@@ -1,0 +1,16 @@
+PODS:
+  - Airwallex (1.0)
+
+DEPENDENCIES:
+  - Airwallex (from `../`)
+
+EXTERNAL SOURCES:
+  Airwallex:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Airwallex: 7e707f24b0184790182e6a049c34ff195584c888
+
+PODFILE CHECKSUM: 6b5e29da478d177e82ec3646bd331549c160f235
+
+COCOAPODS: 1.8.4

@@ -1,0 +1,17 @@
+platform :ios, '10.0'
+
+use_frameworks!
+
+target 'Examples' do
+
+    # Pods for Examples
+    pod 'Airwallex', :path => '../'
+
+end
+
+# target 'ExamplesSwift' do
+#
+#    # Pods for ExamplesSwift
+#    pod 'Airwallex', :path => '../'
+#
+# end
