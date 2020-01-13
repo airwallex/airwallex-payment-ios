@@ -1,19 +1,19 @@
 //
-//  AirWallex.h
-//  AirWallex
+//  Airwallex.h
+//  Airwallex
 //
-//  Created by Victor Zhu on 2020/1/7.
-//  Copyright © 2020 AirWallex. All rights reserved.
+//  Created by Victor Zhu on 2020/1/13.
+//  Copyright © 2020 Airwallex. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-//! Project version number for AirWallex.
-FOUNDATION_EXPORT double AirWallexVersionNumber;
+//! Project version number for Airwallex.
+FOUNDATION_EXPORT double AirwallexVersionNumber;
 
-//! Project version string for AirWallex.
-FOUNDATION_EXPORT const unsigned char AirWallexVersionString[];
+//! Project version string for Airwallex.
+FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <AirWallex/PublicHeader.h>
+// In this header, you should import all the public headers of your framework using statements like #import <Airwallex/PublicHeader.h>
 
 

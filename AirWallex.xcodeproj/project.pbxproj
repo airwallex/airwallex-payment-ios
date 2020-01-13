@@ -7,153 +7,153 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08C8097423C43666005A11D1 /* AirWallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C8096A23C43666005A11D1 /* AirWallex.framework */; };
-		08C8097923C43666005A11D1 /* AirWallexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C8097823C43666005A11D1 /* AirWallexTests.m */; };
-		08C8097B23C43666005A11D1 /* AirWallex.h in Headers */ = {isa = PBXBuildFile; fileRef = 08C8096D23C43666005A11D1 /* AirWallex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
+		085BD3D723CC62B4002E8F27 /* AirwallexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3D623CC62B4002E8F27 /* AirwallexTests.m */; };
+		085BD3D923CC62B4002E8F27 /* Airwallex.h in Headers */ = {isa = PBXBuildFile; fileRef = 085BD3CB23CC62B4002E8F27 /* Airwallex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		08C8097523C43666005A11D1 /* PBXContainerItemProxy */ = {
+		085BD3D323CC62B4002E8F27 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 08C8096123C43666005A11D1 /* Project object */;
+			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 08C8096923C43666005A11D1;
-			remoteInfo = AirWallex;
+			remoteGlobalIDString = 085BD3C723CC62B4002E8F27;
+			remoteInfo = Airwallex;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		08C8096A23C43666005A11D1 /* AirWallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AirWallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		08C8096D23C43666005A11D1 /* AirWallex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirWallex.h; sourceTree = "<group>"; };
-		08C8096E23C43666005A11D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		08C8097323C43666005A11D1 /* AirWallexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirWallexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		08C8097823C43666005A11D1 /* AirWallexTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirWallexTests.m; sourceTree = "<group>"; };
-		08C8097A23C43666005A11D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		085BD3C823CC62B4002E8F27 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		085BD3CB23CC62B4002E8F27 /* Airwallex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Airwallex.h; sourceTree = "<group>"; };
+		085BD3CC23CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		085BD3D623CC62B4002E8F27 /* AirwallexTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirwallexTests.m; sourceTree = "<group>"; };
+		085BD3D823CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		08C8096723C43666005A11D1 /* Frameworks */ = {
+		085BD3C523CC62B4002E8F27 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		08C8097023C43666005A11D1 /* Frameworks */ = {
+		085BD3CE23CC62B4002E8F27 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08C8097423C43666005A11D1 /* AirWallex.framework in Frameworks */,
+				085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		08C8096023C43666005A11D1 = {
+		085BD3BE23CC62B4002E8F27 = {
 			isa = PBXGroup;
 			children = (
-				08C8096C23C43666005A11D1 /* AirWallex */,
-				08C8097723C43666005A11D1 /* AirWallexTests */,
-				08C8096B23C43666005A11D1 /* Products */,
+				085BD3CA23CC62B4002E8F27 /* Airwallex */,
+				085BD3D523CC62B4002E8F27 /* AirwallexTests */,
+				085BD3C923CC62B4002E8F27 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		08C8096B23C43666005A11D1 /* Products */ = {
+		085BD3C923CC62B4002E8F27 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				08C8096A23C43666005A11D1 /* AirWallex.framework */,
-				08C8097323C43666005A11D1 /* AirWallexTests.xctest */,
+				085BD3C823CC62B4002E8F27 /* Airwallex.framework */,
+				085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		08C8096C23C43666005A11D1 /* AirWallex */ = {
+		085BD3CA23CC62B4002E8F27 /* Airwallex */ = {
 			isa = PBXGroup;
 			children = (
-				08C8096D23C43666005A11D1 /* AirWallex.h */,
-				08C8096E23C43666005A11D1 /* Info.plist */,
+				085BD3CB23CC62B4002E8F27 /* Airwallex.h */,
+				085BD3CC23CC62B4002E8F27 /* Info.plist */,
 			);
-			path = AirWallex;
+			path = Airwallex;
 			sourceTree = "<group>";
 		};
-		08C8097723C43666005A11D1 /* AirWallexTests */ = {
+		085BD3D523CC62B4002E8F27 /* AirwallexTests */ = {
 			isa = PBXGroup;
 			children = (
-				08C8097823C43666005A11D1 /* AirWallexTests.m */,
-				08C8097A23C43666005A11D1 /* Info.plist */,
+				085BD3D623CC62B4002E8F27 /* AirwallexTests.m */,
+				085BD3D823CC62B4002E8F27 /* Info.plist */,
 			);
-			path = AirWallexTests;
+			path = AirwallexTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		08C8096523C43666005A11D1 /* Headers */ = {
+		085BD3C323CC62B4002E8F27 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08C8097B23C43666005A11D1 /* AirWallex.h in Headers */,
+				085BD3D923CC62B4002E8F27 /* Airwallex.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		08C8096923C43666005A11D1 /* AirWallex */ = {
+		085BD3C723CC62B4002E8F27 /* Airwallex */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 08C8097E23C43666005A11D1 /* Build configuration list for PBXNativeTarget "AirWallex" */;
+			buildConfigurationList = 085BD3DC23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "Airwallex" */;
 			buildPhases = (
-				08C8096523C43666005A11D1 /* Headers */,
-				08C8096623C43666005A11D1 /* Sources */,
-				08C8096723C43666005A11D1 /* Frameworks */,
-				08C8096823C43666005A11D1 /* Resources */,
+				085BD3C323CC62B4002E8F27 /* Headers */,
+				085BD3C423CC62B4002E8F27 /* Sources */,
+				085BD3C523CC62B4002E8F27 /* Frameworks */,
+				085BD3C623CC62B4002E8F27 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = AirWallex;
-			productName = AirWallex;
-			productReference = 08C8096A23C43666005A11D1 /* AirWallex.framework */;
+			name = Airwallex;
+			productName = Airwallex;
+			productReference = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		08C8097223C43666005A11D1 /* AirWallexTests */ = {
+		085BD3D023CC62B4002E8F27 /* AirwallexTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 08C8098123C43666005A11D1 /* Build configuration list for PBXNativeTarget "AirWallexTests" */;
+			buildConfigurationList = 085BD3DF23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "AirwallexTests" */;
 			buildPhases = (
-				08C8096F23C43666005A11D1 /* Sources */,
-				08C8097023C43666005A11D1 /* Frameworks */,
-				08C8097123C43666005A11D1 /* Resources */,
+				085BD3CD23CC62B4002E8F27 /* Sources */,
+				085BD3CE23CC62B4002E8F27 /* Frameworks */,
+				085BD3CF23CC62B4002E8F27 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				08C8097623C43666005A11D1 /* PBXTargetDependency */,
+				085BD3D423CC62B4002E8F27 /* PBXTargetDependency */,
 			);
-			name = AirWallexTests;
-			productName = AirWallexTests;
-			productReference = 08C8097323C43666005A11D1 /* AirWallexTests.xctest */;
+			name = AirwallexTests;
+			productName = AirwallexTests;
+			productReference = 085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		08C8096123C43666005A11D1 /* Project object */ = {
+		085BD3BF23CC62B4002E8F27 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1110;
-				ORGANIZATIONNAME = AirWallex;
+				ORGANIZATIONNAME = Airwallex;
 				TargetAttributes = {
-					08C8096923C43666005A11D1 = {
+					085BD3C723CC62B4002E8F27 = {
 						CreatedOnToolsVersion = 11.1;
 					};
-					08C8097223C43666005A11D1 = {
+					085BD3D023CC62B4002E8F27 = {
 						CreatedOnToolsVersion = 11.1;
 					};
 				};
 			};
-			buildConfigurationList = 08C8096423C43666005A11D1 /* Build configuration list for PBXProject "AirWallex" */;
+			buildConfigurationList = 085BD3C223CC62B4002E8F27 /* Build configuration list for PBXProject "AirWallex" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -161,26 +161,26 @@
 				en,
 				Base,
 			);
-			mainGroup = 08C8096023C43666005A11D1;
-			productRefGroup = 08C8096B23C43666005A11D1 /* Products */;
+			mainGroup = 085BD3BE23CC62B4002E8F27;
+			productRefGroup = 085BD3C923CC62B4002E8F27 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				08C8096923C43666005A11D1 /* AirWallex */,
-				08C8097223C43666005A11D1 /* AirWallexTests */,
+				085BD3C723CC62B4002E8F27 /* Airwallex */,
+				085BD3D023CC62B4002E8F27 /* AirwallexTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		08C8096823C43666005A11D1 /* Resources */ = {
+		085BD3C623CC62B4002E8F27 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		08C8097123C43666005A11D1 /* Resources */ = {
+		085BD3CF23CC62B4002E8F27 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -190,33 +190,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		08C8096623C43666005A11D1 /* Sources */ = {
+		085BD3C423CC62B4002E8F27 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		08C8096F23C43666005A11D1 /* Sources */ = {
+		085BD3CD23CC62B4002E8F27 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08C8097923C43666005A11D1 /* AirWallexTests.m in Sources */,
+				085BD3D723CC62B4002E8F27 /* AirwallexTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		08C8097623C43666005A11D1 /* PBXTargetDependency */ = {
+		085BD3D423CC62B4002E8F27 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 08C8096923C43666005A11D1 /* AirWallex */;
-			targetProxy = 08C8097523C43666005A11D1 /* PBXContainerItemProxy */;
+			target = 085BD3C723CC62B4002E8F27 /* Airwallex */;
+			targetProxy = 085BD3D323CC62B4002E8F27 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		08C8097C23C43666005A11D1 /* Debug */ = {
+		085BD3DA23CC62B4002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -267,7 +267,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -277,7 +277,7 @@
 			};
 			name = Debug;
 		};
-		08C8097D23C43666005A11D1 /* Release */ = {
+		085BD3DB23CC62B4002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -322,7 +322,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -332,7 +332,7 @@
 			};
 			name = Release;
 		};
-		08C8097F23C43666005A11D1 /* Debug */ = {
+		085BD3DD23CC62B4002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -340,21 +340,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AirWallex/Info.plist;
+				INFOPLIST_FILE = Airwallex/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.AirWallex;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Airwallex;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		08C8098023C43666005A11D1 /* Release */ = {
+		085BD3DE23CC62B4002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -362,47 +362,47 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AirWallex/Info.plist;
+				INFOPLIST_FILE = Airwallex/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.AirWallex;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Airwallex;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
-		08C8098223C43666005A11D1 /* Debug */ = {
+		085BD3E023CC62B4002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AirWallexTests/Info.plist;
+				INFOPLIST_FILE = AirwallexTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.AirWallexTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.AirwallexTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		08C8098323C43666005A11D1 /* Release */ = {
+		085BD3E123CC62B4002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AirWallexTests/Info.plist;
+				INFOPLIST_FILE = AirwallexTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.AirWallexTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.AirwallexTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -411,34 +411,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		08C8096423C43666005A11D1 /* Build configuration list for PBXProject "AirWallex" */ = {
+		085BD3C223CC62B4002E8F27 /* Build configuration list for PBXProject "AirWallex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				08C8097C23C43666005A11D1 /* Debug */,
-				08C8097D23C43666005A11D1 /* Release */,
+				085BD3DA23CC62B4002E8F27 /* Debug */,
+				085BD3DB23CC62B4002E8F27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		08C8097E23C43666005A11D1 /* Build configuration list for PBXNativeTarget "AirWallex" */ = {
+		085BD3DC23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "Airwallex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				08C8097F23C43666005A11D1 /* Debug */,
-				08C8098023C43666005A11D1 /* Release */,
+				085BD3DD23CC62B4002E8F27 /* Debug */,
+				085BD3DE23CC62B4002E8F27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		08C8098123C43666005A11D1 /* Build configuration list for PBXNativeTarget "AirWallexTests" */ = {
+		085BD3DF23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "AirwallexTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				08C8098223C43666005A11D1 /* Debug */,
-				08C8098323C43666005A11D1 /* Release */,
+				085BD3E023CC62B4002E8F27 /* Debug */,
+				085BD3E123CC62B4002E8F27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 08C8096123C43666005A11D1 /* Project object */;
+	rootObject = 085BD3BF23CC62B4002E8F27 /* Project object */;
 }

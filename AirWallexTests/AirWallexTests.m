@@ -1,18 +1,18 @@
 //
-//  AirWallexTests.m
-//  AirWallexTests
+//  AirwallexTests.m
+//  AirwallexTests
 //
-//  Created by Victor Zhu on 2020/1/7.
-//  Copyright © 2020 AirWallex. All rights reserved.
+//  Created by Victor Zhu on 2020/1/13.
+//  Copyright © 2020 Airwallex. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface AirWallexTests : XCTestCase
+@interface AirwallexTests : XCTestCase
 
 @end
 
-@implementation AirWallexTests
+@implementation AirwallexTests
 
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.
