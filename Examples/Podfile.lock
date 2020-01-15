@@ -1,16 +1,23 @@
 PODS:
   - Airwallex (1.0)
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - Airwallex (from `../`)
+  - SVProgressHUD (= 2.2.5)
+
+SPEC REPOS:
+  trunk:
+    - SVProgressHUD
 
 EXTERNAL SOURCES:
   Airwallex:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Airwallex: 7e707f24b0184790182e6a049c34ff195584c888
+  Airwallex: c6f23ba99b7add46ba02f45921a8d0ae5c27835c
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 6b5e29da478d177e82ec3646bd331549c160f235
+PODFILE CHECKSUM: 62a376769f21190c3cb30e07402de86d1b39b5c2
 
 COCOAPODS: 1.8.4
