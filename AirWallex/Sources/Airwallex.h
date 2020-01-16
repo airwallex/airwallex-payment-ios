@@ -16,4 +16,4 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Airwallex/PublicHeader.h>
 
-
+#import <Airwallex/AWAPIClient.h>

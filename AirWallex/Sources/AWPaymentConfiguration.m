@@ -10,7 +10,8 @@
 
 @implementation AWPaymentConfiguration
 
-+ (instancetype)sharedConfiguration {
++ (instancetype)sharedConfiguration
+{
     static AWPaymentConfiguration *sharedConfiguration;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -19,9 +20,15 @@
     return sharedConfiguration;
 }
 
-- (id)copyWithZone:(__unused NSZone *)zone {
+- (id)copyWithZone:(__unused NSZone *)zone
+{
     AWPaymentConfiguration *copy = [self.class new];
-    copy.publishableKey = self.publishableKey;
+    copy.baseURL = self.baseURL;
+    copy.intentId = self.intentId;
+    copy.clientSecret = self.clientSecret;
+    copy.customerId = self.customerId;
+    copy.region = self.region;
+    copy.currency = self.currency;
     return copy;
 }
 

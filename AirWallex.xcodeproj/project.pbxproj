@@ -7,6 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		081D52C923D0307600953B03 /* AWCard.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52C723D0307600953B03 /* AWCard.h */; };
+		081D52CA23D0307600953B03 /* AWCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52C823D0307600953B03 /* AWCard.m */; };
+		081D52CD23D0324E00953B03 /* AWBilling.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52CB23D0324E00953B03 /* AWBilling.h */; };
+		081D52CE23D0324E00953B03 /* AWBilling.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52CC23D0324E00953B03 /* AWBilling.m */; };
+		081D52D123D0339E00953B03 /* AWPaymentMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52CF23D0339E00953B03 /* AWPaymentMethod.h */; };
+		081D52D223D0339E00953B03 /* AWPaymentMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52D023D0339E00953B03 /* AWPaymentMethod.m */; };
+		081D52D523D0343200953B03 /* AWWechatPay.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52D323D0343200953B03 /* AWWechatPay.h */; };
+		081D52D623D0343200953B03 /* AWWechatPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52D423D0343200953B03 /* AWWechatPay.m */; };
+		081D52DE23D03B3F00953B03 /* AWConfirmPaymentIntentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52DC23D03B3F00953B03 /* AWConfirmPaymentIntentRequest.h */; };
+		081D52DF23D03B3F00953B03 /* AWConfirmPaymentIntentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52DD23D03B3F00953B03 /* AWConfirmPaymentIntentRequest.m */; };
+		081D52E323D03BDF00953B03 /* AWConfirmPaymentintentResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52E123D03BDF00953B03 /* AWConfirmPaymentintentResponse.h */; };
+		081D52E423D03BDF00953B03 /* AWConfirmPaymentintentResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52E223D03BDF00953B03 /* AWConfirmPaymentintentResponse.m */; };
+		081D52E823D043E100953B03 /* AWPaymentMethodOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52E623D043E100953B03 /* AWPaymentMethodOptions.h */; };
+		081D52E923D043E100953B03 /* AWPaymentMethodOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52E723D043E100953B03 /* AWPaymentMethodOptions.m */; };
+		081D52ED23D04AE600953B03 /* AWProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EB23D04AE600953B03 /* AWProtocol.h */; };
+		081D52EE23D04AE600953B03 /* AWProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52EC23D04AE600953B03 /* AWProtocol.m */; };
+		081D52F123D04B5400953B03 /* AWAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EF23D04B5400953B03 /* AWAPIResponse.h */; };
+		081D52F223D04B5400953B03 /* AWAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52F023D04B5400953B03 /* AWAPIResponse.m */; };
+		081D52F623D04EA200953B03 /* AWLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52F423D04EA200953B03 /* AWLogger.h */; };
+		081D52F723D04EA200953B03 /* AWLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52F523D04EA200953B03 /* AWLogger.m */; };
+		081D52FA23D0581F00953B03 /* AWUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52F823D0581F00953B03 /* AWUtils.h */; };
+		081D52FB23D0581F00953B03 /* AWUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52F923D0581F00953B03 /* AWUtils.m */; };
 		085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
 		085BD3D723CC62B4002E8F27 /* AirwallexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3D623CC62B4002E8F27 /* AirwallexTests.m */; };
 		085BD41423CC6E0C002E8F27 /* Airwallex.h in Headers */ = {isa = PBXBuildFile; fileRef = 085BD41323CC6E0B002E8F27 /* Airwallex.h */; };
@@ -26,8 +48,6 @@
 		085BD43D23CDCC62002E8F27 /* AWProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD43B23CDCC62002E8F27 /* AWProduct.m */; };
 		085BD44023CDCD71002E8F27 /* AWOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = 085BD43E23CDCD71002E8F27 /* AWOrder.h */; };
 		085BD44123CDCD71002E8F27 /* AWOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD43F23CDCD71002E8F27 /* AWOrder.m */; };
-		088F3E7E23CEB464005AE40F /* AWAPIRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 088F3E7C23CEB464005AE40F /* AWAPIRequest.h */; };
-		088F3E7F23CEB464005AE40F /* AWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E7D23CEB464005AE40F /* AWAPIRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +61,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		081D52C123D00C5D00953B03 /* AWBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWBlocks.h; sourceTree = "<group>"; };
+		081D52C723D0307600953B03 /* AWCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWCard.h; sourceTree = "<group>"; };
+		081D52C823D0307600953B03 /* AWCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWCard.m; sourceTree = "<group>"; };
+		081D52CB23D0324E00953B03 /* AWBilling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWBilling.h; sourceTree = "<group>"; };
+		081D52CC23D0324E00953B03 /* AWBilling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWBilling.m; sourceTree = "<group>"; };
+		081D52CF23D0339E00953B03 /* AWPaymentMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWPaymentMethod.h; sourceTree = "<group>"; };
+		081D52D023D0339E00953B03 /* AWPaymentMethod.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentMethod.m; sourceTree = "<group>"; };
+		081D52D323D0343200953B03 /* AWWechatPay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWWechatPay.h; sourceTree = "<group>"; };
+		081D52D423D0343200953B03 /* AWWechatPay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWWechatPay.m; sourceTree = "<group>"; };
+		081D52DC23D03B3F00953B03 /* AWConfirmPaymentIntentRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWConfirmPaymentIntentRequest.h; sourceTree = "<group>"; };
+		081D52DD23D03B3F00953B03 /* AWConfirmPaymentIntentRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWConfirmPaymentIntentRequest.m; sourceTree = "<group>"; };
+		081D52E023D03B6900953B03 /* AWRequestProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWRequestProtocol.h; sourceTree = "<group>"; };
+		081D52E123D03BDF00953B03 /* AWConfirmPaymentintentResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWConfirmPaymentintentResponse.h; sourceTree = "<group>"; };
+		081D52E223D03BDF00953B03 /* AWConfirmPaymentintentResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWConfirmPaymentintentResponse.m; sourceTree = "<group>"; };
+		081D52E523D03D3D00953B03 /* AWJSONifiable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWJSONifiable.h; sourceTree = "<group>"; };
+		081D52E623D043E100953B03 /* AWPaymentMethodOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWPaymentMethodOptions.h; sourceTree = "<group>"; };
+		081D52E723D043E100953B03 /* AWPaymentMethodOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentMethodOptions.m; sourceTree = "<group>"; };
+		081D52EA23D048BE00953B03 /* AWResponseProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWResponseProtocol.h; sourceTree = "<group>"; };
+		081D52EB23D04AE600953B03 /* AWProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWProtocol.h; sourceTree = "<group>"; };
+		081D52EC23D04AE600953B03 /* AWProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWProtocol.m; sourceTree = "<group>"; };
+		081D52EF23D04B5400953B03 /* AWAPIResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWAPIResponse.h; sourceTree = "<group>"; };
+		081D52F023D04B5400953B03 /* AWAPIResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWAPIResponse.m; sourceTree = "<group>"; };
+		081D52F423D04EA200953B03 /* AWLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWLogger.h; sourceTree = "<group>"; };
+		081D52F523D04EA200953B03 /* AWLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWLogger.m; sourceTree = "<group>"; };
+		081D52F823D0581F00953B03 /* AWUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWUtils.h; sourceTree = "<group>"; };
+		081D52F923D0581F00953B03 /* AWUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWUtils.m; sourceTree = "<group>"; };
+		081D52FC23D0588200953B03 /* AWConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWConstants.h; sourceTree = "<group>"; };
 		085BD3C823CC62B4002E8F27 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3CC23CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,7 +102,6 @@
 		085BD42A23CDC1B5002E8F27 /* AWPaymentIntent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentIntent.m; sourceTree = "<group>"; };
 		085BD42D23CDC1EB002E8F27 /* AWAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWAPIClient.m; sourceTree = "<group>"; };
 		085BD42E23CDC1EB002E8F27 /* AWAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWAPIClient.h; sourceTree = "<group>"; };
-		085BD43123CDC369002E8F27 /* AWAPIClient+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWAPIClient+Private.h"; sourceTree = "<group>"; };
 		085BD43223CDCB73002E8F27 /* AWShipping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWShipping.h; sourceTree = "<group>"; };
 		085BD43323CDCB73002E8F27 /* AWShipping.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWShipping.m; sourceTree = "<group>"; };
 		085BD43623CDCBD7002E8F27 /* AWAddress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWAddress.h; sourceTree = "<group>"; };
@@ -64,8 +110,6 @@
 		085BD43B23CDCC62002E8F27 /* AWProduct.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWProduct.m; sourceTree = "<group>"; };
 		085BD43E23CDCD71002E8F27 /* AWOrder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWOrder.h; sourceTree = "<group>"; };
 		085BD43F23CDCD71002E8F27 /* AWOrder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWOrder.m; sourceTree = "<group>"; };
-		088F3E7C23CEB464005AE40F /* AWAPIRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWAPIRequest.h; sourceTree = "<group>"; };
-		088F3E7D23CEB464005AE40F /* AWAPIRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWAPIRequest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +131,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		081D52C623D0306200953B03 /* PaymentIntent */ = {
+			isa = PBXGroup;
+			children = (
+				081D52E523D03D3D00953B03 /* AWJSONifiable.h */,
+				081D52C723D0307600953B03 /* AWCard.h */,
+				081D52C823D0307600953B03 /* AWCard.m */,
+				085BD43623CDCBD7002E8F27 /* AWAddress.h */,
+				085BD43723CDCBD7002E8F27 /* AWAddress.m */,
+				081D52CB23D0324E00953B03 /* AWBilling.h */,
+				081D52CC23D0324E00953B03 /* AWBilling.m */,
+				081D52CF23D0339E00953B03 /* AWPaymentMethod.h */,
+				081D52D023D0339E00953B03 /* AWPaymentMethod.m */,
+				081D52D323D0343200953B03 /* AWWechatPay.h */,
+				081D52D423D0343200953B03 /* AWWechatPay.m */,
+				081D52E623D043E100953B03 /* AWPaymentMethodOptions.h */,
+				081D52E723D043E100953B03 /* AWPaymentMethodOptions.m */,
+			);
+			path = PaymentIntent;
+			sourceTree = "<group>";
+		};
+		081D52DB23D03AFB00953B03 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				081D52EB23D04AE600953B03 /* AWProtocol.h */,
+				081D52EC23D04AE600953B03 /* AWProtocol.m */,
+				081D52E023D03B6900953B03 /* AWRequestProtocol.h */,
+				081D52EA23D048BE00953B03 /* AWResponseProtocol.h */,
+				081D52EF23D04B5400953B03 /* AWAPIResponse.h */,
+				081D52F023D04B5400953B03 /* AWAPIResponse.m */,
+				081D52DC23D03B3F00953B03 /* AWConfirmPaymentIntentRequest.h */,
+				081D52DD23D03B3F00953B03 /* AWConfirmPaymentIntentRequest.m */,
+				081D52E123D03BDF00953B03 /* AWConfirmPaymentintentResponse.h */,
+				081D52E223D03BDF00953B03 /* AWConfirmPaymentintentResponse.m */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		081D52F323D04E9500953B03 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				081D52F423D04EA200953B03 /* AWLogger.h */,
+				081D52F523D04EA200953B03 /* AWLogger.m */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
 		083D916C23CF0902006283CB /* Private */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,8 +184,6 @@
 				085BD42A23CDC1B5002E8F27 /* AWPaymentIntent.m */,
 				085BD43223CDCB73002E8F27 /* AWShipping.h */,
 				085BD43323CDCB73002E8F27 /* AWShipping.m */,
-				085BD43623CDCBD7002E8F27 /* AWAddress.h */,
-				085BD43723CDCBD7002E8F27 /* AWAddress.m */,
 				085BD43A23CDCC62002E8F27 /* AWProduct.h */,
 				085BD43B23CDCC62002E8F27 /* AWProduct.m */,
 				085BD43E23CDCD71002E8F27 /* AWOrder.h */,
@@ -159,13 +247,17 @@
 		085BD41223CC6E0B002E8F27 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				081D52F823D0581F00953B03 /* AWUtils.h */,
+				081D52F923D0581F00953B03 /* AWUtils.m */,
+				081D52F323D04E9500953B03 /* Logger */,
+				081D52DB23D03AFB00953B03 /* API */,
+				081D52C623D0306200953B03 /* PaymentIntent */,
 				083D916C23CF0902006283CB /* Private */,
 				085BD41323CC6E0B002E8F27 /* Airwallex.h */,
-				085BD43123CDC369002E8F27 /* AWAPIClient+Private.h */,
+				081D52C123D00C5D00953B03 /* AWBlocks.h */,
+				081D52FC23D0588200953B03 /* AWConstants.h */,
 				085BD42E23CDC1EB002E8F27 /* AWAPIClient.h */,
 				085BD42D23CDC1EB002E8F27 /* AWAPIClient.m */,
-				088F3E7C23CEB464005AE40F /* AWAPIRequest.h */,
-				088F3E7D23CEB464005AE40F /* AWAPIRequest.m */,
 				085BD41D23CD9E2C002E8F27 /* AWPaymentConfiguration.h */,
 				085BD41E23CD9E2C002E8F27 /* AWPaymentConfiguration.m */,
 				085BD42123CDB632002E8F27 /* AWPaymentContext.h */,
@@ -182,15 +274,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				085BD44023CDCD71002E8F27 /* AWOrder.h in Headers */,
+				081D52E823D043E100953B03 /* AWPaymentMethodOptions.h in Headers */,
+				081D52E323D03BDF00953B03 /* AWConfirmPaymentintentResponse.h in Headers */,
+				081D52D523D0343200953B03 /* AWWechatPay.h in Headers */,
 				085BD41F23CD9E2C002E8F27 /* AWPaymentConfiguration.h in Headers */,
+				081D52F623D04EA200953B03 /* AWLogger.h in Headers */,
+				081D52CD23D0324E00953B03 /* AWBilling.h in Headers */,
 				085BD43023CDC1EB002E8F27 /* AWAPIClient.h in Headers */,
-				088F3E7E23CEB464005AE40F /* AWAPIRequest.h in Headers */,
+				081D52DE23D03B3F00953B03 /* AWConfirmPaymentIntentRequest.h in Headers */,
+				081D52F123D04B5400953B03 /* AWAPIResponse.h in Headers */,
 				085BD43C23CDCC62002E8F27 /* AWProduct.h in Headers */,
+				081D52ED23D04AE600953B03 /* AWProtocol.h in Headers */,
+				081D52FA23D0581F00953B03 /* AWUtils.h in Headers */,
 				085BD43423CDCB73002E8F27 /* AWShipping.h in Headers */,
+				081D52D123D0339E00953B03 /* AWPaymentMethod.h in Headers */,
 				085BD42323CDB632002E8F27 /* AWPaymentContext.h in Headers */,
 				085BD43823CDCBD7002E8F27 /* AWAddress.h in Headers */,
 				085BD41423CC6E0C002E8F27 /* Airwallex.h in Headers */,
 				085BD42B23CDC1B5002E8F27 /* AWPaymentIntent.h in Headers */,
+				081D52C923D0307600953B03 /* AWCard.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,15 +393,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				088F3E7F23CEB464005AE40F /* AWAPIRequest.m in Sources */,
+				081D52F223D04B5400953B03 /* AWAPIResponse.m in Sources */,
+				081D52E423D03BDF00953B03 /* AWConfirmPaymentintentResponse.m in Sources */,
+				081D52EE23D04AE600953B03 /* AWProtocol.m in Sources */,
+				081D52FB23D0581F00953B03 /* AWUtils.m in Sources */,
+				081D52CA23D0307600953B03 /* AWCard.m in Sources */,
+				081D52D223D0339E00953B03 /* AWPaymentMethod.m in Sources */,
+				081D52E923D043E100953B03 /* AWPaymentMethodOptions.m in Sources */,
 				085BD44123CDCD71002E8F27 /* AWOrder.m in Sources */,
+				081D52DF23D03B3F00953B03 /* AWConfirmPaymentIntentRequest.m in Sources */,
+				081D52CE23D0324E00953B03 /* AWBilling.m in Sources */,
 				085BD42423CDB632002E8F27 /* AWPaymentContext.m in Sources */,
 				085BD42F23CDC1EB002E8F27 /* AWAPIClient.m in Sources */,
+				081D52D623D0343200953B03 /* AWWechatPay.m in Sources */,
 				085BD42C23CDC1B5002E8F27 /* AWPaymentIntent.m in Sources */,
 				085BD43D23CDCC62002E8F27 /* AWProduct.m in Sources */,
 				085BD42023CD9E2C002E8F27 /* AWPaymentConfiguration.m in Sources */,
 				085BD43923CDCBD7002E8F27 /* AWAddress.m in Sources */,
 				085BD43523CDCB73002E8F27 /* AWShipping.m in Sources */,
+				081D52F723D04EA200953B03 /* AWLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,7 +565,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Airwallex;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -475,7 +587,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Airwallex;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
