@@ -2,12 +2,14 @@ platform :ios, '10.0'
 
 use_frameworks!
 
+ENV['SWIFT_VERSION'] = '5'
+
 target 'Examples' do
 
     # Pods for Examples
     pod 'Airwallex', :path => '../'
     pod 'SVProgressHUD', '2.2.5'
-
+    pod 'SkyFloatingLabelTextField', '3.8.0'
 end
 
 # target 'ExamplesSwift' do

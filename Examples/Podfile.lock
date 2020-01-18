@@ -1,14 +1,20 @@
 PODS:
   - Airwallex (1.0)
+  - SkyFloatingLabelTextField (3.8.0)
   - SVProgressHUD (2.2.5)
+  - Validator (3.2.1)
 
 DEPENDENCIES:
   - Airwallex (from `../`)
+  - SkyFloatingLabelTextField (= 3.8.0)
   - SVProgressHUD (= 2.2.5)
+  - Validator (= 3.2.1)
 
 SPEC REPOS:
   trunk:
+    - SkyFloatingLabelTextField
     - SVProgressHUD
+    - Validator
 
 EXTERNAL SOURCES:
   Airwallex:
@@ -16,8 +22,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Airwallex: 29ecf94d853d1119f12ff5c04737a2df707e555f
+  SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
 
-PODFILE CHECKSUM: 62a376769f21190c3cb30e07402de86d1b39b5c2
+PODFILE CHECKSUM: 8ba9c165a2d0a1c0a7efa393344b817215a89d39
 
 COCOAPODS: 1.8.4

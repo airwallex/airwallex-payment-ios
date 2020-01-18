@@ -29,7 +29,9 @@
     [request setValue:apiKey forHTTPHeaderField:@"x-api-key"];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {
-            completionHandler(nil, error);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(nil, error);
+            });
             return;
         }
 
@@ -37,11 +39,16 @@
         if (data) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&anError];
             NSString *token = json[@"token"];
-            completionHandler(token, anError);
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(token, anError);
+            });
             return;
         }
 
-        completionHandler(nil, anError);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionHandler(nil, anError);
+        });
     }] resume];
 }
 
@@ -54,18 +61,24 @@
     [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil]];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {
-            completionHandler(nil, error);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(nil, error);
+            });
             return;
         }
 
         NSError *anError;
         if (data) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&anError];
-            completionHandler(json, anError);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(json, anError);
+            });
             return;
         }
-        
-        completionHandler(nil, anError);
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionHandler(nil, anError);
+        });
     }] resume];
 }
 

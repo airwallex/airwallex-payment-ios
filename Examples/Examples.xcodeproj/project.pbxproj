@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0808136B23D14789000133BF /* PaymentItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0808136A23D14789000133BF /* PaymentItemCell.m */; };
+		0808136E23D14CA4000133BF /* EditShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0808136D23D14CA4000133BF /* EditShippingViewController.m */; };
+		0808137123D14CB5000133BF /* PaymentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0808137023D14CB5000133BF /* PaymentListViewController.m */; };
 		082D308223CEEC3300C9D587 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308123CEEC3300C9D587 /* ProductCell.m */; };
 		082D308523CEECE400C9D587 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
 		082D308823CEEDC100C9D587 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
@@ -18,10 +21,17 @@
 		085BD40123CC64B9002E8F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		088F3E8723CEDF39005AE40F /* Widgets.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8623CEDF39005AE40F /* Widgets.m */; };
+		08EFDC5723D05F6B003EF928 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EFDC5623D05F6B003EF928 /* PaymentViewController.m */; };
 		E08268B70A40C15A51D041FA /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29265F0DAF62D6592201220D /* Pods_Examples.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0808136923D14789000133BF /* PaymentItemCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentItemCell.h; sourceTree = "<group>"; };
+		0808136A23D14789000133BF /* PaymentItemCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentItemCell.m; sourceTree = "<group>"; };
+		0808136C23D14CA4000133BF /* EditShippingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditShippingViewController.h; sourceTree = "<group>"; };
+		0808136D23D14CA4000133BF /* EditShippingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditShippingViewController.m; sourceTree = "<group>"; };
+		0808136F23D14CB5000133BF /* PaymentListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentListViewController.h; sourceTree = "<group>"; };
+		0808137023D14CB5000133BF /* PaymentListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentListViewController.m; sourceTree = "<group>"; };
 		082D308023CEEC3300C9D587 /* ProductCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProductCell.h; sourceTree = "<group>"; };
 		082D308123CEEC3300C9D587 /* ProductCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProductCell.m; sourceTree = "<group>"; };
 		082D308323CEECE400C9D587 /* TotalCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TotalCell.h; sourceTree = "<group>"; };
@@ -43,6 +53,8 @@
 		088F3E8423CED74C005AE40F /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		088F3E8523CEDF39005AE40F /* Widgets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
 		088F3E8623CEDF39005AE40F /* Widgets.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Widgets.m; sourceTree = "<group>"; };
+		08EFDC5523D05F6B003EF928 /* PaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
+		08EFDC5623D05F6B003EF928 /* PaymentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
 		29265F0DAF62D6592201220D /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		571639E6621D83BFA9D06E86 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		CE84F69084EF8EDE43A99B0C /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,6 +81,14 @@
 				082D308423CEECE400C9D587 /* TotalCell.m */,
 				082D308623CEEDC100C9D587 /* CartViewController.h */,
 				082D308723CEEDC100C9D587 /* CartViewController.m */,
+				0808136923D14789000133BF /* PaymentItemCell.h */,
+				0808136A23D14789000133BF /* PaymentItemCell.m */,
+				08EFDC5523D05F6B003EF928 /* PaymentViewController.h */,
+				08EFDC5623D05F6B003EF928 /* PaymentViewController.m */,
+				0808136C23D14CA4000133BF /* EditShippingViewController.h */,
+				0808136D23D14CA4000133BF /* EditShippingViewController.m */,
+				0808136F23D14CB5000133BF /* PaymentListViewController.h */,
+				0808137023D14CB5000133BF /* PaymentListViewController.m */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -268,12 +288,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08EFDC5723D05F6B003EF928 /* PaymentViewController.m in Sources */,
 				082D308823CEEDC100C9D587 /* CartViewController.m in Sources */,
 				088F3E8723CEDF39005AE40F /* Widgets.m in Sources */,
+				0808137123D14CB5000133BF /* PaymentListViewController.m in Sources */,
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,
+				0808136E23D14CA4000133BF /* EditShippingViewController.m in Sources */,
 				088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */,
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
 				083D916A23CF025D006283CB /* NSNumber+Utils.m in Sources */,
+				0808136B23D14789000133BF /* PaymentItemCell.m in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
 			);

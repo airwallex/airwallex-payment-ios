@@ -12,6 +12,7 @@
 #import "ProductCell.h"
 #import "TotalCell.h"
 #import "APIClient.h"
+#import "PaymentViewController.h"
 
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -45,6 +46,14 @@
 {
     [super viewDidLayoutSubviews];
     self.badgeView.cornerRadius = CGRectGetWidth(self.badgeView.bounds) / 2;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"checkout"]) {
+        PaymentViewController *controller = (PaymentViewController *)segue.destinationViewController;
+        controller.total = sender;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -97,7 +106,11 @@
             }
 
             [SVProgressHUD dismiss];
-            [self performSegueWithIdentifier:@"checkout" sender:self.products];
+
+            NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
+            NSDecimalNumber *shipping = [NSDecimalNumber zero];
+            NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
+            [self performSegueWithIdentifier:@"checkout" sender:total];
         }];
     }];
 }
