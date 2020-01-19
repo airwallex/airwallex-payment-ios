@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+IB_DESIGNABLE
 @interface View : UIView
 
 @property (nonatomic) IBInspectable CGFloat cornerRadius;
@@ -22,9 +23,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+IB_DESIGNABLE
 @interface Button : UIButton
 
 @property (nonatomic) IBInspectable CGFloat cornerRadius;
+
+@end
+
+IB_DESIGNABLE
+@interface FloatLabeledTextField : NibView
+
+@property (nonatomic, strong) IBInspectable NSString *text, *placeholder;
+@property (nonatomic) IBInspectable NSInteger keyboardType;
 
 @end
 

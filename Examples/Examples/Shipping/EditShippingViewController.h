@@ -8,12 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@class AWBilling;
+@class AWBilling, EditShippingViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol EditShippingViewControllerDelegate <NSObject>
+
+- (void)editShippingViewController:(EditShippingViewController *)controller didSelectBilling:(AWBilling *)billing;
+
+@end
+
 @interface EditShippingViewController : UIViewController
 
+@property (nonatomic, weak) id <EditShippingViewControllerDelegate> delegate;
 @property (nonatomic, strong) AWBilling *billing;
 
 @end

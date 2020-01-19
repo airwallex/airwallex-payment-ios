@@ -409,16 +409,173 @@
                     <view key="view" contentMode="scaleToFill" id="SHr-Rj-Okg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOX-Xn-3AU">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9Y-b4-PeV">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="653.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pkb-Xv-c2m">
+                                                <rect key="frame" x="16" y="16" width="382" height="38.5"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                                <color key="textColor" name="Black Text Color"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="OOQ-5G-coA">
+                                                <rect key="frame" x="16" y="70.5" width="382" height="567"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTV-yf-Fex">
+                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="21.5"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ocx-SP-87u" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="34.5" width="382" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="giV-6G-IHF"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Lang"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Last name"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRL-ff-vWU" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="107.5" width="382" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="f5n-3l-sMU"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="First name"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Charlie"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6NK-gy-W8J" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="180.5" width="382" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="VYE-Dg-ntT"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Phone number (optional)"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="keyboardType">
+                                                                <integer key="value" value="5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zgb-dX-3eU">
+                                                        <rect key="frame" x="0.0" y="253.5" width="382" height="21.5"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A0h-F3-nGm" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="288" width="382" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="tYE-be-ku1"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="State"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Victoria"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nh3-mU-v1J" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="361" width="382" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="F2n-Sb-bP5"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Melbourne"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="City"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="699-9u-Gzf" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="434" width="382" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="U8z-lv-LSq"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Street"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="7/15 William St"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fU6-wB-8HT" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="507" width="382" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="jG5-pg-h2Q"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Zip code (optional)"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="keyboardType">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="Pkb-Xv-c2m" firstAttribute="top" secondItem="q9Y-b4-PeV" secondAttribute="top" constant="16" id="Ccf-MK-Wlz"/>
+                                            <constraint firstItem="OOQ-5G-coA" firstAttribute="leading" secondItem="q9Y-b4-PeV" secondAttribute="leading" constant="16" id="KNX-s6-MkU"/>
+                                            <constraint firstItem="OOQ-5G-coA" firstAttribute="top" secondItem="Pkb-Xv-c2m" secondAttribute="bottom" constant="16" id="RXw-5K-ABS"/>
+                                            <constraint firstItem="Pkb-Xv-c2m" firstAttribute="leading" secondItem="q9Y-b4-PeV" secondAttribute="leading" constant="16" id="Uyh-Iz-DI9"/>
+                                            <constraint firstAttribute="bottom" secondItem="OOQ-5G-coA" secondAttribute="bottom" constant="16" id="cDG-h3-p4H"/>
+                                            <constraint firstAttribute="trailing" secondItem="Pkb-Xv-c2m" secondAttribute="trailing" constant="16" id="dLx-Y7-cC3"/>
+                                            <constraint firstAttribute="trailing" secondItem="OOQ-5G-coA" secondAttribute="trailing" constant="16" id="s1E-hd-rhw"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="q9Y-b4-PeV" firstAttribute="top" secondItem="H8U-Ee-BEB" secondAttribute="top" id="0HK-nK-VLP"/>
+                                    <constraint firstAttribute="trailing" secondItem="q9Y-b4-PeV" secondAttribute="trailing" id="P7F-OD-3LG"/>
+                                    <constraint firstItem="Lp1-By-RHm" firstAttribute="trailing" secondItem="q9Y-b4-PeV" secondAttribute="trailing" id="SBP-B6-1Iy"/>
+                                    <constraint firstItem="q9Y-b4-PeV" firstAttribute="leading" secondItem="eOX-Xn-3AU" secondAttribute="leading" id="VCj-zg-cUa"/>
+                                    <constraint firstItem="H8U-Ee-BEB" firstAttribute="bottom" secondItem="q9Y-b4-PeV" secondAttribute="bottom" id="btl-ts-QAd"/>
+                                    <constraint firstItem="q9Y-b4-PeV" firstAttribute="leading" secondItem="Lp1-By-RHm" secondAttribute="leading" id="tfz-Uu-ckF"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="H8U-Ee-BEB"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="Lp1-By-RHm"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="eOX-Xn-3AU" firstAttribute="leading" secondItem="Q3R-1B-szX" secondAttribute="leading" id="Ogk-BQ-coR"/>
+                            <constraint firstItem="Q3R-1B-szX" firstAttribute="bottom" secondItem="eOX-Xn-3AU" secondAttribute="bottom" id="TTm-pg-xBm"/>
+                            <constraint firstItem="eOX-Xn-3AU" firstAttribute="trailing" secondItem="Q3R-1B-szX" secondAttribute="trailing" id="dJV-QQ-9GG"/>
+                            <constraint firstItem="eOX-Xn-3AU" firstAttribute="top" secondItem="Q3R-1B-szX" secondAttribute="top" id="i3t-8w-LMN"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Q3R-1B-szX"/>
                     </view>
                     <navigationItem key="navigationItem" id="aXD-8R-gHI">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="evn-ro-Y4e"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="evn-ro-Y4e">
+                            <connections>
+                                <action selector="savePressed:" destination="dty-au-3mp" id="LMQ-Bz-PMW"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cityField" destination="nh3-mU-v1J" id="lzw-Iq-ht3"/>
+                        <outlet property="firstNameField" destination="eRL-ff-vWU" id="AxZ-Jn-J58"/>
+                        <outlet property="lastNameField" destination="ocx-SP-87u" id="VN6-Ax-4YA"/>
+                        <outlet property="phoneNumberField" destination="6NK-gy-W8J" id="1gb-bR-db6"/>
+                        <outlet property="saveBarButtonItem" destination="evn-ro-Y4e" id="0Sf-Jz-1n4"/>
+                        <outlet property="scrollView" destination="eOX-Xn-3AU" id="sqV-WJ-aub"/>
+                        <outlet property="stateField" destination="A0h-F3-nGm" id="P0j-uy-K4B"/>
+                        <outlet property="streetField" destination="699-9u-Gzf" id="4Zg-bC-rwK"/>
+                        <outlet property="zipcodeField" destination="fU6-wB-8HT" id="K6c-oA-HXw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="puw-tZ-q7P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1497" y="898"/>
+            <point key="canvasLocation" x="1495.6521739130435" y="897.99107142857133"/>
         </scene>
         <!--Payment List View Controller-->
         <scene sceneID="58O-K9-j5e">
@@ -519,11 +676,21 @@
                                                     <color key="textColor" name="Black Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ouq-gt-pza">
+                                                    <rect key="frame" x="16" y="56" width="382" height="1"/>
+                                                    <color key="backgroundColor" name="Line Color"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="aL6-1D-pFO"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="SP2-ef-2k0" firstAttribute="top" secondItem="3Xl-vv-7bV" secondAttribute="top" constant="20" id="9qc-sO-OdB"/>
+                                                <constraint firstItem="ouq-gt-pza" firstAttribute="leading" secondItem="3Xl-vv-7bV" secondAttribute="leading" constant="16" id="9xy-Wk-pIa"/>
                                                 <constraint firstAttribute="trailing" secondItem="SP2-ef-2k0" secondAttribute="trailing" constant="16" id="Ky1-cw-yQ1"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SP2-ef-2k0" secondAttribute="bottom" constant="20" id="ofb-Xo-NmV"/>
+                                                <constraint firstAttribute="trailing" secondItem="ouq-gt-pza" secondAttribute="trailing" constant="16" id="YLn-L2-oyi"/>
+                                                <constraint firstItem="ouq-gt-pza" firstAttribute="top" secondItem="SP2-ef-2k0" secondAttribute="bottom" constant="19" id="YrV-9O-gtV"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ouq-gt-pza" secondAttribute="bottom" id="euF-ry-8NW"/>
                                                 <constraint firstItem="SP2-ef-2k0" firstAttribute="leading" secondItem="3Xl-vv-7bV" secondAttribute="leading" constant="16" id="yOB-fl-egl"/>
                                             </constraints>
                                         </tableViewCellContentView>

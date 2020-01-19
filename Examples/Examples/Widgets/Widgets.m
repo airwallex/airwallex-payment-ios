@@ -69,7 +69,7 @@
 
 - (NSString *)nibName
 {
-    return @"-";
+    return NSStringFromClass(self.class);
 }
 
 - (NSInteger)nibIndex
@@ -102,6 +102,98 @@
 {
     super.enabled = enabled;
     self.backgroundColor = enabled ? [UIColor colorNamed:@"Purple Color"] : [UIColor colorNamed:@"Line Color"];
+}
+
+@end
+
+@interface FloatLabeledTextField () <UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UILabel *floatingLabel;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *floatingTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textTopConstraint;
+
+@end
+
+@implementation FloatLabeledTextField
+
+- (NSString *)text
+{
+    return self.textField.text;
+}
+
+- (void)setText:(NSString *)text
+{
+    self.textField.text = text;
+    text.length > 0 ? [self active] : [self inactive];
+}
+
+- (NSString *)placeholder
+{
+    return self.textField.placeholder;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder
+{
+    self.floatingLabel.text = placeholder;
+    self.textField.placeholder = placeholder;
+}
+
+- (NSInteger)keyboardType
+{
+    return self.textField.keyboardType;
+}
+
+- (void)setKeyboardType:(NSInteger)keyboardType
+{
+    self.textField.keyboardType = keyboardType;
+}
+
+- (void)active
+{
+    if (self.floatingLabel.alpha == 1) {
+        return;
+    }
+
+    self.floatingTopConstraint.constant = 30;
+    self.textTopConstraint.constant = 9;
+    self.floatingLabel.alpha = 0;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.floatingTopConstraint.constant = 9;
+        self.textTopConstraint.constant = 30;
+        [self layoutIfNeeded];
+        self.floatingLabel.alpha = 1;
+    }];
+}
+
+- (void)inactive
+{
+    if (self.floatingLabel.alpha == 0) {
+        return;
+    }
+
+    self.floatingTopConstraint.constant = 9;
+    self.textTopConstraint.constant = 30;
+    self.floatingLabel.alpha = 1;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.floatingTopConstraint.constant = 30;
+        self.textTopConstraint.constant = 9;
+        [self layoutIfNeeded];
+        self.floatingLabel.alpha = 0;
+    }];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    text.length > 0 ? [self active] : [self inactive];
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

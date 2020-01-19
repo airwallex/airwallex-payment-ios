@@ -14,7 +14,7 @@
 #import "NSNumber+Utils.h"
 #import "Widgets.h"
 
-@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, PaymentListViewControllerDelegate>
+@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditShippingViewControllerDelegate, PaymentListViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -58,6 +58,7 @@
     if ([segue.identifier isEqualToString:@"selectShipping"]) {
         EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
         controller.billing = sender;
+        controller.delegate = self;
     } else if ([segue.identifier isEqualToString:@"selectPayment"]) {
         PaymentListViewController *controller = (PaymentListViewController *)segue.destinationViewController;
         controller.delegate = self;
@@ -111,14 +112,20 @@
     }
 }
 
-- (IBAction)payPressed:(id)sender
+- (void)editShippingViewController:(EditShippingViewController *)controller didSelectBilling:(AWBilling *)billing
 {
+    self.billing = billing;
+    [self reloadData];
 }
 
 - (void)paymentListViewController:(PaymentListViewController *)controller didSelectMethod:(AWPaymentMethod *)paymentMethod
 {
     self.paymentMethod = paymentMethod;
     [self reloadData];
+}
+
+- (IBAction)payPressed:(id)sender
+{
 }
 
 @end

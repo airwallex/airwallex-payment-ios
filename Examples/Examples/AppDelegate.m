@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import <IQKeyboardManager/IQKeyboardManager.h>
 
 @interface AppDelegate ()
 
@@ -19,6 +20,7 @@
 {
     [SVProgressHUD setBackgroundColor:[UIColor colorNamed:@"Line Color"]];
     [SVProgressHUD setMaximumDismissTimeInterval:1];
+    [IQKeyboardManager sharedManager].enable = YES;
     return YES;
 }
 

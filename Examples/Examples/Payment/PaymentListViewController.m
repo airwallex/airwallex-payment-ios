@@ -120,7 +120,6 @@
     AWPaymentMethod *method = items[indexPath.row];
     self.paymentMethod = method;
     self.saveBarButtonItem.enabled = self.paymentMethod != nil;
-
 }
 
 @end
