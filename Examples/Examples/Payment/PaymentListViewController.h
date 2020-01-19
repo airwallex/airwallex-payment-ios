@@ -8,12 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@class AWPaymentMethod;
+@class AWPaymentMethod, PaymentListViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol PaymentListViewControllerDelegate <NSObject>
+
+- (void)paymentListViewController:(PaymentListViewController *)controller didSelectMethod:(AWPaymentMethod *)paymentMethod;
+
+@end
+
 @interface PaymentListViewController : UIViewController
 
+@property (nonatomic, weak) id <PaymentListViewControllerDelegate> delegate;
 @property (nonatomic, strong) AWPaymentMethod *paymentMethod;
 
 @end

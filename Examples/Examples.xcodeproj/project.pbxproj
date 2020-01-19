@@ -19,6 +19,7 @@
 		085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
 		085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
 		085BD40123CC64B9002E8F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
+		08775C8623D3F0A300AE09A7 /* PaymentMethodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08775C8523D3F0A300AE09A7 /* PaymentMethodCell.m */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		088F3E8723CEDF39005AE40F /* Widgets.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8623CEDF39005AE40F /* Widgets.m */; };
 		08EFDC5723D05F6B003EF928 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EFDC5623D05F6B003EF928 /* PaymentViewController.m */; };
@@ -48,6 +49,8 @@
 		085BD3FD23CC64B9002E8F27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		085BD3FF23CC64B9002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD40023CC64B9002E8F27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		08775C8423D3F0A300AE09A7 /* PaymentMethodCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentMethodCell.h; sourceTree = "<group>"; };
+		08775C8523D3F0A300AE09A7 /* PaymentMethodCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentMethodCell.m; sourceTree = "<group>"; };
 		088F3E8123CEB7FF005AE40F /* APIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
 		088F3E8223CEB7FF005AE40F /* APIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		088F3E8423CED74C005AE40F /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
@@ -81,14 +84,6 @@
 				082D308423CEECE400C9D587 /* TotalCell.m */,
 				082D308623CEEDC100C9D587 /* CartViewController.h */,
 				082D308723CEEDC100C9D587 /* CartViewController.m */,
-				0808136923D14789000133BF /* PaymentItemCell.h */,
-				0808136A23D14789000133BF /* PaymentItemCell.m */,
-				08EFDC5523D05F6B003EF928 /* PaymentViewController.h */,
-				08EFDC5623D05F6B003EF928 /* PaymentViewController.m */,
-				0808136C23D14CA4000133BF /* EditShippingViewController.h */,
-				0808136D23D14CA4000133BF /* EditShippingViewController.m */,
-				0808136F23D14CB5000133BF /* PaymentListViewController.h */,
-				0808137023D14CB5000133BF /* PaymentListViewController.m */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -118,6 +113,8 @@
 				088F3E8023CEB7E6005AE40F /* API */,
 				085BD41923CD8702002E8F27 /* Widgets */,
 				085BD41523CD5AA0002E8F27 /* Categories */,
+				08775C8223D3F06300AE09A7 /* Payment */,
+				08775C8323D3F08700AE09A7 /* Shipping */,
 				082D307F23CEEC0700C9D587 /* Cart */,
 				085BD3EE23CC64B6002E8F27 /* AppDelegate.h */,
 				085BD3EF23CC64B6002E8F27 /* AppDelegate.m */,
@@ -146,6 +143,30 @@
 				088F3E8623CEDF39005AE40F /* Widgets.m */,
 			);
 			path = Widgets;
+			sourceTree = "<group>";
+		};
+		08775C8223D3F06300AE09A7 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				0808136923D14789000133BF /* PaymentItemCell.h */,
+				0808136A23D14789000133BF /* PaymentItemCell.m */,
+				08EFDC5523D05F6B003EF928 /* PaymentViewController.h */,
+				08EFDC5623D05F6B003EF928 /* PaymentViewController.m */,
+				08775C8423D3F0A300AE09A7 /* PaymentMethodCell.h */,
+				08775C8523D3F0A300AE09A7 /* PaymentMethodCell.m */,
+				0808136F23D14CB5000133BF /* PaymentListViewController.h */,
+				0808137023D14CB5000133BF /* PaymentListViewController.m */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		08775C8323D3F08700AE09A7 /* Shipping */ = {
+			isa = PBXGroup;
+			children = (
+				0808136C23D14CA4000133BF /* EditShippingViewController.h */,
+				0808136D23D14CA4000133BF /* EditShippingViewController.m */,
+			);
+			path = Shipping;
 			sourceTree = "<group>";
 		};
 		088F3E8023CEB7E6005AE40F /* API */ = {
@@ -290,6 +311,7 @@
 			files = (
 				08EFDC5723D05F6B003EF928 /* PaymentViewController.m in Sources */,
 				082D308823CEEDC100C9D587 /* CartViewController.m in Sources */,
+				08775C8623D3F0A300AE09A7 /* PaymentMethodCell.m in Sources */,
 				088F3E8723CEDF39005AE40F /* Widgets.m in Sources */,
 				0808137123D14CB5000133BF /* PaymentListViewController.m in Sources */,
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,

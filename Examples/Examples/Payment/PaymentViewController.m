@@ -14,12 +14,13 @@
 #import "NSNumber+Utils.h"
 #import "Widgets.h"
 
-@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, PaymentListViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet Button *payButton;
 @property (strong, nonatomic) NSArray *items;
+@property (strong, nonatomic) AWBilling *billing;
 @property (strong, nonatomic) AWPaymentMethod *paymentMethod;
 
 @end
@@ -32,21 +33,23 @@
     self.totalLabel.text = self.total.string;
     self.items = @[@{@"title": @"Shipping", @"placeholder": @"Enter shipping information"},
                    @{@"title": @"Payment", @"placeholder": @"Select payment method"}];
-    self.paymentMethod = [AWPaymentMethod new];
-    self.paymentMethod.type = @"card";
-    AWCard *card = [AWCard new];
-    card.number = @"4012000300001003";
-    card.name = @"";
-    card.expYear = @"23";
-    card.expMonth = @"01";
-    card.cvc = @"003";
-    self.paymentMethod.card = card;
+
+//    self.paymentMethod = [AWPaymentMethod new];
+//    self.paymentMethod.type = @"card";
+//    AWCard *card = [AWCard new];
+//    card.number = @"4012000300001003";
+//    card.name = @"";
+//    card.expYear = @"23";
+//    card.expMonth = @"01";
+//    card.cvc = @"003";
+//    self.paymentMethod.card = card;
+
     [self reloadData];
 }
 
 - (void)reloadData
 {
-    self.payButton.enabled = self.paymentMethod.billing && self.paymentMethod.type;
+    self.payButton.enabled = self.billing && self.paymentMethod.type;
     [self.tableView reloadData];
 }
 
@@ -57,6 +60,7 @@
         controller.billing = sender;
     } else if ([segue.identifier isEqualToString:@"selectPayment"]) {
         PaymentListViewController *controller = (PaymentListViewController *)segue.destinationViewController;
+        controller.delegate = self;
         controller.paymentMethod = sender;
     }
 }
@@ -73,7 +77,7 @@
     NSString *title = item[@"title"];
     cell.titleLabel.text = title;
     if ([title isEqualToString:@"Shipping"]) {
-        AWBilling *billing = self.paymentMethod.billing;
+        AWBilling *billing = self.billing;
         if (billing) {
             cell.selectionLabel.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@ %@", billing.firstName, billing.lastName, billing.address.street, billing.address.city, billing.address.state, billing.address.countryCode];
         } else {
@@ -101,7 +105,7 @@
 {
     NSDictionary *item = self.items[indexPath.row];
     if ([item[@"title"] isEqualToString:@"Shipping"]) {
-        [self performSegueWithIdentifier:@"selectShipping" sender:self.paymentMethod.billing];
+        [self performSegueWithIdentifier:@"selectShipping" sender:self.billing];
     } else {
         [self performSegueWithIdentifier:@"selectPayment" sender:self.paymentMethod];
     }
@@ -109,6 +113,12 @@
 
 - (IBAction)payPressed:(id)sender
 {
+}
+
+- (void)paymentListViewController:(PaymentListViewController *)controller didSelectMethod:(AWPaymentMethod *)paymentMethod
+{
+    self.paymentMethod = paymentMethod;
+    [self reloadData];
 }
 
 @end
