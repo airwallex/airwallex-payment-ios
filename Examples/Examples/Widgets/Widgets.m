@@ -197,3 +197,68 @@
 }
 
 @end
+
+@interface FloatLabeledView ()
+
+@property (weak, nonatomic) IBOutlet UILabel *floatingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *textLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *floatingTopConstraint;
+
+@end
+
+@implementation FloatLabeledView
+
+- (NSString *)text
+{
+    return self.textLabel.text;
+}
+
+- (void)setText:(NSString *)text
+{
+    self.textLabel.text = text;
+    text.length > 0 ? [self active] : [self inactive];
+}
+
+- (NSString *)placeholder
+{
+    return self.floatingLabel.text;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder
+{
+    self.floatingLabel.text = placeholder;
+}
+
+- (void)active
+{
+    if (self.floatingTopConstraint.constant == 9) {
+        return;
+    }
+
+    self.floatingTopConstraint.constant = 20;
+    self.textLabel.alpha = 0;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.floatingLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
+        self.floatingTopConstraint.constant = 9;
+        self.textLabel.alpha = 1;
+        [self layoutIfNeeded];
+    }];
+}
+
+- (void)inactive
+{
+    if (self.floatingTopConstraint.constant == 20) {
+        return;
+    }
+
+    self.floatingTopConstraint.constant = 9;
+    self.textLabel.alpha = 1;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.floatingLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightMedium];
+        self.floatingTopConstraint.constant = 20;
+        self.textLabel.alpha = 0;
+        [self layoutIfNeeded];
+    }];
+}
+
+@end

@@ -10,8 +10,9 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "AWBilling+Utils.h"
 #import "Widgets.h"
+#import "CountryListViewController.h"
 
-@interface EditShippingViewController ()
+@interface EditShippingViewController () <CountryListViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -22,15 +23,26 @@
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *cityField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *streetField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *zipcodeField;
+@property (weak, nonatomic) IBOutlet FloatLabeledView *countryView;
+
+@property (strong, nonatomic) Country *country;
 
 @end
 
 @implementation EditShippingViewController
 
-- (void)viewDidLoad
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [super viewDidLoad];
-    self.saveBarButtonItem.enabled = self.billing.isValid;
+    if ([segue.identifier isEqualToString:@"selectCountries"]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        CountryListViewController *controller = (CountryListViewController *)navigationController.topViewController;
+        controller.country = sender;
+        controller.delegate = self;
+    }
+}
+
+- (IBAction)unwindToViewController:(UIStoryboardSegue *)unwindSegue
+{
 }
 
 - (IBAction)savePressed:(id)sender
@@ -40,6 +52,7 @@
     billing.firstName = self.firstNameField.text;
     billing.phoneNumber = self.phoneNumberField.text;
     AWAddress *address = [AWAddress new];
+    address.countryCode = self.country.countryCode;
     address.state = self.stateField.text;
     address.city = self.cityField.text;
     address.street = self.streetField.text;
@@ -56,6 +69,17 @@
         [self.delegate editShippingViewController:self didSelectBilling:billing];
     }
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)selectCountries:(id)sender
+{
+    [self performSegueWithIdentifier:@"selectCountries" sender:self.country];
+}
+
+- (void)countryListViewController:(CountryListViewController *)controller didSelectCountry:(nonnull Country *)country
+{
+    self.country = country;
+    self.countryView.text = country.countryName;
 }
 
 @end

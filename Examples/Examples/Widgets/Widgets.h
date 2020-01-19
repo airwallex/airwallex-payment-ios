@@ -38,4 +38,11 @@ IB_DESIGNABLE
 
 @end
 
+IB_DESIGNABLE
+@interface FloatLabeledView : NibView
+
+@property (nonatomic, strong) IBInspectable NSString *text, *placeholder;
+
+@end
+
 NS_ASSUME_NONNULL_END

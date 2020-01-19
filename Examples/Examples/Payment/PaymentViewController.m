@@ -81,8 +81,10 @@
         AWBilling *billing = self.billing;
         if (billing) {
             cell.selectionLabel.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@ %@", billing.firstName, billing.lastName, billing.address.street, billing.address.city, billing.address.state, billing.address.countryCode];
+            cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
         } else {
             cell.selectionLabel.text = item[@"placeholder"];
+            cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
         }
     } else {
         NSString *type = self.paymentMethod.type;
