@@ -10,4 +10,10 @@
 
 @implementation PaymentMethodCell
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+    self.tickView.hidden = !selected;
+}
+
 @end

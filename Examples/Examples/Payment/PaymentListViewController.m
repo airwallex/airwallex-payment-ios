@@ -101,7 +101,7 @@
         cell.logoImageView.image = [UIImage imageNamed:@"wc"];
         cell.titleLabel.text = @"WeChat pay";
         if ([method.type isEqualToString:self.paymentMethod.type]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
     }
 
@@ -115,8 +115,6 @@
         return;
     }
 
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     AWPaymentMethod *method = items[indexPath.row];
     self.paymentMethod = method;
     self.saveBarButtonItem.enabled = self.paymentMethod != nil;

@@ -51,7 +51,10 @@
     Country *country = self.countries[indexPath.row];
     cell.textLabel.text = country.countryName;
     if ([self.country.countryName isEqualToString:country.countryName]) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tick"]];
+        cell.accessoryView = imageView;
+    } else {
+        cell.accessoryView = nil;
     }
     return cell;
 }
