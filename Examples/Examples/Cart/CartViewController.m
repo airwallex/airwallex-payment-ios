@@ -109,7 +109,6 @@
             AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
             configuration.baseURL = @"https://staging-pci-api.airwallex.com";
             configuration.intentId = result[@"id"];
-            configuration.requestId = result[@"request_id"];
             configuration.token = token;
 
             [SVProgressHUD dismiss];

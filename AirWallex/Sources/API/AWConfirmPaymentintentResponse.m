@@ -10,7 +10,7 @@
 
 @interface AWConfirmPaymentintentResponse ()
 
-@property (nonatomic, copy, readwrite) NSString *clientSecret;
+@property (nonatomic, copy, readwrite) NSString *status;
 
 @end
 
@@ -21,7 +21,7 @@
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWConfirmPaymentintentResponse *response = [[AWConfirmPaymentintentResponse alloc] init];
-    response.clientSecret = [responseObject valueForKey:@"client_secret"];
+    response.status = [responseObject valueForKey:@"status"];
     return response;
 }
 

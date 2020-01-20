@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWConfirmPaymentintentResponse : NSObject <AWResponseProtocol>
 
-@property (nonatomic, readonly) NSString *clientSecret;
+@property (nonatomic, readonly) NSString *status;
 
 @end
 
