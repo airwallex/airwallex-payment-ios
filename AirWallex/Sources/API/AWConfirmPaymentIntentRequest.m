@@ -20,16 +20,13 @@
 
 - (AWHTTPMethod)method
 {
-    return AWHTTPMethodGET;
+    return AWHTTPMethodPOST;
 }
 
 - (NSDictionary *)parameters
 {
-    return @{@"customer_id": self.customerId,
-             @"payment_method": self.paymentMethod.toJSONDictionary,
-             @"payment_method_option": self.paymentMethodOptions.toJSONDictionary,
-             @"request_id": self.requestId,
-             @"save_payment_method": self.savePaymentMethod ? @"true" : @"false"
+    return @{@"payment_method": self.paymentMethod.toJSONDictionary,
+             @"request_id": self.requestId
     };
 }
 

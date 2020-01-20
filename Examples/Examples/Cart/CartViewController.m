@@ -7,6 +7,7 @@
 //
 
 #import "CartViewController.h"
+#import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "Widgets.h"
 #import "ProductCell.h"
@@ -104,6 +105,12 @@
                 [SVProgressHUD showErrorWithStatus:error.localizedDescription];
                 return;
             }
+
+            AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
+            configuration.baseURL = @"https://staging-pci-api.airwallex.com";
+            configuration.intentId = result[@"id"];
+            configuration.requestId = result[@"request_id"];
+            configuration.token = token;
 
             [SVProgressHUD dismiss];
 

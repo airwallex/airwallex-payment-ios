@@ -10,12 +10,15 @@
 #import "AWBlocks.h"
 
 @class AWPaymentConfiguration;
+@protocol AWRequestProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AWAPIClient : NSObject
 
 @property (nonatomic, copy) AWPaymentConfiguration *configuration;
+
+- (void)send:(id <AWRequestProtocol>)request handler:(AWRequestHandler)handler;
 
 @end
 

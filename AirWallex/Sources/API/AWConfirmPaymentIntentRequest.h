@@ -17,11 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWConfirmPaymentIntentRequest : NSObject <AWRequestProtocol>
 
 @property (nonatomic, copy) NSString *intentId;
-@property (nonatomic, copy) NSString *customerId;
 @property (nonatomic, copy) NSString *requestId;
 @property (nonatomic, strong) AWPaymentMethod *paymentMethod;
-@property (nonatomic, strong) AWPaymentMethodOptions *paymentMethodOptions;
-@property (nonatomic) BOOL savePaymentMethod;
 
 @end
 

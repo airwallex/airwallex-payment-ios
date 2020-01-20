@@ -25,10 +25,8 @@
     AWPaymentConfiguration *copy = [self.class new];
     copy.baseURL = self.baseURL;
     copy.intentId = self.intentId;
-    copy.clientSecret = self.clientSecret;
-    copy.customerId = self.customerId;
-    copy.region = self.region;
-    copy.currency = self.currency;
+    copy.requestId = self.requestId;
+    copy.token = self.token;
     return copy;
 }
 

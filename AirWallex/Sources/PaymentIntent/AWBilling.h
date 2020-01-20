@@ -15,11 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWBilling : NSObject <AWJSONifiable>
 
 @property (nonatomic, strong) AWAddress *address;
-@property (nonatomic, copy) NSString *dateOfBirth;
-@property (nonatomic, copy) NSString *email;
+@property (nonatomic, copy, nullable) NSString *dateOfBirth;
+@property (nonatomic, copy, nullable) NSString *email;
 @property (nonatomic, copy) NSString *firstName;
 @property (nonatomic, copy) NSString *lastName;
-@property (nonatomic, copy) NSString *phoneNumber;
+@property (nonatomic, copy, nullable) NSString *phoneNumber;
 
 @end
 

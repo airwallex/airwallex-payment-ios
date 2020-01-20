@@ -128,6 +128,16 @@
 
 - (IBAction)payPressed:(id)sender
 {
+    AWAPIClient *client = [AWAPIClient new];
+    AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
+    request.intentId = client.configuration.intentId;
+    request.requestId = client.configuration.requestId;
+    AWPaymentMethod *paymentMethod = self.paymentMethod;
+    paymentMethod.billing = self.billing;
+    request.paymentMethod = paymentMethod;
+    [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        
+    }];
 }
 
 @end

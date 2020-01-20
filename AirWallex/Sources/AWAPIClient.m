@@ -118,6 +118,10 @@
     for (NSString *key in headers) {
         [urlRequest setValue:headers[key] forHTTPHeaderField:key];
     }
+    if (self.configuration.token) {
+        [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", self.configuration.token] forHTTPHeaderField:@"Authorization"];
+    }
+
     if (request.parameters && [NSJSONSerialization isValidJSONObject:request.parameters] && request.method == AWHTTPMethodPOST) {
         urlRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:request.parameters options:NSJSONWritingPrettyPrinted error:nil];
     }
