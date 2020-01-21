@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWBilling (Utils)
 
-- (BOOL)isValid;
 - (nullable NSString *)validate;
 
 @end

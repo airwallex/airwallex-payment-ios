@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *lastNameField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *firstNameField;
+@property (weak, nonatomic) IBOutlet FloatLabeledTextField *emailField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *stateField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *cityField;
@@ -50,6 +51,7 @@
     AWBilling *billing = [AWBilling new];
     billing.lastName = self.lastNameField.text;
     billing.firstName = self.firstNameField.text;
+    billing.email = self.emailField.text;
     billing.phoneNumber = self.phoneNumberField.text;
     AWAddress *address = [AWAddress new];
     address.countryCode = self.country.countryCode;

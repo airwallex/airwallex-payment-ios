@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -414,7 +415,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9Y-b4-PeV">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="726.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="799.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pkb-Xv-c2m">
                                                 <rect key="frame" x="16" y="16" width="382" height="38.5"/>
@@ -423,7 +424,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="OOQ-5G-coA">
-                                                <rect key="frame" x="16" y="70.5" width="382" height="640"/>
+                                                <rect key="frame" x="16" y="70.5" width="382" height="713"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTV-yf-Fex">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="21.5"/>
@@ -453,8 +454,22 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="Charlie"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6NK-gy-W8J" customClass="FloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9MC-zi-0gK" customClass="FloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="180.5" width="382" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="ej3-xg-xtp"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Email"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="jim631@sina.com"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="keyboardType">
+                                                                <integer key="value" value="7"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6NK-gy-W8J" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="253.5" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="VYE-Dg-ntT"/>
@@ -467,13 +482,13 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zgb-dX-3eU">
-                                                        <rect key="frame" x="0.0" y="253.5" width="382" height="21.5"/>
+                                                        <rect key="frame" x="0.0" y="326.5" width="382" height="21.5"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mNZ-Y0-No9" customClass="FloatLabeledView">
-                                                        <rect key="frame" x="0.0" y="288" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="361" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <gestureRecognizers/>
                                                         <constraints>
@@ -487,7 +502,7 @@
                                                         </connections>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A0h-F3-nGm" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="361" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="434" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="tYE-be-ku1"/>
@@ -498,7 +513,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nh3-mU-v1J" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="434" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="507" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="F2n-Sb-bP5"/>
@@ -509,7 +524,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="699-9u-Gzf" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="507" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="580" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="U8z-lv-LSq"/>
@@ -520,7 +535,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fU6-wB-8HT" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="580" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="653" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="jG5-pg-h2Q"/>
@@ -578,6 +593,7 @@
                     <connections>
                         <outlet property="cityField" destination="nh3-mU-v1J" id="lzw-Iq-ht3"/>
                         <outlet property="countryView" destination="mNZ-Y0-No9" id="j0U-uX-3ah"/>
+                        <outlet property="emailField" destination="9MC-zi-0gK" id="cDu-Rz-gHZ"/>
                         <outlet property="firstNameField" destination="eRL-ff-vWU" id="AxZ-Jn-J58"/>
                         <outlet property="lastNameField" destination="ocx-SP-87u" id="VN6-Ax-4YA"/>
                         <outlet property="phoneNumberField" destination="6NK-gy-W8J" id="1gb-bR-db6"/>

@@ -141,7 +141,6 @@
     card.expMonth = @"12";
     card.cvc = @"123";
     paymentMethod.card = card;
-    self.billing.email = @"jim631@sina.com";
     paymentMethod.billing = self.billing;
 
     // Using payment method selected
