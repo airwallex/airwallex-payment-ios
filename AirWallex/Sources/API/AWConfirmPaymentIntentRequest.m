@@ -6,6 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "AWConfirmPaymentIntentRequest.h"
 #import "AWPaymentMethod.h"
 #import "AWPaymentMethodOptions.h"
