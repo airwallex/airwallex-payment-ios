@@ -130,22 +130,22 @@
 
 - (IBAction)payPressed:(id)sender
 {
-    // Using payment method
-    AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
-    paymentMethod.type = @"card";
-
-    AWCard *card = [AWCard new];
-    card.number = @"4012000300001003";
-    card.name = @"Adam";
-    card.expYear = @"2020";
-    card.expMonth = @"12";
-    card.cvc = @"123";
-    paymentMethod.card = card;
-    paymentMethod.billing = self.billing;
+    // Using payment method with card
+//    AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
+//    paymentMethod.type = @"card";
+//
+//    AWCard *card = [AWCard new];
+//    card.number = @"4012000300001003";
+//    card.name = @"Adam";
+//    card.expYear = @"2020";
+//    card.expMonth = @"12";
+//    card.cvc = @"123";
+//    paymentMethod.card = card;
+//    paymentMethod.billing = self.billing;
 
     // Using payment method selected
-//    AWPaymentMethod *paymentMethod = self.paymentMethod;
-//    paymentMethod.billing = self.billing;
+    AWPaymentMethod *paymentMethod = self.paymentMethod;
+    paymentMethod.billing = self.billing;
 
     AWAPIClient *client = [AWAPIClient new];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
@@ -160,25 +160,57 @@
             return;
         }
 
-        PayReq *request = [[PayReq alloc] init];
-        request.partnerId = @"334777613";
-        request.prepayId = @"wx20160642629447d58cef99b51132242000";
-        request.package = @"Sign=WXPay";
-        request.nonceStr = @"t2XhtFHvMBJ5oSDjhe3dVuREHbQrDncR";
-        request.timeStamp = 1579507602;
-        request.sign= @"7B8FD19DC494D4CDA5EC55241048D2BB594945E6558449E9A2636B9A71ED0CD1";
+        AWConfirmPaymentintentResponse *result = (AWConfirmPaymentintentResponse *)response;
+        if (!result.nextAction) {
+            [SVProgressHUD showSuccessWithStatus:@"Waiting payment completion"];
+            return;
+        }
 
-        // WeChatSDK 1.8.2
-        [WXApi sendReq:request];
-
-        // WeChatSDK 1.8.6.1
-//        [WXApi sendReq:request completion:^(BOOL success) {
-//            if (!success) {
-//                [SVProgressHUD showErrorWithStatus:@"Failed to call WeChat Pay"];
-//                return;
-//            }
-//        }];
+        if ([result.nextAction.type isEqualToString:@"call_sdk"]) {
+            [self payWithWeChatSDK:result.nextAction.wechatResponse];
+        }
     }];
+}
+
+- (void)payWithWeChatSDK:(AWWechatPaySDKResponse *)response
+{
+    NSURL *url = [NSURL URLWithString:response.prepayId];
+    if (url) {
+        __weak typeof(self) weakSelf = self;
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                return;
+            }
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                __strong typeof(self) strongSelf = weakSelf;
+                [strongSelf.navigationController popToRootViewControllerAnimated:YES];
+                [SVProgressHUD showSuccessWithStatus:@"Pay successfully"];
+            });
+        }] resume];
+        return;
+    }
+
+    PayReq *request = [[PayReq alloc] init];
+    request.partnerId = response.partnerId;
+    request.prepayId = response.prepayId;
+    request.package = response.package;
+    request.nonceStr = response.nonceStr;
+    request.timeStamp = response.timeStamp.doubleValue;
+    request.sign = response.sign;
+
+    // WeChatSDK 1.8.2
+    [WXApi sendReq:request];
+
+    //WeChatSDK 1.8.6.1
+//    [WXApi sendReq:request completion:^(BOOL success) {
+//        if (!success) {
+//            [SVProgressHUD showErrorWithStatus:@"Failed to call WeChat Pay"];
+//            return;
+//        }
+//    }];
 }
 
 @end
