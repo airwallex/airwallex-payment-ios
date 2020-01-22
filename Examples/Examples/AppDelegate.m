@@ -20,7 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [SVProgressHUD setBackgroundColor:[UIColor colorNamed:@"Line Color"]];
-    [SVProgressHUD setMaximumDismissTimeInterval:1];
+    [SVProgressHUD setMaximumDismissTimeInterval:2];
     [IQKeyboardManager sharedManager].enable = YES;
     
     [WXApi startLogByLevel:WXLogLevelNormal logBlock:^(NSString * _Nonnull log) {
