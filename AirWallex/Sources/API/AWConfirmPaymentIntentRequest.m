@@ -24,7 +24,7 @@
     return AWHTTPMethodPOST;
 }
 
-- (NSDictionary *)parameters
+- (nullable NSDictionary *)parameters
 {
     return @{@"payment_method": self.paymentMethod.toJSONDictionary,
              @"request_id": self.requestId,
@@ -43,6 +43,25 @@
 - (Class)responseClass
 {
     return AWConfirmPaymentintentResponse.class;
+}
+
+@end
+
+@implementation AWGetPaymentIntentRequest
+
+- (NSString *)path
+{
+    return [NSString stringWithFormat:@"/api/v1/pa/payment_intents/%@", self.intentId];
+}
+
+- (AWHTTPMethod)method
+{
+    return AWHTTPMethodGET;
+}
+
+- (Class)responseClass
+{
+    return AWGetPaymentIntentResponse.class;
 }
 
 @end

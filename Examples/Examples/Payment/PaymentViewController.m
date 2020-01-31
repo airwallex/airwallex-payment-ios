@@ -172,6 +172,16 @@
     }];
 }
 
+- (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
+{
+    AWGetPaymentIntentRequest *request = [[AWGetPaymentIntentRequest alloc] init];
+    request.intentId = [AWPaymentConfiguration sharedConfiguration].intentId;
+    [[AWAPIClient new] send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        AWGetPaymentIntentResponse *result = (AWGetPaymentIntentResponse *)response;
+        completionHandler([result.status isEqualToString:@"SUCCEEDED"]);
+    }];
+}
+
 - (void)payWithWeChatSDK:(AWWechatPaySDKResponse *)response
 {
     NSURL *url = [NSURL URLWithString:response.prepayId];
@@ -184,11 +194,11 @@
                 return;
             }
 
-            dispatch_async(dispatch_get_main_queue(), ^{
-                __strong typeof(self) strongSelf = weakSelf;
+            __strong typeof(self) strongSelf = weakSelf;
+            [strongSelf checkPaymentIntentStatusWithCompletion:^(BOOL success) {
                 [strongSelf.navigationController popToRootViewControllerAnimated:YES];
-                [SVProgressHUD showSuccessWithStatus:@"Pay successfully"];
-            });
+                [SVProgressHUD showSuccessWithStatus:success ? @"Pay successfully": @"Failed to pay"];
+            }];
         }] resume];
         return;
     }

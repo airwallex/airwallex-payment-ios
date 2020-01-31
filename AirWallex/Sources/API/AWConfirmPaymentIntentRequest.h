@@ -22,4 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface AWGetPaymentIntentRequest : NSObject <AWRequestProtocol>
+
+@property (nonatomic, copy) NSString *intentId;
+
+@end
+
 NS_ASSUME_NONNULL_END

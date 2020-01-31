@@ -79,3 +79,45 @@
 }
 
 @end
+
+@interface AWGetPaymentIntentResponse ()
+
+@property (nonatomic, copy, readwrite) NSString *Id;
+@property (nonatomic, copy, readwrite) NSString *requestId;
+@property (nonatomic, copy, readwrite) NSNumber *amount;
+@property (nonatomic, copy, readwrite) NSString *currency;
+@property (nonatomic, copy, readwrite) NSString *merchantOrderId;
+@property (nonatomic, copy, readwrite) NSObject *order;
+@property (nonatomic, copy, readwrite) NSString *descriptor;
+@property (nonatomic, copy, readwrite) NSString *status;
+@property (nonatomic, copy, readwrite) NSNumber *capturedAmount;
+@property (nonatomic, copy, readwrite) NSObject *latestPaymentAttempt;
+@property (nonatomic, copy, readwrite) NSString *createdAt;
+@property (nonatomic, copy, readwrite) NSString *updatedAt;
+@property (nonatomic, copy, readwrite) NSArray *availablePaymentMethodTypes;
+
+@end
+
+@implementation AWGetPaymentIntentResponse
+
++ (id <AWResponseProtocol>)parse:(NSData *)data
+{
+    NSError *error = nil;
+    id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    AWGetPaymentIntentResponse *response = [[AWGetPaymentIntentResponse alloc] init];
+    response.requestId = json[@"request_id"];
+    response.amount = json[@"amount"];
+    response.currency = json[@"currency"];
+    response.merchantOrderId = json[@"merchant_order_id"];
+    response.order = json[@"order"];
+    response.descriptor = json[@"descriptor"];
+    response.status = json[@"status"];
+    response.capturedAmount = json[@"captured_amount"];
+    response.latestPaymentAttempt = json[@"latest_payment_attempt"];
+    response.createdAt = json[@"created_at"];
+    response.updatedAt = json[@"updated_at"];
+    response.availablePaymentMethodTypes = json[@"available_payment_method_types"];
+    return response;
+}
+
+@end
