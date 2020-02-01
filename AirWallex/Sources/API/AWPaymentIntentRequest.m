@@ -1,5 +1,5 @@
 //
-//  AWConfirmPaymentIntentRequest.m
+//  AWPaymentIntentRequest.m
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/16.
@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AWConfirmPaymentIntentRequest.h"
+#import "AWPaymentIntentRequest.h"
 #import "AWPaymentMethod.h"
 #import "AWPaymentMethodOptions.h"
-#import "AWConfirmPaymentintentResponse.h"
+#import "AWPaymentIntentResponse.h"
 
 @implementation AWConfirmPaymentIntentRequest
 
@@ -42,7 +42,7 @@
 
 - (Class)responseClass
 {
-    return AWConfirmPaymentintentResponse.class;
+    return AWConfirmPaymentIntentResponse.class;
 }
 
 @end

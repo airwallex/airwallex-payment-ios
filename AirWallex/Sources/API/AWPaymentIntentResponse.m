@@ -1,27 +1,27 @@
 //
-//  AWConfirmPaymentintentResponse.m
+//  AWPaymentintentResponse.m
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/16.
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "AWConfirmPaymentintentResponse.h"
+#import "AWPaymentIntentResponse.h"
 
-@interface AWConfirmPaymentintentResponse ()
+@interface AWConfirmPaymentIntentResponse ()
 
 @property (nonatomic, copy, readwrite) NSString *status;
 @property (nonatomic, strong, readwrite) AWConfirmPaymentNextAction *nextAction;
 
 @end
 
-@implementation AWConfirmPaymentintentResponse
+@implementation AWConfirmPaymentIntentResponse
 
 + (id <AWResponseProtocol>)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    AWConfirmPaymentintentResponse *response = [[AWConfirmPaymentintentResponse alloc] init];
+    AWConfirmPaymentIntentResponse *response = [[AWConfirmPaymentIntentResponse alloc] init];
     response.status = [responseObject valueForKey:@"status"];
     NSDictionary *nextAction = [responseObject valueForKey:@"next_action"];
     if (nextAction && [nextAction isKindOfClass:[NSDictionary class]]) {

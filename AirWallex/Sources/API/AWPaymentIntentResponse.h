@@ -1,5 +1,5 @@
 //
-//  AWConfirmPaymentintentResponse.h
+//  AWPaymentintentResponse.h
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/16.
@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class AWConfirmPaymentNextAction;
 
-@interface AWConfirmPaymentintentResponse : NSObject <AWResponseProtocol>
+@interface AWConfirmPaymentIntentResponse : NSObject <AWResponseProtocol>
 
 @property (nonatomic, readonly) NSString *status;
 @property (nonatomic, readonly) AWConfirmPaymentNextAction *nextAction;

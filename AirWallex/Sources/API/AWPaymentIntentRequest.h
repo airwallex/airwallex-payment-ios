@@ -1,5 +1,5 @@
 //
-//  AWConfirmPaymentIntentRequest.h
+//  AWPaymentIntentRequest.h
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/16.

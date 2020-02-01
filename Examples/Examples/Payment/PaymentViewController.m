@@ -160,7 +160,7 @@
             return;
         }
 
-        AWConfirmPaymentintentResponse *result = (AWConfirmPaymentintentResponse *)response;
+        AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
         if (!result.nextAction) {
             [SVProgressHUD showSuccessWithStatus:@"Waiting payment completion"];
             return;
