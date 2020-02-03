@@ -93,7 +93,7 @@
         if (type) {
             if ([type isEqualToString:@"card"]) {
                 NSString *number = self.paymentMethod.card.number;
-                cell.selectionLabel.text = [NSString stringWithFormat:@"Master •••• %@", [number substringFromIndex:number.length - 4]];
+                cell.selectionLabel.text = [NSString stringWithFormat:@"Visa •••• %@", [number substringFromIndex:number.length - 4]];
             } else {
                 cell.selectionLabel.text = @"WeChat pay";
             }
@@ -130,20 +130,6 @@
 
 - (IBAction)payPressed:(id)sender
 {
-    // Using payment method with card
-//    AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
-//    paymentMethod.type = @"card";
-//
-//    AWCard *card = [AWCard new];
-//    card.number = @"4012000300001003";
-//    card.name = @"Adam";
-//    card.expYear = @"2020";
-//    card.expMonth = @"12";
-//    card.cvc = @"123";
-//    paymentMethod.card = card;
-//    paymentMethod.billing = self.billing;
-
-    // Using payment method selected
     AWPaymentMethod *paymentMethod = self.paymentMethod;
     paymentMethod.billing = self.billing;
 
@@ -154,6 +140,7 @@
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];
+    __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
@@ -163,6 +150,8 @@
         AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
         if (!result.nextAction) {
             [SVProgressHUD showSuccessWithStatus:@"Waiting payment completion"];
+            __strong typeof(self) strongSelf = weakSelf;
+            [strongSelf.navigationController popToRootViewControllerAnimated:YES];
             return;
         }
 

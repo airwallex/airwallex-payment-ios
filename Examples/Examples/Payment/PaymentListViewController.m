@@ -9,11 +9,13 @@
 #import "PaymentListViewController.h"
 #import <Airwallex/Airwallex.h>
 #import "PaymentMethodCell.h"
+#import "CardViewController.h"
 
-@interface PaymentListViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface PaymentListViewController () <UITableViewDataSource, UITableViewDelegate, CardViewControllerDelegate>
 
-@property (nonatomic, strong) NSArray *paymentMethods;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
+@property (nonatomic, strong) NSArray *paymentMethods;
 
 @end
 
@@ -22,14 +24,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.paymentMethods = @[@[self.weChatPay], @[]];
+    self.saveBarButtonItem.enabled = self.paymentMethod != nil;
+}
+
+- (AWPaymentMethod *)weChatPay
+{
     AWPaymentMethod *weChatPay = [AWPaymentMethod new];
     weChatPay.type = @"wechatpay";
     AWWechatPay *pay = [AWWechatPay new];
     pay.flow = @"inapp";
     weChatPay.wechatpay = pay;
+    return weChatPay;
+}
 
-    self.paymentMethods = @[@[weChatPay], @[]];
-    self.saveBarButtonItem.enabled = self.paymentMethod != nil;
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"addCard"]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        CardViewController *controller = (CardViewController *)navigationController.topViewController;
+        controller.delegate = self;
+    }
 }
 
 - (IBAction)savePressed:(id)sender
@@ -38,11 +53,6 @@
         [self.delegate paymentListViewController:self didSelectMethod:self.paymentMethod];
     }
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)addNewCard:(id)sender
-{
-    NSLog(@"Add new card");
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -103,6 +113,14 @@
         if ([method.type isEqualToString:self.paymentMethod.type]) {
             [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
+    } else {
+        cell.logoImageView.image = [UIImage imageNamed:@"visa"];
+        NSInteger length = method.card.number.length;
+        NSRange range = NSMakeRange(length - 4, 4);
+        cell.titleLabel.text = [NSString stringWithFormat:@"Visa •••• %@", [method.card.number substringWithRange:range]];
+        if ([method.type isEqualToString:self.paymentMethod.type] && [method.card.number isEqualToString:self.paymentMethod.card.number]) {
+            [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }
     }
 
     return cell;
@@ -118,6 +136,16 @@
     AWPaymentMethod *method = items[indexPath.row];
     self.paymentMethod = method;
     self.saveBarButtonItem.enabled = self.paymentMethod != nil;
+}
+
+- (void)cardViewController:(CardViewController *)controller didSelectCard:(AWCard *)card
+{
+    AWPaymentMethod *method = [AWPaymentMethod new];
+    method.type = @"card";
+    method.card = card;
+
+    self.paymentMethods = @[@[self.weChatPay], @[method]];
+    [self.tableView reloadData];
 }
 
 @end
