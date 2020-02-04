@@ -26,18 +26,39 @@
 
 - (nullable NSDictionary *)parameters
 {
-    return @{@"payment_method": self.paymentMethod.toJSONDictionary,
-             @"request_id": self.requestId,
-             @"device": @{@"browser_info": @"Chrome/76.0.3809.100",
-                          @"cookies_accepted": @"true",
-                          @"device_id": [UIDevice currentDevice].identifierForVendor.UUIDString,
-                          @"host_name": @"www.airwallex.com",
-                          @"http_browser_email": @"jim631@sina.com",
-                          @"http_browser_type": @"chrome",
-                          @"ip_address": @"123.90.0.1",
-                          @"ip_network_address": @"128.0.0.0"
-             }
-    };
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    [parameters addEntriesFromDictionary:@{@"request_id": self.requestId,
+                                           @"device": @{@"browser_info": @"Chrome/76.0.3809.100",
+                                                        @"cookies_accepted": @"true",
+                                                        @"device_id": [UIDevice currentDevice].identifierForVendor.UUIDString,
+                                                        @"host_name": @"www.airwallex.com",
+                                                        @"http_browser_email": @"jim631@sina.com",
+                                                        @"http_browser_type": @"chrome",
+                                                        @"ip_address": @"123.90.0.1",
+                                                        @"ip_network_address": @"128.0.0.0"
+                                           }
+    }];
+    if (self.paymentMethod.Id) {
+        [parameters addEntriesFromDictionary:@{
+            @"payment_method_reference": @{
+                    @"id": self.paymentMethod.Id,
+                    @"cvc": self.paymentMethod.card.cvc ?: @"123" // Fake cvc (UI required)
+            }
+        }];
+    } else {
+        [parameters addEntriesFromDictionary:@{@"payment_method": self.paymentMethod.toJSONDictionary}];
+    }
+    if (self.options) {
+        [parameters addEntriesFromDictionary:@{
+            @"payment_method_options": @{
+                    @"card": @{
+                            @"auto_capture": @(self.options.autoCapture),
+                            @"three_ds": @{@"option": @(self.options.threeDsOption), @"pa_res": self.options.threeDsPaRes}
+                    }
+            }
+        }];
+    }
+    return parameters;
 }
 
 - (Class)responseClass

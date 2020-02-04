@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "AWJSONifiable.h"
+#import "AWParseable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWAddress : NSObject <AWJSONifiable>
+@interface AWAddress : NSObject <AWJSONifiable, AWParseable>
 
 @property (nonatomic, copy) NSString *countryCode;
 @property (nonatomic, copy) NSString *city;

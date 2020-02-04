@@ -91,11 +91,10 @@
     } else {
         NSString *type = self.paymentMethod.type;
         if (type) {
-            if ([type isEqualToString:@"card"]) {
-                NSString *number = self.paymentMethod.card.number;
-                cell.selectionLabel.text = [NSString stringWithFormat:@"Visa •••• %@", [number substringFromIndex:number.length - 4]];
-            } else {
+            if ([type isEqualToString:@"wechatpay"]) {
                 cell.selectionLabel.text = @"WeChat pay";
+            } else {
+                cell.selectionLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
             }
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
         } else {
@@ -137,6 +136,11 @@
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
     request.intentId = client.configuration.intentId;
     request.requestId = NSUUID.UUID.UUIDString;
+    AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
+    options.autoCapture = YES;
+    options.threeDsOption = NO;
+    options.threeDsPaRes = @"";
+    request.options = options;
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];

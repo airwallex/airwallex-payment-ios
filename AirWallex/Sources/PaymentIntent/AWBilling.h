@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "AWJSONifiable.h"
+#import "AWParseable.h"
 #import "AWAddress.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWBilling : NSObject <AWJSONifiable>
+@interface AWBilling : NSObject <AWJSONifiable, AWParseable>
 
 @property (nonatomic, strong) AWAddress *address;
 @property (nonatomic, copy, nullable) NSString *dateOfBirth;

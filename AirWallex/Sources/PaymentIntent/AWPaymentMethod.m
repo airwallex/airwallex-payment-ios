@@ -26,4 +26,15 @@
     return items;
 }
 
++ (id)parseFromJsonDictionary:(NSDictionary *)json
+{
+    AWPaymentMethod *method = [AWPaymentMethod new];
+    method.Id = json[@"id"];
+    method.type = json[@"type"];
+    method.card = [AWCard parseFromJsonDictionary:json[@"card"]];
+    method.wechatpay = [AWWechatPay parseFromJsonDictionary:json[@"wechatpay"]];
+    method.billing = [AWBilling parseFromJsonDictionary:json[@"billing"]];
+    return method;
+}
+
 @end

@@ -15,4 +15,11 @@
     return @{@"flow": self.flow};
 }
 
++ (id)parseFromJsonDictionary:(NSDictionary *)json
+{
+    AWWechatPay *pay = [AWWechatPay new];
+    pay.flow = json[@"flow"];
+    return pay;
+}
+
 @end

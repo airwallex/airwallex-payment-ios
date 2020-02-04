@@ -135,9 +135,10 @@
                         id response = [request.responseClass performSelector:@selector(parse:) withObject:data];
                         handler(response, error);
                     } else {
-                        id response = [request.responseClass performSelector:@selector(parseError:) withObject:data];
-                        if (response) {
-                            handler(response, error);
+                        AWAPIErrorResponse *errorResponse = [request.responseClass performSelector:@selector(parseError:) withObject:data];
+                        if (errorResponse) {
+                            NSDictionary *errorJson = @{NSLocalizedDescriptionKey: errorResponse.message ?: @""};
+                            handler(nil, [errorJson convertToNSErrorWithCode:@(errorResponse.code.integerValue)]);
                         } else {
                             handler(nil, [@{NSLocalizedDescriptionKey: @"Couldn't parse response."} convertToNSErrorWithCode:@(result.statusCode)]);
                         }

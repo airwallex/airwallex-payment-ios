@@ -1,19 +1,16 @@
 PODS:
   - Airwallex (1.0)
   - IQKeyboardManager (6.5.4)
-  - JVFloatLabeledTextField (1.2.2)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - Airwallex (from `../`)
   - IQKeyboardManager (= 6.5.4)
-  - JVFloatLabeledTextField (= 1.2.2)
   - SVProgressHUD (= 2.2.5)
 
 SPEC REPOS:
   trunk:
     - IQKeyboardManager
-    - JVFloatLabeledTextField
     - SVProgressHUD
 
 EXTERNAL SOURCES:
@@ -23,9 +20,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Airwallex: 29ecf94d853d1119f12ff5c04737a2df707e555f
   IQKeyboardManager: 72b359cd7e777e3a984cedbe05f8da45320cbb63
-  JVFloatLabeledTextField: df48598472ee015701d509f43e59492a0d4ca208
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: c298b5b1c5b2e1cb682186688d43da3fb82094b2
+PODFILE CHECKSUM: b1e6170ef0651c926a2aa8f79aa9296462f9b35a
 
 COCOAPODS: 1.8.4
