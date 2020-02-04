@@ -8,6 +8,7 @@
 
 #import "PaymentListViewController.h"
 #import <Airwallex/Airwallex.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 #import "PaymentMethodCell.h"
 #import "CardViewController.h"
 
@@ -30,6 +31,7 @@
 
 - (void)reload
 {
+    [SVProgressHUD show];
     AWAPIClient *client = [AWAPIClient new];
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
     __weak typeof(self) weakSelf = self;
@@ -49,6 +51,7 @@
             strongSelf.paymentMethods = @[section0, section1];
             [strongSelf.tableView reloadData];
         }
+        [SVProgressHUD dismiss];
     }];
 }
 
