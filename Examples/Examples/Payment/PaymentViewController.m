@@ -91,11 +91,10 @@
     } else {
         NSString *type = self.paymentMethod.type;
         if (type) {
-            if ([type isEqualToString:@"card"]) {
-                NSString *number = self.paymentMethod.card.number;
-                cell.selectionLabel.text = [NSString stringWithFormat:@"Master •••• %@", [number substringFromIndex:number.length - 4]];
-            } else {
+            if ([type isEqualToString:@"wechatpay"]) {
                 cell.selectionLabel.text = @"WeChat pay";
+            } else {
+                cell.selectionLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
             }
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
         } else {
@@ -130,20 +129,6 @@
 
 - (IBAction)payPressed:(id)sender
 {
-    // Using payment method with card
-//    AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
-//    paymentMethod.type = @"card";
-//
-//    AWCard *card = [AWCard new];
-//    card.number = @"4012000300001003";
-//    card.name = @"Adam";
-//    card.expYear = @"2020";
-//    card.expMonth = @"12";
-//    card.cvc = @"123";
-//    paymentMethod.card = card;
-//    paymentMethod.billing = self.billing;
-
-    // Using payment method selected
     AWPaymentMethod *paymentMethod = self.paymentMethod;
     paymentMethod.billing = self.billing;
 
@@ -151,24 +136,42 @@
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
     request.intentId = client.configuration.intentId;
     request.requestId = NSUUID.UUID.UUIDString;
+    AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
+    options.autoCapture = YES;
+    options.threeDsOption = NO;
+    options.threeDsPaRes = @"";
+    request.options = options;
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];
+    __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;
         }
 
-        AWConfirmPaymentintentResponse *result = (AWConfirmPaymentintentResponse *)response;
+        AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
         if (!result.nextAction) {
             [SVProgressHUD showSuccessWithStatus:@"Waiting payment completion"];
+            __strong typeof(self) strongSelf = weakSelf;
+            [strongSelf.navigationController popToRootViewControllerAnimated:YES];
             return;
         }
 
         if ([result.nextAction.type isEqualToString:@"call_sdk"]) {
             [self payWithWeChatSDK:result.nextAction.wechatResponse];
         }
+    }];
+}
+
+- (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
+{
+    AWGetPaymentIntentRequest *request = [[AWGetPaymentIntentRequest alloc] init];
+    request.intentId = [AWPaymentConfiguration sharedConfiguration].intentId;
+    [[AWAPIClient new] send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        AWGetPaymentIntentResponse *result = (AWGetPaymentIntentResponse *)response;
+        completionHandler([result.status isEqualToString:@"SUCCEEDED"]);
     }];
 }
 
@@ -184,11 +187,11 @@
                 return;
             }
 
-            dispatch_async(dispatch_get_main_queue(), ^{
-                __strong typeof(self) strongSelf = weakSelf;
+            __strong typeof(self) strongSelf = weakSelf;
+            [strongSelf checkPaymentIntentStatusWithCompletion:^(BOOL success) {
                 [strongSelf.navigationController popToRootViewControllerAnimated:YES];
-                [SVProgressHUD showSuccessWithStatus:@"Pay successfully"];
-            });
+                [SVProgressHUD showSuccessWithStatus:success ? @"Pay successfully": @"Failed to pay"];
+            }];
         }] resume];
         return;
     }

@@ -21,4 +21,15 @@
     };
 }
 
++ (id)parseFromJsonDictionary:(NSDictionary *)json
+{
+    AWAddress *address = [AWAddress new];
+    address.countryCode = json[@"country_code"];
+    address.state = json[@"state"];
+    address.city = json[@"city"];
+    address.street = json[@"street"];
+    address.postcode = json[@"postcode"];
+    return address;
+}
+
 @end

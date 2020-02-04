@@ -21,4 +21,19 @@
     };
 }
 
++ (id)parseFromJsonDictionary:(NSDictionary *)json
+{
+    AWCard *card = [AWCard new];
+    card.expYear = json[@"exp_year"];
+    card.expMonth = json[@"exp_month"];
+    card.name = json[@"name"];
+    card.bin = json[@"bin"];
+    card.last4 = json[@"last4"];
+    card.brand = json[@"brand"];
+    card.country = json[@"country"];
+    card.funding = json[@"funding"];
+    card.fingerprint = json[@"fingerprint"];
+    return card;
+}
+
 @end

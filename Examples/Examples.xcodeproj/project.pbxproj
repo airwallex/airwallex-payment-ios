@@ -13,6 +13,7 @@
 		082D308223CEEC3300C9D587 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308123CEEC3300C9D587 /* ProductCell.m */; };
 		082D308523CEECE400C9D587 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
 		082D308823CEEDC100C9D587 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
+		0838BF6423E519FF0007F6BA /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0838BF6323E519FF0007F6BA /* CardViewController.m */; };
 		083D916A23CF025D006283CB /* NSNumber+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D916923CF025D006283CB /* NSNumber+Utils.m */; };
 		083FDEB423D45F9600AF35AB /* AWBilling+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 083FDEB323D45F9600AF35AB /* AWBilling+Utils.m */; };
 		083FDEB623D46F6400AF35AB /* FloatLabeledView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 083FDEB523D46F6400AF35AB /* FloatLabeledView.xib */; };
@@ -51,6 +52,8 @@
 		082D308423CEECE400C9D587 /* TotalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TotalCell.m; sourceTree = "<group>"; };
 		082D308623CEEDC100C9D587 /* CartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
 		082D308723CEEDC100C9D587 /* CartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
+		0838BF6223E519FF0007F6BA /* CardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardViewController.h; sourceTree = "<group>"; };
+		0838BF6323E519FF0007F6BA /* CardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardViewController.m; sourceTree = "<group>"; };
 		083D916823CF025D006283CB /* NSNumber+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Utils.h"; sourceTree = "<group>"; };
 		083D916923CF025D006283CB /* NSNumber+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+Utils.m"; sourceTree = "<group>"; };
 		083FDEB223D45F9600AF35AB /* AWBilling+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWBilling+Utils.h"; sourceTree = "<group>"; };
@@ -126,6 +129,15 @@
 			path = Cart;
 			sourceTree = "<group>";
 		};
+		0838BF6123E5190B0007F6BA /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				0838BF6223E519FF0007F6BA /* CardViewController.h */,
+				0838BF6323E519FF0007F6BA /* CardViewController.m */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
 		085BD3E223CC64B6002E8F27 = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +166,7 @@
 				085BD41523CD5AA0002E8F27 /* Categories */,
 				08775C8223D3F06300AE09A7 /* Payment */,
 				08775C8323D3F08700AE09A7 /* Shipping */,
+				0838BF6123E5190B0007F6BA /* Card */,
 				082D307F23CEEC0700C9D587 /* Cart */,
 				085BD3EE23CC64B6002E8F27 /* AppDelegate.h */,
 				085BD3EF23CC64B6002E8F27 /* AppDelegate.m */,
@@ -378,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0838BF6423E519FF0007F6BA /* CardViewController.m in Sources */,
 				08EFDC5723D05F6B003EF928 /* PaymentViewController.m in Sources */,
 				082D308823CEEDC100C9D587 /* CartViewController.m in Sources */,
 				08775C8623D3F0A300AE09A7 /* PaymentMethodCell.m in Sources */,
@@ -554,8 +568,6 @@
 					"-framework",
 					"\"IQKeyboardManager\"",
 					"-framework",
-					"\"JVFloatLabeledTextField\"",
-					"-framework",
 					"\"QuartzCore\"",
 					"-framework",
 					"\"SVProgressHUD\"",
@@ -599,8 +611,6 @@
 					"\"Foundation\"",
 					"-framework",
 					"\"IQKeyboardManager\"",
-					"-framework",
-					"\"JVFloatLabeledTextField\"",
 					"-framework",
 					"\"QuartzCore\"",
 					"-framework",

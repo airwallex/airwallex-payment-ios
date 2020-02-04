@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "AWJSONifiable.h"
+#import "AWParseable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWWechatPay : NSObject <AWJSONifiable>
+@interface AWWechatPay : NSObject <AWJSONifiable, AWParseable>
 
 @property (nonatomic, copy) NSString *flow;
 

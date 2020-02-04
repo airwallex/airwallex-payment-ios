@@ -1,5 +1,5 @@
 //
-//  AWConfirmPaymentintentResponse.h
+//  AWPaymentintentResponse.h
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/16.
@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class AWConfirmPaymentNextAction;
 
-@interface AWConfirmPaymentintentResponse : NSObject <AWResponseProtocol>
+@interface AWConfirmPaymentIntentResponse : NSObject <AWResponseProtocol>
 
 @property (nonatomic, readonly) NSString *status;
 @property (nonatomic, readonly) AWConfirmPaymentNextAction *nextAction;
@@ -42,6 +42,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *sign;
 
 + (AWWechatPaySDKResponse *)parse:(NSDictionary *)json;
+
+@end
+
+@interface AWGetPaymentIntentResponse : NSObject <AWResponseProtocol>
+
+@property (nonatomic, readonly) NSString *Id;
+@property (nonatomic, readonly) NSString *requestId;
+@property (nonatomic, readonly) NSNumber *amount;
+@property (nonatomic, readonly) NSString *currency;
+@property (nonatomic, readonly) NSString *merchantOrderId;
+@property (nonatomic, readonly) NSObject *order;
+@property (nonatomic, readonly) NSString *descriptor;
+@property (nonatomic, readonly) NSString *status;
+@property (nonatomic, readonly) NSNumber *capturedAmount;
+@property (nonatomic, readonly) NSObject *latestPaymentAttempt;
+@property (nonatomic, readonly) NSString *createdAt;
+@property (nonatomic, readonly) NSString *updatedAt;
+@property (nonatomic, readonly) NSArray *availablePaymentMethodTypes;
 
 @end
 

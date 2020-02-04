@@ -22,4 +22,16 @@
     };
 }
 
++ (id)parseFromJsonDictionary:(NSDictionary *)json
+{
+    AWBilling *billing = [AWBilling new];
+    billing.address = [AWAddress parseFromJsonDictionary:json[@"address"]];
+    billing.firstName = json[@"first_name"];
+    billing.lastName = json[@"last_name"];
+    billing.email = json[@"email"];
+    billing.phoneNumber = json[@"phone_number"];
+    billing.dateOfBirth = json[@"date_of_birth"];
+    return billing;
+}
+
 @end

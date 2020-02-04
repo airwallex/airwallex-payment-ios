@@ -1,5 +1,5 @@
 //
-//  AWConfirmPaymentIntentRequest.h
+//  AWPaymentIntentRequest.h
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/16.
@@ -19,6 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *intentId;
 @property (nonatomic, copy) NSString *requestId;
 @property (nonatomic, strong) AWPaymentMethod *paymentMethod;
+@property (nonatomic, strong, nullable) AWPaymentMethodOptions *options;
+
+@end
+
+@interface AWGetPaymentIntentRequest : NSObject <AWRequestProtocol>
+
+@property (nonatomic, copy) NSString *intentId;
 
 @end
 

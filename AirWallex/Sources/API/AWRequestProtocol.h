@@ -20,12 +20,10 @@ typedef enum : NSUInteger {
 
 - (NSString *)path;
 - (AWHTTPMethod)method;
-- (NSDictionary *)parameters;
 
 @optional
+- (nullable NSDictionary *)parameters;
 - (Class)responseClass;
-
-@optional
 - (NSDictionary *)headers;
 
 @end
