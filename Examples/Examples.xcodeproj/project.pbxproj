@@ -63,7 +63,7 @@
 		083FDEB823D47AE100AF35AB /* CountryListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CountryListViewController.m; sourceTree = "<group>"; };
 		083FDEBA23D4858C00AF35AB /* Country.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Country.h; sourceTree = "<group>"; };
 		083FDEBB23D4858C00AF35AB /* Country.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Country.m; sourceTree = "<group>"; };
-		085BD3EB23CC64B6002E8F27 /* Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Examples.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		085BD3EB23CC64B6002E8F27 /* Airwallex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Airwallex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3EE23CC64B6002E8F27 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		085BD3EF23CC64B6002E8F27 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		085BD3F823CC64B6002E8F27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 		085BD3EC23CC64B6002E8F27 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				085BD3EB23CC64B6002E8F27 /* Examples.app */,
+				085BD3EB23CC64B6002E8F27 /* Airwallex.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -293,7 +293,7 @@
 			);
 			name = Examples;
 			productName = Examples;
-			productReference = 085BD3EB23CC64B6002E8F27 /* Examples.app */;
+			productReference = 085BD3EB23CC64B6002E8F27 /* Airwallex.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -580,7 +580,7 @@
 					"-Objc",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Airwallex;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -622,7 +622,7 @@
 					"-Objc",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Airwallex;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
