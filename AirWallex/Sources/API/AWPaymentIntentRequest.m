@@ -53,7 +53,7 @@
             @"payment_method_options": @{
                     @"card": @{
                             @"auto_capture": @(self.options.autoCapture),
-                            @"three_ds": @{@"option": @(self.options.threeDsOption), @"pa_res": self.options.threeDsPaRes}
+                            @"three_ds": @{@"option": @(self.options.threeDsOption)}
                     }
             }
         }];

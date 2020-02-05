@@ -8,10 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "AWRequestProtocol.h"
+#import "AWPaymentMethod.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AWGetPaymentMethodsRequest : NSObject <AWRequestProtocol>
+
+@end
+
+@interface AWCreatePaymentMethodRequest : NSObject <AWRequestProtocol>
+
+@property (nonatomic, copy) NSString *requestId;
+@property (nonatomic, strong) AWPaymentMethod *paymentMethod;
 
 @end
 

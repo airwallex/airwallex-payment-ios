@@ -10,13 +10,13 @@
 #import <Airwallex/Airwallex.h>
 #import "EditShippingViewController.h"
 
-@class CardViewController;
+@class CardViewController, AWPaymentMethod;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol CardViewControllerDelegate <NSObject>
 
-- (void)cardViewController:(CardViewController *)controller didSelectCard:(AWCard *)card;
+- (void)cardViewController:(CardViewController *)controller didCreatePaymentMethod:(AWPaymentMethod *)paymentMethod;
 
 @end
 

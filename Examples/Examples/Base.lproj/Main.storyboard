@@ -908,7 +908,6 @@
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Country / Region"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Australia"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <outletCollection property="gestureRecognizers" destination="A31-6a-pLA" appends="YES" id="g6R-76-Qsm"/>

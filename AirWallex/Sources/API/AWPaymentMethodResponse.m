@@ -36,3 +36,22 @@
 }
 
 @end
+
+@interface AWCreatePaymentMethodResponse ()
+
+@property (nonatomic, strong, readwrite) AWPaymentMethod *paymentMethod;
+
+@end
+
+@implementation AWCreatePaymentMethodResponse
+
++ (id<AWResponseProtocol>)parse:(NSData *)data
+{
+    NSError *error = nil;
+    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    AWCreatePaymentMethodResponse *response = [AWCreatePaymentMethodResponse new];
+    response.paymentMethod = [AWPaymentMethod parseFromJsonDictionary:responseObject];
+    return response;
+}
+
+@end

@@ -16,8 +16,7 @@
         @"card": @{
                 @"auto_capture": self.autoCapture ? @"true" : @"false",
                 @"three_ds": @{
-                        @"option": self.threeDsOption ? @"true" : @"false",
-                        @"pa_res": self.threeDsPaRes
+                        @"option": self.threeDsOption ? @"true" : @"false"
                 }
         }
     };
