@@ -102,6 +102,7 @@
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
         }
     }
+    cell.isLastCell = indexPath.item == self.items.count - 1;
     return cell;
 }
 
