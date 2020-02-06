@@ -12,11 +12,11 @@
 
 - (nullable NSString *)validate
 {
-    if (self.lastName.length == 0) {
-        return @"Please enter your last name";
-    }
     if (self.firstName.length == 0) {
         return @"Please enter your first name";
+    }
+    if (self.lastName.length == 0) {
+        return @"Please enter your last name";
     }
     if (self.email.length == 0) {
         return @"Please enter your email";
