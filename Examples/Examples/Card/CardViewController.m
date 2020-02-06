@@ -21,11 +21,16 @@
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *cardNoField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *expiresField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *cvcField;
+@property (weak, nonatomic) IBOutlet FloatLabeledTextField *firstNameField;
+@property (weak, nonatomic) IBOutlet FloatLabeledTextField *lastNameField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *stateField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *cityField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *streetField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *zipcodeField;
+@property (weak, nonatomic) IBOutlet FloatLabeledTextField *emailField;
+@property (weak, nonatomic) IBOutlet FloatLabeledTextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet FloatLabeledView *countryView;
+
 
 @property (strong, nonatomic) Country *country;
 
@@ -49,10 +54,10 @@
 - (IBAction)savePressed:(id)sender
 {
     AWBilling *billing = [AWBilling new];
-    billing.lastName = self.nameField.text;
-    billing.firstName = self.nameField.text;
-    billing.email = @"john.doe@airwallex.com";
-    billing.phoneNumber = @"13800000000";
+    billing.firstName = self.firstNameField.text;
+    billing.lastName = self.lastNameField.text;
+    billing.email = self.emailField.text;
+    billing.phoneNumber = self.phoneNumberField.text;
     AWAddress *address = [AWAddress new];
     address.countryCode = self.country.countryCode;
     address.state = self.stateField.text;
