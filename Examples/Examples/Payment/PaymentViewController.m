@@ -133,6 +133,12 @@
     AWPaymentMethod *paymentMethod = self.paymentMethod;
     paymentMethod.billing = self.billing;
 
+    // Just for wechat pay testing
+    if ([paymentMethod.type isEqualToString:@"wechatpay"]) {
+        paymentMethod.Id = nil;
+        paymentMethod.wechatpay.flow = @"inapp";
+    }
+
     AWAPIClient *client = [AWAPIClient new];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
     request.intentId = client.configuration.intentId;
