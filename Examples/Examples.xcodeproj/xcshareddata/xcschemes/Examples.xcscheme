@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "085BD3EA23CC64B6002E8F27"
-               BuildableName = "Examples.app"
+               BuildableName = "Airwallex.app"
                BlueprintName = "Examples"
                ReferencedContainer = "container:Examples.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "085BD3EA23CC64B6002E8F27"
-            BuildableName = "Examples.app"
+            BuildableName = "Airwallex.app"
             BlueprintName = "Examples"
             ReferencedContainer = "container:Examples.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "085BD3EA23CC64B6002E8F27"
-            BuildableName = "Examples.app"
+            BuildableName = "Airwallex.app"
             BlueprintName = "Examples"
             ReferencedContainer = "container:Examples.xcodeproj">
          </BuildableReference>
