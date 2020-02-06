@@ -238,7 +238,7 @@
     self.floatingTopConstraint.constant = 20;
     self.textLabel.alpha = 0;
     [UIView animateWithDuration:0.25 animations:^{
-        self.floatingLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
+        self.floatingLabel.font = [UIFont fontWithName:@"CircularStd-Medium" size:12];
         self.floatingTopConstraint.constant = 9;
         self.textLabel.alpha = 1;
         [self layoutIfNeeded];
@@ -254,7 +254,7 @@
     self.floatingTopConstraint.constant = 9;
     self.textLabel.alpha = 1;
     [UIView animateWithDuration:0.25 animations:^{
-        self.floatingLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightMedium];
+        self.floatingLabel.font = [UIFont fontWithName:@"CircularStd-Medium" size:14];
         self.floatingTopConstraint.constant = 20;
         self.textLabel.alpha = 0;
         [self layoutIfNeeded];
