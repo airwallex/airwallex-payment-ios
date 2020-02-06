@@ -120,7 +120,8 @@
     NSArray *items = self.paymentMethods[indexPath.section];
     if (indexPath.section == 1) {
         if (items.count == 0) {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoCardCell" forIndexPath:indexPath];
+            NoCardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoCardCell" forIndexPath:indexPath];
+            cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
             return cell;
         }
     }
@@ -137,6 +138,7 @@
     if ([method.Id isEqualToString:self.paymentMethod.Id]) {
         [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     }
+    cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
     return cell;
 }
 
