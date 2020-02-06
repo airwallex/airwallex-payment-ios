@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *selectionLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineLeftConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineRightConstraint;
+@property (nonatomic) BOOL isLastCell;
 
 @end
 

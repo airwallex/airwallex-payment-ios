@@ -9,12 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "AWResponseProtocol.h"
 
+@class AWPaymentMethod;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AWGetPaymentMethodsResponse : NSObject <AWResponseProtocol>
 
 @property (nonatomic, readonly) NSString *hasMore;
 @property (nonatomic, readonly) NSArray *items;
+
+@end
+
+@interface AWCreatePaymentMethodResponse : NSObject <AWResponseProtocol>
+
+@property (nonatomic, readonly) AWPaymentMethod *paymentMethod;
 
 @end
 

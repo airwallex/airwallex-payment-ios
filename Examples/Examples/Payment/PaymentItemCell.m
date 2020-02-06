@@ -10,4 +10,12 @@
 
 @implementation PaymentItemCell
 
+- (void)setIsLastCell:(BOOL)isLastCell
+{
+    _isLastCell = isLastCell;
+    CGFloat constant = isLastCell ? 0 : 16;
+    self.lineLeftConstraint.constant = constant;
+    self.lineRightConstraint.constant = constant;
+}
+
 @end

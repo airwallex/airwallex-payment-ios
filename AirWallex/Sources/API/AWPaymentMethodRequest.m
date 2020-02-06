@@ -27,3 +27,30 @@
 }
 
 @end
+
+@implementation AWCreatePaymentMethodRequest
+
+- (NSString *)path
+{
+    return @"/api/v1/pa/payment_methods/create";
+}
+
+- (AWHTTPMethod)method
+{
+    return AWHTTPMethodPOST;
+}
+
+- (NSDictionary *)parameters
+{
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"request_id"] = self.requestId;
+    [parameters addEntriesFromDictionary:self.paymentMethod.toJSONDictionary];
+    return parameters;
+}
+
+- (Class)responseClass
+{
+    return AWCreatePaymentMethodResponse.class;
+}
+
+@end

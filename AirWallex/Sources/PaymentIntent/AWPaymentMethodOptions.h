@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) BOOL autoCapture;
 @property (nonatomic) BOOL threeDsOption;
-@property (nonatomic, copy) NSString *threeDsPaRes;
 
 @end
 

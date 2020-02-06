@@ -36,21 +36,24 @@
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
     __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        if (response && [response isKindOfClass:[AWGetPaymentMethodsResponse class]]) {
-            AWGetPaymentMethodsResponse *result = (AWGetPaymentMethodsResponse *)response;
-            NSArray *section0 = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-                AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
-                return [obj.type isEqualToString:@"wechatpay"];
-            }]];
-            NSArray *section1 = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-                AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
-                return [obj.type isEqualToString:@"card"];
-            }]];
-
-            __strong typeof(self) strongSelf = weakSelf;
-            strongSelf.paymentMethods = @[section0, section1];
-            [strongSelf.tableView reloadData];
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            return;
         }
+        
+        AWGetPaymentMethodsResponse *result = (AWGetPaymentMethodsResponse *)response;
+        NSArray *section0 = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+            AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
+            return [obj.type isEqualToString:@"wechatpay"];
+        }]];
+        NSArray *section1 = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+            AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
+            return [obj.type isEqualToString:@"card"];
+        }]];
+
+        __strong typeof(self) strongSelf = weakSelf;
+        strongSelf.paymentMethods = @[section0, section1];
+        [strongSelf.tableView reloadData];
         [SVProgressHUD dismiss];
     }];
 }
@@ -117,7 +120,8 @@
     NSArray *items = self.paymentMethods[indexPath.section];
     if (indexPath.section == 1) {
         if (items.count == 0) {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoCardCell" forIndexPath:indexPath];
+            NoCardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoCardCell" forIndexPath:indexPath];
+            cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
             return cell;
         }
     }
@@ -134,6 +138,7 @@
     if ([method.Id isEqualToString:self.paymentMethod.Id]) {
         [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     }
+    cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
     return cell;
 }
 
@@ -149,14 +154,9 @@
     self.saveBarButtonItem.enabled = self.paymentMethod != nil;
 }
 
-- (void)cardViewController:(CardViewController *)controller didSelectCard:(AWCard *)card
+- (void)cardViewController:(CardViewController *)controller didCreatePaymentMethod:(nonnull AWPaymentMethod *)paymentMethod
 {
-//    AWPaymentMethod *method = [AWPaymentMethod new];
-//    method.type = @"card";
-//    method.card = card;
-//
-//    self.paymentMethods = @[@[self.weChatPay], @[method]];
-//    [self.tableView reloadData];
+    [self reload];
 }
 
 @end

@@ -102,6 +102,7 @@
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
         }
     }
+    cell.isLastCell = indexPath.item == self.items.count - 1;
     return cell;
 }
 
@@ -139,7 +140,6 @@
     AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
     options.autoCapture = YES;
     options.threeDsOption = NO;
-    options.threeDsPaRes = @"";
     request.options = options;
     request.paymentMethod = paymentMethod;
 
@@ -152,15 +152,20 @@
         }
 
         AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
-        if (!result.nextAction) {
-            [SVProgressHUD showSuccessWithStatus:@"Waiting payment completion"];
-            __strong typeof(self) strongSelf = weakSelf;
+        __strong typeof(self) strongSelf = weakSelf;
+        if ([result.status isEqualToString:@"SUCCEEDED"]) {
             [strongSelf.navigationController popToRootViewControllerAnimated:YES];
+            [SVProgressHUD showSuccessWithStatus:@"Pay successfully"];
+            return;
+        }
+
+        if (!result.nextAction) {
+            [strongSelf finishPayment];
             return;
         }
 
         if ([result.nextAction.type isEqualToString:@"call_sdk"]) {
-            [self payWithWeChatSDK:result.nextAction.wechatResponse];
+            [strongSelf payWithWeChatSDK:result.nextAction.wechatResponse];
         }
     }];
 }
@@ -170,8 +175,21 @@
     AWGetPaymentIntentRequest *request = [[AWGetPaymentIntentRequest alloc] init];
     request.intentId = [AWPaymentConfiguration sharedConfiguration].intentId;
     [[AWAPIClient new] send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            return;
+        }
+
         AWGetPaymentIntentResponse *result = (AWGetPaymentIntentResponse *)response;
         completionHandler([result.status isEqualToString:@"SUCCEEDED"]);
+    }];
+}
+
+- (void)finishPayment
+{
+    [self checkPaymentIntentStatusWithCompletion:^(BOOL success) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [SVProgressHUD showSuccessWithStatus:success ? @"Pay successfully": @"Waiting payment completion"];
     }];
 }
 
@@ -188,10 +206,7 @@
             }
 
             __strong typeof(self) strongSelf = weakSelf;
-            [strongSelf checkPaymentIntentStatusWithCompletion:^(BOOL success) {
-                [strongSelf.navigationController popToRootViewControllerAnimated:YES];
-                [SVProgressHUD showSuccessWithStatus:success ? @"Pay successfully": @"Failed to pay"];
-            }];
+            [strongSelf finishPayment];
         }] resume];
         return;
     }
