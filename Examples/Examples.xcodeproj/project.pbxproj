@@ -20,6 +20,7 @@
 		083FDEB923D47AE100AF35AB /* CountryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083FDEB823D47AE100AF35AB /* CountryListViewController.m */; };
 		083FDEBC23D4858C00AF35AB /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = 083FDEBB23D4858C00AF35AB /* Country.m */; };
 		085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
+		085BA65223F2722000FD33FA /* UIButton+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BA65123F2722000FD33FA /* UIButton+Utils.m */; };
 		085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
 		085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3F723CC64B6002E8F27 /* Main.storyboard */; };
 		085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
@@ -67,6 +68,8 @@
 		083FDEBA23D4858C00AF35AB /* Country.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Country.h; sourceTree = "<group>"; };
 		083FDEBB23D4858C00AF35AB /* Country.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Country.m; sourceTree = "<group>"; };
 		085BA64E23F0FB8A00FD33FA /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
+		085BA65023F2722000FD33FA /* UIButton+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+Utils.h"; sourceTree = "<group>"; };
+		085BA65123F2722000FD33FA /* UIButton+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Utils.m"; sourceTree = "<group>"; };
 		085BD3EB23CC64B6002E8F27 /* Airwallex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Airwallex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3EE23CC64B6002E8F27 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		085BD3EF23CC64B6002E8F27 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -194,6 +197,8 @@
 				083D916923CF025D006283CB /* NSNumber+Utils.m */,
 				083FDEB223D45F9600AF35AB /* AWBilling+Utils.h */,
 				083FDEB323D45F9600AF35AB /* AWBilling+Utils.m */,
+				085BA65023F2722000FD33FA /* UIButton+Utils.h */,
+				085BA65123F2722000FD33FA /* UIButton+Utils.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -426,6 +431,7 @@
 				0808136B23D14789000133BF /* PaymentItemCell.m in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
+				085BA65223F2722000FD33FA /* UIButton+Utils.m in Sources */,
 				083FDEB423D45F9600AF35AB /* AWBilling+Utils.m in Sources */,
 				083FDEB923D47AE100AF35AB /* CountryListViewController.m in Sources */,
 			);

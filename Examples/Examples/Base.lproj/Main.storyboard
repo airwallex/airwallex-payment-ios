@@ -360,16 +360,17 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="MlH-DM-ohL" secondAttribute="bottom" id="CAS-vW-gku"/>
-                                                <constraint firstItem="Evg-w2-yaQ" firstAttribute="centerY" secondItem="a4Q-uD-Xh3" secondAttribute="centerY" id="Feo-xD-i1s"/>
                                                 <constraint firstItem="MlH-DM-ohL" firstAttribute="leading" secondItem="YGz-ol-9ob" secondAttribute="leading" constant="16" id="KUz-55-2iQ"/>
                                                 <constraint firstItem="MlH-DM-ohL" firstAttribute="top" secondItem="a4Q-uD-Xh3" secondAttribute="bottom" constant="20" id="RZv-C5-7qx"/>
                                                 <constraint firstItem="a4Q-uD-Xh3" firstAttribute="top" secondItem="YGz-ol-9ob" secondAttribute="top" constant="20" id="Vfy-31-MLP"/>
                                                 <constraint firstItem="fYB-P7-juT" firstAttribute="centerY" secondItem="YGz-ol-9ob" secondAttribute="centerY" id="eqS-cf-Shw"/>
                                                 <constraint firstItem="a4Q-uD-Xh3" firstAttribute="leading" secondItem="YGz-ol-9ob" secondAttribute="leading" constant="16" id="gkY-Nq-P1R"/>
+                                                <constraint firstItem="Evg-w2-yaQ" firstAttribute="top" secondItem="a4Q-uD-Xh3" secondAttribute="top" id="lW2-c3-uss"/>
                                                 <constraint firstItem="Evg-w2-yaQ" firstAttribute="leading" secondItem="a4Q-uD-Xh3" secondAttribute="trailing" constant="16" id="qv2-0k-4lh"/>
                                                 <constraint firstAttribute="trailing" secondItem="MlH-DM-ohL" secondAttribute="trailing" constant="16" id="rY5-MI-yZL"/>
                                                 <constraint firstAttribute="trailing" secondItem="fYB-P7-juT" secondAttribute="trailing" constant="16" id="tBw-vU-VZK"/>
                                                 <constraint firstItem="fYB-P7-juT" firstAttribute="leading" secondItem="Evg-w2-yaQ" secondAttribute="trailing" constant="8" id="tTC-hG-Agg"/>
+                                                <constraint firstItem="Evg-w2-yaQ" firstAttribute="bottom" secondItem="a4Q-uD-Xh3" secondAttribute="bottom" id="vag-7y-rS4"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -728,7 +729,10 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGg-0F-JHB">
-                                            <rect key="frame" x="28" y="16" width="120" height="32"/>
+                                            <rect key="frame" x="28" y="16" width="115" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="115" id="650-qk-dsi"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
                                             <state key="normal" title="Add new card" image="add">
                                                 <color key="titleColor" name="Purple Color"/>
@@ -741,7 +745,6 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="AGg-0F-JHB" firstAttribute="top" secondItem="TGF-T7-huQ" secondAttribute="top" constant="16" id="5aF-Hz-nIF"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AGg-0F-JHB" secondAttribute="trailing" constant="20" symbolic="YES" id="Gq4-2k-rn4"/>
                                         <constraint firstItem="AGg-0F-JHB" firstAttribute="leading" secondItem="TGF-T7-huQ" secondAttribute="leading" constant="28" id="Oaw-oc-gk0"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="AGg-0F-JHB" secondAttribute="bottom" constant="16" id="ojS-UM-Z1y"/>
                                     </constraints>
@@ -861,6 +864,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="saveBarButtonItem" destination="Ai0-oa-jAs" id="xgt-UT-GbZ"/>
+                        <outlet property="saveButton" destination="AGg-0F-JHB" id="IQQ-7M-Tn8"/>
                         <outlet property="tableView" destination="8Cx-XY-2TG" id="cxZ-0C-jK6"/>
                     </connections>
                 </viewController>

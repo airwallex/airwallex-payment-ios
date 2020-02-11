@@ -15,6 +15,7 @@
 #import "PaymentListViewController.h"
 #import "NSNumber+Utils.h"
 #import "Widgets.h"
+#import "UIButton+Utils.h"
 
 @interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditShippingViewControllerDelegate, PaymentListViewControllerDelegate>
 
@@ -32,6 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.payButton setImageAndTitleHorizontalAlignmentCenter:8];
     self.totalLabel.text = self.total.string;
     self.items = @[@{@"title": @"Shipping", @"placeholder": @"Enter shipping information"},
                    @{@"title": @"Payment", @"placeholder": @"Select payment method"}];
