@@ -29,6 +29,8 @@
 		081D52F723D04EA200953B03 /* AWLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52F523D04EA200953B03 /* AWLogger.m */; };
 		081D52FA23D0581F00953B03 /* AWUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52F823D0581F00953B03 /* AWUtils.h */; };
 		081D52FB23D0581F00953B03 /* AWUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52F923D0581F00953B03 /* AWUtils.m */; };
+		085BA65D23F3F89300FD33FA /* AWLuhn.h in Headers */ = {isa = PBXBuildFile; fileRef = 085BA65B23F3F89200FD33FA /* AWLuhn.h */; };
+		085BA65E23F3F89300FD33FA /* AWLuhn.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BA65C23F3F89200FD33FA /* AWLuhn.m */; };
 		085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
 		085BD3D723CC62B4002E8F27 /* AirwallexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3D623CC62B4002E8F27 /* AirwallexTests.m */; };
 		085BD41423CC6E0C002E8F27 /* Airwallex.h in Headers */ = {isa = PBXBuildFile; fileRef = 085BD41323CC6E0B002E8F27 /* Airwallex.h */; };
@@ -90,6 +92,8 @@
 		081D52F823D0581F00953B03 /* AWUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWUtils.h; sourceTree = "<group>"; };
 		081D52F923D0581F00953B03 /* AWUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWUtils.m; sourceTree = "<group>"; };
 		081D52FC23D0588200953B03 /* AWConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWConstants.h; sourceTree = "<group>"; };
+		085BA65B23F3F89200FD33FA /* AWLuhn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWLuhn.h; sourceTree = "<group>"; };
+		085BA65C23F3F89200FD33FA /* AWLuhn.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWLuhn.m; sourceTree = "<group>"; };
 		085BD3C823CC62B4002E8F27 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3CC23CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -271,6 +275,8 @@
 				081D52FC23D0588200953B03 /* AWConstants.h */,
 				085BD41D23CD9E2C002E8F27 /* AWPaymentConfiguration.h */,
 				085BD41E23CD9E2C002E8F27 /* AWPaymentConfiguration.m */,
+				085BA65B23F3F89200FD33FA /* AWLuhn.h */,
+				085BA65C23F3F89200FD33FA /* AWLuhn.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -294,6 +300,7 @@
 				081D52CD23D0324E00953B03 /* AWBilling.h in Headers */,
 				081D52DE23D03B3F00953B03 /* AWPaymentIntentRequest.h in Headers */,
 				081D52F123D04B5400953B03 /* AWAPIResponse.h in Headers */,
+				085BA65D23F3F89300FD33FA /* AWLuhn.h in Headers */,
 				085BD43C23CDCC62002E8F27 /* AWProduct.h in Headers */,
 				08A14B9B23E91F0C00F3C211 /* AWPaymentMethodRequest.h in Headers */,
 				081D52ED23D04AE600953B03 /* AWProtocol.h in Headers */,
@@ -408,6 +415,7 @@
 				081D52E423D03BDF00953B03 /* AWPaymentintentResponse.m in Sources */,
 				08A14BA023E9228300F3C211 /* AWPaymentMethodResponse.m in Sources */,
 				081D52EE23D04AE600953B03 /* AWProtocol.m in Sources */,
+				085BA65E23F3F89300FD33FA /* AWLuhn.m in Sources */,
 				08A14B9C23E91F0C00F3C211 /* AWPaymentMethodRequest.m in Sources */,
 				08A14B9723E91E9700F3C211 /* AWAPIClient.m in Sources */,
 				081D52FB23D0581F00953B03 /* AWUtils.m in Sources */,

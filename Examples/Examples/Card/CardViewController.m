@@ -17,8 +17,8 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet CardTextField *cardNoField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *nameField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *cardNoField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *expiresField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *cvcField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *firstNameField;

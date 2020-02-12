@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSString (Utils)
 
 - (NSDictionary *)convertToDictionary;
+- (NSString *)stringByRemovingIllegalCharacters;
 
 @end
 

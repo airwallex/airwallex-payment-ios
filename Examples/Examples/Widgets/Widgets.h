@@ -45,4 +45,9 @@ IB_DESIGNABLE
 
 @end
 
+IB_DESIGNABLE
+@interface CardTextField : FloatLabeledTextField
+
+@end
+
 NS_ASSUME_NONNULL_END

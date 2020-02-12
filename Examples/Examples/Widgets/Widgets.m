@@ -7,6 +7,7 @@
 //
 
 #import "Widgets.h"
+#import <Airwallex/Airwallex.h>
 
 @interface View ()
 
@@ -259,6 +260,34 @@
         self.textLabel.alpha = 0;
         [self layoutIfNeeded];
     }];
+}
+
+@end
+
+@interface CardTextField ()
+
+@property (weak, nonatomic) IBOutlet UIStackView *brandView;
+@property (weak, nonatomic) IBOutlet UIImageView *visaView;
+@property (weak, nonatomic) IBOutlet UIImageView *masterView;
+
+@end
+
+@implementation CardTextField
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    text.length > 0 ? [self active] : [self inactive];
+    AWCardType type = [AWLuhn typeFromString:text];
+    self.brandView.alpha = (type == AWCardTypeVisa || type == AWCardTypeMastercard) ? 1 : 0.5;
+    if (self.brandView.alpha == 1) {
+        self.visaView.hidden = type != AWCardTypeVisa;
+        self.masterView.hidden = type != AWCardTypeMastercard;
+    } else {
+        self.view.hidden = NO;
+        self.masterView.hidden = NO;
+    }
+    return YES;
 }
 
 @end

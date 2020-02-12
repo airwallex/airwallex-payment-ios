@@ -907,14 +907,13 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="IoJ-2e-Nyb">
                                                 <rect key="frame" x="16" y="69.5" width="382" height="897"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dVL-wB-XF0" customClass="FloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dVL-wB-XF0" customClass="CardTextField">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="KaD-Nx-RXc"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="4012 0003 0000 1003"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Card number"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
