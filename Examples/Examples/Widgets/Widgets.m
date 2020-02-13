@@ -274,19 +274,36 @@
 
 @implementation CardTextField
 
+- (void)setText:(NSString *)text
+{
+    [super setText:text];
+    [self updateBrandWithNumber:text];
+}
+
+- (void)updateBrandWithNumber:(NSString *)number
+{
+    AWBrandType type = AWBrandTypeUnknown;
+    if (number.length != 0) {
+        AWBrand *brand = [AWCardValidator.shared brandForCardNumber:number];
+        if (brand) {
+            type = brand.type;
+        }
+    }
+    self.brandView.alpha = (type == AWBrandTypeVisa || type == AWBrandTypeMastercard) ? 1 : 0.5;
+    if (self.brandView.alpha == 1) {
+        self.visaView.hidden = type != AWBrandTypeVisa;
+        self.masterView.hidden = type != AWBrandTypeMastercard;
+    } else {
+        self.visaView.hidden = NO;
+        self.masterView.hidden = NO;
+    }
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     text.length > 0 ? [self active] : [self inactive];
-    AWCardType type = [AWLuhn typeFromString:text];
-    self.brandView.alpha = (type == AWCardTypeVisa || type == AWCardTypeMastercard) ? 1 : 0.5;
-    if (self.brandView.alpha == 1) {
-        self.visaView.hidden = type != AWCardTypeVisa;
-        self.masterView.hidden = type != AWCardTypeMastercard;
-    } else {
-        self.view.hidden = NO;
-        self.masterView.hidden = NO;
-    }
+    [self updateBrandWithNumber:text];
     return YES;
 }
 

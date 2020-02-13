@@ -915,6 +915,7 @@
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Card number"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="4012 0003 0000 1003"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z38-ER-Mwc" customClass="FloatLabeledTextField">
