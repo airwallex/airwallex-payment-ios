@@ -121,6 +121,9 @@
     if (self.configuration.token) {
         [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", self.configuration.token] forHTTPHeaderField:@"Authorization"];
     }
+    if (self.configuration.clientSecret) {
+        [urlRequest setValue:self.configuration.clientSecret forHTTPHeaderField:@"client-secret"];
+    }
 
     if (request.parameters && [NSJSONSerialization isValidJSONObject:request.parameters] && request.method == AWHTTPMethodPOST) {
         urlRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:request.parameters options:NSJSONWritingPrettyPrinted error:nil];

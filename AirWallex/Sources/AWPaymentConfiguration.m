@@ -26,6 +26,7 @@
     copy.baseURL = self.baseURL;
     copy.intentId = self.intentId;
     copy.token = self.token;
+    copy.clientSecret = self.clientSecret;
     return copy;
 }
 
