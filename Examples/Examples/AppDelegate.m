@@ -22,6 +22,10 @@
     [SVProgressHUD setBackgroundColor:[UIColor colorNamed:@"Line Color"]];
     [SVProgressHUD setMaximumDismissTimeInterval:2];
     [IQKeyboardManager sharedManager].enable = YES;
+
+    [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        [self loadCartView];
+    }];
     
     [WXApi startLogByLevel:WXLogLevelNormal logBlock:^(NSString * _Nonnull log) {
         NSLog(@"WeChat Log: %@", log);
@@ -33,6 +37,24 @@
     // WeChatSDK 1.8.6.1
 //    [WXApi registerApp:@"wxfad13fd6681a62b0" universalLink:@"https://airwallex.com/"];
     return YES;
+}
+
+- (void)loadCartView
+{
+    UIViewController *controller = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
+    [self perform:controller];
+}
+
+- (void)perform:(UIViewController *)controller
+{
+    UIViewController *previousRootViewController = self.window.rootViewController;
+    [previousRootViewController dismissViewControllerAnimated:NO completion:^{
+        [previousRootViewController.view removeFromSuperview];
+    }];
+    self.window.rootViewController = controller;
+    [UIView transitionWithView:self.window duration:0.25 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        self.window.rootViewController = controller;
+    } completion:nil];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options

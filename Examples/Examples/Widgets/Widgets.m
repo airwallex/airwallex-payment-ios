@@ -7,6 +7,7 @@
 //
 
 #import "Widgets.h"
+#import <Airwallex/Airwallex.h>
 
 @interface View ()
 
@@ -259,6 +260,51 @@
         self.textLabel.alpha = 0;
         [self layoutIfNeeded];
     }];
+}
+
+@end
+
+@interface CardTextField ()
+
+@property (weak, nonatomic) IBOutlet UIStackView *brandView;
+@property (weak, nonatomic) IBOutlet UIImageView *visaView;
+@property (weak, nonatomic) IBOutlet UIImageView *masterView;
+
+@end
+
+@implementation CardTextField
+
+- (void)setText:(NSString *)text
+{
+    [super setText:text];
+    [self updateBrandWithNumber:text];
+}
+
+- (void)updateBrandWithNumber:(NSString *)number
+{
+    AWBrandType type = AWBrandTypeUnknown;
+    if (number.length != 0) {
+        AWBrand *brand = [AWCardValidator.shared brandForCardNumber:number];
+        if (brand) {
+            type = brand.type;
+        }
+    }
+    self.brandView.alpha = (type == AWBrandTypeVisa || type == AWBrandTypeMastercard) ? 1 : 0.5;
+    if (self.brandView.alpha == 1) {
+        self.visaView.hidden = type != AWBrandTypeVisa;
+        self.masterView.hidden = type != AWBrandTypeMastercard;
+    } else {
+        self.visaView.hidden = NO;
+        self.masterView.hidden = NO;
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    text.length > 0 ? [self active] : [self inactive];
+    [self updateBrandWithNumber:text];
+    return YES;
 }
 
 @end

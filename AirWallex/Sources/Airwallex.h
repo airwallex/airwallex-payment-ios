@@ -27,3 +27,4 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 #import <Airwallex/AWPaymentIntentResponse.h>
 #import <Airwallex/AWPaymentMethodRequest.h>
 #import <Airwallex/AWPaymentMethodResponse.h>
+#import <Airwallex/AWCardValidator.h>

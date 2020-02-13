@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080EB05823F4D7E900F71CEC /* AWCardValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 080EB05623F4D7E900F71CEC /* AWCardValidator.h */; };
+		080EB05923F4D7E900F71CEC /* AWCardValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 080EB05723F4D7E900F71CEC /* AWCardValidator.m */; };
 		081D52C923D0307600953B03 /* AWCard.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52C723D0307600953B03 /* AWCard.h */; };
 		081D52CA23D0307600953B03 /* AWCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52C823D0307600953B03 /* AWCard.m */; };
 		081D52CD23D0324E00953B03 /* AWBilling.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52CB23D0324E00953B03 /* AWBilling.h */; };
@@ -64,6 +66,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		080EB05623F4D7E900F71CEC /* AWCardValidator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWCardValidator.h; sourceTree = "<group>"; };
+		080EB05723F4D7E900F71CEC /* AWCardValidator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWCardValidator.m; sourceTree = "<group>"; };
 		081D52C723D0307600953B03 /* AWCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWCard.h; sourceTree = "<group>"; };
 		081D52C823D0307600953B03 /* AWCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWCard.m; sourceTree = "<group>"; };
 		081D52CB23D0324E00953B03 /* AWBilling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWBilling.h; sourceTree = "<group>"; };
@@ -137,6 +141,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		080EB05523F4D7AB00F71CEC /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				080EB05623F4D7E900F71CEC /* AWCardValidator.h */,
+				080EB05723F4D7E900F71CEC /* AWCardValidator.m */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
 		081D52C623D0306200953B03 /* PaymentIntent */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +274,7 @@
 		085BD41223CC6E0B002E8F27 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				080EB05523F4D7AB00F71CEC /* Card */,
 				081D52F823D0581F00953B03 /* AWUtils.h */,
 				081D52F923D0581F00953B03 /* AWUtils.m */,
 				081D52F323D04E9500953B03 /* Logger */,
@@ -296,6 +310,7 @@
 				081D52F123D04B5400953B03 /* AWAPIResponse.h in Headers */,
 				085BD43C23CDCC62002E8F27 /* AWProduct.h in Headers */,
 				08A14B9B23E91F0C00F3C211 /* AWPaymentMethodRequest.h in Headers */,
+				080EB05823F4D7E900F71CEC /* AWCardValidator.h in Headers */,
 				081D52ED23D04AE600953B03 /* AWProtocol.h in Headers */,
 				081D52FA23D0581F00953B03 /* AWUtils.h in Headers */,
 				085BD43423CDCB73002E8F27 /* AWShipping.h in Headers */,
@@ -406,6 +421,7 @@
 			files = (
 				081D52F223D04B5400953B03 /* AWAPIResponse.m in Sources */,
 				081D52E423D03BDF00953B03 /* AWPaymentintentResponse.m in Sources */,
+				080EB05923F4D7E900F71CEC /* AWCardValidator.m in Sources */,
 				08A14BA023E9228300F3C211 /* AWPaymentMethodResponse.m in Sources */,
 				081D52EE23D04AE600953B03 /* AWProtocol.m in Sources */,
 				08A14B9C23E91F0C00F3C211 /* AWPaymentMethodRequest.m in Sources */,

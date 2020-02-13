@@ -110,6 +110,7 @@
             configuration.baseURL = @"https://staging-pci-api.airwallex.com";
             configuration.intentId = result[@"id"];
             configuration.token = token;
+            configuration.clientSecret = result[@"client_secret"];
 
             [SVProgressHUD dismiss];
 

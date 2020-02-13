@@ -31,8 +31,14 @@
     AWPaymentMethod *method = [AWPaymentMethod new];
     method.Id = json[@"id"];
     method.type = json[@"type"];
-    method.card = [AWCard parseFromJsonDictionary:json[@"card"]];
-    method.wechatpay = [AWWechatPay parseFromJsonDictionary:json[@"wechatpay"]];
+    NSDictionary *card = json[@"card"];
+    if (card) {
+        method.card = [AWCard parseFromJsonDictionary:card];
+    }
+    NSDictionary *wechatpay = json[@"wechatpay"];
+    if (wechatpay) {
+        method.wechatpay = [AWWechatPay parseFromJsonDictionary:wechatpay];
+    }
     method.billing = [AWBilling parseFromJsonDictionary:json[@"billing"]];
     return method;
 }

@@ -11,11 +11,13 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "PaymentMethodCell.h"
 #import "CardViewController.h"
+#import "UIButton+Utils.h"
 
 @interface PaymentListViewController () <UITableViewDataSource, UITableViewDelegate, CardViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (nonatomic, strong) NSArray *paymentMethods;
 
 @end
@@ -26,6 +28,7 @@
 {
     [super viewDidLoad];
     self.saveBarButtonItem.enabled = self.paymentMethod != nil;
+    [self.saveButton setImageAndTitleHorizontalAlignmentCenter:8];
     [self reload];
 }
 

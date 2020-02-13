@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSString *baseURL;
 @property (nonatomic, copy, readwrite) NSString *intentId;
 @property (nonatomic, copy, readwrite) NSString *token;
+@property (nonatomic, copy, readwrite) NSString *clientSecret;
 
 + (instancetype)sharedConfiguration;
 

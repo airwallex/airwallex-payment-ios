@@ -8,9 +8,12 @@
 
 #import "CountryListViewController.h"
 
-@interface CountryListViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface CountryListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *countries;
+@property (nonatomic, strong) NSArray *matchedCountries;
 
 @end
 
@@ -33,6 +36,7 @@
         return [obj1.countryName localizedCompare:obj2.countryName];
     }];
     self.countries = countries;
+    self.matchedCountries = countries;
 }
 
 - (IBAction)closePressed:(id)sender
@@ -42,13 +46,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.countries.count;
+    return self.matchedCountries.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CountryCell" forIndexPath:indexPath];
-    Country *country = self.countries[indexPath.row];
+    Country *country = self.matchedCountries[indexPath.row];
     cell.textLabel.text = country.countryName;
     if ([self.country.countryName isEqualToString:country.countryName]) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tick"]];
@@ -62,10 +66,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(countryListViewController:didSelectCountry:)]) {
-        Country *country = self.countries[indexPath.row];
+        Country *country = self.matchedCountries[indexPath.row];
         [self.delegate countryListViewController:self didSelectCountry:country];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    self.matchedCountries = [self.countries filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+        Country *obj = (Country *)evaluatedObject;
+        return [obj.countryName rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound;
+    }]];
+    [self.tableView reloadData];
 }
 
 @end
