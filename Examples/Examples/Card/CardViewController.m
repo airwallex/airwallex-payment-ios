@@ -74,8 +74,8 @@
     AWCard *card = [AWCard new];
     card.name = self.nameField.text;
     card.number = [self.cardNoField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    card.expYear = [self.expiresField.text substringFromIndex:3];
-    card.expMonth = [self.expiresField.text substringToIndex:2];
+    card.expiryYear = [self.expiresField.text substringFromIndex:3];
+    card.expiryMonth = [self.expiresField.text substringToIndex:2];
     card.cvc = self.cvcField.text;
 
     AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
