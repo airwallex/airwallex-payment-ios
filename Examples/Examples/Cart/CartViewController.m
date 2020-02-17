@@ -14,13 +14,16 @@
 #import "TotalCell.h"
 #import "APIClient.h"
 #import "PaymentViewController.h"
+#import "EditShippingViewController.h"
+#import "PaymentItemCell.h"
 
-@interface CartViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, EditShippingViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet View *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *products;
+@property (strong, nonatomic) AWBilling *shipping;
 
 @end
 
@@ -29,10 +32,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    [self.tableView registerNib:[UINib nibWithNibName:@"PaymentItemCell" bundle:nil] forCellReuseIdentifier:@"PaymentItemCell"];
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro" detail:@"Free engraving x 1" price:[NSDecimalNumber decimalNumberWithString:@"399"]];
     Product *product1 = [[Product alloc] initWithName:@"HomePod" detail:@"White x 1" price:[NSDecimalNumber decimalNumberWithString:@"469"]];
-
     self.products = [@[product0, product1] mutableCopy];
 }
 
@@ -54,16 +56,69 @@
     if ([segue.identifier isEqualToString:@"checkout"]) {
         PaymentViewController *controller = (PaymentViewController *)segue.destinationViewController;
         controller.total = sender;
+    } else if ([segue.identifier isEqualToString:@"enterAddress"]) {
+        EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
+        controller.billing = sender;
+        controller.delegate = self;
     }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (section == 0) {
+        return 1;
+    }
     return self.products.count + 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 9;
+    }
+    return 24;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return nil;
+    }
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        PaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PaymentItemCell" forIndexPath:indexPath];
+        cell.titleLabel.text = @"Shipping";
+        AWBilling *shipping = self.shipping;
+        if (shipping) {
+            cell.selectionLabel.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@ %@", shipping.firstName, shipping.lastName, shipping.address.street, shipping.address.city, shipping.address.state, shipping.address.countryCode];
+            cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
+        } else {
+            cell.selectionLabel.text = @"Enter shipping information";
+            cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
+        }
+        cell.isLastCell = YES;
+        return cell;
+    }
+
     if (self.products.count == indexPath.row) {
         TotalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TotalCell" forIndexPath:indexPath];
         NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
@@ -83,6 +138,19 @@
         [strongSelf reloadData];
     };
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        [self performSegueWithIdentifier:@"enterAddress" sender:self.shipping];
+    }
+}
+
+- (void)editShippingViewController:(EditShippingViewController *)controller didSelectBilling:(AWBilling *)billing
+{
+    self.shipping = billing;
+    [self reloadData];
 }
 
 - (IBAction)checkoutPressed:(id)sender

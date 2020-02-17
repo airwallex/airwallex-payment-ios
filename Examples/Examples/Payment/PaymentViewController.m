@@ -60,7 +60,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"selectShipping"]) {
+    if ([segue.identifier isEqualToString:@"enterAddress"]) {
         EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
         controller.billing = sender;
         controller.delegate = self;
@@ -113,7 +113,7 @@
 {
     NSDictionary *item = self.items[indexPath.row];
     if ([item[@"title"] isEqualToString:@"Shipping"]) {
-        [self performSegueWithIdentifier:@"selectShipping" sender:self.billing];
+        [self performSegueWithIdentifier:@"enterAddress" sender:self.billing];
     } else {
         [self performSegueWithIdentifier:@"selectPayment" sender:self.paymentMethod];
     }
