@@ -66,9 +66,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"enterAddress"]) {
-        EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
-        controller.delegate = self;
-        controller.billing = self.currentBilling;
+//        EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
+//        controller.delegate = self;
+//        controller.billing = self.currentBilling;
     } else if ([segue.identifier isEqualToString:@"selectPayment"]) {
         PaymentListViewController *controller = (PaymentListViewController *)segue.destinationViewController;
         controller.delegate = self;
@@ -120,10 +120,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *item = self.items[indexPath.row];
-    if ([item[@"title"] isEqualToString:@"Shipping"]) {
+    if ([item[@"title"] isEqualToString:@"Billing"]) {
         [self performSegueWithIdentifier:@"enterAddress" sender:nil];
     } else {
-        [self performSegueWithIdentifier:@"selectPayment" sender:self.paymentMethod];
+        [self performSegueWithIdentifier:@"selectPayment" sender:nil];
     }
 }
 

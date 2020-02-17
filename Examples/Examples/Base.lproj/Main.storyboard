@@ -375,11 +375,28 @@
                         <outlet property="tableView" destination="nHt-RB-kLO" id="WPp-Gw-yLJ"/>
                         <outlet property="totalLabel" destination="j9M-Vc-C4U" id="h3z-Pr-oAA"/>
                         <segue destination="0CG-jD-zAj" kind="show" identifier="selectPayment" id="6bj-aA-Dsx"/>
+                        <segue destination="eqv-HV-iOh" kind="show" identifier="enterAddress" id="YNu-hL-C9A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TK3-X9-ogJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1882.608695652174" y="137.94642857142856"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="63x-G3-j6Y">
+            <objects>
+                <viewController id="eqv-HV-iOh" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eN6-8x-0hd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="B5Q-8B-yJk"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="fvd-a7-oUf"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jrF-du-CXm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3041" y="138"/>
         </scene>
         <!--Edit Shipping View Controller-->
         <scene sceneID="4dL-Xa-B4R">

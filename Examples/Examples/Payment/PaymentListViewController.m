@@ -53,19 +53,23 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         }
         
         AWGetPaymentMethodsResponse *result = (AWGetPaymentMethodsResponse *)response;
+
+        // Section 0
+        NSArray *cards = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+            AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
+            return [obj.type isEqualToString:@"card"];
+        }]];
+
+        // Section 1
         AWPaymentMethod *wechatpay = [AWPaymentMethod new];
         wechatpay.type = AWWechatpay;
         AWWechatPay *pay = [AWWechatPay new];
         pay.flow = @"inapp";
         wechatpay.wechatpay = pay;
-        NSArray *section0 = @[wechatpay];
-        NSArray *section1 = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-            AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
-            return [obj.type isEqualToString:@"card"];
-        }]];
+        NSArray *pays = @[wechatpay];
 
         __strong typeof(self) strongSelf = weakSelf;
-        strongSelf.paymentMethods = @[section0, section1];
+        strongSelf.paymentMethods = @[cards, pays];
         [strongSelf.tableView reloadData];
         [SVProgressHUD dismiss];
     }];
@@ -96,7 +100,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSArray *items = self.paymentMethods[section];
-    if (section == 1) {
+    if (section == 0) {
         return MAX(items.count, 1);
     }
     return items.count;
@@ -131,7 +135,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *items = self.paymentMethods[indexPath.section];
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0) {
         if (items.count == 0) {
             NoCardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoCardCell" forIndexPath:indexPath];
             cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
@@ -158,7 +162,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *items = self.paymentMethods[indexPath.section];
-    if (indexPath.section == 1 && items.count == 0) {
+    if (indexPath.section == 0 && items.count == 0) {
         return;
     }
 
