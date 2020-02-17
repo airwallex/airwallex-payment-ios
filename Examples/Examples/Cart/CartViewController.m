@@ -189,6 +189,7 @@
             configuration.intentId = result[@"id"];
             configuration.token = token;
             configuration.clientSecret = result[@"client_secret"];
+            configuration.currency = result[@"currency"];
 
             [SVProgressHUD dismiss];
 

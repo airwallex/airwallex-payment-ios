@@ -102,7 +102,7 @@
     } else {
         NSString *type = self.paymentMethod.type;
         if (type) {
-            if ([type isEqualToString:@"wechatpay"]) {
+            if ([type isEqualToString:AWWechatpay]) {
                 cell.selectionLabel.text = @"WeChat pay";
             } else {
                 cell.selectionLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
@@ -145,7 +145,7 @@
     paymentMethod.billing = self.currentBilling;
 
     // Just for wechat pay testing
-    if ([paymentMethod.type isEqualToString:@"wechatpay"]) {
+    if ([paymentMethod.type isEqualToString:AWWechatpay]) {
         paymentMethod.Id = nil;
         paymentMethod.wechatpay.flow = @"inapp";
     }

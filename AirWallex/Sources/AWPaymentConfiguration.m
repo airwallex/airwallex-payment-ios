@@ -27,6 +27,7 @@
     copy.intentId = self.intentId;
     copy.token = self.token;
     copy.clientSecret = self.clientSecret;
+    copy.currency = self.currency;
     return copy;
 }
 

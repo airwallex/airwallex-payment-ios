@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class AWPaymentMethod, PaymentListViewController;
-
 NS_ASSUME_NONNULL_BEGIN
+
+static NSString * const AWWechatpay = @"wechatpay";
+
+@class AWPaymentMethod, PaymentListViewController;
 
 @protocol PaymentListViewControllerDelegate <NSObject>
 
@@ -21,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PaymentListViewController : UIViewController
 
 @property (nonatomic, weak) id <PaymentListViewControllerDelegate> delegate;
-@property (nonatomic, strong) AWPaymentMethod *paymentMethod;
+@property (nonatomic, strong, nullable) AWPaymentMethod *paymentMethod;
 
 @end
 

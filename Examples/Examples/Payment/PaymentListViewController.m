@@ -13,12 +13,20 @@
 #import "CardViewController.h"
 #import "UIButton+Utils.h"
 
+static NSString * FormatPaymentMethodTypeString(NSString *type)
+{
+    if ([type isEqualToString:AWWechatpay]) {
+        return @"WeChat pay";
+    }
+    return nil;
+}
+
 @interface PaymentListViewController () <UITableViewDataSource, UITableViewDelegate, CardViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
-@property (nonatomic, strong) NSArray *paymentMethods;
+@property (strong, nonatomic) NSArray *paymentMethods;
 
 @end
 
@@ -27,13 +35,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.saveBarButtonItem.enabled = self.paymentMethod != nil;
     [self.saveButton setImageAndTitleHorizontalAlignmentCenter:8];
-    [self reload];
+    [self reloadData];
 }
 
-- (void)reload
+- (void)reloadData
 {
+    self.saveBarButtonItem.enabled = self.paymentMethod != nil;
     [SVProgressHUD show];
     AWAPIClient *client = [AWAPIClient new];
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
@@ -45,10 +53,12 @@
         }
         
         AWGetPaymentMethodsResponse *result = (AWGetPaymentMethodsResponse *)response;
-        NSArray *section0 = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-            AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
-            return [obj.type isEqualToString:@"wechatpay"];
-        }]];
+        AWPaymentMethod *wechatpay = [AWPaymentMethod new];
+        wechatpay.type = AWWechatpay;
+        AWWechatPay *pay = [AWWechatPay new];
+        pay.flow = @"inapp";
+        wechatpay.wechatpay = pay;
+        NSArray *section0 = @[wechatpay];
         NSArray *section1 = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
             AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
             return [obj.type isEqualToString:@"card"];
@@ -131,9 +141,9 @@
 
     AWPaymentMethod *method = items[indexPath.row];
     PaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PaymentMethodCell" forIndexPath:indexPath];
-    if ([method.type isEqualToString:@"wechatpay"]) {
+    if ([method.type isEqualToString:AWWechatpay]) {
         cell.logoImageView.image = [UIImage imageNamed:@"wc"];
-        cell.titleLabel.text = @"WeChat pay";
+        cell.titleLabel.text = FormatPaymentMethodTypeString(method.type);
     } else {
         cell.logoImageView.image = [UIImage imageNamed:method.card.brand];
         cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", method.card.brand.capitalizedString, method.card.last4];
@@ -154,12 +164,12 @@
 
     AWPaymentMethod *method = items[indexPath.row];
     self.paymentMethod = method;
-    self.saveBarButtonItem.enabled = self.paymentMethod != nil;
+    [self reloadData];
 }
 
 - (void)cardViewController:(CardViewController *)controller didCreatePaymentMethod:(nonnull AWPaymentMethod *)paymentMethod
 {
-    [self reload];
+    [self reloadData];
 }
 
 @end
