@@ -37,6 +37,7 @@
     self.totalLabel.text = self.total.string;
     self.items = @[@{@"title": @"Shipping", @"placeholder": @"Enter shipping information"},
                    @{@"title": @"Payment", @"placeholder": @"Select payment method"}];
+    [self.tableView registerNib:[UINib nibWithNibName:@"PaymentItemCell" bundle:nil] forCellReuseIdentifier:@"PaymentItemCell"];
     [self reloadData];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pop) name:@"PaymentCompleted" object:nil];
 }
