@@ -35,8 +35,8 @@
     [super viewDidLoad];
     [self.payButton setImageAndTitleHorizontalAlignmentCenter:8];
     self.totalLabel.text = self.total.string;
-    self.items = @[@{@"title": @"Shipping", @"placeholder": @"Enter shipping information"},
-                   @{@"title": @"Payment", @"placeholder": @"Select payment method"}];
+    self.items = @[@{@"title": @"Payment", @"placeholder": @"Select payment method"},
+                   @{@"title": @"Billing", @"placeholder": @"Enter shipping information"}];
     [self.tableView registerNib:[UINib nibWithNibName:@"PaymentItemCell" bundle:nil] forCellReuseIdentifier:@"PaymentItemCell"];
     [self reloadData];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pop) name:@"PaymentCompleted" object:nil];
@@ -54,20 +54,25 @@
 
 - (void)reloadData
 {
-    self.payButton.enabled = self.billing && self.paymentMethod.type;
+    self.payButton.enabled = self.currentBilling && self.paymentMethod;
     [self.tableView reloadData];
+}
+
+- (AWBilling *)currentBilling
+{
+    return self.sameAsShipping ? self.shipping : self.billing;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"enterAddress"]) {
         EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
-        controller.billing = sender;
         controller.delegate = self;
+        controller.billing = self.currentBilling;
     } else if ([segue.identifier isEqualToString:@"selectPayment"]) {
         PaymentListViewController *controller = (PaymentListViewController *)segue.destinationViewController;
         controller.delegate = self;
-        controller.paymentMethod = sender;
+        controller.paymentMethod = self.paymentMethod;
     }
 }
 
@@ -82,9 +87,12 @@
     NSDictionary *item = self.items[indexPath.row];
     NSString *title = item[@"title"];
     cell.titleLabel.text = title;
-    if ([title isEqualToString:@"Shipping"]) {
-        AWBilling *billing = self.billing;
-        if (billing) {
+    if ([title isEqualToString:@"Billing"]) {
+        AWBilling *billing = self.currentBilling;
+        if (self.sameAsShipping) {
+            cell.selectionLabel.text = @"Same as shipping information";
+            cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
+        } else if (billing) {
             cell.selectionLabel.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@ %@", billing.firstName, billing.lastName, billing.address.street, billing.address.city, billing.address.state, billing.address.countryCode];
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
         } else {
@@ -113,7 +121,7 @@
 {
     NSDictionary *item = self.items[indexPath.row];
     if ([item[@"title"] isEqualToString:@"Shipping"]) {
-        [self performSegueWithIdentifier:@"enterAddress" sender:self.billing];
+        [self performSegueWithIdentifier:@"enterAddress" sender:nil];
     } else {
         [self performSegueWithIdentifier:@"selectPayment" sender:self.paymentMethod];
     }
@@ -134,7 +142,7 @@
 - (IBAction)payPressed:(id)sender
 {
     AWPaymentMethod *paymentMethod = self.paymentMethod;
-    paymentMethod.billing = self.billing;
+    paymentMethod.billing = self.currentBilling;
 
     // Just for wechat pay testing
     if ([paymentMethod.type isEqualToString:@"wechatpay"]) {

@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet View *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet Button *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
 @property (strong, nonatomic) AWBilling *shipping;
 
@@ -36,12 +37,19 @@
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro" detail:@"Free engraving x 1" price:[NSDecimalNumber decimalNumberWithString:@"399"]];
     Product *product1 = [[Product alloc] initWithName:@"HomePod" detail:@"White x 1" price:[NSDecimalNumber decimalNumberWithString:@"469"]];
     self.products = [@[product0, product1] mutableCopy];
+    [self reloadData];
 }
 
 - (void)reloadData
 {
     self.badgeView.hidden = self.products.count == 0;
     self.badgeLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.products.count];
+
+    NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
+    NSDecimalNumber *shipping = [NSDecimalNumber zero];
+    NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
+
+    self.checkoutButton.enabled = self.shipping != nil && total.doubleValue != 0;
     [self.tableView reloadData];
 }
 
@@ -56,6 +64,8 @@
     if ([segue.identifier isEqualToString:@"checkout"]) {
         PaymentViewController *controller = (PaymentViewController *)segue.destinationViewController;
         controller.total = sender;
+        controller.sameAsShipping = YES;
+        controller.shipping = self.shipping;
     } else if ([segue.identifier isEqualToString:@"enterAddress"]) {
         EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
         controller.billing = sender;

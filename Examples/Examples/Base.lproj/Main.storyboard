@@ -280,6 +280,7 @@
                     <connections>
                         <outlet property="badgeLabel" destination="czL-OA-pH0" id="Zp2-Xp-i8d"/>
                         <outlet property="badgeView" destination="iGg-5K-pEc" id="Ry4-6g-ckh"/>
+                        <outlet property="checkoutButton" destination="w6M-w5-GdE" id="G6z-As-pH4"/>
                         <outlet property="tableView" destination="eCS-DG-9uu" id="txh-yI-DFo"/>
                         <segue destination="C8l-oS-OT5" kind="show" identifier="checkout" id="svb-b0-D2K"/>
                         <segue destination="dty-au-3mp" kind="show" identifier="enterAddress" id="aXH-3E-eSp"/>
