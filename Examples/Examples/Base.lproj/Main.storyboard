@@ -33,7 +33,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My cart" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emf-Qn-Zl3">
-                                            <rect key="frame" x="16" y="16" width="108" height="48"/>
+                                            <rect key="frame" x="16" y="16" width="116.5" height="48"/>
                                             <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="32"/>
                                             <color key="textColor" name="Black Text Color"/>
                                             <nil key="highlightedColor"/>
@@ -86,25 +86,25 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="AirPods Pro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwS-kV-rcA">
-                                                    <rect key="frame" x="16" y="16" width="315" height="21"/>
+                                                    <rect key="frame" x="16" y="16" width="312.5" height="23"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
                                                     <color key="textColor" name="Black Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$399.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irC-v0-rxQ">
-                                                    <rect key="frame" x="347" y="18.5" width="51" height="16.5"/>
+                                                    <rect key="frame" x="344.5" y="18.5" width="53.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Black Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Free engraving x 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Rw-H1-zCS">
-                                                    <rect key="frame" x="16" y="53" width="314" height="16.5"/>
+                                                    <rect key="frame" x="16" y="55" width="314" height="18"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Grey Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yD2-fF-CeK">
-                                                    <rect key="frame" x="346" y="47" width="52" height="29"/>
+                                                    <rect key="frame" x="346" y="49" width="52" height="30"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
                                                     <state key="normal" title="Remove">
                                                         <color key="titleColor" name="Purple Color"/>
@@ -114,7 +114,7 @@
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5HX-Cc-5H1" userLabel="Line">
-                                                    <rect key="frame" x="16" y="85.5" width="382" height="1"/>
+                                                    <rect key="frame" x="16" y="89" width="382" height="1"/>
                                                     <color key="backgroundColor" name="Line Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="lot-gG-dFc"/>
@@ -153,50 +153,50 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Subtotal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVR-Bl-NT8">
-                                                    <rect key="frame" x="16" y="16" width="315" height="16.5"/>
+                                                    <rect key="frame" x="16" y="16" width="312.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Grey Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$868.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9G-2V-mGn">
-                                                    <rect key="frame" x="347" y="16" width="51" height="16.5"/>
+                                                    <rect key="frame" x="344.5" y="16" width="53.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Black Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P9G-84-D0E">
-                                                    <rect key="frame" x="16" y="48.5" width="338.5" height="16.5"/>
+                                                    <rect key="frame" x="16" y="50" width="337.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Grey Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Free" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZA-x4-dXt">
-                                                    <rect key="frame" x="370.5" y="48.5" width="27.5" height="16.5"/>
+                                                    <rect key="frame" x="369.5" y="50" width="28.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Black Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xp4-as-KUI" userLabel="Line">
-                                                    <rect key="frame" x="16" y="81" width="382" height="1"/>
+                                                    <rect key="frame" x="16" y="84" width="382" height="1"/>
                                                     <color key="backgroundColor" name="Line Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="P1I-zy-b1g"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axE-HU-4dc">
-                                                    <rect key="frame" x="16" y="102" width="311" height="16.5"/>
+                                                    <rect key="frame" x="16" y="105" width="308.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Black Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$868.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5E-nF-vKe">
-                                                    <rect key="frame" x="347" y="102" width="51" height="16.5"/>
+                                                    <rect key="frame" x="344.5" y="105" width="53.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Black Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lco-dt-qnc" userLabel="Line">
-                                                    <rect key="frame" x="0.0" y="138.5" width="414" height="1"/>
+                                                    <rect key="frame" x="0.0" y="143" width="414" height="1"/>
                                                     <color key="backgroundColor" name="Line Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="JaA-u6-Xjy"/>
@@ -306,13 +306,13 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$868.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j9M-Vc-C4U">
-                                            <rect key="frame" x="16" y="20" width="382" height="47"/>
+                                            <rect key="frame" x="16" y="20" width="382" height="51"/>
                                             <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="40"/>
                                             <color key="textColor" name="Black Text Color"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrA-E1-GOK">
-                                            <rect key="frame" x="16" y="78" width="382" height="16.5"/>
+                                            <rect key="frame" x="16" y="82" width="382" height="18"/>
                                             <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                             <color key="textColor" name="Black Text Color"/>
                                             <nil key="highlightedColor"/>
@@ -380,23 +380,233 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TK3-X9-ogJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1882.608695652174" y="137.94642857142856"/>
+            <point key="canvasLocation" x="1935" y="138"/>
         </scene>
-        <!--View Controller-->
+        <!--Edit Billing View Controller-->
         <scene sceneID="63x-G3-j6Y">
             <objects>
-                <viewController id="eqv-HV-iOh" sceneMemberID="viewController">
+                <viewController id="eqv-HV-iOh" customClass="EditBillingViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eN6-8x-0hd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCT-ai-gN3">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dAI-Q7-mDJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="668.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Billing info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HRO-me-gZg">
+                                                <rect key="frame" x="16" y="7" width="382" height="40.5"/>
+                                                <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="32"/>
+                                                <color key="textColor" name="Black Text Color"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dd4-eU-off" userLabel="Switch">
+                                                <rect key="frame" x="0.0" y="54.5" width="414" height="58"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Same as shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hkc-Yb-hTi">
+                                                        <rect key="frame" x="16" y="20" width="317" height="18"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YFf-qY-3FS">
+                                                        <rect key="frame" x="349" y="13.5" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="switchChanged:" destination="eqv-HV-iOh" eventType="valueChanged" id="IcD-Sj-19M"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="Hkc-Yb-hTi" firstAttribute="centerY" secondItem="dd4-eU-off" secondAttribute="centerY" id="7Fq-vD-HYq"/>
+                                                    <constraint firstItem="YFf-qY-3FS" firstAttribute="leading" secondItem="Hkc-Yb-hTi" secondAttribute="trailing" constant="16" id="Jtu-IS-TKT"/>
+                                                    <constraint firstItem="Hkc-Yb-hTi" firstAttribute="leading" secondItem="dd4-eU-off" secondAttribute="leading" constant="16" id="Pb1-om-8OZ"/>
+                                                    <constraint firstAttribute="height" constant="58" id="WMU-zt-VIf"/>
+                                                    <constraint firstItem="YFf-qY-3FS" firstAttribute="centerY" secondItem="dd4-eU-off" secondAttribute="centerY" id="geQ-Hg-BWz"/>
+                                                    <constraint firstAttribute="trailing" secondItem="YFf-qY-3FS" secondAttribute="trailing" constant="16" id="kKg-Qi-Sba"/>
+                                                </constraints>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NXx-eS-5iH">
+                                                <rect key="frame" x="0.0" y="128.5" width="414" height="540"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fpE-4h-CVK" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="66B-4o-FG6"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="First name"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Charlie"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JB0-Ul-Ua6" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="60" width="414" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="vGX-SU-cud"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Last name"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Lang"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4NP-tH-TCI" customClass="FloatLabeledView">
+                                                        <rect key="frame" x="0.0" y="120" width="414" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <gestureRecognizers/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="sCp-3k-Ygv"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Country / Region"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <outletCollection property="gestureRecognizers" destination="mta-qT-eYF" appends="YES" id="wxV-iv-bHm"/>
+                                                        </connections>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdQ-Lq-iPQ" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="180" width="414" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="2bd-iL-V7d"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="State"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Victoria"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Dc-Bg-bjm" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="240" width="414" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="rY4-At-0B2"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="City"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Melbourne"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9h-Y4-Fmm" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="300" width="414" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="N16-6v-cmx"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Street"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="7/15 William St"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7d3-iO-7lf" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="360" width="414" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="pdE-CF-8GI"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Zip code (optional)"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mm5-xQ-4BM" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="420" width="414" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="nvL-uy-kmt"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Email"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="aac@gmail.com"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="keyboardType">
+                                                                <integer key="value" value="7"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dee-zc-cTk" customClass="FloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="480" width="414" height="60"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="anp-cr-FTd"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Phone number (optional)"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="keyboardType">
+                                                                <integer key="value" value="5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="18244320094"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="HRO-me-gZg" secondAttribute="trailing" constant="16" id="6xc-5c-tct"/>
+                                            <constraint firstItem="dd4-eU-off" firstAttribute="leading" secondItem="dAI-Q7-mDJ" secondAttribute="leading" id="Gtj-4R-3g2"/>
+                                            <constraint firstAttribute="trailing" secondItem="dd4-eU-off" secondAttribute="trailing" id="J80-oJ-MEb"/>
+                                            <constraint firstItem="NXx-eS-5iH" firstAttribute="leading" secondItem="dAI-Q7-mDJ" secondAttribute="leading" id="PIQ-ap-rAl"/>
+                                            <constraint firstAttribute="bottom" secondItem="NXx-eS-5iH" secondAttribute="bottom" id="cY0-04-gP5"/>
+                                            <constraint firstItem="dd4-eU-off" firstAttribute="top" secondItem="HRO-me-gZg" secondAttribute="bottom" constant="7" id="dIA-wj-d74"/>
+                                            <constraint firstItem="NXx-eS-5iH" firstAttribute="top" secondItem="dd4-eU-off" secondAttribute="bottom" constant="16" id="elt-gt-AXA"/>
+                                            <constraint firstItem="HRO-me-gZg" firstAttribute="top" secondItem="dAI-Q7-mDJ" secondAttribute="top" constant="7" id="ieq-3s-krc"/>
+                                            <constraint firstAttribute="trailing" secondItem="NXx-eS-5iH" secondAttribute="trailing" id="nvR-V1-4PK"/>
+                                            <constraint firstItem="HRO-me-gZg" firstAttribute="leading" secondItem="dAI-Q7-mDJ" secondAttribute="leading" constant="16" id="qjt-q2-QgI"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="dAI-Q7-mDJ" firstAttribute="trailing" secondItem="mFC-Hm-5GO" secondAttribute="trailing" id="68Q-WQ-7re"/>
+                                    <constraint firstItem="E8z-bb-llk" firstAttribute="bottom" secondItem="dAI-Q7-mDJ" secondAttribute="bottom" id="PtW-xL-xtt"/>
+                                    <constraint firstItem="dAI-Q7-mDJ" firstAttribute="top" secondItem="E8z-bb-llk" secondAttribute="top" id="QiV-F9-uxG"/>
+                                    <constraint firstItem="dAI-Q7-mDJ" firstAttribute="leading" secondItem="gCT-ai-gN3" secondAttribute="leading" id="iVK-MG-O4l"/>
+                                    <constraint firstAttribute="trailing" secondItem="dAI-Q7-mDJ" secondAttribute="trailing" id="k8A-2A-Tvl"/>
+                                    <constraint firstItem="dAI-Q7-mDJ" firstAttribute="leading" secondItem="mFC-Hm-5GO" secondAttribute="leading" id="mmt-S0-IGg"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="E8z-bb-llk"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="mFC-Hm-5GO"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="gCT-ai-gN3" firstAttribute="leading" secondItem="B5Q-8B-yJk" secondAttribute="leading" id="MDc-GB-NJi"/>
+                            <constraint firstItem="gCT-ai-gN3" firstAttribute="top" secondItem="B5Q-8B-yJk" secondAttribute="top" id="R5h-wO-1wU"/>
+                            <constraint firstItem="gCT-ai-gN3" firstAttribute="trailing" secondItem="B5Q-8B-yJk" secondAttribute="trailing" id="fLe-2z-zA3"/>
+                            <constraint firstItem="gCT-ai-gN3" firstAttribute="bottom" secondItem="B5Q-8B-yJk" secondAttribute="bottom" id="hYF-CZ-mff"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="B5Q-8B-yJk"/>
                     </view>
-                    <navigationItem key="navigationItem" id="fvd-a7-oUf"/>
+                    <navigationItem key="navigationItem" id="fvd-a7-oUf">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="8PK-Mm-eAl">
+                            <connections>
+                                <action selector="savePressed:" destination="eqv-HV-iOh" id="4L8-xG-0ra"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="billingView" destination="NXx-eS-5iH" id="ynC-Kv-JOz"/>
+                        <outlet property="cityField" destination="8Dc-Bg-bjm" id="Wkd-b6-Ffg"/>
+                        <outlet property="countryView" destination="4NP-tH-TCI" id="z8u-xF-UVt"/>
+                        <outlet property="emailField" destination="Mm5-xQ-4BM" id="ktd-ha-vnj"/>
+                        <outlet property="firstNameField" destination="fpE-4h-CVK" id="aem-k6-OrY"/>
+                        <outlet property="lastNameField" destination="JB0-Ul-Ua6" id="TfD-Mg-p4L"/>
+                        <outlet property="phoneNumberField" destination="Dee-zc-cTk" id="ZZj-76-I4o"/>
+                        <outlet property="stateField" destination="bdQ-Lq-iPQ" id="Zpz-QR-6Wr"/>
+                        <outlet property="streetField" destination="m9h-Y4-Fmm" id="wTS-jh-P4a"/>
+                        <outlet property="switchButton" destination="YFf-qY-3FS" id="gKV-dx-hhx"/>
+                        <outlet property="zipcodeField" destination="7d3-iO-7lf" id="RVS-9P-ZDZ"/>
+                        <segue destination="Iid-Dv-Yq2" kind="presentation" identifier="selectCountries" id="UwH-3F-2JI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jrF-du-CXm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="mta-qT-eYF">
+                    <connections>
+                        <action selector="selectCountries:" destination="eqv-HV-iOh" id="fud-67-IgK"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3041" y="138"/>
+            <point key="canvasLocation" x="1935" y="883"/>
         </scene>
         <!--Edit Shipping View Controller-->
         <scene sceneID="4dL-Xa-B4R">
@@ -410,25 +620,25 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9Y-b4-PeV">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="844.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="851.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pkb-Xv-c2m">
-                                                <rect key="frame" x="16" y="16" width="382" height="37.5"/>
+                                                <rect key="frame" x="16" y="16" width="382" height="40.5"/>
                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="32"/>
                                                 <color key="textColor" name="Black Text Color"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="OOQ-5G-coA">
-                                                <rect key="frame" x="16" y="86.5" width="382" height="742"/>
+                                                <rect key="frame" x="16" y="89.5" width="382" height="746"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTV-yf-Fex">
-                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="21"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="23"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRL-ff-vWU" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="37" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="39" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="f5n-3l-sMU"/>
@@ -439,7 +649,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ocx-SP-87u" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="113" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="115" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="giV-6G-IHF"/>
@@ -450,7 +660,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9MC-zi-0gK" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="189" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="191" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="ej3-xg-xtp"/>
@@ -464,7 +674,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6NK-gy-W8J" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="265" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="267" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="VYE-Dg-ntT"/>
@@ -477,13 +687,13 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zgb-dX-3eU">
-                                                        <rect key="frame" x="0.0" y="341" width="382" height="21"/>
+                                                        <rect key="frame" x="0.0" y="343" width="382" height="23"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mNZ-Y0-No9" customClass="FloatLabeledView">
-                                                        <rect key="frame" x="0.0" y="378" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="382" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <gestureRecognizers/>
                                                         <constraints>
@@ -497,7 +707,7 @@
                                                         </connections>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A0h-F3-nGm" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="454" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="458" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="tYE-be-ku1"/>
@@ -508,7 +718,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nh3-mU-v1J" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="530" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="534" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="F2n-Sb-bP5"/>
@@ -519,7 +729,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="699-9u-Gzf" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="606" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="610" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="U8z-lv-LSq"/>
@@ -530,7 +740,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fU6-wB-8HT" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="682" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="686" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="jG5-pg-h2Q"/>
@@ -608,7 +818,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1048" y="898"/>
+            <point key="canvasLocation" x="1048" y="883"/>
         </scene>
         <!--Country List View Controller-->
         <scene sceneID="WbO-R2-oUw">
@@ -668,7 +878,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hog-G5-TD0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2735" y="1738"/>
+            <point key="canvasLocation" x="2296" y="1684"/>
         </scene>
         <!--Payment List View Controller-->
         <scene sceneID="58O-K9-j5e">
@@ -716,7 +926,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeChat pay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45Y-s7-kkY">
-                                                    <rect key="frame" x="79" y="21.5" width="303" height="16.5"/>
+                                                    <rect key="frame" x="79" y="20.5" width="303" height="18"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Black Text Color"/>
                                                     <nil key="highlightedColor"/>
@@ -729,7 +939,7 @@
                                                     </constraints>
                                                 </view>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick" translatesAutoresizingMaskIntoConstraints="NO" id="sSW-F3-DM1">
-                                                    <rect key="frame" x="366" y="14.5" width="32" height="32"/>
+                                                    <rect key="frame" x="382" y="22.5" width="16" height="16"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -755,20 +965,20 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoCardCell" id="dys-wN-2Wt" customClass="NoCardCell">
-                                        <rect key="frame" x="0.0" y="174.5" width="414" height="56.5"/>
+                                        <rect key="frame" x="0.0" y="174.5" width="414" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dys-wN-2Wt" id="3Xl-vv-7bV">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No saved cards" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SP2-ef-2k0">
-                                                    <rect key="frame" x="16" y="20" width="382" height="16.5"/>
+                                                    <rect key="frame" x="16" y="20" width="382" height="18"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Black Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ouq-gt-pza" userLabel="Line">
-                                                    <rect key="frame" x="16" y="55.5" width="382" height="1"/>
+                                                    <rect key="frame" x="16" y="57" width="382" height="1"/>
                                                     <color key="backgroundColor" name="Line Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="aL6-1D-pFO"/>
@@ -814,7 +1024,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Px1-RL-zGb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1883" y="898"/>
+            <point key="canvasLocation" x="1935" y="-603"/>
         </scene>
         <!--Card View Controller-->
         <scene sceneID="gjW-GF-rFa">
@@ -828,16 +1038,16 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YS0-Zp-qAM">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="982.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="351.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQB-ad-hmT">
-                                                <rect key="frame" x="16" y="16" width="382" height="37.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQB-ad-hmT">
+                                                <rect key="frame" x="16" y="16" width="382" height="40.5"/>
                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="32"/>
                                                 <color key="textColor" name="Black Text Color"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="IoJ-2e-Nyb">
-                                                <rect key="frame" x="16" y="69.5" width="382" height="897"/>
+                                                <rect key="frame" x="16" y="72.5" width="382" height="263"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dVL-wB-XF0" customClass="CardTextField">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="60"/>
@@ -888,119 +1098,25 @@
                                                             <constraint firstAttribute="height" constant="60" id="5RJ-Dl-KqL"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Billing info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNx-NY-MuO">
-                                                        <rect key="frame" x="0.0" y="219" width="382" height="21"/>
-                                                        <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
-                                                        <color key="textColor" name="Black Text Color"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fpE-4h-CVK" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="253" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ets-sp-6tG" customClass="Button">
+                                                        <rect key="frame" x="0.0" y="219" width="382" height="44"/>
+                                                        <color key="backgroundColor" name="Purple Color"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="66B-4o-FG6"/>
+                                                            <constraint firstAttribute="height" constant="44" id="G7N-mi-Nen"/>
                                                         </constraints>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
+                                                        <state key="normal" title="Enter a new card">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="First name"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Charlie"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JB0-Ul-Ua6" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="326" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="vGX-SU-cud"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Last name"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Lang"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4NP-tH-TCI" customClass="FloatLabeledView">
-                                                        <rect key="frame" x="0.0" y="399" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        <gestureRecognizers/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="sCp-3k-Ygv"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Country / Region"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="6"/>
+                                                            </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <outletCollection property="gestureRecognizers" destination="A31-6a-pLA" appends="YES" id="g6R-76-Qsm"/>
+                                                            <action selector="savePressed:" destination="obB-hr-F6n" eventType="touchUpInside" id="YQK-5n-x4d"/>
                                                         </connections>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdQ-Lq-iPQ" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="472" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="2bd-iL-V7d"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="State"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Victoria"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Dc-Bg-bjm" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="545" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="rY4-At-0B2"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="City"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Melbourne"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9h-Y4-Fmm" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="618" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="N16-6v-cmx"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Street"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="7/15 William St"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7d3-iO-7lf" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="691" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="pdE-CF-8GI"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Zip code (optional)"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mm5-xQ-4BM" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="764" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="nvL-uy-kmt"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Email"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="aac@gmail.com"/>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="keyboardType">
-                                                                <integer key="value" value="7"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dee-zc-cTk" customClass="FloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="837" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="anp-cr-FTd"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Phone number (optional)"/>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="keyboardType">
-                                                                <integer key="value" value="5"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="18244320094"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
+                                                    </button>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
@@ -1043,38 +1159,17 @@
                                 <action selector="closePressed:" destination="obB-hr-F6n" id="otE-3N-veU"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="PAw-gp-jI5">
-                            <connections>
-                                <action selector="savePressed:" destination="obB-hr-F6n" id="PlS-44-RTh"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cardNoField" destination="dVL-wB-XF0" id="MRN-Sn-gMI"/>
-                        <outlet property="cityField" destination="8Dc-Bg-bjm" id="0x6-Nm-J4c"/>
-                        <outlet property="countryView" destination="4NP-tH-TCI" id="Fch-yv-cF1"/>
                         <outlet property="cvcField" destination="qD4-FV-1Wp" id="pfA-y1-QTT"/>
-                        <outlet property="emailField" destination="Mm5-xQ-4BM" id="b05-aV-0Fs"/>
                         <outlet property="expiresField" destination="5OG-JM-JVq" id="fxU-ut-Zqm"/>
-                        <outlet property="firstNameField" destination="fpE-4h-CVK" id="7qH-NF-h6J"/>
-                        <outlet property="lastNameField" destination="JB0-Ul-Ua6" id="XVm-s2-14N"/>
                         <outlet property="nameField" destination="Z38-ER-Mwc" id="TbT-Tf-uIl"/>
-                        <outlet property="phoneNumberField" destination="Dee-zc-cTk" id="WY6-XZ-afR"/>
-                        <outlet property="saveBarButtonItem" destination="PAw-gp-jI5" id="wEL-bZ-4S9"/>
-                        <outlet property="stateField" destination="bdQ-Lq-iPQ" id="Ukw-Ug-LAm"/>
-                        <outlet property="streetField" destination="m9h-Y4-Fmm" id="WQo-SB-pgv"/>
-                        <outlet property="zipcodeField" destination="7d3-iO-7lf" id="bo8-Ja-ktS"/>
-                        <segue destination="Iid-Dv-Yq2" kind="presentation" identifier="selectCountries" id="Jrc-u9-D1K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="35f-8E-cPB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="A31-6a-pLA">
-                    <connections>
-                        <action selector="selectCountries:" destination="obB-hr-F6n" id="FAv-OP-Tv8"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3831.884057971015" y="897.99107142857133"/>
+            <point key="canvasLocation" x="3732" y="-603"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iHb-BI-1x5">
@@ -1110,7 +1205,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zf7-I9-U2L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1883" y="1738"/>
+            <point key="canvasLocation" x="1468" y="1684"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LPr-cX-VFY">
@@ -1128,7 +1223,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Agn-4y-DHJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3040.579710144928" y="897.99107142857133"/>
+            <point key="canvasLocation" x="2832" y="-603"/>
         </scene>
     </scenes>
     <resources>
@@ -1160,7 +1255,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Qjr-7g-QqJ"/>
+        <segue reference="UwH-3F-2JI"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Purple Color"/>
 </document>

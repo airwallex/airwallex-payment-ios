@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWPaymentMethod : NSObject <AWJSONifiable, AWParseable>
 
 @property (nonatomic, strong, nullable) NSString *Id;
-@property (nonatomic, strong) AWBilling *billing;
+@property (nonatomic, strong, nullable) AWBilling *billing;
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, strong, nullable) AWCard *card;
 @property (nonatomic, strong, nullable) AWWechatPay *wechatpay;
