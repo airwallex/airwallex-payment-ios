@@ -700,31 +700,6 @@
                                         <constraint firstItem="QPY-A1-g0y" firstAttribute="leading" secondItem="C84-9H-Jeh" secondAttribute="leading" constant="16" id="nUb-x5-lXe"/>
                                     </constraints>
                                 </view>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="TGF-T7-huQ">
-                                    <rect key="frame" x="0.0" y="240" width="414" height="165"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGg-0F-JHB">
-                                            <rect key="frame" x="28" y="16" width="115" height="32"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="115" id="650-qk-dsi"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
-                                            <state key="normal" title="Add new card" image="add">
-                                                <color key="titleColor" name="Purple Color"/>
-                                            </state>
-                                            <connections>
-                                                <segue destination="Ya5-gU-Lzc" kind="presentation" identifier="addCard" id="ggG-NH-K0l"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="AGg-0F-JHB" firstAttribute="top" secondItem="TGF-T7-huQ" secondAttribute="top" constant="16" id="5aF-Hz-nIF"/>
-                                        <constraint firstItem="AGg-0F-JHB" firstAttribute="leading" secondItem="TGF-T7-huQ" secondAttribute="leading" constant="28" id="Oaw-oc-gk0"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="AGg-0F-JHB" secondAttribute="bottom" constant="16" id="ojS-UM-Z1y"/>
-                                    </constraints>
-                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PaymentMethodCell" rowHeight="61" id="Enc-5r-AhC" customClass="PaymentMethodCell">
                                         <rect key="frame" x="0.0" y="113.5" width="414" height="61"/>
@@ -831,17 +806,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sba-wc-3DY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="kDA-EJ-Zye">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="Ai0-oa-jAs">
-                            <connections>
-                                <action selector="savePressed:" destination="0CG-jD-zAj" id="5FB-SX-v8I"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="kDA-EJ-Zye"/>
                     <connections>
-                        <outlet property="saveBarButtonItem" destination="Ai0-oa-jAs" id="xgt-UT-GbZ"/>
-                        <outlet property="saveButton" destination="AGg-0F-JHB" id="IQQ-7M-Tn8"/>
                         <outlet property="tableView" destination="8Cx-XY-2TG" id="cxZ-0C-jK6"/>
+                        <segue destination="Ya5-gU-Lzc" kind="presentation" identifier="addCard" id="c9n-pt-zqQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Px1-RL-zGb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1164,7 +1132,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="16" height="16"/>
         <image name="close" width="24" height="24"/>
         <image name="lock-grey" width="16" height="16"/>
         <image name="lock-white" width="16" height="16"/>

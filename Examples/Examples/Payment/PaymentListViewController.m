@@ -24,8 +24,6 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 @interface PaymentListViewController () <UITableViewDataSource, UITableViewDelegate, CardViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (strong, nonatomic) NSArray *paymentMethods;
 
 @end
@@ -35,13 +33,11 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.saveButton setImageAndTitleHorizontalAlignmentCenter:8];
     [self reloadData];
 }
 
 - (void)reloadData
 {
-    self.saveBarButtonItem.enabled = self.paymentMethod != nil;
     [SVProgressHUD show];
     AWAPIClient *client = [AWAPIClient new];
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
@@ -84,12 +80,9 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     }
 }
 
-- (IBAction)savePressed:(id)sender
+- (void)newPressed:(id)sender
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(paymentListViewController:didSelectMethod:)]) {
-        [self.delegate paymentListViewController:self didSelectMethod:self.paymentMethod];
-    }
-    [self.navigationController popViewControllerAnimated:YES];
+    [self performSegueWithIdentifier:@"addCard" sender:nil];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -111,7 +104,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     if (section == 0) {
         return 9;
     }
-    return 24;
+    return 14;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -124,11 +117,30 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
+    if (section == 0) {
+        return 60;
+    }
     return 1;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
+    if (section == 0) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 56)];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(16, 8, CGRectGetWidth(self.view.bounds) - 32, 44);
+        button.layer.cornerRadius = 6;
+        button.layer.borderWidth = 1;
+        button.layer.borderColor = [UIColor colorNamed:@"Line Color"].CGColor;
+        button.layer.masksToBounds = YES;
+        [button setTitle:@"Enter a new card" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorNamed:@"Purple Color"] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont fontWithName:@"CircularStd-Bold" size:14];
+        button.backgroundColor = [UIColor clearColor];
+        [button addTarget:self action:@selector(newPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:button];
+        return view;
+    }
     return nil;
 }
 
@@ -168,7 +180,11 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
     AWPaymentMethod *method = items[indexPath.row];
     self.paymentMethod = method;
-    [self reloadData];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(paymentListViewController:didSelectMethod:)]) {
+        [self.delegate paymentListViewController:self didSelectMethod:self.paymentMethod];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)cardViewController:(CardViewController *)controller didCreatePaymentMethod:(nonnull AWPaymentMethod *)paymentMethod
