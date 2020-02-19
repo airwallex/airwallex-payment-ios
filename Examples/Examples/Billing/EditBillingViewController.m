@@ -16,7 +16,7 @@
 @interface EditBillingViewController () <CountryListViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UISwitch *switchButton;
-@property (weak, nonatomic) IBOutlet UIStackView *billingView;
+@property (weak, nonatomic) IBOutlet UIView *billingView;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *firstNameField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *lastNameField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *stateField;
@@ -36,10 +36,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.switchButton.on = self.sameAsShipping;
+    self.billingView.hidden = self.sameAsShipping;
 }
 
 - (IBAction)savePressed:(id)sender
 {
+    if (self.sameAsShipping) {
+        self.billing = nil;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(didEndEditingBillingViewController:)]) {
+            [self.delegate didEndEditingBillingViewController:self];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+
     AWBilling *billing = [AWBilling new];
     billing.firstName = self.firstNameField.text;
     billing.lastName = self.lastNameField.text;
@@ -58,10 +69,17 @@
         return;
     }
 
+    self.billing = billing;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didEndEditingBillingViewController:)]) {
+        [self.delegate didEndEditingBillingViewController:self];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)switchChanged:(id)sender
 {
+    self.sameAsShipping = self.switchButton.isOn;
+    self.billingView.hidden = self.switchButton.isOn;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

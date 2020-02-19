@@ -11,13 +11,13 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "WXApi.h"
 #import "PaymentItemCell.h"
-#import "EditShippingViewController.h"
+#import "EditBillingViewController.h"
 #import "PaymentListViewController.h"
 #import "NSNumber+Utils.h"
 #import "Widgets.h"
 #import "UIButton+Utils.h"
 
-@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditShippingViewControllerDelegate, PaymentListViewControllerDelegate>
+@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditBillingViewControllerDelegate, PaymentListViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -66,9 +66,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"enterAddress"]) {
-//        EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
-//        controller.delegate = self;
-//        controller.billing = self.currentBilling;
+        EditBillingViewController *controller = (EditBillingViewController *)segue.destinationViewController;
+        controller.delegate = self;
+        controller.billing = self.currentBilling;
+        controller.sameAsShipping = self.sameAsShipping;
     } else if ([segue.identifier isEqualToString:@"selectPayment"]) {
         PaymentListViewController *controller = (PaymentListViewController *)segue.destinationViewController;
         controller.delegate = self;
@@ -127,9 +128,10 @@
     }
 }
 
-- (void)editShippingViewController:(EditShippingViewController *)controller didSelectBilling:(AWBilling *)billing
+- (void)didEndEditingBillingViewController:(EditBillingViewController *)controller
 {
-    self.billing = billing;
+    self.billing = controller.billing;
+    self.sameAsShipping = controller.sameAsShipping;
     [self reloadData];
 }
 
