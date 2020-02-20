@@ -15,11 +15,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PaymentItemCell" rowHeight="120" id="9lW-Ty-4Ia" customClass="PaymentItemCell">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PaymentItemCell" rowHeight="181" id="9lW-Ty-4Ia" customClass="PaymentItemCell">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="181"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9lW-Ty-4Ia" id="Ewa-ma-Kkg">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="181"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdx-0D-sWD">
@@ -72,7 +72,7 @@
                     <constraint firstAttribute="trailing" secondItem="5Xz-B8-AK1" secondAttribute="trailing" constant="16" id="Bjp-wJ-B9b"/>
                     <constraint firstItem="b13-3m-bqN" firstAttribute="bottom" secondItem="Sdx-0D-sWD" secondAttribute="bottom" id="TI3-yd-375"/>
                     <constraint firstAttribute="trailing" secondItem="z71-rs-5lK" secondAttribute="trailing" constant="16" id="Ugr-GH-sts"/>
-                    <constraint firstItem="5Xz-B8-AK1" firstAttribute="top" secondItem="Sdx-0D-sWD" secondAttribute="bottom" constant="72" id="Vdk-Zx-tkH"/>
+                    <constraint firstItem="5Xz-B8-AK1" firstAttribute="top" secondItem="Sdx-0D-sWD" secondAttribute="bottom" priority="999" constant="72" id="Vdk-Zx-tkH"/>
                     <constraint firstItem="5Xz-B8-AK1" firstAttribute="top" secondItem="Dkg-Kv-pfc" secondAttribute="bottom" id="WSo-JB-uVQ"/>
                     <constraint firstItem="Dkg-Kv-pfc" firstAttribute="leading" secondItem="Ewa-ma-Kkg" secondAttribute="leading" constant="16" id="WaZ-ZS-u3t"/>
                     <constraint firstItem="z71-rs-5lK" firstAttribute="centerY" secondItem="b13-3m-bqN" secondAttribute="centerY" id="a7T-Tp-FL2"/>
@@ -93,7 +93,7 @@
                 <outlet property="selectionLabel" destination="b13-3m-bqN" id="BU2-FG-VpC"/>
                 <outlet property="titleLabel" destination="Sdx-0D-sWD" id="hFx-f4-Xiw"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="170.08928571428569"/>
+            <point key="canvasLocation" x="137.68115942028987" y="189.84375"/>
         </tableViewCell>
     </objects>
     <resources>
