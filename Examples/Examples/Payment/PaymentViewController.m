@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSArray *items;
 @property (strong, nonatomic) AWBilling *billing;
 @property (strong, nonatomic) AWPaymentMethod *paymentMethod;
+@property (strong, nonatomic) NSString *cvc;
 
 @end
 
@@ -54,7 +55,7 @@
 
 - (void)reloadData
 {
-    self.payButton.enabled = self.currentBilling && self.paymentMethod;
+    self.payButton.enabled = self.currentBilling && self.paymentMethod && (self.paymentMethod.card.cvc || self.cvc);
     [self.tableView reloadData];
 }
 
@@ -86,6 +87,7 @@
 {
     PaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PaymentItemCell" forIndexPath:indexPath];
     cell.delegate = self;
+    cell.cvcField.text = self.cvc;
     NSDictionary *item = self.items[indexPath.row];
     NSString *title = item[@"title"];
     cell.titleLabel.text = title;
@@ -148,19 +150,13 @@
 
 - (void)paymentItemCell:(id)cell didEnterCVC:(NSString *)cvc
 {
-    self.paymentMethod.card.cvc = cvc;
+    self.cvc = cvc;
 }
 
 - (IBAction)payPressed:(id)sender
 {
     AWPaymentMethod *paymentMethod = self.paymentMethod;
     paymentMethod.billing = self.currentBilling;
-//
-//    // Just for wechat pay testing
-//    if ([paymentMethod.type isEqualToString:AWWechatpay]) {
-//        paymentMethod.Id = nil;
-//        paymentMethod.wechatpay.flow = @"inapp";
-//    }
 
     AWAPIClient *client = [AWAPIClient new];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];

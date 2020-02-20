@@ -8,6 +8,12 @@
 
 #import "AWPaymentConfiguration.h"
 
+@interface AWPaymentConfiguration ()
+
+@property (nonatomic, strong) NSMutableDictionary *cacheInfo;
+
+@end
+
 @implementation AWPaymentConfiguration
 
 + (instancetype)sharedConfiguration
@@ -18,6 +24,25 @@
         sharedConfiguration = [self new];
     });
     return sharedConfiguration;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.cacheInfo = [@{} mutableCopy];
+    }
+    return self;
+}
+
+- (void)cache:(NSString *)key value:(NSString *)value
+{
+    self.cacheInfo[key] = value;
+}
+
+- (NSString *)cacheWithKey:(NSString *)key
+{
+    return self.cacheInfo[key];
 }
 
 - (id)copyWithZone:(__unused NSZone *)zone

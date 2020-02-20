@@ -38,6 +38,20 @@
 
 - (IBAction)savePressed:(id)sender
 {
+    // Fake billing data
+    AWBilling *billing = [AWBilling new];
+    billing.firstName = @"Charlie";
+    billing.lastName = @"Lang";
+    billing.email = @"jim631@sina.com";
+    billing.phoneNumber = @"";
+    AWAddress *address = [AWAddress new];
+    address.countryCode = @"AI";
+    address.state = @"Victoria";
+    address.city = @"Melbourne";
+    address.street = @"7\\/15 William St";
+    address.postcode = @"";
+    billing.address = address;
+
     AWCard *card = [AWCard new];
     card.name = self.nameField.text;
     card.number = [self.cardNoField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -48,6 +62,7 @@
     AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
     paymentMethod.type = @"card";
     paymentMethod.card = card;
+    paymentMethod.billing = billing;
 
     AWCreatePaymentMethodRequest *request = [AWCreatePaymentMethodRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
@@ -63,6 +78,8 @@
         }
 
         AWCreatePaymentMethodResponse *result = (AWCreatePaymentMethodResponse *)response;
+        [[AWPaymentConfiguration sharedConfiguration] cache:result.paymentMethod.Id value:card.cvc];
+        
         __strong typeof(self) strongSelf = weakSelf;
         [strongSelf finishCreation:result.paymentMethod];
         [SVProgressHUD dismiss];

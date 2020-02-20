@@ -36,6 +36,19 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     [self reloadData];
 }
 
+- (NSArray *)presetCVC:(NSArray *)cards
+{
+    for (AWPaymentMethod *method in cards) {
+        if (method.Id) {
+            NSString *value = [[AWPaymentConfiguration sharedConfiguration] cacheWithKey:method.Id];
+            if (value) {
+                method.card.cvc = value;
+            }
+        }
+    }
+    return cards;
+}
+
 - (void)reloadData
 {
     [SVProgressHUD show];
@@ -47,7 +60,8 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;
         }
-        
+
+        __strong typeof(self) strongSelf = weakSelf;
         AWGetPaymentMethodsResponse *result = (AWGetPaymentMethodsResponse *)response;
 
         // Section 0
@@ -55,6 +69,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
             AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
             return [obj.type isEqualToString:@"card"];
         }]];
+        cards = [strongSelf presetCVC:cards];
 
         // Section 1
         AWPaymentMethod *wechatpay = [AWPaymentMethod new];
@@ -64,7 +79,6 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         wechatpay.wechatpay = pay;
         NSArray *pays = @[wechatpay];
 
-        __strong typeof(self) strongSelf = weakSelf;
         strongSelf.paymentMethods = @[cards, pays];
         [strongSelf.tableView reloadData];
         [SVProgressHUD dismiss];
