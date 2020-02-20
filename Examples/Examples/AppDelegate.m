@@ -21,6 +21,7 @@
 {
     [SVProgressHUD setBackgroundColor:[UIColor colorNamed:@"Line Color"]];
     [SVProgressHUD setMaximumDismissTimeInterval:2];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [IQKeyboardManager sharedManager].enable = YES;
 
     [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {

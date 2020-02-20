@@ -38,8 +38,10 @@
 		0878D0D223D59C7800382702 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0AB23D58D4200382702 /* libz.tbd */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		088F3E8723CEDF39005AE40F /* Widgets.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8623CEDF39005AE40F /* Widgets.m */; };
+		08CFA21223FA2F4F00E6C6F5 /* PaymentItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CFA21123FA2F4F00E6C6F5 /* PaymentItemCell.xib */; };
 		08D6360923EB96B900BA9DC9 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08D6360723EB96B900BA9DC9 /* CircularStd-Bold.otf */; };
 		08D6360A23EB96B900BA9DC9 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08D6360823EB96B900BA9DC9 /* CircularStd-Medium.otf */; };
+		08D6D39323FC86EE007274A4 /* EditBillingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D6D39223FC86EE007274A4 /* EditBillingViewController.m */; };
 		08EFDC5723D05F6B003EF928 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EFDC5623D05F6B003EF928 /* PaymentViewController.m */; };
 		E08268B70A40C15A51D041FA /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29265F0DAF62D6592201220D /* Pods_Examples.framework */; };
 /* End PBXBuildFile section */
@@ -100,8 +102,11 @@
 		088F3E8423CED74C005AE40F /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		088F3E8523CEDF39005AE40F /* Widgets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
 		088F3E8623CEDF39005AE40F /* Widgets.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Widgets.m; sourceTree = "<group>"; };
+		08CFA21123FA2F4F00E6C6F5 /* PaymentItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentItemCell.xib; sourceTree = "<group>"; };
 		08D6360723EB96B900BA9DC9 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.otf"; sourceTree = "<group>"; };
 		08D6360823EB96B900BA9DC9 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
+		08D6D39123FC86EE007274A4 /* EditBillingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditBillingViewController.h; sourceTree = "<group>"; };
+		08D6D39223FC86EE007274A4 /* EditBillingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditBillingViewController.m; sourceTree = "<group>"; };
 		08EFDC5523D05F6B003EF928 /* PaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
 		08EFDC5623D05F6B003EF928 /* PaymentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
 		29265F0DAF62D6592201220D /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,6 +182,7 @@
 				085BD41523CD5AA0002E8F27 /* Categories */,
 				08775C8223D3F06300AE09A7 /* Payment */,
 				08775C8323D3F08700AE09A7 /* Shipping */,
+				08D6D39023FC86CB007274A4 /* Billing */,
 				0838BF6123E5190B0007F6BA /* Card */,
 				082D307F23CEEC0700C9D587 /* Cart */,
 				08D6360623EB96B900BA9DC9 /* Fonts */,
@@ -222,6 +228,7 @@
 			children = (
 				0808136923D14789000133BF /* PaymentItemCell.h */,
 				0808136A23D14789000133BF /* PaymentItemCell.m */,
+				08CFA21123FA2F4F00E6C6F5 /* PaymentItemCell.xib */,
 				08EFDC5523D05F6B003EF928 /* PaymentViewController.h */,
 				08EFDC5623D05F6B003EF928 /* PaymentViewController.m */,
 				08775C8423D3F0A300AE09A7 /* PaymentMethodCell.h */,
@@ -273,6 +280,15 @@
 				08D6360823EB96B900BA9DC9 /* CircularStd-Medium.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		08D6D39023FC86CB007274A4 /* Billing */ = {
+			isa = PBXGroup;
+			children = (
+				08D6D39123FC86EE007274A4 /* EditBillingViewController.h */,
+				08D6D39223FC86EE007274A4 /* EditBillingViewController.m */,
+			);
+			path = Billing;
 			sourceTree = "<group>";
 		};
 		A124BE0DCF06F969177C95C3 /* Frameworks */ = {
@@ -361,6 +377,7 @@
 				083FDEB623D46F6400AF35AB /* FloatLabeledView.xib in Resources */,
 				085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */,
 				085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */,
+				08CFA21223FA2F4F00E6C6F5 /* PaymentItemCell.xib in Resources */,
 				085BA66023F3F96900FD33FA /* CardTextField.xib in Resources */,
 				085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */,
 				08D6360A23EB96B900BA9DC9 /* CircularStd-Medium.otf in Resources */,
@@ -420,6 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08D6D39323FC86EE007274A4 /* EditBillingViewController.m in Sources */,
 				0838BF6423E519FF0007F6BA /* CardViewController.m in Sources */,
 				08EFDC5723D05F6B003EF928 /* PaymentViewController.m in Sources */,
 				082D308823CEEDC100C9D587 /* CartViewController.m in Sources */,

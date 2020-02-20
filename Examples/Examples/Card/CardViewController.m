@@ -10,29 +10,14 @@
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "Widgets.h"
-#import "CountryListViewController.h"
-#import "AWBilling+Utils.h"
 
-@interface CardViewController () <CountryListViewControllerDelegate>
+@interface CardViewController ()
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet CardTextField *cardNoField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *nameField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *expiresField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *cvcField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *firstNameField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *lastNameField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *stateField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *cityField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *streetField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *zipcodeField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *emailField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *phoneNumberField;
-@property (weak, nonatomic) IBOutlet FloatLabeledView *countryView;
-
-
-@property (strong, nonatomic) Country *country;
 
 @end
 
@@ -53,29 +38,25 @@
 
 - (IBAction)savePressed:(id)sender
 {
+    // Fake billing data
     AWBilling *billing = [AWBilling new];
-    billing.firstName = self.firstNameField.text;
-    billing.lastName = self.lastNameField.text;
-    billing.email = self.emailField.text;
-    billing.phoneNumber = self.phoneNumberField.text;
+    billing.firstName = @"Charlie";
+    billing.lastName = @"Lang";
+    billing.email = @"jim631@sina.com";
+    billing.phoneNumber = @"";
     AWAddress *address = [AWAddress new];
-    address.countryCode = self.country.countryCode;
-    address.state = self.stateField.text;
-    address.city = self.cityField.text;
-    address.street = self.streetField.text;
-    address.postcode = self.zipcodeField.text;
+    address.countryCode = @"AI";
+    address.state = @"Victoria";
+    address.city = @"Melbourne";
+    address.street = @"7\\/15 William St";
+    address.postcode = @"";
     billing.address = address;
-    NSString *error = [billing validate];
-    if (error) {
-        [SVProgressHUD showErrorWithStatus:error];
-        return;
-    }
 
     AWCard *card = [AWCard new];
     card.name = self.nameField.text;
     card.number = [self.cardNoField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    card.expYear = [self.expiresField.text substringFromIndex:3];
-    card.expMonth = [self.expiresField.text substringToIndex:2];
+    card.expiryYear = [self.expiresField.text substringFromIndex:3];
+    card.expiryMonth = [self.expiresField.text substringToIndex:2];
     card.cvc = self.cvcField.text;
 
     AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
@@ -97,31 +78,12 @@
         }
 
         AWCreatePaymentMethodResponse *result = (AWCreatePaymentMethodResponse *)response;
+        [[AWPaymentConfiguration sharedConfiguration] cache:result.paymentMethod.Id value:card.cvc];
+        
         __strong typeof(self) strongSelf = weakSelf;
         [strongSelf finishCreation:result.paymentMethod];
         [SVProgressHUD dismiss];
     }];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"selectCountries"]) {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        CountryListViewController *controller = (CountryListViewController *)navigationController.topViewController;
-        controller.country = sender;
-        controller.delegate = self;
-    }
-}
-
-- (IBAction)selectCountries:(id)sender
-{
-    [self performSegueWithIdentifier:@"selectCountries" sender:self.country];
-}
-
-- (void)countryListViewController:(CountryListViewController *)controller didSelectCountry:(nonnull Country *)country
-{
-    self.country = country;
-    self.countryView.text = country.countryName;
 }
 
 @end

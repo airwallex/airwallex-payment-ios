@@ -10,9 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class AWBilling;
+
 @interface PaymentViewController : UIViewController
 
-@property (nonatomic, strong) NSDecimalNumber *total;
+@property (strong, nonatomic) NSDecimalNumber *total;
+@property (nonatomic) BOOL sameAsShipping;
+@property (strong, nonatomic) AWBilling *shipping;
 
 @end
 

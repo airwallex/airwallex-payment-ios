@@ -11,7 +11,7 @@
 
 static NSString * const authenticationURL = @"https://api-staging.airwallex.com/api/v1/authentication/login";
 static NSString * const paymentURL = @"https://staging-pci-api.airwallex.com/api/v1/pa/payment_intents/create";
-static NSString * const clientId = @"DW19XFSMSUq4YPc7xkM4Nw";
-static NSString * const apiKey = @"9092eb393908b656c2ed8134535b574c30e7a243718a1c08a06b8ea9278919f4550af02cac520e062518028204c1dc54";
+static NSString * const clientId = @"dPH0tQnxRaijLH7ILl0nDQ";
+static NSString * const apiKey = @"e70420bb90a34c6c2be422387f4209eaf3a7aa84bc8cc4fc2af23cfde121370407833f0649261723e2a91aec552f56ee";
 
 #endif /* Constant_h */

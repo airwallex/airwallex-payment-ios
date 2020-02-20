@@ -1,46 +1,49 @@
 //
-//  EditShippingViewController.m
+//  EditBillingViewController.m
 //  Examples
 //
-//  Created by Victor Zhu on 2020/1/17.
+//  Created by Victor Zhu on 2020/2/19.
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "EditShippingViewController.h"
-#import <SVProgressHUD/SVProgressHUD.h>
-#import "AWBilling+Utils.h"
+#import "EditBillingViewController.h"
+#import <Airwallex/Airwallex.h>
 #import "Widgets.h"
 #import "CountryListViewController.h"
+#import "AWBilling+Utils.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
-@interface EditShippingViewController () <CountryListViewControllerDelegate>
+@interface EditBillingViewController () <CountryListViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *lastNameField;
+@property (weak, nonatomic) IBOutlet UISwitch *switchButton;
+@property (weak, nonatomic) IBOutlet UIView *billingView;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *firstNameField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *emailField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *phoneNumberField;
+@property (weak, nonatomic) IBOutlet FloatLabeledTextField *lastNameField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *stateField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *cityField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *streetField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *zipcodeField;
+@property (weak, nonatomic) IBOutlet FloatLabeledTextField *emailField;
+@property (weak, nonatomic) IBOutlet FloatLabeledTextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet FloatLabeledView *countryView;
 
 @property (strong, nonatomic) Country *country;
 
 @end
 
-@implementation EditShippingViewController
+@implementation EditBillingViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.switchButton.on = self.sameAsShipping;
+    self.billingView.hidden = self.sameAsShipping;
     if (self.billing) {
-        self.lastNameField.text = self.billing.lastName;
         self.firstNameField.text = self.billing.firstName;
+        self.lastNameField.text = self.billing.lastName;
         self.emailField.text = self.billing.email;
         self.phoneNumberField.text = self.billing.phoneNumber;
-        
+
         AWAddress *address = self.billing.address;
         if (address) {
             self.stateField.text = address.state;
@@ -51,25 +54,20 @@
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"selectCountries"]) {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        CountryListViewController *controller = (CountryListViewController *)navigationController.topViewController;
-        controller.country = sender;
-        controller.delegate = self;
-    }
-}
-
-- (IBAction)unwindToViewController:(UIStoryboardSegue *)unwindSegue
-{
-}
-
 - (IBAction)savePressed:(id)sender
 {
+    if (self.sameAsShipping) {
+        self.billing = nil;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(didEndEditingBillingViewController:)]) {
+            [self.delegate didEndEditingBillingViewController:self];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+
     AWBilling *billing = [AWBilling new];
-    billing.lastName = self.lastNameField.text;
     billing.firstName = self.firstNameField.text;
+    billing.lastName = self.lastNameField.text;
     billing.email = self.emailField.text;
     billing.phoneNumber = self.phoneNumberField.text;
     AWAddress *address = [AWAddress new];
@@ -86,10 +84,26 @@
     }
 
     self.billing = billing;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(editShippingViewController:didSelectBilling:)]) {
-        [self.delegate editShippingViewController:self didSelectBilling:billing];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didEndEditingBillingViewController:)]) {
+        [self.delegate didEndEditingBillingViewController:self];
     }
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)switchChanged:(id)sender
+{
+    self.sameAsShipping = self.switchButton.isOn;
+    self.billingView.hidden = self.switchButton.isOn;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"selectCountries"]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        CountryListViewController *controller = (CountryListViewController *)navigationController.topViewController;
+        controller.country = sender;
+        controller.delegate = self;
+    }
 }
 
 - (IBAction)selectCountries:(id)sender

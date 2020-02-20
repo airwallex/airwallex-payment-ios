@@ -8,15 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class PaymentItemCell;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PaymentItemCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *selectionLabel;
+@property (weak, nonatomic) IBOutlet UIView *cvcView;
+@property (weak, nonatomic) IBOutlet UITextField *cvcField;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineLeftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineRightConstraint;
-@property (nonatomic) BOOL isLastCell;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineTopConstraint;
+@property (nonatomic) BOOL isLastCell, cvcHidden;
 
 @end
 

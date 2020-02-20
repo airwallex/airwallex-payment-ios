@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWCard : NSObject <AWJSONifiable, AWParseable>
 
 @property (nonatomic, copy) NSString *number;
-@property (nonatomic, copy) NSString *expMonth;
-@property (nonatomic, copy) NSString *expYear;
+@property (nonatomic, copy) NSString *expiryMonth;
+@property (nonatomic, copy) NSString *expiryYear;
 @property (nonatomic, copy, nullable) NSString *name;
 @property (nonatomic, copy, nullable) NSString *cvc;
 @property (nonatomic, copy, nullable) NSString *bin;

@@ -13,10 +13,10 @@
 - (NSDictionary *)toJSONDictionary
 {
     NSMutableDictionary *items = [[NSMutableDictionary alloc] init];
-    [items addEntriesFromDictionary:@{
-        @"billing": self.billing.toJSONDictionary,
-        @"type": self.type
-    }];
+    items[@"type"] = self.type;
+    if (self.billing) {
+        items[@"billing"] = self.billing.toJSONDictionary;
+    }
     if (self.card) {
         items[@"card"] = self.card.toJSONDictionary;
     }

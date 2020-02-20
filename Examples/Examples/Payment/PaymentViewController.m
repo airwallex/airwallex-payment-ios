@@ -11,13 +11,13 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "WXApi.h"
 #import "PaymentItemCell.h"
-#import "EditShippingViewController.h"
+#import "EditBillingViewController.h"
 #import "PaymentListViewController.h"
 #import "NSNumber+Utils.h"
 #import "Widgets.h"
 #import "UIButton+Utils.h"
 
-@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditShippingViewControllerDelegate, PaymentListViewControllerDelegate>
+@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditBillingViewControllerDelegate, PaymentListViewControllerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSArray *items;
 @property (strong, nonatomic) AWBilling *billing;
 @property (strong, nonatomic) AWPaymentMethod *paymentMethod;
+@property (strong, nonatomic) NSString *cvc;
 
 @end
 
@@ -35,8 +36,9 @@
     [super viewDidLoad];
     [self.payButton setImageAndTitleHorizontalAlignmentCenter:8];
     self.totalLabel.text = self.total.string;
-    self.items = @[@{@"title": @"Shipping", @"placeholder": @"Enter shipping information"},
-                   @{@"title": @"Payment", @"placeholder": @"Select payment method"}];
+    self.items = @[@{@"title": @"Payment", @"placeholder": @"Select payment method"},
+                   @{@"title": @"Billing", @"placeholder": @"Enter shipping information"}];
+    [self.tableView registerNib:[UINib nibWithNibName:@"PaymentItemCell" bundle:nil] forCellReuseIdentifier:@"PaymentItemCell"];
     [self reloadData];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pop) name:@"PaymentCompleted" object:nil];
 }
@@ -51,22 +53,44 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+- (void)checkPaymentEnabled
+{
+    if (!self.paymentMethod) {
+        self.payButton.enabled = NO;
+        return;
+    }
+
+    if ([self.paymentMethod.type isEqualToString:AWWechatpay]) {
+        self.payButton.enabled = self.currentBilling != nil;
+        return;
+    }
+
+    NSString *cvc = self.paymentMethod.card.cvc ?: self.cvc;
+    self.payButton.enabled = cvc.length > 0;
+}
+
 - (void)reloadData
 {
-    self.payButton.enabled = self.billing && self.paymentMethod.type;
+    [self checkPaymentEnabled];
     [self.tableView reloadData];
+}
+
+- (AWBilling *)currentBilling
+{
+    return self.sameAsShipping ? self.shipping : self.billing;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"selectShipping"]) {
-        EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
-        controller.billing = sender;
+    if ([segue.identifier isEqualToString:@"enterAddress"]) {
+        EditBillingViewController *controller = (EditBillingViewController *)segue.destinationViewController;
         controller.delegate = self;
+        controller.billing = self.billing;
+        controller.sameAsShipping = self.sameAsShipping;
     } else if ([segue.identifier isEqualToString:@"selectPayment"]) {
         PaymentListViewController *controller = (PaymentListViewController *)segue.destinationViewController;
         controller.delegate = self;
-        controller.paymentMethod = sender;
+        controller.paymentMethod = self.paymentMethod;
     }
 }
 
@@ -78,30 +102,39 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PaymentItemCell" forIndexPath:indexPath];
+    cell.cvcField.delegate = self;
+    cell.cvcField.text = self.cvc;
     NSDictionary *item = self.items[indexPath.row];
     NSString *title = item[@"title"];
     cell.titleLabel.text = title;
-    if ([title isEqualToString:@"Shipping"]) {
-        AWBilling *billing = self.billing;
-        if (billing) {
+    if ([title isEqualToString:@"Billing"]) {
+        AWBilling *billing = self.currentBilling;
+        if (self.sameAsShipping) {
+            cell.selectionLabel.text = @"Same as shipping information";
+            cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
+        } else if (billing) {
             cell.selectionLabel.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@ %@", billing.firstName, billing.lastName, billing.address.street, billing.address.city, billing.address.state, billing.address.countryCode];
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
         } else {
             cell.selectionLabel.text = item[@"placeholder"];
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
         }
+        cell.cvcHidden = YES;
     } else {
         NSString *type = self.paymentMethod.type;
         if (type) {
-            if ([type isEqualToString:@"wechatpay"]) {
+            if ([type isEqualToString:AWWechatpay]) {
                 cell.selectionLabel.text = @"WeChat pay";
+                cell.cvcHidden = YES;
             } else {
                 cell.selectionLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
+                cell.cvcHidden = self.paymentMethod.card.cvc != nil;
             }
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
         } else {
             cell.selectionLabel.text = item[@"placeholder"];
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
+            cell.cvcHidden = YES;
         }
     }
     cell.isLastCell = indexPath.item == self.items.count - 1;
@@ -111,34 +144,44 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *item = self.items[indexPath.row];
-    if ([item[@"title"] isEqualToString:@"Shipping"]) {
-        [self performSegueWithIdentifier:@"selectShipping" sender:self.billing];
+    if ([item[@"title"] isEqualToString:@"Billing"]) {
+        [self performSegueWithIdentifier:@"enterAddress" sender:nil];
     } else {
-        [self performSegueWithIdentifier:@"selectPayment" sender:self.paymentMethod];
+        [self performSegueWithIdentifier:@"selectPayment" sender:nil];
     }
 }
 
-- (void)editShippingViewController:(EditShippingViewController *)controller didSelectBilling:(AWBilling *)billing
+- (void)didEndEditingBillingViewController:(EditBillingViewController *)controller
 {
-    self.billing = billing;
+    self.billing = controller.billing;
+    self.sameAsShipping = controller.sameAsShipping;
     [self reloadData];
 }
 
 - (void)paymentListViewController:(PaymentListViewController *)controller didSelectMethod:(AWPaymentMethod *)paymentMethod
 {
     self.paymentMethod = paymentMethod;
+    self.cvc = nil;
     [self reloadData];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (text.length <= 4) {
+        self.cvc = text;
+        [self checkPaymentEnabled];
+        return YES;
+    }
+    return NO;
 }
 
 - (IBAction)payPressed:(id)sender
 {
     AWPaymentMethod *paymentMethod = self.paymentMethod;
-    paymentMethod.billing = self.billing;
-
-    // Just for wechat pay testing
-    if ([paymentMethod.type isEqualToString:@"wechatpay"]) {
-        paymentMethod.Id = nil;
-        paymentMethod.wechatpay.flow = @"inapp";
+    paymentMethod.billing = self.currentBilling;
+    if (!self.paymentMethod.card.cvc) {
+        paymentMethod.card.cvc = self.cvc;
     }
 
     AWAPIClient *client = [AWAPIClient new];

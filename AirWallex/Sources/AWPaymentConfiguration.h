@@ -16,8 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSString *intentId;
 @property (nonatomic, copy, readwrite) NSString *token;
 @property (nonatomic, copy, readwrite) NSString *clientSecret;
+@property (nonatomic, copy, readwrite) NSString *currency;
 
 + (instancetype)sharedConfiguration;
+- (void)cache:(NSString *)key value:(NSString *)value;
+- (NSString *)cacheWithKey:(NSString *)key;
 
 @end
 

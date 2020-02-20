@@ -14,8 +14,8 @@
 {
     return @{
         @"number": self.number,
-        @"exp_month": self.expMonth,
-        @"exp_year": self.expYear,
+        @"expiry_month": self.expiryMonth,
+        @"expiry_year": self.expiryYear,
         @"name": self.name ?: @"",
         @"cvc": self.cvc ?: @""
     };
@@ -24,8 +24,8 @@
 + (id)parseFromJsonDictionary:(NSDictionary *)json
 {
     AWCard *card = [AWCard new];
-    card.expYear = json[@"exp_year"];
-    card.expMonth = json[@"exp_month"];
+    card.expiryYear = json[@"expiry_year"];
+    card.expiryMonth = json[@"expiry_month"];
     card.name = json[@"name"];
     card.bin = json[@"bin"];
     card.last4 = json[@"last4"];
