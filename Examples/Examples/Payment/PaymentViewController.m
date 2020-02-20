@@ -17,7 +17,7 @@
 #import "Widgets.h"
 #import "UIButton+Utils.h"
 
-@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditBillingViewControllerDelegate, PaymentListViewControllerDelegate, PaymentItemCellDelegate>
+@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditBillingViewControllerDelegate, PaymentListViewControllerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -53,9 +53,25 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+- (void)checkPaymentEnabled
+{
+    if (!self.paymentMethod) {
+        self.payButton.enabled = NO;
+        return;
+    }
+
+    if ([self.paymentMethod.type isEqualToString:AWWechatpay]) {
+        self.payButton.enabled = self.currentBilling != nil;
+        return;
+    }
+
+    NSString *cvc = self.paymentMethod.card.cvc ?: self.cvc;
+    self.payButton.enabled = cvc.length > 0;
+}
+
 - (void)reloadData
 {
-    self.payButton.enabled = self.currentBilling && self.paymentMethod && (self.paymentMethod.card.cvc || self.cvc);
+    [self checkPaymentEnabled];
     [self.tableView reloadData];
 }
 
@@ -86,7 +102,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PaymentItemCell" forIndexPath:indexPath];
-    cell.delegate = self;
+    cell.cvcField.delegate = self;
     cell.cvcField.text = self.cvc;
     NSDictionary *item = self.items[indexPath.row];
     NSString *title = item[@"title"];
@@ -145,18 +161,28 @@
 - (void)paymentListViewController:(PaymentListViewController *)controller didSelectMethod:(AWPaymentMethod *)paymentMethod
 {
     self.paymentMethod = paymentMethod;
+    self.cvc = nil;
     [self reloadData];
 }
 
-- (void)paymentItemCell:(id)cell didEnterCVC:(NSString *)cvc
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    self.cvc = cvc;
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (text.length <= 4) {
+        self.cvc = text;
+        [self checkPaymentEnabled];
+        return YES;
+    }
+    return NO;
 }
 
 - (IBAction)payPressed:(id)sender
 {
     AWPaymentMethod *paymentMethod = self.paymentMethod;
     paymentMethod.billing = self.currentBilling;
+    if (!self.paymentMethod.card.cvc) {
+        paymentMethod.card.cvc = self.cvc;
+    }
 
     AWAPIClient *client = [AWAPIClient new];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];

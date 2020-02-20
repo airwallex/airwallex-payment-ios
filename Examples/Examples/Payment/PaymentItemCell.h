@@ -12,12 +12,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol PaymentItemCellDelegate <NSObject>
-
-- (void)paymentItemCell:(PaymentItemCell *)cell didEnterCVC:(NSString *)cvc;
-
-@end
-
 @interface PaymentItemCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -28,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineRightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineTopConstraint;
 @property (nonatomic) BOOL isLastCell, cvcHidden;
-@property (weak, nonatomic) id <PaymentItemCellDelegate> delegate;
 
 @end
 
