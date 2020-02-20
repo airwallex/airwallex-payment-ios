@@ -68,7 +68,7 @@
         controller.shipping = self.shipping;
     } else if ([segue.identifier isEqualToString:@"enterAddress"]) {
         EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
-        controller.billing = sender;
+        controller.billing = self.shipping;
         controller.delegate = self;
     }
 }
@@ -126,6 +126,7 @@
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
         }
         cell.isLastCell = YES;
+        cell.cvcHidden = YES;
         return cell;
     }
 
@@ -153,7 +154,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        [self performSegueWithIdentifier:@"enterAddress" sender:self.shipping];
+        [self performSegueWithIdentifier:@"enterAddress" sender:nil];
     }
 }
 

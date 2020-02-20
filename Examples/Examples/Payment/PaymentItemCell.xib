@@ -15,11 +15,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PaymentItemCell" rowHeight="62" id="9lW-Ty-4Ia" customClass="PaymentItemCell">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PaymentItemCell" rowHeight="120" id="9lW-Ty-4Ia" customClass="PaymentItemCell">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9lW-Ty-4Ia" id="Ewa-ma-Kkg">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdx-0D-sWD">
@@ -35,23 +35,50 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="z71-rs-5lK">
-                        <rect key="frame" x="366" y="15" width="32" height="32"/>
+                        <rect key="frame" x="366" y="12.5" width="32" height="32"/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Xz-B8-AK1" userLabel="Line">
-                        <rect key="frame" x="16" y="56.5" width="382" height="1"/>
+                        <rect key="frame" x="16" y="108.5" width="382" height="1"/>
                         <color key="backgroundColor" name="Line Color"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="0J9-Hn-jTt"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dkg-Kv-pfc" userLabel="CVCView">
+                        <rect key="frame" x="16" y="36.5" width="350" height="72"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cvv" translatesAutoresizingMaskIntoConstraints="NO" id="CzP-DY-WRL">
+                                <rect key="frame" x="278" y="0.0" width="72" height="48"/>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="CVC/VCC" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8HA-mZ-Ls5">
+                                <rect key="frame" x="176" y="7" width="86" height="34"/>
+                                <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="13"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="9lW-Ty-4Ia" id="uVR-o7-1jR"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="CzP-DY-WRL" firstAttribute="leading" secondItem="8HA-mZ-Ls5" secondAttribute="trailing" constant="16" id="1EU-wa-RzT"/>
+                            <constraint firstItem="CzP-DY-WRL" firstAttribute="centerY" secondItem="8HA-mZ-Ls5" secondAttribute="centerY" id="8ss-Og-NAf"/>
+                            <constraint firstAttribute="bottom" secondItem="CzP-DY-WRL" secondAttribute="bottom" constant="24" id="G1k-mN-cYe"/>
+                            <constraint firstAttribute="trailing" secondItem="CzP-DY-WRL" secondAttribute="trailing" id="lnf-VR-yd4"/>
+                            <constraint firstAttribute="height" constant="72" id="zF4-a8-EN4"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="b13-3m-bqN" firstAttribute="top" secondItem="Sdx-0D-sWD" secondAttribute="top" id="2q0-oz-XLp"/>
+                    <constraint firstItem="z71-rs-5lK" firstAttribute="leading" secondItem="Dkg-Kv-pfc" secondAttribute="trailing" id="3Uf-Yy-tMB"/>
                     <constraint firstAttribute="trailing" secondItem="5Xz-B8-AK1" secondAttribute="trailing" constant="16" id="Bjp-wJ-B9b"/>
-                    <constraint firstItem="z71-rs-5lK" firstAttribute="centerY" secondItem="Ewa-ma-Kkg" secondAttribute="centerY" id="KkQ-Q1-HLA"/>
                     <constraint firstItem="b13-3m-bqN" firstAttribute="bottom" secondItem="Sdx-0D-sWD" secondAttribute="bottom" id="TI3-yd-375"/>
                     <constraint firstAttribute="trailing" secondItem="z71-rs-5lK" secondAttribute="trailing" constant="16" id="Ugr-GH-sts"/>
-                    <constraint firstItem="5Xz-B8-AK1" firstAttribute="top" secondItem="Sdx-0D-sWD" secondAttribute="bottom" constant="20" id="Vdk-Zx-tkH"/>
+                    <constraint firstItem="5Xz-B8-AK1" firstAttribute="top" secondItem="Sdx-0D-sWD" secondAttribute="bottom" constant="72" id="Vdk-Zx-tkH"/>
+                    <constraint firstItem="5Xz-B8-AK1" firstAttribute="top" secondItem="Dkg-Kv-pfc" secondAttribute="bottom" id="WSo-JB-uVQ"/>
+                    <constraint firstItem="Dkg-Kv-pfc" firstAttribute="leading" secondItem="Ewa-ma-Kkg" secondAttribute="leading" constant="16" id="WaZ-ZS-u3t"/>
+                    <constraint firstItem="z71-rs-5lK" firstAttribute="centerY" secondItem="b13-3m-bqN" secondAttribute="centerY" id="a7T-Tp-FL2"/>
                     <constraint firstItem="Sdx-0D-sWD" firstAttribute="leading" secondItem="Ewa-ma-Kkg" secondAttribute="leading" constant="16" id="dQE-R9-XLm"/>
                     <constraint firstItem="b13-3m-bqN" firstAttribute="leading" secondItem="Sdx-0D-sWD" secondAttribute="trailing" constant="16" id="iNw-Bu-CNR"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="5Xz-B8-AK1" secondAttribute="bottom" id="iWk-et-DBt"/>
@@ -61,15 +88,19 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="cvcField" destination="8HA-mZ-Ls5" id="3e4-In-vBJ"/>
+                <outlet property="cvcView" destination="Dkg-Kv-pfc" id="M6h-K9-vZo"/>
                 <outlet property="lineLeftConstraint" destination="lgx-T2-G5I" id="le7-zS-dl0"/>
                 <outlet property="lineRightConstraint" destination="Bjp-wJ-B9b" id="ZQK-zN-XvB"/>
+                <outlet property="lineTopConstraint" destination="Vdk-Zx-tkH" id="e7I-6h-xQB"/>
                 <outlet property="selectionLabel" destination="b13-3m-bqN" id="BU2-FG-VpC"/>
                 <outlet property="titleLabel" destination="Sdx-0D-sWD" id="hFx-f4-Xiw"/>
             </connections>
-            <point key="canvasLocation" x="138" y="151"/>
+            <point key="canvasLocation" x="137.68115942028987" y="170.08928571428569"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="cvv" width="36" height="24"/>
         <image name="right" width="16" height="16"/>
         <namedColor name="Grey Text Color">
             <color red="0.32941176470588235" green="0.32941176470588235" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

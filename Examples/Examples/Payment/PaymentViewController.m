@@ -17,7 +17,7 @@
 #import "Widgets.h"
 #import "UIButton+Utils.h"
 
-@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditBillingViewControllerDelegate, PaymentListViewControllerDelegate>
+@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditBillingViewControllerDelegate, PaymentListViewControllerDelegate, PaymentItemCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -85,6 +85,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PaymentItemCell" forIndexPath:indexPath];
+    cell.delegate = self;
     NSDictionary *item = self.items[indexPath.row];
     NSString *title = item[@"title"];
     cell.titleLabel.text = title;
@@ -100,18 +101,22 @@
             cell.selectionLabel.text = item[@"placeholder"];
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
         }
+        cell.cvcHidden = YES;
     } else {
         NSString *type = self.paymentMethod.type;
         if (type) {
             if ([type isEqualToString:AWWechatpay]) {
                 cell.selectionLabel.text = @"WeChat pay";
+                cell.cvcHidden = YES;
             } else {
                 cell.selectionLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
+                cell.cvcHidden = self.paymentMethod.card.cvc != nil;
             }
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
         } else {
             cell.selectionLabel.text = item[@"placeholder"];
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
+            cell.cvcHidden = YES;
         }
     }
     cell.isLastCell = indexPath.item == self.items.count - 1;
@@ -141,16 +146,21 @@
     [self reloadData];
 }
 
+- (void)paymentItemCell:(id)cell didEnterCVC:(NSString *)cvc
+{
+    self.paymentMethod.card.cvc = cvc;
+}
+
 - (IBAction)payPressed:(id)sender
 {
     AWPaymentMethod *paymentMethod = self.paymentMethod;
     paymentMethod.billing = self.currentBilling;
-
-    // Just for wechat pay testing
-    if ([paymentMethod.type isEqualToString:AWWechatpay]) {
-        paymentMethod.Id = nil;
-        paymentMethod.wechatpay.flow = @"inapp";
-    }
+//
+//    // Just for wechat pay testing
+//    if ([paymentMethod.type isEqualToString:AWWechatpay]) {
+//        paymentMethod.Id = nil;
+//        paymentMethod.wechatpay.flow = @"inapp";
+//    }
 
     AWAPIClient *client = [AWAPIClient new];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];

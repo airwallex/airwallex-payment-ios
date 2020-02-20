@@ -42,7 +42,7 @@
         [parameters addEntriesFromDictionary:@{
             @"payment_method_reference": @{
                     @"id": self.paymentMethod.Id,
-                    @"cvc": self.paymentMethod.card.cvc ?: @"123" // Fake cvc (UI required)
+                    @"cvc": self.paymentMethod.card.cvc ?: @""
             }
         }];
     } else {

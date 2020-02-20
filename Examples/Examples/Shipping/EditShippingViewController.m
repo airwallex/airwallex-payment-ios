@@ -32,6 +32,25 @@
 
 @implementation EditShippingViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    if (self.billing) {
+        self.lastNameField.text = self.billing.lastName;
+        self.firstNameField.text = self.billing.firstName;
+        self.emailField.text = self.billing.email;
+        self.phoneNumberField.text = self.billing.phoneNumber;
+        
+        AWAddress *address = self.billing.address;
+        if (address) {
+            self.stateField.text = address.state;
+            self.cityField.text = address.city;
+            self.streetField.text = address.street;
+            self.zipcodeField.text = address.postcode;
+        }
+    }
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"selectCountries"]) {
