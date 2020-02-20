@@ -38,6 +38,20 @@
     [super viewDidLoad];
     self.switchButton.on = self.sameAsShipping;
     self.billingView.hidden = self.sameAsShipping;
+    if (self.billing) {
+        self.firstNameField.text = self.billing.firstName;
+        self.lastNameField.text = self.billing.lastName;
+        self.emailField.text = self.billing.email;
+        self.phoneNumberField.text = self.billing.phoneNumber;
+
+        AWAddress *address = self.billing.address;
+        if (address) {
+            self.stateField.text = address.state;
+            self.cityField.text = address.city;
+            self.streetField.text = address.street;
+            self.zipcodeField.text = address.postcode;
+        }
+    }
 }
 
 - (IBAction)savePressed:(id)sender

@@ -68,7 +68,7 @@
     if ([segue.identifier isEqualToString:@"enterAddress"]) {
         EditBillingViewController *controller = (EditBillingViewController *)segue.destinationViewController;
         controller.delegate = self;
-        controller.billing = self.currentBilling;
+        controller.billing = self.billing;
         controller.sameAsShipping = self.sameAsShipping;
     } else if ([segue.identifier isEqualToString:@"selectPayment"]) {
         PaymentListViewController *controller = (PaymentListViewController *)segue.destinationViewController;
