@@ -175,16 +175,16 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zl7-hq-vSX">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="348.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="351.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pii-iq-Wp8">
-                                                <rect key="frame" x="16" y="16" width="382" height="37.5"/>
+                                                <rect key="frame" x="16" y="16" width="382" height="40.5"/>
                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="32"/>
                                                 <color key="textColor" name="Black Text Color"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="qTO-iC-quJ">
-                                                <rect key="frame" x="16" y="69.5" width="382" height="263"/>
+                                                <rect key="frame" x="16" y="72.5" width="382" height="263"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gN8-Ps-Ex7" customClass="CardTextField">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="60"/>
