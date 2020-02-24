@@ -53,6 +53,7 @@
     copy.token = self.token;
     copy.clientSecret = self.clientSecret;
     copy.currency = self.currency;
+    copy.customerId = self.customerId;
     return copy;
 }
 

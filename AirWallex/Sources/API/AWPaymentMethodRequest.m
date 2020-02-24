@@ -21,6 +21,14 @@
     return AWHTTPMethodGET;
 }
 
+- (nullable NSDictionary *)parameters
+{
+    if (self.customerId) {
+        return @{@"customer_id": self.customerId};
+    }
+    return nil;
+}
+
 - (Class)responseClass
 {
     return AWGetPaymentMethodsResponse.class;
@@ -40,10 +48,13 @@
     return AWHTTPMethodPOST;
 }
 
-- (NSDictionary *)parameters
+- (nullable NSDictionary *)parameters
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
+    if (self.customerId) {
+        parameters[@"customer_id"] = self.customerId;
+    }
     [parameters addEntriesFromDictionary:self.paymentMethod.toJSONDictionary];
     return parameters;
 }

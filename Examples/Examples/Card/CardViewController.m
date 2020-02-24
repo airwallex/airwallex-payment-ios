@@ -66,6 +66,7 @@
 
     AWCreatePaymentMethodRequest *request = [AWCreatePaymentMethodRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
+    request.customerId = [AWPaymentConfiguration sharedConfiguration].customerId;
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];

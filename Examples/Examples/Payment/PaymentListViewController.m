@@ -54,6 +54,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     [SVProgressHUD show];
     AWAPIClient *client = [AWAPIClient new];
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
+    request.customerId = [AWPaymentConfiguration sharedConfiguration].customerId;
     __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {
@@ -178,9 +179,15 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         cell.logoImageView.image = [UIImage imageNamed:method.card.brand];
         cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", method.card.brand.capitalizedString, method.card.last4];
     }
-    if ([method.Id isEqualToString:self.paymentMethod.Id]) {
+
+    if ([self.paymentMethod.type isEqualToString:AWWechatpay]) {
+        if ([method.type isEqualToString:self.paymentMethod.type]) {
+            [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }
+    } else if (method.Id && [method.Id isEqualToString:self.paymentMethod.Id]) {
         [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     }
+    
     cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
     return cell;
 }
