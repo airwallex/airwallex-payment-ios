@@ -39,6 +39,7 @@
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		088F3E8723CEDF39005AE40F /* Widgets.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8623CEDF39005AE40F /* Widgets.m */; };
 		08CFA21223FA2F4F00E6C6F5 /* PaymentItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CFA21123FA2F4F00E6C6F5 /* PaymentItemCell.xib */; };
+		08D26F4B24037391008E65D3 /* PaymentMethod.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F4A24037391008E65D3 /* PaymentMethod.storyboard */; };
 		08D6360923EB96B900BA9DC9 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08D6360723EB96B900BA9DC9 /* CircularStd-Bold.otf */; };
 		08D6360A23EB96B900BA9DC9 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 08D6360823EB96B900BA9DC9 /* CircularStd-Medium.otf */; };
 		08D6D39323FC86EE007274A4 /* EditBillingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D6D39223FC86EE007274A4 /* EditBillingViewController.m */; };
@@ -103,6 +104,7 @@
 		088F3E8523CEDF39005AE40F /* Widgets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
 		088F3E8623CEDF39005AE40F /* Widgets.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Widgets.m; sourceTree = "<group>"; };
 		08CFA21123FA2F4F00E6C6F5 /* PaymentItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentItemCell.xib; sourceTree = "<group>"; };
+		08D26F4A24037391008E65D3 /* PaymentMethod.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PaymentMethod.storyboard; sourceTree = "<group>"; };
 		08D6360723EB96B900BA9DC9 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.otf"; sourceTree = "<group>"; };
 		08D6360823EB96B900BA9DC9 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
 		08D6D39123FC86EE007274A4 /* EditBillingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditBillingViewController.h; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				085BD3EF23CC64B6002E8F27 /* AppDelegate.m */,
 				085BD3FA23CC64B9002E8F27 /* Assets.xcassets */,
 				085BD3F723CC64B6002E8F27 /* Main.storyboard */,
+				08D26F4A24037391008E65D3 /* PaymentMethod.storyboard */,
 				085BA64E23F0FB8A00FD33FA /* Splash.storyboard */,
 				085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */,
 				085BD3FF23CC64B9002E8F27 /* Info.plist */,
@@ -376,6 +379,7 @@
 			files = (
 				083FDEB623D46F6400AF35AB /* FloatLabeledView.xib in Resources */,
 				085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */,
+				08D26F4B24037391008E65D3 /* PaymentMethod.storyboard in Resources */,
 				085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */,
 				08CFA21223FA2F4F00E6C6F5 /* PaymentItemCell.xib in Resources */,
 				085BA66023F3F96900FD33FA /* CardTextField.xib in Resources */,

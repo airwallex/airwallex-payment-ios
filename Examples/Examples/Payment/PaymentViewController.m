@@ -87,7 +87,7 @@
         controller.delegate = self;
         controller.billing = self.billing;
         controller.sameAsShipping = self.sameAsShipping;
-    } else if ([segue.identifier isEqualToString:@"selectPayment"]) {
+    } else if ([segue.identifier isEqualToString:@"selectPaymentMethod"]) {
         PaymentListViewController *controller = (PaymentListViewController *)segue.destinationViewController;
         controller.delegate = self;
         controller.paymentMethod = self.paymentMethod;
@@ -147,7 +147,7 @@
     if ([item[@"title"] isEqualToString:@"Billing"]) {
         [self performSegueWithIdentifier:@"enterAddress" sender:nil];
     } else {
-        [self performSegueWithIdentifier:@"selectPayment" sender:nil];
+        [self performSegueWithIdentifier:@"selectPaymentMethod" sender:nil];
     }
 }
 
