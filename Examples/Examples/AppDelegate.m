@@ -7,9 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import "WXApi.h"
+#import "Constant.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -19,6 +21,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
+    configuration.baseURL = @"https://staging-pci-api.airwallex.com";
+    configuration.customerId = @"cus_Dn6mVcMeTEkJgYuu9o5xEcxWRah";
+
     [SVProgressHUD setBackgroundColor:[UIColor colorNamed:@"Line Color"]];
     [SVProgressHUD setMaximumDismissTimeInterval:2];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];

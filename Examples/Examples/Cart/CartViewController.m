@@ -186,10 +186,8 @@
             }
 
             AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
-            configuration.baseURL = @"https://staging-pci-api.airwallex.com";
             configuration.intentId = result[@"id"];
             configuration.token = token;
-            configuration.customerId = customerId;
             configuration.clientSecret = result[@"client_secret"];
             configuration.currency = result[@"currency"];
 

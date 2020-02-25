@@ -7,6 +7,7 @@
 //
 
 #import "AWPaymentConfiguration.h"
+#import "AWFontLoader.h"
 
 @interface AWPaymentConfiguration ()
 
@@ -30,6 +31,7 @@
 {
     self = [super init];
     if (self) {
+        [AWFontLoader loadFontIfNeeded];
         self.cacheInfo = [@{} mutableCopy];
     }
     return self;
