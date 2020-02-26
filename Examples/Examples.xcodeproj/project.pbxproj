@@ -195,6 +195,8 @@
 		085BD41523CD5AA0002E8F27 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				085BA65023F2722000FD33FA /* UIButton+Utils.h */,
+				085BA65123F2722000FD33FA /* UIButton+Utils.m */,
 				083D916823CF025D006283CB /* NSNumber+Utils.h */,
 				083D916923CF025D006283CB /* NSNumber+Utils.m */,
 			);
@@ -268,8 +270,6 @@
 				0808136F23D14CB5000133BF /* PaymentListViewController.h */,
 				0808137023D14CB5000133BF /* PaymentListViewController.m */,
 				08D26F4C24037687008E65D3 /* Address.storyboard */,
-				085BA65023F2722000FD33FA /* UIButton+Utils.h */,
-				085BA65123F2722000FD33FA /* UIButton+Utils.m */,
 				0838BF6123E5190B0007F6BA /* Card */,
 				08D6D39023FC86CB007274A4 /* Billing */,
 				08775C8323D3F08700AE09A7 /* Shipping */,
@@ -603,11 +603,7 @@
 					"-framework",
 					"\"Airwallex\"",
 					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"IQKeyboardManager\"",
 					"-framework",
 					"\"QuartzCore\"",
 					"-framework",
@@ -618,8 +614,8 @@
 					"\"UIKit\"",
 					"-framework",
 					"\"WebKit\"",
-					"-all_load",
 					"-Objc",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
 				PRODUCT_NAME = Airwallex;
@@ -645,11 +641,7 @@
 					"-framework",
 					"\"Airwallex\"",
 					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"IQKeyboardManager\"",
 					"-framework",
 					"\"QuartzCore\"",
 					"-framework",
@@ -660,8 +652,8 @@
 					"\"UIKit\"",
 					"-framework",
 					"\"WebKit\"",
-					"-all_load",
 					"-Objc",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
 				PRODUCT_NAME = Airwallex;

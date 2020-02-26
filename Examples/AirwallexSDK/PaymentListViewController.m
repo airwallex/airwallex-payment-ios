@@ -11,7 +11,6 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "PaymentMethodCell.h"
 #import "CardViewController.h"
-#import "UIButton+Utils.h"
 
 static NSString * FormatPaymentMethodTypeString(NSString *type)
 {
