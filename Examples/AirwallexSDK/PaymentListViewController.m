@@ -9,7 +9,6 @@
 #import "PaymentListViewController.h"
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
-#import "PaymentMethodCell.h"
 #import "CardViewController.h"
 
 static NSString * FormatPaymentMethodTypeString(NSString *type)
@@ -163,14 +162,14 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     NSArray *items = self.paymentMethods[indexPath.section];
     if (indexPath.section == 0) {
         if (items.count == 0) {
-            NoCardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoCardCell" forIndexPath:indexPath];
+            AWNoCardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWNoCardCell" forIndexPath:indexPath];
             cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
             return cell;
         }
     }
 
     AWPaymentMethod *method = items[indexPath.row];
-    PaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PaymentMethodCell" forIndexPath:indexPath];
+    AWPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWPaymentMethodCell" forIndexPath:indexPath];
     if ([method.type isEqualToString:AWWechatpay]) {
         cell.logoImageView.image = [UIImage imageNamed:@"wc"];
         cell.titleLabel.text = FormatPaymentMethodTypeString(method.type);

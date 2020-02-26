@@ -26,7 +26,6 @@
 		085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
 		085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
 		085BD40123CC64B9002E8F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
-		08775C8623D3F0A300AE09A7 /* PaymentMethodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08775C8523D3F0A300AE09A7 /* PaymentMethodCell.m */; };
 		08775C8823D43AF900AE09A7 /* FloatLabeledTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08775C8723D43AF900AE09A7 /* FloatLabeledTextField.xib */; };
 		0878D0C323D58DF500382702 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D09123D5846B00382702 /* libc++.tbd */; };
 		0878D0CA23D59B9D00382702 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0878D0C723D59B9D00382702 /* README.txt */; };
@@ -79,8 +78,6 @@
 		085BD3FD23CC64B9002E8F27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		085BD3FF23CC64B9002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD40023CC64B9002E8F27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		08775C8423D3F0A300AE09A7 /* PaymentMethodCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentMethodCell.h; sourceTree = "<group>"; };
-		08775C8523D3F0A300AE09A7 /* PaymentMethodCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentMethodCell.m; sourceTree = "<group>"; };
 		08775C8723D43AF900AE09A7 /* FloatLabeledTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FloatLabeledTextField.xib; sourceTree = "<group>"; };
 		0878D09123D5846B00382702 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		0878D0A323D58D1700382702 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -264,8 +261,6 @@
 			children = (
 				088F3E8523CEDF39005AE40F /* Widgets.h */,
 				088F3E8623CEDF39005AE40F /* Widgets.m */,
-				08775C8423D3F0A300AE09A7 /* PaymentMethodCell.h */,
-				08775C8523D3F0A300AE09A7 /* PaymentMethodCell.m */,
 				08D26F4A24037391008E65D3 /* PaymentMethod.storyboard */,
 				0808136F23D14CB5000133BF /* PaymentListViewController.h */,
 				0808137023D14CB5000133BF /* PaymentListViewController.m */,
@@ -436,7 +431,6 @@
 				0838BF6423E519FF0007F6BA /* CardViewController.m in Sources */,
 				08EFDC5723D05F6B003EF928 /* PaymentViewController.m in Sources */,
 				082D308823CEEDC100C9D587 /* CartViewController.m in Sources */,
-				08775C8623D3F0A300AE09A7 /* PaymentMethodCell.m in Sources */,
 				088F3E8723CEDF39005AE40F /* Widgets.m in Sources */,
 				0808137123D14CB5000133BF /* PaymentListViewController.m in Sources */,
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,

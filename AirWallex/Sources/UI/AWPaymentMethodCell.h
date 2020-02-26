@@ -1,5 +1,5 @@
 //
-//  PaymentMethodCell.h
+//  AWPaymentMethodCell.h
 //  Examples
 //
 //  Created by Victor Zhu on 2020/1/19.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PaymentMethodCell : UITableViewCell
+@interface AWPaymentMethodCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface NoCardCell : UITableViewCell
+@interface AWNoCardCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineLeftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineRightConstraint;

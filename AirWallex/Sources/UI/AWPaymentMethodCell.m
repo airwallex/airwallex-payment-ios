@@ -1,14 +1,14 @@
 //
-//  PaymentMethodCell.m
+//  AWPaymentMethodCell.m
 //  Examples
 //
 //  Created by Victor Zhu on 2020/1/19.
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "PaymentMethodCell.h"
+#import "AWPaymentMethodCell.h"
 
-@implementation PaymentMethodCell
+@implementation AWPaymentMethodCell
 
 - (void)setIsLastCell:(BOOL)isLastCell
 {
@@ -26,7 +26,7 @@
 
 @end
 
-@implementation NoCardCell
+@implementation AWNoCardCell
 
 - (void)setIsLastCell:(BOOL)isLastCell
 {
