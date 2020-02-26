@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *lastName;
 @property (nonatomic, copy, nullable) NSString *phoneNumber;
 
+- (nullable NSString *)validate;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -15,7 +15,6 @@
 		082D308823CEEDC100C9D587 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
 		0838BF6423E519FF0007F6BA /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0838BF6323E519FF0007F6BA /* CardViewController.m */; };
 		083D916A23CF025D006283CB /* NSNumber+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D916923CF025D006283CB /* NSNumber+Utils.m */; };
-		083FDEB423D45F9600AF35AB /* AWBilling+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 083FDEB323D45F9600AF35AB /* AWBilling+Utils.m */; };
 		083FDEB623D46F6400AF35AB /* FloatLabeledView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 083FDEB523D46F6400AF35AB /* FloatLabeledView.xib */; };
 		083FDEB923D47AE100AF35AB /* CountryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083FDEB823D47AE100AF35AB /* CountryListViewController.m */; };
 		083FDEBC23D4858C00AF35AB /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = 083FDEBB23D4858C00AF35AB /* Country.m */; };
@@ -63,8 +62,6 @@
 		0838BF6323E519FF0007F6BA /* CardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardViewController.m; sourceTree = "<group>"; };
 		083D916823CF025D006283CB /* NSNumber+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Utils.h"; sourceTree = "<group>"; };
 		083D916923CF025D006283CB /* NSNumber+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+Utils.m"; sourceTree = "<group>"; };
-		083FDEB223D45F9600AF35AB /* AWBilling+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWBilling+Utils.h"; sourceTree = "<group>"; };
-		083FDEB323D45F9600AF35AB /* AWBilling+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWBilling+Utils.m"; sourceTree = "<group>"; };
 		083FDEB523D46F6400AF35AB /* FloatLabeledView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FloatLabeledView.xib; sourceTree = "<group>"; };
 		083FDEB723D47AE100AF35AB /* CountryListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CountryListViewController.h; sourceTree = "<group>"; };
 		083FDEB823D47AE100AF35AB /* CountryListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CountryListViewController.m; sourceTree = "<group>"; };
@@ -271,8 +268,6 @@
 				0808136F23D14CB5000133BF /* PaymentListViewController.h */,
 				0808137023D14CB5000133BF /* PaymentListViewController.m */,
 				08D26F4C24037687008E65D3 /* Address.storyboard */,
-				083FDEB223D45F9600AF35AB /* AWBilling+Utils.h */,
-				083FDEB323D45F9600AF35AB /* AWBilling+Utils.m */,
 				085BA65023F2722000FD33FA /* UIButton+Utils.h */,
 				085BA65123F2722000FD33FA /* UIButton+Utils.m */,
 				0838BF6123E5190B0007F6BA /* Card */,
@@ -454,7 +449,6 @@
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
 				085BA65223F2722000FD33FA /* UIButton+Utils.m in Sources */,
-				083FDEB423D45F9600AF35AB /* AWBilling+Utils.m in Sources */,
 				083FDEB923D47AE100AF35AB /* CountryListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

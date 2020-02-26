@@ -7,8 +7,8 @@
 //
 
 #import "EditShippingViewController.h"
+#import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
-#import "AWBilling+Utils.h"
 #import "Widgets.h"
 #import "CountryListViewController.h"
 
