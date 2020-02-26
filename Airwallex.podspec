@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target		= '10.0'
   s.public_header_files			= "Airwallex/PublicHeaders/*.h"
   s.resource					= 'Airwallex/Resources/AirwallexSDK.bundle'
-  s.source_files				= 'Airwallex/PublicHeaders/*.h', 'Airwallex/Sources/*.{h,m}', 'Airwallex/Sources/API/*.{h,m}', 'Airwallex/Sources/Card/*.{h,m}', 'Airwallex/Sources/Logger/*.{h,m}', 'Airwallex/Sources/Models/*.{h,m}'
+  s.source_files				= 'Airwallex/PublicHeaders/*.h', 'Airwallex/Sources/*.{h,m}', 'Airwallex/Sources/API/*.{h,m}', 'Airwallex/Sources/Tools/*.{h,m}', 'Airwallex/Sources/Models/*.{h,m}'
   s.dependency 'SVProgressHUD'
 
   #  When using multiple platforms

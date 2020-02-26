@@ -134,13 +134,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080EB05523F4D7AB00F71CEC /* Card */ = {
+		080EB05523F4D7AB00F71CEC /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				081D52F823D0581F00953B03 /* AWUtils.h */,
+				081D52F923D0581F00953B03 /* AWUtils.m */,
+				08D26F4F2404AFE9008E65D3 /* AWFontLoader.h */,
+				08D26F502404AFE9008E65D3 /* AWFontLoader.m */,
 				080EB05623F4D7E900F71CEC /* AWCardValidator.h */,
 				080EB05723F4D7E900F71CEC /* AWCardValidator.m */,
+				081D52F423D04EA200953B03 /* AWLogger.h */,
+				081D52F523D04EA200953B03 /* AWLogger.m */,
 			);
-			path = Card;
+			path = Tools;
 			sourceTree = "<group>";
 		};
 		081D52C623D0306200953B03 /* Models */ = {
@@ -186,22 +192,6 @@
 				08A14B9E23E9228300F3C211 /* AWPaymentMethodResponse.m */,
 			);
 			path = API;
-			sourceTree = "<group>";
-		};
-		081D52F323D04E9500953B03 /* Logger */ = {
-			isa = PBXGroup;
-			children = (
-				081D52F423D04EA200953B03 /* AWLogger.h */,
-				081D52F523D04EA200953B03 /* AWLogger.m */,
-			);
-			path = Logger;
-			sourceTree = "<group>";
-		};
-		083D916C23CF0902006283CB /* Private */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Private;
 			sourceTree = "<group>";
 		};
 		085BD3BE23CC62B4002E8F27 = {
@@ -257,15 +247,9 @@
 				08D26F5624051FC2008E65D3 /* AWConstants.m */,
 				085BD41D23CD9E2C002E8F27 /* AWPaymentConfiguration.h */,
 				085BD41E23CD9E2C002E8F27 /* AWPaymentConfiguration.m */,
-				08D26F4F2404AFE9008E65D3 /* AWFontLoader.h */,
-				08D26F502404AFE9008E65D3 /* AWFontLoader.m */,
-				081D52F823D0581F00953B03 /* AWUtils.h */,
-				081D52F923D0581F00953B03 /* AWUtils.m */,
-				080EB05523F4D7AB00F71CEC /* Card */,
-				081D52F323D04E9500953B03 /* Logger */,
 				081D52DB23D03AFB00953B03 /* API */,
+				080EB05523F4D7AB00F71CEC /* Tools */,
 				081D52C623D0306200953B03 /* Models */,
-				083D916C23CF0902006283CB /* Private */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
