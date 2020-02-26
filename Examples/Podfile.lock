@@ -1,13 +1,16 @@
 PODS:
   - Airwallex (1.0):
     - SVProgressHUD
+  - IQKeyboardManager (6.5.4)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - Airwallex (from `../`)
+  - IQKeyboardManager (= 6.5.4)
 
 SPEC REPOS:
   trunk:
+    - IQKeyboardManager
     - SVProgressHUD
 
 EXTERNAL SOURCES:
@@ -16,8 +19,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Airwallex: fca3ffc3b67f5f8eecd05d0704414df4c2406231
+  IQKeyboardManager: 72b359cd7e777e3a984cedbe05f8da45320cbb63
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 4f34921d814a0c656f1364e1b64241b72f693ea1
+PODFILE CHECKSUM: d0ab5e05908c0588795d574e88b4f4c73ed9c5c1
 
 COCOAPODS: 1.8.4
