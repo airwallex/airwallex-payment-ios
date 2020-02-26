@@ -247,11 +247,19 @@
 				08D26F5624051FC2008E65D3 /* AWConstants.m */,
 				085BD41D23CD9E2C002E8F27 /* AWPaymentConfiguration.h */,
 				085BD41E23CD9E2C002E8F27 /* AWPaymentConfiguration.m */,
+				086666402406127800B52477 /* UI */,
 				081D52DB23D03AFB00953B03 /* API */,
 				080EB05523F4D7AB00F71CEC /* Tools */,
 				081D52C623D0306200953B03 /* Models */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		086666402406127800B52477 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

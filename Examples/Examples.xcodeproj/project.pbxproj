@@ -206,8 +206,6 @@
 		085BD41923CD8702002E8F27 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
-				088F3E8523CEDF39005AE40F /* Widgets.h */,
-				088F3E8623CEDF39005AE40F /* Widgets.m */,
 				08775C8723D43AF900AE09A7 /* FloatLabeledTextField.xib */,
 				083FDEB523D46F6400AF35AB /* FloatLabeledView.xib */,
 				085BA65F23F3F96900FD33FA /* CardTextField.xib */,
@@ -223,8 +221,6 @@
 				08CFA21123FA2F4F00E6C6F5 /* PaymentItemCell.xib */,
 				08EFDC5523D05F6B003EF928 /* PaymentViewController.h */,
 				08EFDC5623D05F6B003EF928 /* PaymentViewController.m */,
-				08775C8423D3F0A300AE09A7 /* PaymentMethodCell.h */,
-				08775C8523D3F0A300AE09A7 /* PaymentMethodCell.m */,
 			);
 			path = Payment;
 			sourceTree = "<group>";
@@ -266,6 +262,10 @@
 		08D26F4E2403A3A9008E65D3 /* AirwallexSDK */ = {
 			isa = PBXGroup;
 			children = (
+				088F3E8523CEDF39005AE40F /* Widgets.h */,
+				088F3E8623CEDF39005AE40F /* Widgets.m */,
+				08775C8423D3F0A300AE09A7 /* PaymentMethodCell.h */,
+				08775C8523D3F0A300AE09A7 /* PaymentMethodCell.m */,
 				08D26F4A24037391008E65D3 /* PaymentMethod.storyboard */,
 				0808136F23D14CB5000133BF /* PaymentListViewController.h */,
 				0808137023D14CB5000133BF /* PaymentListViewController.m */,
