@@ -124,3 +124,17 @@
 }
 
 @end
+
+@implementation UIImage (Utils)
+
++ (nullable UIImage *)imageNamed:(NSString *)name inBundle:(nullable NSBundle *)bundle
+{
+    return [UIImage imageNamed:name ofType:@"png" inBundle:bundle];
+}
+
++ (nullable UIImage *)imageNamed:(NSString *)name ofType:(NSString *)type inBundle:(nullable NSBundle *)bundle
+{
+    return [UIImage imageWithContentsOfFile:[bundle pathForResource:name ofType:type]];
+}
+
+@end

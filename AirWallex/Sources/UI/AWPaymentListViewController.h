@@ -6,7 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "AWViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,7 +20,7 @@ static NSString * const AWWechatpay = @"wechatpay";
 
 @end
 
-@interface AWPaymentListViewController : UIViewController
+@interface AWPaymentListViewController : AWViewController
 
 @property (nonatomic, weak) id <AWPaymentListViewControllerDelegate> delegate;
 @property (nonatomic, strong, nullable) AWPaymentMethod *paymentMethod;

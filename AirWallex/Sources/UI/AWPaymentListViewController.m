@@ -10,6 +10,7 @@
 #import "AWCardViewController.h"
 #import "AWWidgets.h"
 #import "AWTheme.h"
+#import "AWUtils.h"
 #import "AWPaymentMethod.h"
 #import "AWPaymentConfiguration.h"
 #import "AWAPIClient.h"
@@ -178,10 +179,10 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     AWPaymentMethod *method = items[indexPath.row];
     AWPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWPaymentMethodCell" forIndexPath:indexPath];
     if ([method.type isEqualToString:AWWechatpay]) {
-        cell.logoImageView.image = [UIImage imageNamed:@"wc"];
+        cell.logoImageView.image = [UIImage imageNamed:@"wc" inBundle:[NSBundle resourceBundle]];
         cell.titleLabel.text = FormatPaymentMethodTypeString(method.type);
     } else {
-        cell.logoImageView.image = [UIImage imageNamed:method.card.brand];
+        cell.logoImageView.image = [UIImage imageNamed:method.card.brand inBundle:[NSBundle resourceBundle]];
         cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", method.card.brand.capitalizedString, method.card.last4];
     }
 

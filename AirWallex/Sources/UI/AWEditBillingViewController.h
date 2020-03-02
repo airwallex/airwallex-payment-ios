@@ -6,7 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "AWViewController.h"
 
 @class AWBilling, AWEditBillingViewController;
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface AWEditBillingViewController : UIViewController
+@interface AWEditBillingViewController : AWViewController
 
 @property (nonatomic, weak) id <AWEditBillingViewControllerDelegate> delegate;
 @property (nonatomic, strong, nullable) AWBilling *billing;

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "AWViewController.h"
 
 @class AWCardViewController, AWPaymentMethod;
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface AWCardViewController : UIViewController
+@interface AWCardViewController : AWViewController
 
 @property (nonatomic, weak) id <AWCardViewControllerDelegate> delegate;
 

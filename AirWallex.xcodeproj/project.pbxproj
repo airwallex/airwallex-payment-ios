@@ -55,7 +55,6 @@
 		0866666024062AEB00B52477 /* AWPaymentListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866665424062AEB00B52477 /* AWPaymentListViewController.h */; };
 		0866666324062B5000B52477 /* AWPaymentMethod.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0866666124062B5000B52477 /* AWPaymentMethod.storyboard */; };
 		0866666424062B5000B52477 /* AWAddress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0866666224062B5000B52477 /* AWAddress.storyboard */; };
-		0866666624062E4100B52477 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0866666524062E4100B52477 /* Assets.xcassets */; };
 		0866666A2406311F00B52477 /* FloatLabeledView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666672406311F00B52477 /* FloatLabeledView.xib */; };
 		0866666B2406311F00B52477 /* CardTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666682406311F00B52477 /* CardTextField.xib */; };
 		0866666C2406311F00B52477 /* FloatLabeledTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666692406311F00B52477 /* FloatLabeledTextField.xib */; };
@@ -70,6 +69,8 @@
 		08A14B9C23E91F0C00F3C211 /* AWPaymentMethodRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A14B9A23E91F0C00F3C211 /* AWPaymentMethodRequest.m */; };
 		08A14B9F23E9228300F3C211 /* AWPaymentMethodResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A14B9D23E9228300F3C211 /* AWPaymentMethodResponse.h */; };
 		08A14BA023E9228300F3C211 /* AWPaymentMethodResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A14B9E23E9228300F3C211 /* AWPaymentMethodResponse.m */; };
+		08BD3A9F240CCAED00ACFB6B /* AWViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 08BD3A9D240CCAED00ACFB6B /* AWViewController.h */; };
+		08BD3AA0240CCAED00ACFB6B /* AWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BD3A9E240CCAED00ACFB6B /* AWViewController.m */; };
 		08D26F512404AFE9008E65D3 /* AWFontLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 08D26F4F2404AFE9008E65D3 /* AWFontLoader.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		08D26F522404AFE9008E65D3 /* AWFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D26F502404AFE9008E65D3 /* AWFontLoader.m */; };
 		08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */; };
@@ -142,7 +143,6 @@
 		0866665424062AEB00B52477 /* AWPaymentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPaymentListViewController.h; sourceTree = "<group>"; };
 		0866666124062B5000B52477 /* AWPaymentMethod.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AWPaymentMethod.storyboard; sourceTree = "<group>"; };
 		0866666224062B5000B52477 /* AWAddress.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AWAddress.storyboard; sourceTree = "<group>"; };
-		0866666524062E4100B52477 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		086666672406311F00B52477 /* FloatLabeledView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FloatLabeledView.xib; sourceTree = "<group>"; };
 		086666682406311F00B52477 /* CardTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardTextField.xib; sourceTree = "<group>"; };
 		086666692406311F00B52477 /* FloatLabeledTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FloatLabeledTextField.xib; sourceTree = "<group>"; };
@@ -158,6 +158,8 @@
 		08A14B9D23E9228300F3C211 /* AWPaymentMethodResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWPaymentMethodResponse.h; sourceTree = "<group>"; };
 		08A14B9E23E9228300F3C211 /* AWPaymentMethodResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentMethodResponse.m; sourceTree = "<group>"; };
 		08A14BA123E9538000F3C211 /* AWParseable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWParseable.h; sourceTree = "<group>"; };
+		08BD3A9D240CCAED00ACFB6B /* AWViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWViewController.h; sourceTree = "<group>"; };
+		08BD3A9E240CCAED00ACFB6B /* AWViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWViewController.m; sourceTree = "<group>"; };
 		08D26F4F2404AFE9008E65D3 /* AWFontLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWFontLoader.h; sourceTree = "<group>"; };
 		08D26F502404AFE9008E65D3 /* AWFontLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWFontLoader.m; sourceTree = "<group>"; };
 		08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AirwallexSDK.bundle; sourceTree = "<group>"; };
@@ -327,6 +329,8 @@
 				0866664C24062AEB00B52477 /* AWPaymentListViewController.m */,
 				086666412406138400B52477 /* AWPaymentMethodCell.h */,
 				086666422406138400B52477 /* AWPaymentMethodCell.m */,
+				08BD3A9D240CCAED00ACFB6B /* AWViewController.h */,
+				08BD3A9E240CCAED00ACFB6B /* AWViewController.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -340,7 +344,6 @@
 				086666672406311F00B52477 /* FloatLabeledView.xib */,
 				0866666224062B5000B52477 /* AWAddress.storyboard */,
 				0866666124062B5000B52477 /* AWPaymentMethod.storyboard */,
-				0866666524062E4100B52477 /* Assets.xcassets */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				081D52F623D04EA200953B03 /* AWLogger.h in Headers */,
 				081D52E823D043E100953B03 /* AWPaymentMethodOptions.h in Headers */,
 				0866665F24062AEB00B52477 /* AWCountryListViewController.h in Headers */,
+				08BD3A9F240CCAED00ACFB6B /* AWViewController.h in Headers */,
 				081D52E323D03BDF00953B03 /* AWPaymentIntentResponse.h in Headers */,
 				081D52D523D0343200953B03 /* AWWechatPay.h in Headers */,
 				086666732406343B00B52477 /* AWTheme.h in Headers */,
@@ -470,7 +474,6 @@
 				0866666324062B5000B52477 /* AWPaymentMethod.storyboard in Resources */,
 				082F315C240C8C1200573824 /* AWHUD.xib in Resources */,
 				08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */,
-				0866666624062E4100B52477 /* Assets.xcassets in Resources */,
 				0866666424062B5000B52477 /* AWAddress.storyboard in Resources */,
 				0866666B2406311F00B52477 /* CardTextField.xib in Resources */,
 			);
@@ -514,6 +517,7 @@
 				081D52CE23D0324E00953B03 /* AWBilling.m in Sources */,
 				081D52D623D0343200953B03 /* AWWechatPay.m in Sources */,
 				086666442406138400B52477 /* AWPaymentMethodCell.m in Sources */,
+				08BD3AA0240CCAED00ACFB6B /* AWViewController.m in Sources */,
 				085BD42023CD9E2C002E8F27 /* AWPaymentConfiguration.m in Sources */,
 				085BD43923CDCBD7002E8F27 /* AWAddress.m in Sources */,
 				081D52F723D04EA200953B03 /* AWLogger.m in Sources */,

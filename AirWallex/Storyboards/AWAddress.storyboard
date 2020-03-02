@@ -535,7 +535,7 @@
                     <navigationItem key="navigationItem" id="SeP-lK-5ac">
                         <barButtonItem key="rightBarButtonItem" title="Close" id="zAH-Qs-bcs">
                             <connections>
-                                <action selector="closePressed:" destination="vwS-Wr-Fsa" id="Ixx-69-bVa"/>
+                                <action selector="close:" destination="vwS-Wr-Fsa" id="xBl-yN-p13"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

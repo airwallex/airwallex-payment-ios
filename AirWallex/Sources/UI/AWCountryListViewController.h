@@ -6,7 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "AWViewController.h"
 
 @class AWCountry, AWCountryListViewController;
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface AWCountryListViewController : UIViewController
+@interface AWCountryListViewController : AWViewController
 
 @property (nonatomic, weak) id <AWCountryListViewControllerDelegate> delegate;
 @property (nonatomic, strong) AWCountry *country;

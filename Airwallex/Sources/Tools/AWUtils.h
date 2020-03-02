@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,6 +46,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)checkNotNegative:(NSDecimalNumber *)value
                     name:(NSString *)name;
+
+@end
+
+@interface UIImage (Utils)
+
++ (nullable UIImage *)imageNamed:(NSString *)name inBundle:(nullable NSBundle *)bundle;
++ (nullable UIImage *)imageNamed:(NSString *)name ofType:(NSString *)type inBundle:(nullable NSBundle *)bundle;
 
 @end
 

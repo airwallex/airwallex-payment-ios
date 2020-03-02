@@ -10,6 +10,7 @@
 #import "AWEditShippingViewController.h"
 #import "AWWidgets.h"
 #import "AWBilling.h"
+#import "AWUtils.h"
 #import "AWCard.h"
 #import "AWPaymentMethod.h"
 #import "AWPaymentMethodRequest.h"
@@ -24,15 +25,17 @@
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *nameField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *expiresField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *cvcField;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (strong, nonatomic) IBOutlet AWHUD *HUD;
 
 @end
 
 @implementation AWCardViewController
 
-- (IBAction)closePressed:(id)sender
+- (void)viewDidLoad
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [super viewDidLoad];
+    self.closeBarButtonItem.image = [UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]];
 }
 
 - (void)finishCreation:(AWPaymentMethod *)paymentMethod

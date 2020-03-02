@@ -9,6 +9,7 @@
 #import "AWWidgets.h"
 #import "AWCardValidator.h"
 #import "AWTheme.h"
+#import "AWUtils.h"
 
 @interface View ()
 
@@ -205,10 +206,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *floatingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *textLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *floatingTopConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @end
 
 @implementation FloatLabeledView
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.imageView.image = [UIImage imageNamed:@"down" inBundle:[NSBundle resourceBundle]];
+}
 
 - (NSString *)text
 {
@@ -274,6 +282,13 @@
 @end
 
 @implementation CardTextField
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.visaView.image = [UIImage imageNamed:@"visa" inBundle:[NSBundle resourceBundle]];
+    self.masterView.image = [UIImage imageNamed:@"mastercard" inBundle:[NSBundle resourceBundle]];
+}
 
 - (void)setText:(NSString *)text
 {

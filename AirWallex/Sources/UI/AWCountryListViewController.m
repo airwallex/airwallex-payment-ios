@@ -8,6 +8,7 @@
 
 #import "AWCountryListViewController.h"
 #import "AWCountry.h"
+#import "AWUtils.h"
 
 @interface AWCountryListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
@@ -40,11 +41,6 @@
     self.matchedCountries = countries;
 }
 
-- (IBAction)closePressed:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.matchedCountries.count;
@@ -56,7 +52,7 @@
     AWCountry *country = self.matchedCountries[indexPath.row];
     cell.textLabel.text = country.countryName;
     if ([self.country.countryName isEqualToString:country.countryName]) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tick"]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tick" inBundle:[NSBundle resourceBundle]]];
         cell.accessoryView = imageView;
     } else {
         cell.accessoryView = nil;
