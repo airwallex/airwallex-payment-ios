@@ -58,7 +58,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="YJ8-xS-1dX" firstAttribute="centerX" secondItem="2sk-8t-Vrm" secondAttribute="centerX" id="5xv-vA-5A7"/>
                         <constraint firstItem="YJ8-xS-1dX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2sk-8t-Vrm" secondAttribute="leading" constant="8" id="MuM-yq-NXt"/>

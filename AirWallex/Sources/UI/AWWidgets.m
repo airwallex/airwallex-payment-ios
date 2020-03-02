@@ -323,6 +323,9 @@
 - (void)addSubviewIfNeeded
 {
     if (!self.superview && self.viewController) {
+        self.backgroundColor = [UIColor clearColor];
+        self.frame = self.viewController.view.bounds;
+        self.center = self.viewController.view.center;
         [self.viewController.view addSubview:self];
     }
     self.alpha = 1;
@@ -345,6 +348,9 @@
     self.imageView.image = [UIImage imageNamed:@"error"];
     self.imageView.hidden = NO;
     self.messageLabel.text = status;
+    [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        [self dismiss];
+    }];
 }
 
 - (void)showSuccessWithStatus:(nullable NSString*)status
@@ -352,9 +358,12 @@
     [self addSubviewIfNeeded];
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
-    self.imageView.image = [UIImage imageNamed:@"error"];
+    self.imageView.image = [UIImage imageNamed:@"success"];
     self.imageView.hidden = NO;
     self.messageLabel.text = status;
+    [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        [self dismiss];
+    }];
 }
 
 - (void)dismiss

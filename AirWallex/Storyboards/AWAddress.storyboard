@@ -252,7 +252,7 @@
                 <view contentMode="scaleToFill" id="RP2-c8-x73" customClass="AWHUD">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <viewLayoutGuide key="safeArea" id="OKG-pP-HuV"/>
                     <connections>
                         <outlet property="viewController" destination="h9U-mC-7xa" id="afI-du-yzD"/>
@@ -474,7 +474,7 @@
                 <view contentMode="scaleToFill" id="fve-2D-XBS" customClass="AWHUD">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <viewLayoutGuide key="safeArea" id="jNS-ie-2JL"/>
                     <connections>
                         <outlet property="viewController" destination="NpV-bL-wL6" id="ayJ-8z-r6B"/>
