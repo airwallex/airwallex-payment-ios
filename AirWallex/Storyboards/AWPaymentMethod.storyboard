@@ -16,10 +16,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Payment List View Controller-->
+        <!--AWPaymentListViewController-->
         <scene sceneID="mdf-GM-7m4">
             <objects>
-                <viewController id="X8p-bs-NKO" customClass="AWPaymentListViewController" sceneMemberID="viewController">
+                <viewController id="X8p-bs-NKO" userLabel="AWPaymentListViewController" customClass="AWPaymentListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lUv-PY-xu3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

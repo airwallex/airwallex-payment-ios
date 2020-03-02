@@ -16,10 +16,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--AWEditBillingViewController-->
         <scene sceneID="XvO-6M-pLB">
             <objects>
-                <viewController storyboardIdentifier="billing" id="h9U-mC-7xa" customClass="AWEditBillingViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="billing" id="h9U-mC-7xa" userLabel="AWEditBillingViewController" customClass="AWEditBillingViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RWP-xf-eSU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -266,10 +266,10 @@
             </objects>
             <point key="canvasLocation" x="1935" y="883"/>
         </scene>
-        <!--View Controller-->
+        <!--AWEditShippingViewController-->
         <scene sceneID="L6p-zs-Kto">
             <objects>
-                <viewController storyboardIdentifier="shipping" id="NpV-bL-wL6" customClass="AWEditShippingViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="shipping" id="NpV-bL-wL6" userLabel="AWEditShippingViewController" customClass="AWEditShippingViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q2O-7m-ogy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -488,10 +488,10 @@
             </objects>
             <point key="canvasLocation" x="1048" y="883"/>
         </scene>
-        <!--Country List View Controller-->
+        <!--AWCountryListViewController-->
         <scene sceneID="0FF-z3-Kvi">
             <objects>
-                <viewController id="vwS-Wr-Fsa" customClass="AWCountryListViewController" sceneMemberID="viewController">
+                <viewController id="vwS-Wr-Fsa" userLabel="AWCountryListViewController" customClass="AWCountryListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6qL-mP-euP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -568,6 +568,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="m4x-jN-zgH"/>
+        <segue reference="0ca-GZ-Ksa"/>
     </inferredMetricsTieBreakers>
 </document>
