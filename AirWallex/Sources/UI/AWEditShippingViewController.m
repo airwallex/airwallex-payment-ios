@@ -16,15 +16,15 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *lastNameField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *firstNameField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *emailField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *phoneNumberField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *stateField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *cityField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *streetField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *zipcodeField;
-@property (weak, nonatomic) IBOutlet FloatLabeledView *countryView;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *lastNameField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *firstNameField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *emailField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *phoneNumberField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *stateField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *cityField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *streetField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *zipcodeField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledView *countryView;
 @property (strong, nonatomic) IBOutlet AWHUD *HUD;
 
 @property (strong, nonatomic) AWCountry *country;

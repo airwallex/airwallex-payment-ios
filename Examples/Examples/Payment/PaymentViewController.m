@@ -18,7 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet Button *payButton;
+@property (weak, nonatomic) IBOutlet AWButton *payButton;
 @property (strong, nonatomic) NSArray *items;
 @property (strong, nonatomic) AWBilling *billing;
 @property (strong, nonatomic) AWPaymentMethod *paymentMethod;

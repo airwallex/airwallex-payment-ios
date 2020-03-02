@@ -13,7 +13,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FloatLabeledTextField">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AWFloatLabeledTextField">
             <connections>
                 <outlet property="floatingLabel" destination="jFW-b4-Um3" id="X4s-Dx-jRc"/>
                 <outlet property="floatingTopConstraint" destination="pY2-M8-vj7" id="7Kf-n1-qBS"/>
@@ -26,7 +26,7 @@
             <rect key="frame" x="0.0" y="0.0" width="355" height="227"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4IW-Km-duE" userLabel="Border" customClass="View">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4IW-Km-duE" userLabel="Border" customClass="AWView">
                     <rect key="frame" x="0.0" y="0.0" width="355" height="227"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jFW-b4-Um3">

@@ -13,7 +13,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardTextField">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AWCardTextField">
             <connections>
                 <outlet property="brandView" destination="EVl-W6-jA9" id="cd0-Vz-Jho"/>
                 <outlet property="floatingLabel" destination="Emi-Vp-8CH" id="Mmv-Er-BB8"/>
@@ -29,7 +29,7 @@
             <rect key="frame" x="0.0" y="0.0" width="454" height="577"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VZA-HM-Bjn" userLabel="Border" customClass="View">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VZA-HM-Bjn" userLabel="Border" customClass="AWView">
                     <rect key="frame" x="0.0" y="44" width="454" height="499"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Emi-Vp-8CH">

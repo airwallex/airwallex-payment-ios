@@ -21,10 +21,10 @@
 @interface AWCardViewController ()
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet CardTextField *cardNoField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *nameField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *expiresField;
-@property (weak, nonatomic) IBOutlet FloatLabeledTextField *cvcField;
+@property (weak, nonatomic) IBOutlet AWCardTextField *cardNoField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *nameField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *expiresField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *cvcField;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (strong, nonatomic) IBOutlet AWHUD *HUD;
 

@@ -17,10 +17,10 @@
 
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWEditShippingViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet View *badgeView;
+@property (weak, nonatomic) IBOutlet AWView *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet Button *checkoutButton;
+@property (weak, nonatomic) IBOutlet AWButton *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
 @property (strong, nonatomic) AWBilling *shipping;
 

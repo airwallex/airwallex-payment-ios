@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 IB_DESIGNABLE
-@interface View : UIView
+@interface AWView : UIView
 
 @property (nonatomic) IBInspectable CGFloat cornerRadius;
 @property (nonatomic) IBInspectable CGFloat borderWidth;
@@ -19,19 +19,19 @@ IB_DESIGNABLE
 
 @end
 
-@interface NibView : View
+@interface AWNibView : AWView
 
 @end
 
 IB_DESIGNABLE
-@interface Button : UIButton
+@interface AWButton : UIButton
 
 @property (nonatomic) IBInspectable CGFloat cornerRadius;
 
 @end
 
 IB_DESIGNABLE
-@interface FloatLabeledTextField : NibView
+@interface AWFloatLabeledTextField : AWNibView
 
 @property (nonatomic, strong) IBInspectable NSString *text, *placeholder;
 @property (nonatomic) IBInspectable NSInteger keyboardType;
@@ -39,18 +39,18 @@ IB_DESIGNABLE
 @end
 
 IB_DESIGNABLE
-@interface FloatLabeledView : NibView
+@interface AWFloatLabeledView : AWNibView
 
 @property (nonatomic, strong) IBInspectable NSString *text, *placeholder;
 
 @end
 
 IB_DESIGNABLE
-@interface CardTextField : FloatLabeledTextField
+@interface AWCardTextField : AWFloatLabeledTextField
 
 @end
 
-@interface AWHUD : NibView
+@interface AWHUD : AWNibView
 
 @property (weak, nonatomic) IBOutlet UIViewController *viewController;
 

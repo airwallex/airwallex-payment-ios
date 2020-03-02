@@ -11,11 +11,11 @@
 #import "AWTheme.h"
 #import "AWUtils.h"
 
-@interface View ()
+@interface AWView ()
 
 @end
 
-@implementation View
+@implementation AWView
 
 - (void)setCornerRadius:(CGFloat)cornerRadius
 {
@@ -38,13 +38,13 @@
 
 @end
 
-@interface NibView ()
+@interface AWNibView ()
 
 @property (nonatomic, strong) UIView *view;
 
 @end
 
-@implementation NibView
+@implementation AWNibView
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -88,11 +88,11 @@
 
 @end
 
-@interface Button ()
+@interface AWButton ()
 
 @end
 
-@implementation Button
+@implementation AWButton
 
 - (void)setCornerRadius:(CGFloat)cornerRadius
 {
@@ -109,7 +109,7 @@
 
 @end
 
-@interface FloatLabeledTextField () <UITextFieldDelegate>
+@interface AWFloatLabeledTextField () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *floatingLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
@@ -118,7 +118,7 @@
 
 @end
 
-@implementation FloatLabeledTextField
+@implementation AWFloatLabeledTextField
 
 - (NSString *)text
 {
@@ -201,7 +201,7 @@
 
 @end
 
-@interface FloatLabeledView ()
+@interface AWFloatLabeledView ()
 
 @property (weak, nonatomic) IBOutlet UILabel *floatingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *textLabel;
@@ -210,7 +210,7 @@
 
 @end
 
-@implementation FloatLabeledView
+@implementation AWFloatLabeledView
 
 - (void)awakeFromNib
 {
@@ -273,7 +273,7 @@
 
 @end
 
-@interface CardTextField ()
+@interface AWCardTextField ()
 
 @property (weak, nonatomic) IBOutlet UIStackView *brandView;
 @property (weak, nonatomic) IBOutlet UIImageView *visaView;
@@ -281,7 +281,7 @@
 
 @end
 
-@implementation CardTextField
+@implementation AWCardTextField
 
 - (void)awakeFromNib
 {

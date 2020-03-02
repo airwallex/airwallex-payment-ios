@@ -55,9 +55,9 @@
 		0866666024062AEB00B52477 /* AWPaymentListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866665424062AEB00B52477 /* AWPaymentListViewController.h */; };
 		0866666324062B5000B52477 /* AWPaymentMethod.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0866666124062B5000B52477 /* AWPaymentMethod.storyboard */; };
 		0866666424062B5000B52477 /* AWAddress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0866666224062B5000B52477 /* AWAddress.storyboard */; };
-		0866666A2406311F00B52477 /* FloatLabeledView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666672406311F00B52477 /* FloatLabeledView.xib */; };
-		0866666B2406311F00B52477 /* CardTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666682406311F00B52477 /* CardTextField.xib */; };
-		0866666C2406311F00B52477 /* FloatLabeledTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666692406311F00B52477 /* FloatLabeledTextField.xib */; };
+		0866666A2406311F00B52477 /* AWFloatLabeledView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666672406311F00B52477 /* AWFloatLabeledView.xib */; };
+		0866666B2406311F00B52477 /* AWCardTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666682406311F00B52477 /* AWCardTextField.xib */; };
+		0866666C2406311F00B52477 /* AWFloatLabeledTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666692406311F00B52477 /* AWFloatLabeledTextField.xib */; };
 		0866666F2406314500B52477 /* AWWidgets.m in Sources */ = {isa = PBXBuildFile; fileRef = 0866666D2406314500B52477 /* AWWidgets.m */; };
 		086666702406314500B52477 /* AWWidgets.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866666E2406314500B52477 /* AWWidgets.h */; };
 		086666732406343B00B52477 /* AWTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 086666712406343B00B52477 /* AWTheme.h */; };
@@ -143,9 +143,9 @@
 		0866665424062AEB00B52477 /* AWPaymentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPaymentListViewController.h; sourceTree = "<group>"; };
 		0866666124062B5000B52477 /* AWPaymentMethod.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AWPaymentMethod.storyboard; sourceTree = "<group>"; };
 		0866666224062B5000B52477 /* AWAddress.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AWAddress.storyboard; sourceTree = "<group>"; };
-		086666672406311F00B52477 /* FloatLabeledView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FloatLabeledView.xib; sourceTree = "<group>"; };
-		086666682406311F00B52477 /* CardTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardTextField.xib; sourceTree = "<group>"; };
-		086666692406311F00B52477 /* FloatLabeledTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FloatLabeledTextField.xib; sourceTree = "<group>"; };
+		086666672406311F00B52477 /* AWFloatLabeledView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWFloatLabeledView.xib; sourceTree = "<group>"; };
+		086666682406311F00B52477 /* AWCardTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWCardTextField.xib; sourceTree = "<group>"; };
+		086666692406311F00B52477 /* AWFloatLabeledTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWFloatLabeledTextField.xib; sourceTree = "<group>"; };
 		0866666D2406314500B52477 /* AWWidgets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWWidgets.m; sourceTree = "<group>"; };
 		0866666E2406314500B52477 /* AWWidgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWWidgets.h; sourceTree = "<group>"; };
 		086666712406343B00B52477 /* AWTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWTheme.h; sourceTree = "<group>"; };
@@ -339,9 +339,9 @@
 			isa = PBXGroup;
 			children = (
 				082F315B240C8C1200573824 /* AWHUD.xib */,
-				086666682406311F00B52477 /* CardTextField.xib */,
-				086666692406311F00B52477 /* FloatLabeledTextField.xib */,
-				086666672406311F00B52477 /* FloatLabeledView.xib */,
+				086666682406311F00B52477 /* AWCardTextField.xib */,
+				086666692406311F00B52477 /* AWFloatLabeledTextField.xib */,
+				086666672406311F00B52477 /* AWFloatLabeledView.xib */,
 				0866666224062B5000B52477 /* AWAddress.storyboard */,
 				0866666124062B5000B52477 /* AWPaymentMethod.storyboard */,
 			);
@@ -469,13 +469,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0866666A2406311F00B52477 /* FloatLabeledView.xib in Resources */,
-				0866666C2406311F00B52477 /* FloatLabeledTextField.xib in Resources */,
+				0866666A2406311F00B52477 /* AWFloatLabeledView.xib in Resources */,
+				0866666C2406311F00B52477 /* AWFloatLabeledTextField.xib in Resources */,
 				0866666324062B5000B52477 /* AWPaymentMethod.storyboard in Resources */,
 				082F315C240C8C1200573824 /* AWHUD.xib in Resources */,
 				08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */,
 				0866666424062B5000B52477 /* AWAddress.storyboard in Resources */,
-				0866666B2406311F00B52477 /* CardTextField.xib in Resources */,
+				0866666B2406311F00B52477 /* AWCardTextField.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
