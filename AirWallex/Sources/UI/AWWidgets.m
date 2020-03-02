@@ -328,8 +328,6 @@
 @interface AWHUD ()
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
 @end
 
@@ -340,7 +338,6 @@
     if (!self.superview && self.viewController) {
         self.backgroundColor = [UIColor clearColor];
         self.frame = self.viewController.view.bounds;
-        self.center = self.viewController.view.center;
         [self.viewController.view addSubview:self];
     }
     self.alpha = 1;
@@ -349,36 +346,7 @@
 - (void)show
 {
     [self addSubviewIfNeeded];
-    self.activityIndicator.hidden = NO;
     [self.activityIndicator startAnimating];
-    self.imageView.hidden = YES;
-    self.messageLabel.text = nil;
-}
-
-- (void)showErrorWithStatus:(nullable NSString *)status
-{
-    [self addSubviewIfNeeded];
-    [self.activityIndicator stopAnimating];
-    self.activityIndicator.hidden = YES;
-    self.imageView.image = [UIImage imageNamed:@"error"];
-    self.imageView.hidden = NO;
-    self.messageLabel.text = status;
-    [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
-        [self dismiss];
-    }];
-}
-
-- (void)showSuccessWithStatus:(nullable NSString*)status
-{
-    [self addSubviewIfNeeded];
-    [self.activityIndicator stopAnimating];
-    self.activityIndicator.hidden = YES;
-    self.imageView.image = [UIImage imageNamed:@"success"];
-    self.imageView.hidden = NO;
-    self.messageLabel.text = status;
-    [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
-        [self dismiss];
-    }];
 }
 
 - (void)dismiss

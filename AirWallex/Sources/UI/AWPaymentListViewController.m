@@ -64,7 +64,9 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {
-            [self.HUD showErrorWithStatus:error.localizedDescription];
+            UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+            [self presentViewController:controller animated:YES completion:nil];
             return;
         }
 

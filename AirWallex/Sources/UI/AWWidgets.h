@@ -55,8 +55,6 @@ IB_DESIGNABLE
 @property (weak, nonatomic) IBOutlet UIViewController *viewController;
 
 - (void)show;
-- (void)showErrorWithStatus:(nullable NSString *)status;
-- (void)showSuccessWithStatus:(nullable NSString*)status;
 - (void)dismiss;
 
 @end

@@ -78,7 +78,9 @@
     billing.address = address;
     NSString *error = [billing validate];
     if (error) {
-        [self.HUD showErrorWithStatus:error];
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
         return;
     }
 
