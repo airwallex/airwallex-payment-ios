@@ -8,7 +8,7 @@
 
 #import "AWPaymentListViewController.h"
 #import "AWCardViewController.h"
-#import <SVProgressHUD/SVProgressHUD.h>
+#import "AWWidgets.h"
 #import "AWTheme.h"
 #import "AWPaymentMethod.h"
 #import "AWPaymentConfiguration.h"
@@ -28,6 +28,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 @interface AWPaymentListViewController () <UITableViewDataSource, UITableViewDelegate, AWCardViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet AWHUD *HUD;
 @property (strong, nonatomic) NSArray *paymentMethods;
 
 @end
@@ -55,14 +56,14 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (void)reloadData
 {
-    [SVProgressHUD show];
+    [self.HUD show];
     AWAPIClient *client = [AWAPIClient new];
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
     request.customerId = [AWPaymentConfiguration sharedConfiguration].customerId;
     __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            [self.HUD showErrorWithStatus:error.localizedDescription];
             return;
         }
 
@@ -86,7 +87,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
         strongSelf.paymentMethods = @[cards, pays];
         [strongSelf.tableView reloadData];
-        [SVProgressHUD dismiss];
+        [self.HUD dismiss];
     }];
 }
 

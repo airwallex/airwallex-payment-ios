@@ -154,15 +154,22 @@
                     </view>
                     <navigationItem key="navigationItem" id="0Tc-wp-Yrt"/>
                     <connections>
+                        <outlet property="HUD" destination="igL-5B-OaS" id="CHB-0p-sgl"/>
                         <outlet property="tableView" destination="bZ9-Ip-2rw" id="lZm-7U-GCa"/>
                         <segue destination="FPd-cM-qgB" kind="presentation" identifier="addCard" id="XXn-gX-5xC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D6c-ce-ibw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="igL-5B-OaS" customClass="AWHUD">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <viewLayoutGuide key="safeArea" id="7rK-HH-aOB"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="-80530" y="-532"/>
         </scene>
-        <!--Card View Controller-->
+        <!--View Controller-->
         <scene sceneID="efI-D8-OrI">
             <objects>
                 <viewController id="rjH-1d-ozb" customClass="AWCardViewController" sceneMemberID="viewController">
@@ -297,6 +304,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="HUD" destination="cEg-UD-idO" id="LZE-4C-HOy"/>
                         <outlet property="cardNoField" destination="gN8-Ps-Ex7" id="NNz-AS-vtl"/>
                         <outlet property="cvcField" destination="ekP-UO-j9w" id="VIJ-iJ-8gG"/>
                         <outlet property="expiresField" destination="3ek-4y-cnB" id="G21-7f-th8"/>
@@ -304,6 +312,15 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QsC-di-tRM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="cEg-UD-idO" customClass="AWHUD">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <viewLayoutGuide key="safeArea" id="MyZ-PC-GFi"/>
+                    <connections>
+                        <outlet property="viewController" destination="rjH-1d-ozb" id="YCQ-vR-5oE"/>
+                    </connections>
+                </view>
             </objects>
             <point key="canvasLocation" x="-78733" y="-532"/>
         </scene>

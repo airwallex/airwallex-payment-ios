@@ -16,7 +16,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Edit Billing View Controller-->
+        <!--View Controller-->
         <scene sceneID="XvO-6M-pLB">
             <objects>
                 <viewController storyboardIdentifier="billing" id="h9U-mC-7xa" customClass="AWEditBillingViewController" sceneMemberID="viewController">
@@ -233,6 +233,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="HUD" destination="RP2-c8-x73" id="Cig-zM-cVF"/>
                         <outlet property="billingView" destination="kb2-4B-Bhz" id="UM8-En-u5f"/>
                         <outlet property="cityField" destination="TK4-9h-amr" id="Nsa-PY-aDQ"/>
                         <outlet property="countryView" destination="KVs-tp-KeV" id="Cxs-7g-E0M"/>
@@ -248,6 +249,15 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H4i-ub-IYB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="RP2-c8-x73" customClass="AWHUD">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <viewLayoutGuide key="safeArea" id="OKG-pP-HuV"/>
+                    <connections>
+                        <outlet property="viewController" destination="h9U-mC-7xa" id="afI-du-yzD"/>
+                    </connections>
+                </view>
                 <tapGestureRecognizer id="Coh-Jh-50K">
                     <connections>
                         <action selector="selectCountries:" destination="h9U-mC-7xa" id="i8R-pT-3KZ"/>
@@ -256,7 +266,7 @@
             </objects>
             <point key="canvasLocation" x="1935" y="883"/>
         </scene>
-        <!--Edit Shipping View Controller-->
+        <!--View Controller-->
         <scene sceneID="L6p-zs-Kto">
             <objects>
                 <viewController storyboardIdentifier="shipping" id="NpV-bL-wL6" customClass="AWEditShippingViewController" sceneMemberID="viewController">
@@ -445,6 +455,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="HUD" destination="fve-2D-XBS" id="epf-rY-0n5"/>
                         <outlet property="cityField" destination="9Kz-kb-d4r" id="qJF-cn-DoN"/>
                         <outlet property="countryView" destination="eRj-MS-kdi" id="mml-pi-guF"/>
                         <outlet property="emailField" destination="mAF-7w-KIj" id="xCL-Ys-krU"/>
@@ -460,6 +471,15 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DCa-ke-wO9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="fve-2D-XBS" customClass="AWHUD">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <viewLayoutGuide key="safeArea" id="jNS-ie-2JL"/>
+                    <connections>
+                        <outlet property="viewController" destination="NpV-bL-wL6" id="ayJ-8z-r6B"/>
+                    </connections>
+                </view>
                 <tapGestureRecognizer id="ZnV-Rn-RPm">
                     <connections>
                         <action selector="selectCountries:" destination="NpV-bL-wL6" id="1vT-th-XrC"/>
@@ -548,6 +568,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="m4x-jN-zgH"/>
+        <segue reference="0ca-GZ-Ksa"/>
     </inferredMetricsTieBreakers>
 </document>

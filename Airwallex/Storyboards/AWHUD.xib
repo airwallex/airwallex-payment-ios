@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="CircularStd-Medium.otf">
+            <string>CircularStd-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AWHUD">
+            <connections>
+                <outlet property="activityIndicator" destination="CZv-oN-q7H" id="AEa-p5-Mo3"/>
+                <outlet property="imageView" destination="RU6-Bw-tQ6" id="fgt-n0-Ht1"/>
+                <outlet property="messageLabel" destination="EXc-FY-pFo" id="1Ma-V4-1f0"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="281" height="253"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2sk-8t-Vrm" customClass="View">
+                    <rect key="frame" x="50.5" y="36.5" width="180" height="180"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJ8-xS-1dX" userLabel="Content">
+                            <rect key="frame" x="8" y="60" width="164" height="60"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="CZv-oN-q7H">
+                                    <rect key="frame" x="63.5" y="0.0" width="37" height="37"/>
+                                    <color key="color" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </activityIndicatorView>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="error" translatesAutoresizingMaskIntoConstraints="NO" id="RU6-Bw-tQ6">
+                                    <rect key="frame" x="68" y="4" width="28" height="28"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading ..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXc-FY-pFo">
+                                    <rect key="frame" x="0.0" y="37" width="164" height="23"/>
+                                    <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="18"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="EXc-FY-pFo" secondAttribute="bottom" id="3uz-0v-uUQ"/>
+                                <constraint firstAttribute="trailing" secondItem="EXc-FY-pFo" secondAttribute="trailing" id="5IJ-X4-cWp"/>
+                                <constraint firstItem="CZv-oN-q7H" firstAttribute="top" secondItem="YJ8-xS-1dX" secondAttribute="top" id="9xD-Jm-7BQ"/>
+                                <constraint firstItem="RU6-Bw-tQ6" firstAttribute="centerX" secondItem="YJ8-xS-1dX" secondAttribute="centerX" id="CrG-t7-m7V"/>
+                                <constraint firstItem="EXc-FY-pFo" firstAttribute="top" secondItem="CZv-oN-q7H" secondAttribute="bottom" id="Ink-5U-ZIO"/>
+                                <constraint firstItem="EXc-FY-pFo" firstAttribute="top" secondItem="RU6-Bw-tQ6" secondAttribute="bottom" constant="5" id="KTw-9B-IrW"/>
+                                <constraint firstItem="EXc-FY-pFo" firstAttribute="leading" secondItem="YJ8-xS-1dX" secondAttribute="leading" id="h5A-Oh-T00"/>
+                                <constraint firstItem="CZv-oN-q7H" firstAttribute="centerX" secondItem="YJ8-xS-1dX" secondAttribute="centerX" id="krn-Z6-xtz"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                    <constraints>
+                        <constraint firstItem="YJ8-xS-1dX" firstAttribute="centerX" secondItem="2sk-8t-Vrm" secondAttribute="centerX" id="5xv-vA-5A7"/>
+                        <constraint firstItem="YJ8-xS-1dX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2sk-8t-Vrm" secondAttribute="leading" constant="8" id="MuM-yq-NXt"/>
+                        <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="YJ8-xS-1dX" secondAttribute="trailing" constant="8" id="Q1r-ty-04t"/>
+                        <constraint firstAttribute="width" constant="180" id="Whg-C2-Gud"/>
+                        <constraint firstAttribute="height" constant="180" id="de2-q4-kOZ"/>
+                        <constraint firstItem="YJ8-xS-1dX" firstAttribute="centerY" secondItem="2sk-8t-Vrm" secondAttribute="centerY" id="hJf-ho-nNE"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="14"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="2sk-8t-Vrm" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="4jC-8o-QAe"/>
+                <constraint firstItem="2sk-8t-Vrm" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="HeY-od-MHV"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="41.304347826086961" y="-62.611607142857139"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="error" width="28" height="28"/>
+    </resources>
+</document>

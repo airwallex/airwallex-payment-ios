@@ -8,7 +8,6 @@
 
 #import "AWEditBillingViewController.h"
 #import "AWCountryListViewController.h"
-#import <SVProgressHUD/SVProgressHUD.h>
 #import "AWWidgets.h"
 #import "AWBilling.h"
 #import "AWCountry.h"
@@ -26,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *emailField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet FloatLabeledView *countryView;
+@property (strong, nonatomic) IBOutlet AWHUD *HUD;
 
 @property (strong, nonatomic) AWCountry *country;
 
@@ -79,7 +79,7 @@
     billing.address = address;
     NSString *error = [billing validate];
     if (error) {
-        [SVProgressHUD showErrorWithStatus:error];
+        [self.HUD showErrorWithStatus:error];
         return;
     }
 

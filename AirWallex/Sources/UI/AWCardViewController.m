@@ -8,7 +8,6 @@
 
 #import "AWCardViewController.h"
 #import "AWEditShippingViewController.h"
-#import <SVProgressHUD/SVProgressHUD.h>
 #import "AWWidgets.h"
 #import "AWBilling.h"
 #import "AWCard.h"
@@ -25,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *nameField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *expiresField;
 @property (weak, nonatomic) IBOutlet FloatLabeledTextField *cvcField;
+@property (strong, nonatomic) IBOutlet AWHUD *HUD;
 
 @end
 
@@ -76,12 +76,12 @@
     request.customerId = [AWPaymentConfiguration sharedConfiguration].customerId;
     request.paymentMethod = paymentMethod;
 
-    [SVProgressHUD show];
+    [self.HUD show];
     __weak typeof(self) weakSelf = self;
     AWAPIClient *client = [AWAPIClient new];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            [self.HUD showErrorWithStatus:error.localizedDescription];
             return;
         }
 
@@ -90,7 +90,7 @@
         
         __strong typeof(self) strongSelf = weakSelf;
         [strongSelf finishCreation:result.paymentMethod];
-        [SVProgressHUD dismiss];
+        [self.HUD dismiss];
     }];
 }
 

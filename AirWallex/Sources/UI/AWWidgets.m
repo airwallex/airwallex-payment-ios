@@ -309,3 +309,61 @@
 }
 
 @end
+
+@interface AWHUD ()
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+
+@end
+
+@implementation AWHUD
+
+- (void)addSubviewIfNeeded
+{
+    if (!self.superview && self.viewController) {
+        [self.viewController.view addSubview:self];
+    }
+    self.alpha = 1;
+}
+
+- (void)show
+{
+    [self addSubviewIfNeeded];
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+    self.imageView.hidden = YES;
+    self.messageLabel.text = nil;
+}
+
+- (void)showErrorWithStatus:(nullable NSString *)status
+{
+    [self addSubviewIfNeeded];
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.imageView.image = [UIImage imageNamed:@"error"];
+    self.imageView.hidden = NO;
+    self.messageLabel.text = status;
+}
+
+- (void)showSuccessWithStatus:(nullable NSString*)status
+{
+    [self addSubviewIfNeeded];
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.imageView.image = [UIImage imageNamed:@"error"];
+    self.imageView.hidden = NO;
+    self.messageLabel.text = status;
+}
+
+- (void)dismiss
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+}
+
+@end
