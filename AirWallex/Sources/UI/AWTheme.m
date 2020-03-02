@@ -7,7 +7,6 @@
 //
 
 #import "AWTheme.h"
-#import <UIKit/UIKit.h>
 
 static UIColor *AWThemeDefaultLineColor = nil;
 static UIColor *AWThemeDefaultPurpleColor = nil;
