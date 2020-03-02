@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class PaymentItemCell;
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PaymentItemCell : UITableViewCell

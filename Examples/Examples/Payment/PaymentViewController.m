@@ -11,13 +11,10 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "WXApi.h"
 #import "PaymentItemCell.h"
-#import "EditBillingViewController.h"
-#import "PaymentListViewController.h"
 #import "NSNumber+Utils.h"
-#import "Widgets.h"
 #import "UIButton+Utils.h"
 
-@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, EditBillingViewControllerDelegate, PaymentListViewControllerDelegate, UITextFieldDelegate>
+@interface PaymentViewController () <UITableViewDelegate, UITableViewDataSource, AWEditBillingViewControllerDelegate, AWPaymentListViewControllerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -83,12 +80,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"enterAddress"]) {
-        EditBillingViewController *controller = (EditBillingViewController *)segue.destinationViewController;
+        AWEditBillingViewController *controller = (AWEditBillingViewController *)segue.destinationViewController;
         controller.delegate = self;
         controller.billing = self.billing;
         controller.sameAsShipping = self.sameAsShipping;
     } else if ([segue.identifier isEqualToString:@"selectPaymentMethod"]) {
-        PaymentListViewController *controller = (PaymentListViewController *)segue.destinationViewController;
+        AWPaymentListViewController *controller = (AWPaymentListViewController *)segue.destinationViewController;
         controller.delegate = self;
         controller.paymentMethod = self.paymentMethod;
     }
@@ -151,14 +148,14 @@
     }
 }
 
-- (void)didEndEditingBillingViewController:(EditBillingViewController *)controller
+- (void)didEndEditingBillingViewController:(AWEditBillingViewController *)controller
 {
     self.billing = controller.billing;
     self.sameAsShipping = controller.sameAsShipping;
     [self reloadData];
 }
 
-- (void)paymentListViewController:(PaymentListViewController *)controller didSelectMethod:(AWPaymentMethod *)paymentMethod
+- (void)paymentListViewController:(AWPaymentListViewController *)controller didSelectMethod:(AWPaymentMethod *)paymentMethod
 {
     self.paymentMethod = paymentMethod;
     self.cvc = nil;

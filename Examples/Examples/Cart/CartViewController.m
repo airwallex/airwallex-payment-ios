@@ -9,15 +9,13 @@
 #import "CartViewController.h"
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
-#import "Widgets.h"
 #import "ProductCell.h"
 #import "TotalCell.h"
 #import "APIClient.h"
 #import "PaymentViewController.h"
-#import "EditShippingViewController.h"
 #import "PaymentItemCell.h"
 
-@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, EditShippingViewControllerDelegate>
+@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWEditShippingViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet View *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
@@ -67,7 +65,7 @@
         controller.sameAsShipping = YES;
         controller.shipping = self.shipping;
     } else if ([segue.identifier isEqualToString:@"enterAddress"]) {
-        EditShippingViewController *controller = (EditShippingViewController *)segue.destinationViewController;
+        AWEditShippingViewController *controller = (AWEditShippingViewController *)segue.destinationViewController;
         controller.billing = self.shipping;
         controller.delegate = self;
     }
@@ -158,7 +156,7 @@
     }
 }
 
-- (void)editShippingViewController:(EditShippingViewController *)controller didSelectBilling:(AWBilling *)billing
+- (void)editShippingViewController:(AWEditShippingViewController *)controller didSelectBilling:(AWBilling *)billing
 {
     self.shipping = billing;
     [self reloadData];

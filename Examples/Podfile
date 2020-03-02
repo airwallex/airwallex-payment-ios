@@ -8,6 +8,7 @@ target 'Examples' do
 
     # Pods for Examples
     pod 'Airwallex', :path => '../'
+    pod 'SVProgressHUD', '2.2.5'
     pod 'IQKeyboardManager', '6.5.4'
 end
 

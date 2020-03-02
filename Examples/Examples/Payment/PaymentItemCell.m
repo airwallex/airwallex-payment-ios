@@ -8,10 +8,6 @@
 
 #import "PaymentItemCell.h"
 
-@interface PaymentItemCell () <UITextFieldDelegate>
-
-@end
-
 @implementation PaymentItemCell
 
 - (void)setIsLastCell:(BOOL)isLastCell

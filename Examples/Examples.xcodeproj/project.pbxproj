@@ -8,25 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		0808136B23D14789000133BF /* PaymentItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0808136A23D14789000133BF /* PaymentItemCell.m */; };
-		0808136E23D14CA4000133BF /* EditShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0808136D23D14CA4000133BF /* EditShippingViewController.m */; };
-		0808137123D14CB5000133BF /* PaymentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0808137023D14CB5000133BF /* PaymentListViewController.m */; };
 		082D308223CEEC3300C9D587 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308123CEEC3300C9D587 /* ProductCell.m */; };
 		082D308523CEECE400C9D587 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
 		082D308823CEEDC100C9D587 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
-		0838BF6423E519FF0007F6BA /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0838BF6323E519FF0007F6BA /* CardViewController.m */; };
 		083D916A23CF025D006283CB /* NSNumber+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 083D916923CF025D006283CB /* NSNumber+Utils.m */; };
-		083FDEB623D46F6400AF35AB /* FloatLabeledView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 083FDEB523D46F6400AF35AB /* FloatLabeledView.xib */; };
-		083FDEB923D47AE100AF35AB /* CountryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 083FDEB823D47AE100AF35AB /* CountryListViewController.m */; };
-		083FDEBC23D4858C00AF35AB /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = 083FDEBB23D4858C00AF35AB /* Country.m */; };
 		085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
 		085BA65223F2722000FD33FA /* UIButton+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BA65123F2722000FD33FA /* UIButton+Utils.m */; };
-		085BA66023F3F96900FD33FA /* CardTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085BA65F23F3F96900FD33FA /* CardTextField.xib */; };
 		085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
 		085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3F723CC64B6002E8F27 /* Main.storyboard */; };
 		085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
 		085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
 		085BD40123CC64B9002E8F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
-		08775C8823D43AF900AE09A7 /* FloatLabeledTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08775C8723D43AF900AE09A7 /* FloatLabeledTextField.xib */; };
 		0878D0C323D58DF500382702 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D09123D5846B00382702 /* libc++.tbd */; };
 		0878D0CA23D59B9D00382702 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0878D0C723D59B9D00382702 /* README.txt */; };
 		0878D0CB23D59B9D00382702 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0C923D59B9D00382702 /* libWeChatSDK.a */; };
@@ -34,12 +26,10 @@
 		0878D0D023D59C5B00382702 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0A523D58D1D00382702 /* CoreTelephony.framework */; };
 		0878D0D123D59C6A00382702 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0A923D58D2D00382702 /* libsqlite3.0.tbd */; };
 		0878D0D223D59C7800382702 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0AB23D58D4200382702 /* libz.tbd */; };
+		088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
+		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
-		088F3E8723CEDF39005AE40F /* Widgets.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8623CEDF39005AE40F /* Widgets.m */; };
 		08CFA21223FA2F4F00E6C6F5 /* PaymentItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CFA21123FA2F4F00E6C6F5 /* PaymentItemCell.xib */; };
-		08D26F4B24037391008E65D3 /* PaymentMethod.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F4A24037391008E65D3 /* PaymentMethod.storyboard */; };
-		08D26F4D24037687008E65D3 /* Address.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F4C24037687008E65D3 /* Address.storyboard */; };
-		08D6D39323FC86EE007274A4 /* EditBillingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D6D39223FC86EE007274A4 /* EditBillingViewController.m */; };
 		08EFDC5723D05F6B003EF928 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EFDC5623D05F6B003EF928 /* PaymentViewController.m */; };
 		E08268B70A40C15A51D041FA /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29265F0DAF62D6592201220D /* Pods_Examples.framework */; };
 /* End PBXBuildFile section */
@@ -47,29 +37,17 @@
 /* Begin PBXFileReference section */
 		0808136923D14789000133BF /* PaymentItemCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentItemCell.h; sourceTree = "<group>"; };
 		0808136A23D14789000133BF /* PaymentItemCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentItemCell.m; sourceTree = "<group>"; };
-		0808136C23D14CA4000133BF /* EditShippingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditShippingViewController.h; sourceTree = "<group>"; };
-		0808136D23D14CA4000133BF /* EditShippingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditShippingViewController.m; sourceTree = "<group>"; };
-		0808136F23D14CB5000133BF /* PaymentListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentListViewController.h; sourceTree = "<group>"; };
-		0808137023D14CB5000133BF /* PaymentListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentListViewController.m; sourceTree = "<group>"; };
 		082D308023CEEC3300C9D587 /* ProductCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProductCell.h; sourceTree = "<group>"; };
 		082D308123CEEC3300C9D587 /* ProductCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProductCell.m; sourceTree = "<group>"; };
 		082D308323CEECE400C9D587 /* TotalCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TotalCell.h; sourceTree = "<group>"; };
 		082D308423CEECE400C9D587 /* TotalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TotalCell.m; sourceTree = "<group>"; };
 		082D308623CEEDC100C9D587 /* CartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
 		082D308723CEEDC100C9D587 /* CartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
-		0838BF6223E519FF0007F6BA /* CardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardViewController.h; sourceTree = "<group>"; };
-		0838BF6323E519FF0007F6BA /* CardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardViewController.m; sourceTree = "<group>"; };
 		083D916823CF025D006283CB /* NSNumber+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Utils.h"; sourceTree = "<group>"; };
 		083D916923CF025D006283CB /* NSNumber+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+Utils.m"; sourceTree = "<group>"; };
-		083FDEB523D46F6400AF35AB /* FloatLabeledView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FloatLabeledView.xib; sourceTree = "<group>"; };
-		083FDEB723D47AE100AF35AB /* CountryListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CountryListViewController.h; sourceTree = "<group>"; };
-		083FDEB823D47AE100AF35AB /* CountryListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CountryListViewController.m; sourceTree = "<group>"; };
-		083FDEBA23D4858C00AF35AB /* Country.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Country.h; sourceTree = "<group>"; };
-		083FDEBB23D4858C00AF35AB /* Country.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Country.m; sourceTree = "<group>"; };
 		085BA64E23F0FB8A00FD33FA /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		085BA65023F2722000FD33FA /* UIButton+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+Utils.h"; sourceTree = "<group>"; };
 		085BA65123F2722000FD33FA /* UIButton+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Utils.m"; sourceTree = "<group>"; };
-		085BA65F23F3F96900FD33FA /* CardTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardTextField.xib; sourceTree = "<group>"; };
 		085BD3EB23CC64B6002E8F27 /* Airwallex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Airwallex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3EE23CC64B6002E8F27 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		085BD3EF23CC64B6002E8F27 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -78,7 +56,6 @@
 		085BD3FD23CC64B9002E8F27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		085BD3FF23CC64B9002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD40023CC64B9002E8F27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		08775C8723D43AF900AE09A7 /* FloatLabeledTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FloatLabeledTextField.xib; sourceTree = "<group>"; };
 		0878D09123D5846B00382702 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		0878D0A323D58D1700382702 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0878D0A523D58D1D00382702 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -91,16 +68,12 @@
 		0878D0C923D59B9D00382702 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		0878D0CC23D59C3900382702 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0878D0CE23D59C4300382702 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		088ADB912407B329001ADC71 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.otf"; sourceTree = "<group>"; };
+		088ADB922407B329001ADC71 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
 		088F3E8123CEB7FF005AE40F /* APIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
 		088F3E8223CEB7FF005AE40F /* APIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		088F3E8423CED74C005AE40F /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
-		088F3E8523CEDF39005AE40F /* Widgets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
-		088F3E8623CEDF39005AE40F /* Widgets.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Widgets.m; sourceTree = "<group>"; };
 		08CFA21123FA2F4F00E6C6F5 /* PaymentItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentItemCell.xib; sourceTree = "<group>"; };
-		08D26F4A24037391008E65D3 /* PaymentMethod.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PaymentMethod.storyboard; sourceTree = "<group>"; };
-		08D26F4C24037687008E65D3 /* Address.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Address.storyboard; sourceTree = "<group>"; };
-		08D6D39123FC86EE007274A4 /* EditBillingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditBillingViewController.h; sourceTree = "<group>"; };
-		08D6D39223FC86EE007274A4 /* EditBillingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditBillingViewController.m; sourceTree = "<group>"; };
 		08EFDC5523D05F6B003EF928 /* PaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
 		08EFDC5623D05F6B003EF928 /* PaymentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
 		29265F0DAF62D6592201220D /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,20 +112,10 @@
 			path = Cart;
 			sourceTree = "<group>";
 		};
-		0838BF6123E5190B0007F6BA /* Card */ = {
-			isa = PBXGroup;
-			children = (
-				0838BF6223E519FF0007F6BA /* CardViewController.h */,
-				0838BF6323E519FF0007F6BA /* CardViewController.m */,
-			);
-			path = Card;
-			sourceTree = "<group>";
-		};
 		085BD3E223CC64B6002E8F27 = {
 			isa = PBXGroup;
 			children = (
 				0878D0C423D59B9D00382702 /* WeChatSDK1.8.2 */,
-				08D26F4E2403A3A9008E65D3 /* AirwallexSDK */,
 				085BD3ED23CC64B6002E8F27 /* Examples */,
 				085BD3EC23CC64B6002E8F27 /* Products */,
 				B66354DF3707CEF41053480C /* Pods */,
@@ -173,16 +136,12 @@
 			children = (
 				088F3E8423CED74C005AE40F /* Constant.h */,
 				088F3E8023CEB7E6005AE40F /* API */,
-				085BD41923CD8702002E8F27 /* Widgets */,
 				085BD41523CD5AA0002E8F27 /* Categories */,
 				08775C8223D3F06300AE09A7 /* Payment */,
 				082D307F23CEEC0700C9D587 /* Cart */,
 				085BD3EE23CC64B6002E8F27 /* AppDelegate.h */,
 				085BD3EF23CC64B6002E8F27 /* AppDelegate.m */,
-				085BD3FA23CC64B9002E8F27 /* Assets.xcassets */,
-				085BD3F723CC64B6002E8F27 /* Main.storyboard */,
-				085BA64E23F0FB8A00FD33FA /* Splash.storyboard */,
-				085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */,
+				088ADB902407B329001ADC71 /* Resources */,
 				085BD3FF23CC64B9002E8F27 /* Info.plist */,
 				085BD40023CC64B9002E8F27 /* main.m */,
 			);
@@ -200,16 +159,6 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		085BD41923CD8702002E8F27 /* Widgets */ = {
-			isa = PBXGroup;
-			children = (
-				08775C8723D43AF900AE09A7 /* FloatLabeledTextField.xib */,
-				083FDEB523D46F6400AF35AB /* FloatLabeledView.xib */,
-				085BA65F23F3F96900FD33FA /* CardTextField.xib */,
-			);
-			path = Widgets;
-			sourceTree = "<group>";
-		};
 		08775C8223D3F06300AE09A7 /* Payment */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,19 +169,6 @@
 				08EFDC5623D05F6B003EF928 /* PaymentViewController.m */,
 			);
 			path = Payment;
-			sourceTree = "<group>";
-		};
-		08775C8323D3F08700AE09A7 /* Shipping */ = {
-			isa = PBXGroup;
-			children = (
-				083FDEBA23D4858C00AF35AB /* Country.h */,
-				083FDEBB23D4858C00AF35AB /* Country.m */,
-				0808136C23D14CA4000133BF /* EditShippingViewController.h */,
-				0808136D23D14CA4000133BF /* EditShippingViewController.m */,
-				083FDEB723D47AE100AF35AB /* CountryListViewController.h */,
-				083FDEB823D47AE100AF35AB /* CountryListViewController.m */,
-			);
-			path = Shipping;
 			sourceTree = "<group>";
 		};
 		0878D0C423D59B9D00382702 /* WeChatSDK1.8.2 */ = {
@@ -247,6 +183,19 @@
 			path = WeChatSDK1.8.2;
 			sourceTree = "<group>";
 		};
+		088ADB902407B329001ADC71 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				088ADB912407B329001ADC71 /* CircularStd-Bold.otf */,
+				088ADB922407B329001ADC71 /* CircularStd-Medium.otf */,
+				085BD3FA23CC64B9002E8F27 /* Assets.xcassets */,
+				085BD3F723CC64B6002E8F27 /* Main.storyboard */,
+				085BA64E23F0FB8A00FD33FA /* Splash.storyboard */,
+				085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		088F3E8023CEB7E6005AE40F /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,31 +203,6 @@
 				088F3E8223CEB7FF005AE40F /* APIClient.m */,
 			);
 			path = API;
-			sourceTree = "<group>";
-		};
-		08D26F4E2403A3A9008E65D3 /* AirwallexSDK */ = {
-			isa = PBXGroup;
-			children = (
-				088F3E8523CEDF39005AE40F /* Widgets.h */,
-				088F3E8623CEDF39005AE40F /* Widgets.m */,
-				08D26F4A24037391008E65D3 /* PaymentMethod.storyboard */,
-				0808136F23D14CB5000133BF /* PaymentListViewController.h */,
-				0808137023D14CB5000133BF /* PaymentListViewController.m */,
-				08D26F4C24037687008E65D3 /* Address.storyboard */,
-				0838BF6123E5190B0007F6BA /* Card */,
-				08D6D39023FC86CB007274A4 /* Billing */,
-				08775C8323D3F08700AE09A7 /* Shipping */,
-			);
-			path = AirwallexSDK;
-			sourceTree = "<group>";
-		};
-		08D6D39023FC86CB007274A4 /* Billing */ = {
-			isa = PBXGroup;
-			children = (
-				08D6D39123FC86EE007274A4 /* EditBillingViewController.h */,
-				08D6D39223FC86EE007274A4 /* EditBillingViewController.m */,
-			);
-			path = Billing;
 			sourceTree = "<group>";
 		};
 		A124BE0DCF06F969177C95C3 /* Frameworks */ = {
@@ -364,17 +288,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				083FDEB623D46F6400AF35AB /* FloatLabeledView.xib in Resources */,
 				085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */,
-				08D26F4B24037391008E65D3 /* PaymentMethod.storyboard in Resources */,
 				085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */,
 				08CFA21223FA2F4F00E6C6F5 /* PaymentItemCell.xib in Resources */,
-				085BA66023F3F96900FD33FA /* CardTextField.xib in Resources */,
+				088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */,
 				085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */,
-				08775C8823D43AF900AE09A7 /* FloatLabeledTextField.xib in Resources */,
-				08D26F4D24037687008E65D3 /* Address.storyboard in Resources */,
 				0878D0CA23D59B9D00382702 /* README.txt in Resources */,
 				085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */,
+				088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,23 +348,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08D6D39323FC86EE007274A4 /* EditBillingViewController.m in Sources */,
-				0838BF6423E519FF0007F6BA /* CardViewController.m in Sources */,
 				08EFDC5723D05F6B003EF928 /* PaymentViewController.m in Sources */,
 				082D308823CEEDC100C9D587 /* CartViewController.m in Sources */,
-				088F3E8723CEDF39005AE40F /* Widgets.m in Sources */,
-				0808137123D14CB5000133BF /* PaymentListViewController.m in Sources */,
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,
-				0808136E23D14CA4000133BF /* EditShippingViewController.m in Sources */,
 				088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */,
-				083FDEBC23D4858C00AF35AB /* Country.m in Sources */,
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
 				083D916A23CF025D006283CB /* NSNumber+Utils.m in Sources */,
 				0808136B23D14789000133BF /* PaymentItemCell.m in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
 				085BA65223F2722000FD33FA /* UIButton+Utils.m in Sources */,
-				083FDEB923D47AE100AF35AB /* CountryListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
