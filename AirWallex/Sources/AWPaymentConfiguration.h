@@ -8,9 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-@class AWBilling;
+@class AWBilling, AWConfirmPaymentIntentResponse, AWWechatPaySDKResponse;
+
+typedef NS_ENUM(NSUInteger, AWPaymentStatus) {
+    AWPaymentStatusSuccess,
+    AWPaymentStatusError,
+    AWPaymentStatusUserCancellation,
+};
 
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol AWPaymentResultDelegate <NSObject>
+
+- (void)paymentDidFinishWithStatus:(AWPaymentStatus)status error:(nullable NSError *)error;
+- (void)paymentWithWechatPaySDK:(AWWechatPaySDKResponse *)response;
+
+@end
 
 @interface AWPaymentConfiguration : NSObject
 
@@ -22,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite, nullable) NSString *customerId;
 @property (nonatomic, copy, readwrite) NSString *currency;
 @property (nonatomic, strong) AWBilling *shipping;
+@property (nonatomic, weak) id <AWPaymentResultDelegate> delegate;
 
 + (instancetype)sharedConfiguration;
 - (void)cache:(NSString *)key value:(NSString *)value;

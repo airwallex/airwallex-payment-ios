@@ -300,100 +300,10 @@
             </objects>
             <point key="canvasLocation" x="1854" y="82"/>
         </scene>
-        <!--Payment View Controller-->
-        <scene sceneID="qok-hg-b7W">
-            <objects>
-                <viewController id="C8l-oS-OT5" customClass="PaymentViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Gig-EM-uE5">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nHt-RB-kLO">
-                                <rect key="frame" x="0.0" y="44" width="414" height="718"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="c2Y-9r-rGf">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$868.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j9M-Vc-C4U">
-                                            <rect key="frame" x="16" y="20" width="382" height="47"/>
-                                            <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="40"/>
-                                            <color key="textColor" name="Black Text Color"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrA-E1-GOK">
-                                            <rect key="frame" x="16" y="78" width="382" height="16.5"/>
-                                            <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
-                                            <color key="textColor" name="Black Text Color"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="j9M-Vc-C4U" firstAttribute="top" secondItem="c2Y-9r-rGf" secondAttribute="top" constant="20" id="AOX-eR-yR1"/>
-                                        <constraint firstItem="j9M-Vc-C4U" firstAttribute="leading" secondItem="c2Y-9r-rGf" secondAttribute="leading" constant="16" id="Fdb-mU-FGx"/>
-                                        <constraint firstItem="VrA-E1-GOK" firstAttribute="top" secondItem="j9M-Vc-C4U" secondAttribute="bottom" constant="11" id="VZK-Yu-g0O"/>
-                                        <constraint firstItem="VrA-E1-GOK" firstAttribute="leading" secondItem="c2Y-9r-rGf" secondAttribute="leading" constant="16" id="aZw-M5-khW"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="VrA-E1-GOK" secondAttribute="bottom" constant="40" id="cOW-2s-eiX"/>
-                                        <constraint firstAttribute="trailing" secondItem="VrA-E1-GOK" secondAttribute="trailing" constant="16" id="qOI-8q-0qb"/>
-                                        <constraint firstAttribute="trailing" secondItem="j9M-Vc-C4U" secondAttribute="trailing" constant="16" id="yQk-Ou-zqq"/>
-                                    </constraints>
-                                </view>
-                                <connections>
-                                    <outlet property="dataSource" destination="C8l-oS-OT5" id="DTD-oJ-bJP"/>
-                                    <outlet property="delegate" destination="C8l-oS-OT5" id="98d-xP-Gj3"/>
-                                </connections>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Sb-Ld-fZK" customClass="AWButton">
-                                <rect key="frame" x="16" y="802" width="382" height="44"/>
-                                <color key="backgroundColor" name="Purple Color"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="qjL-Dd-tZg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
-                                <state key="normal" title="Pay now" image="lock-white">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <state key="disabled" title="Pay now" image="lock-grey">
-                                    <color key="titleColor" name="Placeholder Color"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="6"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="payPressed:" destination="C8l-oS-OT5" eventType="touchUpInside" id="8fU-ge-mHv"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" name="Background Color"/>
-                        <constraints>
-                            <constraint firstItem="nHt-RB-kLO" firstAttribute="top" secondItem="zZt-Na-AaO" secondAttribute="top" id="4YR-D3-3M2"/>
-                            <constraint firstItem="nHt-RB-kLO" firstAttribute="trailing" secondItem="zZt-Na-AaO" secondAttribute="trailing" id="8sG-E9-Ufk"/>
-                            <constraint firstItem="nHt-RB-kLO" firstAttribute="leading" secondItem="zZt-Na-AaO" secondAttribute="leading" id="LP0-Ov-V7c"/>
-                            <constraint firstItem="zZt-Na-AaO" firstAttribute="trailing" secondItem="9Sb-Ld-fZK" secondAttribute="trailing" constant="16" id="TpW-2b-vP0"/>
-                            <constraint firstItem="9Sb-Ld-fZK" firstAttribute="top" secondItem="nHt-RB-kLO" secondAttribute="bottom" constant="40" id="ikN-7I-xHl"/>
-                            <constraint firstItem="9Sb-Ld-fZK" firstAttribute="leading" secondItem="zZt-Na-AaO" secondAttribute="leading" constant="16" id="kcw-NO-57s"/>
-                            <constraint firstItem="zZt-Na-AaO" firstAttribute="bottom" secondItem="9Sb-Ld-fZK" secondAttribute="bottom" constant="16" id="qDs-2F-hmE"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="zZt-Na-AaO"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="188-2b-h7h"/>
-                    <connections>
-                        <outlet property="payButton" destination="9Sb-Ld-fZK" id="McG-U5-Y7f"/>
-                        <outlet property="tableView" destination="nHt-RB-kLO" id="WPp-Gw-yLJ"/>
-                        <outlet property="totalLabel" destination="j9M-Vc-C4U" id="h3z-Pr-oAA"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TK3-X9-ogJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2435" y="658"/>
-        </scene>
-        <!--AWPaymentMethod-->
+        <!--paymentMethodList-->
         <scene sceneID="64d-1b-v4W">
             <objects>
-                <viewControllerPlaceholder storyboardName="AWPaymentMethod" bundleIdentifier="org.cocoapods.Airwallex" id="z9f-ZF-oRb" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="AWPaymentMethod" bundleIdentifier="org.cocoapods.Airwallex" referencedIdentifier="paymentMethodList" id="z9f-ZF-oRb" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="hn8-cr-6Gd"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sAR-1R-T5d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -420,8 +330,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="lock-grey" width="16" height="16"/>
-        <image name="lock-white" width="16" height="16"/>
         <namedColor name="Background Color">
             <color red="0.96862745098039216" green="0.96862745098039216" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

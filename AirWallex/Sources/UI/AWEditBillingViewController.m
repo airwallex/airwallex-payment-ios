@@ -1,6 +1,6 @@
 //
 //  AWEditBillingViewController.m
-//  Examples
+//  Airwallex
 //
 //  Created by Victor Zhu on 2020/2/19.
 //  Copyright © 2020 Airwallex. All rights reserved.
@@ -46,7 +46,7 @@
     self.cityField.fieldType = AWTextFieldTypeCity;
     self.streetField.fieldType = AWTextFieldTypeStreet;
     self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
-    
+
     self.billingView.hidden = self.sameAsShipping;
     if (self.billing) {
         self.firstNameField.text = self.billing.firstName;

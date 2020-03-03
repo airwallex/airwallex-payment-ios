@@ -1,6 +1,6 @@
 //
-//  PaymentItemCell.h
-//  Examples
+//  AWPaymentItemCell.h
+//  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/17.
 //  Copyright © 2020 Airwallex. All rights reserved.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PaymentItemCell : UITableViewCell
+@interface AWPaymentItemCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *selectionLabel;

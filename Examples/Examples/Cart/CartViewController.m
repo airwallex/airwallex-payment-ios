@@ -12,9 +12,9 @@
 #import "ProductCell.h"
 #import "TotalCell.h"
 #import "APIClient.h"
-#import "PaymentItemCell.h"
+#import "WXApi.h"
 
-@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWEditShippingViewControllerDelegate>
+@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWEditShippingViewControllerDelegate, AWPaymentResultDelegate>
 
 @property (weak, nonatomic) IBOutlet AWView *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
@@ -107,7 +107,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        PaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PaymentItemCell" forIndexPath:indexPath];
+        AWPaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWPaymentItemCell" forIndexPath:indexPath];
         cell.titleLabel.text = @"Shipping";
         AWBilling *shipping = self.shipping;
         if (shipping) {
@@ -189,11 +189,93 @@
             configuration.clientSecret = result[@"client_secret"];
             configuration.currency = result[@"currency"];
             configuration.shipping = self.shipping;
+            configuration.delegate = self;
 
             [SVProgressHUD dismiss];
             [self performSegueWithIdentifier:@"selectPaymentMethod" sender:nil];
         }];
     }];
+}
+
+- (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
+{
+    AWGetPaymentIntentRequest *request = [[AWGetPaymentIntentRequest alloc] init];
+    request.intentId = [AWPaymentConfiguration sharedConfiguration].intentId;
+    [[AWAPIClient new] send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            return;
+        }
+
+        AWGetPaymentIntentResponse *result = (AWGetPaymentIntentResponse *)response;
+        completionHandler([result.status isEqualToString:@"SUCCEEDED"]);
+    }];
+}
+
+- (void)finishPayment
+{
+    [self checkPaymentIntentStatusWithCompletion:^(BOOL success) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [SVProgressHUD showSuccessWithStatus:success ? @"Pay successfully": @"Waiting payment completion"];
+    }];
+}
+
+- (void)paymentDidFinishWithStatus:(AWPaymentStatus)status error:(nullable NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+    if (error) {
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
+        return;
+    }
+
+    if (status == AWPaymentStatusSuccess) {
+        [SVProgressHUD showSuccessWithStatus:@"Pay successfully"];
+    } else if (status == AWPaymentStatusUserCancellation) {
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:@"Payment cancelled" preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+}
+
+- (void)paymentWithWechatPaySDK:(AWWechatPaySDKResponse *)response
+{
+    NSURL *url = [NSURL URLWithString:response.prepayId];
+    if (url) {
+        __weak typeof(self) weakSelf = self;
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                return;
+            }
+
+            __strong typeof(self) strongSelf = weakSelf;
+            [strongSelf finishPayment];
+        }] resume];
+        return;
+    }
+
+    PayReq *request = [[PayReq alloc] init];
+    request.partnerId = response.partnerId;
+    request.prepayId = response.prepayId;
+    request.package = response.package;
+    request.nonceStr = response.nonceStr;
+    request.timeStamp = response.timeStamp.doubleValue;
+    request.sign = response.sign;
+
+    // WeChatSDK 1.8.2
+    [WXApi sendReq:request];
+
+    //WeChatSDK 1.8.6.1
+    //    [WXApi sendReq:request completion:^(BOOL success) {
+    //        if (!success) {
+    //            [SVProgressHUD showErrorWithStatus:@"Failed to call WeChat Pay"];
+    //            return;
+    //        }
+    //    }];
 }
 
 @end

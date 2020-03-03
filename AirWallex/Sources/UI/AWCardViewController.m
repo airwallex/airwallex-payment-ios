@@ -1,6 +1,6 @@
 //
 //  AWCardViewController.m
-//  Examples
+//  Airwallex
 //
 //  Created by Victor Zhu on 2020/2/1.
 //  Copyright © 2020 Airwallex. All rights reserved.
@@ -40,7 +40,7 @@
     self.expiresField.fieldType = AWTextFieldTypeExpires;
     self.cvcField.fieldType = AWTextFieldTypeCVC;
 
-    self.closeBarButtonItem.image = [UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]];
+    self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 
 - (void)finishCreation:(AWPaymentMethod *)paymentMethod

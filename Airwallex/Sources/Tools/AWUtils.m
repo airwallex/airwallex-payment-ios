@@ -103,6 +103,19 @@
     return [self decimalNumberByMultiplyingByPowerOf10:2 withBehavior:round];
 }
 
+- (NSString *)string
+{
+    if (self == [NSDecimalNumber zero]) {
+        return @"Free";
+    }
+
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
+    formatter.numberStyle = NSNumberFormatterCurrencyStyle;
+    formatter.usesGroupingSeparator = YES;
+    return [formatter stringFromNumber:self];
+}
+
 @end
 
 @implementation AWValidationUtils
@@ -135,6 +148,23 @@
 + (nullable UIImage *)imageNamed:(NSString *)name ofType:(NSString *)type inBundle:(nullable NSBundle *)bundle
 {
     return [UIImage imageWithContentsOfFile:[bundle pathForResource:name ofType:type]];
+}
+
+@end
+
+@implementation UIButton (Utils)
+
+- (void)setImageAndTitleVerticalAlignmentCenter:(float)spacing imageSize:(CGSize)imageSize
+{
+    CGSize titleSize = [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: self.titleLabel.font}];
+    self.imageEdgeInsets = UIEdgeInsetsMake(- (titleSize.height + spacing), 0.0f, 0.0f, - titleSize.width);
+    self.titleEdgeInsets = UIEdgeInsetsMake(0.0f, - imageSize.width, - (imageSize.height + spacing), 0.0f);
+}
+
+- (void)setImageAndTitleHorizontalAlignmentCenter:(float)spacing
+{
+    self.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, spacing);
+    self.titleEdgeInsets = UIEdgeInsetsMake(0, spacing, 0, 0);
 }
 
 @end

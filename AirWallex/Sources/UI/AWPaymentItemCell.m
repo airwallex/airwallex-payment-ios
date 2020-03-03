@@ -1,14 +1,14 @@
 //
-//  PaymentItemCell.m
-//  Examples
+//  AWPaymentItemCell.m
+//  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/17.
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "PaymentItemCell.h"
+#import "AWPaymentItemCell.h"
 
-@implementation PaymentItemCell
+@implementation AWPaymentItemCell
 
 - (void)setIsLastCell:(BOOL)isLastCell
 {

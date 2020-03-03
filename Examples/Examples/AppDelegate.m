@@ -72,7 +72,6 @@
         switch (response.errCode) {
             case WXSuccess:
                 [SVProgressHUD showSuccessWithStatus:@"Succeed to pay"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"PaymentCompleted" object:nil];
                 break;
             default:
                 [SVProgressHUD showErrorWithStatus:@"Failed to pay"];

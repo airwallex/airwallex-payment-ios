@@ -1,6 +1,6 @@
 //
 //  AWCardViewController.h
-//  Examples
+//  Airwallex
 //
 //  Created by Victor Zhu on 2020/2/1.
 //  Copyright © 2020 Airwallex. All rights reserved.

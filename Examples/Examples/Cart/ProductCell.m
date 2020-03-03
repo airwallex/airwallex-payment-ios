@@ -7,7 +7,7 @@
 //
 
 #import "ProductCell.h"
-#import "NSNumber+Utils.h"
+#import <Airwallex/Airwallex.h>
 
 @implementation Product
 

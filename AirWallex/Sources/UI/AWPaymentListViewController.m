@@ -1,6 +1,6 @@
 //
 //  AWPaymentListViewController.m
-//  Examples
+//  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/17.
 //  Copyright © 2020 Airwallex. All rights reserved.
@@ -8,6 +8,7 @@
 
 #import "AWPaymentListViewController.h"
 #import "AWCardViewController.h"
+#import "AWPaymentViewController.h"
 #import "AWWidgets.h"
 #import "AWTheme.h"
 #import "AWUtils.h"
@@ -33,6 +34,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (strong, nonatomic) IBOutlet AWHUD *HUD;
 @property (strong, nonatomic) NSArray *paymentMethods;
+@property (nonatomic, strong, nullable) AWPaymentMethod *paymentMethod;
 
 @end
 
@@ -41,8 +43,20 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.closeBarButtonItem.image = [UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]];
+    self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [self reloadData];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"confirmPayment"]) {
+        AWPaymentViewController *controller = (AWPaymentViewController *)segue.destinationViewController;
+        controller.paymentMethod = self.paymentMethod;
+    } else if ([segue.identifier isEqualToString:@"addCard"]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        AWCardViewController *controller = (AWCardViewController *)navigationController.topViewController;
+        controller.delegate = self;
+    }
 }
 
 - (NSArray *)presetCVC:(NSArray *)cards
@@ -95,15 +109,6 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         [strongSelf.tableView reloadData];
         [self.HUD dismiss];
     }];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"addCard"]) {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        AWCardViewController *controller = (AWCardViewController *)navigationController.topViewController;
-        controller.delegate = self;
-    }
 }
 
 - (void)newPressed:(id)sender
@@ -212,11 +217,6 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
     AWPaymentMethod *method = items[indexPath.row];
     self.paymentMethod = method;
-
-    if (self.delegate && [self.delegate respondsToSelector:@selector(paymentListViewController:didSelectMethod:)]) {
-        [self.delegate paymentListViewController:self didSelectMethod:self.paymentMethod];
-    }
-
     [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
 }
 

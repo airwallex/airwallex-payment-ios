@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSDecimalNumber (Utils)
 
 - (NSDecimalNumber *)toIntegerCents;
+- (NSString *)string;
 
 @end
 
@@ -53,6 +54,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable UIImage *)imageNamed:(NSString *)name inBundle:(nullable NSBundle *)bundle;
 + (nullable UIImage *)imageNamed:(NSString *)name ofType:(NSString *)type inBundle:(nullable NSBundle *)bundle;
+
+@end
+
+@interface UIButton (Utils)
+
+- (void)setImageAndTitleVerticalAlignmentCenter:(float)spacing imageSize:(CGSize)imageSize;
+- (void)setImageAndTitleHorizontalAlignmentCenter:(float)spacing;
 
 @end
 
