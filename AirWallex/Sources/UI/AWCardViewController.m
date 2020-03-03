@@ -35,6 +35,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.nameField.fieldType = AWTextFieldTypeNameOnCard;
+    self.cardNoField.fieldType = AWTextFieldTypeCardNumber;
+    self.expiresField.fieldType = AWTextFieldTypeExpires;
+    self.cvcField.fieldType = AWTextFieldTypeCVC;
+
     self.closeBarButtonItem.image = [UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]];
 }
 

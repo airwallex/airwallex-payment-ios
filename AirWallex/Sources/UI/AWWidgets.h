@@ -8,6 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, AWTextFieldType) {
+    AWTextFieldTypeFirstName,
+    AWTextFieldTypeLastName,
+    AWTextFieldTypeEmail,
+    AWTextFieldTypePhoneNumber,
+    AWTextFieldTypeCountry,
+    AWTextFieldTypeState,
+    AWTextFieldTypeCity,
+    AWTextFieldTypeStreet,
+    AWTextFieldTypeZipcode,
+    AWTextFieldTypeCardNumber,
+    AWTextFieldTypeNameOnCard,
+    AWTextFieldTypeExpires,
+    AWTextFieldTypeCVC
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
 IB_DESIGNABLE
@@ -34,8 +50,8 @@ IB_DESIGNABLE
 @interface AWFloatLabeledTextField : AWNibView
 
 @property (nonatomic, strong) IBInspectable NSString *text, *placeholder;
-@property (nonatomic) IBInspectable NSInteger keyboardType;
 @property (nonatomic, strong, nullable) NSString *errorText;
+@property (nonatomic) AWTextFieldType fieldType;
 
 @end
 

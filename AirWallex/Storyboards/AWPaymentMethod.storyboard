@@ -181,7 +181,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zl7-hq-vSX">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="351.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="372.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pii-iq-Wp8">
                                                 <rect key="frame" x="16" y="16" width="382" height="40.5"/>
@@ -190,13 +190,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="qTO-iC-quJ">
-                                                <rect key="frame" x="16" y="72.5" width="382" height="263"/>
+                                                <rect key="frame" x="16" y="72.5" width="382" height="284"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gN8-Ps-Ex7" customClass="AWCardTextField">
-                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="o6e-1q-GBH"/>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="o6e-1q-GBH"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Card number"/>
@@ -204,10 +204,10 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MQF-7d-Ysg" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="73" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="80" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="oVm-cw-2eM"/>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="oVm-cw-2eM"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Name on card"/>
@@ -215,10 +215,10 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="auF-F2-v0B">
-                                                        <rect key="frame" x="0.0" y="146" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="160" width="382" height="67"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ek-4y-cnB" customClass="AWFloatLabeledTextField">
-                                                                <rect key="frame" x="0.0" y="0.0" width="258" height="60"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="258" height="67"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Expires MM / YY"/>
@@ -226,7 +226,7 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ekP-UO-j9w" customClass="AWFloatLabeledTextField">
-                                                                <rect key="frame" x="281" y="0.0" width="101" height="60"/>
+                                                                <rect key="frame" x="281" y="0.0" width="101" height="67"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="101" id="lVg-GC-mns"/>
@@ -238,11 +238,11 @@
                                                             </view>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="K5w-e9-wLm"/>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="K5w-e9-wLm"/>
                                                         </constraints>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vlZ-EY-gaZ" customClass="Button">
-                                                        <rect key="frame" x="0.0" y="219" width="382" height="44"/>
+                                                        <rect key="frame" x="0.0" y="240" width="382" height="44"/>
                                                         <color key="backgroundColor" red="0.3803921569" green="0.1843137255" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="Rkh-gU-qhs"/>

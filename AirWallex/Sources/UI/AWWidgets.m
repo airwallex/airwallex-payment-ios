@@ -140,6 +140,67 @@
     text.length > 0 ? [self active] : [self inactive];
 }
 
+- (void)setFieldType:(AWTextFieldType)fieldType
+{
+    _fieldType = fieldType;
+    switch (self.fieldType) {
+        case AWTextFieldTypeFirstName:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeName;
+            break;
+        case AWTextFieldTypeLastName:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeName;
+            break;
+        case AWTextFieldTypeEmail:
+            self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+            self.textField.keyboardType = UIKeyboardTypeEmailAddress;
+            self.textField.textContentType = UITextContentTypeEmailAddress;
+            break;
+        case AWTextFieldTypePhoneNumber:
+            self.textField.keyboardType = UIKeyboardTypePhonePad;
+            self.textField.textContentType = UITextContentTypeTelephoneNumber;
+            break;
+        case AWTextFieldTypeCountry:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeCountryName;
+            break;
+        case AWTextFieldTypeState:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeAddressState;
+            break;
+        case AWTextFieldTypeCity:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeAddressCity;
+            break;
+        case AWTextFieldTypeStreet:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeFullStreetAddress;
+            break;
+        case AWTextFieldTypeZipcode:
+            self.textField.keyboardType = UIKeyboardTypeASCIICapable;
+            self.textField.textContentType = UITextContentTypePostalCode;
+            break;
+        case AWTextFieldTypeCardNumber:
+            self.textField.keyboardType = UIKeyboardTypeNumberPad;
+            self.textField.textContentType = UITextContentTypeCreditCardNumber;
+            break;
+        case AWTextFieldTypeNameOnCard:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeName;
+            break;
+        case AWTextFieldTypeExpires:
+            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+            break;
+        case AWTextFieldTypeCVC:
+            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+            break;
+        default:
+            break;
+    }
+}
+
 - (nullable NSString *)errorText
 {
     return self.errorLabel.text;
@@ -165,16 +226,6 @@
 {
     self.floatingLabel.text = placeholder;
     self.textField.placeholder = placeholder;
-}
-
-- (NSInteger)keyboardType
-{
-    return self.textField.keyboardType;
-}
-
-- (void)setKeyboardType:(NSInteger)keyboardType
-{
-    self.textField.keyboardType = keyboardType;
 }
 
 - (void)active
@@ -218,6 +269,62 @@
     text.length > 0 ? [self active] : [self inactive];
     [self setText:text];
     return NO;
+}
+
+- (void)validateEmail:(NSString *)text
+{
+    NSString *errorMessage = nil;
+    if (text.length > 0) {
+        NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
+        NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+        if (![emailTest evaluateWithObject:text]) {
+            errorMessage = @"Invalid email";
+        }
+    } else {
+        errorMessage =  @"Please enter your email";
+    }
+    self.errorText = errorMessage;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    switch (self.fieldType) {
+        case AWTextFieldTypeFirstName:
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter your first name";
+            break;
+        case AWTextFieldTypeLastName:
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter your last name";
+            break;
+        case AWTextFieldTypeEmail:
+            [self validateEmail:textField.text];
+            break;
+        case AWTextFieldTypeCountry:
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter your country";
+            break;
+        case AWTextFieldTypeState:
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter your state";
+            break;
+        case AWTextFieldTypeCity:
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter your city";
+            break;
+        case AWTextFieldTypeStreet:
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter your street";
+            break;
+        case AWTextFieldTypeCardNumber:
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter your card number";
+            break;
+        case AWTextFieldTypeNameOnCard:
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter your name on card";
+            break;
+        case AWTextFieldTypeExpires:
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter the expiration date";
+            break;
+        case AWTextFieldTypeCVC:
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter the CVC/VCC";
+            break;
+        default:
+            break;
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

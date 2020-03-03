@@ -37,6 +37,16 @@
 {
     [super viewDidLoad];
     self.switchButton.on = self.sameAsShipping;
+
+    self.lastNameField.fieldType = AWTextFieldTypeLastName;
+    self.firstNameField.fieldType = AWTextFieldTypeFirstName;
+    self.emailField.fieldType = AWTextFieldTypeEmail;
+    self.phoneNumberField.fieldType = AWTextFieldTypePhoneNumber;
+    self.stateField.fieldType = AWTextFieldTypeState;
+    self.cityField.fieldType = AWTextFieldTypeCity;
+    self.streetField.fieldType = AWTextFieldTypeStreet;
+    self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
+    
     self.billingView.hidden = self.sameAsShipping;
     if (self.billing) {
         self.firstNameField.text = self.billing.firstName;

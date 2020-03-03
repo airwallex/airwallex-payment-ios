@@ -36,6 +36,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.lastNameField.fieldType = AWTextFieldTypeLastName;
+    self.firstNameField.fieldType = AWTextFieldTypeFirstName;
+    self.emailField.fieldType = AWTextFieldTypeEmail;
+    self.phoneNumberField.fieldType = AWTextFieldTypePhoneNumber;
+    self.stateField.fieldType = AWTextFieldTypeState;
+    self.cityField.fieldType = AWTextFieldTypeCity;
+    self.streetField.fieldType = AWTextFieldTypeStreet;
+    self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
+
     if (self.billing) {
         self.lastNameField.text = self.billing.lastName;
         self.firstNameField.text = self.billing.firstName;
