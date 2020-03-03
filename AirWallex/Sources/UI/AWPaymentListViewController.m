@@ -11,6 +11,7 @@
 #import "AWWidgets.h"
 #import "AWTheme.h"
 #import "AWUtils.h"
+#import "AWConstants.h"
 #import "AWPaymentMethod.h"
 #import "AWPaymentConfiguration.h"
 #import "AWAPIClient.h"
@@ -158,7 +159,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         button.layer.masksToBounds = YES;
         [button setTitle:@"Enter a new card" forState:UIControlStateNormal];
         [button setTitleColor:[AWTheme defaultTheme].purpleColor forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont fontWithName:@"CircularStd-Bold" size:14];
+        button.titleLabel.font = [UIFont fontWithName:AWFontNameCircularStdBold size:14];
         button.backgroundColor = [UIColor clearColor];
         [button addTarget:self action:@selector(newPressed:) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:button];

@@ -7,6 +7,7 @@
 //
 
 #import "AWWidgets.h"
+#import "AWConstants.h"
 #import "AWCardValidator.h"
 #import "AWTheme.h"
 #import "AWUtils.h"
@@ -130,7 +131,7 @@
 - (NSAttributedString *)formatText:(NSString *)text
 {
     NSString *nonNilText = text ?: @"";
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:nonNilText attributes:@{NSFontAttributeName: [UIFont fontWithName:@"CircularStd-Medium" size:16], NSForegroundColorAttributeName: [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1]}];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:nonNilText attributes:@{NSFontAttributeName: [UIFont fontWithName:AWFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1]}];
     return attributedString;
 }
 
@@ -382,7 +383,7 @@
     self.floatingTopConstraint.constant = 20;
     self.textLabel.alpha = 0;
     [UIView animateWithDuration:0.25 animations:^{
-        self.floatingLabel.font = [UIFont fontWithName:@"CircularStd-Medium" size:12];
+        self.floatingLabel.font = [UIFont fontWithName:AWFontNameCircularStdMedium size:12];
         self.floatingTopConstraint.constant = 9;
         self.textLabel.alpha = 1;
         [self layoutIfNeeded];
@@ -398,7 +399,7 @@
     self.floatingTopConstraint.constant = 9;
     self.textLabel.alpha = 1;
     [UIView animateWithDuration:0.25 animations:^{
-        self.floatingLabel.font = [UIFont fontWithName:@"CircularStd-Medium" size:14];
+        self.floatingLabel.font = [UIFont fontWithName:AWFontNameCircularStdMedium size:14];
         self.floatingTopConstraint.constant = 20;
         self.textLabel.alpha = 0;
         [self layoutIfNeeded];
@@ -426,7 +427,7 @@
 
 - (NSAttributedString *)formatText:(NSString *)text
 {
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont fontWithName:@"CircularStd-Medium" size:16], NSForegroundColorAttributeName: [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1]}];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont fontWithName:AWFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1]}];
     AWBrandType type = [self typeOfNumber:text];
     NSArray<NSNumber *> *cardNumberFormat = [AWCardValidator cardNumberFormatForBrand:type];
     NSUInteger index = 0;
