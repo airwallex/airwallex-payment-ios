@@ -12,7 +12,6 @@
 #import "ProductCell.h"
 #import "TotalCell.h"
 #import "APIClient.h"
-#import "PaymentViewController.h"
 #import "PaymentItemCell.h"
 
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWEditShippingViewControllerDelegate>
@@ -59,12 +58,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"checkout"]) {
-        PaymentViewController *controller = (PaymentViewController *)segue.destinationViewController;
-        controller.total = sender;
-        controller.sameAsShipping = YES;
-        controller.shipping = self.shipping;
-    } else if ([segue.identifier isEqualToString:@"enterAddress"]) {
+    if ([segue.identifier isEqualToString:@"enterAddress"]) {
         AWEditShippingViewController *controller = (AWEditShippingViewController *)segue.destinationViewController;
         controller.billing = self.shipping;
         controller.delegate = self;
@@ -176,7 +170,11 @@
             return;
         }
 
-        NSMutableDictionary *parameters = [@{@"amount": @100, @"currency": @"USD", @"merchant_order_id": NSUUID.UUID.UUIDString, @"request_id": NSUUID.UUID.UUIDString, @"order": @{}} mutableCopy];
+        NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
+        NSDecimalNumber *shipping = [NSDecimalNumber zero];
+        NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
+
+        NSMutableDictionary *parameters = [@{@"amount": total, @"currency": @"USD", @"merchant_order_id": NSUUID.UUID.UUIDString, @"request_id": NSUUID.UUID.UUIDString, @"order": @{}} mutableCopy];
         [[APIClient sharedClient] createPaymentIntent:[NSURL URLWithString:paymentURL] token:token parameters:parameters completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
             if (error) {
                 [SVProgressHUD showErrorWithStatus:error.localizedDescription];
@@ -184,17 +182,16 @@
             }
 
             AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
+            configuration.baseURL = @"https://staging-pci-api.airwallex.com";
+            configuration.customerId = @"cus_Dn6mVcMeTEkJgYuu9o5xEcxWRah";
             configuration.intentId = result[@"id"];
             configuration.token = token;
             configuration.clientSecret = result[@"client_secret"];
             configuration.currency = result[@"currency"];
+            configuration.shipping = self.shipping;
 
             [SVProgressHUD dismiss];
-
-            NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
-            NSDecimalNumber *shipping = [NSDecimalNumber zero];
-            NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
-            [self performSegueWithIdentifier:@"checkout" sender:total];
+            [self performSegueWithIdentifier:@"selectPaymentMethod" sender:nil];
         }];
     }];
 }

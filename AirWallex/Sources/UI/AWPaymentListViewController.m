@@ -30,6 +30,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 @interface AWPaymentListViewController () <UITableViewDataSource, UITableViewDelegate, AWCardViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (strong, nonatomic) IBOutlet AWHUD *HUD;
 @property (strong, nonatomic) NSArray *paymentMethods;
 
@@ -40,6 +41,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.closeBarButtonItem.image = [UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]];
     [self reloadData];
 }
 
@@ -75,13 +77,6 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         AWGetPaymentMethodsResponse *result = (AWGetPaymentMethodsResponse *)response;
 
         // Section 0
-        NSArray *cards = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-            AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
-            return [obj.type isEqualToString:@"card"];
-        }]];
-        cards = [strongSelf presetCVC:cards];
-
-        // Section 1
         AWPaymentMethod *wechatpay = [AWPaymentMethod new];
         wechatpay.type = AWWechatpay;
         AWWechatPay *pay = [AWWechatPay new];
@@ -89,7 +84,14 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         wechatpay.wechatpay = pay;
         NSArray *pays = @[wechatpay];
 
-        strongSelf.paymentMethods = @[cards, pays];
+        // Section 1
+        NSArray *cards = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+            AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
+            return [obj.type isEqualToString:@"card"];
+        }]];
+        cards = [strongSelf presetCVC:cards];
+
+        strongSelf.paymentMethods = @[pays, cards];
         [strongSelf.tableView reloadData];
         [self.HUD dismiss];
     }];
@@ -117,7 +119,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSArray *items = self.paymentMethods[section];
-    if (section == 0) {
+    if (section == 1) {
         return MAX(items.count, 1);
     }
     return items.count;
@@ -141,7 +143,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == 0) {
+    if (section == 1) {
         return 60;
     }
     return 1;
@@ -149,7 +151,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section == 0) {
+    if (section == 1) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 56)];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(16, 8, CGRectGetWidth(self.view.bounds) - 32, 44);
@@ -171,7 +173,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *items = self.paymentMethods[indexPath.section];
-    if (indexPath.section == 0) {
+    if (indexPath.section == 1) {
         if (items.count == 0) {
             AWNoCardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWNoCardCell" forIndexPath:indexPath];
             cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
@@ -204,7 +206,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *items = self.paymentMethods[indexPath.section];
-    if (indexPath.section == 0 && items.count == 0) {
+    if (indexPath.section == 1 && items.count == 0) {
         return;
     }
 
@@ -214,7 +216,8 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     if (self.delegate && [self.delegate respondsToSelector:@selector(paymentListViewController:didSelectMethod:)]) {
         [self.delegate paymentListViewController:self didSelectMethod:self.paymentMethod];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+
+    [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
 }
 
 - (void)cardViewController:(AWCardViewController *)controller didCreatePaymentMethod:(nonnull AWPaymentMethod *)paymentMethod
