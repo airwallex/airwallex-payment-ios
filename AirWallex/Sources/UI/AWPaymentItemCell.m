@@ -7,8 +7,16 @@
 //
 
 #import "AWPaymentItemCell.h"
+#import "AWUtils.h"
 
 @implementation AWPaymentItemCell
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.arrowView.image = [UIImage imageNamed:@"right" inBundle:[NSBundle resourceBundle]];
+    self.cvvImageView.image = [UIImage imageNamed:@"cvv" inBundle:[NSBundle resourceBundle]];
+}
 
 - (void)setIsLastCell:(BOOL)isLastCell
 {

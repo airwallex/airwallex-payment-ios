@@ -85,8 +85,10 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="arrowView" destination="z71-rs-5lK" id="59f-Ni-Gki"/>
                 <outlet property="cvcField" destination="8HA-mZ-Ls5" id="3e4-In-vBJ"/>
                 <outlet property="cvcView" destination="Dkg-Kv-pfc" id="M6h-K9-vZo"/>
+                <outlet property="cvvImageView" destination="CzP-DY-WRL" id="WGv-9m-Eik"/>
                 <outlet property="lineLeftConstraint" destination="lgx-T2-G5I" id="le7-zS-dl0"/>
                 <outlet property="lineRightConstraint" destination="Bjp-wJ-B9b" id="ZQK-zN-XvB"/>
                 <outlet property="lineTopConstraint" destination="Vdk-Zx-tkH" id="e7I-6h-xQB"/>

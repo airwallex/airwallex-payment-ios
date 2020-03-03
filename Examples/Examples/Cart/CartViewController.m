@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView registerNib:[UINib nibWithNibName:@"PaymentItemCell" bundle:nil] forCellReuseIdentifier:@"PaymentItemCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:[NSBundle sdkBundle]] forCellReuseIdentifier:@"AWPaymentItemCell"];
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro" detail:@"Free engraving x 1" price:[NSDecimalNumber decimalNumberWithString:@"399"]];
     Product *product1 = [[Product alloc] initWithName:@"HomePod" detail:@"White x 1" price:[NSDecimalNumber decimalNumberWithString:@"469"]];
     self.products = [@[product0, product1] mutableCopy];
@@ -189,6 +189,7 @@
             configuration.clientSecret = result[@"client_secret"];
             configuration.currency = result[@"currency"];
             configuration.shipping = self.shipping;
+            configuration.totalNumber = total;
             configuration.delegate = self;
 
             [SVProgressHUD dismiss];

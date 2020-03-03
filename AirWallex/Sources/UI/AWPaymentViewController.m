@@ -36,12 +36,17 @@
     [super viewDidLoad];
     [self.payButton setImageAndTitleHorizontalAlignmentCenter:8];
     self.totalLabel.text = [AWPaymentConfiguration sharedConfiguration].totalNumber.string;
-    [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:nil] forCellReuseIdentifier:@"AWPaymentItemCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:[NSBundle sdkBundle]] forCellReuseIdentifier:@"AWPaymentItemCell"];
     [self reloadData];
 }
 
 - (void)checkPaymentEnabled
 {
+    if ([self.paymentMethod.type isEqualToString:AWWechatpay]) {
+        self.payButton.enabled = YES;
+        return;
+    }
+
     NSString *cvc = self.paymentMethod.card.cvc ?: self.cvc;
     self.payButton.enabled = cvc.length > 0;
 }
@@ -74,6 +79,7 @@
     }
     cell.selectionLabel.textColor = [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1];
     cell.isLastCell = YES;
+    cell.arrowView.hidden = YES;
     return cell;
 }
 
