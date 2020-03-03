@@ -127,7 +127,6 @@
     ];
 }
 
-
 - (nullable AWBrand *)brandForCardNumber:(NSString *)cardNumber
 {
     NSArray *filtered = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
@@ -135,6 +134,18 @@
         return brand.type != AWBrandTypeUnknown && [brand matchesNumber:cardNumber];
     }]];
     return filtered.firstObject;
+}
+
++ (NSArray<NSNumber *> *)cardNumberFormatForBrand:(AWBrandType)type
+{
+    switch (type) {
+        case AWBrandTypeAmex:
+            return @[@4, @6, @5];
+        case AWBrandTypeDinersClub:
+            return @[@4, @6, @4];
+        default:
+            return @[@4, @4, @4, @4];
+    }
 }
 
 @end

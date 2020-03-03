@@ -35,6 +35,7 @@ IB_DESIGNABLE
 
 @property (nonatomic, strong) IBInspectable NSString *text, *placeholder;
 @property (nonatomic) IBInspectable NSInteger keyboardType;
+@property (nonatomic, strong, nullable) NSString *errorText;
 
 @end
 

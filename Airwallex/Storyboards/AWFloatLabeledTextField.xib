@@ -15,6 +15,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AWFloatLabeledTextField">
             <connections>
+                <outlet property="borderView" destination="4IW-Km-duE" id="SiV-dK-MhC"/>
+                <outlet property="errorLabel" destination="gOQ-Ai-F05" id="pRQ-oW-j5k"/>
                 <outlet property="floatingLabel" destination="jFW-b4-Um3" id="X4s-Dx-jRc"/>
                 <outlet property="floatingTopConstraint" destination="pY2-M8-vj7" id="7Kf-n1-qBS"/>
                 <outlet property="textField" destination="Hlr-nd-iue" id="gNJ-RU-hVk"/>
@@ -27,7 +29,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4IW-Km-duE" userLabel="Border" customClass="AWView">
-                    <rect key="frame" x="0.0" y="0.0" width="355" height="227"/>
+                    <rect key="frame" x="0.0" y="0.0" width="355" height="221"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jFW-b4-Um3">
                             <rect key="frame" x="16" y="30" width="323" height="0.0"/>
@@ -36,7 +38,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hlr-nd-iue">
-                            <rect key="frame" x="16" y="9" width="323" height="209"/>
+                            <rect key="frame" x="16" y="9" width="323" height="203"/>
                             <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="16"/>
                             <textInputTraits key="textInputTraits"/>
@@ -67,13 +69,22 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOQ-Ai-F05">
+                    <rect key="frame" x="16" y="227" width="323" height="0.0"/>
+                    <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="12"/>
+                    <color key="textColor" red="1" green="0.30980392159999998" blue="0.25882352939999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gOQ-Ai-F05" secondAttribute="trailing" constant="16" id="2hZ-Ca-Mtm"/>
                 <constraint firstItem="4IW-Km-duE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9rb-Ox-MAB"/>
                 <constraint firstItem="4IW-Km-duE" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="UVV-a3-2EK"/>
+                <constraint firstItem="gOQ-Ai-F05" firstAttribute="top" secondItem="4IW-Km-duE" secondAttribute="bottom" constant="6" id="XfU-Rd-dLp"/>
                 <constraint firstItem="4IW-Km-duE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="sHB-S8-B1N"/>
-                <constraint firstItem="4IW-Km-duE" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="usU-Zb-GOz"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gOQ-Ai-F05" secondAttribute="bottom" id="sNp-Ve-7QG"/>
+                <constraint firstItem="gOQ-Ai-F05" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="wrj-JY-u5U"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
