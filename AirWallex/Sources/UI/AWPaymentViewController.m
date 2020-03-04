@@ -113,6 +113,7 @@
 
     [self.HUD show];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [self.HUD dismiss];
         id <AWPaymentResultDelegate> delegate = [AWPaymentConfiguration sharedConfiguration].delegate;
         if (error) {
             [delegate paymentDidFinishWithStatus:AWPaymentStatusError error:error];

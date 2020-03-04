@@ -80,6 +80,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     request.customerId = [AWPaymentConfiguration sharedConfiguration].customerId;
     __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [self.HUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
@@ -107,7 +108,6 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
         strongSelf.paymentMethods = @[pays, cards];
         [strongSelf.tableView reloadData];
-        [self.HUD dismiss];
     }];
 }
 

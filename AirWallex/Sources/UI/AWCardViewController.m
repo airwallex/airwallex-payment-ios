@@ -17,16 +17,35 @@
 #import "AWPaymentConfiguration.h"
 #import "AWAPIClient.h"
 #import "AWPaymentMethodResponse.h"
+#import "AWCountryListViewController.h"
+#import "AWCountry.h"
 
-@interface AWCardViewController ()
+@interface AWCardViewController () <AWCountryListViewControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet AWHUD *HUD;
+
 @property (weak, nonatomic) IBOutlet AWCardTextField *cardNoField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *nameField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *expiresField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *cvcField;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
-@property (strong, nonatomic) IBOutlet AWHUD *HUD;
+
+@property (weak, nonatomic) IBOutlet UISwitch *switchButton;
+@property (weak, nonatomic) IBOutlet UIView *billingView;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *firstNameField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *lastNameField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *stateField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *cityField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *streetField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *zipcodeField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *emailField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *phoneNumberField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledView *countryView;
+
+@property (nonatomic, strong, nullable) AWBilling *billing;
+@property (strong, nonatomic) AWCountry *country;
+@property (nonatomic) BOOL sameAsShipping;
 
 @end
 
@@ -41,6 +60,60 @@
     self.cvcField.fieldType = AWTextFieldTypeCVC;
 
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+
+    self.switchButton.on = self.sameAsShipping;
+
+    self.lastNameField.fieldType = AWTextFieldTypeLastName;
+    self.firstNameField.fieldType = AWTextFieldTypeFirstName;
+    self.emailField.fieldType = AWTextFieldTypeEmail;
+    self.phoneNumberField.fieldType = AWTextFieldTypePhoneNumber;
+    self.stateField.fieldType = AWTextFieldTypeState;
+    self.cityField.fieldType = AWTextFieldTypeCity;
+    self.streetField.fieldType = AWTextFieldTypeStreet;
+    self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
+
+    self.billingView.hidden = self.sameAsShipping;
+    if (self.billing) {
+        self.firstNameField.text = self.billing.firstName;
+        self.lastNameField.text = self.billing.lastName;
+        self.emailField.text = self.billing.email;
+        self.phoneNumberField.text = self.billing.phoneNumber;
+
+        AWAddress *address = self.billing.address;
+        if (address) {
+            self.stateField.text = address.state;
+            self.cityField.text = address.city;
+            self.streetField.text = address.street;
+            self.zipcodeField.text = address.postcode;
+        }
+    }
+}
+
+- (IBAction)switchChanged:(id)sender
+{
+    self.sameAsShipping = self.switchButton.isOn;
+    self.billingView.hidden = self.switchButton.isOn;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"selectCountries"]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        AWCountryListViewController *controller = (AWCountryListViewController *)navigationController.topViewController;
+        controller.country = sender;
+        controller.delegate = self;
+    }
+}
+
+- (IBAction)selectCountries:(id)sender
+{
+    [self performSegueWithIdentifier:@"selectCountries" sender:self.country];
+}
+
+- (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(nonnull AWCountry *)country
+{
+    self.country = country;
+    self.countryView.text = country.countryName;
 }
 
 - (void)finishCreation:(AWPaymentMethod *)paymentMethod
@@ -53,19 +126,31 @@
 
 - (IBAction)savePressed:(id)sender
 {
-    // Fake billing data
-    AWBilling *billing = [AWBilling new];
-    billing.firstName = @"Charlie";
-    billing.lastName = @"Lang";
-    billing.email = @"jim631@sina.com";
-    billing.phoneNumber = @"";
-    AWAddress *address = [AWAddress new];
-    address.countryCode = @"AI";
-    address.state = @"Victoria";
-    address.city = @"Melbourne";
-    address.street = @"7\\/15 William St";
-    address.postcode = @"";
-    billing.address = address;
+    if (self.sameAsShipping) {
+        self.billing = [AWPaymentConfiguration sharedConfiguration].shipping;
+    } else {
+        AWBilling *billing = [AWBilling new];
+        billing.firstName = self.firstNameField.text;
+        billing.lastName = self.lastNameField.text;
+        billing.email = self.emailField.text;
+        billing.phoneNumber = self.phoneNumberField.text;
+        AWAddress *address = [AWAddress new];
+        address.countryCode = self.country.countryCode;
+        address.state = self.stateField.text;
+        address.city = self.cityField.text;
+        address.street = self.streetField.text;
+        address.postcode = self.zipcodeField.text;
+        billing.address = address;
+        NSString *error = [billing validate];
+        if (error) {
+            UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
+            [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+            [self presentViewController:controller animated:YES completion:nil];
+            return;
+        }
+
+        self.billing = billing;
+    }
 
     AWCard *card = [AWCard new];
     card.name = self.nameField.text;
@@ -77,7 +162,7 @@
     AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
     paymentMethod.type = @"card";
     paymentMethod.card = card;
-    paymentMethod.billing = billing;
+    paymentMethod.billing = self.billing;
 
     AWCreatePaymentMethodRequest *request = [AWCreatePaymentMethodRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
@@ -88,6 +173,7 @@
     __weak typeof(self) weakSelf = self;
     AWAPIClient *client = [AWAPIClient new];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [self.HUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
@@ -100,7 +186,6 @@
         
         __strong typeof(self) strongSelf = weakSelf;
         [strongSelf finishCreation:result.paymentMethod];
-        [self.HUD dismiss];
     }];
 }
 

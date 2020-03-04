@@ -293,7 +293,7 @@
         <!--shipping-->
         <scene sceneID="Aoj-Mj-6tP">
             <objects>
-                <viewControllerPlaceholder storyboardName="AWAddress" bundleIdentifier="org.cocoapods.Airwallex" referencedIdentifier="shipping" id="JHk-GB-c6U" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="AWPaymentMethod" bundleIdentifier="org.cocoapods.Airwallex" referencedIdentifier="shipping" id="JHk-GB-c6U" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="mV2-Td-J0k"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="61B-eM-Nls" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
