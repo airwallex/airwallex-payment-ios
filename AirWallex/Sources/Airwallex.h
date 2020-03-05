@@ -16,11 +16,17 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Airwallex/PublicHeader.h>
 
+#import <Airwallex/AWTheme.h>
+#import <Airwallex/AWWidgets.h>
+
+#import <Airwallex/AWUtils.h>
+
 #import <Airwallex/AWPaymentConfiguration.h>
 #import <Airwallex/AWAPIClient.h>
 #import <Airwallex/AWPaymentMethod.h>
 #import <Airwallex/AWCard.h>
 #import <Airwallex/AWBilling.h>
+#import <Airwallex/AWCountry.h>
 #import <Airwallex/AWPaymentMethodOptions.h>
 #import <Airwallex/AWAPIResponse.h>
 #import <Airwallex/AWPaymentIntentRequest.h>
@@ -28,3 +34,12 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 #import <Airwallex/AWPaymentMethodRequest.h>
 #import <Airwallex/AWPaymentMethodResponse.h>
 #import <Airwallex/AWCardValidator.h>
+
+#import <Airwallex/AWCardViewController.h>
+#import <Airwallex/AWCountryListViewController.h>
+#import <Airwallex/AWEditShippingViewController.h>
+#import <Airwallex/AWPaymentListViewController.h>
+#import <Airwallex/AWPaymentMethodCell.h>
+
+#import "AWPaymentViewController.h"
+#import "AWPaymentItemCell.h"

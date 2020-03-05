@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Airwallex: e8a7e4f8854ad3b698b11d4a7829c3f1274af6cb
+  Airwallex: 78201e5169e442d97ff4fa571c29d09571213199
   IQKeyboardManager: 72b359cd7e777e3a984cedbe05f8da45320cbb63
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 

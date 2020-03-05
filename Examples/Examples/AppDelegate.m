@@ -7,9 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import "WXApi.h"
+#import "Constant.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -70,7 +72,6 @@
         switch (response.errCode) {
             case WXSuccess:
                 [SVProgressHUD showSuccessWithStatus:@"Succeed to pay"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"PaymentCompleted" object:nil];
                 break;
             default:
                 [SVProgressHUD showErrorWithStatus:@"Failed to pay"];

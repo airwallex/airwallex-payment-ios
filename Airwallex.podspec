@@ -10,7 +10,8 @@ Pod::Spec.new do |s|
   s.platform   					= :ios
   s.ios.deployment_target		= '10.0'
   s.public_header_files			= "Airwallex/PublicHeaders/*.h"
-  s.source_files				= 'Airwallex/PublicHeaders/*.h', 'Airwallex/Sources/*.{h,m}', 'Airwallex/Sources/API/*.{h,m}', 'Airwallex/Sources/Card/*.{h,m}', 'Airwallex/Sources/Logger/*.{h,m}', 'Airwallex/Sources/PaymentIntent/*.{h,m}'
+  s.resources					= ['Airwallex/Resources/AirwallexSDK.bundle', 'Airwallex/Storyboards/**/*']
+  s.source_files				= 'Airwallex/PublicHeaders/*.h', 'Airwallex/Sources/*.{h,m}', 'Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Sources/API/*.{h,m}', 'Airwallex/Sources/Tools/*.{h,m}', 'Airwallex/Sources/Models/*.{h,m}'
 
   #  When using multiple platforms
   # s.ios.deployment_target 	= "10.0"

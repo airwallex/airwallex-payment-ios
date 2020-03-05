@@ -14,11 +14,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWGetPaymentMethodsRequest : NSObject <AWRequestProtocol>
 
+@property (nonatomic, copy, nullable) NSString *customerId;
+
 @end
 
 @interface AWCreatePaymentMethodRequest : NSObject <AWRequestProtocol>
 
 @property (nonatomic, copy) NSString *requestId;
+@property (nonatomic, copy, nullable) NSString *customerId;
 @property (nonatomic, strong) AWPaymentMethod *paymentMethod;
 
 @end
