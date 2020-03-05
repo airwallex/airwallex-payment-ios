@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWCardViewController : AWViewController
 
 @property (nonatomic, weak) id <AWCardViewControllerDelegate> delegate;
+@property (nonatomic) BOOL sameAsShipping;
 
 @end
 

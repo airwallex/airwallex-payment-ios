@@ -33,8 +33,12 @@
                         <color key="textColor" red="0.66274509803921566" green="0.66274509803921566" blue="0.66274509803921566" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right.png" translatesAutoresizingMaskIntoConstraints="NO" id="z71-rs-5lK">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="z71-rs-5lK">
                         <rect key="frame" x="366" y="13" width="32" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" placeholder="YES" id="N7y-v9-aAf"/>
+                            <constraint firstAttribute="height" constant="32" placeholder="YES" id="Rgf-gV-Kde"/>
+                        </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Xz-B8-AK1" userLabel="Line">
                         <rect key="frame" x="16" y="110" width="382" height="1"/>
@@ -46,8 +50,12 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dkg-Kv-pfc" userLabel="CVCView">
                         <rect key="frame" x="16" y="38" width="350" height="72"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cvv.png" translatesAutoresizingMaskIntoConstraints="NO" id="CzP-DY-WRL">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CzP-DY-WRL">
                                 <rect key="frame" x="278" y="0.0" width="72" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="72" placeholder="YES" id="8Dv-Hk-27Q"/>
+                                    <constraint firstAttribute="height" constant="48" placeholder="YES" id="oCs-Cu-6zx"/>
+                                </constraints>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="CVC/VCC" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8HA-mZ-Ls5">
                                 <rect key="frame" x="172" y="7" width="90" height="34"/>
@@ -98,8 +106,4 @@
             <point key="canvasLocation" x="137.68115942028987" y="189.84375"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="cvv.png" width="36" height="24"/>
-        <image name="right.png" width="16" height="16"/>
-    </resources>
 </document>

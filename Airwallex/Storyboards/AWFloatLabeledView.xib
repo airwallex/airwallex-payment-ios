@@ -41,7 +41,7 @@
                             <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down.png" translatesAutoresizingMaskIntoConstraints="NO" id="JhU-Um-ulw">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JhU-Um-ulw">
                             <rect key="frame" x="249" y="22" width="17" height="16"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="16" id="Oej-id-jT9"/>
@@ -88,7 +88,4 @@
             <point key="canvasLocation" x="42.028985507246382" y="-101.78571428571428"/>
         </view>
     </objects>
-    <resources>
-        <image name="down.png" width="17" height="16"/>
-    </resources>
 </document>

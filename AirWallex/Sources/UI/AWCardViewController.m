@@ -43,9 +43,8 @@
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledView *countryView;
 
-@property (nonatomic, strong, nullable) AWBilling *billing;
 @property (strong, nonatomic) AWCountry *country;
-@property (nonatomic) BOOL sameAsShipping;
+@property (nonatomic, strong, nullable) AWBilling *billing;
 
 @end
 

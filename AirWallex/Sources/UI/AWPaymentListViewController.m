@@ -56,6 +56,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         AWCardViewController *controller = (AWCardViewController *)navigationController.topViewController;
         controller.delegate = self;
+        controller.sameAsShipping = YES;
     }
 }
 

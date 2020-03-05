@@ -225,20 +225,15 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 
-    if (error) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
-        return;
-    }
-
+    NSString *message = error.localizedDescription;
     if (status == AWPaymentStatusSuccess) {
-        [SVProgressHUD showSuccessWithStatus:@"Pay successfully"];
+        message = @"Pay successfully";
     } else if (status == AWPaymentStatusUserCancellation) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:@"Payment cancelled" preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
+        message = @"Payment cancelled";
     }
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)paymentWithWechatPaySDK:(AWWechatPaySDKResponse *)response

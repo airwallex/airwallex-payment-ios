@@ -20,12 +20,12 @@
 		0878D0CA23D59B9D00382702 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0878D0C723D59B9D00382702 /* README.txt */; };
 		0878D0CB23D59B9D00382702 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0C923D59B9D00382702 /* libWeChatSDK.a */; };
 		0878D0CF23D59C4300382702 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0CE23D59C4300382702 /* SystemConfiguration.framework */; };
-		0878D0D023D59C5B00382702 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0A523D58D1D00382702 /* CoreTelephony.framework */; };
 		0878D0D123D59C6A00382702 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0A923D58D2D00382702 /* libsqlite3.0.tbd */; };
 		0878D0D223D59C7800382702 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0AB23D58D4200382702 /* libz.tbd */; };
 		088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
 		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
+		08D5B51924109DEA00680074 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0A523D58D1D00382702 /* CoreTelephony.framework */; };
 		E08268B70A40C15A51D041FA /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29265F0DAF62D6592201220D /* Pods_Examples.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,10 +72,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08D5B51924109DEA00680074 /* CoreTelephony.framework in Frameworks */,
 				0878D0C323D58DF500382702 /* libc++.tbd in Frameworks */,
 				0878D0CF23D59C4300382702 /* SystemConfiguration.framework in Frameworks */,
 				0878D0D223D59C7800382702 /* libz.tbd in Frameworks */,
-				0878D0D023D59C5B00382702 /* CoreTelephony.framework in Frameworks */,
 				0878D0CB23D59B9D00382702 /* libWeChatSDK.a in Frameworks */,
 				E08268B70A40C15A51D041FA /* Pods_Examples.framework in Frameworks */,
 				0878D0D123D59C6A00382702 /* libsqlite3.0.tbd in Frameworks */,
