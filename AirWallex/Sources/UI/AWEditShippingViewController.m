@@ -66,7 +66,7 @@
     if ([segue.identifier isEqualToString:@"selectCountries"]) {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         AWCountryListViewController *controller = (AWCountryListViewController *)navigationController.topViewController;
-        controller.country = sender;
+        controller.country = self.country;
         controller.delegate = self;
     }
 }
@@ -102,7 +102,7 @@
 
 - (IBAction)selectCountries:(id)sender
 {
-    [self performSegueWithIdentifier:@"selectCountries" sender:self.country];
+    [self performSegueWithIdentifier:@"selectCountries" sender:nil];
 }
 
 - (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(nonnull AWCountry *)country
