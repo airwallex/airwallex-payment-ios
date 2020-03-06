@@ -25,6 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
                  parameters:(NSDictionary *)parameters
           completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
 
+- (void)createCustomer:(NSURL *)url
+                 token:(NSString *)token
+            parameters:(NSDictionary *)parameters
+     completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+
 @end
 
 NS_ASSUME_NONNULL_END

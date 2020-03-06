@@ -163,6 +163,15 @@
         return;
     }
 
+    AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
+    configuration.shipping = self.shipping;
+    NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
+    NSDecimalNumber *shipping = [NSDecimalNumber zero];
+    NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
+    configuration.totalNumber = total;
+    configuration.delegate = self;
+    configuration.baseURL = @"https://staging-pci-api.airwallex.com";
+
     [SVProgressHUD show];
     [[APIClient sharedClient] createAuthenticationToken:[NSURL URLWithString:authenticationURL] clientId:clientId apiKey:apiKey completionHandler:^(NSString * _Nullable token, NSError * _Nullable error) {
         if (error) {
@@ -170,31 +179,53 @@
             return;
         }
 
-        NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
-        NSDecimalNumber *shipping = [NSDecimalNumber zero];
-        NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
+        configuration.token = token;
+
+        __block NSError *finalError = nil;
+        dispatch_group_t group = dispatch_group_create();
 
         NSMutableDictionary *parameters = [@{@"amount": total, @"currency": @"USD", @"merchant_order_id": NSUUID.UUID.UUIDString, @"request_id": NSUUID.UUID.UUIDString, @"order": @{}} mutableCopy];
-        [[APIClient sharedClient] createPaymentIntent:[NSURL URLWithString:paymentURL] token:token parameters:parameters completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+        dispatch_group_enter(group);
+        [[APIClient sharedClient] createPaymentIntent:[NSURL URLWithString:paymentIntentsURL]
+                                                token:token
+                                           parameters:parameters
+                                    completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
             if (error) {
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                finalError = error;
+                dispatch_group_leave(group);
                 return;
             }
 
-            AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
-            configuration.baseURL = @"https://staging-pci-api.airwallex.com";
-            configuration.customerId = @"cus_Dn6mVcMeTEkJgYuu9o5xEcxWRah";
             configuration.intentId = result[@"id"];
-            configuration.token = token;
             configuration.clientSecret = result[@"client_secret"];
             configuration.currency = result[@"currency"];
-            configuration.shipping = self.shipping;
-            configuration.totalNumber = total;
-            configuration.delegate = self;
+            dispatch_group_leave(group);
+        }];
+
+        dispatch_group_enter(group);
+        [[APIClient sharedClient] createCustomer:[NSURL URLWithString:customersURL]
+                                           token:token
+                                      parameters:@{@"request_id": NSUUID.UUID.UUIDString, @"merchant_customer_id": NSUUID.UUID.UUIDString, @"first_name": @"John", @"last_name": @"Doe", @"email": @"john.doe@airwallex.com", @"phone_number": @"13800000000", @"additional_info": @{@"registered_via_social_media": @NO, @"registration_date": @"2019-09-18", @"first_successful_order_date": @"2019-09-18"}, @"metadata": @{@"id": @1}}
+                               completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                finalError = error;
+                dispatch_group_leave(group);
+                return;
+            }
+
+            configuration.customerId = result[@"id"];
+            dispatch_group_leave(group);
+        }];
+
+        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+            if (finalError) {
+                [SVProgressHUD showErrorWithStatus:finalError.localizedDescription];
+                return;
+            }
 
             [SVProgressHUD dismiss];
             [self performSegueWithIdentifier:@"selectPaymentMethod" sender:nil];
-        }];
+        });
     }];
 }
 
@@ -216,8 +247,11 @@
 - (void)finishPayment
 {
     [self checkPaymentIntentStatusWithCompletion:^(BOOL success) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [SVProgressHUD showSuccessWithStatus:success ? @"Pay successfully": @"Waiting payment completion"];
+        [SVProgressHUD dismiss];
+        
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:success ? @"Pay successfully": @"Waiting payment completion" preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
     }];
 }
 
@@ -238,8 +272,12 @@
 
 - (void)paymentWithWechatPaySDK:(AWWechatPaySDKResponse *)response
 {
+    [self dismissViewControllerAnimated:YES completion:nil];
+
     NSURL *url = [NSURL URLWithString:response.prepayId];
     if (url) {
+        [SVProgressHUD show];
+
         __weak typeof(self) weakSelf = self;
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {

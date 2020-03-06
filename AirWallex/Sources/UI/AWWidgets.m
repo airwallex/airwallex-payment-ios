@@ -509,6 +509,7 @@
         self.frame = self.viewController.view.bounds;
         [self.viewController.view addSubview:self];
     }
+    [self.viewController.view bringSubviewToFront:self];
     self.alpha = 1;
 }
 
