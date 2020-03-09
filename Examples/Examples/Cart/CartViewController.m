@@ -202,20 +202,27 @@
             dispatch_group_leave(group);
         }];
 
-        dispatch_group_enter(group);
-        [[APIClient sharedClient] createCustomer:[NSURL URLWithString:customersURL]
-                                           token:token
-                                      parameters:@{@"request_id": NSUUID.UUID.UUIDString, @"merchant_customer_id": NSUUID.UUID.UUIDString, @"first_name": @"John", @"last_name": @"Doe", @"email": @"john.doe@airwallex.com", @"phone_number": @"13800000000", @"additional_info": @{@"registered_via_social_media": @NO, @"registration_date": @"2019-09-18", @"first_successful_order_date": @"2019-09-18"}, @"metadata": @{@"id": @1}}
-                               completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
-            if (error) {
-                finalError = error;
-                dispatch_group_leave(group);
-                return;
-            }
+        NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:@"Cached Customer ID"];
+        if (!customerId) {
+            dispatch_group_enter(group);
+            [[APIClient sharedClient] createCustomer:[NSURL URLWithString:customersURL]
+                                               token:token
+                                          parameters:@{@"request_id": NSUUID.UUID.UUIDString, @"merchant_customer_id": NSUUID.UUID.UUIDString, @"first_name": @"John", @"last_name": @"Doe", @"email": @"john.doe@airwallex.com", @"phone_number": @"13800000000", @"additional_info": @{@"registered_via_social_media": @NO, @"registration_date": @"2019-09-18", @"first_successful_order_date": @"2019-09-18"}, @"metadata": @{@"id": @1}}
+                                   completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+                if (error) {
+                    finalError = error;
+                    dispatch_group_leave(group);
+                    return;
+                }
 
-            configuration.customerId = result[@"id"];
-            dispatch_group_leave(group);
-        }];
+                NSString *customerId = result[@"id"];
+                if (customerId) {
+                    configuration.customerId = result[@"id"];
+                    [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:@"Cached Customer ID"];
+                }
+                dispatch_group_leave(group);
+            }];
+        }
 
         dispatch_group_notify(group, dispatch_get_main_queue(), ^{
             if (finalError) {
