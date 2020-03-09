@@ -45,13 +45,13 @@
     self.streetField.fieldType = AWTextFieldTypeStreet;
     self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
 
-    if (self.billing) {
-        self.lastNameField.text = self.billing.lastName;
-        self.firstNameField.text = self.billing.firstName;
-        self.emailField.text = self.billing.email;
-        self.phoneNumberField.text = self.billing.phoneNumber;
+    if (self.shipping) {
+        self.lastNameField.text = self.shipping.lastName;
+        self.firstNameField.text = self.shipping.firstName;
+        self.emailField.text = self.shipping.email;
+        self.phoneNumberField.text = self.shipping.phoneNumber;
         
-        AWAddress *address = self.billing.address;
+        AWAddress *address = self.shipping.address;
         if (address) {
             self.stateField.text = address.state;
             self.cityField.text = address.city;
@@ -93,7 +93,7 @@
         return;
     }
 
-    self.billing = billing;
+    self.shipping = billing;
     if (self.delegate && [self.delegate respondsToSelector:@selector(editShippingViewController:didSelectBilling:)]) {
         [self.delegate editShippingViewController:self didSelectBilling:billing];
     }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0805366E241656C900C0896C /* AWPaymentUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 0805366C241656C900C0896C /* AWPaymentUI.h */; };
+		0805366F241656C900C0896C /* AWPaymentUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805366D241656C900C0896C /* AWPaymentUI.m */; };
 		080EB05823F4D7E900F71CEC /* AWCardValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 080EB05623F4D7E900F71CEC /* AWCardValidator.h */; };
 		080EB05923F4D7E900F71CEC /* AWCardValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 080EB05723F4D7E900F71CEC /* AWCardValidator.m */; };
 		081D52C923D0307600953B03 /* AWCard.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52C723D0307600953B03 /* AWCard.h */; };
@@ -91,6 +93,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0805366C241656C900C0896C /* AWPaymentUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWPaymentUI.h; sourceTree = "<group>"; };
+		0805366D241656C900C0896C /* AWPaymentUI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentUI.m; sourceTree = "<group>"; };
 		080EB05623F4D7E900F71CEC /* AWCardValidator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWCardValidator.h; sourceTree = "<group>"; };
 		080EB05723F4D7E900F71CEC /* AWCardValidator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWCardValidator.m; sourceTree = "<group>"; };
 		081D52C723D0307600953B03 /* AWCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWCard.h; sourceTree = "<group>"; };
@@ -302,6 +306,8 @@
 				085BD41323CC6E0B002E8F27 /* Airwallex.h */,
 				08D26F5524051FC2008E65D3 /* AWConstants.h */,
 				08D26F5624051FC2008E65D3 /* AWConstants.m */,
+				0805366C241656C900C0896C /* AWPaymentUI.h */,
+				0805366D241656C900C0896C /* AWPaymentUI.m */,
 				085BD41D23CD9E2C002E8F27 /* AWPaymentConfiguration.h */,
 				085BD41E23CD9E2C002E8F27 /* AWPaymentConfiguration.m */,
 				086666402406127800B52477 /* UI */,
@@ -383,6 +389,7 @@
 				0866665E24062AEB00B52477 /* AWEditShippingViewController.h in Headers */,
 				08A14B9B23E91F0C00F3C211 /* AWPaymentMethodRequest.h in Headers */,
 				080EB05823F4D7E900F71CEC /* AWCardValidator.h in Headers */,
+				0805366E241656C900C0896C /* AWPaymentUI.h in Headers */,
 				081D52ED23D04AE600953B03 /* AWProtocol.h in Headers */,
 				081D52FA23D0581F00953B03 /* AWUtils.h in Headers */,
 				086666432406138400B52477 /* AWPaymentMethodCell.h in Headers */,
@@ -502,6 +509,7 @@
 			files = (
 				081D52F223D04B5400953B03 /* AWAPIResponse.m in Sources */,
 				081D52E423D03BDF00953B03 /* AWPaymentIntentResponse.m in Sources */,
+				0805366F241656C900C0896C /* AWPaymentUI.m in Sources */,
 				080EB05923F4D7E900F71CEC /* AWCardValidator.m in Sources */,
 				0866665824062AEB00B52477 /* AWPaymentListViewController.m in Sources */,
 				08A14BA023E9228300F3C211 /* AWPaymentMethodResponse.m in Sources */,

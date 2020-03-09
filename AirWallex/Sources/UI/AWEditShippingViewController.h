@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWEditShippingViewController : AWViewController
 
 @property (nonatomic, weak) id <AWEditShippingViewControllerDelegate> delegate;
-@property (nonatomic, strong) AWBilling *billing;
+@property (nonatomic, strong) AWBilling *shipping;
 
 @end
 

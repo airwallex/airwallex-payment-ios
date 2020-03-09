@@ -19,7 +19,7 @@
         <!--AWPaymentListViewController-->
         <scene sceneID="mdf-GM-7m4">
             <objects>
-                <viewController id="X8p-bs-NKO" userLabel="AWPaymentListViewController" customClass="AWPaymentListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="paymentMethodList" id="X8p-bs-NKO" userLabel="AWPaymentListViewController" customClass="AWPaymentListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lUv-PY-xu3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -187,7 +187,7 @@
         <!--AWCardViewController-->
         <scene sceneID="efI-D8-OrI">
             <objects>
-                <viewController id="rjH-1d-ozb" userLabel="AWCardViewController" customClass="AWCardViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newCard" id="rjH-1d-ozb" userLabel="AWCardViewController" customClass="AWCardViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Gl-OO-Mm9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -537,7 +537,7 @@
         <!--Navigation Controller-->
         <scene sceneID="UbN-fo-9Gy">
             <objects>
-                <navigationController storyboardIdentifier="newCard" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="FPd-cM-qgB" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="newCardNav" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="FPd-cM-qgB" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EmF-JY-H3z">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -555,7 +555,7 @@
         <!--Navigation Controller-->
         <scene sceneID="o3T-Sa-ATJ">
             <objects>
-                <navigationController storyboardIdentifier="paymentMethodList" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="dG1-RU-wgL" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="paymentMethodListNav" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="dG1-RU-wgL" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ma4-as-2vb">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -573,7 +573,7 @@
         <!--Navigation Controller-->
         <scene sceneID="zPs-79-oDH">
             <objects>
-                <navigationController storyboardIdentifier="paymentDetail" id="Wr1-qa-BRZ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="paymentDetailNav" id="Wr1-qa-BRZ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="l15-FF-6JF">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -589,7 +589,7 @@
         <!--View Controller-->
         <scene sceneID="ROv-Wc-s8C">
             <objects>
-                <viewController id="qRb-XP-suO" customClass="AWPaymentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="paymentDetail" id="qRb-XP-suO" customClass="AWPaymentViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="t7M-4D-XeU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -897,7 +897,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-79620" y="1093"/>
+            <point key="canvasLocation" x="-78710.144927536239" y="1092.8571428571429"/>
         </scene>
         <!--AWCountryListViewController-->
         <scene sceneID="IPp-Lz-tcG">
@@ -957,7 +957,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Fu-7W-Oxd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-77848" y="1093"/>
+            <point key="canvasLocation" x="-76939.130434782608" y="1092.8571428571429"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="y3g-kr-qVk">
@@ -975,7 +975,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tBa-gn-Jgg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-78720" y="1093"/>
+            <point key="canvasLocation" x="-77810.144927536239" y="1092.8571428571429"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="OUc-fM-GKE">
+            <objects>
+                <navigationController storyboardIdentifier="shippingNav" automaticallyAdjustsScrollViewInsets="NO" id="1Ir-3B-EFj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YLS-WI-teL">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Gcj-sK-QY6" kind="relationship" relationship="rootViewController" id="cSv-6t-gw0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A6M-Qc-xAc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-79620.289855072464" y="1092.8571428571429"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

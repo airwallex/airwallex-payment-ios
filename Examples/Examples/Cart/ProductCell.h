@@ -15,7 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *name, *detail;
 @property (nonatomic, strong) NSDecimalNumber *price;
 
-- (instancetype)initWithName:(NSString *)name detail:(NSString *)detail price:(NSDecimalNumber *)price;
+- (instancetype)initWithName:(NSString *)name
+                      detail:(NSString *)detail
+                       price:(NSDecimalNumber *)price;
 
 @end
 

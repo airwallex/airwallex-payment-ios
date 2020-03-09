@@ -11,7 +11,9 @@
 
 @implementation Product
 
-- (instancetype)initWithName:(NSString *)name detail:(NSString *)detail price:(NSDecimalNumber *)price
+- (instancetype)initWithName:(NSString *)name
+                      detail:(NSString *)detail
+                       price:(NSDecimalNumber *)price
 {
     if (self = [super init]) {
         self.name = name;

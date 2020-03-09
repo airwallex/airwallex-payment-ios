@@ -283,7 +283,6 @@
                         <outlet property="checkoutButton" destination="w6M-w5-GdE" id="G6z-As-pH4"/>
                         <outlet property="tableView" destination="eCS-DG-9uu" id="txh-yI-DFo"/>
                         <segue destination="JHk-GB-c6U" kind="show" identifier="enterAddress" id="6yl-hH-3ce"/>
-                        <segue destination="z9f-ZF-oRb" kind="presentation" identifier="selectPaymentMethod" id="jII-Jx-zFy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -298,17 +297,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="61B-eM-Nls" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1854" y="82"/>
-        </scene>
-        <!--paymentMethodList-->
-        <scene sceneID="64d-1b-v4W">
-            <objects>
-                <viewControllerPlaceholder storyboardName="AWPaymentMethod" bundleIdentifier="org.cocoapods.Airwallex" referencedIdentifier="paymentMethodList" id="z9f-ZF-oRb" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="hn8-cr-6Gd"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sAR-1R-T5d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1903" y="236"/>
+            <point key="canvasLocation" x="1776" y="138"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iHb-BI-1x5">
