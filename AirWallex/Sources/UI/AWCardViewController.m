@@ -60,8 +60,6 @@
 
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
-    self.switchButton.on = self.sameAsShipping;
-
     self.lastNameField.fieldType = AWTextFieldTypeLastName;
     self.firstNameField.fieldType = AWTextFieldTypeFirstName;
     self.emailField.fieldType = AWTextFieldTypeEmail;
@@ -71,7 +69,13 @@
     self.streetField.fieldType = AWTextFieldTypeStreet;
     self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
 
+    if (![AWPaymentConfiguration sharedConfiguration].shipping) {
+        self.sameAsShipping = NO;
+    }
+
+    self.switchButton.on = self.sameAsShipping;
     self.billingView.hidden = self.sameAsShipping;
+
     if (self.billing) {
         self.firstNameField.text = self.billing.firstName;
         self.lastNameField.text = self.billing.lastName;
@@ -90,6 +94,17 @@
 
 - (IBAction)switchChanged:(id)sender
 {
+    if (![AWPaymentConfiguration sharedConfiguration].shipping) {
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
+                                                                            message:@"No shipping address configured."
+                                                                     preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            self.switchButton.on = NO;
+        }]];
+        [self presentViewController:controller animated:YES completion:nil];
+        return;
+    }
+
     self.sameAsShipping = self.switchButton.isOn;
     self.billingView.hidden = self.switchButton.isOn;
 }

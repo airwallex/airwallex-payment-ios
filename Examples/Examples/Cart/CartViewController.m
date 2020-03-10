@@ -244,6 +244,7 @@
         return;
     }
 
+    // 1. Setup Airwallex Configuration
     AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
     configuration.shipping = self.shipping;
     NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
@@ -291,7 +292,9 @@
         }];
 
         NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:@"Cached Customer ID"];
-        if (!customerId) {
+        if (customerId) {
+            configuration.customerId = customerId;
+        } else {
             dispatch_group_enter(group);
             [[APIClient sharedClient] createCustomer:[NSURL URLWithString:customersURL]
                                                token:token
@@ -316,6 +319,7 @@
                 if (customerId) {
                     configuration.customerId = result[@"id"];
                     [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:@"Cached Customer ID"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
                 }
                 dispatch_group_leave(group);
             }];
@@ -328,6 +332,8 @@
             }
 
             [SVProgressHUD dismiss];
+
+            // 2. Show the payment method list or load the payment detail with selected payment method
             [self loadPaymentMethodList];
         });
     }];

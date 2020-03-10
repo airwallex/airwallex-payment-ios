@@ -73,8 +73,24 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     return cards;
 }
 
+- (NSArray *)section0
+{
+    AWPaymentMethod *wechatpay = [AWPaymentMethod new];
+    wechatpay.type = AWWechatpay;
+    AWWechatPay *pay = [AWWechatPay new];
+    pay.flow = @"inapp";
+    wechatpay.wechatpay = pay;
+    return @[wechatpay];
+}
+
 - (void)reloadData
 {
+    if ([AWPaymentConfiguration sharedConfiguration].customerId == nil) {
+        self.paymentMethods = @[self.section0, @[]];
+        [self.tableView reloadData];
+        return;
+    }
+
     [self.HUD show];
     AWAPIClient *client = [AWAPIClient new];
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
@@ -91,23 +107,13 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
         __strong typeof(self) strongSelf = weakSelf;
         AWGetPaymentMethodsResponse *result = (AWGetPaymentMethodsResponse *)response;
-
-        // Section 0
-        AWPaymentMethod *wechatpay = [AWPaymentMethod new];
-        wechatpay.type = AWWechatpay;
-        AWWechatPay *pay = [AWWechatPay new];
-        pay.flow = @"inapp";
-        wechatpay.wechatpay = pay;
-        NSArray *pays = @[wechatpay];
-
-        // Section 1
         NSArray *cards = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
             AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
             return [obj.type isEqualToString:@"card"];
         }]];
         cards = [strongSelf presetCVC:cards];
 
-        strongSelf.paymentMethods = @[pays, cards];
+        strongSelf.paymentMethods = @[strongSelf.section0, cards];
         [strongSelf.tableView reloadData];
     }];
 }
@@ -116,6 +122,8 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 {
     [self performSegueWithIdentifier:@"addCard" sender:nil];
 }
+
+#pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -149,15 +157,15 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == 1) {
+    if (section == 1 && [AWPaymentConfiguration sharedConfiguration].customerId != nil) {
         return 60;
     }
-    return 1;
+    return CGFLOAT_MIN;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section == 1) {
+    if (section == 1 && [AWPaymentConfiguration sharedConfiguration].customerId != nil) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 56)];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(16, 8, CGRectGetWidth(self.view.bounds) - 32, 44);
@@ -218,8 +226,22 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
     AWPaymentMethod *method = items[indexPath.row];
     self.paymentMethod = method;
+
+    if ([self.paymentMethod.type isEqualToString:AWWechatpay]) {
+        // Confirm payment with wechat type directly
+
+        return;
+    } else if (self.paymentMethod.card.cvc) {
+        // Confirm payment with card cvc directly
+
+        return;
+    }
+
+    // No cvc provided and go to enter cvc in payment detail page
     [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
 }
+
+#pragma mark - AWCardViewControllerDelegate
 
 - (void)cardViewController:(AWCardViewController *)controller didCreatePaymentMethod:(nonnull AWPaymentMethod *)paymentMethod
 {
