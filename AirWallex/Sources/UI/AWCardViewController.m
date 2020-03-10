@@ -187,18 +187,18 @@
     __weak typeof(self) weakSelf = self;
     AWAPIClient *client = [AWAPIClient new];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        [self.HUD dismiss];
+        __strong typeof(self) strongSelf = weakSelf;
+        [strongSelf.HUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-            [self presentViewController:controller animated:YES completion:nil];
+            [strongSelf presentViewController:controller animated:YES completion:nil];
             return;
         }
 
         AWCreatePaymentMethodResponse *result = (AWCreatePaymentMethodResponse *)response;
         [[AWPaymentConfiguration sharedConfiguration] cache:result.paymentMethod.Id value:card.cvc];
         
-        __strong typeof(self) strongSelf = weakSelf;
         [strongSelf finishCreation:result.paymentMethod];
     }];
 }

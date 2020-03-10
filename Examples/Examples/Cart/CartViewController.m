@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet AWButton *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
 @property (strong, nonatomic) AWBilling *shipping;
-@property (strong, nonatomic) UINavigationController *paymentNavigationController;
 
 @end
 
@@ -70,6 +69,118 @@
 
     self.checkoutButton.enabled = self.shipping != nil && total.doubleValue != 0;
     [self.tableView reloadData];
+}
+
+#pragma mark - Check Out
+
+- (IBAction)checkoutPressed:(id)sender
+{
+    if (self.products.count == 0) {
+        [SVProgressHUD showErrorWithStatus:@"No products in your cart"];
+        return;
+    }
+
+    // 1. Setup Airwallex Configuration
+    AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
+    configuration.shipping = self.shipping;
+    NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
+    NSDecimalNumber *shipping = [NSDecimalNumber zero];
+    NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
+    configuration.totalNumber = total;
+    configuration.delegate = self;
+    configuration.baseURL = @"https://staging-pci-api.airwallex.com";
+
+    [SVProgressHUD show];
+    [[APIClient sharedClient] createAuthenticationToken:[NSURL URLWithString:authenticationURL]
+                                               clientId:clientId
+                                                 apiKey:apiKey
+                                      completionHandler:^(NSString * _Nullable token, NSError * _Nullable error) {
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            return;
+        }
+
+        configuration.token = token;
+
+        __block NSError *finalError = nil;
+        dispatch_group_t group = dispatch_group_create();
+
+        NSMutableDictionary *parameters = [@{@"amount": total,
+                                             @"currency": @"USD",
+                                             @"merchant_order_id": NSUUID.UUID.UUIDString,
+                                             @"request_id": NSUUID.UUID.UUIDString,
+                                             @"order": @{}} mutableCopy];
+        dispatch_group_enter(group);
+        [[APIClient sharedClient] createPaymentIntent:[NSURL URLWithString:paymentIntentsURL]
+                                                token:token
+                                           parameters:parameters
+                                    completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                finalError = error;
+                dispatch_group_leave(group);
+                return;
+            }
+
+            configuration.intentId = result[@"id"];
+            configuration.clientSecret = result[@"client_secret"];
+            configuration.currency = result[@"currency"];
+            dispatch_group_leave(group);
+        }];
+
+        NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:@"Cached Customer ID"];
+        if (customerId) {
+            configuration.customerId = customerId;
+        } else {
+            dispatch_group_enter(group);
+            [[APIClient sharedClient] createCustomer:[NSURL URLWithString:customersURL]
+                                               token:token
+                                          parameters:@{@"request_id": NSUUID.UUID.UUIDString,
+                                                       @"merchant_customer_id": NSUUID.UUID.UUIDString,
+                                                       @"first_name": @"John",
+                                                       @"last_name": @"Doe",
+                                                       @"email": @"john.doe@airwallex.com",
+                                                       @"phone_number": @"13800000000",
+                                                       @"additional_info": @{@"registered_via_social_media": @NO,
+                                                                             @"registration_date": @"2019-09-18",
+                                                                             @"first_successful_order_date": @"2019-09-18"},
+                                                       @"metadata": @{@"id": @1}}
+                                   completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+                if (error) {
+                    finalError = error;
+                    dispatch_group_leave(group);
+                    return;
+                }
+
+                NSString *customerId = result[@"id"];
+                if (customerId) {
+                    configuration.customerId = result[@"id"];
+                    [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:@"Cached Customer ID"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+                dispatch_group_leave(group);
+            }];
+        }
+
+        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+            if (finalError) {
+                [SVProgressHUD showErrorWithStatus:finalError.localizedDescription];
+                return;
+            }
+
+            [SVProgressHUD dismiss];
+
+            // 2. Show the payment method list or load the payment detail with selected payment method
+            [self loadPaymentMethodList];
+        });
+    }];
+}
+
+#pragma mark - Show Payment Method List
+
+- (void)loadPaymentMethodList
+{
+    UINavigationController *navigationController = [AWPaymentUI paymentMethodListNavigationController];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -181,21 +292,11 @@
                                                                         message:message
                                                                  preferredStyle:UIAlertControllerStyleAlert];
     [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:controller animated:YES completion:^{
-        if (self.paymentNavigationController) {
-            [self.paymentNavigationController dismissViewControllerAnimated:YES completion:nil];
-            self.paymentNavigationController = nil;
-        }
-    }];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)paymentWithWechatPaySDK:(AWWechatPaySDKResponse *)response
 {
-    if (self.paymentNavigationController) {
-        [self.paymentNavigationController dismissViewControllerAnimated:YES completion:nil];
-        self.paymentNavigationController = nil;
-    }
-
     NSURL *url = [NSURL URLWithString:response.prepayId];
     if (url) {
         [SVProgressHUD show];
@@ -235,115 +336,7 @@
 //        }];
 }
 
-#pragma mark - Check Out
-
-- (IBAction)checkoutPressed:(id)sender
-{
-    if (self.products.count == 0) {
-        [SVProgressHUD showErrorWithStatus:@"No products in your cart"];
-        return;
-    }
-
-    // 1. Setup Airwallex Configuration
-    AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
-    configuration.shipping = self.shipping;
-    NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
-    NSDecimalNumber *shipping = [NSDecimalNumber zero];
-    NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
-    configuration.totalNumber = total;
-    configuration.delegate = self;
-    configuration.baseURL = @"https://staging-pci-api.airwallex.com";
-
-    [SVProgressHUD show];
-    [[APIClient sharedClient] createAuthenticationToken:[NSURL URLWithString:authenticationURL]
-                                               clientId:clientId
-                                                 apiKey:apiKey
-                                      completionHandler:^(NSString * _Nullable token, NSError * _Nullable error) {
-        if (error) {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-            return;
-        }
-
-        configuration.token = token;
-
-        __block NSError *finalError = nil;
-        dispatch_group_t group = dispatch_group_create();
-
-        NSMutableDictionary *parameters = [@{@"amount": total,
-                                             @"currency": @"USD",
-                                             @"merchant_order_id": NSUUID.UUID.UUIDString,
-                                             @"request_id": NSUUID.UUID.UUIDString,
-                                             @"order": @{}} mutableCopy];
-        dispatch_group_enter(group);
-        [[APIClient sharedClient] createPaymentIntent:[NSURL URLWithString:paymentIntentsURL]
-                                                token:token
-                                           parameters:parameters
-                                    completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
-            if (error) {
-                finalError = error;
-                dispatch_group_leave(group);
-                return;
-            }
-
-            configuration.intentId = result[@"id"];
-            configuration.clientSecret = result[@"client_secret"];
-            configuration.currency = result[@"currency"];
-            dispatch_group_leave(group);
-        }];
-
-        NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:@"Cached Customer ID"];
-        if (customerId) {
-            configuration.customerId = customerId;
-        } else {
-            dispatch_group_enter(group);
-            [[APIClient sharedClient] createCustomer:[NSURL URLWithString:customersURL]
-                                               token:token
-                                          parameters:@{@"request_id": NSUUID.UUID.UUIDString,
-                                                       @"merchant_customer_id": NSUUID.UUID.UUIDString,
-                                                       @"first_name": @"John",
-                                                       @"last_name": @"Doe",
-                                                       @"email": @"john.doe@airwallex.com",
-                                                       @"phone_number": @"13800000000",
-                                                       @"additional_info": @{@"registered_via_social_media": @NO,
-                                                                             @"registration_date": @"2019-09-18",
-                                                                             @"first_successful_order_date": @"2019-09-18"},
-                                                       @"metadata": @{@"id": @1}}
-                                   completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
-                if (error) {
-                    finalError = error;
-                    dispatch_group_leave(group);
-                    return;
-                }
-
-                NSString *customerId = result[@"id"];
-                if (customerId) {
-                    configuration.customerId = result[@"id"];
-                    [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:@"Cached Customer ID"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                }
-                dispatch_group_leave(group);
-            }];
-        }
-
-        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-            if (finalError) {
-                [SVProgressHUD showErrorWithStatus:finalError.localizedDescription];
-                return;
-            }
-
-            [SVProgressHUD dismiss];
-
-            // 2. Show the payment method list or load the payment detail with selected payment method
-            [self loadPaymentMethodList];
-        });
-    }];
-}
-
-- (void)loadPaymentMethodList
-{
-    self.paymentNavigationController = [AWPaymentUI paymentMethodListNavigationController];
-    [self presentViewController:self.paymentNavigationController animated:YES completion:nil];
-}
+#pragma mark - Check Payment Intent Status
 
 - (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
 {

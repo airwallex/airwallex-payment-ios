@@ -28,4 +28,9 @@
 {
 }
 
+- (void)dealloc
+{
+    NSLog(@"%@", NSStringFromClass(self.class));
+}
+
 @end
