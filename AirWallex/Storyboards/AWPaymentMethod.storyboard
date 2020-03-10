@@ -694,11 +694,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIT-Vq-95B">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIT-Vq-95B">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JPf-59-w9C">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="893.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPf-59-w9C">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="810.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tw5-cy-VgW">
                                                 <rect key="frame" x="16" y="16" width="382" height="40.5"/>
@@ -706,8 +706,8 @@
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="V6J-h2-Ept">
-                                                <rect key="frame" x="16" y="89.5" width="382" height="788"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="V6J-h2-Ept">
+                                                <rect key="frame" x="16" y="89.5" width="382" height="705"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05V-Bk-icU">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="23"/>
@@ -715,7 +715,7 @@
                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YZ6-W0-Koa" customClass="AWFloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YZ6-W0-Koa" customClass="AWFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="39" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -726,7 +726,7 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="Charlie"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V2J-fB-G8T" customClass="AWFloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V2J-fB-G8T" customClass="AWFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="122" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -737,19 +737,8 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Last name"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2f0-s1-lVZ" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="205" width="382" height="67"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="gk6-sz-jz9"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Email"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="jim631@sina.com"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sKh-EQ-3nT" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="288" width="382" height="60"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sKh-EQ-3nT" customClass="AWFloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="205" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="wyl-9h-fpD"/>
@@ -758,14 +747,14 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Phone number (optional)"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lh-kb-BSe">
-                                                        <rect key="frame" x="0.0" y="364" width="382" height="23"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lh-kb-BSe">
+                                                        <rect key="frame" x="0.0" y="281" width="382" height="23"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wjN-0Q-PSk" customClass="AWFloatLabeledView">
-                                                        <rect key="frame" x="0.0" y="403" width="382" height="60"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wjN-0Q-PSk" customClass="AWFloatLabeledView">
+                                                        <rect key="frame" x="0.0" y="320" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <gestureRecognizers/>
                                                         <constraints>
@@ -778,8 +767,8 @@
                                                             <outletCollection property="gestureRecognizers" destination="GFw-Kl-p56" appends="YES" id="v2Q-Lk-6kt"/>
                                                         </connections>
                                                     </view>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q8C-ug-Ehi" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="479" width="382" height="67"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8C-ug-Ehi" customClass="AWFloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="396" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="66L-n8-e4j"/>
@@ -789,8 +778,8 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="Victoria"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NhI-6R-lbc" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="562" width="382" height="67"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NhI-6R-lbc" customClass="AWFloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="479" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Gaw-Ko-NOU"/>
@@ -800,8 +789,8 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="City"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lSZ-Zq-YQP" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="645" width="382" height="67"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lSZ-Zq-YQP" customClass="AWFloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="562" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="PQs-zv-d5M"/>
@@ -811,8 +800,8 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="7/15 William St"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fH9-JM-Mgx" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="728" width="382" height="60"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fH9-JM-Mgx" customClass="AWFloatLabeledTextField">
+                                                        <rect key="frame" x="0.0" y="645" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="BU8-7q-X1W"/>
@@ -869,7 +858,6 @@
                         <outlet property="HUD" destination="5jB-DZ-EQ4" id="TMg-6P-1Tj"/>
                         <outlet property="cityField" destination="NhI-6R-lbc" id="rGb-dh-Gbl"/>
                         <outlet property="countryView" destination="wjN-0Q-PSk" id="aTz-yy-z3T"/>
-                        <outlet property="emailField" destination="2f0-s1-lVZ" id="wT1-iL-y1m"/>
                         <outlet property="firstNameField" destination="YZ6-W0-Koa" id="qI1-C5-u4v"/>
                         <outlet property="lastNameField" destination="V2J-fB-G8T" id="IO2-dE-o3h"/>
                         <outlet property="phoneNumberField" destination="sKh-EQ-3nT" id="IKT-Us-f5h"/>

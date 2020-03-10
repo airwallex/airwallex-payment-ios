@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *lastNameField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *firstNameField;
-@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *emailField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *stateField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *cityField;
@@ -38,7 +37,6 @@
     [super viewDidLoad];
     self.lastNameField.fieldType = AWTextFieldTypeLastName;
     self.firstNameField.fieldType = AWTextFieldTypeFirstName;
-    self.emailField.fieldType = AWTextFieldTypeEmail;
     self.phoneNumberField.fieldType = AWTextFieldTypePhoneNumber;
     self.stateField.fieldType = AWTextFieldTypeState;
     self.cityField.fieldType = AWTextFieldTypeCity;
@@ -48,7 +46,6 @@
     if (self.shipping) {
         self.lastNameField.text = self.shipping.lastName;
         self.firstNameField.text = self.shipping.firstName;
-        self.emailField.text = self.shipping.email;
         self.phoneNumberField.text = self.shipping.phoneNumber;
         
         AWAddress *address = self.shipping.address;
@@ -76,7 +73,6 @@
     AWBilling *billing = [AWBilling new];
     billing.lastName = self.lastNameField.text;
     billing.firstName = self.firstNameField.text;
-    billing.email = self.emailField.text;
     billing.phoneNumber = self.phoneNumberField.text;
     AWAddress *address = [AWAddress new];
     address.countryCode = self.country.countryCode;
