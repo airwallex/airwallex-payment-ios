@@ -16,13 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWPaymentUI : NSObject
 
 + (UINavigationController *)paymentMethodListNavigationController;
-+ (AWPaymentListViewController *)paymentMethodListViewController;
 + (UINavigationController *)newCardNavigationController;
-+ (AWCardViewController *)newCardViewController;
 + (UINavigationController *)paymentDetailNavigationController;
-+ (AWPaymentViewController *)paymentDetailViewController;
 + (UINavigationController *)shippingNavigationController;
-+ (AWEditShippingViewController *)shippingViewController;
 
 @end
 

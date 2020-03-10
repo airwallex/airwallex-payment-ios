@@ -248,6 +248,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (void)cardViewController:(AWCardViewController *)controller didCreatePaymentMethod:(nonnull AWPaymentMethod *)paymentMethod
 {
+    [controller dismissViewControllerAnimated:YES completion:nil];
     [self reloadData];
 }
 

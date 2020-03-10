@@ -126,6 +126,7 @@
 
 - (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(nonnull AWCountry *)country
 {
+    [controller dismissViewControllerAnimated:YES completion:nil];
     self.country = country;
     self.countryView.text = country.countryName;
 }
@@ -135,7 +136,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(cardViewController:didCreatePaymentMethod:)]) {
         [self.delegate cardViewController:self didCreatePaymentMethod:paymentMethod];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)savePressed:(id)sender

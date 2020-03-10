@@ -66,7 +66,6 @@
         AWCountry *country = self.matchedCountries[indexPath.row];
         [self.delegate countryListViewController:self didSelectCountry:country];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText

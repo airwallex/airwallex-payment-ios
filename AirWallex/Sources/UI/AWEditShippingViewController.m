@@ -97,7 +97,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(editShippingViewController:didSelectBilling:)]) {
         [self.delegate editShippingViewController:self didSelectBilling:billing];
     }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)selectCountries:(id)sender
@@ -107,6 +106,7 @@
 
 - (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(nonnull AWCountry *)country
 {
+    [controller dismissViewControllerAnimated:YES completion:nil];
     self.country = country;
     self.countryView.text = country.countryName;
 }

@@ -274,6 +274,7 @@
 
 - (void)editShippingViewController:(AWEditShippingViewController *)controller didSelectBilling:(AWBilling *)billing
 {
+    [controller.navigationController popViewControllerAnimated:YES];
     self.shipping = billing;
     [self reloadData];
 }

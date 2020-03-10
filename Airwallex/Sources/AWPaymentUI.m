@@ -22,24 +22,10 @@
     return controller;
 }
 
-+ (AWPaymentListViewController *)paymentMethodListViewController
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWPaymentMethod" bundle:[NSBundle sdkBundle]];
-    AWPaymentListViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodList"];
-    return controller;
-}
-
 + (UINavigationController *)newCardNavigationController
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWPaymentMethod" bundle:[NSBundle sdkBundle]];
     UINavigationController *controller = [storyboard instantiateViewControllerWithIdentifier:@"newCardNav"];
-    return controller;
-}
-
-+ (AWCardViewController *)newCardViewController
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWPaymentMethod" bundle:[NSBundle sdkBundle]];
-    AWCardViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"newCard"];
     return controller;
 }
 
@@ -50,24 +36,10 @@
     return controller;
 }
 
-+ (AWPaymentViewController *)paymentDetailViewController
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWPaymentMethod" bundle:[NSBundle sdkBundle]];
-    AWPaymentViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"paymentDetail"];
-    return controller;
-}
-
 + (UINavigationController *)shippingNavigationController
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWPaymentMethod" bundle:[NSBundle sdkBundle]];
     UINavigationController *controller = [storyboard instantiateViewControllerWithIdentifier:@"shippingNav"];
-    return controller;
-}
-
-+ (AWEditShippingViewController *)shippingViewController
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWPaymentMethod" bundle:[NSBundle sdkBundle]];
-    AWEditShippingViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"shipping"];
     return controller;
 }
 
