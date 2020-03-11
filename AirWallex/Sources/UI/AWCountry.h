@@ -16,4 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface AWCountry (Utils)
+
++ (NSArray *)allCountries;
++ (nullable AWCountry *)countryWithCode:(NSString *)code;
+
+@end
+
 NS_ASSUME_NONNULL_END

@@ -50,6 +50,11 @@
         
         AWAddress *address = self.shipping.address;
         if (address) {
+            AWCountry *matchedCountry = [AWCountry countryWithCode:address.countryCode];
+            if (matchedCountry) {
+                self.country = matchedCountry;
+                self.countryView.text = matchedCountry.countryName;
+            }
             self.stateField.text = address.state;
             self.cityField.text = address.city;
             self.streetField.text = address.street;
@@ -100,7 +105,7 @@
     [self performSegueWithIdentifier:@"selectCountries" sender:nil];
 }
 
-- (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(nonnull AWCountry *)country
+- (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(AWCountry *)country
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
     self.country = country;

@@ -34,6 +34,10 @@
     return billing;
 }
 
+@end
+
+@implementation AWBilling (Utils)
+
 - (nullable NSString *)validate
 {
     if (self.firstName.length == 0) {
