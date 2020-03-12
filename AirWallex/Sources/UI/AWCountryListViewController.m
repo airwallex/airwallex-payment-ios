@@ -57,10 +57,14 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    self.matchedCountries = [self.countries filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-        AWCountry *obj = (AWCountry *)evaluatedObject;
-        return [obj.countryName rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound;
-    }]];
+    if (searchText.length > 0) {
+        self.matchedCountries = [self.countries filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+            AWCountry *obj = (AWCountry *)evaluatedObject;
+            return [obj.countryName rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound;
+        }]];
+    } else {
+        self.matchedCountries = self.countries;
+    }
     [self.tableView reloadData];
 }
 
