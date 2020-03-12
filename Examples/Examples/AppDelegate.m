@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import "WXApi.h"
