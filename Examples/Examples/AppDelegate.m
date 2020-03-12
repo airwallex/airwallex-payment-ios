@@ -7,11 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import "WXApi.h"
-#import "Constant.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -42,6 +40,13 @@
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    return [WXApi handleOpenURL:url delegate:self];
+}
+
+#pragma mark - UI
+
 - (void)loadCartView
 {
     UIViewController *controller = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
@@ -60,10 +65,7 @@
     } completion:nil];
 }
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
-{
-    return [WXApi handleOpenURL:url delegate:self];
-}
+#pragma mark - WXApiDelegate
 
 - (void)onResp:(BaseResp *)resp
 {

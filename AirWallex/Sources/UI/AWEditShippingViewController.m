@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *lastNameField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *firstNameField;
-@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *emailField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *stateField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *cityField;
@@ -38,21 +37,24 @@
     [super viewDidLoad];
     self.lastNameField.fieldType = AWTextFieldTypeLastName;
     self.firstNameField.fieldType = AWTextFieldTypeFirstName;
-    self.emailField.fieldType = AWTextFieldTypeEmail;
     self.phoneNumberField.fieldType = AWTextFieldTypePhoneNumber;
     self.stateField.fieldType = AWTextFieldTypeState;
     self.cityField.fieldType = AWTextFieldTypeCity;
     self.streetField.fieldType = AWTextFieldTypeStreet;
     self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
 
-    if (self.billing) {
-        self.lastNameField.text = self.billing.lastName;
-        self.firstNameField.text = self.billing.firstName;
-        self.emailField.text = self.billing.email;
-        self.phoneNumberField.text = self.billing.phoneNumber;
+    if (self.shipping) {
+        self.lastNameField.text = self.shipping.lastName;
+        self.firstNameField.text = self.shipping.firstName;
+        self.phoneNumberField.text = self.shipping.phoneNumber;
         
-        AWAddress *address = self.billing.address;
+        AWAddress *address = self.shipping.address;
         if (address) {
+            AWCountry *matchedCountry = [AWCountry countryWithCode:address.countryCode];
+            if (matchedCountry) {
+                self.country = matchedCountry;
+                self.countryView.text = matchedCountry.countryName;
+            }
             self.stateField.text = address.state;
             self.cityField.text = address.city;
             self.streetField.text = address.street;
@@ -76,7 +78,6 @@
     AWBilling *billing = [AWBilling new];
     billing.lastName = self.lastNameField.text;
     billing.firstName = self.firstNameField.text;
-    billing.email = self.emailField.text;
     billing.phoneNumber = self.phoneNumberField.text;
     AWAddress *address = [AWAddress new];
     address.countryCode = self.country.countryCode;
@@ -93,11 +94,10 @@
         return;
     }
 
-    self.billing = billing;
+    self.shipping = billing;
     if (self.delegate && [self.delegate respondsToSelector:@selector(editShippingViewController:didSelectBilling:)]) {
         [self.delegate editShippingViewController:self didSelectBilling:billing];
     }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)selectCountries:(id)sender
@@ -105,8 +105,9 @@
     [self performSegueWithIdentifier:@"selectCountries" sender:nil];
 }
 
-- (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(nonnull AWCountry *)country
+- (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(AWCountry *)country
 {
+    [controller dismissViewControllerAnimated:YES completion:nil];
     self.country = country;
     self.countryView.text = country.countryName;
 }

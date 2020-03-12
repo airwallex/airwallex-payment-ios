@@ -13,6 +13,10 @@ Pod::Spec.new do |s|
   s.resources					= ['Airwallex/Resources/AirwallexSDK.bundle', 'Airwallex/Storyboards/**/*']
   s.source_files				= 'Airwallex/PublicHeaders/*.h', 'Airwallex/Sources/*.{h,m}', 'Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Sources/API/*.{h,m}', 'Airwallex/Sources/Tools/*.{h,m}', 'Airwallex/Sources/Models/*.{h,m}'
 
+  # s.resource_bundles = {
+  #   'AirwallexSDK' => ['Airwallex/Resources/**/*.{lproj,storyboard,xib,xcassets,json,imageset,png}']
+  # }
+  
   #  When using multiple platforms
   # s.ios.deployment_target 	= "10.0"
   # s.osx.deployment_target 	= "10.15"

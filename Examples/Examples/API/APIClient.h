@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Constant.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,6 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
                       token:(NSString *)token
                  parameters:(NSDictionary *)parameters
           completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+
+- (void)createCustomer:(NSURL *)url
+                 token:(NSString *)token
+            parameters:(NSDictionary *)parameters
+     completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
 
 @end
 

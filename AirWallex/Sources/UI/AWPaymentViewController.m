@@ -114,28 +114,32 @@
     request.paymentMethod = paymentMethod;
 
     [self.HUD show];
+    __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        [self.HUD dismiss];
-        id <AWPaymentResultDelegate> delegate = [AWPaymentConfiguration sharedConfiguration].delegate;
-        if (error) {
-            [delegate paymentDidFinishWithStatus:AWPaymentStatusError error:error];
-            return;
-        }
+        __strong typeof(self) strongSelf = weakSelf;
+        [strongSelf.HUD dismiss];
+        [strongSelf dismissViewControllerAnimated:YES completion:^{
+            id <AWPaymentResultDelegate> delegate = [AWPaymentConfiguration sharedConfiguration].delegate;
+            if (error) {
+                [delegate paymentDidFinishWithStatus:AWPaymentStatusError error:error];
+                return;
+            }
 
-        AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
-        if ([result.status isEqualToString:@"SUCCEEDED"]) {
-            [delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
-            return;
-        }
+            AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
+            if ([result.status isEqualToString:@"SUCCEEDED"]) {
+                [delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
+                return;
+            }
 
-        if (!result.nextAction) {
-            [delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
-            return;
-        }
+            if (!result.nextAction) {
+                [delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
+                return;
+            }
 
-        if ([result.nextAction.type isEqualToString:@"call_sdk"]) {
-            [delegate paymentWithWechatPaySDK:result.nextAction.wechatResponse];
-        }
+            if ([result.nextAction.type isEqualToString:@"call_sdk"]) {
+                [delegate paymentWithWechatPaySDK:result.nextAction.wechatResponse];
+            }
+        }];
     }];
 }
 

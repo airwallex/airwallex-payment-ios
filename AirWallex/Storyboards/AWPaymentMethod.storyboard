@@ -19,7 +19,7 @@
         <!--AWPaymentListViewController-->
         <scene sceneID="mdf-GM-7m4">
             <objects>
-                <viewController id="X8p-bs-NKO" userLabel="AWPaymentListViewController" customClass="AWPaymentListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="paymentMethodList" id="X8p-bs-NKO" userLabel="AWPaymentListViewController" customClass="AWPaymentListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lUv-PY-xu3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -177,6 +177,9 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <viewLayoutGuide key="safeArea" id="7rK-HH-aOB"/>
+                    <connections>
+                        <outlet property="viewController" destination="X8p-bs-NKO" id="bFO-gY-TtN"/>
+                    </connections>
                 </view>
             </objects>
             <point key="canvasLocation" x="-79620.289855072464" y="-532.36607142857144"/>
@@ -184,7 +187,7 @@
         <!--AWCardViewController-->
         <scene sceneID="efI-D8-OrI">
             <objects>
-                <viewController id="rjH-1d-ozb" userLabel="AWCardViewController" customClass="AWCardViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newCard" id="rjH-1d-ozb" userLabel="AWCardViewController" customClass="AWCardViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Gl-OO-Mm9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -534,7 +537,7 @@
         <!--Navigation Controller-->
         <scene sceneID="UbN-fo-9Gy">
             <objects>
-                <navigationController storyboardIdentifier="newCard" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="FPd-cM-qgB" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="newCardNav" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="FPd-cM-qgB" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EmF-JY-H3z">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -552,7 +555,7 @@
         <!--Navigation Controller-->
         <scene sceneID="o3T-Sa-ATJ">
             <objects>
-                <navigationController storyboardIdentifier="paymentMethodList" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="dG1-RU-wgL" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="paymentMethodListNav" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="dG1-RU-wgL" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ma4-as-2vb">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -570,7 +573,7 @@
         <!--Navigation Controller-->
         <scene sceneID="zPs-79-oDH">
             <objects>
-                <navigationController storyboardIdentifier="paymentDetail" id="Wr1-qa-BRZ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="paymentDetailNav" id="Wr1-qa-BRZ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="l15-FF-6JF">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -583,10 +586,10 @@
             </objects>
             <point key="canvasLocation" x="-78720" y="-1352"/>
         </scene>
-        <!--Payment View Controller-->
+        <!--View Controller-->
         <scene sceneID="ROv-Wc-s8C">
             <objects>
-                <viewController id="qRb-XP-suO" customClass="AWPaymentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="paymentDetail" id="qRb-XP-suO" customClass="AWPaymentViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="t7M-4D-XeU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -676,6 +679,9 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <viewLayoutGuide key="safeArea" id="Zmv-cz-VCA"/>
+                    <connections>
+                        <outlet property="viewController" destination="qRb-XP-suO" id="cQz-Ad-vq9"/>
+                    </connections>
                 </view>
             </objects>
             <point key="canvasLocation" x="-78720" y="-532"/>
@@ -689,10 +695,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIT-Vq-95B">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPf-59-w9C">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="893.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="810.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tw5-cy-VgW">
                                                 <rect key="frame" x="16" y="16" width="382" height="40.5"/>
@@ -701,7 +707,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="V6J-h2-Ept">
-                                                <rect key="frame" x="16" y="89.5" width="382" height="788"/>
+                                                <rect key="frame" x="16" y="89.5" width="382" height="705"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05V-Bk-icU">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="23"/>
@@ -731,19 +737,8 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Last name"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2f0-s1-lVZ" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="205" width="382" height="67"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="gk6-sz-jz9"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Email"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="jim631@sina.com"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sKh-EQ-3nT" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="288" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="205" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="wyl-9h-fpD"/>
@@ -753,13 +748,13 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lh-kb-BSe">
-                                                        <rect key="frame" x="0.0" y="364" width="382" height="23"/>
+                                                        <rect key="frame" x="0.0" y="281" width="382" height="23"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wjN-0Q-PSk" customClass="AWFloatLabeledView">
-                                                        <rect key="frame" x="0.0" y="403" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="320" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <gestureRecognizers/>
                                                         <constraints>
@@ -773,7 +768,7 @@
                                                         </connections>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8C-ug-Ehi" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="479" width="382" height="67"/>
+                                                        <rect key="frame" x="0.0" y="396" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="66L-n8-e4j"/>
@@ -784,7 +779,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NhI-6R-lbc" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="562" width="382" height="67"/>
+                                                        <rect key="frame" x="0.0" y="479" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Gaw-Ko-NOU"/>
@@ -795,7 +790,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lSZ-Zq-YQP" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="645" width="382" height="67"/>
+                                                        <rect key="frame" x="0.0" y="562" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="PQs-zv-d5M"/>
@@ -806,7 +801,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fH9-JM-Mgx" customClass="AWFloatLabeledTextField">
-                                                        <rect key="frame" x="0.0" y="728" width="382" height="60"/>
+                                                        <rect key="frame" x="0.0" y="645" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="BU8-7q-X1W"/>
@@ -863,7 +858,6 @@
                         <outlet property="HUD" destination="5jB-DZ-EQ4" id="TMg-6P-1Tj"/>
                         <outlet property="cityField" destination="NhI-6R-lbc" id="rGb-dh-Gbl"/>
                         <outlet property="countryView" destination="wjN-0Q-PSk" id="aTz-yy-z3T"/>
-                        <outlet property="emailField" destination="2f0-s1-lVZ" id="wT1-iL-y1m"/>
                         <outlet property="firstNameField" destination="YZ6-W0-Koa" id="qI1-C5-u4v"/>
                         <outlet property="lastNameField" destination="V2J-fB-G8T" id="IO2-dE-o3h"/>
                         <outlet property="phoneNumberField" destination="sKh-EQ-3nT" id="IKT-Us-f5h"/>
@@ -891,7 +885,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-79620" y="1093"/>
+            <point key="canvasLocation" x="-78710.144927536239" y="1092.8571428571429"/>
         </scene>
         <!--AWCountryListViewController-->
         <scene sceneID="IPp-Lz-tcG">
@@ -951,7 +945,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Fu-7W-Oxd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-77848" y="1093"/>
+            <point key="canvasLocation" x="-76799" y="621"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="y3g-kr-qVk">
@@ -969,12 +963,30 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tBa-gn-Jgg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-78720" y="1093"/>
+            <point key="canvasLocation" x="-77684" y="621"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="OUc-fM-GKE">
+            <objects>
+                <navigationController storyboardIdentifier="shippingNav" automaticallyAdjustsScrollViewInsets="NO" id="1Ir-3B-EFj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YLS-WI-teL">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Gcj-sK-QY6" kind="relationship" relationship="rootViewController" id="cSv-6t-gw0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A6M-Qc-xAc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-79620.289855072464" y="1092.8571428571429"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Oci-f4-ed5"/>
-        <segue reference="LPD-wi-Lqa"/>
+        <segue reference="DKs-vZ-uzr"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.3803921569" green="0.1843137255" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

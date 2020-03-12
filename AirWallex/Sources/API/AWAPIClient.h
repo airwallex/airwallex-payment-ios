@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AWBlocks.h"
 
 @class AWPaymentConfiguration;
-@protocol AWRequestProtocol;
+@protocol AWRequestProtocol, AWResponseProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^AWRequestHandler)(id <AWResponseProtocol> _Nullable response, NSError * _Nullable error);
 
 @interface AWAPIClient : NSObject
 

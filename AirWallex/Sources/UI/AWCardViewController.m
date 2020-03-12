@@ -60,8 +60,6 @@
 
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
-    self.switchButton.on = self.sameAsShipping;
-
     self.lastNameField.fieldType = AWTextFieldTypeLastName;
     self.firstNameField.fieldType = AWTextFieldTypeFirstName;
     self.emailField.fieldType = AWTextFieldTypeEmail;
@@ -71,7 +69,13 @@
     self.streetField.fieldType = AWTextFieldTypeStreet;
     self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
 
+    if (![AWPaymentConfiguration sharedConfiguration].shipping) {
+        self.sameAsShipping = NO;
+    }
+
+    self.switchButton.on = self.sameAsShipping;
     self.billingView.hidden = self.sameAsShipping;
+
     if (self.billing) {
         self.firstNameField.text = self.billing.firstName;
         self.lastNameField.text = self.billing.lastName;
@@ -80,6 +84,11 @@
 
         AWAddress *address = self.billing.address;
         if (address) {
+            AWCountry *matchedCountry = [AWCountry countryWithCode:address.countryCode];
+            if (matchedCountry) {
+                self.country = matchedCountry;
+                self.countryView.text = matchedCountry.countryName;
+            }
             self.stateField.text = address.state;
             self.cityField.text = address.city;
             self.streetField.text = address.street;
@@ -90,6 +99,17 @@
 
 - (IBAction)switchChanged:(id)sender
 {
+    if (![AWPaymentConfiguration sharedConfiguration].shipping) {
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
+                                                                            message:@"No shipping address configured."
+                                                                     preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            self.switchButton.on = NO;
+        }]];
+        [self presentViewController:controller animated:YES completion:nil];
+        return;
+    }
+
     self.sameAsShipping = self.switchButton.isOn;
     self.billingView.hidden = self.switchButton.isOn;
 }
@@ -109,8 +129,9 @@
     [self performSegueWithIdentifier:@"selectCountries" sender:nil];
 }
 
-- (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(nonnull AWCountry *)country
+- (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(AWCountry *)country
 {
+    [controller dismissViewControllerAnimated:YES completion:nil];
     self.country = country;
     self.countryView.text = country.countryName;
 }
@@ -120,7 +141,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(cardViewController:didCreatePaymentMethod:)]) {
         [self.delegate cardViewController:self didCreatePaymentMethod:paymentMethod];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)savePressed:(id)sender
@@ -172,18 +192,18 @@
     __weak typeof(self) weakSelf = self;
     AWAPIClient *client = [AWAPIClient new];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        [self.HUD dismiss];
+        __strong typeof(self) strongSelf = weakSelf;
+        [strongSelf.HUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-            [self presentViewController:controller animated:YES completion:nil];
+            [strongSelf presentViewController:controller animated:YES completion:nil];
             return;
         }
 
         AWCreatePaymentMethodResponse *result = (AWCreatePaymentMethodResponse *)response;
         [[AWPaymentConfiguration sharedConfiguration] cache:result.paymentMethod.Id value:card.cvc];
         
-        __strong typeof(self) strongSelf = weakSelf;
         [strongSelf finishCreation:result.paymentMethod];
     }];
 }
