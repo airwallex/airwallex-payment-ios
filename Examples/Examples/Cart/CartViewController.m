@@ -275,6 +275,9 @@
 - (void)editShippingViewController:(AWEditShippingViewController *)controller didSelectBilling:(AWBilling *)billing
 {
     [controller.navigationController popViewControllerAnimated:YES];
+    // Please remove fake email later
+    billing.email = @"jim631@sina.com";
+
     self.shipping = billing;
     [self reloadData];
 }
