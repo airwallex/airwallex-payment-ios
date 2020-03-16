@@ -1,12 +1,12 @@
 //
-//  AWPaymentListViewController.m
+//  AWPaymentMethodListViewController.m
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/17.
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "AWPaymentListViewController.h"
+#import "AWPaymentMethodListViewController.h"
 #import "AWCardViewController.h"
 #import "AWPaymentViewController.h"
 #import "AWWidgets.h"
@@ -31,7 +31,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     return nil;
 }
 
-@interface AWPaymentListViewController () <UITableViewDataSource, UITableViewDelegate, AWCardViewControllerDelegate>
+@interface AWPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, AWCardViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
@@ -41,7 +41,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 @end
 
-@implementation AWPaymentListViewController
+@implementation AWPaymentMethodListViewController
 
 - (void)viewDidLoad
 {

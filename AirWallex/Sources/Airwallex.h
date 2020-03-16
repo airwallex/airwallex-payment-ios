@@ -39,7 +39,7 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 #import <Airwallex/AWCardViewController.h>
 #import <Airwallex/AWCountryListViewController.h>
 #import <Airwallex/AWEditShippingViewController.h>
-#import <Airwallex/AWPaymentListViewController.h>
+#import <Airwallex/AWPaymentMethodListViewController.h>
 #import <Airwallex/AWPaymentMethodCell.h>
 
 #import "AWPaymentViewController.h"

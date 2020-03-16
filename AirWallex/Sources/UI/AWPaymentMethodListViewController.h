@@ -1,5 +1,5 @@
 //
-//  AWPaymentListViewController.h
+//  AWPaymentMethodListViewController.h
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/17.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWPaymentListViewController : AWViewController
+@interface AWPaymentMethodListViewController : AWViewController
 
 @end
 

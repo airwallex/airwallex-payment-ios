@@ -8,7 +8,7 @@
 
 #import "AWPaymentUI.h"
 #import "AWUtils.h"
-#import "AWPaymentListViewController.h"
+#import "AWPaymentMethodListViewController.h"
 #import "AWEditShippingViewController.h"
 #import "AWCardViewController.h"
 #import "AWPaymentViewController.h"
