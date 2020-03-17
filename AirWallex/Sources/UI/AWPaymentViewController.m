@@ -17,6 +17,7 @@
 #import "AWPaymentIntentRequest.h"
 #import "AWPaymentMethodOptions.h"
 #import "AWPaymentIntentResponse.h"
+#import "AWTheme.h"
 
 @interface AWPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
@@ -59,43 +60,6 @@
     [self.tableView reloadData];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    AWPaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWPaymentItemCell" forIndexPath:indexPath];
-    cell.cvcField.delegate = self;
-    cell.cvcField.text = self.cvc;
-    cell.titleLabel.text = @"Payment";
-    NSString *type = self.paymentMethod.type;
-    if ([type isEqualToString:AWWechatpay]) {
-        cell.selectionLabel.text = @"WeChat pay";
-        cell.cvcHidden = YES;
-    } else {
-        cell.selectionLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
-        cell.cvcHidden = NO;
-        cell.cvcField.text = self.paymentMethod.card.cvc;
-    }
-    cell.selectionLabel.textColor = [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1];
-    cell.isLastCell = YES;
-    cell.arrowView.hidden = YES;
-    return cell;
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    if (text.length <= 4) {
-        self.cvc = text;
-        [self checkPaymentEnabled];
-        return YES;
-    }
-    return NO;
-}
-
 - (IBAction)payPressed:(id)sender
 {
     AWPaymentMethod *paymentMethod = self.paymentMethod;
@@ -110,7 +74,7 @@
     AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
     options.autoCapture = YES;
     options.threeDsOption = NO;
-    request.options = options;
+    request.options = nil;
     request.paymentMethod = paymentMethod;
 
     [self.HUD show];
@@ -141,6 +105,47 @@
             }
         }];
     }];
+}
+
+#pragma mark - UITableViewDataSource & UITableViewDelegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    AWPaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWPaymentItemCell" forIndexPath:indexPath];
+    cell.cvcField.delegate = self;
+    cell.cvcField.text = self.cvc;
+    cell.titleLabel.text = @"Payment";
+    NSString *type = self.paymentMethod.type;
+    if ([type isEqualToString:AWWechatpay]) {
+        cell.selectionLabel.text = @"WeChat pay";
+        cell.cvcHidden = YES;
+    } else {
+        cell.selectionLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
+        cell.cvcHidden = NO;
+        cell.cvcField.text = self.paymentMethod.card.cvc;
+    }
+    cell.selectionLabel.textColor = [AWTheme defaultTheme].textColor;
+    cell.isLastCell = YES;
+    cell.arrowView.hidden = YES;
+    return cell;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (text.length <= 4) {
+        self.cvc = text;
+        [self checkPaymentEnabled];
+        return YES;
+    }
+    return NO;
 }
 
 @end

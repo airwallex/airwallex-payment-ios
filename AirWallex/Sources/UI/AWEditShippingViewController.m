@@ -26,7 +26,7 @@
 @property (weak, nonatomic) IBOutlet AWFloatLabeledView *countryView;
 @property (strong, nonatomic) IBOutlet AWHUD *HUD;
 
-@property (strong, nonatomic) AWCountry *country;
+@property (strong, nonatomic, nullable) AWCountry *country;
 
 @end
 

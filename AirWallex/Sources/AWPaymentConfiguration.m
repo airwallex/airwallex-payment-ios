@@ -8,6 +8,7 @@
 
 #import "AWPaymentConfiguration.h"
 #import "AWFontLoader.h"
+#import "AWBilling.h"
 
 @interface AWPaymentConfiguration ()
 
@@ -47,17 +48,18 @@
     return self.cacheInfo[key];
 }
 
-- (id)copyWithZone:(__unused NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
-    AWPaymentConfiguration *copy = [self.class new];
-    copy.baseURL = self.baseURL;
-    copy.intentId = self.intentId;
-    copy.totalNumber = self.totalNumber;
-    copy.token = self.token;
-    copy.clientSecret = self.clientSecret;
-    copy.currency = self.currency;
-    copy.customerId = self.customerId;
-    copy.shipping = self.shipping;
+    AWPaymentConfiguration *copy = [[AWPaymentConfiguration allocWithZone:zone] init];
+    copy.baseURL = [self.baseURL copyWithZone:zone];
+    copy.intentId = [self.intentId copyWithZone:zone];
+    copy.totalNumber = [self.totalNumber copyWithZone:zone];
+    copy.token = [self.token copyWithZone:zone];
+    copy.clientSecret = [self.clientSecret copyWithZone:zone];
+    copy.customerId = [self.customerId copyWithZone:zone];
+    copy.currency = [self.currency copyWithZone:zone];
+    copy.shipping = [self.shipping copyWithZone:zone];
+    copy.delegate = self.delegate;
     return copy;
 }
 

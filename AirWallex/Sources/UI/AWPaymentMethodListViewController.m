@@ -36,8 +36,9 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (strong, nonatomic) IBOutlet AWHUD *HUD;
+
 @property (strong, nonatomic) NSArray *paymentMethods;
-@property (nonatomic, strong, nullable) AWPaymentMethod *paymentMethod;
+@property (strong, nonatomic, nullable) AWPaymentMethod *paymentMethod;
 
 @end
 

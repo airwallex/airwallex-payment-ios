@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWCountryListViewController : AWViewController
 
 @property (nonatomic, weak) id <AWCountryListViewControllerDelegate> delegate;
-@property (nonatomic, strong) AWCountry *country;
+@property (nonatomic, strong, nullable) AWCountry *country;
 
 @end
 

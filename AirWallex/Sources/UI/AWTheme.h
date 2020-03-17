@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy, null_resettable) UIColor *lineColor;
 @property (nonatomic, copy, null_resettable) UIColor *purpleColor;
+@property (nonatomic, copy, null_resettable) UIColor *textColor;
 
 + (instancetype)defaultTheme;
 

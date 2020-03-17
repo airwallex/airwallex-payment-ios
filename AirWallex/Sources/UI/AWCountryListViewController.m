@@ -28,6 +28,8 @@
     self.matchedCountries = self.countries;
 }
 
+#pragma mark - UITableViewDataSource & UITableViewDelegate
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.matchedCountries.count;
@@ -54,6 +56,8 @@
         [self.delegate countryListViewController:self didSelectCountry:self.country];
     }
 }
+
+#pragma mark - UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {

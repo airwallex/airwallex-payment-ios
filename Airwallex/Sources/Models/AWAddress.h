@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWAddress : NSObject <AWJSONifiable, AWParseable>
+@interface AWAddress : NSObject <AWJSONifiable, AWParseable, NSCopying>
 
 @property (nonatomic, copy) NSString *countryCode;
 @property (nonatomic, copy) NSString *city;

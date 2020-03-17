@@ -17,7 +17,9 @@ typedef void (^AWRequestHandler)(id <AWResponseProtocol> _Nullable response, NSE
 
 @interface AWAPIClient : NSObject
 
-@property (nonatomic, copy) AWPaymentConfiguration *configuration;
+@property (nonatomic, copy, readonly) AWPaymentConfiguration *configuration;
+
+- (instancetype)initWithConfiguration:(AWPaymentConfiguration *)configuration;
 
 - (void)send:(id <AWRequestProtocol>)request handler:(AWRequestHandler)handler;
 

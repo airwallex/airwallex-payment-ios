@@ -24,13 +24,10 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) IBOutlet AWHUD *HUD;
-
 @property (weak, nonatomic) IBOutlet AWCardTextField *cardNoField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *nameField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *expiresField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *cvcField;
-
 @property (weak, nonatomic) IBOutlet UISwitch *switchButton;
 @property (weak, nonatomic) IBOutlet UIView *billingView;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *firstNameField;
@@ -42,9 +39,10 @@
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *emailField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledView *countryView;
+@property (strong, nonatomic) IBOutlet AWHUD *HUD;
 
-@property (strong, nonatomic) AWCountry *country;
-@property (nonatomic, strong, nullable) AWBilling *billing;
+@property (strong, nonatomic, nullable) AWCountry *country;
+@property (strong, nonatomic, nullable) AWBilling *billing;
 
 @end
 
@@ -97,6 +95,16 @@
     }
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"selectCountries"]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        AWCountryListViewController *controller = (AWCountryListViewController *)navigationController.topViewController;
+        controller.country = self.country;
+        controller.delegate = self;
+    }
+}
+
 - (IBAction)switchChanged:(id)sender
 {
     if (![AWPaymentConfiguration sharedConfiguration].shipping) {
@@ -114,26 +122,9 @@
     self.billingView.hidden = self.switchButton.isOn;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"selectCountries"]) {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        AWCountryListViewController *controller = (AWCountryListViewController *)navigationController.topViewController;
-        controller.country = self.country;
-        controller.delegate = self;
-    }
-}
-
 - (IBAction)selectCountries:(id)sender
 {
     [self performSegueWithIdentifier:@"selectCountries" sender:nil];
-}
-
-- (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(AWCountry *)country
-{
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    self.country = country;
-    self.countryView.text = country.countryName;
 }
 
 - (void)finishCreation:(AWPaymentMethod *)paymentMethod
@@ -206,6 +197,15 @@
         
         [strongSelf finishCreation:result.paymentMethod];
     }];
+}
+
+#pragma mark - AWCountryListViewControllerDelegate
+
+- (void)countryListViewController:(AWCountryListViewController *)controller didSelectCountry:(AWCountry *)country
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    self.country = country;
+    self.countryView.text = country.countryName;
 }
 
 @end

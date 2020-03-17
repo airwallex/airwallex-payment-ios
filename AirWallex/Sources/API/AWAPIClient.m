@@ -91,7 +91,7 @@
 {
     self = [super init];
     if (self) {
-        _configuration = configuration;
+        _configuration = [configuration copy];
     }
     return self;
 }

@@ -13,25 +13,37 @@
 - (NSDictionary *)toJSONDictionary
 {
     return @{
-        @"address": self.address.toJSONDictionary,
-        @"date_of_birth": self.dateOfBirth ?: @"",
-        @"email": self.email ?: @"",
         @"first_name": self.firstName,
         @"last_name": self.lastName,
-        @"phone_number": self.phoneNumber ?: @""
+        @"email": self.email ?: @"",
+        @"date_of_birth": self.dateOfBirth ?: @"",
+        @"phone_number": self.phoneNumber ?: @"",
+        @"address": self.address.toJSONDictionary
     };
 }
 
 + (id)parseFromJsonDictionary:(NSDictionary *)json
 {
     AWBilling *billing = [AWBilling new];
-    billing.address = [AWAddress parseFromJsonDictionary:json[@"address"]];
     billing.firstName = json[@"first_name"];
     billing.lastName = json[@"last_name"];
     billing.email = json[@"email"];
-    billing.phoneNumber = json[@"phone_number"];
     billing.dateOfBirth = json[@"date_of_birth"];
+    billing.phoneNumber = json[@"phone_number"];
+    billing.address = [AWAddress parseFromJsonDictionary:json[@"address"]];
     return billing;
+}
+
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+    AWBilling *copy = [[AWBilling allocWithZone:zone] init];
+    copy.address = [self.address copyWithZone:zone];
+    copy.firstName = [self.firstName copyWithZone:zone];
+    copy.lastName = [self.lastName copyWithZone:zone];
+    copy.email = [self.email copyWithZone:zone];
+    copy.phoneNumber = [self.phoneNumber copyWithZone:zone];
+    copy.dateOfBirth = [self.dateOfBirth copyWithZone:zone];
+    return copy;
 }
 
 @end

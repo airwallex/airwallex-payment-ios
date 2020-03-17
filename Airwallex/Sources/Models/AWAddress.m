@@ -14,9 +14,9 @@
 {
     return @{
         @"country_code": self.countryCode,
-        @"state": self.state ?: @"",
         @"city": self.city,
         @"street": self.street,
+        @"state": self.state ?: @"",
         @"postcode": self.postcode ?: @""
     };
 }
@@ -25,11 +25,22 @@
 {
     AWAddress *address = [AWAddress new];
     address.countryCode = json[@"country_code"];
-    address.state = json[@"state"];
     address.city = json[@"city"];
     address.street = json[@"street"];
+    address.state = json[@"state"];
     address.postcode = json[@"postcode"];
     return address;
+}
+
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+    AWAddress *copy = [[AWAddress allocWithZone:zone] init];
+    copy.countryCode = [self.countryCode copyWithZone:zone];
+    copy.city = [self.city copyWithZone:zone];
+    copy.street = [self.street copyWithZone:zone];
+    copy.state = [self.state copyWithZone:zone];
+    copy.postcode = [self.postcode copyWithZone:zone];
+    return copy;
 }
 
 @end

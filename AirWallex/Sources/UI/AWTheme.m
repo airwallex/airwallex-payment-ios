@@ -10,6 +10,7 @@
 
 static UIColor *AWThemeDefaultLineColor = nil;
 static UIColor *AWThemeDefaultPurpleColor = nil;
+static UIColor *AWThemeDefaultTextColor = nil;
 
 @implementation AWTheme
 
@@ -27,6 +28,7 @@ static UIColor *AWThemeDefaultPurpleColor = nil;
 {
     AWThemeDefaultLineColor = [UIColor colorWithRed:235.0f/255.0f green:236.0f/255.0f blue:240.0f/255.0f alpha:1];
     AWThemeDefaultPurpleColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
+    AWThemeDefaultTextColor = [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1];
 }
 
 - (instancetype)init
@@ -35,6 +37,7 @@ static UIColor *AWThemeDefaultPurpleColor = nil;
     if (self) {
         self.lineColor = AWThemeDefaultLineColor;
         self.purpleColor = AWThemeDefaultPurpleColor;
+        self.textColor = AWThemeDefaultTextColor;
     }
     return self;
 }
@@ -47,6 +50,11 @@ static UIColor *AWThemeDefaultPurpleColor = nil;
 - (UIColor *)purpleColor
 {
     return _purpleColor ?: AWThemeDefaultPurpleColor;
+}
+
+- (UIColor *)textColor
+{
+    return _textColor ?: AWThemeDefaultTextColor;
 }
 
 @end

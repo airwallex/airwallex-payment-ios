@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class AWBilling, AWConfirmPaymentIntentResponse, AWWechatPaySDKResponse;
+@class AWBilling, AWWechatPaySDKResponse;
 
 typedef NS_ENUM(NSUInteger, AWPaymentStatus) {
     AWPaymentStatusSuccess,
@@ -24,16 +24,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface AWPaymentConfiguration : NSObject
+@interface AWPaymentConfiguration : NSObject <NSCopying>
 
-@property (nonatomic, copy, readwrite) NSString *baseURL;
-@property (nonatomic, copy, readwrite) NSString *intentId;
-@property (nonatomic, copy, readwrite) NSDecimalNumber *totalNumber;
-@property (nonatomic, copy, readwrite) NSString *token;
-@property (nonatomic, copy, readwrite) NSString *clientSecret;
-@property (nonatomic, copy, readwrite, nullable) NSString *customerId;
-@property (nonatomic, copy, readwrite) NSString *currency;
-@property (nonatomic, strong) AWBilling *shipping;
+@property (nonatomic, copy) NSString *baseURL;
+@property (nonatomic, copy) NSString *intentId;
+@property (nonatomic, copy) NSDecimalNumber *totalNumber;
+@property (nonatomic, copy) NSString *token;
+@property (nonatomic, copy) NSString *clientSecret;
+@property (nonatomic, copy, nullable) NSString *customerId;
+@property (nonatomic, copy) NSString *currency;
+@property (nonatomic, copy) AWBilling *shipping;
 @property (nonatomic, weak) id <AWPaymentResultDelegate> delegate;
 
 + (instancetype)sharedConfiguration;

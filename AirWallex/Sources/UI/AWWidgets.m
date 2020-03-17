@@ -131,7 +131,7 @@
 - (NSAttributedString *)formatText:(NSString *)text
 {
     NSString *nonNilText = text ?: @"";
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:nonNilText attributes:@{NSFontAttributeName: [UIFont fontWithName:AWFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1]}];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:nonNilText attributes:@{NSFontAttributeName: [UIFont fontWithName:AWFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [AWTheme defaultTheme].textColor}];
     return attributedString;
 }
 
@@ -427,7 +427,7 @@
 
 - (NSAttributedString *)formatText:(NSString *)text
 {
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont fontWithName:AWFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1]}];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont fontWithName:AWFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [AWTheme defaultTheme].textColor}];
     AWBrandType type = [self typeOfNumber:text];
     NSArray<NSNumber *> *cardNumberFormat = [AWCardValidator cardNumberFormatForBrand:type];
     NSUInteger index = 0;
@@ -456,7 +456,7 @@
 {
     AWBrandType type = AWBrandTypeUnknown;
     if (number.length != 0) {
-        AWBrand *brand = [AWCardValidator.shared brandForCardNumber:number];
+        AWBrand *brand = [[AWCardValidator sharedCardValidator] brandForCardNumber:number];
         if (brand) {
             type = brand.type;
         }
@@ -483,7 +483,7 @@
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     text.length > 0 ? [self active] : [self inactive];
 
-    AWBrand *brand = [AWCardValidator.shared brandForCardNumber:text];
+    AWBrand *brand = [[AWCardValidator sharedCardValidator] brandForCardNumber:text];
     if (brand && text.length > brand.length) {
         return NO;
     }

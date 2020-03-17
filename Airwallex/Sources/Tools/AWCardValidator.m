@@ -63,14 +63,14 @@
 
 @implementation AWCardValidator
 
-+ (instancetype)shared
++ (instancetype)sharedCardValidator
 {
-    static AWCardValidator *sharedInstance;
+    static AWCardValidator *sharedCardValidator;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [self new];
+        sharedCardValidator = [self new];
     });
-    return sharedInstance;
+    return sharedCardValidator;
 }
 
 - (NSArray<AWBrand *> *)brands
