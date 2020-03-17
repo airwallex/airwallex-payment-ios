@@ -289,8 +289,6 @@
     NSString *message = error.localizedDescription;
     if (status == AWPaymentStatusSuccess) {
         message = @"Pay successfully";
-    } else if (status == AWPaymentStatusUserCancellation) {
-        message = @"Payment cancelled";
     }
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
                                                                         message:message

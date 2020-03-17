@@ -125,7 +125,7 @@
 
 - (NSString *)text
 {
-    return self.textField.text;
+    return [self.textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
 - (NSAttributedString *)formatText:(NSString *)text

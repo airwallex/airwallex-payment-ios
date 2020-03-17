@@ -13,7 +13,6 @@
 typedef NS_ENUM(NSUInteger, AWPaymentStatus) {
     AWPaymentStatusSuccess,
     AWPaymentStatusError,
-    AWPaymentStatusUserCancellation,
 };
 
 NS_ASSUME_NONNULL_BEGIN

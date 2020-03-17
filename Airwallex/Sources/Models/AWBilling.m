@@ -59,11 +59,11 @@
     if (self.address.countryCode.length == 0) {
         return @"Please choose your country/region";
     }
-    if (self.address.state.length == 0) {
-        return @"Please enter your state";
-    }
     if (self.address.city.length == 0) {
         return @"Please enter your city";
+    }
+    if (self.address.street.length == 0) {
+        return @"Please enter your street";
     }
     return nil;
 }
