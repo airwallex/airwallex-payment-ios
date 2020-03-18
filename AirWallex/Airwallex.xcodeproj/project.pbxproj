@@ -292,7 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				085BD41223CC6E0B002E8F27 /* Sources */,
-				08666645240629FA00B52477 /* Storyboards */,
 				085BD40723CC6C89002E8F27 /* Resources */,
 				085BD3CC23CC62B4002E8F27 /* Info.plist */,
 			);
@@ -311,6 +310,12 @@
 		085BD40723CC6C89002E8F27 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0863F6FE240E391600925664 /* AWPaymentItemCell.xib */,
+				082F315B240C8C1200573824 /* AWHUD.xib */,
+				086666682406311F00B52477 /* AWCardTextField.xib */,
+				086666692406311F00B52477 /* AWFloatLabeledTextField.xib */,
+				086666672406311F00B52477 /* AWFloatLabeledView.xib */,
+				0866666124062B5000B52477 /* AWPaymentMethod.storyboard */,
 				08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */,
 			);
 			path = Resources;
@@ -361,19 +366,6 @@
 				08BD3A9E240CCAED00ACFB6B /* AWViewController.m */,
 			);
 			path = UI;
-			sourceTree = "<group>";
-		};
-		08666645240629FA00B52477 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				0863F6FE240E391600925664 /* AWPaymentItemCell.xib */,
-				082F315B240C8C1200573824 /* AWHUD.xib */,
-				086666682406311F00B52477 /* AWCardTextField.xib */,
-				086666692406311F00B52477 /* AWFloatLabeledTextField.xib */,
-				086666672406311F00B52477 /* AWFloatLabeledView.xib */,
-				0866666124062B5000B52477 /* AWPaymentMethod.storyboard */,
-			);
-			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		733626A25405FD6D39FD7FA2 /* Pods */ = {
