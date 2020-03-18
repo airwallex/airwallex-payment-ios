@@ -18,7 +18,7 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 
 #import <Airwallex/AWTheme.h>
 #import <Airwallex/AWWidgets.h>
-
+#import <Airwallex/AWConstants.h>
 #import <Airwallex/AWUtils.h>
 
 #import <Airwallex/AWPaymentConfiguration.h>

@@ -9,12 +9,12 @@ Pod::Spec.new do |s|
   s.frameworks					= 'UIKit', 'Foundation', 'Security', 'WebKit'
   s.platform   					= :ios
   s.ios.deployment_target		= '10.0'
-  s.public_header_files			= "Airwallex/PublicHeaders/*.h"
-  s.resources					= ['Airwallex/Resources/AirwallexSDK.bundle', 'Airwallex/Storyboards/**/*']
-  s.source_files				= 'Airwallex/PublicHeaders/*.h', 'Airwallex/Sources/*.{h,m}', 'Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Sources/API/*.{h,m}', 'Airwallex/Sources/Tools/*.{h,m}', 'Airwallex/Sources/Models/*.{h,m}'
+  s.public_header_files			= "Airwallex/Airwallex/PublicHeaders/*.h"
+  s.resources					= ['Airwallex/Airwallex/Resources/AirwallexSDK.bundle', 'Airwallex/Airwallex/Storyboards/**/*']
+  s.source_files				= 'Airwallex/Airwallex/PublicHeaders/*.h', 'Airwallex/Airwallex/Sources/*.{h,m}', 'Airwallex/Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Airwallex/Sources/API/*.{h,m}', 'Airwallex/Airwallex/Sources/Tools/*.{h,m}', 'Airwallex/Airwallex/Sources/Models/*.{h,m}'
 
   # s.resource_bundles = {
-  #   'AirwallexSDK' => ['Airwallex/Resources/**/*.{lproj,storyboard,xib,xcassets,json,imageset,png}']
+  #   'AirwallexSDK' => ['Airwallex/Airwallex/Resources/**/*.{lproj,storyboard,xib,xcassets,json,imageset,png}']
   # }
   
   #  When using multiple platforms

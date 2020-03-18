@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (UINavigationController *)paymentMethodListNavigationController;
 + (UINavigationController *)newCardNavigationController;
 + (UINavigationController *)paymentDetailNavigationController;
++ (AWEditShippingViewController *)shippingViewController;
 + (UINavigationController *)shippingNavigationController;
 
 @end

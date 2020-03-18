@@ -49,15 +49,6 @@
     self.badgeView.cornerRadius = CGRectGetWidth(self.badgeView.bounds) / 2;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"enterAddress"]) {
-        AWEditShippingViewController *controller = (AWEditShippingViewController *)segue.destinationViewController;
-        controller.shipping = self.shipping;
-        controller.delegate = self;
-    }
-}
-
 - (void)reloadData
 {
     self.badgeView.hidden = self.products.count == 0;
@@ -266,7 +257,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        [self performSegueWithIdentifier:@"enterAddress" sender:nil];
+        AWEditShippingViewController *controller = [AWPaymentUI shippingViewController];
+        controller.delegate = self;
+        controller.shipping = self.shipping;
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 

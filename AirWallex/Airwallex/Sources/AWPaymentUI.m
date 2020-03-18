@@ -36,6 +36,13 @@
     return controller;
 }
 
++ (AWEditShippingViewController *)shippingViewController
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWPaymentMethod" bundle:[NSBundle sdkBundle]];
+    AWEditShippingViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"shipping"];
+    return controller;
+}
+
 + (UINavigationController *)shippingNavigationController
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWPaymentMethod" bundle:[NSBundle sdkBundle]];
