@@ -7,6 +7,7 @@
 //
 
 #import "AWCardViewController.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 #import "AWEditShippingViewController.h"
 #import "AWWidgets.h"
 #import "AWBilling.h"
@@ -39,7 +40,6 @@
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *emailField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledView *countryView;
-@property (strong, nonatomic) IBOutlet AWHUD *HUD;
 
 @property (strong, nonatomic, nullable) AWCountry *country;
 @property (strong, nonatomic, nullable) AWBilling *billing;
@@ -179,12 +179,12 @@
     request.customerId = [AWPaymentConfiguration sharedConfiguration].customerId;
     request.paymentMethod = paymentMethod;
 
-    [self.HUD show];
+    [SVProgressHUD show];
     __weak typeof(self) weakSelf = self;
     AWAPIClient *client = [AWAPIClient new];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong typeof(self) strongSelf = weakSelf;
-        [strongSelf.HUD dismiss];
+        [SVProgressHUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];

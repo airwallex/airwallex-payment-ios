@@ -67,13 +67,4 @@ IB_DESIGNABLE
 
 @end
 
-@interface AWHUD : AWNibView
-
-@property (weak, nonatomic) IBOutlet UIViewController *viewController;
-
-- (void)show;
-- (void)dismiss;
-
-@end
-
 NS_ASSUME_NONNULL_END

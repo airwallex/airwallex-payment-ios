@@ -493,39 +493,3 @@
 }
 
 @end
-
-@interface AWHUD ()
-
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-
-@end
-
-@implementation AWHUD
-
-- (void)addSubviewIfNeeded
-{
-    if (!self.superview && self.viewController) {
-        self.backgroundColor = [UIColor clearColor];
-        self.frame = self.viewController.view.bounds;
-        [self.viewController.view addSubview:self];
-    }
-    [self.viewController.view bringSubviewToFront:self];
-    self.alpha = 1;
-}
-
-- (void)show
-{
-    [self addSubviewIfNeeded];
-    [self.activityIndicator startAnimating];
-}
-
-- (void)dismiss
-{
-    [UIView animateWithDuration:0.25 animations:^{
-        self.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-    }];
-}
-
-@end

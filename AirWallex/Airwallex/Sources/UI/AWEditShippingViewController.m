@@ -7,6 +7,7 @@
 //
 
 #import "AWEditShippingViewController.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 #import "AWCountryListViewController.h"
 #import "AWWidgets.h"
 #import "AWBilling.h"
@@ -24,7 +25,6 @@
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *streetField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *zipcodeField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledView *countryView;
-@property (strong, nonatomic) IBOutlet AWHUD *HUD;
 
 @property (strong, nonatomic, nullable) AWCountry *country;
 

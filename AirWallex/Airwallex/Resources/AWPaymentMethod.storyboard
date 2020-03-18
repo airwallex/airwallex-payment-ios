@@ -164,7 +164,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="HUD" destination="igL-5B-OaS" id="CHB-0p-sgl"/>
                         <outlet property="closeBarButtonItem" destination="tgX-ek-RXc" id="vXQ-MB-SLU"/>
                         <outlet property="tableView" destination="bZ9-Ip-2rw" id="lZm-7U-GCa"/>
                         <segue destination="FPd-cM-qgB" kind="presentation" identifier="addCard" id="XXn-gX-5xC"/>
@@ -172,15 +171,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D6c-ce-ibw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="igL-5B-OaS" customClass="AWHUD">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <viewLayoutGuide key="safeArea" id="7rK-HH-aOB"/>
-                    <connections>
-                        <outlet property="viewController" destination="X8p-bs-NKO" id="bFO-gY-TtN"/>
-                    </connections>
-                </view>
             </objects>
             <point key="canvasLocation" x="-79620.289855072464" y="-532.36607142857144"/>
         </scene>
@@ -192,10 +182,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bdd-wr-GyF">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bdd-wr-GyF">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zl7-hq-vSX">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zl7-hq-vSX">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1269"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pii-iq-Wp8">
@@ -204,10 +194,10 @@
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="qTO-iC-quJ">
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="qTO-iC-quJ">
                                                 <rect key="frame" x="16" y="72.5" width="382" height="227"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gN8-Ps-Ex7" customClass="AWCardTextField">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gN8-Ps-Ex7" customClass="AWCardTextField">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -218,7 +208,7 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="4012000300001003"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MQF-7d-Ysg" customClass="AWFloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MQF-7d-Ysg" customClass="AWFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="80" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -229,10 +219,10 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="Adam"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="auF-F2-v0B">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="auF-F2-v0B">
                                                         <rect key="frame" x="0.0" y="160" width="382" height="67"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ek-4y-cnB" customClass="AWFloatLabeledTextField">
+                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ek-4y-cnB" customClass="AWFloatLabeledTextField">
                                                                 <rect key="frame" x="0.0" y="0.0" width="258" height="67"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                 <userDefinedRuntimeAttributes>
@@ -240,7 +230,7 @@
                                                                     <userDefinedRuntimeAttribute type="string" keyPath="text" value="12/2020"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ekP-UO-j9w" customClass="AWFloatLabeledTextField">
+                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ekP-UO-j9w" customClass="AWFloatLabeledTextField">
                                                                 <rect key="frame" x="281" y="0.0" width="101" height="67"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                 <constraints>
@@ -258,7 +248,7 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c3x-aQ-9Pb" userLabel="Billing">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c3x-aQ-9Pb" userLabel="Billing">
                                                 <rect key="frame" x="0.0" y="315.5" width="414" height="877.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Billing info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSE-wt-y8v">
@@ -294,13 +284,13 @@
                                                             <constraint firstAttribute="height" constant="58" id="xvg-od-QGu"/>
                                                         </constraints>
                                                     </view>
-                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="htq-Dn-fma" userLabel="BillingForm">
+                                                    <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="htq-Dn-fma" userLabel="BillingForm">
                                                         <rect key="frame" x="0.0" y="128.5" width="414" height="749"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="1PR-Li-UFe">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="1PR-Li-UFe">
                                                                 <rect key="frame" x="16" y="16" width="382" height="717"/>
                                                                 <subviews>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eMd-qO-uE1" customClass="AWFloatLabeledTextField">
+                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMd-qO-uE1" customClass="AWFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="67"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                         <constraints>
@@ -311,7 +301,7 @@
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="Charlie"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ub-dG-8eB" customClass="AWFloatLabeledTextField">
+                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Ub-dG-8eB" customClass="AWFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="83" width="382" height="67"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                         <gestureRecognizers/>
@@ -323,7 +313,7 @@
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="Lang"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tpj-MN-8KM" customClass="AWFloatLabeledView">
+                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpj-MN-8KM" customClass="AWFloatLabeledView">
                                                                         <rect key="frame" x="0.0" y="166" width="382" height="60"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                         <gestureRecognizers/>
@@ -337,7 +327,7 @@
                                                                             <outletCollection property="gestureRecognizers" destination="wA4-Nd-2ZG" appends="YES" id="62B-26-lwE"/>
                                                                         </connections>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FCM-rb-vxF" customClass="AWFloatLabeledTextField">
+                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FCM-rb-vxF" customClass="AWFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="242" width="382" height="67"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                         <constraints>
@@ -348,7 +338,7 @@
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="Victoria"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QzA-bT-eEj" customClass="AWFloatLabeledTextField">
+                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QzA-bT-eEj" customClass="AWFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="325" width="382" height="67"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                         <constraints>
@@ -359,7 +349,7 @@
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="Melbourne"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="36b-ed-KZp" customClass="AWFloatLabeledTextField">
+                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="36b-ed-KZp" customClass="AWFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="408" width="382" height="67"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                         <constraints>
@@ -370,7 +360,7 @@
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="7/15 William St"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Chs-8R-CKN" customClass="AWFloatLabeledTextField">
+                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Chs-8R-CKN" customClass="AWFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="491" width="382" height="60"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                         <constraints>
@@ -380,7 +370,7 @@
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Zip code (optional)"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dwc-HE-iw4" customClass="AWFloatLabeledTextField">
+                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dwc-HE-iw4" customClass="AWFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="567" width="382" height="67"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                         <constraints>
@@ -391,7 +381,7 @@
                                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="aac@gmail.com"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rxO-1a-EKZ" customClass="AWFloatLabeledTextField">
+                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rxO-1a-EKZ" customClass="AWFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="650" width="382" height="67"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                         <constraints>
@@ -495,7 +485,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="HUD" destination="cEg-UD-idO" id="LZE-4C-HOy"/>
                         <outlet property="billingView" destination="htq-Dn-fma" id="6oh-Pk-flT"/>
                         <outlet property="cardNoField" destination="gN8-Ps-Ex7" id="NNz-AS-vtl"/>
                         <outlet property="cityField" destination="QzA-bT-eEj" id="3ZU-vw-QZ8"/>
@@ -517,15 +506,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QsC-di-tRM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="cEg-UD-idO" customClass="AWHUD">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <viewLayoutGuide key="safeArea" id="MyZ-PC-GFi"/>
-                    <connections>
-                        <outlet property="viewController" destination="rjH-1d-ozb" id="YCQ-vR-5oE"/>
-                    </connections>
-                </view>
                 <tapGestureRecognizer id="wA4-Nd-2ZG">
                     <connections>
                         <action selector="selectCountries:" destination="rjH-1d-ozb" id="NS3-cc-wba"/>
@@ -586,7 +566,7 @@
             </objects>
             <point key="canvasLocation" x="-78720" y="-1352"/>
         </scene>
-        <!--View Controller-->
+        <!--Payment View Controller-->
         <scene sceneID="ROv-Wc-s8C">
             <objects>
                 <viewController storyboardIdentifier="paymentDetail" id="qRb-XP-suO" customClass="AWPaymentViewController" sceneMemberID="viewController">
@@ -667,22 +647,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="Dn9-gC-aEW"/>
                     <connections>
-                        <outlet property="HUD" destination="EdU-eC-T4B" id="pd8-qa-6Jz"/>
                         <outlet property="payButton" destination="BBj-j1-Rai" id="HnE-FK-FYi"/>
                         <outlet property="tableView" destination="WWw-xk-J85" id="sVR-H5-ada"/>
                         <outlet property="totalLabel" destination="vQj-JH-JLD" id="eFA-ya-uPz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jey-4J-gPa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="EdU-eC-T4B" customClass="AWHUD">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <viewLayoutGuide key="safeArea" id="Zmv-cz-VCA"/>
-                    <connections>
-                        <outlet property="viewController" destination="qRb-XP-suO" id="cQz-Ad-vq9"/>
-                    </connections>
-                </view>
             </objects>
             <point key="canvasLocation" x="-78720" y="-532"/>
         </scene>
@@ -694,10 +664,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIT-Vq-95B">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIT-Vq-95B">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPf-59-w9C">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JPf-59-w9C">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="810.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tw5-cy-VgW">
@@ -706,7 +676,7 @@
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="V6J-h2-Ept">
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="V6J-h2-Ept">
                                                 <rect key="frame" x="16" y="89.5" width="382" height="705"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05V-Bk-icU">
@@ -715,7 +685,7 @@
                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YZ6-W0-Koa" customClass="AWFloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YZ6-W0-Koa" customClass="AWFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="39" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -726,7 +696,7 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="Charlie"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V2J-fB-G8T" customClass="AWFloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V2J-fB-G8T" customClass="AWFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="122" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -737,7 +707,7 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Last name"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sKh-EQ-3nT" customClass="AWFloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sKh-EQ-3nT" customClass="AWFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="205" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -747,13 +717,13 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Phone number (optional)"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lh-kb-BSe">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lh-kb-BSe">
                                                         <rect key="frame" x="0.0" y="281" width="382" height="23"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wjN-0Q-PSk" customClass="AWFloatLabeledView">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wjN-0Q-PSk" customClass="AWFloatLabeledView">
                                                         <rect key="frame" x="0.0" y="320" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <gestureRecognizers/>
@@ -767,7 +737,7 @@
                                                             <outletCollection property="gestureRecognizers" destination="GFw-Kl-p56" appends="YES" id="v2Q-Lk-6kt"/>
                                                         </connections>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8C-ug-Ehi" customClass="AWFloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q8C-ug-Ehi" customClass="AWFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="396" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -778,7 +748,7 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="Victoria"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NhI-6R-lbc" customClass="AWFloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NhI-6R-lbc" customClass="AWFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="479" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -789,7 +759,7 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="City"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lSZ-Zq-YQP" customClass="AWFloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lSZ-Zq-YQP" customClass="AWFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="562" width="382" height="67"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -800,7 +770,7 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="text" value="7/15 William St"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fH9-JM-Mgx" customClass="AWFloatLabeledTextField">
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fH9-JM-Mgx" customClass="AWFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="645" width="382" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
@@ -855,7 +825,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="HUD" destination="5jB-DZ-EQ4" id="TMg-6P-1Tj"/>
                         <outlet property="cityField" destination="NhI-6R-lbc" id="rGb-dh-Gbl"/>
                         <outlet property="countryView" destination="wjN-0Q-PSk" id="aTz-yy-z3T"/>
                         <outlet property="firstNameField" destination="YZ6-W0-Koa" id="qI1-C5-u4v"/>
@@ -870,15 +839,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="peK-I7-xlS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="5jB-DZ-EQ4" customClass="AWHUD">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <viewLayoutGuide key="safeArea" id="ZvO-tS-zaW"/>
-                    <connections>
-                        <outlet property="viewController" destination="Gcj-sK-QY6" id="4RJ-M5-peV"/>
-                    </connections>
-                </view>
                 <tapGestureRecognizer id="GFw-Kl-p56">
                     <connections>
                         <action selector="selectCountries:" destination="Gcj-sK-QY6" id="fzx-rn-IgM"/>

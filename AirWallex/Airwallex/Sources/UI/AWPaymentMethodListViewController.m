@@ -7,6 +7,7 @@
 //
 
 #import "AWPaymentMethodListViewController.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 #import "AWCardViewController.h"
 #import "AWPaymentViewController.h"
 #import "AWWidgets.h"
@@ -35,7 +36,6 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
-@property (strong, nonatomic) IBOutlet AWHUD *HUD;
 
 @property (strong, nonatomic) NSArray *paymentMethods;
 @property (strong, nonatomic, nullable) AWPaymentMethod *paymentMethod;
@@ -95,14 +95,14 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         return;
     }
 
-    [self.HUD show];
+    [SVProgressHUD show];
     AWAPIClient *client = [AWAPIClient new];
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
     request.customerId = [AWPaymentConfiguration sharedConfiguration].customerId;
     __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong typeof(self) strongSelf = weakSelf;
-        [strongSelf.HUD dismiss];
+        [SVProgressHUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
@@ -267,11 +267,11 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     request.options = options;
     request.paymentMethod = paymentMethod;
 
-    [self.HUD show];
+    [SVProgressHUD show];
     __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong typeof(self) strongSelf = weakSelf;
-        [strongSelf.HUD dismiss];
+        [SVProgressHUD dismiss];
         [strongSelf dismissViewControllerAnimated:YES completion:^{
             id <AWPaymentResultDelegate> delegate = [AWPaymentConfiguration sharedConfiguration].delegate;
             if (error) {

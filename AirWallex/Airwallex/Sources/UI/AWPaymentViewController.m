@@ -7,6 +7,7 @@
 //
 
 #import "AWPaymentViewController.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 #import "AWConstants.h"
 #import "AWPaymentConfiguration.h"
 #import "AWPaymentItemCell.h"
@@ -24,7 +25,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet AWButton *payButton;
-@property (strong, nonatomic) IBOutlet AWHUD *HUD;
 
 @property (strong, nonatomic) NSString *cvc;
 
@@ -77,11 +77,11 @@
     request.options = nil;
     request.paymentMethod = paymentMethod;
 
-    [self.HUD show];
+    [SVProgressHUD show];
     __weak typeof(self) weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong typeof(self) strongSelf = weakSelf;
-        [strongSelf.HUD dismiss];
+        [SVProgressHUD dismiss];
         [strongSelf dismissViewControllerAnimated:YES completion:^{
             id <AWPaymentResultDelegate> delegate = [AWPaymentConfiguration sharedConfiguration].delegate;
             if (error) {
