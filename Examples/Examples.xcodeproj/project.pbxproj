@@ -16,18 +16,11 @@
 		085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
 		085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
 		085BD40123CC64B9002E8F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
-		0878D0C323D58DF500382702 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D09123D5846B00382702 /* libc++.tbd */; };
-		0878D0CA23D59B9D00382702 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0878D0C723D59B9D00382702 /* README.txt */; };
-		0878D0CB23D59B9D00382702 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0C923D59B9D00382702 /* libWeChatSDK.a */; };
-		0878D0CF23D59C4300382702 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0CE23D59C4300382702 /* SystemConfiguration.framework */; };
-		0878D0D123D59C6A00382702 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0A923D58D2D00382702 /* libsqlite3.0.tbd */; };
-		0878D0D223D59C7800382702 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0AB23D58D4200382702 /* libz.tbd */; };
 		088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
 		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		08B55E3B2421DA330054E254 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
 		08B55E3C2421DA330054E254 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		08D5B51924109DEA00680074 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0A523D58D1D00382702 /* CoreTelephony.framework */; };
 		F7071D3AC01A9341C319415E /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,18 +54,6 @@
 		085BD3FD23CC64B9002E8F27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		085BD3FF23CC64B9002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD40023CC64B9002E8F27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0878D09123D5846B00382702 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		0878D0A323D58D1700382702 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		0878D0A523D58D1D00382702 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		0878D0A923D58D2D00382702 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		0878D0AB23D58D4200382702 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		0878D0C523D59B9D00382702 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		0878D0C623D59B9D00382702 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
-		0878D0C723D59B9D00382702 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		0878D0C823D59B9D00382702 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
-		0878D0C923D59B9D00382702 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		0878D0CC23D59C3900382702 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		0878D0CE23D59C4300382702 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		088ADB912407B329001ADC71 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.otf"; sourceTree = "<group>"; };
 		088ADB922407B329001ADC71 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
 		088F3E8123CEB7FF005AE40F /* APIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
@@ -90,12 +71,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				08B55E3B2421DA330054E254 /* Airwallex.framework in Frameworks */,
-				08D5B51924109DEA00680074 /* CoreTelephony.framework in Frameworks */,
-				0878D0C323D58DF500382702 /* libc++.tbd in Frameworks */,
-				0878D0CF23D59C4300382702 /* SystemConfiguration.framework in Frameworks */,
-				0878D0D223D59C7800382702 /* libz.tbd in Frameworks */,
-				0878D0CB23D59B9D00382702 /* libWeChatSDK.a in Frameworks */,
-				0878D0D123D59C6A00382702 /* libsqlite3.0.tbd in Frameworks */,
 				F7071D3AC01A9341C319415E /* Pods_Examples.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,7 +94,6 @@
 		085BD3E223CC64B6002E8F27 = {
 			isa = PBXGroup;
 			children = (
-				0878D0C423D59B9D00382702 /* WeChatSDK1.8.2 */,
 				085BD3ED23CC64B6002E8F27 /* Examples */,
 				085BD3EC23CC64B6002E8F27 /* Products */,
 				B66354DF3707CEF41053480C /* Pods */,
@@ -150,18 +124,6 @@
 			path = Examples;
 			sourceTree = "<group>";
 		};
-		0878D0C423D59B9D00382702 /* WeChatSDK1.8.2 */ = {
-			isa = PBXGroup;
-			children = (
-				0878D0C523D59B9D00382702 /* WXApi.h */,
-				0878D0C623D59B9D00382702 /* WXApiObject.h */,
-				0878D0C723D59B9D00382702 /* README.txt */,
-				0878D0C823D59B9D00382702 /* WechatAuthSDK.h */,
-				0878D0C923D59B9D00382702 /* libWeChatSDK.a */,
-			);
-			path = WeChatSDK1.8.2;
-			sourceTree = "<group>";
-		};
 		088ADB902407B329001ADC71 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,13 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				08B55E372421D8C60054E254 /* Airwallex.framework */,
-				0878D0CE23D59C4300382702 /* SystemConfiguration.framework */,
-				0878D0CC23D59C3900382702 /* Security.framework */,
-				0878D0AB23D58D4200382702 /* libz.tbd */,
-				0878D0A923D58D2D00382702 /* libsqlite3.0.tbd */,
-				0878D0A523D58D1D00382702 /* CoreTelephony.framework */,
-				0878D0A323D58D1700382702 /* CFNetwork.framework */,
-				0878D09123D5846B00382702 /* libc++.tbd */,
 				7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */,
 			);
 			name = Frameworks;
@@ -273,7 +228,6 @@
 				085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */,
 				088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */,
 				085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */,
-				0878D0CA23D59B9D00382702 /* README.txt in Resources */,
 				085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */,
 				088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */,
 			);
@@ -481,7 +435,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/WeChatSDK1.8.2";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -519,7 +472,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/WeChatSDK1.8.2";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",

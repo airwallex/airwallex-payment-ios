@@ -19,5 +19,6 @@ end
 target 'Examples' do
     project './Examples/Examples.xcodeproj'
     shared_pods
+    pod 'WechatOpenSDK', '1.8.2'
     pod 'IQKeyboardManager', '6.5.4'
 end

@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
-#import "WXApi.h"
+#import <WechatOpenSDK/WXApi.h>
 
 @interface AppDelegate () <WXApiDelegate>
 
