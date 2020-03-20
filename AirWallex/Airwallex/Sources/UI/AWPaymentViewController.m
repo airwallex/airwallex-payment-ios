@@ -38,7 +38,7 @@
     [self.payButton setImage:[UIImage imageNamed:@"lock-white" inBundle:[NSBundle resourceBundle]] forState:UIControlStateNormal];
     [self.payButton setImage:[UIImage imageNamed:@"lock-grey" inBundle:[NSBundle resourceBundle]] forState:UIControlStateDisabled];
     [self.payButton setImageAndTitleHorizontalAlignmentCenter:8];
-    self.totalLabel.text = [AWPaymentConfiguration sharedConfiguration].totalNumber.string;
+    self.totalLabel.text = [AWPaymentConfiguration sharedConfiguration].totalAmount.string;
     [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:[NSBundle sdkBundle]] forCellReuseIdentifier:@"AWPaymentItemCell"];
     [self reloadData];
 }

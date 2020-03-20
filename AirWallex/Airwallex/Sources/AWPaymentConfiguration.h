@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSURL *baseURL;
 @property (nonatomic, copy) NSString *intentId;
-@property (nonatomic, copy) NSDecimalNumber *totalNumber;
+@property (nonatomic, copy) NSDecimalNumber *totalAmount;
 @property (nonatomic, copy) NSString *token;
 @property (nonatomic, copy) NSString *clientSecret;
 @property (nonatomic, copy, nullable) NSString *customerId;
