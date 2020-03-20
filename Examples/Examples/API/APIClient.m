@@ -95,6 +95,10 @@
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:NSJSONReadingMutableContainers
                                                                    error:&anError];
+            NSString *errorMessage = json[@"message"];
+            if (errorMessage) {
+                anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 completionHandler(json, anError);
             });
@@ -132,6 +136,10 @@
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:NSJSONReadingMutableContainers
                                                                    error:&anError];
+            NSString *errorMessage = json[@"message"];
+            if (errorMessage) {
+                anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 completionHandler(json, anError);
             });

@@ -48,11 +48,17 @@
 
 - (IBAction)resetPressed:(id)sender
 {
-    [APIClient sharedClient].authBaseURL = [NSURL URLWithString:authenticationBaseURL];
-    [APIClient sharedClient].paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
-    [AWPaymentConfiguration sharedConfiguration].baseURL = [NSURL URLWithString:paymentBaseURL];
-    [APIClient sharedClient].apiKey = apiKey;
-    [APIClient sharedClient].clientID = clientID;
+    APIClient *client = [APIClient sharedClient];
+    client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
+    client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
+    client.apiKey = apiKey;
+    client.clientID = clientID;
+
+    AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
+    configuration.baseURL = [NSURL URLWithString:paymentBaseURL];
+    configuration.totalAmount = [NSDecimalNumber decimalNumberWithString:defaultTotalAmount];
+    configuration.currency = defaultCurrency;
+
     [self resetTextFields];
 }
 
@@ -81,9 +87,16 @@
         [APIClient sharedClient].clientID = textField.text;
     } else if (textField == self.totalAmountTextField) {
         NSDecimalNumber *totalAmount = [NSDecimalNumber decimalNumberWithString:textField.text];
+        if (totalAmount == NSDecimalNumber.notANumber) {
+            totalAmount = NSDecimalNumber.zero;
+        }
         [self.delegate optionsViewController:self didEditTotalAmount:totalAmount];
     } else if (textField == self.currencyTextField) {
-        [self.delegate optionsViewController:self didEditCurrency:textField.text];
+        if ([textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0) {
+            [self.delegate optionsViewController:self didEditCurrency:textField.text.uppercaseString];
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"Please enter a valid currency"];
+        }
     }
 }
 
