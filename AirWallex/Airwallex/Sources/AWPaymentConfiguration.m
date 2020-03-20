@@ -38,6 +38,11 @@
     return self;
 }
 
+- (void)setBaseURL:(NSURL *)baseURL
+{
+    _baseURL = [baseURL URLByAppendingPathComponent:@""];
+}
+
 - (void)cache:(NSString *)key value:(NSString *)value
 {
     self.cacheInfo[key] = value;

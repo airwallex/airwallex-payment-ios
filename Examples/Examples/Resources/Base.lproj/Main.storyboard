@@ -17,10 +17,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Cart View Controller-->
+        <!--Cart-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="CartViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Cart" customClass="CartViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -248,7 +248,7 @@
                                     <constraint firstAttribute="height" constant="44" id="8In-xM-6a8"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
-                                <state key="normal" title="Checkout">
+                                <state key="normal" title="Checkout With Wechat">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <state key="disabled" title="Checkout">
@@ -276,7 +276,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="n69-eD-JJv"/>
+                    <navigationItem key="navigationItem" id="n69-eD-JJv">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" id="Cdb-jb-CTr">
+                            <connections>
+                                <segue destination="ctT-KW-lCz" kind="presentation" id="udD-0y-ARe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="badgeLabel" destination="czL-OA-pH0" id="Zp2-Xp-i8d"/>
                         <outlet property="badgeView" destination="iGg-5K-pEc" id="Ry4-6g-ckh"/>
@@ -287,6 +293,112 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="137.94642857142856"/>
+        </scene>
+        <!--Options-->
+        <scene sceneID="XgQ-3K-n2r">
+            <objects>
+                <viewController id="3dc-1g-4U7" customClass="OptionsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8AO-7M-Nu3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P74-f6-EbX">
+                                <rect key="frame" x="16" y="104" width="382" height="300"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authorization URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FEY-2R-sVI">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://api-staging.airwallex.com" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jDR-a6-Y7p">
+                                        <rect key="frame" x="0.0" y="33.5" width="382" height="34"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="3dc-1g-4U7" id="sBM-Us-qKW"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw3-vc-e4I">
+                                        <rect key="frame" x="0.0" y="77.5" width="382" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://staging-pci-api.airwallex.com" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YSw-cs-6Pe">
+                                        <rect key="frame" x="0.0" y="111" width="382" height="34"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="3dc-1g-4U7" id="5hV-Eu-cPh"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J14-mn-E62">
+                                        <rect key="frame" x="0.0" y="155" width="382" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="e70420bb90a34c6c2be422387f4209eaf3a7aa84bc8cc4fc2af23cfde121370407833f0649261723e2a91aec552f56ee" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ucc-VN-sfr">
+                                        <rect key="frame" x="0.0" y="188.5" width="382" height="34"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="3dc-1g-4U7" id="9dp-Pl-v0I"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5p4-lS-mL2">
+                                        <rect key="frame" x="0.0" y="232.5" width="382" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="dPH0tQnxRaijLH7ILl0nDQ" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-cl-UUP">
+                                        <rect key="frame" x="0.0" y="266" width="382" height="34"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="3dc-1g-4U7" id="yGh-R7-KBw"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="uB5-La-e3z" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="P74-f6-EbX" secondAttribute="bottom" id="6G6-ys-z9t"/>
+                            <constraint firstItem="P74-f6-EbX" firstAttribute="top" secondItem="uB5-La-e3z" secondAttribute="top" constant="16" id="WaV-kL-yub"/>
+                            <constraint firstItem="P74-f6-EbX" firstAttribute="leading" secondItem="uB5-La-e3z" secondAttribute="leading" constant="16" id="k1A-7p-kFg"/>
+                            <constraint firstItem="P74-f6-EbX" firstAttribute="trailing" secondItem="uB5-La-e3z" secondAttribute="trailing" constant="-16" id="wdf-Rd-bWw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uB5-La-e3z"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Options" id="iLW-z0-cq9">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="233-eG-3Hj">
+                            <connections>
+                                <action selector="dismiss:" destination="3dc-1g-4U7" id="dL8-sv-rLa"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Reset" id="hcb-eB-hqs">
+                            <connections>
+                                <action selector="resetPressed:" destination="3dc-1g-4U7" id="XK6-fc-8vh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="apiKeyTextField" destination="ucc-VN-sfr" id="EXV-PE-RMH"/>
+                        <outlet property="authURLTextField" destination="jDR-a6-Y7p" id="833-JK-4z5"/>
+                        <outlet property="clientIDTextField" destination="Qvi-cl-UUP" id="VQT-UV-ejR"/>
+                        <outlet property="paymentURLTextField" destination="YSw-cs-6Pe" id="qdG-Sh-62V"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6DU-lc-9l6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2598.5507246376815" y="137.94642857142856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iHb-BI-1x5">
@@ -305,6 +417,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ccL-a3-Yao" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Nt5-rV-h4V">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="ctT-KW-lCz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IXt-XM-enX">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3dc-1g-4U7" kind="relationship" relationship="rootViewController" id="czH-wU-zv0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oqc-Rz-HlF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1825" y="138"/>
         </scene>
     </scenes>
     <resources>

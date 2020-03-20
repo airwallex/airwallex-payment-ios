@@ -98,19 +98,14 @@
 
 - (void)send:(id <AWRequestProtocol>)request handler:(AWRequestHandler)handler
 {
-    NSString *host = self.configuration.baseURL;
-    NSString *method;
-    NSURL *url;
-    switch (request.method) {
-        case AWHTTPMethodGET:
-            method = @"GET";
-            url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?%@", host, request.path, request.parameters ? [request.parameters queryURLEncoding] : @""]];
-            break;
-        case AWHTTPMethodPOST:
-            method = @"POST";
-            url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", host, request.path]];
-            break;
+    NSString *method = @"POST";
+    NSURL *url = [NSURL URLWithString:request.path relativeToURL:self.configuration.baseURL];
+    
+    if (request.method == AWHTTPMethodGET) {
+        method = @"GET";
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", url.absoluteString, request.parameters ? [request.parameters queryURLEncoding] : @""]];
     }
+
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     urlRequest.HTTPMethod = method;
 

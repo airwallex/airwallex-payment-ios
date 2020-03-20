@@ -9,10 +9,10 @@
 #import "CartViewController.h"
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
+#import <WechatOpenSDK/WXApi.h>
 #import "ProductCell.h"
 #import "TotalCell.h"
 #import "APIClient.h"
-#import "WXApi.h"
 #import "Constant.h"
 
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWEditShippingViewControllerDelegate, AWPaymentResultDelegate>
@@ -41,6 +41,17 @@
                                                 price:[NSDecimalNumber decimalNumberWithString:@"469"]];
     self.products = [@[product0, product1] mutableCopy];
     [self reloadData];
+
+    // 1. Setup Airwallex & Example Configuration
+    AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
+    configuration.delegate = self;
+    configuration.baseURL = [NSURL URLWithString:paymentBaseURL];
+
+    APIClient *client = [APIClient sharedClient];
+    client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
+    client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
+    client.apiKey = apiKey;
+    client.clientID = clientID;
 }
 
 - (void)viewDidLayoutSubviews
@@ -78,20 +89,15 @@
     NSDecimalNumber *shipping = [NSDecimalNumber zero];
     NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
     configuration.totalNumber = total;
-    configuration.delegate = self;
-    configuration.baseURL = @"https://staging-pci-api.airwallex.com";
 
     [SVProgressHUD show];
-    [[APIClient sharedClient] createAuthenticationToken:[NSURL URLWithString:authenticationURL]
-                                               clientId:clientId
-                                                 apiKey:apiKey
-                                      completionHandler:^(NSString * _Nullable token, NSError * _Nullable error) {
+    [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;
         }
 
-        configuration.token = token;
+        configuration.token = [APIClient sharedClient].token;
 
         __block NSError *finalError = nil;
         dispatch_group_t group = dispatch_group_create();
@@ -101,17 +107,17 @@
                                              @"merchant_order_id": NSUUID.UUID.UUIDString,
                                              @"request_id": NSUUID.UUID.UUIDString,
                                              @"order": @{}} mutableCopy];
+
         dispatch_group_enter(group);
-        [[APIClient sharedClient] createPaymentIntent:[NSURL URLWithString:paymentIntentsURL]
-                                                token:token
-                                           parameters:parameters
-                                    completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+        [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
+                                                  completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
             if (error) {
                 finalError = error;
                 dispatch_group_leave(group);
                 return;
             }
 
+            AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
             configuration.intentId = result[@"id"];
             configuration.clientSecret = result[@"client_secret"];
             configuration.currency = result[@"currency"];
@@ -123,19 +129,17 @@
             configuration.customerId = customerId;
         } else {
             dispatch_group_enter(group);
-            [[APIClient sharedClient] createCustomer:[NSURL URLWithString:customersURL]
-                                               token:token
-                                          parameters:@{@"request_id": NSUUID.UUID.UUIDString,
-                                                       @"merchant_customer_id": NSUUID.UUID.UUIDString,
-                                                       @"first_name": @"John",
-                                                       @"last_name": @"Doe",
-                                                       @"email": @"john.doe@airwallex.com",
-                                                       @"phone_number": @"13800000000",
-                                                       @"additional_info": @{@"registered_via_social_media": @NO,
-                                                                             @"registration_date": @"2019-09-18",
-                                                                             @"first_successful_order_date": @"2019-09-18"},
-                                                       @"metadata": @{@"id": @1}}
-                                   completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+            [[APIClient sharedClient] createCustomerWithParameters:@{@"request_id": NSUUID.UUID.UUIDString,
+                                                                     @"merchant_customer_id": NSUUID.UUID.UUIDString,
+                                                                     @"first_name": @"John",
+                                                                     @"last_name": @"Doe",
+                                                                     @"email": @"john.doe@airwallex.com",
+                                                                     @"phone_number": @"13800000000",
+                                                                     @"additional_info": @{@"registered_via_social_media": @NO,
+                                                                                           @"registration_date": @"2019-09-18",
+                                                                                           @"first_successful_order_date": @"2019-09-18"},
+                                                                     @"metadata": @{@"id": @1}}
+                                                 completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
                 if (error) {
                     finalError = error;
                     dispatch_group_leave(group);

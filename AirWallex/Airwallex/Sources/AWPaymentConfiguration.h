@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWPaymentConfiguration : NSObject <NSCopying>
 
-@property (nonatomic, copy) NSString *baseURL;
+@property (nonatomic, copy) NSURL *baseURL;
 @property (nonatomic, copy) NSString *intentId;
 @property (nonatomic, copy) NSDecimalNumber *totalNumber;
 @property (nonatomic, copy) NSString *token;

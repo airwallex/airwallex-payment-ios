@@ -19,6 +19,7 @@
 		088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
 		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
+		08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
 		08B55E3B2421DA330054E254 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
 		08B55E3C2421DA330054E254 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F7071D3AC01A9341C319415E /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */; };
@@ -59,6 +60,8 @@
 		088F3E8123CEB7FF005AE40F /* APIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
 		088F3E8223CEB7FF005AE40F /* APIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		088F3E8423CED74C005AE40F /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		08A3E99D24246C30003FDAAF /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
+		08A3E99E24246C30003FDAAF /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		08B55E372421D8C60054E254 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A6EAE250E77991C1E9B6A69 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "../../Pods/Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +90,8 @@
 				082D308423CEECE400C9D587 /* TotalCell.m */,
 				082D308623CEEDC100C9D587 /* CartViewController.h */,
 				082D308723CEEDC100C9D587 /* CartViewController.m */,
+				08A3E99D24246C30003FDAAF /* OptionsViewController.h */,
+				08A3E99E24246C30003FDAAF /* OptionsViewController.m */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -288,6 +293,7 @@
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
+				08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

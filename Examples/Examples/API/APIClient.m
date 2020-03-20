@@ -20,21 +20,29 @@
     return sharedClient;
 }
 
-- (void)createAuthenticationToken:(NSURL *)url
-                         clientId:(NSString *)clientId
-                           apiKey:(NSString *)apiKey
-                completionHandler:(void (^)(NSString * _Nullable token, NSError * _Nullable error))completionHandler
+- (void)setAuthBaseURL:(NSURL *)authBaseURL
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    _authBaseURL = [authBaseURL URLByAppendingPathComponent:@""];
+}
+
+- (void)setPaymentBaseURL:(NSURL *)paymentBaseURL
+{
+    _paymentBaseURL = [paymentBaseURL URLByAppendingPathComponent:@""];
+}
+
+- (void)createAuthenticationTokenWithCompletionHandler:(void (^)(NSError * _Nullable error))completionHandler
+{
+    NSURL *requestURL = [NSURL URLWithString:@"api/v1/authentication/login" relativeToURL:self.authBaseURL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:clientId forHTTPHeaderField:@"x-client-id"];
-    [request setValue:apiKey forHTTPHeaderField:@"x-api-key"];
+    [request setValue:self.clientID forHTTPHeaderField:@"x-client-id"];
+    [request setValue:self.apiKey forHTTPHeaderField:@"x-api-key"];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                      completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(nil, error);
+                completionHandler(error);
             });
             return;
         }
@@ -44,29 +52,34 @@
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:NSJSONReadingMutableContainers
                                                                    error:&anError];
-            NSString *token = json[@"token"];
+            NSString *errorMessage = json[@"error"];
+            if (errorMessage) {
+                anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
+            }
+            self.token = json[@"token"];
 
             dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(token, anError);
+                completionHandler(anError);
             });
             return;
         }
 
         dispatch_async(dispatch_get_main_queue(), ^{
-            completionHandler(nil, anError);
+            completionHandler(anError);
         });
     }] resume];
 }
 
-- (void)createPaymentIntent:(NSURL *)url
-                      token:(NSString *)token
-                 parameters:(NSDictionary *)parameters
-          completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
+- (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
+                        completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSURL *requestURL = [NSURL URLWithString:@"api/v1/pa/payment_intents/create" relativeToURL:self.paymentBaseURL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    if (self.token) {
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
+    }
     [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil]];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                      completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -94,15 +107,16 @@
     }] resume];
 }
 
-- (void)createCustomer:(NSURL *)url
-                 token:(NSString *)token
-            parameters:(NSDictionary *)parameters
-     completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
+- (void)createCustomerWithParameters:(NSDictionary *)parameters
+                   completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSURL *requestURL = [NSURL URLWithString:@"api/v1/pa/customers/create" relativeToURL:self.paymentBaseURL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    if (self.token) {
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
+    }
     [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil]];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                      completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
