@@ -279,7 +279,7 @@
                     <navigationItem key="navigationItem" id="n69-eD-JJv">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="Cdb-jb-CTr">
                             <connections>
-                                <segue destination="ctT-KW-lCz" kind="presentation" id="udD-0y-ARe"/>
+                                <segue destination="ctT-KW-lCz" kind="presentation" identifier="goToSettings" id="udD-0y-ARe"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -303,7 +303,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P74-f6-EbX">
-                                <rect key="frame" x="16" y="104" width="382" height="300"/>
+                                <rect key="frame" x="16" y="104" width="382" height="455"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authorization URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FEY-2R-sVI">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="23.5"/>
@@ -365,6 +365,36 @@
                                             <outlet property="delegate" destination="3dc-1g-4U7" id="yGh-R7-KBw"/>
                                         </connections>
                                     </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BH-xo-rjD">
+                                        <rect key="frame" x="0.0" y="310" width="382" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0.1" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ofq-7n-F5l">
+                                        <rect key="frame" x="0.0" y="343.5" width="382" height="34"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="3dc-1g-4U7" id="nOQ-hz-L2J"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ap9-GE-PVt">
+                                        <rect key="frame" x="0.0" y="387.5" width="382" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="USD" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XwV-xj-OFr">
+                                        <rect key="frame" x="0.0" y="421" width="382" height="34"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="3dc-1g-4U7" id="ylw-Is-jt0"/>
+                                        </connections>
+                                    </textField>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -393,7 +423,9 @@
                         <outlet property="apiKeyTextField" destination="ucc-VN-sfr" id="EXV-PE-RMH"/>
                         <outlet property="authURLTextField" destination="jDR-a6-Y7p" id="833-JK-4z5"/>
                         <outlet property="clientIDTextField" destination="Qvi-cl-UUP" id="VQT-UV-ejR"/>
+                        <outlet property="currencyTextField" destination="XwV-xj-OFr" id="TLL-Jw-HkG"/>
                         <outlet property="paymentURLTextField" destination="YSw-cs-6Pe" id="qdG-Sh-62V"/>
+                        <outlet property="totalAmountTextField" destination="Ofq-7n-F5l" id="9hs-Vm-5TE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6DU-lc-9l6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

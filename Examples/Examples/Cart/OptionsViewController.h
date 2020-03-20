@@ -8,9 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class OptionsViewController;
+
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol OptionsViewControllerDelegate <NSObject>
+
+- (void)optionsViewController:(OptionsViewController *)viewController didEditTotalAmount:(NSDecimalNumber *)totalAmount;
+- (void)optionsViewController:(OptionsViewController *)viewController didEditCurrency:(NSString *)currency;
+
+@end
+
 @interface OptionsViewController : UIViewController
+
+@property (weak, nonatomic) id <OptionsViewControllerDelegate> delegate;
 
 @end
 

@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *paymentURLTextField;
 @property (weak, nonatomic) IBOutlet UITextField *apiKeyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *clientIDTextField;
+@property (weak, nonatomic) IBOutlet UITextField *totalAmountTextField;
+@property (weak, nonatomic) IBOutlet UITextField *currencyTextField;
 
 @end
 
@@ -35,6 +37,8 @@
     self.paymentURLTextField.text = [APIClient sharedClient].paymentBaseURL.absoluteString;
     self.apiKeyTextField.text = [APIClient sharedClient].apiKey;
     self.clientIDTextField.text = [APIClient sharedClient].clientID;
+    self.totalAmountTextField.text = [NSString stringWithFormat:@"%0.2f", [AWPaymentConfiguration sharedConfiguration].totalNumber.doubleValue];
+    self.currencyTextField.text = [AWPaymentConfiguration sharedConfiguration].currency;
 }
 
 - (IBAction)dismiss:(id)sender
@@ -75,6 +79,11 @@
         [APIClient sharedClient].apiKey = textField.text;
     } else if (textField == self.clientIDTextField) {
         [APIClient sharedClient].clientID = textField.text;
+    } else if (textField == self.totalAmountTextField) {
+        NSDecimalNumber *totalAmount = [NSDecimalNumber decimalNumberWithString:textField.text];
+        [self.delegate optionsViewController:self didEditTotalAmount:totalAmount];
+    } else if (textField == self.currencyTextField) {
+        [self.delegate optionsViewController:self didEditCurrency:textField.text];
     }
 }
 
@@ -91,6 +100,8 @@
     NSLog(@"Payment Base URL (SDK): %@", [AWPaymentConfiguration sharedConfiguration].baseURL);
     NSLog(@"API Key: %@", [APIClient sharedClient].apiKey);
     NSLog(@"Client ID: %@", [APIClient sharedClient].clientID);
+    NSLog(@"Total amount: %@", self.totalAmountTextField.text);
+    NSLog(@"Currency: %@", self.currencyTextField.text);
 }
 
 @end

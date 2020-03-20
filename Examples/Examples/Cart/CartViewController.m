@@ -10,12 +10,13 @@
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <WechatOpenSDK/WXApi.h>
+#import "OptionsViewController.h"
 #import "ProductCell.h"
 #import "TotalCell.h"
 #import "APIClient.h"
 #import "Constant.h"
 
-@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWEditShippingViewControllerDelegate, AWPaymentResultDelegate>
+@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWEditShippingViewControllerDelegate, AWPaymentResultDelegate, OptionsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet AWView *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
@@ -46,6 +47,8 @@
     AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
     configuration.delegate = self;
     configuration.baseURL = [NSURL URLWithString:paymentBaseURL];
+    configuration.totalNumber = [NSDecimalNumber decimalNumberWithString:defaultTotalAmount];
+    configuration.currency = defaultCurrency;
 
     APIClient *client = [APIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
@@ -60,6 +63,15 @@
     self.badgeView.cornerRadius = CGRectGetWidth(self.badgeView.bounds) / 2;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"goToSettings"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        OptionsViewController *controller = (OptionsViewController *)navigationController.topViewController;
+        controller.delegate = self;
+    }
+}
+
 - (void)reloadData
 {
     self.badgeView.hidden = self.products.count == 0;
@@ -69,7 +81,7 @@
     NSDecimalNumber *shipping = [NSDecimalNumber zero];
     NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
 
-    self.checkoutButton.enabled = self.shipping != nil && total.doubleValue != 0;
+    self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && [AWPaymentConfiguration sharedConfiguration].totalNumber.doubleValue > 0 && [AWPaymentConfiguration sharedConfiguration].currency.length > 0;
     [self.tableView reloadData];
 }
 
@@ -85,10 +97,6 @@
     // 1. Setup Airwallex Configuration
     AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
     configuration.shipping = self.shipping;
-    NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
-    NSDecimalNumber *shipping = [NSDecimalNumber zero];
-    NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
-    configuration.totalNumber = total;
 
     [SVProgressHUD show];
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
@@ -102,13 +110,14 @@
         __block NSError *finalError = nil;
         dispatch_group_t group = dispatch_group_create();
 
-        NSMutableDictionary *parameters = [@{@"amount": total,
-                                             @"currency": @"USD",
+        NSMutableDictionary *parameters = [@{@"amount": configuration.totalNumber,
+                                             @"currency": configuration.currency,
                                              @"merchant_order_id": NSUUID.UUID.UUIDString,
                                              @"request_id": NSUUID.UUID.UUIDString,
                                              @"order": @{}} mutableCopy];
 
         dispatch_group_enter(group);
+        NSLog(@"Create Payment Intent:\n%@", parameters);
         [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
                                                   completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
             if (error) {
@@ -120,7 +129,6 @@
             AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
             configuration.intentId = result[@"id"];
             configuration.clientSecret = result[@"client_secret"];
-            configuration.currency = result[@"currency"];
             dispatch_group_leave(group);
         }];
 
@@ -277,6 +285,20 @@
     billing.email = @"jim631@sina.com";
 
     self.shipping = billing;
+    [self reloadData];
+}
+
+#pragma mark - OptionsViewControllerDelegate
+
+- (void)optionsViewController:(OptionsViewController *)viewController didEditTotalAmount:(NSDecimalNumber *)totalAmount
+{
+     [AWPaymentConfiguration sharedConfiguration].totalNumber = totalAmount;
+    [self reloadData];
+}
+
+- (void)optionsViewController:(OptionsViewController *)viewController didEditCurrency:(NSString *)currency
+{
+    [AWPaymentConfiguration sharedConfiguration].currency = currency;
     [self reloadData];
 }
 
