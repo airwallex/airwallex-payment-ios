@@ -1,0 +1,19 @@
+stages:
+  - build
+  - archive
+
+build_project:
+  stage: build
+  script:
+    - xctool -project Airwallex.xcworkspace -scheme Example clean
+
+archive_project:
+  stage: archive
+  script:
+    - xctool -project Airwallex.xcworkspace -scheme Example archive -archivePath build/Example
+    - xcodebuild -exportArchive -exportFormat ipa -archivePath "build/Example.xcarchive" -exportPath "build/Example.ipa"
+  only:
+    - master
+  artifacts:
+    paths:
+      - build/Example.ipa
