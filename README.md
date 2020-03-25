@@ -1,66 +1,104 @@
 # Airwallex iOS SDK
 
-[![CocoaPods](https://img.shields.io/cocoapods/v/Airwallex.svg?style=flat)](http://cocoapods.org/?q=author%3AAirwallex%20name%3AAirwallex)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![License](https://img.shields.io/cocoapods/l/Airwallex.svg?style=flat)](https://github.com/airwallex/airwallex-payment-ios/blob/master/LICENSE)
-[![Platform](https://img.shields.io/cocoapods/p/Airwallex.svg?style=flat)](https://github.com/airwallex/airwallex-payment-ios#)
+![Pod Version](https://img.shields.io/cocoapods/v/Airwallex.svg?style=flat)
+![Pod Platform](https://img.shields.io/cocoapods/p/Airwallex.svg?style=flat)
+![Pod License](https://img.shields.io/cocoapods/l/Airwallex.svg?style=flat)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-green.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-green.svg?style=flat)](https://cocoapods.org)
 
-The Airwallex iOS SDK makes it quick and easy to build an excellent payment experience in your iOS app. We provide powerful and customizable UI screens and elements that can be used out-of-the-box to collect your users’ payment details. We also expose the low-level APIs that power those UIs so that you can build fully custom experiences.
-
-Get started with our integration guide and example project.
-
-Table of contents
-=================
-
-<!--ts-->
-   * [Features](#features)
-   * [Releases](#releases)
-   * [Requirements](#requirements)
-   * [Getting Started](#getting-started)
-      * [Integration](#integration)
-      * [Examples](#examples)
-   * [Contributing](#contributing)
-   * [Running Tests](#running-tests)
-<!--te-->
-
-## Features
-
-**Simplified Security**: We make it simple for you to collect sensitive data such as credit card numbers. This means the sensitive data is sent directly to Airwallex instead of passing through your server.
-
-**WeChat Pay**: We provide a seamless integration with WeChat Pay.
-
-**3DS**: The SDK automatically performs native 3D Secure authentication if needed.
-
-**Airwallex API**: We provide low-level APIs that correspond to objects and methods in the Airwallex API. You can build your own entirely custom UI on top of this layer, while still taking advantage of utilities like `AWCardValidator` to validate your user’s input.
-
-**Native UI**: We provide native screens to collect payment and shipping details. For example, `AWCardViewController` is a UIViewController that collects, validates card details and finishes saving.
-
-You can use these individually, or take all of the prebuilt UI in one flow by following the Basic Integration guide.
-
-From let to right: `AWCardViewController`, `AWPaymentMethodListViewController`, `AWEditShippingViewController`, `AWPaymentViewController`
-
-## Releases
-
-We recommend installing the Airwallex iOS SDK using a package manager such as Cocoapods or Carthage. If you link the library manually, use a version from our releases page.
-
-If you’re reading this on GitHub.com, please make sure you are looking at the tagged version that corresponds to the release you have installed. Otherwise, the instructions and example code may be mismatched with your copy. You can read the latest tagged version of this README and browse the associated code on GitHub.
+The Airwallex iOS SDK is a framework for integrating easy, fast and secure payments inside your app with Airwallex. It provides simple functions to send sensitive credit card data directly to Airwallex, it also provides a powerful, customizable interface for collecting user payment details.
 
 ## Requirements
-The Airwallex iOS SDK requires Xcode 10.0 or later and is compatible with apps targeting iOS 10 or above.
+The Airwallex iOS SDK requires Xcode 10 or later and is compatible with apps targeting iOS 10 or above.
 
-## Getting Started
+## Installation
+
+### CocoaPods
+
+```ruby
+pod 'Airwallex'
+```
+
+### Carthage
+
+```ogdl
+github "airwallex/airwallex-payment-ios"
+```
+
+## Swift
+
+Even though `Airwallex` is written in Objective-C, it can be used in Swift with no hassle. If you use [CocoaPods](http://cocoapods.org) add the following line to your [Podfile](http://guides.cocoapods.org/using/using-cocoapods.html):
+
+```ruby
+use_frameworks!
+```
+
+## Usage
 
 ### Integration
 
-Get started with our [📚 integration guides](https://www.airwallex.com/docs/#overview) and [example projects](#examples), or [📘 browse the SDK reference](https://www.airwallex.com/docs/#overview) for fine-grained documentation of all the classes and methods in the SDK.
+### 1. Initialize AWPaymentConfiguration
+
+These payment method specific configuration parameters can be set in an instance of `AWPaymentConfiguration`.
+
+```
+AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
+configuration.shipping = "Your shipping address";
+configuration.totalNumber = "Your total amount";
+configuration.delegate = self;
+configuration.baseURL = "Payment server URL";
+configuration.intentId = "Payment intent ID";
+configuration.clientSecret = "Client secret";
+configuration.currency = "Your currency";
+configuration.customerId = "Your customer ID";
+```
+
+### 2. Present Shipping UI
+
+Use AWPaymentUI to get an UINavigationController including `AWEditShippingViewController` and present it.
+
+```
+UINavigationController *navigationController = [AWPaymentUI shippingNavigationController];
+[self presentViewController:navigationController animated:YES completion:nil];
+```
+
+### 3. Present Payment Method List UI
+
+Use AWPaymentUI to get an UINavigationController including `AWPaymentMethodListViewController` and present it.
+
+```
+UINavigationController *navigationController = [AWPaymentUI paymentMethodListNavigationController];
+[self presentViewController:navigationController animated:YES completion:nil];
+```
+
+### 4. Present New Credit Card UI
+
+Use AWPaymentUI to get an UINavigationController including `AWCardViewController` and present it.
+
+```
+UINavigationController *navigationController = [AWPaymentUI newCardNavigationController];
+[self presentViewController:navigationController animated:YES completion:nil];
+```
+
+### 5. Present Payment Detail UI to confirm
+
+Use AWPaymentUI to get an UINavigationController including `AWPaymentViewController` and present it.
+
+```
+UINavigationController *navigationController = [AWPaymentUI paymentDetailNavigationController];
+[self presentViewController:navigationController animated:YES completion:nil];
+```
 
 ### Examples
 
-There is an example app included in the repository and it provides the way how to check out with WeChat SDK.
+There is an example app included in the repository and it provides the way how to check out with WeChat SDK and Credit Card.
+
+### Calling APIs
+
+Use `AWAPIClient` to send a request.
+
+A request to confirm payment intent using: `AWConfirmPaymentIntentRequest`
+A request to get payment intent using: `AWGetPaymentIntentRequest`
 
 ## Contributing
-We welcome contributions of any kind including new features, bug fixes, and documentation improvements. Please first open an issue describing what you want to build if it is a major change so that we can discuss how to move forward. Otherwise, go ahead and open a pull request for minor changes such as typo fixes and one liners.
-
-## Running Tests
-We will add some unit tests for this later.
-
+We welcome contributions of any kind including new features, bug fixes, and documentation improvements. The best way to contribute is by submitting a pull request – we'll do our best to respond to your patch as soon as possible. You can also submit an issue if you find bugs or have any questions.

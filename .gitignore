@@ -17,6 +17,7 @@ Pods/
 
 ## Build generated
 build/
+builds/
 DerivedData/
 
 ## Various settings
