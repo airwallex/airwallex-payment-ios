@@ -27,7 +27,7 @@ github "airwallex/airwallex-payment-ios"
 
 ## Swift
 
-Even though `Airwallex` is written in Objective-C, it can be used in Swift with no hassle. If you use [CocoaPods](http://cocoapods.org) add the following line to your [Podfile](http://guides.cocoapods.org/using/using-cocoapods.html):
+Even though `Airwallex` is written in Objective-C, it can be used in Swift with no hassle. If you use [CocoaPods](http://cocoapods.org),  add the following line to your [Podfile](http://guides.cocoapods.org/using/using-cocoapods.html):
 
 ```ruby
 use_frameworks!
@@ -98,6 +98,7 @@ There is an example app included in the repository and it provides the way how t
 Use `AWAPIClient` to send a request.
 
 A request to confirm payment intent using: `AWConfirmPaymentIntentRequest`
+
 A request to get payment intent using: `AWGetPaymentIntentRequest`
 
 ## Contributing
