@@ -12,12 +12,34 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWAddress` includes the information of an address.
+ */
 @interface AWAddress : NSObject <AWJSONifiable, AWParseable, NSCopying>
 
+/**
+ Country code.
+ */
 @property (nonatomic, copy) NSString *countryCode;
+
+/**
+ City.
+ */
 @property (nonatomic, copy) NSString *city;
+
+/**
+ Street.
+ */
 @property (nonatomic, copy) NSString *street;
+
+/**
+ State, optional.
+ */
 @property (nonatomic, copy, nullable) NSString *state;
+
+/**
+ Post code, optional.
+ */
 @property (nonatomic, copy, nullable) NSString *postcode;
 
 @end

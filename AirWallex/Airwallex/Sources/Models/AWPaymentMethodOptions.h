@@ -11,9 +11,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWPaymentMethodOptions` includes the information of payment method options
+ */
 @interface AWPaymentMethodOptions : NSObject <AWJSONifiable>
 
+/**
+ Whether to auto capture.
+ */
 @property (nonatomic) BOOL autoCapture;
+
+/**
+ Whether use 3ds.
+ */
 @property (nonatomic) BOOL threeDsOption;
 
 @end

@@ -13,13 +13,39 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWBilling` includes the information of a billing address.
+ */
 @interface AWBilling : NSObject <AWJSONifiable, AWParseable, NSCopying>
 
+/**
+ First name.
+ */
 @property (nonatomic, copy) NSString *firstName;
+
+/**
+ Last name.
+ */
 @property (nonatomic, copy) NSString *lastName;
+
+/**
+ Email, optional.
+ */
 @property (nonatomic, copy, nullable) NSString *email;
+
+/**
+ Date of birth, optional.
+ */
 @property (nonatomic, copy, nullable) NSString *dateOfBirth;
+
+/**
+ Phone number, optional.
+ */
 @property (nonatomic, copy, nullable) NSString *phoneNumber;
+
+/**
+ Address object.
+ */
 @property (nonatomic, copy) AWAddress *address;
 
 @end

@@ -15,12 +15,34 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWPaymentMethod` includes the information of a payment method.
+ */
 @interface AWPaymentMethod : NSObject <AWJSONifiable, AWParseable>
 
+/**
+ Payment type
+ */
 @property (nonatomic, copy) NSString *type;
+
+/**
+ Payment method ID.
+ */
 @property (nonatomic, copy, nullable) NSString *Id;
+
+/**
+ Billing object.
+ */
 @property (nonatomic, strong, nullable) AWBilling *billing;
+
+/**
+ Card object.
+ */
 @property (nonatomic, strong, nullable) AWCard *card;
+
+/**
+ Wechat pay object.
+ */
 @property (nonatomic, strong, nullable) AWWechatPay *wechatpay;
 
 @end

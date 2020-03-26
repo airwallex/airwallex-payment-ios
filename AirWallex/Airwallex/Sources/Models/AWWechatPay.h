@@ -12,8 +12,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWWechatPay` includes the information of wechat.
+ */
 @interface AWWechatPay : NSObject <AWJSONifiable, AWParseable>
 
+/**
+ Wechat flow
+ */
 @property (nonatomic, copy) NSString *flow;
 
 @end

@@ -10,15 +10,36 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWCountry` includes the information of a country.
+ */
 @interface AWCountry : NSObject
 
-@property (nonatomic, strong) NSString *countryCode, *countryName;
+/**
+ Country code.
+ */
+@property (nonatomic, strong) NSString *countryCode;
+
+/**
+ Country name.
+ */
+@property (nonatomic, strong) NSString *countryName;
 
 @end
 
 @interface AWCountry (Utils)
 
+/**
+ Return all of the supported countries.
+ */
 + (NSArray *)allCountries;
+
+/**
+ Get a matched country object.
+
+ @param code Country code.
+ @return A country object.
+ */
 + (nullable AWCountry *)countryWithCode:(NSString *)code;
 
 @end
