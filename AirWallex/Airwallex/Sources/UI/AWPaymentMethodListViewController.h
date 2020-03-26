@@ -10,7 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWPaymentMethodListViewController` provides a list of payment method.
+ */
 @interface AWPaymentMethodListViewController : AWViewController
+
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
+                         bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 @end
 
