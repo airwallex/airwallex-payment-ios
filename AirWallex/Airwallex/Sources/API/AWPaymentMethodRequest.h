@@ -12,16 +12,36 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWGetPaymentMethodsRequest` includes all of the parameters needed to get payment methods.
+ */
 @interface AWGetPaymentMethodsRequest : NSObject <AWRequestProtocol>
 
+/**
+ Customer ID
+ */
 @property (nonatomic, copy, nullable) NSString *customerId;
 
 @end
 
+/**
+ `AWCreatePaymentMethodRequest` includes all of the parameters needed to create a payment method.
+ */
 @interface AWCreatePaymentMethodRequest : NSObject <AWRequestProtocol>
 
+/**
+ Request ID.
+ */
 @property (nonatomic, copy) NSString *requestId;
+
+/**
+ Customer ID.
+ */
 @property (nonatomic, copy, nullable) NSString *customerId;
+
+/**
+ Payment method object.
+ */
 @property (nonatomic, strong) AWPaymentMethod *paymentMethod;
 
 @end

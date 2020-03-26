@@ -14,17 +14,41 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWConfirmPaymentIntentRequest` includes all of the parameters needed to confirm payment intent.
+ */
 @interface AWConfirmPaymentIntentRequest : NSObject <AWRequestProtocol>
 
+/**
+ Intent ID.
+ */
 @property (nonatomic, copy) NSString *intentId;
+
+/**
+ Request ID.
+ */
 @property (nonatomic, copy) NSString *requestId;
+
+/**
+ Payment method object.
+ */
 @property (nonatomic, strong) AWPaymentMethod *paymentMethod;
+
+/**
+ Options object.
+ */
 @property (nonatomic, strong, nullable) AWPaymentMethodOptions *options;
 
 @end
 
+/**
+ `AWGetPaymentIntentRequest` includes all of the parameters needed to get payment intent.
+ */
 @interface AWGetPaymentIntentRequest : NSObject <AWRequestProtocol>
 
+/**
+ Intent ID.
+ */
 @property (nonatomic, copy) NSString *intentId;
 
 @end
