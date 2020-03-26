@@ -16,31 +16,37 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Airwallex/PublicHeader.h>
 
+#import <Airwallex/AWConstants.h>
+#import <Airwallex/AWPaymentConfiguration.h>
+
+// UI
+#import <Airwallex/AWPaymentUI.h>
 #import <Airwallex/AWTheme.h>
 #import <Airwallex/AWWidgets.h>
-#import <Airwallex/AWConstants.h>
-#import <Airwallex/AWUtils.h>
+#import <Airwallex/AWCountryListViewController.h>
+#import <Airwallex/AWEditShippingViewController.h>
+#import <Airwallex/AWPaymentMethodCell.h>
+#import <Airwallex/AWPaymentMethodListViewController.h>
+#import "AWPaymentItemCell.h"
+#import "AWPaymentViewController.h"
+#import <Airwallex/AWCardViewController.h>
 
-#import <Airwallex/AWPaymentConfiguration.h>
+// API
 #import <Airwallex/AWAPIClient.h>
-#import <Airwallex/AWPaymentMethod.h>
-#import <Airwallex/AWCard.h>
-#import <Airwallex/AWBilling.h>
-#import <Airwallex/AWCountry.h>
-#import <Airwallex/AWPaymentMethodOptions.h>
 #import <Airwallex/AWAPIResponse.h>
 #import <Airwallex/AWPaymentIntentRequest.h>
 #import <Airwallex/AWPaymentIntentResponse.h>
 #import <Airwallex/AWPaymentMethodRequest.h>
 #import <Airwallex/AWPaymentMethodResponse.h>
+
+// Tools
+#import <Airwallex/AWUtils.h>
 #import <Airwallex/AWCardValidator.h>
 
-#import <Airwallex/AWPaymentUI.h>
-#import <Airwallex/AWCardViewController.h>
-#import <Airwallex/AWCountryListViewController.h>
-#import <Airwallex/AWEditShippingViewController.h>
-#import <Airwallex/AWPaymentMethodListViewController.h>
-#import <Airwallex/AWPaymentMethodCell.h>
-
-#import "AWPaymentViewController.h"
-#import "AWPaymentItemCell.h"
+// Models
+#import <Airwallex/AWCountry.h>
+#import <Airwallex/AWCard.h>
+#import <Airwallex/AWBilling.h>
+#import <Airwallex/AWPaymentMethod.h>
+#import <Airwallex/AWWechatPay.h>
+#import <Airwallex/AWPaymentMethodOptions.h>
