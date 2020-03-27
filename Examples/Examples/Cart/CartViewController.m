@@ -41,7 +41,6 @@
                                                detail:@"White x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"469"]];
     self.products = [@[product0, product1] mutableCopy];
-    [self reloadData];
 
     // 1. Setup Airwallex & Example Configuration
     AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
@@ -55,6 +54,8 @@
     client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
     client.apiKey = apiKey;
     client.clientID = clientID;
+
+    [self reloadData];
 }
 
 - (void)viewDidLayoutSubviews
