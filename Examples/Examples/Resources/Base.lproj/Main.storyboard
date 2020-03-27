@@ -303,7 +303,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P74-f6-EbX">
-                                <rect key="frame" x="16" y="104" width="382" height="455"/>
+                                <rect key="frame" x="16" y="104" width="382" height="522"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authorization URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FEY-2R-sVI">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="23.5"/>
@@ -395,6 +395,18 @@
                                             <outlet property="delegate" destination="3dc-1g-4U7" id="ylw-Is-jt0"/>
                                         </connections>
                                     </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeChat Region: AU" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iou-6j-t8u">
+                                        <rect key="frame" x="0.0" y="465" width="382" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version: v1.0 (22)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTK-Dh-PCi">
+                                        <rect key="frame" x="0.0" y="498.5" width="382" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                        <color key="textColor" name="Black Text Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -425,7 +437,9 @@
                         <outlet property="clientIDTextField" destination="Qvi-cl-UUP" id="VQT-UV-ejR"/>
                         <outlet property="currencyTextField" destination="XwV-xj-OFr" id="TLL-Jw-HkG"/>
                         <outlet property="paymentURLTextField" destination="YSw-cs-6Pe" id="qdG-Sh-62V"/>
+                        <outlet property="regionLabel" destination="iou-6j-t8u" id="Uq8-qd-c7A"/>
                         <outlet property="totalAmountTextField" destination="Ofq-7n-F5l" id="9hs-Vm-5TE"/>
+                        <outlet property="versionLabel" destination="JTK-Dh-PCi" id="QI9-aU-Od5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6DU-lc-9l6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

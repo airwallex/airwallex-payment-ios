@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *clientIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *totalAmountTextField;
 @property (weak, nonatomic) IBOutlet UITextField *currencyTextField;
+@property (weak, nonatomic) IBOutlet UILabel *regionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 
 @end
 
@@ -28,6 +30,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.regionLabel.text = @"WeChat Region: HK";
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    NSString *build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+    self.versionLabel.text = [NSString stringWithFormat:@"App Version: v%@ (%@)", version, build];
     [self resetTextFields];
 }
 
