@@ -324,7 +324,7 @@
      To mock the wechat payment flow, we use an url to call instead wechat callback.
      */
     NSURL *url = [NSURL URLWithString:response.prepayId];
-    if (url) {
+    if (url.scheme && url.host) {
         [SVProgressHUD show];
         
         __weak typeof(self) weakSelf = self;
