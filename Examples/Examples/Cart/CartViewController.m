@@ -41,20 +41,20 @@
                                                detail:@"White x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"469"]];
     self.products = [@[product0, product1] mutableCopy];
-
+    
     // 1. Setup Airwallex & Example Configuration
     AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
     configuration.delegate = self;
     configuration.baseURL = [NSURL URLWithString:paymentBaseURL];
     configuration.totalAmount = [NSDecimalNumber decimalNumberWithString:defaultTotalAmount];
     configuration.currency = defaultCurrency;
-
+    
     APIClient *client = [APIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
     client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
     client.apiKey = apiKey;
     client.clientID = clientID;
-
+    
     [self reloadData];
 }
 
@@ -77,11 +77,11 @@
 {
     self.badgeView.hidden = self.products.count == 0;
     self.badgeLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.products.count];
-
+    
     NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
     NSDecimalNumber *shipping = [NSDecimalNumber zero];
     NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
-
+    
     self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && [AWPaymentConfiguration sharedConfiguration].totalAmount.doubleValue > 0 && [AWPaymentConfiguration sharedConfiguration].currency.length > 0;
     [self.tableView reloadData];
 }
@@ -94,29 +94,29 @@
         [SVProgressHUD showErrorWithStatus:@"No products in your cart"];
         return;
     }
-
+    
     // 1. Setup Airwallex Configuration
     AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
     configuration.shipping = self.shipping;
-
+    
     [SVProgressHUD show];
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;
         }
-
+        
         configuration.token = [APIClient sharedClient].token;
-
+        
         __block NSError *finalError = nil;
         dispatch_group_t group = dispatch_group_create();
-
+        
         NSMutableDictionary *parameters = [@{@"amount": configuration.totalAmount,
                                              @"currency": configuration.currency,
                                              @"merchant_order_id": NSUUID.UUID.UUIDString,
                                              @"request_id": NSUUID.UUID.UUIDString,
                                              @"order": @{}} mutableCopy];
-
+        
         dispatch_group_enter(group);
         NSLog(@"Create Payment Intent:\n%@", parameters);
         [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
@@ -126,13 +126,13 @@
                 dispatch_group_leave(group);
                 return;
             }
-
+            
             AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
             configuration.intentId = result[@"id"];
             configuration.clientSecret = result[@"client_secret"];
             dispatch_group_leave(group);
         }];
-
+        
         NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:@"Cached Customer ID"];
         if (customerId) {
             configuration.customerId = customerId;
@@ -154,7 +154,7 @@
                     dispatch_group_leave(group);
                     return;
                 }
-
+                
                 NSString *customerId = result[@"id"];
                 if (customerId) {
                     configuration.customerId = result[@"id"];
@@ -164,15 +164,15 @@
                 dispatch_group_leave(group);
             }];
         }
-
+        
         dispatch_group_notify(group, dispatch_get_main_queue(), ^{
             if (finalError) {
                 [SVProgressHUD showErrorWithStatus:finalError.localizedDescription];
                 return;
             }
-
+            
             [SVProgressHUD dismiss];
-
+            
             // 2. Show the payment method list or load the payment detail with selected payment method
             [self loadPaymentMethodList];
         });
@@ -245,7 +245,7 @@
         cell.cvcHidden = YES;
         return cell;
     }
-
+    
     if (self.products.count == indexPath.row) {
         TotalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TotalCell" forIndexPath:indexPath];
         NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
@@ -255,7 +255,7 @@
         cell.total = [subtotal decimalNumberByAdding:shipping];
         return cell;
     }
-
+    
     ProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell" forIndexPath:indexPath];
     cell.product = self.products[indexPath.row];
     __weak typeof(self) weakSelf = self;
@@ -284,7 +284,7 @@
     [controller.navigationController popViewControllerAnimated:YES];
     // Please remove fake email later
     billing.email = @"jim631@sina.com";
-
+    
     self.shipping = billing;
     [self reloadData];
 }
@@ -293,7 +293,7 @@
 
 - (void)optionsViewController:(OptionsViewController *)viewController didEditTotalAmount:(NSDecimalNumber *)totalAmount
 {
-     [AWPaymentConfiguration sharedConfiguration].totalAmount = totalAmount;
+    [AWPaymentConfiguration sharedConfiguration].totalAmount = totalAmount;
     [self reloadData];
 }
 
@@ -320,10 +320,13 @@
 
 - (void)paymentWithWechatPaySDK:(AWWechatPaySDKResponse *)response
 {
+    /**
+     To mock the wechat payment flow, we use an url to call instead wechat callback.
+     */
     NSURL *url = [NSURL URLWithString:response.prepayId];
     if (url) {
         [SVProgressHUD show];
-
+        
         __weak typeof(self) weakSelf = self;
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [[[NSURLSession sharedSession] dataTaskWithRequest:request
@@ -332,13 +335,13 @@
                 [SVProgressHUD showErrorWithStatus:error.localizedDescription];
                 return;
             }
-
+            
             __strong typeof(self) strongSelf = weakSelf;
             [strongSelf finishPayment];
         }] resume];
         return;
     }
-
+    
     PayReq *request = [[PayReq alloc] init];
     request.partnerId = response.partnerId;
     request.prepayId = response.prepayId;
@@ -346,17 +349,19 @@
     request.nonceStr = response.nonceStr;
     request.timeStamp = response.timeStamp.doubleValue;
     request.sign = response.sign;
-
+    
     // WeChatSDK 1.8.2
     [WXApi sendReq:request];
-
-//    WeChatSDK 1.8.6.1
-//        [WXApi sendReq:request completion:^(BOOL success) {
-//            if (!success) {
-//                [SVProgressHUD showErrorWithStatus:@"Failed to call WeChat Pay"];
-//                return;
-//            }
-//        }];
+    
+    //    WeChatSDK 1.8.6.1
+    //    [WXApi sendReq:request completion:^(BOOL success) {
+    //        if (!success) {
+    //            [SVProgressHUD showErrorWithStatus:@"Failed to call WeChat Pay"];
+    //            return;
+    //        }
+    //
+    //        [SVProgressHUD showSuccessWithStatus:@"Succeed to pay"];
+    //    }];
 }
 
 #pragma mark - Check Payment Intent Status
@@ -370,7 +375,7 @@
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;
         }
-
+        
         AWGetPaymentIntentResponse *result = (AWGetPaymentIntentResponse *)response;
         completionHandler([result.status isEqualToString:@"SUCCEEDED"]);
     }];

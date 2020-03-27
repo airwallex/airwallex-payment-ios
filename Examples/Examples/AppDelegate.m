@@ -23,7 +23,7 @@
     [SVProgressHUD setMaximumDismissTimeInterval:2];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [IQKeyboardManager sharedManager].enable = YES;
-
+    
     [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [self loadCartView];
     }];
@@ -31,12 +31,12 @@
     [WXApi startLogByLevel:WXLogLevelNormal logBlock:^(NSString * _Nonnull log) {
         NSLog(@"WeChat Log: %@", log);
     }];
-
+    
     // WeChatSDK 1.8.2
     [WXApi registerApp:@"wxfad13fd6681a62b0" enableMTA:YES];
-
+    
     // WeChatSDK 1.8.6.1
-//    [WXApi registerApp:@"wxfad13fd6681a62b0" universalLink:@"https://airwallex.com/"];
+    //    [WXApi registerApp:@"wxfad13fd6681a62b0" universalLink:@"https://airwallex.com/"];
     return YES;
 }
 
@@ -67,6 +67,9 @@
 
 #pragma mark - WXApiDelegate
 
+/**
+ You can retrieve the payment intent status after your server is notified
+ */
 - (void)onResp:(BaseResp *)resp
 {
     if ([resp isKindOfClass:[PayResp class]]) {
