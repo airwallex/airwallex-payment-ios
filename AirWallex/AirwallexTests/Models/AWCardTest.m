@@ -26,7 +26,7 @@
     XCTAssertNotNil(card.bin);
     XCTAssertNotNil(card.last4);
     XCTAssertNotNil(card.brand);
-    XCTAssertNotNil(card.fingerprint);;
+    XCTAssertNotNil(card.fingerprint);
 }
 
 @end

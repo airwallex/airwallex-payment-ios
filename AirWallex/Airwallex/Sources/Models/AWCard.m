@@ -24,6 +24,8 @@
 + (id)parseFromJsonDictionary:(NSDictionary *)json
 {
     AWCard *card = [AWCard new];
+    card.number = json[@"number"];
+    card.cvc = json[@"cvc"];
     card.expiryYear = json[@"expiry_year"];
     card.expiryMonth = json[@"expiry_month"];
     card.name = json[@"name"];

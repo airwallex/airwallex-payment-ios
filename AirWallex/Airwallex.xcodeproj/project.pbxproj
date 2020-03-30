@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,6 +36,16 @@
 		082442C52431AA5100D04A2C /* Card.json in Resources */ = {isa = PBXBuildFile; fileRef = 082442C42431AA5100D04A2C /* Card.json */; };
 		082442C82431BD5100D04A2C /* AWTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 082442C72431BD5100D04A2C /* AWTestUtils.m */; };
 		082442CC2431C00E00D04A2C /* AWCardTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 082442CB2431C00E00D04A2C /* AWCardTest.m */; };
+		0829FD002431D0DE00557DB2 /* Address.json in Resources */ = {isa = PBXBuildFile; fileRef = 0829FCFF2431D0DE00557DB2 /* Address.json */; };
+		0829FD022431D10800557DB2 /* AWAddressTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD012431D10800557DB2 /* AWAddressTest.m */; };
+		0829FD062431D22800557DB2 /* Billing.json in Resources */ = {isa = PBXBuildFile; fileRef = 0829FD052431D22800557DB2 /* Billing.json */; };
+		0829FD082431D25800557DB2 /* AWBillingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD072431D25800557DB2 /* AWBillingTest.m */; };
+		0829FD0C2431D3A500557DB2 /* PaymentMethod.json in Resources */ = {isa = PBXBuildFile; fileRef = 0829FD0B2431D3A500557DB2 /* PaymentMethod.json */; };
+		0829FD0E2431D3C200557DB2 /* AWPaymentMethodTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD0D2431D3C200557DB2 /* AWPaymentMethodTest.m */; };
+		0829FD132431E11E00557DB2 /* AWPaymentMethodFunctionalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD122431E11E00557DB2 /* AWPaymentMethodFunctionalTest.m */; };
+		0829FD152431F13A00557DB2 /* AWPaymentIntentFunctionalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD142431F13A00557DB2 /* AWPaymentIntentFunctionalTest.m */; };
+		0829FD172431FCB400557DB2 /* PaymentMethodWithCard.json in Resources */ = {isa = PBXBuildFile; fileRef = 0829FD162431FCB400557DB2 /* PaymentMethodWithCard.json */; };
+		0829FD1A2432019E00557DB2 /* AWCardValidatorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD192432019E00557DB2 /* AWCardValidatorTest.m */; };
 		082F315C240C8C1200573824 /* AWHUD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 082F315B240C8C1200573824 /* AWHUD.xib */; };
 		085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
 		085BD3D723CC62B4002E8F27 /* AirwallexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3D623CC62B4002E8F27 /* AirwallexTests.m */; };
@@ -87,7 +97,7 @@
 		08D26F5724051FC2008E65D3 /* AWConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 08D26F5524051FC2008E65D3 /* AWConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08D26F5824051FC2008E65D3 /* AWConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D26F5624051FC2008E65D3 /* AWConstants.m */; };
 		43FFA0BACB00AEB61B5678E9 /* Pods_Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */; };
-		CF66F7E349C26954144DF916 /* Pods_Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 082BCA1D2431CD1C006DC445 /* Pods_Airwallex.framework */; };
+		CF66F7E349C26954144DF916 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		D09F2EDBD05E1DF743727FC2 /* Pods_AirwallexTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2D4A2E2793E96E830344B95 /* Pods_AirwallexTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -135,6 +145,16 @@
 		082442C62431BD5100D04A2C /* AWTestUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWTestUtils.h; sourceTree = "<group>"; };
 		082442C72431BD5100D04A2C /* AWTestUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWTestUtils.m; sourceTree = "<group>"; };
 		082442CB2431C00E00D04A2C /* AWCardTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWCardTest.m; sourceTree = "<group>"; };
+		0829FCFF2431D0DE00557DB2 /* Address.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Address.json; sourceTree = "<group>"; };
+		0829FD012431D10800557DB2 /* AWAddressTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWAddressTest.m; sourceTree = "<group>"; };
+		0829FD052431D22800557DB2 /* Billing.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Billing.json; sourceTree = "<group>"; };
+		0829FD072431D25800557DB2 /* AWBillingTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWBillingTest.m; sourceTree = "<group>"; };
+		0829FD0B2431D3A500557DB2 /* PaymentMethod.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PaymentMethod.json; sourceTree = "<group>"; };
+		0829FD0D2431D3C200557DB2 /* AWPaymentMethodTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentMethodTest.m; sourceTree = "<group>"; };
+		0829FD122431E11E00557DB2 /* AWPaymentMethodFunctionalTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentMethodFunctionalTest.m; sourceTree = "<group>"; };
+		0829FD142431F13A00557DB2 /* AWPaymentIntentFunctionalTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentIntentFunctionalTest.m; sourceTree = "<group>"; };
+		0829FD162431FCB400557DB2 /* PaymentMethodWithCard.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PaymentMethodWithCard.json; sourceTree = "<group>"; };
+		0829FD192432019E00557DB2 /* AWCardValidatorTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWCardValidatorTest.m; sourceTree = "<group>"; };
 		082F315B240C8C1200573824 /* AWHUD.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AWHUD.xib; sourceTree = "<group>"; };
 		085BD3C823CC62B4002E8F27 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3CC23CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -199,7 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43FFA0BACB00AEB61B5678E9 /* Pods_Airwallex.framework in Frameworks */,
-				CF66F7E349C26954144DF916 /* Pods_Airwallex.framework in Frameworks */,
+				CF66F7E349C26954144DF916 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +309,10 @@
 			isa = PBXGroup;
 			children = (
 				082442C42431AA5100D04A2C /* Card.json */,
+				0829FCFF2431D0DE00557DB2 /* Address.json */,
+				0829FD052431D22800557DB2 /* Billing.json */,
+				0829FD0B2431D3A500557DB2 /* PaymentMethod.json */,
+				0829FD162431FCB400557DB2 /* PaymentMethodWithCard.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -297,8 +321,28 @@
 			isa = PBXGroup;
 			children = (
 				082442CB2431C00E00D04A2C /* AWCardTest.m */,
+				0829FD012431D10800557DB2 /* AWAddressTest.m */,
+				0829FD072431D25800557DB2 /* AWBillingTest.m */,
+				0829FD0D2431D3C200557DB2 /* AWPaymentMethodTest.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		0829FD0F2431DF7000557DB2 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				0829FD122431E11E00557DB2 /* AWPaymentMethodFunctionalTest.m */,
+				0829FD142431F13A00557DB2 /* AWPaymentIntentFunctionalTest.m */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		0829FD182432016900557DB2 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				0829FD192432019E00557DB2 /* AWCardValidatorTest.m */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 		085BD3BE23CC62B4002E8F27 = {
@@ -336,6 +380,8 @@
 			children = (
 				082442C62431BD5100D04A2C /* AWTestUtils.h */,
 				082442C72431BD5100D04A2C /* AWTestUtils.m */,
+				0829FD182432016900557DB2 /* Tools */,
+				0829FD0F2431DF7000557DB2 /* API */,
 				082442CA2431BFCB00D04A2C /* Models */,
 				082442C32431AA1B00D04A2C /* Resources */,
 				085BD3D623CC62B4002E8F27 /* AirwallexTests.m */,
@@ -558,6 +604,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0829FD062431D22800557DB2 /* Billing.json in Resources */,
+				0829FD172431FCB400557DB2 /* PaymentMethodWithCard.json in Resources */,
+				0829FD0C2431D3A500557DB2 /* PaymentMethod.json in Resources */,
+				0829FD002431D0DE00557DB2 /* Address.json in Resources */,
 				082442C52431AA5100D04A2C /* Card.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -671,9 +721,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0829FD1A2432019E00557DB2 /* AWCardValidatorTest.m in Sources */,
+				0829FD022431D10800557DB2 /* AWAddressTest.m in Sources */,
 				082442CC2431C00E00D04A2C /* AWCardTest.m in Sources */,
+				0829FD082431D25800557DB2 /* AWBillingTest.m in Sources */,
+				0829FD132431E11E00557DB2 /* AWPaymentMethodFunctionalTest.m in Sources */,
 				085BD3D723CC62B4002E8F27 /* AirwallexTests.m in Sources */,
+				0829FD152431F13A00557DB2 /* AWPaymentIntentFunctionalTest.m in Sources */,
 				082442C82431BD5100D04A2C /* AWTestUtils.m in Sources */,
+				0829FD0E2431D3C200557DB2 /* AWPaymentMethodTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

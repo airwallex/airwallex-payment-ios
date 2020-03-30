@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AWPaymentConfiguration.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AWTestUtils : NSObject
 
 + (NSDictionary *)jsonNamed:(NSString *)name;
++ (AWPaymentConfiguration *)paymentConfiguration;
 
 @end
 
