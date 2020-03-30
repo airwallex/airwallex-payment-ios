@@ -87,6 +87,8 @@
 		08D26F5724051FC2008E65D3 /* AWConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 08D26F5524051FC2008E65D3 /* AWConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08D26F5824051FC2008E65D3 /* AWConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D26F5624051FC2008E65D3 /* AWConstants.m */; };
 		43FFA0BACB00AEB61B5678E9 /* Pods_Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */; };
+		CF66F7E349C26954144DF916 /* Pods_Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 082BCA1D2431CD1C006DC445 /* Pods_Airwallex.framework */; };
+		D09F2EDBD05E1DF743727FC2 /* Pods_AirwallexTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2D4A2E2793E96E830344B95 /* Pods_AirwallexTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,7 +187,10 @@
 		08D26F5624051FC2008E65D3 /* AWConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWConstants.m; sourceTree = "<group>"; };
 		89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AD4E6D56C6BCC575BBBFF36 /* Pods-Airwallex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Airwallex.release.xcconfig"; path = "Target Support Files/Pods-Airwallex/Pods-Airwallex.release.xcconfig"; sourceTree = "<group>"; };
+		C4A04FA4848FC5ABC56AF950 /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirwallexTests.release.xcconfig"; path = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
 		EB72D67C8C4166DA0B538CB3 /* Pods-Airwallex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Airwallex.debug.xcconfig"; path = "Target Support Files/Pods-Airwallex/Pods-Airwallex.debug.xcconfig"; sourceTree = "<group>"; };
+		EF019E134879A5ECDDA7AB32 /* Pods-AirwallexTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirwallexTests.debug.xcconfig"; path = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F2D4A2E2793E96E830344B95 /* Pods_AirwallexTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AirwallexTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43FFA0BACB00AEB61B5678E9 /* Pods_Airwallex.framework in Frameworks */,
+				CF66F7E349C26954144DF916 /* Pods_Airwallex.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */,
+				D09F2EDBD05E1DF743727FC2 /* Pods_AirwallexTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */,
+				F2D4A2E2793E96E830344B95 /* Pods_AirwallexTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -400,6 +408,8 @@
 			children = (
 				EB72D67C8C4166DA0B538CB3 /* Pods-Airwallex.debug.xcconfig */,
 				8AD4E6D56C6BCC575BBBFF36 /* Pods-Airwallex.release.xcconfig */,
+				EF019E134879A5ECDDA7AB32 /* Pods-AirwallexTests.debug.xcconfig */,
+				C4A04FA4848FC5ABC56AF950 /* Pods-AirwallexTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = ../Pods;
@@ -477,9 +487,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 085BD3DF23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "AirwallexTests" */;
 			buildPhases = (
+				137DE5960FB41E7F0766316C /* [CP] Check Pods Manifest.lock */,
 				085BD3CD23CC62B4002E8F27 /* Sources */,
 				085BD3CE23CC62B4002E8F27 /* Frameworks */,
 				085BD3CF23CC62B4002E8F27 /* Resources */,
+				4981D01A4E0B3EFB0CB7F6CD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -553,6 +565,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		137DE5960FB41E7F0766316C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AirwallexTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		286BC640CA1B3B356BD3C29F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -573,6 +607,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4981D01A4E0B3EFB0CB7F6CD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -801,6 +852,7 @@
 		};
 		085BD3E023CC62B4002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF019E134879A5ECDDA7AB32 /* Pods-AirwallexTests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AirwallexTests/Info.plist;
@@ -817,6 +869,7 @@
 		};
 		085BD3E123CC62B4002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4A04FA4848FC5ABC56AF950 /* Pods-AirwallexTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AirwallexTests/Info.plist;

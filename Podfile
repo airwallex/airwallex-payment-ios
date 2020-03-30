@@ -16,6 +16,11 @@ target 'Airwallex' do
     shared_pods
 end
 
+target 'AirwallexTests' do
+    project './Airwallex/Airwallex.xcodeproj'
+    shared_pods
+end
+
 target 'Examples' do
     project './Examples/Examples.xcodeproj'
     shared_pods
