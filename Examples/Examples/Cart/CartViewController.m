@@ -46,7 +46,7 @@
     AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
     configuration.delegate = self;
     configuration.baseURL = [NSURL URLWithString:paymentBaseURL];
-    configuration.totalAmount = [NSDecimalNumber decimalNumberWithString:defaultTotalAmount];
+    configuration.amount = [NSDecimalNumber decimalNumberWithString:defaultTotalAmount];
     configuration.currency = defaultCurrency;
     
     APIClient *client = [APIClient sharedClient];
@@ -82,7 +82,7 @@
     NSDecimalNumber *shipping = [NSDecimalNumber zero];
     NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
     
-    self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && [AWPaymentConfiguration sharedConfiguration].totalAmount.doubleValue > 0 && [AWPaymentConfiguration sharedConfiguration].currency.length > 0;
+    self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && [AWPaymentConfiguration sharedConfiguration].amount.doubleValue > 0 && [AWPaymentConfiguration sharedConfiguration].currency.length > 0;
     [self.tableView reloadData];
 }
 
@@ -111,7 +111,7 @@
         __block NSError *finalError = nil;
         dispatch_group_t group = dispatch_group_create();
         
-        NSMutableDictionary *parameters = [@{@"amount": configuration.totalAmount,
+        NSMutableDictionary *parameters = [@{@"amount": configuration.amount,
                                              @"currency": configuration.currency,
                                              @"merchant_order_id": NSUUID.UUID.UUIDString,
                                              @"request_id": NSUUID.UUID.UUIDString,
@@ -293,7 +293,7 @@
 
 - (void)optionsViewController:(OptionsViewController *)viewController didEditTotalAmount:(NSDecimalNumber *)totalAmount
 {
-    [AWPaymentConfiguration sharedConfiguration].totalAmount = totalAmount;
+    [AWPaymentConfiguration sharedConfiguration].amount = totalAmount;
     [self reloadData];
 }
 

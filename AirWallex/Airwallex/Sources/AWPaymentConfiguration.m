@@ -58,7 +58,7 @@
     AWPaymentConfiguration *copy = [[AWPaymentConfiguration allocWithZone:zone] init];
     copy.baseURL = [self.baseURL copyWithZone:zone];
     copy.intentId = [self.intentId copyWithZone:zone];
-    copy.totalAmount = [self.totalAmount copyWithZone:zone];
+    copy.amount = [self.amount copyWithZone:zone];
     copy.token = [self.token copyWithZone:zone];
     copy.clientSecret = [self.clientSecret copyWithZone:zone];
     copy.customerId = [self.customerId copyWithZone:zone];

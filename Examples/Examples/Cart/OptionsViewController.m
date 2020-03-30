@@ -43,7 +43,7 @@
     self.paymentURLTextField.text = [APIClient sharedClient].paymentBaseURL.absoluteString;
     self.apiKeyTextField.text = [APIClient sharedClient].apiKey;
     self.clientIDTextField.text = [APIClient sharedClient].clientID;
-    self.totalAmountTextField.text = [NSString stringWithFormat:@"%0.2f", [AWPaymentConfiguration sharedConfiguration].totalAmount.doubleValue];
+    self.totalAmountTextField.text = [NSString stringWithFormat:@"%0.2f", [AWPaymentConfiguration sharedConfiguration].amount.doubleValue];
     self.currencyTextField.text = [AWPaymentConfiguration sharedConfiguration].currency;
 }
 
@@ -62,7 +62,7 @@
 
     AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
     configuration.baseURL = [NSURL URLWithString:paymentBaseURL];
-    configuration.totalAmount = [NSDecimalNumber decimalNumberWithString:defaultTotalAmount];
+    configuration.amount = [NSDecimalNumber decimalNumberWithString:defaultTotalAmount];
     configuration.currency = defaultCurrency;
 
     [self resetTextFields];

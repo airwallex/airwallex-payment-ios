@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The total amount.
  */
-@property (nonatomic, copy) NSDecimalNumber *totalAmount;
+@property (nonatomic, copy) NSDecimalNumber *amount;
 
 /**
  The token for auth.
