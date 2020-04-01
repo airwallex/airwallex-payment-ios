@@ -12,7 +12,7 @@
 #import "AWPaymentMethodListViewController.h"
 #import "AWCardViewController.h"
 #import "AWPaymentViewController.h"
-#import "AWEditShippingViewController.h"
+#import "AWShippingViewController.h"
 #import "AWPaymentIntent.h"
 #import "AWPlaceDetails.h"
 
@@ -90,10 +90,10 @@
     return controller;
 }
 
-+ (AWEditShippingViewController *)shippingViewController
++ (AWShippingViewController *)shippingViewController
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWPaymentFlow" bundle:[NSBundle sdkBundle]];
-    AWEditShippingViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"shipping"];
+    AWShippingViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"shipping"];
     return controller;
 }
 

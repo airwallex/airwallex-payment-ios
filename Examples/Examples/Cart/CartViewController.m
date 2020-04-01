@@ -18,7 +18,7 @@
 
 static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 
-@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWEditShippingViewControllerDelegate, AWPaymentResultDelegate, OptionsViewControllerDelegate>
+@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWShippingViewControllerDelegate, AWPaymentResultDelegate, OptionsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet AWView *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
@@ -270,16 +270,16 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        AWEditShippingViewController *controller = [AWUIContext shippingViewController];
+        AWShippingViewController *controller = [AWUIContext shippingViewController];
         controller.delegate = self;
         controller.shipping = self.shipping;
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
 
-#pragma mark - AWEditShippingViewControllerDelegate
+#pragma mark - AWShippingViewControllerDelegate
 
-- (void)editShippingViewController:(AWEditShippingViewController *)controller didEditShipping:(AWPlaceDetails *)shipping
+- (void)shippingViewController:(AWShippingViewController *)controller didEditShipping:(AWPlaceDetails *)shipping
 {
     [controller.navigationController popViewControllerAnimated:YES];
     

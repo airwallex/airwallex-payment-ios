@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class AWWechatPaySDKResponse, AWPaymentMethodListViewController, AWCardViewController, AWPaymentViewController, AWEditShippingViewController, AWPaymentIntent, AWPlaceDetails;
+@class AWWechatPaySDKResponse, AWPaymentMethodListViewController, AWCardViewController, AWPaymentViewController, AWShippingViewController, AWPaymentIntent, AWPlaceDetails;
 
 typedef NS_ENUM(NSUInteger, AWPaymentStatus) {
     AWPaymentStatusSuccess,
@@ -108,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return The newly created shipping view controller.
  */
-+ (AWEditShippingViewController *)shippingViewController;
++ (AWShippingViewController *)shippingViewController;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

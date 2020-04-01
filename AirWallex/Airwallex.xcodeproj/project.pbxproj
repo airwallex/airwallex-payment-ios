@@ -64,11 +64,11 @@
 		0866665524062AEB00B52477 /* AWCountry.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866664924062AEB00B52477 /* AWCountry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0866665624062AEB00B52477 /* AWCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = 0866664A24062AEB00B52477 /* AWCountry.m */; };
 		0866665824062AEB00B52477 /* AWPaymentMethodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0866664C24062AEB00B52477 /* AWPaymentMethodListViewController.m */; };
-		0866665924062AEB00B52477 /* AWEditShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0866664D24062AEB00B52477 /* AWEditShippingViewController.m */; };
+		0866665924062AEB00B52477 /* AWShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0866664D24062AEB00B52477 /* AWShippingViewController.m */; };
 		0866665A24062AEB00B52477 /* AWCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0866664E24062AEB00B52477 /* AWCardViewController.m */; };
 		0866665B24062AEB00B52477 /* AWCountryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0866664F24062AEB00B52477 /* AWCountryListViewController.m */; };
 		0866665C24062AEB00B52477 /* AWCardViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866665024062AEB00B52477 /* AWCardViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0866665E24062AEB00B52477 /* AWEditShippingViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866665224062AEB00B52477 /* AWEditShippingViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0866665E24062AEB00B52477 /* AWShippingViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866665224062AEB00B52477 /* AWShippingViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0866665F24062AEB00B52477 /* AWCountryListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866665324062AEB00B52477 /* AWCountryListViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0866666024062AEB00B52477 /* AWPaymentMethodListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866665424062AEB00B52477 /* AWPaymentMethodListViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0866666324062B5000B52477 /* AWPaymentFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0866666124062B5000B52477 /* AWPaymentFlow.storyboard */; };
@@ -176,11 +176,11 @@
 		0866664924062AEB00B52477 /* AWCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWCountry.h; sourceTree = "<group>"; };
 		0866664A24062AEB00B52477 /* AWCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWCountry.m; sourceTree = "<group>"; };
 		0866664C24062AEB00B52477 /* AWPaymentMethodListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWPaymentMethodListViewController.m; sourceTree = "<group>"; };
-		0866664D24062AEB00B52477 /* AWEditShippingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWEditShippingViewController.m; sourceTree = "<group>"; };
+		0866664D24062AEB00B52477 /* AWShippingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWShippingViewController.m; sourceTree = "<group>"; };
 		0866664E24062AEB00B52477 /* AWCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWCardViewController.m; sourceTree = "<group>"; };
 		0866664F24062AEB00B52477 /* AWCountryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWCountryListViewController.m; sourceTree = "<group>"; };
 		0866665024062AEB00B52477 /* AWCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWCardViewController.h; sourceTree = "<group>"; };
-		0866665224062AEB00B52477 /* AWEditShippingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWEditShippingViewController.h; sourceTree = "<group>"; };
+		0866665224062AEB00B52477 /* AWShippingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWShippingViewController.h; sourceTree = "<group>"; };
 		0866665324062AEB00B52477 /* AWCountryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWCountryListViewController.h; sourceTree = "<group>"; };
 		0866665424062AEB00B52477 /* AWPaymentMethodListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWPaymentMethodListViewController.h; sourceTree = "<group>"; };
 		0866666124062B5000B52477 /* AWPaymentFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AWPaymentFlow.storyboard; sourceTree = "<group>"; };
@@ -431,8 +431,8 @@
 				0866666D2406314500B52477 /* AWWidgets.m */,
 				0866665324062AEB00B52477 /* AWCountryListViewController.h */,
 				0866664F24062AEB00B52477 /* AWCountryListViewController.m */,
-				0866665224062AEB00B52477 /* AWEditShippingViewController.h */,
-				0866664D24062AEB00B52477 /* AWEditShippingViewController.m */,
+				0866665224062AEB00B52477 /* AWShippingViewController.h */,
+				0866664D24062AEB00B52477 /* AWShippingViewController.m */,
 				086666412406138400B52477 /* AWPaymentMethodCell.h */,
 				086666422406138400B52477 /* AWPaymentMethodCell.m */,
 				0866665424062AEB00B52477 /* AWPaymentMethodListViewController.h */,
@@ -486,7 +486,7 @@
 				081D52F123D04B5400953B03 /* AWAPIResponse.h in Headers */,
 				0863F6FC240E390100925664 /* AWPaymentItemCell.h in Headers */,
 				0866665524062AEB00B52477 /* AWCountry.h in Headers */,
-				0866665E24062AEB00B52477 /* AWEditShippingViewController.h in Headers */,
+				0866665E24062AEB00B52477 /* AWShippingViewController.h in Headers */,
 				08A14B9B23E91F0C00F3C211 /* AWPaymentMethodRequest.h in Headers */,
 				080EB05823F4D7E900F71CEC /* AWCardValidator.h in Headers */,
 				0805366E241656C900C0896C /* AWUIContext.h in Headers */,
@@ -706,7 +706,7 @@
 				0829FD1E2433474A00557DB2 /* AWPaymentIntent.m in Sources */,
 				0866665A24062AEB00B52477 /* AWCardViewController.m in Sources */,
 				0866666F2406314500B52477 /* AWWidgets.m in Sources */,
-				0866665924062AEB00B52477 /* AWEditShippingViewController.m in Sources */,
+				0866665924062AEB00B52477 /* AWShippingViewController.m in Sources */,
 				081D52CE23D0324E00953B03 /* AWPlaceDetails.m in Sources */,
 				081D52D623D0343200953B03 /* AWWechatPay.m in Sources */,
 				086666442406138400B52477 /* AWPaymentMethodCell.m in Sources */,

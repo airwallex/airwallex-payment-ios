@@ -8,7 +8,7 @@
 
 #import "AWCardViewController.h"
 #import <SVProgressHUD/SVProgressHUD.h>
-#import "AWEditShippingViewController.h"
+#import "AWShippingViewController.h"
 #import "AWConstants.h"
 #import "AWWidgets.h"
 #import "AWPlaceDetails.h"

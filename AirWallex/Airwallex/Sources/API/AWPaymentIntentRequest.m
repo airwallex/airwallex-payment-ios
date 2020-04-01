@@ -27,17 +27,7 @@
 - (nullable NSDictionary *)parameters
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters addEntriesFromDictionary:@{@"request_id": self.requestId,
-                                           @"device": @{@"browser_info": @"Chrome/76.0.3809.100",
-                                                        @"cookies_accepted": @"true",
-                                                        @"device_id": [UIDevice currentDevice].identifierForVendor.UUIDString,
-                                                        @"host_name": @"www.airwallex.com",
-                                                        @"http_browser_email": @"jim631@sina.com",
-                                                        @"http_browser_type": @"chrome",
-                                                        @"ip_address": @"123.90.0.1",
-                                                        @"ip_network_address": @"128.0.0.0"
-                                           }
-    }];
+    parameters[@"request_id"] = self.requestId;
     if (self.paymentMethod.Id) {
         [parameters addEntriesFromDictionary:@{
             @"payment_method_reference": @{

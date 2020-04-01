@@ -1,5 +1,5 @@
 //
-//  AWEditShippingViewController.h
+//  AWShippingViewController.h
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/17.
@@ -8,14 +8,14 @@
 
 #import "AWViewController.h"
 
-@class AWPlaceDetails, AWEditShippingViewController;
+@class AWPlaceDetails, AWShippingViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  A delegate which handles selected shipping.
  */
-@protocol AWEditShippingViewControllerDelegate <NSObject>
+@protocol AWShippingViewControllerDelegate <NSObject>
 
 /**
  This method is called when a shipping has been saved.
@@ -23,19 +23,19 @@ NS_ASSUME_NONNULL_BEGIN
  @param controller The shipping view controller.
  @param shipping The selected shipping.
  */
-- (void)editShippingViewController:(AWEditShippingViewController *)controller didEditShipping:(AWPlaceDetails *)shipping;
+- (void)shippingViewController:(AWShippingViewController *)controller didEditShipping:(AWPlaceDetails *)shipping;
 
 @end
 
 /**
- `AWEditShippingViewController` provides a form to edit shipping address.
+ `AWShippingViewController` provides a form to edit shipping address.
  */
-@interface AWEditShippingViewController : AWViewController
+@interface AWShippingViewController : AWViewController
 
 /**
  A delegate which handles saved shipping.
  */
-@property (nonatomic, weak) id <AWEditShippingViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <AWShippingViewControllerDelegate> delegate;
 
 /**
  Saved shippping.

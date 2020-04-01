@@ -1,19 +1,19 @@
 //
-//  AWEditShippingViewController.m
+//  AWShippingViewController.m
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/17.
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "AWEditShippingViewController.h"
+#import "AWShippingViewController.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "AWCountryListViewController.h"
 #import "AWWidgets.h"
 #import "AWPlaceDetails.h"
 #import "AWCountry.h"
 
-@interface AWEditShippingViewController () <AWCountryListViewControllerDelegate>
+@interface AWShippingViewController () <AWCountryListViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -30,7 +30,7 @@
 
 @end
 
-@implementation AWEditShippingViewController
+@implementation AWShippingViewController
 
 - (void)viewDidLoad
 {
@@ -95,8 +95,8 @@
     }
 
     self.shipping = shipping;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(editShippingViewController:didEditShipping:)]) {
-        [self.delegate editShippingViewController:self didEditShipping:shipping];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(shippingViewController:didEditShipping:)]) {
+        [self.delegate shippingViewController:self didEditShipping:shipping];
     }
 }
 
