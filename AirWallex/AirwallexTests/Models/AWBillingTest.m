@@ -1,5 +1,5 @@
 //
-//  AWBillingTest.m
+//  AWPlaceDetailsTest.m
 //  AirwallexTests
 //
 //  Created by Victor Zhu on 2020/3/30.
@@ -8,17 +8,17 @@
 
 #import <XCTest/XCTest.h>
 #import "AWTestUtils.h"
-#import "AWBilling.h"
+#import "AWPlaceDetails.h"
 
-@interface AWBillingTest : XCTestCase
+@interface AWPlaceDetailsTest : XCTestCase
 
 @end
 
-@implementation AWBillingTest
+@implementation AWPlaceDetailsTest
 
 - (void)testBilling
 {
-    AWBilling *billing = [AWBilling parseFromJsonDictionary:[AWTestUtils jsonNamed:@"Billing"]];
+    AWPlaceDetails *billing = [AWPlaceDetails parseFromJsonDictionary:[AWTestUtils jsonNamed:@"Billing"]];
     XCTAssertNotNil(billing);
     XCTAssertNotNil(billing.firstName);
     XCTAssertNotNil(billing.lastName);

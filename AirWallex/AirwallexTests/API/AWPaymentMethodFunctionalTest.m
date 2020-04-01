@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "AWTestUtils.h"
+#import "AWConstants.h"
 #import "AWAPIClient.h"
 #import "AWPaymentMethodRequest.h"
 #import "AWPaymentMethodResponse.h"
@@ -38,8 +39,8 @@
     AWCreatePaymentMethodRequest *request = [AWCreatePaymentMethodRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
     AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
-    paymentMethod.billing = [AWBilling parseFromJsonDictionary:[AWTestUtils jsonNamed:@"Billing"]];
-    paymentMethod.type = @"card";
+    paymentMethod.billing = [AWPlaceDetails parseFromJsonDictionary:[AWTestUtils jsonNamed:@"Billing"]];
+    paymentMethod.type = AWCardKey;
     paymentMethod.card = [AWCard parseFromJsonDictionary:@{
         @"number": @"4012000300001010",
         @"cvc": @"123",

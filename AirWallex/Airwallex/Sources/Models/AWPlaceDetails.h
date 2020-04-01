@@ -1,5 +1,5 @@
 //
-//  AWBilling.h
+//  AWPlaceDetails.h
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/16.
@@ -14,9 +14,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- `AWBilling` includes the information of a billing address.
+ `AWPlaceDetails` includes the information of a billing address.
  */
-@interface AWBilling : NSObject <AWJSONifiable, AWParseable, NSCopying>
+@interface AWPlaceDetails : NSObject <AWJSONifiable, AWParseable, NSCopying>
 
 /**
  First name.
@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface AWBilling (Utils)
+@interface AWPlaceDetails (Utils)
 
 - (nullable NSString *)validate;
 

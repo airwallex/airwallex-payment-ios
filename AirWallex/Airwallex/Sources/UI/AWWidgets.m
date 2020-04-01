@@ -105,7 +105,7 @@
 - (void)setEnabled:(BOOL)enabled
 {
     super.enabled = enabled;
-    self.backgroundColor = enabled ? [AWTheme defaultTheme].purpleColor : [AWTheme defaultTheme].lineColor;
+    self.backgroundColor = enabled ? [AWTheme sharedTheme].purpleColor : [AWTheme sharedTheme].lineColor;
 }
 
 @end
@@ -131,7 +131,7 @@
 - (NSAttributedString *)formatText:(NSString *)text
 {
     NSString *nonNilText = text ?: @"";
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:nonNilText attributes:@{NSFontAttributeName: [UIFont fontWithName:AWFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [AWTheme defaultTheme].textColor}];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:nonNilText attributes:@{NSFontAttributeName: [UIFont fontWithName:AWFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [AWTheme sharedTheme].textColor}];
     return attributedString;
 }
 
@@ -427,9 +427,9 @@
 
 - (NSAttributedString *)formatText:(NSString *)text
 {
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont fontWithName:AWFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [AWTheme defaultTheme].textColor}];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont fontWithName:AWFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [AWTheme sharedTheme].textColor}];
     AWBrandType type = [self typeOfNumber:text];
-    NSArray<NSNumber *> *cardNumberFormat = [AWCardValidator cardNumberFormatForBrand:type];
+    NSArray *cardNumberFormat = [AWCardValidator cardNumberFormatForBrand:type];
     NSUInteger index = 0;
     for (NSNumber *segmentLength in cardNumberFormat) {
         NSUInteger segmentIndex = 0;

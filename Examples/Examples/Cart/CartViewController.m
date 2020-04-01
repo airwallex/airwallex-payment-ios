@@ -16,6 +16,8 @@
 #import "APIClient.h"
 #import "Constant.h"
 
+static NSString * const kCachedCustomerID = @"kCachedCustomerID";
+
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWEditShippingViewControllerDelegate, AWPaymentResultDelegate, OptionsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet AWView *badgeView;
@@ -23,7 +25,11 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet AWButton *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
-@property (strong, nonatomic) AWBilling *shipping;
+@property (strong, nonatomic) AWPlaceDetails *shipping;
+
+@property (strong, nonatomic) NSDecimalNumber *amount;
+@property (strong, nonatomic) NSString *currency;
+@property (strong, nonatomic) AWPaymentIntent *paymentIntent;
 
 @end
 
@@ -41,13 +47,8 @@
                                                detail:@"White x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"469"]];
     self.products = [@[product0, product1] mutableCopy];
-    
-    // 1. Setup Airwallex & Example Configuration
-    AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
-    configuration.delegate = self;
-    configuration.baseURL = [NSURL URLWithString:paymentBaseURL];
-    configuration.amount = [NSDecimalNumber decimalNumberWithString:defaultTotalAmount];
-    configuration.currency = defaultCurrency;
+    self.amount = [NSDecimalNumber decimalNumberWithString:defaultAmount];
+    self.currency = defaultCurrency;
     
     APIClient *client = [APIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
@@ -82,7 +83,7 @@
     NSDecimalNumber *shipping = [NSDecimalNumber zero];
     NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
     
-    self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && [AWPaymentConfiguration sharedConfiguration].amount.doubleValue > 0 && [AWPaymentConfiguration sharedConfiguration].currency.length > 0;
+    self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && self.amount.doubleValue > 0 && self.currency.length > 0;
     [self.tableView reloadData];
 }
 
@@ -95,96 +96,95 @@
         return;
     }
     
-    // 1. Setup Airwallex Configuration
-    AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
-    configuration.shipping = self.shipping;
-    
     [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;
         }
         
-        configuration.token = [APIClient sharedClient].token;
+#warning @"please remove this line before release."
+        [AWAPIClientConfiguration sharedConfiguration].token = [APIClient sharedClient].token;
         
-        __block NSError *finalError = nil;
-        dispatch_group_t group = dispatch_group_create();
-        
-        NSMutableDictionary *parameters = [@{@"amount": configuration.amount,
-                                             @"currency": configuration.currency,
-                                             @"merchant_order_id": NSUUID.UUID.UUIDString,
-                                             @"request_id": NSUUID.UUID.UUIDString,
-                                             @"order": @{}} mutableCopy];
-        
-        dispatch_group_enter(group);
-        NSLog(@"Create Payment Intent:\n%@", parameters);
-        [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
-                                                  completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
-            if (error) {
-                finalError = error;
-                dispatch_group_leave(group);
-                return;
-            }
-            
-            AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
-            configuration.intentId = result[@"id"];
-            configuration.clientSecret = result[@"client_secret"];
-            dispatch_group_leave(group);
-        }];
-        
-        NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:@"Cached Customer ID"];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
         if (customerId) {
-            configuration.customerId = customerId;
-        } else {
-            dispatch_group_enter(group);
-            [[APIClient sharedClient] createCustomerWithParameters:@{@"request_id": NSUUID.UUID.UUIDString,
-                                                                     @"merchant_customer_id": NSUUID.UUID.UUIDString,
-                                                                     @"first_name": @"John",
-                                                                     @"last_name": @"Doe",
-                                                                     @"email": @"john.doe@airwallex.com",
-                                                                     @"phone_number": @"13800000000",
-                                                                     @"additional_info": @{@"registered_via_social_media": @NO,
-                                                                                           @"registration_date": @"2019-09-18",
-                                                                                           @"first_successful_order_date": @"2019-09-18"},
-                                                                     @"metadata": @{@"id": @1}}
-                                                 completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
-                if (error) {
-                    finalError = error;
-                    dispatch_group_leave(group);
-                    return;
-                }
-                
-                NSString *customerId = result[@"id"];
-                if (customerId) {
-                    configuration.customerId = result[@"id"];
-                    [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:@"Cached Customer ID"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                }
-                dispatch_group_leave(group);
-            }];
+            [strongSelf createPaymentIntentWithCustomerId:customerId];
+            return;
         }
         
-        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-            if (finalError) {
-                [SVProgressHUD showErrorWithStatus:finalError.localizedDescription];
+        [[APIClient sharedClient] createCustomerWithParameters:@{@"request_id": NSUUID.UUID.UUIDString,
+                                                                 @"merchant_customer_id": NSUUID.UUID.UUIDString,
+                                                                 @"first_name": @"John",
+                                                                 @"last_name": @"Doe",
+                                                                 @"email": @"john.doe@airwallex.com",
+                                                                 @"phone_number": @"13800000000",
+                                                                 @"additional_info": @{@"registered_via_social_media": @NO,
+                                                                                       @"registration_date": @"2019-09-18",
+                                                                                       @"first_successful_order_date": @"2019-09-18"},
+                                                                 @"metadata": @{@"id": @1}}
+                                             completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
                 return;
             }
             
-            [SVProgressHUD dismiss];
+            NSString *customerId = result[@"id"];
+            [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:kCachedCustomerID];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             
-            // 2. Show the payment method list or load the payment detail with selected payment method
-            [self loadPaymentMethodList];
-        });
+            [strongSelf createPaymentIntentWithCustomerId:customerId];
+        }];
+    }];
+}
+
+#pragma mark - Create Payment Intent
+
+- (void)createPaymentIntentWithCustomerId:(NSString *)customerId
+{
+    NSMutableDictionary *parameters = [@{@"amount": self.amount,
+                                         @"currency": self.currency,
+                                         @"merchant_order_id": NSUUID.UUID.UUIDString,
+                                         @"request_id": NSUUID.UUID.UUIDString,
+                                         @"order": @{}} mutableCopy];
+    if (customerId) {
+        parameters[@"customer_id"] = customerId;
+    }
+    __weak __typeof(self)weakSelf = self;
+    [SVProgressHUD show];
+    [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
+                                              completionHandler:^(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            return;
+        }
+
+        if (paymentIntent.Id && paymentIntent.clientSecret) {
+            [AWAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
+
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf showPaymentFlowWithPaymentIntent:paymentIntent];
+            [SVProgressHUD dismiss];
+            return;
+        }
+
+        [SVProgressHUD showErrorWithStatus:@"Failed to create payment intent."];
     }];
 }
 
 #pragma mark - Show Payment Method List
 
-- (void)loadPaymentMethodList
+- (void)showPaymentFlowWithPaymentIntent:(AWPaymentIntent *)paymentIntent
 {
-    UINavigationController *navigationController = [AWPaymentUI paymentMethodListNavigationController];
-    [self presentViewController:navigationController animated:YES completion:nil];
+    self.paymentIntent = paymentIntent;
+    
+    AWUIContext *context = [AWUIContext sharedContext];
+    context.delegate = self;
+    context.hostViewController = self;
+    context.paymentIntent = paymentIntent;
+    context.shipping = self.shipping;
+    [context presentPaymentFlow];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -233,7 +233,7 @@
     if (indexPath.section == 0) {
         AWPaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWPaymentItemCell" forIndexPath:indexPath];
         cell.titleLabel.text = @"Shipping";
-        AWBilling *shipping = self.shipping;
+        AWPlaceDetails *shipping = self.shipping;
         if (shipping) {
             cell.selectionLabel.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@ %@", shipping.firstName, shipping.lastName, shipping.address.street, shipping.address.city, shipping.address.state, shipping.address.countryCode];
             cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
@@ -270,7 +270,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        AWEditShippingViewController *controller = [AWPaymentUI shippingViewController];
+        AWEditShippingViewController *controller = [AWUIContext shippingViewController];
         controller.delegate = self;
         controller.shipping = self.shipping;
         [self.navigationController pushViewController:controller animated:YES];
@@ -279,27 +279,28 @@
 
 #pragma mark - AWEditShippingViewControllerDelegate
 
-- (void)editShippingViewController:(AWEditShippingViewController *)controller didSelectBilling:(AWBilling *)billing
+- (void)editShippingViewController:(AWEditShippingViewController *)controller didEditShipping:(AWPlaceDetails *)shipping
 {
     [controller.navigationController popViewControllerAnimated:YES];
-    // Please remove fake email later
-    billing.email = @"jim631@sina.com";
     
-    self.shipping = billing;
+#warning @"Please remove fake email later"
+    shipping.email = @"jim631@sina.com";
+    
+    self.shipping = shipping;
     [self reloadData];
 }
 
 #pragma mark - OptionsViewControllerDelegate
 
-- (void)optionsViewController:(OptionsViewController *)viewController didEditTotalAmount:(NSDecimalNumber *)totalAmount
+- (void)optionsViewController:(OptionsViewController *)viewController didEditAmount:(NSDecimalNumber *)amount
 {
-    [AWPaymentConfiguration sharedConfiguration].amount = totalAmount;
+    self.amount = amount;
     [self reloadData];
 }
 
 - (void)optionsViewController:(OptionsViewController *)viewController didEditCurrency:(NSString *)currency
 {
-    [AWPaymentConfiguration sharedConfiguration].currency = currency;
+    self.currency = currency;
     [self reloadData];
 }
 
@@ -307,19 +308,23 @@
 
 - (void)paymentDidFinishWithStatus:(AWPaymentStatus)status error:(nullable NSError *)error
 {
-    NSString *message = error.localizedDescription;
-    if (status == AWPaymentStatusSuccess) {
-        message = @"Pay successfully";
-    }
-    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
-                                                                        message:message
-                                                                 preferredStyle:UIAlertControllerStyleAlert];
-    [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:controller animated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSString *message = error.localizedDescription;
+        if (status == AWPaymentStatusSuccess) {
+            message = @"Pay successfully";
+        }
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
+                                                                            message:message
+                                                                     preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
+    }];
 }
 
 - (void)paymentWithWechatPaySDK:(AWWechatPaySDKResponse *)response
 {
+    [self dismissViewControllerAnimated:YES completion:nil];
+
     /**
      To mock the wechat payment flow, we use an url to call instead wechat callback.
      */
@@ -369,7 +374,7 @@
 - (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
 {
     AWGetPaymentIntentRequest *request = [[AWGetPaymentIntentRequest alloc] init];
-    request.intentId = [AWPaymentConfiguration sharedConfiguration].intentId;
+    request.intentId = self.paymentIntent.Id;
     [[AWAPIClient new] send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class AWPaymentIntent;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface APIClient : NSObject
@@ -23,10 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)createAuthenticationTokenWithCompletionHandler:(void (^)(NSError * _Nullable error))completionHandler;
 
 - (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
-                        completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+                        completionHandler:(void (^ _Nullable)(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;
 
 - (void)createCustomerWithParameters:(NSDictionary *)parameters
-             completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+                   completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
 
 @end
 

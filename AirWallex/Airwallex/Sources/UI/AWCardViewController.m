@@ -9,13 +9,13 @@
 #import "AWCardViewController.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "AWEditShippingViewController.h"
+#import "AWConstants.h"
 #import "AWWidgets.h"
-#import "AWBilling.h"
+#import "AWPlaceDetails.h"
 #import "AWUtils.h"
 #import "AWCard.h"
 #import "AWPaymentMethod.h"
 #import "AWPaymentMethodRequest.h"
-#import "AWPaymentConfiguration.h"
 #import "AWAPIClient.h"
 #import "AWPaymentMethodResponse.h"
 #import "AWCountryListViewController.h"
@@ -42,7 +42,7 @@
 @property (weak, nonatomic) IBOutlet AWFloatLabeledView *countryView;
 
 @property (strong, nonatomic, nullable) AWCountry *country;
-@property (strong, nonatomic, nullable) AWBilling *billing;
+@property (strong, nonatomic, nullable) AWPlaceDetails *billing;
 
 @end
 
@@ -67,7 +67,7 @@
     self.streetField.fieldType = AWTextFieldTypeStreet;
     self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
 
-    if (![AWPaymentConfiguration sharedConfiguration].shipping) {
+    if (!self.shipping) {
         self.sameAsShipping = NO;
     }
 
@@ -107,7 +107,7 @@
 
 - (IBAction)switchChanged:(id)sender
 {
-    if (![AWPaymentConfiguration sharedConfiguration].shipping) {
+    if (!self.shipping) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
                                                                             message:@"No shipping address configured."
                                                                      preferredStyle:UIAlertControllerStyleAlert];
@@ -137,9 +137,9 @@
 - (IBAction)savePressed:(id)sender
 {
     if (self.sameAsShipping) {
-        self.billing = [AWPaymentConfiguration sharedConfiguration].shipping;
+        self.billing = [self.shipping copy];
     } else {
-        AWBilling *billing = [AWBilling new];
+        AWPlaceDetails *billing = [AWPlaceDetails new];
         billing.firstName = self.firstNameField.text;
         billing.lastName = self.lastNameField.text;
         billing.email = self.emailField.text;
@@ -170,13 +170,13 @@
     card.cvc = self.cvcField.text;
 
     AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
-    paymentMethod.type = @"card";
+    paymentMethod.type = AWCardKey;
     paymentMethod.card = card;
     paymentMethod.billing = self.billing;
 
     AWCreatePaymentMethodRequest *request = [AWCreatePaymentMethodRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
-    request.customerId = [AWPaymentConfiguration sharedConfiguration].customerId;
+    request.customerId = self.customerId;
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];
@@ -193,8 +193,8 @@
         }
 
         AWCreatePaymentMethodResponse *result = (AWCreatePaymentMethodResponse *)response;
-        [[AWPaymentConfiguration sharedConfiguration] cache:result.paymentMethod.Id value:card.cvc];
-        
+        [[NSUserDefaults standardUserDefaults] setObject:card.cvc forKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, result.paymentMethod.Id]];
+
         [strongSelf finishCreation:result.paymentMethod];
     }];
 }

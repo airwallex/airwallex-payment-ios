@@ -47,7 +47,7 @@ typedef enum : NSUInteger {
 
 + (instancetype)sharedCardValidator;
 - (nullable AWBrand *)brandForCardNumber:(NSString *)cardNumber;
-+ (NSArray<NSNumber *> *)cardNumberFormatForBrand:(AWBrandType)type;
++ (NSArray <NSNumber *> *)cardNumberFormatForBrand:(AWBrandType)type;
 
 @end
 

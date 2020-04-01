@@ -14,7 +14,7 @@
 
 @implementation AWCountry (Utils)
 
-+ (NSArray *)allCountries
++ (NSArray <AWCountry *> *)allCountries
 {
     NSLocale *locale = [NSLocale currentLocale];
     NSArray *isoCountryCodes = [NSLocale ISOCountryCodes];

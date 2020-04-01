@@ -8,7 +8,7 @@
 
 #import "AWViewController.h"
 
-@class AWCardViewController, AWPaymentMethod;
+@class AWCardViewController, AWPaymentMethod, AWPlaceDetails;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -41,6 +41,16 @@ NS_ASSUME_NONNULL_BEGIN
  A boolean which can switch to billing form
  */
 @property (nonatomic) BOOL sameAsShipping;
+
+/**
+ A  shipping address.
+ */
+@property (nonatomic, strong, nullable) AWPlaceDetails *shipping;
+
+/**
+ A customer id.
+ */
+@property (nonatomic, strong, nullable) NSString *customerId;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

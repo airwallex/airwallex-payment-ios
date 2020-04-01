@@ -14,8 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *countries;
-@property (nonatomic, strong) NSArray *matchedCountries;
+@property (strong, nonatomic) NSArray <AWCountry *> *countries;
+@property (strong, nonatomic) NSArray <AWCountry *> *matchedCountries;
 
 @end
 

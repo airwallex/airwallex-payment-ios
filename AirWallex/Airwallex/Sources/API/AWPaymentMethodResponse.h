@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWGetPaymentMethodsResponse : NSObject <AWResponseProtocol>
 
 @property (nonatomic, readonly) NSString *hasMore;
-@property (nonatomic, readonly) NSArray *items;
+@property (nonatomic, readonly) NSArray <AWPaymentMethod *> *items;
 
 @end
 

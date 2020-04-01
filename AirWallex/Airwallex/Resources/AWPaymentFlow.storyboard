@@ -535,6 +535,7 @@
         <!--Navigation Controller-->
         <scene sceneID="o3T-Sa-ATJ">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rlR-cK-hfY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="paymentMethodListNav" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="dG1-RU-wgL" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ma4-as-2vb">
@@ -546,13 +547,13 @@
                         <segue destination="X8p-bs-NKO" kind="relationship" relationship="rootViewController" id="3d2-dd-0Tz"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rlR-cK-hfY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-80530.434782608703" y="-532.36607142857144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zPs-79-oDH">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X9r-SV-AMe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="paymentDetailNav" id="Wr1-qa-BRZ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="l15-FF-6JF">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -562,7 +563,6 @@
                         <segue destination="qRb-XP-suO" kind="relationship" relationship="rootViewController" id="LPD-wi-Lqa"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="X9r-SV-AMe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-78720" y="-1352"/>
         </scene>
@@ -930,6 +930,7 @@
         <!--Navigation Controller-->
         <scene sceneID="OUc-fM-GKE">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A6M-Qc-xAc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="shippingNav" automaticallyAdjustsScrollViewInsets="NO" id="1Ir-3B-EFj" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YLS-WI-teL">
@@ -941,13 +942,12 @@
                         <segue destination="Gcj-sK-QY6" kind="relationship" relationship="rootViewController" id="cSv-6t-gw0"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="A6M-Qc-xAc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-79620.289855072464" y="1092.8571428571429"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Oci-f4-ed5"/>
+        <segue reference="Kt1-cg-dJB"/>
         <segue reference="DKs-vZ-uzr"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.3803921569" green="0.1843137255" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

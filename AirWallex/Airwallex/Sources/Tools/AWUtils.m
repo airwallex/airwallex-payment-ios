@@ -9,7 +9,7 @@
 #import "AWUtils.h"
 #import "AWConstants.h"
 #import "AWLogger.h"
-#import "AWPaymentConfiguration.h"
+#import "AWAPIClient.h"
 
 @implementation NSDictionary (Utils)
 
@@ -50,7 +50,7 @@
 
 + (NSBundle *)sdkBundle
 {
-    return [NSBundle bundleForClass:[AWPaymentConfiguration class]];
+    return [NSBundle bundleForClass:[Airwallex class]];
 }
 
 + (NSBundle *)resourceBundle

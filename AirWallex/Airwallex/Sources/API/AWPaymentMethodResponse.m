@@ -12,7 +12,7 @@
 @interface AWGetPaymentMethodsResponse ()
 
 @property (nonatomic, copy, readwrite) NSString *hasMore;
-@property (nonatomic, copy, readwrite) NSArray *items;
+@property (nonatomic, copy, readwrite) NSArray <AWPaymentMethod *> *items;
 
 @end
 

@@ -73,7 +73,7 @@
     return sharedCardValidator;
 }
 
-- (NSArray<AWBrand *> *)brands
+- (NSArray <AWBrand *> *)brands
 {
     return @[
         // Unknown
@@ -136,7 +136,7 @@
     return filtered.firstObject;
 }
 
-+ (NSArray<NSNumber *> *)cardNumberFormatForBrand:(AWBrandType)type
++ (NSArray <NSNumber *> *)cardNumberFormatForBrand:(AWBrandType)type
 {
     switch (type) {
         case AWBrandTypeAmex:

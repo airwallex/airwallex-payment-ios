@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *paymentURLTextField;
 @property (weak, nonatomic) IBOutlet UITextField *apiKeyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *clientIDTextField;
-@property (weak, nonatomic) IBOutlet UITextField *totalAmountTextField;
+@property (weak, nonatomic) IBOutlet UITextField *amountTextField;
 @property (weak, nonatomic) IBOutlet UITextField *currencyTextField;
 @property (weak, nonatomic) IBOutlet UILabel *regionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
@@ -43,8 +43,8 @@
     self.paymentURLTextField.text = [APIClient sharedClient].paymentBaseURL.absoluteString;
     self.apiKeyTextField.text = [APIClient sharedClient].apiKey;
     self.clientIDTextField.text = [APIClient sharedClient].clientID;
-    self.totalAmountTextField.text = [NSString stringWithFormat:@"%0.2f", [AWPaymentConfiguration sharedConfiguration].amount.doubleValue];
-    self.currencyTextField.text = [AWPaymentConfiguration sharedConfiguration].currency;
+    self.amountTextField.text = defaultAmount;
+    self.currencyTextField.text = defaultCurrency;
 }
 
 - (IBAction)dismiss:(id)sender
@@ -60,10 +60,10 @@
     client.apiKey = apiKey;
     client.clientID = clientID;
 
-    AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
-    configuration.baseURL = [NSURL URLWithString:paymentBaseURL];
-    configuration.amount = [NSDecimalNumber decimalNumberWithString:defaultTotalAmount];
-    configuration.currency = defaultCurrency;
+    [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
+
+    [self.delegate optionsViewController:self didEditAmount:[NSDecimalNumber decimalNumberWithString:defaultAmount]];
+    [self.delegate optionsViewController:self didEditCurrency:defaultCurrency];
 
     [self resetTextFields];
 }
@@ -74,16 +74,16 @@
 {
     if (textField == self.authURLTextField) {
         NSURL *url = [NSURL URLWithString:textField.text];
-        if (url) {
+        if (url.scheme && url.host) {
             [APIClient sharedClient].authBaseURL = url;
         } else {
             [SVProgressHUD showErrorWithStatus:@"Not a valid auth url"];
         }
     } else if (textField == self.paymentURLTextField) {
         NSURL *url = [NSURL URLWithString:textField.text];
-        if (url) {
+        if (url.scheme && url.host) {
             [APIClient sharedClient].paymentBaseURL = url;
-            [AWPaymentConfiguration sharedConfiguration].baseURL = url;
+            [Airwallex setDefaultBaseURL:url];
         } else {
             [SVProgressHUD showErrorWithStatus:@"Not a valid payment url"];
         }
@@ -91,12 +91,12 @@
         [APIClient sharedClient].apiKey = textField.text;
     } else if (textField == self.clientIDTextField) {
         [APIClient sharedClient].clientID = textField.text;
-    } else if (textField == self.totalAmountTextField) {
-        NSDecimalNumber *totalAmount = [NSDecimalNumber decimalNumberWithString:textField.text];
-        if (totalAmount == NSDecimalNumber.notANumber) {
-            totalAmount = NSDecimalNumber.zero;
+    } else if (textField == self.amountTextField) {
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:textField.text];
+        if (amount == NSDecimalNumber.notANumber) {
+            amount = NSDecimalNumber.zero;
         }
-        [self.delegate optionsViewController:self didEditTotalAmount:totalAmount];
+        [self.delegate optionsViewController:self didEditAmount:amount];
     } else if (textField == self.currencyTextField) {
         if ([textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0) {
             [self.delegate optionsViewController:self didEditCurrency:textField.text.uppercaseString];
@@ -116,10 +116,10 @@
 {
     NSLog(@"Auth Base URL: %@", [APIClient sharedClient].authBaseURL.absoluteString);
     NSLog(@"Payment Base URL (Example): %@", [APIClient sharedClient].paymentBaseURL.absoluteString);
-    NSLog(@"Payment Base URL (SDK): %@", [AWPaymentConfiguration sharedConfiguration].baseURL);
+    NSLog(@"Payment Base URL (SDK): %@", [Airwallex defaultBaseURL].absoluteString);
     NSLog(@"API Key: %@", [APIClient sharedClient].apiKey);
     NSLog(@"Client ID: %@", [APIClient sharedClient].clientID);
-    NSLog(@"Total amount: %@", self.totalAmountTextField.text);
+    NSLog(@"Amount: %@", self.amountTextField.text);
     NSLog(@"Currency: %@", self.currencyTextField.text);
 }
 

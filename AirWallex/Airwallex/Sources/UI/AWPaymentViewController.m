@@ -9,7 +9,6 @@
 #import "AWPaymentViewController.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "AWConstants.h"
-#import "AWPaymentConfiguration.h"
 #import "AWPaymentItemCell.h"
 #import "AWUtils.h"
 #import "AWWidgets.h"
@@ -19,6 +18,7 @@
 #import "AWPaymentMethodOptions.h"
 #import "AWPaymentIntentResponse.h"
 #import "AWTheme.h"
+#import "AWPaymentIntent.h"
 
 @interface AWPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
@@ -38,14 +38,19 @@
     [self.payButton setImage:[UIImage imageNamed:@"lock-white" inBundle:[NSBundle resourceBundle]] forState:UIControlStateNormal];
     [self.payButton setImage:[UIImage imageNamed:@"lock-grey" inBundle:[NSBundle resourceBundle]] forState:UIControlStateDisabled];
     [self.payButton setImageAndTitleHorizontalAlignmentCenter:8];
-    self.totalLabel.text = [AWPaymentConfiguration sharedConfiguration].amount.string;
+    self.totalLabel.text = self.paymentIntent.amount.string;
     [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:[NSBundle sdkBundle]] forCellReuseIdentifier:@"AWPaymentItemCell"];
+
+    NSString *cvc = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
+    if (cvc) {
+        self.paymentMethod.card.cvc = cvc;
+    }
     [self reloadData];
 }
 
 - (void)checkPaymentEnabled
 {
-    if ([self.paymentMethod.type isEqualToString:AWWechatpay]) {
+    if ([self.paymentMethod.type isEqualToString:AWWeChatPayKey]) {
         self.payButton.enabled = YES;
         return;
     }
@@ -69,7 +74,7 @@
 
     AWAPIClient *client = [AWAPIClient new];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
-    request.intentId = client.configuration.intentId;
+    request.intentId = self.paymentIntent.Id;
     request.requestId = NSUUID.UUID.UUIDString;
     AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
     options.autoCapture = YES;
@@ -82,29 +87,31 @@
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong typeof(self) strongSelf = weakSelf;
         [SVProgressHUD dismiss];
-        [strongSelf dismissViewControllerAnimated:YES completion:^{
-            id <AWPaymentResultDelegate> delegate = [AWPaymentConfiguration sharedConfiguration].delegate;
-            if (error) {
-                [delegate paymentDidFinishWithStatus:AWPaymentStatusError error:error];
-                return;
-            }
 
-            AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
-            if ([result.status isEqualToString:@"SUCCEEDED"]) {
-                [delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
-                return;
-            }
-
-            if (!result.nextAction) {
-                [delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
-                return;
-            }
-
-            if ([result.nextAction.type isEqualToString:@"call_sdk"]) {
-                [delegate paymentWithWechatPaySDK:result.nextAction.wechatResponse];
-            }
-        }];
+        [strongSelf finishConfirmationWithResponse:response error:error];
     }];
+}
+
+- (void)finishConfirmationWithResponse:(AWConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
+{
+    if (error) {
+        [self.delegate paymentDidFinishWithStatus:AWPaymentStatusError error:error];
+        return;
+    }
+
+    if ([response.status isEqualToString:@"SUCCEEDED"]) {
+        [self.delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
+        return;
+    }
+
+    if (!response.nextAction) {
+        [self.delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
+        return;
+    }
+
+    if ([response.nextAction.type isEqualToString:@"call_sdk"]) {
+        [self.delegate paymentWithWechatPaySDK:response.nextAction.wechatResponse];
+    }
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -121,7 +128,7 @@
     cell.cvcField.text = self.cvc;
     cell.titleLabel.text = @"Payment";
     NSString *type = self.paymentMethod.type;
-    if ([type isEqualToString:AWWechatpay]) {
+    if ([type isEqualToString:AWWeChatPayKey]) {
         cell.selectionLabel.text = @"WeChat pay";
         cell.cvcHidden = YES;
     } else {
@@ -129,7 +136,7 @@
         cell.cvcHidden = NO;
         cell.cvcField.text = self.paymentMethod.card.cvc;
     }
-    cell.selectionLabel.textColor = [AWTheme defaultTheme].textColor;
+    cell.selectionLabel.textColor = [AWTheme sharedTheme].textColor;
     cell.isLastCell = YES;
     cell.arrowView.hidden = YES;
     return cell;

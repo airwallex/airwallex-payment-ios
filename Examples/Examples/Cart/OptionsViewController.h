@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol OptionsViewControllerDelegate <NSObject>
 
-- (void)optionsViewController:(OptionsViewController *)viewController didEditTotalAmount:(NSDecimalNumber *)totalAmount;
+- (void)optionsViewController:(OptionsViewController *)viewController didEditAmount:(NSDecimalNumber *)amount;
 - (void)optionsViewController:(OptionsViewController *)viewController didEditCurrency:(NSString *)currency;
 
 @end

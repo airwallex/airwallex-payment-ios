@@ -10,7 +10,7 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "AWCountryListViewController.h"
 #import "AWWidgets.h"
-#import "AWBilling.h"
+#import "AWPlaceDetails.h"
 #import "AWCountry.h"
 
 @interface AWEditShippingViewController () <AWCountryListViewControllerDelegate>
@@ -75,18 +75,18 @@
 
 - (IBAction)savePressed:(id)sender
 {
-    AWBilling *billing = [AWBilling new];
-    billing.lastName = self.lastNameField.text;
-    billing.firstName = self.firstNameField.text;
-    billing.phoneNumber = self.phoneNumberField.text;
+    AWPlaceDetails *shipping = [AWPlaceDetails new];
+    shipping.lastName = self.lastNameField.text;
+    shipping.firstName = self.firstNameField.text;
+    shipping.phoneNumber = self.phoneNumberField.text;
     AWAddress *address = [AWAddress new];
     address.countryCode = self.country.countryCode;
     address.state = self.stateField.text;
     address.city = self.cityField.text;
     address.street = self.streetField.text;
     address.postcode = self.zipcodeField.text;
-    billing.address = address;
-    NSString *error = [billing validate];
+    shipping.address = address;
+    NSString *error = [shipping validate];
     if (error) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
         [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
@@ -94,9 +94,9 @@
         return;
     }
 
-    self.shipping = billing;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(editShippingViewController:didSelectBilling:)]) {
-        [self.delegate editShippingViewController:self didSelectBilling:billing];
+    self.shipping = shipping;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(editShippingViewController:didEditShipping:)]) {
+        [self.delegate editShippingViewController:self didEditShipping:shipping];
     }
 }
 

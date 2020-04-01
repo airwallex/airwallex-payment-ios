@@ -14,14 +14,14 @@ static UIColor *AWThemeDefaultTextColor = nil;
 
 @implementation AWTheme
 
-+ (instancetype)defaultTheme
++ (instancetype)sharedTheme
 {
-    static AWTheme *theme;
+    static AWTheme *sharedTheme;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        theme = [self new];
+        sharedTheme = [self new];
     });
-    return theme;
+    return sharedTheme;
 }
 
 + (void)initialize

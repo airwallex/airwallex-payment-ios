@@ -7,6 +7,7 @@
 //
 
 #import "APIClient.h"
+#import <Airwallex/Airwallex.h>
 
 @implementation APIClient
 
@@ -46,7 +47,7 @@
             });
             return;
         }
-
+        
         NSError *anError;
         if (data) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
@@ -57,13 +58,13 @@
                 anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
             }
             self.token = json[@"token"];
-
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 completionHandler(anError);
             });
             return;
         }
-
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             completionHandler(anError);
         });
@@ -71,7 +72,7 @@
 }
 
 - (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
-                        completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
+                        completionHandler:(void (^ _Nullable)(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler
 {
     NSURL *requestURL = [NSURL URLWithString:@"api/v1/pa/payment_intents/create" relativeToURL:self.paymentBaseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
@@ -89,7 +90,7 @@
             });
             return;
         }
-
+        
         NSError *anError;
         if (data) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
@@ -99,12 +100,14 @@
             if (errorMessage) {
                 anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
             }
+            
+            AWPaymentIntent *paymentIntent = [AWPaymentIntent parseFromJsonDictionary:json];
             dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(json, anError);
+                completionHandler(paymentIntent, anError);
             });
             return;
         }
-
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             completionHandler(nil, anError);
         });
@@ -130,7 +133,7 @@
             });
             return;
         }
-
+        
         NSError *anError;
         if (data) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
@@ -145,7 +148,7 @@
             });
             return;
         }
-
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             completionHandler(nil, anError);
         });

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AWJSONifiable.h"
 #import "AWParseable.h"
-#import "AWBilling.h"
+#import "AWPlaceDetails.h"
 #import "AWCard.h"
 #import "AWWechatPay.h"
 
@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Billing object.
  */
-@property (nonatomic, strong, nullable) AWBilling *billing;
+@property (nonatomic, strong, nullable) AWPlaceDetails *billing;
 
 /**
  Card object.
@@ -44,6 +44,11 @@ NS_ASSUME_NONNULL_BEGIN
  Wechat pay object.
  */
 @property (nonatomic, strong, nullable) AWWechatPay *wechatpay;
+
+/**
+ A customer id.
+ */
+@property (nonatomic, strong, nullable) NSString *customerId;
 
 @end
 

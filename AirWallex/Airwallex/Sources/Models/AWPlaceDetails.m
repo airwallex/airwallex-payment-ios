@@ -1,14 +1,14 @@
 //
-//  AWBilling.m
+//  AWPlaceDetails.m
 //  Airwallex
 //
 //  Created by Victor Zhu on 2020/1/16.
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "AWBilling.h"
+#import "AWPlaceDetails.h"
 
-@implementation AWBilling
+@implementation AWPlaceDetails
 
 - (NSDictionary *)toJSONDictionary
 {
@@ -24,7 +24,7 @@
 
 + (id)parseFromJsonDictionary:(NSDictionary *)json
 {
-    AWBilling *billing = [AWBilling new];
+    AWPlaceDetails *billing = [AWPlaceDetails new];
     billing.firstName = json[@"first_name"];
     billing.lastName = json[@"last_name"];
     billing.email = json[@"email"];
@@ -36,7 +36,7 @@
 
 - (id)copyWithZone:(nullable NSZone *)zone
 {
-    AWBilling *copy = [[AWBilling allocWithZone:zone] init];
+    AWPlaceDetails *copy = [[AWPlaceDetails allocWithZone:zone] init];
     copy.address = [self.address copyWithZone:zone];
     copy.firstName = [self.firstName copyWithZone:zone];
     copy.lastName = [self.lastName copyWithZone:zone];
@@ -48,7 +48,7 @@
 
 @end
 
-@implementation AWBilling (Utils)
+@implementation AWPlaceDetails (Utils)
 
 - (nullable NSString *)validate
 {

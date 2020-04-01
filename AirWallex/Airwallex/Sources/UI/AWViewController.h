@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static NSString * const kCachedCVC = @"com.airwallex.sdk:Cached CVC";
+
 @interface AWViewController : UIViewController
+
+@property (nonatomic) BOOL isFlow;
 
 - (IBAction)close:(id)sender;
 - (IBAction)pop:(id)sender;

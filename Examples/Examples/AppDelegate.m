@@ -10,6 +10,8 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import <WechatOpenSDK/WXApi.h>
+#import <Airwallex/Airwallex.h>
+#import "Constant.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -31,6 +33,9 @@
     [WXApi startLogByLevel:WXLogLevelNormal logBlock:^(NSString * _Nonnull log) {
         NSLog(@"WeChat Log: %@", log);
     }];
+
+    // Airwallex
+    [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
     
     // WeChatSDK 1.8.2
     [WXApi registerApp:@"wx4c86d73fe4f82431" enableMTA:YES];

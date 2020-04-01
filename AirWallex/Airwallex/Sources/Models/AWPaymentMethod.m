@@ -23,6 +23,9 @@
     if (self.wechatpay) {
         items[@"wechatpay"] = self.wechatpay.toJSONDictionary;
     }
+    if (self.customerId) {
+        items[@"customer_id"] = self.customerId;
+    }
     return items;
 }
 
@@ -39,7 +42,8 @@
     if (wechatpay) {
         method.wechatpay = [AWWechatPay parseFromJsonDictionary:wechatpay];
     }
-    method.billing = [AWBilling parseFromJsonDictionary:json[@"billing"]];
+    method.billing = [AWPlaceDetails parseFromJsonDictionary:json[@"billing"]];
+    method.customerId = json[@"customer_id"];
     return method;
 }
 

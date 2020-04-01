@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSObject *latestPaymentAttempt;
 @property (nonatomic, readonly) NSString *createdAt;
 @property (nonatomic, readonly) NSString *updatedAt;
-@property (nonatomic, readonly) NSArray *availablePaymentMethodTypes;
+@property (nonatomic, readonly) NSArray <NSString *> *availablePaymentMethodTypes;
 
 @end
 

@@ -7,7 +7,7 @@
 //
 
 #import "AWTestUtils.h"
-#import "AWBilling.h"
+#import "AWPlaceDetails.h"
 
 @implementation AWTestUtils
 
@@ -50,7 +50,7 @@
     configuration.baseURL = [NSURL URLWithString:@"https://staging-pci-api.airwallex.com/"];
     configuration.amount = [NSDecimalNumber decimalNumberWithString:@"0.1"];
     configuration.currency = @"USD";
-    AWBilling *billing = [AWBilling parseFromJsonDictionary:[AWTestUtils jsonNamed:@"Billing"]];
+    AWPlaceDetails *billing = [AWPlaceDetails parseFromJsonDictionary:[AWTestUtils jsonNamed:@"Billing"]];
     configuration.shipping = billing;
     configuration.intentId = @"int_mJ25queYzvh1rrJlwziLWR88d43";
     configuration.clientSecret = @"WZlx4Ab1RMlyxQxvnSLPupjHdPKcMUvMHExoiTMO-AL9Otgb6Kc4rTxQelOx3x8xr2jWuiFY5QdaLnOWPg57TWwsvCDuqd8UwpxlGGpeO0aTDsEDXZYHrn3T1liBCh9DUeGnXHGx4OUnffLFVENbodw=";

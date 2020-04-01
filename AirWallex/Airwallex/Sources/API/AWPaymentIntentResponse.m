@@ -94,7 +94,7 @@
 @property (nonatomic, copy, readwrite) NSObject *latestPaymentAttempt;
 @property (nonatomic, copy, readwrite) NSString *createdAt;
 @property (nonatomic, copy, readwrite) NSString *updatedAt;
-@property (nonatomic, copy, readwrite) NSArray *availablePaymentMethodTypes;
+@property (nonatomic, copy, readwrite) NSArray <NSString *> *availablePaymentMethodTypes;
 
 @end
 

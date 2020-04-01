@@ -12,8 +12,57 @@
 #import "AWResponseProtocol.h"
 #import "AWLogger.h"
 #import "AWAPIResponse.h"
-#import "AWPaymentConfiguration.h"
 #import "AWUtils.h"
+
+static NSString * const AWAPIBaseURL = @"https://pci-api.ariwallex.com/";
+
+@implementation Airwallex
+
+static NSURL *_defaultBaseURL;
+
++ (void)setDefaultBaseURL:(NSURL *)baseURL
+{
+    _defaultBaseURL = [baseURL URLByAppendingPathComponent:@""];
+}
+
++ (NSURL *)defaultBaseURL
+{
+    return _defaultBaseURL ?: [NSURL URLWithString:AWAPIBaseURL];
+}
+
+@end
+
+@implementation AWAPIClientConfiguration
+
++ (instancetype)sharedConfiguration
+{
+    static AWAPIClientConfiguration *sharedConfiguration;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedConfiguration = [self new];
+    });
+    return sharedConfiguration;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.baseURL = [Airwallex defaultBaseURL];
+    }
+    return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    AWAPIClientConfiguration *copy = [[AWAPIClientConfiguration allocWithZone:zone] init];
+    copy.baseURL = [self.baseURL copyWithZone:zone];
+    copy.token = [self.token copyWithZone:zone];
+    copy.clientSecret = [self.clientSecret copyWithZone:zone];
+    return copy;
+}
+
+@end
 
 @defs(AWRequestProtocol)
 
@@ -84,10 +133,10 @@
 
 - (instancetype)init
 {
-    return [self initWithConfiguration:[AWPaymentConfiguration sharedConfiguration]];
+    return [self initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
 }
 
-- (instancetype)initWithConfiguration:(AWPaymentConfiguration *)configuration
+- (instancetype)initWithConfiguration:(AWAPIClientConfiguration *)configuration
 {
     self = [super init];
     if (self) {

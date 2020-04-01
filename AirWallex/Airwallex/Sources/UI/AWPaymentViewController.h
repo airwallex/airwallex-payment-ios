@@ -7,8 +7,9 @@
 //
 
 #import "AWViewController.h"
+#import "AWUIContext.h"
 
-@class AWPaymentMethod;
+@class AWPaymentIntent, AWPaymentMethod;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,9 +19,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWPaymentViewController : AWViewController
 
 /**
+ A delegate which handles confirmed payment intent.
+ */
+@property (nonatomic, weak) id <AWPaymentResultDelegate> delegate;
+
+/**
  A payment method has been selected.
  */
-@property (strong, nonatomic) AWPaymentMethod *paymentMethod;
+@property (nonatomic, strong) AWPaymentMethod *paymentMethod;
+
+/**
+ A payment intent.
+ */
+@property (nonatomic, strong) AWPaymentIntent *paymentIntent;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

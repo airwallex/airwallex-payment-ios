@@ -8,10 +8,57 @@
 
 #import <Foundation/Foundation.h>
 
-@class AWPaymentConfiguration;
 @protocol AWRequestProtocol, AWResponseProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
+
+/**
+ `Airwallex` contains the base configuration the SDK needs.
+ */
+@interface Airwallex : NSObject
+
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+
+/**
+ Set base URL.
+ 
+ @param baseURL A baseURL required.
+ */
++ (void)setDefaultBaseURL:(NSURL *)baseURL;
+
+/**
+ Get base URL.
+ */
++ (NSURL *)defaultBaseURL;
+
+@end
+
+@interface AWAPIClientConfiguration : NSObject <NSCopying>
+
+/**
+ The base URL.
+ */
+@property (nonatomic, copy) NSURL *baseURL;
+
+/**
+ The token for auth.
+ */
+@property (nonatomic, copy) NSString *token;
+
+/**
+ The client secret for payment.
+ */
+@property (nonatomic, copy) NSString *clientSecret;
+
+/**
+ Convenience constructor for a configuration.
+ 
+ @return The shared configuration.
+ */
++ (instancetype)sharedConfiguration;
+
+@end
 
 typedef void (^AWRequestHandler)(id <AWResponseProtocol> _Nullable response, NSError * _Nullable error);
 
@@ -21,9 +68,16 @@ typedef void (^AWRequestHandler)(id <AWResponseProtocol> _Nullable response, NSE
 @interface AWAPIClient : NSObject
 
 /**
+ Convenience constructor for an api client.
+ 
+ @return The shared api client.
+ */
++ (instancetype)sharedClient;
+
+/**
  The configuration required.
  */
-@property (nonatomic, copy, readonly) AWPaymentConfiguration *configuration;
+@property (nonatomic, copy, readonly) AWAPIClientConfiguration *configuration;
 
 /**
  Initializer.
@@ -31,7 +85,7 @@ typedef void (^AWRequestHandler)(id <AWResponseProtocol> _Nullable response, NSE
  @param configuration A configuration required.
  @return The initialized http request client.
  */
-- (instancetype)initWithConfiguration:(AWPaymentConfiguration *)configuration;
+- (instancetype)initWithConfiguration:(AWAPIClientConfiguration *)configuration;
 
 /**
  Send request.

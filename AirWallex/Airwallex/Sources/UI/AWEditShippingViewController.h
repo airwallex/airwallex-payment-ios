@@ -8,22 +8,22 @@
 
 #import "AWViewController.h"
 
-@class AWBilling, AWEditShippingViewController;
+@class AWPlaceDetails, AWEditShippingViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- A delegate which handles selected billing.
+ A delegate which handles selected shipping.
  */
 @protocol AWEditShippingViewControllerDelegate <NSObject>
 
 /**
- This method is called when a billing has been saved.
+ This method is called when a shipping has been saved.
  
  @param controller The shipping view controller.
- @param billing The selected billing.
+ @param shipping The selected shipping.
  */
-- (void)editShippingViewController:(AWEditShippingViewController *)controller didSelectBilling:(AWBilling *)billing;
+- (void)editShippingViewController:(AWEditShippingViewController *)controller didEditShipping:(AWPlaceDetails *)shipping;
 
 @end
 
@@ -33,14 +33,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWEditShippingViewController : AWViewController
 
 /**
- A delegate which handles saved billing.
+ A delegate which handles saved shipping.
  */
 @property (nonatomic, weak) id <AWEditShippingViewControllerDelegate> delegate;
 
 /**
  Saved shippping.
  */
-@property (nonatomic, strong) AWBilling *shipping;
+@property (nonatomic, strong, nullable) AWPlaceDetails *shipping;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
