@@ -47,10 +47,10 @@ The specific base URL can be set in an instance of `Airwallex`.
 
 ### 2. Show Shipping UI
 
-Use `AWUIContext` to get an instance of `AWEditShippingViewController` and show it contained in a `UINavigationController`.
+Use `AWUIContext` to get an instance of `AWShippingViewController` and show it contained in a `UINavigationController`.
 
 ```
-AWEditShippingViewController *controller = [AWUIContext shippingViewController];
+AWShippingViewController *controller = [AWUIContext shippingViewController];
 ```
 
 ### 3. Show Payment Method List UI
@@ -83,7 +83,7 @@ Use `[AWUIContext sharedContext]` to get an instance of `AWUIContext` and show t
 
 ```
 AWUIContext *context = [AWUIContext sharedContext];
-context.delegate = "The target to get the payment result";
+context.delegate = "The target to handle AWPaymentResultDelegate protocol";
 context.hostViewController = "The host viewController present or push the payment UIs";
 context.paymentIntent = "The payment intent merchant provides";
 context.shipping = "The shipping address merchant provides";
