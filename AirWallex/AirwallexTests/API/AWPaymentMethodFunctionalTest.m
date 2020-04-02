@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "XCTestCase+Utils.h"
 #import "AWTestUtils.h"
 #import "AWConstants.h"
 #import "AWAPIClient.h"
@@ -19,19 +20,24 @@
 
 @implementation AWPaymentMethodFunctionalTest
 
+- (void)setUp
+{
+    [super setUp];
+    [self prepareEphemeralKeys];
+}
+
 - (void)testGetPaymentMethodList
 {
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
     request.customerId = @"cus_gSItdRkbwWQcyocadV93vQmdW0l";
 
-    AWPaymentConfiguration *configuration = [AWTestUtils paymentConfiguration];
-    AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:configuration];
+    AWAPIClient *client = [AWAPIClient sharedClient];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         XCTAssertNil(error);
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithTimeout:8 handler:nil];
+    [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 
 - (void)testCreatePaymentMethod
@@ -49,15 +55,15 @@
         @"expiry_month": @"12"
     }];
     request.paymentMethod = paymentMethod;
+    request.customerId = @"cus_gSItdRkbwWQcyocadV93vQmdW0l";
 
-    AWPaymentConfiguration *configuration = [AWTestUtils paymentConfiguration];
-    AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:configuration];
+    AWAPIClient *client = [AWAPIClient sharedClient];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Create payment method"];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        XCTAssertNil(error);
+        XCTAssertNotNil(error);
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithTimeout:8 handler:nil];
+    [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 
 @end
