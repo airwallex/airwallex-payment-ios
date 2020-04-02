@@ -42,9 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- `AWGetPaymentIntentRequest` includes all of the parameters needed to get payment intent.
+ `AWRetrievePaymentIntentRequest` includes all of the parameters needed to get payment intent.
  */
-@interface AWGetPaymentIntentRequest : NSObject <AWRequestProtocol>
+@interface AWRetrievePaymentIntentRequest : NSObject <AWRequestProtocol>
 
 /**
  Intent ID.

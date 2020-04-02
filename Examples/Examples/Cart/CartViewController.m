@@ -373,7 +373,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 
 - (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
 {
-    AWGetPaymentIntentRequest *request = [[AWGetPaymentIntentRequest alloc] init];
+    AWRetrievePaymentIntentRequest *request = [[AWRetrievePaymentIntentRequest alloc] init];
     request.intentId = self.paymentIntent.Id;
     [[AWAPIClient new] send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {

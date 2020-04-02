@@ -37,56 +37,57 @@ use_frameworks!
 
 ### Integration
 
-### 1. Initialize AWPaymentConfiguration
+### 1. Initialize Airwallex SDK
 
-These payment method specific configuration parameters can be set in an instance of `AWPaymentConfiguration`.
-
-```
-AWPaymentConfiguration *configuration = [AWPaymentConfiguration sharedConfiguration];
-configuration.shipping = "Your shipping address";
-configuration.totalNumber = "Your total amount";
-configuration.delegate = self;
-configuration.baseURL = "Payment server URL";
-configuration.intentId = "Payment intent ID";
-configuration.clientSecret = "Client secret";
-configuration.currency = "Your currency";
-configuration.customerId = "Your customer ID";
-```
-
-### 2. Present Shipping UI
-
-Use AWPaymentUI to get an UINavigationController including `AWEditShippingViewController` and present it.
+The specific base URL can be set in an instance of `Airwallex`.
 
 ```
-UINavigationController *navigationController = [AWPaymentUI shippingNavigationController];
-[self presentViewController:navigationController animated:YES completion:nil];
+[Airwallex setDefaultBaseURL:[NSURL URLWithString:@"Airwallex payment base URL"]];
 ```
 
-### 3. Present Payment Method List UI
+### 2. Show Shipping UI
 
-Use AWPaymentUI to get an UINavigationController including `AWPaymentMethodListViewController` and present it.
-
-```
-UINavigationController *navigationController = [AWPaymentUI paymentMethodListNavigationController];
-[self presentViewController:navigationController animated:YES completion:nil];
-```
-
-### 4. Present New Credit Card UI
-
-Use AWPaymentUI to get an UINavigationController including `AWCardViewController` and present it.
+Use `AWUIContext` to get an instance of `AWEditShippingViewController` and show it contained in a `UINavigationController`.
 
 ```
-UINavigationController *navigationController = [AWPaymentUI newCardNavigationController];
-[self presentViewController:navigationController animated:YES completion:nil];
+AWEditShippingViewController *controller = [AWUIContext shippingViewController];
 ```
 
-### 5. Present Payment Detail UI to confirm
+### 3. Show Payment Method List UI
 
-Use AWPaymentUI to get an UINavigationController including `AWPaymentViewController` and present it.
+Use `AWUIContext` to get an instance of `AWPaymentMethodListViewController` and show it contanined in a `UINavigationController`.
 
 ```
-UINavigationController *navigationController = [AWPaymentUI paymentDetailNavigationController];
-[self presentViewController:navigationController animated:YES completion:nil];
+AWPaymentMethodListViewController *controller = [AWUIContext paymentMethodListViewController];
+```
+
+### 4. Show New Card UI
+
+Use `AWUIContext` to get an instance of `AWCardViewController` and show it contanined in a `UINavigationController`.
+
+```
+AWCardViewController *controller = [AWUIContext newCardViewController];
+```
+
+### 5. Show Payment Detail UI
+
+Use `AWUIContext` to get an instance of `AWPaymentViewController` and show it contanined in a `UINavigationController`.
+
+```
+AWPaymentViewController *controller = [AWUIContext paymentDetailViewController];
+```
+
+### 5. Show Payment Flow
+
+Use `[AWUIContext sharedContext]` to get an instance of `AWUIContext` and show the payment flow using function `presentPaymentFlow` or `pushPaymentFlow`.
+
+```
+AWUIContext *context = [AWUIContext sharedContext];
+context.delegate = "The target to get the payment result";
+context.hostViewController = "The host viewController present or push the payment UIs";
+context.paymentIntent = "The payment intent merchant provides";
+context.shipping = "The shipping address merchant provides";
+[context presentPaymentFlow];
 ```
 
 ### Examples
@@ -95,11 +96,11 @@ There is an example app included in the repository and it provides the way how t
 
 ### Calling APIs
 
-Use `AWAPIClient` to send a request.
+Use `AWAPIClient` with an instance of `AWAPIClientConfiguration` including basic parameters such as `baseURL` and `client secret` to send a request.
 
 A request to confirm payment intent using: `AWConfirmPaymentIntentRequest`
 
-A request to get payment intent using: `AWGetPaymentIntentRequest`
+A request to get payment intent using: `AWRetrievePaymentIntentRequest`
 
 ## Contributing
 We welcome contributions of any kind including new features, bug fixes, and documentation improvements. The best way to contribute is by submitting a pull request – we'll do our best to respond to your patch as soon as possible. You can also submit an issue if you find bugs or have any questions.

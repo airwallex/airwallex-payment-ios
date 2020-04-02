@@ -58,7 +58,7 @@
 
 @end
 
-@implementation AWGetPaymentIntentRequest
+@implementation AWRetrievePaymentIntentRequest
 
 - (NSString *)path
 {

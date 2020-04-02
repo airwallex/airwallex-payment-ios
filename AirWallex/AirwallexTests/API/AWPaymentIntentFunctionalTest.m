@@ -28,7 +28,7 @@
 
 - (void)testRetrievePaymentIntent
 {
-    AWGetPaymentIntentRequest *request = [AWGetPaymentIntentRequest new];
+    AWRetrievePaymentIntentRequest *request = [AWRetrievePaymentIntentRequest new];
     request.intentId = @"int_mJ25queYzvh1rrJlwziLWR88d43";
 
     AWAPIClient *client = [AWAPIClient sharedClient];
