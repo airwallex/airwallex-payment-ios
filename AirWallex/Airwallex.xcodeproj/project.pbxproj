@@ -96,8 +96,7 @@
 		08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */; };
 		08D26F5724051FC2008E65D3 /* AWConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 08D26F5524051FC2008E65D3 /* AWConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08D26F5824051FC2008E65D3 /* AWConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D26F5624051FC2008E65D3 /* AWConstants.m */; };
-		43FFA0BACB00AEB61B5678E9 /* Pods_Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */; };
-		CF66F7E349C26954144DF916 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		BFF1A9DD0427D0465EB85A27 /* Pods_Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */; };
 		D09F2EDBD05E1DF743727FC2 /* Pods_AirwallexTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2D4A2E2793E96E830344B95 /* Pods_AirwallexTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -220,8 +219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43FFA0BACB00AEB61B5678E9 /* Pods_Airwallex.framework in Frameworks */,
-				CF66F7E349C26954144DF916 /* (null) in Frameworks */,
+				BFF1A9DD0427D0465EB85A27 /* Pods_Airwallex.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
