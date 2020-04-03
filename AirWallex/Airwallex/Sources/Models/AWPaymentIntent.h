@@ -14,22 +14,22 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWPaymentIntent : NSObject <AWParseable>
 
 /**
- Payment intent ID.
+ Unique identifier for the payment intent.
  */
 @property (nonatomic, copy) NSString *Id;
 
 /**
- Amount.
+ Payment amount. This is the order amount you would like to charge your customer.
  */
 @property (nonatomic, copy) NSDecimalNumber *amount;
 
 /**
- Currency.
+ Amount currency.
  */
 @property (nonatomic, copy) NSString *currency;
 
 /**
- Payment intent status.
+ Payment intent status. REQUIRES_PAYMENT_METHOD, REQUIRES_CUSTOMER_ACTION, REQUIRES_MERCHANT_ACTION, SUCCEEDED, CANCELLED
  */
 @property (nonatomic, copy) NSString *status;
 
@@ -39,14 +39,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray <NSString *> *availablePaymentMethodTypes;
 
 /**
- Client secret.
+ Client secret for browser or app.
  */
 @property (nonatomic, copy) NSString *clientSecret;
 
 /**
- Customer ID.
+ The customer who is paying for this payment intent
  */
-@property (nonatomic, copy) NSString *customerId;
+@property (nonatomic, copy, nullable) NSString *customerId;
 
 @end
 
