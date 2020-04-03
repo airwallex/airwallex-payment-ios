@@ -12,12 +12,16 @@
 
 - (NSDictionary *)toJSONDictionary
 {
+    NSMutableDictionary *threeDs = [@{
+        @"option": self.threeDsOption ? @"true" : @"false"
+    } mutableCopy];
+    if (self.paRes) {
+        threeDs[@"pa_res"] = self.paRes;
+    }
     return @{
         @"card": @{
                 @"auto_capture": self.autoCapture ? @"true" : @"false",
-                @"three_ds": @{
-                        @"option": self.threeDsOption ? @"true" : @"false"
-                }
+                @"three_ds": threeDs
         }
     };
 }

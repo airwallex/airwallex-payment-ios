@@ -17,14 +17,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWPaymentMethodOptions : NSObject <AWJSONifiable>
 
 /**
- Whether to auto capture.
+ Should capture automatically when confirm. Default to false. The payment intent will be captured automatically if it is true, and authorized only if it is false.
  */
 @property (nonatomic) BOOL autoCapture;
 
 /**
- Whether use 3ds.
+ Enable three domain secure.
  */
 @property (nonatomic) BOOL threeDsOption;
+
+/**
+ Three domain request.
+ */
+@property (nonatomic, copy, nullable) NSString *paRes;
 
 @end
 
