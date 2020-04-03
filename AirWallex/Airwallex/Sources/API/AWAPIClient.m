@@ -57,7 +57,6 @@ static NSURL *_defaultBaseURL;
 {
     AWAPIClientConfiguration *copy = [[AWAPIClientConfiguration allocWithZone:zone] init];
     copy.baseURL = [self.baseURL copyWithZone:zone];
-    copy.token = [self.token copyWithZone:zone];
     copy.clientSecret = [self.clientSecret copyWithZone:zone];
     return copy;
 }
@@ -161,9 +160,6 @@ static NSURL *_defaultBaseURL;
     NSDictionary *headers = request.headers;
     for (NSString *key in headers) {
         [urlRequest setValue:headers[key] forHTTPHeaderField:key];
-    }
-    if (self.configuration.token) {
-        [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", self.configuration.token] forHTTPHeaderField:@"Authorization"];
     }
     if (self.configuration.clientSecret) {
         [urlRequest setValue:self.configuration.clientSecret forHTTPHeaderField:@"client-secret"];

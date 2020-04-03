@@ -104,9 +104,6 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
             return;
         }
         
-#warning @"please remove this line before release."
-        [AWAPIClientConfiguration sharedConfiguration].token = [APIClient sharedClient].token;
-        
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
         if (customerId) {

@@ -42,11 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSURL *baseURL;
 
 /**
- The token for auth.
- */
-@property (nonatomic, copy) NSString *token;
-
-/**
  The client secret for payment.
  */
 @property (nonatomic, copy) NSString *clientSecret;
