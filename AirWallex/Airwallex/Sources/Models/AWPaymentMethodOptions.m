@@ -10,6 +10,15 @@
 
 @implementation AWPaymentMethodOptions
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.autoCapture = YES;
+    }
+    return self;
+}
+
 - (NSDictionary *)toJSONDictionary
 {
     NSMutableDictionary *threeDs = [@{

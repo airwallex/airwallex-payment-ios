@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWConfirmPaymentIntentResponse : NSObject <AWResponseProtocol>
 
 @property (nonatomic, readonly) NSString *status;
-@property (nonatomic, readonly) AWConfirmPaymentNextAction *nextAction;
+@property (nonatomic, readonly, nullable) AWConfirmPaymentNextAction *nextAction;
 
 @end
 
@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWConfirmPaymentNextAction : NSObject
 
 @property (nonatomic, readonly) NSString *type;
-@property (nonatomic, readonly) AWWechatPaySDKResponse *wechatResponse;
+@property (nonatomic, readonly, nullable) AWWechatPaySDKResponse *wechatResponse;
 
 + (AWConfirmPaymentNextAction *)parse:(NSDictionary *)json;
 

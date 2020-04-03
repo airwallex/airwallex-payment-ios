@@ -28,6 +28,9 @@
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
+    if (self.customerId) {
+        parameters[@"customer_id"] = self.customerId;
+    }
     if (self.paymentMethod.Id) {
         [parameters addEntriesFromDictionary:@{
             @"payment_method_reference": @{
@@ -39,15 +42,9 @@
         [parameters addEntriesFromDictionary:@{@"payment_method": self.paymentMethod.toJSONDictionary}];
     }
     if (self.options) {
-        [parameters addEntriesFromDictionary:@{
-            @"payment_method_options": @{
-                    @"card": @{
-                            @"auto_capture": @(self.options.autoCapture),
-                            @"three_ds": @{@"option": @(self.options.threeDsOption)}
-                    }
-            }
-        }];
+        parameters[@"payment_method_options"] = self.options.toJSONDictionary;
     }
+    parameters[@"save_payment_method"] = self.savePaymentMethod ? @"true" : @"false";
     return parameters;
 }
 

@@ -23,17 +23,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *number;
 
 /**
- Card expiry month.
+ Two digit number representing the card’s expiration month. Example: 12.
  */
 @property (nonatomic, copy) NSString *expiryMonth;
 
 /**
- Card expiry year.
+ Four digit number representing the card’s expiration year. Example: 2030.
  */
 @property (nonatomic, copy) NSString *expiryYear;
 
 /**
- The name on card.
+ Card holder name.
  */
 @property (nonatomic, copy, nullable) NSString *name;
 
@@ -43,34 +43,44 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *cvc;
 
 /**
- Bin.
+ Bank identify number of this card.
  */
 @property (nonatomic, copy, nullable) NSString *bin;
 
 /**
- Last 4 card numbers.
+ Last four digits of the card number.
  */
 @property (nonatomic, copy, nullable) NSString *last4;
 
 /**
- Card brand.
+ Brand of the card.
  */
 @property (nonatomic, copy, nullable) NSString *brand;
 
 /**
- Country code.
+ Country code of the card.
  */
 @property (nonatomic, copy, nullable) NSString *country;
 
 /**
- Funding.
+ Funding type of the card.
  */
 @property (nonatomic, copy, nullable) NSString *funding;
 
 /**
- Fingerprint
+ Fingerprint of the card.
  */
 @property (nonatomic, copy, nullable) NSString *fingerprint;
+
+/**
+ Whether CVC pass the check.
+ */
+@property (nonatomic, copy, nullable) NSString *cvcCheck;
+
+/**
+ Whether address pass the check.
+ */
+@property (nonatomic, copy, nullable) NSString *avsCheck;
 
 @end
 

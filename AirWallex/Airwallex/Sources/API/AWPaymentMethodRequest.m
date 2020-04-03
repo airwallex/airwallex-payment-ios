@@ -11,6 +11,16 @@
 
 @implementation AWGetPaymentMethodsRequest
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.pageNum = 0;
+        self.pageSize = 10;
+    }
+    return self;
+}
+
 - (NSString *)path
 {
     return @"/api/v1/pa/payment_methods";
@@ -23,10 +33,22 @@
 
 - (nullable NSDictionary *)parameters
 {
+    NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
     if (self.customerId) {
-        return @{@"customer_id": self.customerId};
+        _parameters[@"customer_id"] = self.customerId;
     }
-    return nil;
+    _parameters[@"page_num"] = @(self.pageNum);
+    _parameters[@"page_size"] = @(self.pageSize);
+    if (self.methodType) {
+        _parameters[@"method"] = self.methodType;
+    }
+    if (self.fromCreatedAt) {
+        _parameters[@"from_created_at"] = self.fromCreatedAt;
+    }
+    if (self.toCreatedAt) {
+        _parameters[@"to_created_at"] = self.toCreatedAt;
+    }
+    return _parameters;
 }
 
 - (Class)responseClass
@@ -52,9 +74,6 @@
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
-    if (self.customerId) {
-        parameters[@"customer_id"] = self.customerId;
-    }
     [parameters addEntriesFromDictionary:self.paymentMethod.toJSONDictionary];
     return parameters;
 }

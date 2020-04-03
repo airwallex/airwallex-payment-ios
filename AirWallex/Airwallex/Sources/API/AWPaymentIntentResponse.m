@@ -11,7 +11,7 @@
 @interface AWConfirmPaymentIntentResponse ()
 
 @property (nonatomic, copy, readwrite) NSString *status;
-@property (nonatomic, strong, readwrite) AWConfirmPaymentNextAction *nextAction;
+@property (nonatomic, strong, readwrite, nullable) AWConfirmPaymentNextAction *nextAction;
 
 @end
 
@@ -35,7 +35,7 @@
 @interface AWConfirmPaymentNextAction ()
 
 @property (nonatomic, copy, readwrite) NSString *type;
-@property (nonatomic, strong, readwrite) AWWechatPaySDKResponse *wechatResponse;
+@property (nonatomic, strong, readwrite, nullable) AWWechatPaySDKResponse *wechatResponse;
 
 @end
 
@@ -45,7 +45,9 @@
 {
     AWConfirmPaymentNextAction *response = [[AWConfirmPaymentNextAction alloc] init];
     response.type = json[@"type"];
-    response.wechatResponse = [AWWechatPaySDKResponse parse:json[@"data"]];
+    if ([response.type isEqualToString:@"call_sdk"]) {
+        response.wechatResponse = [AWWechatPaySDKResponse parse:json[@"data"]];
+    }
     return response;
 }
 

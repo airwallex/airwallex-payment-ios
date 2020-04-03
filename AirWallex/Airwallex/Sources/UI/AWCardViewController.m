@@ -171,12 +171,12 @@
 
     AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
     paymentMethod.type = AWCardKey;
-    paymentMethod.card = card;
     paymentMethod.billing = self.billing;
+    paymentMethod.card = card;
+    paymentMethod.customerId = self.customerId;
 
     AWCreatePaymentMethodRequest *request = [AWCreatePaymentMethodRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
-    request.customerId = self.customerId;
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];

@@ -76,6 +76,7 @@
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
     request.intentId = self.paymentIntent.Id;
     request.requestId = NSUUID.UUID.UUIDString;
+    request.customerId = self.paymentIntent.customerId;
     AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
     options.autoCapture = YES;
     options.threeDsOption = NO;
@@ -109,7 +110,7 @@
         return;
     }
 
-    if ([response.nextAction.type isEqualToString:@"call_sdk"]) {
+    if (response.nextAction.wechatResponse) {
         [self.delegate paymentWithWechatPaySDK:response.nextAction.wechatResponse];
     }
 }

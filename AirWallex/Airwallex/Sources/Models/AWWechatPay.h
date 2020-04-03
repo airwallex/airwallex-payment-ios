@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWWechatPay : NSObject <AWJSONifiable, AWParseable>
 
 /**
- Wechat flow
+ The specific WechatPay flow to use. For app, it should be 'inapp'.
  */
 @property (nonatomic, copy) NSString *flow;
 

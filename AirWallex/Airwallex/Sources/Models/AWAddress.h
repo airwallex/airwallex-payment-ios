@@ -18,27 +18,27 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWAddress : NSObject <AWJSONifiable, AWParseable, NSCopying>
 
 /**
- Country code.
+ Country code of the address. Use the two-character ISO Standard Country Codes.
  */
 @property (nonatomic, copy) NSString *countryCode;
 
 /**
- City.
+ City of the address.
  */
 @property (nonatomic, copy) NSString *city;
 
 /**
- Street.
+ Street of the address.
  */
 @property (nonatomic, copy) NSString *street;
 
 /**
- State, optional.
+ State or province of the address, optional.
  */
 @property (nonatomic, copy, nullable) NSString *state;
 
 /**
- Post code, optional.
+ Postcode of the address, optional.
  */
 @property (nonatomic, copy, nullable) NSString *postcode;
 

@@ -19,27 +19,27 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWPlaceDetails : NSObject <AWJSONifiable, AWParseable, NSCopying>
 
 /**
- First name.
+ First name of the customer.
  */
 @property (nonatomic, copy) NSString *firstName;
 
 /**
- Last name.
+ Last name of the customer.
  */
 @property (nonatomic, copy) NSString *lastName;
 
 /**
- Email, optional.
+ Email address of the customer, optional.
  */
 @property (nonatomic, copy, nullable) NSString *email;
 
 /**
- Date of birth, optional.
+ Date of birth of the customer in the format: YYYY-MM-DD, optional.
  */
 @property (nonatomic, copy, nullable) NSString *dateOfBirth;
 
 /**
- Phone number, optional.
+ Phone number of the customer, optional.
  */
 @property (nonatomic, copy, nullable) NSString *phoneNumber;
 

@@ -229,6 +229,11 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         return;
     }
 
+    NSString *cvc = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
+    if (cvc) {
+        self.paymentMethod.card.cvc = cvc;
+    }
+
     // Confirm directly (Only be valid for payment flow)
     if ([self.paymentMethod.type isEqualToString:AWWeChatPayKey]) {
         // Confirm payment with wechat type directly
@@ -265,15 +270,11 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
     request.intentId = [AWUIContext sharedContext].paymentIntent.Id;
     request.requestId = NSUUID.UUID.UUIDString;
+    request.customerId = self.customerId;
     AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
     options.autoCapture = YES;
     options.threeDsOption = NO;
     request.options = options;
-
-    NSString *cvc = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, paymentMethod.Id]];
-    if (cvc) {
-        paymentMethod.card.cvc = cvc;
-    }
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];
@@ -297,7 +298,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
             return;
         }
 
-        if ([result.nextAction.type isEqualToString:@"call_sdk"]) {
+        if (result.nextAction.wechatResponse) {
             [delegate paymentWithWechatPaySDK:result.nextAction.wechatResponse];
         }
     }];

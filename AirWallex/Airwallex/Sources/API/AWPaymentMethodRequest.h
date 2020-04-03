@@ -18,9 +18,34 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWGetPaymentMethodsRequest : NSObject <AWRequestProtocol>
 
 /**
- Customer ID
+ Customer ID.
  */
 @property (nonatomic, copy, nullable) NSString *customerId;
+
+/**
+ Page number starting from 0.
+ */
+@property (nonatomic) NSInteger pageNum;
+
+/**
+ Number of payment methods to be listed per page.
+ */
+@property (nonatomic) NSInteger pageSize;
+
+/**
+ Payment method type.
+ */
+@property (nonatomic, copy, nullable) NSString *methodType;
+
+/**
+ The start time of created_at in ISO8601 format.
+ */
+@property (nonatomic, copy, nullable) NSString *fromCreatedAt;
+
+/**
+ The end time of created_at in ISO8601 format
+ */
+@property (nonatomic, copy, nullable) NSString *toCreatedAt;
 
 @end
 
@@ -33,11 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
  Request ID.
  */
 @property (nonatomic, copy) NSString *requestId;
-
-/**
- Customer ID.
- */
-@property (nonatomic, copy, nullable) NSString *customerId;
 
 /**
  Payment method object.
