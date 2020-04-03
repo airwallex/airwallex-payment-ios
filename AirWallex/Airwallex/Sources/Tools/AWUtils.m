@@ -11,6 +11,8 @@
 #import "AWLogger.h"
 #import "AWAPIClient.h"
 
+static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
+
 @implementation NSDictionary (Utils)
 
 - (NSString *)queryURLEncoding
@@ -56,6 +58,24 @@
 + (NSBundle *)resourceBundle
 {
     return [NSBundle bundleWithPath:[self.sdkBundle pathForResource:@"AirwallexSDK" ofType:@"bundle"]];
+}
+
+@end
+
+@implementation NSUserDefaults (Utils)
+
++ (NSUserDefaults *)awUserDefaults
+{
+    return [[NSUserDefaults alloc] initWithSuiteName:kSDKSuiteName];
+}
+
+- (void)reset
+{
+    NSDictionary *keys = self.dictionaryRepresentation;
+    for (id key in keys) {
+        [self removeObjectForKey:key];
+    }
+    [self synchronize];
 }
 
 @end

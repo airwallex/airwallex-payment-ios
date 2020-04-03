@@ -41,7 +41,7 @@
     self.totalLabel.text = self.paymentIntent.amount.string;
     [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:[NSBundle sdkBundle]] forCellReuseIdentifier:@"AWPaymentItemCell"];
 
-    NSString *cvc = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
+    NSString *cvc = [[NSUserDefaults awUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
     if (cvc) {
         self.paymentMethod.card.cvc = cvc;
     }
@@ -55,8 +55,7 @@
         return;
     }
 
-    NSString *cvc = self.paymentMethod.card.cvc ?: self.cvc;
-    self.payButton.enabled = cvc.length > 0;
+    self.payButton.enabled = self.cvc.length > 0;
 }
 
 - (void)reloadData
@@ -68,9 +67,7 @@
 - (IBAction)payPressed:(id)sender
 {
     AWPaymentMethod *paymentMethod = self.paymentMethod;
-    if (!self.paymentMethod.card.cvc) {
-        paymentMethod.card.cvc = self.cvc;
-    }
+    paymentMethod.card.cvc = self.cvc;
 
     AWAPIClient *client = [AWAPIClient new];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
@@ -99,6 +96,9 @@
         [self.delegate paymentDidFinishWithStatus:AWPaymentStatusError error:error];
         return;
     }
+
+    [[NSUserDefaults awUserDefaults] setObject:self.cvc forKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
+    [[NSUserDefaults awUserDefaults] synchronize];
 
     if ([response.status isEqualToString:@"SUCCEEDED"]) {
         [self.delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];

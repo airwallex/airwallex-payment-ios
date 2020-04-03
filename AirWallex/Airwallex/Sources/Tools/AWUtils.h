@@ -26,6 +26,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface NSUserDefaults (Utils)
+
++ (NSUserDefaults *)awUserDefaults;
+- (void)reset;
+
+@end
+
 @interface NSString (Utils)
 
 - (NSDictionary *)convertToDictionary;

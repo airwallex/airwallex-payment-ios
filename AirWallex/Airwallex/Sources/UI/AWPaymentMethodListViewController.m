@@ -229,7 +229,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         return;
     }
 
-    NSString *cvc = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
+    NSString *cvc = [[NSUserDefaults awUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
     if (cvc) {
         self.paymentMethod.card.cvc = cvc;
     }

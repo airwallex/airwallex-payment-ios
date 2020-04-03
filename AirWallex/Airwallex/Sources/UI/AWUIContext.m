@@ -32,6 +32,7 @@
 {
     if (self == [AWUIContext class]) {
         [AWFontLoader loadFontIfNeeded];
+        [[NSUserDefaults awUserDefaults] reset];
     }
 }
 
