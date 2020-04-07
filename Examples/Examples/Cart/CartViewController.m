@@ -20,10 +20,10 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWShippingViewControllerDelegate, AWPaymentResultDelegate, OptionsViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet AWView *badgeView;
+@property (weak, nonatomic) IBOutlet UIView *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet AWButton *checkoutButton;
+@property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
 @property (strong, nonatomic) AWPlaceDetails *shipping;
 
@@ -38,6 +38,11 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.badgeView.layer.masksToBounds = YES;
+    self.badgeView.layer.cornerRadius = 12;
+    self.checkoutButton.layer.masksToBounds = YES;
+    self.checkoutButton.layer.cornerRadius = 6;
+
     [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:[NSBundle sdkBundle]]
          forCellReuseIdentifier:@"AWPaymentItemCell"];
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro"
@@ -62,7 +67,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.badgeView.cornerRadius = CGRectGetWidth(self.badgeView.bounds) / 2;
+    self.badgeView.layer.cornerRadius = CGRectGetWidth(self.badgeView.bounds) / 2;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -84,6 +89,8 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
     
     self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && self.amount.doubleValue > 0 && self.currency.length > 0;
+    self.checkoutButton.backgroundColor = self.checkoutButton.enabled ? [UIColor colorNamed:@"Purple Color"] : [UIColor colorNamed:@"Line Color"];
+
     [self.tableView reloadData];
 }
 
