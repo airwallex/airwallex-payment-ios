@@ -7,15 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AWJSONifiable.h"
-#import "AWParseable.h"
+#import "AWCodable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWCard` includes the information of a card.
  */
-@interface AWCard : NSObject <AWJSONifiable, AWParseable>
+@interface AWCard : NSObject <AWJSONEncodable, AWJSONDecodable>
 
 /**
  Card number.

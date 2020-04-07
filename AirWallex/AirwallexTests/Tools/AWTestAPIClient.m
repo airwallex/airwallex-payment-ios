@@ -100,7 +100,7 @@
                 anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
             }
 
-            AWPaymentIntent *paymentIntent = [AWPaymentIntent parseFromJsonDictionary:json];
+            AWPaymentIntent *paymentIntent = [AWPaymentIntent decodeFromJSON:json];
             dispatch_async(dispatch_get_main_queue(), ^{
                 completionHandler(paymentIntent, anError);
             });

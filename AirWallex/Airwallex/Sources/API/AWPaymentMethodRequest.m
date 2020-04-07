@@ -74,7 +74,7 @@
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
-    [parameters addEntriesFromDictionary:self.paymentMethod.toJSONDictionary];
+    [parameters addEntriesFromDictionary:self.paymentMethod.encodeToJSON];
     return parameters;
 }
 

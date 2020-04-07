@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AWJSONifiable.h"
-#import "AWParseable.h"
+#import "AWCodable.h"
 #import "AWPlaceDetails.h"
 #import "AWCard.h"
 #import "AWWechatPay.h"
@@ -18,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWPaymentMethod` includes the information of a payment method.
  */
-@interface AWPaymentMethod : NSObject <AWJSONifiable, AWParseable>
+@interface AWPaymentMethod : NSObject <AWJSONEncodable, AWJSONDecodable>
 
 /**
  Type of the payment method. One of card, wechatpay.

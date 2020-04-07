@@ -10,7 +10,7 @@
 
 @implementation AWAddress
 
-- (NSDictionary *)toJSONDictionary
+- (NSDictionary *)encodeToJSON
 {
     return @{
         @"country_code": self.countryCode,
@@ -21,7 +21,7 @@
     };
 }
 
-+ (id)parseFromJsonDictionary:(NSDictionary *)json
++ (id)decodeFromJSON:(NSDictionary *)json
 {
     AWAddress *address = [AWAddress new];
     address.countryCode = json[@"country_code"];

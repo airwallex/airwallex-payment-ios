@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AWJSONifiable.h"
-#import "AWParseable.h"
+#import "AWCodable.h"
 #import "AWAddress.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -16,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWPlaceDetails` includes the information of a billing address.
  */
-@interface AWPlaceDetails : NSObject <AWJSONifiable, AWParseable, NSCopying>
+@interface AWPlaceDetails : NSObject <AWJSONEncodable, AWJSONDecodable, NSCopying>
 
 /**
  First name of the customer.

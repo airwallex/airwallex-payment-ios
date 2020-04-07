@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AWJSONifiable.h"
+#import "AWCodable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWPaymentMethodOptions` includes the information of payment method options
  */
-@interface AWPaymentMethodOptions : NSObject <AWJSONifiable>
+@interface AWPaymentMethodOptions : NSObject <AWJSONEncodable>
 
 /**
  Should capture automatically when confirm. Default to false. The payment intent will be captured automatically if it is true, and authorized only if it is false.

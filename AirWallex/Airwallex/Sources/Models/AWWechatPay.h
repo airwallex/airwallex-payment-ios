@@ -7,15 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AWJSONifiable.h"
-#import "AWParseable.h"
+#import "AWCodable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWWechatPay` includes the information of wechat.
  */
-@interface AWWechatPay : NSObject <AWJSONifiable, AWParseable>
+@interface AWWechatPay : NSObject <AWJSONEncodable, AWJSONDecodable>
 
 /**
  The specific WechatPay flow to use. For app, it should be 'inapp'.

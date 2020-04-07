@@ -18,7 +18,7 @@
 
 - (void)testPaymentMethod
 {
-    AWPaymentMethod *paymentMethod = [AWPaymentMethod parseFromJsonDictionary:[AWTestUtils jsonNamed:@"PaymentMethod"]];
+    AWPaymentMethod *paymentMethod = [AWPaymentMethod decodeFromJSON:[AWTestUtils jsonNamed:@"PaymentMethod"]];
     XCTAssertNotNil(paymentMethod);
     XCTAssertNotNil(paymentMethod.Id);
     XCTAssertNotNil(paymentMethod.type);

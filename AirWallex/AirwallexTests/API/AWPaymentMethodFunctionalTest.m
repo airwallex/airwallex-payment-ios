@@ -46,8 +46,8 @@
     request.requestId = NSUUID.UUID.UUIDString;
     AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
     paymentMethod.type = AWCardKey;
-    paymentMethod.billing = [AWPlaceDetails parseFromJsonDictionary:[AWTestUtils jsonNamed:@"Billing"]];
-    paymentMethod.card = [AWCard parseFromJsonDictionary:@{
+    paymentMethod.billing = [AWPlaceDetails decodeFromJSON:[AWTestUtils jsonNamed:@"Billing"]];
+    paymentMethod.card = [AWCard decodeFromJSON:@{
         @"number": @"4012000300001010",
         @"cvc": @"123",
         @"expiry_year": @"2020",

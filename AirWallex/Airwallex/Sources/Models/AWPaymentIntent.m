@@ -10,7 +10,7 @@
 
 @implementation AWPaymentIntent
 
-+ (id)parseFromJsonDictionary:(NSDictionary *)json
++ (id)decodeFromJSON:(NSDictionary *)json
 {
     AWPaymentIntent *intent = [AWPaymentIntent new];
     intent.Id = json[@"id"];

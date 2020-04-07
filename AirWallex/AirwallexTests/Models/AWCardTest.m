@@ -18,7 +18,7 @@
 
 - (void)testCard
 {
-    AWCard *card = [AWCard parseFromJsonDictionary:[AWTestUtils jsonNamed:@"Card"]];
+    AWCard *card = [AWCard decodeFromJSON:[AWTestUtils jsonNamed:@"Card"]];
     XCTAssertNotNil(card);
     XCTAssertNotNil(card.expiryYear);
     XCTAssertNotNil(card.expiryMonth);

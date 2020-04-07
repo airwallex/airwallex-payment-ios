@@ -10,7 +10,7 @@
 
 @implementation AWPlaceDetails
 
-- (NSDictionary *)toJSONDictionary
+- (NSDictionary *)encodeToJSON
 {
     return @{
         @"first_name": self.firstName,
@@ -18,11 +18,11 @@
         @"email": self.email ?: @"",
         @"date_of_birth": self.dateOfBirth ?: @"",
         @"phone_number": self.phoneNumber ?: @"",
-        @"address": self.address.toJSONDictionary
+        @"address": self.address.encodeToJSON
     };
 }
 
-+ (id)parseFromJsonDictionary:(NSDictionary *)json
++ (id)decodeFromJSON:(NSDictionary *)json
 {
     AWPlaceDetails *billing = [AWPlaceDetails new];
     billing.firstName = json[@"first_name"];
@@ -30,7 +30,7 @@
     billing.email = json[@"email"];
     billing.dateOfBirth = json[@"date_of_birth"];
     billing.phoneNumber = json[@"phone_number"];
-    billing.address = [AWAddress parseFromJsonDictionary:json[@"address"]];
+    billing.address = [AWAddress decodeFromJSON:json[@"address"]];
     return billing;
 }
 

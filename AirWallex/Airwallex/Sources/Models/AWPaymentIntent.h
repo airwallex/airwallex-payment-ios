@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AWParseable.h"
+#import "AWCodable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWPaymentIntent : NSObject <AWParseable>
+@interface AWPaymentIntent : NSObject <AWJSONDecodable>
 
 /**
  Unique identifier for the payment intent.

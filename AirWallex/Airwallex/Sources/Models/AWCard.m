@@ -10,7 +10,7 @@
 
 @implementation AWCard
 
-- (NSDictionary *)toJSONDictionary
+- (NSDictionary *)encodeToJSON
 {
     return @{
         @"number": self.number,
@@ -21,7 +21,7 @@
     };
 }
 
-+ (id)parseFromJsonDictionary:(NSDictionary *)json
++ (id)decodeFromJSON:(NSDictionary *)json
 {
     AWCard *card = [AWCard new];
     NSString *number = json[@"number"];

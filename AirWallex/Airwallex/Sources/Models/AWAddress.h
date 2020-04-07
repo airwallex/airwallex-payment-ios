@@ -7,15 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AWJSONifiable.h"
-#import "AWParseable.h"
+#import "AWCodable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWAddress` includes the information of an address.
  */
-@interface AWAddress : NSObject <AWJSONifiable, AWParseable, NSCopying>
+@interface AWAddress : NSObject <AWJSONEncodable, AWJSONDecodable, NSCopying>
 
 /**
  Country code of the address. Use the two-character ISO Standard Country Codes.

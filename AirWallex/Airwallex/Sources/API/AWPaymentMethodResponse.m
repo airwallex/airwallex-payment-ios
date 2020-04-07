@@ -28,7 +28,7 @@
     NSArray *list = responseObject[@"items"];
     if (list && [list isKindOfClass:[NSArray class]]) {
         for (NSDictionary *item in list) {
-            [items addObject:[AWPaymentMethod parseFromJsonDictionary:item]];
+            [items addObject:[AWPaymentMethod decodeFromJSON:item]];
         }
     }
     response.items = items;
@@ -50,7 +50,7 @@
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWCreatePaymentMethodResponse *response = [AWCreatePaymentMethodResponse new];
-    response.paymentMethod = [AWPaymentMethod parseFromJsonDictionary:responseObject];
+    response.paymentMethod = [AWPaymentMethod decodeFromJSON:responseObject];
     return response;
 }
 

@@ -10,12 +10,12 @@
 
 @implementation AWWechatPay
 
-- (NSDictionary *)toJSONDictionary
+- (NSDictionary *)encodeToJSON
 {
     return @{@"flow": self.flow};
 }
 
-+ (id)parseFromJsonDictionary:(NSDictionary *)json
++ (id)decodeFromJSON:(NSDictionary *)json
 {
     AWWechatPay *pay = [AWWechatPay new];
     pay.flow = json[@"flow"];

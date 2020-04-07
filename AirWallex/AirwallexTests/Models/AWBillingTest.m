@@ -18,7 +18,7 @@
 
 - (void)testBilling
 {
-    AWPlaceDetails *billing = [AWPlaceDetails parseFromJsonDictionary:[AWTestUtils jsonNamed:@"Billing"]];
+    AWPlaceDetails *billing = [AWPlaceDetails decodeFromJSON:[AWTestUtils jsonNamed:@"Billing"]];
     XCTAssertNotNil(billing);
     XCTAssertNotNil(billing.firstName);
     XCTAssertNotNil(billing.lastName);

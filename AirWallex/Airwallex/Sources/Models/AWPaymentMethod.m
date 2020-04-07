@@ -10,18 +10,18 @@
 
 @implementation AWPaymentMethod
 
-- (NSDictionary *)toJSONDictionary
+- (NSDictionary *)encodeToJSON
 {
     NSMutableDictionary *items = [[NSMutableDictionary alloc] init];
     items[@"type"] = self.type;
     if (self.billing) {
-        items[@"billing"] = self.billing.toJSONDictionary;
+        items[@"billing"] = self.billing.encodeToJSON;
     }
     if (self.card) {
-        items[@"card"] = self.card.toJSONDictionary;
+        items[@"card"] = self.card.encodeToJSON;
     }
     if (self.wechatpay) {
-        items[@"wechatpay"] = self.wechatpay.toJSONDictionary;
+        items[@"wechatpay"] = self.wechatpay.encodeToJSON;
     }
     if (self.customerId) {
         items[@"customer_id"] = self.customerId;
@@ -29,20 +29,20 @@
     return items;
 }
 
-+ (id)parseFromJsonDictionary:(NSDictionary *)json
++ (id)decodeFromJSON:(NSDictionary *)json
 {
     AWPaymentMethod *method = [AWPaymentMethod new];
     method.Id = json[@"id"];
     method.type = json[@"type"];
     NSDictionary *card = json[@"card"];
     if (card) {
-        method.card = [AWCard parseFromJsonDictionary:card];
+        method.card = [AWCard decodeFromJSON:card];
     }
     NSDictionary *wechatpay = json[@"wechatpay"];
     if (wechatpay) {
-        method.wechatpay = [AWWechatPay parseFromJsonDictionary:wechatpay];
+        method.wechatpay = [AWWechatPay decodeFromJSON:wechatpay];
     }
-    method.billing = [AWPlaceDetails parseFromJsonDictionary:json[@"billing"]];
+    method.billing = [AWPlaceDetails decodeFromJSON:json[@"billing"]];
     method.customerId = json[@"customer_id"];
     return method;
 }

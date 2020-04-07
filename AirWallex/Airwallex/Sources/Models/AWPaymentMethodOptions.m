@@ -19,7 +19,7 @@
     return self;
 }
 
-- (NSDictionary *)toJSONDictionary
+- (NSDictionary *)encodeToJSON
 {
     NSMutableDictionary *threeDs = [@{
         @"option": self.threeDsOption ? @"true" : @"false"

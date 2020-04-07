@@ -18,7 +18,7 @@
 
 - (void)testAddress
 {
-    AWAddress *address = [AWAddress parseFromJsonDictionary:[AWTestUtils jsonNamed:@"Address"]];
+    AWAddress *address = [AWAddress decodeFromJSON:[AWTestUtils jsonNamed:@"Address"]];
     XCTAssertNotNil(address);
     XCTAssertNotNil(address.countryCode);
     XCTAssertNotNil(address.state);
