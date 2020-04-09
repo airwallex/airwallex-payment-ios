@@ -41,10 +41,15 @@
     self.totalLabel.text = self.paymentIntent.amount.string;
     [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:[NSBundle sdkBundle]] forCellReuseIdentifier:@"AWPaymentItemCell"];
 
-    NSString *cvc = [[NSUserDefaults awUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
-    if (cvc) {
-        self.paymentMethod.card.cvc = cvc;
+    if (self.paymentMethod.card.cvc) {
+        self.cvc = self.paymentMethod.card.cvc;
+    } else {
+        NSString *cvc = [[NSUserDefaults awUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
+        if (cvc) {
+            self.cvc = cvc;
+        }
     }
+
     [self reloadData];
 }
 
@@ -135,7 +140,6 @@
     } else {
         cell.selectionLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
         cell.cvcHidden = NO;
-        cell.cvcField.text = self.paymentMethod.card.cvc;
     }
     cell.selectionLabel.textColor = [AWTheme sharedTheme].textColor;
     cell.isLastCell = YES;

@@ -42,11 +42,6 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get auth token"];
     [client createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
         XCTAssertNil(error);
-
-#warning @"please remove this line before release."
-        [AWAPIClientConfiguration sharedConfiguration].token = client.token;
-        XCTAssertNotNil([AWAPIClientConfiguration sharedConfiguration].token);
-
         NSMutableDictionary *parameters = [@{@"amount": @0.10,
                                              @"currency": @"USD",
                                              @"merchant_order_id": NSUUID.UUID.UUIDString,

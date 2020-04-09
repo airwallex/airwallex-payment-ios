@@ -266,7 +266,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWPaymentMethod *)paymentMethod
 {
-    AWAPIClient *client = [AWAPIClient sharedClient];
+    AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
     request.intentId = [AWUIContext sharedContext].paymentIntent.Id;
     request.requestId = NSUUID.UUID.UUIDString;

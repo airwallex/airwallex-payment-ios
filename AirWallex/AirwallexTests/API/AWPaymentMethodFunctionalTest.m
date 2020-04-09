@@ -54,8 +54,8 @@
         @"name": @"Adam",
         @"expiry_month": @"12"
     }];
+    paymentMethod.customerId = @"cus_gSItdRkbwWQcyocadV93vQmdW0l";
     request.paymentMethod = paymentMethod;
-    request.customerId = @"cus_gSItdRkbwWQcyocadV93vQmdW0l";
 
     AWAPIClient *client = [AWAPIClient sharedClient];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Create payment method"];
