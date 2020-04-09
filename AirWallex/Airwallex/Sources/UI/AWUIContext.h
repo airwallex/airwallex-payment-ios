@@ -25,18 +25,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This method is called when the user has completed the checkout.
- 
+
+ @param controller The controller handling payment result.
  @param status The status of checkout result.
  @param error The error if checkout failed.
  */
-- (void)paymentDidFinishWithStatus:(AWPaymentStatus)status error:(nullable NSError *)error;
+- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWPaymentStatus)status error:(nullable NSError *)error;
 
 /**
- This method is called when the user has completed the checkout with wechat pay.
- 
+ This method is called when wechat pay is needed.
+
+ @param controller The controller handling payment result.
  @param response The wechat object.
  */
-- (void)paymentWithWechatPaySDK:(AWWechatPaySDKResponse *)response;
+- (void)paymentViewController:(UIViewController *)controller nextActionWithWechatPaySDK:(AWWechatPaySDKResponse *)response;
 
 @end
 

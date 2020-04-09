@@ -98,7 +98,7 @@
 - (void)finishConfirmationWithResponse:(AWConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
 {
     if (error) {
-        [self.delegate paymentDidFinishWithStatus:AWPaymentStatusError error:error];
+        [self.delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusError error:error];
         return;
     }
 
@@ -106,17 +106,17 @@
     [[NSUserDefaults awUserDefaults] synchronize];
 
     if ([response.status isEqualToString:@"SUCCEEDED"]) {
-        [self.delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
+        [self.delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusSuccess error:error];
         return;
     }
 
     if (!response.nextAction) {
-        [self.delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
+        [self.delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusSuccess error:error];
         return;
     }
 
     if (response.nextAction.wechatResponse) {
-        [self.delegate paymentWithWechatPaySDK:response.nextAction.wechatResponse];
+        [self.delegate paymentViewController:self nextActionWithWechatPaySDK:response.nextAction.wechatResponse];
     }
 }
 

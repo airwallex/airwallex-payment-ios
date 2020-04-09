@@ -278,28 +278,30 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         [SVProgressHUD dismiss];
 
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         id <AWPaymentResultDelegate> delegate = [AWUIContext sharedContext].delegate;
         if (error) {
-            [delegate paymentDidFinishWithStatus:AWPaymentStatusError error:error];
+            [delegate paymentViewController:strongSelf didFinishWithStatus:AWPaymentStatusError error:error];
             return;
         }
 
         AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
         if ([result.status isEqualToString:@"SUCCEEDED"]) {
-            [delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
+            [delegate paymentViewController:strongSelf didFinishWithStatus:AWPaymentStatusSuccess error:error];
             return;
         }
 
         if (!result.nextAction) {
-            [delegate paymentDidFinishWithStatus:AWPaymentStatusSuccess error:error];
+            [delegate paymentViewController:strongSelf didFinishWithStatus:AWPaymentStatusSuccess error:error];
             return;
         }
 
         if (result.nextAction.wechatResponse) {
-            [delegate paymentWithWechatPaySDK:result.nextAction.wechatResponse];
+            [delegate paymentViewController:strongSelf nextActionWithWechatPaySDK:result.nextAction.wechatResponse];
         }
     }];
 }

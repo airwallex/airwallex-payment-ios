@@ -310,9 +310,9 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 
 #pragma mark - AWPaymentResultDelegate
 
-- (void)paymentDidFinishWithStatus:(AWPaymentStatus)status error:(nullable NSError *)error
+- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWPaymentStatus)status error:(NSError *)error
 {
-    [self dismissViewControllerAnimated:YES completion:^{
+    [controller dismissViewControllerAnimated:YES completion:^{
         NSString *message = error.localizedDescription;
         if (status == AWPaymentStatusSuccess) {
             message = @"Pay successfully";
@@ -325,9 +325,9 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     }];
 }
 
-- (void)paymentWithWechatPaySDK:(AWWechatPaySDKResponse *)response
+- (void)paymentViewController:(UIViewController *)controller nextActionWithWechatPaySDK:(AWWechatPaySDKResponse *)response
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [controller dismissViewControllerAnimated:YES completion:nil];
 
     /**
      To mock the wechat payment flow, we use an url to call instead wechat callback.
