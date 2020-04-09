@@ -23,7 +23,10 @@
 - (void)setUp
 {
     [super setUp];
-    [self prepareEphemeralKeys];
+    [self prepareEphemeralKeys:^(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
+        XCTAssertNotNil(paymentIntent);
+        XCTAssertNil(error);
+    }];
 }
 
 - (void)testGetPaymentMethodList

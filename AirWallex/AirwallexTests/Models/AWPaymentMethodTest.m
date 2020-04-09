@@ -24,7 +24,7 @@
     XCTAssertNotNil(paymentMethod.type);
     XCTAssertNotNil(paymentMethod.card);
     XCTAssertNotNil(paymentMethod.billing);
-    XCTAssertNil(paymentMethod.wechatpay);
+    XCTAssertNil(paymentMethod.weChatPay);
 }
 
 @end

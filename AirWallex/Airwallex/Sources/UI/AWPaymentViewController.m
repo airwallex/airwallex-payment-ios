@@ -74,7 +74,7 @@
     AWPaymentMethod *paymentMethod = self.paymentMethod;
     paymentMethod.card.cvc = self.cvc;
 
-    AWAPIClient *client = [AWAPIClient new];
+    AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
     request.intentId = self.paymentIntent.Id;
     request.requestId = NSUUID.UUID.UUIDString;
@@ -115,8 +115,8 @@
         return;
     }
 
-    if (response.nextAction.wechatResponse) {
-        [self.delegate paymentViewController:self nextActionWithWechatPaySDK:response.nextAction.wechatResponse];
+    if (response.nextAction.weChatPayResponse) {
+        [self.delegate paymentViewController:self nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
     }
 }
 

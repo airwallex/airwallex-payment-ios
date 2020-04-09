@@ -325,7 +325,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     }];
 }
 
-- (void)paymentViewController:(UIViewController *)controller nextActionWithWechatPaySDK:(AWWechatPaySDKResponse *)response
+- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWWeChatPaySDKResponse *)response
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
 
@@ -379,7 +379,8 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 {
     AWRetrievePaymentIntentRequest *request = [[AWRetrievePaymentIntentRequest alloc] init];
     request.intentId = self.paymentIntent.Id;
-    [[AWAPIClient new] send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
+    [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;

@@ -90,6 +90,9 @@ typedef void (^AWRequestHandler)(id <AWResponseProtocol> _Nullable response, NSE
  */
 - (void)send:(id <AWRequestProtocol>)request handler:(AWRequestHandler)handler;
 
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+
 @end
 
 NS_ASSUME_NONNULL_END

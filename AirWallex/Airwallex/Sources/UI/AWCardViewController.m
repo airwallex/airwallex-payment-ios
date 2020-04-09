@@ -181,7 +181,7 @@
 
     [SVProgressHUD show];
     __weak typeof(self) weakSelf = self;
-    AWAPIClient *client = [AWAPIClient new];
+    AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong typeof(self) strongSelf = weakSelf;
         [SVProgressHUD dismiss];

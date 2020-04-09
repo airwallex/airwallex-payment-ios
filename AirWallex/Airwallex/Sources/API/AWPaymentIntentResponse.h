@@ -20,18 +20,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@class AWWechatPaySDKResponse;
+@class AWWeChatPaySDKResponse;
 
 @interface AWConfirmPaymentNextAction : NSObject
 
 @property (nonatomic, readonly) NSString *type;
-@property (nonatomic, readonly, nullable) AWWechatPaySDKResponse *wechatResponse;
+@property (nonatomic, readonly, nullable) AWWeChatPaySDKResponse *weChatPayResponse;
 
 + (AWConfirmPaymentNextAction *)parse:(NSDictionary *)json;
 
 @end
 
-@interface AWWechatPaySDKResponse: NSObject
+@interface AWWeChatPaySDKResponse: NSObject
 
 @property (nonatomic, readonly, nullable) NSString *appId;
 @property (nonatomic, readonly) NSString *timeStamp;
@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *package;
 @property (nonatomic, readonly) NSString *sign;
 
-+ (AWWechatPaySDKResponse *)parse:(NSDictionary *)json;
++ (AWWeChatPaySDKResponse *)parse:(NSDictionary *)json;
 
 @end
 

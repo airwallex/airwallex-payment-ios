@@ -72,7 +72,7 @@
 }
 
 - (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
-                        completionHandler:(void (^ _Nullable)(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler
+                        completionHandler:(void (^)(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler
 {
     NSURL *requestURL = [NSURL URLWithString:@"api/v1/pa/payment_intents/create" relativeToURL:self.paymentBaseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
@@ -115,7 +115,7 @@
 }
 
 - (void)createCustomerWithParameters:(NSDictionary *)parameters
-                   completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
+                   completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
 {
     NSURL *requestURL = [NSURL URLWithString:@"api/v1/pa/customers/create" relativeToURL:self.paymentBaseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];

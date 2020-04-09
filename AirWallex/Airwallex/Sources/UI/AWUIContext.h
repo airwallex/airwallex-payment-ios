@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class AWWechatPaySDKResponse, AWPaymentMethodListViewController, AWCardViewController, AWPaymentViewController, AWShippingViewController, AWPaymentIntent, AWPlaceDetails;
+@class AWWeChatPaySDKResponse, AWPaymentMethodListViewController, AWCardViewController, AWPaymentViewController, AWShippingViewController, AWPaymentIntent, AWPlaceDetails;
 
 typedef NS_ENUM(NSUInteger, AWPaymentStatus) {
     AWPaymentStatusSuccess,
@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param controller The controller handling payment result.
  @param response The wechat object.
  */
-- (void)paymentViewController:(UIViewController *)controller nextActionWithWechatPaySDK:(AWWechatPaySDKResponse *)response;
+- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWWeChatPaySDKResponse *)response;
 
 @end
 

@@ -8,13 +8,15 @@
 
 #import <XCTest/XCTest.h>
 
+@class AWPaymentIntent;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XCTestCase (Utils)
 
 - (void)waitForDuration:(NSTimeInterval)duration;
 - (void)waitForElement:(XCUIElement *)element duration:(NSTimeInterval)duration;
-- (void)prepareEphemeralKeys;
+- (void)prepareEphemeralKeys:(void (^)(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;
 
 @end
 

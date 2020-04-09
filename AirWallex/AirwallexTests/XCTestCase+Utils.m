@@ -29,7 +29,7 @@
     [self waitForExpectationsWithTimeout:duration handler:nil];
 }
 
-- (void)prepareEphemeralKeys
+- (void)prepareEphemeralKeys:(void (^)(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler
 {
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://staging-pci-api.airwallex.com/"]];
 
@@ -54,6 +54,8 @@
 
             [AWAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
             XCTAssertNotNil([AWAPIClientConfiguration sharedConfiguration].clientSecret);
+
+            completionHandler(paymentIntent, error);
 
             [expectation fulfill];
         }];

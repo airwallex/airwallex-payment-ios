@@ -18,8 +18,8 @@
 		081D52CE23D0324E00953B03 /* AWPlaceDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52CC23D0324E00953B03 /* AWPlaceDetails.m */; };
 		081D52D123D0339E00953B03 /* AWPaymentMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52CF23D0339E00953B03 /* AWPaymentMethod.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		081D52D223D0339E00953B03 /* AWPaymentMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52D023D0339E00953B03 /* AWPaymentMethod.m */; };
-		081D52D523D0343200953B03 /* AWWechatPay.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52D323D0343200953B03 /* AWWechatPay.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		081D52D623D0343200953B03 /* AWWechatPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52D423D0343200953B03 /* AWWechatPay.m */; };
+		081D52D523D0343200953B03 /* AWWeChatPay.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52D323D0343200953B03 /* AWWeChatPay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		081D52D623D0343200953B03 /* AWWeChatPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52D423D0343200953B03 /* AWWeChatPay.m */; };
 		081D52DE23D03B3F00953B03 /* AWPaymentIntentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52DC23D03B3F00953B03 /* AWPaymentIntentRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		081D52DF23D03B3F00953B03 /* AWPaymentIntentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52DD23D03B3F00953B03 /* AWPaymentIntentRequest.m */; };
 		081D52E323D03BDF00953B03 /* AWPaymentIntentResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52E123D03BDF00953B03 /* AWPaymentIntentResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -121,8 +121,8 @@
 		081D52CC23D0324E00953B03 /* AWPlaceDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPlaceDetails.m; sourceTree = "<group>"; };
 		081D52CF23D0339E00953B03 /* AWPaymentMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWPaymentMethod.h; sourceTree = "<group>"; };
 		081D52D023D0339E00953B03 /* AWPaymentMethod.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentMethod.m; sourceTree = "<group>"; };
-		081D52D323D0343200953B03 /* AWWechatPay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWWechatPay.h; sourceTree = "<group>"; };
-		081D52D423D0343200953B03 /* AWWechatPay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWWechatPay.m; sourceTree = "<group>"; };
+		081D52D323D0343200953B03 /* AWWeChatPay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWWeChatPay.h; sourceTree = "<group>"; };
+		081D52D423D0343200953B03 /* AWWeChatPay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWWeChatPay.m; sourceTree = "<group>"; };
 		081D52DC23D03B3F00953B03 /* AWPaymentIntentRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWPaymentIntentRequest.h; sourceTree = "<group>"; };
 		081D52DD23D03B3F00953B03 /* AWPaymentIntentRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentIntentRequest.m; sourceTree = "<group>"; };
 		081D52E023D03B6900953B03 /* AWRequestProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWRequestProtocol.h; sourceTree = "<group>"; };
@@ -271,8 +271,8 @@
 				081D52CC23D0324E00953B03 /* AWPlaceDetails.m */,
 				081D52CF23D0339E00953B03 /* AWPaymentMethod.h */,
 				081D52D023D0339E00953B03 /* AWPaymentMethod.m */,
-				081D52D323D0343200953B03 /* AWWechatPay.h */,
-				081D52D423D0343200953B03 /* AWWechatPay.m */,
+				081D52D323D0343200953B03 /* AWWeChatPay.h */,
+				081D52D423D0343200953B03 /* AWWeChatPay.m */,
 				081D52E623D043E100953B03 /* AWPaymentMethodOptions.h */,
 				081D52E723D043E100953B03 /* AWPaymentMethodOptions.m */,
 				0829FD1B2433474A00557DB2 /* AWPaymentIntent.h */,
@@ -473,7 +473,7 @@
 				0866665F24062AEB00B52477 /* AWCountryListViewController.h in Headers */,
 				081D52E823D043E100953B03 /* AWPaymentMethodOptions.h in Headers */,
 				081D52E323D03BDF00953B03 /* AWPaymentIntentResponse.h in Headers */,
-				081D52D523D0343200953B03 /* AWWechatPay.h in Headers */,
+				081D52D523D0343200953B03 /* AWWeChatPay.h in Headers */,
 				0863F6FB240E390100925664 /* AWPaymentViewController.h in Headers */,
 				0866666024062AEB00B52477 /* AWPaymentMethodListViewController.h in Headers */,
 				08A14B9823E91E9700F3C211 /* AWAPIClient.h in Headers */,
@@ -705,7 +705,7 @@
 				0866666F2406314500B52477 /* AWWidgets.m in Sources */,
 				0866665924062AEB00B52477 /* AWShippingViewController.m in Sources */,
 				081D52CE23D0324E00953B03 /* AWPlaceDetails.m in Sources */,
-				081D52D623D0343200953B03 /* AWWechatPay.m in Sources */,
+				081D52D623D0343200953B03 /* AWWeChatPay.m in Sources */,
 				086666442406138400B52477 /* AWPaymentMethodCell.m in Sources */,
 				08BD3AA0240CCAED00ACFB6B /* AWViewController.m in Sources */,
 				085BD43923CDCBD7002E8F27 /* AWAddress.m in Sources */,

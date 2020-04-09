@@ -71,12 +71,11 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (NSArray <AWPaymentMethod *> *)section0
 {
-    AWPaymentMethod *wechatpay = [AWPaymentMethod new];
-    wechatpay.type = AWWeChatPayKey;
-    AWWechatPay *pay = [AWWechatPay new];
-    pay.flow = @"inapp";
-    wechatpay.wechatpay = pay;
-    return @[wechatpay];
+    AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
+    paymentMethod.type = AWWeChatPayKey;
+    AWWeChatPay *pay = [AWWeChatPay new];
+    paymentMethod.weChatPay = pay;
+    return @[paymentMethod];
 }
 
 - (void)reloadData
@@ -88,10 +87,10 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     }
 
     [SVProgressHUD show];
-    AWAPIClient *client = [AWAPIClient new];
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
     request.customerId = self.customerId;
     __weak typeof(self) weakSelf = self;
+    AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong typeof(self) strongSelf = weakSelf;
         [SVProgressHUD dismiss];
@@ -300,8 +299,8 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
             return;
         }
 
-        if (result.nextAction.wechatResponse) {
-            [delegate paymentViewController:strongSelf nextActionWithWechatPaySDK:result.nextAction.wechatResponse];
+        if (result.nextAction.weChatPayResponse) {
+            [delegate paymentViewController:strongSelf nextActionWithWeChatPaySDK:result.nextAction.weChatPayResponse];
         }
     }];
 }

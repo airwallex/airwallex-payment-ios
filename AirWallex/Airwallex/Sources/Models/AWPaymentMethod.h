@@ -10,7 +10,7 @@
 #import "AWCodable.h"
 #import "AWPlaceDetails.h"
 #import "AWCard.h"
-#import "AWWechatPay.h"
+#import "AWWeChatPay.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Wechat pay object.
  */
-@property (nonatomic, strong, nullable) AWWechatPay *wechatpay;
+@property (nonatomic, strong, nullable) AWWeChatPay *weChatPay;
 
 /**
  The customer this payment method belongs to.

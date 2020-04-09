@@ -13,8 +13,11 @@
 #import "AWAPIClient.h"
 #import "AWPaymentIntentRequest.h"
 #import "AWPaymentIntentResponse.h"
+#import "AWPaymentIntent.h"
 
 @interface AWPaymentIntentFunctionalTest : XCTestCase
+
+@property (nonatomic, strong) AWPaymentIntent *paymentIntent;
 
 @end
 
@@ -23,15 +26,21 @@
 - (void)setUp
 {
     [super setUp];
-    [self prepareEphemeralKeys];
+    __weak __typeof(self)weakSelf = self;
+    [self prepareEphemeralKeys:^(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
+        XCTAssertNotNil(paymentIntent);
+        XCTAssertNil(error);
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.paymentIntent = paymentIntent;
+    }];
 }
 
 - (void)testRetrievePaymentIntent
 {
     AWRetrievePaymentIntentRequest *request = [AWRetrievePaymentIntentRequest new];
-    request.intentId = @"int_mJ25queYzvh1rrJlwziLWR88d43";
+    request.intentId = self.paymentIntent.Id;
 
-    AWAPIClient *client = [AWAPIClient sharedClient];
+    AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Retrieve payment intent"];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         XCTAssertNil(error);

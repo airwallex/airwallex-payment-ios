@@ -35,7 +35,7 @@
 @interface AWConfirmPaymentNextAction ()
 
 @property (nonatomic, copy, readwrite) NSString *type;
-@property (nonatomic, strong, readwrite, nullable) AWWechatPaySDKResponse *wechatResponse;
+@property (nonatomic, strong, readwrite, nullable) AWWeChatPaySDKResponse *weChatPayResponse;
 
 @end
 
@@ -46,14 +46,14 @@
     AWConfirmPaymentNextAction *response = [[AWConfirmPaymentNextAction alloc] init];
     response.type = json[@"type"];
     if ([response.type isEqualToString:@"call_sdk"]) {
-        response.wechatResponse = [AWWechatPaySDKResponse parse:json[@"data"]];
+        response.weChatPayResponse = [AWWeChatPaySDKResponse parse:json[@"data"]];
     }
     return response;
 }
 
 @end
 
-@interface AWWechatPaySDKResponse ()
+@interface AWWeChatPaySDKResponse ()
 
 @property (nonatomic, copy, readwrite) NSString *appId;
 @property (nonatomic, copy, readwrite) NSString *timeStamp;
@@ -65,11 +65,11 @@
 
 @end
 
-@implementation AWWechatPaySDKResponse
+@implementation AWWeChatPaySDKResponse
 
-+ (AWWechatPaySDKResponse *)parse:(NSDictionary *)json
++ (AWWeChatPaySDKResponse *)parse:(NSDictionary *)json
 {
-    AWWechatPaySDKResponse *response = [[AWWechatPaySDKResponse alloc] init];
+    AWWeChatPaySDKResponse *response = [[AWWeChatPaySDKResponse alloc] init];
     response.appId = json[@"appId"];
     response.timeStamp = json[@"timeStamp"];
     response.nonceStr = json[@"nonceStr"];
