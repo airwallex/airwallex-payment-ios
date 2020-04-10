@@ -6,10 +6,10 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-green.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-green.svg?style=flat)](https://cocoapods.org)
 
-The Airwallex iOS SDK is a framework for integrating easy, fast and secure payments inside your app with Airwallex. It provides simple functions to send sensitive credit card data directly to Airwallex, it also provides a powerful, customizable interface for collecting user payment details.
+The Airwallex iOS SDK is a framework for integrating easy, fast and secure payments inside your app with Airwallex.
 
 ## Requirements
-The Airwallex iOS SDK requires Xcode 10 or later and is compatible with apps targeting iOS 10 or above.
+The Airwallex iOS SDK requires Xcode 9.3 or later and is compatible with apps targeting iOS 10 or above.
 
 ## Installation
 
@@ -37,7 +37,7 @@ use_frameworks!
 
 ### Integration
 
-### 1. Initialize Airwallex SDK
+### Initialize Airwallex SDK
 
 The specific base URL can be set in an instance of `Airwallex`.
 
@@ -45,54 +45,18 @@ The specific base URL can be set in an instance of `Airwallex`.
 [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"Airwallex payment base URL"]];
 ```
 
-### 2. Show Shipping UI
+### Using `AWAPIClient`
 
-Use `AWUIContext` to get an instance of `AWShippingViewController` and show it contained in a `UINavigationController`.
-
-```
-AWShippingViewController *controller = [AWUIContext shippingViewController];
-```
-
-### 3. Show Payment Method List UI
-
-Use `AWUIContext` to get an instance of `AWPaymentMethodListViewController` and show it contanined in a `UINavigationController`.
+Please set client secret before using `AWAPIClient` to send a request.
 
 ```
-AWPaymentMethodListViewController *controller = [AWUIContext paymentMethodListViewController];
-```
-
-### 4. Show New Card UI
-
-Use `AWUIContext` to get an instance of `AWCardViewController` and show it contanined in a `UINavigationController`.
-
-```
-AWCardViewController *controller = [AWUIContext newCardViewController];
-```
-
-### 5. Show Payment Detail UI
-
-Use `AWUIContext` to get an instance of `AWPaymentViewController` and show it contanined in a `UINavigationController`.
-
-```
-AWPaymentViewController *controller = [AWUIContext paymentDetailViewController];
-```
-
-### 5. Show Payment Flow
-
-Use `[AWUIContext sharedContext]` to get an instance of `AWUIContext` and show the payment flow using function `presentPaymentFlow` or `pushPaymentFlow`.
-
-```
-AWUIContext *context = [AWUIContext sharedContext];
-context.delegate = "The target to handle AWPaymentResultDelegate protocol";
-context.hostViewController = "The host viewController present or push the payment UIs";
-context.paymentIntent = "The payment intent merchant provides";
-context.shipping = "The shipping address merchant provides";
-[context presentPaymentFlow];
+[AWAPIClientConfiguration sharedConfiguration].clientSecret = "The client secret merchant provides";
+AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
 ```
 
 ### Examples
 
-There is an example app included in the repository and it provides the way how to check out with WeChat SDK and Credit Card.
+There is an example app included in the repository and it provides the way how to check out with WeChat SDK.
 
 ### Calling APIs
 

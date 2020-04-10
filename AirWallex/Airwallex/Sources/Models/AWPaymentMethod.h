@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "AWCodable.h"
-#import "AWPlaceDetails.h"
-#import "AWCard.h"
 #import "AWWeChatPay.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -20,24 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWPaymentMethod : NSObject <AWJSONEncodable, AWJSONDecodable>
 
 /**
- Type of the payment method. One of card, wechatpay.
+ Type of the payment method. Only wechatpay supported now.
  */
 @property (nonatomic, copy) NSString *type;
-
-/**
- Unique identifier for the payment method.
- */
-@property (nonatomic, copy, nullable) NSString *Id;
-
-/**
- Billing object.
- */
-@property (nonatomic, strong, nullable) AWPlaceDetails *billing;
-
-/**
- Card object.
- */
-@property (nonatomic, strong, nullable) AWCard *card;
 
 /**
  Wechat pay object.
