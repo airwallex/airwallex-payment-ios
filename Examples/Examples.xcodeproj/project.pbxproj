@@ -16,18 +16,28 @@
 		085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
 		085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
 		085BD40123CC64B9002E8F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
-		0878D0C323D58DF500382702 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D09123D5846B00382702 /* libc++.tbd */; };
-		0878D0CA23D59B9D00382702 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0878D0C723D59B9D00382702 /* README.txt */; };
-		0878D0CB23D59B9D00382702 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0C923D59B9D00382702 /* libWeChatSDK.a */; };
-		0878D0CF23D59C4300382702 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0CE23D59C4300382702 /* SystemConfiguration.framework */; };
-		0878D0D123D59C6A00382702 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0A923D58D2D00382702 /* libsqlite3.0.tbd */; };
-		0878D0D223D59C7800382702 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0AB23D58D4200382702 /* libz.tbd */; };
 		088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
 		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
-		08D5B51924109DEA00680074 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878D0A523D58D1D00382702 /* CoreTelephony.framework */; };
-		E08268B70A40C15A51D041FA /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29265F0DAF62D6592201220D /* Pods_Examples.framework */; };
+		08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
+		08B55E3B2421DA330054E254 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
+		08B55E3C2421DA330054E254 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7071D3AC01A9341C319415E /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		08B55E3D2421DA330054E254 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				08B55E3C2421DA330054E254 /* Airwallex.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		082D308023CEEC3300C9D587 /* ProductCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProductCell.h; sourceTree = "<group>"; };
@@ -45,26 +55,17 @@
 		085BD3FD23CC64B9002E8F27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		085BD3FF23CC64B9002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD40023CC64B9002E8F27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0878D09123D5846B00382702 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		0878D0A323D58D1700382702 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		0878D0A523D58D1D00382702 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		0878D0A923D58D2D00382702 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		0878D0AB23D58D4200382702 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		0878D0C523D59B9D00382702 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		0878D0C623D59B9D00382702 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
-		0878D0C723D59B9D00382702 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		0878D0C823D59B9D00382702 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
-		0878D0C923D59B9D00382702 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		0878D0CC23D59C3900382702 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		0878D0CE23D59C4300382702 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		088ADB912407B329001ADC71 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.otf"; sourceTree = "<group>"; };
 		088ADB922407B329001ADC71 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
 		088F3E8123CEB7FF005AE40F /* APIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
 		088F3E8223CEB7FF005AE40F /* APIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		088F3E8423CED74C005AE40F /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
-		29265F0DAF62D6592201220D /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		571639E6621D83BFA9D06E86 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
-		CE84F69084EF8EDE43A99B0C /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
+		08A3E99D24246C30003FDAAF /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
+		08A3E99E24246C30003FDAAF /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
+		08B55E372421D8C60054E254 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A6EAE250E77991C1E9B6A69 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "../../Pods/Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
+		7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EA9D3B9B12EC61CCBFD04C4 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "../../Pods/Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,13 +73,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08D5B51924109DEA00680074 /* CoreTelephony.framework in Frameworks */,
-				0878D0C323D58DF500382702 /* libc++.tbd in Frameworks */,
-				0878D0CF23D59C4300382702 /* SystemConfiguration.framework in Frameworks */,
-				0878D0D223D59C7800382702 /* libz.tbd in Frameworks */,
-				0878D0CB23D59B9D00382702 /* libWeChatSDK.a in Frameworks */,
-				E08268B70A40C15A51D041FA /* Pods_Examples.framework in Frameworks */,
-				0878D0D123D59C6A00382702 /* libsqlite3.0.tbd in Frameworks */,
+				08B55E3B2421DA330054E254 /* Airwallex.framework in Frameworks */,
+				F7071D3AC01A9341C319415E /* Pods_Examples.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +90,8 @@
 				082D308423CEECE400C9D587 /* TotalCell.m */,
 				082D308623CEEDC100C9D587 /* CartViewController.h */,
 				082D308723CEEDC100C9D587 /* CartViewController.m */,
+				08A3E99D24246C30003FDAAF /* OptionsViewController.h */,
+				08A3E99E24246C30003FDAAF /* OptionsViewController.m */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -101,7 +99,6 @@
 		085BD3E223CC64B6002E8F27 = {
 			isa = PBXGroup;
 			children = (
-				0878D0C423D59B9D00382702 /* WeChatSDK1.8.2 */,
 				085BD3ED23CC64B6002E8F27 /* Examples */,
 				085BD3EC23CC64B6002E8F27 /* Products */,
 				B66354DF3707CEF41053480C /* Pods */,
@@ -132,18 +129,6 @@
 			path = Examples;
 			sourceTree = "<group>";
 		};
-		0878D0C423D59B9D00382702 /* WeChatSDK1.8.2 */ = {
-			isa = PBXGroup;
-			children = (
-				0878D0C523D59B9D00382702 /* WXApi.h */,
-				0878D0C623D59B9D00382702 /* WXApiObject.h */,
-				0878D0C723D59B9D00382702 /* README.txt */,
-				0878D0C823D59B9D00382702 /* WechatAuthSDK.h */,
-				0878D0C923D59B9D00382702 /* libWeChatSDK.a */,
-			);
-			path = WeChatSDK1.8.2;
-			sourceTree = "<group>";
-		};
 		088ADB902407B329001ADC71 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,14 +154,8 @@
 		A124BE0DCF06F969177C95C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0878D0CE23D59C4300382702 /* SystemConfiguration.framework */,
-				0878D0CC23D59C3900382702 /* Security.framework */,
-				0878D0AB23D58D4200382702 /* libz.tbd */,
-				0878D0A923D58D2D00382702 /* libsqlite3.0.tbd */,
-				0878D0A523D58D1D00382702 /* CoreTelephony.framework */,
-				0878D0A323D58D1700382702 /* CFNetwork.framework */,
-				0878D09123D5846B00382702 /* libc++.tbd */,
-				29265F0DAF62D6592201220D /* Pods_Examples.framework */,
+				08B55E372421D8C60054E254 /* Airwallex.framework */,
+				7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -184,8 +163,8 @@
 		B66354DF3707CEF41053480C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				CE84F69084EF8EDE43A99B0C /* Pods-Examples.debug.xcconfig */,
-				571639E6621D83BFA9D06E86 /* Pods-Examples.release.xcconfig */,
+				9EA9D3B9B12EC61CCBFD04C4 /* Pods-Examples.debug.xcconfig */,
+				4A6EAE250E77991C1E9B6A69 /* Pods-Examples.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -197,11 +176,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */;
 			buildPhases = (
-				21F8834485F52356E77440D3 /* [CP] Check Pods Manifest.lock */,
+				27213DDF7CB718263CED259E /* [CP] Check Pods Manifest.lock */,
 				085BD3E723CC64B6002E8F27 /* Sources */,
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
-				AB15E8EED34C9823272A9690 /* [CP] Embed Pods Frameworks */,
+				08B55E3D2421DA330054E254 /* Embed Frameworks */,
+				93EA6DFA6F7AE71247D6E8D3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -253,7 +233,6 @@
 				085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */,
 				088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */,
 				085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */,
-				0878D0CA23D59B9D00382702 /* README.txt in Resources */,
 				085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */,
 				088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */,
 			);
@@ -262,7 +241,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		21F8834485F52356E77440D3 /* [CP] Check Pods Manifest.lock */ = {
+		27213DDF7CB718263CED259E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -284,7 +263,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AB15E8EED34C9823272A9690 /* [CP] Embed Pods Frameworks */ = {
+		93EA6DFA6F7AE71247D6E8D3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -314,6 +293,7 @@
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
+				08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,7 +431,7 @@
 		};
 		085BD40523CC64B9002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE84F69084EF8EDE43A99B0C /* Pods-Examples.debug.xcconfig */;
+			baseConfigurationReference = 9EA9D3B9B12EC61CCBFD04C4 /* Pods-Examples.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -462,7 +442,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/WeChatSDK1.8.2";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -491,7 +470,7 @@
 		};
 		085BD40623CC64B9002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 571639E6621D83BFA9D06E86 /* Pods-Examples.release.xcconfig */;
+			baseConfigurationReference = 4A6EAE250E77991C1E9B6A69 /* Pods-Examples.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -502,7 +481,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/WeChatSDK1.8.2";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",

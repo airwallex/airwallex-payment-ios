@@ -1,0 +1,15 @@
+stages:
+  - build
+#  - archive
+
+build_project:
+  stage: build
+  script:
+    - xcodebuild clean -project Airwallex.xcworkspace -scheme Examples | xcpretty
+    - xcodebuild test -project Airwallex.xcworkspace -scheme Examples -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.3' | xcpretty -s
+
+#archive_project:
+#  stage: archive
+#  script:
+#    - xcodebuild clean archive -archivePath build/Airwallex -scheme Examples
+#    - xcodebuild -exportArchive -exportFormat ipa -archivePath "build/Examples.xcarchive" -exportPath "build/Examples.ipa" -exportProvisioningProfile "ProvisioningProfileName"

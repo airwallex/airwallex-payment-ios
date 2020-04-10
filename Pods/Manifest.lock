@@ -1,0 +1,24 @@
+PODS:
+  - IQKeyboardManager (6.5.4)
+  - SVProgressHUD (2.2.5)
+  - WechatOpenSDK (1.8.2)
+
+DEPENDENCIES:
+  - IQKeyboardManager (= 6.5.4)
+  - SVProgressHUD (= 2.2.5)
+  - WechatOpenSDK (= 1.8.2)
+
+SPEC REPOS:
+  trunk:
+    - IQKeyboardManager
+    - SVProgressHUD
+    - WechatOpenSDK
+
+SPEC CHECKSUMS:
+  IQKeyboardManager: 72b359cd7e777e3a984cedbe05f8da45320cbb63
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
+
+PODFILE CHECKSUM: 4671a43656d36da421c36546a6ac2467f610003f
+
+COCOAPODS: 1.9.1

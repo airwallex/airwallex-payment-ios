@@ -9,7 +9,9 @@
 #import "AppDelegate.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
-#import "WXApi.h"
+#import <WechatOpenSDK/WXApi.h>
+#import <Airwallex/Airwallex.h>
+#import "Constant.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -23,7 +25,7 @@
     [SVProgressHUD setMaximumDismissTimeInterval:2];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [IQKeyboardManager sharedManager].enable = YES;
-
+    
     [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [self loadCartView];
     }];
@@ -32,11 +34,14 @@
         NSLog(@"WeChat Log: %@", log);
     }];
 
+    // Airwallex
+    [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
+    
     // WeChatSDK 1.8.2
-    [WXApi registerApp:@"wxfad13fd6681a62b0" enableMTA:YES];
-
+    [WXApi registerApp:@"wx4c86d73fe4f82431" enableMTA:YES];
+    
     // WeChatSDK 1.8.6.1
-//    [WXApi registerApp:@"wxfad13fd6681a62b0" universalLink:@"https://airwallex.com/"];
+    //    [WXApi registerApp:@"wx4c86d73fe4f82431" universalLink:@"https://airwallex.com/"];
     return YES;
 }
 
@@ -67,6 +72,9 @@
 
 #pragma mark - WXApiDelegate
 
+/**
+ You can retrieve the payment intent status after your server is notified
+ */
 - (void)onResp:(BaseResp *)resp
 {
     if ([resp isKindOfClass:[PayResp class]]) {

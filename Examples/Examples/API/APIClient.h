@@ -8,26 +8,27 @@
 
 #import <Foundation/Foundation.h>
 
+@class AWPaymentIntent;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface APIClient : NSObject
 
+@property (nonatomic, strong) NSURL *authBaseURL;
+@property (nonatomic, strong) NSURL *paymentBaseURL;
+@property (nonatomic, strong) NSString *apiKey;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, strong) NSString *token;
+
 + (instancetype)sharedClient;
 
-- (void)createAuthenticationToken:(NSURL *)url
-                         clientId:(NSString *)clientId
-                           apiKey:(NSString *)apiKey
-                completionHandler:(void (^ _Nullable)(NSString * _Nullable token, NSError * _Nullable error))completionHandler;
+- (void)createAuthenticationTokenWithCompletionHandler:(void (^)(NSError * _Nullable error))completionHandler;
 
-- (void)createPaymentIntent:(NSURL *)url
-                      token:(NSString *)token
-                 parameters:(NSDictionary *)parameters
-          completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+- (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
+                        completionHandler:(void (^)(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;
 
-- (void)createCustomer:(NSURL *)url
-                 token:(NSString *)token
-            parameters:(NSDictionary *)parameters
-     completionHandler:(void (^ _Nullable)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+- (void)createCustomerWithParameters:(NSDictionary *)parameters
+                   completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
 
 @end
 
