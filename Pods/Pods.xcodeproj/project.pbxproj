@@ -21,17 +21,21 @@
 /* Begin PBXBuildFile section */
 		025791C351C06AAF7A11E27D8B425BA8 /* IQTitleBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E218C08D7962682DF151F500320F349C /* IQTitleBarButtonItem.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		0CA80ED7E59E6BCE64CEEE649A3C6D2F /* SVProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = C1E0B909A9D08716853538EE5337429E /* SVProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0D4A3CDC3B4EF5C9577A7F6F2A82F35C /* Pods-AirwallexTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A398ECA327EE27D4F213A8BF2D6D995 /* Pods-AirwallexTests-dummy.m */; };
+		0E740E20A2F88CB5B8530C1D24E58658 /* Keys-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 002BC7CA5E9610C862091A4F1A1DF84C /* Keys-dummy.m */; };
 		0EB2DBBB48FD2F3B7CA84B42B110C64D /* IQPreviousNextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 611303C026262CE77D59652078A28490 /* IQPreviousNextView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		1699A2FEA177B8F64D038C9882878003 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		1C4BFB6B596362C70EE7AA52099EF145 /* IQKeyboardReturnKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A62EE4319AAFFCF141612DDCEDB2AF /* IQKeyboardReturnKeyHandler.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		1FBD457F5CE5013A61DCFE50240D4C1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		203662AC9DF46479DCE23544E5FD32C5 /* IQKeyboardReturnKeyHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 641DF7553A1C5C054A7314A626D097B8 /* IQKeyboardReturnKeyHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		23F09203A4DF777F64426424114CD21B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		24864AD6CD2835BC9657EDD43B031489 /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = B30D35E90B73A937E7FCC3DC30F76FFE /* IQNSArray+Sort.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		264E1A478BDFA31DA6842749C72EA535 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A6BC32571E2E87C6ACF9479E9B68C77D /* SVProgressHUD.bundle */; };
 		27C6ACA29543A53984C35ADC6BD1FFC3 /* IQUIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = C51EC6496982B6C43A67A44860AE3B1D /* IQUIViewController+Additions.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		29753E27241CBD9B1BA0D8022723F18D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		2D2801427B88163A3FE72A41B896508F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B7385E5CE24E35E95F147C3DD65D1E /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		37E96A71F9458498AFF6E94DCE43285B /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C75184FC91F914EFF9B1EBC8E32EA0 /* IQToolbar.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		384BD67256D5D4B6B0ABB54D2AF51E3D /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */; };
+		3A9AE1DFCC992D178F2D2512F88EE221 /* AirwallexExamplesKeys.h in Headers */ = {isa = PBXBuildFile; fileRef = A1C71EC25B5F5E2CB88198F15DE2E578 /* AirwallexExamplesKeys.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3FE6B479CAB3EDDC9AABA985B79EC762 /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BF00B3A0B1DF28E7DEC82A25D0DAD6 /* IQUITextFieldView+Additions.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		42E8489C1582635F029345E8F6495CEC /* IQKeyboardManager-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A20D861F06029BF5FC7F19184DE3D07 /* IQKeyboardManager-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4BE2D5E93EE14CA50B3E64E813D85098 /* IQKeyboardManager-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E4D90FDD3D73704CE43CDAEF7469B7 /* IQKeyboardManager-dummy.m */; };
@@ -40,22 +44,25 @@
 		5FA6B319F7A3AEA63E8575E9BE33B63A /* IQPreviousNextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A3C9ABF0A08604D19D14D4E022D1014 /* IQPreviousNextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61D552992D3522BCF5DFFA2B716FFA67 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C94040A040145551D060C2478D8D09 /* SVProgressAnimatedView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		667195CA2A33A523BB110E6E3AE8C396 /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 347E6C64C6BFF016C23A181B345B4AD5 /* IQUIView+Hierarchy.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		69169C6AEA53389518006549D22AF8D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
-		697C085A219E702B8EA47A1577A1183E /* Pods-Examples-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D9FB9614F4BBFFD96C2EA0C5BA9D449F /* Pods-Examples-dummy.m */; };
+		6908E53391BB1AF40808289AEE7B65B5 /* Keys-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F74E99988F0C07F3B5F64BB08B8C92A4 /* Keys-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E4F5AA1B676387E6512E340EE9C3A23 /* Pods-Examples-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D9FB9614F4BBFFD96C2EA0C5BA9D449F /* Pods-Examples-dummy.m */; };
+		760BEC056398BE238B06BB30F06FD36C /* Pods-Airwallex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4179DC630D09B96847212A1814EC048 /* Pods-Airwallex-dummy.m */; };
 		7CDD1E64E291E5B797B3F71CE7FDD1C8 /* IQBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C470D61E4C918714CAAD1D692F14EF52 /* IQBarButtonItem.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		89FF21B9BE487B7C40579EB6F94633AF /* Pods-AirwallexTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 542AB3B8466A49C84B7D1C282D4CC73F /* Pods-AirwallexTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F3BB79F130510F74713727AE02ACA72 /* Pods-AirwallexTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 542AB3B8466A49C84B7D1C282D4CC73F /* Pods-AirwallexTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		801AB1AC84D162DAE2049FB6D55A1E81 /* AirwallexExamplesKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = A78D4F0D5A8E71C6BBA923F114A64460 /* AirwallexExamplesKeys.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		8ADC598F07F4C47BD8B71A08B011C974 /* IQKeyboardManagerConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E0DB25620330B923F382EA8B04010A9 /* IQKeyboardManagerConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		96730F3FB102540D1A358AFA4BC73C69 /* Pods-Airwallex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4179DC630D09B96847212A1814EC048 /* Pods-Airwallex-dummy.m */; };
+		8BE06AFE73B981B9110352BE55E7403C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		967DD47A591A95CD20388BD29A3A7216 /* IQKeyboardManagerConstantsInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F422F884E6D21244E6AA70258EDDF4D /* IQKeyboardManagerConstantsInternal.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		96EADE99073DBA8FCE7904627E2D18EE /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C8B0EE2BAFD4FE9470FCA743E2E5C71 /* SVIndefiniteAnimatedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96F9E10DB0A7B4C34504CAB08C13DCA6 /* IQUIView+Hierarchy.h in Headers */ = {isa = PBXBuildFile; fileRef = FDA534736472308271B58ADA087CA495 /* IQUIView+Hierarchy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		97D8B52950F10E88EF79CCE635FF59F1 /* IQUIView+IQKeyboardToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = A979CD67E59133A601E5099DA0DC3F3E /* IQUIView+IQKeyboardToolbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99456829035D2883017E8EBCDB82C231 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B86528815F4C81E70D4F6522BB7687 /* QuartzCore.framework */; };
-		A2CCA2DFC93A8C4F29F1951B5B19C978 /* Pods-Examples-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F9FD0940B8BBB4DDAC94532D3CAF719 /* Pods-Examples-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A872F559DC3E6C024D4D4D0274761490 /* IQTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4859382DEFCD149ACFDB9E1D7F9C37FB /* IQTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B06588B9359BCD1D7BFDE98A39D41BE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B86528815F4C81E70D4F6522BB7687 /* QuartzCore.framework */; };
 		BB541904E511E4B3468713B8003E1D50 /* IQBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 11FB31955C98BAAAEDE4E5A5D7EB787C /* IQBarButtonItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE7771F000A75785BD4737778FD7DE4C /* SVProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EB2214CCE3F065CB3BA6DE7999F89F9 /* SVProgressHUD-dummy.m */; };
+		BE8E46EAD8490A2623C9F3447EFFAA64 /* Pods-Examples-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F9FD0940B8BBB4DDAC94532D3CAF719 /* Pods-Examples-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4C2C5CA5F3A0567606A09F513E2085F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		CEE79161A0250EC83EA8D90A70D95412 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A7DACB743F2A39BC0D9C0E317842D5 /* CoreGraphics.framework */; };
 		D116443135087883F9249406502FA257 /* IQUIScrollView+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = BF117C0C278C44E6C74D22C4AC70D8EA /* IQUIScrollView+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D17BC701F945E2F64E8DD414765F818F /* IQTitleBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = E753CED8865E8E6A8F81D30C758FFBAD /* IQTitleBarButtonItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -68,45 +75,36 @@
 		E0186A63060F0EB3676F95CD0ACE0E18 /* SVProgressAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 806BAF0C233E14261CC5749C140B3430 /* SVProgressAnimatedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E47A50752ACE8C8A6928BBD35323ABD9 /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4642CE355C63B7B3A0657D53773063 /* IQUIView+IQKeyboardToolbar.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		E67869FB3BA1227522178DF27ACE69E4 /* IQNSArray+Sort.h in Headers */ = {isa = PBXBuildFile; fileRef = 9811D9E151EF73FB103629B43B1E5E4B /* IQNSArray+Sort.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		E938B72635F8425D76E1BEF0F5A2F63C /* Pods-AirwallexTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A398ECA327EE27D4F213A8BF2D6D995 /* Pods-AirwallexTests-dummy.m */; };
 		EC039CF23C961C0957AA6A5C06CD5009 /* IQToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = A5E3B7A689AB9582D6FBD01780272EE6 /* IQToolbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EE00DDFD4BFF9536E6204F00E345265C /* IQUIScrollView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E510E6982B3BFA5B7A26702C53CD2B7 /* IQUIScrollView+Additions.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		EE210D6F10EC65CA06A3853ACC8E61EB /* IQUITextFieldView+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = B50449ADD79819D3BBB6A91CC452BAD9 /* IQUITextFieldView+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6F24A610A3A287A36CF1E98C2B1BDA2 /* IQKeyboardManager.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20789F9242BE93BEC9B7061B9C3C6944 /* IQKeyboardManager.xcassets */; };
 		F80124E7C770FAD318674EC96936C0FB /* IQKeyboardManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B6B3D468184B0DCBDA348A455F4D171 /* IQKeyboardManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F87E63CF35FB9FA6A09B240DBFB1C583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
-		FEB495C27F077A1D71707D3A050CCBFC /* Pods-Airwallex-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 70429E80C299472147E5E7A42387D5D5 /* Pods-Airwallex-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FE42EFFE6A9A4D83C78DA2461B63FC5F /* Pods-Airwallex-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 70429E80C299472147E5E7A42387D5D5 /* Pods-Airwallex-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FEB549FA553BEB024857478C8E60ED99 /* IQTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE2AC8EDD565C60F8C7EED54A4E5E47 /* IQTextView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0558D9C099AB121EF59C88B069BE642B /* PBXContainerItemProxy */ = {
+		28FF74B747BDA1920A76A8E6D52B51EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CE75F0DCD94A1A113665B974F74795F;
+			remoteInfo = Keys;
+		};
+		451D4410C4862D6A45D952BA913244D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
+			remoteInfo = SVProgressHUD;
+		};
+		54C26B8DAFBA36FCD112C920EF11FBA9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FBA456CB50E371584C11231929A0971E;
 			remoteInfo = IQKeyboardManager;
-		};
-		0FCC671DD64C993A4E61028DA4621962 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
-			remoteInfo = SVProgressHUD;
-		};
-		2B35F26556E6E012D0517844F4C01551 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
-			remoteInfo = SVProgressHUD;
-		};
-		618090839838C2489E8EF6FA5A6BD5CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8554F6236D2AA202CF58503D2DF29730;
-			remoteInfo = WechatOpenSDK;
 		};
 		6A0D586B4BCE61874068EA5DDA9238B7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -115,16 +113,45 @@
 			remoteGlobalIDString = 05B2A835D60F78761395189914B88047;
 			remoteInfo = "IQKeyboardManager-IQKeyboardManager";
 		};
-		CDFB4419D7EAA4E73056E01CB33A5839 /* PBXContainerItemProxy */ = {
+		6A549C73009B8078842BE890A7684254 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CE75F0DCD94A1A113665B974F74795F;
+			remoteInfo = Keys;
+		};
+		8B8BF701A34CD8B38DE9CC773072BB9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
 			remoteInfo = SVProgressHUD;
 		};
+		94FC6D308DC0009D98E7206CDCEFA44E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
+			remoteInfo = SVProgressHUD;
+		};
+		AC4F8920E3772B79E6FA0ABBB80C8C7F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8554F6236D2AA202CF58503D2DF29730;
+			remoteInfo = WechatOpenSDK;
+		};
+		BDE9B2D8C071BB0771A7D9047E09DCB5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CE75F0DCD94A1A113665B974F74795F;
+			remoteInfo = Keys;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		002BC7CA5E9610C862091A4F1A1DF84C /* Keys-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Keys-dummy.m"; sourceTree = "<group>"; };
 		05DF19F88AB3490D8F915D7CB3BD4251 /* IQUIViewController+Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIViewController+Additions.h"; path = "IQKeyboardManager/Categories/IQUIViewController+Additions.h"; sourceTree = "<group>"; };
 		064ACC3CFB93BB8F7E75C5FFC9A160F4 /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = WechatSDK1.8.2/libWeChatSDK.a; sourceTree = "<group>"; };
 		11FB31955C98BAAAEDE4E5A5D7EB787C /* IQBarButtonItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQBarButtonItem.h; path = IQKeyboardManager/IQToolbar/IQBarButtonItem.h; sourceTree = "<group>"; };
@@ -139,6 +166,7 @@
 		3315EF9377A73F95D4F2A1E7E374D272 /* IQKeyboardManager-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "IQKeyboardManager-Info.plist"; sourceTree = "<group>"; };
 		33E238876D5B2FBD99153A2D9703018A /* IQKeyboardManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQKeyboardManager.m; path = IQKeyboardManager/IQKeyboardManager.m; sourceTree = "<group>"; };
 		347E6C64C6BFF016C23A181B345B4AD5 /* IQUIView+Hierarchy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIView+Hierarchy.m"; path = "IQKeyboardManager/Categories/IQUIView+Hierarchy.m"; sourceTree = "<group>"; };
+		367CA45C0793AD233D2ABCAFB426C1B3 /* Keys-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Keys-Info.plist"; sourceTree = "<group>"; };
 		3C8B0EE2BAFD4FE9470FCA743E2E5C71 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		3E77063E0E6A9881C2684AC370DF4352 /* IQKeyboardManager.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = IQKeyboardManager.modulemap; sourceTree = "<group>"; };
 		3EB2214CCE3F065CB3BA6DE7999F89F9 /* SVProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD-dummy.m"; sourceTree = "<group>"; };
@@ -172,11 +200,13 @@
 		74E4D90FDD3D73704CE43CDAEF7469B7 /* IQKeyboardManager-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "IQKeyboardManager-dummy.m"; sourceTree = "<group>"; };
 		762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		785F17CA489405BCE0A7B3E6CB1AE711 /* ResourceBundle-IQKeyboardManager-IQKeyboardManager-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-IQKeyboardManager-IQKeyboardManager-Info.plist"; sourceTree = "<group>"; };
+		786AD9C7BA4747A662AEFF7C197C2AD0 /* Keys.podspec.json */ = {isa = PBXFileReference; includeInIndex = 1; path = Keys.podspec.json; sourceTree = "<group>"; };
 		7A398ECA327EE27D4F213A8BF2D6D995 /* Pods-AirwallexTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AirwallexTests-dummy.m"; sourceTree = "<group>"; };
 		7E0DB25620330B923F382EA8B04010A9 /* IQKeyboardManagerConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManagerConstants.h; path = IQKeyboardManager/Constants/IQKeyboardManagerConstants.h; sourceTree = "<group>"; };
 		7F12266EE2189AFB2EFCA47224E2CE27 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		7F9FD0940B8BBB4DDAC94532D3CAF719 /* Pods-Examples-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Examples-umbrella.h"; sourceTree = "<group>"; };
 		806BAF0C233E14261CC5749C140B3430 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressAnimatedView.h; path = SVProgressHUD/SVProgressAnimatedView.h; sourceTree = "<group>"; };
+		88446196C9E9F90FBFB3DDBAFA82B09A /* Keys.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Keys.release.xcconfig; sourceTree = "<group>"; };
 		8986E18455DEE547D8236941D2B4EFFF /* Pods-Airwallex-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Airwallex-acknowledgements.plist"; sourceTree = "<group>"; };
 		8A20D861F06029BF5FC7F19184DE3D07 /* IQKeyboardManager-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQKeyboardManager-umbrella.h"; sourceTree = "<group>"; };
 		8B5F7740CB6AE0382CC6B9093ADF19BF /* SVProgressHUD-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SVProgressHUD-Info.plist"; sourceTree = "<group>"; };
@@ -189,16 +219,19 @@
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E510E6982B3BFA5B7A26702C53CD2B7 /* IQUIScrollView+Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIScrollView+Additions.m"; path = "IQKeyboardManager/Categories/IQUIScrollView+Additions.m"; sourceTree = "<group>"; };
 		9FE2AC8EDD565C60F8C7EED54A4E5E47 /* IQTextView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQTextView.m; path = IQKeyboardManager/IQTextView/IQTextView.m; sourceTree = "<group>"; };
+		A1C71EC25B5F5E2CB88198F15DE2E578 /* AirwallexExamplesKeys.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AirwallexExamplesKeys.h; sourceTree = "<group>"; };
 		A2D72189949781E59ED0988443A19A55 /* SVProgressHUD.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SVProgressHUD.modulemap; sourceTree = "<group>"; };
 		A535F096EFB51D3905ED3BD0076E33BB /* Pods-AirwallexTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirwallexTests-frameworks.sh"; sourceTree = "<group>"; };
 		A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = IQKeyboardManager.bundle; path = "IQKeyboardManager-IQKeyboardManager.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E3B7A689AB9582D6FBD01780272EE6 /* IQToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQToolbar.h; path = IQKeyboardManager/IQToolbar/IQToolbar.h; sourceTree = "<group>"; };
 		A67A7780FEC52989D1C75E9966565ED7 /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
 		A6BC32571E2E87C6ACF9479E9B68C77D /* SVProgressHUD.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
+		A78D4F0D5A8E71C6BBA923F114A64460 /* AirwallexExamplesKeys.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AirwallexExamplesKeys.m; sourceTree = "<group>"; };
 		A979CD67E59133A601E5099DA0DC3F3E /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIView+IQKeyboardToolbar.h"; path = "IQKeyboardManager/IQToolbar/IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
 		AD4642CE355C63B7B3A0657D53773063 /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIView+IQKeyboardToolbar.m"; path = "IQKeyboardManager/IQToolbar/IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		AF41F610118262368A520BA11BA5AE63 /* Pods-Examples-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-frameworks.sh"; sourceTree = "<group>"; };
 		B26D73371ADCF1CDF653038D7EF9D859 /* Pods-AirwallexTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-AirwallexTests.modulemap"; sourceTree = "<group>"; };
+		B2741485BF9B359CF06C3762B2842792 /* Keys.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Keys.modulemap; sourceTree = "<group>"; };
 		B30D35E90B73A937E7FCC3DC30F76FFE /* IQNSArray+Sort.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQNSArray+Sort.m"; path = "IQKeyboardManager/Categories/IQNSArray+Sort.m"; sourceTree = "<group>"; };
 		B50449ADD79819D3BBB6A91CC452BAD9 /* IQUITextFieldView+Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUITextFieldView+Additions.h"; path = "IQKeyboardManager/Categories/IQUITextFieldView+Additions.h"; sourceTree = "<group>"; };
 		B9B86528815F4C81E70D4F6522BB7687 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -212,11 +245,15 @@
 		D4B4FD9888FB277066CA328BB004D7A6 /* SVProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-prefix.pch"; sourceTree = "<group>"; };
 		D60371ADEBFAA63F6E93D817071CDB02 /* Pods-AirwallexTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AirwallexTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D9FB9614F4BBFFD96C2EA0C5BA9D449F /* Pods-Examples-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-dummy.m"; sourceTree = "<group>"; };
+		DB66D9FCAB5077AFC60B5ABCF7EB03C7 /* Keys.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Keys.debug.xcconfig; sourceTree = "<group>"; };
 		E0C75184FC91F914EFF9B1EBC8E32EA0 /* IQToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQToolbar.m; path = IQKeyboardManager/IQToolbar/IQToolbar.m; sourceTree = "<group>"; };
+		E138DA323DA458AF0B7A4D932727C2F1 /* Keys-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Keys-prefix.pch"; sourceTree = "<group>"; };
 		E218C08D7962682DF151F500320F349C /* IQTitleBarButtonItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQTitleBarButtonItem.m; path = IQKeyboardManager/IQToolbar/IQTitleBarButtonItem.m; sourceTree = "<group>"; };
 		E753CED8865E8E6A8F81D30C758FFBAD /* IQTitleBarButtonItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQTitleBarButtonItem.h; path = IQKeyboardManager/IQToolbar/IQTitleBarButtonItem.h; sourceTree = "<group>"; };
+		E8CACB8744373C1818777FFB8F84C67E /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Keys.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E97D43C46A45EE515A4DA3AF94398441 /* SVProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SVProgressHUD.framework; path = SVProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3F8DA418EE38B98227F343F6651566 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVRadialGradientLayer.m; path = SVProgressHUD/SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		F74E99988F0C07F3B5F64BB08B8C92A4 /* Keys-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Keys-umbrella.h"; sourceTree = "<group>"; };
 		FA526CD41CD430E54FBEEC30A09C0F03 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVRadialGradientLayer.h; path = SVProgressHUD/SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		FDA534736472308271B58ADA087CA495 /* IQUIView+Hierarchy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIView+Hierarchy.h"; path = "IQKeyboardManager/Categories/IQUIView+Hierarchy.h"; sourceTree = "<group>"; };
 		FE13FA860DACFD9F2452D9949E15C2B7 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
@@ -224,19 +261,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		2956DFDDD2AF40BD95955A8738A4EAAB /* Frameworks */ = {
+		187A2F5CB6A7BDC7A722316BAC65E386 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F87E63CF35FB9FA6A09B240DBFB1C583 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		32A0502CE8BC063D10878ECEA01D2CC3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				29753E27241CBD9B1BA0D8022723F18D /* Foundation.framework in Frameworks */,
+				23F09203A4DF777F64426424114CD21B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,11 +280,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5080D860DF085675740F6E1F17229163 /* Frameworks */ = {
+		91D8DF1147B28139CDDB7C4188E80E9E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69169C6AEA53389518006549D22AF8D7 /* Foundation.framework in Frameworks */,
+				8BE06AFE73B981B9110352BE55E7403C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		922F925E12B3BC3FA3849031926595A0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1699A2FEA177B8F64D038C9882878003 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +302,14 @@
 			files = (
 				D4914107FF5A197B9D0BC6D1C089E33D /* Foundation.framework in Frameworks */,
 				99456829035D2883017E8EBCDB82C231 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E13BCC562D018F62D8F9F969B692F02C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4C2C5CA5F3A0567606A09F513E2085F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +425,18 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		71D73883354C039ACA8BD71B1BB0C03D /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				A1C71EC25B5F5E2CB88198F15DE2E578 /* AirwallexExamplesKeys.h */,
+				A78D4F0D5A8E71C6BBA923F114A64460 /* AirwallexExamplesKeys.m */,
+				98A2F7D733D48ADD773795E613F16277 /* Pod */,
+				B9B7B67A932D941B24EFEC9FF930002F /* Support Files */,
+			);
+			name = Keys;
+			path = CocoaPodsKeys;
+			sourceTree = "<group>";
+		};
 		7A9A9C76CCCC306CCD53232A0D61E7FE /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +463,22 @@
 			path = "Target Support Files/Pods-Airwallex";
 			sourceTree = "<group>";
 		};
+		918C67CEDF38AB6FC9603B3803A92E0F /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				71D73883354C039ACA8BD71B1BB0C03D /* Keys */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		98A2F7D733D48ADD773795E613F16277 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				786AD9C7BA4747A662AEFF7C197C2AD0 /* Keys.podspec.json */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
 		A3004DC25FE3492DE1AE5BACC6712677 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -422,17 +495,19 @@
 			path = "../Target Support Files/IQKeyboardManager";
 			sourceTree = "<group>";
 		};
-		A47F6A9D3162D33313B35E4C081B60E3 /* Products */ = {
+		B9B7B67A932D941B24EFEC9FF930002F /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */,
-				98527D7196957AAB07B79E2E2AFDE23E /* IQKeyboardManager.framework */,
-				1E7494EB14C355A65FDD0C0DF6895B5F /* Pods_Airwallex.framework */,
-				6B977302022559FAF8CDA1F700D7FEB2 /* Pods_AirwallexTests.framework */,
-				715F823A05067B88BA9D209804538147 /* Pods_Examples.framework */,
-				E97D43C46A45EE515A4DA3AF94398441 /* SVProgressHUD.framework */,
+				B2741485BF9B359CF06C3762B2842792 /* Keys.modulemap */,
+				002BC7CA5E9610C862091A4F1A1DF84C /* Keys-dummy.m */,
+				367CA45C0793AD233D2ABCAFB426C1B3 /* Keys-Info.plist */,
+				E138DA323DA458AF0B7A4D932727C2F1 /* Keys-prefix.pch */,
+				F74E99988F0C07F3B5F64BB08B8C92A4 /* Keys-umbrella.h */,
+				DB66D9FCAB5077AFC60B5ABCF7EB03C7 /* Keys.debug.xcconfig */,
+				88446196C9E9F90FBFB3DDBAFA82B09A /* Keys.release.xcconfig */,
 			);
-			name = Products;
+			name = "Support Files";
+			path = "../Target Support Files/Keys";
 			sourceTree = "<group>";
 		};
 		BA4F31F07263C99FC76E66D632A59F09 /* Frameworks */ = {
@@ -455,11 +530,26 @@
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				918C67CEDF38AB6FC9603B3803A92E0F /* Development Pods */,
 				BA4F31F07263C99FC76E66D632A59F09 /* Frameworks */,
 				6BBCE8F981C2404D03F929441C5C1BFA /* Pods */,
-				A47F6A9D3162D33313B35E4C081B60E3 /* Products */,
+				D31845E4BDFB7D49FA18B29D6FABC00D /* Products */,
 				7A9A9C76CCCC306CCD53232A0D61E7FE /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		D31845E4BDFB7D49FA18B29D6FABC00D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */,
+				98527D7196957AAB07B79E2E2AFDE23E /* IQKeyboardManager.framework */,
+				E8CACB8744373C1818777FFB8F84C67E /* Keys.framework */,
+				1E7494EB14C355A65FDD0C0DF6895B5F /* Pods_Airwallex.framework */,
+				6B977302022559FAF8CDA1F700D7FEB2 /* Pods_AirwallexTests.framework */,
+				715F823A05067B88BA9D209804538147 /* Pods_Examples.framework */,
+				E97D43C46A45EE515A4DA3AF94398441 /* SVProgressHUD.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		D4AF6F2A305EA204C22BF2D387C13987 /* Pods-AirwallexTests */ = {
@@ -528,11 +618,19 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		3586288ED18CE6A8C608F3B2C9CC765B /* Headers */ = {
+		2B35314E82EDE35850B5DD1BC11FC496 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FEB495C27F077A1D71707D3A050CCBFC /* Pods-Airwallex-umbrella.h in Headers */,
+				FE42EFFE6A9A4D83C78DA2461B63FC5F /* Pods-Airwallex-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DDE3FA78E84BDC9716AF540299AAEEF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE8E46EAD8490A2623C9F3447EFFAA64 /* Pods-Examples-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,19 +646,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		904F93C89FA247EA1A59761BCE44870B /* Headers */ = {
+		9FDA889C86CA006C3C7461AF8D31C469 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2CCA2DFC93A8C4F29F1951B5B19C978 /* Pods-Examples-umbrella.h in Headers */,
+				7F3BB79F130510F74713727AE02ACA72 /* Pods-AirwallexTests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B634CF55BBFF866E869ED80845FA7823 /* Headers */ = {
+		BAAFDA40C9BAC55A3BA56BB07FF80ECB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89FF21B9BE487B7C40579EB6F94633AF /* Pods-AirwallexTests-umbrella.h in Headers */,
+				3A9AE1DFCC992D178F2D2512F88EE221 /* AirwallexExamplesKeys.h in Headers */,
+				6908E53391BB1AF40808289AEE7B65B5 /* Keys-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,21 +724,40 @@
 			productReference = E97D43C46A45EE515A4DA3AF94398441 /* SVProgressHUD.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		798D7038185779650724117C84AA91DB /* Pods-Examples */ = {
+		5CE75F0DCD94A1A113665B974F74795F /* Keys */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2101928E4B3953519EEC8C0D56D7D2EF /* Build configuration list for PBXNativeTarget "Pods-Examples" */;
+			buildConfigurationList = 795CB2150073E63FDFE236FC26037B45 /* Build configuration list for PBXNativeTarget "Keys" */;
 			buildPhases = (
-				904F93C89FA247EA1A59761BCE44870B /* Headers */,
-				B1668A615CB3574375EA5894D7089A1A /* Sources */,
-				32A0502CE8BC063D10878ECEA01D2CC3 /* Frameworks */,
-				46527B6724CE8FD30D6656E2C9EF750B /* Resources */,
+				BAAFDA40C9BAC55A3BA56BB07FF80ECB /* Headers */,
+				7E383AC0184605927BCAD258F9A55B35 /* Sources */,
+				922F925E12B3BC3FA3849031926595A0 /* Frameworks */,
+				578B49FAC5467E628C7F79081E2652E6 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				05D5774FAE1C2454A05E72C43C30713C /* PBXTargetDependency */,
-				F9BD823E23ABBABEBA5C8F3EF41CC1ED /* PBXTargetDependency */,
-				A9FDC0118695367F1FAE4AE7810151C5 /* PBXTargetDependency */,
+			);
+			name = Keys;
+			productName = Keys;
+			productReference = E8CACB8744373C1818777FFB8F84C67E /* Keys.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		798D7038185779650724117C84AA91DB /* Pods-Examples */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 473AC986E2C100CE300D8C60CD054605 /* Build configuration list for PBXNativeTarget "Pods-Examples" */;
+			buildPhases = (
+				6DDE3FA78E84BDC9716AF540299AAEEF /* Headers */,
+				619DFD2AD07BB52CD23A1DBC38E3CC26 /* Sources */,
+				187A2F5CB6A7BDC7A722316BAC65E386 /* Frameworks */,
+				850D89042837498B606D8B58F1D75BBA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E2C061CB8C8698758B737A3C2A9017DF /* PBXTargetDependency */,
+				DD08DBD55CBFB2FA0EC37B060FCA68E7 /* PBXTargetDependency */,
+				61D1DF091C1140D46215FB006439060D /* PBXTargetDependency */,
+				E345F590C71DACDB4377900F9FAB5E01 /* PBXTargetDependency */,
 			);
 			name = "Pods-Examples";
 			productName = "Pods-Examples";
@@ -648,17 +766,18 @@
 		};
 		F570EDABE55B540442303119D9625340 /* Pods-AirwallexTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3816ACEC19186C54843ABAAFD1F5398C /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */;
+			buildConfigurationList = 54219F003513B00F412DC7AD13F9F789 /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */;
 			buildPhases = (
-				B634CF55BBFF866E869ED80845FA7823 /* Headers */,
-				317FB484CE0FDBE444C792635DF84B6B /* Sources */,
-				5080D860DF085675740F6E1F17229163 /* Frameworks */,
-				104A1C993B2BEE478B8316F60CCDBE3B /* Resources */,
+				9FDA889C86CA006C3C7461AF8D31C469 /* Headers */,
+				30DA44015959AC9BEE220879E56367EB /* Sources */,
+				E13BCC562D018F62D8F9F969B692F02C /* Frameworks */,
+				4479FBE61FBAF76394D7CCC0D26F39E5 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				DA3B60D445BD77CAA22AF41368F62983 /* PBXTargetDependency */,
+				1FCD38B0B59618C7CB47D5AD9790065D /* PBXTargetDependency */,
+				023AA5639C0B7EE4C5DF602FF80DFB8F /* PBXTargetDependency */,
 			);
 			name = "Pods-AirwallexTests";
 			productName = "Pods-AirwallexTests";
@@ -667,17 +786,18 @@
 		};
 		F58E9775E039168F7D40BFD110403F36 /* Pods-Airwallex */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 20403B69A0A025BE10023605F8B93858 /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */;
+			buildConfigurationList = E9A84D1EF527DDD9CA9D5F6599980223 /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */;
 			buildPhases = (
-				3586288ED18CE6A8C608F3B2C9CC765B /* Headers */,
-				F4F00333F63F5DB18E93831178413FA7 /* Sources */,
-				2956DFDDD2AF40BD95955A8738A4EAAB /* Frameworks */,
-				E1ECE4916AF99B94F9677460B5A80007 /* Resources */,
+				2B35314E82EDE35850B5DD1BC11FC496 /* Headers */,
+				BBCFA080086348B2119E92D6960718A3 /* Sources */,
+				91D8DF1147B28139CDDB7C4188E80E9E /* Frameworks */,
+				663492C21EBEDA5491A8379FEC4CC4B7 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				EF7F81999F0D2BA4759BEBD32E770D2D /* PBXTargetDependency */,
+				62C48D61544BC977E50AB72303E5B84A /* PBXTargetDependency */,
+				A961CF04DBA071464501D68010B7CA72 /* PBXTargetDependency */,
 			);
 			name = "Pods-Airwallex";
 			productName = "Pods-Airwallex";
@@ -721,12 +841,13 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = A47F6A9D3162D33313B35E4C081B60E3 /* Products */;
+			productRefGroup = D31845E4BDFB7D49FA18B29D6FABC00D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				FBA456CB50E371584C11231929A0971E /* IQKeyboardManager */,
 				05B2A835D60F78761395189914B88047 /* IQKeyboardManager-IQKeyboardManager */,
+				5CE75F0DCD94A1A113665B974F74795F /* Keys */,
 				F58E9775E039168F7D40BFD110403F36 /* Pods-Airwallex */,
 				F570EDABE55B540442303119D9625340 /* Pods-AirwallexTests */,
 				798D7038185779650724117C84AA91DB /* Pods-Examples */,
@@ -737,14 +858,21 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		104A1C993B2BEE478B8316F60CCDBE3B /* Resources */ = {
+		4479FBE61FBAF76394D7CCC0D26F39E5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		46527B6724CE8FD30D6656E2C9EF750B /* Resources */ = {
+		578B49FAC5467E628C7F79081E2652E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		663492C21EBEDA5491A8379FEC4CC4B7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -759,18 +887,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		850D89042837498B606D8B58F1D75BBA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CF48BE05499F25A6DF50634FA99936C0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F6F24A610A3A287A36CF1E98C2B1BDA2 /* IQKeyboardManager.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E1ECE4916AF99B94F9677460B5A80007 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -785,11 +913,11 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		317FB484CE0FDBE444C792635DF84B6B /* Sources */ = {
+		30DA44015959AC9BEE220879E56367EB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E938B72635F8425D76E1BEF0F5A2F63C /* Pods-AirwallexTests-dummy.m in Sources */,
+				0D4A3CDC3B4EF5C9577A7F6F2A82F35C /* Pods-AirwallexTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -812,11 +940,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B1668A615CB3574375EA5894D7089A1A /* Sources */ = {
+		619DFD2AD07BB52CD23A1DBC38E3CC26 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				697C085A219E702B8EA47A1577A1183E /* Pods-Examples-dummy.m in Sources */,
+				6E4F5AA1B676387E6512E340EE9C3A23 /* Pods-Examples-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E383AC0184605927BCAD258F9A55B35 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				801AB1AC84D162DAE2049FB6D55A1E81 /* AirwallexExamplesKeys.m in Sources */,
+				0E740E20A2F88CB5B8530C1D24E58658 /* Keys-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BBCFA080086348B2119E92D6960718A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				760BEC056398BE238B06BB30F06FD36C /* Pods-Airwallex-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -841,34 +986,44 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F4F00333F63F5DB18E93831178413FA7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				96730F3FB102540D1A358AFA4BC73C69 /* Pods-Airwallex-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		05D5774FAE1C2454A05E72C43C30713C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IQKeyboardManager;
-			target = FBA456CB50E371584C11231929A0971E /* IQKeyboardManager */;
-			targetProxy = 0558D9C099AB121EF59C88B069BE642B /* PBXContainerItemProxy */;
-		};
-		A9FDC0118695367F1FAE4AE7810151C5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = WechatOpenSDK;
-			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
-			targetProxy = 618090839838C2489E8EF6FA5A6BD5CC /* PBXContainerItemProxy */;
-		};
-		DA3B60D445BD77CAA22AF41368F62983 /* PBXTargetDependency */ = {
+		023AA5639C0B7EE4C5DF602FF80DFB8F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SVProgressHUD;
 			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
-			targetProxy = 2B35F26556E6E012D0517844F4C01551 /* PBXContainerItemProxy */;
+			targetProxy = 8B8BF701A34CD8B38DE9CC773072BB9C /* PBXContainerItemProxy */;
+		};
+		1FCD38B0B59618C7CB47D5AD9790065D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Keys;
+			target = 5CE75F0DCD94A1A113665B974F74795F /* Keys */;
+			targetProxy = BDE9B2D8C071BB0771A7D9047E09DCB5 /* PBXContainerItemProxy */;
+		};
+		61D1DF091C1140D46215FB006439060D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SVProgressHUD;
+			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
+			targetProxy = 94FC6D308DC0009D98E7206CDCEFA44E /* PBXContainerItemProxy */;
+		};
+		62C48D61544BC977E50AB72303E5B84A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Keys;
+			target = 5CE75F0DCD94A1A113665B974F74795F /* Keys */;
+			targetProxy = 6A549C73009B8078842BE890A7684254 /* PBXContainerItemProxy */;
+		};
+		A961CF04DBA071464501D68010B7CA72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SVProgressHUD;
+			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
+			targetProxy = 451D4410C4862D6A45D952BA913244D3 /* PBXContainerItemProxy */;
+		};
+		DD08DBD55CBFB2FA0EC37B060FCA68E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Keys;
+			target = 5CE75F0DCD94A1A113665B974F74795F /* Keys */;
+			targetProxy = 28FF74B747BDA1920A76A8E6D52B51EA /* PBXContainerItemProxy */;
 		};
 		E26F631ED099CDF69B9B5BCB85CF78C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -876,17 +1031,17 @@
 			target = 05B2A835D60F78761395189914B88047 /* IQKeyboardManager-IQKeyboardManager */;
 			targetProxy = 6A0D586B4BCE61874068EA5DDA9238B7 /* PBXContainerItemProxy */;
 		};
-		EF7F81999F0D2BA4759BEBD32E770D2D /* PBXTargetDependency */ = {
+		E2C061CB8C8698758B737A3C2A9017DF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = SVProgressHUD;
-			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
-			targetProxy = 0FCC671DD64C993A4E61028DA4621962 /* PBXContainerItemProxy */;
+			name = IQKeyboardManager;
+			target = FBA456CB50E371584C11231929A0971E /* IQKeyboardManager */;
+			targetProxy = 54C26B8DAFBA36FCD112C920EF11FBA9 /* PBXContainerItemProxy */;
 		};
-		F9BD823E23ABBABEBA5C8F3EF41CC1ED /* PBXTargetDependency */ = {
+		E345F590C71DACDB4377900F9FAB5E01 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = SVProgressHUD;
-			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
-			targetProxy = CDFB4419D7EAA4E73056E01CB33A5839 /* PBXContainerItemProxy */;
+			name = WechatOpenSDK;
+			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
+			targetProxy = AC4F8920E3772B79E6FA0ABBB80C8C7F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -972,86 +1127,9 @@
 			};
 			name = Debug;
 		};
-		28183E72A56ECECA69F306B084101F5B /* Debug */ = {
+		21C36CF60D98FB4D53C0EA1CC9EBC2DA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47724DF4C9BCFF8BCF3249C223ADF288 /* Pods-Examples.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Examples/Pods-Examples-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Examples/Pods-Examples.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		2BB9245FCCE687EDD3FC8031C4C8CEA0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF7837EE400E6B784DB61431E00E0681 /* Pods-Airwallex.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Airwallex/Pods-Airwallex-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Airwallex/Pods-Airwallex.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		3EAE15B840B42040F734C26940BDFCA8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B156A26A3BA8EE11A1756C0F4A997B9 /* Pods-AirwallexTests.debug.xcconfig */;
+			baseConfigurationReference = A67A7780FEC52989D1C75E9966565ED7 /* Pods-AirwallexTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1082,12 +1160,87 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		4522027ABD4B5FD8E75DD0778D2F6BE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB66D9FCAB5077AFC60B5ABCF7EB03C7 /* Keys.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Keys/Keys-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Keys/Keys-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/Keys/Keys.modulemap";
+				PRODUCT_MODULE_NAME = Keys;
+				PRODUCT_NAME = Keys;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		5EC32CC555055F719BE8773AB0523EE7 /* Debug */ = {
+		4E29CC5A7DCAD0D7DE7EFE90DD67A229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE13FA860DACFD9F2452D9949E15C2B7 /* Pods-Examples.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Examples/Pods-Examples-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Examples/Pods-Examples.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		53924A1F3288C0A6AC69377CD2AE7E3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 618EE68425B342DFA7F3BA18570344CF /* Pods-Airwallex.debug.xcconfig */;
 			buildSettings = {
@@ -1140,6 +1293,119 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
+		};
+		7384A6340D8C5050E0C638A484141611 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF7837EE400E6B784DB61431E00E0681 /* Pods-Airwallex.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Airwallex/Pods-Airwallex-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Airwallex/Pods-Airwallex.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8955E4C7FBEBCB97999664A05193A11C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47724DF4C9BCFF8BCF3249C223ADF288 /* Pods-Examples.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Examples/Pods-Examples-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Examples/Pods-Examples.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		92E78E6C9A007A5DC7F7B7F0B7A0ADA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 88446196C9E9F90FBFB3DDBAFA82B09A /* Keys.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Keys/Keys-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Keys/Keys-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/Keys/Keys.modulemap";
+				PRODUCT_MODULE_NAME = Keys;
+				PRODUCT_NAME = Keys;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		B01D14FDC83DCF9D4BE53066BEA96D05 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1254,45 +1520,6 @@
 			};
 			name = Release;
 		};
-		CF58AFC9CEF67916BAD88694656BD98C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A67A7780FEC52989D1C75E9966565ED7 /* Pods-AirwallexTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		DB77A9AD9C9FF35427399204D980560D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 406CAA3D3338B7450E086E69C5CED6E5 /* SVProgressHUD.debug.xcconfig */;
@@ -1328,9 +1555,9 @@
 			};
 			name = Debug;
 		};
-		E23C626081F0E543565B5487FB5F3DB6 /* Release */ = {
+		DE185C0410234CE609A5E406AC1EFB43 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FE13FA860DACFD9F2452D9949E15C2B7 /* Pods-Examples.release.xcconfig */;
+			baseConfigurationReference = 9B156A26A3BA8EE11A1756C0F4A997B9 /* Pods-AirwallexTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1343,7 +1570,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Examples/Pods-Examples-Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1352,7 +1579,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Examples/Pods-Examples.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -1361,11 +1588,10 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		E75D6D1B8278B7F8970B824DF420B68F /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1467,29 +1693,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		20403B69A0A025BE10023605F8B93858 /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */ = {
+		473AC986E2C100CE300D8C60CD054605 /* Build configuration list for PBXNativeTarget "Pods-Examples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5EC32CC555055F719BE8773AB0523EE7 /* Debug */,
-				2BB9245FCCE687EDD3FC8031C4C8CEA0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2101928E4B3953519EEC8C0D56D7D2EF /* Build configuration list for PBXNativeTarget "Pods-Examples" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				28183E72A56ECECA69F306B084101F5B /* Debug */,
-				E23C626081F0E543565B5487FB5F3DB6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3816ACEC19186C54843ABAAFD1F5398C /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3EAE15B840B42040F734C26940BDFCA8 /* Debug */,
-				CF58AFC9CEF67916BAD88694656BD98C /* Release */,
+				8955E4C7FBEBCB97999664A05193A11C /* Debug */,
+				4E29CC5A7DCAD0D7DE7EFE90DD67A229 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1521,11 +1729,38 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		54219F003513B00F412DC7AD13F9F789 /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE185C0410234CE609A5E406AC1EFB43 /* Debug */,
+				21C36CF60D98FB4D53C0EA1CC9EBC2DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		795CB2150073E63FDFE236FC26037B45 /* Build configuration list for PBXNativeTarget "Keys" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4522027ABD4B5FD8E75DD0778D2F6BE4 /* Debug */,
+				92E78E6C9A007A5DC7F7B7F0B7A0ADA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E76C288BA44757915CF3700D8A326EB7 /* Build configuration list for PBXNativeTarget "SVProgressHUD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DB77A9AD9C9FF35427399204D980560D /* Debug */,
 				C72DA987B60B5B67C933806FBF116D89 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E9A84D1EF527DDD9CA9D5F6599980223 /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53924A1F3288C0A6AC69377CD2AE7E3A /* Debug */,
+				7384A6340D8C5050E0C638A484141611 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

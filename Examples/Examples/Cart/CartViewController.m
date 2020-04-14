@@ -10,6 +10,7 @@
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <WechatOpenSDK/WXApi.h>
+#import "AirwallexExamplesKeys+Utils.h"
 #import "OptionsViewController.h"
 #import "ProductCell.h"
 #import "TotalCell.h"
@@ -42,7 +43,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     self.badgeView.layer.cornerRadius = 12;
     self.checkoutButton.layer.masksToBounds = YES;
     self.checkoutButton.layer.cornerRadius = 6;
-
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:[NSBundle sdkBundle]]
          forCellReuseIdentifier:@"AWPaymentItemCell"];
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro"
@@ -58,8 +59,8 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     APIClient *client = [APIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
     client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
-    client.apiKey = apiKey;
-    client.clientID = clientID;
+    client.apiKey = [AirwallexExamplesKeys shared].apiKey;
+    client.clientID = [AirwallexExamplesKeys shared].clientID;
     
     [self reloadData];
 }
@@ -90,7 +91,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     
     self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && self.amount.doubleValue > 0 && self.currency.length > 0;
     self.checkoutButton.backgroundColor = self.checkoutButton.enabled ? [UIColor colorNamed:@"Purple Color"] : [UIColor colorNamed:@"Line Color"];
-
+    
     [self.tableView reloadData];
 }
 
@@ -163,16 +164,16 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;
         }
-
+        
         if (paymentIntent.Id && paymentIntent.clientSecret) {
             [AWAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
-
+            
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf showPaymentFlowWithPaymentIntent:paymentIntent];
             [SVProgressHUD dismiss];
             return;
         }
-
+        
         [SVProgressHUD showErrorWithStatus:@"Failed to create payment intent."];
     }];
 }
@@ -328,7 +329,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 - (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWWeChatPaySDKResponse *)response
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
-
+    
     /**
      To mock the wechat payment flow, we use an url to call instead wechat callback.
      */

@@ -9,6 +9,7 @@
 #import "XCTestCase+Utils.h"
 #import "AWTestAPIClient.h"
 #import "AWAPIClient.h"
+#import <AirwallexExamplesKeys.h>
 
 @implementation XCTestCase (Utils)
 
@@ -36,8 +37,9 @@
     AWTestAPIClient *client = [AWTestAPIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:@"https://api-staging.airwallex.com/"];
     client.paymentBaseURL = [NSURL URLWithString:@"https://staging-pci-api.airwallex.com/"];
-    client.apiKey = @"e70420bb90a34c6c2be422387f4209eaf3a7aa84bc8cc4fc2af23cfde121370407833f0649261723e2a91aec552f56ee";
-    client.clientID = @"dPH0tQnxRaijLH7ILl0nDQ";
+    AirwallexExamplesKeys *keys = [AirwallexExamplesKeys new];
+    client.apiKey = keys.apiKey;
+    client.clientID = keys.clientID;
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get auth token"];
     [client createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
