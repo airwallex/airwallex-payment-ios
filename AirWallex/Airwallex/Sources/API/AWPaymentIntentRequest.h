@@ -35,9 +35,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *customerId;
 
 /**
+ Save payment method.
+ */
+@property (nonatomic) BOOL savePaymentMethod;
+
+/**
  Payment method object.
  */
 @property (nonatomic, strong) AWPaymentMethod *paymentMethod;
+
+/**
+ Options object.
+ */
+@property (nonatomic, strong, nullable) AWPaymentMethodOptions *options;
 
 @end
 

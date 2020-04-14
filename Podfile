@@ -13,10 +13,12 @@ end
 
 target 'Airwallex' do
     project './Airwallex/Airwallex.xcodeproj'
+    shared_pods
 end
 
 target 'AirwallexTests' do
     project './Airwallex/Airwallex.xcodeproj'
+    shared_pods
 end
 
 target 'Examples' do

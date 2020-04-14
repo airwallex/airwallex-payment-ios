@@ -7,6 +7,7 @@
 //
 
 #import "AWTestUtils.h"
+#import "AWPlaceDetails.h"
 
 @implementation AWTestUtils
 

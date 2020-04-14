@@ -5,11 +5,11 @@ This application makes use of the following third party libraries:
 
 MIT LICENSE Found in the repo
 
-## IQKeyboardManager
+## SVProgressHUD
 
 MIT License
 
-Copyright (c) 2013-2017 Iftekhar Qurashi
+Copyright (c) 2011-2018 Sam Vermette, Tobias Tiemerding and contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-## SVProgressHUD
+## IQKeyboardManager
 
 MIT License
 
-Copyright (c) 2011-2018 Sam Vermette, Tobias Tiemerding and contributors.
+Copyright (c) 2013-2017 Iftekhar Qurashi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AWPaymentIntentRequest.h"
 #import "AWPaymentMethod.h"
+#import "AWPaymentMethodOptions.h"
 #import "AWPaymentIntentResponse.h"
 
 @implementation AWConfirmPaymentIntentRequest
@@ -30,7 +31,20 @@
     if (self.customerId) {
         parameters[@"customer_id"] = self.customerId;
     }
-    [parameters addEntriesFromDictionary:@{@"payment_method": self.paymentMethod.encodeToJSON}];
+    if (self.paymentMethod.Id) {
+        [parameters addEntriesFromDictionary:@{
+            @"payment_method_reference": @{
+                    @"id": self.paymentMethod.Id,
+                    @"cvc": self.paymentMethod.card.cvc ?: @""
+            }
+        }];
+    } else {
+        [parameters addEntriesFromDictionary:@{@"payment_method": self.paymentMethod.encodeToJSON}];
+    }
+    if (self.options) {
+        parameters[@"payment_method_options"] = self.options.encodeToJSON;
+    }
+    parameters[@"save_payment_method"] = self.savePaymentMethod ? @"true" : @"false";
     return parameters;
 }
 

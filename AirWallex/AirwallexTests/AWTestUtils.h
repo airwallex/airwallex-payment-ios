@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AWAPIClient.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

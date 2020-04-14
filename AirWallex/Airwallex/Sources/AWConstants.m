@@ -19,3 +19,8 @@ NSString *const AWSDKErrorDomain = @"com.airwallex.sdk";
 #endif
 
 NSString *const AWWeChatPayKey = @"wechatpay";
+NSString *const AWCardKey = @"card";
+
+NSString *const AWFontFamilyNameCircularStd = @"Circular Std";
+NSString *const AWFontNameCircularStdMedium = @"CircularStd-Medium";
+NSString *const AWFontNameCircularStdBold = @"CircularStd-Bold";

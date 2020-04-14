@@ -22,5 +22,10 @@ FOUNDATION_EXPORT NSString *const AWSDKErrorDomain;
 #endif
 
 FOUNDATION_EXPORT NSString *const AWWeChatPayKey;
+FOUNDATION_EXPORT NSString *const AWCardKey;
+
+FOUNDATION_EXPORT NSString *const AWFontFamilyNameCircularStd;
+FOUNDATION_EXPORT NSString *const AWFontNameCircularStdMedium;
+FOUNDATION_EXPORT NSString *const AWFontNameCircularStdBold;
 
 NS_ASSUME_NONNULL_END
