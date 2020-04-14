@@ -79,9 +79,11 @@ iOSInjectionProject/
 # Xcode
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-
-
-
+### certificates ###
+*.pem
+*.key
+*.crt
+*.priv
 
 ## Playgrounds
 timeline.xctimeline

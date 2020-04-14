@@ -1,10 +1,12 @@
 PODS:
   - IQKeyboardManager (6.5.4)
+  - Keys (1.0.1)
   - SVProgressHUD (2.2.5)
   - WechatOpenSDK (1.8.2)
 
 DEPENDENCIES:
   - IQKeyboardManager (= 6.5.4)
+  - Keys (from `Pods/CocoaPodsKeys`)
   - SVProgressHUD (= 2.2.5)
   - WechatOpenSDK (= 1.8.2)
 
@@ -14,11 +16,16 @@ SPEC REPOS:
     - SVProgressHUD
     - WechatOpenSDK
 
+EXTERNAL SOURCES:
+  Keys:
+    :path: Pods/CocoaPodsKeys
+
 SPEC CHECKSUMS:
   IQKeyboardManager: 72b359cd7e777e3a984cedbe05f8da45320cbb63
+  Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: bd1815bbd7b7bdeb8e018dc7e54f36238b559889
+PODFILE CHECKSUM: 30962cfc075499073b9d48b78221196878d9b2d0
 
 COCOAPODS: 1.9.1

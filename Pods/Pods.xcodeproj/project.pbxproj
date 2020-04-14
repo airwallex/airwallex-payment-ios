@@ -20,32 +20,37 @@
 
 /* Begin PBXBuildFile section */
 		025791C351C06AAF7A11E27D8B425BA8 /* IQTitleBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 47615A629E4275B3DA9DD6DA645B63A4 /* IQTitleBarButtonItem.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		0A1D7EA70C8CECF7E1521A56996978FE /* Pods-AirwallexTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E7607F0C0C635CA1982ADAF869F91ED2 /* Pods-AirwallexTests-dummy.m */; };
+		04BB4A760AF264A09FB655DFCE94F299 /* Pods-Airwallex-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 70429E80C299472147E5E7A42387D5D5 /* Pods-Airwallex-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CA80ED7E59E6BCE64CEEE649A3C6D2F /* SVProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 243998375A0F5E45734491912AEA5150 /* SVProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0E740E20A2F88CB5B8530C1D24E58658 /* Keys-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 002BC7CA5E9610C862091A4F1A1DF84C /* Keys-dummy.m */; };
 		0EB2DBBB48FD2F3B7CA84B42B110C64D /* IQPreviousNextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69ABE2C1E5F47ACFE7D54CB4ED8BC8BC /* IQPreviousNextView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		19587BBD4AF38CBA9C7F89B51304CF78 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
+		1036AB0B37120DAF7E67D11D8A4B18F6 /* Pods-Examples-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F9FD0940B8BBB4DDAC94532D3CAF719 /* Pods-Examples-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		13C6F2BC022AA4DD05839D41E96D1793 /* Pods-AirwallexTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 542AB3B8466A49C84B7D1C282D4CC73F /* Pods-AirwallexTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1699A2FEA177B8F64D038C9882878003 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		1C4BFB6B596362C70EE7AA52099EF145 /* IQKeyboardReturnKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 664F880A8257E19E778C847A0E49B741 /* IQKeyboardReturnKeyHandler.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		1FBD457F5CE5013A61DCFE50240D4C1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		203662AC9DF46479DCE23544E5FD32C5 /* IQKeyboardReturnKeyHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 692DCC1301E0471584146D689E473660 /* IQKeyboardReturnKeyHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		21601877C46E05B99013650392836D03 /* Pods-AirwallexTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B366D37A9F9ABABB4764E68452E9FE /* Pods-AirwallexTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		24864AD6CD2835BC9657EDD43B031489 /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = C12F1D380BB91A6438ACC47E58CCF9D5 /* IQNSArray+Sort.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		264E1A478BDFA31DA6842749C72EA535 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 02C8971FC6545B2725C4677B5096C963 /* SVProgressHUD.bundle */; };
 		27C6ACA29543A53984C35ADC6BD1FFC3 /* IQUIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6776471DFCBFEFF4F04E33EE1B7639A8 /* IQUIViewController+Additions.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		2930A56900D8C455293FA5BFB4394993 /* Pods-Examples-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D9FB9614F4BBFFD96C2EA0C5BA9D449F /* Pods-Examples-dummy.m */; };
 		2D2801427B88163A3FE72A41B896508F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E00AEDC78369C7F78E6663A30A6108A /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		37E96A71F9458498AFF6E94DCE43285B /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 22A239072E1E6089744D656C393EDDC2 /* IQToolbar.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		384BD67256D5D4B6B0ABB54D2AF51E3D /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */; };
+		3A9AE1DFCC992D178F2D2512F88EE221 /* AirwallexExamplesKeys.h in Headers */ = {isa = PBXBuildFile; fileRef = A1C71EC25B5F5E2CB88198F15DE2E578 /* AirwallexExamplesKeys.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3FE6B479CAB3EDDC9AABA985B79EC762 /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B211207436BC85507D457BB0F9742 /* IQUITextFieldView+Additions.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		42E8489C1582635F029345E8F6495CEC /* IQKeyboardManager-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EB5EB88D189586F4C56FB7EC00154452 /* IQKeyboardManager-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		44BFDC4666E6780F2012C9AD34D96B67 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		4BE2D5E93EE14CA50B3E64E813D85098 /* IQKeyboardManager-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5D4ABBEAF174289E058947A5906F7D /* IQKeyboardManager-dummy.m */; };
 		5017F297AAA171A30A29BC2F85D30D1B /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC139103E082A33A878A5F12AF5D5D50 /* SVIndefiniteAnimatedView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		527206EDBEE3C4980B7787CD4DD47D29 /* IQUIViewController+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = CD52959006F99A0F9F32C08C3E3A60C5 /* IQUIViewController+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5FA6B319F7A3AEA63E8575E9BE33B63A /* IQPreviousNextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 10DFE8A39086876391EC495A33E257FF /* IQPreviousNextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61D552992D3522BCF5DFFA2B716FFA67 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51B86165F8378C4B22093D32A70D5326 /* SVProgressAnimatedView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		667195CA2A33A523BB110E6E3AE8C396 /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A32CB1BCD1DBA77A6C9B9AB1F9751A6 /* IQUIView+Hierarchy.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		6908E53391BB1AF40808289AEE7B65B5 /* Keys-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F74E99988F0C07F3B5F64BB08B8C92A4 /* Keys-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		74B13937C3ED5DBE20BF2BC3941EDC9C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		7CDD1E64E291E5B797B3F71CE7FDD1C8 /* IQBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FD046A23D0F9BB929490E43F3C2CCF /* IQBarButtonItem.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		801AB1AC84D162DAE2049FB6D55A1E81 /* AirwallexExamplesKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = A78D4F0D5A8E71C6BBA923F114A64460 /* AirwallexExamplesKeys.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		8ADC598F07F4C47BD8B71A08B011C974 /* IQKeyboardManagerConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C2DBB788D0FE04A439EA09AF5167AD7 /* IQKeyboardManagerConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		915200C822472DB78CE29EDBE98F0313 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		967DD47A591A95CD20388BD29A3A7216 /* IQKeyboardManagerConstantsInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = D321E0A810F806AAFA3BC4DC3F80F1E3 /* IQKeyboardManagerConstantsInternal.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		96EADE99073DBA8FCE7904627E2D18EE /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = CEA86F70E4121EB9D82FC57CFBACC298 /* SVIndefiniteAnimatedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96F9E10DB0A7B4C34504CAB08C13DCA6 /* IQUIView+Hierarchy.h in Headers */ = {isa = PBXBuildFile; fileRef = D3F02EF5C71C92CBC5BB62136E1C50FF /* IQUIView+Hierarchy.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -53,11 +58,9 @@
 		99456829035D2883017E8EBCDB82C231 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B86528815F4C81E70D4F6522BB7687 /* QuartzCore.framework */; };
 		A872F559DC3E6C024D4D4D0274761490 /* IQTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 93215B045D17508C07E287B9A927812B /* IQTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B06588B9359BCD1D7BFDE98A39D41BE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B86528815F4C81E70D4F6522BB7687 /* QuartzCore.framework */; };
-		B8A1B3DB6E5B4A59F0466D80EB3284DC /* Pods-Airwallex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D882CB52326C831D68E6B4586D70965 /* Pods-Airwallex-dummy.m */; };
 		BB541904E511E4B3468713B8003E1D50 /* IQBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 31D941426944723AA99D0E6243EDFCBB /* IQBarButtonItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE7771F000A75785BD4737778FD7DE4C /* SVProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A65DC4E5309527C5F9576997E7D7111 /* SVProgressHUD-dummy.m */; };
-		BF26896863D6D970342ECCCB78B998F7 /* Pods-Examples-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AFB311258FEE32A2F6FA1192295FD686 /* Pods-Examples-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9ECA360AA4E64D1C649574D748F321B /* Pods-Airwallex-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 95C69F7BC79A8A319C14FE34559563EE /* Pods-Airwallex-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C5F3FB3444C537B9A4802939EB65DA6C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		CEE79161A0250EC83EA8D90A70D95412 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A7DACB743F2A39BC0D9C0E317842D5 /* CoreGraphics.framework */; };
 		D116443135087883F9249406502FA257 /* IQUIScrollView+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 445F742E9BA83EF2D660C44F37EF3107 /* IQUIScrollView+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D17BC701F945E2F64E8DD414765F818F /* IQTitleBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = BDE9B27F3998F604671F3274FF410CDB /* IQTitleBarButtonItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -66,20 +69,36 @@
 		D87B2D5ED73534ACF97CE0A52FA18AE4 /* SVRadialGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 34EA83259FF8E69628310FB2061E6346 /* SVRadialGradientLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB19804BA6B117B4B5CBB959C9C3AFFB /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5914FDED20FFCAC5FD23825DE7416557 /* SVRadialGradientLayer.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		DE12057AB8895931A0E9499619C5CFC8 /* SVProgressHUD-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 724D1604B84B4E6806C56E88C9AEA5BD /* SVProgressHUD-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DFABEE662AACDEFD3129656C952AA539 /* Pods-Airwallex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4179DC630D09B96847212A1814EC048 /* Pods-Airwallex-dummy.m */; };
 		DFEE2B729CCB9591FCC3873FBA897AB5 /* IQKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A42A847B1BB1F04E5B563982475ED059 /* IQKeyboardManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		E0186A63060F0EB3676F95CD0ACE0E18 /* SVProgressAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = CC44AF2D5ECD5F7889D92B266FB6D658 /* SVProgressAnimatedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E3096A2C58689592ED58117250B37E32 /* Pods-Examples-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BD00FFE83B0B659C098581B3DB761740 /* Pods-Examples-dummy.m */; };
 		E47A50752ACE8C8A6928BBD35323ABD9 /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = DE3B3561F525CA5E2C884C1F227A27A0 /* IQUIView+IQKeyboardToolbar.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		E61D223F833E5E56984D44B739E8C7C8 /* Pods-AirwallexTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A398ECA327EE27D4F213A8BF2D6D995 /* Pods-AirwallexTests-dummy.m */; };
 		E67869FB3BA1227522178DF27ACE69E4 /* IQNSArray+Sort.h in Headers */ = {isa = PBXBuildFile; fileRef = B4A0ABCCFBE65CF611C6DB3D9B33BDB2 /* IQNSArray+Sort.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		EC039CF23C961C0957AA6A5C06CD5009 /* IQToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A1327DA2B53C125CA4EDE090E711B81 /* IQToolbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EE00DDFD4BFF9536E6204F00E345265C /* IQUIScrollView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E310DF5AA9DD89392BF3974B6C16D29 /* IQUIScrollView+Additions.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		EE210D6F10EC65CA06A3853ACC8E61EB /* IQUITextFieldView+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = DB89B3A89C1CC220FB5539CF9D62C42F /* IQUITextFieldView+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6F24A610A3A287A36CF1E98C2B1BDA2 /* IQKeyboardManager.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D146C0C48248D777EBF2DAD1E5913F /* IQKeyboardManager.xcassets */; };
 		F80124E7C770FAD318674EC96936C0FB /* IQKeyboardManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EA6347B5942B3227B72A3A00EA2609A8 /* IQKeyboardManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FE5CF713C67204C427D0054A15A9FFB6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */; };
 		FEB549FA553BEB024857478C8E60ED99 /* IQTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 803B453CA1BCC40273633ACC376EA403 /* IQTextView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		127510DFC33756CD60BEAD495FD88547 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CE75F0DCD94A1A113665B974F74795F;
+			remoteInfo = Keys;
+		};
+		15A048E8C2AFD5832CE3F8E411A8FEE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBA456CB50E371584C11231929A0971E;
+			remoteInfo = IQKeyboardManager;
+		};
 		6A0D586B4BCE61874068EA5DDA9238B7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -87,125 +106,144 @@
 			remoteGlobalIDString = 05B2A835D60F78761395189914B88047;
 			remoteInfo = "IQKeyboardManager-IQKeyboardManager";
 		};
-		D0A85D50B384B14AE867B4B9EE73396F /* PBXContainerItemProxy */ = {
+		85F7E575BE6EC7F525780C1D0C860CAD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = FBA456CB50E371584C11231929A0971E;
-			remoteInfo = IQKeyboardManager;
+			remoteGlobalIDString = 5CE75F0DCD94A1A113665B974F74795F;
+			remoteInfo = Keys;
 		};
-		DE14C9581B8717FFAC2AEC575A7AB9FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8554F6236D2AA202CF58503D2DF29730;
-			remoteInfo = WechatOpenSDK;
-		};
-		FAC9C644D96B018BB0E06F1C8D2A4537 /* PBXContainerItemProxy */ = {
+		D5077BA62EC8D159D12F7362526E7B46 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
 			remoteInfo = SVProgressHUD;
 		};
+		D5B1EC1BA7633FBBFA62B9238283D4CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CE75F0DCD94A1A113665B974F74795F;
+			remoteInfo = Keys;
+		};
+		FF9AC2383A8CAD90954C71189197F87F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8554F6236D2AA202CF58503D2DF29730;
+			remoteInfo = WechatOpenSDK;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		002BC7CA5E9610C862091A4F1A1DF84C /* Keys-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Keys-dummy.m"; sourceTree = "<group>"; };
 		02C8971FC6545B2725C4677B5096C963 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
-		03DBDD632AB112746DCFD2168CF954D4 /* Pods-AirwallexTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.debug.xcconfig"; sourceTree = "<group>"; };
 		04EB03E7835222F987C0B078AA02FEDF /* WechatOpenSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.release.xcconfig; sourceTree = "<group>"; };
 		09AFF6159DA4BC9F3A9ABB6966700D6A /* IQKeyboardManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManager.debug.xcconfig; sourceTree = "<group>"; };
-		0C4174D4AE4CE1599D51844B7812849A /* Pods-AirwallexTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AirwallexTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		0D882CB52326C831D68E6B4586D70965 /* Pods-Airwallex-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Airwallex-dummy.m"; sourceTree = "<group>"; };
 		10DFE8A39086876391EC495A33E257FF /* IQPreviousNextView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQPreviousNextView.h; path = IQKeyboardManager/IQToolbar/IQPreviousNextView.h; sourceTree = "<group>"; };
 		1772DD08773C3A2F14A011DADA8F4BD5 /* WXApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = WechatSDK1.8.2/WXApi.h; sourceTree = "<group>"; };
+		193F9CA544FD8D1482ED555FD931B004 /* Pods-Airwallex.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Airwallex.modulemap"; sourceTree = "<group>"; };
+		195C20F8E754862C0E36B7657ADD8075 /* Pods-Airwallex-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Airwallex-Info.plist"; sourceTree = "<group>"; };
 		1E7494EB14C355A65FDD0C0DF6895B5F /* Pods_Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Airwallex.framework; path = "Pods-Airwallex.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20A7DACB743F2A39BC0D9C0E317842D5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		214E997E4A215D7E0463C2B35F335011 /* IQKeyboardManager-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "IQKeyboardManager-Info.plist"; sourceTree = "<group>"; };
 		22A239072E1E6089744D656C393EDDC2 /* IQToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQToolbar.m; path = IQKeyboardManager/IQToolbar/IQToolbar.m; sourceTree = "<group>"; };
 		243998375A0F5E45734491912AEA5150 /* SVProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
 		28E8B183F873142E57C7460A33AE4A8E /* SVProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-prefix.pch"; sourceTree = "<group>"; };
-		3191AA8A0F90ABFB68F8BBB05E92A080 /* Pods-Airwallex-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Airwallex-Info.plist"; sourceTree = "<group>"; };
 		31D941426944723AA99D0E6243EDFCBB /* IQBarButtonItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQBarButtonItem.h; path = IQKeyboardManager/IQToolbar/IQBarButtonItem.h; sourceTree = "<group>"; };
-		32B7B7A213467B0EC68E63078E2E266F /* Pods-AirwallexTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AirwallexTests-Info.plist"; sourceTree = "<group>"; };
 		3475F55E53E0006318D70CF566A16976 /* WechatAuthSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = WechatSDK1.8.2/WechatAuthSDK.h; sourceTree = "<group>"; };
 		34EA83259FF8E69628310FB2061E6346 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVRadialGradientLayer.h; path = SVProgressHUD/SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		367CA45C0793AD233D2ABCAFB426C1B3 /* Keys-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Keys-Info.plist"; sourceTree = "<group>"; };
 		3A32CB1BCD1DBA77A6C9B9AB1F9751A6 /* IQUIView+Hierarchy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIView+Hierarchy.m"; path = "IQKeyboardManager/Categories/IQUIView+Hierarchy.m"; sourceTree = "<group>"; };
 		3A65DC4E5309527C5F9576997E7D7111 /* SVProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD-dummy.m"; sourceTree = "<group>"; };
 		3E00AEDC78369C7F78E6663A30A6108A /* SVProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
 		41FD046A23D0F9BB929490E43F3C2CCF /* IQBarButtonItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQBarButtonItem.m; path = IQKeyboardManager/IQToolbar/IQBarButtonItem.m; sourceTree = "<group>"; };
+		42A807FB5E38BFFE1DEDC05248D8DDDD /* Pods-Examples-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-acknowledgements.plist"; sourceTree = "<group>"; };
+		4327ACF2B62B1D55DE2AC1FEAF86224E /* Pods-AirwallexTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AirwallexTests-Info.plist"; sourceTree = "<group>"; };
 		445F742E9BA83EF2D660C44F37EF3107 /* IQUIScrollView+Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIScrollView+Additions.h"; path = "IQKeyboardManager/Categories/IQUIScrollView+Additions.h"; sourceTree = "<group>"; };
 		47615A629E4275B3DA9DD6DA645B63A4 /* IQTitleBarButtonItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQTitleBarButtonItem.m; path = IQKeyboardManager/IQToolbar/IQTitleBarButtonItem.m; sourceTree = "<group>"; };
-		4DD79C1E32ACD69BF12CBE839E93AB19 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
+		47724DF4C9BCFF8BCF3249C223ADF288 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
+		4B78D216614405AD9F6D7DE6CAC99D76 /* Pods-Examples-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Info.plist"; sourceTree = "<group>"; };
 		4F0110D7A8073530AB236296382FB8CA /* IQKeyboardManager.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = IQKeyboardManager.modulemap; sourceTree = "<group>"; };
 		51B86165F8378C4B22093D32A70D5326 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressAnimatedView.m; path = SVProgressHUD/SVProgressAnimatedView.m; sourceTree = "<group>"; };
+		542AB3B8466A49C84B7D1C282D4CC73F /* Pods-AirwallexTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AirwallexTests-umbrella.h"; sourceTree = "<group>"; };
 		56DE6DFF52489DACAF66A82BFD0FE2CA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		5914FDED20FFCAC5FD23825DE7416557 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVRadialGradientLayer.m; path = SVProgressHUD/SVRadialGradientLayer.m; sourceTree = "<group>"; };
-		5DFE7757EFE6A5A53C7D60E8C7E7701D /* Pods-Airwallex.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Airwallex.modulemap"; sourceTree = "<group>"; };
+		5B3874456F47169EA8386B11B7E4C872 /* Pods-Examples-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-acknowledgements.markdown"; sourceTree = "<group>"; };
+		618EE68425B342DFA7F3BA18570344CF /* Pods-Airwallex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.debug.xcconfig"; sourceTree = "<group>"; };
 		61EDCABF8E45B501508776165BDD1240 /* WechatOpenSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.debug.xcconfig; sourceTree = "<group>"; };
-		628AE3F7F20D6C0DE37F7E5AAA429712 /* Pods-Airwallex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.debug.xcconfig"; sourceTree = "<group>"; };
 		664F880A8257E19E778C847A0E49B741 /* IQKeyboardReturnKeyHandler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQKeyboardReturnKeyHandler.m; path = IQKeyboardManager/IQKeyboardReturnKeyHandler.m; sourceTree = "<group>"; };
 		6776471DFCBFEFF4F04E33EE1B7639A8 /* IQUIViewController+Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIViewController+Additions.m"; path = "IQKeyboardManager/Categories/IQUIViewController+Additions.m"; sourceTree = "<group>"; };
 		692DCC1301E0471584146D689E473660 /* IQKeyboardReturnKeyHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardReturnKeyHandler.h; path = IQKeyboardManager/IQKeyboardReturnKeyHandler.h; sourceTree = "<group>"; };
 		69ABE2C1E5F47ACFE7D54CB4ED8BC8BC /* IQPreviousNextView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQPreviousNextView.m; path = IQKeyboardManager/IQToolbar/IQPreviousNextView.m; sourceTree = "<group>"; };
 		6B977302022559FAF8CDA1F700D7FEB2 /* Pods_AirwallexTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_AirwallexTests.framework; path = "Pods-AirwallexTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6D34B415D3BD013C1357F255A3A4BC9A /* Pods-Examples.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Examples.modulemap"; sourceTree = "<group>"; };
+		6D8ADBB87AE9232EC43018C545629A9D /* Pods-Examples.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Examples.modulemap"; sourceTree = "<group>"; };
 		6E310DF5AA9DD89392BF3974B6C16D29 /* IQUIScrollView+Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIScrollView+Additions.m"; path = "IQKeyboardManager/Categories/IQUIScrollView+Additions.m"; sourceTree = "<group>"; };
 		6F6284F6DA6E51A4C6DFD604EED3608A /* ResourceBundle-IQKeyboardManager-IQKeyboardManager-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-IQKeyboardManager-IQKeyboardManager-Info.plist"; sourceTree = "<group>"; };
+		70429E80C299472147E5E7A42387D5D5 /* Pods-Airwallex-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Airwallex-umbrella.h"; sourceTree = "<group>"; };
 		715F823A05067B88BA9D209804538147 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Examples.framework; path = "Pods-Examples.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		724D1604B84B4E6806C56E88C9AEA5BD /* SVProgressHUD-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-umbrella.h"; sourceTree = "<group>"; };
 		762C973A19DDE5A5AD81F317CEA5461F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		7EB0EB0E8505D84889CFE3F79B4B5577 /* Pods-Airwallex-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Airwallex-acknowledgements.markdown"; sourceTree = "<group>"; };
+		786AD9C7BA4747A662AEFF7C197C2AD0 /* Keys.podspec.json */ = {isa = PBXFileReference; includeInIndex = 1; path = Keys.podspec.json; sourceTree = "<group>"; };
+		7A398ECA327EE27D4F213A8BF2D6D995 /* Pods-AirwallexTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AirwallexTests-dummy.m"; sourceTree = "<group>"; };
 		7EF483B7450373AEAF167818D0F263A1 /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = WechatSDK1.8.2/libWeChatSDK.a; sourceTree = "<group>"; };
 		7F4427E7224AE82BD08F15F1A09D7BC9 /* IQKeyboardManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManager.release.xcconfig; sourceTree = "<group>"; };
+		7F9FD0940B8BBB4DDAC94532D3CAF719 /* Pods-Examples-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Examples-umbrella.h"; sourceTree = "<group>"; };
 		803B453CA1BCC40273633ACC376EA403 /* IQTextView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQTextView.m; path = IQKeyboardManager/IQTextView/IQTextView.m; sourceTree = "<group>"; };
 		82196AE068A64BE86AEF891E928488AF /* SVProgressHUD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.release.xcconfig; sourceTree = "<group>"; };
+		88446196C9E9F90FBFB3DDBAFA82B09A /* Keys.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Keys.release.xcconfig; sourceTree = "<group>"; };
+		8986E18455DEE547D8236941D2B4EFFF /* Pods-Airwallex-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Airwallex-acknowledgements.plist"; sourceTree = "<group>"; };
 		8A1327DA2B53C125CA4EDE090E711B81 /* IQToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQToolbar.h; path = IQKeyboardManager/IQToolbar/IQToolbar.h; sourceTree = "<group>"; };
-		8A984872A3C39730F2C41F16DD0064BA /* Pods-Examples-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-acknowledgements.markdown"; sourceTree = "<group>"; };
-		8BC5BC480F1B030422FB633F331C5186 /* Pods-Examples-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-frameworks.sh"; sourceTree = "<group>"; };
 		93215B045D17508C07E287B9A927812B /* IQTextView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQTextView.h; path = IQKeyboardManager/IQTextView/IQTextView.h; sourceTree = "<group>"; };
-		9357288B955D56D47304350FCC3D61A9 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
-		95C69F7BC79A8A319C14FE34559563EE /* Pods-Airwallex-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Airwallex-umbrella.h"; sourceTree = "<group>"; };
-		9827A0BBA37BB97C6EA861086E4E2A6A /* Pods-Airwallex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.release.xcconfig"; sourceTree = "<group>"; };
+		97CFF8CE30C2A3D5BA0C717616C95ED9 /* Pods-Airwallex-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Airwallex-acknowledgements.markdown"; sourceTree = "<group>"; };
 		984B211207436BC85507D457BB0F9742 /* IQUITextFieldView+Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUITextFieldView+Additions.m"; path = "IQKeyboardManager/Categories/IQUITextFieldView+Additions.m"; sourceTree = "<group>"; };
 		98527D7196957AAB07B79E2E2AFDE23E /* IQKeyboardManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = IQKeyboardManager.framework; path = IQKeyboardManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B156A26A3BA8EE11A1756C0F4A997B9 /* Pods-AirwallexTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9C2DBB788D0FE04A439EA09AF5167AD7 /* IQKeyboardManagerConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManagerConstants.h; path = IQKeyboardManager/Constants/IQKeyboardManagerConstants.h; sourceTree = "<group>"; };
 		9C4D0D96681F2B0FB481CC9F07CEB8BA /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIView+IQKeyboardToolbar.h"; path = "IQKeyboardManager/IQToolbar/IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DA7FB3139B0C37C864812EC56224BA8 /* SVProgressHUD-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SVProgressHUD-Info.plist"; sourceTree = "<group>"; };
+		A1C71EC25B5F5E2CB88198F15DE2E578 /* AirwallexExamplesKeys.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AirwallexExamplesKeys.h; sourceTree = "<group>"; };
 		A40B050115AC73ECA2A597E368A64FA3 /* SVProgressHUD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.debug.xcconfig; sourceTree = "<group>"; };
 		A42A847B1BB1F04E5B563982475ED059 /* IQKeyboardManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQKeyboardManager.m; path = IQKeyboardManager/IQKeyboardManager.m; sourceTree = "<group>"; };
+		A535F096EFB51D3905ED3BD0076E33BB /* Pods-AirwallexTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirwallexTests-frameworks.sh"; sourceTree = "<group>"; };
 		A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = IQKeyboardManager.bundle; path = "IQKeyboardManager-IQKeyboardManager.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA9E9CE4A72DC8134994D574D613EDAE /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
-		AD7F7D482667B5A2802388EAA7780501 /* Pods-Airwallex-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Airwallex-acknowledgements.plist"; sourceTree = "<group>"; };
-		AFB311258FEE32A2F6FA1192295FD686 /* Pods-Examples-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Examples-umbrella.h"; sourceTree = "<group>"; };
+		A67A7780FEC52989D1C75E9966565ED7 /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
+		A78D4F0D5A8E71C6BBA923F114A64460 /* AirwallexExamplesKeys.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AirwallexExamplesKeys.m; sourceTree = "<group>"; };
+		AF41F610118262368A520BA11BA5AE63 /* Pods-Examples-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-frameworks.sh"; sourceTree = "<group>"; };
+		B26D73371ADCF1CDF653038D7EF9D859 /* Pods-AirwallexTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-AirwallexTests.modulemap"; sourceTree = "<group>"; };
+		B2741485BF9B359CF06C3762B2842792 /* Keys.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Keys.modulemap; sourceTree = "<group>"; };
 		B4A0ABCCFBE65CF611C6DB3D9B33BDB2 /* IQNSArray+Sort.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQNSArray+Sort.h"; path = "IQKeyboardManager/Categories/IQNSArray+Sort.h"; sourceTree = "<group>"; };
 		B87EF7D741C1FC64E4C6260C7976D9C2 /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = WechatSDK1.8.2/WXApiObject.h; sourceTree = "<group>"; };
 		B9B86528815F4C81E70D4F6522BB7687 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		BA5D4ABBEAF174289E058947A5906F7D /* IQKeyboardManager-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "IQKeyboardManager-dummy.m"; sourceTree = "<group>"; };
 		BB9E9395AFDA76E8A0133C2372D0B9BE /* SVProgressHUD.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SVProgressHUD.modulemap; sourceTree = "<group>"; };
-		BD00FFE83B0B659C098581B3DB761740 /* Pods-Examples-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-dummy.m"; sourceTree = "<group>"; };
-		BD41DB40626CAD73D4DF433A0E41B26B /* Pods-Examples-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-acknowledgements.plist"; sourceTree = "<group>"; };
 		BDE9B27F3998F604671F3274FF410CDB /* IQTitleBarButtonItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQTitleBarButtonItem.h; path = IQKeyboardManager/IQToolbar/IQTitleBarButtonItem.h; sourceTree = "<group>"; };
+		BF7837EE400E6B784DB61431E00E0681 /* Pods-Airwallex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.release.xcconfig"; sourceTree = "<group>"; };
 		C12F1D380BB91A6438ACC47E58CCF9D5 /* IQNSArray+Sort.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQNSArray+Sort.m"; path = "IQKeyboardManager/Categories/IQNSArray+Sort.m"; sourceTree = "<group>"; };
-		C2706ACFE90792895F15BD7A459675AC /* Pods-AirwallexTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-AirwallexTests.modulemap"; sourceTree = "<group>"; };
 		CC44AF2D5ECD5F7889D92B266FB6D658 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressAnimatedView.h; path = SVProgressHUD/SVProgressAnimatedView.h; sourceTree = "<group>"; };
 		CD52959006F99A0F9F32C08C3E3A60C5 /* IQUIViewController+Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIViewController+Additions.h"; path = "IQKeyboardManager/Categories/IQUIViewController+Additions.h"; sourceTree = "<group>"; };
 		CEA86F70E4121EB9D82FC57CFBACC298 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		D321E0A810F806AAFA3BC4DC3F80F1E3 /* IQKeyboardManagerConstantsInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManagerConstantsInternal.h; path = IQKeyboardManager/Constants/IQKeyboardManagerConstantsInternal.h; sourceTree = "<group>"; };
 		D3F02EF5C71C92CBC5BB62136E1C50FF /* IQUIView+Hierarchy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIView+Hierarchy.h"; path = "IQKeyboardManager/Categories/IQUIView+Hierarchy.h"; sourceTree = "<group>"; };
-		D4B366D37A9F9ABABB4764E68452E9FE /* Pods-AirwallexTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AirwallexTests-umbrella.h"; sourceTree = "<group>"; };
+		D4179DC630D09B96847212A1814EC048 /* Pods-Airwallex-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Airwallex-dummy.m"; sourceTree = "<group>"; };
+		D60371ADEBFAA63F6E93D817071CDB02 /* Pods-AirwallexTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AirwallexTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		D9FB9614F4BBFFD96C2EA0C5BA9D449F /* Pods-Examples-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-dummy.m"; sourceTree = "<group>"; };
+		DB66D9FCAB5077AFC60B5ABCF7EB03C7 /* Keys.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Keys.debug.xcconfig; sourceTree = "<group>"; };
 		DB89B3A89C1CC220FB5539CF9D62C42F /* IQUITextFieldView+Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUITextFieldView+Additions.h"; path = "IQKeyboardManager/Categories/IQUITextFieldView+Additions.h"; sourceTree = "<group>"; };
 		DE3B3561F525CA5E2C884C1F227A27A0 /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIView+IQKeyboardToolbar.m"; path = "IQKeyboardManager/IQToolbar/IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
-		E2CCF69739154F71C8F8D7106BAAE5C5 /* Pods-AirwallexTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AirwallexTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		E138DA323DA458AF0B7A4D932727C2F1 /* Keys-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Keys-prefix.pch"; sourceTree = "<group>"; };
 		E2D146C0C48248D777EBF2DAD1E5913F /* IQKeyboardManager.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = IQKeyboardManager.xcassets; path = IQKeyboardManager/Resources/IQKeyboardManager.xcassets; sourceTree = "<group>"; };
-		E7607F0C0C635CA1982ADAF869F91ED2 /* Pods-AirwallexTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AirwallexTests-dummy.m"; sourceTree = "<group>"; };
+		E8CACB8744373C1818777FFB8F84C67E /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Keys.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E97D43C46A45EE515A4DA3AF94398441 /* SVProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SVProgressHUD.framework; path = SVProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA6347B5942B3227B72A3A00EA2609A8 /* IQKeyboardManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManager.h; path = IQKeyboardManager/IQKeyboardManager.h; sourceTree = "<group>"; };
 		EB5EB88D189586F4C56FB7EC00154452 /* IQKeyboardManager-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQKeyboardManager-umbrella.h"; sourceTree = "<group>"; };
 		EC139103E082A33A878A5F12AF5D5D50 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		F74E99988F0C07F3B5F64BB08B8C92A4 /* Keys-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Keys-umbrella.h"; sourceTree = "<group>"; };
 		FDC1D8F04A44638D03EDB9422DB45760 /* IQKeyboardManager-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQKeyboardManager-prefix.pch"; sourceTree = "<group>"; };
-		FEFD99FB36F93580D3A26BB2A5C5D453 /* Pods-Examples-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Info.plist"; sourceTree = "<group>"; };
+		FE13FA860DACFD9F2452D9949E15C2B7 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
+		FE4492D30B138984955FDC2D27B94E6F /* Pods-AirwallexTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AirwallexTests-acknowledgements.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,19 +258,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		43F2D3F86160CB7E8E6B079D0ACC4150 /* Frameworks */ = {
+		64803064BF5899F57BC2EDEC3903AC49 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44BFDC4666E6780F2012C9AD34D96B67 /* Foundation.framework in Frameworks */,
+				74B13937C3ED5DBE20BF2BC3941EDC9C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		87D90894998568F3F8570A54D78959F8 /* Frameworks */ = {
+		922F925E12B3BC3FA3849031926595A0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19587BBD4AF38CBA9C7F89B51304CF78 /* Foundation.framework in Frameworks */,
+				1699A2FEA177B8F64D038C9882878003 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,18 +283,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BF23A0D45B2F037F1D41FB1C5939E06C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE5CF713C67204C427D0054A15A9FFB6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCCFDE4EC4A1AF4D4B93CCFD604F27C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5F3FB3444C537B9A4802939EB65DA6C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EF101858B3E684A26F517D49B894574B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F862F4050C0912C7790954CE6DD00B08 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				915200C822472DB78CE29EDBE98F0313 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,14 +344,21 @@
 			path = "../Target Support Files/IQKeyboardManager";
 			sourceTree = "<group>";
 		};
-		3E46E68B57275ED9DDE272D8B4A62F81 /* Targets Support Files */ = {
+		42A10094BAB4F9A9770B9C035EB306AF /* Pods-Examples */ = {
 			isa = PBXGroup;
 			children = (
-				A8964F4189817B550FF11DFF3AD0A527 /* Pods-Airwallex */,
-				5812BD6499E936B395A8925246AC94C3 /* Pods-AirwallexTests */,
-				E9920C19F01324736B10807F4E2B98B0 /* Pods-Examples */,
+				6D8ADBB87AE9232EC43018C545629A9D /* Pods-Examples.modulemap */,
+				5B3874456F47169EA8386B11B7E4C872 /* Pods-Examples-acknowledgements.markdown */,
+				42A807FB5E38BFFE1DEDC05248D8DDDD /* Pods-Examples-acknowledgements.plist */,
+				D9FB9614F4BBFFD96C2EA0C5BA9D449F /* Pods-Examples-dummy.m */,
+				AF41F610118262368A520BA11BA5AE63 /* Pods-Examples-frameworks.sh */,
+				4B78D216614405AD9F6D7DE6CAC99D76 /* Pods-Examples-Info.plist */,
+				7F9FD0940B8BBB4DDAC94532D3CAF719 /* Pods-Examples-umbrella.h */,
+				47724DF4C9BCFF8BCF3249C223ADF288 /* Pods-Examples.debug.xcconfig */,
+				FE13FA860DACFD9F2452D9949E15C2B7 /* Pods-Examples.release.xcconfig */,
 			);
-			name = "Targets Support Files";
+			name = "Pods-Examples";
+			path = "Target Support Files/Pods-Examples";
 			sourceTree = "<group>";
 		};
 		43A63D1BAB858E015D90B048359DB3CB /* Pods */ = {
@@ -316,22 +369,6 @@
 				620C7D0C75FC628FD5621B04AF991628 /* WechatOpenSDK */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		5812BD6499E936B395A8925246AC94C3 /* Pods-AirwallexTests */ = {
-			isa = PBXGroup;
-			children = (
-				C2706ACFE90792895F15BD7A459675AC /* Pods-AirwallexTests.modulemap */,
-				0C4174D4AE4CE1599D51844B7812849A /* Pods-AirwallexTests-acknowledgements.markdown */,
-				E2CCF69739154F71C8F8D7106BAAE5C5 /* Pods-AirwallexTests-acknowledgements.plist */,
-				E7607F0C0C635CA1982ADAF869F91ED2 /* Pods-AirwallexTests-dummy.m */,
-				32B7B7A213467B0EC68E63078E2E266F /* Pods-AirwallexTests-Info.plist */,
-				D4B366D37A9F9ABABB4764E68452E9FE /* Pods-AirwallexTests-umbrella.h */,
-				03DBDD632AB112746DCFD2168CF954D4 /* Pods-AirwallexTests.debug.xcconfig */,
-				AA9E9CE4A72DC8134994D574D613EDAE /* Pods-AirwallexTests.release.xcconfig */,
-			);
-			name = "Pods-AirwallexTests";
-			path = "Target Support Files/Pods-AirwallexTests";
 			sourceTree = "<group>";
 		};
 		620C7D0C75FC628FD5621B04AF991628 /* WechatOpenSDK */ = {
@@ -385,12 +422,34 @@
 			path = IQKeyboardManager;
 			sourceTree = "<group>";
 		};
+		71D73883354C039ACA8BD71B1BB0C03D /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				A1C71EC25B5F5E2CB88198F15DE2E578 /* AirwallexExamplesKeys.h */,
+				A78D4F0D5A8E71C6BBA923F114A64460 /* AirwallexExamplesKeys.m */,
+				98A2F7D733D48ADD773795E613F16277 /* Pod */,
+				B9B7B67A932D941B24EFEC9FF930002F /* Support Files */,
+			);
+			name = Keys;
+			path = CocoaPodsKeys;
+			sourceTree = "<group>";
+		};
 		7645B3F197D0B9E4A895E586C40271B9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				E2D146C0C48248D777EBF2DAD1E5913F /* IQKeyboardManager.xcassets */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		7A9A9C76CCCC306CCD53232A0D61E7FE /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8CF07AF895F04E742650CEE85A7561D9 /* Pods-Airwallex */,
+				D4AF6F2A305EA204C22BF2D387C13987 /* Pods-AirwallexTests */,
+				42A10094BAB4F9A9770B9C035EB306AF /* Pods-Examples */,
+			);
+			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		7BA63773292EB3B3C6C2473DD065C19F /* Support Files */ = {
@@ -408,17 +467,36 @@
 			path = "../Target Support Files/SVProgressHUD";
 			sourceTree = "<group>";
 		};
-		A47F6A9D3162D33313B35E4C081B60E3 /* Products */ = {
+		8CF07AF895F04E742650CEE85A7561D9 /* Pods-Airwallex */ = {
 			isa = PBXGroup;
 			children = (
-				A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */,
-				98527D7196957AAB07B79E2E2AFDE23E /* IQKeyboardManager.framework */,
-				1E7494EB14C355A65FDD0C0DF6895B5F /* Pods_Airwallex.framework */,
-				6B977302022559FAF8CDA1F700D7FEB2 /* Pods_AirwallexTests.framework */,
-				715F823A05067B88BA9D209804538147 /* Pods_Examples.framework */,
-				E97D43C46A45EE515A4DA3AF94398441 /* SVProgressHUD.framework */,
+				193F9CA544FD8D1482ED555FD931B004 /* Pods-Airwallex.modulemap */,
+				97CFF8CE30C2A3D5BA0C717616C95ED9 /* Pods-Airwallex-acknowledgements.markdown */,
+				8986E18455DEE547D8236941D2B4EFFF /* Pods-Airwallex-acknowledgements.plist */,
+				D4179DC630D09B96847212A1814EC048 /* Pods-Airwallex-dummy.m */,
+				195C20F8E754862C0E36B7657ADD8075 /* Pods-Airwallex-Info.plist */,
+				70429E80C299472147E5E7A42387D5D5 /* Pods-Airwallex-umbrella.h */,
+				618EE68425B342DFA7F3BA18570344CF /* Pods-Airwallex.debug.xcconfig */,
+				BF7837EE400E6B784DB61431E00E0681 /* Pods-Airwallex.release.xcconfig */,
 			);
-			name = Products;
+			name = "Pods-Airwallex";
+			path = "Target Support Files/Pods-Airwallex";
+			sourceTree = "<group>";
+		};
+		918C67CEDF38AB6FC9603B3803A92E0F /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				71D73883354C039ACA8BD71B1BB0C03D /* Keys */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		98A2F7D733D48ADD773795E613F16277 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				786AD9C7BA4747A662AEFF7C197C2AD0 /* Keys.podspec.json */,
+			);
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		A83E788160732A91235686B569F7A73F /* Support Files */ = {
@@ -429,22 +507,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/WechatOpenSDK";
-			sourceTree = "<group>";
-		};
-		A8964F4189817B550FF11DFF3AD0A527 /* Pods-Airwallex */ = {
-			isa = PBXGroup;
-			children = (
-				5DFE7757EFE6A5A53C7D60E8C7E7701D /* Pods-Airwallex.modulemap */,
-				7EB0EB0E8505D84889CFE3F79B4B5577 /* Pods-Airwallex-acknowledgements.markdown */,
-				AD7F7D482667B5A2802388EAA7780501 /* Pods-Airwallex-acknowledgements.plist */,
-				0D882CB52326C831D68E6B4586D70965 /* Pods-Airwallex-dummy.m */,
-				3191AA8A0F90ABFB68F8BBB05E92A080 /* Pods-Airwallex-Info.plist */,
-				95C69F7BC79A8A319C14FE34559563EE /* Pods-Airwallex-umbrella.h */,
-				628AE3F7F20D6C0DE37F7E5AAA429712 /* Pods-Airwallex.debug.xcconfig */,
-				9827A0BBA37BB97C6EA861086E4E2A6A /* Pods-Airwallex.release.xcconfig */,
-			);
-			name = "Pods-Airwallex";
-			path = "Target Support Files/Pods-Airwallex";
 			sourceTree = "<group>";
 		};
 		B24749025F17DCB63C32912D95160D29 /* SVProgressHUD */ = {
@@ -465,6 +527,21 @@
 			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		B9B7B67A932D941B24EFEC9FF930002F /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B2741485BF9B359CF06C3762B2842792 /* Keys.modulemap */,
+				002BC7CA5E9610C862091A4F1A1DF84C /* Keys-dummy.m */,
+				367CA45C0793AD233D2ABCAFB426C1B3 /* Keys-Info.plist */,
+				E138DA323DA458AF0B7A4D932727C2F1 /* Keys-prefix.pch */,
+				F74E99988F0C07F3B5F64BB08B8C92A4 /* Keys-umbrella.h */,
+				DB66D9FCAB5077AFC60B5ABCF7EB03C7 /* Keys.debug.xcconfig */,
+				88446196C9E9F90FBFB3DDBAFA82B09A /* Keys.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Keys";
+			sourceTree = "<group>";
+		};
 		BA4F31F07263C99FC76E66D632A59F09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -477,11 +554,43 @@
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				918C67CEDF38AB6FC9603B3803A92E0F /* Development Pods */,
 				BA4F31F07263C99FC76E66D632A59F09 /* Frameworks */,
 				43A63D1BAB858E015D90B048359DB3CB /* Pods */,
-				A47F6A9D3162D33313B35E4C081B60E3 /* Products */,
-				3E46E68B57275ED9DDE272D8B4A62F81 /* Targets Support Files */,
+				D31845E4BDFB7D49FA18B29D6FABC00D /* Products */,
+				7A9A9C76CCCC306CCD53232A0D61E7FE /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		D31845E4BDFB7D49FA18B29D6FABC00D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */,
+				98527D7196957AAB07B79E2E2AFDE23E /* IQKeyboardManager.framework */,
+				E8CACB8744373C1818777FFB8F84C67E /* Keys.framework */,
+				1E7494EB14C355A65FDD0C0DF6895B5F /* Pods_Airwallex.framework */,
+				6B977302022559FAF8CDA1F700D7FEB2 /* Pods_AirwallexTests.framework */,
+				715F823A05067B88BA9D209804538147 /* Pods_Examples.framework */,
+				E97D43C46A45EE515A4DA3AF94398441 /* SVProgressHUD.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D4AF6F2A305EA204C22BF2D387C13987 /* Pods-AirwallexTests */ = {
+			isa = PBXGroup;
+			children = (
+				B26D73371ADCF1CDF653038D7EF9D859 /* Pods-AirwallexTests.modulemap */,
+				D60371ADEBFAA63F6E93D817071CDB02 /* Pods-AirwallexTests-acknowledgements.markdown */,
+				FE4492D30B138984955FDC2D27B94E6F /* Pods-AirwallexTests-acknowledgements.plist */,
+				7A398ECA327EE27D4F213A8BF2D6D995 /* Pods-AirwallexTests-dummy.m */,
+				A535F096EFB51D3905ED3BD0076E33BB /* Pods-AirwallexTests-frameworks.sh */,
+				4327ACF2B62B1D55DE2AC1FEAF86224E /* Pods-AirwallexTests-Info.plist */,
+				542AB3B8466A49C84B7D1C282D4CC73F /* Pods-AirwallexTests-umbrella.h */,
+				9B156A26A3BA8EE11A1756C0F4A997B9 /* Pods-AirwallexTests.debug.xcconfig */,
+				A67A7780FEC52989D1C75E9966565ED7 /* Pods-AirwallexTests.release.xcconfig */,
+			);
+			name = "Pods-AirwallexTests";
+			path = "Target Support Files/Pods-AirwallexTests";
 			sourceTree = "<group>";
 		};
 		DDCE7B701B67A43EAB5293E75490C5FA /* Resources */ = {
@@ -492,31 +601,30 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		E9920C19F01324736B10807F4E2B98B0 /* Pods-Examples */ = {
-			isa = PBXGroup;
-			children = (
-				6D34B415D3BD013C1357F255A3A4BC9A /* Pods-Examples.modulemap */,
-				8A984872A3C39730F2C41F16DD0064BA /* Pods-Examples-acknowledgements.markdown */,
-				BD41DB40626CAD73D4DF433A0E41B26B /* Pods-Examples-acknowledgements.plist */,
-				BD00FFE83B0B659C098581B3DB761740 /* Pods-Examples-dummy.m */,
-				8BC5BC480F1B030422FB633F331C5186 /* Pods-Examples-frameworks.sh */,
-				FEFD99FB36F93580D3A26BB2A5C5D453 /* Pods-Examples-Info.plist */,
-				AFB311258FEE32A2F6FA1192295FD686 /* Pods-Examples-umbrella.h */,
-				4DD79C1E32ACD69BF12CBE839E93AB19 /* Pods-Examples.debug.xcconfig */,
-				9357288B955D56D47304350FCC3D61A9 /* Pods-Examples.release.xcconfig */,
-			);
-			name = "Pods-Examples";
-			path = "Target Support Files/Pods-Examples";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		317ACE15781422161AD3DEC4385CB4BA /* Headers */ = {
+		3E15B43B8F5CB0198DFD8E709851792E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9ECA360AA4E64D1C649574D748F321B /* Pods-Airwallex-umbrella.h in Headers */,
+				1036AB0B37120DAF7E67D11D8A4B18F6 /* Pods-Examples-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6FB9CF54424A8CCA1144EBB59240F99A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				13C6F2BC022AA4DD05839D41E96D1793 /* Pods-AirwallexTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70D3EB3EFC4912AC6104AB0DD0CE13CD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04BB4A760AF264A09FB655DFCE94F299 /* Pods-Airwallex-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,19 +640,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A421D56C319D6BD6810C16742E829918 /* Headers */ = {
+		BAAFDA40C9BAC55A3BA56BB07FF80ECB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21601877C46E05B99013650392836D03 /* Pods-AirwallexTests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CBD8A406D5F683F7C97A5BB07D1FB62E /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BF26896863D6D970342ECCCB78B998F7 /* Pods-Examples-umbrella.h in Headers */,
+				3A9AE1DFCC992D178F2D2512F88EE221 /* AirwallexExamplesKeys.h in Headers */,
+				6908E53391BB1AF40808289AEE7B65B5 /* Keys-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,21 +710,40 @@
 			productReference = E97D43C46A45EE515A4DA3AF94398441 /* SVProgressHUD.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		798D7038185779650724117C84AA91DB /* Pods-Examples */ = {
+		5CE75F0DCD94A1A113665B974F74795F /* Keys */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C9B833242D522F65AA78DCD7BB6582CC /* Build configuration list for PBXNativeTarget "Pods-Examples" */;
+			buildConfigurationList = 795CB2150073E63FDFE236FC26037B45 /* Build configuration list for PBXNativeTarget "Keys" */;
 			buildPhases = (
-				CBD8A406D5F683F7C97A5BB07D1FB62E /* Headers */,
-				EF446DBF6C0C726142542A1FB01A03CC /* Sources */,
-				87D90894998568F3F8570A54D78959F8 /* Frameworks */,
-				5265F93E5898A8B1E09B279229CBE66B /* Resources */,
+				BAAFDA40C9BAC55A3BA56BB07FF80ECB /* Headers */,
+				7E383AC0184605927BCAD258F9A55B35 /* Sources */,
+				922F925E12B3BC3FA3849031926595A0 /* Frameworks */,
+				578B49FAC5467E628C7F79081E2652E6 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				967BFC8711CAB25794E054C6E1721FA8 /* PBXTargetDependency */,
-				7EDBC7FB2BD0184178E17F3A5A7A4A9E /* PBXTargetDependency */,
-				5625094662818817A6324FD6275DAEDF /* PBXTargetDependency */,
+			);
+			name = Keys;
+			productName = Keys;
+			productReference = E8CACB8744373C1818777FFB8F84C67E /* Keys.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		798D7038185779650724117C84AA91DB /* Pods-Examples */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 364FA5B81A182E37DEA9BE0D851F2CFF /* Build configuration list for PBXNativeTarget "Pods-Examples" */;
+			buildPhases = (
+				3E15B43B8F5CB0198DFD8E709851792E /* Headers */,
+				FFB070C2DCAEC5762AFCA4E89934C3F3 /* Sources */,
+				64803064BF5899F57BC2EDEC3903AC49 /* Frameworks */,
+				40000832194FC83C8AC71462495C66DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D24319DE809817DFFFCA4CD0B4BEBE2 /* PBXTargetDependency */,
+				2CF7A15B7949F09BDBC9FCCE99D05EF9 /* PBXTargetDependency */,
+				A129A84E0503C819B19F5FBE76E4C44E /* PBXTargetDependency */,
+				C072759314A738A0BA43AF9A65BD9995 /* PBXTargetDependency */,
 			);
 			name = "Pods-Examples";
 			productName = "Pods-Examples";
@@ -632,16 +752,17 @@
 		};
 		F570EDABE55B540442303119D9625340 /* Pods-AirwallexTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8A764D05C8B04BA9CA6D5B247D69C689 /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */;
+			buildConfigurationList = BBC7F684DF37EBBA711C76A815FC7432 /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */;
 			buildPhases = (
-				A421D56C319D6BD6810C16742E829918 /* Headers */,
-				E722D1DEC02BEB414D974D66802575A2 /* Sources */,
-				F862F4050C0912C7790954CE6DD00B08 /* Frameworks */,
-				926CA330E9AE1C2EEEED715414CF2EAB /* Resources */,
+				6FB9CF54424A8CCA1144EBB59240F99A /* Headers */,
+				F3CEB4189C88E3F06D2F902905CE3D60 /* Sources */,
+				BF23A0D45B2F037F1D41FB1C5939E06C /* Frameworks */,
+				009BD3A6C680045D32BD2AF9BB44AAFA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D90801F4003F363664416CB1E7809E8F /* PBXTargetDependency */,
 			);
 			name = "Pods-AirwallexTests";
 			productName = "Pods-AirwallexTests";
@@ -650,16 +771,17 @@
 		};
 		F58E9775E039168F7D40BFD110403F36 /* Pods-Airwallex */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C56C583B2A8FDB597DB7B8B7CCE17B9A /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */;
+			buildConfigurationList = 1073EDDFABFFB7F3BA0F01782025303C /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */;
 			buildPhases = (
-				317ACE15781422161AD3DEC4385CB4BA /* Headers */,
-				96AFCA6DA09675F77FC598FEA113C2EF /* Sources */,
-				43F2D3F86160CB7E8E6B079D0ACC4150 /* Frameworks */,
-				06EBDCA83FE98953A591A687D55CE41D /* Resources */,
+				70D3EB3EFC4912AC6104AB0DD0CE13CD /* Headers */,
+				47FD15D796CC3C2EF15FD8AFFF23B25B /* Sources */,
+				DCCFDE4EC4A1AF4D4B93CCFD604F27C4 /* Frameworks */,
+				A71DB11301298C1E8862854E790FA27C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CC598EBD6F9B7F8C96A5B3DBFFC18B47 /* PBXTargetDependency */,
 			);
 			name = "Pods-Airwallex";
 			productName = "Pods-Airwallex";
@@ -703,12 +825,13 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = A47F6A9D3162D33313B35E4C081B60E3 /* Products */;
+			productRefGroup = D31845E4BDFB7D49FA18B29D6FABC00D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				FBA456CB50E371584C11231929A0971E /* IQKeyboardManager */,
 				05B2A835D60F78761395189914B88047 /* IQKeyboardManager-IQKeyboardManager */,
+				5CE75F0DCD94A1A113665B974F74795F /* Keys */,
 				F58E9775E039168F7D40BFD110403F36 /* Pods-Airwallex */,
 				F570EDABE55B540442303119D9625340 /* Pods-AirwallexTests */,
 				798D7038185779650724117C84AA91DB /* Pods-Examples */,
@@ -719,14 +842,21 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		06EBDCA83FE98953A591A687D55CE41D /* Resources */ = {
+		009BD3A6C680045D32BD2AF9BB44AAFA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5265F93E5898A8B1E09B279229CBE66B /* Resources */ = {
+		40000832194FC83C8AC71462495C66DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		578B49FAC5467E628C7F79081E2652E6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -741,7 +871,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		926CA330E9AE1C2EEEED715414CF2EAB /* Resources */ = {
+		A71DB11301298C1E8862854E790FA27C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -774,6 +904,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		47FD15D796CC3C2EF15FD8AFFF23B25B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFABEE662AACDEFD3129656C952AA539 /* Pods-Airwallex-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		54545EA62932CE6B8B101D93D78DE32C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -786,11 +924,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		96AFCA6DA09675F77FC598FEA113C2EF /* Sources */ = {
+		7E383AC0184605927BCAD258F9A55B35 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8A1B3DB6E5B4A59F0466D80EB3284DC /* Pods-Airwallex-dummy.m in Sources */,
+				801AB1AC84D162DAE2049FB6D55A1E81 /* AirwallexExamplesKeys.m in Sources */,
+				0E740E20A2F88CB5B8530C1D24E58658 /* Keys-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -815,42 +954,60 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E722D1DEC02BEB414D974D66802575A2 /* Sources */ = {
+		F3CEB4189C88E3F06D2F902905CE3D60 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A1D7EA70C8CECF7E1521A56996978FE /* Pods-AirwallexTests-dummy.m in Sources */,
+				E61D223F833E5E56984D44B739E8C7C8 /* Pods-AirwallexTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EF446DBF6C0C726142542A1FB01A03CC /* Sources */ = {
+		FFB070C2DCAEC5762AFCA4E89934C3F3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3096A2C58689592ED58117250B37E32 /* Pods-Examples-dummy.m in Sources */,
+				2930A56900D8C455293FA5BFB4394993 /* Pods-Examples-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5625094662818817A6324FD6275DAEDF /* PBXTargetDependency */ = {
+		2CF7A15B7949F09BDBC9FCCE99D05EF9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = WechatOpenSDK;
-			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
-			targetProxy = DE14C9581B8717FFAC2AEC575A7AB9FC /* PBXContainerItemProxy */;
+			name = Keys;
+			target = 5CE75F0DCD94A1A113665B974F74795F /* Keys */;
+			targetProxy = 85F7E575BE6EC7F525780C1D0C860CAD /* PBXContainerItemProxy */;
 		};
-		7EDBC7FB2BD0184178E17F3A5A7A4A9E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SVProgressHUD;
-			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
-			targetProxy = FAC9C644D96B018BB0E06F1C8D2A4537 /* PBXContainerItemProxy */;
-		};
-		967BFC8711CAB25794E054C6E1721FA8 /* PBXTargetDependency */ = {
+		4D24319DE809817DFFFCA4CD0B4BEBE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = IQKeyboardManager;
 			target = FBA456CB50E371584C11231929A0971E /* IQKeyboardManager */;
-			targetProxy = D0A85D50B384B14AE867B4B9EE73396F /* PBXContainerItemProxy */;
+			targetProxy = 15A048E8C2AFD5832CE3F8E411A8FEE5 /* PBXContainerItemProxy */;
+		};
+		A129A84E0503C819B19F5FBE76E4C44E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SVProgressHUD;
+			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
+			targetProxy = D5077BA62EC8D159D12F7362526E7B46 /* PBXContainerItemProxy */;
+		};
+		C072759314A738A0BA43AF9A65BD9995 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WechatOpenSDK;
+			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
+			targetProxy = FF9AC2383A8CAD90954C71189197F87F /* PBXContainerItemProxy */;
+		};
+		CC598EBD6F9B7F8C96A5B3DBFFC18B47 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Keys;
+			target = 5CE75F0DCD94A1A113665B974F74795F /* Keys */;
+			targetProxy = 127510DFC33756CD60BEAD495FD88547 /* PBXContainerItemProxy */;
+		};
+		D90801F4003F363664416CB1E7809E8F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Keys;
+			target = 5CE75F0DCD94A1A113665B974F74795F /* Keys */;
+			targetProxy = D5B1EC1BA7633FBBFA62B9238283D4CF /* PBXContainerItemProxy */;
 		};
 		E26F631ED099CDF69B9B5BCB85CF78C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -861,6 +1018,45 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		0B446670AAB3866A0867E937B4245DA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A67A7780FEC52989D1C75E9966565ED7 /* Pods-AirwallexTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		0CE07BED0BB7122141A6B73361FBE124 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F4427E7224AE82BD08F15F1A09D7BC9 /* IQKeyboardManager.release.xcconfig */;
@@ -942,9 +1138,82 @@
 			};
 			name = Debug;
 		};
-		1D3608DF1ED069AD003314B2FD808B37 /* Debug */ = {
+		4522027ABD4B5FD8E75DD0778D2F6BE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03DBDD632AB112746DCFD2168CF954D4 /* Pods-AirwallexTests.debug.xcconfig */;
+			baseConfigurationReference = DB66D9FCAB5077AFC60B5ABCF7EB03C7 /* Keys.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Keys/Keys-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Keys/Keys-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/Keys/Keys.modulemap";
+				PRODUCT_MODULE_NAME = Keys;
+				PRODUCT_NAME = Keys;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		46AA1AECDA408873C828377ACA1CB9EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 618EE68425B342DFA7F3BA18570344CF /* Pods-Airwallex.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Airwallex/Pods-Airwallex-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Airwallex/Pods-Airwallex.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4BC84A05CFE8182699412B935E707DCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B156A26A3BA8EE11A1756C0F4A997B9 /* Pods-AirwallexTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -980,48 +1249,9 @@
 			};
 			name = Debug;
 		};
-		3C4F5C0BCB60441319566EE2DA881861 /* Release */ = {
+		6283822DAEAD68727091AA4FB68D5D93 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9357288B955D56D47304350FCC3D61A9 /* Pods-Examples.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Examples/Pods-Examples-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Examples/Pods-Examples.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		4A226F487A62BEF66BFF1F5D10E7E628 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9827A0BBA37BB97C6EA861086E4E2A6A /* Pods-Airwallex.release.xcconfig */;
+			baseConfigurationReference = BF7837EE400E6B784DB61431E00E0681 /* Pods-Airwallex.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1074,12 +1304,10 @@
 			};
 			name = Debug;
 		};
-		A578C48CF5324E3AAA8E749EBACB2320 /* Release */ = {
+		92E78E6C9A007A5DC7F7B7F0B7A0ADA5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA9E9CE4A72DC8134994D574D613EDAE /* Pods-AirwallexTests.release.xcconfig */;
+			baseConfigurationReference = 88446196C9E9F90FBFB3DDBAFA82B09A /* Keys.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1089,23 +1317,22 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/Keys/Keys-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Keys/Keys-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				MODULEMAP_FILE = "Target Support Files/Keys/Keys.modulemap";
+				PRODUCT_MODULE_NAME = Keys;
+				PRODUCT_NAME = Keys;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1190,44 +1417,6 @@
 			};
 			name = Release;
 		};
-		C6B6BFCCF08E3948B05CE2A003D81568 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 628AE3F7F20D6C0DE37F7E5AAA429712 /* Pods-Airwallex.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Airwallex/Pods-Airwallex-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Airwallex/Pods-Airwallex.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		C72DA987B60B5B67C933806FBF116D89 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 82196AE068A64BE86AEF891E928488AF /* SVProgressHUD.release.xcconfig */;
@@ -1257,6 +1446,45 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D44DBF2BF3FB630217432D75E2A559F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE13FA860DACFD9F2452D9949E15C2B7 /* Pods-Examples.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Examples/Pods-Examples-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Examples/Pods-Examples.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1351,9 +1579,9 @@
 			};
 			name = Debug;
 		};
-		F76861E35C736F08DADDBBF745C3B16E /* Debug */ = {
+		F46C511364131E56C4D98137A4F84C5B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4DD79C1E32ACD69BF12CBE839E93AB19 /* Pods-Examples.debug.xcconfig */;
+			baseConfigurationReference = 47724DF4C9BCFF8BCF3249C223ADF288 /* Pods-Examples.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1437,6 +1665,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		1073EDDFABFFB7F3BA0F01782025303C /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46AA1AECDA408873C828377ACA1CB9EE /* Debug */,
+				6283822DAEAD68727091AA4FB68D5D93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		364FA5B81A182E37DEA9BE0D851F2CFF /* Build configuration list for PBXNativeTarget "Pods-Examples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F46C511364131E56C4D98137A4F84C5B /* Debug */,
+				D44DBF2BF3FB630217432D75E2A559F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1464,29 +1710,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8A764D05C8B04BA9CA6D5B247D69C689 /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */ = {
+		795CB2150073E63FDFE236FC26037B45 /* Build configuration list for PBXNativeTarget "Keys" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1D3608DF1ED069AD003314B2FD808B37 /* Debug */,
-				A578C48CF5324E3AAA8E749EBACB2320 /* Release */,
+				4522027ABD4B5FD8E75DD0778D2F6BE4 /* Debug */,
+				92E78E6C9A007A5DC7F7B7F0B7A0ADA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C56C583B2A8FDB597DB7B8B7CCE17B9A /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */ = {
+		BBC7F684DF37EBBA711C76A815FC7432 /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C6B6BFCCF08E3948B05CE2A003D81568 /* Debug */,
-				4A226F487A62BEF66BFF1F5D10E7E628 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C9B833242D522F65AA78DCD7BB6582CC /* Build configuration list for PBXNativeTarget "Pods-Examples" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F76861E35C736F08DADDBBF745C3B16E /* Debug */,
-				3C4F5C0BCB60441319566EE2DA881861 /* Release */,
+				4BC84A05CFE8182699412B935E707DCF /* Debug */,
+				0B446670AAB3866A0867E937B4245DA0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -9,6 +9,7 @@
 #import "OptionsViewController.h"
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "AirwallexExamplesKeys+Utils.h"
 #import "APIClient.h"
 #import "Constant.h"
 
@@ -57,8 +58,8 @@
     APIClient *client = [APIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
     client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
-    client.apiKey = apiKey;
-    client.clientID = clientID;
+    client.apiKey = [AirwallexExamplesKeys shared].apiKey;
+    client.clientID = [AirwallexExamplesKeys shared].clientID;
 
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
 

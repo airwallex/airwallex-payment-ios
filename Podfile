@@ -20,6 +20,15 @@ target 'AirwallexTests' do
 end
 
 target 'Examples' do
+
+    plugin 'cocoapods-keys', {
+    :project => "AirwallexExamples",
+    :keys => [
+        "ApiKey",
+        "ClientID",
+        "WeChatAppID"
+    ]}
+
     project './Examples/Examples.xcodeproj'
     shared_pods
     pod 'WechatOpenSDK', '1.8.2'

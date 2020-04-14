@@ -10,6 +10,7 @@
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <WechatOpenSDK/WXApi.h>
+#import "AirwallexExamplesKeys+Utils.h"
 #import "OptionsViewController.h"
 #import "ProductCell.h"
 #import "TotalCell.h"
@@ -41,7 +42,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     self.badgeView.layer.cornerRadius = 12;
     self.checkoutButton.layer.masksToBounds = YES;
     self.checkoutButton.layer.cornerRadius = 6;
-    
+
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro"
                                                detail:@"Free engraving x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"399"]];
@@ -55,8 +56,8 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     APIClient *client = [APIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
     client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
-    client.apiKey = apiKey;
-    client.clientID = clientID;
+    client.apiKey = [AirwallexExamplesKeys shared].apiKey;
+    client.clientID = [AirwallexExamplesKeys shared].clientID;
     
     [self reloadData];
 }

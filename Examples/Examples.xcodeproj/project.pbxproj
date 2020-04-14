@@ -10,6 +10,7 @@
 		082D308223CEEC3300C9D587 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308123CEEC3300C9D587 /* ProductCell.m */; };
 		082D308523CEECE400C9D587 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
 		082D308823CEEDC100C9D587 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
+		085855052445371C0012B818 /* AirwallexExamplesKeys+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 085855042445371C0012B818 /* AirwallexExamplesKeys+Utils.m */; };
 		085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
 		085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
 		085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3F723CC64B6002E8F27 /* Main.storyboard */; };
@@ -46,6 +47,8 @@
 		082D308423CEECE400C9D587 /* TotalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TotalCell.m; sourceTree = "<group>"; };
 		082D308623CEEDC100C9D587 /* CartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
 		082D308723CEEDC100C9D587 /* CartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
+		085855032445371C0012B818 /* AirwallexExamplesKeys+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirwallexExamplesKeys+Utils.h"; sourceTree = "<group>"; };
+		085855042445371C0012B818 /* AirwallexExamplesKeys+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AirwallexExamplesKeys+Utils.m"; sourceTree = "<group>"; };
 		085BA64E23F0FB8A00FD33FA /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		085BD3EB23CC64B6002E8F27 /* Airwallex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Airwallex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3EE23CC64B6002E8F27 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -120,6 +123,8 @@
 				088F3E8423CED74C005AE40F /* Constant.h */,
 				085BD3EE23CC64B6002E8F27 /* AppDelegate.h */,
 				085BD3EF23CC64B6002E8F27 /* AppDelegate.m */,
+				085855032445371C0012B818 /* AirwallexExamplesKeys+Utils.h */,
+				085855042445371C0012B818 /* AirwallexExamplesKeys+Utils.m */,
 				088F3E8023CEB7E6005AE40F /* API */,
 				082D307F23CEEC0700C9D587 /* Cart */,
 				088ADB902407B329001ADC71 /* Resources */,
@@ -287,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				085855052445371C0012B818 /* AirwallexExamplesKeys+Utils.m in Sources */,
 				082D308823CEEDC100C9D587 /* CartViewController.m in Sources */,
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,
 				088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */,
