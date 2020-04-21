@@ -19,14 +19,16 @@
 #import "AWPaymentIntentResponse.h"
 #import "AWTheme.h"
 #import "AWPaymentIntent.h"
+#import "AW3DSService.h"
 
-@interface AWPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface AWPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AW3DSServiceDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet AWButton *payButton;
 
 @property (strong, nonatomic) NSString *cvc;
+@property (strong, nonatomic, readonly) AW3DSService *service;
 
 @end
 
@@ -71,8 +73,8 @@
 
 - (IBAction)payPressed:(id)sender
 {
+    self.paymentMethod.card.cvc = self.cvc;
     AWPaymentMethod *paymentMethod = self.paymentMethod;
-    paymentMethod.card.cvc = self.cvc;
 
     AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
@@ -80,9 +82,7 @@
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.paymentIntent.customerId;
     AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
-    options.autoCapture = YES;
-    options.threeDsOption = NO;
-    request.options = nil;
+    request.options = options;
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];
@@ -116,8 +116,22 @@
     }
 
     if (response.nextAction.weChatPayResponse) {
-        [self.delegate paymentViewController:self nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
+        [self.delegate paymentViewController:self
+                  nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
+    } else if (response.nextAction.redirectResponse) {
+        [self.service present3DSFlowWithRedirectResponse:response.nextAction.redirectResponse];
     }
+}
+
+- (AW3DSService *)service
+{
+    AW3DSService *service = [AW3DSService new];
+    service.customerId = self.paymentIntent.customerId;
+    service.intentId = self.paymentIntent.Id;
+    service.paymentMethod = self.paymentMethod;
+    service.presentingViewController = self;
+    service.delegate = self;
+    return service;
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -145,6 +159,14 @@
     cell.isLastCell = YES;
     cell.arrowView.hidden = YES;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    AWPaymentItemCell *_cell = (AWPaymentItemCell *)cell;
+    if (_cell.cvcField.text.length == 0) {
+        [_cell.cvcField becomeFirstResponder];
+    }
 }
 
 #pragma mark - UITextFieldDelegate

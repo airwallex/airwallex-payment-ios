@@ -36,6 +36,7 @@
 
 @property (nonatomic, copy, readwrite) NSString *type;
 @property (nonatomic, strong, readwrite, nullable) AWWeChatPaySDKResponse *weChatPayResponse;
+@property (nonatomic, strong, readwrite, nullable) AWRedirectResponse *redirectResponse;
 
 @end
 
@@ -47,6 +48,8 @@
     response.type = json[@"type"];
     if ([response.type isEqualToString:@"call_sdk"]) {
         response.weChatPayResponse = [AWWeChatPaySDKResponse parse:json[@"data"]];
+    } else if ([response.type isEqualToString:@"redirect"]) {
+        response.redirectResponse = [AWRedirectResponse decodeFromJSON:json];
     }
     return response;
 }
@@ -77,6 +80,32 @@
     response.partnerId = json[@"partnerId"];
     response.package = json[@"package"];
     response.sign = json[@"sign"];
+    return response;
+}
+
+@end
+
+@interface AWRedirectResponse ()
+
+@property (nonatomic, copy, readwrite) NSString *method;
+@property (nonatomic, copy, readwrite) NSString *url;
+@property (nonatomic, copy, readwrite) NSString *jwt;
+@property (nonatomic, copy, readwrite) NSString *stage;
+
+@end
+
+@implementation AWRedirectResponse
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWRedirectResponse *response = [[AWRedirectResponse alloc] init];
+    response.method = json[@"method"];
+    response.url = json[@"url"];
+    NSDictionary *data = json[@"data"];
+    if (data) {
+        response.jwt = data[@"jwt"];
+        response.stage = data[@"stage"];
+    }
     return response;
 }
 

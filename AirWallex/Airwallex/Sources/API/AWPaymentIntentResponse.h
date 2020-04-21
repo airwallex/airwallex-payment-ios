@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AWCodable.h"
 #import "AWResponseProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -20,12 +21,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@class AWWeChatPaySDKResponse;
+@class AWWeChatPaySDKResponse, AWRedirectResponse;
 
 @interface AWConfirmPaymentNextAction : NSObject
 
 @property (nonatomic, readonly) NSString *type;
 @property (nonatomic, readonly, nullable) AWWeChatPaySDKResponse *weChatPayResponse;
+@property (nonatomic, readonly, nullable) AWRedirectResponse *redirectResponse;
 
 + (AWConfirmPaymentNextAction *)parse:(NSDictionary *)json;
 
@@ -42,6 +44,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *sign;
 
 + (AWWeChatPaySDKResponse *)parse:(NSDictionary *)json;
+
+@end
+
+@interface AWRedirectResponse : NSObject <AWJSONDecodable>
+
+@property (nonatomic, readonly) NSString *method;
+@property (nonatomic, readonly) NSString *url;
+@property (nonatomic, readonly) NSString *jwt;
+@property (nonatomic, readonly) NSString *stage;
 
 @end
 

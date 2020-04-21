@@ -12,6 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static NSString * const kCachedCustomerID = @"kCachedCustomerID";
+
 @protocol OptionsViewControllerDelegate <NSObject>
 
 - (void)optionsViewController:(OptionsViewController *)viewController didEditAmount:(NSDecimalNumber *)amount;

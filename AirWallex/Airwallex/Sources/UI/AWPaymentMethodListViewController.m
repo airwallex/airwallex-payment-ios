@@ -271,8 +271,6 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.customerId;
     AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
-    options.autoCapture = YES;
-    options.threeDsOption = NO;
     request.options = options;
     request.paymentMethod = paymentMethod;
 
@@ -301,6 +299,8 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
         if (result.nextAction.weChatPayResponse) {
             [delegate paymentViewController:strongSelf nextActionWithWeChatPaySDK:result.nextAction.weChatPayResponse];
+        } else if (result.nextAction.redirectResponse) {
+
         }
     }];
 }

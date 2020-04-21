@@ -44,7 +44,7 @@
     if (self.options) {
         parameters[@"payment_method_options"] = self.options.encodeToJSON;
     }
-    parameters[@"save_payment_method"] = self.savePaymentMethod ? @"true" : @"false";
+    parameters[@"save_payment_method"] = @(self.savePaymentMethod);
     return parameters;
 }
 

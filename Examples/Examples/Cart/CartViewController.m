@@ -17,8 +17,6 @@
 #import "APIClient.h"
 #import "Constant.h"
 
-static NSString * const kCachedCustomerID = @"kCachedCustomerID";
-
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWShippingViewControllerDelegate, AWPaymentResultDelegate, OptionsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *badgeView;
