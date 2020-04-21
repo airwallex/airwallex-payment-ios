@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AWDevice.h"
 #import "AWPaymentIntentRequest.h"
 #import "AWPaymentMethod.h"
 #import "AWPaymentMethodOptions.h"
@@ -39,12 +40,15 @@
             }
         }];
     } else {
-        [parameters addEntriesFromDictionary:@{@"payment_method": self.paymentMethod.encodeToJSON}];
+        parameters[@"payment_method"] = self.paymentMethod.encodeToJSON;
     }
     if (self.options) {
         parameters[@"payment_method_options"] = self.options.encodeToJSON;
     }
     parameters[@"save_payment_method"] = @(self.savePaymentMethod);
+    if (self.device) {
+        parameters[@"device"] = [self.device encodeToJSON];
+    }
     return parameters;
 }
 
