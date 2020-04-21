@@ -15,6 +15,7 @@
 #import "AWUtils.h"
 #import "AWConstants.h"
 #import "AWPaymentMethod.h"
+#import "AWDevice.h"
 #import "AWAPIClient.h"
 #import "AWPaymentMethodRequest.h"
 #import "AWPaymentMethodResponse.h"
@@ -23,6 +24,8 @@
 #import "AWPaymentIntentResponse.h"
 #import "AWPaymentMethodOptions.h"
 #import "AWPaymentIntent.h"
+#import "AW3DSService.h"
+#import "AWSecurityService.h"
 
 static NSString * FormatPaymentMethodTypeString(NSString *type)
 {
@@ -32,12 +35,13 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     return nil;
 }
 
-@interface AWPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, AWCardViewControllerDelegate>
+@interface AWPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, AWCardViewControllerDelegate, AW3DSServiceDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
 @property (strong, nonatomic) NSArray <NSArray <AWPaymentMethod *> *> *paymentMethods;
+@property (strong, nonatomic, readonly) AW3DSService *service;
 
 @end
 
@@ -89,10 +93,10 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     [SVProgressHUD show];
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
     request.customerId = self.customerId;
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self)weakSelf = self;
     AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        __strong typeof(self) strongSelf = weakSelf;
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         [SVProgressHUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
@@ -115,6 +119,18 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (void)newPressed:(id)sender
 {
     [self performSegueWithIdentifier:@"addCard" sender:nil];
+}
+
+- (AW3DSService *)service
+{
+    AWPaymentIntent *paymentIntent = [AWUIContext sharedContext].paymentIntent;
+    AW3DSService *service = [AW3DSService new];
+    service.customerId = paymentIntent.customerId;
+    service.intentId = paymentIntent.Id;
+    service.paymentMethod = self.paymentMethod;
+    service.presentingViewController = self;
+    service.delegate = self;
+    return service;
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -265,6 +281,20 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWPaymentMethod *)paymentMethod
 {
+    __weak __typeof(self)weakSelf = self;
+    [SVProgressHUD show];
+    [[AWSecurityService sharedService] doProfile:[AWUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
+        [SVProgressHUD dismiss];
+        
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        AWDevice *device = [AWDevice new];
+        device.deviceId = sessionId;
+        [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
+    }];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethod:(AWPaymentMethod *)paymentMethod device:(AWDevice *)device
+{
     AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
     request.intentId = [AWUIContext sharedContext].paymentIntent.Id;
@@ -273,6 +303,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
     request.options = options;
     request.paymentMethod = paymentMethod;
+    request.device = device;
 
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
@@ -280,29 +311,36 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         [SVProgressHUD dismiss];
 
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        id <AWPaymentResultDelegate> delegate = [AWUIContext sharedContext].delegate;
-        if (error) {
-            [delegate paymentViewController:strongSelf didFinishWithStatus:AWPaymentStatusError error:error];
-            return;
-        }
-
-        AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
-        if ([result.status isEqualToString:@"SUCCEEDED"]) {
-            [delegate paymentViewController:strongSelf didFinishWithStatus:AWPaymentStatusSuccess error:error];
-            return;
-        }
-
-        if (!result.nextAction) {
-            [delegate paymentViewController:strongSelf didFinishWithStatus:AWPaymentStatusSuccess error:error];
-            return;
-        }
-
-        if (result.nextAction.weChatPayResponse) {
-            [delegate paymentViewController:strongSelf nextActionWithWeChatPaySDK:result.nextAction.weChatPayResponse];
-        } else if (result.nextAction.redirectResponse) {
-
-        }
+        [strongSelf finishConfirmationWithResponse:response error:error];
     }];
+}
+
+- (void)finishConfirmationWithResponse:(AWConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
+{
+    id <AWPaymentResultDelegate> delegate = [AWUIContext sharedContext].delegate;
+    if (error) {
+        [[NSUserDefaults awUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
+        [[NSUserDefaults awUserDefaults] synchronize];
+        [delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusError error:error];
+        return;
+    }
+
+    AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
+    if ([result.status isEqualToString:@"SUCCEEDED"]) {
+        [delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusSuccess error:error];
+        return;
+    }
+
+    if (!result.nextAction) {
+        [delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusSuccess error:error];
+        return;
+    }
+
+    if (result.nextAction.weChatPayResponse) {
+        [delegate paymentViewController:self nextActionWithWeChatPaySDK:result.nextAction.weChatPayResponse];
+    } else if (result.nextAction.redirectResponse) {
+        [self.service present3DSFlowWithRedirectResponse:result.nextAction.redirectResponse];
+    }
 }
 
 @end

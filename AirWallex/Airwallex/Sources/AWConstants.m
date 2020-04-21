@@ -18,6 +18,9 @@ NSString *const AWSDKErrorDomain = @"com.airwallex.sdk";
 
 #endif
 
+NSString *const AWCyberSourceOrganizationID = @"1snn5n9w";
+NSString *const AWCyberSourceMerchantID = @"airwallex_cybs";
+
 NSString *const AWWeChatPayKey = @"wechatpay";
 NSString *const AWCardKey = @"card";
 

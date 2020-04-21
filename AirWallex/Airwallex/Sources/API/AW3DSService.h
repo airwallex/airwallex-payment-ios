@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id <AW3DSServiceDelegate> delegate;
 
 - (void)present3DSFlowWithRedirectResponse:(AWRedirectResponse *)response;
++ (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
 
 @end
 

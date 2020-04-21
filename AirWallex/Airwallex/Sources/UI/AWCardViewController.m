@@ -180,10 +180,10 @@
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self)weakSelf = self;
     AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        __strong typeof(self) strongSelf = weakSelf;
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         [SVProgressHUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];

@@ -23,6 +23,9 @@ FOUNDATION_EXPORT NSString *const AWSDKErrorDomain;
 
 #endif
 
+FOUNDATION_EXPORT NSString *const AWCyberSourceOrganizationID;
+FOUNDATION_EXPORT NSString *const AWCyberSourceMerchantID;
+
 FOUNDATION_EXPORT NSString *const AWWeChatPayKey;
 FOUNDATION_EXPORT NSString *const AWCardKey;
 

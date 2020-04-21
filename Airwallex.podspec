@@ -7,6 +7,7 @@ Pod::Spec.new do |s|
   s.authors      				= { 'Airwallex' => 'pa_mobile_sdk@airwallex.com' }
   s.source       				= { :git => "https://github.com/airwallex/airwallex-payment-ios.git", :tag => "#{s.version}" }
   s.frameworks					= 'UIKit', 'Foundation', 'Security', 'WebKit'
+  s.library						= 'z'
   s.platform   					= :ios
   s.ios.deployment_target		= '10.0'
   s.resources					= ['Airwallex/Airwallex/Resources/**/*']

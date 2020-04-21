@@ -14,10 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWDevice : NSObject <AWJSONEncodable>
 
 @property (nonatomic, copy) NSString *deviceId;
-@property (nonatomic, copy) NSString *sdkVersionName;
-@property (nonatomic, copy) NSString *platformType;
-@property (nonatomic, copy) NSString *deviceModel;
-@property (nonatomic, copy) NSString *deviceOs;
 
 @end
 

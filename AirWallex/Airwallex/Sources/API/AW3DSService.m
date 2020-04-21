@@ -7,7 +7,7 @@
 //
 
 #import "AW3DSService.h"
-#import <CardinalMobile/CardinalMobile.h>
+//#import <CardinalMobile/CardinalMobile.h>
 #import "AWUtils.h"
 #import "AWPaymentIntentRequest.h"
 #import "AWPaymentIntentResponse.h"
@@ -17,52 +17,52 @@
 
 @interface AW3DSService ()
 
-@property (strong, nonatomic) CardinalSession *session;
+//@property (strong, nonatomic) CardinalSession *session;
 
 @end
 
 @implementation AW3DSService
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.session = [CardinalSession new];
-
-        CardinalSessionConfiguration *config = [CardinalSessionConfiguration new];
-        config.deploymentEnvironment = CardinalSessionEnvironmentStaging;
-        config.requestTimeout = CardinalSessionTimeoutStandard;
-        config.challengeTimeout = 8;
-        config.uiType = CardinalSessionUITypeBoth;
-        CardinalSessionRenderTypeArray *renderType = [[CardinalSessionRenderTypeArray alloc] initWithObjects:
-                                                      CardinalSessionRenderTypeOTP,
-                                                      CardinalSessionRenderTypeHTML,
-                                                      CardinalSessionRenderTypeOOB,
-                                                      CardinalSessionRenderTypeSingleSelect,
-                                                      CardinalSessionRenderTypeMultiSelect,
-                                                      nil];
-        config.renderType = renderType;
-
-        [self.session configure:config];
-    }
-    return self;
-}
+//- (instancetype)init
+//{
+//    self = [super init];
+//    if (self) {
+//        self.session = [CardinalSession new];
+//
+//        CardinalSessionConfiguration *config = [CardinalSessionConfiguration new];
+//        config.deploymentEnvironment = CardinalSessionEnvironmentStaging;
+//        config.requestTimeout = CardinalSessionTimeoutStandard;
+//        config.challengeTimeout = 8;
+//        config.uiType = CardinalSessionUITypeBoth;
+//        CardinalSessionRenderTypeArray *renderType = [[CardinalSessionRenderTypeArray alloc] initWithObjects:
+//                                                      CardinalSessionRenderTypeOTP,
+//                                                      CardinalSessionRenderTypeHTML,
+//                                                      CardinalSessionRenderTypeOOB,
+//                                                      CardinalSessionRenderTypeSingleSelect,
+//                                                      CardinalSessionRenderTypeMultiSelect,
+//                                                      nil];
+//        config.renderType = renderType;
+//
+//        [self.session configure:config];
+//    }
+//    return self;
+//}
 
 - (void)present3DSFlowWithRedirectResponse:(AWRedirectResponse *)response
 {
-    __weak __typeof(self)weakSelf = self;
-    [SVProgressHUD show];
-    [self.session setupWithJWT:response.jwt didComplete:^(NSString * _Nonnull consumerSessionId) {
-        [SVProgressHUD dismiss];
-        NSLog(@"cardinal setup complete");
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf confirmWithConsumerSessionId:consumerSessionId];
-    } didValidate:^(CardinalResponse * _Nonnull validateResponse) {
-        [SVProgressHUD dismiss];
-        NSLog(@"cardinal setup failed");
-        NSDictionary *errorJson = @{NSLocalizedDescriptionKey: validateResponse.errorDescription ?: @""};
-//        completion([errorJson convertToNSErrorWithCode:@(validateResponse.errorNumber)]);
-    }];
+//    __weak __typeof(self)weakSelf = self;
+//    [SVProgressHUD show];
+//    [self.session setupWithJWT:response.jwt didComplete:^(NSString * _Nonnull consumerSessionId) {
+//        [SVProgressHUD dismiss];
+//        NSLog(@"cardinal setup complete");
+//        __strong __typeof(weakSelf)strongSelf = weakSelf;
+//        [strongSelf confirmWithConsumerSessionId:consumerSessionId];
+//    } didValidate:^(CardinalResponse * _Nonnull validateResponse) {
+//        [SVProgressHUD dismiss];
+//        NSLog(@"cardinal setup failed");
+//        NSDictionary *errorJson = @{NSLocalizedDescriptionKey: validateResponse.errorDescription ?: @""};
+////        completion([errorJson convertToNSErrorWithCode:@(validateResponse.errorNumber)]);
+//    }];
 }
 
 - (void)confirmWithConsumerSessionId:(NSString *)consumerSessionId
@@ -88,9 +88,9 @@
         request.options = options;
 
         [SVProgressHUD show];
-        __weak typeof(self) weakSelf = self;
+        __weak __typeof(self)weakSelf = self;
         [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-            __strong typeof(self) strongSelf = weakSelf;
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
             [SVProgressHUD dismiss];
 
 

@@ -258,12 +258,12 @@
         cell.total = [subtotal decimalNumberByAdding:shipping];
         return cell;
     }
-    
+
     ProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell" forIndexPath:indexPath];
     cell.product = self.products[indexPath.row];
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self)weakSelf = self;
     cell.handler = ^(Product *product) {
-        __strong typeof(self) strongSelf = weakSelf;
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.products removeObject:product];
         [strongSelf reloadData];
     };
@@ -335,7 +335,7 @@
     if (url.scheme && url.host) {
         [SVProgressHUD show];
         
-        __weak typeof(self) weakSelf = self;
+        __weak __typeof(self)weakSelf = self;
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                          completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -344,7 +344,7 @@
                 return;
             }
             
-            __strong typeof(self) strongSelf = weakSelf;
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf finishPayment];
         }] resume];
         return;

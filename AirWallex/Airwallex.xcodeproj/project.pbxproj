@@ -53,12 +53,12 @@
 		082F315C240C8C1200573824 /* AWHUD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 082F315B240C8C1200573824 /* AWHUD.xib */; };
 		08477984244DB0C500C41256 /* AW3DSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 08477982244DB0C500C41256 /* AW3DSService.h */; };
 		08477985244DB0C500C41256 /* AW3DSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 08477983244DB0C500C41256 /* AW3DSService.m */; };
-		08477988244E993200C41256 /* TrustDefender.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08477986244E992E00C41256 /* TrustDefender.framework */; };
-		08477989244E993200C41256 /* TrustDefender.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08477986244E992E00C41256 /* TrustDefender.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0847798C244EB40200C41256 /* AWDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0847798A244EB40200C41256 /* AWDevice.h */; };
 		0847798D244EB40200C41256 /* AWDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0847798B244EB40200C41256 /* AWDevice.m */; };
-		0858553B2445DDC60012B818 /* CardinalMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085855392445DDB00012B818 /* CardinalMobile.framework */; };
-		0858553C2445DDC60012B818 /* CardinalMobile.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 085855392445DDB00012B818 /* CardinalMobile.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		08477990244EC52C00C41256 /* AWSecurityService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0847798E244EC52C00C41256 /* AWSecurityService.h */; };
+		08477991244EC52C00C41256 /* AWSecurityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0847798F244EC52C00C41256 /* AWSecurityService.m */; };
+		084779AA244F08C300C41256 /* TrustDefender.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084779A8244F08C300C41256 /* TrustDefender.framework */; };
+		084779B4244F100C00C41256 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 084779B3244F0FFE00C41256 /* libz.tbd */; };
 		085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
 		085BD41423CC6E0C002E8F27 /* Airwallex.h in Headers */ = {isa = PBXBuildFile; fileRef = 085BD41323CC6E0B002E8F27 /* Airwallex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		085BD43823CDCBD7002E8F27 /* AWAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 085BD43623CDCBD7002E8F27 /* AWAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -117,21 +117,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		0858553D2445DDC60012B818 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				08477989244E993200C41256 /* TrustDefender.framework in Embed Frameworks */,
-				0858553C2445DDC60012B818 /* CardinalMobile.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		0805366C241656C900C0896C /* AWUIContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWUIContext.h; sourceTree = "<group>"; };
 		0805366D241656C900C0896C /* AWUIContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWUIContext.m; sourceTree = "<group>"; };
@@ -184,10 +169,12 @@
 		082F315B240C8C1200573824 /* AWHUD.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AWHUD.xib; sourceTree = "<group>"; };
 		08477982244DB0C500C41256 /* AW3DSService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AW3DSService.h; sourceTree = "<group>"; };
 		08477983244DB0C500C41256 /* AW3DSService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AW3DSService.m; sourceTree = "<group>"; };
-		08477986244E992E00C41256 /* TrustDefender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TrustDefender.framework; sourceTree = "<group>"; };
 		0847798A244EB40200C41256 /* AWDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWDevice.h; sourceTree = "<group>"; };
 		0847798B244EB40200C41256 /* AWDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWDevice.m; sourceTree = "<group>"; };
-		085855392445DDB00012B818 /* CardinalMobile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CardinalMobile.framework; sourceTree = "<group>"; };
+		0847798E244EC52C00C41256 /* AWSecurityService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSecurityService.h; sourceTree = "<group>"; };
+		0847798F244EC52C00C41256 /* AWSecurityService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSecurityService.m; sourceTree = "<group>"; };
+		084779A8244F08C300C41256 /* TrustDefender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TrustDefender.framework; sourceTree = "<group>"; };
+		084779B3244F0FFE00C41256 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		085BD3C823CC62B4002E8F27 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3CC23CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,9 +233,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08477988244E993200C41256 /* TrustDefender.framework in Frameworks */,
-				0858553B2445DDC60012B818 /* CardinalMobile.framework in Frameworks */,
 				BFF1A9DD0427D0465EB85A27 /* Pods_Airwallex.framework in Frameworks */,
+				084779B4244F100C00C41256 /* libz.tbd in Frameworks */,
+				084779AA244F08C300C41256 /* TrustDefender.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,8 +254,8 @@
 		0765DE4B2A31304286AAE45B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				08477986244E992E00C41256 /* TrustDefender.framework */,
-				085855392445DDB00012B818 /* CardinalMobile.framework */,
+				084779B3244F0FFE00C41256 /* libz.tbd */,
+				084779A8244F08C300C41256 /* TrustDefender.framework */,
 				89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */,
 				F2D4A2E2793E96E830344B95 /* Pods_AirwallexTests.framework */,
 			);
@@ -337,6 +324,8 @@
 				08A14B9E23E9228300F3C211 /* AWPaymentMethodResponse.m */,
 				08477982244DB0C500C41256 /* AW3DSService.h */,
 				08477983244DB0C500C41256 /* AW3DSService.m */,
+				0847798E244EC52C00C41256 /* AWSecurityService.h */,
+				0847798F244EC52C00C41256 /* AWSecurityService.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -510,6 +499,7 @@
 				0866665F24062AEB00B52477 /* AWCountryListViewController.h in Headers */,
 				081D52E823D043E100953B03 /* AWPaymentMethodOptions.h in Headers */,
 				081D52E323D03BDF00953B03 /* AWPaymentIntentResponse.h in Headers */,
+				08477990244EC52C00C41256 /* AWSecurityService.h in Headers */,
 				081D52D523D0343200953B03 /* AWWeChatPay.h in Headers */,
 				0863F6FB240E390100925664 /* AWPaymentViewController.h in Headers */,
 				0866666024062AEB00B52477 /* AWPaymentMethodListViewController.h in Headers */,
@@ -556,7 +546,6 @@
 				085BD3C423CC62B4002E8F27 /* Sources */,
 				085BD3C523CC62B4002E8F27 /* Frameworks */,
 				085BD3C623CC62B4002E8F27 /* Resources */,
-				0858553D2445DDC60012B818 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -729,6 +718,7 @@
 				08A14BA023E9228300F3C211 /* AWPaymentMethodResponse.m in Sources */,
 				081D52EE23D04AE600953B03 /* AWProtocol.m in Sources */,
 				08A14B9C23E91F0C00F3C211 /* AWPaymentMethodRequest.m in Sources */,
+				08477991244EC52C00C41256 /* AWSecurityService.m in Sources */,
 				086666742406343B00B52477 /* AWTheme.m in Sources */,
 				0866665624062AEB00B52477 /* AWCountry.m in Sources */,
 				08A14B9723E91E9700F3C211 /* AWAPIClient.m in Sources */,
@@ -915,11 +905,6 @@
 				);
 				INFOPLIST_FILE = Airwallex/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -942,11 +927,6 @@
 				);
 				INFOPLIST_FILE = Airwallex/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

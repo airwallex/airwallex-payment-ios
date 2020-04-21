@@ -12,6 +12,7 @@
 #import "AWPaymentItemCell.h"
 #import "AWUtils.h"
 #import "AWWidgets.h"
+#import "AWDevice.h"
 #import "AWPaymentMethod.h"
 #import "AWAPIClient.h"
 #import "AWPaymentIntentRequest.h"
@@ -20,6 +21,7 @@
 #import "AWTheme.h"
 #import "AWPaymentIntent.h"
 #import "AW3DSService.h"
+#import "AWSecurityService.h"
 
 @interface AWPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AW3DSServiceDelegate>
 
@@ -71,11 +73,41 @@
     [self.tableView reloadData];
 }
 
+- (AW3DSService *)service
+{
+    AW3DSService *service = [AW3DSService new];
+    service.customerId = self.paymentIntent.customerId;
+    service.intentId = self.paymentIntent.Id;
+    service.paymentMethod = self.paymentMethod;
+    service.presentingViewController = self;
+    service.delegate = self;
+    return service;
+}
+
 - (IBAction)payPressed:(id)sender
 {
     self.paymentMethod.card.cvc = self.cvc;
     AWPaymentMethod *paymentMethod = self.paymentMethod;
 
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethod:(AWPaymentMethod *)paymentMethod
+{
+    __weak __typeof(self)weakSelf = self;
+    [SVProgressHUD show];
+    [[AWSecurityService sharedService] doProfile:[AWUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
+        [SVProgressHUD dismiss];
+        
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        AWDevice *device = [AWDevice new];
+        device.deviceId = sessionId;
+        [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
+    }];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethod:(AWPaymentMethod *)paymentMethod device:(AWDevice *)device
+{
     AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
     request.intentId = self.paymentIntent.Id;
@@ -84,13 +116,14 @@
     AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
     request.options = options;
     request.paymentMethod = paymentMethod;
+    request.device = device;
 
     [SVProgressHUD show];
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        __strong typeof(self) strongSelf = weakSelf;
         [SVProgressHUD dismiss];
 
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }
@@ -98,6 +131,8 @@
 - (void)finishConfirmationWithResponse:(AWConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
 {
     if (error) {
+        [[NSUserDefaults awUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
+        [[NSUserDefaults awUserDefaults] synchronize];
         [self.delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusError error:error];
         return;
     }
@@ -121,17 +156,6 @@
     } else if (response.nextAction.redirectResponse) {
         [self.service present3DSFlowWithRedirectResponse:response.nextAction.redirectResponse];
     }
-}
-
-- (AW3DSService *)service
-{
-    AW3DSService *service = [AW3DSService new];
-    service.customerId = self.paymentIntent.customerId;
-    service.intentId = self.paymentIntent.Id;
-    service.paymentMethod = self.paymentMethod;
-    service.presentingViewController = self;
-    service.delegate = self;
-    return service;
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
