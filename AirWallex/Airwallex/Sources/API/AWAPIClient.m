@@ -112,9 +112,7 @@ static NSURL *_defaultBaseURL;
     }
     NSString *message = [responseObject valueForKey:@"message"];
     NSString *code = [responseObject valueForKey:@"code"];
-    NSString *type = [responseObject valueForKey:@"type"];
-    NSNumber *statusCode = [responseObject valueForKey:@"status_code"];
-    return [[AWAPIErrorResponse alloc] initWithMessage:message code:code type:type statusCode:statusCode];
+    return [[AWAPIErrorResponse alloc] initWithMessage:message code:code];
 }
 
 @end
@@ -181,10 +179,9 @@ static NSURL *_defaultBaseURL;
                     } else {
                         AWAPIErrorResponse *errorResponse = [request.responseClass performSelector:@selector(parseError:) withObject:data];
                         if (errorResponse) {
-                            NSDictionary *errorJson = @{NSLocalizedDescriptionKey: errorResponse.message ?: @""};
-                            handler(nil, [errorJson convertToNSErrorWithCode:@(errorResponse.code.integerValue)]);
+                            handler(nil, errorResponse.error);
                         } else {
-                            handler(nil, [@{NSLocalizedDescriptionKey: @"Couldn't parse response."} convertToNSErrorWithCode:@(result.statusCode)]);
+                            handler(nil, [NSError errorWithDomain:AWSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: @"Couldn't parse response."}]);
                         }
                     }
                 });

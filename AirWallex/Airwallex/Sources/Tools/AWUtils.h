@@ -14,8 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSDictionary (Utils)
 
 - (NSString *)queryURLEncoding;
-- (NSError *)convertToNSErrorWithCode:(NSNumber *)code;
-- (NSError *)convertToNSError;
 
 @end
 

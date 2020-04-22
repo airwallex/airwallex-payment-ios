@@ -10,11 +10,11 @@
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
-NSErrorDomain const AWSDKErrorDomain = @"com.airwallex.sdk";
+NSErrorDomain const AWSDKErrorDomain = @"com.airwallex.error";
 
 #else
 
-NSString *const AWSDKErrorDomain = @"com.airwallex.sdk";
+NSString *const AWSDKErrorDomain = @"com.airwallex.error";
 
 #endif
 

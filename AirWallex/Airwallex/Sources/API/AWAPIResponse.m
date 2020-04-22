@@ -7,31 +7,23 @@
 //
 
 #import "AWAPIResponse.h"
+#import "AWConstants.h"
 
 @implementation AWAPIErrorResponse
 
 - (instancetype)initWithMessage:(NSString *)message
                            code:(NSString *)code
-                           type:(NSString *)type
-                     statusCode:(NSNumber *)statusCode
 {
     if (self = [super init]) {
         _message = [message copy];
         _code = [code copy];
-        _type = [type copy];
-        _statusCode = [statusCode copy];
     }
     return self;
 }
 
-- (NSDictionary *)dictionary
+- (NSError *)error
 {
-    return @{
-             @"message": self.message,
-             @"code": self.code,
-             @"type": self.type,
-             @"statusCode": self.statusCode,
-             };
+    return [NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: self.message, NSLocalizedFailureReasonErrorKey: self.code}];
 }
 
 @end
