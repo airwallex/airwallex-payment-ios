@@ -443,11 +443,9 @@
                                 <constraints>
                                     <constraint firstItem="Zl7-hq-vSX" firstAttribute="leading" secondItem="Bdd-wr-GyF" secondAttribute="leading" id="IHt-tT-ZH2"/>
                                     <constraint firstItem="Zl7-hq-vSX" firstAttribute="trailing" secondItem="Bdd-wr-GyF" secondAttribute="trailing" id="REx-u9-jzU"/>
-                                    <constraint firstItem="Zl7-hq-vSX" firstAttribute="top" secondItem="xMz-Kg-8PW" secondAttribute="top" id="Wup-aW-Kvw"/>
-                                    <constraint firstItem="xMz-Kg-8PW" firstAttribute="bottom" secondItem="Zl7-hq-vSX" secondAttribute="bottom" id="kBR-yA-UxL"/>
+                                    <constraint firstItem="Zl7-hq-vSX" firstAttribute="top" secondItem="Bdd-wr-GyF" secondAttribute="top" id="Wup-aW-Kvw"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zl7-hq-vSX" secondAttribute="bottom" id="kBR-yA-UxL"/>
                                 </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="xMz-Kg-8PW"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="iVY-gx-VTW"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vlZ-EY-gaZ" customClass="AWButton">
                                 <rect key="frame" x="16" y="802" width="382" height="44"/>
@@ -808,13 +806,11 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="JPf-59-w9C" firstAttribute="top" secondItem="h4Y-Mg-zd7" secondAttribute="top" id="K2O-Jc-Qen"/>
+                                    <constraint firstItem="JPf-59-w9C" firstAttribute="top" secondItem="HIT-Vq-95B" secondAttribute="top" id="K2O-Jc-Qen"/>
                                     <constraint firstAttribute="trailing" secondItem="JPf-59-w9C" secondAttribute="trailing" id="Y9x-vN-CBV"/>
-                                    <constraint firstItem="h4Y-Mg-zd7" firstAttribute="bottom" secondItem="JPf-59-w9C" secondAttribute="bottom" id="h0U-qX-VCu"/>
+                                    <constraint firstAttribute="bottom" secondItem="JPf-59-w9C" secondAttribute="bottom" id="h0U-qX-VCu"/>
                                     <constraint firstItem="JPf-59-w9C" firstAttribute="leading" secondItem="HIT-Vq-95B" secondAttribute="leading" id="kxt-22-Qj2"/>
                                 </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="h4Y-Mg-zd7"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="1CO-dJ-ozW"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
