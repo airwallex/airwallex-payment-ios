@@ -35,12 +35,15 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     return nil;
 }
 
-@interface AWPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, AWCardViewControllerDelegate, AW3DSServiceDelegate>
+@interface AWPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWCardViewControllerDelegate, AW3DSServiceDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
 @property (strong, nonatomic) NSArray <NSArray <AWPaymentMethod *> *> *paymentMethods;
+@property (strong, nonatomic) NSMutableArray <AWPaymentMethod *> *cards;
+@property (nonatomic) BOOL canLoadMore;
+@property (nonatomic) NSInteger nextPageNum;
 @property (strong, nonatomic, readonly) AW3DSService *service;
 
 @end
@@ -89,10 +92,20 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         [self.tableView reloadData];
         return;
     }
+    
+    self.cards = [NSMutableArray array];
+    [self loadDataFromPageNum:0];
+}
 
+- (void)loadDataFromPageNum:(NSInteger)pageNum
+{
     [SVProgressHUD show];
+    
     AWGetPaymentMethodsRequest *request = [AWGetPaymentMethodsRequest new];
     request.customerId = self.customerId;
+    request.pageNum = pageNum;
+    request.methodType = AWCardKey;
+    
     __weak __typeof(self)weakSelf = self;
     AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
@@ -104,15 +117,18 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
             [strongSelf presentViewController:controller animated:YES completion:nil];
             return;
         }
-
+        
         AWGetPaymentMethodsResponse *result = (AWGetPaymentMethodsResponse *)response;
+        strongSelf.canLoadMore = result.hasMore;
         NSArray *cards = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
             AWPaymentMethod *obj = (AWPaymentMethod *)evaluatedObject;
             return [obj.type isEqualToString:AWCardKey];
         }]];
-
-        strongSelf.paymentMethods = @[strongSelf.section0, cards];
+        [strongSelf.cards addObjectsFromArray:cards];
+        
+        strongSelf.paymentMethods = @[strongSelf.section0, strongSelf.cards];
         [strongSelf.tableView reloadData];
+        strongSelf.nextPageNum = pageNum + 1;
     }];
 }
 
@@ -204,7 +220,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
             return cell;
         }
     }
-
+    
     AWPaymentMethod *method = items[indexPath.row];
     AWPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWPaymentMethodCell" forIndexPath:indexPath];
     if ([method.type isEqualToString:AWWeChatPayKey]) {
@@ -214,7 +230,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         cell.logoImageView.image = [UIImage imageNamed:method.card.brand inBundle:[NSBundle resourceBundle]];
         cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", method.card.brand.capitalizedString, method.card.last4];
     }
-
+    
     if ([self.paymentMethod.type isEqualToString:AWWeChatPayKey]) {
         if ([method.type isEqualToString:self.paymentMethod.type]) {
             [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
@@ -227,28 +243,41 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     return cell;
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!self.canLoadMore) {
+        return;
+    }
+    
+    CGFloat currentOffset = scrollView.contentOffset.y;
+    CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+    if (maximumOffset - currentOffset <= 0) {
+        [self loadDataFromPageNum:self.nextPageNum];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *items = self.paymentMethods[indexPath.section];
     if (indexPath.section == 1 && items.count == 0) {
         return;
     }
-
+    
     AWPaymentMethod *method = items[indexPath.row];
     self.paymentMethod = method;
-
+    
     if (!self.isFlow) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(paymentMethodListViewController:didSelectPaymentMethod:)]) {
             [self.delegate paymentMethodListViewController:self didSelectPaymentMethod:method];
         }
         return;
     }
-
+    
     NSString *cvc = [[NSUserDefaults awUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
     if (cvc) {
         self.paymentMethod.card.cvc = cvc;
     }
-
+    
     // Confirm directly (Only be valid for payment flow)
     if ([self.paymentMethod.type isEqualToString:AWWeChatPayKey]) {
         // Confirm payment with wechat type directly
@@ -259,7 +288,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
         return;
     }
-
+    
     // No cvc provided and go to enter cvc in payment detail page
     [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
 }
@@ -304,12 +333,12 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     request.options = options;
     request.paymentMethod = paymentMethod;
     request.device = device;
-
+    
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         [SVProgressHUD dismiss];
-
+        
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
@@ -324,18 +353,18 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         [delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusError error:error];
         return;
     }
-
+    
     AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
     if ([result.status isEqualToString:@"SUCCEEDED"]) {
         [delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusSuccess error:error];
         return;
     }
-
+    
     if (!result.nextAction) {
         [delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusSuccess error:error];
         return;
     }
-
+    
     if (result.nextAction.weChatPayResponse) {
         [delegate paymentViewController:self nextActionWithWeChatPaySDK:result.nextAction.weChatPayResponse];
     } else if (result.nextAction.redirectResponse) {
