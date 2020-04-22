@@ -7,6 +7,7 @@
 //
 
 #import "AWAPIClient.h"
+#import "AWConstants.h"
 #import "AWProtocol.h"
 #import "AWRequestProtocol.h"
 #import "AWResponseProtocol.h"
@@ -78,7 +79,7 @@ static NSURL *_defaultBaseURL;
 
 - (NSDictionary *)headers
 {
-    return @{@"Content-Type": @"application/json"};
+    return @{@"Content-Type": @"application/json", @"x-api-version": AIRWALLEX_VERSION};
 }
 
 - (nullable NSDictionary *)parameters
