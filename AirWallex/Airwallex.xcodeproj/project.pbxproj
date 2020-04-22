@@ -50,7 +50,6 @@
 		0829FD1E2433474A00557DB2 /* AWPaymentIntent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD1C2433474A00557DB2 /* AWPaymentIntent.m */; };
 		0829FD4E243584E300557DB2 /* AWTestAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD4D243584E300557DB2 /* AWTestAPIClient.m */; };
 		0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */; };
-		082F315C240C8C1200573824 /* AWHUD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 082F315B240C8C1200573824 /* AWHUD.xib */; };
 		08477984244DB0C500C41256 /* AW3DSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 08477982244DB0C500C41256 /* AW3DSService.h */; };
 		08477985244DB0C500C41256 /* AW3DSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 08477983244DB0C500C41256 /* AW3DSService.m */; };
 		0847798C244EB40200C41256 /* AWDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0847798A244EB40200C41256 /* AWDevice.h */; };
@@ -166,7 +165,6 @@
 		0829FD4D243584E300557DB2 /* AWTestAPIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWTestAPIClient.m; sourceTree = "<group>"; };
 		0829FD4F24358E5600557DB2 /* XCTestCase+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Utils.h"; sourceTree = "<group>"; };
 		0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Utils.m"; sourceTree = "<group>"; };
-		082F315B240C8C1200573824 /* AWHUD.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AWHUD.xib; sourceTree = "<group>"; };
 		08477982244DB0C500C41256 /* AW3DSService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AW3DSService.h; sourceTree = "<group>"; };
 		08477983244DB0C500C41256 /* AW3DSService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AW3DSService.m; sourceTree = "<group>"; };
 		0847798A244EB40200C41256 /* AWDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWDevice.h; sourceTree = "<group>"; };
@@ -421,7 +419,6 @@
 			isa = PBXGroup;
 			children = (
 				0863F6FE240E391600925664 /* AWPaymentItemCell.xib */,
-				082F315B240C8C1200573824 /* AWHUD.xib */,
 				086666682406311F00B52477 /* AWCardTextField.xib */,
 				086666692406311F00B52477 /* AWFloatLabeledTextField.xib */,
 				086666672406311F00B52477 /* AWFloatLabeledView.xib */,
@@ -621,7 +618,6 @@
 				0863F6FF240E391600925664 /* AWPaymentItemCell.xib in Resources */,
 				0866666C2406311F00B52477 /* AWFloatLabeledTextField.xib in Resources */,
 				0866666324062B5000B52477 /* AWPaymentFlow.storyboard in Resources */,
-				082F315C240C8C1200573824 /* AWHUD.xib in Resources */,
 				08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */,
 				0866666B2406311F00B52477 /* AWCardTextField.xib in Resources */,
 			);

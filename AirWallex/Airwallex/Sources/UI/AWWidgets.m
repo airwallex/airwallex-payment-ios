@@ -330,8 +330,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [textField resignFirstResponder];
-    return YES;
+    if (!self.nextTextField) {
+        [textField resignFirstResponder];
+        return YES;
+    }
+
+    [self.nextTextField.textField becomeFirstResponder];
+    return NO;
 }
 
 @end

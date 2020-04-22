@@ -17,8 +17,8 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *lastNameField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *firstNameField;
+@property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *lastNameField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *stateField;
 @property (weak, nonatomic) IBOutlet AWFloatLabeledTextField *cityField;
@@ -35,12 +35,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.lastNameField.fieldType = AWTextFieldTypeLastName;
     self.firstNameField.fieldType = AWTextFieldTypeFirstName;
+    self.firstNameField.nextTextField = self.lastNameField;
+    self.lastNameField.fieldType = AWTextFieldTypeLastName;
+    self.lastNameField.nextTextField = self.phoneNumberField;
     self.phoneNumberField.fieldType = AWTextFieldTypePhoneNumber;
+    self.phoneNumberField.nextTextField = self.stateField;
     self.stateField.fieldType = AWTextFieldTypeState;
+    self.stateField.nextTextField = self.cityField;
     self.cityField.fieldType = AWTextFieldTypeCity;
+    self.cityField.nextTextField = self.streetField;
     self.streetField.fieldType = AWTextFieldTypeStreet;
+    self.streetField.nextTextField = self.zipcodeField;
     self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
 
     if (self.shipping) {
