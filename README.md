@@ -9,7 +9,7 @@
 The Airwallex iOS SDK is a framework for integrating easy, fast and secure payments inside your app with Airwallex. It provides simple functions to send sensitive credit card data directly to Airwallex, it also provides a powerful, customizable interface for collecting user payment details.
 
 <p align="center">
-<img src="./Screenshots/card.png" width="200" alt="AWCardViewController" hspace="20"><img src="./Screenshots/payment method list.png" width="200" alt="AWPaymentMethodListViewController" hspace="20"><img src="./Screenshots/shipping.png" width="200" alt="AWShippingViewController" hspace="20"><img src="./Screenshots/payment.png" width="200" alt="AWPaymentViewController" hspace="20">
+<img src="./Screenshots/card.png" width="200" alt="AWCardViewController" hspace="10"><img src="./Screenshots/payment method list.png" width="200" alt="AWPaymentMethodListViewController" hspace="10"><img src="./Screenshots/shipping.png" width="200" alt="AWShippingViewController" hspace="10"><img src="./Screenshots/payment.png" width="200" alt="AWPaymentViewController" hspace="10">
 </p>
 
 Get started with our integration guide and example project.
