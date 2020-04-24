@@ -8,6 +8,10 @@
 
 The Airwallex iOS SDK is a framework for integrating easy, fast and secure payments inside your app with Airwallex. It provides simple functions to send sensitive credit card data directly to Airwallex, it also provides a powerful, customizable interface for collecting user payment details.
 
+<p align="center">
+<img src="./Screenshots/card.png" width="200" alt="AWCardViewController" hspace="20"><img src="./Screenshots/payment method list.png" width="200" alt="AWPaymentMethodListViewController" hspace="20"><img src="./Screenshots/shipping.png" width="200" alt="AWShippingViewController" hspace="20"><img src="./Screenshots/payment.png" width="200" alt="AWPaymentViewController" hspace="20">
+</p>
+
 Get started with our integration guide and example project.
 
 Table of contents
@@ -21,8 +25,7 @@ Table of contents
 	  * [Swift](#swift)
       * [Basic Integration](#basic-integration)
       * [Customize Usage](#customize-usage)
-      * [Set Up WeChat](#set-up-wechat)
-   * [Features](#features)
+      * [Set Up WeChat Pay](#set-up-wechat-pay)
    * [Examples](#examples)
    * [Contributing](#contributing)
 <!--te-->
@@ -220,6 +223,7 @@ options.autoCapture = YES;
 options.threeDsOption = NO;
 request.options = options;
 request.requestId = NSUUID.UUID.UUIDString;
+
 AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
 [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
 	if (error) {
@@ -278,21 +282,6 @@ Note: you can follow this official guide [WeChat In-App Pay](https://pay.weixin.
 	}
 }
 ```
-
-## Features
-
-**WeChat Pay**: We provide a seamless integration with WeChat Pay.
-
-**Airwallex API**: We provide low-level APIs that correspond to objects and methods in the Airwallex API. You can build your own entirely custom UI on top of this layer, while still taking advantage of utilities like `AWCardValidator` to validate your user’s input.
-
-**Native UI**: We provide native screens to collect payment and shipping details. For example, `AWCardViewController` is a UIViewController that collects, validates card details and finishes saving.
-
-You can use these individually, or take all of the prebuilt UI in one flow by following the Integration guide.
-
-<p align="center">
-<img src="./Screenshots/card.png" width="200" alt="AWCardViewController" hspace="20"><img src="./Screenshots/payment method list.png" width="200" alt="AWPaymentMethodListViewController" hspace="20"><img src="./Screenshots/shipping.png" width="200" alt="AWShippingViewController" hspace="20"><img src="./Screenshots/payment.png" width="200" alt="AWPaymentViewController" hspace="20">
-</p>
-From let to right: `AWCardViewController`, `AWPaymentMethodListViewController`, `AWShippingViewController`, `AWPaymentViewController`
 
 ## Examples
 
