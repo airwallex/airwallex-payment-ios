@@ -14,16 +14,6 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>MIT LICENSE Found in the repo</string>
-			<key>License</key>
-			<string>MIT</string>
-			<key>Title</key>
-			<string>Keys</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
 			<string>MIT License
 
 Copyright (c) 2011-2018 Sam Vermette, Tobias Tiemerding and contributors.
@@ -50,6 +40,16 @@ SOFTWARE.
 			<string>MIT</string>
 			<key>Title</key>
 			<string>SVProgressHUD</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>MIT LICENSE Found in the repo</string>
+			<key>License</key>
+			<string>MIT</string>
+			<key>Title</key>
+			<string>Keys</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
