@@ -9,7 +9,10 @@
 The Airwallex iOS SDK is a framework for integrating easy, fast and secure payments inside your app with Airwallex. It provides simple functions to send sensitive credit card data directly to Airwallex, it also provides a powerful, customizable interface for collecting user payment details.
 
 <p align="center">
-<img src="./Screenshots/card.png" width="200" alt="AWCardViewController" hspace="10"><img src="./Screenshots/payment method list.png" width="200" alt="AWPaymentMethodListViewController" hspace="10"><img src="./Screenshots/shipping.png" width="200" alt="AWShippingViewController" hspace="10"><img src="./Screenshots/payment.png" width="200" alt="AWPaymentViewController" hspace="10">
+<img src="./Screenshots/shipping.png" width="200" alt="AWShippingViewController" hspace="10">
+<img src="./Screenshots/card.png" width="200" alt="AWCardViewController" hspace="10">
+<img src="./Screenshots/payment method list.png" width="200" alt="AWPaymentMethodListViewController" hspace="10">
+<img src="./Screenshots/payment.png" width="200" alt="AWPaymentViewController" hspace="10">
 </p>
 
 Get started with our integration guide and example project.
@@ -289,9 +292,9 @@ To run the example project, you should follow these steps.
 
 - Preparing
 
-Installed the [lastest version](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) of Xcode and iOS SDK from Mac Store.
+1. Install the [lastest version](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) of Xcode and iOS SDK from Mac Store.
 
-Install [Bundle](https://bundler.io/)
+2. Install [Bundle](https://bundler.io/)
 
 ```ruby
 gem install bundler
@@ -323,7 +326,7 @@ bundle install
 pod install
 ```
 
-3. Open Airwallex.xcworkspace' from Xcode or run the following script to open it. **Be sure you always open the project from the work space.**
+3. Open `Airwallex.xcworkspace` from Xcode or run the following script to open it. **Be sure you always open the project from the work space.**
 
 ```
 open Airwallex.xcworkspace
@@ -334,6 +337,7 @@ open Airwallex.xcworkspace
 There are two schemes `Airwallex` and `Examples`. You can switch the schemes in project scheme settings.
 
 `Airwallex` will generate a framework for developer
+
 `Examples` will build and run an example application
 
 - Run the app on your iOS device
