@@ -296,6 +296,8 @@
             NSString *string = [textField.text stringByRemovingIllegalCharacters];
             text = [string substringToIndex:string.length - 1];
         }
+    } else if (self.fieldType == AWTextFieldTypeCVC) {
+        text = [text substringToIndex:MIN(text.length, 4)];
     }
     text.length > 0 ? [self active] : [self inactive];
     [self setText:text];
