@@ -69,4 +69,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface NSCharacterSet (Utils)
+
++ (NSCharacterSet *)invertedAsciiDigitCharacterSet;
+
+@end
+
 NS_ASSUME_NONNULL_END

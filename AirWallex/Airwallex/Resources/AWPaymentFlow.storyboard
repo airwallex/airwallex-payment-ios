@@ -232,7 +232,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="258" height="67"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                 <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Expires MM / YY"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Expires MM / YYYY"/>
                                                                     <userDefinedRuntimeAttribute type="string" keyPath="text" value="12/2020"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>

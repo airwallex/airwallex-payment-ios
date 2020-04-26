@@ -167,3 +167,12 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 }
 
 @end
+
+@implementation NSCharacterSet (Utils)
+
++ (NSCharacterSet *)invertedAsciiDigitCharacterSet
+{
+    return [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- "] invertedSet];
+}
+
+@end
