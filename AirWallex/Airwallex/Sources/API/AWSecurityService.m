@@ -43,6 +43,9 @@
 - (void)doProfile:(NSString *)intentId
        completion:(void(^)(NSString * _Nullable))completion
 {
+#if TARGET_OS_SIMULATOR
+    completion([UIDevice currentDevice].identifierForVendor.UUIDString);
+#else
     NSString *fraudSessionId = [NSString stringWithFormat:@"%@%f", intentId, [[NSDate date] timeIntervalSince1970]];
     NSString *sessionId = [NSString stringWithFormat:@"%@%@", AWCyberSourceMerchantID, fraudSessionId];
     [self.defender doProfileRequestWithOptions:@{@"session_id": sessionId}
@@ -50,6 +53,7 @@
         NSString *sessionId = [result valueForKey:THMSessionID];
         completion(sessionId ?: @"");
     }];
+#endif
 }
 
 @end
