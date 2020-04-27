@@ -339,13 +339,13 @@
                 isValidYear = year.integerValue > currentYear;
             }
             if (!(isValidYear && isValidMonth)) {
-                errorMessage = @"Please enter a valid date";
+                errorMessage = @"Please enter a valid expiry date";
             }
         } else {
-            errorMessage = @"Please enter the expiration date";
+            errorMessage = @"Please enter a valid expiry date";
         }
     } else {
-        errorMessage = @"Please enter the expiration date";
+        errorMessage = @"Please enter a valid expiry date";
     }
     self.errorText = errorMessage;
 }
@@ -384,7 +384,7 @@
             [self validateExpires:textField.text];
             break;
         case AWTextFieldTypeCVC:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter the CVC/VCC";
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter your card CVC";
             break;
         default:
             break;
