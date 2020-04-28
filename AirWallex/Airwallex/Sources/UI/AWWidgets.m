@@ -225,6 +225,12 @@
     }
 }
 
+- (void)setNextTextField:(AWFloatLabeledTextField *)nextTextField
+{
+    _nextTextField = nextTextField;
+    self.textField.returnKeyType = nextTextField == nil ? UIReturnKeyDefault : UIReturnKeyNext;
+}
+
 - (nullable NSString *)errorText
 {
     return self.errorLabel.text;
