@@ -56,8 +56,6 @@
 		0847798D244EB40200C41256 /* AWDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0847798B244EB40200C41256 /* AWDevice.m */; };
 		08477990244EC52C00C41256 /* AWSecurityService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0847798E244EC52C00C41256 /* AWSecurityService.h */; };
 		08477991244EC52C00C41256 /* AWSecurityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0847798F244EC52C00C41256 /* AWSecurityService.m */; };
-		084779AA244F08C300C41256 /* TrustDefender.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084779A8244F08C300C41256 /* TrustDefender.framework */; };
-		084779B4244F100C00C41256 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 084779B3244F0FFE00C41256 /* libz.tbd */; };
 		085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
 		085BD41423CC6E0C002E8F27 /* Airwallex.h in Headers */ = {isa = PBXBuildFile; fileRef = 085BD41323CC6E0B002E8F27 /* Airwallex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		085BD43823CDCBD7002E8F27 /* AWAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 085BD43623CDCBD7002E8F27 /* AWAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -171,8 +169,6 @@
 		0847798B244EB40200C41256 /* AWDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWDevice.m; sourceTree = "<group>"; };
 		0847798E244EC52C00C41256 /* AWSecurityService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSecurityService.h; sourceTree = "<group>"; };
 		0847798F244EC52C00C41256 /* AWSecurityService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSecurityService.m; sourceTree = "<group>"; };
-		084779A8244F08C300C41256 /* TrustDefender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TrustDefender.framework; sourceTree = "<group>"; };
-		084779B3244F0FFE00C41256 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		085BD3C823CC62B4002E8F27 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3CC23CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,8 +228,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFF1A9DD0427D0465EB85A27 /* Pods_Airwallex.framework in Frameworks */,
-				084779B4244F100C00C41256 /* libz.tbd in Frameworks */,
-				084779AA244F08C300C41256 /* TrustDefender.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,8 +246,6 @@
 		0765DE4B2A31304286AAE45B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				084779B3244F0FFE00C41256 /* libz.tbd */,
-				084779A8244F08C300C41256 /* TrustDefender.framework */,
 				89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */,
 				F2D4A2E2793E96E830344B95 /* Pods_AirwallexTests.framework */,
 			);

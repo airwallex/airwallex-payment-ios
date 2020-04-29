@@ -18,6 +18,7 @@ plugin 'cocoapods-keys', {
 
 def shared_pods
     pod 'SVProgressHUD', '2.2.5'
+    pod 'AirwallexTrustDefender', '5.0.32'
 end
 
 target 'Airwallex' do
