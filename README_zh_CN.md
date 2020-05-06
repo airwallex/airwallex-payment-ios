@@ -8,13 +8,6 @@
 
 Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松，快速和安全地完成付款。
 
-<p align="center">
-<img src="./Screenshots/shipping.png" width="200" alt="AWShippingViewController" hspace="10">
-<img src="./Screenshots/card.png" width="200" alt="AWCardViewController" hspace="10">
-<img src="./Screenshots/payment method list.png" width="200" alt="AWPaymentMethodListViewController" hspace="10">
-<img src="./Screenshots/payment.png" width="200" alt="AWPaymentViewController" hspace="10">
-</p>
-
 开始使用我们的集成指南和示例项目。
 
 目录
@@ -94,28 +87,24 @@ use_frameworks!
 AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
 request.intentId = "The payment intent id merchant provides";
 request.paymentMethod = "The payment method merchant provides";
-AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
-options.autoCapture = YES;
-options.threeDsOption = NO;
-request.options = options;
 request.requestId = NSUUID.UUID.UUIDString;
 
 AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
 [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-	if (error) {
-		return;
-	}
+    if (error) {
+        return;
+    }
  
-	AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
-	// Handle the payment result.
+    AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
+    // Handle the payment result.
 }];
 ```
 
 ### 设置微信支付
 
-注意：您可以按照此官方指南来设置[WeChat In-App Pay](https://pay.weixin.qq.com/wiki/doc/api/wxpay/pay/In-AppPay/chapter6_2.shtml).
+注意：您可以按照此官方指南来设置[WeChat In-App Pay](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_5)。
 
-1. 商家成功在微信开放平台上申请了应用后，平台将向商家提供唯一的APPID。在Xcode中创建项目时，开发人员应在“URL Schemes”字段中输入APPID值
+1. 商家成功在微信开放平台上申请了应用后，平台将向商家提供唯一的APPID。在Xcode中创建项目时，开发人员应在“URL Schemes”字段中输入APPID值。
 2. 在调用API之前，您应该在微信上注册您的APPID。
 
 ```objective-c
@@ -164,7 +153,7 @@ AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientCon
 
 - 准备
 
-1. 安装Xcode的[最新版本](https://itunes.apple.com/us/app/xcode/id497799835?mt=12).
+1. 安装Xcode的[最新版本](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
 
 2. 安装[Bundle](https://bundler.io/)
 
