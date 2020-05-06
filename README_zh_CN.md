@@ -240,9 +240,9 @@ AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientCon
 
 ### 设置微信支付
 
-注意：您可以按照此官方指南来设置[WeChat In-App Pay](https://pay.weixin.qq.com/wiki/doc/api/wxpay/pay/In-AppPay/chapter6_2.shtml).
+注意：您可以按照此官方指南来设置[WeChat In-App Pay](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_5)。
 
-1. 商家成功在微信开放平台上申请了应用后，平台将向商家提供唯一的APPID。在Xcode中创建项目时，开发人员应在“URL Schemes”字段中输入APPID值
+1. 商家成功在微信开放平台上申请了应用后，平台将向商家提供唯一的APPID。在Xcode中创建项目时，开发人员应在“URL Schemes”字段中输入APPID值。
 2. 在调用API之前，您应该在微信上注册您的APPID。
 
 ```objective-c
