@@ -6,7 +6,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-green.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-green.svg?style=flat)](https://cocoapods.org)
 
-Airwallex iOS SDK是一个框架，用于通过Airwallex在您的应用程序中集成轻松，快速和安全的付款。它提供了简单的功能，可以将敏感的信用卡数据直接发送到Airwallex，还提供了功能强大的可自定义界面，用于收集用户付款明细。
+Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松，快速和安全地完成付款。它提供了简单的功能，可以将敏感的信用卡数据直接发送到Airwallex，还提供了功能详细的界面，用于收集用户付款明细。
 
 <p align="center">
 <img src="./Screenshots/shipping.png" width="200" alt="AWShippingViewController" hspace="10">
