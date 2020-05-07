@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks.sh
+${PODS_ROOT}/AirwallexCardinalMobile/CardinalMobile.framework
 ${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework
 ${BUILT_PRODUCTS_DIR}/Keys/Keys.framework
 ${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework

@@ -1,9 +1,9 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SVProgressHUD" "${PODS_ROOT}/AirwallexTrustDefender"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SVProgressHUD" "${PODS_ROOT}/AirwallexCardinalMobile" "${PODS_ROOT}/AirwallexTrustDefender"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SVProgressHUD/SVProgressHUD.framework/Headers" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/WechatOpenSDK"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks' '@executable_path/../../Frameworks'
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_CONFIGURATION_BUILD_DIR}/SVProgressHUD/SVProgressHUD.framework/Headers" -iframework "${PODS_ROOT}/AirwallexTrustDefender" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/SVProgressHUD"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"z" -framework "QuartzCore" -framework "SVProgressHUD" -framework "TrustDefender"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_CONFIGURATION_BUILD_DIR}/SVProgressHUD/SVProgressHUD.framework/Headers" -iframework "${PODS_ROOT}/AirwallexCardinalMobile" -iframework "${PODS_ROOT}/AirwallexTrustDefender" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/SVProgressHUD"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"z" -framework "CardinalMobile" -framework "QuartzCore" -framework "SVProgressHUD" -framework "TrustDefender"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/..
