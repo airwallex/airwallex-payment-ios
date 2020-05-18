@@ -11,7 +11,7 @@
 
 static NSString * const authenticationBaseURL = @"https://api-staging.airwallex.com/";
 static NSString * const paymentBaseURL = @"https://staging-pci-api.airwallex.com/";
-static NSString * const defaultAmount = @"0.10";
+static NSString * const defaultAmount = @"500.10";
 static NSString * const defaultCurrency = @"USD";
 
 #endif /* Constant_h */

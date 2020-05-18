@@ -329,8 +329,19 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     request.intentId = [AWUIContext sharedContext].paymentIntent.Id;
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.customerId;
-    AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
-    request.options = options;
+
+    if ([paymentMethod.type isEqualToString:AWCardKey]) {
+        AWCardOptions *cardOptions = [AWCardOptions new];
+        cardOptions.autoCapture = YES;
+        AWThreeDs *threeDs = [AWThreeDs new];
+        threeDs.returnURL = AWThreeDSReturnURL;
+        cardOptions.threeDs = threeDs;
+
+        AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
+        options.cardOptions = cardOptions;
+        request.options = options;
+    }
+
     request.paymentMethod = paymentMethod;
     request.device = device;
     
@@ -370,6 +381,13 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     } else if (result.nextAction.redirectResponse) {
         [self.service present3DSFlowWithRedirectResponse:result.nextAction.redirectResponse];
     }
+}
+
+#pragma mark - AW3DSServiceDelegate
+
+- (void)threeDSServiceDidFailWithError:(NSError *)error
+{
+
 }
 
 @end

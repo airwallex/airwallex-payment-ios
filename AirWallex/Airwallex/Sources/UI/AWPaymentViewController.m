@@ -31,6 +31,7 @@
 
 @property (strong, nonatomic) NSString *cvc;
 @property (strong, nonatomic, readonly) AW3DSService *service;
+@property (strong, nonatomic) AWDevice *device;
 
 @end
 
@@ -79,6 +80,7 @@
     service.customerId = self.paymentIntent.customerId;
     service.intentId = self.paymentIntent.Id;
     service.paymentMethod = self.paymentMethod;
+    service.device = self.device;
     service.presentingViewController = self;
     service.delegate = self;
     return service;
@@ -113,10 +115,22 @@
     request.intentId = self.paymentIntent.Id;
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.paymentIntent.customerId;
-    AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
-    request.options = options;
+
+    if ([paymentMethod.type isEqualToString:AWCardKey]) {
+        AWCardOptions *cardOptions = [AWCardOptions new];
+        cardOptions.autoCapture = YES;
+        AWThreeDs *threeDs = [AWThreeDs new];
+        threeDs.returnURL = AWThreeDSReturnURL;
+        cardOptions.threeDs = threeDs;
+
+        AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
+        options.cardOptions = cardOptions;
+        request.options = options;
+    }
+
     request.paymentMethod = paymentMethod;
     request.device = device;
+    self.device = device;
 
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
@@ -204,6 +218,13 @@
         return YES;
     }
     return NO;
+}
+
+#pragma mark - AW3DSServiceDelegate
+
+- (void)threeDSServiceDidFailWithError:(NSError *)error
+{
+    
 }
 
 @end

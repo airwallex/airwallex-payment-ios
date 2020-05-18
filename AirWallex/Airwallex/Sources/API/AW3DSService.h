@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class AWPaymentMethod, AWRedirectResponse;
+@class AWPaymentMethod, AWDevice, AWRedirectResponse;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol AW3DSServiceDelegate <NSObject>
+
+- (void)threeDSServiceDidFailWithError:(NSError *)error;
 
 @end
 
@@ -21,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *intentId, *customerId;
 @property (nonatomic, strong) AWPaymentMethod *paymentMethod;
+@property (nonatomic, strong) AWDevice *device;
 @property (nonatomic, weak) UIViewController *presentingViewController;
 @property (nonatomic, weak) id <AW3DSServiceDelegate> delegate;
 

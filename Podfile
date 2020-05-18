@@ -19,7 +19,7 @@ plugin 'cocoapods-keys', {
 def shared_pods
     pod 'SVProgressHUD', '2.2.5'
     pod 'AirwallexTrustDefender', '5.0.32'
-    pod 'AirwallexCardinalMobile', '2.2.2'
+    pod 'AirwallexCardinalMobile', '2.2.1'
 end
 
 target 'Airwallex' do

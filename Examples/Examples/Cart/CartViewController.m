@@ -285,10 +285,6 @@
 - (void)shippingViewController:(AWShippingViewController *)controller didEditShipping:(AWPlaceDetails *)shipping
 {
     [controller.navigationController popViewControllerAnimated:YES];
-    
-#warning @"Please remove fake email later"
-    shipping.email = @"jim631@sina.com";
-    
     self.shipping = shipping;
     [self reloadData];
 }

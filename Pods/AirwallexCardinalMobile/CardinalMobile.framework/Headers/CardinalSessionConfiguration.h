@@ -12,10 +12,14 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  * @typedef CardinalSessionEnvironment
  * @brief List of CardinalSession Enviroments
+ * @constant CardinalSessionEnvironmentSandbox Sandbox Environment
+ * @constant CardinalSessionEnvironmentTesting Testing Environment
  * @constant CardinalSessionEnvironmentStaging Staging Environment
  * @constant CardinalSessionEnvironmentProduction Production Environment
  */
 typedef NS_ENUM(NSUInteger, CardinalSessionEnvironment) {
+    CardinalSessionEnvironmentSandbox,
+    CardinalSessionEnvironmentTesting,
     CardinalSessionEnvironmentStaging,
     CardinalSessionEnvironmentProduction
 };
@@ -167,16 +171,9 @@ extern NSUInteger const CardinalSessionTimeoutDEFAULT;
 @property (nonatomic, strong) UiCustomization *uiCustomization;
 
 /*!
- * @property darkModeUiCustomization UI Customization of Dark Mode Challenge Views
- * @brief Set the customization of different UITypes for Dark Mode Challege Views.
- * Default value is nil.
- */
-@property (nonatomic, strong) UiCustomization *darkModeUiCustomization;
-
-/*!
  * @property enableDFSync Synchronize Setup Task with Lasso
  * @brief Enable synchronize setup task.
- * Default value is true.
+ * Default value is false.
  */
 @property (nonatomic) BOOL enableDFSync;
 
