@@ -91,6 +91,8 @@
 		08A14B9C23E91F0C00F3C211 /* AWPaymentMethodRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A14B9A23E91F0C00F3C211 /* AWPaymentMethodRequest.m */; };
 		08A14B9F23E9228300F3C211 /* AWPaymentMethodResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A14B9D23E9228300F3C211 /* AWPaymentMethodResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08A14BA023E9228300F3C211 /* AWPaymentMethodResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A14B9E23E9228300F3C211 /* AWPaymentMethodResponse.m */; };
+		08B3A0CD247282C600F425B0 /* AWWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 08B3A0CB247282C600F425B0 /* AWWebViewController.h */; };
+		08B3A0CE247282C600F425B0 /* AWWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B3A0CC247282C600F425B0 /* AWWebViewController.m */; };
 		08B55E402421DC700054E254 /* AWRequestProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52E023D03B6900953B03 /* AWRequestProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08B55E412421DC700054E254 /* AWResponseProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EA23D048BE00953B03 /* AWResponseProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08BD3A9F240CCAED00ACFB6B /* AWViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 08BD3A9D240CCAED00ACFB6B /* AWViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -207,6 +209,8 @@
 		08A14B9A23E91F0C00F3C211 /* AWPaymentMethodRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentMethodRequest.m; sourceTree = "<group>"; };
 		08A14B9D23E9228300F3C211 /* AWPaymentMethodResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWPaymentMethodResponse.h; sourceTree = "<group>"; };
 		08A14B9E23E9228300F3C211 /* AWPaymentMethodResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWPaymentMethodResponse.m; sourceTree = "<group>"; };
+		08B3A0CB247282C600F425B0 /* AWWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWWebViewController.h; sourceTree = "<group>"; };
+		08B3A0CC247282C600F425B0 /* AWWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWWebViewController.m; sourceTree = "<group>"; };
 		08BD3A9D240CCAED00ACFB6B /* AWViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWViewController.h; sourceTree = "<group>"; };
 		08BD3A9E240CCAED00ACFB6B /* AWViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWViewController.m; sourceTree = "<group>"; };
 		08D26F4F2404AFE9008E65D3 /* AWFontLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWFontLoader.h; sourceTree = "<group>"; };
@@ -459,6 +463,8 @@
 				0866664E24062AEB00B52477 /* AWCardViewController.m */,
 				08BD3A9D240CCAED00ACFB6B /* AWViewController.h */,
 				08BD3A9E240CCAED00ACFB6B /* AWViewController.m */,
+				08B3A0CB247282C600F425B0 /* AWWebViewController.h */,
+				08B3A0CC247282C600F425B0 /* AWWebViewController.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -514,6 +520,7 @@
 				081D52C923D0307600953B03 /* AWCard.h in Headers */,
 				086666702406314500B52477 /* AWWidgets.h in Headers */,
 				0829FD1D2433474A00557DB2 /* AWPaymentIntent.h in Headers */,
+				08B3A0CD247282C600F425B0 /* AWWebViewController.h in Headers */,
 				086666732406343B00B52477 /* AWTheme.h in Headers */,
 				085BD41423CC6E0C002E8F27 /* Airwallex.h in Headers */,
 				080BA817243C346A000D8141 /* AWCodable.h in Headers */,
@@ -703,6 +710,7 @@
 				0805366F241656C900C0896C /* AWUIContext.m in Sources */,
 				080EB05923F4D7E900F71CEC /* AWCardValidator.m in Sources */,
 				0866665824062AEB00B52477 /* AWPaymentMethodListViewController.m in Sources */,
+				08B3A0CE247282C600F425B0 /* AWWebViewController.m in Sources */,
 				08A14BA023E9228300F3C211 /* AWPaymentMethodResponse.m in Sources */,
 				081D52EE23D04AE600953B03 /* AWProtocol.m in Sources */,
 				08A14B9C23E91F0C00F3C211 /* AWPaymentMethodRequest.m in Sources */,

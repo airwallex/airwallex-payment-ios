@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol AW3DSServiceDelegate <NSObject>
 
 - (void)threeDSServiceDidFailWithError:(NSError *)error;
+- (void)threeDSServiceDidFinish;
 
 @end
 
@@ -28,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id <AW3DSServiceDelegate> delegate;
 
 - (void)present3DSFlowWithRedirectResponse:(AWRedirectResponse *)response;
+
 + (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
 
 @end

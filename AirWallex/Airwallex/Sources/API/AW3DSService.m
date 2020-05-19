@@ -16,6 +16,7 @@
 #import "AWAPIClient.h"
 #import "AWUtils.h"
 #import "AWDevice.h"
+#import "AWWebViewController.h"
 
 @interface AW3DSService () <CardinalValidationDelegate>
 
@@ -58,6 +59,7 @@
 {
     __weak __typeof(self)weakSelf = self;
     [SVProgressHUD show];
+    // Step 1: Request `referenceId` with `serverJwt` by Cardinal SDK
     [self.session setupWithJWT:response.jwt didComplete:^(NSString * _Nonnull consumerSessionId) {
         [SVProgressHUD dismiss];
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -100,6 +102,7 @@
     AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     AWConfirmPaymentIntentRequest *request = [self confirmPaymentIntentRequestWithThreeDs:threeDs];
 
+    // Step 2: Request 3DS lookup response by `confirmPaymentIntent` with `referenceId`
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
@@ -111,18 +114,39 @@
         }
 
         AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
+        if ([result.status isEqualToString:@"REQUIRES_CAPTURE"] || result.nextAction == nil) {
+            [strongSelf.delegate threeDSServiceDidFinish];
+            return;
+        }
+
+        // Step 3: Show 3DS UI, then wait user input. After user input, will receive `processorTransactionId`
         AWAuthenticationData *authenticationData = result.latestPaymentAttempt.authenticationData;
         AWRedirectResponse *redirectResponse = result.nextAction.redirectResponse;
         if (authenticationData.isThreeDSVersion2) {
+            // 3DS v2.x flow
             if (redirectResponse.xid && redirectResponse.req) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [strongSelf.session continueWithTransactionId:redirectResponse.xid payload:redirectResponse.req didValidateDelegate:self];
                 });
             } else {
-                [self.delegate threeDSServiceDidFailWithError:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing transaction id or payload."}]];
+                [strongSelf.delegate threeDSServiceDidFailWithError:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing transaction id or payload."}]];
             }
         } else {
-            
+            // 3DS v1.x flow
+            NSMutableCharacterSet *set = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
+            [set removeCharactersInString:@"&+=?"];
+            NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:set];
+            NSString *termUrlEncoding = [AWThreeDSReturnURL stringByAddingPercentEncodingWithAllowedCharacters:set];
+            NSString *body = [NSString stringWithFormat:@"&PaReq=%@&TermUrl=%@", reqEncoding, termUrlEncoding];
+            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:redirectResponse.acs]];
+            urlRequest.HTTPMethod = @"POST";
+            urlRequest.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
+            [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+            AWWebViewController *webViewController = [[AWWebViewController alloc] initWithURLRequest:urlRequest webHandler:^(NSString * _Nullable payload, NSError * _Nullable error) {
+                // Todo: get payload
+            }];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
+            [strongSelf.presentingViewController presentViewController:navigationController animated:YES completion:nil];
         }
     }];
 }
