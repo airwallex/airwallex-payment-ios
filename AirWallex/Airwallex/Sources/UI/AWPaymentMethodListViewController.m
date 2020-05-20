@@ -44,7 +44,8 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 @property (strong, nonatomic) NSMutableArray <AWPaymentMethod *> *cards;
 @property (nonatomic) BOOL canLoadMore;
 @property (nonatomic) NSInteger nextPageNum;
-@property (strong, nonatomic, readonly) AWThreeDSService *service;
+@property (strong, nonatomic) AWThreeDSService *service;
+@property (strong, nonatomic) AWDevice *device;
 
 @end
 
@@ -135,18 +136,6 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (void)newPressed:(id)sender
 {
     [self performSegueWithIdentifier:@"addCard" sender:nil];
-}
-
-- (AWThreeDSService *)service
-{
-    AWPaymentIntent *paymentIntent = [AWUIContext sharedContext].paymentIntent;
-    AWThreeDSService *service = [AWThreeDSService new];
-    service.customerId = paymentIntent.customerId;
-    service.intentId = paymentIntent.Id;
-    service.paymentMethod = self.paymentMethod;
-    service.presentingViewController = self;
-    service.delegate = self;
-    return service;
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -344,7 +333,8 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
     request.paymentMethod = paymentMethod;
     request.device = device;
-    
+    self.device = device;
+
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
@@ -366,7 +356,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     }
     
     AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
-    if ([result.status isEqualToString:@"SUCCEEDED"]) {
+    if ([response.status isEqualToString:@"SUCCEEDED"] || [response.status isEqualToString:@"REQUIRES_CAPTURE"]) {
         [delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusSuccess error:error];
         return;
     }
@@ -379,7 +369,16 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     if (result.nextAction.weChatPayResponse) {
         [delegate paymentViewController:self nextActionWithWeChatPaySDK:result.nextAction.weChatPayResponse];
     } else if (result.nextAction.redirectResponse) {
-        [self.service presentThreeDSFlowWithServerJwt:result.nextAction.redirectResponse.jwt];
+        AWPaymentIntent *paymentIntent = [AWUIContext sharedContext].paymentIntent;
+        AWThreeDSService *service = [AWThreeDSService new];
+        service.customerId = paymentIntent.customerId;
+        service.intentId = paymentIntent.Id;
+        service.paymentMethod = self.paymentMethod;
+        service.device = self.device;
+        service.presentingViewController = self;
+        service.delegate = self;
+        self.service = service;
+        [service presentThreeDSFlowWithServerJwt:result.nextAction.redirectResponse.jwt];
     }
 }
 

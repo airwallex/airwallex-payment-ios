@@ -30,7 +30,7 @@
 @property (weak, nonatomic) IBOutlet AWButton *payButton;
 
 @property (strong, nonatomic) NSString *cvc;
-@property (strong, nonatomic, readonly) AWThreeDSService *service;
+@property (strong, nonatomic) AWThreeDSService *service;
 @property (strong, nonatomic) AWDevice *device;
 
 @end
@@ -72,18 +72,6 @@
 {
     [self checkPaymentEnabled];
     [self.tableView reloadData];
-}
-
-- (AWThreeDSService *)service
-{
-    AWThreeDSService *service = [AWThreeDSService new];
-    service.customerId = self.paymentIntent.customerId;
-    service.intentId = self.paymentIntent.Id;
-    service.paymentMethod = self.paymentMethod;
-    service.device = self.device;
-    service.presentingViewController = self;
-    service.delegate = self;
-    return service;
 }
 
 - (IBAction)payPressed:(id)sender
@@ -154,7 +142,7 @@
     [[NSUserDefaults awUserDefaults] setObject:self.cvc forKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
     [[NSUserDefaults awUserDefaults] synchronize];
 
-    if ([response.status isEqualToString:@"SUCCEEDED"]) {
+    if ([response.status isEqualToString:@"SUCCEEDED"] || [response.status isEqualToString:@"REQUIRES_CAPTURE"]) {
         [self.delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusSuccess error:error];
         return;
     }
@@ -168,7 +156,15 @@
         [self.delegate paymentViewController:self
                   nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
     } else if (response.nextAction.redirectResponse) {
-        [self.service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
+        AWThreeDSService *service = [AWThreeDSService new];
+        service.customerId = self.paymentIntent.customerId;
+        service.intentId = self.paymentIntent.Id;
+        service.paymentMethod = self.paymentMethod;
+        service.device = self.device;
+        service.presentingViewController = self;
+        service.delegate = self;
+        self.service = service;
+        [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     }
 }
 
