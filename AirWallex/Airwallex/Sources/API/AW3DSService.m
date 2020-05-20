@@ -131,7 +131,7 @@
             } else {
                 [strongSelf.delegate threeDSServiceDidFailWithError:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing transaction id or payload."}]];
             }
-        } else {
+        } else if (redirectResponse.acs && redirectResponse.req) {
             // 3DS v1.x flow
             NSMutableCharacterSet *set = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
             [set removeCharactersInString:@"&+=?"];
@@ -147,6 +147,8 @@
             }];
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
             [strongSelf.presentingViewController presentViewController:navigationController animated:YES completion:nil];
+        } else {
+            [strongSelf.delegate threeDSServiceDidFailWithError:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Failed to determine the challenge is 1.x or 2.x."}]];
         }
     }];
 }
