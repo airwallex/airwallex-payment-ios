@@ -20,17 +20,17 @@
 #import "AWPaymentIntentResponse.h"
 #import "AWTheme.h"
 #import "AWPaymentIntent.h"
-#import "AW3DSService.h"
+#import "AWThreeDSService.h"
 #import "AWSecurityService.h"
 
-@interface AWPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AW3DSServiceDelegate>
+@interface AWPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AWThreeDSServiceDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet AWButton *payButton;
 
 @property (strong, nonatomic) NSString *cvc;
-@property (strong, nonatomic, readonly) AW3DSService *service;
+@property (strong, nonatomic, readonly) AWThreeDSService *service;
 @property (strong, nonatomic) AWDevice *device;
 
 @end
@@ -74,9 +74,9 @@
     [self.tableView reloadData];
 }
 
-- (AW3DSService *)service
+- (AWThreeDSService *)service
 {
-    AW3DSService *service = [AW3DSService new];
+    AWThreeDSService *service = [AWThreeDSService new];
     service.customerId = self.paymentIntent.customerId;
     service.intentId = self.paymentIntent.Id;
     service.paymentMethod = self.paymentMethod;
@@ -168,7 +168,7 @@
         [self.delegate paymentViewController:self
                   nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
     } else if (response.nextAction.redirectResponse) {
-        [self.service present3DSFlowWithRedirectResponse:response.nextAction.redirectResponse];
+        [self.service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     }
 }
 
@@ -220,16 +220,11 @@
     return NO;
 }
 
-#pragma mark - AW3DSServiceDelegate
+#pragma mark - AWThreeDSServiceDelegate
 
-- (void)threeDSServiceDidFailWithError:(NSError *)error
+- (void)threeDSService:(AWThreeDSService *)service didFinishWithResponse:(AWConfirmPaymentIntentResponse *)response error:(NSError *)error
 {
-    
-}
-
-- (void)threeDSServiceDidFinish
-{
-    
+    [self finishConfirmationWithResponse:response error:error];
 }
 
 @end

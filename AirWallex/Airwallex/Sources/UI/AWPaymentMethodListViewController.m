@@ -24,7 +24,7 @@
 #import "AWPaymentIntentResponse.h"
 #import "AWPaymentMethodOptions.h"
 #import "AWPaymentIntent.h"
-#import "AW3DSService.h"
+#import "AWThreeDSService.h"
 #import "AWSecurityService.h"
 
 static NSString * FormatPaymentMethodTypeString(NSString *type)
@@ -35,7 +35,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     return nil;
 }
 
-@interface AWPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWCardViewControllerDelegate, AW3DSServiceDelegate>
+@interface AWPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWCardViewControllerDelegate, AWThreeDSServiceDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
@@ -44,7 +44,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 @property (strong, nonatomic) NSMutableArray <AWPaymentMethod *> *cards;
 @property (nonatomic) BOOL canLoadMore;
 @property (nonatomic) NSInteger nextPageNum;
-@property (strong, nonatomic, readonly) AW3DSService *service;
+@property (strong, nonatomic, readonly) AWThreeDSService *service;
 
 @end
 
@@ -137,10 +137,10 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     [self performSegueWithIdentifier:@"addCard" sender:nil];
 }
 
-- (AW3DSService *)service
+- (AWThreeDSService *)service
 {
     AWPaymentIntent *paymentIntent = [AWUIContext sharedContext].paymentIntent;
-    AW3DSService *service = [AW3DSService new];
+    AWThreeDSService *service = [AWThreeDSService new];
     service.customerId = paymentIntent.customerId;
     service.intentId = paymentIntent.Id;
     service.paymentMethod = self.paymentMethod;
@@ -379,15 +379,15 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     if (result.nextAction.weChatPayResponse) {
         [delegate paymentViewController:self nextActionWithWeChatPaySDK:result.nextAction.weChatPayResponse];
     } else if (result.nextAction.redirectResponse) {
-        [self.service present3DSFlowWithRedirectResponse:result.nextAction.redirectResponse];
+        [self.service presentThreeDSFlowWithServerJwt:result.nextAction.redirectResponse.jwt];
     }
 }
 
-#pragma mark - AW3DSServiceDelegate
+#pragma mark - AWThreeDSServiceDelegate
 
-- (void)threeDSServiceDidFailWithError:(NSError *)error
+- (void)threeDSService:(AWThreeDSService *)service didFinishWithResponse:(AWConfirmPaymentIntentResponse *)response error:(NSError *)error
 {
-
+    [self finishConfirmationWithResponse:response error:error];
 }
 
 @end

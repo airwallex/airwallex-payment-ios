@@ -50,8 +50,8 @@
 		0829FD1E2433474A00557DB2 /* AWPaymentIntent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD1C2433474A00557DB2 /* AWPaymentIntent.m */; };
 		0829FD4E243584E300557DB2 /* AWTestAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD4D243584E300557DB2 /* AWTestAPIClient.m */; };
 		0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */; };
-		08477984244DB0C500C41256 /* AW3DSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 08477982244DB0C500C41256 /* AW3DSService.h */; };
-		08477985244DB0C500C41256 /* AW3DSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 08477983244DB0C500C41256 /* AW3DSService.m */; };
+		08477984244DB0C500C41256 /* AWThreeDSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 08477982244DB0C500C41256 /* AWThreeDSService.h */; };
+		08477985244DB0C500C41256 /* AWThreeDSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 08477983244DB0C500C41256 /* AWThreeDSService.m */; };
 		0847798C244EB40200C41256 /* AWDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0847798A244EB40200C41256 /* AWDevice.h */; };
 		0847798D244EB40200C41256 /* AWDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0847798B244EB40200C41256 /* AWDevice.m */; };
 		08477990244EC52C00C41256 /* AWSecurityService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0847798E244EC52C00C41256 /* AWSecurityService.h */; };
@@ -165,8 +165,8 @@
 		0829FD4D243584E300557DB2 /* AWTestAPIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWTestAPIClient.m; sourceTree = "<group>"; };
 		0829FD4F24358E5600557DB2 /* XCTestCase+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Utils.h"; sourceTree = "<group>"; };
 		0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Utils.m"; sourceTree = "<group>"; };
-		08477982244DB0C500C41256 /* AW3DSService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AW3DSService.h; sourceTree = "<group>"; };
-		08477983244DB0C500C41256 /* AW3DSService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AW3DSService.m; sourceTree = "<group>"; };
+		08477982244DB0C500C41256 /* AWThreeDSService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWThreeDSService.h; sourceTree = "<group>"; };
+		08477983244DB0C500C41256 /* AWThreeDSService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWThreeDSService.m; sourceTree = "<group>"; };
 		0847798A244EB40200C41256 /* AWDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWDevice.h; sourceTree = "<group>"; };
 		0847798B244EB40200C41256 /* AWDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWDevice.m; sourceTree = "<group>"; };
 		0847798E244EC52C00C41256 /* AWSecurityService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWSecurityService.h; sourceTree = "<group>"; };
@@ -316,8 +316,8 @@
 				08A14B9A23E91F0C00F3C211 /* AWPaymentMethodRequest.m */,
 				08A14B9D23E9228300F3C211 /* AWPaymentMethodResponse.h */,
 				08A14B9E23E9228300F3C211 /* AWPaymentMethodResponse.m */,
-				08477982244DB0C500C41256 /* AW3DSService.h */,
-				08477983244DB0C500C41256 /* AW3DSService.m */,
+				08477982244DB0C500C41256 /* AWThreeDSService.h */,
+				08477983244DB0C500C41256 /* AWThreeDSService.m */,
 				0847798E244EC52C00C41256 /* AWSecurityService.h */,
 				0847798F244EC52C00C41256 /* AWSecurityService.m */,
 			);
@@ -504,7 +504,7 @@
 				081D52DE23D03B3F00953B03 /* AWPaymentIntentRequest.h in Headers */,
 				081D52F123D04B5400953B03 /* AWAPIResponse.h in Headers */,
 				0863F6FC240E390100925664 /* AWPaymentItemCell.h in Headers */,
-				08477984244DB0C500C41256 /* AW3DSService.h in Headers */,
+				08477984244DB0C500C41256 /* AWThreeDSService.h in Headers */,
 				0866665524062AEB00B52477 /* AWCountry.h in Headers */,
 				0847798C244EB40200C41256 /* AWDevice.h in Headers */,
 				0866665E24062AEB00B52477 /* AWShippingViewController.h in Headers */,
@@ -735,7 +735,7 @@
 				081D52D623D0343200953B03 /* AWWeChatPay.m in Sources */,
 				086666442406138400B52477 /* AWPaymentMethodCell.m in Sources */,
 				08BD3AA0240CCAED00ACFB6B /* AWViewController.m in Sources */,
-				08477985244DB0C500C41256 /* AW3DSService.m in Sources */,
+				08477985244DB0C500C41256 /* AWThreeDSService.m in Sources */,
 				085BD43923CDCBD7002E8F27 /* AWAddress.m in Sources */,
 				081D52F723D04EA200953B03 /* AWLogger.m in Sources */,
 				08D26F5824051FC2008E65D3 /* AWConstants.m in Sources */,
