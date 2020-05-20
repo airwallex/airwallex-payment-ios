@@ -106,12 +106,12 @@ static NSURL *_defaultBaseURL;
 + (nullable id <AWResponseProtocol>)parseError:(NSData *)data
 {
     NSError *error = nil;
-    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    if (responseObject == nil) {
+    id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    if (json == nil) {
         return nil;
     }
-    NSString *message = [responseObject valueForKey:@"message"];
-    NSString *code = [responseObject valueForKey:@"code"];
+    NSString *message = json[@"message"];
+    NSString *code = json[@"code"];
     return [[AWAPIErrorResponse alloc] initWithMessage:message code:code];
 }
 

@@ -21,14 +21,14 @@
 + (id<AWResponseProtocol>)parse:(NSData *)data
 {
     NSError *error = nil;
-    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWConfirmPaymentIntentResponse *response = [[AWConfirmPaymentIntentResponse alloc] init];
-    response.status = [responseObject valueForKey:@"status"];
-    NSDictionary *nextAction = [responseObject valueForKey:@"next_action"];
+    response.status = json[@"status"];
+    NSDictionary *nextAction = json[@"next_action"];
     if (nextAction && [nextAction isKindOfClass:[NSDictionary class]]) {
         response.nextAction = [AWConfirmPaymentNextAction decodeFromJSON:nextAction];
     }
-    NSDictionary *latestPaymentAttempt = [responseObject valueForKey:@"latest_payment_attempt"];
+    NSDictionary *latestPaymentAttempt = json[@"latest_payment_attempt"];
     if (latestPaymentAttempt && [latestPaymentAttempt isKindOfClass:[NSDictionary class]]) {
         response.latestPaymentAttempt = [AWPaymentAttempt decodeFromJSON:latestPaymentAttempt];
     }
@@ -199,7 +199,7 @@
 @property (nonatomic, copy, readwrite) NSString *descriptor;
 @property (nonatomic, copy, readwrite) NSString *status;
 @property (nonatomic, copy, readwrite) NSNumber *capturedAmount;
-@property (nonatomic, copy, readwrite) NSObject *latestPaymentAttempt;
+@property (nonatomic, copy, readwrite) AWPaymentAttempt *latestPaymentAttempt;
 @property (nonatomic, copy, readwrite) NSString *createdAt;
 @property (nonatomic, copy, readwrite) NSString *updatedAt;
 @property (nonatomic, copy, readwrite) NSArray <NSString *> *availablePaymentMethodTypes;
@@ -221,7 +221,10 @@
     response.descriptor = json[@"descriptor"];
     response.status = json[@"status"];
     response.capturedAmount = json[@"captured_amount"];
-    response.latestPaymentAttempt = json[@"latest_payment_attempt"];
+    NSDictionary *latestPaymentAttempt = json[@"latest_payment_attempt"];
+    if (latestPaymentAttempt && [latestPaymentAttempt isKindOfClass:[NSDictionary class]]) {
+        response.latestPaymentAttempt = [AWPaymentAttempt decodeFromJSON:latestPaymentAttempt];
+    }
     response.createdAt = json[@"created_at"];
     response.updatedAt = json[@"updated_at"];
     response.availablePaymentMethodTypes = json[@"available_payment_method_types"];

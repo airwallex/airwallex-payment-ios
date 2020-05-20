@@ -50,7 +50,7 @@
     NSString *sessionId = [NSString stringWithFormat:@"%@%@", AWCyberSourceMerchantID, fraudSessionId];
     [self.defender doProfileRequestWithOptions:@{@"session_id": sessionId}
                               andCallbackBlock:^(NSDictionary *result) {
-        NSString *sessionId = [result valueForKey:THMSessionID];
+        NSString *sessionId = result[THMSessionID];
         completion(sessionId ?: @"");
     }];
 #endif

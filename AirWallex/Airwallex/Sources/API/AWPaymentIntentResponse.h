@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *status;
 @property (nonatomic, readonly) NSNumber *capturedAmount;
 #warning "not finished"
-@property (nonatomic, readonly) NSObject *latestPaymentAttempt;
+@property (nonatomic, readonly) AWPaymentAttempt *latestPaymentAttempt;
 @property (nonatomic, readonly) NSString *createdAt;
 @property (nonatomic, readonly) NSString *updatedAt;
 @property (nonatomic, readonly) NSArray <NSString *> *availablePaymentMethodTypes;
