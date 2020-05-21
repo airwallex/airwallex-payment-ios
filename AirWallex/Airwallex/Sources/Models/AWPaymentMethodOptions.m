@@ -8,7 +8,32 @@
 
 #import "AWPaymentMethodOptions.h"
 
-@implementation AWPaymentMethodOptions
+@implementation AWThreeDs
+
+- (NSDictionary *)encodeToJSON
+{
+    NSMutableDictionary *threeDs = [NSMutableDictionary dictionary];
+    if (self.paRes) {
+        threeDs[@"pa_res"] = self.paRes;
+    }
+    if (self.returnURL) {
+        threeDs[@"return_url"] = self.returnURL;
+    }
+    if (self.attemptId) {
+        threeDs[@"attempt_id"] = self.attemptId;
+    }
+    if (self.deviceDataCollectionRes) {
+        threeDs[@"device_data_collection_res"] = self.deviceDataCollectionRes;
+    }
+    if (self.dsTransactionId) {
+        threeDs[@"ds_transaction_id"] = self.dsTransactionId;
+    }
+    return threeDs;
+}
+
+@end
+
+@implementation AWCardOptions
 
 - (instancetype)init
 {
@@ -21,18 +46,25 @@
 
 - (NSDictionary *)encodeToJSON
 {
-    NSMutableDictionary *threeDs = [@{
-        @"option": self.threeDsOption ? @"true" : @"false"
-    } mutableCopy];
-    if (self.paRes) {
-        threeDs[@"pa_res"] = self.paRes;
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
+    if (self.threeDs) {
+        options[@"three_ds"] = [self.threeDs encodeToJSON];
     }
-    return @{
-        @"card": @{
-                @"auto_capture": self.autoCapture ? @"true" : @"false",
-                @"three_ds": threeDs
-        }
-    };
+    options[@"auto_capture"] = @(self.autoCapture);
+    return options;
+}
+
+@end
+
+@implementation AWPaymentMethodOptions
+
+- (NSDictionary *)encodeToJSON
+{
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
+    if (self.cardOptions) {
+        options[@"card"] = [self.cardOptions encodeToJSON];
+    }
+    return options;
 }
 
 @end

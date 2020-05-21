@@ -12,12 +12,11 @@
 #import <WechatOpenSDK/WXApi.h>
 #import "AirwallexExamplesKeys+Utils.h"
 #import "OptionsViewController.h"
+#import "ShippingCell.h"
 #import "ProductCell.h"
 #import "TotalCell.h"
 #import "APIClient.h"
 #import "Constant.h"
-
-static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWShippingViewControllerDelegate, AWPaymentResultDelegate, OptionsViewControllerDelegate>
 
@@ -44,8 +43,6 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     self.checkoutButton.layer.masksToBounds = YES;
     self.checkoutButton.layer.cornerRadius = 6;
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:[NSBundle sdkBundle]]
-         forCellReuseIdentifier:@"AWPaymentItemCell"];
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro"
                                                detail:@"Free engraving x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"399"]];
@@ -236,18 +233,8 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        AWPaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWPaymentItemCell" forIndexPath:indexPath];
-        cell.titleLabel.text = @"Shipping";
-        AWPlaceDetails *shipping = self.shipping;
-        if (shipping) {
-            cell.selectionLabel.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@ %@", shipping.firstName, shipping.lastName, shipping.address.street, shipping.address.city, shipping.address.state, shipping.address.countryCode];
-            cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
-        } else {
-            cell.selectionLabel.text = @"Enter shipping information";
-            cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
-        }
-        cell.isLastCell = YES;
-        cell.cvcHidden = YES;
+        ShippingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ShippingCell" forIndexPath:indexPath];
+        cell.shipping = self.shipping;
         return cell;
     }
     
@@ -260,12 +247,12 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
         cell.total = [subtotal decimalNumberByAdding:shipping];
         return cell;
     }
-    
+
     ProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell" forIndexPath:indexPath];
     cell.product = self.products[indexPath.row];
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self)weakSelf = self;
     cell.handler = ^(Product *product) {
-        __strong typeof(self) strongSelf = weakSelf;
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.products removeObject:product];
         [strongSelf reloadData];
     };
@@ -287,10 +274,6 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 - (void)shippingViewController:(AWShippingViewController *)controller didEditShipping:(AWPlaceDetails *)shipping
 {
     [controller.navigationController popViewControllerAnimated:YES];
-    
-#warning @"Please remove fake email later"
-    shipping.email = @"jim631@sina.com";
-    
     self.shipping = shipping;
     [self reloadData];
 }
@@ -337,7 +320,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     if (url.scheme && url.host) {
         [SVProgressHUD show];
         
-        __weak typeof(self) weakSelf = self;
+        __weak __typeof(self)weakSelf = self;
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                          completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -346,7 +329,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
                 return;
             }
             
-            __strong typeof(self) strongSelf = weakSelf;
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf finishPayment];
         }] resume];
         return;

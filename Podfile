@@ -7,8 +7,19 @@ ENV['SWIFT_VERSION'] = '5'
 
 workspace 'Airwallex.xcworkspace'
 
+plugin 'cocoapods-keys', {
+  :project => "AirwallexExamples",
+  :target => ["AirwallexTests", "Examples"],
+  :keys => [
+    "ApiKey",
+    "ClientID",
+    "WeChatAppID"
+]}
+
 def shared_pods
     pod 'SVProgressHUD', '2.2.5'
+    pod 'AirwallexTrustDefender', '5.0.32'
+    pod 'AirwallexCardinalMobile', '2.2.3'
 end
 
 target 'Airwallex' do
@@ -22,15 +33,6 @@ target 'AirwallexTests' do
 end
 
 target 'Examples' do
-
-    plugin 'cocoapods-keys', {
-    :project => "AirwallexExamples",
-    :keys => [
-        "ApiKey",
-        "ClientID",
-        "WeChatAppID"
-    ]}
-
     project './Examples/Examples.xcodeproj'
     shared_pods
     pod 'WechatOpenSDK', '1.8.2'

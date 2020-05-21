@@ -27,32 +27,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *code;
 
 /**
- Error type.
+ Error object.
  */
-@property (nonatomic, copy, readonly) NSString *type;
-
-/**
- Response status code.
- */
-@property (nonatomic, copy, readonly) NSNumber *statusCode;
+@property (nonatomic, strong, readonly) NSError *error;
 
 /**
  Initializer.
  
  @param message Error message.
  @param code Error code.
- @param type Error type.
- @param statusCode Response status code.
  @return The initialized error object.
  */
 - (instancetype)initWithMessage:(NSString *)message
-                           code:(NSString *)code
-                           type:(NSString *)type
-                     statusCode:(NSNumber *)statusCode;
+                           code:(NSString *)code;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
-
-- (NSDictionary *)dictionary;
 
 @end
 

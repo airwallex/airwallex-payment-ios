@@ -34,6 +34,7 @@
             CGFontRef font = CGFontCreateWithDataProvider(provider);
             if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
                 CFStringRef errorDescription = CFErrorCopyDescription(error);
+                
                 NSLog(@"Failed to load font: %@", errorDescription);
                 CFRelease(errorDescription);
             }

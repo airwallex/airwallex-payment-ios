@@ -25,27 +25,6 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
     return [parametersArray componentsJoinedByString:@"&"];
 }
 
-- (NSError *)convertToNSErrorWithCode:(NSNumber *)code
-{
-    return [NSError errorWithDomain:AWSDKErrorDomain
-                               code:[code integerValue]
-                           userInfo:self.appendErrorDescription];
-}
-
-- (NSError *)convertToNSError
-{
-    return [self convertToNSErrorWithCode:@(-1)];
-}
-
-- (NSDictionary *)appendErrorDescription
-{
-    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithDictionary:self];
-    if (self[@"message"]) {
-        [userInfo addEntriesFromDictionary: @{NSLocalizedDescriptionKey: self[@"message"]}];
-    }
-    return userInfo;
-}
-
 @end
 
 @implementation NSBundle (Utils)
@@ -185,6 +164,15 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 {
     self.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, spacing);
     self.titleEdgeInsets = UIEdgeInsetsMake(0, spacing, 0, 0);
+}
+
+@end
+
+@implementation NSCharacterSet (Utils)
+
++ (NSCharacterSet *)invertedAsciiDigitCharacterSet
+{
+    return [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- "] invertedSet];
 }
 
 @end

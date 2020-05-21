@@ -11,6 +11,7 @@
 
 @class AWPaymentMethod;
 @class AWPaymentMethodOptions;
+@class AWDevice;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -48,6 +49,11 @@ NS_ASSUME_NONNULL_BEGIN
  Options object.
  */
 @property (nonatomic, strong, nullable) AWPaymentMethodOptions *options;
+
+/**
+ Device object.
+ */
+@property (nonatomic, strong, nullable) AWDevice *device;
 
 @end
 

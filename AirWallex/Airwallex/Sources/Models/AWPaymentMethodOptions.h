@@ -11,10 +11,36 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface AWThreeDs : NSObject <AWJSONEncodable>
+
 /**
- `AWPaymentMethodOptions` includes the information of payment method options
+ Three domain request.
  */
-@interface AWPaymentMethodOptions : NSObject <AWJSONEncodable>
+@property (nonatomic, copy, nullable) NSString *paRes;
+
+/**
+ Return url.
+ */
+@property (nonatomic, copy, nullable) NSString *returnURL;
+
+/**
+ Attempt ID.
+ */
+@property (nonatomic, copy, nullable) NSString *attemptId;
+
+/**
+ Device data collection response.
+ */
+@property (nonatomic, copy, nullable) NSString *deviceDataCollectionRes;
+
+/**
+ 3DS transaction ID.
+ */
+@property (nonatomic, copy, nullable) NSString *dsTransactionId;
+
+@end
+
+@interface AWCardOptions : NSObject <AWJSONEncodable>
 
 /**
  Should capture automatically when confirm. Default to false. The payment intent will be captured automatically if it is true, and authorized only if it is false.
@@ -22,14 +48,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL autoCapture;
 
 /**
- Enable three domain secure.
+ ThreeDs object.
  */
-@property (nonatomic) BOOL threeDsOption;
+@property (nonatomic, strong, nullable) AWThreeDs *threeDs;
+
+@end
 
 /**
- Three domain request.
+ `AWPaymentMethodOptions` includes the information of payment method options
  */
-@property (nonatomic, copy, nullable) NSString *paRes;
+@interface AWPaymentMethodOptions : NSObject <AWJSONEncodable>
+
+/**
+ The options for card.
+ */
+@property (nonatomic, strong, nullable) AWCardOptions *cardOptions;
 
 @end
 

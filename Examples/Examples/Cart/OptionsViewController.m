@@ -90,8 +90,12 @@
         }
     } else if (textField == self.apiKeyTextField) {
         [APIClient sharedClient].apiKey = textField.text;
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     } else if (textField == self.clientIDTextField) {
         [APIClient sharedClient].clientID = textField.text;
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     } else if (textField == self.amountTextField) {
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:textField.text];
         if (amount == NSDecimalNumber.notANumber) {

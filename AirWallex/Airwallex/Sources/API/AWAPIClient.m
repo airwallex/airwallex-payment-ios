@@ -7,6 +7,7 @@
 //
 
 #import "AWAPIClient.h"
+#import "AWConstants.h"
 #import "AWProtocol.h"
 #import "AWRequestProtocol.h"
 #import "AWResponseProtocol.h"
@@ -78,7 +79,7 @@ static NSURL *_defaultBaseURL;
 
 - (NSDictionary *)headers
 {
-    return @{@"Content-Type": @"application/json"};
+    return @{@"Content-Type": @"application/json", @"x-api-version": AIRWALLEX_VERSION};
 }
 
 - (nullable NSDictionary *)parameters
@@ -105,15 +106,13 @@ static NSURL *_defaultBaseURL;
 + (nullable id <AWResponseProtocol>)parseError:(NSData *)data
 {
     NSError *error = nil;
-    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    if (responseObject == nil) {
+    id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    if (json == nil) {
         return nil;
     }
-    NSString *message = [responseObject valueForKey:@"message"];
-    NSString *code = [responseObject valueForKey:@"code"];
-    NSString *type = [responseObject valueForKey:@"type"];
-    NSNumber *statusCode = [responseObject valueForKey:@"status_code"];
-    return [[AWAPIErrorResponse alloc] initWithMessage:message code:code type:type statusCode:statusCode];
+    NSString *message = json[@"message"];
+    NSString *code = json[@"code"];
+    return [[AWAPIErrorResponse alloc] initWithMessage:message code:code];
 }
 
 @end
@@ -180,10 +179,9 @@ static NSURL *_defaultBaseURL;
                     } else {
                         AWAPIErrorResponse *errorResponse = [request.responseClass performSelector:@selector(parseError:) withObject:data];
                         if (errorResponse) {
-                            NSDictionary *errorJson = @{NSLocalizedDescriptionKey: errorResponse.message ?: @""};
-                            handler(nil, [errorJson convertToNSErrorWithCode:@(errorResponse.code.integerValue)]);
+                            handler(nil, errorResponse.error);
                         } else {
-                            handler(nil, [@{NSLocalizedDescriptionKey: @"Couldn't parse response."} convertToNSErrorWithCode:@(result.statusCode)]);
+                            handler(nil, [NSError errorWithDomain:AWSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: @"Couldn't parse response."}]);
                         }
                     }
                 });

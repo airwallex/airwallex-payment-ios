@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
++ (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
 
 /**
  Set base URL.
@@ -92,6 +93,7 @@ typedef void (^AWRequestHandler)(id <AWResponseProtocol> _Nullable response, NSE
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
++ (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
 
 @end
 

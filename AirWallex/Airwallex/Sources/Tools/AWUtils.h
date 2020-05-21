@@ -14,8 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSDictionary (Utils)
 
 - (NSString *)queryURLEncoding;
-- (NSError *)convertToNSErrorWithCode:(NSNumber *)code;
-- (NSError *)convertToNSError;
 
 @end
 
@@ -68,6 +66,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setImageAndTitleVerticalAlignmentCenter:(float)spacing imageSize:(CGSize)imageSize;
 - (void)setImageAndTitleHorizontalAlignmentCenter:(float)spacing;
+
+@end
+
+@interface NSCharacterSet (Utils)
+
++ (NSCharacterSet *)invertedAsciiDigitCharacterSet;
 
 @end
 

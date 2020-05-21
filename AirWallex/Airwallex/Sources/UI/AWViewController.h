@@ -16,6 +16,11 @@ static NSString * const kCachedCVC = @"com.airwallex.sdk:Cached CVC";
 
 @property (nonatomic) BOOL isFlow;
 
+- (void)unregisterKeyboard;
+- (void)registerKeyboard;
+- (UIView *)activeField;
+- (void)setActiveField:(UIView *)field;
+- (UIScrollView *)activeScrollView;
 - (IBAction)close:(id)sender;
 - (IBAction)pop:(id)sender;
 - (IBAction)unwindToViewController:(UIStoryboardSegue *)unwindSegue;

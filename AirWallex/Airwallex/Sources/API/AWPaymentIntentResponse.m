@@ -12,20 +12,25 @@
 
 @property (nonatomic, copy, readwrite) NSString *status;
 @property (nonatomic, strong, readwrite, nullable) AWConfirmPaymentNextAction *nextAction;
+@property (nonatomic, strong, readwrite, nullable) AWPaymentAttempt *latestPaymentAttempt;
 
 @end
 
 @implementation AWConfirmPaymentIntentResponse
 
-+ (id <AWResponseProtocol>)parse:(NSData *)data
++ (id<AWResponseProtocol>)parse:(NSData *)data
 {
     NSError *error = nil;
-    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWConfirmPaymentIntentResponse *response = [[AWConfirmPaymentIntentResponse alloc] init];
-    response.status = [responseObject valueForKey:@"status"];
-    NSDictionary *nextAction = [responseObject valueForKey:@"next_action"];
+    response.status = json[@"status"];
+    NSDictionary *nextAction = json[@"next_action"];
     if (nextAction && [nextAction isKindOfClass:[NSDictionary class]]) {
-        response.nextAction = [AWConfirmPaymentNextAction parse:nextAction];
+        response.nextAction = [AWConfirmPaymentNextAction decodeFromJSON:nextAction];
+    }
+    NSDictionary *latestPaymentAttempt = json[@"latest_payment_attempt"];
+    if (latestPaymentAttempt && [latestPaymentAttempt isKindOfClass:[NSDictionary class]]) {
+        response.latestPaymentAttempt = [AWPaymentAttempt decodeFromJSON:latestPaymentAttempt];
     }
     return response;
 }
@@ -36,17 +41,23 @@
 
 @property (nonatomic, copy, readwrite) NSString *type;
 @property (nonatomic, strong, readwrite, nullable) AWWeChatPaySDKResponse *weChatPayResponse;
+@property (nonatomic, strong, readwrite, nullable) AWRedirectResponse *redirectResponse;
 
 @end
 
 @implementation AWConfirmPaymentNextAction
 
-+ (AWConfirmPaymentNextAction *)parse:(NSDictionary *)json
++ (id)decodeFromJSON:(NSDictionary *)json
 {
     AWConfirmPaymentNextAction *response = [[AWConfirmPaymentNextAction alloc] init];
     response.type = json[@"type"];
-    if ([response.type isEqualToString:@"call_sdk"]) {
-        response.weChatPayResponse = [AWWeChatPaySDKResponse parse:json[@"data"]];
+    NSDictionary *data = json[@"data"];
+    if (data) {
+        if ([response.type isEqualToString:@"call_sdk"]) {
+            response.weChatPayResponse = [AWWeChatPaySDKResponse decodeFromJSON:data];
+        } else if ([response.type isEqualToString:@"redirect"]) {
+            response.redirectResponse = [AWRedirectResponse decodeFromJSON:data];
+        }
     }
     return response;
 }
@@ -67,7 +78,7 @@
 
 @implementation AWWeChatPaySDKResponse
 
-+ (AWWeChatPaySDKResponse *)parse:(NSDictionary *)json
++ (id)decodeFromJSON:(NSDictionary *)json
 {
     AWWeChatPaySDKResponse *response = [[AWWeChatPaySDKResponse alloc] init];
     response.appId = json[@"appId"];
@@ -78,6 +89,101 @@
     response.package = json[@"package"];
     response.sign = json[@"sign"];
     return response;
+}
+
+@end
+
+@interface AWRedirectResponse ()
+
+@property (nonatomic, copy, readwrite) NSString *jwt;
+@property (nonatomic, copy, readwrite) NSString *stage;
+@property (nonatomic, copy, readwrite, nullable) NSString *acs;
+@property (nonatomic, copy, readwrite, nullable) NSString *xid;
+@property (nonatomic, copy, readwrite, nullable) NSString *req;
+
+@end
+
+@implementation AWRedirectResponse
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWRedirectResponse *response = [[AWRedirectResponse alloc] init];
+    response.jwt = json[@"jwt"];
+    response.stage = json[@"stage"];
+    response.acs = json[@"acs"];
+    response.xid = json[@"xid"];
+    response.req = json[@"req"];
+    return response;
+}
+
+@end
+
+@interface AWPaymentAttempt ()
+
+@property (nonatomic, copy, readwrite) NSString *Id;
+@property (nonatomic, copy, readwrite) NSNumber *amount;
+@property (nonatomic, strong, readwrite) AWPaymentMethod *paymentMethod;
+@property (nonatomic, copy, readwrite) NSString *status;
+@property (nonatomic, copy, readwrite) NSNumber *capturedAmount;
+@property (nonatomic, copy, readwrite) NSNumber *refundedAmount;
+@property (nonatomic, strong, readwrite) AWAuthenticationData *authenticationData;
+
+@end
+
+@implementation AWPaymentAttempt
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWPaymentAttempt *response = [[AWPaymentAttempt alloc] init];
+    response.Id = json[@"id"];
+    response.amount = json[@"amount"];
+    NSDictionary *paymentMethod = json[@"payment_method"];
+    if (paymentMethod) {
+        response.paymentMethod = [AWPaymentMethod decodeFromJSON:paymentMethod];
+    }
+    response.status = json[@"status"];
+    response.capturedAmount = json[@"captured_amount"];
+    response.refundedAmount = json[@"refunded_amount"];
+    NSDictionary *authenticationData = json[@"authentication_data"];
+    if (authenticationData) {
+        response.authenticationData = [AWAuthenticationData decodeFromJSON:authenticationData];
+    }
+    return response;
+}
+
+@end
+
+@interface AWAuthenticationData ()
+
+@property (nonatomic, copy, readwrite) NSString *action;
+@property (nonatomic, copy, readwrite) NSString *score;
+@property (nonatomic, copy, readwrite) NSString *version;
+
+@end
+
+@implementation AWAuthenticationData
+
+- (BOOL)isThreeDSVersion2
+{
+    if (self.version && [self.version hasPrefix:@"2."]) {
+        return YES;
+    }
+    return NO;
+}
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWAuthenticationData *authenticationData = [[AWAuthenticationData alloc] init];
+    NSDictionary *fraudData = json[@"fraud_data"];
+    if (fraudData) {
+        authenticationData.action = fraudData[@"action"];
+        authenticationData.score = fraudData[@"score"];
+    }
+    NSDictionary *dsData = json[@"ds_data"];
+    if (dsData) {
+        authenticationData.version = dsData[@"version"];
+    }
+    return authenticationData;
 }
 
 @end
@@ -93,7 +199,7 @@
 @property (nonatomic, copy, readwrite) NSString *descriptor;
 @property (nonatomic, copy, readwrite) NSString *status;
 @property (nonatomic, copy, readwrite) NSNumber *capturedAmount;
-@property (nonatomic, copy, readwrite) NSObject *latestPaymentAttempt;
+@property (nonatomic, copy, readwrite) AWPaymentAttempt *latestPaymentAttempt;
 @property (nonatomic, copy, readwrite) NSString *createdAt;
 @property (nonatomic, copy, readwrite) NSString *updatedAt;
 @property (nonatomic, copy, readwrite) NSArray <NSString *> *availablePaymentMethodTypes;
@@ -115,7 +221,10 @@
     response.descriptor = json[@"descriptor"];
     response.status = json[@"status"];
     response.capturedAmount = json[@"captured_amount"];
-    response.latestPaymentAttempt = json[@"latest_payment_attempt"];
+    NSDictionary *latestPaymentAttempt = json[@"latest_payment_attempt"];
+    if (latestPaymentAttempt && [latestPaymentAttempt isKindOfClass:[NSDictionary class]]) {
+        response.latestPaymentAttempt = [AWPaymentAttempt decodeFromJSON:latestPaymentAttempt];
+    }
     response.createdAt = json[@"created_at"];
     response.updatedAt = json[@"updated_at"];
     response.availablePaymentMethodTypes = json[@"available_payment_method_types"];

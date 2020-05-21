@@ -51,21 +51,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.nameField.fieldType = AWTextFieldTypeNameOnCard;
-    self.cardNoField.fieldType = AWTextFieldTypeCardNumber;
-    self.expiresField.fieldType = AWTextFieldTypeExpires;
-    self.cvcField.fieldType = AWTextFieldTypeCVC;
-
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
-    self.lastNameField.fieldType = AWTextFieldTypeLastName;
+    self.cardNoField.fieldType = AWTextFieldTypeCardNumber;
+    self.cardNoField.nextTextField = self.nameField;
+    self.nameField.fieldType = AWTextFieldTypeNameOnCard;
+    self.nameField.nextTextField = self.expiresField;
+    self.expiresField.fieldType = AWTextFieldTypeExpires;
+    self.expiresField.nextTextField = self.cvcField;
+    self.cvcField.fieldType = AWTextFieldTypeCVC;
+
     self.firstNameField.fieldType = AWTextFieldTypeFirstName;
-    self.emailField.fieldType = AWTextFieldTypeEmail;
-    self.phoneNumberField.fieldType = AWTextFieldTypePhoneNumber;
+    self.firstNameField.nextTextField = self.lastNameField;
+    self.lastNameField.fieldType = AWTextFieldTypeLastName;
+    self.lastNameField.nextTextField = self.stateField;
     self.stateField.fieldType = AWTextFieldTypeState;
+    self.stateField.nextTextField = self.cityField;
     self.cityField.fieldType = AWTextFieldTypeCity;
+    self.cityField.nextTextField = self.streetField;
     self.streetField.fieldType = AWTextFieldTypeStreet;
+    self.streetField.nextTextField = self.zipcodeField;
     self.zipcodeField.fieldType = AWTextFieldTypeZipcode;
+    self.zipcodeField.nextTextField = self.emailField;
+    self.emailField.fieldType = AWTextFieldTypeEmail;
+    self.emailField.nextTextField = self.phoneNumberField;
+    self.phoneNumberField.fieldType = AWTextFieldTypePhoneNumber;
 
     if (!self.shipping) {
         self.sameAsShipping = NO;
@@ -95,6 +105,23 @@
     }
 }
 
+- (UIScrollView *)activeScrollView
+{
+    return self.scrollView;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self registerKeyboard];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self unregisterKeyboard];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"selectCountries"]) {
@@ -120,6 +147,7 @@
 
     self.sameAsShipping = self.switchButton.isOn;
     self.billingView.hidden = self.switchButton.isOn;
+    self.cvcField.nextTextField = self.sameAsShipping ? self.firstNameField : nil;
 }
 
 - (IBAction)selectCountries:(id)sender
@@ -165,8 +193,9 @@
     AWCard *card = [AWCard new];
     card.name = self.nameField.text;
     card.number = [self.cardNoField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    card.expiryYear = [self.expiresField.text substringFromIndex:3];
-    card.expiryMonth = [self.expiresField.text substringToIndex:2];
+    NSArray *dates = [self.expiresField.text componentsSeparatedByString:@"/"];
+    card.expiryYear = dates.lastObject;
+    card.expiryMonth = dates.firstObject;
     card.cvc = self.cvcField.text;
 
     AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
@@ -180,10 +209,10 @@
     request.paymentMethod = paymentMethod;
 
     [SVProgressHUD show];
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self)weakSelf = self;
     AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        __strong typeof(self) strongSelf = weakSelf;
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         [SVProgressHUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];

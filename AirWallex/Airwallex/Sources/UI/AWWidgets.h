@@ -52,6 +52,7 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable NSString *text, *placeholder;
 @property (nonatomic, strong, nullable) NSString *errorText;
 @property (nonatomic) AWTextFieldType fieldType;
+@property (nonatomic, weak) AWFloatLabeledTextField *nextTextField;
 
 @end
 

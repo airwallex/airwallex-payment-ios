@@ -11,6 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define AIRWALLEX_VERSION (@"1.0.0")
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
 FOUNDATION_EXPORT NSErrorDomain const AWSDKErrorDomain;
@@ -21,8 +23,12 @@ FOUNDATION_EXPORT NSString *const AWSDKErrorDomain;
 
 #endif
 
+FOUNDATION_EXPORT NSString *const AWCyberSourceOrganizationID;
+FOUNDATION_EXPORT NSString *const AWCyberSourceMerchantID;
+
 FOUNDATION_EXPORT NSString *const AWWeChatPayKey;
 FOUNDATION_EXPORT NSString *const AWCardKey;
+FOUNDATION_EXPORT NSString *const AWThreeDSReturnURL;
 
 FOUNDATION_EXPORT NSString *const AWFontFamilyNameCircularStd;
 FOUNDATION_EXPORT NSString *const AWFontNameCircularStdMedium;

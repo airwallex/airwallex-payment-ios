@@ -12,6 +12,7 @@
 #import "AWPaymentItemCell.h"
 #import "AWUtils.h"
 #import "AWWidgets.h"
+#import "AWDevice.h"
 #import "AWPaymentMethod.h"
 #import "AWAPIClient.h"
 #import "AWPaymentIntentRequest.h"
@@ -19,14 +20,18 @@
 #import "AWPaymentIntentResponse.h"
 #import "AWTheme.h"
 #import "AWPaymentIntent.h"
+#import "AWThreeDSService.h"
+#import "AWSecurityService.h"
 
-@interface AWPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface AWPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AWThreeDSServiceDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet AWButton *payButton;
 
 @property (strong, nonatomic) NSString *cvc;
+@property (strong, nonatomic) AWThreeDSService *service;
+@property (strong, nonatomic) AWDevice *device;
 
 @end
 
@@ -71,26 +76,56 @@
 
 - (IBAction)payPressed:(id)sender
 {
+    self.paymentMethod.card.cvc = self.cvc;
     AWPaymentMethod *paymentMethod = self.paymentMethod;
-    paymentMethod.card.cvc = self.cvc;
 
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethod:(AWPaymentMethod *)paymentMethod
+{
+    __weak __typeof(self)weakSelf = self;
+    [SVProgressHUD show];
+    [[AWSecurityService sharedService] doProfile:[AWUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
+        [SVProgressHUD dismiss];
+        
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        AWDevice *device = [AWDevice new];
+        device.deviceId = sessionId;
+        [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
+    }];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethod:(AWPaymentMethod *)paymentMethod device:(AWDevice *)device
+{
     AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
     AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
     request.intentId = self.paymentIntent.Id;
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.paymentIntent.customerId;
-    AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
-    options.autoCapture = YES;
-    options.threeDsOption = NO;
-    request.options = nil;
+
+    if ([paymentMethod.type isEqualToString:AWCardKey]) {
+        AWCardOptions *cardOptions = [AWCardOptions new];
+        cardOptions.autoCapture = YES;
+        AWThreeDs *threeDs = [AWThreeDs new];
+        threeDs.returnURL = AWThreeDSReturnURL;
+        cardOptions.threeDs = threeDs;
+
+        AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
+        options.cardOptions = cardOptions;
+        request.options = options;
+    }
+
     request.paymentMethod = paymentMethod;
+    request.device = device;
+    self.device = device;
 
     [SVProgressHUD show];
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        __strong typeof(self) strongSelf = weakSelf;
         [SVProgressHUD dismiss];
 
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }
@@ -98,6 +133,8 @@
 - (void)finishConfirmationWithResponse:(AWConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
 {
     if (error) {
+        [[NSUserDefaults awUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
+        [[NSUserDefaults awUserDefaults] synchronize];
         [self.delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusError error:error];
         return;
     }
@@ -105,7 +142,7 @@
     [[NSUserDefaults awUserDefaults] setObject:self.cvc forKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
     [[NSUserDefaults awUserDefaults] synchronize];
 
-    if ([response.status isEqualToString:@"SUCCEEDED"]) {
+    if ([response.status isEqualToString:@"SUCCEEDED"] || [response.status isEqualToString:@"REQUIRES_CAPTURE"]) {
         [self.delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusSuccess error:error];
         return;
     }
@@ -116,7 +153,18 @@
     }
 
     if (response.nextAction.weChatPayResponse) {
-        [self.delegate paymentViewController:self nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
+        [self.delegate paymentViewController:self
+                  nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
+    } else if (response.nextAction.redirectResponse) {
+        AWThreeDSService *service = [AWThreeDSService new];
+        service.customerId = self.paymentIntent.customerId;
+        service.intentId = self.paymentIntent.Id;
+        service.paymentMethod = self.paymentMethod;
+        service.device = self.device;
+        service.presentingViewController = self;
+        service.delegate = self;
+        self.service = service;
+        [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     }
 }
 
@@ -147,6 +195,14 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    AWPaymentItemCell *_cell = (AWPaymentItemCell *)cell;
+    if (_cell.cvcField.text.length == 0) {
+        [_cell.cvcField becomeFirstResponder];
+    }
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -158,6 +214,13 @@
         return YES;
     }
     return NO;
+}
+
+#pragma mark - AWThreeDSServiceDelegate
+
+- (void)threeDSService:(AWThreeDSService *)service didFinishWithResponse:(AWConfirmPaymentIntentResponse *)response error:(NSError *)error
+{
+    [self finishConfirmationWithResponse:response error:error];
 }
 
 @end

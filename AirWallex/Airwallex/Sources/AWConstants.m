@@ -10,16 +10,20 @@
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
-NSErrorDomain const AWSDKErrorDomain = @"com.airwallex.sdk";
+NSErrorDomain const AWSDKErrorDomain = @"com.airwallex.error";
 
 #else
 
-NSString *const AWSDKErrorDomain = @"com.airwallex.sdk";
+NSString *const AWSDKErrorDomain = @"com.airwallex.error";
 
 #endif
 
+NSString *const AWCyberSourceOrganizationID = @"1snn5n9w";
+NSString *const AWCyberSourceMerchantID = @"airwallex_cybs";
+
 NSString *const AWWeChatPayKey = @"wechatpay";
 NSString *const AWCardKey = @"card";
+NSString *const AWThreeDSReturnURL = @"http://requestbin.net/r/qtvlt7qt";
 
 NSString *const AWFontFamilyNameCircularStd = @"Circular Std";
 NSString *const AWFontNameCircularStdMedium = @"CircularStd-Medium";

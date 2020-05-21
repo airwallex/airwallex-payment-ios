@@ -137,7 +137,30 @@
 
 - (void)setText:(NSString *)text
 {
-    self.textField.attributedText = [self formatText:text];
+    NSString *_text = text;
+    if (self.fieldType == AWTextFieldTypeExpires) {
+        NSString *expirationMonth = [_text substringToIndex:MIN(_text.length, 2)];
+        NSString *expirationYear = _text.length < 2 ? @"" : [_text substringFromIndex:2];
+        if (expirationYear) {
+            expirationYear = [expirationYear stringByRemovingIllegalCharacters];
+            expirationYear = [expirationYear substringToIndex:MIN(expirationYear.length, 4)];
+        }
+
+        if (expirationMonth.length == 1 && ![expirationMonth isEqualToString:@"0"] && ![expirationMonth isEqualToString:@"1"]) {
+            expirationMonth = [NSString stringWithFormat:@"0%@", text];
+        }
+
+        NSMutableArray *array = [NSMutableArray array];
+        if (expirationMonth && ![expirationMonth isEqualToString:@""]) {
+            [array addObject:expirationMonth];
+        }
+        if (expirationMonth.length == 2 && expirationMonth.integerValue > 0 && expirationMonth.integerValue <= 12) {
+            [array addObject:expirationYear];
+        }
+
+        _text = [array componentsJoinedByString:@"/"];
+    }
+    self.textField.attributedText = [self formatText:_text];
     text.length > 0 ? [self active] : [self inactive];
 }
 
@@ -200,6 +223,12 @@
         default:
             break;
     }
+}
+
+- (void)setNextTextField:(AWFloatLabeledTextField *)nextTextField
+{
+    _nextTextField = nextTextField;
+    self.textField.returnKeyType = nextTextField == nil ? UIReturnKeyDefault : UIReturnKeyNext;
 }
 
 - (nullable NSString *)errorText
@@ -267,6 +296,15 @@
 {
     self.errorText = nil;
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (self.fieldType == AWTextFieldTypeExpires) {
+        BOOL deleting = (range.location == textField.text.length - 1 && range.length == 1 && [string isEqualToString:@""]);
+        if (deleting) {
+            NSString *string = [textField.text stringByRemovingIllegalCharacters];
+            text = [string substringToIndex:string.length - 1];
+        }
+    } else if (self.fieldType == AWTextFieldTypeCVC) {
+        text = [text substringToIndex:MIN(text.length, 4)];
+    }
     text.length > 0 ? [self active] : [self inactive];
     [self setText:text];
     return NO;
@@ -283,6 +321,37 @@
         }
     } else {
         errorMessage =  @"Please enter your email";
+    }
+    self.errorText = errorMessage;
+}
+
+- (void)validateExpires:(NSString *)text
+{
+    NSString *errorMessage = nil;
+    if (text.length > 0) {
+        NSArray *array = [text componentsSeparatedByString:@"/"];
+        if (array.count == 2) {
+            NSString *month = array.firstObject;
+            NSString *year = array.lastObject;
+            BOOL isValidMonth = month.integerValue > 0 && month.integerValue <= 12;
+            NSCalendar *calendar = [NSCalendar currentCalendar];
+            NSDate *date = [NSDate date];
+            NSInteger currentYear = [calendar component:NSCalendarUnitYear fromDate:date];
+            NSInteger currentMonth = [calendar component:NSCalendarUnitMonth fromDate:date];
+            BOOL isValidYear;
+            if (year.integerValue == currentYear) {
+                isValidYear = month.integerValue >= currentMonth;
+            } else {
+                isValidYear = year.integerValue > currentYear;
+            }
+            if (!(isValidYear && isValidMonth)) {
+                errorMessage = @"Please enter a valid expiry date";
+            }
+        } else {
+            errorMessage = @"Please enter a valid expiry date";
+        }
+    } else {
+        errorMessage = @"Please enter a valid expiry date";
     }
     self.errorText = errorMessage;
 }
@@ -318,10 +387,10 @@
             self.errorText = textField.text.length > 0 ? nil : @"Please enter your name on card";
             break;
         case AWTextFieldTypeExpires:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter the expiration date";
+            [self validateExpires:textField.text];
             break;
         case AWTextFieldTypeCVC:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter the CVC/VCC";
+            self.errorText = textField.text.length > 0 ? nil : @"Please enter your card CVC";
             break;
         default:
             break;
@@ -330,8 +399,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [textField resignFirstResponder];
-    return YES;
+    if (!self.nextTextField) {
+        [textField resignFirstResponder];
+        return YES;
+    }
+
+    [self.nextTextField.textField becomeFirstResponder];
+    return NO;
 }
 
 @end

@@ -11,7 +11,7 @@
 
 @interface AWGetPaymentMethodsResponse ()
 
-@property (nonatomic, copy, readwrite) NSString *hasMore;
+@property (nonatomic, readwrite) BOOL hasMore;
 @property (nonatomic, copy, readwrite) NSArray <AWPaymentMethod *> *items;
 
 @end
@@ -23,7 +23,7 @@
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWGetPaymentMethodsResponse *response = [AWGetPaymentMethodsResponse new];
-    response.hasMore = responseObject[@"has_more"];
+    response.hasMore = [responseObject[@"has_more"] boolValue];
     NSMutableArray *items = [NSMutableArray array];
     NSArray *list = responseObject[@"items"];
     if (list && [list isKindOfClass:[NSArray class]]) {

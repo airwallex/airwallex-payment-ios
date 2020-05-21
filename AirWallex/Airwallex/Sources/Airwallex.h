@@ -14,18 +14,16 @@ FOUNDATION_EXPORT double AirwallexVersionNumber;
 //! Project version string for Airwallex.
 FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 
+// Constants
 #import <Airwallex/AWConstants.h>
 
 // UI
 #import <Airwallex/AWUIContext.h>
 #import <Airwallex/AWTheme.h>
-#import <Airwallex/AWWidgets.h>
 #import <Airwallex/AWCountryListViewController.h>
 #import <Airwallex/AWShippingViewController.h>
-#import <Airwallex/AWPaymentMethodCell.h>
 #import <Airwallex/AWPaymentMethodListViewController.h>
-#import "AWPaymentItemCell.h"
-#import "AWPaymentViewController.h"
+#import <Airwallex/AWPaymentViewController.h>
 #import <Airwallex/AWCardViewController.h>
 
 // API
