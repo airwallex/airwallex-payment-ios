@@ -12,6 +12,7 @@
 #import <WechatOpenSDK/WXApi.h>
 #import "AirwallexExamplesKeys+Utils.h"
 #import "OptionsViewController.h"
+#import "ShippingCell.h"
 #import "ProductCell.h"
 #import "TotalCell.h"
 #import "APIClient.h"
@@ -42,8 +43,6 @@
     self.checkoutButton.layer.masksToBounds = YES;
     self.checkoutButton.layer.cornerRadius = 6;
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"AWPaymentItemCell" bundle:[NSBundle sdkBundle]]
-         forCellReuseIdentifier:@"AWPaymentItemCell"];
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro"
                                                detail:@"Free engraving x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"399"]];
@@ -234,18 +233,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        AWPaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWPaymentItemCell" forIndexPath:indexPath];
-        cell.titleLabel.text = @"Shipping";
-        AWPlaceDetails *shipping = self.shipping;
-        if (shipping) {
-            cell.selectionLabel.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@ %@", shipping.firstName, shipping.lastName, shipping.address.street, shipping.address.city, shipping.address.state, shipping.address.countryCode];
-            cell.selectionLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
-        } else {
-            cell.selectionLabel.text = @"Enter shipping information";
-            cell.selectionLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
-        }
-        cell.isLastCell = YES;
-        cell.cvcHidden = YES;
+        ShippingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ShippingCell" forIndexPath:indexPath];
+        cell.shipping = self.shipping;
         return cell;
     }
     

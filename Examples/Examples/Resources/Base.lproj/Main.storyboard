@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -73,8 +73,57 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShippingCell" id="L2w-l6-jwz" customClass="ShippingCell">
+                                        <rect key="frame" x="0.0" y="135.5" width="414" height="57.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="L2w-l6-jwz" id="aBr-fF-Llt">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="57.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vh8-dj-yqR">
+                                                    <rect key="frame" x="16" y="20" width="55.5" height="16.5"/>
+                                                    <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
+                                                    <color key="textColor" name="Grey Text Color"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Enter shipping information" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRL-Mh-vjv">
+                                                    <rect key="frame" x="87.5" y="20" width="294.5" height="16.5"/>
+                                                    <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
+                                                    <color key="textColor" name="Placeholder Color"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="BbU-Q7-jOG">
+                                                    <rect key="frame" x="390" y="20.5" width="16" height="16"/>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JqI-fU-V83" userLabel="Line">
+                                                    <rect key="frame" x="0.0" y="56.5" width="414" height="1"/>
+                                                    <color key="backgroundColor" name="Line Color"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="HRO-Z6-InO"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="JqI-fU-V83" firstAttribute="leading" secondItem="aBr-fF-Llt" secondAttribute="leading" id="53L-Ly-pRe"/>
+                                                <constraint firstItem="kRL-Mh-vjv" firstAttribute="leading" secondItem="vh8-dj-yqR" secondAttribute="trailing" constant="16" id="9XZ-ZQ-GQU"/>
+                                                <constraint firstItem="BbU-Q7-jOG" firstAttribute="centerY" secondItem="vh8-dj-yqR" secondAttribute="centerY" id="9e1-0s-Z9R"/>
+                                                <constraint firstItem="vh8-dj-yqR" firstAttribute="top" secondItem="aBr-fF-Llt" secondAttribute="top" constant="20" id="C8B-Ho-LdC"/>
+                                                <constraint firstItem="BbU-Q7-jOG" firstAttribute="leading" secondItem="kRL-Mh-vjv" secondAttribute="trailing" constant="8" id="Qz9-1q-02k"/>
+                                                <constraint firstAttribute="trailing" secondItem="JqI-fU-V83" secondAttribute="trailing" id="TSa-hO-Oqs"/>
+                                                <constraint firstAttribute="trailing" secondItem="BbU-Q7-jOG" secondAttribute="trailing" constant="8" id="U2h-MF-6WD"/>
+                                                <constraint firstItem="kRL-Mh-vjv" firstAttribute="centerY" secondItem="vh8-dj-yqR" secondAttribute="centerY" id="U8c-kU-MdD"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="JqI-fU-V83" secondAttribute="bottom" id="qQj-LT-xql"/>
+                                                <constraint firstItem="vh8-dj-yqR" firstAttribute="leading" secondItem="aBr-fF-Llt" secondAttribute="leading" constant="16" id="uF9-vo-yS5"/>
+                                                <constraint firstItem="JqI-fU-V83" firstAttribute="top" secondItem="vh8-dj-yqR" secondAttribute="bottom" constant="20" id="wyB-Sk-QAd"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="shippingLabel" destination="kRL-Mh-vjv" id="363-DN-JEq"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductCell" rowHeight="155" id="P5K-v1-gGW" customClass="ProductCell">
-                                        <rect key="frame" x="0.0" y="135.5" width="414" height="155"/>
+                                        <rect key="frame" x="0.0" y="193" width="414" height="155"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P5K-v1-gGW" id="ye2-6z-VD7">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="155"/>
@@ -141,7 +190,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TotalCell" rowHeight="214" id="KOI-Zh-6jg" customClass="TotalCell">
-                                        <rect key="frame" x="0.0" y="290.5" width="414" height="214"/>
+                                        <rect key="frame" x="0.0" y="348" width="414" height="214"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KOI-Zh-6jg" id="gtZ-fH-PXU">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="214"/>
@@ -497,7 +546,9 @@
             <point key="canvasLocation" x="1825" y="138"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="Purple Color"/>
     <resources>
+        <image name="right" width="16" height="16"/>
         <namedColor name="Background Color">
             <color red="0.96862745098039216" green="0.96862745098039216" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -520,5 +571,4 @@
             <color red="0.38039215686274508" green="0.18431372549019609" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
-    <color key="tintColor" name="Purple Color"/>
 </document>

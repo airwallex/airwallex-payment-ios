@@ -12,6 +12,7 @@
 		082D308823CEEDC100C9D587 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
 		084779D2244F240A00C41256 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
 		084779D3244F240A00C41256 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084F15E6247646FA00DAAD76 /* ShippingCell.m */; };
 		085855052445371C0012B818 /* AirwallexExamplesKeys+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 085855042445371C0012B818 /* AirwallexExamplesKeys+Utils.m */; };
 		085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
 		085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
@@ -47,6 +48,8 @@
 		082D308423CEECE400C9D587 /* TotalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TotalCell.m; sourceTree = "<group>"; };
 		082D308623CEEDC100C9D587 /* CartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
 		082D308723CEEDC100C9D587 /* CartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
+		084F15E5247646FA00DAAD76 /* ShippingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShippingCell.h; sourceTree = "<group>"; };
+		084F15E6247646FA00DAAD76 /* ShippingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShippingCell.m; sourceTree = "<group>"; };
 		085855032445371C0012B818 /* AirwallexExamplesKeys+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirwallexExamplesKeys+Utils.h"; sourceTree = "<group>"; };
 		085855042445371C0012B818 /* AirwallexExamplesKeys+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AirwallexExamplesKeys+Utils.m"; sourceTree = "<group>"; };
 		085BA64E23F0FB8A00FD33FA /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
@@ -87,6 +90,8 @@
 		082D307F23CEEC0700C9D587 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				084F15E5247646FA00DAAD76 /* ShippingCell.h */,
+				084F15E6247646FA00DAAD76 /* ShippingCell.m */,
 				082D308023CEEC3300C9D587 /* ProductCell.h */,
 				082D308123CEEC3300C9D587 /* ProductCell.m */,
 				082D308323CEECE400C9D587 /* TotalCell.h */,
@@ -297,6 +302,7 @@
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,
 				088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */,
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
+				084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
 				08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */,
