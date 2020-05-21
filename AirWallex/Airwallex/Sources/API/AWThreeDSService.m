@@ -141,8 +141,14 @@
             urlRequest.HTTPMethod = @"POST";
             urlRequest.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
             [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+            __weak __typeof(self)weakSelf = self;
             AWWebViewController *webViewController = [[AWWebViewController alloc] initWithURLRequest:urlRequest webHandler:^(NSString * _Nullable payload, NSError * _Nullable error) {
-                // Todo: get payload
+                __strong __typeof(weakSelf)strongSelf = weakSelf;
+                if (payload) {
+                    [strongSelf confirmWithTransactionId:payload];
+                } else {
+                    [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
+                }
             }];
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
             [strongSelf.presentingViewController presentViewController:navigationController animated:YES completion:nil];
