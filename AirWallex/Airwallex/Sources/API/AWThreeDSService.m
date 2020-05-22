@@ -21,6 +21,7 @@
 @interface AWThreeDSService () <CardinalValidationDelegate>
 
 @property (strong, nonatomic) CardinalSession *session;
+@property (strong, nonatomic) NSString *transactionId;
 
 @end
 
@@ -126,6 +127,7 @@
         if (authenticationData.isThreeDSVersion2) {
             // 3DS v2.x flow
             if (redirectResponse.xid && redirectResponse.req) {
+                strongSelf.transactionId = redirectResponse.xid;
                 [strongSelf.session continueWithTransactionId:redirectResponse.xid payload:redirectResponse.req didValidateDelegate:self];
             } else {
                 [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing transaction id or payload."}]];
@@ -160,12 +162,18 @@
 
 - (void)cardinalSession:(CardinalSession *)session stepUpDidValidateWithResponse:(CardinalResponse *)validateResponse serverJWT:(NSString *)serverJWT
 {
-    if (serverJWT && validateResponse.actionCode == CardinalResponseActionCodeSuccess) {
-        [self confirmWithTransactionId:serverJWT];
-    } else if (validateResponse.actionCode == CardinalResponseActionCodeCancel) {
-        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: @"User cancelled."}]];
-    } else if (validateResponse) {
-        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: validateResponse.errorDescription}]];
+    if (validateResponse) {
+        if (validateResponse.actionCode == CardinalResponseActionCodeCancel) {
+            [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: @"User cancelled."}]];
+        } else if ([validateResponse.errorDescription.uppercaseString isEqualToString:@"SUCCESS"]) {
+            [self confirmWithTransactionId:validateResponse.payment.processorTransactionId];
+        } else {
+            [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: validateResponse.errorDescription}]];
+        }
+    } else if (self.transactionId) {
+        [self confirmWithTransactionId:self.transactionId];
+    } else {
+        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing transaction id."}]];
     }
 }
 
