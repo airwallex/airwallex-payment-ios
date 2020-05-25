@@ -29,6 +29,7 @@ FOUNDATION_EXPORT NSString *const AWCyberSourceMerchantID;
 FOUNDATION_EXPORT NSString *const AWWeChatPayKey;
 FOUNDATION_EXPORT NSString *const AWCardKey;
 FOUNDATION_EXPORT NSString *const AWThreeDSReturnURL;
+FOUNDATION_EXPORT NSString *const AWRedirectPaResURL;
 
 FOUNDATION_EXPORT NSString *const AWFontFamilyNameCircularStd;
 FOUNDATION_EXPORT NSString *const AWFontNameCircularStdMedium;

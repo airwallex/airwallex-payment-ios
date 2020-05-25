@@ -8,6 +8,7 @@
 
 #import "AWWebViewController.h"
 #import <WebKit/WebKit.h>
+#import "AWUtils.h"
 
 @interface AWWebViewController () <WKNavigationDelegate>
 
@@ -56,9 +57,9 @@
 {
     NSURL *url = navigationAction.request.URL;
     NSLog(@"%@", url.absoluteString);
-    if (url && [url.absoluteString containsString:AWThreeDSReturnURL] && self.webHandler) {
-        NSString *payload = [url.absoluteString stringByReplacingOccurrencesOfString:AWThreeDSReturnURL withString:@""];
-        self.webHandler(payload, nil);
+    if (url && [url.absoluteString containsString:AWRedirectPaResURL] && self.webHandler) {
+        NSString *paRes = [url queryValueForName:@"PaRes"];
+        self.webHandler(paRes, nil);
         [self dismissViewControllerAnimated:YES completion:nil];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;

@@ -134,12 +134,14 @@
             }
         } else if (redirectResponse.acs && redirectResponse.req) {
             // 3DS v1.x flow
+            NSURL *url = [NSURL URLWithString:redirectResponse.acs];
             NSMutableCharacterSet *set = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
             [set removeCharactersInString:@"&+=?"];
             NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:set];
-            NSString *termUrlEncoding = [AWThreeDSReturnURL stringByAddingPercentEncodingWithAllowedCharacters:set];
+            NSString *termUrl = [NSString stringWithFormat:@"%@/web/feedback", url.baseURL.absoluteString];
+            NSString *termUrlEncoding = [termUrl stringByAddingPercentEncodingWithAllowedCharacters:set];
             NSString *body = [NSString stringWithFormat:@"&PaReq=%@&TermUrl=%@", reqEncoding, termUrlEncoding];
-            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:redirectResponse.acs]];
+            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
             urlRequest.HTTPMethod = @"POST";
             urlRequest.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
             [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];

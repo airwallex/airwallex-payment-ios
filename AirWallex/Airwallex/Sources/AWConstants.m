@@ -23,7 +23,8 @@ NSString *const AWCyberSourceMerchantID = @"airwallex_cybs";
 
 NSString *const AWWeChatPayKey = @"wechatpay";
 NSString *const AWCardKey = @"card";
-NSString *const AWThreeDSReturnURL = @"http://requestbin.net/r/qtvlt7qt";
+NSString *const AWThreeDSReturnURL = @"";
+NSString *const AWRedirectPaResURL = @"/feedback/success";
 
 NSString *const AWFontFamilyNameCircularStd = @"Circular Std";
 NSString *const AWFontNameCircularStdMedium = @"CircularStd-Medium";

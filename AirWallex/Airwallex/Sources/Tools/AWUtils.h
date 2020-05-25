@@ -75,4 +75,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface NSURL (Utils)
+
+- (nullable NSArray *)queryItems;
+- (nullable NSString *)queryValueForName:(NSString *)name;
+
+@end
+
 NS_ASSUME_NONNULL_END
