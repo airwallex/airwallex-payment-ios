@@ -175,4 +175,36 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
     return [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- "] invertedSet];
 }
 
++ (NSCharacterSet *)allURLQueryAllowedCharacterSet
+{
+    NSMutableCharacterSet *set = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
+    [set removeCharactersInString:@"&+=?"];
+    return set;
+}
+
+@end
+
+@implementation NSURL (Utils)
+
+- (nullable NSArray *)queryItems
+{
+    NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:self resolvingAgainstBaseURL:YES];
+    return urlComponents.queryItems;
+}
+
+- (nullable NSString *)queryValueForName:(NSString *)name
+{
+    NSArray *queryItems = self.queryItems;
+    if (!queryItems) {
+        return nil;
+    }
+    
+    for (NSURLQueryItem *item in queryItems) {
+        if ([item.name isEqualToString:name]) {
+            return item.value;
+        }
+    }
+    return nil;
+}
+
 @end

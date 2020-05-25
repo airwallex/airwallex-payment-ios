@@ -86,7 +86,7 @@
                                                     <color key="textColor" name="Grey Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Enter shipping information" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRL-Mh-vjv">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Enter shipping information" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRL-Mh-vjv">
                                                     <rect key="frame" x="87.5" y="20" width="294.5" height="16.5"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                     <color key="textColor" name="Placeholder Color"/>
@@ -112,6 +112,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="JqI-fU-V83" secondAttribute="trailing" id="TSa-hO-Oqs"/>
                                                 <constraint firstAttribute="trailing" secondItem="BbU-Q7-jOG" secondAttribute="trailing" constant="8" id="U2h-MF-6WD"/>
                                                 <constraint firstItem="kRL-Mh-vjv" firstAttribute="centerY" secondItem="vh8-dj-yqR" secondAttribute="centerY" id="U8c-kU-MdD"/>
+                                                <constraint firstItem="kRL-Mh-vjv" firstAttribute="height" secondItem="vh8-dj-yqR" secondAttribute="height" id="dYx-9N-1s9"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="JqI-fU-V83" secondAttribute="bottom" id="qQj-LT-xql"/>
                                                 <constraint firstItem="vh8-dj-yqR" firstAttribute="leading" secondItem="aBr-fF-Llt" secondAttribute="leading" constant="16" id="uF9-vo-yS5"/>
                                                 <constraint firstItem="JqI-fU-V83" firstAttribute="top" secondItem="vh8-dj-yqR" secondAttribute="bottom" constant="20" id="wyB-Sk-QAd"/>

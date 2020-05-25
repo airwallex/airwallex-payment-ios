@@ -72,6 +72,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSCharacterSet (Utils)
 
 + (NSCharacterSet *)invertedAsciiDigitCharacterSet;
++ (NSCharacterSet *)allURLQueryAllowedCharacterSet;
+
+@end
+
+@interface NSURL (Utils)
+
+- (nullable NSArray *)queryItems;
+- (nullable NSString *)queryValueForName:(NSString *)name;
 
 @end
 

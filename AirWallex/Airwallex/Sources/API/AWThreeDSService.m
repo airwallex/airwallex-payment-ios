@@ -21,6 +21,7 @@
 @interface AWThreeDSService () <CardinalValidationDelegate>
 
 @property (strong, nonatomic) CardinalSession *session;
+@property (strong, nonatomic) NSString *transactionId;
 
 @end
 
@@ -126,18 +127,21 @@
         if (authenticationData.isThreeDSVersion2) {
             // 3DS v2.x flow
             if (redirectResponse.xid && redirectResponse.req) {
+                strongSelf.transactionId = redirectResponse.xid;
                 [strongSelf.session continueWithTransactionId:redirectResponse.xid payload:redirectResponse.req didValidateDelegate:self];
             } else {
                 [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing transaction id or payload."}]];
             }
         } else if (redirectResponse.acs && redirectResponse.req) {
             // 3DS v1.x flow
-            NSMutableCharacterSet *set = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
-            [set removeCharactersInString:@"&+=?"];
-            NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:set];
-            NSString *termUrlEncoding = [AWThreeDSReturnURL stringByAddingPercentEncodingWithAllowedCharacters:set];
+            NSURL *url = [NSURL URLWithString:redirectResponse.acs];
+            NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
+            NSString *termUrl = [NSString stringWithFormat:@"%@web/feedback", [Airwallex defaultBaseURL].absoluteString];
+#warning Please remove fake termUrl
+            termUrl = @"http://34.92.57.93:8080/web/feedback";
+            NSString *termUrlEncoding = [termUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
             NSString *body = [NSString stringWithFormat:@"&PaReq=%@&TermUrl=%@", reqEncoding, termUrlEncoding];
-            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:redirectResponse.acs]];
+            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
             urlRequest.HTTPMethod = @"POST";
             urlRequest.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
             [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
@@ -160,12 +164,18 @@
 
 - (void)cardinalSession:(CardinalSession *)session stepUpDidValidateWithResponse:(CardinalResponse *)validateResponse serverJWT:(NSString *)serverJWT
 {
-    if (serverJWT && validateResponse.actionCode == CardinalResponseActionCodeSuccess) {
-        [self confirmWithTransactionId:serverJWT];
-    } else if (validateResponse.actionCode == CardinalResponseActionCodeCancel) {
-        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: @"User cancelled."}]];
-    } else if (validateResponse) {
-        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: validateResponse.errorDescription}]];
+    if (validateResponse) {
+        if (validateResponse.actionCode == CardinalResponseActionCodeCancel) {
+            [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: @"User cancelled."}]];
+        } else if ([validateResponse.errorDescription.uppercaseString isEqualToString:@"SUCCESS"]) {
+            [self confirmWithTransactionId:validateResponse.payment.processorTransactionId];
+        } else {
+            [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: validateResponse.errorDescription}]];
+        }
+    } else if (self.transactionId) {
+        [self confirmWithTransactionId:self.transactionId];
+    } else {
+        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing transaction id."}]];
     }
 }
 
