@@ -135,11 +135,11 @@
         } else if (redirectResponse.acs && redirectResponse.req) {
             // 3DS v1.x flow
             NSURL *url = [NSURL URLWithString:redirectResponse.acs];
-            NSMutableCharacterSet *set = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
-            [set removeCharactersInString:@"&+=?"];
-            NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:set];
-            NSString *termUrl = [NSString stringWithFormat:@"%@/web/feedback", url.baseURL.absoluteString];
-            NSString *termUrlEncoding = [termUrl stringByAddingPercentEncodingWithAllowedCharacters:set];
+            NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
+            NSString *termUrl = [NSString stringWithFormat:@"%@web/feedback", [Airwallex defaultBaseURL].absoluteString];
+#warning Please remove fake termUrl
+            termUrl = @"http://34.92.57.93:8080/web/feedback";
+            NSString *termUrlEncoding = [termUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
             NSString *body = [NSString stringWithFormat:@"&PaReq=%@&TermUrl=%@", reqEncoding, termUrlEncoding];
             NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
             urlRequest.HTTPMethod = @"POST";

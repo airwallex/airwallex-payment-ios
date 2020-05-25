@@ -56,7 +56,6 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     NSURL *url = navigationAction.request.URL;
-    NSLog(@"%@", url.absoluteString);
     if (url && [url.absoluteString containsString:AWRedirectPaResURL] && self.webHandler) {
         NSString *paRes = [url queryValueForName:@"PaRes"];
         self.webHandler(paRes, nil);
@@ -69,6 +68,10 @@
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
 {
+    if (error.code == 102) {
+        return;
+    }
+    
     if (self.webHandler) {
         self.webHandler(nil, error);
     }

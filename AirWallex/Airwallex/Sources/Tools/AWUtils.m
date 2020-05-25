@@ -175,6 +175,13 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
     return [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- "] invertedSet];
 }
 
++ (NSCharacterSet *)allURLQueryAllowedCharacterSet
+{
+    NSMutableCharacterSet *set = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
+    [set removeCharactersInString:@"&+=?"];
+    return set;
+}
+
 @end
 
 @implementation NSURL (Utils)
