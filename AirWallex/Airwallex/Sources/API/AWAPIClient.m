@@ -79,7 +79,7 @@ static NSURL *_defaultBaseURL;
 
 - (NSDictionary *)headers
 {
-    return @{@"Content-Type": @"application/json", @"x-api-version": AIRWALLEX_VERSION};
+    return @{@"Content-Type": @"application/json", @"x-api-version": AIRWALLEX_API_VERSION};
 }
 
 - (nullable NSDictionary *)parameters
