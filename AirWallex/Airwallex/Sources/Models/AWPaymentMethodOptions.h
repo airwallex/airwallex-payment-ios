@@ -11,6 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWThreeDs` includes the information of 3ds.
+ */
 @interface AWThreeDs : NSObject <AWJSONEncodable>
 
 /**
@@ -40,6 +43,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWCardOptions` includes the options of card.
+ */
 @interface AWCardOptions : NSObject <AWJSONEncodable>
 
 /**

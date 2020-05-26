@@ -11,6 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWPaymentIntent` includes the information of payment intent.
+ */
 @interface AWPaymentIntent : NSObject <AWJSONDecodable>
 
 /**
@@ -34,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *status;
 
 /**
- Available payment method types
+ Available payment method types.
  */
 @property (nonatomic, copy) NSArray <NSString *> *availablePaymentMethodTypes;
 
@@ -44,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *clientSecret;
 
 /**
- The customer who is paying for this payment intent
+ The customer who is paying for this payment intent.
  */
 @property (nonatomic, copy, nullable) NSString *customerId;
 

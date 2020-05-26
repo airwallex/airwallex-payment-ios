@@ -14,7 +14,6 @@ typedef void (^AWWebHandler)(NSString * _Nullable payload, NSError * _Nullable e
 
 @interface AWWebViewController : AWViewController
 
-//- (instancetype)initWithURL:(NSURL *)URL webHandler:(AWWebHandler)webHandler;
 - (instancetype)initWithURLRequest:(NSURLRequest *)urlRequest webHandler:(AWWebHandler)webHandler;
 
 - (instancetype)init NS_UNAVAILABLE;

@@ -28,11 +28,12 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 
 // API
 #import <Airwallex/AWAPIClient.h>
-#import <Airwallex/AWAPIResponse.h>
 #import <Airwallex/AWPaymentIntentRequest.h>
 #import <Airwallex/AWPaymentIntentResponse.h>
 #import <Airwallex/AWPaymentMethodRequest.h>
 #import <Airwallex/AWPaymentMethodResponse.h>
+#import <Airwallex/AWThreeDSService.h>
+#import <Airwallex/AWSecurityService.h>
 
 // Tools
 #import <Airwallex/AWUtils.h>
@@ -41,8 +42,10 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 // Models
 #import <Airwallex/AWCountry.h>
 #import <Airwallex/AWCard.h>
+#import <Airwallex/AWAddress.h>
 #import <Airwallex/AWPlaceDetails.h>
 #import <Airwallex/AWPaymentMethod.h>
 #import <Airwallex/AWWeChatPay.h>
 #import <Airwallex/AWPaymentMethodOptions.h>
 #import <Airwallex/AWPaymentIntent.h>
+#import <Airwallex/AWDevice.h>

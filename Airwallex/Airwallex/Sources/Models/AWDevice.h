@@ -11,8 +11,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWDevice` includes the information of device.
+ */
 @interface AWDevice : NSObject <AWJSONEncodable>
 
+/**
+ Device id.
+ */
 @property (nonatomic, copy) NSString *deviceId;
 
 @end

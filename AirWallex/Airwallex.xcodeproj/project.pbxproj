@@ -28,7 +28,7 @@
 		081D52E923D043E100953B03 /* AWPaymentMethodOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52E723D043E100953B03 /* AWPaymentMethodOptions.m */; };
 		081D52ED23D04AE600953B03 /* AWProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EB23D04AE600953B03 /* AWProtocol.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		081D52EE23D04AE600953B03 /* AWProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52EC23D04AE600953B03 /* AWProtocol.m */; };
-		081D52F123D04B5400953B03 /* AWAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EF23D04B5400953B03 /* AWAPIResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		081D52F123D04B5400953B03 /* AWAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EF23D04B5400953B03 /* AWAPIResponse.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		081D52F223D04B5400953B03 /* AWAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52F023D04B5400953B03 /* AWAPIResponse.m */; };
 		081D52F623D04EA200953B03 /* AWLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52F423D04EA200953B03 /* AWLogger.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		081D52F723D04EA200953B03 /* AWLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52F523D04EA200953B03 /* AWLogger.m */; };
@@ -50,11 +50,11 @@
 		0829FD1E2433474A00557DB2 /* AWPaymentIntent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD1C2433474A00557DB2 /* AWPaymentIntent.m */; };
 		0829FD4E243584E300557DB2 /* AWTestAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD4D243584E300557DB2 /* AWTestAPIClient.m */; };
 		0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */; };
-		08477984244DB0C500C41256 /* AWThreeDSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 08477982244DB0C500C41256 /* AWThreeDSService.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		08477984244DB0C500C41256 /* AWThreeDSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 08477982244DB0C500C41256 /* AWThreeDSService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08477985244DB0C500C41256 /* AWThreeDSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 08477983244DB0C500C41256 /* AWThreeDSService.m */; };
-		0847798C244EB40200C41256 /* AWDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0847798A244EB40200C41256 /* AWDevice.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0847798C244EB40200C41256 /* AWDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0847798A244EB40200C41256 /* AWDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0847798D244EB40200C41256 /* AWDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0847798B244EB40200C41256 /* AWDevice.m */; };
-		08477990244EC52C00C41256 /* AWSecurityService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0847798E244EC52C00C41256 /* AWSecurityService.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		08477990244EC52C00C41256 /* AWSecurityService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0847798E244EC52C00C41256 /* AWSecurityService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08477991244EC52C00C41256 /* AWSecurityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0847798F244EC52C00C41256 /* AWSecurityService.m */; };
 		085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
 		085BD41423CC6E0C002E8F27 /* Airwallex.h in Headers */ = {isa = PBXBuildFile; fileRef = 085BD41323CC6E0B002E8F27 /* Airwallex.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -488,45 +488,45 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				085BD41423CC6E0C002E8F27 /* Airwallex.h in Headers */,
+				08D26F5724051FC2008E65D3 /* AWConstants.h in Headers */,
+				0805366E241656C900C0896C /* AWUIContext.h in Headers */,
+				086666732406343B00B52477 /* AWTheme.h in Headers */,
+				0866665F24062AEB00B52477 /* AWCountryListViewController.h in Headers */,
+				0866665E24062AEB00B52477 /* AWShippingViewController.h in Headers */,
+				0866666024062AEB00B52477 /* AWPaymentMethodListViewController.h in Headers */,
+				0863F6FB240E390100925664 /* AWPaymentViewController.h in Headers */,
+				0866665C24062AEB00B52477 /* AWCardViewController.h in Headers */,
 				08BD3A9F240CCAED00ACFB6B /* AWViewController.h in Headers */,
+				08A14B9823E91E9700F3C211 /* AWAPIClient.h in Headers */,
 				08B55E402421DC700054E254 /* AWRequestProtocol.h in Headers */,
 				08B55E412421DC700054E254 /* AWResponseProtocol.h in Headers */,
-				0866665F24062AEB00B52477 /* AWCountryListViewController.h in Headers */,
-				081D52E823D043E100953B03 /* AWPaymentMethodOptions.h in Headers */,
-				081D52E323D03BDF00953B03 /* AWPaymentIntentResponse.h in Headers */,
-				081D52D523D0343200953B03 /* AWWeChatPay.h in Headers */,
-				0863F6FB240E390100925664 /* AWPaymentViewController.h in Headers */,
-				0866666024062AEB00B52477 /* AWPaymentMethodListViewController.h in Headers */,
-				08A14B9823E91E9700F3C211 /* AWAPIClient.h in Headers */,
-				08A14B9F23E9228300F3C211 /* AWPaymentMethodResponse.h in Headers */,
-				081D52CD23D0324E00953B03 /* AWPlaceDetails.h in Headers */,
 				081D52DE23D03B3F00953B03 /* AWPaymentIntentRequest.h in Headers */,
-				081D52F123D04B5400953B03 /* AWAPIResponse.h in Headers */,
-				0866665524062AEB00B52477 /* AWCountry.h in Headers */,
-				0866665E24062AEB00B52477 /* AWShippingViewController.h in Headers */,
+				081D52E323D03BDF00953B03 /* AWPaymentIntentResponse.h in Headers */,
 				08A14B9B23E91F0C00F3C211 /* AWPaymentMethodRequest.h in Headers */,
-				080EB05823F4D7E900F71CEC /* AWCardValidator.h in Headers */,
-				0805366E241656C900C0896C /* AWUIContext.h in Headers */,
-				081D52FA23D0581F00953B03 /* AWUtils.h in Headers */,
-				081D52D123D0339E00953B03 /* AWPaymentMethod.h in Headers */,
-				085BD43823CDCBD7002E8F27 /* AWAddress.h in Headers */,
-				08D26F5724051FC2008E65D3 /* AWConstants.h in Headers */,
-				0866665C24062AEB00B52477 /* AWCardViewController.h in Headers */,
-				081D52C923D0307600953B03 /* AWCard.h in Headers */,
-				0829FD1D2433474A00557DB2 /* AWPaymentIntent.h in Headers */,
-				086666732406343B00B52477 /* AWTheme.h in Headers */,
-				085BD41423CC6E0C002E8F27 /* Airwallex.h in Headers */,
-				08477990244EC52C00C41256 /* AWSecurityService.h in Headers */,
-				086666702406314500B52477 /* AWWidgets.h in Headers */,
+				08A14B9F23E9228300F3C211 /* AWPaymentMethodResponse.h in Headers */,
 				08477984244DB0C500C41256 /* AWThreeDSService.h in Headers */,
-				0847798C244EB40200C41256 /* AWDevice.h in Headers */,
-				08B3A0CD247282C600F425B0 /* AWWebViewController.h in Headers */,
+				08477990244EC52C00C41256 /* AWSecurityService.h in Headers */,
+				081D52FA23D0581F00953B03 /* AWUtils.h in Headers */,
+				080EB05823F4D7E900F71CEC /* AWCardValidator.h in Headers */,
 				080BA817243C346A000D8141 /* AWCodable.h in Headers */,
-				08D26F512404AFE9008E65D3 /* AWFontLoader.h in Headers */,
-				081D52F623D04EA200953B03 /* AWLogger.h in Headers */,
-				081D52ED23D04AE600953B03 /* AWProtocol.h in Headers */,
+				0866665524062AEB00B52477 /* AWCountry.h in Headers */,
+				081D52C923D0307600953B03 /* AWCard.h in Headers */,
+				085BD43823CDCBD7002E8F27 /* AWAddress.h in Headers */,
+				081D52CD23D0324E00953B03 /* AWPlaceDetails.h in Headers */,
+				081D52D123D0339E00953B03 /* AWPaymentMethod.h in Headers */,
+				081D52D523D0343200953B03 /* AWWeChatPay.h in Headers */,
+				081D52E823D043E100953B03 /* AWPaymentMethodOptions.h in Headers */,
+				0829FD1D2433474A00557DB2 /* AWPaymentIntent.h in Headers */,
+				0847798C244EB40200C41256 /* AWDevice.h in Headers */,
 				0863F6FC240E390100925664 /* AWPaymentItemCell.h in Headers */,
 				086666432406138400B52477 /* AWPaymentMethodCell.h in Headers */,
+				086666702406314500B52477 /* AWWidgets.h in Headers */,
+				081D52ED23D04AE600953B03 /* AWProtocol.h in Headers */,
+				081D52F123D04B5400953B03 /* AWAPIResponse.h in Headers */,
+				08B3A0CD247282C600F425B0 /* AWWebViewController.h in Headers */,
+				08D26F512404AFE9008E65D3 /* AWFontLoader.h in Headers */,
+				081D52F623D04EA200953B03 /* AWLogger.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
