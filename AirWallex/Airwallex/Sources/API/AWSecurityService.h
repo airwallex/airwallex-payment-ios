@@ -10,10 +10,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWSecurityService` is a service to handle security information.
+ */
 @interface AWSecurityService : NSObject
 
+/**
+ Convenience constructor for a security service.
+ 
+ @return The shared security service.
+ */
 + (instancetype)sharedService;
 
+/**
+ Request device id.
+ */
 - (void)doProfile:(NSString *)intentId
        completion:(void(^)(NSString * _Nullable))completion;
 
