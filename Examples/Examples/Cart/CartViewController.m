@@ -294,7 +294,7 @@
 
 #pragma mark - AWPaymentResultDelegate
 
-- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWPaymentStatus)status error:(NSError *)error
+- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWPaymentStatus)status error:(nullable NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:^{
         NSString *message = error.localizedDescription;

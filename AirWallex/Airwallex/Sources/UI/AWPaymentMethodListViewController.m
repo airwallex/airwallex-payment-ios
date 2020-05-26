@@ -380,7 +380,9 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         self.service = service;
         [service presentThreeDSFlowWithServerJwt:result.nextAction.redirectResponse.jwt];
     } else {
-        [self.delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusError error:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
+        [delegate paymentViewController:self
+                         didFinishWithStatus:AWPaymentStatusError
+                                       error:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
     }
 }
 

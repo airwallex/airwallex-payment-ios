@@ -36,7 +36,7 @@
     WKUserScript *userScript = [[WKUserScript alloc] initWithSource:script injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
     WKUserContentController *userContent = [[WKUserContentController alloc] init];
     [userContent addUserScript:userScript];
-
+    
     WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
     configuration.userContentController = userContent;
     WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
@@ -45,10 +45,19 @@
     webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:webView];
     self.webView = webView;
-
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
-
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
+    
     [self.webView loadRequest:self.urlRequest];
+}
+
+- (void)cancel:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.webHandler) {
+            self.webHandler(nil, [NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"User cancelled."}]);
+        }
+    }];
 }
 
 #pragma mark - WKNavigationDelegate
@@ -58,8 +67,9 @@
     NSURL *url = navigationAction.request.URL;
     if (url && [url.absoluteString containsString:AWRedirectPaResURL] && self.webHandler) {
         NSString *paRes = [url queryValueForName:@"PaRes"];
-        self.webHandler(paRes, nil);
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            self.webHandler(paRes, nil);
+        }];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
@@ -72,18 +82,20 @@
         return;
     }
     
-    if (self.webHandler) {
-        self.webHandler(nil, error);
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.webHandler) {
+            self.webHandler(nil, error);
+        }
+    }];
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
-    if (self.webHandler) {
-        self.webHandler(nil, error);
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.webHandler) {
+            self.webHandler(nil, error);
+        }
+    }];
 }
 
 @end

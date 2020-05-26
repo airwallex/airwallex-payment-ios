@@ -166,7 +166,9 @@
         self.service = service;
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else {
-        [self.delegate paymentViewController:self didFinishWithStatus:AWPaymentStatusError error:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
+        [self.delegate paymentViewController:self
+                         didFinishWithStatus:AWPaymentStatusError
+                                       error:[NSError errorWithDomain:AWSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
     }
 }
 
