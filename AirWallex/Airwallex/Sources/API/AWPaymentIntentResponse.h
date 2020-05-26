@@ -85,15 +85,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSNumber *amount;
 @property (nonatomic, readonly) NSString *currency;
 @property (nonatomic, readonly) NSString *merchantOrderId;
-@property (nonatomic, readonly) NSObject *order;
-@property (nonatomic, readonly) NSString *descriptor;
+@property (nonatomic, readonly) NSDictionary *order;
+@property (nonatomic, readonly) NSString *customerId;
 @property (nonatomic, readonly) NSString *status;
 @property (nonatomic, readonly) NSNumber *capturedAmount;
-#warning "not finished"
-@property (nonatomic, readonly) AWPaymentAttempt *latestPaymentAttempt;
 @property (nonatomic, readonly) NSString *createdAt;
 @property (nonatomic, readonly) NSString *updatedAt;
 @property (nonatomic, readonly) NSArray <NSString *> *availablePaymentMethodTypes;
+@property (nonatomic, readonly) NSString *clientSecret;
 
 @end
 

@@ -49,7 +49,7 @@
                                              @"merchant_order_id": NSUUID.UUID.UUIDString,
                                              @"request_id": NSUUID.UUID.UUIDString,
                                              @"order": @{},
-                                             @"customer_id": @"cus_gSItdRkbwWQcyocadV93vQmdW0l"} mutableCopy];
+                                             @"customer_id": @"cus_7hFQRwZNxESFY8aiKrDRu27IlMc"} mutableCopy];
         [client createPaymentIntentWithParameters:parameters
                                 completionHandler:^(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
             XCTAssertNil(error);

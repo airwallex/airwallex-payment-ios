@@ -195,14 +195,14 @@
 @property (nonatomic, copy, readwrite) NSNumber *amount;
 @property (nonatomic, copy, readwrite) NSString *currency;
 @property (nonatomic, copy, readwrite) NSString *merchantOrderId;
-@property (nonatomic, copy, readwrite) NSObject *order;
-@property (nonatomic, copy, readwrite) NSString *descriptor;
+@property (nonatomic, copy, readwrite) NSDictionary *order;
+@property (nonatomic, copy, readwrite) NSString *customerId;
 @property (nonatomic, copy, readwrite) NSString *status;
 @property (nonatomic, copy, readwrite) NSNumber *capturedAmount;
-@property (nonatomic, copy, readwrite) AWPaymentAttempt *latestPaymentAttempt;
 @property (nonatomic, copy, readwrite) NSString *createdAt;
 @property (nonatomic, copy, readwrite) NSString *updatedAt;
 @property (nonatomic, copy, readwrite) NSArray <NSString *> *availablePaymentMethodTypes;
+@property (nonatomic, copy, readwrite) NSString *clientSecret;
 
 @end
 
@@ -213,21 +213,19 @@
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWGetPaymentIntentResponse *response = [[AWGetPaymentIntentResponse alloc] init];
+    response.Id = json[@"id"];
     response.requestId = json[@"request_id"];
     response.amount = json[@"amount"];
     response.currency = json[@"currency"];
     response.merchantOrderId = json[@"merchant_order_id"];
     response.order = json[@"order"];
-    response.descriptor = json[@"descriptor"];
+    response.customerId = json[@"customer_id"];
     response.status = json[@"status"];
     response.capturedAmount = json[@"captured_amount"];
-    NSDictionary *latestPaymentAttempt = json[@"latest_payment_attempt"];
-    if (latestPaymentAttempt && [latestPaymentAttempt isKindOfClass:[NSDictionary class]]) {
-        response.latestPaymentAttempt = [AWPaymentAttempt decodeFromJSON:latestPaymentAttempt];
-    }
     response.createdAt = json[@"created_at"];
     response.updatedAt = json[@"updated_at"];
     response.availablePaymentMethodTypes = json[@"available_payment_method_types"];
+    response.clientSecret = json[@"client_secret"];
     return response;
 }
 
