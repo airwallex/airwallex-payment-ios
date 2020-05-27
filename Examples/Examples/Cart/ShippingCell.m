@@ -10,7 +10,7 @@
 
 @implementation ShippingCell
 
-- (void)setShipping:(AWPlaceDetails *)shipping
+- (void)setShipping:(AWXPlaceDetails *)shipping
 {
     if (shipping) {
         self.shippingLabel.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@ %@", shipping.firstName, shipping.lastName, shipping.address.street, shipping.address.city, shipping.address.state, shipping.address.countryCode];

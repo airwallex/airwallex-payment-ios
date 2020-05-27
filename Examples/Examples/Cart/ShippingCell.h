@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UILabel *shippingLabel;
 
-@property (strong, nonatomic) AWPlaceDetails *shipping;
+@property (strong, nonatomic) AWXPlaceDetails *shipping;
 
 @end
 

@@ -18,18 +18,18 @@
 #import "APIClient.h"
 #import "Constant.h"
 
-@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWShippingViewControllerDelegate, AWPaymentResultDelegate, OptionsViewControllerDelegate>
+@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate, OptionsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
-@property (strong, nonatomic) AWPlaceDetails *shipping;
+@property (strong, nonatomic) AWXPlaceDetails *shipping;
 
 @property (strong, nonatomic) NSDecimalNumber *amount;
 @property (strong, nonatomic) NSString *currency;
-@property (strong, nonatomic) AWPaymentIntent *paymentIntent;
+@property (strong, nonatomic) AWXPaymentIntent *paymentIntent;
 
 @end
 
@@ -156,14 +156,14 @@
     __weak __typeof(self)weakSelf = self;
     [SVProgressHUD show];
     [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
-                                              completionHandler:^(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
+                                              completionHandler:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;
         }
         
         if (paymentIntent.Id && paymentIntent.clientSecret) {
-            [AWAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
+            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
             
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf showPaymentFlowWithPaymentIntent:paymentIntent];
@@ -177,11 +177,11 @@
 
 #pragma mark - Show Payment Method List
 
-- (void)showPaymentFlowWithPaymentIntent:(AWPaymentIntent *)paymentIntent
+- (void)showPaymentFlowWithPaymentIntent:(AWXPaymentIntent *)paymentIntent
 {
     self.paymentIntent = paymentIntent;
     
-    AWUIContext *context = [AWUIContext sharedContext];
+    AWXUIContext *context = [AWXUIContext sharedContext];
     context.delegate = self;
     context.hostViewController = self;
     context.paymentIntent = paymentIntent;
@@ -262,16 +262,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        AWShippingViewController *controller = [AWUIContext shippingViewController];
+        AWXShippingViewController *controller = [AWXUIContext shippingViewController];
         controller.delegate = self;
         controller.shipping = self.shipping;
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
 
-#pragma mark - AWShippingViewControllerDelegate
+#pragma mark - AWXShippingViewControllerDelegate
 
-- (void)shippingViewController:(AWShippingViewController *)controller didEditShipping:(AWPlaceDetails *)shipping
+- (void)shippingViewController:(AWXShippingViewController *)controller didEditShipping:(AWXPlaceDetails *)shipping
 {
     [controller.navigationController popViewControllerAnimated:YES];
     self.shipping = shipping;
@@ -292,13 +292,13 @@
     [self reloadData];
 }
 
-#pragma mark - AWPaymentResultDelegate
+#pragma mark - AWXPaymentResultDelegate
 
-- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWPaymentStatus)status error:(nullable NSError *)error
+- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:^{
         NSString *message = error.localizedDescription;
-        if (status == AWPaymentStatusSuccess) {
+        if (status == AWXPaymentStatusSuccess) {
             message = @"Pay successfully";
         }
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
@@ -309,7 +309,7 @@
     }];
 }
 
-- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWWeChatPaySDKResponse *)response
+- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWXWeChatPaySDKResponse *)response
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
     
@@ -361,16 +361,16 @@
 
 - (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
 {
-    AWRetrievePaymentIntentRequest *request = [[AWRetrievePaymentIntentRequest alloc] init];
+    AWXRetrievePaymentIntentRequest *request = [[AWXRetrievePaymentIntentRequest alloc] init];
     request.intentId = self.paymentIntent.Id;
-    AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;
         }
         
-        AWGetPaymentIntentResponse *result = (AWGetPaymentIntentResponse *)response;
+        AWXGetPaymentIntentResponse *result = (AWXGetPaymentIntentResponse *)response;
         completionHandler([result.status isEqualToString:@"SUCCEEDED"]);
     }];
 }

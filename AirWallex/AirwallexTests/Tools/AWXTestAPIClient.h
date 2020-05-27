@@ -1,18 +1,17 @@
 //
-//  APIClient.h
-//  Examples
+//  AWXTestAPIClient.h
+//  AirwallexTests
 //
-//  Created by Victor Zhu on 2020/1/15.
+//  Created by Victor Zhu on 2020/4/2.
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-
-@class AWXPaymentIntent;
+#import "AWXPaymentIntent.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APIClient : NSObject
+@interface AWXTestAPIClient : NSObject
 
 @property (nonatomic, strong) NSURL *authBaseURL;
 @property (nonatomic, strong) NSURL *paymentBaseURL;
@@ -23,12 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedClient;
 
 - (void)createAuthenticationTokenWithCompletionHandler:(void (^)(NSError * _Nullable error))completionHandler;
-
 - (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
-                        completionHandler:(void (^)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;
-
-- (void)createCustomerWithParameters:(NSDictionary *)parameters
-                   completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+                        completionHandler:(void (^ _Nullable)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;
 
 @end
 
