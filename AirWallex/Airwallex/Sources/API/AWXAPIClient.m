@@ -64,6 +64,20 @@ static NSURL *_defaultBaseURL;
 
 @end
 
+@implementation AWXCustomerAPIClientConfiguration
+
++ (instancetype)sharedConfiguration
+{
+    static AWXCustomerAPIClientConfiguration *sharedConfiguration;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedConfiguration = [self new];
+    });
+    return sharedConfiguration;
+}
+
+@end
+
 @defs(AWXRequestProtocol)
 
 - (NSString *)path

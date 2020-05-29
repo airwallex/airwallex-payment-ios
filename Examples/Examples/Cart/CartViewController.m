@@ -145,34 +145,64 @@
 
 - (void)createPaymentIntentWithCustomerId:(NSString *)customerId
 {
+    [SVProgressHUD show];
+    
+    __weak __typeof(self)weakSelf = self;
+    dispatch_group_t group = dispatch_group_create();
+    __block NSError *_error;
+    __block AWXPaymentIntent *_paymentIntent;
+    __block NSString *_customerSecret;
+    
     NSMutableDictionary *parameters = [@{@"amount": self.amount,
                                          @"currency": self.currency,
                                          @"merchant_order_id": NSUUID.UUID.UUIDString,
                                          @"request_id": NSUUID.UUID.UUIDString,
+                                         @"customer_id": customerId,
                                          @"order": @{}} mutableCopy];
-    if (customerId) {
-        parameters[@"customer_id"] = customerId;
-    }
-    __weak __typeof(self)weakSelf = self;
-    [SVProgressHUD show];
+    
+    dispatch_group_enter(group);
     [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
                                               completionHandler:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            _error = error;
+            dispatch_group_leave(group);
             return;
         }
         
-        if (paymentIntent.Id && paymentIntent.clientSecret) {
-            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
-            
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf showPaymentFlowWithPaymentIntent:paymentIntent];
-            [SVProgressHUD dismiss];
-            return;
-        }
-        
-        [SVProgressHUD showErrorWithStatus:@"Failed to create payment intent."];
+        _paymentIntent = paymentIntent;
+        dispatch_group_leave(group);
     }];
+    
+    dispatch_group_enter(group);
+    [[APIClient sharedClient] createCustomerSecretWithId:customerId completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            _error = error;
+            dispatch_group_leave(group);
+            return;
+        }
+        
+        _customerSecret = result[@"client_secret"];
+        dispatch_group_leave(group);
+        
+    }];
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        if (_error) {
+            [SVProgressHUD showErrorWithStatus:_error.localizedDescription];
+            return;
+        }
+        
+        [SVProgressHUD dismiss];
+        if (_paymentIntent && _customerSecret) {
+            // Step2: Setup client secret & customer secret
+            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
+            [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
+            
+            // Step3: Show payment flow
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
+        }
+    });
 }
 
 #pragma mark - Show Payment Method List
@@ -247,7 +277,7 @@
         cell.total = [subtotal decimalNumberByAdding:shipping];
         return cell;
     }
-
+    
     ProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell" forIndexPath:indexPath];
     cell.product = self.products[indexPath.row];
     __weak __typeof(self)weakSelf = self;

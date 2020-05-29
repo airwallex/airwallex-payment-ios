@@ -108,7 +108,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     request.methodType = AWXCardKey;
     
     __weak __typeof(self)weakSelf = self;
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [SVProgressHUD dismiss];

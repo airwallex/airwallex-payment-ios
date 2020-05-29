@@ -36,6 +36,7 @@
     }];
 
     // Airwallex
+    // Step1: Setup base URL
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
     
     // WeChatSDK 1.8.2

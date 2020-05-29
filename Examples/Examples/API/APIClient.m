@@ -155,4 +155,44 @@
     }] resume];
 }
 
+- (void)createCustomerSecretWithId:(NSString *)Id
+                 completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
+{
+    NSURL *requestURL = [NSURL URLWithString:[NSString stringWithFormat:@"api/v1/customers/%@", Id] relativeToURL:self.paymentBaseURL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    if (self.token) {
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
+    }
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request
+                                     completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(nil, error);
+            });
+            return;
+        }
+        
+        NSError *anError;
+        if (data) {
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:NSJSONReadingMutableContainers
+                                                                   error:&anError];
+            NSString *errorMessage = json[@"message"];
+            if (errorMessage) {
+                anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(json, anError);
+            });
+            return;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionHandler(nil, anError);
+        });
+    }] resume];
+}
+
 @end

@@ -56,6 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface AWXCustomerAPIClientConfiguration : AWXAPIClientConfiguration
+
+@end
+
 typedef void (^AWXRequestHandler)(id <AWXResponseProtocol> _Nullable response, NSError * _Nullable error);
 
 /**
