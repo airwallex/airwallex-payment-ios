@@ -9,10 +9,10 @@
 Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松，快速和安全地完成付款。它提供了简单的功能，可以将敏感的信用卡数据直接发送到Airwallex，还提供了功能详细的界面，用于收集用户付款明细。
 
 <p align="center">
-<img src="./Screenshots/shipping.png" width="200" alt="AWShippingViewController" hspace="10">
-<img src="./Screenshots/card.png" width="200" alt="AWCardViewController" hspace="10">
-<img src="./Screenshots/payment method list.png" width="200" alt="AWPaymentMethodListViewController" hspace="10">
-<img src="./Screenshots/payment.png" width="200" alt="AWPaymentViewController" hspace="10">
+<img src="./Screenshots/shipping.png" width="200" alt="AWXShippingViewController" hspace="10">
+<img src="./Screenshots/card.png" width="200" alt="AWXCardViewController" hspace="10">
+<img src="./Screenshots/payment method list.png" width="200" alt="AWXPaymentMethodListViewController" hspace="10">
+<img src="./Screenshots/payment.png" width="200" alt="AWXPaymentViewController" hspace="10">
 </p>
 
 开始使用我们的集成指南和示例项目。
@@ -85,15 +85,25 @@ use_frameworks!
 
 - 创建payment intent
 
-当客户想要结帐时，您应该在服务器端创建payment intent，然后将id和client_secret传递给移动端，以所选的付款方式确认payment intent。
+当客户想要结帐时，您应该在服务器端创建payment intent，然后将payment intent传递给移动端，以所选的付款方式确认payment intent。
+
+```
+[AWXAPIClientConfiguration sharedConfiguration].clientSecret = "The payment intent's client secret";
+```
+
+- 为用户的服务创建单独的client secret并传入sdk。
+
+```
+[AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = "The customer's client secret";
+```
 
 - 处理付款流程
 
-在结帐界面中，添加一个按钮，让客户输入或更改他们的付款方式。点击后，用`AWUIContext`显示付款流程。
+在结帐界面中，添加一个按钮，让客户输入或更改他们的付款方式。点击后，用`AWXUIContext`显示付款流程。
 
 ```objective-c
-AWUIContext *context = [AWUIContext sharedContext];
-context.delegate = ”The target to handle AWPaymentResultDelegate protocol”;
+AWXUIContext *context = [AWXUIContext sharedContext];
+context.delegate = ”The target to handle AWXPaymentResultDelegate protocol”;
 context.hostViewController = “The host viewController present or push the payment UIs”;
 context.paymentIntent = “The payment intent merchant provides”;
 context.shipping = “The shipping address merchant provides”;
@@ -108,7 +118,7 @@ context.shipping = “The shipping address merchant provides”;
 /**
  A delegate which handles checkout results.
  */
-@protocol AWPaymentResultDelegate <NSObject>
+@protocol AWXPaymentResultDelegate <NSObject>
  
 /**
  This method is called when the user has completed the checkout.
@@ -117,7 +127,7 @@ context.shipping = “The shipping address merchant provides”;
  @param status The status of checkout result.
  @param error The error if checkout failed.
  */
-- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWPaymentStatus)status error:(nullable NSError *)error;
+- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error;
  
 /**
  This method is called when the user has completed the checkout with wechat pay.
@@ -125,7 +135,7 @@ context.shipping = “The shipping address merchant provides”;
  @param controller The controller handling payment result.
  @param response The wechat object.
  */
-- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWWeChatPaySDKResponse *)response;
+- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWXWeChatPaySDKResponse *)response;
  
 @end
 ```
@@ -134,11 +144,11 @@ context.shipping = “The shipping address merchant provides”;
 
 - 自定义物流信息的用法
 
-使用`AWUIContext`得到`AWShippingViewController`的实例并显示包含在`UINavigationController`里。
+使用`AWXUIContext`得到`AWXShippingViewController`的实例并显示包含在`UINavigationController`里。
 
 ```objective-c
-AWShippingViewController *controller = [AWUIContext shippingViewController];
-controller.delegate = "The target to handle AWShippingViewControllerDelegate protocol";
+AWXShippingViewController *controller = [AWXUIContext shippingViewController];
+controller.delegate = "The target to handle AWXShippingViewControllerDelegate protocol";
 controller.shipping = "The shipping address merchant provides";
 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
 [self presentViewController:navigationController animated:YES completion:nil];
@@ -150,7 +160,7 @@ UINavigationController *navigationController = [[UINavigationController alloc] i
 /**
  A delegate which handles selected shipping.
  */
-@protocol AWShippingViewControllerDelegate <NSObject>
+@protocol AWXShippingViewControllerDelegate <NSObject>
  
 /**
  This method is called when a shipping has been saved.
@@ -158,18 +168,18 @@ UINavigationController *navigationController = [[UINavigationController alloc] i
  @param controller The shipping view controller.
  @param shipping The selected shipping.
  */
-- (void)shippingViewController:(AWShippingViewController *)controller didEditShipping:(AWPlaceDetails *)shipping;
+- (void)shippingViewController:(AWXShippingViewController *)controller didEditShipping:(AWXPlaceDetails *)shipping;
  
 @end
 ```
 
 - 自定义卡片创建的用法
 
-使用`AWUIContext`得到`AWCardViewController`的实例并显示包含在`UINavigationController`里。
+使用`AWXUIContext`得到`AWXCardViewController`的实例并显示包含在`UINavigationController`里。
 
 ```objective-c
-AWCardViewController *controller = [AWUIContext newCardViewController];
-controller.delegate = "The target to handle AWCardViewControllerDelegate protocol";
+AWXCardViewController *controller = [AWXUIContext newCardViewController];
+controller.delegate = "The target to handle AWXCardViewControllerDelegate protocol";
 controller.customerId = "The customer id merchant provides";
 controller.sameAsShipping = YES;
 controller.shipping = "The shipping address merchant provides";
@@ -183,7 +193,7 @@ UINavigationController *navigationController = [[UINavigationController alloc] i
 /**
  A delegate which handles card creation.
  */
-@protocol AWCardViewControllerDelegate <NSObject>
+@protocol AWXCardViewControllerDelegate <NSObject>
  
 /**
  This method is called when a card has been created and saved to backend.
@@ -191,18 +201,18 @@ UINavigationController *navigationController = [[UINavigationController alloc] i
  @param controller The new card view controller.
  @param paymentMethod The saved card.
  */
-- (void)cardViewController:(AWCardViewController *)controller didCreatePaymentMethod:(AWPaymentMethod *)paymentMethod;
+- (void)cardViewController:(AWXCardViewController *)controller didCreatePaymentMethod:(AWXPaymentMethod *)paymentMethod;
  
 @end
 ```
 
 - 自定义付款明细的用法
 
-使用`AWUIContext`得到`AWPaymentViewController`的实例并显示包含在`UINavigationController`里。
+使用`AWXUIContext`得到`AWXPaymentViewController`的实例并显示包含在`UINavigationController`里。
 
 ```objective-c
-AWPaymentViewController *controller = [AWUIContext paymentDetailViewController];
-controller.delegate = "The target to handle AWPaymentResultDelegate protocol";
+AWXPaymentViewController *controller = [AWXUIContext paymentDetailViewController];
+controller.delegate = "The target to handle AWXPaymentResultDelegate protocol";
 controller.paymentIntent = "The payment intent merchant provides";
 controller.paymentMethod = "The payment method merchant provides";
 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
@@ -211,31 +221,66 @@ UINavigationController *navigationController = [[UINavigationController alloc] i
 
 - 自定义确认payment intent的用法
 
-在使用`AWAPIClient`发送请求之前，请设置client secret。
+在使用`AWXAPIClient`发送请求之前，请设置client secret。
 
 ```objective-c
-[AWAPIClientConfiguration sharedConfiguration].clientSecret = "The client secret merchant provides";
+[AWXAPIClientConfiguration sharedConfiguration].clientSecret = "The client secret merchant provides";
 ```
 
 ```objective-c
-AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
+AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
 request.intentId = "The payment intent id merchant provides";
 request.paymentMethod = "The payment method merchant provides";
-AWPaymentMethodOptions *options = [AWPaymentMethodOptions new];
+AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
 options.autoCapture = YES;
 options.threeDsOption = NO;
 request.options = options;
 request.requestId = NSUUID.UUID.UUIDString;
 
-AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
-[client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+[client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
 	if (error) {
 		return;
 	}
  
-	AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
+	AWXConfirmPaymentIntentResponse *result = (AWXConfirmPaymentIntentResponse *)response;
 	// Handle the payment result.
 }];
+```
+
+- 自定义3DS流程
+
+```
+AWXThreeDSService *service = [AWXThreeDSService new];
+service.customerId = "The customer id merchant provides";
+service.intentId = "The intent id merchant provides";
+service.paymentMethod = "The payment method merchant provides";
+service.device = "The device id got by AWXSecurityService";
+service.presentingViewController = “The host viewController present or push the payment UIs”;
+service.delegate = ”The target to handle AWXThreeDSServiceDelegate protocol”;
+[service presentThreeDSFlowWithServerJwt:"The server jwt backend provides"];
+```
+
+- 处理3DS的结果
+
+```objective-c
+/**
+ A delegate which handles 3ds results.
+ */
+@protocol AWXThreeDSServiceDelegate <NSObject>
+
+/**
+ This method is called when the user has completed the 3ds flow.
+ 
+ @param service The service handling 3ds flow.
+ @param response The response of 3ds auth.
+ @param error The error if 3ds auth failed.
+ */
+- (void)threeDSService:(AWXThreeDSService *)service
+ didFinishWithResponse:(nullable AWXConfirmPaymentIntentResponse *)response
+                 error:(nullable NSError *)error;
+
+@end
 ```
 
 ### 设置微信支付
@@ -252,7 +297,7 @@ AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientCon
 3. 商家的服务器调用统一订单API来创建交易。获取prepay_id并签署相关参数后，交易数据将传输到该应用以开始付款。
 
 ```objective-c
-- (void)paymentWithWechatPaySDK:(AWWeChatPaySDKResponse *)response
+- (void)paymentWithWechatPaySDK:(AWXWeChatPaySDKResponse *)response
 {
 	PayReq *request = [[PayReq alloc] init];
 	request.partnerId = response.partnerId;
