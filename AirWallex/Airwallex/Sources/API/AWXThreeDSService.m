@@ -18,6 +18,8 @@
 #import "AWXDevice.h"
 #import "AWXWebViewController.h"
 
+static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
+
 @interface AWXThreeDSService () <CardinalValidationDelegate>
 
 @property (strong, nonatomic) CardinalSession *session;
@@ -82,7 +84,6 @@
     request.intentId = self.intentId;
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.customerId;
-    request.paymentMethod = self.paymentMethod;
 
     AWXCardOptions *cardOptions = [AWXCardOptions new];
     cardOptions.threeDs = threeDs;
@@ -136,7 +137,7 @@
             // 3DS v1.x flow
             NSURL *url = [NSURL URLWithString:redirectResponse.acs];
             NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
-            NSString *termUrl = [NSString stringWithFormat:@"%@web/feedback", [Airwallex defaultBaseURL].absoluteString];
+            NSString *termUrl = [NSString stringWithFormat:@"%@web/feedback", AWXTermURL];
             NSString *termUrlEncoding = [termUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
             NSString *body = [NSString stringWithFormat:@"&PaReq=%@&TermUrl=%@", reqEncoding, termUrlEncoding];
             NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];

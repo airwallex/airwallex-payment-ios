@@ -158,9 +158,9 @@
 - (void)createCustomerSecretWithId:(NSString *)Id
                  completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
 {
-    NSURL *requestURL = [NSURL URLWithString:[NSString stringWithFormat:@"api/v1/customers/%@", Id] relativeToURL:self.paymentBaseURL];
+    NSURL *requestURL = [NSURL URLWithString:[NSString stringWithFormat:@"api/v1/pa/customers/%@/generate_client_secret", Id] relativeToURL:self.paymentBaseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-    [request setHTTPMethod:@"POST"];
+    [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     if (self.token) {
         [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
