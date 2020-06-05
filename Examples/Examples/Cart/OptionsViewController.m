@@ -55,6 +55,9 @@
 
 - (IBAction)resetPressed:(id)sender
 {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     APIClient *client = [APIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
     client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];

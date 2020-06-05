@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class AWPaymentIntent;
+@class AWXPaymentIntent;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,10 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)createAuthenticationTokenWithCompletionHandler:(void (^)(NSError * _Nullable error))completionHandler;
 
 - (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
-                        completionHandler:(void (^)(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;
+                        completionHandler:(void (^)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;
 
 - (void)createCustomerWithParameters:(NSDictionary *)parameters
                    completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+
+- (void)createCustomerSecretWithId:(NSString *)Id
+                 completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
 
 @end
 

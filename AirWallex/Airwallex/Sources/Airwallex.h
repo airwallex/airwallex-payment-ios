@@ -15,34 +15,37 @@ FOUNDATION_EXPORT double AirwallexVersionNumber;
 FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 
 // Constants
-#import <Airwallex/AWConstants.h>
+#import <Airwallex/AWXConstants.h>
 
 // UI
-#import <Airwallex/AWUIContext.h>
-#import <Airwallex/AWTheme.h>
-#import <Airwallex/AWCountryListViewController.h>
-#import <Airwallex/AWShippingViewController.h>
-#import <Airwallex/AWPaymentMethodListViewController.h>
-#import <Airwallex/AWPaymentViewController.h>
-#import <Airwallex/AWCardViewController.h>
+#import <Airwallex/AWXUIContext.h>
+#import <Airwallex/AWXTheme.h>
+#import <Airwallex/AWXCountryListViewController.h>
+#import <Airwallex/AWXShippingViewController.h>
+#import <Airwallex/AWXPaymentMethodListViewController.h>
+#import <Airwallex/AWXPaymentViewController.h>
+#import <Airwallex/AWXCardViewController.h>
 
 // API
-#import <Airwallex/AWAPIClient.h>
-#import <Airwallex/AWAPIResponse.h>
-#import <Airwallex/AWPaymentIntentRequest.h>
-#import <Airwallex/AWPaymentIntentResponse.h>
-#import <Airwallex/AWPaymentMethodRequest.h>
-#import <Airwallex/AWPaymentMethodResponse.h>
+#import <Airwallex/AWXAPIClient.h>
+#import <Airwallex/AWXPaymentIntentRequest.h>
+#import <Airwallex/AWXPaymentIntentResponse.h>
+#import <Airwallex/AWXPaymentMethodRequest.h>
+#import <Airwallex/AWXPaymentMethodResponse.h>
+#import <Airwallex/AWXThreeDSService.h>
+#import <Airwallex/AWXSecurityService.h>
 
 // Tools
-#import <Airwallex/AWUtils.h>
-#import <Airwallex/AWCardValidator.h>
+#import <Airwallex/AWXUtils.h>
+#import <Airwallex/AWXCardValidator.h>
 
 // Models
-#import <Airwallex/AWCountry.h>
-#import <Airwallex/AWCard.h>
-#import <Airwallex/AWPlaceDetails.h>
-#import <Airwallex/AWPaymentMethod.h>
-#import <Airwallex/AWWeChatPay.h>
-#import <Airwallex/AWPaymentMethodOptions.h>
-#import <Airwallex/AWPaymentIntent.h>
+#import <Airwallex/AWXCountry.h>
+#import <Airwallex/AWXCard.h>
+#import <Airwallex/AWXAddress.h>
+#import <Airwallex/AWXPlaceDetails.h>
+#import <Airwallex/AWXPaymentMethod.h>
+#import <Airwallex/AWXWeChatPay.h>
+#import <Airwallex/AWXPaymentMethodOptions.h>
+#import <Airwallex/AWXPaymentIntent.h>
+#import <Airwallex/AWXDevice.h>
