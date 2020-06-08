@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         				= "Airwallex"
-  s.version      				= "1.0.1"
+  s.version      				= "2.0.0"
   s.summary      				= "Integrate Airwallex into your iOS app"
   s.license						= { :type => 'MIT', :file => 'LICENSE' }
   s.homepage     				= "https://www.airwallex.com/docs/#overview"
@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
   s.source_files				= 'Airwallex/Airwallex/Sources/*.{h,m}', 'Airwallex/Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Airwallex/Sources/API/*.{h,m}', 'Airwallex/Airwallex/Sources/Tools/*.{h,m}', 'Airwallex/Airwallex/Sources/Models/*.{h,m}'
   s.dependency					'SVProgressHUD'
   s.denpendecy					'AirwallexTrustDefender'
+  s.denpendecy					'AirwallexCardinalMobile'
 
   # s.resource_bundles = {
   #   'AirwallexSDK' => ['Airwallex/Airwallex/Resources/**/*.{lproj,storyboard,xib,xcassets,json,imageset,png}']
