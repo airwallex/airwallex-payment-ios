@@ -319,8 +319,6 @@
         if (![emailTest evaluateWithObject:text]) {
             errorMessage = @"Invalid email";
         }
-    } else {
-        errorMessage =  @"Please enter your email";
     }
     self.errorText = errorMessage;
 }
