@@ -47,6 +47,7 @@
     controller.paymentMethod = nil;
     controller.shipping = self.shipping;
     controller.customerId = self.paymentIntent.customerId;
+    controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
     controller.isFlow = YES;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     [self.hostViewController presentViewController:navigationController animated:YES completion:nil];
@@ -68,6 +69,7 @@
     controller.paymentMethod = nil;
     controller.shipping = self.shipping;
     controller.customerId = self.paymentIntent.customerId;
+    controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
     controller.isFlow = YES;
     [navigationController pushViewController:controller animated:YES];
 }

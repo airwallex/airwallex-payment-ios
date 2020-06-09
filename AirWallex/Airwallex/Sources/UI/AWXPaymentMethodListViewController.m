@@ -79,6 +79,10 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (NSArray <AWXPaymentMethod *> *)section0
 {
+    if (![self.availablePaymentMethodTypes containsObject:AWXWeChatPayKey]) {
+        return @[];
+    }
+
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
     paymentMethod.type = AWXWeChatPayKey;
     AWXWeChatPay *pay = [AWXWeChatPay new];
@@ -100,6 +104,12 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (void)loadDataFromPageNum:(NSInteger)pageNum
 {
+    if (![self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
+        self.paymentMethods = @[self.section0, self.cards];
+        [self.tableView reloadData];
+        return;
+    }
+
     [SVProgressHUD show];
     
     AWXGetPaymentMethodsRequest *request = [AWXGetPaymentMethodsRequest new];
@@ -149,7 +159,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 {
     NSArray <AWXPaymentMethod *> *items = self.paymentMethods[section];
     if (section == 1) {
-        return MAX(items.count, 1);
+        return MAX(items.count, [self.availablePaymentMethodTypes containsObject:AWXCardKey] ? 1 : 0);
     }
     return items.count;
 }
@@ -172,7 +182,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == 1 && self.customerId != nil) {
+    if (section == 1 && self.customerId != nil && [self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
         return 60;
     }
     return CGFLOAT_MIN;
@@ -180,7 +190,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section == 1 && self.customerId != nil) {
+    if (section == 1 && self.customerId != nil && [self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 56)];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(16, 8, CGRectGetWidth(self.view.bounds) - 32, 44);
@@ -381,8 +391,8 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         [service presentThreeDSFlowWithServerJwt:result.nextAction.redirectResponse.jwt];
     } else {
         [delegate paymentViewController:self
-                         didFinishWithStatus:AWXPaymentStatusError
-                                       error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
+                    didFinishWithStatus:AWXPaymentStatusError
+                                  error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
     }
 }
 

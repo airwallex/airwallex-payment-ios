@@ -168,7 +168,7 @@
             dispatch_group_leave(group);
             return;
         }
-        
+
         _paymentIntent = paymentIntent;
         dispatch_group_leave(group);
     }];

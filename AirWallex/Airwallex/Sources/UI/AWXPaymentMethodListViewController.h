@@ -48,6 +48,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) AWXPlaceDetails *shipping;
 
 /**
+ Available payment method types.
+ */
+@property (nonatomic, strong) NSArray <NSString *> *availablePaymentMethodTypes;
+
+/**
  A customer id.
  */
 @property (nonatomic, strong, nullable) NSString *customerId;
