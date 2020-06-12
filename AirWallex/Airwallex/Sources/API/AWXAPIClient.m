@@ -15,7 +15,7 @@
 #import "AWXAPIResponse.h"
 #import "AWXUtils.h"
 
-static NSString * const AWXAPIBaseURL = @"https://pci-api.ariwallex.com/";
+static NSString * const AWXAPIBaseURL = @"https://demo-pci-api.airwallex.com/";
 
 @implementation Airwallex
 
