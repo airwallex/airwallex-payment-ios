@@ -211,7 +211,7 @@
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Card number"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="4012000300001003"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="4000000000001091"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MQF-7d-Ysg" customClass="AWXFloatLabeledTextField">

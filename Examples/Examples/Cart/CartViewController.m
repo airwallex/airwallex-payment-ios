@@ -74,6 +74,8 @@
         UINavigationController *navigationController = segue.destinationViewController;
         OptionsViewController *controller = (OptionsViewController *)navigationController.topViewController;
         controller.delegate = self;
+        controller.amount = self.amount;
+        controller.currency = self.currency;
     }
 }
 
