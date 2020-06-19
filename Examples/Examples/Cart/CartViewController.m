@@ -74,6 +74,8 @@
         UINavigationController *navigationController = segue.destinationViewController;
         OptionsViewController *controller = (OptionsViewController *)navigationController.topViewController;
         controller.delegate = self;
+        controller.amount = self.amount;
+        controller.currency = self.currency;
     }
 }
 
@@ -168,7 +170,7 @@
             dispatch_group_leave(group);
             return;
         }
-        
+
         _paymentIntent = paymentIntent;
         dispatch_group_leave(group);
     }];

@@ -44,8 +44,8 @@
     self.paymentURLTextField.text = [APIClient sharedClient].paymentBaseURL.absoluteString;
     self.apiKeyTextField.text = [APIClient sharedClient].apiKey;
     self.clientIDTextField.text = [APIClient sharedClient].clientID;
-    self.amountTextField.text = defaultAmount;
-    self.currencyTextField.text = defaultCurrency;
+    self.amountTextField.text = self.amount ? [NSString stringWithFormat:@"%.2f", self.amount.doubleValue] : defaultAmount;
+    self.currencyTextField.text = self.currency ?: defaultCurrency;
 }
 
 - (IBAction)dismiss:(id)sender

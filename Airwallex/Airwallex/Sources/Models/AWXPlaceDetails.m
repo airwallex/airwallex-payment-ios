@@ -12,14 +12,18 @@
 
 - (NSDictionary *)encodeToJSON
 {
-    return @{
+    NSMutableDictionary *json = [@{
         @"first_name": self.firstName,
         @"last_name": self.lastName,
-        @"email": self.email ?: @"",
         @"date_of_birth": self.dateOfBirth ?: @"",
-        @"phone_number": self.phoneNumber ?: @"",
-        @"address": self.address.encodeToJSON
-    };
+        @"address": self.address.encodeToJSON} mutableCopy];
+    if (self.email && self.email.length > 0) {
+        json[@"email"] = self.email;
+    }
+    if (self.phoneNumber && self.phoneNumber.length > 0) {
+        json[@"phone_number"] = self.phoneNumber;
+    }
+    return json;
 }
 
 + (id)decodeFromJSON:(NSDictionary *)json

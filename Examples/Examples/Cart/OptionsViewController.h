@@ -24,6 +24,8 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 @interface OptionsViewController : UIViewController
 
 @property (weak, nonatomic) id <OptionsViewControllerDelegate> delegate;
+@property (strong, nonatomic) NSString *currency;
+@property (strong, nonatomic) NSDecimalNumber *amount;
 
 @end
 
