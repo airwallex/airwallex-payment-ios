@@ -18,7 +18,7 @@
         <!--AWXPaymentListViewController-->
         <scene sceneID="mdf-GM-7m4">
             <objects>
-                <viewController storyboardIdentifier="paymentMethodList" id="X8p-bs-NKO" userLabel="AWXPaymentListViewController" customClass="AWXPaymentMethodListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="paymentMethodList" modalPresentationStyle="fullScreen" id="X8p-bs-NKO" userLabel="AWXPaymentListViewController" customClass="AWXPaymentMethodListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eUr-eS-DJL"/>
                         <viewControllerLayoutGuide type="bottom" id="5MX-RY-kax"/>
@@ -179,7 +179,7 @@
         <!--AWXCardViewController-->
         <scene sceneID="efI-D8-OrI">
             <objects>
-                <viewController storyboardIdentifier="newCard" id="rjH-1d-ozb" userLabel="AWXCardViewController" customClass="AWXCardViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newCard" modalPresentationStyle="fullScreen" id="rjH-1d-ozb" userLabel="AWXCardViewController" customClass="AWXCardViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DY4-jY-pSE"/>
                         <viewControllerLayoutGuide type="bottom" id="bmG-LG-alY"/>
@@ -555,7 +555,7 @@
         <!--Navigation Controller-->
         <scene sceneID="zPs-79-oDH">
             <objects>
-                <navigationController storyboardIdentifier="paymentDetailNav" id="Wr1-qa-BRZ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="paymentDetailNav" modalPresentationStyle="fullScreen" id="Wr1-qa-BRZ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="l15-FF-6JF">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -571,7 +571,7 @@
         <!--Payment View Controller-->
         <scene sceneID="ROv-Wc-s8C">
             <objects>
-                <viewController storyboardIdentifier="paymentDetail" id="qRb-XP-suO" customClass="AWXPaymentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="paymentDetail" modalPresentationStyle="fullScreen" id="qRb-XP-suO" customClass="AWXPaymentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tBj-2n-fgB"/>
                         <viewControllerLayoutGuide type="bottom" id="UUJ-ry-5mU"/>
@@ -664,7 +664,7 @@
         <!--AWXShippingViewController-->
         <scene sceneID="7Uu-Nt-f0k">
             <objects>
-                <viewController storyboardIdentifier="shipping" id="Gcj-sK-QY6" userLabel="AWXShippingViewController" customClass="AWXShippingViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="shipping" modalPresentationStyle="fullScreen" id="Gcj-sK-QY6" userLabel="AWXShippingViewController" customClass="AWXShippingViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nup-uk-3y5"/>
                         <viewControllerLayoutGuide type="bottom" id="dHU-bz-ori"/>
@@ -855,7 +855,7 @@
         <!--AWXCountryListViewController-->
         <scene sceneID="IPp-Lz-tcG">
             <objects>
-                <viewController id="Jcn-fj-QIX" userLabel="AWXCountryListViewController" customClass="AWXCountryListViewController" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="Jcn-fj-QIX" userLabel="AWXCountryListViewController" customClass="AWXCountryListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2Al-wE-0oM"/>
                         <viewControllerLayoutGuide type="bottom" id="uMn-6F-zgh"/>
@@ -955,8 +955,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Kt1-cg-dJB"/>
-        <segue reference="DKs-vZ-uzr"/>
+        <segue reference="Oci-f4-ed5"/>
+        <segue reference="LPD-wi-Lqa"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.3803921569" green="0.1843137255" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
