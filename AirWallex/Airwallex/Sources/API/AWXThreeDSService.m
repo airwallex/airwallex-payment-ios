@@ -154,6 +154,7 @@ static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
                 }
             }];
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
+            navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
             [strongSelf.presentingViewController presentViewController:navigationController animated:YES completion:nil];
         } else {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Failed to determine the challenge is 1.x or 2.x."}]];

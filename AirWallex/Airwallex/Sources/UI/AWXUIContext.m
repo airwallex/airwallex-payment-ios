@@ -50,6 +50,7 @@
     controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
     controller.isFlow = YES;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.hostViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
