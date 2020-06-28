@@ -139,7 +139,7 @@ static NSURL *_defaultBaseURL;
 {
     self = [super init];
     if (self) {
-        _configuration = [configuration copy];
+        _configuration = configuration;
     }
     return self;
 }
