@@ -272,18 +272,9 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         return;
     }
     
-    NSString *cvc = [[NSUserDefaults awxUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
-    if (cvc) {
-        self.paymentMethod.card.cvc = cvc;
-    }
-    
     // Confirm directly (Only be valid for payment flow)
     if ([self.paymentMethod.type isEqualToString:AWXWeChatPayKey]) {
         // Confirm payment with wechat type directly
-        [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
-        return;
-    } else if (self.paymentMethod.card.cvc) {
-        // Confirm payment with card cvc directly
         [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
         return;
     }
@@ -359,8 +350,6 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 {
     id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
     if (error) {
-        [[NSUserDefaults awxUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
-        [[NSUserDefaults awxUserDefaults] synchronize];
         [delegate paymentViewController:self didFinishWithStatus:AWXPaymentStatusError error:error];
         return;
     }
