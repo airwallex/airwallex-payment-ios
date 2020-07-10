@@ -222,9 +222,7 @@
         }
 
         AWXCreatePaymentMethodResponse *result = (AWXCreatePaymentMethodResponse *)response;
-        [[NSUserDefaults awxUserDefaults] setObject:card.cvc forKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, result.paymentMethod.Id]];
-        [[NSUserDefaults awxUserDefaults] synchronize];
-
+        result.paymentMethod.card.cvc = card.cvc;
         [strongSelf finishCreation:result.paymentMethod];
     }];
 }

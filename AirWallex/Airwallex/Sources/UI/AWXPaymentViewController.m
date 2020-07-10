@@ -48,11 +48,6 @@
 
     if (self.paymentMethod.card.cvc) {
         self.cvc = self.paymentMethod.card.cvc;
-    } else {
-        NSString *cvc = [[NSUserDefaults awxUserDefaults] stringForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
-        if (cvc) {
-            self.cvc = cvc;
-        }
     }
 
     [self reloadData];
@@ -133,14 +128,9 @@
 - (void)finishConfirmationWithResponse:(AWXConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
 {
     if (error) {
-        [[NSUserDefaults awxUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
-        [[NSUserDefaults awxUserDefaults] synchronize];
         [self.delegate paymentViewController:self didFinishWithStatus:AWXPaymentStatusError error:error];
         return;
     }
-
-    [[NSUserDefaults awxUserDefaults] setObject:self.cvc forKey:[NSString stringWithFormat:@"%@:%@", kCachedCVC, self.paymentMethod.Id]];
-    [[NSUserDefaults awxUserDefaults] synchronize];
 
     if ([response.status isEqualToString:@"SUCCEEDED"] || [response.status isEqualToString:@"REQUIRES_CAPTURE"]) {
         [self.delegate paymentViewController:self didFinishWithStatus:AWXPaymentStatusSuccess error:error];
