@@ -18,7 +18,7 @@
 #import "AWXDevice.h"
 #import "AWXWebViewController.h"
 
-static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
+static NSString * const AWXTermURL = @"https://demo-pacybsmock.airwallex.com/";
 
 @interface AWXThreeDSService () <CardinalValidationDelegate>
 
@@ -98,12 +98,13 @@ static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
 
 - (void)confirmWithReferenceId:(NSString *)referenceId
 {
-    AWXThreeDs *threeDs = [AWXThreeDs new];
-    threeDs.deviceDataCollectionRes = referenceId;
-    threeDs.returnURL = AWXThreeDSReturnURL;
-
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    AWXConfirmPaymentIntentRequest *request = [self confirmPaymentIntentRequestWithThreeDs:threeDs];
+
+    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.intentId = self.intentId;
+    request.type = AWXThreeDSCheckEnrollment;
+    request.deviceDataCollectionRes = referenceId;
 
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
@@ -181,12 +182,13 @@ static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
 
 - (void)confirmWithTransactionId:(NSString *)transactionId
 {
-    AWXThreeDs *threeDs = [AWXThreeDs new];
-    threeDs.dsTransactionId = transactionId;
-    threeDs.returnURL = AWXThreeDSReturnURL;
-
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    AWXConfirmPaymentIntentRequest *request = [self confirmPaymentIntentRequestWithThreeDs:threeDs];
+
+    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.intentId = self.intentId;
+    request.type = AWXThreeDSValidate;
+    request.dsTransactionId = transactionId;
 
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;

@@ -58,6 +58,38 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
+ `AWXConfirmThreeDSRequest` includes all of the parameters needed to confirm 3ds.
+ */
+@interface AWXConfirmThreeDSRequest : NSObject <AWXRequestProtocol>
+
+/**
+ Intent ID.
+ */
+@property (nonatomic, copy) NSString *intentId;
+
+/**
+ Request ID.
+ */
+@property (nonatomic, copy) NSString *requestId;
+
+/**
+ Confirm type.
+ */
+@property (nonatomic, copy) NSString *type;
+
+/**
+ Device data collection response.
+ */
+@property (nonatomic, copy, nullable) NSString *deviceDataCollectionRes;
+
+/**
+ 3DS transaction ID.
+ */
+@property (nonatomic, copy, nullable) NSString *dsTransactionId;
+
+@end
+
+/**
  `AWXRetrievePaymentIntentRequest` includes all of the parameters needed to get payment intent.
  */
 @interface AWXRetrievePaymentIntentRequest : NSObject <AWXRequestProtocol>

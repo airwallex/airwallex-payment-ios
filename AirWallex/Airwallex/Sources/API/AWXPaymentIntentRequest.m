@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AWXConstants.h"
 #import "AWXDevice.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentMethod.h"
@@ -48,6 +49,39 @@
     parameters[@"save_payment_method"] = @(self.savePaymentMethod);
     if (self.device) {
         parameters[@"device"] = [self.device encodeToJSON];
+    }
+    return parameters;
+}
+
+- (Class)responseClass
+{
+    return AWXConfirmPaymentIntentResponse.class;
+}
+
+@end
+
+@implementation AWXConfirmThreeDSRequest
+
+- (NSString *)path
+{
+    return [NSString stringWithFormat:@"/api/v1/pa/payment_intents/%@/confirm_continue", self.intentId];
+}
+
+- (AWXHTTPMethod)method
+{
+    return AWXHTTPMethodPOST;
+}
+
+- (nullable NSDictionary *)parameters
+{
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"request_id"] = self.requestId;
+    if ([self.type isEqualToString:AWXThreeDSCheckEnrollment]) {
+        parameters[@"type"] = self.type;
+        parameters[@"three_ds"] = @{@"device_data_collection_res": self.deviceDataCollectionRes};
+    } else if ([self.type isEqualToString:AWXThreeDSValidate]) {
+        parameters[@"type"] = self.type;
+        parameters[@"three_ds"] = @{@"ds_transaction_id": self.dsTransactionId};
     }
     return parameters;
 }

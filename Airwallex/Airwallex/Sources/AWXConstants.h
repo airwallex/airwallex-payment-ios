@@ -31,6 +31,8 @@ FOUNDATION_EXPORT NSString *const AWXWeChatPayKey;
 FOUNDATION_EXPORT NSString *const AWXCardKey;
 FOUNDATION_EXPORT NSString *const AWXThreeDSReturnURL;
 FOUNDATION_EXPORT NSString *const AWXRedirectPaResURL;
+FOUNDATION_EXPORT NSString *const AWXThreeDSCheckEnrollment;
+FOUNDATION_EXPORT NSString *const AWXThreeDSValidate;
 
 FOUNDATION_EXPORT NSString *const AWXFontFamilyNameCircularStd;
 FOUNDATION_EXPORT NSString *const AWXFontNameCircularStdMedium;

@@ -66,7 +66,7 @@
 {
     NSURL *url = navigationAction.request.URL;
     if (url && [url.absoluteString containsString:AWXRedirectPaResURL] && self.webHandler) {
-        NSString *paRes = [url queryValueForName:@"PaRes"];
+        NSString *paRes = [url queryValueForName:@"paRes"];
         [self dismissViewControllerAnimated:YES completion:^{
             self.webHandler(paRes, nil);
         }];
