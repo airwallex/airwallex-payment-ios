@@ -87,6 +87,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy, nullable) NSString *dsTransactionId;
 
+/**
+ Device object.
+ */
+@property (nonatomic, strong, nullable) AWXDevice *device;
+
 @end
 
 /**

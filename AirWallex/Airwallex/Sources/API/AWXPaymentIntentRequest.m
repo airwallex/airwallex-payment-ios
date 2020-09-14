@@ -83,6 +83,9 @@
         parameters[@"type"] = self.type;
         parameters[@"three_ds"] = @{@"ds_transaction_id": self.dsTransactionId};
     }
+    if (self.device) {
+        parameters[@"device"] = [self.device encodeToJSON];
+    }
     return parameters;
 }
 

@@ -39,6 +39,7 @@
     
     WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
     configuration.userContentController = userContent;
+    configuration.preferences.javaScriptEnabled = YES;
     WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
     webView.multipleTouchEnabled = NO;
     webView.navigationDelegate = self;

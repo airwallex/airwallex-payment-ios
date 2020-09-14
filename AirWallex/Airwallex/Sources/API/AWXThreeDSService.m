@@ -105,6 +105,7 @@ static NSString * const AWXTermURL = @"https://demo-pacybsmock.airwallex.com/";
     request.intentId = self.intentId;
     request.type = AWXThreeDSCheckEnrollment;
     request.deviceDataCollectionRes = referenceId;
+    request.device = self.device;
 
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
@@ -189,6 +190,7 @@ static NSString * const AWXTermURL = @"https://demo-pacybsmock.airwallex.com/";
     request.intentId = self.intentId;
     request.type = AWXThreeDSValidate;
     request.dsTransactionId = transactionId;
+    request.device = self.device;
 
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
