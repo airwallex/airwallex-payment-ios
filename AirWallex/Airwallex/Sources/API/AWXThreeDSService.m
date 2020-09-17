@@ -36,7 +36,7 @@ static NSString * const AWXTermURL = @"https://demo-pacybsmock.airwallex.com/";
         self.session = [CardinalSession new];
 
         CardinalSessionConfiguration *config = [CardinalSessionConfiguration new];
-        config.deploymentEnvironment = CardinalSessionEnvironmentStaging;
+        config.deploymentEnvironment = [Airwallex mode] == AirwallexSDKLiveMode ? CardinalSessionEnvironmentProduction : CardinalSessionEnvironmentStaging;
         config.requestTimeout = CardinalSessionTimeoutStandard;
         config.challengeTimeout = 8;
         config.uiType = CardinalSessionUITypeBoth;

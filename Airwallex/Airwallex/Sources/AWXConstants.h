@@ -14,6 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 #define AIRWALLEX_VERSION (@"2.0.0")
 #define AIRWALLEX_API_VERSION (@"2020-04-30")
 
+typedef NS_ENUM(NSInteger, AirwallexSDKMode) {
+    AirwallexSDKTestMode,
+    AirwallexSDKLiveMode
+};
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
 FOUNDATION_EXPORT NSErrorDomain const AWXSDKErrorDomain;

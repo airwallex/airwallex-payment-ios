@@ -7,7 +7,6 @@
 //
 
 #import "AWXAPIClient.h"
-#import "AWXConstants.h"
 #import "AWXProtocol.h"
 #import "AWXRequestProtocol.h"
 #import "AWXResponseProtocol.h"
@@ -15,11 +14,13 @@
 #import "AWXAPIResponse.h"
 #import "AWXUtils.h"
 
-static NSString * const AWXAPIBaseURL = @"https://demo-pci-api.airwallex.com/";
+static NSString * const AWXAPIBaseTestURL = @"https://demo-pci-api.airwallex.com/";
+static NSString * const AWXAPIBaseLiveURL = @"https://pci-api.airwallex.com/";
 
 @implementation Airwallex
 
 static NSURL *_defaultBaseURL;
+static AirwallexSDKMode _mode = AirwallexSDKTestMode;
 
 + (void)setDefaultBaseURL:(NSURL *)baseURL
 {
@@ -28,7 +29,17 @@ static NSURL *_defaultBaseURL;
 
 + (NSURL *)defaultBaseURL
 {
-    return _defaultBaseURL ?: [NSURL URLWithString:AWXAPIBaseURL];
+    return _defaultBaseURL ?: (_mode == AirwallexSDKLiveMode ? [NSURL URLWithString:AWXAPIBaseLiveURL] : [NSURL URLWithString:AWXAPIBaseTestURL]);
+}
+
++ (void)setMode:(AirwallexSDKMode)mode
+{
+    _mode = mode;
+}
+
++ (AirwallexSDKMode)mode
+{
+    return _mode;
 }
 
 @end
