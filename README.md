@@ -80,7 +80,13 @@ use_frameworks!
 
 ### Basic Integration
 
-When your app starts, configure the SDK with your Airwallex `baseURL`.
+When your app starts, configure the SDK with  `mode`.
+
+```objective-c
+[Airwallex setMode:AirwallexSDKLiveMode];
+```
+
+If you want to test on different endpoint, you can customize mode and payment URL.
 
 ```objective-c
 [Airwallex setDefaultBaseURL:[NSURL URLWithString:@”Airwallex payment base URL”]];

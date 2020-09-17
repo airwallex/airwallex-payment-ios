@@ -79,7 +79,13 @@ use_frameworks!
 
 ### 基本整合
 
-启动应用时，请先配置SDK的`baseURL`.
+启动应用时，请先配置SDK的`mode`.
+
+```objective-c
+[Airwallex setMode:AirwallexSDKLiveMode];
+```
+
+如果你想在不同的服务端进行测试，你可以自定义mode和payment URL.
 
 ```objective-c
 [Airwallex setDefaultBaseURL:[NSURL URLWithString:@”Airwallex payment base URL”]];
