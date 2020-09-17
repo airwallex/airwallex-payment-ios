@@ -36,8 +36,11 @@
     }];
 
     // Airwallex
-    // Step1: Setup base URL
+    // Step1:
+    // Set a custom payment URL
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
+    // or use a preset mode (Note: test mode as default)
+//    [Airwallex setMode:AirwallexSDKLiveMode];
     
     // WeChatSDK 1.8.2
     [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppID enableMTA:YES];

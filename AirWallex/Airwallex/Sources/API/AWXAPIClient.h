@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setMode:(AirwallexSDKMode)mode;
 
 /**
- Get sdk mode.
+ Get sdk mode. Test mode as default.
  */
 + (AirwallexSDKMode)mode;
 
