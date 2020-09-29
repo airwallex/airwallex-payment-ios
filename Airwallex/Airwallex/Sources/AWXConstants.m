@@ -31,3 +31,6 @@ NSString *const AWXThreeDSValidate = @"3dsValidate";
 NSString *const AWXFontFamilyNameCircularStd = @"Circular Std";
 NSString *const AWXFontNameCircularStdMedium = @"CircularStd-Medium";
 NSString *const AWXFontNameCircularStdBold = @"CircularStd-Bold";
+
+NSString *const AWXFontFamilyNameCircularXX = @"CircularXX";
+NSString *const AWXFontNameCircularXXRegular = @"CircularXX-Regular";

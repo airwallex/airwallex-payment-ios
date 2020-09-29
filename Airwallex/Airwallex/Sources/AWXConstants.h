@@ -43,4 +43,7 @@ FOUNDATION_EXPORT NSString *const AWXFontFamilyNameCircularStd;
 FOUNDATION_EXPORT NSString *const AWXFontNameCircularStdMedium;
 FOUNDATION_EXPORT NSString *const AWXFontNameCircularStdBold;
 
+FOUNDATION_EXPORT NSString *const AWXFontFamilyNameCircularXX;
+FOUNDATION_EXPORT NSString *const AWXFontNameCircularXXRegular;
+
 NS_ASSUME_NONNULL_END

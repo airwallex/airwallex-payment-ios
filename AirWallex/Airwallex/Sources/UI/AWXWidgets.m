@@ -565,3 +565,45 @@
 }
 
 @end
+
+@interface AWXCurrencyView ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *flagImageView;
+@property (weak, nonatomic) IBOutlet UILabel *currencyNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+
+@end
+
+@implementation AWXCurrencyView
+
+- (NSString *)currencyName
+{
+    return self.currencyNameLabel.text;
+}
+
+- (void)setCurrencyName:(NSString *)currencyName
+{
+    self.currencyNameLabel.text = currencyName;
+}
+
+- (UIImage *)flag
+{
+    return self.flagImageView.image;
+}
+
+- (void)setFlag:(UIImage *)flag
+{
+    self.flagImageView.image = flag;
+}
+
+- (NSString *)price
+{
+    return self.priceLabel.text;
+}
+
+- (void)setPrice:(NSString *)price
+{
+    self.priceLabel.text = price;
+}
+
+@end

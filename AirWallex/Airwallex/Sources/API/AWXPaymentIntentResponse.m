@@ -10,6 +10,8 @@
 
 @interface AWXConfirmPaymentIntentResponse ()
 
+@property (nonatomic, copy, readwrite) NSNumber *amount;
+@property (nonatomic, copy, readwrite) NSString *currency;
 @property (nonatomic, copy, readwrite) NSString *status;
 @property (nonatomic, strong, readwrite, nullable) AWXConfirmPaymentNextAction *nextAction;
 @property (nonatomic, strong, readwrite, nullable) AWXPaymentAttempt *latestPaymentAttempt;
@@ -23,6 +25,8 @@
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWXConfirmPaymentIntentResponse *response = [[AWXConfirmPaymentIntentResponse alloc] init];
+    response.amount = json[@"amount"];
+    response.currency = json[@"currency"];
     response.status = json[@"status"];
     NSDictionary *nextAction = json[@"next_action"];
     if (nextAction && [nextAction isKindOfClass:[NSDictionary class]]) {
@@ -58,8 +62,12 @@
             response.weChatPayResponse = [AWXWeChatPaySDKResponse decodeFromJSON:data];
         } else if ([response.type isEqualToString:@"redirect"]) {
             response.redirectResponse = [AWXRedirectResponse decodeFromJSON:data];
-        } else if ([response.type isEqualToString:@"dcc"]) {
-            response.dccResponse = [AWXDccResponse decodeFromJSON:data];
+        }
+    }
+    NSDictionary *dccData = json[@"dcc_data"];
+    if (dccData) {
+        if ([response.type isEqualToString:@"dcc"]) {
+            response.dccResponse = [AWXDccResponse decodeFromJSON:dccData];
         }
     }
     return response;
@@ -137,11 +145,11 @@
 {
     AWXDccResponse *response = [[AWXDccResponse alloc] init];
     response.currency = json[@"currency"];
-    response.currency = json[@"currencyPair"];
-    response.currency = json[@"amount"];
-    response.currency = json[@"clientRate"];
-    response.currency = json[@"rateTimestamp"];
-    response.currency = json[@"rateExpiry"];
+    response.currencyPair = json[@"currencyPair"];
+    response.amount = json[@"amount"];
+    response.clientRate = json[@"clientRate"];
+    response.rateTimestamp = json[@"rateTimestamp"];
+    response.rateExpiry = json[@"rateExpiry"];
     return response;
 }
 

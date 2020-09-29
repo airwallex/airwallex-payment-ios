@@ -21,6 +21,16 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXConfirmPaymentIntentResponse : NSObject <AWXResponseProtocol>
 
 /**
+ Currency.
+ */
+@property (nonatomic, readonly) NSString *currency;
+
+/**
+ Payment amount.
+ */
+@property (nonatomic, readonly) NSNumber *amount;
+
+/**
  Payment status.
  */
 @property (nonatomic, readonly) NSString *status;

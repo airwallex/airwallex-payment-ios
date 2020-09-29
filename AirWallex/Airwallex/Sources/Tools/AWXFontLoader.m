@@ -16,12 +16,19 @@
 
 + (void)loadFontIfNeeded
 {
-    if ([UIFont fontNamesForFamilyName:AWXFontFamilyNameCircularStd].count == 0) {
+    [self loadFontWithFamilyName:AWXFontFamilyNameCircularStd
+                       fontNames:@[AWXFontNameCircularStdMedium, AWXFontNameCircularStdBold]];
+    [self loadFontWithFamilyName:AWXFontFamilyNameCircularXX
+                       fontNames:@[AWXFontNameCircularXXRegular]];
+}
+
++ (void)loadFontWithFamilyName:(NSString *)familyName fontNames:(NSArray <NSString *> *)fontNames
+{
+    if ([UIFont fontNamesForFamilyName:familyName].count == 0) {
         NSBundle *bundle = [NSBundle resourceBundle];
         NSString *identifier = bundle.bundleIdentifier;
 
-        NSArray *fonts = @[AWXFontNameCircularStdMedium, AWXFontNameCircularStdBold];
-        for (NSString *fontName in fonts) {
+        for (NSString *fontName in fontNames) {
             NSURL *fontURL = nil;
             if ([identifier hasPrefix:@"org.cocoapods"]) {
                 fontURL = [bundle URLForResource:fontName withExtension:@"otf" subdirectory:@"Airwallex.bundle"];
@@ -34,7 +41,7 @@
             CGFontRef font = CGFontCreateWithDataProvider(provider);
             if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
                 CFStringRef errorDescription = CFErrorCopyDescription(error);
-                
+
                 NSLog(@"Failed to load font: %@", errorDescription);
                 CFRelease(errorDescription);
             }

@@ -68,4 +68,13 @@ IB_DESIGNABLE
 
 @end
 
+IB_DESIGNABLE
+@interface AWXCurrencyView : AWXNibView
+
+@property (nonatomic, strong) NSString *currencyName;
+@property (nonatomic, strong) UIImage *flag;
+@property (nonatomic, strong) NSString *price;
+
+@end
+
 NS_ASSUME_NONNULL_END

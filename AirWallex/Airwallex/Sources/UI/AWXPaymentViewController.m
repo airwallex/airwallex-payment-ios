@@ -8,6 +8,7 @@
 
 #import "AWXPaymentViewController.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "AWXDCCViewController.h"
 #import "AWXConstants.h"
 #import "AWXPaymentItemCell.h"
 #import "AWXUtils.h"
@@ -23,7 +24,7 @@
 #import "AWXThreeDSService.h"
 #import "AWXSecurityService.h"
 
-@interface AWXPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AWXThreeDSServiceDelegate>
+@interface AWXPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -51,6 +52,16 @@
     }
 
     [self reloadData];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showDCC"] && [sender isKindOfClass:[AWXConfirmPaymentIntentResponse class]]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        AWXDCCViewController *controller = (AWXDCCViewController *)navigationController.topViewController;
+        controller.response = sender;
+        controller.delegate = self;
+    }
 }
 
 - (void)checkPaymentEnabled
@@ -156,7 +167,7 @@
         self.service = service;
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else if (response.nextAction.dccResponse) {
-        
+        [self performSegueWithIdentifier:@"showDCC" sender:response];
     } else {
         [self.delegate paymentViewController:self
                          didFinishWithStatus:AWXPaymentStatusError
@@ -217,6 +228,13 @@
 - (void)threeDSService:(AWXThreeDSService *)service didFinishWithResponse:(AWXConfirmPaymentIntentResponse *)response error:(NSError *)error
 {
     [self finishConfirmationWithResponse:response error:error];
+}
+
+#pragma mark - AWXDCCViewControllerDelegate
+
+- (void)dccViewController:(AWXDCCViewController *)controller useDCC:(BOOL)useDCC
+{
+    
 }
 
 @end
