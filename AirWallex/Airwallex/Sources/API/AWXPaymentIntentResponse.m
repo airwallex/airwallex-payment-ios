@@ -42,6 +42,7 @@
 @property (nonatomic, copy, readwrite) NSString *type;
 @property (nonatomic, strong, readwrite, nullable) AWXWeChatPaySDKResponse *weChatPayResponse;
 @property (nonatomic, strong, readwrite, nullable) AWXRedirectResponse *redirectResponse;
+@property (nonatomic, strong, readwrite, nullable) AWXDccResponse *dccResponse;
 
 @end
 
@@ -57,6 +58,8 @@
             response.weChatPayResponse = [AWXWeChatPaySDKResponse decodeFromJSON:data];
         } else if ([response.type isEqualToString:@"redirect"]) {
             response.redirectResponse = [AWXRedirectResponse decodeFromJSON:data];
+        } else if ([response.type isEqualToString:@"dcc"]) {
+            response.dccResponse = [AWXDccResponse decodeFromJSON:data];
         }
     }
     return response;
@@ -113,6 +116,32 @@
     response.acs = json[@"acs"];
     response.xid = json[@"xid"];
     response.req = json[@"req"];
+    return response;
+}
+
+@end
+
+@interface AWXDccResponse ()
+
+@property (nonatomic, copy, readwrite) NSString *currency;
+@property (nonatomic, copy, readwrite) NSString *currencyPair;
+@property (nonatomic, copy, readwrite) NSNumber *amount;
+@property (nonatomic, copy, readwrite) NSNumber *clientRate;
+@property (nonatomic, copy, readwrite) NSString *rateTimestamp, *rateExpiry;
+
+@end
+
+@implementation AWXDccResponse
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWXDccResponse *response = [[AWXDccResponse alloc] init];
+    response.currency = json[@"currency"];
+    response.currency = json[@"currencyPair"];
+    response.currency = json[@"amount"];
+    response.currency = json[@"clientRate"];
+    response.currency = json[@"rateTimestamp"];
+    response.currency = json[@"rateExpiry"];
     return response;
 }
 

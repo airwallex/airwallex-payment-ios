@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -148,7 +149,7 @@
                                                     <color key="textColor" name="Grey Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yD2-fF-CeK">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yD2-fF-CeK">
                                                     <rect key="frame" x="346" y="47" width="52" height="29"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
                                                     <state key="normal" title="Remove">
@@ -286,7 +287,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="11p-U3-wTR"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w6M-w5-GdE">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w6M-w5-GdE">
                                 <rect key="frame" x="16" y="802" width="382" height="44"/>
                                 <color key="backgroundColor" name="Purple Color"/>
                                 <constraints>
@@ -304,6 +305,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="Background Color"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="w6M-w5-GdE" secondAttribute="trailing" constant="16" id="DCY-xJ-p9r"/>
@@ -314,7 +316,6 @@
                             <constraint firstItem="eCS-DG-9uu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fBU-vA-hWk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eCS-DG-9uu" secondAttribute="trailing" id="yCW-c5-tn8"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="n69-eD-JJv">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="Cdb-jb-CTr">
@@ -456,7 +457,7 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="P74-f6-EbX" firstAttribute="top" secondItem="iM6-7j-oWC" secondAttribute="top" constant="16" id="84z-1z-aEQ"/>
                                             <constraint firstAttribute="bottom" secondItem="P74-f6-EbX" secondAttribute="bottom" constant="16" id="h4m-48-zkp"/>
@@ -473,7 +474,8 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="uB5-La-e3z"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="uB5-La-e3z" firstAttribute="bottom" secondItem="lyV-gZ-kEV" secondAttribute="bottom" id="DhM-mZ-4QF"/>
                             <constraint firstItem="lyV-gZ-kEV" firstAttribute="leading" secondItem="uB5-La-e3z" secondAttribute="leading" id="Lpg-Ip-b7r"/>
@@ -481,7 +483,6 @@
                             <constraint firstItem="lyV-gZ-kEV" firstAttribute="top" secondItem="uB5-La-e3z" secondAttribute="top" id="c2v-0A-VmJ"/>
                             <constraint firstItem="iM6-7j-oWC" firstAttribute="width" secondItem="8AO-7M-Nu3" secondAttribute="width" id="uep-vN-Zym"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="uB5-La-e3z"/>
                     </view>
                     <navigationItem key="navigationItem" title="Options" id="iLW-z0-cq9">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="233-eG-3Hj">
@@ -571,5 +572,8 @@
         <namedColor name="Purple Color">
             <color red="0.38039215686274508" green="0.18431372549019609" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

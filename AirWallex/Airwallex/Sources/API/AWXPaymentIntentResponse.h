@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@class AWXWeChatPaySDKResponse, AWXRedirectResponse;
+@class AWXWeChatPaySDKResponse, AWXRedirectResponse, AWXDccResponse;
 
 /**
  `AWXConfirmPaymentNextAction` includes the parameters for next action.
@@ -58,6 +58,11 @@ NS_ASSUME_NONNULL_BEGIN
  The parameters for redirection.
  */
 @property (nonatomic, readonly, nullable) AWXRedirectResponse *redirectResponse;
+
+/**
+  The parameters for dcc.
+ */
+@property (nonatomic, readonly, nullable) AWXDccResponse *dccResponse;
 
 @end
 
@@ -86,6 +91,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) NSString *acs;
 @property (nonatomic, readonly, nullable) NSString *xid;
 @property (nonatomic, readonly, nullable) NSString *req;
+
+@end
+
+/**
+ `AWXDccResponse` includes the parameters for dcc.
+ */
+@interface AWXDccResponse : NSObject <AWXJSONDecodable>
+
+@property (nonatomic, readonly) NSString *currency;
+@property (nonatomic, readonly) NSString *currencyPair;
+@property (nonatomic, readonly) NSNumber *amount;
+@property (nonatomic, readonly) NSNumber *clientRate;
+@property (nonatomic, readonly) NSString *rateTimestamp, *rateExpiry;
 
 @end
 

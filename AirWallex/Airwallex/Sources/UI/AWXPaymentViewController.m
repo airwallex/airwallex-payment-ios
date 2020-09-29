@@ -155,6 +155,8 @@
         service.delegate = self;
         self.service = service;
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
+    } else if (response.nextAction.dccResponse) {
+        
     } else {
         [self.delegate paymentViewController:self
                          didFinishWithStatus:AWXPaymentStatusError

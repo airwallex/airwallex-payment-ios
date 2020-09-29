@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="dG1-RU-wgL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="dG1-RU-wgL">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -205,24 +206,24 @@
                                                 <subviews>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gN8-Ps-Ex7" customClass="AWXCardTextField">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="67"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="o6e-1q-GBH"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Card number"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="4000000000001091"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="4012000300001003"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MQF-7d-Ysg" customClass="AWXFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="80" width="382" height="67"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="oVm-cw-2eM"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Name on card"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Adam"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="1003"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="auF-F2-v0B">
@@ -230,15 +231,15 @@
                                                         <subviews>
                                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ek-4y-cnB" customClass="AWXFloatLabeledTextField">
                                                                 <rect key="frame" x="0.0" y="0.0" width="258" height="67"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Expires MM / YYYY"/>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="text" value="12/2020"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="text" value="12/2023"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
                                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ekP-UO-j9w" customClass="AWXFloatLabeledTextField">
                                                                 <rect key="frame" x="281" y="0.0" width="101" height="67"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="101" id="lVg-GC-mns"/>
                                                                 </constraints>
@@ -280,7 +281,7 @@
                                                                 </connections>
                                                             </switch>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="trailing" secondItem="zp8-MB-K1P" secondAttribute="trailing" constant="16" id="8Eg-6C-PeK"/>
                                                             <constraint firstItem="zp8-MB-K1P" firstAttribute="centerY" secondItem="aMl-za-xhb" secondAttribute="centerY" id="J2n-To-2r1"/>
@@ -298,7 +299,7 @@
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMd-qO-uE1" customClass="AWXFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="67"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="hZR-yA-Bf1"/>
                                                                         </constraints>
@@ -309,7 +310,7 @@
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Ub-dG-8eB" customClass="AWXFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="83" width="382" height="67"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <gestureRecognizers/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="eDb-pE-5dJ"/>
@@ -321,7 +322,7 @@
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpj-MN-8KM" customClass="AWXFloatLabeledView">
                                                                         <rect key="frame" x="0.0" y="166" width="382" height="60"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <gestureRecognizers/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="YOu-8Q-gSo"/>
@@ -335,7 +336,7 @@
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FCM-rb-vxF" customClass="AWXFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="242" width="382" height="67"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Bsv-Or-B7m"/>
                                                                         </constraints>
@@ -346,7 +347,7 @@
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QzA-bT-eEj" customClass="AWXFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="325" width="382" height="67"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="SPn-r8-SCo"/>
                                                                         </constraints>
@@ -357,7 +358,7 @@
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="36b-ed-KZp" customClass="AWXFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="408" width="382" height="67"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="gb8-P6-UhY"/>
                                                                         </constraints>
@@ -368,7 +369,7 @@
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Chs-8R-CKN" customClass="AWXFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="491" width="382" height="60"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Eq6-sv-EVd"/>
                                                                         </constraints>
@@ -378,7 +379,7 @@
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dwc-HE-iw4" customClass="AWXFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="567" width="382" height="67"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="QOQ-tU-dZg"/>
                                                                         </constraints>
@@ -389,7 +390,7 @@
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rxO-1a-EKZ" customClass="AWXFloatLabeledTextField">
                                                                         <rect key="frame" x="0.0" y="650" width="382" height="67"/>
-                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Hr1-Eg-Nyi"/>
                                                                         </constraints>
@@ -401,7 +402,7 @@
                                                                 </subviews>
                                                             </stackView>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="trailing" secondItem="1PR-Li-UFe" secondAttribute="trailing" constant="16" id="Teb-VA-tpC"/>
                                                             <constraint firstAttribute="bottom" secondItem="1PR-Li-UFe" secondAttribute="bottom" constant="16" id="W9D-an-6px"/>
@@ -425,7 +426,7 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="qTO-iC-quJ" firstAttribute="leading" secondItem="Zl7-hq-vSX" secondAttribute="leading" constant="16" id="6tN-0d-G9E"/>
                                             <constraint firstItem="c3x-aQ-9Pb" firstAttribute="top" secondItem="qTO-iC-quJ" secondAttribute="bottom" constant="16" id="BBQ-G0-3Vd"/>
@@ -467,7 +468,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="vlZ-EY-gaZ" firstAttribute="leading" secondItem="5Gl-OO-Mm9" secondAttribute="leading" constant="16" id="Cx8-C5-fTh"/>
                             <constraint firstAttribute="trailing" secondItem="vlZ-EY-gaZ" secondAttribute="trailing" constant="16" id="Fa5-O0-PZd"/>
@@ -696,7 +697,7 @@
                                                     </label>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YZ6-W0-Koa" customClass="AWXFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="39" width="382" height="67"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Rbw-7c-CA4"/>
                                                         </constraints>
@@ -707,7 +708,7 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V2J-fB-G8T" customClass="AWXFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="122" width="382" height="67"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="A0P-7n-olT"/>
                                                         </constraints>
@@ -718,7 +719,7 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sKh-EQ-3nT" customClass="AWXFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="205" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="wyl-9h-fpD"/>
                                                         </constraints>
@@ -734,7 +735,7 @@
                                                     </label>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wjN-0Q-PSk" customClass="AWXFloatLabeledView">
                                                         <rect key="frame" x="0.0" y="320" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <gestureRecognizers/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="LH1-cs-K84"/>
@@ -748,7 +749,7 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q8C-ug-Ehi" customClass="AWXFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="396" width="382" height="67"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="66L-n8-e4j"/>
                                                         </constraints>
@@ -759,7 +760,7 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NhI-6R-lbc" customClass="AWXFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="479" width="382" height="67"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Gaw-Ko-NOU"/>
                                                         </constraints>
@@ -770,7 +771,7 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lSZ-Zq-YQP" customClass="AWXFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="562" width="382" height="67"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="PQs-zv-d5M"/>
                                                         </constraints>
@@ -781,7 +782,7 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fH9-JM-Mgx" customClass="AWXFloatLabeledTextField">
                                                         <rect key="frame" x="0.0" y="645" width="382" height="60"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="BU8-7q-X1W"/>
                                                         </constraints>
@@ -866,7 +867,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-q6-vt1">
                                 <rect key="frame" x="0.0" y="144" width="414" height="718"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CountryCell" id="GrY-Ii-25t">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
@@ -954,9 +955,22 @@
             <point key="canvasLocation" x="-79620.289855072464" y="1092.8571428571429"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="BBj-j1-Rai">
+            <size key="intrinsicContentSize" width="55" height="30"/>
+        </designable>
+        <designable name="vlZ-EY-gaZ">
+            <size key="intrinsicContentSize" width="54" height="30"/>
+        </designable>
+    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="Oci-f4-ed5"/>
         <segue reference="DKs-vZ-uzr"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.3803921569" green="0.1843137255" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
