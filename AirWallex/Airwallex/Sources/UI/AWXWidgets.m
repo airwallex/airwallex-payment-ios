@@ -576,6 +576,15 @@
 
 @implementation AWXCurrencyView
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = 6.0f;
+    self.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.layer.borderWidth = 1 / [UIScreen mainScreen].scale;
+}
+
 - (NSString *)currencyName
 {
     return self.currencyNameLabel.text;

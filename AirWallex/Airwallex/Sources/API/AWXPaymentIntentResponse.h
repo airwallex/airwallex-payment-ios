@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment amount.
  */
-@property (nonatomic, readonly) NSNumber *amount;
+@property (nonatomic, readonly) NSDecimalNumber *amount;
 
 /**
  Payment status.
@@ -111,8 +111,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) NSString *currency;
 @property (nonatomic, readonly) NSString *currencyPair;
-@property (nonatomic, readonly) NSNumber *amount;
-@property (nonatomic, readonly) NSNumber *clientRate;
+@property (nonatomic, readonly) NSDecimalNumber *amount;
+@property (nonatomic, readonly) NSDecimalNumber *clientRate;
 @property (nonatomic, readonly) NSString *rateTimestamp, *rateExpiry;
 
 @end
@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment amount.
  */
-@property (nonatomic, readonly) NSNumber *amount;
+@property (nonatomic, readonly) NSDecimalNumber *amount;
 
 /**
  Payment method.
@@ -161,12 +161,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Captured amount.
  */
-@property (nonatomic, readonly) NSNumber *capturedAmount;
+@property (nonatomic, readonly) NSDecimalNumber *capturedAmount;
 
 /**
  Refunded amount.
  */
-@property (nonatomic, readonly) NSNumber *refundedAmount;
+@property (nonatomic, readonly) NSDecimalNumber *refundedAmount;
 
 /**
  3DS authentication data.
@@ -193,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment amount.
  */
-@property (nonatomic, readonly) NSNumber *amount;
+@property (nonatomic, readonly) NSDecimalNumber *amount;
 
 /**
  Currency.
@@ -223,7 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Captured amount.
  */
-@property (nonatomic, readonly) NSNumber *capturedAmount;
+@property (nonatomic, readonly) NSDecimalNumber *capturedAmount;
 
 /**
  Created date.

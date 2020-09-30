@@ -10,7 +10,7 @@
 
 @interface AWXConfirmPaymentIntentResponse ()
 
-@property (nonatomic, copy, readwrite) NSNumber *amount;
+@property (nonatomic, copy, readwrite) NSDecimalNumber *amount;
 @property (nonatomic, copy, readwrite) NSString *currency;
 @property (nonatomic, copy, readwrite) NSString *status;
 @property (nonatomic, strong, readwrite, nullable) AWXConfirmPaymentNextAction *nextAction;
@@ -25,7 +25,8 @@
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWXConfirmPaymentIntentResponse *response = [[AWXConfirmPaymentIntentResponse alloc] init];
-    response.amount = json[@"amount"];
+    NSNumber *amount = json[@"amount"];
+    response.amount = [NSDecimalNumber decimalNumberWithDecimal:amount.decimalValue];
     response.currency = json[@"currency"];
     response.status = json[@"status"];
     NSDictionary *nextAction = json[@"next_action"];
@@ -133,8 +134,8 @@
 
 @property (nonatomic, copy, readwrite) NSString *currency;
 @property (nonatomic, copy, readwrite) NSString *currencyPair;
-@property (nonatomic, copy, readwrite) NSNumber *amount;
-@property (nonatomic, copy, readwrite) NSNumber *clientRate;
+@property (nonatomic, copy, readwrite) NSDecimalNumber *amount;
+@property (nonatomic, copy, readwrite) NSDecimalNumber *clientRate;
 @property (nonatomic, copy, readwrite) NSString *rateTimestamp, *rateExpiry;
 
 @end
@@ -146,8 +147,10 @@
     AWXDccResponse *response = [[AWXDccResponse alloc] init];
     response.currency = json[@"currency"];
     response.currencyPair = json[@"currencyPair"];
-    response.amount = json[@"amount"];
-    response.clientRate = json[@"clientRate"];
+    NSNumber *amount = json[@"amount"];
+    response.amount = [NSDecimalNumber decimalNumberWithDecimal:amount.decimalValue];
+    NSNumber *clientRate = json[@"clientRate"];
+    response.clientRate = [NSDecimalNumber decimalNumberWithDecimal:clientRate.decimalValue];
     response.rateTimestamp = json[@"rateTimestamp"];
     response.rateExpiry = json[@"rateExpiry"];
     return response;
@@ -158,11 +161,11 @@
 @interface AWXPaymentAttempt ()
 
 @property (nonatomic, copy, readwrite) NSString *Id;
-@property (nonatomic, copy, readwrite) NSNumber *amount;
+@property (nonatomic, copy, readwrite) NSDecimalNumber *amount;
 @property (nonatomic, strong, readwrite) AWXPaymentMethod *paymentMethod;
 @property (nonatomic, copy, readwrite) NSString *status;
-@property (nonatomic, copy, readwrite) NSNumber *capturedAmount;
-@property (nonatomic, copy, readwrite) NSNumber *refundedAmount;
+@property (nonatomic, copy, readwrite) NSDecimalNumber *capturedAmount;
+@property (nonatomic, copy, readwrite) NSDecimalNumber *refundedAmount;
 @property (nonatomic, strong, readwrite) AWXAuthenticationData *authenticationData;
 
 @end
@@ -173,14 +176,17 @@
 {
     AWXPaymentAttempt *response = [[AWXPaymentAttempt alloc] init];
     response.Id = json[@"id"];
-    response.amount = json[@"amount"];
+    NSNumber *amount = json[@"amount"];
+    response.amount = [NSDecimalNumber decimalNumberWithDecimal:amount.decimalValue];
     NSDictionary *paymentMethod = json[@"payment_method"];
     if (paymentMethod) {
         response.paymentMethod = [AWXPaymentMethod decodeFromJSON:paymentMethod];
     }
     response.status = json[@"status"];
-    response.capturedAmount = json[@"captured_amount"];
-    response.refundedAmount = json[@"refunded_amount"];
+    NSNumber *capturedAmount = json[@"captured_amount"];
+    response.capturedAmount = [NSDecimalNumber decimalNumberWithDecimal:capturedAmount.decimalValue];
+    NSNumber *refundedAmount = json[@"refunded_amount"];
+    response.refundedAmount = [NSDecimalNumber decimalNumberWithDecimal:refundedAmount.decimalValue];
     NSDictionary *authenticationData = json[@"authentication_data"];
     if (authenticationData) {
         response.authenticationData = [AWXAuthenticationData decodeFromJSON:authenticationData];
@@ -229,13 +235,13 @@
 
 @property (nonatomic, copy, readwrite) NSString *Id;
 @property (nonatomic, copy, readwrite) NSString *requestId;
-@property (nonatomic, copy, readwrite) NSNumber *amount;
+@property (nonatomic, copy, readwrite) NSDecimalNumber *amount;
 @property (nonatomic, copy, readwrite) NSString *currency;
 @property (nonatomic, copy, readwrite) NSString *merchantOrderId;
 @property (nonatomic, copy, readwrite) NSDictionary *order;
 @property (nonatomic, copy, readwrite) NSString *customerId;
 @property (nonatomic, copy, readwrite) NSString *status;
-@property (nonatomic, copy, readwrite) NSNumber *capturedAmount;
+@property (nonatomic, copy, readwrite) NSDecimalNumber *capturedAmount;
 @property (nonatomic, copy, readwrite) NSString *createdAt;
 @property (nonatomic, copy, readwrite) NSString *updatedAt;
 @property (nonatomic, copy, readwrite) NSArray <NSString *> *availablePaymentMethodTypes;
@@ -252,13 +258,15 @@
     AWXGetPaymentIntentResponse *response = [[AWXGetPaymentIntentResponse alloc] init];
     response.Id = json[@"id"];
     response.requestId = json[@"request_id"];
-    response.amount = json[@"amount"];
+    NSNumber *amount = json[@"amount"];
+    response.amount = [NSDecimalNumber decimalNumberWithDecimal:amount.decimalValue];
     response.currency = json[@"currency"];
     response.merchantOrderId = json[@"merchant_order_id"];
     response.order = json[@"order"];
     response.customerId = json[@"customer_id"];
     response.status = json[@"status"];
-    response.capturedAmount = json[@"captured_amount"];
+    NSNumber *capturedAmount = json[@"captured_amount"];
+    response.capturedAmount = [NSDecimalNumber decimalNumberWithDecimal:capturedAmount.decimalValue];
     response.createdAt = json[@"created_at"];
     response.updatedAt = json[@"updated_at"];
     response.availablePaymentMethodTypes = json[@"available_payment_method_types"];
