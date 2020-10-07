@@ -583,7 +583,27 @@
     self.contentView.layer.masksToBounds = YES;
     self.contentView.layer.cornerRadius = 6.0f;
     self.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.contentView.layer.borderWidth = 1 / [UIScreen mainScreen].scale;
+    self.contentView.layer.borderWidth = 1.0 / [UIScreen mainScreen].scale;
+}
+
+- (IBAction)buttonPressed:(id)sender
+{
+    self.isSelected = YES;
+    if (self.exclusiveView) {
+        self.exclusiveView.isSelected = NO;
+    }
+}
+
+- (BOOL)isSelected
+{
+    return self.button.isSelected;
+}
+
+- (void)setIsSelected:(BOOL)isSelected
+{
+    self.button.selected = isSelected;
+    self.contentView.layer.borderWidth = isSelected ? 1.5 : (1.0 / [UIScreen mainScreen].scale);
+    self.contentView.layer.borderColor = isSelected ? [UIColor blueColor].CGColor : [UIColor lightGrayColor].CGColor;
 }
 
 - (NSString *)currencyName

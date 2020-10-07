@@ -18,6 +18,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AWXCurrencyView">
             <connections>
+                <outlet property="button" destination="tys-WQ-UGn" id="AcJ-Tj-J0B"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="a6v-b2-fQA"/>
                 <outlet property="currencyNameLabel" destination="pta-T2-otX" id="mbA-dC-Alb"/>
                 <outlet property="flagImageView" destination="jWO-kr-ZLS" id="f6t-n3-u9V"/>
@@ -65,11 +66,21 @@
                         <constraint firstAttribute="trailing" secondItem="pta-T2-otX" secondAttribute="trailing" id="xBd-P3-rtS"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tys-WQ-UGn">
+                    <rect key="frame" x="0.0" y="0.0" width="338" height="337"/>
+                    <connections>
+                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="1pw-sq-Xf2"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="BQR-ik-9iC" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2Yo-zV-p03"/>
+                <constraint firstAttribute="trailing" secondItem="tys-WQ-UGn" secondAttribute="trailing" id="JRG-JW-BOK"/>
+                <constraint firstAttribute="bottom" secondItem="tys-WQ-UGn" secondAttribute="bottom" id="eg6-oa-elb"/>
+                <constraint firstItem="tys-WQ-UGn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jjs-2h-8bC"/>
                 <constraint firstItem="BQR-ik-9iC" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ra6-OB-wqx"/>
+                <constraint firstItem="tys-WQ-UGn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zYM-H8-Rkd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="34.782608695652179" y="7.03125"/>

@@ -36,6 +36,8 @@
     self.leftCurrencyView.layer.shadowOffset = CGSizeMake(0, 0);
     self.leftCurrencyView.layer.shadowOpacity = 1;
     self.leftCurrencyView.layer.shadowRadius = 16;
+    self.leftCurrencyView.exclusiveView = self.rightCurrencyView;
+    self.leftCurrencyView.isSelected = YES;
 
     AWXDccResponse *dccResponse = self.response.nextAction.dccResponse;
     if (dccResponse) {
@@ -52,6 +54,7 @@
     self.rightCurrencyView.layer.shadowOffset = CGSizeMake(0, 0);
     self.rightCurrencyView.layer.shadowOpacity = 1;
     self.rightCurrencyView.layer.shadowRadius = 16;
+    self.rightCurrencyView.exclusiveView = self.leftCurrencyView;
 
     self.rateImageView.image = [UIImage imageNamed:@"fxRate" inBundle:[NSBundle resourceBundle]];
 

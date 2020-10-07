@@ -73,6 +73,9 @@ IB_DESIGNABLE
 @property (nonatomic, strong) NSString *currencyName;
 @property (nonatomic, strong) UIImage *flag;
 @property (nonatomic, strong) NSString *price;
+@property (nonatomic) BOOL isSelected;
+@property (nonatomic, weak) AWXCurrencyView *exclusiveView;
+@property (weak, nonatomic) IBOutlet UIButton *button;
 
 @end
 
