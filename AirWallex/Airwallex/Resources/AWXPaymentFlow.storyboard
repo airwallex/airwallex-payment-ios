@@ -174,6 +174,7 @@
                         <outlet property="tableView" destination="bZ9-Ip-2rw" id="lZm-7U-GCa"/>
                         <segue destination="FPd-cM-qgB" kind="presentation" identifier="addCard" id="XXn-gX-5xC"/>
                         <segue destination="qRb-XP-suO" kind="show" identifier="confirmPayment" id="DKs-vZ-uzr"/>
+                        <segue destination="Kac-c3-XHw" kind="presentation" identifier="showDCC" id="jOs-vC-2Pn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D6c-ce-ibw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1105,6 +1106,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
+        <segue reference="jOs-vC-2Pn"/>
         <segue reference="Kt1-cg-dJB"/>
         <segue reference="DKs-vZ-uzr"/>
     </inferredMetricsTieBreakers>

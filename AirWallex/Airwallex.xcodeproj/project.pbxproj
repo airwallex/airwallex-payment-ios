@@ -85,7 +85,7 @@
 		086666702406314500B52477 /* AWXWidgets.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866666E2406314500B52477 /* AWXWidgets.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		086666732406343B00B52477 /* AWXTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 086666712406343B00B52477 /* AWXTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		086666742406343B00B52477 /* AWXTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 086666722406343B00B52477 /* AWXTheme.m */; };
-		086F85E82522FB040006DAB5 /* AWXDCCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 086F85E62522FB040006DAB5 /* AWXDCCViewController.h */; };
+		086F85E82522FB040006DAB5 /* AWXDCCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 086F85E62522FB040006DAB5 /* AWXDCCViewController.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		086F85E92522FB040006DAB5 /* AWXDCCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086F85E72522FB040006DAB5 /* AWXDCCViewController.m */; };
 		086F8629252304030006DAB5 /* AWXCurrencyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086F8628252304030006DAB5 /* AWXCurrencyView.xib */; };
 		08A14B9723E91E9700F3C211 /* AWXAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A14B9523E91E9700F3C211 /* AWXAPIClient.m */; };
@@ -526,11 +526,11 @@
 				081D52D123D0339E00953B03 /* AWXPaymentMethod.h in Headers */,
 				081D52D523D0343200953B03 /* AWXWeChatPay.h in Headers */,
 				081D52E823D043E100953B03 /* AWXPaymentMethodOptions.h in Headers */,
-				086F85E82522FB040006DAB5 /* AWXDCCViewController.h in Headers */,
 				0829FD1D2433474A00557DB2 /* AWXPaymentIntent.h in Headers */,
 				0847798C244EB40200C41256 /* AWXDevice.h in Headers */,
 				0863F6FC240E390100925664 /* AWXPaymentItemCell.h in Headers */,
 				086666432406138400B52477 /* AWXPaymentMethodCell.h in Headers */,
+				086F85E82522FB040006DAB5 /* AWXDCCViewController.h in Headers */,
 				086666702406314500B52477 /* AWXWidgets.h in Headers */,
 				081D52ED23D04AE600953B03 /* AWXProtocol.h in Headers */,
 				081D52F123D04B5400953B03 /* AWXAPIResponse.h in Headers */,
