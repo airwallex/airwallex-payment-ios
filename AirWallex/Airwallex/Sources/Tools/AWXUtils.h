@@ -38,10 +38,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface NSLocale (Utils)
+
++ (NSLocale *)localeWithCurrency:(NSString *)currency;
+
+@end
+
 @interface NSDecimalNumber (Utils)
 
 - (NSDecimalNumber *)toIntegerCents;
 - (NSString *)string;
+- (NSString *)stringWithCurrencyCode:(NSString *)currencyCode;
 
 @end
 

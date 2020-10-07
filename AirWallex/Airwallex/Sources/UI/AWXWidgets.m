@@ -568,6 +568,7 @@
 
 @interface AWXCurrencyView ()
 
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIImageView *flagImageView;
 @property (weak, nonatomic) IBOutlet UILabel *currencyNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
@@ -579,10 +580,10 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    self.layer.masksToBounds = YES;
-    self.layer.cornerRadius = 6.0f;
-    self.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    self.layer.borderWidth = 1 / [UIScreen mainScreen].scale;
+    self.contentView.layer.masksToBounds = YES;
+    self.contentView.layer.cornerRadius = 6.0f;
+    self.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.contentView.layer.borderWidth = 1 / [UIScreen mainScreen].scale;
 }
 
 - (NSString *)currencyName

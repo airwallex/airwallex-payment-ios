@@ -68,7 +68,6 @@ IB_DESIGNABLE
 
 @end
 
-IB_DESIGNABLE
 @interface AWXCurrencyView : AWXNibView
 
 @property (nonatomic, strong) NSString *currencyName;

@@ -32,7 +32,7 @@
     _product = product;
     self.nameLabel.text = product.name;
     self.detailLabel.text = product.detail;
-    self.priceLabel.text = product.price.string;
+    self.priceLabel.text = [NSString stringWithFormat:@"$%@", product.price.string];
 }
 
 - (IBAction)removePressed:(id)sender

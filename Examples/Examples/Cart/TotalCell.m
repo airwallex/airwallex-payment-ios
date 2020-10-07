@@ -14,19 +14,19 @@
 - (void)setSubtotal:(NSDecimalNumber *)subtotal
 {
     _subtotal = subtotal;
-    self.subtotalLabel.text = subtotal.string;
+    self.subtotalLabel.text = [NSString stringWithFormat:@"$%@", subtotal.string];
 }
 
 - (void)setShipping:(NSDecimalNumber *)shipping
 {
     _shipping = shipping;
-    self.shippingLabel.text = shipping.string;
+    self.shippingLabel.text = [NSString stringWithFormat:@"$%@", shipping.string];
 }
 
 - (void)setTotal:(NSDecimalNumber *)total
 {
     _total = total;
-    self.totalLabel.text = total.string;
+    self.totalLabel.text = [NSString stringWithFormat:@"$%@", total.string];
 }
 
 @end

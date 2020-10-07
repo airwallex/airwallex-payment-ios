@@ -85,6 +85,22 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 
 @end
 
+@implementation NSLocale (Utils)
+
++ (NSLocale *)localeWithCurrency:(NSString *)currency
+{
+    NSArray *locales = [NSLocale availableLocaleIdentifiers];
+    for (NSString *localeId in locales) {
+        NSLocale *locale = [NSLocale localeWithLocaleIdentifier:localeId];
+        if ([locale.currencyCode isEqualToString:currency]) {
+            return locale;
+        }
+    }
+    return [NSLocale localeWithLocaleIdentifier:@"en_US"];
+}
+
+@end
+
 @implementation NSDecimalNumber (Utils)
 
 - (NSDecimalNumber *)toIntegerCents
@@ -110,6 +126,15 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     formatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    formatter.usesGroupingSeparator = YES;
+    return [formatter stringFromNumber:self];
+}
+
+- (NSString *)stringWithCurrencyCode:(NSString *)currencyCode
+{
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.locale = [NSLocale localeWithCurrency:currencyCode];
     formatter.numberStyle = NSNumberFormatterCurrencyStyle;
     formatter.usesGroupingSeparator = YES;
     return [formatter stringFromNumber:self];

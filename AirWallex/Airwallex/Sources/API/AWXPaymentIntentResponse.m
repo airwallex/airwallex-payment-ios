@@ -146,13 +146,13 @@
 {
     AWXDccResponse *response = [[AWXDccResponse alloc] init];
     response.currency = json[@"currency"];
-    response.currencyPair = json[@"currencyPair"];
+    response.currencyPair = json[@"currency_pair"];
     NSNumber *amount = json[@"amount"];
     response.amount = [NSDecimalNumber decimalNumberWithDecimal:amount.decimalValue];
-    NSNumber *clientRate = json[@"clientRate"];
+    NSNumber *clientRate = json[@"client_rate"];
     response.clientRate = [NSDecimalNumber decimalNumberWithDecimal:clientRate.decimalValue];
-    response.rateTimestamp = json[@"rateTimestamp"];
-    response.rateExpiry = json[@"rateExpiry"];
+    response.rateTimestamp = json[@"rate_timestamp"];
+    response.rateExpiry = json[@"rate_expiry"];
     return response;
 }
 
