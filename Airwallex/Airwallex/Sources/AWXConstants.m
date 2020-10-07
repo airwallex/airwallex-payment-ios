@@ -27,6 +27,7 @@ NSString *const AWXThreeDSReturnURL = @"";
 NSString *const AWXRedirectPaResURL = @"/web/feedback?paRes=";
 NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
 NSString *const AWXThreeDSValidate = @"3dsValidate";
+NSString *const AWXDCC = @"dcc";
 
 NSString *const AWXFontFamilyNameCircularStd = @"Circular Std";
 NSString *const AWXFontNameCircularStdMedium = @"CircularStd-Medium";

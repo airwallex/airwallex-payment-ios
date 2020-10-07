@@ -64,7 +64,7 @@
 
 - (IBAction)confirmPressed:(id)sender
 {
-    
+    [self.delegate dccViewController:self useDCC:self.rightCurrencyView.isSelected];
 }
 
 @end

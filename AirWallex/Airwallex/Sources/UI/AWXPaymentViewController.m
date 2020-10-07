@@ -234,7 +234,25 @@
 
 - (void)dccViewController:(AWXDCCViewController *)controller useDCC:(BOOL)useDCC
 {
+    [controller dismissViewControllerAnimated:YES completion:nil];
     
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+
+    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.intentId = self.paymentIntent.Id;
+    request.type = AWXDCC;
+    request.useDCC = useDCC;
+    request.device = self.device;
+
+    [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [SVProgressHUD dismiss];
+
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf finishConfirmationWithResponse:response error:error];
+    }];
 }
 
 @end

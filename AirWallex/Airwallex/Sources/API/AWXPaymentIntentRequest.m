@@ -76,12 +76,13 @@
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
+    parameters[@"type"] = self.type;
     if ([self.type isEqualToString:AWXThreeDSCheckEnrollment]) {
-        parameters[@"type"] = self.type;
         parameters[@"three_ds"] = @{@"device_data_collection_res": self.deviceDataCollectionRes};
     } else if ([self.type isEqualToString:AWXThreeDSValidate]) {
-        parameters[@"type"] = self.type;
         parameters[@"three_ds"] = @{@"ds_transaction_id": self.dsTransactionId};
+    } else if ([self.type isEqualToString:AWXDCC]) {
+        parameters[@"use_dcc"] = self.useDCC ? @"true" : @"false";
     }
     if (self.device) {
         parameters[@"device"] = [self.device encodeToJSON];
