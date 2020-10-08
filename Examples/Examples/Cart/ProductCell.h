@@ -28,6 +28,7 @@ typedef void(^ProductCellRemovalHandler)(Product *product);
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
+@property (weak, nonatomic) IBOutlet UIButton *removeButton;
 
 @property (strong, nonatomic) Product *product;
 @property (strong, nonatomic) ProductCellRemovalHandler handler;

@@ -20,6 +20,7 @@
 #import "AWXPaymentMethodResponse.h"
 #import "AWXCountryListViewController.h"
 #import "AWXCountry.h"
+#import "AWXTheme.h"
 
 @interface AWXCardViewController () <AWXCountryListViewControllerDelegate>
 
@@ -43,6 +44,7 @@
 
 @property (strong, nonatomic, nullable) AWXCountry *country;
 @property (strong, nonatomic, nullable) AWXPlaceDetails *billing;
+@property (weak, nonatomic) IBOutlet AWXButton *confirmButton;
 
 @end
 
@@ -51,7 +53,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
     self.cardNoField.fieldType = AWXTextFieldTypeCardNumber;
     self.cardNoField.nextTextField = self.nameField;
@@ -60,6 +62,7 @@
     self.expiresField.fieldType = AWXTextFieldTypeExpires;
     self.expiresField.nextTextField = self.cvcField;
     self.cvcField.fieldType = AWXTextFieldTypeCVC;
+    self.switchButton.onTintColor = [AWXTheme sharedTheme].tintColor;
 
     self.firstNameField.fieldType = AWXTextFieldTypeFirstName;
     self.firstNameField.nextTextField = self.lastNameField;
@@ -76,6 +79,7 @@
     self.emailField.fieldType = AWXTextFieldTypeEmail;
     self.emailField.nextTextField = self.phoneNumberField;
     self.phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
+    self.confirmButton.enabled = YES;
 
     if (!self.shipping) {
         self.sameAsShipping = NO;

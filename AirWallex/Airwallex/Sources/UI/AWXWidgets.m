@@ -105,7 +105,7 @@
 - (void)setEnabled:(BOOL)enabled
 {
     super.enabled = enabled;
-    self.backgroundColor = enabled ? [AWXTheme sharedTheme].purpleColor : [AWXTheme sharedTheme].lineColor;
+    self.backgroundColor = enabled ? [AWXTheme sharedTheme].tintColor : [AWXTheme sharedTheme].lineColor;
 }
 
 @end
@@ -603,7 +603,7 @@
 {
     self.button.selected = isSelected;
     self.contentView.layer.borderWidth = isSelected ? 1.5 : (1.0 / [UIScreen mainScreen].scale);
-    self.contentView.layer.borderColor = isSelected ? [UIColor blueColor].CGColor : [UIColor lightGrayColor].CGColor;
+    self.contentView.layer.borderColor = isSelected ? [AWXTheme sharedTheme].tintColor.CGColor : [AWXTheme sharedTheme].lineColor.CGColor;
 }
 
 - (NSString *)currencyName

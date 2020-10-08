@@ -22,9 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, null_resettable) UIColor *lineColor;
 
 /**
- Purple Color.
+ Tint Color.
  */
-@property (nonatomic, copy, null_resettable) UIColor *purpleColor;
+@property (nonatomic, copy, null_resettable) UIColor *tintColor;
 
 /**
  Text Color.

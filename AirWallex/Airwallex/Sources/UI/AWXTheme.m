@@ -31,25 +31,14 @@ static UIColor *AWXThemeDefaultTextColor = nil;
     AWXThemeDefaultTextColor = [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1];
 }
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.lineColor = AWXThemeDefaultLineColor;
-        self.purpleColor = AWXThemeDefaultPurpleColor;
-        self.textColor = AWXThemeDefaultTextColor;
-    }
-    return self;
-}
-
 - (UIColor *)lineColor
 {
     return _lineColor ?: AWXThemeDefaultLineColor;
 }
 
-- (UIColor *)purpleColor
+- (UIColor *)tintColor
 {
-    return _purpleColor ?: AWXThemeDefaultPurpleColor;
+    return _tintColor ?: AWXThemeDefaultPurpleColor;
 }
 
 - (UIColor *)textColor

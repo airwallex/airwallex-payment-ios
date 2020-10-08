@@ -55,7 +55,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self reloadData];
 }
 
@@ -205,7 +205,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         button.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
         button.layer.masksToBounds = YES;
         [button setTitle:@"Enter a new card" forState:UIControlStateNormal];
-        [button setTitleColor:[AWXTheme sharedTheme].purpleColor forState:UIControlStateNormal];
+        [button setTitleColor:[AWXTheme sharedTheme].tintColor forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
         button.backgroundColor = [UIColor clearColor];
         [button addTarget:self action:@selector(newPressed:) forControlEvents:UIControlEventTouchUpInside];

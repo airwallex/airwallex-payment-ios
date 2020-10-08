@@ -58,8 +58,7 @@
 
     self.rateImageView.image = [UIImage imageNamed:@"fxRate" inBundle:[NSBundle resourceBundle]];
 
-    self.confirmButton.layer.masksToBounds = NO;
-    self.confirmButton.layer.cornerRadius = 6.0f;
+    self.confirmButton.enabled = YES;
 }
 
 - (IBAction)confirmPressed:(id)sender

@@ -33,6 +33,7 @@
     self.nameLabel.text = product.name;
     self.detailLabel.text = product.detail;
     self.priceLabel.text = [NSString stringWithFormat:@"$%@", product.price.string];
+    [self.removeButton setTitleColor:[AWXTheme sharedTheme].tintColor forState:UIControlStateNormal];
 }
 
 - (IBAction)removePressed:(id)sender

@@ -49,11 +49,10 @@
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="LS5-42-5J5"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
-                                                    <color key="textColor" name="Purple Color"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" name="Light Purple Color"/>
                                             <constraints>
                                                 <constraint firstItem="czL-OA-pH0" firstAttribute="leading" secondItem="iGg-5K-pEc" secondAttribute="leading" id="9Pg-Gd-qKV"/>
                                                 <constraint firstAttribute="trailing" secondItem="czL-OA-pH0" secondAttribute="trailing" id="QXe-LV-GZz"/>
@@ -153,7 +152,7 @@
                                                     <rect key="frame" x="346" y="47" width="52" height="29"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
                                                     <state key="normal" title="Remove">
-                                                        <color key="titleColor" name="Purple Color"/>
+                                                        <color key="titleColor" systemColor="labelColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="removePressed:" destination="P5K-v1-gGW" eventType="touchUpInside" id="mHw-5N-UlR"/>
@@ -189,6 +188,7 @@
                                             <outlet property="detailLabel" destination="3Rw-H1-zCS" id="Co2-KX-N5z"/>
                                             <outlet property="nameLabel" destination="nwS-kV-rcA" id="yWq-zW-7Qr"/>
                                             <outlet property="priceLabel" destination="irC-v0-rxQ" id="0g4-Va-uPp"/>
+                                            <outlet property="removeButton" destination="yD2-fF-CeK" id="uoi-0w-f90"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TotalCell" rowHeight="214" id="KOI-Zh-6jg" customClass="TotalCell">
@@ -289,7 +289,6 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w6M-w5-GdE">
                                 <rect key="frame" x="16" y="802" width="382" height="44"/>
-                                <color key="backgroundColor" name="Purple Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8In-xM-6a8"/>
                                 </constraints>
@@ -560,9 +559,6 @@
         <namedColor name="Grey Text Color">
             <color red="0.32941176470588235" green="0.32941176470588235" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="Light Purple Color">
-            <color red="0.85098039215686272" green="0.80392156862745101" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="Line Color">
             <color red="0.92156862745098034" green="0.92549019607843142" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -572,6 +568,9 @@
         <namedColor name="Purple Color">
             <color red="0.38039215686274508" green="0.18431372549019609" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
