@@ -111,4 +111,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXRetrievePaymentIntentRequest` includes all of the parameters needed to get payment intent.
+ */
+@interface AWXGetPaResRequest : NSObject <AWXRequestProtocol>
+
+/**
+ PaRes ID.
+ */
+@property (nonatomic, copy) NSString *paResId;
+
+@end
+
 NS_ASSUME_NONNULL_END

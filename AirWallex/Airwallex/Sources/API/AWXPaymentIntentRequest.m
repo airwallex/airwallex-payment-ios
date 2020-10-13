@@ -115,3 +115,27 @@
 }
 
 @end
+
+@implementation AWXGetPaResRequest
+
+- (NSString *)path
+{
+    return @"/paresCache";
+}
+
+- (AWXHTTPMethod)method
+{
+    return AWXHTTPMethodGET;
+}
+
+- (nullable NSDictionary *)parameters
+{
+    return @{@"paResId": self.paResId};
+}
+
+- (Class)responseClass
+{
+    return AWXGetPaResResponse.class;
+}
+
+@end

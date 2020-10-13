@@ -275,3 +275,22 @@
 }
 
 @end
+
+@interface AWXGetPaResResponse ()
+
+@property (nonatomic, copy, readwrite) NSString *paRes;
+
+@end
+
+@implementation AWXGetPaResResponse
+
++ (id <AWXResponseProtocol>)parse:(NSData *)data
+{
+    NSError *error = nil;
+    id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    AWXGetPaResResponse *response = [[AWXGetPaResResponse alloc] init];
+    response.paRes = json[@"pares"];
+    return response;
+}
+
+@end

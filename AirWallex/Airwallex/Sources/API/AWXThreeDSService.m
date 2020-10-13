@@ -137,7 +137,7 @@
             // 3DS v1.x flow
             NSURL *url = [NSURL URLWithString:redirectResponse.acs];
             NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
-            NSString *termUrlEncoding = [AWXTermURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
+            NSString *termUrlEncoding = [[NSString stringWithFormat:@"%@pares/callback", AWXTermURL] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
             NSString *body = [NSString stringWithFormat:@"&PaReq=%@&TermUrl=%@", reqEncoding, termUrlEncoding];
             NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
             urlRequest.HTTPMethod = @"POST";
@@ -147,7 +147,11 @@
             AWXWebViewController *webViewController = [[AWXWebViewController alloc] initWithURLRequest:urlRequest webHandler:^(NSString * _Nullable paResId, NSError * _Nullable error) {
                 __strong __typeof(weakSelf)strongSelf = weakSelf;
                 if (paResId) {
-                    [strongSelf confirmWithTransactionId:paResId];
+                    __weak __typeof(self)_weakSelf = strongSelf;
+                    [strongSelf getPaRes:paResId completion:^(AWXGetPaResResponse *paResResponse) {
+                        __strong __typeof(weakSelf)_strongSelf = _weakSelf;
+                        [_strongSelf confirmWithTransactionId:paResResponse.paRes];
+                    }];
                 } else {
                     [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
                 }
@@ -201,6 +205,29 @@
         }
 
         [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:response error:error];
+    }];
+}
+
+- (void)getPaRes:(NSString *)Id completion:(void(^)(AWXGetPaResResponse *))completion;
+{
+    AWXAPIClientConfiguration *configuration = [[AWXAPIClientConfiguration alloc] init];
+    configuration.baseURL = [NSURL URLWithString:AWXTermURL];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:configuration];
+
+    AWXGetPaResRequest *request = [AWXGetPaResRequest new];
+    request.paResId = Id;
+
+    [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [SVProgressHUD dismiss];
+        if (error) {
+            [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
+            return;
+        }
+
+        completion(response);
     }];
 }
 

@@ -247,4 +247,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface AWXGetPaResResponse : NSObject <AWXResponseProtocol>
+
+/**
+ PaRes
+ */
+@property (nonatomic, readonly) NSString *paRes;
+
+@end
+
 NS_ASSUME_NONNULL_END
