@@ -24,7 +24,7 @@ NSString *const AWXCyberSourceMerchantID = @"airwallex_cybs";
 NSString *const AWXWeChatPayKey = @"wechatpay";
 NSString *const AWXCardKey = @"card";
 NSString *const AWXThreeDSReturnURL = @"";
-NSString *const AWXRedirectPaResURL = @"/web/feedback?paRes=";
+NSString *const AWXTermURL = @"https://demo-pacybsmock.airwallex.com/pares/callback";
 NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
 NSString *const AWXThreeDSValidate = @"3dsValidate";
 NSString *const AWXDCC = @"dcc";

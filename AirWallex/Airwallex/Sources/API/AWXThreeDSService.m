@@ -18,8 +18,6 @@
 #import "AWXDevice.h"
 #import "AWXWebViewController.h"
 
-static NSString * const AWXTermURL = @"https://demo-pacybsmock.airwallex.com/";
-
 @interface AWXThreeDSService () <CardinalValidationDelegate>
 
 @property (strong, nonatomic) CardinalSession *session;
@@ -139,18 +137,17 @@ static NSString * const AWXTermURL = @"https://demo-pacybsmock.airwallex.com/";
             // 3DS v1.x flow
             NSURL *url = [NSURL URLWithString:redirectResponse.acs];
             NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
-            NSString *termUrl = [NSString stringWithFormat:@"%@web/feedback", AWXTermURL];
-            NSString *termUrlEncoding = [termUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
+            NSString *termUrlEncoding = [AWXTermURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
             NSString *body = [NSString stringWithFormat:@"&PaReq=%@&TermUrl=%@", reqEncoding, termUrlEncoding];
             NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
             urlRequest.HTTPMethod = @"POST";
             urlRequest.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
             [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
             __weak __typeof(self)weakSelf = self;
-            AWXWebViewController *webViewController = [[AWXWebViewController alloc] initWithURLRequest:urlRequest webHandler:^(NSString * _Nullable payload, NSError * _Nullable error) {
+            AWXWebViewController *webViewController = [[AWXWebViewController alloc] initWithURLRequest:urlRequest webHandler:^(NSString * _Nullable paResId, NSError * _Nullable error) {
                 __strong __typeof(weakSelf)strongSelf = weakSelf;
-                if (payload) {
-                    [strongSelf confirmWithTransactionId:payload];
+                if (paResId) {
+                    [strongSelf confirmWithTransactionId:paResId];
                 } else {
                     [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
                 }
