@@ -35,7 +35,7 @@
 //    [Airwallex setMode:AirwallexSDKLiveMode];
 
     // Theme customization
-    UIColor *tintColor = [UIColor redColor];
+    UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
     [AWXTheme sharedTheme].tintColor = tintColor;
     [UIView.appearance setTintColor:tintColor];
     

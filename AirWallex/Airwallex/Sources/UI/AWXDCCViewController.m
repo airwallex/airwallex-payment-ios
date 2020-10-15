@@ -25,10 +25,60 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    static NSDictionary* flags = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        flags = @{@"AED": @"AE",
+                  @"AUD": @"AU",
+                  @"BEL" :@"BE",
+                  @"BDT": @"BD",
+                  @"BGR": @"BG",
+                  @"CAD": @"CA",
+                  @"CHF": @"CH",
+                  @"CNH": @"CN",
+                  @"CNY": @"CN",
+                  @"CNY_ONSHORE": @"CN",
+                  @"CSK": @"CZ",
+                  @"CYP": @"CY",
+                  @"CZE": @"CZ",
+                  @"DKK": @"DK",
+                  @"EEK": @"EE",
+                  @"EUR": @"EU",
+                  @"GBP": @"GB",
+                  @"GIP": @"GI",
+                  @"HKD": @"HK",
+                  @"HRK": @"HR",
+                  @"HRV": @"HR",
+                  @"HUF": @"HU",
+                  @"IDR": @"ID",
+                  @"INR": @"IN",
+                  @"JPY": @"JP",
+                  @"ISK": @"IS",
+                  @"KRW": @"KR",
+                  @"LKR": @"LK",
+                  @"MYR": @"MY",
+                  @"NOK": @"NO",
+                  @"NPR": @"NP",
+                  @"NZD": @"NZ",
+                  @"PHP": @"PH",
+                  @"PKR": @"PK",
+                  @"PLN": @"PL",
+                  @"RON": @"RO",
+                  @"SEK": @"SE",
+                  @"SGD": @"SG",
+                  @"THB": @"TH",
+                  @"TRY": @"TR",
+                  @"USD": @"US",
+                  @"VND": @"VN"};
+    });
+
     self.leftCurrencyView.currencyName = self.response.currency;
     self.leftCurrencyView.price = [self.response.amount stringWithCurrencyCode:self.response.currency];
-//    self.leftCurrencyView.flag = [UIImage imageNamed:self.response.currency inBundle:[NSBundle resourceBundle]];
-    self.leftCurrencyView.flag = [UIImage imageNamed:@"USD" inBundle:[NSBundle resourceBundle]];
+    NSString *flagPath = flags[self.response.currency];
+    if (flagPath) {
+        self.leftCurrencyView.flag = [UIImage imageNamed:[NSString stringWithFormat:@"Flag/%@", flagPath] inBundle:[NSBundle resourceBundle]];
+    }
 
     self.leftCurrencyView.layer.masksToBounds = NO;
     self.leftCurrencyView.layer.cornerRadius = 6.0f;
@@ -43,8 +93,10 @@
     if (dccResponse) {
         self.rightCurrencyView.currencyName = dccResponse.currency;
         self.rightCurrencyView.price = [dccResponse.amount stringWithCurrencyCode:dccResponse.currency];
-//        self.rightCurrencyView.flag = [UIImage imageNamed:dccResponse.currency inBundle:[NSBundle resourceBundle]];
-        self.rightCurrencyView.flag = [UIImage imageNamed:@"AUD" inBundle:[NSBundle resourceBundle]];
+        NSString *flagPath = flags[dccResponse.currency];
+        if (flagPath) {
+            self.rightCurrencyView.flag = [UIImage imageNamed:[NSString stringWithFormat:@"Flag/%@", flagPath] inBundle:[NSBundle resourceBundle]];
+        }
         self.rateLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@", self.response.currency, dccResponse.clientRate.string, dccResponse.currency];
     }
 
