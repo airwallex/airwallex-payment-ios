@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -48,11 +49,10 @@
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="LS5-42-5J5"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
-                                                    <color key="textColor" name="Purple Color"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" name="Light Purple Color"/>
                                             <constraints>
                                                 <constraint firstItem="czL-OA-pH0" firstAttribute="leading" secondItem="iGg-5K-pEc" secondAttribute="leading" id="9Pg-Gd-qKV"/>
                                                 <constraint firstAttribute="trailing" secondItem="czL-OA-pH0" secondAttribute="trailing" id="QXe-LV-GZz"/>
@@ -73,8 +73,58 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShippingCell" id="L2w-l6-jwz" customClass="ShippingCell">
+                                        <rect key="frame" x="0.0" y="135.5" width="414" height="57.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="L2w-l6-jwz" id="aBr-fF-Llt">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="57.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vh8-dj-yqR">
+                                                    <rect key="frame" x="16" y="20" width="55.5" height="16.5"/>
+                                                    <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
+                                                    <color key="textColor" name="Grey Text Color"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Enter shipping information" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRL-Mh-vjv">
+                                                    <rect key="frame" x="87.5" y="20" width="294.5" height="16.5"/>
+                                                    <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
+                                                    <color key="textColor" name="Placeholder Color"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="BbU-Q7-jOG">
+                                                    <rect key="frame" x="390" y="20.5" width="16" height="16"/>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JqI-fU-V83" userLabel="Line">
+                                                    <rect key="frame" x="0.0" y="56.5" width="414" height="1"/>
+                                                    <color key="backgroundColor" name="Line Color"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="HRO-Z6-InO"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="JqI-fU-V83" firstAttribute="leading" secondItem="aBr-fF-Llt" secondAttribute="leading" id="53L-Ly-pRe"/>
+                                                <constraint firstItem="kRL-Mh-vjv" firstAttribute="leading" secondItem="vh8-dj-yqR" secondAttribute="trailing" constant="16" id="9XZ-ZQ-GQU"/>
+                                                <constraint firstItem="BbU-Q7-jOG" firstAttribute="centerY" secondItem="vh8-dj-yqR" secondAttribute="centerY" id="9e1-0s-Z9R"/>
+                                                <constraint firstItem="vh8-dj-yqR" firstAttribute="top" secondItem="aBr-fF-Llt" secondAttribute="top" constant="20" id="C8B-Ho-LdC"/>
+                                                <constraint firstItem="BbU-Q7-jOG" firstAttribute="leading" secondItem="kRL-Mh-vjv" secondAttribute="trailing" constant="8" id="Qz9-1q-02k"/>
+                                                <constraint firstAttribute="trailing" secondItem="JqI-fU-V83" secondAttribute="trailing" id="TSa-hO-Oqs"/>
+                                                <constraint firstAttribute="trailing" secondItem="BbU-Q7-jOG" secondAttribute="trailing" constant="8" id="U2h-MF-6WD"/>
+                                                <constraint firstItem="kRL-Mh-vjv" firstAttribute="centerY" secondItem="vh8-dj-yqR" secondAttribute="centerY" id="U8c-kU-MdD"/>
+                                                <constraint firstItem="kRL-Mh-vjv" firstAttribute="height" secondItem="vh8-dj-yqR" secondAttribute="height" id="dYx-9N-1s9"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="JqI-fU-V83" secondAttribute="bottom" id="qQj-LT-xql"/>
+                                                <constraint firstItem="vh8-dj-yqR" firstAttribute="leading" secondItem="aBr-fF-Llt" secondAttribute="leading" constant="16" id="uF9-vo-yS5"/>
+                                                <constraint firstItem="JqI-fU-V83" firstAttribute="top" secondItem="vh8-dj-yqR" secondAttribute="bottom" constant="20" id="wyB-Sk-QAd"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="shippingLabel" destination="kRL-Mh-vjv" id="363-DN-JEq"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductCell" rowHeight="155" id="P5K-v1-gGW" customClass="ProductCell">
-                                        <rect key="frame" x="0.0" y="135.5" width="414" height="155"/>
+                                        <rect key="frame" x="0.0" y="193" width="414" height="155"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P5K-v1-gGW" id="ye2-6z-VD7">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="155"/>
@@ -98,11 +148,11 @@
                                                     <color key="textColor" name="Grey Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yD2-fF-CeK">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yD2-fF-CeK">
                                                     <rect key="frame" x="346" y="47" width="52" height="29"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
                                                     <state key="normal" title="Remove">
-                                                        <color key="titleColor" name="Purple Color"/>
+                                                        <color key="titleColor" systemColor="labelColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="removePressed:" destination="P5K-v1-gGW" eventType="touchUpInside" id="mHw-5N-UlR"/>
@@ -138,10 +188,11 @@
                                             <outlet property="detailLabel" destination="3Rw-H1-zCS" id="Co2-KX-N5z"/>
                                             <outlet property="nameLabel" destination="nwS-kV-rcA" id="yWq-zW-7Qr"/>
                                             <outlet property="priceLabel" destination="irC-v0-rxQ" id="0g4-Va-uPp"/>
+                                            <outlet property="removeButton" destination="yD2-fF-CeK" id="uoi-0w-f90"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TotalCell" rowHeight="214" id="KOI-Zh-6jg" customClass="TotalCell">
-                                        <rect key="frame" x="0.0" y="290.5" width="414" height="214"/>
+                                        <rect key="frame" x="0.0" y="348" width="414" height="214"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KOI-Zh-6jg" id="gtZ-fH-PXU">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="214"/>
@@ -236,9 +287,8 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="11p-U3-wTR"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w6M-w5-GdE">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w6M-w5-GdE">
                                 <rect key="frame" x="16" y="802" width="382" height="44"/>
-                                <color key="backgroundColor" name="Purple Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8In-xM-6a8"/>
                                 </constraints>
@@ -254,6 +304,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="Background Color"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="w6M-w5-GdE" secondAttribute="trailing" constant="16" id="DCY-xJ-p9r"/>
@@ -264,7 +315,6 @@
                             <constraint firstItem="eCS-DG-9uu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fBU-vA-hWk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eCS-DG-9uu" secondAttribute="trailing" id="yCW-c5-tn8"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="n69-eD-JJv">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="Cdb-jb-CTr">
@@ -292,122 +342,146 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P74-f6-EbX">
-                                <rect key="frame" x="16" y="104" width="382" height="522"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyV-gZ-kEV">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authorization URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FEY-2R-sVI">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="23.5"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jDR-a6-Y7p">
-                                        <rect key="frame" x="0.0" y="33.5" width="382" height="34"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="3dc-1g-4U7" id="sBM-Us-qKW"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw3-vc-e4I">
-                                        <rect key="frame" x="0.0" y="77.5" width="382" height="23.5"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YSw-cs-6Pe">
-                                        <rect key="frame" x="0.0" y="111" width="382" height="34"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="3dc-1g-4U7" id="5hV-Eu-cPh"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J14-mn-E62">
-                                        <rect key="frame" x="0.0" y="155" width="382" height="23.5"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ucc-VN-sfr">
-                                        <rect key="frame" x="0.0" y="188.5" width="382" height="34"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="3dc-1g-4U7" id="9dp-Pl-v0I"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5p4-lS-mL2">
-                                        <rect key="frame" x="0.0" y="232.5" width="382" height="23.5"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-cl-UUP">
-                                        <rect key="frame" x="0.0" y="266" width="382" height="34"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="3dc-1g-4U7" id="yGh-R7-KBw"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BH-xo-rjD">
-                                        <rect key="frame" x="0.0" y="310" width="382" height="23.5"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ofq-7n-F5l">
-                                        <rect key="frame" x="0.0" y="343.5" width="382" height="34"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="3dc-1g-4U7" id="nOQ-hz-L2J"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ap9-GE-PVt">
-                                        <rect key="frame" x="0.0" y="387.5" width="382" height="23.5"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XwV-xj-OFr">
-                                        <rect key="frame" x="0.0" y="421" width="382" height="34"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="3dc-1g-4U7" id="ylw-Is-jt0"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeChat Region:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iou-6j-t8u">
-                                        <rect key="frame" x="0.0" y="465" width="382" height="23.5"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTK-Dh-PCi">
-                                        <rect key="frame" x="0.0" y="498.5" width="382" height="23.5"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
-                                        <color key="textColor" name="Black Text Color"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iM6-7j-oWC">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="554"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P74-f6-EbX">
+                                                <rect key="frame" x="16" y="16" width="382" height="522"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authorization URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FEY-2R-sVI">
+                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="23.5"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jDR-a6-Y7p">
+                                                        <rect key="frame" x="0.0" y="33.5" width="382" height="34"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="3dc-1g-4U7" id="sBM-Us-qKW"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw3-vc-e4I">
+                                                        <rect key="frame" x="0.0" y="77.5" width="382" height="23.5"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YSw-cs-6Pe">
+                                                        <rect key="frame" x="0.0" y="111" width="382" height="34"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="3dc-1g-4U7" id="5hV-Eu-cPh"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J14-mn-E62">
+                                                        <rect key="frame" x="0.0" y="155" width="382" height="23.5"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ucc-VN-sfr">
+                                                        <rect key="frame" x="0.0" y="188.5" width="382" height="34"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="3dc-1g-4U7" id="9dp-Pl-v0I"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5p4-lS-mL2">
+                                                        <rect key="frame" x="0.0" y="232.5" width="382" height="23.5"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-cl-UUP">
+                                                        <rect key="frame" x="0.0" y="266" width="382" height="34"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="3dc-1g-4U7" id="yGh-R7-KBw"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BH-xo-rjD">
+                                                        <rect key="frame" x="0.0" y="310" width="382" height="23.5"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ofq-7n-F5l">
+                                                        <rect key="frame" x="0.0" y="343.5" width="382" height="34"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="3dc-1g-4U7" id="nOQ-hz-L2J"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ap9-GE-PVt">
+                                                        <rect key="frame" x="0.0" y="387.5" width="382" height="23.5"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XwV-xj-OFr">
+                                                        <rect key="frame" x="0.0" y="421" width="382" height="34"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="3dc-1g-4U7" id="ylw-Is-jt0"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeChat Region:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iou-6j-t8u">
+                                                        <rect key="frame" x="0.0" y="465" width="382" height="23.5"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTK-Dh-PCi">
+                                                        <rect key="frame" x="0.0" y="498.5" width="382" height="23.5"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="P74-f6-EbX" firstAttribute="top" secondItem="iM6-7j-oWC" secondAttribute="top" constant="16" id="84z-1z-aEQ"/>
+                                            <constraint firstAttribute="bottom" secondItem="P74-f6-EbX" secondAttribute="bottom" constant="16" id="h4m-48-zkp"/>
+                                            <constraint firstItem="P74-f6-EbX" firstAttribute="leading" secondItem="iM6-7j-oWC" secondAttribute="leading" constant="16" id="msD-J0-SlH"/>
+                                            <constraint firstAttribute="trailing" secondItem="P74-f6-EbX" secondAttribute="trailing" constant="16" id="ynC-SF-dEY"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                            </stackView>
+                                <constraints>
+                                    <constraint firstItem="iM6-7j-oWC" firstAttribute="top" secondItem="lyV-gZ-kEV" secondAttribute="top" id="64m-4r-IQo"/>
+                                    <constraint firstAttribute="bottom" secondItem="iM6-7j-oWC" secondAttribute="bottom" id="cZl-Zg-BEb"/>
+                                    <constraint firstItem="iM6-7j-oWC" firstAttribute="leading" secondItem="lyV-gZ-kEV" secondAttribute="leading" id="s7Z-GQ-qTj"/>
+                                    <constraint firstAttribute="trailing" secondItem="iM6-7j-oWC" secondAttribute="trailing" id="wvg-2I-N7u"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="uB5-La-e3z" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="P74-f6-EbX" secondAttribute="bottom" id="6G6-ys-z9t"/>
-                            <constraint firstItem="P74-f6-EbX" firstAttribute="top" secondItem="uB5-La-e3z" secondAttribute="top" constant="16" id="WaV-kL-yub"/>
-                            <constraint firstItem="P74-f6-EbX" firstAttribute="leading" secondItem="uB5-La-e3z" secondAttribute="leading" constant="16" id="k1A-7p-kFg"/>
-                            <constraint firstItem="P74-f6-EbX" firstAttribute="trailing" secondItem="uB5-La-e3z" secondAttribute="trailing" constant="-16" id="wdf-Rd-bWw"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="uB5-La-e3z"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="uB5-La-e3z" firstAttribute="bottom" secondItem="lyV-gZ-kEV" secondAttribute="bottom" id="DhM-mZ-4QF"/>
+                            <constraint firstItem="lyV-gZ-kEV" firstAttribute="leading" secondItem="uB5-La-e3z" secondAttribute="leading" id="Lpg-Ip-b7r"/>
+                            <constraint firstItem="uB5-La-e3z" firstAttribute="trailing" secondItem="lyV-gZ-kEV" secondAttribute="trailing" id="TUI-xy-8kW"/>
+                            <constraint firstItem="lyV-gZ-kEV" firstAttribute="top" secondItem="uB5-La-e3z" secondAttribute="top" id="c2v-0A-VmJ"/>
+                            <constraint firstItem="iM6-7j-oWC" firstAttribute="width" secondItem="8AO-7M-Nu3" secondAttribute="width" id="uep-vN-Zym"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Options" id="iLW-z0-cq9">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="233-eG-3Hj">
@@ -473,7 +547,9 @@
             <point key="canvasLocation" x="1825" y="138"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="Purple Color"/>
     <resources>
+        <image name="right" width="16" height="16"/>
         <namedColor name="Background Color">
             <color red="0.96862745098039216" green="0.96862745098039216" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -482,9 +558,6 @@
         </namedColor>
         <namedColor name="Grey Text Color">
             <color red="0.32941176470588235" green="0.32941176470588235" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Light Purple Color">
-            <color red="0.85098039215686272" green="0.80392156862745101" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Line Color">
             <color red="0.92156862745098034" green="0.92549019607843142" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -495,6 +568,11 @@
         <namedColor name="Purple Color">
             <color red="0.38039215686274508" green="0.18431372549019609" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
-    <color key="tintColor" name="Purple Color"/>
 </document>

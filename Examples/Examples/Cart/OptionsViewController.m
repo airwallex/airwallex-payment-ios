@@ -44,8 +44,8 @@
     self.paymentURLTextField.text = [APIClient sharedClient].paymentBaseURL.absoluteString;
     self.apiKeyTextField.text = [APIClient sharedClient].apiKey;
     self.clientIDTextField.text = [APIClient sharedClient].clientID;
-    self.amountTextField.text = defaultAmount;
-    self.currencyTextField.text = defaultCurrency;
+    self.amountTextField.text = self.amount ? [NSString stringWithFormat:@"%.2f", self.amount.doubleValue] : defaultAmount;
+    self.currencyTextField.text = self.currency ?: defaultCurrency;
 }
 
 - (IBAction)dismiss:(id)sender
@@ -55,6 +55,9 @@
 
 - (IBAction)resetPressed:(id)sender
 {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     APIClient *client = [APIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
     client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
@@ -90,8 +93,12 @@
         }
     } else if (textField == self.apiKeyTextField) {
         [APIClient sharedClient].apiKey = textField.text;
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     } else if (textField == self.clientIDTextField) {
         [APIClient sharedClient].clientID = textField.text;
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     } else if (textField == self.amountTextField) {
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:textField.text];
         if (amount == NSDecimalNumber.notANumber) {

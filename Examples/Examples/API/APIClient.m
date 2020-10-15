@@ -72,7 +72,7 @@
 }
 
 - (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
-                        completionHandler:(void (^)(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler
+                        completionHandler:(void (^)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler
 {
     NSURL *requestURL = [NSURL URLWithString:@"api/v1/pa/payment_intents/create" relativeToURL:self.paymentBaseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
@@ -101,7 +101,7 @@
                 anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
             }
             
-            AWPaymentIntent *paymentIntent = [AWPaymentIntent decodeFromJSON:json];
+            AWXPaymentIntent *paymentIntent = [AWXPaymentIntent decodeFromJSON:json];
             dispatch_async(dispatch_get_main_queue(), ^{
                 completionHandler(paymentIntent, anError);
             });
@@ -125,6 +125,46 @@
         [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
     }
     [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil]];
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request
+                                     completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(nil, error);
+            });
+            return;
+        }
+        
+        NSError *anError;
+        if (data) {
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:NSJSONReadingMutableContainers
+                                                                   error:&anError];
+            NSString *errorMessage = json[@"message"];
+            if (errorMessage) {
+                anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(json, anError);
+            });
+            return;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionHandler(nil, anError);
+        });
+    }] resume];
+}
+
+- (void)createCustomerSecretWithId:(NSString *)Id
+                 completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
+{
+    NSURL *requestURL = [NSURL URLWithString:[NSString stringWithFormat:@"api/v1/pa/customers/%@/generate_client_secret", Id] relativeToURL:self.paymentBaseURL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    if (self.token) {
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
+    }
     [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                      completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {

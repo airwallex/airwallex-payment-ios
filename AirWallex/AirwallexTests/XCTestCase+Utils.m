@@ -7,8 +7,8 @@
 //
 
 #import "XCTestCase+Utils.h"
-#import "AWTestAPIClient.h"
-#import "AWAPIClient.h"
+#import "AWXTestAPIClient.h"
+#import "AWXAPIClient.h"
 #import <AirwallexExamplesKeys.h>
 
 @implementation XCTestCase (Utils)
@@ -30,13 +30,13 @@
     [self waitForExpectationsWithTimeout:duration handler:nil];
 }
 
-- (void)prepareEphemeralKeys:(void (^)(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler
+- (void)prepareEphemeralKeys:(void (^)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler
 {
-    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://demo-pci-api.airwallex.com/"]];
+    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://staging-pci-api.airwallex.com/"]];
 
-    AWTestAPIClient *client = [AWTestAPIClient sharedClient];
-    client.authBaseURL = [NSURL URLWithString:@"https://api-demo.airwallex.com/"];
-    client.paymentBaseURL = [NSURL URLWithString:@"https://demo-pci-api.airwallex.com/"];
+    AWXTestAPIClient *client = [AWXTestAPIClient sharedClient];
+    client.authBaseURL = [NSURL URLWithString:@"https://api-staging.airwallex.com/"];
+    client.paymentBaseURL = [NSURL URLWithString:@"https://staging-pci-api.airwallex.com/"];
     AirwallexExamplesKeys *keys = [AirwallexExamplesKeys new];
     client.apiKey = keys.apiKey;
     client.clientID = keys.clientID;
@@ -49,13 +49,13 @@
                                              @"merchant_order_id": NSUUID.UUID.UUIDString,
                                              @"request_id": NSUUID.UUID.UUIDString,
                                              @"order": @{},
-                                             @"customer_id": @"cus_gSItdRkbwWQcyocadV93vQmdW0l"} mutableCopy];
+                                             @"customer_id": @"cus_7hFQRwZNxESFY8aiKrDRu27IlMc"} mutableCopy];
         [client createPaymentIntentWithParameters:parameters
-                                completionHandler:^(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
+                                completionHandler:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
             XCTAssertNil(error);
 
-            [AWAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
-            XCTAssertNotNil([AWAPIClientConfiguration sharedConfiguration].clientSecret);
+            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
+            XCTAssertNotNil([AWXAPIClientConfiguration sharedConfiguration].clientSecret);
 
             completionHandler(paymentIntent, error);
 

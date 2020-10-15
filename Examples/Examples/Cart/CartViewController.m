@@ -12,24 +12,24 @@
 #import <WechatOpenSDK/WXApi.h>
 #import "AirwallexExamplesKeys+Utils.h"
 #import "OptionsViewController.h"
+#import "ShippingCell.h"
 #import "ProductCell.h"
 #import "TotalCell.h"
 #import "APIClient.h"
 #import "Constant.h"
 
-static NSString * const kCachedCustomerID = @"kCachedCustomerID";
-
-@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, OptionsViewControllerDelegate>
+@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate, OptionsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
+@property (strong, nonatomic) AWXPlaceDetails *shipping;
 
 @property (strong, nonatomic) NSDecimalNumber *amount;
 @property (strong, nonatomic) NSString *currency;
-@property (strong, nonatomic) AWPaymentIntent *paymentIntent;
+@property (strong, nonatomic) AWXPaymentIntent *paymentIntent;
 
 @end
 
@@ -38,11 +38,13 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.badgeView.backgroundColor = [[AWXTheme sharedTheme].tintColor colorWithAlphaComponent:0.5];
+    self.badgeLabel.textColor = [AWXTheme sharedTheme].tintColor;
     self.badgeView.layer.masksToBounds = YES;
     self.badgeView.layer.cornerRadius = 12;
     self.checkoutButton.layer.masksToBounds = YES;
     self.checkoutButton.layer.cornerRadius = 6;
-
+    
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro"
                                                detail:@"Free engraving x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"399"]];
@@ -74,6 +76,8 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
         UINavigationController *navigationController = segue.destinationViewController;
         OptionsViewController *controller = (OptionsViewController *)navigationController.topViewController;
         controller.delegate = self;
+        controller.amount = self.amount;
+        controller.currency = self.currency;
     }
 }
 
@@ -86,8 +90,8 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     NSDecimalNumber *shipping = [NSDecimalNumber zero];
     NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
     
-    self.checkoutButton.enabled = total.doubleValue > 0 && self.amount.doubleValue > 0 && self.currency.length > 0;
-    self.checkoutButton.backgroundColor = self.checkoutButton.enabled ? [UIColor colorNamed:@"Purple Color"] : [UIColor colorNamed:@"Line Color"];
+    self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && self.amount.doubleValue > 0 && self.currency.length > 0;
+    self.checkoutButton.backgroundColor = self.checkoutButton.enabled ? [AWXTheme sharedTheme].tintColor : [UIColor colorNamed:@"Line Color"];
     
     [self.tableView reloadData];
 }
@@ -145,82 +149,204 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
 
 - (void)createPaymentIntentWithCustomerId:(NSString *)customerId
 {
+    [SVProgressHUD show];
+    
+    __weak __typeof(self)weakSelf = self;
+    dispatch_group_t group = dispatch_group_create();
+    __block NSError *_error;
+    __block AWXPaymentIntent *_paymentIntent;
+    __block NSString *_customerSecret;
+    
     NSMutableDictionary *parameters = [@{@"amount": self.amount,
                                          @"currency": self.currency,
                                          @"merchant_order_id": NSUUID.UUID.UUIDString,
                                          @"request_id": NSUUID.UUID.UUIDString,
+                                         @"customer_id": customerId,
                                          @"order": @{}} mutableCopy];
-    if (customerId) {
-        parameters[@"customer_id"] = customerId;
-    }
-    __weak __typeof(self)weakSelf = self;
-    [SVProgressHUD show];
+    
+    dispatch_group_enter(group);
     [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
-                                              completionHandler:^(AWPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
+                                              completionHandler:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            _error = error;
+            dispatch_group_leave(group);
             return;
         }
-        
-        if (paymentIntent.Id && paymentIntent.clientSecret) {
-            [AWAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
-            
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf confirmPaymentIntent:paymentIntent];
-            return;
-        }
-        
-        [SVProgressHUD showErrorWithStatus:@"Failed to create payment intent."];
+
+        _paymentIntent = paymentIntent;
+        dispatch_group_leave(group);
     }];
+    
+    dispatch_group_enter(group);
+    [[APIClient sharedClient] createCustomerSecretWithId:customerId completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            _error = error;
+            dispatch_group_leave(group);
+            return;
+        }
+        
+        _customerSecret = result[@"client_secret"];
+        dispatch_group_leave(group);
+        
+    }];
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        if (_error) {
+            [SVProgressHUD showErrorWithStatus:_error.localizedDescription];
+            return;
+        }
+        
+        [SVProgressHUD dismiss];
+        if (_paymentIntent && _customerSecret) {
+            // Step2: Setup client secret & customer secret
+            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
+            [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
+            
+            // Step3: Show payment flow
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
+        }
+    });
 }
 
-#pragma mark - Confirm Payment Intent Directly
+#pragma mark - Show Payment Method List
 
-- (void)confirmPaymentIntent:(AWPaymentIntent *)paymentIntent
+- (void)showPaymentFlowWithPaymentIntent:(AWXPaymentIntent *)paymentIntent
 {
     self.paymentIntent = paymentIntent;
     
-    AWWeChatPay *weChatPay = [AWWeChatPay new];
+    AWXUIContext *context = [AWXUIContext sharedContext];
+    context.delegate = self;
+    context.hostViewController = self;
+    context.paymentIntent = paymentIntent;
+    context.shipping = self.shipping;
+    [context presentPaymentFlow];
+}
+
+#pragma mark - UITableViewDataSource & UITableViewDelegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 1;
+    }
+    return self.products.count + 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 9;
+    }
+    return 24;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return nil;
+    }
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return nil;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        ShippingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ShippingCell" forIndexPath:indexPath];
+        cell.shipping = self.shipping;
+        return cell;
+    }
     
-    AWPaymentMethod *paymentMethod = [AWPaymentMethod new];
-    NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
-    paymentMethod.customerId = customerId;
-    paymentMethod.type = AWWeChatPayKey;
-    paymentMethod.weChatPay = weChatPay;
+    if (self.products.count == indexPath.row) {
+        TotalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TotalCell" forIndexPath:indexPath];
+        NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
+        NSDecimalNumber *shipping = [NSDecimalNumber zero];
+        cell.subtotal = subtotal;
+        cell.shipping = shipping;
+        cell.total = [subtotal decimalNumberByAdding:shipping];
+        return cell;
+    }
     
-    AWConfirmPaymentIntentRequest *request = [AWConfirmPaymentIntentRequest new];
-    request.customerId = customerId;
-    request.intentId = paymentIntent.Id;
-    request.paymentMethod = paymentMethod;
-    request.requestId = NSUUID.UUID.UUIDString;
-    
-    [SVProgressHUD show];
-    [[AWAPIClient sharedClient] send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        if (error) {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-            return;
+    ProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell" forIndexPath:indexPath];
+    cell.product = self.products[indexPath.row];
+    __weak __typeof(self)weakSelf = self;
+    cell.handler = ^(Product *product) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.products removeObject:product];
+        [strongSelf reloadData];
+    };
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        AWXShippingViewController *controller = [AWXUIContext shippingViewController];
+        controller.delegate = self;
+        controller.shipping = self.shipping;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+}
+
+#pragma mark - AWXShippingViewControllerDelegate
+
+- (void)shippingViewController:(AWXShippingViewController *)controller didEditShipping:(AWXPlaceDetails *)shipping
+{
+    [controller.navigationController popViewControllerAnimated:YES];
+    self.shipping = shipping;
+    [self reloadData];
+}
+
+#pragma mark - OptionsViewControllerDelegate
+
+- (void)optionsViewController:(OptionsViewController *)viewController didEditAmount:(NSDecimalNumber *)amount
+{
+    self.amount = amount;
+    [self reloadData];
+}
+
+- (void)optionsViewController:(OptionsViewController *)viewController didEditCurrency:(NSString *)currency
+{
+    self.currency = currency;
+    [self reloadData];
+}
+
+#pragma mark - AWXPaymentResultDelegate
+
+- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        NSString *message = error.localizedDescription;
+        if (status == AWXPaymentStatusSuccess) {
+            message = @"Pay successfully";
         }
-        
-        if ([response isKindOfClass:[AWConfirmPaymentIntentResponse class]]) {
-            AWConfirmPaymentIntentResponse *result = (AWConfirmPaymentIntentResponse *)response;
-            
-            if ([result.status isEqualToString:@"SUCCEEDED"]) {
-                [SVProgressHUD showSuccessWithStatus:@"Pay successfully"];
-                return;
-            }
-            
-            if (result.nextAction && result.nextAction.weChatPayResponse) {
-                [self handleConfirmPaymentIntentResponse:result.nextAction.weChatPayResponse];
-                return;
-            }
-        }
-        
-        [SVProgressHUD showErrorWithStatus:@"Failed to confirm payment intent."];
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
+                                                                            message:message
+                                                                     preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
     }];
 }
 
-- (void)handleConfirmPaymentIntentResponse:(AWWeChatPaySDKResponse *)response
+- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWXWeChatPaySDKResponse *)response
 {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    
     /**
      To mock the wechat payment flow, we use an url to call instead wechat callback.
      */
@@ -228,7 +354,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     if (url.scheme && url.host) {
         [SVProgressHUD show];
         
-        __weak typeof(self) weakSelf = self;
+        __weak __typeof(self)weakSelf = self;
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                          completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -237,7 +363,7 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
                 return;
             }
             
-            __strong typeof(self) strongSelf = weakSelf;
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf finishPayment];
         }] resume];
         return;
@@ -265,69 +391,20 @@ static NSString * const kCachedCustomerID = @"kCachedCustomerID";
     //    }];
 }
 
-#pragma mark - UITableViewDataSource & UITableViewDelegate
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.products.count + 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.products.count == indexPath.row) {
-        TotalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TotalCell" forIndexPath:indexPath];
-        NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
-        NSDecimalNumber *shipping = [NSDecimalNumber zero];
-        cell.subtotal = subtotal;
-        cell.shipping = shipping;
-        cell.total = [subtotal decimalNumberByAdding:shipping];
-        return cell;
-    }
-    
-    ProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell" forIndexPath:indexPath];
-    cell.product = self.products[indexPath.row];
-    __weak typeof(self) weakSelf = self;
-    cell.handler = ^(Product *product) {
-        __strong typeof(self) strongSelf = weakSelf;
-        [strongSelf.products removeObject:product];
-        [strongSelf reloadData];
-    };
-    return cell;
-}
-
-#pragma mark - OptionsViewControllerDelegate
-
-- (void)optionsViewController:(OptionsViewController *)viewController didEditAmount:(NSDecimalNumber *)amount
-{
-    self.amount = amount;
-    [self reloadData];
-}
-
-- (void)optionsViewController:(OptionsViewController *)viewController didEditCurrency:(NSString *)currency
-{
-    self.currency = currency;
-    [self reloadData];
-}
-
 #pragma mark - Check Payment Intent Status
 
 - (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
 {
-    AWRetrievePaymentIntentRequest *request = [[AWRetrievePaymentIntentRequest alloc] init];
+    AWXRetrievePaymentIntentRequest *request = [[AWXRetrievePaymentIntentRequest alloc] init];
     request.intentId = self.paymentIntent.Id;
-    AWAPIClient *client = [[AWAPIClient alloc] initWithConfiguration:[AWAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:^(id<AWResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             return;
         }
         
-        AWGetPaymentIntentResponse *result = (AWGetPaymentIntentResponse *)response;
+        AWXGetPaymentIntentResponse *result = (AWXGetPaymentIntentResponse *)response;
         completionHandler([result.status isEqualToString:@"SUCCEEDED"]);
     }];
 }

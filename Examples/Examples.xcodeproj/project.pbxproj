@@ -10,6 +10,9 @@
 		082D308223CEEC3300C9D587 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308123CEEC3300C9D587 /* ProductCell.m */; };
 		082D308523CEECE400C9D587 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
 		082D308823CEEDC100C9D587 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
+		084779D2244F240A00C41256 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
+		084779D3244F240A00C41256 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084F15E6247646FA00DAAD76 /* ShippingCell.m */; };
 		085855052445371C0012B818 /* AirwallexExamplesKeys+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 085855042445371C0012B818 /* AirwallexExamplesKeys+Utils.m */; };
 		085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
 		085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
@@ -17,23 +20,22 @@
 		085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
 		085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
 		085BD40123CC64B9002E8F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
+		086F862F25230C330006DAB5 /* CircularXX-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 086F862E25230C330006DAB5 /* CircularXX-Regular.otf */; };
 		088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
 		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
-		08B55E3B2421DA330054E254 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
-		08B55E3C2421DA330054E254 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F7071D3AC01A9341C319415E /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		08B55E3D2421DA330054E254 /* Embed Frameworks */ = {
+		084779D1244F23CC00C41256 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				08B55E3C2421DA330054E254 /* Airwallex.framework in Embed Frameworks */,
+				084779D3244F240A00C41256 /* Airwallex.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,6 +49,8 @@
 		082D308423CEECE400C9D587 /* TotalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TotalCell.m; sourceTree = "<group>"; };
 		082D308623CEEDC100C9D587 /* CartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
 		082D308723CEEDC100C9D587 /* CartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
+		084F15E5247646FA00DAAD76 /* ShippingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShippingCell.h; sourceTree = "<group>"; };
+		084F15E6247646FA00DAAD76 /* ShippingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShippingCell.m; sourceTree = "<group>"; };
 		085855032445371C0012B818 /* AirwallexExamplesKeys+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirwallexExamplesKeys+Utils.h"; sourceTree = "<group>"; };
 		085855042445371C0012B818 /* AirwallexExamplesKeys+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AirwallexExamplesKeys+Utils.m"; sourceTree = "<group>"; };
 		085BA64E23F0FB8A00FD33FA /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
@@ -58,6 +62,7 @@
 		085BD3FD23CC64B9002E8F27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		085BD3FF23CC64B9002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD40023CC64B9002E8F27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		086F862E25230C330006DAB5 /* CircularXX-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularXX-Regular.otf"; sourceTree = "<group>"; };
 		088ADB912407B329001ADC71 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.otf"; sourceTree = "<group>"; };
 		088ADB922407B329001ADC71 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
 		088F3E8123CEB7FF005AE40F /* APIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
@@ -66,9 +71,9 @@
 		08A3E99D24246C30003FDAAF /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		08A3E99E24246C30003FDAAF /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		08B55E372421D8C60054E254 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A6EAE250E77991C1E9B6A69 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "../../Pods/Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
+		617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 		7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9EA9D3B9B12EC61CCBFD04C4 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "../../Pods/Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
+		89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08B55E3B2421DA330054E254 /* Airwallex.framework in Frameworks */,
+				084779D2244F240A00C41256 /* Airwallex.framework in Frameworks */,
 				F7071D3AC01A9341C319415E /* Pods_Examples.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,6 +92,8 @@
 		082D307F23CEEC0700C9D587 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				084F15E5247646FA00DAAD76 /* ShippingCell.h */,
+				084F15E6247646FA00DAAD76 /* ShippingCell.m */,
 				082D308023CEEC3300C9D587 /* ProductCell.h */,
 				082D308123CEEC3300C9D587 /* ProductCell.m */,
 				082D308323CEECE400C9D587 /* TotalCell.h */,
@@ -104,8 +111,8 @@
 			children = (
 				085BD3ED23CC64B6002E8F27 /* Examples */,
 				085BD3EC23CC64B6002E8F27 /* Products */,
-				B66354DF3707CEF41053480C /* Pods */,
 				A124BE0DCF06F969177C95C3 /* Frameworks */,
+				242E8629232F042B71464DAF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +144,7 @@
 		088ADB902407B329001ADC71 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				086F862E25230C330006DAB5 /* CircularXX-Regular.otf */,
 				088ADB912407B329001ADC71 /* CircularStd-Bold.otf */,
 				088ADB922407B329001ADC71 /* CircularStd-Medium.otf */,
 				085BD3FA23CC64B9002E8F27 /* Assets.xcassets */,
@@ -156,6 +164,16 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		242E8629232F042B71464DAF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */,
+				89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
+			sourceTree = "<group>";
+		};
 		A124BE0DCF06F969177C95C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,15 +181,6 @@
 				7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B66354DF3707CEF41053480C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				9EA9D3B9B12EC61CCBFD04C4 /* Pods-Examples.debug.xcconfig */,
-				4A6EAE250E77991C1E9B6A69 /* Pods-Examples.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,8 +194,8 @@
 				085BD3E723CC64B6002E8F27 /* Sources */,
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
-				08B55E3D2421DA330054E254 /* Embed Frameworks */,
 				93EA6DFA6F7AE71247D6E8D3 /* [CP] Embed Pods Frameworks */,
+				084779D1244F23CC00C41256 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -239,6 +248,7 @@
 				088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */,
 				085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */,
 				085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */,
+				086F862F25230C330006DAB5 /* CircularXX-Regular.otf in Resources */,
 				088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,6 +307,7 @@
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,
 				088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */,
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
+				084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
 				08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */,
@@ -437,34 +448,19 @@
 		};
 		085BD40523CC64B9002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9EA9D3B9B12EC61CCBFD04C4 /* Pods-Examples.debug.xcconfig */;
+			baseConfigurationReference = 617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6AM6RAJ294;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Examples/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					"\"Airwallex\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"QuartzCore\"",
-					"-framework",
-					"\"SVProgressHUD\"",
-					"-framework",
-					"\"Security\"",
-					"-framework",
-					"\"UIKit\"",
-					"-framework",
-					"\"WebKit\"",
-					"-Objc",
-					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
 				PRODUCT_NAME = Airwallex;
@@ -474,34 +470,19 @@
 		};
 		085BD40623CC64B9002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4A6EAE250E77991C1E9B6A69 /* Pods-Examples.release.xcconfig */;
+			baseConfigurationReference = 89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6AM6RAJ294;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Examples/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					"\"Airwallex\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"QuartzCore\"",
-					"-framework",
-					"\"SVProgressHUD\"",
-					"-framework",
-					"\"Security\"",
-					"-framework",
-					"\"UIKit\"",
-					"-framework",
-					"\"WebKit\"",
-					"-Objc",
-					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
 				PRODUCT_NAME = Airwallex;
