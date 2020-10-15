@@ -31,6 +31,7 @@ Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松
       * [基本整合](#基本整合)
       * [自定义用法](#自定义用法)
       * [设置微信支付](#设置微信支付)
+      * [主题色](#主题色)
    * [例子](#例子)
    * [贡献](#贡献)
 <!--te-->
@@ -336,6 +337,16 @@ service.delegate = ”The target to handle AWXThreeDSServiceDelegate protocol”
 		}
 	}
 }
+```
+
+### 主题色
+
+你可以通过下面代码自定义主题色。
+
+```
+UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
+[AWXTheme sharedTheme].tintColor = tintColor;
+[UIView.appearance setTintColor:tintColor];
 ```
 
 ## 例子

@@ -32,6 +32,7 @@ Table of contents
       * [Basic Integration](#basic-integration)
       * [Customize Usage](#customize-usage)
       * [Set Up WeChat Pay](#set-up-wechat-pay)
+      * [Theme Color](#theme-color)
    * [Examples](#examples)
    * [Contributing](#contributing)
 <!--te-->
@@ -340,6 +341,16 @@ Note: you can follow this official guide [WeChat In-App Pay](https://pay.weixin.
 		}
 	}
 }
+```
+
+### Theme Color
+
+You can customize the theme color.
+
+```
+UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
+[AWXTheme sharedTheme].tintColor = tintColor;
+[UIView.appearance setTintColor:tintColor];
 ```
 
 ## Examples
