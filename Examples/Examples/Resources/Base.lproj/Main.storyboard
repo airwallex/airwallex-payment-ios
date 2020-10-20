@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -48,11 +49,10 @@
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="LS5-42-5J5"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
-                                                    <color key="textColor" name="Purple Color"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" name="Light Purple Color"/>
                                             <constraints>
                                                 <constraint firstItem="czL-OA-pH0" firstAttribute="leading" secondItem="iGg-5K-pEc" secondAttribute="leading" id="9Pg-Gd-qKV"/>
                                                 <constraint firstAttribute="trailing" secondItem="czL-OA-pH0" secondAttribute="trailing" id="QXe-LV-GZz"/>
@@ -148,11 +148,11 @@
                                                     <color key="textColor" name="Grey Text Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yD2-fF-CeK">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yD2-fF-CeK">
                                                     <rect key="frame" x="346" y="47" width="52" height="29"/>
                                                     <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
                                                     <state key="normal" title="Remove">
-                                                        <color key="titleColor" name="Purple Color"/>
+                                                        <color key="titleColor" systemColor="labelColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="removePressed:" destination="P5K-v1-gGW" eventType="touchUpInside" id="mHw-5N-UlR"/>
@@ -188,6 +188,7 @@
                                             <outlet property="detailLabel" destination="3Rw-H1-zCS" id="Co2-KX-N5z"/>
                                             <outlet property="nameLabel" destination="nwS-kV-rcA" id="yWq-zW-7Qr"/>
                                             <outlet property="priceLabel" destination="irC-v0-rxQ" id="0g4-Va-uPp"/>
+                                            <outlet property="removeButton" destination="yD2-fF-CeK" id="uoi-0w-f90"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TotalCell" rowHeight="214" id="KOI-Zh-6jg" customClass="TotalCell">
@@ -286,9 +287,8 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="11p-U3-wTR"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w6M-w5-GdE">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w6M-w5-GdE">
                                 <rect key="frame" x="16" y="802" width="382" height="44"/>
-                                <color key="backgroundColor" name="Purple Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8In-xM-6a8"/>
                                 </constraints>
@@ -304,6 +304,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="Background Color"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="w6M-w5-GdE" secondAttribute="trailing" constant="16" id="DCY-xJ-p9r"/>
@@ -314,7 +315,6 @@
                             <constraint firstItem="eCS-DG-9uu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fBU-vA-hWk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eCS-DG-9uu" secondAttribute="trailing" id="yCW-c5-tn8"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="n69-eD-JJv">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="Cdb-jb-CTr">
@@ -456,7 +456,7 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="P74-f6-EbX" firstAttribute="top" secondItem="iM6-7j-oWC" secondAttribute="top" constant="16" id="84z-1z-aEQ"/>
                                             <constraint firstAttribute="bottom" secondItem="P74-f6-EbX" secondAttribute="bottom" constant="16" id="h4m-48-zkp"/>
@@ -473,7 +473,8 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="uB5-La-e3z"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="uB5-La-e3z" firstAttribute="bottom" secondItem="lyV-gZ-kEV" secondAttribute="bottom" id="DhM-mZ-4QF"/>
                             <constraint firstItem="lyV-gZ-kEV" firstAttribute="leading" secondItem="uB5-La-e3z" secondAttribute="leading" id="Lpg-Ip-b7r"/>
@@ -481,7 +482,6 @@
                             <constraint firstItem="lyV-gZ-kEV" firstAttribute="top" secondItem="uB5-La-e3z" secondAttribute="top" id="c2v-0A-VmJ"/>
                             <constraint firstItem="iM6-7j-oWC" firstAttribute="width" secondItem="8AO-7M-Nu3" secondAttribute="width" id="uep-vN-Zym"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="uB5-La-e3z"/>
                     </view>
                     <navigationItem key="navigationItem" title="Options" id="iLW-z0-cq9">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="233-eG-3Hj">
@@ -559,9 +559,6 @@
         <namedColor name="Grey Text Color">
             <color red="0.32941176470588235" green="0.32941176470588235" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="Light Purple Color">
-            <color red="0.85098039215686272" green="0.80392156862745101" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="Line Color">
             <color red="0.92156862745098034" green="0.92549019607843142" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -571,5 +568,11 @@
         <namedColor name="Purple Color">
             <color red="0.38039215686274508" green="0.18431372549019609" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

@@ -39,6 +39,7 @@
     
     WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
     configuration.userContentController = userContent;
+    configuration.preferences.javaScriptEnabled = YES;
     WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
     webView.multipleTouchEnabled = NO;
     webView.navigationDelegate = self;
@@ -46,7 +47,7 @@
     [self.view addSubview:webView];
     self.webView = webView;
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
     
     [self.webView loadRequest:self.urlRequest];
 }
@@ -65,10 +66,10 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     NSURL *url = navigationAction.request.URL;
-    if (url && [url.absoluteString containsString:AWXRedirectPaResURL] && self.webHandler) {
-        NSString *paRes = [url queryValueForName:@"PaRes"];
+    if (url && [url.absoluteString containsString:[NSString stringWithFormat:@"%@pares/callback?paRes=", AWXTermURL]] && self.webHandler) {
+        NSString *paResId = [url queryValueForName:@"paRes"];
         [self dismissViewControllerAnimated:YES completion:^{
-            self.webHandler(paRes, nil);
+            self.webHandler(paResId, nil);
         }];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AWXConstants.h"
 
 @protocol AWXRequestProtocol, AWXResponseProtocol;
 
@@ -32,6 +33,18 @@ NS_ASSUME_NONNULL_BEGIN
  Get base URL.
  */
 + (NSURL *)defaultBaseURL;
+
+/**
+ Set sdk mode.
+
+ @param mode A mode required.
+ */
++ (void)setMode:(AirwallexSDKMode)mode;
+
+/**
+ Get sdk mode. Test mode as default.
+ */
++ (AirwallexSDKMode)mode;
 
 @end
 

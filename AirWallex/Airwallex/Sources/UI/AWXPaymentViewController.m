@@ -8,6 +8,7 @@
 
 #import "AWXPaymentViewController.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "AWXDCCViewController.h"
 #import "AWXConstants.h"
 #import "AWXPaymentItemCell.h"
 #import "AWXUtils.h"
@@ -23,7 +24,7 @@
 #import "AWXThreeDSService.h"
 #import "AWXSecurityService.h"
 
-@interface AWXPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AWXThreeDSServiceDelegate>
+@interface AWXPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -43,7 +44,7 @@
     [self.payButton setImage:[UIImage imageNamed:@"lock-white" inBundle:[NSBundle resourceBundle]] forState:UIControlStateNormal];
     [self.payButton setImage:[UIImage imageNamed:@"lock-grey" inBundle:[NSBundle resourceBundle]] forState:UIControlStateDisabled];
     [self.payButton setImageAndTitleHorizontalAlignmentCenter:8];
-    self.totalLabel.text = self.paymentIntent.amount.string;
+    self.totalLabel.text = [self.paymentIntent.amount stringWithCurrencyCode:self.paymentIntent.currency];
     [self.tableView registerNib:[UINib nibWithNibName:@"AWXPaymentItemCell" bundle:[NSBundle sdkBundle]] forCellReuseIdentifier:@"AWXPaymentItemCell"];
 
     if (self.paymentMethod.card.cvc) {
@@ -51,6 +52,16 @@
     }
 
     [self reloadData];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showDCC"] && [sender isKindOfClass:[AWXConfirmPaymentIntentResponse class]]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        AWXDCCViewController *controller = (AWXDCCViewController *)navigationController.topViewController;
+        controller.response = sender;
+        controller.delegate = self;
+    }
 }
 
 - (void)checkPaymentEnabled
@@ -155,6 +166,8 @@
         service.delegate = self;
         self.service = service;
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
+    } else if (response.nextAction.dccResponse) {
+        [self performSegueWithIdentifier:@"showDCC" sender:response];
     } else {
         [self.delegate paymentViewController:self
                          didFinishWithStatus:AWXPaymentStatusError
@@ -215,6 +228,31 @@
 - (void)threeDSService:(AWXThreeDSService *)service didFinishWithResponse:(AWXConfirmPaymentIntentResponse *)response error:(NSError *)error
 {
     [self finishConfirmationWithResponse:response error:error];
+}
+
+#pragma mark - AWXDCCViewControllerDelegate
+
+- (void)dccViewController:(AWXDCCViewController *)controller useDCC:(BOOL)useDCC
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+
+    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.intentId = self.paymentIntent.Id;
+    request.type = AWXDCC;
+    request.useDCC = useDCC;
+    request.device = self.device;
+
+    [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [SVProgressHUD dismiss];
+
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf finishConfirmationWithResponse:response error:error];
+    }];
 }
 
 @end

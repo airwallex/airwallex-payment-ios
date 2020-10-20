@@ -24,8 +24,14 @@ NSString *const AWXCyberSourceMerchantID = @"airwallex_cybs";
 NSString *const AWXWeChatPayKey = @"wechatpay";
 NSString *const AWXCardKey = @"card";
 NSString *const AWXThreeDSReturnURL = @"";
-NSString *const AWXRedirectPaResURL = @"/feedback/success";
+NSString *const AWXTermURL = @"https://staging-pacybsmock.airwallex.com/";
+NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
+NSString *const AWXThreeDSValidate = @"3dsValidate";
+NSString *const AWXDCC = @"dcc";
 
 NSString *const AWXFontFamilyNameCircularStd = @"Circular Std";
 NSString *const AWXFontNameCircularStdMedium = @"CircularStd-Medium";
 NSString *const AWXFontNameCircularStdBold = @"CircularStd-Bold";
+
+NSString *const AWXFontFamilyNameCircularXX = @"CircularXX";
+NSString *const AWXFontNameCircularXXRegular = @"CircularXX-Regular";

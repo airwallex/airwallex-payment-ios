@@ -38,6 +38,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.badgeView.backgroundColor = [[AWXTheme sharedTheme].tintColor colorWithAlphaComponent:0.5];
+    self.badgeLabel.textColor = [AWXTheme sharedTheme].tintColor;
     self.badgeView.layer.masksToBounds = YES;
     self.badgeView.layer.cornerRadius = 12;
     self.checkoutButton.layer.masksToBounds = YES;
@@ -89,7 +91,7 @@
     NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
     
     self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && self.amount.doubleValue > 0 && self.currency.length > 0;
-    self.checkoutButton.backgroundColor = self.checkoutButton.enabled ? [UIColor colorNamed:@"Purple Color"] : [UIColor colorNamed:@"Line Color"];
+    self.checkoutButton.backgroundColor = self.checkoutButton.enabled ? [AWXTheme sharedTheme].tintColor : [UIColor colorNamed:@"Line Color"];
     
     [self.tableView reloadData];
 }

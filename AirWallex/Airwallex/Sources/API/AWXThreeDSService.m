@@ -18,8 +18,6 @@
 #import "AWXDevice.h"
 #import "AWXWebViewController.h"
 
-static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
-
 @interface AWXThreeDSService () <CardinalValidationDelegate>
 
 @property (strong, nonatomic) CardinalSession *session;
@@ -36,7 +34,7 @@ static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
         self.session = [CardinalSession new];
 
         CardinalSessionConfiguration *config = [CardinalSessionConfiguration new];
-        config.deploymentEnvironment = CardinalSessionEnvironmentStaging;
+        config.deploymentEnvironment = [Airwallex mode] == AirwallexSDKLiveMode ? CardinalSessionEnvironmentProduction : CardinalSessionEnvironmentStaging;
         config.requestTimeout = CardinalSessionTimeoutStandard;
         config.challengeTimeout = 8;
         config.uiType = CardinalSessionUITypeBoth;
@@ -98,12 +96,14 @@ static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
 
 - (void)confirmWithReferenceId:(NSString *)referenceId
 {
-    AWXThreeDs *threeDs = [AWXThreeDs new];
-    threeDs.deviceDataCollectionRes = referenceId;
-    threeDs.returnURL = AWXThreeDSReturnURL;
-
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    AWXConfirmPaymentIntentRequest *request = [self confirmPaymentIntentRequestWithThreeDs:threeDs];
+
+    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.intentId = self.intentId;
+    request.type = AWXThreeDSCheckEnrollment;
+    request.deviceDataCollectionRes = referenceId;
+    request.device = self.device;
 
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
@@ -137,18 +137,21 @@ static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
             // 3DS v1.x flow
             NSURL *url = [NSURL URLWithString:redirectResponse.acs];
             NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
-            NSString *termUrl = [NSString stringWithFormat:@"%@web/feedback", AWXTermURL];
-            NSString *termUrlEncoding = [termUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
+            NSString *termUrlEncoding = [[NSString stringWithFormat:@"%@pares/callback", AWXTermURL] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
             NSString *body = [NSString stringWithFormat:@"&PaReq=%@&TermUrl=%@", reqEncoding, termUrlEncoding];
             NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
             urlRequest.HTTPMethod = @"POST";
             urlRequest.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
             [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
             __weak __typeof(self)weakSelf = self;
-            AWXWebViewController *webViewController = [[AWXWebViewController alloc] initWithURLRequest:urlRequest webHandler:^(NSString * _Nullable payload, NSError * _Nullable error) {
+            AWXWebViewController *webViewController = [[AWXWebViewController alloc] initWithURLRequest:urlRequest webHandler:^(NSString * _Nullable paResId, NSError * _Nullable error) {
                 __strong __typeof(weakSelf)strongSelf = weakSelf;
-                if (payload) {
-                    [strongSelf confirmWithTransactionId:payload];
+                if (paResId) {
+                    __weak __typeof(self)_weakSelf = strongSelf;
+                    [strongSelf getPaRes:paResId completion:^(AWXGetPaResResponse *paResResponse) {
+                        __strong __typeof(weakSelf)_strongSelf = _weakSelf;
+                        [_strongSelf confirmWithTransactionId:paResResponse.paRes];
+                    }];
                 } else {
                     [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
                 }
@@ -181,12 +184,14 @@ static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
 
 - (void)confirmWithTransactionId:(NSString *)transactionId
 {
-    AWXThreeDs *threeDs = [AWXThreeDs new];
-    threeDs.dsTransactionId = transactionId;
-    threeDs.returnURL = AWXThreeDSReturnURL;
-
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    AWXConfirmPaymentIntentRequest *request = [self confirmPaymentIntentRequestWithThreeDs:threeDs];
+
+    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.intentId = self.intentId;
+    request.type = AWXThreeDSValidate;
+    request.dsTransactionId = transactionId;
+    request.device = self.device;
 
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
@@ -200,6 +205,29 @@ static NSString * const AWXTermURL = @"http://34.92.57.93:8080/";
         }
 
         [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:response error:error];
+    }];
+}
+
+- (void)getPaRes:(NSString *)Id completion:(void(^)(AWXGetPaResResponse *))completion;
+{
+    AWXAPIClientConfiguration *configuration = [[AWXAPIClientConfiguration alloc] init];
+    configuration.baseURL = [NSURL URLWithString:AWXTermURL];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:configuration];
+
+    AWXGetPaResRequest *request = [AWXGetPaResRequest new];
+    request.paResId = Id;
+
+    [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [SVProgressHUD dismiss];
+        if (error) {
+            [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
+            return;
+        }
+
+        completion(response);
     }];
 }
 

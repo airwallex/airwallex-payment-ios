@@ -21,6 +21,16 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXConfirmPaymentIntentResponse : NSObject <AWXResponseProtocol>
 
 /**
+ Currency.
+ */
+@property (nonatomic, readonly) NSString *currency;
+
+/**
+ Payment amount.
+ */
+@property (nonatomic, readonly) NSDecimalNumber *amount;
+
+/**
  Payment status.
  */
 @property (nonatomic, readonly) NSString *status;
@@ -37,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@class AWXWeChatPaySDKResponse, AWXRedirectResponse;
+@class AWXWeChatPaySDKResponse, AWXRedirectResponse, AWXDccResponse;
 
 /**
  `AWXConfirmPaymentNextAction` includes the parameters for next action.
@@ -58,6 +68,11 @@ NS_ASSUME_NONNULL_BEGIN
  The parameters for redirection.
  */
 @property (nonatomic, readonly, nullable) AWXRedirectResponse *redirectResponse;
+
+/**
+  The parameters for dcc.
+ */
+@property (nonatomic, readonly, nullable) AWXDccResponse *dccResponse;
 
 @end
 
@@ -90,6 +105,19 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
+ `AWXDccResponse` includes the parameters for dcc.
+ */
+@interface AWXDccResponse : NSObject <AWXJSONDecodable>
+
+@property (nonatomic, readonly) NSString *currency;
+@property (nonatomic, readonly) NSString *currencyPair;
+@property (nonatomic, readonly) NSDecimalNumber *amount;
+@property (nonatomic, readonly) NSDecimalNumber *clientRate;
+@property (nonatomic, readonly) NSString *rateTimestamp, *rateExpiry;
+
+@end
+
+/**
  `AWXAuthenticationData` includes the parameters for 3ds authentication.
  */
 @interface AWXAuthenticationData : NSObject <AWXJSONDecodable>
@@ -118,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment amount.
  */
-@property (nonatomic, readonly) NSNumber *amount;
+@property (nonatomic, readonly) NSDecimalNumber *amount;
 
 /**
  Payment method.
@@ -133,12 +161,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Captured amount.
  */
-@property (nonatomic, readonly) NSNumber *capturedAmount;
+@property (nonatomic, readonly) NSDecimalNumber *capturedAmount;
 
 /**
  Refunded amount.
  */
-@property (nonatomic, readonly) NSNumber *refundedAmount;
+@property (nonatomic, readonly) NSDecimalNumber *refundedAmount;
 
 /**
  3DS authentication data.
@@ -165,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment amount.
  */
-@property (nonatomic, readonly) NSNumber *amount;
+@property (nonatomic, readonly) NSDecimalNumber *amount;
 
 /**
  Currency.
@@ -195,7 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Captured amount.
  */
-@property (nonatomic, readonly) NSNumber *capturedAmount;
+@property (nonatomic, readonly) NSDecimalNumber *capturedAmount;
 
 /**
  Created date.
@@ -216,6 +244,15 @@ NS_ASSUME_NONNULL_BEGIN
  Client secret.
  */
 @property (nonatomic, readonly) NSString *clientSecret;
+
+@end
+
+@interface AWXGetPaResResponse : NSObject <AWXResponseProtocol>
+
+/**
+ PaRes
+ */
+@property (nonatomic, readonly) NSString *paRes;
 
 @end
 

@@ -68,4 +68,15 @@ IB_DESIGNABLE
 
 @end
 
+@interface AWXCurrencyView : AWXNibView
+
+@property (nonatomic, strong) NSString *currencyName;
+@property (nonatomic, strong) UIImage *flag;
+@property (nonatomic, strong) NSString *price;
+@property (nonatomic) BOOL isSelected;
+@property (nonatomic, weak) AWXCurrencyView *exclusiveView;
+@property (weak, nonatomic) IBOutlet UIButton *button;
+
+@end
+
 NS_ASSUME_NONNULL_END

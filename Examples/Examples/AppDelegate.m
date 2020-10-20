@@ -26,24 +26,33 @@
     [SVProgressHUD setMaximumDismissTimeInterval:2];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [IQKeyboardManager sharedManager].enable = YES;
-    
-    [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
-        [self loadCartView];
-    }];
-    
-    [WXApi startLogByLevel:WXLogLevelNormal logBlock:^(NSString * _Nonnull log) {
-        NSLog(@"WeChat Log: %@", log);
-    }];
 
     // Airwallex
-    // Step1: Setup base URL
+    // Step1:
+    // Set a custom payment URL
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
+    // or use a preset mode (Note: test mode as default)
+//    [Airwallex setMode:AirwallexSDKLiveMode];
+
+    // Theme customization
+    UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
+    [AWXTheme sharedTheme].tintColor = tintColor;
+    [UIView.appearance setTintColor:tintColor];
     
     // WeChatSDK 1.8.2
     [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppID enableMTA:YES];
     
     // WeChatSDK 1.8.6.1
     //    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppID universalLink:@"https://airwallex.com/"];
+
+    [WXApi startLogByLevel:WXLogLevelNormal logBlock:^(NSString * _Nonnull log) {
+        NSLog(@"WeChat Log: %@", log);
+    }];
+
+    [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        [self loadCartView];
+    }];
+
     return YES;
 }
 

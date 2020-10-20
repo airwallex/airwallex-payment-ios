@@ -8,6 +8,7 @@
 
 #import "AWXPaymentMethodListViewController.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "AWXDCCViewController.h"
 #import "AWXCardViewController.h"
 #import "AWXPaymentViewController.h"
 #import "AWXWidgets.h"
@@ -35,7 +36,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     return nil;
 }
 
-@interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate>
+@interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
@@ -54,7 +55,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self reloadData];
 }
 
@@ -74,6 +75,11 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         controller.customerId = self.customerId;
         controller.shipping = self.shipping;
         controller.isFlow = self.isFlow;
+    } else if ([segue.identifier isEqualToString:@"showDCC"] && [sender isKindOfClass:[AWXConfirmPaymentIntentResponse class]]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        AWXDCCViewController *controller = (AWXDCCViewController *)navigationController.topViewController;
+        controller.response = sender;
+        controller.delegate = self;
     }
 }
 
@@ -199,7 +205,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         button.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
         button.layer.masksToBounds = YES;
         [button setTitle:@"Enter a new card" forState:UIControlStateNormal];
-        [button setTitleColor:[AWXTheme sharedTheme].purpleColor forState:UIControlStateNormal];
+        [button setTitleColor:[AWXTheme sharedTheme].tintColor forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
         button.backgroundColor = [UIColor clearColor];
         [button addTarget:self action:@selector(newPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -354,20 +360,19 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         return;
     }
     
-    AWXConfirmPaymentIntentResponse *result = (AWXConfirmPaymentIntentResponse *)response;
     if ([response.status isEqualToString:@"SUCCEEDED"] || [response.status isEqualToString:@"REQUIRES_CAPTURE"]) {
         [delegate paymentViewController:self didFinishWithStatus:AWXPaymentStatusSuccess error:error];
         return;
     }
     
-    if (!result.nextAction) {
+    if (!response.nextAction) {
         [delegate paymentViewController:self didFinishWithStatus:AWXPaymentStatusSuccess error:error];
         return;
     }
     
-    if (result.nextAction.weChatPayResponse) {
-        [delegate paymentViewController:self nextActionWithWeChatPaySDK:result.nextAction.weChatPayResponse];
-    } else if (result.nextAction.redirectResponse) {
+    if (response.nextAction.weChatPayResponse) {
+        [delegate paymentViewController:self nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
+    } else if (response.nextAction.redirectResponse) {
         AWXPaymentIntent *paymentIntent = [AWXUIContext sharedContext].paymentIntent;
         AWXThreeDSService *service = [AWXThreeDSService new];
         service.customerId = paymentIntent.customerId;
@@ -377,7 +382,9 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         service.presentingViewController = self;
         service.delegate = self;
         self.service = service;
-        [service presentThreeDSFlowWithServerJwt:result.nextAction.redirectResponse.jwt];
+        [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
+    } else if (response.nextAction.dccResponse) {
+        [self performSegueWithIdentifier:@"showDCC" sender:response];
     } else {
         [delegate paymentViewController:self
                     didFinishWithStatus:AWXPaymentStatusError
@@ -390,6 +397,31 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 - (void)threeDSService:(AWXThreeDSService *)service didFinishWithResponse:(AWXConfirmPaymentIntentResponse *)response error:(NSError *)error
 {
     [self finishConfirmationWithResponse:response error:error];
+}
+
+#pragma mark - AWXDCCViewControllerDelegate
+
+- (void)dccViewController:(AWXDCCViewController *)controller useDCC:(BOOL)useDCC
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+
+    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.intentId = [AWXUIContext sharedContext].paymentIntent.Id;
+    request.type = AWXDCC;
+    request.useDCC = useDCC;
+    request.device = self.device;
+
+    [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [SVProgressHUD dismiss];
+
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf finishConfirmationWithResponse:response error:error];
+    }];
 }
 
 @end

@@ -105,7 +105,7 @@
 - (void)setEnabled:(BOOL)enabled
 {
     super.enabled = enabled;
-    self.backgroundColor = enabled ? [AWXTheme sharedTheme].purpleColor : [AWXTheme sharedTheme].lineColor;
+    self.backgroundColor = enabled ? [AWXTheme sharedTheme].tintColor : [AWXTheme sharedTheme].lineColor;
 }
 
 @end
@@ -562,6 +562,78 @@
 
     [self setText:text];
     return NO;
+}
+
+@end
+
+@interface AWXCurrencyView ()
+
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIImageView *flagImageView;
+@property (weak, nonatomic) IBOutlet UILabel *currencyNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+
+@end
+
+@implementation AWXCurrencyView
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.contentView.layer.masksToBounds = YES;
+    self.contentView.layer.cornerRadius = 6.0f;
+    self.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.contentView.layer.borderWidth = 1.0 / [UIScreen mainScreen].scale;
+}
+
+- (IBAction)buttonPressed:(id)sender
+{
+    self.isSelected = YES;
+    if (self.exclusiveView) {
+        self.exclusiveView.isSelected = NO;
+    }
+}
+
+- (BOOL)isSelected
+{
+    return self.button.isSelected;
+}
+
+- (void)setIsSelected:(BOOL)isSelected
+{
+    self.button.selected = isSelected;
+    self.contentView.layer.borderWidth = isSelected ? 1.5 : (1.0 / [UIScreen mainScreen].scale);
+    self.contentView.layer.borderColor = isSelected ? [AWXTheme sharedTheme].tintColor.CGColor : [AWXTheme sharedTheme].lineColor.CGColor;
+}
+
+- (NSString *)currencyName
+{
+    return self.currencyNameLabel.text;
+}
+
+- (void)setCurrencyName:(NSString *)currencyName
+{
+    self.currencyNameLabel.text = currencyName;
+}
+
+- (UIImage *)flag
+{
+    return self.flagImageView.image;
+}
+
+- (void)setFlag:(UIImage *)flag
+{
+    self.flagImageView.image = flag;
+}
+
+- (NSString *)price
+{
+    return self.priceLabel.text;
+}
+
+- (void)setPrice:(NSString *)price
+{
+    self.priceLabel.text = price;
 }
 
 @end
