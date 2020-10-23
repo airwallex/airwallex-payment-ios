@@ -140,6 +140,14 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
     return [formatter stringFromNumber:self];
 }
 
+- (NSString *)currencySymbol:(NSString *)currencyCode
+{
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.locale = [NSLocale localeWithCurrency:currencyCode];
+    formatter.numberStyle = NSNumberFormatterCurrencyStyle;
+    return formatter.currencySymbol;
+}
+
 @end
 
 @implementation AWXValidationUtils

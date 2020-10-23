@@ -74,7 +74,7 @@
     });
 
     self.leftCurrencyView.currencyName = self.response.currency;
-    self.leftCurrencyView.price = [self.response.amount stringWithCurrencyCode:self.response.currency];
+    self.leftCurrencyView.price = [NSString stringWithFormat:@"%@%@", [self.response.amount currencySymbol:self.response.currency], self.response.amount.stringValue];
     NSString *flagPath = flags[self.response.currency];
     if (flagPath) {
         self.leftCurrencyView.flag = [UIImage imageNamed:[NSString stringWithFormat:@"Flag/%@", flagPath] inBundle:[NSBundle resourceBundle]];
@@ -92,12 +92,12 @@
     AWXDccResponse *dccResponse = self.response.nextAction.dccResponse;
     if (dccResponse) {
         self.rightCurrencyView.currencyName = dccResponse.currency;
-        self.rightCurrencyView.price = [dccResponse.amount stringWithCurrencyCode:dccResponse.currency];
+        self.rightCurrencyView.price = [NSString stringWithFormat:@"%@%@", [dccResponse.amount currencySymbol:dccResponse.currency], dccResponse.amountString];
         NSString *flagPath = flags[dccResponse.currency];
         if (flagPath) {
             self.rightCurrencyView.flag = [UIImage imageNamed:[NSString stringWithFormat:@"Flag/%@", flagPath] inBundle:[NSBundle resourceBundle]];
         }
-        self.rateLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@", self.response.currency, dccResponse.clientRate.string, dccResponse.currency];
+        self.rateLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@", self.response.currency, dccResponse.clientRateString, dccResponse.currency];
     }
 
     self.rightCurrencyView.layer.masksToBounds = NO;
