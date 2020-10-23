@@ -572,6 +572,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *flagImageView;
 @property (weak, nonatomic) IBOutlet UILabel *currencyNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelLeftConstraint;
 
 @end
 
@@ -621,8 +622,13 @@
     return self.flagImageView.image;
 }
 
-- (void)setFlag:(UIImage *)flag
+- (void)setFlag:(nullable UIImage *)flag
 {
+    if (flag) {
+        self.labelLeftConstraint.constant = 44;
+    } else {
+        self.labelLeftConstraint.constant = 0;
+    }
     self.flagImageView.image = flag;
 }
 

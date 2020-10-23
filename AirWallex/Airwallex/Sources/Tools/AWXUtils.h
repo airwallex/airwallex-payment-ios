@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDecimalNumber *)toIntegerCents;
 - (NSString *)string;
 - (NSString *)stringWithCurrencyCode:(NSString *)currencyCode;
+- (NSString *)currencySymbol:(NSString *)currencyCode;
 
 @end
 

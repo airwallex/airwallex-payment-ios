@@ -112,7 +112,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *currency;
 @property (nonatomic, readonly) NSString *currencyPair;
 @property (nonatomic, readonly) NSDecimalNumber *amount;
+@property (nonatomic, readonly) NSString *amountString;
 @property (nonatomic, readonly) NSDecimalNumber *clientRate;
+@property (nonatomic, readonly) NSString *clientRateString;
 @property (nonatomic, readonly) NSString *rateTimestamp, *rateExpiry;
 
 @end

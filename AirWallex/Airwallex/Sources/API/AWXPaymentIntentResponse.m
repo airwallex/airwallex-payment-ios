@@ -135,7 +135,9 @@
 @property (nonatomic, copy, readwrite) NSString *currency;
 @property (nonatomic, copy, readwrite) NSString *currencyPair;
 @property (nonatomic, copy, readwrite) NSDecimalNumber *amount;
+@property (nonatomic, copy, readwrite) NSString *amountString;
 @property (nonatomic, copy, readwrite) NSDecimalNumber *clientRate;
+@property (nonatomic, copy, readwrite) NSString *clientRateString;
 @property (nonatomic, copy, readwrite) NSString *rateTimestamp, *rateExpiry;
 
 @end
@@ -149,8 +151,10 @@
     response.currencyPair = json[@"currency_pair"];
     NSNumber *amount = json[@"amount"];
     response.amount = [NSDecimalNumber decimalNumberWithDecimal:amount.decimalValue];
+    response.amountString = @(amount.floatValue).description;
     NSNumber *clientRate = json[@"client_rate"];
     response.clientRate = [NSDecimalNumber decimalNumberWithDecimal:clientRate.decimalValue];
+    response.clientRateString = @(clientRate.floatValue).description;
     response.rateTimestamp = json[@"rate_timestamp"];
     response.rateExpiry = json[@"rate_expiry"];
     return response;
