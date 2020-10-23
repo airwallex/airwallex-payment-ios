@@ -78,6 +78,8 @@
     NSString *flagPath = flags[self.response.currency];
     if (flagPath) {
         self.leftCurrencyView.flag = [UIImage imageNamed:[NSString stringWithFormat:@"Flag/%@", flagPath] inBundle:[NSBundle resourceBundle]];
+    } else {
+        self.leftCurrencyView.flag = nil;
     }
 
     self.leftCurrencyView.layer.masksToBounds = NO;
@@ -96,6 +98,8 @@
         NSString *flagPath = flags[dccResponse.currency];
         if (flagPath) {
             self.rightCurrencyView.flag = [UIImage imageNamed:[NSString stringWithFormat:@"Flag/%@", flagPath] inBundle:[NSBundle resourceBundle]];
+        } else {
+            self.rightCurrencyView.flag = nil;
         }
         self.rateLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@", self.response.currency, dccResponse.clientRateString, dccResponse.currency];
     }

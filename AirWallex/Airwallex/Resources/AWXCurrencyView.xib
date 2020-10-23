@@ -22,6 +22,7 @@
                 <outlet property="contentView" destination="iN0-l3-epB" id="a6v-b2-fQA"/>
                 <outlet property="currencyNameLabel" destination="pta-T2-otX" id="mbA-dC-Alb"/>
                 <outlet property="flagImageView" destination="jWO-kr-ZLS" id="f6t-n3-u9V"/>
+                <outlet property="labelLeftConstraint" destination="5r3-jV-7eO" id="yoS-2i-qxY"/>
                 <outlet property="priceLabel" destination="W27-Wk-J5g" id="vfA-C7-M5P"/>
             </connections>
         </placeholder>
@@ -33,19 +34,34 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQR-ik-9iC">
                     <rect key="frame" x="133" y="137" width="72" height="63"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jWO-kr-ZLS">
-                            <rect key="frame" x="0.0" y="0.0" width="34" height="24"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bWQ-Yj-nTy">
+                            <rect key="frame" x="0.0" y="0.0" width="72" height="24"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jWO-kr-ZLS">
+                                    <rect key="frame" x="0.0" y="0.0" width="34" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="34" id="UDt-DF-eBk"/>
+                                        <constraint firstAttribute="height" constant="24" id="yjb-NR-yO2"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pta-T2-otX">
+                                    <rect key="frame" x="44" y="0.0" width="28" height="24"/>
+                                    <fontDescription key="fontDescription" name="CircularXX-Regular" family="CircularXX" pointSize="14"/>
+                                    <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="34" id="UDt-DF-eBk"/>
-                                <constraint firstAttribute="height" constant="24" id="yjb-NR-yO2"/>
+                                <constraint firstItem="pta-T2-otX" firstAttribute="leading" secondItem="bWQ-Yj-nTy" secondAttribute="leading" constant="44" id="5r3-jV-7eO"/>
+                                <constraint firstItem="jWO-kr-ZLS" firstAttribute="top" secondItem="bWQ-Yj-nTy" secondAttribute="top" id="Qt7-sD-pbG"/>
+                                <constraint firstAttribute="bottom" secondItem="jWO-kr-ZLS" secondAttribute="bottom" id="XDB-2G-s6q"/>
+                                <constraint firstItem="pta-T2-otX" firstAttribute="top" secondItem="bWQ-Yj-nTy" secondAttribute="top" id="lzS-Lf-GIJ"/>
+                                <constraint firstItem="jWO-kr-ZLS" firstAttribute="leading" secondItem="bWQ-Yj-nTy" secondAttribute="leading" id="oG9-15-emh"/>
+                                <constraint firstAttribute="bottom" secondItem="pta-T2-otX" secondAttribute="bottom" id="t5h-ng-R5p"/>
+                                <constraint firstAttribute="trailing" secondItem="pta-T2-otX" secondAttribute="trailing" id="ywJ-d4-nwY"/>
                             </constraints>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pta-T2-otX">
-                            <rect key="frame" x="42" y="3" width="30" height="18"/>
-                            <fontDescription key="fontDescription" name="CircularXX-Regular" family="CircularXX" pointSize="14"/>
-                            <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 100.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W27-Wk-J5g">
                             <rect key="frame" x="0.0" y="40" width="72" height="23"/>
                             <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
@@ -55,15 +71,12 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="jWO-kr-ZLS" firstAttribute="top" secondItem="BQR-ik-9iC" secondAttribute="top" id="4Cg-vI-rQJ"/>
                         <constraint firstAttribute="trailing" secondItem="W27-Wk-J5g" secondAttribute="trailing" id="82O-vf-zh2"/>
-                        <constraint firstItem="pta-T2-otX" firstAttribute="leading" secondItem="jWO-kr-ZLS" secondAttribute="trailing" constant="8" id="D9n-ia-hFu"/>
+                        <constraint firstItem="bWQ-Yj-nTy" firstAttribute="top" secondItem="BQR-ik-9iC" secondAttribute="top" id="QNB-lq-i3K"/>
                         <constraint firstAttribute="bottom" secondItem="W27-Wk-J5g" secondAttribute="bottom" id="WEh-px-cel"/>
-                        <constraint firstItem="W27-Wk-J5g" firstAttribute="top" secondItem="jWO-kr-ZLS" secondAttribute="bottom" constant="16" id="ZxI-00-7Bw"/>
-                        <constraint firstItem="pta-T2-otX" firstAttribute="centerY" secondItem="jWO-kr-ZLS" secondAttribute="centerY" id="nbG-lv-VdF"/>
-                        <constraint firstItem="jWO-kr-ZLS" firstAttribute="leading" secondItem="BQR-ik-9iC" secondAttribute="leading" id="vSO-MJ-6XY"/>
+                        <constraint firstItem="W27-Wk-J5g" firstAttribute="top" secondItem="bWQ-Yj-nTy" secondAttribute="bottom" constant="16" id="ieC-ck-NzE"/>
+                        <constraint firstItem="bWQ-Yj-nTy" firstAttribute="centerX" secondItem="BQR-ik-9iC" secondAttribute="centerX" id="jIU-O4-icE"/>
                         <constraint firstItem="W27-Wk-J5g" firstAttribute="leading" secondItem="BQR-ik-9iC" secondAttribute="leading" id="wcp-2B-Ym2"/>
-                        <constraint firstAttribute="trailing" secondItem="pta-T2-otX" secondAttribute="trailing" id="xBd-P3-rtS"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tys-WQ-UGn">
