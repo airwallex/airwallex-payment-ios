@@ -145,6 +145,9 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     formatter.locale = [NSLocale localeWithCurrency:currencyCode];
     formatter.numberStyle = NSNumberFormatterCurrencyStyle;
+    if ([formatter.currencySymbol isEqualToString:@"HK$"]) {
+        return @"$";
+    }
     return formatter.currencySymbol;
 }
 
