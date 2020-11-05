@@ -105,8 +105,8 @@
 		08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */; };
 		08D26F5724051FC2008E65D3 /* AWXConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 08D26F5524051FC2008E65D3 /* AWXConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08D26F5824051FC2008E65D3 /* AWXConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D26F5624051FC2008E65D3 /* AWXConstants.m */; };
-		BFF1A9DD0427D0465EB85A27 /* Pods_Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */; };
-		D09F2EDBD05E1DF743727FC2 /* Pods_AirwallexTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2D4A2E2793E96E830344B95 /* Pods_AirwallexTests.framework */; };
+		26346A618B1632CE13FD8BD8 /* libPods-Airwallex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F32234CF28FBF7DEF511F529 /* libPods-Airwallex.a */; };
+		A56D02CF82D812DC123E6CB2 /* libPods-AirwallexTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2467B1E77C4D87CAA384DD2F /* libPods-AirwallexTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,12 +224,12 @@
 		08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AirwallexSDK.bundle; sourceTree = "<group>"; };
 		08D26F5524051FC2008E65D3 /* AWXConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXConstants.h; sourceTree = "<group>"; };
 		08D26F5624051FC2008E65D3 /* AWXConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXConstants.m; sourceTree = "<group>"; };
-		89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2467B1E77C4D87CAA384DD2F /* libPods-AirwallexTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AirwallexTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AD4E6D56C6BCC575BBBFF36 /* Pods-Airwallex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Airwallex.release.xcconfig"; path = "Target Support Files/Pods-Airwallex/Pods-Airwallex.release.xcconfig"; sourceTree = "<group>"; };
 		C4A04FA4848FC5ABC56AF950 /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirwallexTests.release.xcconfig"; path = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
 		EB72D67C8C4166DA0B538CB3 /* Pods-Airwallex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Airwallex.debug.xcconfig"; path = "Target Support Files/Pods-Airwallex/Pods-Airwallex.debug.xcconfig"; sourceTree = "<group>"; };
 		EF019E134879A5ECDDA7AB32 /* Pods-AirwallexTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirwallexTests.debug.xcconfig"; path = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F2D4A2E2793E96E830344B95 /* Pods_AirwallexTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AirwallexTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F32234CF28FBF7DEF511F529 /* libPods-Airwallex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Airwallex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,7 +237,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFF1A9DD0427D0465EB85A27 /* Pods_Airwallex.framework in Frameworks */,
+				26346A618B1632CE13FD8BD8 /* libPods-Airwallex.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */,
-				D09F2EDBD05E1DF743727FC2 /* Pods_AirwallexTests.framework in Frameworks */,
+				A56D02CF82D812DC123E6CB2 /* libPods-AirwallexTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,8 +256,8 @@
 		0765DE4B2A31304286AAE45B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				89331540B3492EBA2AA72EAE /* Pods_Airwallex.framework */,
-				F2D4A2E2793E96E830344B95 /* Pods_AirwallexTests.framework */,
+				F32234CF28FBF7DEF511F529 /* libPods-Airwallex.a */,
+				2467B1E77C4D87CAA384DD2F /* libPods-AirwallexTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -552,6 +552,7 @@
 				085BD3C423CC62B4002E8F27 /* Sources */,
 				085BD3C523CC62B4002E8F27 /* Frameworks */,
 				085BD3C623CC62B4002E8F27 /* Resources */,
+				D46EC70E7ABC1CFC513731B3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -571,6 +572,7 @@
 				085BD3CE23CC62B4002E8F27 /* Frameworks */,
 				085BD3CF23CC62B4002E8F27 /* Resources */,
 				A6EEBDC668E1ADC16900AAC6 /* [CP] Embed Pods Frameworks */,
+				EBCA0096C3FD008C2241FA59 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -706,6 +708,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D46EC70E7ABC1CFC513731B3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Airwallex/Pods-Airwallex-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Airwallex/Pods-Airwallex-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Airwallex/Pods-Airwallex-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EBCA0096C3FD008C2241FA59 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
