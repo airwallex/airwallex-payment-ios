@@ -11,8 +11,8 @@ Pod::Spec.new do |s|
   s.resources					= ['Airwallex/Airwallex/Resources/**/*']
   s.source_files				= 'Airwallex/Airwallex/Sources/*.{h,m}', 'Airwallex/Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Airwallex/Sources/API/*.{h,m}', 'Airwallex/Airwallex/Sources/Tools/*.{h,m}', 'Airwallex/Airwallex/Sources/Models/*.{h,m}'
   s.dependency					'SVProgressHUD'
-  s.denpendecy					'AirwallexTrustDefender'
-  s.denpendecy					'AirwallexCardinalMobile'
+  s.dependency					'AirwallexTrustDefender'
+  s.dependency					'AirwallexCardinalMobile'
 
   # s.resource_bundles = {
   #   'AirwallexSDK' => ['Airwallex/Airwallex/Resources/**/*.{lproj,storyboard,xib,xcassets,json,imageset,png}']
