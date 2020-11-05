@@ -29,10 +29,8 @@
 
     // Airwallex
     // Step1:
-    // Set a custom payment URL
-    [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
     // or use a preset mode (Note: test mode as default)
-//    [Airwallex setMode:AirwallexSDKLiveMode];
+    [Airwallex setMode:AirwallexSDKTestMode];
 
     // Theme customization
     UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
