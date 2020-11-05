@@ -14,12 +14,17 @@
 #import "AWXAPIResponse.h"
 #import "AWXUtils.h"
 
-static NSString * const AWXAPIBaseTestURL = @"https://staging-pci-api.airwallex.com/";
+static NSString * const AWXAPIBaseTestURL = @"https://demo-pci-api.airwallex.com/";
 static NSString * const AWXAPIBaseLiveURL = @"https://pci-api.airwallex.com/";
+
+static NSString *const AWXCybsTestURL = @"https://demo-pacybsmock.airwallex.com/";
+static NSString *const AWXCybsLiveURL = @"https://prod-pacybs.airwallex.com/";
 
 @implementation Airwallex
 
 static NSURL *_defaultBaseURL;
+static NSString *_cybsURL;
+
 static AirwallexSDKMode _mode = AirwallexSDKTestMode;
 
 + (void)setDefaultBaseURL:(NSURL *)baseURL
@@ -30,6 +35,16 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
 + (NSURL *)defaultBaseURL
 {
     return _defaultBaseURL ?: (_mode == AirwallexSDKLiveMode ? [NSURL URLWithString:AWXAPIBaseLiveURL] : [NSURL URLWithString:AWXAPIBaseTestURL]);
+}
+
++ (void)setCybsURL:(NSString *)cybsURL
+{
+    _cybsURL = cybsURL;
+}
+
++ (NSString *)cybsURL
+{
+    return _cybsURL ?: (_mode == AirwallexSDKLiveMode ? AWXCybsLiveURL : AWXCybsTestURL);
 }
 
 + (void)setMode:(AirwallexSDKMode)mode

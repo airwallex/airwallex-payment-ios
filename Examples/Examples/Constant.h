@@ -9,8 +9,8 @@
 #ifndef Constant_h
 #define Constant_h
 
-static NSString * const authenticationBaseURL = @"https://api-staging.airwallex.com/";
-static NSString * const paymentBaseURL = @"https://staging-pci-api.airwallex.com/";
+static NSString * const authenticationBaseURL = @"https://api-demo.airwallex.com/";
+static NSString * const paymentBaseURL = @"https://demo-pci-api.airwallex.com/";
 static NSString * const defaultAmount = @"0.10";
 static NSString * const defaultCurrency = @"HKD";
 
