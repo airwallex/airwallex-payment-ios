@@ -37,6 +37,8 @@ IB_DESIGNABLE
 
 @interface AWXNibView : AWXView
 
+- (void)setup;
+
 @end
 
 IB_DESIGNABLE

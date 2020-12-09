@@ -69,6 +69,11 @@
     view.frame = self.bounds;
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:_view = view];
+    [self setup];
+}
+
+- (void)setup
+{
 }
 
 - (NSString *)nibName
@@ -122,6 +127,12 @@
 @end
 
 @implementation AWXFloatLabeledTextField
+
+- (void)setup
+{
+    [super setup];
+    [self.textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+}
 
 - (NSString *)text
 {
@@ -203,12 +214,11 @@
             self.textField.textContentType = UITextContentTypeFullStreetAddress;
             break;
         case AWXTextFieldTypeZipcode:
-            self.textField.keyboardType = UIKeyboardTypeASCIICapable;
+            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
             self.textField.textContentType = UITextContentTypePostalCode;
             break;
         case AWXTextFieldTypeCardNumber:
-            self.textField.keyboardType = UIKeyboardTypeNumberPad;
-            self.textField.textContentType = UITextContentTypeCreditCardNumber;
+            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
             break;
         case AWXTextFieldTypeNameOnCard:
             self.textField.keyboardType = UIKeyboardTypeDefault;
@@ -294,6 +304,10 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    if (!(self.fieldType == AWXTextFieldTypeExpires || self.fieldType == AWXTextFieldTypeCVC)) {
+        return YES;
+    }
+    
     self.errorText = nil;
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if (self.fieldType == AWXTextFieldTypeExpires) {
@@ -308,6 +322,15 @@
     text.length > 0 ? [self active] : [self inactive];
     [self setText:text];
     return NO;
+}
+
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    if (self.fieldType == AWXTextFieldTypeExpires || self.fieldType == AWXTextFieldTypeCVC) {
+        return;
+    }
+    
+    textField.text.length > 0 ? [self active] : [self inactive];
 }
 
 - (void)validateEmail:(NSString *)text
