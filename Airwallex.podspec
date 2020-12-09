@@ -10,9 +10,14 @@ Pod::Spec.new do |s|
   s.ios.deployment_target		= '10.0'
   s.resources					= ['Airwallex/Airwallex/Resources/**/*']
   s.source_files				= 'Airwallex/Airwallex/Sources/*.{h,m}', 'Airwallex/Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Airwallex/Sources/API/*.{h,m}', 'Airwallex/Airwallex/Sources/Tools/*.{h,m}', 'Airwallex/Airwallex/Sources/Models/*.{h,m}'
+  s.static_framework			= true
+  s.pod_target_xcconfig = {
+  'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+  }
+  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   s.dependency					'SVProgressHUD'
-  s.denpendecy					'AirwallexTrustDefender'
-  s.denpendecy					'AirwallexCardinalMobile'
+  s.dependency					'AirwallexTrustDefender'
+  s.dependency					'AirwallexCardinalMobile'
 
   # s.resource_bundles = {
   #   'AirwallexSDK' => ['Airwallex/Airwallex/Resources/**/*.{lproj,storyboard,xib,xcassets,json,imageset,png}']

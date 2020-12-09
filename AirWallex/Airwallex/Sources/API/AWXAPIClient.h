@@ -35,6 +35,18 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURL *)defaultBaseURL;
 
 /**
+ Set term URL.
+ 
+ @param cybsURL A cybs URL.
+ */
++ (void)setCybsURL:(NSString *)cybsURL;
+
+/**
+ Get term URL.
+ */
++ (NSString *)cybsURL;
+
+/**
  Set sdk mode.
 
  @param mode A mode required.

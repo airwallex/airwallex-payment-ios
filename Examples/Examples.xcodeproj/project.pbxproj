@@ -25,7 +25,7 @@
 		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
-		F7071D3AC01A9341C319415E /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */; };
+		C316E4627234A4CD5BEAACE4 /* libPods-Examples.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8A8271856E8171BDDAA9BA /* libPods-Examples.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,8 +71,8 @@
 		08A3E99D24246C30003FDAAF /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		08A3E99E24246C30003FDAAF /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		08B55E372421D8C60054E254 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A8A8271856E8171BDDAA9BA /* libPods-Examples.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Examples.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
-		7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,7 +82,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				084779D2244F240A00C41256 /* Airwallex.framework in Frameworks */,
-				F7071D3AC01A9341C319415E /* Pods_Examples.framework in Frameworks */,
+				C316E4627234A4CD5BEAACE4 /* libPods-Examples.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,7 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				08B55E372421D8C60054E254 /* Airwallex.framework */,
-				7E72755DB560AA3A38D34A01 /* Pods_Examples.framework */,
+				1A8A8271856E8171BDDAA9BA /* libPods-Examples.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -196,6 +196,7 @@
 				085BD3E923CC64B6002E8F27 /* Resources */,
 				93EA6DFA6F7AE71247D6E8D3 /* [CP] Embed Pods Frameworks */,
 				084779D1244F23CC00C41256 /* Embed Frameworks */,
+				40D7BBA677BA0350813534A3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -276,6 +277,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		40D7BBA677BA0350813534A3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		93EA6DFA6F7AE71247D6E8D3 /* [CP] Embed Pods Frameworks */ = {

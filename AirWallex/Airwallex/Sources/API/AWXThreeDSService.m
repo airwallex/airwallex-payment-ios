@@ -137,7 +137,7 @@
             // 3DS v1.x flow
             NSURL *url = [NSURL URLWithString:redirectResponse.acs];
             NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
-            NSString *termUrlEncoding = [[NSString stringWithFormat:@"%@pares/callback", AWXTermURL] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
+            NSString *termUrlEncoding = [[NSString stringWithFormat:@"%@pares/callback", [Airwallex cybsURL]] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
             NSString *body = [NSString stringWithFormat:@"&PaReq=%@&TermUrl=%@", reqEncoding, termUrlEncoding];
             NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
             urlRequest.HTTPMethod = @"POST";
@@ -211,7 +211,7 @@
 - (void)getPaRes:(NSString *)Id completion:(void(^)(AWXGetPaResResponse *))completion;
 {
     AWXAPIClientConfiguration *configuration = [[AWXAPIClientConfiguration alloc] init];
-    configuration.baseURL = [NSURL URLWithString:AWXTermURL];
+    configuration.baseURL = [NSURL URLWithString:[Airwallex cybsURL]];
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:configuration];
 
     AWXGetPaResRequest *request = [AWXGetPaResRequest new];
