@@ -85,15 +85,15 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (NSArray <AWXPaymentMethod *> *)section0
 {
-    if (![self.availablePaymentMethodTypes containsObject:AWXWeChatPayKey]) {
-        return @[];
+    NSMutableArray *paymentMethodTypes = [NSMutableArray array];
+    if ([self.availablePaymentMethodTypes containsObject:AWXWeChatPayKey]) {
+        AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
+        paymentMethod.type = AWXWeChatPayKey;
+        AWXWeChatPay *pay = [AWXWeChatPay new];
+        paymentMethod.weChatPay = pay;
+        [paymentMethodTypes addObject:paymentMethod];
     }
-
-    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-    paymentMethod.type = AWXWeChatPayKey;
-    AWXWeChatPay *pay = [AWXWeChatPay new];
-    paymentMethod.weChatPay = pay;
-    return @[paymentMethod];
+    return paymentMethodTypes;
 }
 
 - (void)reloadData

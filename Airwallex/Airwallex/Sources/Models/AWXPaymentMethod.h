@@ -10,6 +10,7 @@
 #import "AWXCodable.h"
 #import "AWXPlaceDetails.h"
 #import "AWXCard.h"
+#import "AWXNonCard.h"
 #import "AWXWeChatPay.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -42,7 +43,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Wechat pay object.
  */
-@property (nonatomic, strong, nullable) AWXWeChatPay *weChatPay;
+@property (nonatomic, strong, nullable) AWXWeChatPay *weChatPay API_DEPRECATED_WITH_REPLACEMENT("Use nonCard instead.", ios(2.0, 14.0));
+
+/**
+ Non-card  object.
+ */
+@property (nonatomic, strong, nullable) AWXNonCard *nonCard;
 
 /**
  The customer this payment method belongs to.

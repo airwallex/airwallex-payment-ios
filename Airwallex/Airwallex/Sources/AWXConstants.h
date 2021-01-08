@@ -33,6 +33,13 @@ FOUNDATION_EXPORT NSString *const AWXCyberSourceOrganizationID;
 FOUNDATION_EXPORT NSString *const AWXCyberSourceMerchantID;
 
 FOUNDATION_EXPORT NSString *const AWXWeChatPayKey;
+FOUNDATION_EXPORT NSString *const AWXAliPayCNKey;
+FOUNDATION_EXPORT NSString *const AWXAliPayHKKey;
+FOUNDATION_EXPORT NSString *const AWXKakaoPayKey;
+FOUNDATION_EXPORT NSString *const AWXTNGPayKey;
+FOUNDATION_EXPORT NSString *const AWXDANAPayKey;
+FOUNDATION_EXPORT NSString *const AWXGCashPayKey;
+
 FOUNDATION_EXPORT NSString *const AWXCardKey;
 FOUNDATION_EXPORT NSString *const AWXThreeDSReturnURL;
 FOUNDATION_EXPORT NSString *const AWXCybsURL;

@@ -22,6 +22,13 @@ NSString *const AWXCyberSourceOrganizationID = @"1snn5n9w";
 NSString *const AWXCyberSourceMerchantID = @"airwallex_cybs";
 
 NSString *const AWXWeChatPayKey = @"wechatpay";
+NSString *const AWXAliPayCNKey = @"alipaycn";
+NSString *const AWXAliPayHKKey = @"alipayhk";
+NSString *const AWXKakaoPayKey = @"kakaopay";
+NSString *const AWXTNGPayKey = @"tng";
+NSString *const AWXDANAPayKey = @"dana";
+NSString *const AWXGCashPayKey = @"gcash";
+
 NSString *const AWXCardKey = @"card";
 NSString *const AWXThreeDSReturnURL = @"";
 NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
