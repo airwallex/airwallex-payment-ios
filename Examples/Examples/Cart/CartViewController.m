@@ -162,7 +162,41 @@
                                          @"merchant_order_id": NSUUID.UUID.UUIDString,
                                          @"request_id": NSUUID.UUID.UUIDString,
                                          @"customer_id": customerId,
-                                         @"order": @{}} mutableCopy];
+                                         @"metadata": @{@"id": @1},
+                                         @"order": @{
+                                                 @"products": @[@{
+                                                                    @"type": @"Free engraving",
+                                                                    @"code": @"123",
+                                                                    @"name": @"AirPods Pro",
+                                                                    @"sku": @"piece",
+                                                                    @"quantity": @1,
+                                                                    @"unit_price": @399.0,
+                                                                    @"desc": @"Buy AirPods Pro, per month with trade-in",
+                                                                    @"url": @"www.aircross.com"
+                                                 }, @{
+                                                                    @"type": @"White",
+                                                                    @"code": @"123",
+                                                                    @"name": @"HomePod",
+                                                                    @"sku": @"piece",
+                                                                    @"quantity": @1,
+                                                                    @"unit_price": @469.0,
+                                                                    @"desc": @"Buy HomePod, per month with trade-in",
+                                                                    @"url": @"www.aircross.com"
+                                                 }],
+                                                 @"shipping": @{
+                                                         @"first_name": @"Verify",
+                                                         @"last_name": @"Doe",
+                                                         @"phone_number": @"13800000000",
+                                                         @"address": @{
+                                                                 @"country_code": @"CN",
+                                                                 @"state": @"Shanghai",
+                                                                 @"city": @"Shanghai",
+                                                                 @"street": @"Pudong District",
+                                                                 @"postcode": @"100000"
+                                                         }
+                                                 },
+                                                 @"type": @"physical_goods"
+                                         }} mutableCopy];
     
     dispatch_group_enter(group);
     [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
