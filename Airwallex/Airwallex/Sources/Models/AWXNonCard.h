@@ -17,11 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXNonCard : NSObject <AWXJSONEncodable, AWXJSONDecodable>
 
 /**
- The type of non-card payment method.
- */
-@property (nonatomic, copy) NSString *type;
-
-/**
  The specific WeChatPay flow to use. For app, it should be 'inapp'.
  */
 @property (nonatomic, copy) NSString *flow;

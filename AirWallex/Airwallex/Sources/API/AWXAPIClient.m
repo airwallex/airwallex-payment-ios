@@ -57,6 +57,12 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
     return _mode;
 }
 
++ (NSArray *)supportedNonCardTypes
+{
+//    return @[AWXWeChatPayKey, AWXAliPayCNKey, AWXAliPayHKKey, AWXKakaoPayKey, AWXTNGPayKey, AWXDANAPayKey, AWXGCashPayKey];
+    return @[AWXWeChatPayKey, AWXAliPayCNKey];
+}
+
 @end
 
 @implementation AWXAPIClientConfiguration

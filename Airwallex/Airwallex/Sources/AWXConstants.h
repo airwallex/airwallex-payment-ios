@@ -54,4 +54,7 @@ FOUNDATION_EXPORT NSString *const AWXFontNameCircularStdBold;
 FOUNDATION_EXPORT NSString *const AWXFontFamilyNameCircularXX;
 FOUNDATION_EXPORT NSString *const AWXFontNameCircularXXRegular;
 
+FOUNDATION_EXPORT NSString * FormatPaymentMethodTypeString(NSString *type);
+FOUNDATION_EXPORT NSString * PaymentMethodTypeLogo(NSString *type);
+
 NS_ASSUME_NONNULL_END

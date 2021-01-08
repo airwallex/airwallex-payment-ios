@@ -41,3 +41,43 @@ NSString *const AWXFontNameCircularStdBold = @"CircularStd-Bold";
 
 NSString *const AWXFontFamilyNameCircularXX = @"CircularXX";
 NSString *const AWXFontNameCircularXXRegular = @"CircularXX-Regular";
+
+NSString * FormatPaymentMethodTypeString(NSString *type)
+{
+    if ([type isEqualToString:AWXWeChatPayKey]) {
+        return @"WeChat Pay";
+    } else if ([type isEqualToString:AWXAliPayCNKey]) {
+        return @"Alipay";
+    } else if ([type isEqualToString:AWXAliPayHKKey]) {
+        return @"Alipay";
+    } else if ([type isEqualToString:AWXKakaoPayKey]) {
+        return @"Alipay";
+    } else if ([type isEqualToString:AWXTNGPayKey]) {
+        return @"Alipay";
+    } else if ([type isEqualToString:AWXDANAPayKey]) {
+        return @"Alipay";
+    } else if ([type isEqualToString:AWXGCashPayKey]) {
+        return @"Alipay";
+    }
+    return nil;
+}
+
+NSString * PaymentMethodTypeLogo(NSString *type)
+{
+    if ([type isEqualToString:AWXWeChatPayKey]) {
+        return @"wechat";
+    } else if ([type isEqualToString:AWXAliPayCNKey]) {
+        return @"alipay";
+    } else if ([type isEqualToString:AWXAliPayHKKey]) {
+        return @"alipay";
+    } else if ([type isEqualToString:AWXKakaoPayKey]) {
+        return @"alipay";
+    } else if ([type isEqualToString:AWXTNGPayKey]) {
+        return @"alipay";
+    } else if ([type isEqualToString:AWXDANAPayKey]) {
+        return @"alipay";
+    } else if ([type isEqualToString:AWXGCashPayKey]) {
+        return @"alipay";
+    }
+    return nil;
+}

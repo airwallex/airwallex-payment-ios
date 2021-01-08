@@ -28,14 +28,6 @@
 #import "AWXThreeDSService.h"
 #import "AWXSecurityService.h"
 
-static NSString * FormatPaymentMethodTypeString(NSString *type)
-{
-    if ([type isEqualToString:AWXWeChatPayKey]) {
-        return @"WeChat pay";
-    }
-    return nil;
-}
-
 @interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -85,13 +77,16 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (NSArray <AWXPaymentMethod *> *)section0
 {
+    NSArray *supportedTypes = [Airwallex supportedNonCardTypes];
     NSMutableArray *paymentMethodTypes = [NSMutableArray array];
-    if ([self.availablePaymentMethodTypes containsObject:AWXWeChatPayKey]) {
-        AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-        paymentMethod.type = AWXWeChatPayKey;
-        AWXWeChatPay *pay = [AWXWeChatPay new];
-        paymentMethod.weChatPay = pay;
-        [paymentMethodTypes addObject:paymentMethod];
+    for (NSString *type in self.availablePaymentMethodTypes) {
+        if ([supportedTypes containsObject:type]) {
+            AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
+            paymentMethod.type = type;
+            AWXNonCard *nonCard = [AWXNonCard new];
+            paymentMethod.nonCard = nonCard;
+            [paymentMethodTypes addObject:paymentMethod];
+        }
     }
     return paymentMethodTypes;
 }
@@ -228,15 +223,15 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     
     AWXPaymentMethod *method = items[indexPath.row];
     AWXPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentMethodCell" forIndexPath:indexPath];
-    if ([method.type isEqualToString:AWXWeChatPayKey]) {
-        cell.logoImageView.image = [UIImage imageNamed:@"wc" inBundle:[NSBundle resourceBundle]];
+    if ([Airwallex.supportedNonCardTypes containsObject:method.type]) {
+        cell.logoImageView.image = [UIImage imageNamed:PaymentMethodTypeLogo(method.type) inBundle:[NSBundle resourceBundle]];
         cell.titleLabel.text = FormatPaymentMethodTypeString(method.type);
     } else {
         cell.logoImageView.image = [UIImage imageNamed:method.card.brand inBundle:[NSBundle resourceBundle]];
         cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", method.card.brand.capitalizedString, method.card.last4];
     }
     
-    if ([self.paymentMethod.type isEqualToString:AWXWeChatPayKey]) {
+    if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
         if ([method.type isEqualToString:self.paymentMethod.type]) {
             [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
