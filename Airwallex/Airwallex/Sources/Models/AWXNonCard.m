@@ -16,7 +16,7 @@
     self = [super init];
     if (self) {
         self.flow = @"inapp";
-        self.osType = [UIDevice currentDevice].systemName;
+        self.osType = @"ios";
     }
     return self;
 }
