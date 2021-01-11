@@ -23,6 +23,9 @@
     if (self.weChatPay) {
         items[@"wechatpay"] = self.weChatPay.encodeToJSON;
     }
+    if (self.nonCard) {
+        items[self.type] = self.nonCard.encodeToJSON;
+    }
     if (self.customerId) {
         items[@"customer_id"] = self.customerId;
     }

@@ -33,6 +33,13 @@ FOUNDATION_EXPORT NSString *const AWXCyberSourceOrganizationID;
 FOUNDATION_EXPORT NSString *const AWXCyberSourceMerchantID;
 
 FOUNDATION_EXPORT NSString *const AWXWeChatPayKey;
+FOUNDATION_EXPORT NSString *const AWXAlipayCNKey;
+FOUNDATION_EXPORT NSString *const AWXAlipayHKKey;
+FOUNDATION_EXPORT NSString *const AWXKakaoPayKey;
+FOUNDATION_EXPORT NSString *const AWXTNGPayKey;
+FOUNDATION_EXPORT NSString *const AWXDANAPayKey;
+FOUNDATION_EXPORT NSString *const AWXGCashPayKey;
+
 FOUNDATION_EXPORT NSString *const AWXCardKey;
 FOUNDATION_EXPORT NSString *const AWXThreeDSReturnURL;
 FOUNDATION_EXPORT NSString *const AWXCybsURL;
@@ -46,5 +53,8 @@ FOUNDATION_EXPORT NSString *const AWXFontNameCircularStdBold;
 
 FOUNDATION_EXPORT NSString *const AWXFontFamilyNameCircularXX;
 FOUNDATION_EXPORT NSString *const AWXFontNameCircularXXRegular;
+
+FOUNDATION_EXPORT NSString * FormatPaymentMethodTypeString(NSString *type);
+FOUNDATION_EXPORT NSString * PaymentMethodTypeLogo(NSString *type);
 
 NS_ASSUME_NONNULL_END

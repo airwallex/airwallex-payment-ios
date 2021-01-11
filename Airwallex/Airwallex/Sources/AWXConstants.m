@@ -22,6 +22,13 @@ NSString *const AWXCyberSourceOrganizationID = @"1snn5n9w";
 NSString *const AWXCyberSourceMerchantID = @"airwallex_cybs";
 
 NSString *const AWXWeChatPayKey = @"wechatpay";
+NSString *const AWXAlipayCNKey = @"alipaycn";
+NSString *const AWXAlipayHKKey = @"alipayhk";
+NSString *const AWXKakaoPayKey = @"kakaopay";
+NSString *const AWXTNGPayKey = @"tng";
+NSString *const AWXDANAPayKey = @"dana";
+NSString *const AWXGCashPayKey = @"gcash";
+
 NSString *const AWXCardKey = @"card";
 NSString *const AWXThreeDSReturnURL = @"";
 NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
@@ -34,3 +41,43 @@ NSString *const AWXFontNameCircularStdBold = @"CircularStd-Bold";
 
 NSString *const AWXFontFamilyNameCircularXX = @"CircularXX";
 NSString *const AWXFontNameCircularXXRegular = @"CircularXX-Regular";
+
+NSString * FormatPaymentMethodTypeString(NSString *type)
+{
+    if ([type isEqualToString:AWXWeChatPayKey]) {
+        return @"WeChat Pay";
+    } else if ([type isEqualToString:AWXAlipayCNKey]) {
+        return @"Alipay";
+    } else if ([type isEqualToString:AWXAlipayHKKey]) {
+        return @"AlipayHK";
+    } else if ([type isEqualToString:AWXKakaoPayKey]) {
+        return @"Kakao Pay";
+    } else if ([type isEqualToString:AWXTNGPayKey]) {
+        return @"Touch 'n Go";
+    } else if ([type isEqualToString:AWXDANAPayKey]) {
+        return @"DANA";
+    } else if ([type isEqualToString:AWXGCashPayKey]) {
+        return @"GCash";
+    }
+    return nil;
+}
+
+NSString * PaymentMethodTypeLogo(NSString *type)
+{
+    if ([type isEqualToString:AWXWeChatPayKey]) {
+        return @"wechat";
+    } else if ([type isEqualToString:AWXAlipayCNKey]) {
+        return @"alipaycn";
+    } else if ([type isEqualToString:AWXAlipayHKKey]) {
+        return @"alipayhk";
+    } else if ([type isEqualToString:AWXKakaoPayKey]) {
+        return @"kakaopay";
+    } else if ([type isEqualToString:AWXTNGPayKey]) {
+        return @"tng";
+    } else if ([type isEqualToString:AWXDANAPayKey]) {
+        return @"dana";
+    } else if ([type isEqualToString:AWXGCashPayKey]) {
+        return @"gcash";
+    }
+    return nil;
+}

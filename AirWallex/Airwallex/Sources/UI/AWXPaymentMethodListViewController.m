@@ -28,14 +28,6 @@
 #import "AWXThreeDSService.h"
 #import "AWXSecurityService.h"
 
-static NSString * FormatPaymentMethodTypeString(NSString *type)
-{
-    if ([type isEqualToString:AWXWeChatPayKey]) {
-        return @"WeChat pay";
-    }
-    return nil;
-}
-
 @interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -85,15 +77,18 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
 
 - (NSArray <AWXPaymentMethod *> *)section0
 {
-    if (![self.availablePaymentMethodTypes containsObject:AWXWeChatPayKey]) {
-        return @[];
+    NSArray *supportedTypes = [Airwallex supportedNonCardTypes];
+    NSMutableArray *paymentMethodTypes = [NSMutableArray array];
+    for (NSString *type in self.availablePaymentMethodTypes) {
+        if ([supportedTypes containsObject:type]) {
+            AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
+            paymentMethod.type = type;
+            AWXNonCard *nonCard = [AWXNonCard new];
+            paymentMethod.nonCard = nonCard;
+            [paymentMethodTypes addObject:paymentMethod];
+        }
     }
-
-    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-    paymentMethod.type = AWXWeChatPayKey;
-    AWXWeChatPay *pay = [AWXWeChatPay new];
-    paymentMethod.weChatPay = pay;
-    return @[paymentMethod];
+    return paymentMethodTypes;
 }
 
 - (void)reloadData
@@ -106,6 +101,55 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     
     self.cards = [NSMutableArray array];
     [self loadDataFromPageNum:0];
+}
+
+- (void)loadMultipleDataFromPageNum:(NSInteger)pageNum
+{
+    if (![self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
+        self.paymentMethods = @[self.section0, self.cards];
+        [self.tableView reloadData];
+        return;
+    }
+    
+    NSArray *cardTypes = @[@"visa", @"mastercard"];
+
+    [SVProgressHUD show];
+    dispatch_group_t group = dispatch_group_create();
+
+    for (NSString *type in cardTypes) {
+        dispatch_group_enter(group);
+
+        AWXGetPaymentMethodsRequest *request = [AWXGetPaymentMethodsRequest new];
+        request.customerId = self.customerId;
+        request.pageNum = pageNum;
+        request.methodType = AWXCardKey;
+        request.cardType = type;
+        
+        __weak __typeof(self)weakSelf = self;
+        AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
+        [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+
+            if (response && !error) {
+                AWXGetPaymentMethodsResponse *result = (AWXGetPaymentMethodsResponse *)response;
+                strongSelf.canLoadMore = strongSelf.canLoadMore || result.hasMore;
+                NSArray *cards = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+                    AWXPaymentMethod *obj = (AWXPaymentMethod *)evaluatedObject;
+                    return [cardTypes containsObject:obj.type];
+                }]];
+                [strongSelf.cards addObjectsFromArray:cards];
+            }
+            
+            dispatch_group_leave(group);
+        }];
+    }
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        self.paymentMethods = @[self.section0, self.cards];
+        [self.tableView reloadData];
+        self.nextPageNum = pageNum + 1;
+        [SVProgressHUD dismiss];
+    });
 }
 
 - (void)loadDataFromPageNum:(NSInteger)pageNum
@@ -137,11 +181,7 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         
         AWXGetPaymentMethodsResponse *result = (AWXGetPaymentMethodsResponse *)response;
         strongSelf.canLoadMore = result.hasMore;
-        NSArray *cards = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-            AWXPaymentMethod *obj = (AWXPaymentMethod *)evaluatedObject;
-            return [obj.type isEqualToString:AWXCardKey];
-        }]];
-        [strongSelf.cards addObjectsFromArray:cards];
+        [strongSelf.cards addObjectsFromArray:result.items];
         
         strongSelf.paymentMethods = @[strongSelf.section0, strongSelf.cards];
         [strongSelf.tableView reloadData];
@@ -228,15 +268,15 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     
     AWXPaymentMethod *method = items[indexPath.row];
     AWXPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentMethodCell" forIndexPath:indexPath];
-    if ([method.type isEqualToString:AWXWeChatPayKey]) {
-        cell.logoImageView.image = [UIImage imageNamed:@"wc" inBundle:[NSBundle resourceBundle]];
+    if ([Airwallex.supportedNonCardTypes containsObject:method.type]) {
+        cell.logoImageView.image = [UIImage imageNamed:PaymentMethodTypeLogo(method.type) inBundle:[NSBundle resourceBundle]];
         cell.titleLabel.text = FormatPaymentMethodTypeString(method.type);
     } else {
         cell.logoImageView.image = [UIImage imageNamed:method.card.brand inBundle:[NSBundle resourceBundle]];
         cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", method.card.brand.capitalizedString, method.card.last4];
     }
     
-    if ([self.paymentMethod.type isEqualToString:AWXWeChatPayKey]) {
+    if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
         if ([method.type isEqualToString:self.paymentMethod.type]) {
             [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
@@ -279,12 +319,12 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
     }
     
     // Confirm directly (Only be valid for payment flow)
-    if ([self.paymentMethod.type isEqualToString:AWXWeChatPayKey]) {
+    if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
         // Confirm payment with wechat type directly
         [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
         return;
     }
-    
+        
     // No cvc provided and go to enter cvc in payment detail page
     [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
 }
@@ -385,6 +425,8 @@ static NSString * FormatPaymentMethodTypeString(NSString *type)
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else if (response.nextAction.dccResponse) {
         [self performSegueWithIdentifier:@"showDCC" sender:response];
+    } else if (response.nextAction.url) {
+        [delegate paymentViewController:self nextActionWithAlipayURL:response.nextAction.url];
     } else {
         [delegate paymentViewController:self
                     didFinishWithStatus:AWXPaymentStatusError

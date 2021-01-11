@@ -66,7 +66,7 @@
 
 - (void)checkPaymentEnabled
 {
-    if ([self.paymentMethod.type isEqualToString:AWXWeChatPayKey]) {
+    if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
         self.payButton.enabled = YES;
         return;
     }
@@ -168,6 +168,8 @@
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else if (response.nextAction.dccResponse) {
         [self performSegueWithIdentifier:@"showDCC" sender:response];
+    } else if (response.nextAction.url) {
+        [self.delegate paymentViewController:self nextActionWithAlipayURL:response.nextAction.url];
     } else {
         [self.delegate paymentViewController:self
                          didFinishWithStatus:AWXPaymentStatusError
@@ -189,8 +191,8 @@
     cell.cvcField.text = self.cvc;
     cell.titleLabel.text = @"Payment";
     NSString *type = self.paymentMethod.type;
-    if ([type isEqualToString:AWXWeChatPayKey]) {
-        cell.selectionLabel.text = @"WeChat pay";
+    if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
+        cell.selectionLabel.text = FormatPaymentMethodTypeString(type);
         cell.cvcHidden = YES;
     } else {
         cell.selectionLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
@@ -205,7 +207,7 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AWXPaymentItemCell *_cell = (AWXPaymentItemCell *)cell;
-    if (_cell.cvcField.text.length == 0) {
+    if (_cell.cvcField.text.length == 0 && !_cell.cvcHidden) {
         [_cell.cvcField becomeFirstResponder];
     }
 }

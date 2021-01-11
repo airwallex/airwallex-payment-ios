@@ -32,6 +32,7 @@ Table of contents
       * [Basic Integration](#basic-integration)
       * [Customize Usage](#customize-usage)
       * [Set Up WeChat Pay](#set-up-wechat-pay)
+      * [Set Up Alipay](#set-up-alipay)
       * [Theme Color](#theme-color)
    * [Examples](#examples)
    * [Contributing](#contributing)
@@ -340,6 +341,21 @@ Note: you can follow this official guide [WeChat In-App Pay](https://pay.weixin.
 				break;
 		}
 	}
+}
+```
+
+### Set Up Alipay
+
+Processing server side returned url to complete payment.
+
+```objective-c
+- (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:url];
+        webViewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        [self presentViewController:webViewController animated:YES completion:nil];
+    }];
 }
 ```
 

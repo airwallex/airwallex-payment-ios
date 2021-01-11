@@ -38,6 +38,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *methodType;
 
 /**
+ Card type.
+ */
+@property (nonatomic, copy, nullable) NSString *cardType;
+
+/**
  The start time of created_at in ISO8601 format.
  */
 @property (nonatomic, copy, nullable) NSString *fromCreatedAt;

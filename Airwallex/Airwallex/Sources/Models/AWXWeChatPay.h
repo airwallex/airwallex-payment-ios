@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXWeChatPay` includes the information of wechat.
  */
+NS_CLASS_DEPRECATED_IOS(2_0, 14_0, "Use AWXNonCard instead.")
 @interface AWXWeChatPay : NSObject <AWXJSONEncodable, AWXJSONDecodable>
 
 /**

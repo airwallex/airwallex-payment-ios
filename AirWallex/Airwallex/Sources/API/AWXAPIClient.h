@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Set sdk mode.
-
+ 
  @param mode A mode required.
  */
 + (void)setMode:(AirwallexSDKMode)mode;
@@ -57,6 +57,11 @@ NS_ASSUME_NONNULL_BEGIN
  Get sdk mode. Test mode as default.
  */
 + (AirwallexSDKMode)mode;
+
+/**
+ Supported non-card payment method types.
+ */
++ (NSArray *)supportedNonCardTypes;
 
 @end
 

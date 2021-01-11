@@ -106,6 +106,10 @@
 		08D26F5724051FC2008E65D3 /* AWXConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 08D26F5524051FC2008E65D3 /* AWXConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08D26F5824051FC2008E65D3 /* AWXConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D26F5624051FC2008E65D3 /* AWXConstants.m */; };
 		26346A618B1632CE13FD8BD8 /* libPods-Airwallex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F32234CF28FBF7DEF511F529 /* libPods-Airwallex.a */; };
+		570A139E25A82B280064B362 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139C25A82B270064B362 /* README.md */; };
+		570A139F25A82B280064B362 /* README_zh_CN.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139D25A82B280064B362 /* README_zh_CN.md */; };
+		570A13A425A84AFA0064B362 /* AWXNonCard.h in Headers */ = {isa = PBXBuildFile; fileRef = 570A13A225A84AFA0064B362 /* AWXNonCard.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		570A13A525A84AFA0064B362 /* AWXNonCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 570A13A325A84AFA0064B362 /* AWXNonCard.m */; };
 		A56D02CF82D812DC123E6CB2 /* libPods-AirwallexTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2467B1E77C4D87CAA384DD2F /* libPods-AirwallexTests.a */; };
 /* End PBXBuildFile section */
 
@@ -225,6 +229,10 @@
 		08D26F5524051FC2008E65D3 /* AWXConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXConstants.h; sourceTree = "<group>"; };
 		08D26F5624051FC2008E65D3 /* AWXConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXConstants.m; sourceTree = "<group>"; };
 		2467B1E77C4D87CAA384DD2F /* libPods-AirwallexTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AirwallexTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		570A139C25A82B270064B362 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		570A139D25A82B280064B362 /* README_zh_CN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../../README_zh_CN.md; sourceTree = "<group>"; };
+		570A13A225A84AFA0064B362 /* AWXNonCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWXNonCard.h; path = ../../../../AirWallex/Airwallex/Sources/Models/AWXNonCard.h; sourceTree = "<group>"; };
+		570A13A325A84AFA0064B362 /* AWXNonCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXNonCard.m; path = ../../../../AirWallex/Airwallex/Sources/Models/AWXNonCard.m; sourceTree = "<group>"; };
 		8AD4E6D56C6BCC575BBBFF36 /* Pods-Airwallex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Airwallex.release.xcconfig"; path = "Target Support Files/Pods-Airwallex/Pods-Airwallex.release.xcconfig"; sourceTree = "<group>"; };
 		C4A04FA4848FC5ABC56AF950 /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirwallexTests.release.xcconfig"; path = "Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
 		EB72D67C8C4166DA0B538CB3 /* Pods-Airwallex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Airwallex.debug.xcconfig"; path = "Target Support Files/Pods-Airwallex/Pods-Airwallex.debug.xcconfig"; sourceTree = "<group>"; };
@@ -285,14 +293,16 @@
 				0866664A24062AEB00B52477 /* AWXCountry.m */,
 				081D52C723D0307600953B03 /* AWXCard.h */,
 				081D52C823D0307600953B03 /* AWXCard.m */,
+				570A13A225A84AFA0064B362 /* AWXNonCard.h */,
+				570A13A325A84AFA0064B362 /* AWXNonCard.m */,
+				081D52D323D0343200953B03 /* AWXWeChatPay.h */,
+				081D52D423D0343200953B03 /* AWXWeChatPay.m */,
 				085BD43623CDCBD7002E8F27 /* AWXAddress.h */,
 				085BD43723CDCBD7002E8F27 /* AWXAddress.m */,
 				081D52CB23D0324E00953B03 /* AWXPlaceDetails.h */,
 				081D52CC23D0324E00953B03 /* AWXPlaceDetails.m */,
 				081D52CF23D0339E00953B03 /* AWXPaymentMethod.h */,
 				081D52D023D0339E00953B03 /* AWXPaymentMethod.m */,
-				081D52D323D0343200953B03 /* AWXWeChatPay.h */,
-				081D52D423D0343200953B03 /* AWXWeChatPay.m */,
 				081D52E623D043E100953B03 /* AWXPaymentMethodOptions.h */,
 				081D52E723D043E100953B03 /* AWXPaymentMethodOptions.m */,
 				0829FD1B2433474A00557DB2 /* AWXPaymentIntent.h */,
@@ -394,6 +404,8 @@
 		085BD3CA23CC62B4002E8F27 /* Airwallex */ = {
 			isa = PBXGroup;
 			children = (
+				570A139D25A82B280064B362 /* README_zh_CN.md */,
+				570A139C25A82B270064B362 /* README.md */,
 				085BD41223CC6E0B002E8F27 /* Sources */,
 				085BD40723CC6C89002E8F27 /* Resources */,
 				085BD3CC23CC62B4002E8F27 /* Info.plist */,
@@ -527,6 +539,7 @@
 				081D52D523D0343200953B03 /* AWXWeChatPay.h in Headers */,
 				081D52E823D043E100953B03 /* AWXPaymentMethodOptions.h in Headers */,
 				0829FD1D2433474A00557DB2 /* AWXPaymentIntent.h in Headers */,
+				570A13A425A84AFA0064B362 /* AWXNonCard.h in Headers */,
 				0847798C244EB40200C41256 /* AWXDevice.h in Headers */,
 				0863F6FC240E390100925664 /* AWXPaymentItemCell.h in Headers */,
 				086666432406138400B52477 /* AWXPaymentMethodCell.h in Headers */,
@@ -629,8 +642,10 @@
 				0863F6FF240E391600925664 /* AWXPaymentItemCell.xib in Resources */,
 				0866666C2406311F00B52477 /* AWXFloatLabeledTextField.xib in Resources */,
 				0866666324062B5000B52477 /* AWXPaymentFlow.storyboard in Resources */,
+				570A139F25A82B280064B362 /* README_zh_CN.md in Resources */,
 				08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */,
 				0866666B2406311F00B52477 /* AWXCardTextField.xib in Resources */,
+				570A139E25A82B280064B362 /* README.md in Resources */,
 				086F8629252304030006DAB5 /* AWXCurrencyView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -762,6 +777,7 @@
 				081D52EE23D04AE600953B03 /* AWXProtocol.m in Sources */,
 				08A14B9C23E91F0C00F3C211 /* AWXPaymentMethodRequest.m in Sources */,
 				08477991244EC52C00C41256 /* AWXSecurityService.m in Sources */,
+				570A13A525A84AFA0064B362 /* AWXNonCard.m in Sources */,
 				086666742406343B00B52477 /* AWXTheme.m in Sources */,
 				0866665624062AEB00B52477 /* AWXCountry.m in Sources */,
 				08A14B9723E91E9700F3C211 /* AWXAPIClient.m in Sources */,

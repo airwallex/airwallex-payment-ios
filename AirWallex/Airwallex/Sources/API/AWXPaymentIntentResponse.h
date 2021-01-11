@@ -60,6 +60,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *type;
 
 /**
+ Redirect URL.
+ */
+@property (nonatomic, readonly, nullable) NSURL *url;
+
+/**
  The parameters for WeChatSDK.
  */
 @property (nonatomic, readonly, nullable) AWXWeChatPaySDKResponse *weChatPayResponse;

@@ -45,6 +45,7 @@
 @interface AWXConfirmPaymentNextAction ()
 
 @property (nonatomic, copy, readwrite) NSString *type;
+@property (nonatomic, copy, readwrite, nullable) NSURL *url;
 @property (nonatomic, strong, readwrite, nullable) AWXWeChatPaySDKResponse *weChatPayResponse;
 @property (nonatomic, strong, readwrite, nullable) AWXRedirectResponse *redirectResponse;
 @property (nonatomic, strong, readwrite, nullable) AWXDccResponse *dccResponse;
@@ -57,6 +58,10 @@
 {
     AWXConfirmPaymentNextAction *response = [[AWXConfirmPaymentNextAction alloc] init];
     response.type = json[@"type"];
+    NSString *url = json[@"url"];
+    if (url) {
+        response.url = [NSURL URLWithString:url];
+    }
     NSDictionary *data = json[@"data"];
     if (data) {
         if ([response.type isEqualToString:@"call_sdk"]) {

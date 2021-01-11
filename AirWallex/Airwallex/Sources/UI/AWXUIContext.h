@@ -40,6 +40,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWXWeChatPaySDKResponse *)response;
 
+/**
+ This method is called when alipay is needed.
+
+ @param controller The controller handling payment result.
+ @param url The url to launch alipay.
+ */
+- (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url;
+
 @end
 
 /**
