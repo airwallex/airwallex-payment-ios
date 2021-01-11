@@ -100,7 +100,55 @@
     }
     
     self.cards = [NSMutableArray array];
-    [self loadDataFromPageNum:0];
+    [self loadMultipleDataFromPageNum:0];
+}
+
+- (void)loadMultipleDataFromPageNum:(NSInteger)pageNum
+{
+    if (![self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
+        self.paymentMethods = @[self.section0, self.cards];
+        [self.tableView reloadData];
+        return;
+    }
+    
+    NSArray *cardTypes = @[@"visa", @"mastercard"];
+
+    [SVProgressHUD show];
+    dispatch_group_t group = dispatch_group_create();
+
+    for (NSString *type in cardTypes) {
+        dispatch_group_enter(group);
+
+        AWXGetPaymentMethodsRequest *request = [AWXGetPaymentMethodsRequest new];
+        request.customerId = self.customerId;
+        request.pageNum = pageNum;
+        request.cardType = type;
+        
+        __weak __typeof(self)weakSelf = self;
+        AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
+        [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+
+            if (response && !error) {
+                AWXGetPaymentMethodsResponse *result = (AWXGetPaymentMethodsResponse *)response;
+                strongSelf.canLoadMore = strongSelf.canLoadMore || result.hasMore;
+                NSArray *cards = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+                    AWXPaymentMethod *obj = (AWXPaymentMethod *)evaluatedObject;
+                    return [cardTypes containsObject:obj.type];
+                }]];
+                [strongSelf.cards addObjectsFromArray:cards];
+            }
+            
+            dispatch_group_leave(group);
+        }];
+    }
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        self.paymentMethods = @[self.section0, self.cards];
+        [self.tableView reloadData];
+        self.nextPageNum = pageNum + 1;
+        [SVProgressHUD dismiss];
+    });
 }
 
 - (void)loadDataFromPageNum:(NSInteger)pageNum
@@ -252,7 +300,7 @@
     CGFloat currentOffset = scrollView.contentOffset.y;
     CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
     if (maximumOffset - currentOffset <= 0) {
-        [self loadDataFromPageNum:self.nextPageNum];
+        [self loadMultipleDataFromPageNum:self.nextPageNum];
     }
 }
 

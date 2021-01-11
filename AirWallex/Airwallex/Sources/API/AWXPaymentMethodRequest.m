@@ -42,6 +42,9 @@
     if (self.methodType) {
         _parameters[@"method"] = self.methodType;
     }
+    if (self.cardType) {
+        _parameters[@"type"] = self.cardType;
+    }
     if (self.fromCreatedAt) {
         _parameters[@"from_created_at"] = self.fromCreatedAt;
     }
