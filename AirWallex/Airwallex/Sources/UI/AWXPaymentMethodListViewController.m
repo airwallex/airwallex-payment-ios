@@ -274,12 +274,12 @@
     }
     
     // Confirm directly (Only be valid for payment flow)
-    if ([self.paymentMethod.type isEqualToString:AWXWeChatPayKey]) {
+    if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
         // Confirm payment with wechat type directly
         [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
         return;
     }
-    
+        
     // No cvc provided and go to enter cvc in payment detail page
     [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
 }
@@ -380,6 +380,8 @@
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else if (response.nextAction.dccResponse) {
         [self performSegueWithIdentifier:@"showDCC" sender:response];
+    } else if (response.nextAction.url) {
+        [delegate paymentViewController:self nextActionWithAlipayURL:response.nextAction.url];
     } else {
         [delegate paymentViewController:self
                     didFinishWithStatus:AWXPaymentStatusError

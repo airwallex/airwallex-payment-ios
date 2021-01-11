@@ -7,6 +7,7 @@
 //
 
 #import "CartViewController.h"
+#import <SafariServices/SFSafariViewController.h>
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <WechatOpenSDK/WXApi.h>
@@ -163,6 +164,7 @@
                                          @"request_id": NSUUID.UUID.UUIDString,
                                          @"customer_id": customerId,
                                          @"metadata": @{@"id": @1},
+                                         @"return_url": @"https://staging-pacheckoutdemo.airwallex.com/checkout-success?isTesting=N",
                                          @"order": @{
                                                  @"products": @[@{
                                                                     @"type": @"Free engraving",
@@ -423,6 +425,15 @@
     //
     //        [SVProgressHUD showSuccessWithStatus:@"Succeed to pay"];
     //    }];
+}
+
+- (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:url];
+        webViewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        [self presentViewController:webViewController animated:YES completion:nil];
+    }];
 }
 
 #pragma mark - Check Payment Intent Status

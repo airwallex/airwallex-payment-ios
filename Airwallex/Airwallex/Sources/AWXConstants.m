@@ -22,8 +22,8 @@ NSString *const AWXCyberSourceOrganizationID = @"1snn5n9w";
 NSString *const AWXCyberSourceMerchantID = @"airwallex_cybs";
 
 NSString *const AWXWeChatPayKey = @"wechatpay";
-NSString *const AWXAliPayCNKey = @"alipaycn";
-NSString *const AWXAliPayHKKey = @"alipayhk";
+NSString *const AWXAlipayCNKey = @"alipaycn";
+NSString *const AWXAlipayHKKey = @"alipayhk";
 NSString *const AWXKakaoPayKey = @"kakaopay";
 NSString *const AWXTNGPayKey = @"tng";
 NSString *const AWXDANAPayKey = @"dana";
@@ -46,9 +46,9 @@ NSString * FormatPaymentMethodTypeString(NSString *type)
 {
     if ([type isEqualToString:AWXWeChatPayKey]) {
         return @"WeChat Pay";
-    } else if ([type isEqualToString:AWXAliPayCNKey]) {
+    } else if ([type isEqualToString:AWXAlipayCNKey]) {
         return @"Alipay";
-    } else if ([type isEqualToString:AWXAliPayHKKey]) {
+    } else if ([type isEqualToString:AWXAlipayHKKey]) {
         return @"Alipay";
     } else if ([type isEqualToString:AWXKakaoPayKey]) {
         return @"Alipay";
@@ -66,9 +66,9 @@ NSString * PaymentMethodTypeLogo(NSString *type)
 {
     if ([type isEqualToString:AWXWeChatPayKey]) {
         return @"wechat";
-    } else if ([type isEqualToString:AWXAliPayCNKey]) {
+    } else if ([type isEqualToString:AWXAlipayCNKey]) {
         return @"alipay";
-    } else if ([type isEqualToString:AWXAliPayHKKey]) {
+    } else if ([type isEqualToString:AWXAlipayHKKey]) {
         return @"alipay";
     } else if ([type isEqualToString:AWXKakaoPayKey]) {
         return @"alipay";

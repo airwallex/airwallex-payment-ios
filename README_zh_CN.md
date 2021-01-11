@@ -31,6 +31,7 @@ Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松
       * [基本整合](#基本整合)
       * [自定义用法](#自定义用法)
       * [设置微信支付](#设置微信支付)
+      * [设置支付宝支付](设置支付宝支付)
       * [主题色](#主题色)
    * [例子](#例子)
    * [贡献](#贡献)
@@ -336,6 +337,21 @@ service.delegate = ”The target to handle AWXThreeDSServiceDelegate protocol”
 				break;
 		}
 	}
+}
+```
+
+### 设置支付宝支付
+
+处理从服务端返回的URL来完成支付。
+
+```objective-c
+- (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:url];
+        webViewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        [self presentViewController:webViewController animated:YES completion:nil];
+    }];
 }
 ```
 

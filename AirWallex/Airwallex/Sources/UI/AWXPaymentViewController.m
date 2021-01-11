@@ -168,6 +168,8 @@
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else if (response.nextAction.dccResponse) {
         [self performSegueWithIdentifier:@"showDCC" sender:response];
+    } else if (response.nextAction.url) {
+        [self.delegate paymentViewController:self nextActionWithAlipayURL:response.nextAction.url];
     } else {
         [self.delegate paymentViewController:self
                          didFinishWithStatus:AWXPaymentStatusError
