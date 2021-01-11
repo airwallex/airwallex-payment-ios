@@ -122,6 +122,7 @@
         AWXGetPaymentMethodsRequest *request = [AWXGetPaymentMethodsRequest new];
         request.customerId = self.customerId;
         request.pageNum = pageNum;
+        request.methodType = AWXCardKey;
         request.cardType = type;
         
         __weak __typeof(self)weakSelf = self;
