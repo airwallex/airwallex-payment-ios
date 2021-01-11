@@ -100,7 +100,7 @@
     }
     
     self.cards = [NSMutableArray array];
-    [self loadMultipleDataFromPageNum:0];
+    [self loadDataFromPageNum:0];
 }
 
 - (void)loadMultipleDataFromPageNum:(NSInteger)pageNum
@@ -181,11 +181,7 @@
         
         AWXGetPaymentMethodsResponse *result = (AWXGetPaymentMethodsResponse *)response;
         strongSelf.canLoadMore = result.hasMore;
-        NSArray *cards = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-            AWXPaymentMethod *obj = (AWXPaymentMethod *)evaluatedObject;
-            return [obj.type isEqualToString:AWXCardKey];
-        }]];
-        [strongSelf.cards addObjectsFromArray:cards];
+        [strongSelf.cards addObjectsFromArray:result.items];
         
         strongSelf.paymentMethods = @[strongSelf.section0, strongSelf.cards];
         [strongSelf.tableView reloadData];
@@ -301,7 +297,7 @@
     CGFloat currentOffset = scrollView.contentOffset.y;
     CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
     if (maximumOffset - currentOffset <= 0) {
-        [self loadMultipleDataFromPageNum:self.nextPageNum];
+        [self loadDataFromPageNum:self.nextPageNum];
     }
 }
 
