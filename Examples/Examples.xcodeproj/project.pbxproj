@@ -482,7 +482,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
-                PRODUCT_NAME = Airwallex;
+				PRODUCT_NAME = Airwallex;
 				PROVISIONING_PROFILE_SPECIFIER = "Airwallex Enterprise";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -506,7 +506,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
-                PRODUCT_NAME = Airwallex;
+				PRODUCT_NAME = Airwallex;
 				PROVISIONING_PROFILE_SPECIFIER = "Airwallex Enterprise";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
