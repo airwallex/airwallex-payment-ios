@@ -430,9 +430,7 @@
 - (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:url];
-        webViewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-        [self presentViewController:webViewController animated:YES completion:nil];
+        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
     }];
 }
 
