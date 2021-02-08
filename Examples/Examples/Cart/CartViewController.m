@@ -430,7 +430,15 @@
 - (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+        UIAlertController *alertController = [[UIAlertController alloc] init];
+        alertController.message = url.absoluteString;
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Open Safari" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        [UIPasteboard.generalPasteboard setString:url.absoluteString];
     }];
 }
 
