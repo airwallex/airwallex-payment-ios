@@ -30,7 +30,7 @@ NSString *const AWXDANAPayKey = @"dana";
 NSString *const AWXGCashPayKey = @"gcash";
 
 NSString *const AWXCardKey = @"card";
-NSString *const AWXThreeDSReturnURL = @"";
+NSString *const AWXThreeDSReturnURL = @"https://www.airwallex.com";
 NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
 NSString *const AWXThreeDSValidate = @"3dsValidate";
 NSString *const AWXDCC = @"dcc";
