@@ -120,7 +120,7 @@
 
 - (NSString *)path
 {
-    return @"/paresCache";
+    return @"/pa/webhook/cybs/paresCache";
 }
 
 - (AWXHTTPMethod)method
