@@ -15,7 +15,6 @@
 
 @interface OptionsViewController () <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *authURLTextField;
 @property (weak, nonatomic) IBOutlet UITextField *paymentURLTextField;
 @property (weak, nonatomic) IBOutlet UITextField *apiKeyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *clientIDTextField;
@@ -40,7 +39,6 @@
 
 - (void)resetTextFields
 {
-    self.authURLTextField.text = [APIClient sharedClient].authBaseURL.absoluteString;
     self.paymentURLTextField.text = [APIClient sharedClient].paymentBaseURL.absoluteString;
     self.apiKeyTextField.text = [APIClient sharedClient].apiKey;
     self.clientIDTextField.text = [APIClient sharedClient].clientID;
@@ -59,7 +57,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     APIClient *client = [APIClient sharedClient];
-    client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
     client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientID;
@@ -76,14 +73,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (textField == self.authURLTextField) {
-        NSURL *url = [NSURL URLWithString:textField.text];
-        if (url.scheme && url.host) {
-            [APIClient sharedClient].authBaseURL = url;
-        } else {
-            [SVProgressHUD showErrorWithStatus:@"Not a valid auth url"];
-        }
-    } else if (textField == self.paymentURLTextField) {
+    if (textField == self.paymentURLTextField) {
         NSURL *url = [NSURL URLWithString:textField.text];
         if (url.scheme && url.host) {
             [APIClient sharedClient].paymentBaseURL = url;
@@ -122,7 +112,6 @@
 
 - (void)dealloc
 {
-    NSLog(@"Auth Base URL: %@", [APIClient sharedClient].authBaseURL.absoluteString);
     NSLog(@"Payment Base URL (Example): %@", [APIClient sharedClient].paymentBaseURL.absoluteString);
     NSLog(@"Payment Base URL (SDK): %@", [Airwallex defaultBaseURL].absoluteString);
     NSLog(@"API Key: %@", [APIClient sharedClient].apiKey);

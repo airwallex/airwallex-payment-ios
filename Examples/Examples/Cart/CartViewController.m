@@ -57,7 +57,6 @@
     self.currency = defaultCurrency;
     
     APIClient *client = [APIClient sharedClient];
-    client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
     client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientID;

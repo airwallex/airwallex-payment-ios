@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXTestAPIClient : NSObject
 
-@property (nonatomic, strong) NSURL *authBaseURL;
 @property (nonatomic, strong) NSURL *paymentBaseURL;
 @property (nonatomic, strong) NSString *apiKey;
 @property (nonatomic, strong) NSString *clientID;

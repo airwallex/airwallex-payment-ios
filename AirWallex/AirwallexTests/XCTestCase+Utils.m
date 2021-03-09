@@ -32,11 +32,10 @@
 
 - (void)prepareEphemeralKeys:(void (^)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler
 {
-    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://demo-pci-api.airwallex.com/"]];
+    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://pci-api-demo.airwallex.com/"]];
 
     AWXTestAPIClient *client = [AWXTestAPIClient sharedClient];
-    client.authBaseURL = [NSURL URLWithString:@"https://api-demo.airwallex.com/"];
-    client.paymentBaseURL = [NSURL URLWithString:@"https://demo-pci-api.airwallex.com/"];
+    client.paymentBaseURL = [NSURL URLWithString:@"https://pci-api-demo.airwallex.com/"];
     AirwallexExamplesKeys *keys = [AirwallexExamplesKeys new];
     client.apiKey = keys.apiKey;
     client.clientID = keys.clientID;
