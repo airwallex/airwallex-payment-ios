@@ -14,11 +14,11 @@
 #import "AWXAPIResponse.h"
 #import "AWXUtils.h"
 
-static NSString * const AWXAPIBaseTestURL = @"https://demo-pci-api.airwallex.com/";
+static NSString * const AWXAPIBaseTestURL = @"https://pci-api-demo.airwallex.com/";
 static NSString * const AWXAPIBaseLiveURL = @"https://pci-api.airwallex.com/";
 
-static NSString *const AWXCybsTestURL = @"https://demo-pacybsmock.airwallex.com/";
-static NSString *const AWXCybsLiveURL = @"https://prod-pacybs.airwallex.com/";
+static NSString *const AWXCybsTestURL = @"https://pci-api-demo.airwallex.com/";
+static NSString *const AWXCybsLiveURL = @"https://pci-api.airwallex.com/";
 
 @implementation Airwallex
 

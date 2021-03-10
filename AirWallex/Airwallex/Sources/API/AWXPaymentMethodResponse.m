@@ -55,3 +55,22 @@
 }
 
 @end
+
+@interface AWXDisablePaymentMethodResponse ()
+
+@property (nonatomic, strong, readwrite) AWXPaymentMethod *paymentMethod;
+
+@end
+
+@implementation AWXDisablePaymentMethodResponse
+
++ (id<AWXResponseProtocol>)parse:(NSData *)data
+{
+    NSError *error = nil;
+    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    AWXDisablePaymentMethodResponse *response = [AWXDisablePaymentMethodResponse new];
+    response.paymentMethod = [AWXPaymentMethod decodeFromJSON:responseObject];
+    return response;
+}
+
+@end

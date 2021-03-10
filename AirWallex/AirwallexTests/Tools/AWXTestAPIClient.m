@@ -20,11 +20,6 @@
     return sharedClient;
 }
 
-- (void)setAuthBaseURL:(NSURL *)authBaseURL
-{
-    _authBaseURL = [authBaseURL URLByAppendingPathComponent:@""];
-}
-
 - (void)setPaymentBaseURL:(NSURL *)paymentBaseURL
 {
     _paymentBaseURL = [paymentBaseURL URLByAppendingPathComponent:@""];
@@ -32,7 +27,7 @@
 
 - (void)createAuthenticationTokenWithCompletionHandler:(void (^)(NSError * _Nullable error))completionHandler
 {
-    NSURL *requestURL = [NSURL URLWithString:@"api/v1/authentication/login" relativeToURL:self.authBaseURL];
+    NSURL *requestURL = [NSURL URLWithString:@"api/v1/authentication/login" relativeToURL:self.paymentBaseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];

@@ -19,7 +19,7 @@
         @"device_id": self.deviceId,
         @"sdk_version_name": AIRWALLEX_VERSION,
         @"platform_type": device.systemName,
-        @"device_model": device.model,
+        @"device_model": @"mobile",
         @"device_os": device.systemVersion
     };
 }

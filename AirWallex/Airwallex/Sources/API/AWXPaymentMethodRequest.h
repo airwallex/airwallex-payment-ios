@@ -71,4 +71,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXDisablePaymentMethodRequest` disable a payment method.
+ */
+@interface AWXDisablePaymentMethodRequest : NSObject <AWXRequestProtocol>
+
+/**
+ Request ID.
+ */
+@property (nonatomic, copy) NSString *requestId;
+
+/**
+ Payment method id.
+ */
+@property (nonatomic, strong) NSString *paymentMethodId;
+
+@end
+
 NS_ASSUME_NONNULL_END

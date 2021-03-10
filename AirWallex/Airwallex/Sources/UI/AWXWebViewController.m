@@ -67,7 +67,7 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     NSURL *url = navigationAction.request.URL;
-    if (url && [url.absoluteString containsString:[NSString stringWithFormat:@"%@pares/callback?paRes=", [Airwallex cybsURL]]] && self.webHandler) {
+    if (url && [url.absoluteString containsString:[NSString stringWithFormat:@"%@pa/webhook/cybs/pares/callback?paRes=", [Airwallex cybsURL]]] && self.webHandler) {
         NSString *paResId = [url queryValueForName:@"paRes"];
         [self dismissViewControllerAnimated:YES completion:^{
             self.webHandler(paResId, nil);

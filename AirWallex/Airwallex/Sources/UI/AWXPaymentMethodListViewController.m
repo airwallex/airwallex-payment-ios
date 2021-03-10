@@ -194,6 +194,30 @@
     [self performSegueWithIdentifier:@"addCard" sender:nil];
 }
 
+- (void)disableCard:(AWXPaymentMethod *)paymentMethod
+{
+    [SVProgressHUD show];
+    
+    AWXDisablePaymentMethodRequest *request = [AWXDisablePaymentMethodRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.paymentMethodId = paymentMethod.Id;
+    
+    __weak __typeof(self)weakSelf = self;
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [SVProgressHUD dismiss];
+        if (error) {
+            UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+            [strongSelf presentViewController:controller animated:YES completion:nil];
+            return;
+        }
+        
+        [strongSelf reloadData];
+    }];
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -286,6 +310,39 @@
     
     cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray <AWXPaymentMethod *> *items = self.paymentMethods[indexPath.section];
+    if (indexPath.section == 1) {
+        return items.count != 0;
+    }
+    return NO;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Delete";
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *items = self.paymentMethods[indexPath.section];
+    if (indexPath.section == 1 && items.count == 0) {
+        return;
+    }
+    
+    AWXPaymentMethod *method = items[indexPath.row];
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Would you like to delete this card?" preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self disableCard:method];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
