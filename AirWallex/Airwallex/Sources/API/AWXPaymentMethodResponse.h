@@ -42,4 +42,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXDisablePaymentMethodResponse` includes the payment method disabled.
+ */
+@interface AWXDisablePaymentMethodResponse : NSObject <AWXResponseProtocol>
+
+/**
+ Payment method object.
+ */
+@property (nonatomic, readonly) AWXPaymentMethod *paymentMethod;
+
+@end
+
 NS_ASSUME_NONNULL_END

@@ -200,7 +200,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1269"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pii-iq-Wp8">
-                                                <rect key="frame" x="16" y="16" width="382" height="37.5"/>
+                                                <rect key="frame" x="16" y="16" width="382" height="40.5"/>
                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="32"/>
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -257,16 +257,16 @@
                                                 <rect key="frame" x="0.0" y="315.5" width="414" height="877.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Billing info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSE-wt-y8v">
-                                                        <rect key="frame" x="16" y="7" width="382" height="37.5"/>
+                                                        <rect key="frame" x="16" y="7" width="382" height="40.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="32"/>
                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMl-za-xhb" userLabel="Switch">
-                                                        <rect key="frame" x="0.0" y="51.5" width="414" height="58"/>
+                                                        <rect key="frame" x="0.0" y="54.5" width="414" height="58"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Same as shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qml-nv-10p">
-                                                                <rect key="frame" x="16" y="21" width="317" height="16.5"/>
+                                                                <rect key="frame" x="16" y="20" width="317" height="18"/>
                                                                 <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -579,13 +579,13 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQj-JH-JLD">
-                                            <rect key="frame" x="16" y="20" width="382" height="47"/>
+                                            <rect key="frame" x="16" y="20" width="382" height="51"/>
                                             <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="40"/>
                                             <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fVJ-3M-6VT">
-                                            <rect key="frame" x="16" y="78" width="382" height="16.5"/>
+                                            <rect key="frame" x="16" y="82" width="382" height="18"/>
                                             <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                             <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -666,19 +666,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select your currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A96-RZ-pnZ">
-                                <rect key="frame" x="24" y="88" width="366" height="21"/>
+                                <rect key="frame" x="24" y="88" width="366" height="23"/>
                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
                                 <color key="textColor" red="0.25882352941176467" green="0.25882352941176467" blue="0.25882352941176467" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select the currency you would like to pay with" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWc-S2-kzZ">
-                                <rect key="frame" x="24" y="125" width="366" height="16.5"/>
+                                <rect key="frame" x="24" y="127" width="366" height="17.5"/>
                                 <fontDescription key="fontDescription" name="CircularXX-Regular" family="CircularXX" pointSize="14"/>
                                 <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Rg-qo-MNb">
-                                <rect key="frame" x="24" y="165.5" width="366" height="110"/>
+                                <rect key="frame" x="24" y="168.5" width="366" height="110"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ml1-ty-Lvl" customClass="AWXCurrencyView">
                                         <rect key="frame" x="0.0" y="0.0" width="175.5" height="110"/>
@@ -703,14 +703,14 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wWG-b5-7Jp">
-                                <rect key="frame" x="24" y="293.5" width="16" height="16"/>
+                                <rect key="frame" x="24" y="296.5" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="0dn-Wr-rOA"/>
                                     <constraint firstAttribute="width" constant="16" id="0v1-N7-xu8"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vtf-pY-4ZL" customClass="AWXButton">
-                                <rect key="frame" x="24" y="350" width="366" height="44"/>
+                                <rect key="frame" x="24" y="353.5" width="366" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="80u-il-Xvg"/>
                                 </constraints>
@@ -728,7 +728,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="1 USD = 1 AUD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnP-UX-zys">
-                                <rect key="frame" x="48" y="293.5" width="342" height="16.5"/>
+                                <rect key="frame" x="48" y="296" width="342" height="17.5"/>
                                 <fontDescription key="fontDescription" name="CircularXX-Regular" family="CircularXX" pointSize="14"/>
                                 <color key="textColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.55686274509803924" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1084,13 +1084,13 @@
     </scenes>
     <designables>
         <designable name="BBj-j1-Rai">
-            <size key="intrinsicContentSize" width="54" height="29"/>
+            <size key="intrinsicContentSize" width="55" height="30"/>
         </designable>
         <designable name="Vtf-pY-4ZL">
-            <size key="intrinsicContentSize" width="109" height="29"/>
+            <size key="intrinsicContentSize" width="115" height="30"/>
         </designable>
         <designable name="vlZ-EY-gaZ">
-            <size key="intrinsicContentSize" width="50" height="29"/>
+            <size key="intrinsicContentSize" width="54" height="30"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>

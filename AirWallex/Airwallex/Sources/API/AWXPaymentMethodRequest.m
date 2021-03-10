@@ -87,3 +87,27 @@
 }
 
 @end
+
+@implementation AWXDisablePaymentMethodRequest
+
+- (NSString *)path
+{
+    return [NSString stringWithFormat:@"/api/v1/pa/payment_methods/%@/disable", self.paymentMethodId];
+}
+
+- (AWXHTTPMethod)method
+{
+    return AWXHTTPMethodPOST;
+}
+
+- (nullable NSDictionary *)parameters
+{
+    return @{@"request_id": self.requestId};
+}
+
+- (Class)responseClass
+{
+    return AWXDisablePaymentMethodResponse.class;
+}
+
+@end

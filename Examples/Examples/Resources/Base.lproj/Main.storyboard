@@ -376,7 +376,7 @@
                                                         <rect key="frame" x="0.0" y="111" width="382" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="3dc-1g-4U7" id="9dp-Pl-v0I"/>
                                                         </connections>
@@ -391,7 +391,7 @@
                                                         <rect key="frame" x="0.0" y="188.5" width="382" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="3dc-1g-4U7" id="yGh-R7-KBw"/>
                                                         </connections>
