@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *currencyTextField;
 @property (weak, nonatomic) IBOutlet UILabel *regionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
 
 @end
 
@@ -39,6 +40,7 @@
 
 - (void)resetTextFields
 {
+    self.modeSwitch.on = Airwallex.mode == AirwallexSDKLiveMode;
     self.paymentURLTextField.text = [APIClient sharedClient].paymentBaseURL.absoluteString;
     self.apiKeyTextField.text = [APIClient sharedClient].apiKey;
     self.clientIDTextField.text = [APIClient sharedClient].clientID;
@@ -51,6 +53,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)switchPressed:(id)sender
+{
+    [Airwallex setMode:self.modeSwitch.isOn ? AirwallexSDKLiveMode : AirwallexSDKTestMode];
+}
+
 - (IBAction)resetPressed:(id)sender
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
@@ -61,6 +68,7 @@
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientID;
 
+    [Airwallex setMode:AirwallexSDKTestMode];
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
 
     [self.delegate optionsViewController:self didEditAmount:[NSDecimalNumber decimalNumberWithString:defaultAmount]];
