@@ -163,7 +163,7 @@
                                          @"request_id": NSUUID.UUID.UUIDString,
                                          @"customer_id": customerId,
                                          @"metadata": @{@"id": @1},
-//                                         @"return_url": @"https://staging-pacheckoutdemo.airwallex.com/checkout-success?isTesting=N",
+                                         @"return_url": @"airwallexcheckout://com.airwallex.paymentacceptance",
                                          @"order": @{
                                                  @"products": @[@{
                                                                     @"type": @"Free engraving",
