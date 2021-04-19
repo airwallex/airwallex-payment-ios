@@ -57,6 +57,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong, nullable) NSString *customerId;
 
+/**
+ A currency code.
+ */
+@property (nonatomic, strong, nullable) NSString *currency;
+
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

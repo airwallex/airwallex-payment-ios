@@ -25,7 +25,9 @@ static NSString *const AWXCybsLiveURL = @"https://pci-api.airwallex.com/";
 static NSURL *_defaultBaseURL;
 static NSString *_cybsURL;
 
-static AirwallexSDKMode _mode = AirwallexSDKTestMode;
+static AirwallexSDKMode     _mode        = AirwallexSDKTestMode;
+static AirwallexPaymentMode _paymentMode = AirwallexPaymentNormalMode;
+static AirwallexUserType    _userType    = AirwallexUserTypeCustomer;
 
 + (void)setDefaultBaseURL:(NSURL *)baseURL
 {
@@ -55,6 +57,24 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
 + (AirwallexSDKMode)mode
 {
     return _mode;
+}
+
++ (void)setPaymentMode:(AirwallexPaymentMode)paymentMode
+{
+    _paymentMode = paymentMode;
+}
+
++ (AirwallexPaymentMode)paymentMode
+{
+    return _paymentMode;
+}
+
+
++ (void)setUserType:(AirwallexUserType)userType{
+    _userType = userType;
+}
++ (AirwallexUserType)userType{
+    return  _userType;
 }
 
 + (NSArray *)supportedNonCardTypes

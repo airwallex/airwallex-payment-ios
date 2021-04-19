@@ -19,6 +19,16 @@ typedef NS_ENUM(NSInteger, AirwallexSDKMode) {
     AirwallexSDKLiveMode
 };
 
+typedef NS_ENUM(NSInteger, AirwallexPaymentMode) {
+    AirwallexPaymentNormalMode,
+    AirwallexPaymentSubscribeMode
+};
+
+typedef NS_ENUM(NSUInteger, AirwallexUserType) {
+    AirwallexUserTypeCustomer,
+    AirwallexUserTypeMerchant,
+};
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
 FOUNDATION_EXPORT NSErrorDomain const AWXSDKErrorDomain;

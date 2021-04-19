@@ -59,6 +59,32 @@ NS_ASSUME_NONNULL_BEGIN
 + (AirwallexSDKMode)mode;
 
 /**
+ Set sdk paymentMode.
+ 
+ @param paymentMode A paymentMode required.
+ */
++ (void)setPaymentMode:(AirwallexPaymentMode)paymentMode;
+
+/**
+ Get paymentMode mode.  normal as default.
+ */
++ (AirwallexPaymentMode)paymentMode;
+
+/**
+ Set User type.
+ 
+ @param userType A userType required.
+ */
++ (void)setUserType:(AirwallexUserType)userType;
+
+/**
+ Get User type. customer  as default.
+ */
++ (AirwallexUserType)userType;
+
+
+
+/**
  Supported non-card payment method types.
  */
 + (NSArray *)supportedNonCardTypes;
