@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *regionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *paymentModelSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *userTypeSwitch;
 
 @end
 
@@ -41,6 +43,8 @@
 - (void)resetTextFields
 {
     self.modeSwitch.on = Airwallex.mode == AirwallexSDKLiveMode;
+    self.paymentModelSwitch.on = Airwallex.paymentMode == AirwallexPaymentSubscribeMode;
+    self.userTypeSwitch.on = Airwallex.userType == AirwallexUserTypeMerchant;
     self.paymentURLTextField.text = [APIClient sharedClient].paymentBaseURL.absoluteString;
     self.apiKeyTextField.text = [APIClient sharedClient].apiKey;
     self.clientIDTextField.text = [APIClient sharedClient].clientID;
@@ -57,6 +61,12 @@
 {
     [Airwallex setMode:self.modeSwitch.isOn ? AirwallexSDKLiveMode : AirwallexSDKTestMode];
 }
+- (IBAction)switchPaymentModel:(id)sender {
+    [Airwallex setPaymentMode:self.paymentModelSwitch.isOn ? AirwallexPaymentSubscribeMode : AirwallexPaymentNormalMode];
+}
+- (IBAction)switchUserType:(id)sender {
+    [Airwallex setUserType:self.userTypeSwitch.isOn ? AirwallexUserTypeMerchant : AirwallexUserTypeCustomer];
+}
 
 - (IBAction)resetPressed:(id)sender
 {
@@ -69,6 +79,8 @@
     client.clientID = [AirwallexExamplesKeys shared].clientID;
 
     [Airwallex setMode:AirwallexSDKTestMode];
+    [Airwallex setPaymentMode:AirwallexPaymentNormalMode];
+    [Airwallex setUserType:AirwallexUserTypeCustomer];
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
 
     [self.delegate optionsViewController:self didEditAmount:[NSDecimalNumber decimalNumberWithString:defaultAmount]];

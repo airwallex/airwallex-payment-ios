@@ -13,7 +13,7 @@
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentIntentResponse.h"
-
+#import "AWXPaymentConsent.h"
 @implementation AWXConfirmPaymentIntentRequest
 
 - (NSString *)path
@@ -33,16 +33,31 @@
     if (self.customerId) {
         parameters[@"customer_id"] = self.customerId;
     }
-    if (self.paymentMethod.Id) {
+    
+    if (self.paymentConsent.Id) {
+        NSMutableDictionary *consentParams = @{
+            @"id": self.paymentConsent.Id,
+        }.mutableCopy;
+        
+        if (self.paymentConsent.requires_cvc) {
+            consentParams[@"cvc"] = self.paymentMethod.card.cvc ?: @"";
+        }
         [parameters addEntriesFromDictionary:@{
-            @"payment_method_reference": @{
-                    @"id": self.paymentMethod.Id,
-                    @"cvc": self.paymentMethod.card.cvc ?: @""
-            }
+            @"payment_consent_reference":consentParams
         }];
-    } else {
-        parameters[@"payment_method"] = self.paymentMethod.encodeToJSON;
+    }else{
+        if (self.paymentMethod.Id) {
+            [parameters addEntriesFromDictionary:@{
+                @"payment_method_reference": @{
+                        @"id": self.paymentMethod.Id,
+                        @"cvc": self.paymentMethod.card.cvc ?: @""
+                }
+            }];
+        } else {
+            parameters[@"payment_method"] = self.paymentMethod.encodeToJSON;
+        }
     }
+    
     if (self.options) {
         parameters[@"payment_method_options"] = self.options.encodeToJSON;
     }

@@ -23,6 +23,8 @@
 #import "AWXPaymentIntent.h"
 #import "AWXThreeDSService.h"
 #import "AWXSecurityService.h"
+#import "AWXPaymentConsentRequest.h"
+#import "AWXPaymentConsentResponse.h"
 
 @interface AWXPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
@@ -98,18 +100,64 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
-        [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
+        if ([Airwallex paymentMode] == AirwallexPaymentNormalMode) {
+            [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:nil];
+        }else{
+            [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod completion:^(AWXPaymentConsent * _Nullable consent) {
+                [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:consent];
+            }];
+        }
     }];
 }
 
-- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod device:(AWXDevice *)device
+
+
+-(void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod completion:(void(^)(AWXPaymentConsent * _Nullable))completion{
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    AWXCreatePaymentConsentRequest *request = [AWXCreatePaymentConsentRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.customerId = self.paymentIntent.customerId;
+    request.paymentMethod = paymentMethod;
+
+    [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [SVProgressHUD dismiss];
+        AWXPaymentConsentResponse *result = response;
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:result.consent completion:^(AWXPaymentConsent * _Nullable consent) {
+            completion(consent);
+        }];
+    }];
+}
+
+
+-(void)verifyPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod consent:(AWXPaymentConsent *)consent completion:(void(^)(AWXPaymentConsent * _Nullable))completion{
+    
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    AWXVerifyPaymentConsentRequest *request = [AWXVerifyPaymentConsentRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.consent = consent;
+    AWXPaymentMethod * payment = paymentMethod;
+    request.options = payment;
+
+    [SVProgressHUD show];
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [SVProgressHUD dismiss];
+        AWXPaymentConsentResponse *result = response;
+        completion(result.consent);
+    }];
+}
+
+
+- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod device:(AWXDevice *)device consent:(AWXPaymentConsent *)consent
 {
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
     request.intentId = self.paymentIntent.Id;
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.paymentIntent.customerId;
-
+    request.paymentConsent = consent;
     if ([paymentMethod.type isEqualToString:AWXCardKey]) {
         AWXCardOptions *cardOptions = [AWXCardOptions new];
         cardOptions.autoCapture = YES;

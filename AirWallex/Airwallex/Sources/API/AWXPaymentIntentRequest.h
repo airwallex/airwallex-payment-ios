@@ -12,6 +12,7 @@
 @class AWXPaymentMethod;
 @class AWXPaymentMethodOptions;
 @class AWXDevice;
+@class AWXPaymentConsent;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -44,6 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
  Payment method object.
  */
 @property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
+
+/**
+ PaymentConsent method object.
+ */
+@property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
 
 /**
  Options object.

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		002C86A9261F0DBE00FA7CC3 /* AWXTrackManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 002C86A7261F0DBE00FA7CC3 /* AWXTrackManager.h */; };
+		002C86AA261F0DBE00FA7CC3 /* AWXTrackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 002C86A8261F0DBE00FA7CC3 /* AWXTrackManager.m */; };
+		00737C9E260C7546000F8EA4 /* AWXPaymentConsentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 00737C9C260C7546000F8EA4 /* AWXPaymentConsentRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		00737C9F260C7546000F8EA4 /* AWXPaymentConsentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 00737C9D260C7546000F8EA4 /* AWXPaymentConsentRequest.m */; };
+		00737CA4260C7565000F8EA4 /* AWXPaymentConsentResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 00737CA2260C7565000F8EA4 /* AWXPaymentConsentResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		00737CA5260C7565000F8EA4 /* AWXPaymentConsentResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 00737CA3260C7565000F8EA4 /* AWXPaymentConsentResponse.m */; };
+		0075B57E260C2AAC0005C038 /* AWXPaymentConsent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0075B57C260C2AAC0005C038 /* AWXPaymentConsent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0075B57F260C2AAC0005C038 /* AWXPaymentConsent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0075B57D260C2AAC0005C038 /* AWXPaymentConsent.m */; };
 		0805366E241656C900C0896C /* AWXUIContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0805366C241656C900C0896C /* AWXUIContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0805366F241656C900C0896C /* AWXUIContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805366D241656C900C0896C /* AWXUIContext.m */; };
 		080BA817243C346A000D8141 /* AWXCodable.h in Headers */ = {isa = PBXBuildFile; fileRef = 080BA816243C2897000D8141 /* AWXCodable.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -124,6 +132,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		002C86A7261F0DBE00FA7CC3 /* AWXTrackManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWXTrackManager.h; path = ../../../../AirWallex/Airwallex/Sources/API/AWXTrackManager.h; sourceTree = "<group>"; };
+		002C86A8261F0DBE00FA7CC3 /* AWXTrackManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXTrackManager.m; path = ../../../../AirWallex/Airwallex/Sources/API/AWXTrackManager.m; sourceTree = "<group>"; };
+		00737C9C260C7546000F8EA4 /* AWXPaymentConsentRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWXPaymentConsentRequest.h; path = ../../../../AirWallex/Airwallex/Sources/API/AWXPaymentConsentRequest.h; sourceTree = "<group>"; };
+		00737C9D260C7546000F8EA4 /* AWXPaymentConsentRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXPaymentConsentRequest.m; path = ../../../../AirWallex/Airwallex/Sources/API/AWXPaymentConsentRequest.m; sourceTree = "<group>"; };
+		00737CA2260C7565000F8EA4 /* AWXPaymentConsentResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWXPaymentConsentResponse.h; path = ../../../../AirWallex/Airwallex/Sources/API/AWXPaymentConsentResponse.h; sourceTree = "<group>"; };
+		00737CA3260C7565000F8EA4 /* AWXPaymentConsentResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXPaymentConsentResponse.m; path = ../../../../AirWallex/Airwallex/Sources/API/AWXPaymentConsentResponse.m; sourceTree = "<group>"; };
+		0075B57C260C2AAC0005C038 /* AWXPaymentConsent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWXPaymentConsent.h; path = ../../../../AirWallex/Airwallex/Sources/Models/AWXPaymentConsent.h; sourceTree = "<group>"; };
+		0075B57D260C2AAC0005C038 /* AWXPaymentConsent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXPaymentConsent.m; path = ../../../../AirWallex/Airwallex/Sources/Models/AWXPaymentConsent.m; sourceTree = "<group>"; };
 		0805366C241656C900C0896C /* AWXUIContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXUIContext.h; sourceTree = "<group>"; };
 		0805366D241656C900C0896C /* AWXUIContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXUIContext.m; sourceTree = "<group>"; };
 		080BA816243C2897000D8141 /* AWXCodable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXCodable.h; sourceTree = "<group>"; };
@@ -307,6 +323,8 @@
 				081D52E723D043E100953B03 /* AWXPaymentMethodOptions.m */,
 				0829FD1B2433474A00557DB2 /* AWXPaymentIntent.h */,
 				0829FD1C2433474A00557DB2 /* AWXPaymentIntent.m */,
+				0075B57C260C2AAC0005C038 /* AWXPaymentConsent.h */,
+				0075B57D260C2AAC0005C038 /* AWXPaymentConsent.m */,
 				0847798A244EB40200C41256 /* AWXDevice.h */,
 				0847798B244EB40200C41256 /* AWXDevice.m */,
 			);
@@ -336,6 +354,12 @@
 				08477983244DB0C500C41256 /* AWXThreeDSService.m */,
 				0847798E244EC52C00C41256 /* AWXSecurityService.h */,
 				0847798F244EC52C00C41256 /* AWXSecurityService.m */,
+				00737C9C260C7546000F8EA4 /* AWXPaymentConsentRequest.h */,
+				00737C9D260C7546000F8EA4 /* AWXPaymentConsentRequest.m */,
+				00737CA2260C7565000F8EA4 /* AWXPaymentConsentResponse.h */,
+				00737CA3260C7565000F8EA4 /* AWXPaymentConsentResponse.m */,
+				002C86A7261F0DBE00FA7CC3 /* AWXTrackManager.h */,
+				002C86A8261F0DBE00FA7CC3 /* AWXTrackManager.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -517,6 +541,7 @@
 				0866665E24062AEB00B52477 /* AWXShippingViewController.h in Headers */,
 				0866666024062AEB00B52477 /* AWXPaymentMethodListViewController.h in Headers */,
 				0863F6FB240E390100925664 /* AWXPaymentViewController.h in Headers */,
+				002C86A9261F0DBE00FA7CC3 /* AWXTrackManager.h in Headers */,
 				0866665C24062AEB00B52477 /* AWXCardViewController.h in Headers */,
 				08BD3A9F240CCAED00ACFB6B /* AWXViewController.h in Headers */,
 				08A14B9823E91E9700F3C211 /* AWXAPIClient.h in Headers */,
@@ -540,6 +565,9 @@
 				081D52E823D043E100953B03 /* AWXPaymentMethodOptions.h in Headers */,
 				0829FD1D2433474A00557DB2 /* AWXPaymentIntent.h in Headers */,
 				570A13A425A84AFA0064B362 /* AWXNonCard.h in Headers */,
+				00737CA4260C7565000F8EA4 /* AWXPaymentConsentResponse.h in Headers */,
+				00737C9E260C7546000F8EA4 /* AWXPaymentConsentRequest.h in Headers */,
+				0075B57E260C2AAC0005C038 /* AWXPaymentConsent.h in Headers */,
 				0847798C244EB40200C41256 /* AWXDevice.h in Headers */,
 				0863F6FC240E390100925664 /* AWXPaymentItemCell.h in Headers */,
 				086666432406138400B52477 /* AWXPaymentMethodCell.h in Headers */,
@@ -787,6 +815,7 @@
 				0866665B24062AEB00B52477 /* AWXCountryListViewController.m in Sources */,
 				081D52CA23D0307600953B03 /* AWXCard.m in Sources */,
 				081D52D223D0339E00953B03 /* AWXPaymentMethod.m in Sources */,
+				00737CA5260C7565000F8EA4 /* AWXPaymentConsentResponse.m in Sources */,
 				081D52E923D043E100953B03 /* AWXPaymentMethodOptions.m in Sources */,
 				081D52DF23D03B3F00953B03 /* AWXPaymentIntentRequest.m in Sources */,
 				086F85E92522FB040006DAB5 /* AWXDCCViewController.m in Sources */,
@@ -794,14 +823,17 @@
 				0829FD1E2433474A00557DB2 /* AWXPaymentIntent.m in Sources */,
 				0866665A24062AEB00B52477 /* AWXCardViewController.m in Sources */,
 				0866666F2406314500B52477 /* AWXWidgets.m in Sources */,
+				00737C9F260C7546000F8EA4 /* AWXPaymentConsentRequest.m in Sources */,
 				0866665924062AEB00B52477 /* AWXShippingViewController.m in Sources */,
 				081D52CE23D0324E00953B03 /* AWXPlaceDetails.m in Sources */,
 				081D52D623D0343200953B03 /* AWXWeChatPay.m in Sources */,
 				086666442406138400B52477 /* AWXPaymentMethodCell.m in Sources */,
 				08BD3AA0240CCAED00ACFB6B /* AWXViewController.m in Sources */,
+				002C86AA261F0DBE00FA7CC3 /* AWXTrackManager.m in Sources */,
 				08477985244DB0C500C41256 /* AWXThreeDSService.m in Sources */,
 				085BD43923CDCBD7002E8F27 /* AWXAddress.m in Sources */,
 				081D52F723D04EA200953B03 /* AWXLogger.m in Sources */,
+				0075B57F260C2AAC0005C038 /* AWXPaymentConsent.m in Sources */,
 				08D26F5824051FC2008E65D3 /* AWXConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
