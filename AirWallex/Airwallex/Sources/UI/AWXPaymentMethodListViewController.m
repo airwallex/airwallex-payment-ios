@@ -53,6 +53,7 @@
     [super viewDidLoad];
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self reloadData];
+    [self loadPaymentMethodTypes];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -77,6 +78,25 @@
         controller.response = sender;
         controller.delegate = self;
     }
+}
+
+- (void) loadPaymentMethodTypes{
+    AWXGetPaymentMethodsTypeRequest *request = [AWXGetPaymentMethodsTypeRequest new];
+    request.active = self.customerId;
+    request.pageNum = 0;
+    request.pageSize = 200;
+    request.transactionCurrency = _currency;
+    
+    __weak __typeof(self)weakSelf = self;
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+
+        if (response && !error) {
+            AWXGetPaymentMethodsResponse *result = (AWXGetPaymentMethodsResponse *)response;
+            
+        }
+    }];
 }
 
 - (NSArray <AWXPaymentMethod *> *)section0
@@ -416,7 +436,7 @@
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
         
-        if ([Airwallex paymentMode] == AirwallexPaymentNormalMode) {
+        if ([Airwallex checkoutMode] == AirwallexCheckoutNormalMode) {
             [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:nil];
         }else{
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod completion:^(AWXPaymentConsent * _Nullable consent) {

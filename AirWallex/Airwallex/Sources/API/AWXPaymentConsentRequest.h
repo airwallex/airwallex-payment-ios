@@ -32,10 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
  Payment method object.
  */
 @property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
-/**
- Next_triggered_by.
- */
-@property (nonatomic, copy) NSString *next_triggered_by;
 
 @end
 

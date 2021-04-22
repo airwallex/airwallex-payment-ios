@@ -19,14 +19,14 @@ typedef NS_ENUM(NSInteger, AirwallexSDKMode) {
     AirwallexSDKLiveMode
 };
 
-typedef NS_ENUM(NSInteger, AirwallexPaymentMode) {
-    AirwallexPaymentNormalMode,
-    AirwallexPaymentSubscribeMode
+typedef NS_ENUM(NSInteger, AirwallexCheckoutMode) {
+    AirwallexCheckoutNormalMode,
+    AirwallexCheckoutRecurringMode
 };
 
-typedef NS_ENUM(NSUInteger, AirwallexUserType) {
-    AirwallexUserTypeCustomer,
-    AirwallexUserTypeMerchant,
+typedef NS_ENUM(NSUInteger, AirwallexNextTriggerByType) {
+    AirwallexNextTriggerByCustomerType,
+    AirwallexNextTriggerByMerchantType,
 };
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0

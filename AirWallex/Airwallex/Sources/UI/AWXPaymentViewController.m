@@ -100,7 +100,7 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
-        if ([Airwallex paymentMode] == AirwallexPaymentNormalMode) {
+        if ([Airwallex checkoutMode] == AirwallexCheckoutNormalMode) {
             [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:nil];
         }else{
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod completion:^(AWXPaymentConsent * _Nullable consent) {

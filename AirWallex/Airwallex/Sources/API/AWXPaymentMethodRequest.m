@@ -61,6 +61,48 @@
 
 @end
 
+@implementation AWXGetPaymentMethodsTypeRequest
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.pageNum = 0;
+        self.pageSize = 10;
+    }
+    return self;
+}
+
+- (NSString *)path
+{
+    return @"/api/v1/pa/config/payment_method_types";
+}
+
+- (AWXHTTPMethod)method
+{
+    return AWXHTTPMethodGET;
+}
+
+- (nullable NSDictionary *)parameters
+{
+    NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
+
+    _parameters[@"page_num"] = @(self.pageNum);
+    _parameters[@"page_size"] = @(self.pageSize);
+    _parameters[@"active"] =   [NSNumber numberWithBool:self.active];
+    if (self.transactionCurrency) {
+        _parameters[@"transaction_currency"] = self.transactionCurrency;
+    }
+    return _parameters;
+}
+
+- (Class)responseClass
+{
+    return AWXGetPaymentMethodsResponse.class;
+}
+
+@end
+
 @implementation AWXCreatePaymentMethodRequest
 
 - (NSString *)path

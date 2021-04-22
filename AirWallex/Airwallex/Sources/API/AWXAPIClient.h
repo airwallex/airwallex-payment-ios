@@ -59,28 +59,28 @@ NS_ASSUME_NONNULL_BEGIN
 + (AirwallexSDKMode)mode;
 
 /**
- Set sdk paymentMode.
+ Set sdk CheckoutMode.
  
- @param paymentMode A paymentMode required.
+ @param checkoutMode A CheckoutMode required.
  */
-+ (void)setPaymentMode:(AirwallexPaymentMode)paymentMode;
++ (void)setCheckoutMode:(AirwallexCheckoutMode)checkoutMode;
 
 /**
- Get paymentMode mode.  normal as default.
+ Get CheckoutMode mode.  normal as default.
  */
-+ (AirwallexPaymentMode)paymentMode;
++ (AirwallexCheckoutMode)checkoutMode;
 
 /**
  Set User type.
  
- @param userType A userType required.
+ @param type A NextTriggerByType required.
  */
-+ (void)setUserType:(AirwallexUserType)userType;
++ (void)setNextTriggerByType:(AirwallexNextTriggerByType)type;
 
 /**
  Get User type. customer  as default.
  */
-+ (AirwallexUserType)userType;
++ (AirwallexNextTriggerByType)nextTriggerByType;
 
 
 

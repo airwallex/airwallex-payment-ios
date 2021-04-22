@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -346,10 +347,10 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iM6-7j-oWC">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="633"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="671"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P74-f6-EbX">
-                                                <rect key="frame" x="16" y="16" width="382" height="601"/>
+                                                <rect key="frame" x="16" y="16" width="382" height="639"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Environment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3F-HC-rpy">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="23.5"/>
@@ -374,48 +375,83 @@
                                                             </switch>
                                                         </subviews>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B1t-9Y-yql">
-                                                        <rect key="frame" x="0.0" y="74.5" width="382" height="31"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="B1t-9Y-yql">
+                                                        <rect key="frame" x="0.0" y="74.5" width="382" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faX-vN-ISh">
-                                                                <rect key="frame" x="0.0" y="0.0" width="333" height="31"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Checkout Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faX-vN-ISh">
+                                                                <rect key="frame" x="0.0" y="0.0" width="122" height="50"/>
                                                                 <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                                 <color key="textColor" name="Black Text Color"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iex-LC-QLH">
-                                                                <rect key="frame" x="333" y="0.0" width="51" height="31"/>
-                                                                <connections>
-                                                                    <action selector="switchPaymentModel:" destination="3dc-1g-4U7" eventType="valueChanged" id="nL2-dw-BJj"/>
-                                                                </connections>
-                                                            </switch>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nra-B3-YXf">
+                                                                <rect key="frame" x="130" y="0.0" width="252" height="50"/>
+                                                                <subviews>
+                                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ran-Dd-cvp">
+                                                                        <rect key="frame" x="93" y="10" width="159" height="31"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="30" id="tGe-aW-0H6"/>
+                                                                        </constraints>
+                                                                        <segments>
+                                                                            <segment title="Normal"/>
+                                                                            <segment title="Recurring"/>
+                                                                        </segments>
+                                                                        <connections>
+                                                                            <action selector="checkoutModeValueChange:" destination="3dc-1g-4U7" eventType="valueChanged" id="KuM-1W-h0G"/>
+                                                                        </connections>
+                                                                    </segmentedControl>
+                                                                </subviews>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="50" id="4ri-VB-uSY"/>
+                                                                    <constraint firstItem="ran-Dd-cvp" firstAttribute="centerY" secondItem="nra-B3-YXf" secondAttribute="centerY" id="5ZB-bV-qUO"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ran-Dd-cvp" secondAttribute="trailing" id="KoU-bk-R7t"/>
+                                                                </constraints>
+                                                            </view>
                                                         </subviews>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ve-Hg-PsW">
-                                                        <rect key="frame" x="0.0" y="115.5" width="382" height="31"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="8ve-Hg-PsW">
+                                                        <rect key="frame" x="0.0" y="134.5" width="382" height="50"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdW-GS-XKJ">
-                                                                <rect key="frame" x="0.0" y="0.0" width="333" height="31"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next trigger by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdW-GS-XKJ">
+                                                                <rect key="frame" x="0.0" y="0.0" width="113" height="50"/>
                                                                 <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                                 <color key="textColor" name="Black Text Color"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k0e-Fp-viY">
-                                                                <rect key="frame" x="333" y="0.0" width="51" height="31"/>
-                                                                <connections>
-                                                                    <action selector="switchUserType:" destination="3dc-1g-4U7" eventType="valueChanged" id="KCL-3r-BLj"/>
-                                                                </connections>
-                                                            </switch>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IoA-Vu-oV0">
+                                                                <rect key="frame" x="213" y="0.0" width="169" height="50"/>
+                                                                <subviews>
+                                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-vo-oGk">
+                                                                        <rect key="frame" x="10" y="10" width="159" height="31"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="30" id="uwe-uM-Ub2"/>
+                                                                        </constraints>
+                                                                        <segments>
+                                                                            <segment title="Customer"/>
+                                                                            <segment title="Merchant"/>
+                                                                        </segments>
+                                                                        <connections>
+                                                                            <action selector="nextTriggerByValueChange:" destination="3dc-1g-4U7" eventType="valueChanged" id="ZB0-1Q-RpO"/>
+                                                                        </connections>
+                                                                    </segmentedControl>
+                                                                </subviews>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstItem="PvZ-vo-oGk" firstAttribute="centerY" secondItem="IoA-Vu-oV0" secondAttribute="centerY" id="0oL-bK-lha"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="PvZ-vo-oGk" secondAttribute="trailing" id="HCU-Jw-9Xu"/>
+                                                                </constraints>
+                                                            </view>
                                                         </subviews>
                                                     </stackView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw3-vc-e4I">
-                                                        <rect key="frame" x="0.0" y="156.5" width="382" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="194.5" width="382" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YSw-cs-6Pe">
-                                                        <rect key="frame" x="0.0" y="190" width="382" height="34"/>
+                                                        <rect key="frame" x="0.0" y="228" width="382" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -424,13 +460,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J14-mn-E62">
-                                                        <rect key="frame" x="0.0" y="234" width="382" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="272" width="382" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ucc-VN-sfr">
-                                                        <rect key="frame" x="0.0" y="267.5" width="382" height="34"/>
+                                                        <rect key="frame" x="0.0" y="305.5" width="382" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -439,13 +475,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5p4-lS-mL2">
-                                                        <rect key="frame" x="0.0" y="311.5" width="382" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="349.5" width="382" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-cl-UUP">
-                                                        <rect key="frame" x="0.0" y="345" width="382" height="34"/>
+                                                        <rect key="frame" x="0.0" y="383" width="382" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -454,13 +490,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BH-xo-rjD">
-                                                        <rect key="frame" x="0.0" y="389" width="382" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="427" width="382" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ofq-7n-F5l">
-                                                        <rect key="frame" x="0.0" y="422.5" width="382" height="34"/>
+                                                        <rect key="frame" x="0.0" y="460.5" width="382" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -469,13 +505,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ap9-GE-PVt">
-                                                        <rect key="frame" x="0.0" y="466.5" width="382" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="504.5" width="382" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XwV-xj-OFr">
-                                                        <rect key="frame" x="0.0" y="500" width="382" height="34"/>
+                                                        <rect key="frame" x="0.0" y="538" width="382" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -484,13 +520,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeChat Region:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iou-6j-t8u">
-                                                        <rect key="frame" x="0.0" y="544" width="382" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="582" width="382" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTK-Dh-PCi">
-                                                        <rect key="frame" x="0.0" y="577.5" width="382" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="615.5" width="382" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
@@ -540,13 +576,13 @@
                     <connections>
                         <outlet property="amountTextField" destination="Ofq-7n-F5l" id="aoW-om-maE"/>
                         <outlet property="apiKeyTextField" destination="ucc-VN-sfr" id="EXV-PE-RMH"/>
+                        <outlet property="checkoutModeSegment" destination="ran-Dd-cvp" id="og8-jT-Pn6"/>
                         <outlet property="clientIDTextField" destination="Qvi-cl-UUP" id="VQT-UV-ejR"/>
                         <outlet property="currencyTextField" destination="XwV-xj-OFr" id="TLL-Jw-HkG"/>
                         <outlet property="modeSwitch" destination="ZUZ-aJ-rBX" id="0AT-ON-8xf"/>
-                        <outlet property="paymentModelSwitch" destination="Iex-LC-QLH" id="SPL-Ut-9NL"/>
+                        <outlet property="nextTriggingBySegment" destination="PvZ-vo-oGk" id="Eif-2H-2L1"/>
                         <outlet property="paymentURLTextField" destination="YSw-cs-6Pe" id="qdG-Sh-62V"/>
                         <outlet property="regionLabel" destination="iou-6j-t8u" id="Uq8-qd-c7A"/>
-                        <outlet property="userTypeSwitch" destination="k0e-Fp-viY" id="uq5-PP-dDf"/>
                         <outlet property="versionLabel" destination="JTK-Dh-PCi" id="QI9-aU-Od5"/>
                     </connections>
                 </viewController>

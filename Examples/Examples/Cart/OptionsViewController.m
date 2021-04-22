@@ -23,8 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *regionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *paymentModelSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *userTypeSwitch;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *checkoutModeSegment;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *nextTriggingBySegment;
 
 @end
 
@@ -43,8 +43,8 @@
 - (void)resetTextFields
 {
     self.modeSwitch.on = Airwallex.mode == AirwallexSDKLiveMode;
-    self.paymentModelSwitch.on = Airwallex.paymentMode == AirwallexPaymentSubscribeMode;
-    self.userTypeSwitch.on = Airwallex.userType == AirwallexUserTypeMerchant;
+    self.checkoutModeSegment.selectedSegmentIndex   = Airwallex.checkoutMode != AirwallexCheckoutNormalMode;
+    self.nextTriggingBySegment.selectedSegmentIndex = Airwallex.nextTriggerByType != AirwallexNextTriggerByCustomerType;
     self.paymentURLTextField.text = [APIClient sharedClient].paymentBaseURL.absoluteString;
     self.apiKeyTextField.text = [APIClient sharedClient].apiKey;
     self.clientIDTextField.text = [APIClient sharedClient].clientID;
@@ -61,12 +61,13 @@
 {
     [Airwallex setMode:self.modeSwitch.isOn ? AirwallexSDKLiveMode : AirwallexSDKTestMode];
 }
-- (IBAction)switchPaymentModel:(id)sender {
-    [Airwallex setPaymentMode:self.paymentModelSwitch.isOn ? AirwallexPaymentSubscribeMode : AirwallexPaymentNormalMode];
+- (IBAction)checkoutModeValueChange:(UISegmentedControl *)sender {
+    [Airwallex setCheckoutMode: sender.selectedSegmentIndex == 0 ? AirwallexCheckoutNormalMode : AirwallexCheckoutRecurringMode];
 }
-- (IBAction)switchUserType:(id)sender {
-    [Airwallex setUserType:self.userTypeSwitch.isOn ? AirwallexUserTypeMerchant : AirwallexUserTypeCustomer];
+- (IBAction)nextTriggerByValueChange:(UISegmentedControl *)sender {
+    [Airwallex setNextTriggerByType: sender.selectedSegmentIndex == 0 ? AirwallexNextTriggerByCustomerType : AirwallexNextTriggerByMerchantType];
 }
+
 
 - (IBAction)resetPressed:(id)sender
 {
@@ -79,8 +80,8 @@
     client.clientID = [AirwallexExamplesKeys shared].clientID;
 
     [Airwallex setMode:AirwallexSDKTestMode];
-    [Airwallex setPaymentMode:AirwallexPaymentNormalMode];
-    [Airwallex setUserType:AirwallexUserTypeCustomer];
+    [Airwallex setCheckoutMode:AirwallexCheckoutNormalMode];
+    [Airwallex setNextTriggerByType:AirwallexNextTriggerByCustomerType];
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
 
     [self.delegate optionsViewController:self didEditAmount:[NSDecimalNumber decimalNumberWithString:defaultAmount]];

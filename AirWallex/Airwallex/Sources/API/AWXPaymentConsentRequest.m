@@ -33,16 +33,17 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"]        = self.requestId;
     parameters[@"customer_id"]       = self.customerId;
-    parameters[@"next_triggered_by"] = self.next_triggered_by;
+
     parameters[@"requires_cvc"] = [NSNumber numberWithBool:NO];
-    parameters[@"merchant_trigger_reason"] = [Airwallex paymentMode] == AirwallexPaymentNormalMode ? @"unscheduled" : @"scheduled";
-    if ([Airwallex userType] == AirwallexUserTypeCustomer) {
+    parameters[@"merchant_trigger_reason"] = @"unscheduled";
+        
+    if ([Airwallex nextTriggerByType] == AirwallexNextTriggerByCustomerType) {
         parameters[@"next_triggered_by"] = @"customer";
         if (self.paymentMethod.card) {
             parameters[@"requires_cvc"] = [NSNumber numberWithBool:YES];
         }
     }else{
-        parameters[@"next_triggered_by"]       = @"merchant";
+        parameters[@"next_triggered_by"]  = @"merchant";
     }
 
     NSMutableDictionary *paymentParams = @{}.mutableCopy;

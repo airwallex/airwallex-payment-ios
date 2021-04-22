@@ -25,9 +25,9 @@ static NSString *const AWXCybsLiveURL = @"https://pci-api.airwallex.com/";
 static NSURL *_defaultBaseURL;
 static NSString *_cybsURL;
 
-static AirwallexSDKMode     _mode        = AirwallexSDKTestMode;
-static AirwallexPaymentMode _paymentMode = AirwallexPaymentNormalMode;
-static AirwallexUserType    _userType    = AirwallexUserTypeCustomer;
+static AirwallexSDKMode     _mode          = AirwallexSDKTestMode;
+static AirwallexCheckoutMode _checkoutMode = AirwallexCheckoutNormalMode;
+static AirwallexNextTriggerByType    _nextTriggerByType      = AirwallexNextTriggerByCustomerType;
 
 + (void)setDefaultBaseURL:(NSURL *)baseURL
 {
@@ -59,22 +59,22 @@ static AirwallexUserType    _userType    = AirwallexUserTypeCustomer;
     return _mode;
 }
 
-+ (void)setPaymentMode:(AirwallexPaymentMode)paymentMode
++ (void)setCheckoutMode:(AirwallexCheckoutMode)checkoutMode
 {
-    _paymentMode = paymentMode;
+    _checkoutMode = checkoutMode;
 }
 
-+ (AirwallexPaymentMode)paymentMode
++ (AirwallexCheckoutMode)checkoutMode
 {
-    return _paymentMode;
+    return _checkoutMode;
 }
 
 
-+ (void)setUserType:(AirwallexUserType)userType{
-    _userType = userType;
++ (void)setNextTriggerByType:(AirwallexNextTriggerByType)type{
+    _nextTriggerByType = type;
 }
-+ (AirwallexUserType)userType{
-    return  _userType;
++ (AirwallexNextTriggerByType)nextTriggerByType{
+    return  _nextTriggerByType;
 }
 
 + (NSArray *)supportedNonCardTypes
