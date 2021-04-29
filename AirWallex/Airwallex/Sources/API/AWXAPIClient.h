@@ -82,8 +82,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (AirwallexNextTriggerByType)nextTriggerByType;
 
-
-
 /**
  Supported non-card payment method types.
  */

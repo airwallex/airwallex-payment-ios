@@ -54,7 +54,15 @@ NS_ASSUME_NONNULL_BEGIN
  `AWXUIContext` generates payment method list, new card, payment detail and shipping view controllers.
  */
 @interface AWXUIContext : NSObject
+/**
+ A customer id.
+ */
+@property (nonatomic, strong, nullable) NSString *customerId;
 
+/**
+ A currency code.
+ */
+@property (nonatomic, strong, nullable) NSString *currency;
 /**
  The delegate which handles checkout events.
  */
@@ -123,6 +131,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
+
+@end
+
+
+@interface AWXRecurringUIContext: AWXUIContext
+
+
+
 
 @end
 

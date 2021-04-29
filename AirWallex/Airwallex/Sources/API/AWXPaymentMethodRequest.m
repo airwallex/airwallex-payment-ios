@@ -98,7 +98,7 @@
 
 - (Class)responseClass
 {
-    return AWXGetPaymentMethodsResponse.class;
+    return AWXGetPaymentMethodTypeResponse.class;
 }
 
 @end

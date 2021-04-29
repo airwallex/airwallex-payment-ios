@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AWXResponseProtocol.h"
 
-@class AWXPaymentMethod;
+@class AWXPaymentMethod,AWXPaymentMethodType;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,6 +27,23 @@ NS_ASSUME_NONNULL_BEGIN
  Payment methods.
  */
 @property (nonatomic, readonly) NSArray <AWXPaymentMethod *> *items;
+
+@end
+
+/**
+ `AWXGetPaymentMethodTypesResponse` includes the list of payment methods.
+ */
+@interface AWXGetPaymentMethodTypeResponse : NSObject <AWXResponseProtocol>
+
+/**
+ Check whether there are more payment methods not loaded.
+ */
+@property (nonatomic, readonly) BOOL hasMore;
+
+/**
+ Payment methods.
+ */
+@property (nonatomic, readonly) NSArray <AWXPaymentMethodType *> *items;
 
 @end
 

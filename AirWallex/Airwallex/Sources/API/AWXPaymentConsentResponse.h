@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "AWXResponseProtocol.h"
-@class  AWXPaymentConsent;
+
+@class  AWXPaymentConsent,AWXConfirmPaymentNextAction,AWXPaymentMethod;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,6 +19,20 @@ NS_ASSUME_NONNULL_BEGIN
  Payment consent object.
  */
 @property (nonatomic, readonly) AWXPaymentConsent *consent;
+
+@end
+
+@interface AWXVerifyPaymentConsentResponse : NSObject <AWXResponseProtocol>
+
+/**
+ Payment status.
+ */
+@property (nonatomic, readonly) NSString *status;
+
+/**
+ Next action.
+ */
+@property (nonatomic, readonly, nullable) AWXConfirmPaymentNextAction *nextAction;
 
 @end
 

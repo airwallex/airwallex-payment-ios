@@ -199,19 +199,22 @@
                                                  @"type": @"physical_goods"
                                          }} mutableCopy];
     
-    dispatch_group_enter(group);
-    [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
-                                              completionHandler:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
-        if (error) {
-            _error = error;
-            dispatch_group_leave(group);
-            return;
-        }
-
-        _paymentIntent = paymentIntent;
-        dispatch_group_leave(group);
-    }];
     
+    if ([Airwallex checkoutMode] != AirwallexCheckoutRecurringMode) {
+        dispatch_group_enter(group);
+        [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
+                                                  completionHandler:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
+            if (error) {
+                _error = error;
+                dispatch_group_leave(group);
+                return;
+            }
+
+            _paymentIntent = paymentIntent;
+            dispatch_group_leave(group);
+        }];
+    }
+
     dispatch_group_enter(group);
     [[APIClient sharedClient] createCustomerSecretWithId:customerId completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
         if (error) {
@@ -232,11 +235,16 @@
         }
         
         [SVProgressHUD dismiss];
-        if (_paymentIntent && _customerSecret) {
-            // Step2: Setup client secret & customer secret
-            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
+//        if (_paymentIntent) {
+//            // Step2: Setup client secret
+//            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
+//        }else{
+//            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = @"";
+//        }
+        if (_customerSecret) {
+            // Step2: Setup customer secret
             [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
-            
+            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
             // Step3: Show payment flow
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
@@ -248,6 +256,15 @@
 
 - (void)showPaymentFlowWithPaymentIntent:(AWXPaymentIntent *)paymentIntent
 {
+    NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
+    NSString *clientSecret = [AWXAPIClientConfiguration sharedConfiguration].clientSecret;
+    if (!paymentIntent) {
+        AWXPaymentIntent * intent = AWXPaymentIntent.new;
+        intent.customerId  = customerId;
+        intent.currency    = self.currency;
+        intent.amount      = self.amount;
+        intent.clientSecret  = clientSecret;
+    }
     self.paymentIntent = paymentIntent;
     
     AWXUIContext *context = [AWXUIContext sharedContext];
@@ -255,6 +272,8 @@
     context.hostViewController = self;
     context.paymentIntent = paymentIntent;
     context.shipping = self.shipping;
+    context.currency = self.currency;
+    context.customerId = customerId;
     [context presentPaymentFlow];
 }
 

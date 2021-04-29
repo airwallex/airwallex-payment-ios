@@ -29,6 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy, nullable) NSString *customerId;
 /**
+ A currency code.
+ */
+@property (nonatomic, strong, nullable) NSString *currency;
+/**
  Payment method object.
  */
 @property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
@@ -41,6 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
  Request ID.
  */
 @property (nonatomic, copy) NSString *requestId;
+
+/**
+ Return url.
+ */
+@property (nonatomic, copy) NSString *returnURL;
 /**
  Payment method object.
  */

@@ -25,6 +25,8 @@
 #import "AWXSecurityService.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
+#import "AWXPaymentConsent.h"
+
 
 @interface AWXPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
@@ -102,8 +104,12 @@
         device.deviceId = sessionId;
         if ([Airwallex checkoutMode] == AirwallexCheckoutNormalMode) {
             [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:nil];
-        }else{
-            [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod completion:^(AWXPaymentConsent * _Nullable consent) {
+        }else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
+            [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod  createCompletion:^(AWXPaymentConsent * _Nullable consent) {
+                [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
+            }];
+        }else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringWithInsentMode){
+            [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod createCompletion:^(AWXPaymentConsent * _Nullable consent) {
                 [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:consent];
             }];
         }
@@ -112,27 +118,26 @@
 
 
 
--(void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod completion:(void(^)(AWXPaymentConsent * _Nullable))completion{
+-(void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod createCompletion:(void(^)(AWXPaymentConsent * _Nullable))completion{
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXCreatePaymentConsentRequest *request = [AWXCreatePaymentConsentRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
-    request.customerId = self.paymentIntent.customerId;
+    request.customerId = self.paymentMethod.customerId;
     request.paymentMethod = paymentMethod;
-
+    AWXUIContext *context = [AWXUIContext sharedContext];
+    request.currency = context.currency;
     [SVProgressHUD show];
-    __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         [SVProgressHUD dismiss];
-        AWXPaymentConsentResponse *result = response;
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:result.consent completion:^(AWXPaymentConsent * _Nullable consent) {
-            completion(consent);
-        }];
+        if (response && !error) {
+            AWXPaymentConsentResponse *result = response;
+            completion(result.consent);
+        }
     }];
 }
 
 
--(void)verifyPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod consent:(AWXPaymentConsent *)consent completion:(void(^)(AWXPaymentConsent * _Nullable))completion{
+-(void)verifyPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod consent:(AWXPaymentConsent *)consent{
     
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXVerifyPaymentConsentRequest *request = [AWXVerifyPaymentConsentRequest new];
@@ -140,14 +145,16 @@
     request.consent = consent;
     AWXPaymentMethod * payment = paymentMethod;
     request.options = payment;
-
+    request.returnURL =  @"airwallexcheckout://com.airwallex.paymentacceptance";
     [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         [SVProgressHUD dismiss];
-        AWXPaymentConsentResponse *result = response;
-        completion(result.consent);
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }
+
 
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod device:(AWXDevice *)device consent:(AWXPaymentConsent *)consent

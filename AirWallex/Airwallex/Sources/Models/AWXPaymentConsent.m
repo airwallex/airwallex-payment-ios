@@ -7,6 +7,25 @@
 //
 
 #import "AWXPaymentConsent.h"
+#import "AWXPaymentMethod.h"
+
+@interface AWXPaymentConsent ()
+
+@property (nonatomic, copy, readwrite) NSString *Id;
+@property (nonatomic, copy, readwrite) NSString *requestId;
+@property (nonatomic, copy, readwrite) NSString *customerId;
+@property (nonatomic, copy, readwrite) NSString *status;
+@property (nonatomic, strong, readwrite) AWXPaymentMethod *paymentMethod;
+@property (nonatomic, copy, readwrite) NSString *nextTriggeredBy;
+@property (nonatomic, copy, readwrite) NSString *merchantTriggerReason;
+@property (nonatomic, copy,readwrite) NSString *initialPaymentIntentId;
+
+@property (nonatomic, assign ,readwrite) BOOL requiresCvc;
+
+@property (nonatomic, copy, readwrite) NSString *createdAt;
+@property (nonatomic, copy, readwrite) NSString *updatedAt;
+@property (nonatomic, copy, readwrite) NSString *clientSecret;
+@end
 
 @implementation AWXPaymentConsent
 
@@ -15,10 +34,20 @@
 {
     AWXPaymentConsent *intent = [AWXPaymentConsent new];
     intent.Id = json[@"id"];
-    intent.next_triggered_by = json[@"next_triggered_by"];
-    intent.merchant_trigger_reason = json[@"merchant_trigger_reason"];
-    
-    intent.requires_cvc = [json[@"requires_cvc"] boolValue];
+    intent.requestId = json[@"request_id"];
+    intent.customerId = json[@"customer_id"];
+    intent.status     = json[@"status"];
+    intent.nextTriggeredBy = json[@"next_triggered_by"];
+    intent.merchantTriggerReason = json[@"merchant_trigger_reason"];
+    intent.initialPaymentIntentId = json[@"initial_payment_intent_id"];
+    intent.requiresCvc = [json[@"requires_cvc"] boolValue];
+    NSDictionary *paymentMethod = json[@"payment_method"];
+    if (paymentMethod) {
+        intent.paymentMethod = [AWXPaymentMethod decodeFromJSON:paymentMethod];
+    }
+    intent.createdAt = json[@"created_at"];
+    intent.updatedAt = json[@"updated_at"];
+    intent.clientSecret = json[@"client_secret"];
     return intent;
 }
 
