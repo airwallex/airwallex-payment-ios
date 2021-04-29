@@ -151,6 +151,12 @@
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         [SVProgressHUD dismiss];
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        AWXVerifyPaymentConsentResponse *result = response;
+        if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
+            AWXUIContext *context = [AWXUIContext sharedContext];
+            context.paymentIntent.Id = result.initialPaymentIntentId;
+        }
+
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }

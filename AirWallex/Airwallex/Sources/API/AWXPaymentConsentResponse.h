@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly) NSString *status;
 
+@property (nonatomic, readonly) NSString *initialPaymentIntentId;
 /**
  Next action.
  */

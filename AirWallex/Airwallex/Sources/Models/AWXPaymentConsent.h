@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) NSString *nextTriggeredBy;
 @property (nonatomic, readonly) NSString *merchantTriggerReason;
-@property (nonatomic, readonly) NSString *initialPaymentIntentId;
+
 
 @property (nonatomic, readonly) BOOL requiresCvc;
 

@@ -264,6 +264,7 @@
         intent.currency    = self.currency;
         intent.amount      = self.amount;
         intent.clientSecret  = clientSecret;
+        paymentIntent = intent;
     }
     self.paymentIntent = paymentIntent;
     

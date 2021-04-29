@@ -18,7 +18,6 @@
 @property (nonatomic, strong, readwrite) AWXPaymentMethod *paymentMethod;
 @property (nonatomic, copy, readwrite) NSString *nextTriggeredBy;
 @property (nonatomic, copy, readwrite) NSString *merchantTriggerReason;
-@property (nonatomic, copy,readwrite) NSString *initialPaymentIntentId;
 
 @property (nonatomic, assign ,readwrite) BOOL requiresCvc;
 
@@ -39,7 +38,6 @@
     intent.status     = json[@"status"];
     intent.nextTriggeredBy = json[@"next_triggered_by"];
     intent.merchantTriggerReason = json[@"merchant_trigger_reason"];
-    intent.initialPaymentIntentId = json[@"initial_payment_intent_id"];
     intent.requiresCvc = [json[@"requires_cvc"] boolValue];
     NSDictionary *paymentMethod = json[@"payment_method"];
     if (paymentMethod) {
