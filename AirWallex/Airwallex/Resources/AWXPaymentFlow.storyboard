@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="dG1-RU-wgL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="dG1-RU-wgL">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -55,7 +55,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AWXPaymentMethodCell" rowHeight="61" id="kCv-Jp-HZu" customClass="AWXPaymentMethodCell">
-                                        <rect key="frame" x="0.0" y="113.5" width="414" height="61"/>
+                                        <rect key="frame" x="0.0" y="107.5" width="414" height="61"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kCv-Jp-HZu" id="09j-j7-h6C">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="61"/>
@@ -112,7 +112,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AWXNoCardCell" id="ihb-ph-XeK" customClass="AWXNoCardCell">
-                                        <rect key="frame" x="0.0" y="174.5" width="414" height="58"/>
+                                        <rect key="frame" x="0.0" y="168.5" width="414" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ihb-ph-XeK" id="sJo-aH-Hzx">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
@@ -232,14 +232,14 @@
                                                         <rect key="frame" x="0.0" y="160" width="382" height="67"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ek-4y-cnB" customClass="AWXFloatLabeledTextField">
-                                                                <rect key="frame" x="0.0" y="0.0" width="238.5" height="67"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="227" height="67"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Expires MM / YYYY"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
                                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ekP-UO-j9w" customClass="AWXFloatLabeledTextField">
-                                                                <rect key="frame" x="261.5" y="0.0" width="120.5" height="67"/>
+                                                                <rect key="frame" x="250" y="0.0" width="132" height="67"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="CVC / VCC"/>
@@ -248,7 +248,7 @@
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="K5w-e9-wLm"/>
-                                                            <constraint firstItem="ekP-UO-j9w" firstAttribute="width" secondItem="3ek-4y-cnB" secondAttribute="width" multiplier="130/258" id="QBV-7M-Jys"/>
+                                                            <constraint firstItem="ekP-UO-j9w" firstAttribute="width" secondItem="3ek-4y-cnB" secondAttribute="width" multiplier="150/258" id="QBV-7M-Jys"/>
                                                         </constraints>
                                                     </stackView>
                                                 </subviews>
@@ -975,11 +975,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-q6-vt1">
-                                <rect key="frame" x="0.0" y="144" width="414" height="718"/>
+                                <rect key="frame" x="0.0" y="139" width="414" height="723"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CountryCell" id="GrY-Ii-25t">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GrY-Ii-25t" id="VN1-L4-X9l">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -993,7 +993,7 @@
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="d2R-24-lIb">
-                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="Jcn-fj-QIX" id="lt9-fc-Ugd"/>
