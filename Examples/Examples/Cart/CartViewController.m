@@ -235,20 +235,19 @@
         }
         
         [SVProgressHUD dismiss];
-//        if (_paymentIntent) {
-//            // Step2: Setup client secret
-//            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
-//        }else{
-//            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = @"";
-//        }
+        if (_paymentIntent) {
+            // Step1: Setup client secret
+            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
+        }else{
+            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
+        }
         if (_customerSecret) {
             // Step2: Setup customer secret
             [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
-            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
-            // Step3: Show payment flow
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
         }
+        // Step3: Show payment flow
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
     });
 }
 
@@ -273,8 +272,6 @@
     context.hostViewController = self;
     context.paymentIntent = paymentIntent;
     context.shipping = self.shipping;
-    context.currency = self.currency;
-    context.customerId = customerId;
     [context presentPaymentFlow];
 }
 

@@ -38,6 +38,9 @@
 @property (strong, nonatomic) AWXThreeDSService *service;
 @property (strong, nonatomic) AWXDevice *device;
 
+@property (copy, nonatomic) NSString *paymentIntentId;
+
+
 @end
 
 @implementation AWXPaymentViewController
@@ -102,7 +105,7 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
-        if ([Airwallex checkoutMode] == AirwallexCheckoutNormalMode) {
+        if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
             [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:nil];
         }else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod  createCompletion:^(AWXPaymentConsent * _Nullable consent) {
@@ -125,7 +128,7 @@
     request.customerId = self.paymentMethod.customerId;
     request.paymentMethod = paymentMethod;
     AWXUIContext *context = [AWXUIContext sharedContext];
-    request.currency = context.currency;
+    request.currency = context.paymentIntent.currency;
     [SVProgressHUD show];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         [SVProgressHUD dismiss];
@@ -153,8 +156,7 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         AWXVerifyPaymentConsentResponse *result = response;
         if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
-            AWXUIContext *context = [AWXUIContext sharedContext];
-            context.paymentIntent.Id = result.initialPaymentIntentId;
+            self.paymentIntentId = result.initialPaymentIntentId;
         }
 
         [strongSelf finishConfirmationWithResponse:response error:error];
@@ -220,7 +222,7 @@
     } else if (response.nextAction.redirectResponse) {
         AWXThreeDSService *service = [AWXThreeDSService new];
         service.customerId = self.paymentIntent.customerId;
-        service.intentId = self.paymentIntent.Id;
+        service.intentId   = self.paymentIntent.Id.length > 0 ? self.paymentIntent.Id : self.paymentIntentId;
         service.paymentMethod = self.paymentMethod;
         service.device = self.device;
         service.presentingViewController = self;

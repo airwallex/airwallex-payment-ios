@@ -26,7 +26,7 @@ static NSURL *_defaultBaseURL;
 static NSString *_cybsURL;
 
 static AirwallexSDKMode     _mode          = AirwallexSDKTestMode;
-static AirwallexCheckoutMode _checkoutMode = AirwallexCheckoutNormalMode;
+static AirwallexCheckoutMode _checkoutMode = AirwallexCheckoutPaymentMode;
 static AirwallexNextTriggerByType    _nextTriggerByType      = AirwallexNextTriggerByCustomerType;
 
 + (void)setDefaultBaseURL:(NSURL *)baseURL

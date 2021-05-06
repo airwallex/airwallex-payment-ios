@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -74,7 +74,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShippingCell" id="L2w-l6-jwz" customClass="ShippingCell">
-                                        <rect key="frame" x="0.0" y="135.5" width="320" height="57.5"/>
+                                        <rect key="frame" x="0.0" y="129.5" width="320" height="57.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="L2w-l6-jwz" id="aBr-fF-Llt">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="57.5"/>
@@ -124,7 +124,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductCell" rowHeight="155" id="P5K-v1-gGW" customClass="ProductCell">
-                                        <rect key="frame" x="0.0" y="193" width="320" height="155"/>
+                                        <rect key="frame" x="0.0" y="187" width="320" height="155"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P5K-v1-gGW" id="ye2-6z-VD7">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="155"/>
@@ -192,7 +192,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TotalCell" rowHeight="214" id="KOI-Zh-6jg" customClass="TotalCell">
-                                        <rect key="frame" x="0.0" y="348" width="320" height="214"/>
+                                        <rect key="frame" x="0.0" y="342" width="320" height="214"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KOI-Zh-6jg" id="gtZ-fH-PXU">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="214"/>
@@ -346,10 +346,10 @@
                                 <rect key="frame" x="0.0" y="44" width="320" height="436"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iM6-7j-oWC">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="781"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="783"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P74-f6-EbX">
-                                                <rect key="frame" x="16" y="16" width="288" height="749"/>
+                                                <rect key="frame" x="16" y="16" width="288" height="751"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Environment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3F-HC-rpy">
                                                         <rect key="frame" x="0.0" y="0.0" width="288" height="23.5"/>
@@ -474,23 +474,59 @@
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eE7-Om-WvW">
-                                                        <rect key="frame" x="0.0" y="260.5" width="288" height="34"/>
-                                                        <color key="textColor" name="Black Text Color"/>
-                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                        <connections>
-                                                            <outlet property="delegate" destination="3dc-1g-4U7" id="C8n-RH-YIa"/>
-                                                        </connections>
-                                                    </textField>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dck-7L-Vck">
+                                                        <rect key="frame" x="0.0" y="260.5" width="288" height="36"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eE7-Om-WvW">
+                                                                <rect key="frame" x="0.0" y="0.0" width="239" height="36"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="36" id="Nnu-uT-MEr"/>
+                                                                </constraints>
+                                                                <color key="textColor" name="Black Text Color"/>
+                                                                <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="3dc-1g-4U7" id="C8n-RH-YIa"/>
+                                                                </connections>
+                                                            </textField>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPD-sh-aXs">
+                                                                <rect key="frame" x="244" y="8" width="44" height="20"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" id="YLJ-VC-2jr"/>
+                                                                    <constraint firstAttribute="width" constant="44" id="m2I-HG-1Nf"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="16"/>
+                                                                <state key="normal" title="Clear">
+                                                                    <color key="titleColor" name="Purple Color"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                        <integer key="value" value="4"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="clearCustomerBtnTapped:" destination="3dc-1g-4U7" eventType="touchUpInside" id="OZE-rg-UyL"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstItem="oPD-sh-aXs" firstAttribute="centerY" secondItem="Dck-7L-Vck" secondAttribute="centerY" id="4Fe-dO-f8s"/>
+                                                            <constraint firstItem="eE7-Om-WvW" firstAttribute="leading" secondItem="Dck-7L-Vck" secondAttribute="leading" id="Rc6-H5-LpB"/>
+                                                            <constraint firstItem="oPD-sh-aXs" firstAttribute="leading" secondItem="eE7-Om-WvW" secondAttribute="trailing" constant="5" id="gXw-dF-Akx"/>
+                                                            <constraint firstAttribute="bottom" secondItem="eE7-Om-WvW" secondAttribute="bottom" id="rXq-6A-lPh"/>
+                                                            <constraint firstItem="eE7-Om-WvW" firstAttribute="top" secondItem="Dck-7L-Vck" secondAttribute="top" id="y4k-Rs-Ju8"/>
+                                                            <constraint firstAttribute="trailing" secondItem="oPD-sh-aXs" secondAttribute="trailing" id="zYa-aZ-HwA"/>
+                                                        </constraints>
+                                                    </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw3-vc-e4I">
-                                                        <rect key="frame" x="0.0" y="304.5" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="306.5" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YSw-cs-6Pe">
-                                                        <rect key="frame" x="0.0" y="338" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="340" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -499,13 +535,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J14-mn-E62">
-                                                        <rect key="frame" x="0.0" y="382" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="384" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ucc-VN-sfr">
-                                                        <rect key="frame" x="0.0" y="415.5" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="417.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -514,13 +550,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5p4-lS-mL2">
-                                                        <rect key="frame" x="0.0" y="459.5" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="461.5" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-cl-UUP">
-                                                        <rect key="frame" x="0.0" y="493" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="495" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -529,13 +565,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BH-xo-rjD">
-                                                        <rect key="frame" x="0.0" y="537" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="539" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ofq-7n-F5l">
-                                                        <rect key="frame" x="0.0" y="570.5" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="572.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -544,13 +580,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ap9-GE-PVt">
-                                                        <rect key="frame" x="0.0" y="614.5" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="616.5" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XwV-xj-OFr">
-                                                        <rect key="frame" x="0.0" y="648" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="650" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -559,13 +595,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeChat Region:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iou-6j-t8u">
-                                                        <rect key="frame" x="0.0" y="692" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="694" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTK-Dh-PCi">
-                                                        <rect key="frame" x="0.0" y="725.5" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="727.5" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
@@ -616,6 +652,7 @@
                         <outlet property="amountTextField" destination="Ofq-7n-F5l" id="aoW-om-maE"/>
                         <outlet property="apiKeyTextField" destination="ucc-VN-sfr" id="EXV-PE-RMH"/>
                         <outlet property="checkoutBtn" destination="7eK-wj-8Bg" id="s1k-Sl-oux"/>
+                        <outlet property="clearCustomerIdButton" destination="oPD-sh-aXs" id="7X4-On-5Ee"/>
                         <outlet property="clientIDTextField" destination="Qvi-cl-UUP" id="VQT-UV-ejR"/>
                         <outlet property="currencyTextField" destination="XwV-xj-OFr" id="TLL-Jw-HkG"/>
                         <outlet property="customerIdTextField" destination="eE7-Om-WvW" id="v9O-Ri-qhU"/>
@@ -636,7 +673,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pG9-fq-6li" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lmz-Qw-MyF">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

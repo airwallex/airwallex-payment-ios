@@ -43,6 +43,7 @@
 @property (nonatomic) NSInteger nextPageNum;
 @property (strong, nonatomic) AWXThreeDSService *service;
 @property (strong, nonatomic) AWXDevice *device;
+@property (copy, nonatomic) NSString *paymentIntentId;
 
 @end
 
@@ -88,7 +89,7 @@
     request.transactionCurrency = _currency;
     
     __weak __typeof(self)weakSelf = self;
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
 
@@ -96,7 +97,7 @@
             AWXGetPaymentMethodTypeResponse *result = (AWXGetPaymentMethodTypeResponse *)response;
             NSMutableArray *typeArray = @[].mutableCopy;
             for (AWXPaymentMethodType * type in result.items) {
-                if ([Airwallex checkoutMode] == AirwallexCheckoutNormalMode) {
+                if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
                     if ([type.transactionMode isEqualToString:@"oneoff"]) {
                         if (type.name){
                             [typeArray addObject:type.name];
@@ -453,7 +454,7 @@
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
         
-        if ([Airwallex checkoutMode] == AirwallexCheckoutNormalMode) {
+        if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
             [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:nil];
         }else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod  createCompletion:^(AWXPaymentConsent * _Nullable consent) {
@@ -497,6 +498,10 @@
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         [SVProgressHUD dismiss];
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        AWXVerifyPaymentConsentResponse *result = response;
+        if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
+            self.paymentIntentId = result.initialPaymentIntentId;
+        }
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }
@@ -559,7 +564,7 @@
         AWXPaymentIntent *paymentIntent = [AWXUIContext sharedContext].paymentIntent;
         AWXThreeDSService *service = [AWXThreeDSService new];
         service.customerId = paymentIntent.customerId;
-        service.intentId = paymentIntent.Id;
+        service.intentId   = paymentIntent.Id.length > 0 ? paymentIntent.Id : self.paymentIntentId;
         service.paymentMethod = self.paymentMethod;
         service.device = self.device;
         service.presentingViewController = self;

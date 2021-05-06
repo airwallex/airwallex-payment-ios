@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *checkoutBtn;
 @property (weak, nonatomic) IBOutlet UIButton *nextTriggerByBtn;
 @property (weak, nonatomic) IBOutlet UITextField *customerIdTextField;
+@property (weak, nonatomic) IBOutlet UIButton *clearCustomerIdButton;
 
 @property(nonatomic, strong) NSArray *checkoutModesList;
 @property(nonatomic, strong) NSArray *nextTriggerByList;
@@ -65,6 +66,7 @@
     self.amountTextField.text = self.amount ? [NSString stringWithFormat:@"%.2f", self.amount.doubleValue] : defaultAmount;
     self.currencyTextField.text = self.currency ?: defaultCurrency;
     
+    self.customerIdTextField.enabled = NO;
     NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
     self.customerIdTextField.text = customerId;
     
@@ -90,6 +92,11 @@
         [Airwallex setNextTriggerByType: selectIndex];
         [self.nextTriggerByBtn setTitle:self.nextTriggerByList[Airwallex.nextTriggerByType] forState:(UIControlStateNormal)];
     }];
+}
+- (IBAction)clearCustomerBtnTapped:(id)sender {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self resetTextFields];
 }
 
 -(void)showSelectViewWithArray:(NSArray *) arr completion:(void (^)(NSInteger selectIndex))completion{
@@ -121,7 +128,7 @@
     client.clientID = [AirwallexExamplesKeys shared].clientID;
 
     [Airwallex setMode:AirwallexSDKTestMode];
-    [Airwallex setCheckoutMode:AirwallexCheckoutNormalMode];
+    [Airwallex setCheckoutMode:AirwallexCheckoutPaymentMode];
     [Airwallex setNextTriggerByType:AirwallexNextTriggerByCustomerType];
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
 

@@ -46,9 +46,9 @@
     controller.delegate = nil;
     controller.paymentMethod = nil;
     controller.shipping = self.shipping;
-    controller.customerId = self.customerId;
-    controller.currency = self.currency;
-    controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
+    controller.customerId = self.paymentIntent.customerId;
+    controller.currency = self.paymentIntent.currency;
+//    controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
     controller.isFlow = YES;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;

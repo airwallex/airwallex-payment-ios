@@ -95,8 +95,8 @@
             NSMutableDictionary *cardParams = @{}.mutableCopy;
             AWXUIContext *context = [AWXUIContext sharedContext];
             cardParams[@"amount"] = @"1";
-            if (context.currency) {
-                cardParams[@"currency"] = context.currency;
+            if (context.paymentIntent.currency) {
+                cardParams[@"currency"] = context.paymentIntent.currency;
             }
             if (self.options.card.cvc ) {
                 cardParams[@"cvc"] = self.options.card.cvc;
