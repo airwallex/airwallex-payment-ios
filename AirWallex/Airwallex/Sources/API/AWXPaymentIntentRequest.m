@@ -39,7 +39,7 @@
             @"id": self.paymentConsent.Id,
         }.mutableCopy;
         
-        if (self.paymentConsent.requires_cvc) {
+        if (self.paymentMethod.card.cvc) {
             consentParams[@"cvc"] = self.paymentMethod.card.cvc ?: @"";
         }
         [parameters addEntriesFromDictionary:@{

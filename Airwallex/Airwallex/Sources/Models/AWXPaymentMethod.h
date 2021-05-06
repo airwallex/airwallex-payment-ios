@@ -57,4 +57,35 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXPaymentMethodType` includes the information of a payment method.
+ */
+@interface AWXPaymentMethodType : NSObject <AWXJSONEncodable, AWXJSONDecodable>
+
+/**
+ name of the payment method. One of card, wechatpay.
+ */
+@property (nonatomic, copy) NSString *name;
+/**
+ transaction_mode of the payment method. One of oneoff, recurring.
+ */
+@property (nonatomic, copy) NSString *transactionMode;
+/**
+ flows of the payment method.
+ */
+@property (nonatomic, copy) NSArray<NSString* > *flows;
+/**
+ transaction_currencies of the payment method.  "AUD", "CHF", "HKD", "SGD", "JPY", "EUR", "GBP", "USD", "CAD", "NZD", "CNY"],
+ */
+@property (nonatomic, copy) NSArray<NSString* > *transactionCurrencies;
+/**
+ active
+ */
+@property (nonatomic, assign) BOOL active;
+
+
+
+@end
+
+
 NS_ASSUME_NONNULL_END

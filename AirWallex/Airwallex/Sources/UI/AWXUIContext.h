@@ -126,4 +126,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
+@interface AWXRecurringUIContext: AWXUIContext
+
+
+
+
+@end
+
 NS_ASSUME_NONNULL_END

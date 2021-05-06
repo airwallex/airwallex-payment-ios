@@ -50,4 +50,35 @@
     return method;
 }
 
+
+
+@end
+
+@implementation AWXPaymentMethodType
+
+- (NSDictionary *)encodeToJSON
+{
+    NSMutableDictionary *items = [[NSMutableDictionary alloc] init];
+    if (self.name) {
+        items[@"name"] = self.name;
+    }
+    items[@"transaction_mode"] = self.transactionMode;
+    items[@"flows"] = self.flows;
+    items[@"transaction_currencies"] = self.transactionCurrencies;
+    items[@"active"] = [NSNumber numberWithBool:self.active] ;
+    
+    return items;
+}
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWXPaymentMethodType *method = [AWXPaymentMethodType new];
+    method.name = json[@"name"];
+    method.transactionMode = json[@"transaction_mode"];
+    method.flows = json[@"flows"];
+    method.transactionCurrencies = json[@"transaction_currencies"];
+    method.active = [json[@"active"] boolValue];
+    return method;
+}
+
 @end

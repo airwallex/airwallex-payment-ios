@@ -33,16 +33,17 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"]        = self.requestId;
     parameters[@"customer_id"]       = self.customerId;
-    parameters[@"next_triggered_by"] = self.next_triggered_by;
-    parameters[@"requires_cvc"] = [NSNumber numberWithBool:NO];
-    parameters[@"merchant_trigger_reason"] = [Airwallex paymentMode] == AirwallexPaymentNormalMode ? @"unscheduled" : @"scheduled";
-    if ([Airwallex userType] == AirwallexUserTypeCustomer) {
+    parameters[@"currency"]          = self.currency;
+//    parameters[@"requires_cvc"] = [NSNumber numberWithBool:NO];
+//    parameters[@"merchant_trigger_reason"] = @"unscheduled";
+        
+    if ([Airwallex nextTriggerByType] == AirwallexNextTriggerByCustomerType) {
         parameters[@"next_triggered_by"] = @"customer";
-        if (self.paymentMethod.card) {
-            parameters[@"requires_cvc"] = [NSNumber numberWithBool:YES];
-        }
+//        if (self.paymentMethod.card) {
+//            parameters[@"requires_cvc"] = [NSNumber numberWithBool:YES];
+//        }
     }else{
-        parameters[@"next_triggered_by"]       = @"merchant";
+        parameters[@"next_triggered_by"]  = @"merchant";
     }
 
     NSMutableDictionary *paymentParams = @{}.mutableCopy;
@@ -84,35 +85,36 @@
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
-    NSDictionary *options = @{};
-    if (self.options.card) {
-        NSMutableDictionary *cardParams = @{}.mutableCopy;
-        AWXPaymentIntent * intent = [AWXUIContext sharedContext].paymentIntent;
-        cardParams[@"amount"] = @"0.00";
-        if (intent.currency) {
-            cardParams[@"currency"] = intent.currency;
-        }
-        if (self.options.card.cvc && self.consent.requires_cvc) {
-            cardParams[@"cvc"] = self.options.card.cvc;
-        }
-        options = cardParams.copy;
-    }else{
-        NSDictionary *params = self.options.encodeToJSON;
-        options = params;
-        id value = [params valueForKey:self.options.type];
-        if (value) {
-            options = @{
-                self.options.type : value
-            };
+    if (self.returnURL) {
+        parameters[@"return_url"] = self.returnURL;
+    }
+    NSDictionary *params = self.options.encodeToJSON;
+    id value = [params valueForKey:self.options.type];
+    if (value) {
+        if (self.options.card) {
+            NSMutableDictionary *cardParams = @{}.mutableCopy;
+            AWXUIContext *context = [AWXUIContext sharedContext];
+            cardParams[@"amount"] = @"1";
+            if (context.paymentIntent.currency) {
+                cardParams[@"currency"] = context.paymentIntent.currency;
+            }
+            if (self.options.card.cvc ) {
+                cardParams[@"cvc"] = self.options.card.cvc;
+            }
+            value = cardParams.copy;
         }
     }
+    
+    NSDictionary *options = @{
+        self.options.type : value
+    };
     parameters[@"verification_options"] = options;
     return parameters;
 }
 
 - (Class)responseClass
 {
-    return AWXPaymentConsentResponse.class;
+    return AWXVerifyPaymentConsentResponse.class;
 }
 
 @end

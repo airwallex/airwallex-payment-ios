@@ -55,6 +55,33 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
+ `AWXGetPaymentMethodsTypeRequest` includes all of the parameters needed to get payment methods.
+ */
+@interface AWXGetPaymentMethodsTypeRequest : NSObject <AWXRequestProtocol>
+
+/**
+ active .
+ */
+@property (nonatomic) BOOL active;
+/**
+ Page number starting from 0.
+ */
+@property (nonatomic) NSInteger pageNum;
+
+/**
+ Number of payment methods to be listed per page.
+ */
+@property (nonatomic) NSInteger pageSize;
+
+/**
+ A currency code.
+ */
+@property (nonatomic, copy, nullable) NSString *transactionCurrency;
+
+
+@end
+
+/**
  `AWXCreatePaymentMethodRequest` includes all of the parameters needed to create a payment method.
  */
 @interface AWXCreatePaymentMethodRequest : NSObject <AWXRequestProtocol>

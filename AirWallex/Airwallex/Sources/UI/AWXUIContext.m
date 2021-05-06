@@ -48,7 +48,7 @@
     controller.shipping = self.shipping;
     controller.customerId = self.paymentIntent.customerId;
     controller.currency = self.paymentIntent.currency;
-    controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
+//    controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
     controller.isFlow = YES;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -103,5 +103,10 @@
     AWXShippingViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"shipping"];
     return controller;
 }
+
+@end
+
+@implementation AWXRecurringUIContext
+
 
 @end
