@@ -317,6 +317,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="n69-eD-JJv">
+                        <barButtonItem key="leftBarButtonItem" title="Demo" id="Vey-Yf-bW7">
+                            <connections>
+                                <segue destination="7Ab-n5-deV" kind="show" id="1Qj-3z-P6e"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="Cdb-jb-CTr">
                             <connections>
                                 <segue destination="ctT-KW-lCz" kind="presentation" identifier="goToSettings" id="udD-0y-ARe"/>
@@ -333,6 +338,73 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="137.94642857142856"/>
+        </scene>
+        <!--Input View Controller-->
+        <scene sceneID="WmO-Vf-pc5">
+            <objects>
+                <viewController id="7Ab-n5-deV" customClass="InputViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NlY-P6-FYU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Web‘s url" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JNL-Sa-Ann">
+                                <rect key="frame" x="20" y="104" width="280" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Pdu-OK-fXh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Referer" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5oc-v0-fKZ">
+                                <rect key="frame" x="20" y="168" width="280" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="zfJ-zM-HCT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qBM-wU-dJa">
+                                <rect key="frame" x="110" y="242" width="100" height="44"/>
+                                <color key="backgroundColor" red="0.84705882349999995" green="0.89019607840000003" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="KV3-3I-oUm"/>
+                                    <constraint firstAttribute="width" constant="100" id="yBY-vW-Iju"/>
+                                </constraints>
+                                <state key="normal" title="点击">
+                                    <color key="titleColor" red="0.1647058824" green="0.1843137255" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="btnTapped:" destination="7Ab-n5-deV" eventType="touchUpInside" id="LOR-GV-tF8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Uof-B0-4oI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="5oc-v0-fKZ" secondAttribute="trailing" constant="20" id="0mY-bQ-n5I"/>
+                            <constraint firstItem="JNL-Sa-Ann" firstAttribute="top" secondItem="Uof-B0-4oI" secondAttribute="top" constant="60" id="AgD-ut-M0I"/>
+                            <constraint firstAttribute="trailing" secondItem="JNL-Sa-Ann" secondAttribute="trailing" constant="20" id="BYi-QH-3dK"/>
+                            <constraint firstItem="qBM-wU-dJa" firstAttribute="centerX" secondItem="NlY-P6-FYU" secondAttribute="centerX" id="JJK-J9-ojK"/>
+                            <constraint firstItem="JNL-Sa-Ann" firstAttribute="leading" secondItem="Uof-B0-4oI" secondAttribute="leading" constant="20" id="Ll3-CA-dmT"/>
+                            <constraint firstItem="5oc-v0-fKZ" firstAttribute="leading" secondItem="Uof-B0-4oI" secondAttribute="leading" constant="20" id="cDS-pZ-XqS"/>
+                            <constraint firstItem="5oc-v0-fKZ" firstAttribute="top" secondItem="JNL-Sa-Ann" secondAttribute="bottom" constant="20" id="oHv-MU-vwd"/>
+                            <constraint firstItem="qBM-wU-dJa" firstAttribute="top" secondItem="5oc-v0-fKZ" secondAttribute="bottom" constant="30" id="rTh-uS-xyr"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ELM-p0-t0p"/>
+                    <connections>
+                        <outlet property="url1TextField" destination="JNL-Sa-Ann" id="uy2-h0-Rd7"/>
+                        <outlet property="url2TextField" destination="5oc-v0-fKZ" id="TWc-kV-x5I"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OUh-yl-yM2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1824" y="901"/>
         </scene>
         <!--Options-->
         <scene sceneID="XgQ-3K-n2r">
@@ -544,7 +616,7 @@
                                                         <rect key="frame" x="0.0" y="417.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <textInputTraits key="textInputTraits"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="3dc-1g-4U7" id="9dp-Pl-v0I"/>
                                                         </connections>
@@ -559,7 +631,7 @@
                                                         <rect key="frame" x="0.0" y="495" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <textInputTraits key="textInputTraits"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="3dc-1g-4U7" id="yGh-R7-KBw"/>
                                                         </connections>
@@ -673,7 +745,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pG9-fq-6li" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lmz-Qw-MyF">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -691,7 +763,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="ctT-KW-lCz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IXt-XM-enX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

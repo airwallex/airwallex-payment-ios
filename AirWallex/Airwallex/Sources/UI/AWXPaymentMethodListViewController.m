@@ -30,7 +30,7 @@
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXTrackManager.h"
-
+#import "AWXPaymentConsent.h"
 
 @interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
@@ -117,6 +117,25 @@
     }];
 }
 
+-(void) loadCustomerPaymentMethods{
+    self.paymentMethods = @[self.section0,@[]];
+    
+    if (self.customerPaymentConsents.count) {
+        self.cards = @[].mutableCopy;
+        for (AWXPaymentConsent * consent in  self.customerPaymentConsents) {
+            if ([consent.nextTriggeredBy isEqualToString: @"customer"]) {
+                for (AWXPaymentMethod * method in  self.customerPaymentMethods) {
+                    if ([consent.paymentMethod.Id isEqualToString:method.Id]) {
+                        [self.cards addObject:method];
+                    }
+                }
+            }
+        }
+        self.paymentMethods = @[self.section0, self.cards];
+    }
+    [self.tableView reloadData];
+}
+
 - (NSArray <AWXPaymentMethod *> *)section0
 {
     NSArray *supportedTypes = [Airwallex supportedNonCardTypes];
@@ -142,7 +161,9 @@
     }
     
     self.cards = [NSMutableArray array];
-    [self loadDataFromPageNum:0];
+    [self loadCustomerPaymentMethods];
+    
+//    [self loadDataFromPageNum:0];
 }
 
 - (void)loadMultipleDataFromPageNum:(NSInteger)pageNum
@@ -203,12 +224,12 @@
     }
 
     [SVProgressHUD show];
-    
+
     AWXGetPaymentMethodsRequest *request = [AWXGetPaymentMethodsRequest new];
     request.customerId = self.customerId;
     request.pageNum = pageNum;
     request.methodType = AWXCardKey;
-    
+
     __weak __typeof(self)weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
@@ -220,11 +241,11 @@
             [strongSelf presentViewController:controller animated:YES completion:nil];
             return;
         }
-        
+
         AWXGetPaymentMethodsResponse *result = (AWXGetPaymentMethodsResponse *)response;
         strongSelf.canLoadMore = result.hasMore;
         [strongSelf.cards addObjectsFromArray:result.items];
-        
+
         strongSelf.paymentMethods = @[strongSelf.section0, strongSelf.cards];
         [strongSelf.tableView reloadData];
         strongSelf.nextPageNum = pageNum + 1;
@@ -389,15 +410,15 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (!self.canLoadMore) {
-        return;
-    }
-    
-    CGFloat currentOffset = scrollView.contentOffset.y;
-    CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-    if (maximumOffset - currentOffset <= 0) {
-        [self loadDataFromPageNum:self.nextPageNum];
-    }
+//    if (!self.canLoadMore) {
+//        return;
+//    }
+//
+//    CGFloat currentOffset = scrollView.contentOffset.y;
+//    CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+//    if (maximumOffset - currentOffset <= 0) {
+//        [self loadDataFromPageNum:self.nextPageNum];
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

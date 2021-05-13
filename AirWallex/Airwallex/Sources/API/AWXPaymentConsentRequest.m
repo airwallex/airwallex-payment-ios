@@ -34,7 +34,7 @@
     parameters[@"request_id"]        = self.requestId;
     parameters[@"customer_id"]       = self.customerId;
     parameters[@"currency"]          = self.currency;
-//    parameters[@"requires_cvc"] = [NSNumber numberWithBool:NO];
+    parameters[@"requires_cvc"] = [NSNumber numberWithBool:NO];
 //    parameters[@"merchant_trigger_reason"] = @"unscheduled";
         
     if ([Airwallex nextTriggerByType] == AirwallexNextTriggerByCustomerType) {
@@ -94,7 +94,7 @@
         if (self.options.card) {
             NSMutableDictionary *cardParams = @{}.mutableCopy;
             AWXUIContext *context = [AWXUIContext sharedContext];
-            cardParams[@"amount"] = @"1";
+            cardParams[@"amount"] = context.paymentIntent.amount;
             if (context.paymentIntent.currency) {
                 cardParams[@"currency"] = context.paymentIntent.currency;
             }

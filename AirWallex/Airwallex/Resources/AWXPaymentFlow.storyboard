@@ -836,7 +836,7 @@
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="wyl-9h-fpD"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Phone number (optional)"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Phone number"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lh-kb-BSe">
@@ -1095,7 +1095,7 @@
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="jOs-vC-2Pn"/>
-        <segue reference="Kt1-cg-dJB"/>
+        <segue reference="Oci-f4-ed5"/>
         <segue reference="DKs-vZ-uzr"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.3803921569" green="0.1843137255" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

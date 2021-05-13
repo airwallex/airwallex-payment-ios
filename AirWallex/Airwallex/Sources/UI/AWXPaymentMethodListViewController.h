@@ -8,7 +8,7 @@
 
 #import "AWXViewController.h"
 
-@class AWXPaymentMethodListViewController, AWXPaymentMethod, AWXPlaceDetails;
+@class AWXPaymentMethodListViewController, AWXPaymentMethod, AWXPlaceDetails,AWXPaymentConsent;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -61,6 +61,15 @@ NS_ASSUME_NONNULL_BEGIN
  A currency code.
  */
 @property (nonatomic, strong, nullable) NSString *currency;
+
+/**
+ customer payment methods.
+ */
+@property (nonatomic, strong) NSArray <AWXPaymentMethod *> *customerPaymentMethods;
+/**
+ customer payment consents.
+ */
+@property (nonatomic, strong) NSArray <AWXPaymentConsent *> *customerPaymentConsents;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

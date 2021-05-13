@@ -41,6 +41,9 @@
 	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>airwallexcheckout</string>
+		<string>alipayhk</string>
+		<string>alipay</string>
 		<string>weixinULAPI</string>
 		<string>weixin</string>
 	</array>
