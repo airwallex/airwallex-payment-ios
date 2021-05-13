@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AWXCodable.h"
-
+@class AWXPaymentMethod,AWXPaymentConsent;
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -50,6 +50,15 @@ NS_ASSUME_NONNULL_BEGIN
  The customer who is paying for this payment intent.
  */
 @property (nonatomic, copy, nullable) NSString *customerId;
+
+/**
+ Payment methods.
+ */
+@property (nonatomic, strong) NSArray <AWXPaymentMethod *> *paymentMethods;
+/**
+ Payment consents .
+ */
+@property (nonatomic, strong) NSArray <AWXPaymentConsent *> *paymentConsents;
 
 @end
 

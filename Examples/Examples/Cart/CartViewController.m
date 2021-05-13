@@ -60,7 +60,21 @@
     client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientID;
-    
+        
+   NSDictionary *shipping = @{
+                              @"first_name": @"Verify",
+                              @"last_name": @"Doe",
+                              @"phone_number": @"13800000000",
+                              @"address": @{
+                                      @"country_code": @"CN",
+                                      @"state": @"Shanghai",
+                                      @"city": @"Shanghai",
+                                      @"street": @"Pudong District",
+                                      @"postcode": @"100000"
+                              }
+                       };
+    self.shipping =  [AWXPlaceDetails decodeFromJSON:shipping];
+
     [self reloadData];
 }
 

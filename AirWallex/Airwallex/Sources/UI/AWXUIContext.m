@@ -48,6 +48,8 @@
     controller.shipping = self.shipping;
     controller.customerId = self.paymentIntent.customerId;
     controller.currency = self.paymentIntent.currency;
+    controller.customerPaymentMethods = self.paymentIntent.paymentMethods;
+    controller.customerPaymentConsents = self.paymentIntent.paymentConsents;
 //    controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
     controller.isFlow = YES;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
