@@ -56,6 +56,9 @@
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
+    if ([url.scheme hasPrefix:@"airwallexcheckout"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showSuccessfullVC" object:nil];
+    }
     return [WXApi handleOpenURL:url delegate:self];
 }
 
