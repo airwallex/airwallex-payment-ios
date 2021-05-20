@@ -9,7 +9,7 @@
 #import "AWXViewController.h"
 #import "AWXUIContext.h"
 
-@class AWXPaymentIntent, AWXPaymentMethod;
+@class AWXPaymentIntent, AWXPaymentMethod, AWXPaymentConsent;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,6 +32,11 @@ NS_ASSUME_NONNULL_BEGIN
  A payment intent.
  */
 @property (nonatomic, strong) AWXPaymentIntent *paymentIntent;
+/**
+ A payment consent.
+ */
+@property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
+
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
