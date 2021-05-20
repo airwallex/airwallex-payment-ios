@@ -228,7 +228,7 @@ static AirwallexNextTriggerByType    _nextTriggerByType      = AirwallexNextTrig
     if (self.configuration.clientSecret) {
         [urlRequest setValue:self.configuration.clientSecret forHTTPHeaderField:@"client-secret"];
     }
-
+    [urlRequest setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
     if (request.parameters && [NSJSONSerialization isValidJSONObject:request.parameters] && request.method == AWXHTTPMethodPOST) {
         urlRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:request.parameters options:NSJSONWritingPrettyPrinted error:nil];
     }

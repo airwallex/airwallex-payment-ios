@@ -30,6 +30,7 @@
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:NSUUID.UUID.UUIDString forHTTPHeaderField:@"Awx-Tracker"];
+    [request setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
     [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil]];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                      completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
