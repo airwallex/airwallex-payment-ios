@@ -249,6 +249,7 @@
         }
         
         [SVProgressHUD dismiss];
+        [AWXAPIClientConfiguration sharedConfiguration].baseURL = [APIClient sharedClient].paymentBaseURL;
         if (_paymentIntent) {
             // Step1: Setup client secret
             [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;

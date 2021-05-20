@@ -106,7 +106,7 @@
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
         if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
-            [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:nil];
+            [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:self.paymentConsent];
         }else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod  createCompletion:^(AWXPaymentConsent * _Nullable consent) {
                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];

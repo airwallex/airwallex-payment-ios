@@ -34,6 +34,7 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:self.clientID forHTTPHeaderField:@"x-client-id"];
     [request setValue:self.apiKey forHTTPHeaderField:@"x-api-key"];
+    [request setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                      completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {
@@ -73,6 +74,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
     if (self.token) {
         [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
     }
@@ -116,6 +118,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
     if (self.token) {
         [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
     }
@@ -157,6 +160,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
     if (self.token) {
         [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
     }

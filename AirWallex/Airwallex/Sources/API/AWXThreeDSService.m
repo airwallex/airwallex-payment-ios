@@ -143,6 +143,7 @@
             urlRequest.HTTPMethod = @"POST";
             urlRequest.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
             [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+            [urlRequest setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
             __weak __typeof(self)weakSelf = self;
             AWXWebViewController *webViewController = [[AWXWebViewController alloc] initWithURLRequest:urlRequest webHandler:^(NSString * _Nullable paResId, NSError * _Nullable error) {
                 __strong __typeof(weakSelf)strongSelf = weakSelf;

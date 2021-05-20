@@ -26,14 +26,24 @@
     
     [self.webView addObserver:self forKeyPath:@"title" options:(NSKeyValueObservingOptionNew) context:nil];
     if (self.url.length) {
-        NSURL *url = [[NSURL alloc]initWithString:self.url];
-        NSMutableURLRequest *requeset = [NSMutableURLRequest requestWithURL:url];
+        NSURL *url = [NSURL URLWithString:self.url];
+        NSMutableURLRequest *requeset = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
         [requeset setValue:self.referer forHTTPHeaderField:@"Referer"];
+        [requeset setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
         self.webView.navigationDelegate = self;
         self.webView.UIDelegate  = self;
         [self.webView loadRequest:requeset];
+        [self setWebViewUA];
     }
     
+}
+
+- (void)setWebViewUA{
+    [self.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
+            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Airwallex-iOS-SDK", @"UserAgent", nil];
+            [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }];
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
@@ -42,7 +52,10 @@
         [absoluteString hasPrefix:@"http://weixin/wap/pay"] ||
         [absoluteString hasPrefix:@"alipay://"] ||
         [absoluteString hasPrefix:@"alipayhk://"] ||
-        [absoluteString hasPrefix:@"airwallexcheckout://"]) {
+        [absoluteString hasPrefix:@"airwallexcheckout://"] ||
+        [absoluteString hasPrefix:@"https://"] ||
+        [absoluteString hasPrefix:@"http://"]||
+        [absoluteString hasPrefix:@"alipays://"]) {
         NSURL *url = [[NSURL alloc]initWithString:absoluteString];
         if (url) {
             [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];

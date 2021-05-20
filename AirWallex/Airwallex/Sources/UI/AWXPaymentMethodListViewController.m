@@ -44,7 +44,7 @@
 @property (strong, nonatomic) AWXThreeDSService *service;
 @property (strong, nonatomic) AWXDevice *device;
 @property (copy, nonatomic) NSString *paymentIntentId;
-
+@property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
 @end
 
 @implementation AWXPaymentMethodListViewController
@@ -64,6 +64,7 @@
         controller.delegate = [AWXUIContext sharedContext].delegate;
         controller.paymentIntent = [AWXUIContext sharedContext].paymentIntent;
         controller.paymentMethod = self.paymentMethod;
+        controller.paymentConsent = self.paymentConsent;
         controller.isFlow = self.isFlow;
     } else if ([segue.identifier isEqualToString:@"addCard"]) {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
@@ -444,7 +445,11 @@
         [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
         return;
     }
-        
+    for (AWXPaymentConsent * consent in  self.customerPaymentConsents) {
+        if ([consent.paymentMethod.Id isEqualToString:self.paymentMethod.Id]) {
+            self.paymentConsent = consent;
+        }
+    }
     // No cvc provided and go to enter cvc in payment detail page
     [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
 }
