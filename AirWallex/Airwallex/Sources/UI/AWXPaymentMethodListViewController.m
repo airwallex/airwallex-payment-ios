@@ -54,7 +54,7 @@
     [super viewDidLoad];
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
    
-    [self loadPaymentMethodTypes];
+    [self loadPaymentMethodTypesFromPageNum: 0];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -82,11 +82,10 @@
     }
 }
 
-- (void) loadPaymentMethodTypes{
+- (void) loadPaymentMethodTypesFromPageNum:(NSInteger)pageNum {
     AWXGetPaymentMethodsTypeRequest *request = [AWXGetPaymentMethodsTypeRequest new];
     request.active = self.customerId;
-    request.pageNum = 0;
-    request.pageSize = 200;
+    request.pageNum = pageNum;
     request.transactionCurrency = _currency;
     
     __weak __typeof(self)weakSelf = self;
@@ -114,6 +113,8 @@
             }
             strongSelf.availablePaymentMethodTypes = typeArray;
             [strongSelf reloadData];
+            [strongSelf.tableView reloadData];
+            strongSelf.nextPageNum = pageNum + 1;
         }
     }];
 }
@@ -411,15 +412,16 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-//    if (!self.canLoadMore) {
-//        return;
-//    }
-//
-//    CGFloat currentOffset = scrollView.contentOffset.y;
-//    CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-//    if (maximumOffset - currentOffset <= 0) {
+    if (!self.canLoadMore) {
+        return;
+    }
+
+    CGFloat currentOffset = scrollView.contentOffset.y;
+    CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+    if (maximumOffset - currentOffset <= 0) {
 //        [self loadDataFromPageNum:self.nextPageNum];
-//    }
+        [self loadPaymentMethodTypesFromPageNum:self.nextPageNum];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

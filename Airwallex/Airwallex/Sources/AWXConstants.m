@@ -28,6 +28,8 @@ NSString *const AWXKakaoPayKey = @"kakaopay";
 NSString *const AWXTNGPayKey = @"tng";
 NSString *const AWXDANAPayKey = @"dana";
 NSString *const AWXGCashPayKey = @"gcash";
+NSString *const AWXTrueMoneyPayKey = @"truemoney";
+NSString *const AWXBKashPayKey = @"bkash";
 
 NSString *const AWXCardKey = @"card";
 NSString *const AWXThreeDSReturnURL = @"https://www.airwallex.com";
@@ -58,6 +60,10 @@ NSString * FormatPaymentMethodTypeString(NSString *type)
         return @"DANA";
     } else if ([type isEqualToString:AWXGCashPayKey]) {
         return @"GCash";
+    } else if ([type isEqualToString:AWXTrueMoneyPayKey]) {
+        return @"Truemoney";
+    } else if ([type isEqualToString:AWXBKashPayKey]) {
+        return @"BKash";
     }
     return nil;
 }
@@ -78,6 +84,10 @@ NSString * PaymentMethodTypeLogo(NSString *type)
         return @"dana";
     } else if ([type isEqualToString:AWXGCashPayKey]) {
         return @"gcash";
+    } else if ([type isEqualToString:AWXTrueMoneyPayKey]) {
+        return @"truemoney";
+    } else if ([type isEqualToString:AWXBKashPayKey]) {
+        return @"bKash";
     }
     return nil;
 }
