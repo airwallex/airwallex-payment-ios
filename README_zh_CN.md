@@ -100,7 +100,10 @@ use_frameworks!
 ```
 [AWXAPIClientConfiguration sharedConfiguration].clientSecret = "The payment intent's client secret";
 ```
-
+注:  当checkoutMode 为AirwallexCheckoutRecurringMode时,我们不需要创建 payment intent,这时你需要使用用户服务的 client secret
+```
+[AWXAPIClientConfiguration sharedConfiguration].clientSecret = "The customer's client secret";
+```
 - 为用户的服务创建单独的client secret并传入sdk。
 
 ```
