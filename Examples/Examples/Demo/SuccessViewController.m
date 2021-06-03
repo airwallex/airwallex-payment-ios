@@ -21,7 +21,7 @@
     
     UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 100)];
     lab.center = self.view.center;
-    lab.text = @"Success";
+    lab.text = @"Pay Result";
     lab.textColor = UIColor.blackColor;
     lab.font = [UIFont systemFontOfSize:30];
     lab.textAlignment = NSTextAlignmentCenter;

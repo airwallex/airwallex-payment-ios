@@ -22,8 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.url1TextField.text = @"";
+    self.url2TextField.text = @"https://checkout.airwallex.com";
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showSuccessfull) name:@"showSuccessfullVC" object:nil];
+   
 }
 
 - (IBAction)btnTapped:(id)sender {
