@@ -42,6 +42,7 @@
         self.webView.navigationDelegate = self;
         self.webView.UIDelegate  = self;
         [self.webView loadRequest:requeset];
+        //设置ua会造成微信支付 cancel 无法返回
 //        [self setWebViewUA];
     }
 }
