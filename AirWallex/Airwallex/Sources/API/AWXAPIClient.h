@@ -87,6 +87,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSArray *)supportedNonCardTypes;
 
+/**
+ Supported non-card payment method types and it can extension.
+ */
++ (NSArray *)supportedExtensionNonCardTypes;
+
 @end
 
 @interface AWXAPIClientConfiguration : NSObject <NSCopying>
