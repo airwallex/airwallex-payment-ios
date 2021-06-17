@@ -32,6 +32,8 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 #import <Airwallex/AWXPaymentIntentResponse.h>
 #import <Airwallex/AWXPaymentMethodRequest.h>
 #import <Airwallex/AWXPaymentMethodResponse.h>
+#import <Airwallex/AWXPaymentConsentRequest.h>
+#import <Airwallex/AWXPaymentConsentResponse.h>
 #import <Airwallex/AWXThreeDSService.h>
 #import <Airwallex/AWXSecurityService.h>
 
@@ -49,4 +51,6 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 #import <Airwallex/AWXWeChatPay.h>
 #import <Airwallex/AWXPaymentMethodOptions.h>
 #import <Airwallex/AWXPaymentIntent.h>
+#import <Airwallex/AWXPaymentConsent.h>
 #import <Airwallex/AWXDevice.h>
+

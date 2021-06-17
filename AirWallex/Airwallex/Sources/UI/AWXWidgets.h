@@ -24,13 +24,6 @@ typedef NS_ENUM(NSUInteger, AWXTextFieldType) {
     AWXTextFieldTypeCVC
 };
 
-typedef NS_ENUM(NSUInteger, AWXPayMethodExtensionType) {
-    AWXPayMethodExtensionTypeBank,
-    AWXPayMethodExtensionTypeName,
-    AWXPayMethodExtensionTypeEmail,
-    AWXPayMethodExtensionTypePhone
-};
-
 NS_ASSUME_NONNULL_BEGIN
 
 IB_DESIGNABLE
@@ -85,14 +78,6 @@ IB_DESIGNABLE
 @property (nonatomic) BOOL isSelected;
 @property (nonatomic, weak) AWXCurrencyView *exclusiveView;
 @property (weak, nonatomic) IBOutlet UIButton *button;
-
-@end
-
-@interface AWXPayExtensionView : AWXNibView
-@property (nonatomic, assign) AWXPayMethodExtensionType type;
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *inputText;
-@property (nonatomic, copy) void (^textFieldEdit) (NSString * text) ;
 
 @end
 

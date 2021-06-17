@@ -27,6 +27,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
+- (void)enableTapToDismiss
+{
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
+    [self.view addGestureRecognizer:tapGestureRecognizer];
+}
+
 - (UIView *)activeField
 {
     return nil;
@@ -37,21 +43,35 @@
     return nil;
 }
 
+- (NSLayoutConstraint *)bottomLayoutConstraint
+{
+    return nil;
+}
+
 - (void)keyboardWillChangeFrame:(NSNotification *)notification
 {
+    NSValue *rectValue = notification.userInfo[UIKeyboardFrameEndUserInfoKey];
+    CGFloat keyboardHeight = CGRectGetHeight(rectValue.CGRectValue);
     UIScrollView *scrollView = self.activeScrollView;
+    NSLayoutConstraint *bottomLayoutConstraint = self.bottomLayoutConstraint;
     if (scrollView) {
-        NSValue *rectValue = notification.userInfo[UIKeyboardFrameEndUserInfoKey];
         UIEdgeInsets contentInsets = scrollView.contentInset;
-        contentInsets.bottom = CGRectGetHeight(rectValue.CGRectValue);
+        contentInsets.bottom = keyboardHeight;
         scrollView.contentInset = contentInsets;
         scrollView.scrollIndicatorInsets = scrollView.contentInset;
-
+        
         UIView *activeField = self.activeField;
         if (activeField) {
             CGRect frame = [activeField.superview convertRect:activeField.frame toView:scrollView];
             [scrollView scrollRectToVisible:frame animated:YES];
         }
+    } else if (bottomLayoutConstraint) {
+        bottomLayoutConstraint.constant = keyboardHeight;
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.view setNeedsUpdateConstraints];
+            [self.view setNeedsLayout];
+            [self.view layoutIfNeeded];
+        }];
     }
 }
 
@@ -69,11 +89,19 @@
 - (void)keyboardWillBeHidden:(NSNotification *)notification
 {
     UIScrollView *scrollView = self.activeScrollView;
+    NSLayoutConstraint *bottomLayoutConstraint = self.bottomLayoutConstraint;
     if (scrollView) {
         UIEdgeInsets contentInsets = scrollView.contentInset;
         contentInsets.bottom = 0;
         scrollView.contentInset = UIEdgeInsetsZero;
         scrollView.scrollIndicatorInsets = scrollView.contentInset;
+    } else if (bottomLayoutConstraint) {
+        bottomLayoutConstraint.constant = 0;
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.view setNeedsUpdateConstraints];
+            [self.view setNeedsLayout];
+            [self.view layoutIfNeeded];
+        }];
     }
 }
 

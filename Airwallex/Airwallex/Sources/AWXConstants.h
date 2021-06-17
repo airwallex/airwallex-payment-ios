@@ -55,6 +55,7 @@ FOUNDATION_EXPORT NSString *const AWXBKashPayKey;
 FOUNDATION_EXPORT NSString *const AWXPoli;
 FOUNDATION_EXPORT NSString *const AWXFpx;
 FOUNDATION_EXPORT NSString *const AWXBankTransfer;
+FOUNDATION_EXPORT NSString *const AWXOnlineBanking;
 
 FOUNDATION_EXPORT NSString *const AWXCardKey;
 FOUNDATION_EXPORT NSString *const AWXThreeDSReturnURL;

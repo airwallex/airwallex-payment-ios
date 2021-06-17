@@ -33,6 +33,7 @@ NSString *const AWXBKashPayKey = @"bkash";
 NSString *const AWXPoli = @"poli";
 NSString *const AWXFpx = @"fpx";
 NSString *const AWXBankTransfer = @"bank_transfer";
+NSString *const AWXOnlineBanking = @"online_banking";
 
 
 NSString *const AWXCardKey = @"card";
@@ -74,6 +75,8 @@ NSString * FormatPaymentMethodTypeString(NSString *type)
         return @"FPX";
     } else if ([type isEqualToString:AWXBankTransfer]) {
         return @"Bank transfer";
+    } else if ([type isEqualToString:AWXOnlineBanking]) {
+        return @"Online Banking";
     }
     return nil;
 }
@@ -104,6 +107,8 @@ NSString * PaymentMethodTypeLogo(NSString *type)
         return @"fpx";
     } else if ([type isEqualToString:AWXBankTransfer]) {
         return @"bank_transfer";
+    } else if ([type isEqualToString:AWXOnlineBanking]) {
+        return @"online_banking";
     }
     return nil;
 }

@@ -123,19 +123,27 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     APIClient *client = [APIClient sharedClient];
-    client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
-    client.apiKey = [AirwallexExamplesKeys shared].apiKey;
-    client.clientID = [AirwallexExamplesKeys shared].clientID;
-
-    [Airwallex setMode:AirwallexSDKTestMode];
-    [Airwallex setCheckoutMode:AirwallexCheckoutPaymentMode];
-    [Airwallex setNextTriggerByType:AirwallexNextTriggerByCustomerType];
-    [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
-
-    [self.delegate optionsViewController:self didEditAmount:[NSDecimalNumber decimalNumberWithString:defaultAmount]];
-    [self.delegate optionsViewController:self didEditCurrency:defaultCurrency];
+//    client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
+//    client.apiKey = [AirwallexExamplesKeys shared].apiKey;
+//    client.clientID = [AirwallexExamplesKeys shared].clientID;
+//
+//    [Airwallex setMode:AirwallexSDKTestMode];
+//    [Airwallex setCheckoutMode:AirwallexCheckoutPaymentMode];
+//    [Airwallex setNextTriggerByType:AirwallexNextTriggerByCustomerType];
+//    [Airwallex setDefaultBaseURL:[NSURL URLWithString:paymentBaseURL]];
+//
+//    [self.delegate optionsViewController:self didEditAmount:[NSDecimalNumber decimalNumberWithString:defaultAmount]];
+//    [self.delegate optionsViewController:self didEditCurrency:defaultCurrency];
+    
+    client.paymentBaseURL = [NSURL URLWithString:@"https://pci-api-staging.airwallex.com"];
+    client.apiKey = @"63973457b747616b0e2762dfc77ccebbac45d48e1cb82f91c89506bd1ae6f43c6e6725e7dcdbd78e2c747515c64b2a5a";
+    client.clientID = @"1zlCc8I_T-qEpCr6iijT5A";
+    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://pci-api-staging.airwallex.com"]];
+    self.currency  = @"MYR";
+    [self.delegate optionsViewController:self didEditCurrency: self.currency];
 
     [self resetTextFields];
+    
 }
 
 #pragma mark - UITextFieldDelegate

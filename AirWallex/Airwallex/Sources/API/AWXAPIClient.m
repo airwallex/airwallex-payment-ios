@@ -79,11 +79,12 @@ static AirwallexNextTriggerByType    _nextTriggerByType      = AirwallexNextTrig
 
 + (NSArray *)supportedNonCardTypes
 {
-    return @[AWXWeChatPayKey, AWXAlipayCNKey, AWXAlipayHKKey, AWXKakaoPayKey, AWXTNGPayKey, AWXDANAPayKey, AWXGCashPayKey, AWXTrueMoneyPayKey, AWXBKashPayKey, AWXPoli, AWXFpx, AWXBankTransfer];
+    return @[AWXWeChatPayKey, AWXAlipayCNKey, AWXAlipayHKKey, AWXKakaoPayKey, AWXTNGPayKey, AWXDANAPayKey, AWXGCashPayKey, AWXTrueMoneyPayKey, AWXBKashPayKey, AWXPoli, AWXFpx, AWXBankTransfer, AWXOnlineBanking];
 }
+
 + (NSArray *)supportedExtensionNonCardTypes
 {
-    return @[AWXPoli, AWXFpx, AWXBankTransfer];
+    return @[AWXPoli, AWXFpx, AWXBankTransfer, AWXOnlineBanking];
 }
 @end
 
