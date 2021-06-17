@@ -35,7 +35,6 @@ NSString *const AWXFpx = @"fpx";
 NSString *const AWXBankTransfer = @"bank_transfer";
 NSString *const AWXOnlineBanking = @"online_banking";
 
-
 NSString *const AWXCardKey = @"card";
 NSString *const AWXThreeDSReturnURL = @"https://www.airwallex.com";
 NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
