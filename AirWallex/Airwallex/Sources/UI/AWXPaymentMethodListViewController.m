@@ -45,6 +45,7 @@
 @property (strong, nonatomic) AWXDevice *device;
 @property (copy, nonatomic) NSString *paymentIntentId;
 @property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
+@property (nonatomic, strong) NSIndexPath *selectIndex;
 @end
 
 @implementation AWXPaymentMethodListViewController
@@ -53,7 +54,7 @@
 {
     [super viewDidLoad];
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-   
+    self.selectIndex = [NSIndexPath indexPathForRow:NSIntegerMax inSection:0];
     [self loadPaymentMethodTypesFromPageNum: 0];
 }
 
@@ -356,6 +357,19 @@
     }
     
     AWXPaymentMethod *method = items[indexPath.row];
+    if ([Airwallex.supportedExtensionNonCardTypes containsObject:method.type]) {
+        AWXPaymentMethodExtensionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentMethodExtensionCell" forIndexPath:indexPath];
+        cell.logoImageView.image = [UIImage imageNamed:PaymentMethodTypeLogo(method.type) inBundle:[NSBundle resourceBundle]];
+        cell.titleLabel.text = FormatPaymentMethodTypeString(method.type);
+        cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
+        cell.method = method;
+        cell.isExtension = indexPath == self.selectIndex;
+        cell.toPay = ^(NSDictionary * _Nonnull data) {
+            [self paymentExtensionInfoData:data];
+        };
+        return cell;
+    }
+    
     AWXPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentMethodCell" forIndexPath:indexPath];
     if ([Airwallex.supportedNonCardTypes containsObject:method.type]) {
         cell.logoImageView.image = [UIImage imageNamed:PaymentMethodTypeLogo(method.type) inBundle:[NSBundle resourceBundle]];
@@ -441,6 +455,13 @@
         return;
     }
     
+    if ([Airwallex.supportedExtensionNonCardTypes containsObject:self.paymentMethod.type]) {
+        if (self.selectIndex != indexPath) {
+            self.selectIndex = indexPath;
+            [tableView reloadData];
+        }
+        return;
+    }
     // Confirm directly (Only be valid for payment flow)
     if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
         // Confirm payment with wechat type directly
@@ -642,4 +663,13 @@
     }];
 }
 
+-(void) paymentExtensionInfoData:(NSDictionary *) data{
+    NSString *message = @"";
+    for (NSString *key in data.allKeys) {
+        message =  [message stringByAppendingFormat:@"%@:%@",key,data[key]];
+    }
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:controller animated:YES completion:nil];
+}
 @end

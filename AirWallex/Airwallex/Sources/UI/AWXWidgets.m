@@ -666,3 +666,62 @@
 }
 
 @end
+
+@interface AWXPayExtensionView ()
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+
+@end
+@implementation AWXPayExtensionView
+
+-(void)awakeFromNib {
+    [super awakeFromNib];
+}
+- (IBAction)textFiledEditChange:(UITextField *)sender {
+    if (self.textFieldEdit) {
+        self.textFieldEdit(sender.text);
+    }
+}
+
+
+- (void)setTitle:(NSString *)title{
+    self.titleLabel.text = title;
+}
+- (NSString *)title{
+    return  self.titleLabel.text;
+}
+-(void)setInputText:(NSString *)inputText{
+    self.textField.text = inputText;
+}
+-(NSString *)inputText{
+    return  self.textField.text;
+}
+
+- (void)setType:(AWXPayMethodExtensionType)type{
+    _type = type;
+    if (type == AWXPayMethodExtensionTypeBank) {
+        self.title = @"Bank";
+    }else if (type == AWXPayMethodExtensionTypeName) {
+        self.title = @"Name";
+    }else if (type == AWXPayMethodExtensionTypeEmail) {
+        self.title = @"Email";
+    }else if (type == AWXPayMethodExtensionTypePhone) {
+        self.title = @"Phone";
+    }
+}
+
+@end
+
+@interface AWXPayButtonView ()
+@end
+@implementation AWXPayButtonView
+
+- (void)setTitle:(NSString *)title{
+    [self.payButton setTitle:title forState:(UIControlStateNormal)];
+}
+- (NSString *)title{
+    return  self.payButton.titleLabel.text;
+}
+
+@end

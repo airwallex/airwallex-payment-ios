@@ -15,6 +15,8 @@
 		00737CA5260C7565000F8EA4 /* AWXPaymentConsentResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 00737CA3260C7565000F8EA4 /* AWXPaymentConsentResponse.m */; };
 		0075B57E260C2AAC0005C038 /* AWXPaymentConsent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0075B57C260C2AAC0005C038 /* AWXPaymentConsent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0075B57F260C2AAC0005C038 /* AWXPaymentConsent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0075B57D260C2AAC0005C038 /* AWXPaymentConsent.m */; };
+		00C013662672096D00DEA947 /* AWXPayExtensionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00C013652672096D00DEA947 /* AWXPayExtensionView.xib */; };
+		00C013682672105D00DEA947 /* AWXPayButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00C013672672105D00DEA947 /* AWXPayButtonView.xib */; };
 		0805366E241656C900C0896C /* AWXUIContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0805366C241656C900C0896C /* AWXUIContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0805366F241656C900C0896C /* AWXUIContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 0805366D241656C900C0896C /* AWXUIContext.m */; };
 		080BA817243C346A000D8141 /* AWXCodable.h in Headers */ = {isa = PBXBuildFile; fileRef = 080BA816243C2897000D8141 /* AWXCodable.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -140,6 +142,8 @@
 		00737CA3260C7565000F8EA4 /* AWXPaymentConsentResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXPaymentConsentResponse.m; path = ../../../../AirWallex/Airwallex/Sources/API/AWXPaymentConsentResponse.m; sourceTree = "<group>"; };
 		0075B57C260C2AAC0005C038 /* AWXPaymentConsent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWXPaymentConsent.h; path = ../../../../AirWallex/Airwallex/Sources/Models/AWXPaymentConsent.h; sourceTree = "<group>"; };
 		0075B57D260C2AAC0005C038 /* AWXPaymentConsent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXPaymentConsent.m; path = ../../../../AirWallex/Airwallex/Sources/Models/AWXPaymentConsent.m; sourceTree = "<group>"; };
+		00C013652672096D00DEA947 /* AWXPayExtensionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AWXPayExtensionView.xib; path = ../../../AirWallex/Airwallex/Resources/AWXPayExtensionView.xib; sourceTree = "<group>"; };
+		00C013672672105D00DEA947 /* AWXPayButtonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AWXPayButtonView.xib; path = ../../../AirWallex/Airwallex/Resources/AWXPayButtonView.xib; sourceTree = "<group>"; };
 		0805366C241656C900C0896C /* AWXUIContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXUIContext.h; sourceTree = "<group>"; };
 		0805366D241656C900C0896C /* AWXUIContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXUIContext.m; sourceTree = "<group>"; };
 		080BA816243C2897000D8141 /* AWXCodable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXCodable.h; sourceTree = "<group>"; };
@@ -462,6 +466,8 @@
 				086666692406311F00B52477 /* AWXFloatLabeledTextField.xib */,
 				086666672406311F00B52477 /* AWXFloatLabeledView.xib */,
 				0866666124062B5000B52477 /* AWXPaymentFlow.storyboard */,
+				00C013652672096D00DEA947 /* AWXPayExtensionView.xib */,
+				00C013672672105D00DEA947 /* AWXPayButtonView.xib */,
 				08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */,
 			);
 			path = Resources;
@@ -666,10 +672,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00C013662672096D00DEA947 /* AWXPayExtensionView.xib in Resources */,
 				0866666A2406311F00B52477 /* AWXFloatLabeledView.xib in Resources */,
 				0863F6FF240E391600925664 /* AWXPaymentItemCell.xib in Resources */,
 				0866666C2406311F00B52477 /* AWXFloatLabeledTextField.xib in Resources */,
 				0866666324062B5000B52477 /* AWXPaymentFlow.storyboard in Resources */,
+				00C013682672105D00DEA947 /* AWXPayButtonView.xib in Resources */,
 				570A139F25A82B280064B362 /* README_zh_CN.md in Resources */,
 				08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */,
 				0866666B2406311F00B52477 /* AWXCardTextField.xib in Resources */,
