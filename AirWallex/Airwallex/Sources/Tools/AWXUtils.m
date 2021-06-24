@@ -244,3 +244,15 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 }
 
 @end
+
+@implementation UIView (Utils)
+
+- (void)roundCorners:(UIRectCorner)corners radius:(CGFloat)radius
+{
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
+    CAShapeLayer *maskLayer = [CAShapeLayer new];
+    maskLayer.path = path.CGPath;
+    self.layer.mask = maskLayer;
+}
+
+@end

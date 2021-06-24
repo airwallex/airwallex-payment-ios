@@ -207,7 +207,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="qTO-iC-quJ">
-                                                <rect key="frame" x="16" y="72.5" width="396" height="226.99999999999997"/>
+                                                <rect key="frame" x="16" y="72.500000000000014" width="396" height="226.99999999999997"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gN8-Ps-Ex7" customClass="AWXCardTextField">
                                                         <rect key="frame" x="0.0" y="0.0" width="396" height="67"/>
@@ -711,7 +711,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vtf-pY-4ZL" customClass="AWXButton">
-                                <rect key="frame" x="24" y="353.33333333333331" width="380" height="44"/>
+                                <rect key="frame" x="24" y="353.66666666666669" width="380" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="80u-il-Xvg"/>
                                 </constraints>
@@ -729,7 +729,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="1 USD = 1 AUD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnP-UX-zys">
-                                <rect key="frame" x="48" y="295.66666666666669" width="356" height="17.666666666666686"/>
+                                <rect key="frame" x="48" y="296" width="356" height="17.666666666666686"/>
                                 <fontDescription key="fontDescription" name="CircularXX-Regular" family="CircularXX" pointSize="14"/>
                                 <color key="textColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.55686274509803924" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1056,6 +1056,7 @@
                     <navigationItem key="navigationItem" id="5nr-gM-ow5"/>
                     <connections>
                         <outlet property="promptBottomConstraint" destination="cua-xw-hT9" id="OvE-uT-l4g"/>
+                        <outlet property="promptView" destination="3aL-Rf-YsV" id="pa1-zL-uWc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uJS-RI-cm4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

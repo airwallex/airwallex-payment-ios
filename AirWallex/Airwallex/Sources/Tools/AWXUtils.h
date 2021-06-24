@@ -91,4 +91,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface UIView (Utils)
+
+- (void)roundCorners:(UIRectCorner)corners radius:(CGFloat)radius;
+
+@end
+
 NS_ASSUME_NONNULL_END

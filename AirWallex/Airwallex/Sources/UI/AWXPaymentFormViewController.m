@@ -11,6 +11,7 @@
 @interface AWXPaymentFormViewController ()
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *promptBottomConstraint;
+@property (weak, nonatomic) IBOutlet UIView *promptView;
 
 @end
 
@@ -20,6 +21,12 @@
 {
     [super viewDidLoad];
     [self enableTapToDismiss];
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self.promptView roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight radius:16];
 }
 
 - (NSLayoutConstraint *)bottomLayoutConstraint
