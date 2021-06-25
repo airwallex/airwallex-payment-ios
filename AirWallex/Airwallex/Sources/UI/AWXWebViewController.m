@@ -57,7 +57,7 @@
 {
     [self dismissViewControllerAnimated:YES completion:^{
         if (self.webHandler) {
-            self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"User cancelled."}]);
+            self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"User cancelled.", nil)}]);
         }
     }];
 }

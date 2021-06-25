@@ -140,9 +140,9 @@
 {
     if (!self.shipping) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
-                                                                            message:@"No shipping address configured."
+                                                                            message:NSLocalizedString(@"No shipping address configured.", nil)
                                                                      preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             self.switchButton.on = NO;
         }]];
         [self presentViewController:controller animated:YES completion:nil];
@@ -186,7 +186,7 @@
         NSString *error = [billing validate];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
-            [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+            [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:controller animated:YES completion:nil];
             return;
         }
@@ -220,7 +220,7 @@
         [SVProgressHUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-            [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+            [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
             [strongSelf presentViewController:controller animated:YES completion:nil];
             return;
         }

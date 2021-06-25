@@ -137,7 +137,7 @@ static AirwallexNextTriggerByType    _nextTriggerByType      = AirwallexNextTrig
 
 - (NSString *)path
 {
-    [[AWXLogger sharedLogger] logException:@"path required"];
+    [[AWXLogger sharedLogger] logException:NSLocalizedString(@"path required", nil)];
     return nil;
 }
 
@@ -158,7 +158,7 @@ static AirwallexNextTriggerByType    _nextTriggerByType      = AirwallexNextTrig
 
 - (Class)responseClass
 {
-    [[AWXLogger sharedLogger] logEvent:@"responseClass is not overridden, but is not required"];
+    [[AWXLogger sharedLogger] logEvent:NSLocalizedString(@"responseClass is not overridden, but is not required", nil)];
     return nil;
 }
 
@@ -168,7 +168,7 @@ static AirwallexNextTriggerByType    _nextTriggerByType      = AirwallexNextTrig
 
 + (id <AWXResponseProtocol>)parse:(NSData *)data
 {
-    [[AWXLogger sharedLogger] logException:@"parse method require override"];
+    [[AWXLogger sharedLogger] logException:NSLocalizedString(@"parse method require override", nil)];
     return nil;
 }
 
@@ -250,7 +250,7 @@ static AirwallexNextTriggerByType    _nextTriggerByType      = AirwallexNextTrig
                         if (errorResponse) {
                             handler(nil, errorResponse.error);
                         } else {
-                            handler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: @"Couldn't parse response."}]);
+                            handler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Couldn't parse response.", nil)}]);
                         }
                     }
                 });
