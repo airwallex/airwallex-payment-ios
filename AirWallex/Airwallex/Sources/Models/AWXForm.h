@@ -14,8 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) AWXFormType type;
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong, nullable) NSString *logo;
 
 + (instancetype)formWithTitle:(NSString *)title type:(AWXFormType)type;
++ (instancetype)formWithTitle:(NSString *)title type:(AWXFormType)type logo:(nullable NSString *)logo;
 
 @end
 

@@ -7,6 +7,10 @@
 //
 
 #import "AWXPaymentFormViewController.h"
+#import "AWXLabeledFormTextFieldView.h"
+#import "AWXOptionView.h"
+#import "AWXUtils.h"
+#import "AWXPaymentMethod.h"
 #import "AWXFormMapping.h"
 #import "AWXForm.h"
 
@@ -62,7 +66,7 @@
     titleLabel.textColor = [UIColor titleColor];
     titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:22];
     [promptView addSubview:titleLabel];
-
+    
     UIStackView *stackView = [UIStackView autoLayoutView];
     stackView.axis = UILayoutConstraintAxisVertical;
     stackView.alignment = UIStackViewAlignmentFill;
@@ -74,6 +78,10 @@
             UITextField *textField = [UITextField new];
             AWXLabeledFormTextFieldView *fieldView = [[AWXLabeledFormTextFieldView alloc] initWithFormLabel:form.title textField:textField];
             [stackView addArrangedSubview:fieldView];
+        } else if (form.type == AWXFormTypeOption) {
+            AWXOptionView *optionView = [[AWXOptionView alloc] initWithFormLabel:form.title logo:form.logo];
+            [optionView addTarget:self action:@selector(optionPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [stackView addArrangedSubview:optionView];
         } else if (form.type == AWXFormTypeButton) {
             UIButton *button = [UIButton autoLayoutView];
             button.layer.masksToBounds = YES;
@@ -96,6 +104,11 @@
     
     [promptView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-24-[titleLabel]-24-|" options:0 metrics:nil views:views]];
     [promptView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-24-[titleLabel]-24-[stackView]-bottom-|" options:NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing metrics:metrics views:views]];
+}
+
+- (void)optionPressed:(id)sender
+{
+    
 }
 
 - (void)buttonPressed:(id)sender

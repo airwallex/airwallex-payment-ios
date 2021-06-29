@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, AirwallexNextTriggerByType) {
 };
 
 typedef NS_ENUM(NSUInteger, AWXFormType) {
-    AWXFormTypeSelector,
+    AWXFormTypeOption,
     AWXFormTypeField,
     AWXFormTypeButton
 };

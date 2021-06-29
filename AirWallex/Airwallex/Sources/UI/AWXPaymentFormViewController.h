@@ -6,11 +6,11 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import <Airwallex/Airwallex.h>
+#import "AWXViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class AWXFormMapping;
+@class AWXPaymentMethod, AWXFormMapping;
 @interface AWXPaymentFormViewController : AWXViewController
 
 @property (nonatomic, strong) AWXPaymentMethod *paymentMethod;

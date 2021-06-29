@@ -67,6 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable UIImage *)imageNamed:(NSString *)name inBundle:(nullable NSBundle *)bundle;
 + (nullable UIImage *)imageNamed:(NSString *)name ofType:(NSString *)type inBundle:(nullable NSBundle *)bundle;
++ (UIImage *)imageFromColor:(UIColor *)color;
 
 @end
 
