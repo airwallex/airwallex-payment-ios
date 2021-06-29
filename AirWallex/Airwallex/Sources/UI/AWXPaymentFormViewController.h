@@ -10,9 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class AWXFormMapping;
 @interface AWXPaymentFormViewController : AWXViewController
 
-@property (nonatomic, strong, nullable) AWXPaymentMethod *paymentMethod;
+@property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
+@property (nonatomic, strong) AWXFormMapping *formMapping;
 
 @end
 

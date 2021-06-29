@@ -93,7 +93,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIView (Utils)
 
++ (instancetype)autoLayoutView;
 - (void)roundCorners:(UIRectCorner)corners radius:(CGFloat)radius;
+
+@end
+
+@interface UIColor (Utils)
+
++ (UIColor *)titleColor;
++ (UIColor *)textColor;
++ (UIColor *)buttonBackgroundColor;
 
 @end
 

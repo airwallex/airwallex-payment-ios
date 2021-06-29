@@ -32,6 +32,7 @@
 #import "AWXTrackManager.h"
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentFormViewController.h"
+#import "AWXFormMapping.h"
 
 @interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
@@ -442,7 +443,13 @@
     }
     
     if ([Airwallex.supportedExtensionNonCardTypes containsObject:self.paymentMethod.type]) {
-        [self performSegueWithIdentifier:@"paymentForm" sender:nil];
+        AWXFormMapping *formMapping = [AWXFormMapping new];
+        AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
+        controller.paymentMethod = method;
+        controller.formMapping = formMapping;
+        controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self presentViewController:controller animated:YES completion:nil];
         return;
     }
     // Confirm directly (Only be valid for payment flow)

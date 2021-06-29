@@ -247,12 +247,38 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 
 @implementation UIView (Utils)
 
++ (instancetype)autoLayoutView
+{
+    UIView *view = [self new];
+    view.translatesAutoresizingMaskIntoConstraints = NO;
+    return view;
+}
+
 - (void)roundCorners:(UIRectCorner)corners radius:(CGFloat)radius
 {
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
     CAShapeLayer *maskLayer = [CAShapeLayer new];
     maskLayer.path = path.CGPath;
     self.layer.mask = maskLayer;
+}
+
+@end
+
+@implementation UIColor (Utils)
+
++ (UIColor *)titleColor
+{
+    return [UIColor colorWithRed:0.1 green:0.11 blue:0.13 alpha:1];
+}
+
++ (UIColor *)textColor
+{
+    return [UIColor colorWithRed:0.33 green:0.36 blue:0.39 alpha:1];
+}
+
++ (UIColor *)buttonBackgroundColor
+{
+    return [UIColor colorWithRed:0.38 green:0.18 blue:1 alpha:1];
 }
 
 @end

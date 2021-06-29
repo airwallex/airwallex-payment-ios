@@ -27,7 +27,13 @@ typedef NS_ENUM(NSInteger, AirwallexCheckoutMode) {
 
 typedef NS_ENUM(NSUInteger, AirwallexNextTriggerByType) {
     AirwallexNextTriggerByCustomerType,
-    AirwallexNextTriggerByMerchantType,
+    AirwallexNextTriggerByMerchantType
+};
+
+typedef NS_ENUM(NSUInteger, AWXFormType) {
+    AWXFormTypeSelector,
+    AWXFormTypeField,
+    AWXFormTypeButton
 };
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0

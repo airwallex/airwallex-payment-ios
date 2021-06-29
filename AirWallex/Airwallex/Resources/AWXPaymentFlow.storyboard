@@ -175,7 +175,6 @@
                         <segue destination="FPd-cM-qgB" kind="presentation" identifier="addCard" id="XXn-gX-5xC"/>
                         <segue destination="qRb-XP-suO" kind="show" identifier="confirmPayment" id="DKs-vZ-uzr"/>
                         <segue destination="Kac-c3-XHw" kind="presentation" identifier="showDCC" id="jOs-vC-2Pn"/>
-                        <segue destination="c6I-ho-93F" kind="presentation" identifier="paymentForm" id="c1G-8L-d4u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D6c-ce-ibw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -963,106 +962,6 @@
             </objects>
             <point key="canvasLocation" x="-77810" y="1083"/>
         </scene>
-        <!--Payment Form View Controller-->
-        <scene sceneID="Hsh-Gs-FJ1">
-            <objects>
-                <viewController id="c6I-ho-93F" customClass="AWXPaymentFormViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="f34-rl-GyR"/>
-                        <viewControllerLayoutGuide type="bottom" id="6KW-vX-GUh"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="jby-No-1PZ">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="872"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aL-Rf-YsV" userLabel="Prompt">
-                                <rect key="frame" x="0.0" y="587" width="428" height="285"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pay with POLi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEx-Ul-YU0">
-                                        <rect key="frame" x="24" y="24" width="380" height="28"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="22"/>
-                                        <color key="textColor" red="0.10196078431372549" green="0.11372549019607843" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XjJ-dt-SvY">
-                                        <rect key="frame" x="24" y="76" width="380" height="1"/>
-                                        <color key="backgroundColor" red="0.96470588235294119" green="0.96862745098039216" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="Qsy-oq-HBB"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N1U-yy-CBe">
-                                        <rect key="frame" x="24" y="93" width="380" height="18"/>
-                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
-                                        <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="838-IW-3Ju">
-                                        <rect key="frame" x="24" y="135" width="380" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UjP-Oe-EWR" customClass="AWXButton">
-                                        <rect key="frame" x="24" y="201" width="380" height="44"/>
-                                        <color key="backgroundColor" red="0.3803921569" green="0.1843137255" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="k9j-gL-hEP"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="14"/>
-                                        <state key="normal" title="Pay now">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <state key="disabled">
-                                            <color key="titleColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="6"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="payPressed:" destination="qRb-XP-suO" eventType="touchUpInside" id="v5X-RX-V5n"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="zEx-Ul-YU0" secondAttribute="trailing" constant="24" id="8l5-c6-frr"/>
-                                    <constraint firstItem="838-IW-3Ju" firstAttribute="top" secondItem="N1U-yy-CBe" secondAttribute="bottom" constant="24" id="EeB-98-Yaa"/>
-                                    <constraint firstAttribute="trailing" secondItem="838-IW-3Ju" secondAttribute="trailing" constant="24" id="FS5-ag-qw4"/>
-                                    <constraint firstItem="XjJ-dt-SvY" firstAttribute="leading" secondItem="3aL-Rf-YsV" secondAttribute="leading" constant="24" id="Hur-2D-bDE"/>
-                                    <constraint firstAttribute="trailing" secondItem="UjP-Oe-EWR" secondAttribute="trailing" constant="24" id="Idh-hB-CQ2"/>
-                                    <constraint firstItem="N1U-yy-CBe" firstAttribute="top" secondItem="XjJ-dt-SvY" secondAttribute="bottom" constant="16" id="Om4-ve-Ncb"/>
-                                    <constraint firstItem="UjP-Oe-EWR" firstAttribute="top" secondItem="838-IW-3Ju" secondAttribute="bottom" constant="32" id="QH2-FW-Ztp"/>
-                                    <constraint firstAttribute="trailing" secondItem="N1U-yy-CBe" secondAttribute="trailing" constant="24" id="T35-ea-eIh"/>
-                                    <constraint firstItem="XjJ-dt-SvY" firstAttribute="top" secondItem="zEx-Ul-YU0" secondAttribute="bottom" constant="24" id="Vqf-BF-fsF"/>
-                                    <constraint firstAttribute="bottom" secondItem="UjP-Oe-EWR" secondAttribute="bottom" constant="40" id="bPY-hO-d1C"/>
-                                    <constraint firstItem="UjP-Oe-EWR" firstAttribute="leading" secondItem="3aL-Rf-YsV" secondAttribute="leading" constant="24" id="bVJ-4B-ZbU"/>
-                                    <constraint firstItem="838-IW-3Ju" firstAttribute="leading" secondItem="3aL-Rf-YsV" secondAttribute="leading" constant="24" id="brG-m9-k3k"/>
-                                    <constraint firstAttribute="trailing" secondItem="XjJ-dt-SvY" secondAttribute="trailing" constant="24" id="hE8-VH-fYq"/>
-                                    <constraint firstItem="zEx-Ul-YU0" firstAttribute="leading" secondItem="3aL-Rf-YsV" secondAttribute="leading" constant="24" id="k7m-SX-xQ2"/>
-                                    <constraint firstItem="N1U-yy-CBe" firstAttribute="leading" secondItem="3aL-Rf-YsV" secondAttribute="leading" constant="24" id="lk9-vh-vJY"/>
-                                    <constraint firstItem="zEx-Ul-YU0" firstAttribute="top" secondItem="3aL-Rf-YsV" secondAttribute="top" constant="24" id="yWM-sm-egO"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="3aL-Rf-YsV" secondAttribute="trailing" id="ICC-Wu-kX2"/>
-                            <constraint firstItem="3aL-Rf-YsV" firstAttribute="leading" secondItem="jby-No-1PZ" secondAttribute="leading" id="Xdt-QM-Dgl"/>
-                            <constraint firstAttribute="bottom" secondItem="3aL-Rf-YsV" secondAttribute="bottom" id="cua-xw-hT9"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="5nr-gM-ow5"/>
-                    <connections>
-                        <outlet property="promptBottomConstraint" destination="cua-xw-hT9" id="OvE-uT-l4g"/>
-                        <outlet property="promptView" destination="3aL-Rf-YsV" id="pa1-zL-uWc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uJS-RI-cm4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-78720.289855072464" y="1887.7232142857142"/>
-        </scene>
         <!--AWXCountryListViewController-->
         <scene sceneID="IPp-Lz-tcG">
             <objects>
@@ -1185,9 +1084,6 @@
     </scenes>
     <designables>
         <designable name="BBj-j1-Rai">
-            <size key="intrinsicContentSize" width="55" height="30"/>
-        </designable>
-        <designable name="UjP-Oe-EWR">
             <size key="intrinsicContentSize" width="55" height="30"/>
         </designable>
         <designable name="Vtf-pY-4ZL">
