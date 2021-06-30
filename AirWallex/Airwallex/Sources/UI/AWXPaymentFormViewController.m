@@ -13,11 +13,13 @@
 #import "AWXPaymentMethod.h"
 #import "AWXFormMapping.h"
 #import "AWXForm.h"
+#import "AWXUIContext.h"
 
 @interface AWXPaymentFormViewController ()
 
 @property (strong, nonatomic) NSLayoutConstraint *promptBottomConstraint;
 @property (strong, nonatomic) UIView *promptView;
+@property (strong, nonatomic) UIStackView *stackView;
 
 @end
 
@@ -71,6 +73,7 @@
     stackView.axis = UILayoutConstraintAxisVertical;
     stackView.alignment = UIStackViewAlignmentFill;
     stackView.spacing = 24;
+    self.stackView = stackView;
     [promptView addSubview:stackView];
     
     for (AWXForm *form in self.formMapping.forms) {
@@ -106,14 +109,30 @@
     [promptView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-24-[titleLabel]-24-[stackView]-bottom-|" options:NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing metrics:metrics views:views]];
 }
 
-- (void)optionPressed:(id)sender
+- (void)optionPressed:(UIButton *)sender
 {
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didSelectOption:)]) {
+        [self.delegate paymentFormViewController:self didSelectOption:[sender titleForState:UIControlStateNormal]];
+    }
 }
 
 - (void)buttonPressed:(id)sender
 {
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didConfirmPayment:)]) {
+        [self.delegate paymentFormViewController:self didConfirmPayment:self.form];
+    }
+}
+
+- (NSDictionary *)form
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    for (UIView *view in self.stackView.arrangedSubviews) {
+        if ([view isKindOfClass:[AWXLabeledFormTextFieldView class]]) {
+            AWXLabeledFormTextFieldView *field = (AWXLabeledFormTextFieldView *)view;
+            dictionary[field.label] = field.input;
+        }
+    }
+    return dictionary;
 }
 
 @end

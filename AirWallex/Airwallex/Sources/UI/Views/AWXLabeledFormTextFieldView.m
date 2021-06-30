@@ -10,7 +10,24 @@
 #import "AWXUtils.h"
 #import "AWXConstants.h"
 
+@interface AWXLabeledFormTextFieldView ()
+
+@property (nonatomic, strong) UILabel *formLabel;
+@property (nonatomic, strong) UITextField *textField;
+
+@end
+
 @implementation AWXLabeledFormTextFieldView
+
+- (NSString *)label
+{
+    return self.formLabel.text;
+}
+
+- (NSString *)input
+{
+    return self.textField.text;
+}
 
 - (instancetype)initWithFormLabel:(NSString *)formLabelText textField:(UITextField *)textField
 {
@@ -20,6 +37,7 @@
         formLabel.textColor = [UIColor textColor];
         formLabel.font = [UIFont fontWithName:AWXFontFamilyNameCircularXX size:14];
         formLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.formLabel = formLabel;
         [self addSubview:formLabel];
 
         UIView *contentView = [UIView autoLayoutView];

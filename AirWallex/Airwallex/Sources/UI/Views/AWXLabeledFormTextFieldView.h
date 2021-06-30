@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXLabeledFormTextFieldView : UIView
 
+@property (nonatomic, readonly) NSString *label;
+@property (nonatomic, readonly) NSString *input;
+
 - (instancetype)initWithFormLabel:(NSString *)formLabelText textField:(UITextField *)textField;
 
 @end

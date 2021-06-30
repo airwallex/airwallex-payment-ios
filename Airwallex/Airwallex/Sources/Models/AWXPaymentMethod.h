@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) AWXWeChatPay *weChatPay API_DEPRECATED_WITH_REPLACEMENT("Use nonCard instead.", ios(2.0, 14.0));
 
 /**
- Non-card  object.
+ Redirect  object.
  */
 @property (nonatomic, strong, nullable) AWXNonCard *nonCard;
 

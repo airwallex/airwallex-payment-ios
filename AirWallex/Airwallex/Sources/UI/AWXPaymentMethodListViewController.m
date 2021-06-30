@@ -33,8 +33,9 @@
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentFormViewController.h"
 #import "AWXFormMapping.h"
+#import "AWXForm.h"
 
-@interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
+@interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate, AWXPaymentFormViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
@@ -444,7 +445,26 @@
     
     if ([Airwallex.supportedExtensionNonCardTypes containsObject:self.paymentMethod.type]) {
         AWXFormMapping *formMapping = [AWXFormMapping new];
+        if ([self.paymentMethod.type isEqualToString:AWXBankTransfer]) {
+            formMapping.title = NSLocalizedString(@"Select your bank", @"Select your bank");
+            formMapping.forms = @[
+                [AWXForm formWithTitle:@"Affin Bank" type:AWXFormTypeOption logo:@"affin_bank"],
+                [AWXForm formWithTitle:@"Alliance Bank" type:AWXFormTypeOption logo:@"alliance_bank"],
+                [AWXForm formWithTitle:@"AmBank" type:AWXFormTypeOption logo:@"ambank"],
+                [AWXForm formWithTitle:@"Bank Islam" type:AWXFormTypeOption logo:@"bank_islam"],
+                [AWXForm formWithTitle:@"Bank Kerjasama Rakyat Malaysia" type:AWXFormTypeOption logo:@"bank_kerjasama_rakyat"],
+                [AWXForm formWithTitle:@"Bank Muamalat" type:AWXFormTypeOption logo:@"bank_muamalat"],
+                [AWXForm formWithTitle:@"Bank Simpanan Nasional" type:AWXFormTypeOption logo:@"bank_simpanan_nasional"]
+            ];
+        } else {
+            formMapping.title = FormatPaymentMethodTypeString(self.paymentMethod.type);
+            formMapping.forms = @[
+                [AWXForm formWithTitle:@"Name" type:AWXFormTypeField],
+                [AWXForm formWithTitle:@"Pay now" type:AWXFormTypeButton]
+            ];
+        }
         AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
+        controller.delegate = self;
         controller.paymentMethod = method;
         controller.formMapping = formMapping;
         controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
@@ -662,4 +682,35 @@
     [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:controller animated:YES completion:nil];
 }
+
+#pragma mark - AWXPaymentFormViewControllerDelegate
+
+- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didSelectOption:(NSString *)option
+{
+    AWXFormMapping *formMapping = [AWXFormMapping new];
+    formMapping.title = NSLocalizedString(@"Bank transfer", @"Bank transfer");
+    formMapping.forms = @[
+        [AWXForm formWithTitle:@"Name" type:AWXFormTypeField],
+        [AWXForm formWithTitle:@"Email" type:AWXFormTypeField],
+        [AWXForm formWithTitle:@"Phone" type:AWXFormTypeField],
+        [AWXForm formWithTitle:@"Pay now" type:AWXFormTypeButton]
+    ];
+    AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
+    controller.delegate = self;
+    controller.paymentMethod = self.paymentMethod;
+    controller.formMapping = formMapping;
+    controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+        [self presentViewController:controller animated:YES completion:nil];
+    }];
+}
+
+- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPayment:(NSDictionary *)params
+{
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+        [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
+    }];
+}
+
 @end
