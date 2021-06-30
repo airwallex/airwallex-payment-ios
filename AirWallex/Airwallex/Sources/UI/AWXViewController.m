@@ -9,7 +9,7 @@
 #import "AWXViewController.h"
 #import "AWXLogger.h"
 
-@interface AWXViewController ()
+@interface AWXViewController () <UIGestureRecognizerDelegate>
 
 @end
 
@@ -30,6 +30,7 @@
 - (void)enableTapToDismiss
 {
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
+    tapGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:tapGestureRecognizer];
 }
 
@@ -122,6 +123,17 @@
 - (void)dealloc
 {
     [[AWXLogger sharedLogger] logEvent:[NSString stringWithFormat:@"%@ dealloc", NSStringFromClass(self.class)]];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint point = [gestureRecognizer locationInView:self.view];
+    UIView *viewTouched = [self.view hitTest:point withEvent:nil];
+    if (viewTouched == self.view) {
+        return YES;
+    }
+    return NO;
 }
 
 @end
