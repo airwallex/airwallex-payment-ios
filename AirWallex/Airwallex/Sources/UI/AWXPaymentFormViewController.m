@@ -95,6 +95,7 @@
             button.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
             [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [stackView addArrangedSubview:button];
+            self.stackView = stackView;
             [button.heightAnchor constraintEqualToConstant:40].active = YES;
         }
     }

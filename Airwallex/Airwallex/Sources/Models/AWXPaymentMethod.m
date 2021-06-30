@@ -20,11 +20,8 @@
     if (self.card) {
         items[@"card"] = self.card.encodeToJSON;
     }
-    if (self.weChatPay) {
-        items[@"wechatpay"] = self.weChatPay.encodeToJSON;
-    }
-    if (self.nonCard) {
-        items[self.type] = self.nonCard.encodeToJSON;
+    if (self.additionalParams) {
+        items[self.type] = self.additionalParams;
     }
     if (self.customerId) {
         items[@"customer_id"] = self.customerId;
@@ -40,10 +37,6 @@
     NSDictionary *card = json[@"card"];
     if (card) {
         method.card = [AWXCard decodeFromJSON:card];
-    }
-    NSDictionary *weChatPay = json[@"wechatpay"];
-    if (weChatPay) {
-        method.weChatPay = [AWXWeChatPay decodeFromJSON:weChatPay];
     }
     method.billing = [AWXPlaceDetails decodeFromJSON:json[@"billing"]];
     method.customerId = json[@"customer_id"];

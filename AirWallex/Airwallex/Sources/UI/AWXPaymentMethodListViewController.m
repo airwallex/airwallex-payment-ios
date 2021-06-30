@@ -148,8 +148,6 @@
         if ([supportedTypes containsObject:type]) {
             AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
             paymentMethod.type = type;
-            AWXNonCard *nonCard = [AWXNonCard new];
-            paymentMethod.nonCard = nonCard;
             [paymentMethodTypes addObject:paymentMethod];
         }
     }
@@ -472,17 +470,20 @@
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }
+    
     // Confirm directly (Only be valid for payment flow)
     if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
         // Confirm payment with wechat type directly
         [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
         return;
     }
+    
     for (AWXPaymentConsent * consent in  self.customerPaymentConsents) {
         if ([consent.paymentMethod.Id isEqualToString:self.paymentMethod.Id]) {
             self.paymentConsent = consent;
         }
     }
+    
     // No cvc provided and go to enter cvc in payment detail page
     [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
 }
@@ -504,6 +505,17 @@
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
 {
+    if (![paymentMethod.type isEqualToString:AWXCardKey]) {
+        NSDictionary *metaData = @{@"flow": @"inapp", @"os_type": @"ios"};
+        if (paymentMethod.additionalParams) {
+            NSMutableDictionary *params = paymentMethod.additionalParams.mutableCopy;
+            [params addEntriesFromDictionary:metaData];
+            paymentMethod.additionalParams = params;
+        } else {
+            paymentMethod.additionalParams = metaData;
+        }
+    }
+    
     __weak __typeof(self)weakSelf = self;
     [SVProgressHUD show];
     [[AWXSecurityService sharedService] doProfile:[AWXUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
@@ -709,6 +721,7 @@
 - (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPayment:(NSDictionary *)params
 {
     [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+        self.paymentMethod.additionalParams = params;
         [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
     }];
 }

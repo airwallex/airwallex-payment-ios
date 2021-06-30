@@ -50,6 +50,7 @@
         textField.textColor = [UIColor textColor];
         textField.font = [UIFont fontWithName:AWXFontFamilyNameCircularXX size:14];
         textField.translatesAutoresizingMaskIntoConstraints = NO;
+        self.textField = textField;
         [contentView addSubview:textField];
 
         NSDictionary *views = @{@"formLabel": formLabel, @"contentView": contentView, @"textField": textField};
