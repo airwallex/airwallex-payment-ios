@@ -18,7 +18,6 @@
 		084779D2244F240A00C41256 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
 		084779D3244F240A00C41256 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084F15E6247646FA00DAAD76 /* ShippingCell.m */; };
-		085855052445371C0012B818 /* AirwallexExamplesKeys+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 085855042445371C0012B818 /* AirwallexExamplesKeys+Utils.m */; };
 		085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
 		085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
 		085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3F723CC64B6002E8F27 /* Main.storyboard */; };
@@ -30,6 +29,35 @@
 		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
+		57B8EF2E268DEFFA00124314 /* Demo.json in Resources */ = {isa = PBXBuildFile; fileRef = 57B8EF2C268DEFFA00124314 /* Demo.json */; };
+		57B8EF2F268DEFFA00124314 /* Demo.json in Resources */ = {isa = PBXBuildFile; fileRef = 57B8EF2C268DEFFA00124314 /* Demo.json */; };
+		57B8EF30268DEFFA00124314 /* Production.json in Resources */ = {isa = PBXBuildFile; fileRef = 57B8EF2D268DEFFA00124314 /* Production.json */; };
+		57B8EF31268DEFFA00124314 /* Production.json in Resources */ = {isa = PBXBuildFile; fileRef = 57B8EF2D268DEFFA00124314 /* Production.json */; };
+		57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */; };
+		57F9EF8B268DCE3E00B744B2 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
+		57F9EF8C268DCE3E00B744B2 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BE264D06B400027311 /* WebViewController.m */; };
+		57F9EF8D268DCE3E00B744B2 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
+		57F9EF8E268DCE3E00B744B2 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7B956265F44BA00F2CBB6 /* DemoViewController.m */; };
+		57F9EF8F268DCE3E00B744B2 /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BB264D06A900027311 /* InputViewController.m */; };
+		57F9EF90268DCE3E00B744B2 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
+		57F9EF91268DCE3E00B744B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
+		57F9EF92268DCE3E00B744B2 /* ShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084F15E6247646FA00DAAD76 /* ShippingCell.m */; };
+		57F9EF93268DCE3E00B744B2 /* AirwallexExamplesKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */; };
+		57F9EF94268DCE3E00B744B2 /* WechatPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7B959265F45AF00F2CBB6 /* WechatPayViewController.m */; };
+		57F9EF95268DCE3E00B744B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
+		57F9EF96268DCE3E00B744B2 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308123CEEC3300C9D587 /* ProductCell.m */; };
+		57F9EF97268DCE3E00B744B2 /* SuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501C1264D06BE00027311 /* SuccessViewController.m */; };
+		57F9EF98268DCE3E00B744B2 /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
+		57F9EF9A268DCE3E00B744B2 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
+		57F9EF9B268DCE3E00B744B2 /* libPods-Examples.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8A8271856E8171BDDAA9BA /* libPods-Examples.a */; };
+		57F9EF9D268DCE3E00B744B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
+		57F9EF9E268DCE3E00B744B2 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
+		57F9EF9F268DCE3E00B744B2 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
+		57F9EFA0268DCE3E00B744B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
+		57F9EFA1268DCE3E00B744B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3F723CC64B6002E8F27 /* Main.storyboard */; };
+		57F9EFA2268DCE3E00B744B2 /* CircularXX-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 086F862E25230C330006DAB5 /* CircularXX-Regular.otf */; };
+		57F9EFA4268DCE3E00B744B2 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
+		57F9EFA7268DCE3E00B744B2 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C316E4627234A4CD5BEAACE4 /* libPods-Examples.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8A8271856E8171BDDAA9BA /* libPods-Examples.a */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +69,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				084779D3244F240A00C41256 /* Airwallex.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57F9EFA6268DCE3E00B744B2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				57F9EFA7268DCE3E00B744B2 /* Airwallex.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,10 +105,8 @@
 		082D308723CEEDC100C9D587 /* CartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
 		084F15E5247646FA00DAAD76 /* ShippingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShippingCell.h; sourceTree = "<group>"; };
 		084F15E6247646FA00DAAD76 /* ShippingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShippingCell.m; sourceTree = "<group>"; };
-		085855032445371C0012B818 /* AirwallexExamplesKeys+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirwallexExamplesKeys+Utils.h"; sourceTree = "<group>"; };
-		085855042445371C0012B818 /* AirwallexExamplesKeys+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AirwallexExamplesKeys+Utils.m"; sourceTree = "<group>"; };
 		085BA64E23F0FB8A00FD33FA /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
-		085BD3EB23CC64B6002E8F27 /* Airwallex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Airwallex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		085BD3EB23CC64B6002E8F27 /* Examples-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Examples-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3EE23CC64B6002E8F27 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		085BD3EF23CC64B6002E8F27 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		085BD3F823CC64B6002E8F27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -82,11 +119,15 @@
 		088ADB922407B329001ADC71 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
 		088F3E8123CEB7FF005AE40F /* APIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
 		088F3E8223CEB7FF005AE40F /* APIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
-		088F3E8423CED74C005AE40F /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		08A3E99D24246C30003FDAAF /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		08A3E99E24246C30003FDAAF /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		08B55E372421D8C60054E254 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A8A8271856E8171BDDAA9BA /* libPods-Examples.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Examples.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		57B8EF2C268DEFFA00124314 /* Demo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Demo.json; sourceTree = "<group>"; };
+		57B8EF2D268DEFFA00124314 /* Production.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Production.json; sourceTree = "<group>"; };
+		57F9EF83268DCB3600B744B2 /* AirwallexExamplesKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexExamplesKeys.h; sourceTree = "<group>"; };
+		57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirwallexExamplesKeys.m; sourceTree = "<group>"; };
+		57F9EFAC268DCE3E00B744B2 /* Examples-Production.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Examples-Production.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 		89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,6 +139,15 @@
 			files = (
 				084779D2244F240A00C41256 /* Airwallex.framework in Frameworks */,
 				C316E4627234A4CD5BEAACE4 /* libPods-Examples.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57F9EF99268DCE3E00B744B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57F9EF9A268DCE3E00B744B2 /* Airwallex.framework in Frameworks */,
+				57F9EF9B268DCE3E00B744B2 /* libPods-Examples.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,7 +201,8 @@
 		085BD3EC23CC64B6002E8F27 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				085BD3EB23CC64B6002E8F27 /* Airwallex.app */,
+				085BD3EB23CC64B6002E8F27 /* Examples-Demo.app */,
+				57F9EFAC268DCE3E00B744B2 /* Examples-Production.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,15 +210,15 @@
 		085BD3ED23CC64B6002E8F27 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
-				088F3E8423CED74C005AE40F /* Constant.h */,
 				085BD3EE23CC64B6002E8F27 /* AppDelegate.h */,
 				085BD3EF23CC64B6002E8F27 /* AppDelegate.m */,
-				085855032445371C0012B818 /* AirwallexExamplesKeys+Utils.h */,
-				085855042445371C0012B818 /* AirwallexExamplesKeys+Utils.m */,
+				57F9EF83268DCB3600B744B2 /* AirwallexExamplesKeys.h */,
+				57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */,
 				00E501B9264CD2EF00027311 /* Demo */,
 				088F3E8023CEB7E6005AE40F /* API */,
 				082D307F23CEEC0700C9D587 /* Cart */,
 				088ADB902407B329001ADC71 /* Resources */,
+				57B8EF2B268DEFFA00124314 /* Keys */,
 				085BD3FF23CC64B9002E8F27 /* Info.plist */,
 				085BD40023CC64B9002E8F27 /* main.m */,
 			);
@@ -207,6 +258,16 @@
 			path = ../Pods;
 			sourceTree = "<group>";
 		};
+		57B8EF2B268DEFFA00124314 /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				57B8EF2C268DEFFA00124314 /* Demo.json */,
+				57B8EF2D268DEFFA00124314 /* Production.json */,
+			);
+			name = Keys;
+			path = Examples/Keys;
+			sourceTree = SOURCE_ROOT;
+		};
 		A124BE0DCF06F969177C95C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,9 +280,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		085BD3EA23CC64B6002E8F27 /* Examples */ = {
+		085BD3EA23CC64B6002E8F27 /* Examples-Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */;
+			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples-Demo" */;
 			buildPhases = (
 				27213DDF7CB718263CED259E /* [CP] Check Pods Manifest.lock */,
 				085BD3E723CC64B6002E8F27 /* Sources */,
@@ -235,9 +296,30 @@
 			);
 			dependencies = (
 			);
-			name = Examples;
+			name = "Examples-Demo";
 			productName = Examples;
-			productReference = 085BD3EB23CC64B6002E8F27 /* Airwallex.app */;
+			productReference = 085BD3EB23CC64B6002E8F27 /* Examples-Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		57F9EF88268DCE3E00B744B2 /* Examples-Production */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57F9EFA9268DCE3E00B744B2 /* Build configuration list for PBXNativeTarget "Examples-Production" */;
+			buildPhases = (
+				57F9EF89268DCE3E00B744B2 /* [CP] Check Pods Manifest.lock */,
+				57F9EF8A268DCE3E00B744B2 /* Sources */,
+				57F9EF99268DCE3E00B744B2 /* Frameworks */,
+				57F9EF9C268DCE3E00B744B2 /* Resources */,
+				57F9EFA5268DCE3E00B744B2 /* [CP] Embed Pods Frameworks */,
+				57F9EFA6268DCE3E00B744B2 /* Embed Frameworks */,
+				57F9EFA8268DCE3E00B744B2 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Examples-Production";
+			productName = Examples;
+			productReference = 57F9EFAC268DCE3E00B744B2 /* Examples-Production.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -267,7 +349,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				085BD3EA23CC64B6002E8F27 /* Examples */,
+				085BD3EA23CC64B6002E8F27 /* Examples-Demo */,
+				57F9EF88268DCE3E00B744B2 /* Examples-Production */,
 			);
 		};
 /* End PBXProject section */
@@ -281,9 +364,27 @@
 				085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */,
 				088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */,
 				085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */,
+				57B8EF30268DEFFA00124314 /* Production.json in Resources */,
 				085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */,
 				086F862F25230C330006DAB5 /* CircularXX-Regular.otf in Resources */,
+				57B8EF2E268DEFFA00124314 /* Demo.json in Resources */,
 				088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57F9EF9C268DCE3E00B744B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57F9EF9D268DCE3E00B744B2 /* LaunchScreen.storyboard in Resources */,
+				57F9EF9E268DCE3E00B744B2 /* Splash.storyboard in Resources */,
+				57F9EF9F268DCE3E00B744B2 /* CircularStd-Medium.otf in Resources */,
+				57F9EFA0268DCE3E00B744B2 /* Assets.xcassets in Resources */,
+				57B8EF31268DEFFA00124314 /* Production.json in Resources */,
+				57F9EFA1268DCE3E00B744B2 /* Main.storyboard in Resources */,
+				57F9EFA2268DCE3E00B744B2 /* CircularXX-Regular.otf in Resources */,
+				57B8EF2F268DEFFA00124314 /* Demo.json in Resources */,
+				57F9EFA4268DCE3E00B744B2 /* CircularStd-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +430,62 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		57F9EF89268DCE3E00B744B2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Examples-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57F9EFA5268DCE3E00B744B2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57F9EFA8268DCE3E00B744B2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		93EA6DFA6F7AE71247D6E8D3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -353,7 +510,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				085855052445371C0012B818 /* AirwallexExamplesKeys+Utils.m in Sources */,
 				082D308823CEEDC100C9D587 /* CartViewController.m in Sources */,
 				00E501BF264D06B400027311 /* WebViewController.m in Sources */,
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,
@@ -362,11 +518,33 @@
 				088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */,
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
 				084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */,
+				57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */,
 				00D7B95A265F45AF00F2CBB6 /* WechatPayViewController.m in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
 				00E501C2264D06BE00027311 /* SuccessViewController.m in Sources */,
 				08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57F9EF8A268DCE3E00B744B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57F9EF8B268DCE3E00B744B2 /* CartViewController.m in Sources */,
+				57F9EF8C268DCE3E00B744B2 /* WebViewController.m in Sources */,
+				57F9EF8D268DCE3E00B744B2 /* TotalCell.m in Sources */,
+				57F9EF8E268DCE3E00B744B2 /* DemoViewController.m in Sources */,
+				57F9EF8F268DCE3E00B744B2 /* InputViewController.m in Sources */,
+				57F9EF90268DCE3E00B744B2 /* APIClient.m in Sources */,
+				57F9EF91268DCE3E00B744B2 /* AppDelegate.m in Sources */,
+				57F9EF92268DCE3E00B744B2 /* ShippingCell.m in Sources */,
+				57F9EF93268DCE3E00B744B2 /* AirwallexExamplesKeys.m in Sources */,
+				57F9EF94268DCE3E00B744B2 /* WechatPayViewController.m in Sources */,
+				57F9EF95268DCE3E00B744B2 /* main.m in Sources */,
+				57F9EF96268DCE3E00B744B2 /* ProductCell.m in Sources */,
+				57F9EF97268DCE3E00B744B2 /* SuccessViewController.m in Sources */,
+				57F9EF98268DCE3E00B744B2 /* OptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,13 +692,18 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"DEMO=1",
+				);
 				INFOPLIST_FILE = Examples/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
-				PRODUCT_NAME = Airwallex;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Airwallex Enterprise";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -538,13 +721,66 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"DEMO=1",
+				);
 				INFOPLIST_FILE = Examples/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
-				PRODUCT_NAME = Airwallex;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Airwallex Enterprise";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		57F9EFAA268DCE3E00B744B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 6AM6RAJ294;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = Examples/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Airwallex Enterprise";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		57F9EFAB268DCE3E00B744B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 6AM6RAJ294;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = Examples/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Airwallex Enterprise";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -562,11 +798,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */ = {
+		085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples-Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				085BD40523CC64B9002E8F27 /* Debug */,
 				085BD40623CC64B9002E8F27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		57F9EFA9268DCE3E00B744B2 /* Build configuration list for PBXNativeTarget "Examples-Production" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57F9EFAA268DCE3E00B744B2 /* Debug */,
+				57F9EFAB268DCE3E00B744B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

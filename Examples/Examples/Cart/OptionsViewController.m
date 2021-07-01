@@ -9,9 +9,8 @@
 #import "OptionsViewController.h"
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
-#import "AirwallexExamplesKeys+Utils.h"
+#import "AirwallexExamplesKeys.h"
 #import "APIClient.h"
-#import "Constant.h"
 
 @interface OptionsViewController () <UITextFieldDelegate>
 
@@ -63,8 +62,8 @@
     self.paymentURLTextField.text = [APIClient sharedClient].paymentBaseURL.absoluteString;
     self.apiKeyTextField.text = [APIClient sharedClient].apiKey;
     self.clientIDTextField.text = [APIClient sharedClient].clientID;
-    self.amountTextField.text = self.amount ? [NSString stringWithFormat:@"%.2f", self.amount.doubleValue] : defaultAmount;
-    self.currencyTextField.text = self.currency ?: defaultCurrency;
+    self.amountTextField.text = self.amount ? [NSString stringWithFormat:@"%.2f", self.amount.doubleValue] : [AirwallexExamplesKeys shared].amount;
+    self.currencyTextField.text = self.currency ?: [AirwallexExamplesKeys shared].currency;
     
     self.customerIdTextField.enabled = NO;
     NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];

@@ -1,6 +1,10 @@
 # Created by https://www.gitignore.io/api/xcode,swift,cocoapods,objective-c
 # Edit at https://www.gitignore.io/?templates=xcode,swift,cocoapods,objective-c
 
+# Keys
+#
+Keys/
+
 # OSX
 #
 .DS_Store

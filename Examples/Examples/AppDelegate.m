@@ -11,8 +11,7 @@
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import <WechatOpenSDK/WXApi.h>
 #import <Airwallex/Airwallex.h>
-#import "AirwallexExamplesKeys+Utils.h"
-#import "Constant.h"
+#import "AirwallexExamplesKeys.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -38,7 +37,7 @@
     [UIView.appearance setTintColor:tintColor];
     
     // WeChatSDK 1.8.2
-    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppID enableMTA:YES];
+    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppId enableMTA:YES];
     
     // WeChatSDK 1.8.6.1
     //    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppID universalLink:@"https://airwallex.com/"];

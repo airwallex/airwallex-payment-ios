@@ -6,35 +6,36 @@ ENV['SWIFT_VERSION'] = '5'
 
 workspace 'Airwallex.xcworkspace'
 
-plugin 'cocoapods-keys', {
-  :project => "AirwallexExamples",
-  :target => ["AirwallexTests", "Examples"],
-  :keys => [
-    "ApiKey",
-    "ClientID",
-    "WeChatAppID"
-]}
-
-def shared_pods
-    pod 'SVProgressHUD', '2.2.5'
-    pod 'AirwallexTrustDefender', '5.0.32'
-    pod 'AirwallexCardinalMobile', '2.2.3'
+def shared_sdk_pods
+  pod 'SVProgressHUD', '2.2.5'
+  pod 'AirwallexTrustDefender', '5.0.32'
+  pod 'AirwallexCardinalMobile', '2.2.3'
 end
 
 target 'Airwallex' do
-    project './Airwallex/Airwallex.xcodeproj'
-    shared_pods
+  project './Airwallex/Airwallex.xcodeproj'
+  shared_sdk_pods
 end
 
 target 'AirwallexTests' do
-    project './Airwallex/Airwallex.xcodeproj'
-    shared_pods
+  project './Airwallex/Airwallex.xcodeproj'
+  shared_sdk_pods
 end
 
-target 'Examples' do
-    project './Examples/Examples.xcodeproj'
-    shared_pods
-    pod 'AlipaySDK-iOS', '15.7.9'
-    pod 'WechatOpenSDK', '1.8.2'
-    pod 'IQKeyboardManager', '6.5.4'
+def shared_example_pods
+  pod 'AlipaySDK-iOS', '15.7.9'
+  pod 'WechatOpenSDK', '1.8.2'
+  pod 'IQKeyboardManager', '6.5.4'
+end
+
+target 'Examples-Demo' do
+  project './Examples/Examples.xcodeproj'
+  shared_pods
+  shared_example_pods
+end
+
+target 'Examples-Production' do
+  project './Examples/Examples.xcodeproj'
+  shared_pods
+  shared_example_pods
 end
