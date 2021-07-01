@@ -42,8 +42,13 @@
 - (NSDictionary *)loadConfigFile:(NSString *)filename
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:@"json"];
-    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-    return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    if (path) {
+        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+        if (data) {
+            return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        }
+    }
+    return nil;
 }
 
 - (NSString *)apiKey
@@ -68,7 +73,7 @@
 
 - (NSString *)amount
 {
-    return self.configJson[@"amount"];
+    return self.configJson[@"amount"] ?: @"0";
 }
 
 - (NSString *)currency
