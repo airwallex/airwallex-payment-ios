@@ -29,9 +29,9 @@
     return self.textField.text;
 }
 
-- (instancetype)initWithFormLabel:(NSString *)formLabelText textField:(UITextField *)textField
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText textField:(UITextField *)textField
 {
-    if (self = [super initWithFrame:CGRectZero]) {
+    if (self = [super initWithKey:key]) {
         UILabel *formLabel = [UILabel new];
         formLabel.text = formLabelText;
         formLabel.textColor = [UIColor textColor];

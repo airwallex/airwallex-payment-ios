@@ -33,11 +33,11 @@
 		081D52E423D03BDF00953B03 /* AWXPaymentIntentResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52E223D03BDF00953B03 /* AWXPaymentIntentResponse.m */; };
 		081D52E823D043E100953B03 /* AWXPaymentMethodOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52E623D043E100953B03 /* AWXPaymentMethodOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		081D52E923D043E100953B03 /* AWXPaymentMethodOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52E723D043E100953B03 /* AWXPaymentMethodOptions.m */; };
-		081D52ED23D04AE600953B03 /* AWXProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EB23D04AE600953B03 /* AWXProtocol.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		081D52ED23D04AE600953B03 /* AWXProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EB23D04AE600953B03 /* AWXProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		081D52EE23D04AE600953B03 /* AWXProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52EC23D04AE600953B03 /* AWXProtocol.m */; };
-		081D52F123D04B5400953B03 /* AWXAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EF23D04B5400953B03 /* AWXAPIResponse.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		081D52F123D04B5400953B03 /* AWXAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EF23D04B5400953B03 /* AWXAPIResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		081D52F223D04B5400953B03 /* AWXAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52F023D04B5400953B03 /* AWXAPIResponse.m */; };
-		081D52F623D04EA200953B03 /* AWXLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52F423D04EA200953B03 /* AWXLogger.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		081D52F623D04EA200953B03 /* AWXLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52F423D04EA200953B03 /* AWXLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		081D52F723D04EA200953B03 /* AWXLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52F523D04EA200953B03 /* AWXLogger.m */; };
 		081D52FA23D0581F00953B03 /* AWXUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52F823D0581F00953B03 /* AWXUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		081D52FB23D0581F00953B03 /* AWXUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 081D52F923D0581F00953B03 /* AWXUtils.m */; };
@@ -69,10 +69,10 @@
 		085BD43923CDCBD7002E8F27 /* AWXAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD43723CDCBD7002E8F27 /* AWXAddress.m */; };
 		0863F6FA240E390100925664 /* AWXPaymentItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863F6F6240E390000925664 /* AWXPaymentItemCell.m */; };
 		0863F6FB240E390100925664 /* AWXPaymentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0863F6F7240E390000925664 /* AWXPaymentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0863F6FC240E390100925664 /* AWXPaymentItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 0863F6F8240E390000925664 /* AWXPaymentItemCell.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		0863F6FC240E390100925664 /* AWXPaymentItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 0863F6F8240E390000925664 /* AWXPaymentItemCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0863F6FD240E390100925664 /* AWXPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0863F6F9240E390000925664 /* AWXPaymentViewController.m */; };
 		0863F6FF240E391600925664 /* AWXPaymentItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0863F6FE240E391600925664 /* AWXPaymentItemCell.xib */; };
-		086666432406138400B52477 /* AWXPaymentMethodCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 086666412406138400B52477 /* AWXPaymentMethodCell.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		086666432406138400B52477 /* AWXPaymentMethodCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 086666412406138400B52477 /* AWXPaymentMethodCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		086666442406138400B52477 /* AWXPaymentMethodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 086666422406138400B52477 /* AWXPaymentMethodCell.m */; };
 		0866665524062AEB00B52477 /* AWXCountry.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866664924062AEB00B52477 /* AWXCountry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0866665624062AEB00B52477 /* AWXCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = 0866664A24062AEB00B52477 /* AWXCountry.m */; };
@@ -89,10 +89,10 @@
 		0866666B2406311F00B52477 /* AWXCardTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666682406311F00B52477 /* AWXCardTextField.xib */; };
 		0866666C2406311F00B52477 /* AWXFloatLabeledTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086666692406311F00B52477 /* AWXFloatLabeledTextField.xib */; };
 		0866666F2406314500B52477 /* AWXWidgets.m in Sources */ = {isa = PBXBuildFile; fileRef = 0866666D2406314500B52477 /* AWXWidgets.m */; };
-		086666702406314500B52477 /* AWXWidgets.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866666E2406314500B52477 /* AWXWidgets.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		086666702406314500B52477 /* AWXWidgets.h in Headers */ = {isa = PBXBuildFile; fileRef = 0866666E2406314500B52477 /* AWXWidgets.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		086666732406343B00B52477 /* AWXTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 086666712406343B00B52477 /* AWXTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		086666742406343B00B52477 /* AWXTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 086666722406343B00B52477 /* AWXTheme.m */; };
-		086F85E82522FB040006DAB5 /* AWXDCCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 086F85E62522FB040006DAB5 /* AWXDCCViewController.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		086F85E82522FB040006DAB5 /* AWXDCCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 086F85E62522FB040006DAB5 /* AWXDCCViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		086F85E92522FB040006DAB5 /* AWXDCCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086F85E72522FB040006DAB5 /* AWXDCCViewController.m */; };
 		086F8629252304030006DAB5 /* AWXCurrencyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086F8628252304030006DAB5 /* AWXCurrencyView.xib */; };
 		08A14B9723E91E9700F3C211 /* AWXAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A14B9523E91E9700F3C211 /* AWXAPIClient.m */; };
@@ -101,13 +101,13 @@
 		08A14B9C23E91F0C00F3C211 /* AWXPaymentMethodRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A14B9A23E91F0C00F3C211 /* AWXPaymentMethodRequest.m */; };
 		08A14B9F23E9228300F3C211 /* AWXPaymentMethodResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A14B9D23E9228300F3C211 /* AWXPaymentMethodResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08A14BA023E9228300F3C211 /* AWXPaymentMethodResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A14B9E23E9228300F3C211 /* AWXPaymentMethodResponse.m */; };
-		08B3A0CD247282C600F425B0 /* AWXWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 08B3A0CB247282C600F425B0 /* AWXWebViewController.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		08B3A0CD247282C600F425B0 /* AWXWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 08B3A0CB247282C600F425B0 /* AWXWebViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08B3A0CE247282C600F425B0 /* AWXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B3A0CC247282C600F425B0 /* AWXWebViewController.m */; };
 		08B55E402421DC700054E254 /* AWXRequestProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52E023D03B6900953B03 /* AWXRequestProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08B55E412421DC700054E254 /* AWXResponseProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 081D52EA23D048BE00953B03 /* AWXResponseProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08BD3A9F240CCAED00ACFB6B /* AWXViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 08BD3A9D240CCAED00ACFB6B /* AWXViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08BD3AA0240CCAED00ACFB6B /* AWXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BD3A9E240CCAED00ACFB6B /* AWXViewController.m */; };
-		08D26F512404AFE9008E65D3 /* AWXFontLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 08D26F4F2404AFE9008E65D3 /* AWXFontLoader.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		08D26F512404AFE9008E65D3 /* AWXFontLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 08D26F4F2404AFE9008E65D3 /* AWXFontLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08D26F522404AFE9008E65D3 /* AWXFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D26F502404AFE9008E65D3 /* AWXFontLoader.m */; };
 		08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */; };
 		08D26F5724051FC2008E65D3 /* AWXConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 08D26F5524051FC2008E65D3 /* AWXConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -115,15 +115,15 @@
 		26346A618B1632CE13FD8BD8 /* libPods-Airwallex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F32234CF28FBF7DEF511F529 /* libPods-Airwallex.a */; };
 		570A139E25A82B280064B362 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139C25A82B270064B362 /* README.md */; };
 		570A139F25A82B280064B362 /* README_zh_CN.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139D25A82B280064B362 /* README_zh_CN.md */; };
-		573DA7A2268AFB4C0007463C /* AWXFormMapping.h in Headers */ = {isa = PBXBuildFile; fileRef = 573DA7A0268AFB4C0007463C /* AWXFormMapping.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		573DA7A2268AFB4C0007463C /* AWXFormMapping.h in Headers */ = {isa = PBXBuildFile; fileRef = 573DA7A0268AFB4C0007463C /* AWXFormMapping.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		573DA7A3268AFB4C0007463C /* AWXFormMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 573DA7A1268AFB4C0007463C /* AWXFormMapping.m */; };
-		573DA7A6268AFE450007463C /* AWXForm.h in Headers */ = {isa = PBXBuildFile; fileRef = 573DA7A4268AFE450007463C /* AWXForm.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		573DA7A6268AFE450007463C /* AWXForm.h in Headers */ = {isa = PBXBuildFile; fileRef = 573DA7A4268AFE450007463C /* AWXForm.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		573DA7A7268AFE450007463C /* AWXForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 573DA7A5268AFE450007463C /* AWXForm.m */; };
-		573DA7AA268B10470007463C /* AWXOptionView.h in Headers */ = {isa = PBXBuildFile; fileRef = 573DA7A8268B10470007463C /* AWXOptionView.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		573DA7AA268B10470007463C /* AWXOptionView.h in Headers */ = {isa = PBXBuildFile; fileRef = 573DA7A8268B10470007463C /* AWXOptionView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		573DA7AB268B10470007463C /* AWXOptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 573DA7A9268B10470007463C /* AWXOptionView.m */; };
 		57539E342685A698005B7F8D /* AWXLabeledFormTextFieldView.h in Headers */ = {isa = PBXBuildFile; fileRef = 57539E322685A698005B7F8D /* AWXLabeledFormTextFieldView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57539E352685A698005B7F8D /* AWXLabeledFormTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 57539E332685A698005B7F8D /* AWXLabeledFormTextFieldView.m */; };
-		57ABA90B267B210F00178047 /* AWXPaymentFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57ABA909267B210F00178047 /* AWXPaymentFormViewController.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		57ABA90B267B210F00178047 /* AWXPaymentFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57ABA909267B210F00178047 /* AWXPaymentFormViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57ABA90C267B210F00178047 /* AWXPaymentFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57ABA90A267B210F00178047 /* AWXPaymentFormViewController.m */; };
 		A56D02CF82D812DC123E6CB2 /* libPods-AirwallexTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2467B1E77C4D87CAA384DD2F /* libPods-AirwallexTests.a */; };
 /* End PBXBuildFile section */
@@ -594,10 +594,7 @@
 				0829FD1D2433474A00557DB2 /* AWXPaymentIntent.h in Headers */,
 				57539E342685A698005B7F8D /* AWXLabeledFormTextFieldView.h in Headers */,
 				00737CA4260C7565000F8EA4 /* AWXPaymentConsentResponse.h in Headers */,
-				00737C9E260C7546000F8EA4 /* AWXPaymentConsentRequest.h in Headers */,
-				0075B57E260C2AAC0005C038 /* AWXPaymentConsent.h in Headers */,
 				57ABA90B267B210F00178047 /* AWXPaymentFormViewController.h in Headers */,
-				0847798C244EB40200C41256 /* AWXDevice.h in Headers */,
 				0863F6FC240E390100925664 /* AWXPaymentItemCell.h in Headers */,
 				086666432406138400B52477 /* AWXPaymentMethodCell.h in Headers */,
 				086F85E82522FB040006DAB5 /* AWXDCCViewController.h in Headers */,
@@ -610,6 +607,9 @@
 				573DA7A2268AFB4C0007463C /* AWXFormMapping.h in Headers */,
 				08D26F512404AFE9008E65D3 /* AWXFontLoader.h in Headers */,
 				081D52F623D04EA200953B03 /* AWXLogger.h in Headers */,
+				00737C9E260C7546000F8EA4 /* AWXPaymentConsentRequest.h in Headers */,
+				0075B57E260C2AAC0005C038 /* AWXPaymentConsent.h in Headers */,
+				0847798C244EB40200C41256 /* AWXDevice.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

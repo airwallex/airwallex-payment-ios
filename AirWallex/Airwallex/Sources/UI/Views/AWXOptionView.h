@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AWXWidgets.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWXOptionView : UIView
+@interface AWXOptionView : AWXView
 
-- (instancetype)initWithFormLabel:(NSString *)formLabelText logo:(NSString *)logo;
+@property (nonatomic, readonly) NSString *placeholder;
+
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText placeholder:(NSString *)placeholder logo:(NSString *)logo;
 - (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 
 @end

@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AWXWidgets.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWXLabeledFormTextFieldView : UIView
+@interface AWXLabeledFormTextFieldView : AWXView
 
 @property (nonatomic, readonly) NSString *label;
 @property (nonatomic, readonly) NSString *input;
 
-- (instancetype)initWithFormLabel:(NSString *)formLabelText textField:(UITextField *)textField;
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText textField:(UITextField *)textField;
 
 @end
 

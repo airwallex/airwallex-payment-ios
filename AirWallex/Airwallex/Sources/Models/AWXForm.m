@@ -10,16 +10,18 @@
 
 @implementation AWXForm
 
-+ (instancetype)formWithTitle:(NSString *)title type:(AWXFormType)type
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title
 {
-    return [self formWithTitle:title type:type logo:nil];
+    return [self formWithKey:key type:type title:title placeholder:nil logo:nil];
 }
 
-+ (instancetype)formWithTitle:(NSString *)title type:(AWXFormType)type logo:(nullable NSString *)logo
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title placeholder:(nullable NSString *)placeholder logo:(nullable NSString *)logo
 {
     AWXForm *form = [AWXForm new];
-    form.title = title;
+    form.key = key;
     form.type = type;
+    form.placeholder = placeholder;
+    form.title = title;
     form.logo = logo;
     return form;
 }

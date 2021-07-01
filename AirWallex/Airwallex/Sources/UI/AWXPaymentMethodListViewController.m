@@ -443,24 +443,26 @@
     
     if ([Airwallex.supportedExtensionNonCardTypes containsObject:self.paymentMethod.type]) {
         AWXFormMapping *formMapping = [AWXFormMapping new];
-        if ([self.paymentMethod.type isEqualToString:AWXBankTransfer]) {
+//        if ([self.paymentMethod.type isEqualToString:AWXBankTransfer]) {
             formMapping.title = NSLocalizedString(@"Select your bank", @"Select your bank");
             formMapping.forms = @[
-                [AWXForm formWithTitle:@"Affin Bank" type:AWXFormTypeOption logo:@"affin_bank"],
-                [AWXForm formWithTitle:@"Alliance Bank" type:AWXFormTypeOption logo:@"alliance_bank"],
-                [AWXForm formWithTitle:@"AmBank" type:AWXFormTypeOption logo:@"ambank"],
-                [AWXForm formWithTitle:@"Bank Islam" type:AWXFormTypeOption logo:@"bank_islam"],
-                [AWXForm formWithTitle:@"Bank Kerjasama Rakyat Malaysia" type:AWXFormTypeOption logo:@"bank_kerjasama_rakyat"],
-                [AWXForm formWithTitle:@"Bank Muamalat" type:AWXFormTypeOption logo:@"bank_muamalat"],
-                [AWXForm formWithTitle:@"Bank Simpanan Nasional" type:AWXFormTypeOption logo:@"bank_simpanan_nasional"]
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Affin Bank" placeholder:@"affin" logo:@"affin_bank"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Alliance Bank" placeholder:@"alliance" logo:@"alliance_bank"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"AmBank" placeholder:@"ambank" logo:@"ambank"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Islam" placeholder:@"kerjasama_rakyat" logo:@"bank_kerjasama_rakyat"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Kerjasama Rakyat Malaysia" placeholder:@"affin" logo:@"affin_bank"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Muamalat" placeholder:@"muamalat" logo:@"bank_muamalat"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Simpanan Nasional" placeholder:@"simpanan_nasional" logo:@"bank_simpanan_nasional"]
             ];
-        } else {
-            formMapping.title = FormatPaymentMethodTypeString(self.paymentMethod.type);
-            formMapping.forms = @[
-                [AWXForm formWithTitle:@"Name" type:AWXFormTypeField],
-                [AWXForm formWithTitle:@"Pay now" type:AWXFormTypeButton]
-            ];
-        }
+//        } else {
+//            formMapping.title = FormatPaymentMethodTypeString(self.paymentMethod.type);
+//            formMapping.forms = @[
+//                [AWXForm formWithKey:@"shopper_name" type:AWXFormTypeField title:@"Name"],
+//                [AWXForm formWithKey:@"shopper_email" type:AWXFormTypeField title:@"Email"],
+//                [AWXForm formWithKey:@"shopper_phone" type:AWXFormTypeField title:@"Phone"],
+//                [AWXForm formWithKey:@"pay" type:AWXFormTypeButton title:@"Pay now"]
+//            ];
+//        }
         AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
         controller.delegate = self;
         controller.paymentMethod = method;
@@ -697,15 +699,17 @@
 
 #pragma mark - AWXPaymentFormViewControllerDelegate
 
-- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didSelectOption:(NSString *)option
+- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didSelectOption:(NSDictionary *)params
 {
+    [self.paymentMethod appendAdditionalParams:params];
+
     AWXFormMapping *formMapping = [AWXFormMapping new];
     formMapping.title = NSLocalizedString(@"Bank transfer", @"Bank transfer");
     formMapping.forms = @[
-        [AWXForm formWithTitle:@"Name" type:AWXFormTypeField],
-        [AWXForm formWithTitle:@"Email" type:AWXFormTypeField],
-        [AWXForm formWithTitle:@"Phone" type:AWXFormTypeField],
-        [AWXForm formWithTitle:@"Pay now" type:AWXFormTypeButton]
+        [AWXForm formWithKey:@"shopper_name" type:AWXFormTypeField title:@"Name"],
+        [AWXForm formWithKey:@"shopper_email" type:AWXFormTypeField title:@"Email"],
+        [AWXForm formWithKey:@"shopper_phone" type:AWXFormTypeField title:@"Phone"],
+        [AWXForm formWithKey:@"pay" type:AWXFormTypeButton title:@"Pay now"]
     ];
     AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
@@ -721,7 +725,7 @@
 - (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPayment:(NSDictionary *)params
 {
     [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
-        self.paymentMethod.additionalParams = params;
+        [self.paymentMethod appendAdditionalParams:params];
         [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
     }];
 }

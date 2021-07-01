@@ -79,10 +79,10 @@
     for (AWXForm *form in self.formMapping.forms) {
         if (form.type == AWXFormTypeField) {
             UITextField *textField = [UITextField new];
-            AWXLabeledFormTextFieldView *fieldView = [[AWXLabeledFormTextFieldView alloc] initWithFormLabel:form.title textField:textField];
+            AWXLabeledFormTextFieldView *fieldView = [[AWXLabeledFormTextFieldView alloc] initWithKey:form.key formLabel:form.title textField:textField];
             [stackView addArrangedSubview:fieldView];
         } else if (form.type == AWXFormTypeOption) {
-            AWXOptionView *optionView = [[AWXOptionView alloc] initWithFormLabel:form.title logo:form.logo];
+            AWXOptionView *optionView = [[AWXOptionView alloc] initWithKey:form.key formLabel:form.title placeholder:form.placeholder logo:form.logo];
             [optionView addTarget:self action:@selector(optionPressed:) forControlEvents:UIControlEventTouchUpInside];
             [stackView addArrangedSubview:optionView];
         } else if (form.type == AWXFormTypeButton) {
@@ -113,24 +113,36 @@
 - (void)optionPressed:(UIButton *)sender
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didSelectOption:)]) {
-        [self.delegate paymentFormViewController:self didSelectOption:[sender titleForState:UIControlStateNormal]];
+        [self.delegate paymentFormViewController:self didSelectOption:self.options];
     }
 }
 
 - (void)buttonPressed:(id)sender
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didConfirmPayment:)]) {
-        [self.delegate paymentFormViewController:self didConfirmPayment:self.form];
+        [self.delegate paymentFormViewController:self didConfirmPayment:self.fields];
     }
 }
 
-- (NSDictionary *)form
+- (NSDictionary *)options
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    for (UIView *view in self.stackView.arrangedSubviews) {
+        if ([view isKindOfClass:[AWXOptionView class]]) {
+            AWXOptionView *option = (AWXOptionView *)view;
+            dictionary[option.key] = option.placeholder;
+        }
+    }
+    return dictionary;
+}
+
+- (NSDictionary *)fields
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     for (UIView *view in self.stackView.arrangedSubviews) {
         if ([view isKindOfClass:[AWXLabeledFormTextFieldView class]]) {
             AWXLabeledFormTextFieldView *field = (AWXLabeledFormTextFieldView *)view;
-            dictionary[field.label] = field.input;
+            dictionary[field.key] = field.input;
         }
     }
     return dictionary;

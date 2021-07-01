@@ -25,7 +25,7 @@
     [SVProgressHUD setBackgroundColor:[UIColor colorNamed:@"Line Color"]];
     [SVProgressHUD setMaximumDismissTimeInterval:2];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-//    [IQKeyboardManager sharedManager].enable = YES;
+    [IQKeyboardManager sharedManager].enable = NO;
 
     // Airwallex
     // Step1:

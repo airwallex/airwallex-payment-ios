@@ -14,14 +14,17 @@
 
 @property (nonatomic, strong) UIButton *contentView;
 @property (nonatomic, strong) UILabel *formLabel;
+@property (nonatomic, strong) NSString *placeholder;
 
 @end
 
 @implementation AWXOptionView
 
-- (instancetype)initWithFormLabel:(NSString *)formLabelText logo:(NSString *)logo
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText placeholder:(NSString *)placeholder logo:(NSString *)logo
 {
-    if (self = [super initWithFrame:CGRectZero]) {
+    if (self = [super initWithKey:key]) {
+        self.placeholder = placeholder;
+        
         UIButton *contentView = [UIButton autoLayoutView];
         self.contentView = contentView;
         contentView.layer.masksToBounds = YES;

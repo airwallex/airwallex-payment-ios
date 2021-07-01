@@ -14,6 +14,8 @@
 
 @interface AWXView ()
 
+@property (nonatomic, strong) NSString *key;
+
 @end
 
 @implementation AWXView
@@ -35,6 +37,14 @@
 {
     _borderColor = borderColor;
     self.layer.borderColor = borderColor.CGColor;
+}
+
+- (instancetype)initWithKey:(NSString *)key
+{
+    if (self = [super initWithFrame:CGRectZero]) {
+        self.key = key;
+    }
+    return self;
 }
 
 @end

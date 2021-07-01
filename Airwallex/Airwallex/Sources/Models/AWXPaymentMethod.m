@@ -43,7 +43,16 @@
     return method;
 }
 
-
+- (void)appendAdditionalParams:(NSDictionary *)params
+{
+    if (self.additionalParams) {
+        NSMutableDictionary *dictionary = [self.additionalParams mutableCopy];
+        [dictionary addEntriesFromDictionary:params];
+        self.additionalParams = dictionary;
+    } else {
+        self.additionalParams = params;
+    }
+}
 
 @end
 

@@ -33,6 +33,10 @@ IB_DESIGNABLE
 @property (nonatomic) IBInspectable CGFloat borderWidth;
 @property (nonatomic, strong) IBInspectable UIColor *borderColor;
 
+@property (nonatomic, readonly) NSString *key;
+
+- (instancetype)initWithKey:(NSString *)key;
+
 @end
 
 @interface AWXNibView : AWXView
