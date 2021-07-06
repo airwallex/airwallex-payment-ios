@@ -2,7 +2,6 @@ PODS:
   - AirwallexCardinalMobile (2.2.3)
   - AirwallexTrustDefender (5.0.32)
   - AlipaySDK-iOS (15.7.9)
-  - IQKeyboardManager (6.5.4)
   - SVProgressHUD (2.2.5)
   - WechatOpenSDK (1.8.2)
 
@@ -10,7 +9,6 @@ DEPENDENCIES:
   - AirwallexCardinalMobile (= 2.2.3)
   - AirwallexTrustDefender (= 5.0.32)
   - AlipaySDK-iOS (= 15.7.9)
-  - IQKeyboardManager (= 6.5.4)
   - SVProgressHUD (= 2.2.5)
   - WechatOpenSDK (= 1.8.2)
 
@@ -19,7 +17,6 @@ SPEC REPOS:
     - AirwallexCardinalMobile
     - AirwallexTrustDefender
     - AlipaySDK-iOS
-    - IQKeyboardManager
     - SVProgressHUD
     - WechatOpenSDK
 
@@ -27,10 +24,9 @@ SPEC CHECKSUMS:
   AirwallexCardinalMobile: 8c5bee55e91819492fc953440482fe8e6727c1c3
   AirwallexTrustDefender: f32cce15b1f9982319630c559673b3a2f549ad50
   AlipaySDK-iOS: 94ff4c0e17c5e7d126b8207596d5033006534c25
-  IQKeyboardManager: 72b359cd7e777e3a984cedbe05f8da45320cbb63
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: 257d1f8a4740ac00c5c6edd975d744d309ed16b5
+PODFILE CHECKSUM: e914efe1e5f550107f2981b5bdc8130764811546
 
 COCOAPODS: 1.9.1

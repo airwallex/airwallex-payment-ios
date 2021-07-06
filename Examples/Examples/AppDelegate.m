@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import <SVProgressHUD/SVProgressHUD.h>
-#import <IQKeyboardManager/IQKeyboardManager.h>
 #import <WechatOpenSDK/WXApi.h>
 #import <Airwallex/Airwallex.h>
 #import "AirwallexExamplesKeys.h"
@@ -24,7 +23,6 @@
     [SVProgressHUD setBackgroundColor:[UIColor colorNamed:@"Line Color"]];
     [SVProgressHUD setMaximumDismissTimeInterval:2];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [IQKeyboardManager sharedManager].enable = NO;
 
     // Airwallex
     // Step1:

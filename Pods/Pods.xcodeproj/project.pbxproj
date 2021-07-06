@@ -46,48 +46,19 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		06C533A2EDDA46ED58DC16A1A2538657 /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC8743EDBCC759FEDD0E871C7117ADE /* IQNSArray+Sort.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		097E253520E232C40BC89C2C8C59ECD3 /* IQPreviousNextView.m in Sources */ = {isa = PBXBuildFile; fileRef = A09CBE2C779CC2CCCB5C700E1868E637 /* IQPreviousNextView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		0AF427776FADDE44561A6F311154F496 /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D97F7E0416BC8FB0ACE2AD8DF28455 /* IQToolbar.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		0F2AA3A031B9ED68C8BF5F8C651937C3 /* IQUIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6281E3D80B7C4EA411542F8508C870E6 /* IQUIViewController+Additions.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		19CB27C78074DF587684F968A7622D30 /* IQKeyboardReturnKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E185A02A6D40A30CFDF443BD0B34CD5A /* IQKeyboardReturnKeyHandler.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		1B77D7340EC83E839FAE3D9BB7DF0D1F /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AC3454298A06B9C77FF8C99F81BD82B /* SVProgressAnimatedView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		23D60C47351F5088777DCE5A66E1A140 /* IQTitleBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BBAC2B79A0DBC81F1DEEE5898A9572 /* IQTitleBarButtonItem.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		240DA7531A3EEFBFE9A80EFFA6DF0334 /* IQBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C42F09A3311DFED3AF71377948686017 /* IQBarButtonItem.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		2D67FAEB37C5A19987B85C644F716011 /* IQKeyboardManagerConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 11A353FD29335B6E5E65415CC87DF979 /* IQKeyboardManagerConstants.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		3AAF11F3D443FAC5FA05724E0D3BA619 /* IQBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 254E6A416D727922B27A37F8783136FE /* IQBarButtonItem.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		40AAC5FD63D30F5CAF3263840042883C /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3280669170FFEF10DE1A057D6896D3D3 /* IQUIView+Hierarchy.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		40DE126042024EC771303961E89824A6 /* IQKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C04AACE54DD34DAF6B3B72E4206DEEF6 /* IQKeyboardManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		484F55CC26B18879D05B55130EB61F82 /* IQUIScrollView+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 14AF2D26167777994E74BE38ABA73FCA /* IQUIScrollView+Additions.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		4980DC99BBD4343E24E0A381DC97E617 /* IQKeyboardReturnKeyHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 7256B0D9CFD6801A53FB8C4B9503A0F2 /* IQKeyboardReturnKeyHandler.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		4F1095965D3C120675B3F15A441BAE54 /* IQTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 84A06C2CBE3BE13D678EA3E282E3C0E4 /* IQTextView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		504F67BDC2B4230E8419142598EE4FEA /* IQUIView+Hierarchy.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B00CA656C899F7A127BC37AFC0B2965 /* IQUIView+Hierarchy.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		56BC27D1E6C748409D085B72FBFB8C7F /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D7A92E46C6D1A3237AEBF451DFD0A450 /* SVRadialGradientLayer.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		5FA587C035E82EE68EE4703DDD5D24CB /* IQKeyboardManager-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5643E0740EFD44EB8C6C626A0DF489B6 /* IQKeyboardManager-dummy.m */; };
-		6A823A45125967013ECFC2197E1D8DA5 /* Pods-AirwallexTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 982E0B2FACCD8FF57BFECAA07971DFE8 /* Pods-AirwallexTests-dummy.m */; };
-		6D5DD431FA37E82652B996D385282017 /* IQTitleBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = D1EFA3D146AA6ABD52D95A872BE9DFA0 /* IQTitleBarButtonItem.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		72EA5E1F693FE30D163352247713AEFF /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = AC83D8D9F1E00C918E0FD01373130A4E /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		743A36219F41FAAE55F83E8A70F61B80 /* IQNSArray+Sort.h in Headers */ = {isa = PBXBuildFile; fileRef = 811C97887331FAFD2E01FA797BF9D252 /* IQNSArray+Sort.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		7EE6C17BBFFD2AB808C0F09CCACE42F0 /* Pods-Airwallex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1791786D65E004A92EA6F734F516E6 /* Pods-Airwallex-dummy.m */; };
-		7F5A64DCE11E74CDE82D1C0737A94E49 /* IQUIScrollView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E59486910EB93EBAEE5088E0F2F46848 /* IQUIScrollView+Additions.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		8649FA19DB7585214273380164946561 /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = A3FC2A589C5EB4BF4AC81F30D14490D7 /* SVIndefiniteAnimatedView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		8D732177E62EF6A302ADF2FC0F6D5B81 /* IQKeyboardManager.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 134006AE8E5323877B34EC8A08808C6B /* IQKeyboardManager.xcassets */; };
-		97B1C2165AD1B8B0F84F0D979BD3441F /* IQUIView+IQKeyboardToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A6B5758C860763E31D01FF1B4100FB7 /* IQUIView+IQKeyboardToolbar.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		A45369E414714EA3CD320D74C0CECE9B /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3878B1ACDA4763816AAB5DC012D8D0 /* IQUIView+IQKeyboardToolbar.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		AF559EEBDEEDF421756966862ED3E746 /* SVProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A9A28CE1B4CD4F5C63A07B020BD44D /* SVProgressHUD.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		BFBD816F65F71F6620E678DF053E5DB8 /* IQUIViewController+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DB9F68C70B7845017BAADD313804FB7 /* IQUIViewController+Additions.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		C0E2C41633CCA2B473A186ADDE148122 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D3645EBB3302E0BB75A9302082192FD /* SVIndefiniteAnimatedView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		C22ECFFBDB8ED7A1C3045DCA0ED98EEF /* Pods-Examples-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D3A2A80AEB0CB59FA20D2A81D2B105 /* Pods-Examples-dummy.m */; };
-		C780B85D6AC87D7C5D4C7AD4F183C370 /* IQPreviousNextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EF2236795D281B3F12A06A13C4525F4 /* IQPreviousNextView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		D3ADDA388618D98E120DAA2EDE6D4211 /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C32878CB2932A79C56A3D3A3874A68E /* IQUITextFieldView+Additions.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		DC85A1CC87F3496C48D0CC2B09E5322F /* SVRadialGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DF001381049648B8A6A3F415F965051 /* SVRadialGradientLayer.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		DE5D87B242F8A5C968271E53A5E48036 /* IQKeyboardManagerConstantsInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 32D54138B97355E72C363D9441A02BAC /* IQKeyboardManagerConstantsInternal.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		E0C1FDB1F5617B1CC2A23A06B6F94A61 /* IQKeyboardManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BBFA62E39556886E4961F1D50F264222 /* IQKeyboardManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		E3D4450AEB2D0C9E6EC44BE160C72E43 /* IQTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D9B3FF4B19DAB4BB1BCB6E7D2C967 /* IQTextView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		E56ED51862897266BF586BA26965E137 /* SVProgressAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 08FE51BACF8A67613E73DCC427CBE2E2 /* SVProgressAnimatedView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		EC6482B6C6A757A832C6BB34DCEF0BB3 /* IQToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 8940E79D3BB78F0F5544E4FC561D84B8 /* IQToolbar.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		ED141E898A6F86747999A58190D2CBCB /* SVProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 684E928C9BC280AEC5F09A2A0332DEDE /* SVProgressHUD-dummy.m */; };
-		FB6D71B30E54A6273883502C884A16C0 /* IQUITextFieldView+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = C5E522A4FA30EA33E5AF017FAD4E5451 /* IQUITextFieldView+Additions.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		1B77D7340EC83E839FAE3D9BB7DF0D1F /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = D146AA5CA42598F1089C4D30120411F5 /* SVProgressAnimatedView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		4A8D8A6E86FF477ACC422CFD81280018 /* Pods-Examples-Production-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EB9502ECC08D14C870AD50724D1C85 /* Pods-Examples-Production-dummy.m */; };
+		4D4710DED1E948065343292EEC567FCE /* Pods-Examples-Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D048EAC6F82E22AE9E0A70CB8D19A5 /* Pods-Examples-Demo-dummy.m */; };
+		56BC27D1E6C748409D085B72FBFB8C7F /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8FFB7DCD72FF5433363817C6EF44D4 /* SVRadialGradientLayer.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		6A823A45125967013ECFC2197E1D8DA5 /* Pods-AirwallexTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 250A5A6B57109DBC25BE65D1552A4ACA /* Pods-AirwallexTests-dummy.m */; };
+		72EA5E1F693FE30D163352247713AEFF /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B17365947A18645237F33510769FFF90 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		7EE6C17BBFFD2AB808C0F09CCACE42F0 /* Pods-Airwallex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6902FEAA4634061347C5267763216F6B /* Pods-Airwallex-dummy.m */; };
+		8649FA19DB7585214273380164946561 /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5052C3BF1B2F5D0F2F88D3D27F170D95 /* SVIndefiniteAnimatedView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		AF559EEBDEEDF421756966862ED3E746 /* SVProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 75A6B0C96337AEC32741A905EE753FAB /* SVProgressHUD.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		C0E2C41633CCA2B473A186ADDE148122 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEC469743DAF9E59E4F66ADEB7659E3 /* SVIndefiniteAnimatedView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		DC85A1CC87F3496C48D0CC2B09E5322F /* SVRadialGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = DCB8D2676FA2C5A33F8BDACE020F3DEE /* SVRadialGradientLayer.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		E56ED51862897266BF586BA26965E137 /* SVProgressAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A283D463371855C6D808D7E8A7DB180 /* SVProgressAnimatedView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		ED141E898A6F86747999A58190D2CBCB /* SVProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 599B491D012F9F46FA0E8737A8D74150 /* SVProgressHUD-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +68,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = FA08D9F61A9AFD54AEE434F54B902E55;
 			remoteInfo = AirwallexTrustDefender;
+		};
+		2C00A7EB136881052661C4819C2BD1D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4847ACB1E2799345AA74D9E317048D58;
+			remoteInfo = "AlipaySDK-iOS";
 		};
 		2D56476A2781C330C07522DD256E2086 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -112,26 +90,26 @@
 			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
 			remoteInfo = SVProgressHUD;
 		};
-		4756AD58AEC37A1BDF4B9B2E73119A63 /* PBXContainerItemProxy */ = {
+		5192C688A84EB199307D9D272446A960 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
-			remoteInfo = AirwallexCardinalMobile;
+			remoteGlobalIDString = 8554F6236D2AA202CF58503D2DF29730;
+			remoteInfo = WechatOpenSDK;
 		};
-		4C9C4DA304EE920E187495E816D7DAFB /* PBXContainerItemProxy */ = {
+		70E2DD52CE3A1852D7740DA0F7EEDD05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
 			remoteInfo = SVProgressHUD;
 		};
-		6504B9EDCA440FE9295A3FA6C2B72544 /* PBXContainerItemProxy */ = {
+		7C7805B8ADBB5823FC322344A8A77E35 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4847ACB1E2799345AA74D9E317048D58;
-			remoteInfo = "AlipaySDK-iOS";
+			remoteGlobalIDString = FA08D9F61A9AFD54AEE434F54B902E55;
+			remoteInfo = AirwallexTrustDefender;
 		};
 		9A5C0AC0AAF9F2DFEF7D74C485CD2792 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -140,6 +118,20 @@
 			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
 			remoteInfo = SVProgressHUD;
 		};
+		A730EFC1B47E1438B29C046C62292998 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
+			remoteInfo = AirwallexCardinalMobile;
+		};
+		B1F6BDBA627EA63067C4AF4005B19892 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4847ACB1E2799345AA74D9E317048D58;
+			remoteInfo = "AlipaySDK-iOS";
+		};
 		B5653F10A960EFEC1C32EC2DE4F1B8B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -147,28 +139,28 @@
 			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
 			remoteInfo = AirwallexCardinalMobile;
 		};
-		E88437170A0F140984F5043077768586 /* PBXContainerItemProxy */ = {
+		C433CCCD1E6D63FD79DF158C97C31BE6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 05B2A835D60F78761395189914B88047;
-			remoteInfo = "IQKeyboardManager-IQKeyboardManager";
+			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
+			remoteInfo = AirwallexCardinalMobile;
 		};
-		F3E30B31658D79DAD1A06EFC81EC43C0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBA456CB50E371584C11231929A0971E;
-			remoteInfo = IQKeyboardManager;
-		};
-		F59FBDE987224A7B99366868D306032E /* PBXContainerItemProxy */ = {
+		C5038E7889A6E492288BD17E94303C33 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8554F6236D2AA202CF58503D2DF29730;
 			remoteInfo = WechatOpenSDK;
 		};
-		FC10776F5BEEB99A94D8CEA425610F0E /* PBXContainerItemProxy */ = {
+		FAC76EF008E768EFF203075C9ACB5A23 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
+			remoteInfo = SVProgressHUD;
+		};
+		FB010731CBABA957C3C7E0229C0AB2BA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -185,107 +177,72 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		03D2DB35C6CAF92FE120F5A3F3611ADC /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = WechatSDK1.8.2/libWeChatSDK.a; sourceTree = "<group>"; };
-		08FE51BACF8A67613E73DCC427CBE2E2 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressAnimatedView.h; path = SVProgressHUD/SVProgressAnimatedView.h; sourceTree = "<group>"; };
-		11A353FD29335B6E5E65415CC87DF979 /* IQKeyboardManagerConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManagerConstants.h; path = IQKeyboardManager/Constants/IQKeyboardManagerConstants.h; sourceTree = "<group>"; };
-		134006AE8E5323877B34EC8A08808C6B /* IQKeyboardManager.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = IQKeyboardManager.xcassets; path = IQKeyboardManager/Resources/IQKeyboardManager.xcassets; sourceTree = "<group>"; };
-		13BBAC2B79A0DBC81F1DEEE5898A9572 /* IQTitleBarButtonItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQTitleBarButtonItem.m; path = IQKeyboardManager/IQToolbar/IQTitleBarButtonItem.m; sourceTree = "<group>"; };
-		14AF2D26167777994E74BE38ABA73FCA /* IQUIScrollView+Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIScrollView+Additions.h"; path = "IQKeyboardManager/Categories/IQUIScrollView+Additions.h"; sourceTree = "<group>"; };
-		1D90A004D1925EA38C8BD51DC6102362 /* Pods-Examples-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-frameworks.sh"; sourceTree = "<group>"; };
+		0172BD4E7CF3E5CAB85E6932BECD43C4 /* Pods-Airwallex-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Airwallex-acknowledgements.plist"; sourceTree = "<group>"; };
+		0704EAAACC48AD6F4327CFEB8C4CC7B8 /* AirwallexCardinalMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexCardinalMobile.release.xcconfig; sourceTree = "<group>"; };
+		097A265B884731B09E08AF9FF70D9468 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
+		0985DAAF4FAFAE2EE3809517F74817F4 /* SVProgressHUD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.release.xcconfig; sourceTree = "<group>"; };
+		0EA210FA1ABDB3F19465ECEC51CD3483 /* Pods-Airwallex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.debug.xcconfig"; sourceTree = "<group>"; };
+		1874B9D216AA608F27115EF4BA2204FB /* SVProgressHUD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.debug.xcconfig; sourceTree = "<group>"; };
+		19223CA8545A75CA42277649519DDD3F /* WechatAuthSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = WechatSDK1.8.2/WechatAuthSDK.h; sourceTree = "<group>"; };
+		1A283D463371855C6D808D7E8A7DB180 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressAnimatedView.h; path = SVProgressHUD/SVProgressAnimatedView.h; sourceTree = "<group>"; };
 		1E7494EB14C355A65FDD0C0DF6895B5F /* libPods-Airwallex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Airwallex.a"; path = "libPods-Airwallex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2495C831673BCF4C805FF313DDF9E8DE /* Pods-Examples-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-acknowledgements.plist"; sourceTree = "<group>"; };
-		254E6A416D727922B27A37F8783136FE /* IQBarButtonItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQBarButtonItem.h; path = IQKeyboardManager/IQToolbar/IQBarButtonItem.h; sourceTree = "<group>"; };
-		2AC3454298A06B9C77FF8C99F81BD82B /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressAnimatedView.m; path = SVProgressHUD/SVProgressAnimatedView.m; sourceTree = "<group>"; };
-		2DDA7A3DC2B54732BF5A1C95E83CAFA8 /* Pods-Airwallex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.release.xcconfig"; sourceTree = "<group>"; };
-		31A973F86E79C67148271DA4C75B7F48 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
-		3280669170FFEF10DE1A057D6896D3D3 /* IQUIView+Hierarchy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIView+Hierarchy.m"; path = "IQKeyboardManager/Categories/IQUIView+Hierarchy.m"; sourceTree = "<group>"; };
-		32D54138B97355E72C363D9441A02BAC /* IQKeyboardManagerConstantsInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManagerConstantsInternal.h; path = IQKeyboardManager/Constants/IQKeyboardManagerConstantsInternal.h; sourceTree = "<group>"; };
-		36A835DDB33571894D0707C7328D96FB /* Pods-Airwallex-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Airwallex-acknowledgements.markdown"; sourceTree = "<group>"; };
-		3AFC841BFE8E20C7A6914490238D88AF /* WechatOpenSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.debug.xcconfig; sourceTree = "<group>"; };
-		3C0B48A8657BD58B0002A5FAFDA7AC16 /* Pods-Airwallex-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Airwallex-resources.sh"; sourceTree = "<group>"; };
-		3C4275DA3C9C7EC9327A21D26147CA28 /* IQKeyboardManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManager.debug.xcconfig; sourceTree = "<group>"; };
-		3EF2236795D281B3F12A06A13C4525F4 /* IQPreviousNextView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQPreviousNextView.h; path = IQKeyboardManager/IQToolbar/IQPreviousNextView.h; sourceTree = "<group>"; };
-		3F04AD3C100BD0BE4F47E7422AFB2F02 /* AirwallexCardinalMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexCardinalMobile.release.xcconfig; sourceTree = "<group>"; };
-		412D9B3FF4B19DAB4BB1BCB6E7D2C967 /* IQTextView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQTextView.m; path = IQKeyboardManager/IQTextView/IQTextView.m; sourceTree = "<group>"; };
-		46188D23115CC2B7C5A47C3AE9159133 /* WechatOpenSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.release.xcconfig; sourceTree = "<group>"; };
-		467D022B3E32529C1E9FD664E184F6D8 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
-		4A6B5758C860763E31D01FF1B4100FB7 /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIView+IQKeyboardToolbar.h"; path = "IQKeyboardManager/IQToolbar/IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
-		4BCD29AA12C386EAE57533C5AC7630F4 /* Pods-Airwallex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.debug.xcconfig"; sourceTree = "<group>"; };
-		4D3878B1ACDA4763816AAB5DC012D8D0 /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIView+IQKeyboardToolbar.m"; path = "IQKeyboardManager/IQToolbar/IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
-		5188A62C586048B53536795E3C25FAB0 /* AirwallexTrustDefender.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexTrustDefender.release.xcconfig; sourceTree = "<group>"; };
-		5643E0740EFD44EB8C6C626A0DF489B6 /* IQKeyboardManager-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "IQKeyboardManager-dummy.m"; sourceTree = "<group>"; };
-		59B12879DAF1743E95ADD9DECFA36E1D /* AlipaySDK-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AlipaySDK-iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		5E4C9E6277FC4EC40D79E86DED1DD461 /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = WechatSDK1.8.2/WXApiObject.h; sourceTree = "<group>"; };
-		6281E3D80B7C4EA411542F8508C870E6 /* IQUIViewController+Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIViewController+Additions.m"; path = "IQKeyboardManager/Categories/IQUIViewController+Additions.m"; sourceTree = "<group>"; };
-		66B68097E92A149CCAB620EF1168FB28 /* Pods-AirwallexTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirwallexTests-frameworks.sh"; sourceTree = "<group>"; };
-		67016523854633D0F304206417BD2686 /* AlipaySDK.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
-		684E928C9BC280AEC5F09A2A0332DEDE /* SVProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD-dummy.m"; sourceTree = "<group>"; };
-		696BA3CDF5111764A42515E80037F623 /* TrustDefender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TrustDefender.framework; sourceTree = "<group>"; };
+		250A5A6B57109DBC25BE65D1552A4ACA /* Pods-AirwallexTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AirwallexTests-dummy.m"; sourceTree = "<group>"; };
+		27333BBEA52FA1332EB2A7C258B6A8A7 /* Pods-Airwallex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.release.xcconfig"; sourceTree = "<group>"; };
+		305DBEEB314A5FD9BA87FD5ABDD37935 /* Pods-Airwallex-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Airwallex-resources.sh"; sourceTree = "<group>"; };
+		31D048EAC6F82E22AE9E0A70CB8D19A5 /* Pods-Examples-Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-Demo-dummy.m"; sourceTree = "<group>"; };
+		386A260F852432960B8800BABB331D7A /* Pods-Examples-Production-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Production-acknowledgements.plist"; sourceTree = "<group>"; };
+		386C94B59B41D34C683A71DFCDC4C387 /* Pods-Examples-Production.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Production.debug.xcconfig"; sourceTree = "<group>"; };
+		4F450932ECC4653337F928EB366CB137 /* Pods-AirwallexTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirwallexTests-resources.sh"; sourceTree = "<group>"; };
+		5052C3BF1B2F5D0F2F88D3D27F170D95 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		52F6EBA27B507513469195F59CB87D2F /* Pods-Examples-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Demo.release.xcconfig"; sourceTree = "<group>"; };
+		53DDCA5AAF0A60CF81CC7317F7A52158 /* SVProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-prefix.pch"; sourceTree = "<group>"; };
+		579B710A70F66A9CD96AF076F305AFEB /* Pods-Examples-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Demo-frameworks.sh"; sourceTree = "<group>"; };
+		5906EB4BAB225C7E1BED62794F157237 /* Pods-AirwallexTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AirwallexTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		599B491D012F9F46FA0E8737A8D74150 /* SVProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD-dummy.m"; sourceTree = "<group>"; };
+		6902FEAA4634061347C5267763216F6B /* Pods-Airwallex-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Airwallex-dummy.m"; sourceTree = "<group>"; };
 		6B977302022559FAF8CDA1F700D7FEB2 /* libPods-AirwallexTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-AirwallexTests.a"; path = "libPods-AirwallexTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C32878CB2932A79C56A3D3A3874A68E /* IQUITextFieldView+Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUITextFieldView+Additions.m"; path = "IQKeyboardManager/Categories/IQUITextFieldView+Additions.m"; sourceTree = "<group>"; };
-		6D3645EBB3302E0BB75A9302082192FD /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
-		715F823A05067B88BA9D209804538147 /* libPods-Examples.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Examples.a"; path = "libPods-Examples.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		71888080F49A6283A95B9B54903265BB /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
-		7256B0D9CFD6801A53FB8C4B9503A0F2 /* IQKeyboardReturnKeyHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardReturnKeyHandler.h; path = IQKeyboardManager/IQKeyboardReturnKeyHandler.h; sourceTree = "<group>"; };
-		7A9B7278A158CC3A19173CE8ECE5DB7F /* IQKeyboardManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManager.release.xcconfig; sourceTree = "<group>"; };
-		7DF001381049648B8A6A3F415F965051 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVRadialGradientLayer.h; path = SVProgressHUD/SVRadialGradientLayer.h; sourceTree = "<group>"; };
-		7F0AF15B96797A4221D021762DB7341A /* SVProgressHUD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.debug.xcconfig; sourceTree = "<group>"; };
-		811C97887331FAFD2E01FA797BF9D252 /* IQNSArray+Sort.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQNSArray+Sort.h"; path = "IQKeyboardManager/Categories/IQNSArray+Sort.h"; sourceTree = "<group>"; };
-		84A06C2CBE3BE13D678EA3E282E3C0E4 /* IQTextView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQTextView.h; path = IQKeyboardManager/IQTextView/IQTextView.h; sourceTree = "<group>"; };
-		885D374F586B2E88E2B841423721CB0E /* WXApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = WechatSDK1.8.2/WXApi.h; sourceTree = "<group>"; };
-		8940E79D3BB78F0F5544E4FC561D84B8 /* IQToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQToolbar.h; path = IQKeyboardManager/IQToolbar/IQToolbar.h; sourceTree = "<group>"; };
-		8DB9F68C70B7845017BAADD313804FB7 /* IQUIViewController+Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIViewController+Additions.h"; path = "IQKeyboardManager/Categories/IQUIViewController+Additions.h"; sourceTree = "<group>"; };
-		931F092F2B1D085D3136D15B7EC213C3 /* Pods-AirwallexTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.debug.xcconfig"; sourceTree = "<group>"; };
-		982E0B2FACCD8FF57BFECAA07971DFE8 /* Pods-AirwallexTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AirwallexTests-dummy.m"; sourceTree = "<group>"; };
-		98527D7196957AAB07B79E2E2AFDE23E /* libIQKeyboardManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libIQKeyboardManager.a; path = libIQKeyboardManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		9872870971BFB9CD65550C08267BF7E9 /* Pods-Examples-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-acknowledgements.markdown"; sourceTree = "<group>"; };
-		9B00CA656C899F7A127BC37AFC0B2965 /* IQUIView+Hierarchy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIView+Hierarchy.h"; path = "IQKeyboardManager/Categories/IQUIView+Hierarchy.h"; sourceTree = "<group>"; };
+		7245A87FCEFDA71BD5E1DAD54A985CAC /* AirwallexCardinalMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexCardinalMobile.debug.xcconfig; sourceTree = "<group>"; };
+		75A6B0C96337AEC32741A905EE753FAB /* SVProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
+		78B5D0C43626FE3B34DDC18CD6179ED8 /* CardinalMobile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CardinalMobile.framework; sourceTree = "<group>"; };
+		7A6D439005EB56E1DF0C3261D405255E /* Pods-AirwallexTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirwallexTests-frameworks.sh"; sourceTree = "<group>"; };
+		7ADB6996CF88F323C4227F6201E742D5 /* Pods-AirwallexTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AirwallexTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		7C8F763740009B012A6A494A95E386DA /* Pods-Examples-Production.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Production.release.xcconfig"; sourceTree = "<group>"; };
+		7D2B4116BA1356E79264C649D4D3BA13 /* Pods-Examples-Demo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Demo-resources.sh"; sourceTree = "<group>"; };
+		7D7F9F2672C3F784B9DBFC6683AF5C04 /* libPods-Examples-Production.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Examples-Production.a"; path = "libPods-Examples-Production.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D825EF174C14FE30AE62AAE2499C379 /* WechatOpenSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.debug.xcconfig; sourceTree = "<group>"; };
+		7DFDF4F7211ED9A2923131F0419B6AEC /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = WechatSDK1.8.2/libWeChatSDK.a; sourceTree = "<group>"; };
+		8010F9319E2684EB6733314A2ADFD0E2 /* Pods-Examples-Production-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Production-resources.sh"; sourceTree = "<group>"; };
+		82EB9502ECC08D14C870AD50724D1C85 /* Pods-Examples-Production-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-Production-dummy.m"; sourceTree = "<group>"; };
+		86982BBE41308FE6909B620A626E460E /* AirwallexTrustDefender.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexTrustDefender.debug.xcconfig; sourceTree = "<group>"; };
+		8EA3E9C129C54C3A84CE963A824E4F76 /* AirwallexTrustDefender.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexTrustDefender.release.xcconfig; sourceTree = "<group>"; };
+		97CF28900A1A5CA37484B6E91E3BB702 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9E7259AB5492142B46E5AE8D74FA6554 /* ResourceBundle-IQKeyboardManager-IQKeyboardManager-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-IQKeyboardManager-IQKeyboardManager-Info.plist"; sourceTree = "<group>"; };
-		A09CBE2C779CC2CCCB5C700E1868E637 /* IQPreviousNextView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQPreviousNextView.m; path = IQKeyboardManager/IQToolbar/IQPreviousNextView.m; sourceTree = "<group>"; };
-		A17DA6B26746174CD1E66764C0EF3024 /* Pods-AirwallexTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirwallexTests-resources.sh"; sourceTree = "<group>"; };
-		A3FC2A589C5EB4BF4AC81F30D14490D7 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
-		A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = IQKeyboardManager.bundle; path = "IQKeyboardManager-IQKeyboardManager.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A82D98BDFB8946DC03FB17177E17E517 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
-		AC83D8D9F1E00C918E0FD01373130A4E /* SVProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
-		B5C49715F8385F7B2924373EB97061E7 /* WechatAuthSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = WechatSDK1.8.2/WechatAuthSDK.h; sourceTree = "<group>"; };
-		BBFA62E39556886E4961F1D50F264222 /* IQKeyboardManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManager.h; path = IQKeyboardManager/IQKeyboardManager.h; sourceTree = "<group>"; };
-		BC6C90C261D4DB2CD9CD61BFA22616EF /* AlipaySDK-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AlipaySDK-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		BF1791786D65E004A92EA6F734F516E6 /* Pods-Airwallex-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Airwallex-dummy.m"; sourceTree = "<group>"; };
-		C04AACE54DD34DAF6B3B72E4206DEEF6 /* IQKeyboardManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQKeyboardManager.m; path = IQKeyboardManager/IQKeyboardManager.m; sourceTree = "<group>"; };
-		C42F09A3311DFED3AF71377948686017 /* IQBarButtonItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQBarButtonItem.m; path = IQKeyboardManager/IQToolbar/IQBarButtonItem.m; sourceTree = "<group>"; };
-		C5E522A4FA30EA33E5AF017FAD4E5451 /* IQUITextFieldView+Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUITextFieldView+Additions.h"; path = "IQKeyboardManager/Categories/IQUITextFieldView+Additions.h"; sourceTree = "<group>"; };
-		C807CBE2EB09C54C882712294CE4FFB7 /* Pods-Airwallex-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Airwallex-acknowledgements.plist"; sourceTree = "<group>"; };
-		CB857E18B72EA2EA17118E33C5C23878 /* SVProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-prefix.pch"; sourceTree = "<group>"; };
-		D1EFA3D146AA6ABD52D95A872BE9DFA0 /* IQTitleBarButtonItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQTitleBarButtonItem.h; path = IQKeyboardManager/IQToolbar/IQTitleBarButtonItem.h; sourceTree = "<group>"; };
-		D2D3A2A80AEB0CB59FA20D2A81D2B105 /* Pods-Examples-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-dummy.m"; sourceTree = "<group>"; };
-		D5D97F7E0416BC8FB0ACE2AD8DF28455 /* IQToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQToolbar.m; path = IQKeyboardManager/IQToolbar/IQToolbar.m; sourceTree = "<group>"; };
-		D7A92E46C6D1A3237AEBF451DFD0A450 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVRadialGradientLayer.m; path = SVProgressHUD/SVRadialGradientLayer.m; sourceTree = "<group>"; };
-		D7D67F20E974675B686FC84911F5FC6B /* SVProgressHUD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.release.xcconfig; sourceTree = "<group>"; };
-		D7FFABDB11ED61FE2DCF7937A37A3648 /* CardinalMobile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CardinalMobile.framework; sourceTree = "<group>"; };
-		D9A9A28CE1B4CD4F5C63A07B020BD44D /* SVProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
-		E185A02A6D40A30CFDF443BD0B34CD5A /* IQKeyboardReturnKeyHandler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQKeyboardReturnKeyHandler.m; path = IQKeyboardManager/IQKeyboardReturnKeyHandler.m; sourceTree = "<group>"; };
-		E22B99ED0C99B29C14AB2673A2294FA0 /* AirwallexTrustDefender.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexTrustDefender.debug.xcconfig; sourceTree = "<group>"; };
-		E4934D471A560D0B91F429CBA85DBD2D /* Pods-Examples-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-resources.sh"; sourceTree = "<group>"; };
-		E59486910EB93EBAEE5088E0F2F46848 /* IQUIScrollView+Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIScrollView+Additions.m"; path = "IQKeyboardManager/Categories/IQUIScrollView+Additions.m"; sourceTree = "<group>"; };
-		E8D34BF034390FCB81C3E12541A31451 /* IQKeyboardManager-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQKeyboardManager-prefix.pch"; sourceTree = "<group>"; };
+		A2CBD0DF570BC750230D2791449E83A6 /* Pods-Airwallex-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Airwallex-acknowledgements.markdown"; sourceTree = "<group>"; };
+		A8648301CB145EC68C7F07CDA5A09546 /* AlipaySDK-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AlipaySDK-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		B031A8DFA99F0876A6524D62A36C6389 /* Pods-Examples-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Demo.debug.xcconfig"; sourceTree = "<group>"; };
+		B17365947A18645237F33510769FFF90 /* SVProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
+		B3B19B964F77D4539777FAB67415722A /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = WechatSDK1.8.2/WXApiObject.h; sourceTree = "<group>"; };
+		C3FDA31B186F54292CA0E7C9ACF8EB22 /* Pods-Examples-Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
+		C52C1B38D9A520AC9C341E4C5AF65351 /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
+		CF8FFB7DCD72FF5433363817C6EF44D4 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVRadialGradientLayer.m; path = SVProgressHUD/SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		D146AA5CA42598F1089C4D30120411F5 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressAnimatedView.m; path = SVProgressHUD/SVProgressAnimatedView.m; sourceTree = "<group>"; };
+		D4AF76F21815FFF9F9B3036F3ACFF577 /* Pods-Examples-Production-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Production-frameworks.sh"; sourceTree = "<group>"; };
+		DA457213DE99FD5B61D713A22DBD4B48 /* Pods-Examples-Production-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-Production-acknowledgements.markdown"; sourceTree = "<group>"; };
+		DCB8D2676FA2C5A33F8BDACE020F3DEE /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVRadialGradientLayer.h; path = SVProgressHUD/SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		DD2CFA096C9D6560E15438867DE9143F /* Pods-AirwallexTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E97D43C46A45EE515A4DA3AF94398441 /* libSVProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSVProgressHUD.a; path = libSVProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		EBC8743EDBCC759FEDD0E871C7117ADE /* IQNSArray+Sort.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQNSArray+Sort.m"; path = "IQKeyboardManager/Categories/IQNSArray+Sort.m"; sourceTree = "<group>"; };
-		EDCF23597208462C625808943BA105C4 /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
-		F20EBBCDBAF258B3AAAC00A0BDAE737E /* Pods-AirwallexTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AirwallexTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		F30676CA5B1422D0BF4303AB5483DCEE /* Pods-AirwallexTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AirwallexTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		F930481EAC1AFC357C4AB3A120868107 /* AirwallexCardinalMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexCardinalMobile.debug.xcconfig; sourceTree = "<group>"; };
+		EA7F3FE707DFBB3BFBFE23054E24A8EF /* libPods-Examples-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Examples-Demo.a"; path = "libPods-Examples-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED7B755479E121F610B2456BDB5D69C8 /* WXApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = WechatSDK1.8.2/WXApi.h; sourceTree = "<group>"; };
+		F0F238CFFB038A73CC58F746C9021CE2 /* AlipaySDK.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		F293125E486052D1BC2E73355C2C4C89 /* TrustDefender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TrustDefender.framework; sourceTree = "<group>"; };
+		F346E39339C1F5645B6E83530E4043A9 /* AlipaySDK-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AlipaySDK-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		F52F65BDD7CD320C98C4B77F7CD4D4BF /* Pods-Examples-Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Demo-acknowledgements.plist"; sourceTree = "<group>"; };
+		F6FC6B4F1B96D4F8F943CD8B606AB25A /* WechatOpenSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.release.xcconfig; sourceTree = "<group>"; };
+		FAEC469743DAF9E59E4F66ADEB7659E3 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		2F6563E907B5A4CB3C70F752D0CBD84A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3BB9E8289971A3CFC0156E6C7505D843 /* Frameworks */ = {
+		224628FB8D06F99FE31BDFD9D993A43A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -306,14 +263,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DDECC8FA16DB523A3C6859759BC981D4 /* Frameworks */ = {
+		70474154FEE80742B3D9347212C6988E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F2EA58CE47398C23803750CFA2F0836A /* Frameworks */ = {
+		DDECC8FA16DB523A3C6859759BC981D4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -323,251 +280,194 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0FB41C864BDD1CCB3B59FF8210F7B8FA /* AlipaySDK-iOS */ = {
+		03D98F6858575DC3820AE13434B70CC2 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				336E580E5D66198F1F9EA6229DBCC0E3 /* Frameworks */,
-				B02D2C1946A7C52CACF4E05BDC900697 /* Resources */,
-				5CFE2BB8FA9D333E14E795C7293B3BE7 /* Support Files */,
-			);
-			name = "AlipaySDK-iOS";
-			path = "AlipaySDK-iOS";
-			sourceTree = "<group>";
-		};
-		1525F1F7D39A8CCC934A27EC2E89C932 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				272D5A061F419685D61B52E2DD8B8F32 /* Pods-Airwallex */,
-				537E031AE8DE4B0B8A7668F86ACD1F3D /* Pods-AirwallexTests */,
-				D6BC6E329BA5DB17CF0E01D217D7CB41 /* Pods-Examples */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		272D5A061F419685D61B52E2DD8B8F32 /* Pods-Airwallex */ = {
-			isa = PBXGroup;
-			children = (
-				36A835DDB33571894D0707C7328D96FB /* Pods-Airwallex-acknowledgements.markdown */,
-				C807CBE2EB09C54C882712294CE4FFB7 /* Pods-Airwallex-acknowledgements.plist */,
-				BF1791786D65E004A92EA6F734F516E6 /* Pods-Airwallex-dummy.m */,
-				3C0B48A8657BD58B0002A5FAFDA7AC16 /* Pods-Airwallex-resources.sh */,
-				4BCD29AA12C386EAE57533C5AC7630F4 /* Pods-Airwallex.debug.xcconfig */,
-				2DDA7A3DC2B54732BF5A1C95E83CAFA8 /* Pods-Airwallex.release.xcconfig */,
-			);
-			name = "Pods-Airwallex";
-			path = "Target Support Files/Pods-Airwallex";
-			sourceTree = "<group>";
-		};
-		32DD4B5B45A0B1F0C56808C50FE7D559 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				5643E0740EFD44EB8C6C626A0DF489B6 /* IQKeyboardManager-dummy.m */,
-				E8D34BF034390FCB81C3E12541A31451 /* IQKeyboardManager-prefix.pch */,
-				3C4275DA3C9C7EC9327A21D26147CA28 /* IQKeyboardManager.debug.xcconfig */,
-				7A9B7278A158CC3A19173CE8ECE5DB7F /* IQKeyboardManager.release.xcconfig */,
-				9E7259AB5492142B46E5AE8D74FA6554 /* ResourceBundle-IQKeyboardManager-IQKeyboardManager-Info.plist */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/IQKeyboardManager";
-			sourceTree = "<group>";
-		};
-		336E580E5D66198F1F9EA6229DBCC0E3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				71888080F49A6283A95B9B54903265BB /* AlipaySDK.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		385FD353909B7573DB92F5E6C665F058 /* IQKeyboardManager */ = {
-			isa = PBXGroup;
-			children = (
-				254E6A416D727922B27A37F8783136FE /* IQBarButtonItem.h */,
-				C42F09A3311DFED3AF71377948686017 /* IQBarButtonItem.m */,
-				BBFA62E39556886E4961F1D50F264222 /* IQKeyboardManager.h */,
-				C04AACE54DD34DAF6B3B72E4206DEEF6 /* IQKeyboardManager.m */,
-				11A353FD29335B6E5E65415CC87DF979 /* IQKeyboardManagerConstants.h */,
-				32D54138B97355E72C363D9441A02BAC /* IQKeyboardManagerConstantsInternal.h */,
-				7256B0D9CFD6801A53FB8C4B9503A0F2 /* IQKeyboardReturnKeyHandler.h */,
-				E185A02A6D40A30CFDF443BD0B34CD5A /* IQKeyboardReturnKeyHandler.m */,
-				811C97887331FAFD2E01FA797BF9D252 /* IQNSArray+Sort.h */,
-				EBC8743EDBCC759FEDD0E871C7117ADE /* IQNSArray+Sort.m */,
-				3EF2236795D281B3F12A06A13C4525F4 /* IQPreviousNextView.h */,
-				A09CBE2C779CC2CCCB5C700E1868E637 /* IQPreviousNextView.m */,
-				84A06C2CBE3BE13D678EA3E282E3C0E4 /* IQTextView.h */,
-				412D9B3FF4B19DAB4BB1BCB6E7D2C967 /* IQTextView.m */,
-				D1EFA3D146AA6ABD52D95A872BE9DFA0 /* IQTitleBarButtonItem.h */,
-				13BBAC2B79A0DBC81F1DEEE5898A9572 /* IQTitleBarButtonItem.m */,
-				8940E79D3BB78F0F5544E4FC561D84B8 /* IQToolbar.h */,
-				D5D97F7E0416BC8FB0ACE2AD8DF28455 /* IQToolbar.m */,
-				14AF2D26167777994E74BE38ABA73FCA /* IQUIScrollView+Additions.h */,
-				E59486910EB93EBAEE5088E0F2F46848 /* IQUIScrollView+Additions.m */,
-				C5E522A4FA30EA33E5AF017FAD4E5451 /* IQUITextFieldView+Additions.h */,
-				6C32878CB2932A79C56A3D3A3874A68E /* IQUITextFieldView+Additions.m */,
-				9B00CA656C899F7A127BC37AFC0B2965 /* IQUIView+Hierarchy.h */,
-				3280669170FFEF10DE1A057D6896D3D3 /* IQUIView+Hierarchy.m */,
-				4A6B5758C860763E31D01FF1B4100FB7 /* IQUIView+IQKeyboardToolbar.h */,
-				4D3878B1ACDA4763816AAB5DC012D8D0 /* IQUIView+IQKeyboardToolbar.m */,
-				8DB9F68C70B7845017BAADD313804FB7 /* IQUIViewController+Additions.h */,
-				6281E3D80B7C4EA411542F8508C870E6 /* IQUIViewController+Additions.m */,
-				96476ADB13926A319FD60E9491DE0FCD /* Resources */,
-				32DD4B5B45A0B1F0C56808C50FE7D559 /* Support Files */,
-			);
-			name = IQKeyboardManager;
-			path = IQKeyboardManager;
-			sourceTree = "<group>";
-		};
-		537E031AE8DE4B0B8A7668F86ACD1F3D /* Pods-AirwallexTests */ = {
-			isa = PBXGroup;
-			children = (
-				F30676CA5B1422D0BF4303AB5483DCEE /* Pods-AirwallexTests-acknowledgements.markdown */,
-				F20EBBCDBAF258B3AAAC00A0BDAE737E /* Pods-AirwallexTests-acknowledgements.plist */,
-				982E0B2FACCD8FF57BFECAA07971DFE8 /* Pods-AirwallexTests-dummy.m */,
-				66B68097E92A149CCAB620EF1168FB28 /* Pods-AirwallexTests-frameworks.sh */,
-				A17DA6B26746174CD1E66764C0EF3024 /* Pods-AirwallexTests-resources.sh */,
-				931F092F2B1D085D3136D15B7EC213C3 /* Pods-AirwallexTests.debug.xcconfig */,
-				EDCF23597208462C625808943BA105C4 /* Pods-AirwallexTests.release.xcconfig */,
-			);
-			name = "Pods-AirwallexTests";
-			path = "Target Support Files/Pods-AirwallexTests";
-			sourceTree = "<group>";
-		};
-		5A747C7BF8C59977080D3CC7C2E02503 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				696BA3CDF5111764A42515E80037F623 /* TrustDefender.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5CFE2BB8FA9D333E14E795C7293B3BE7 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				59B12879DAF1743E95ADD9DECFA36E1D /* AlipaySDK-iOS.debug.xcconfig */,
-				BC6C90C261D4DB2CD9CD61BFA22616EF /* AlipaySDK-iOS.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/AlipaySDK-iOS";
-			sourceTree = "<group>";
-		};
-		5F0F213BC43B6F4A29075A06FF871E58 /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				A3FC2A589C5EB4BF4AC81F30D14490D7 /* SVIndefiniteAnimatedView.h */,
-				6D3645EBB3302E0BB75A9302082192FD /* SVIndefiniteAnimatedView.m */,
-				08FE51BACF8A67613E73DCC427CBE2E2 /* SVProgressAnimatedView.h */,
-				2AC3454298A06B9C77FF8C99F81BD82B /* SVProgressAnimatedView.m */,
-				D9A9A28CE1B4CD4F5C63A07B020BD44D /* SVProgressHUD.h */,
-				AC83D8D9F1E00C918E0FD01373130A4E /* SVProgressHUD.m */,
-				7DF001381049648B8A6A3F415F965051 /* SVRadialGradientLayer.h */,
-				D7A92E46C6D1A3237AEBF451DFD0A450 /* SVRadialGradientLayer.m */,
-				BB460251AE777264931970E3F7574DF1 /* Resources */,
-				B57F9BF7CC5546EF7B8A7CDAE6D5A958 /* Support Files */,
-			);
-			name = SVProgressHUD;
-			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
-		63AE07A2C823A278C796F1E422D79E80 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				BCE65CA34BDCF05A13893C13D8E6076D /* AirwallexCardinalMobile */,
-				C9DA279ED8B5CA616C021796838C8F4C /* AirwallexTrustDefender */,
-				0FB41C864BDD1CCB3B59FF8210F7B8FA /* AlipaySDK-iOS */,
-				385FD353909B7573DB92F5E6C665F058 /* IQKeyboardManager */,
-				5F0F213BC43B6F4A29075A06FF871E58 /* SVProgressHUD */,
-				E501D59DC33AE91E690DE31E1A521486 /* WechatOpenSDK */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		80EA8369DA4C5B411988F867C5174CE7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */,
-				98527D7196957AAB07B79E2E2AFDE23E /* libIQKeyboardManager.a */,
-				1E7494EB14C355A65FDD0C0DF6895B5F /* libPods-Airwallex.a */,
-				6B977302022559FAF8CDA1F700D7FEB2 /* libPods-AirwallexTests.a */,
-				715F823A05067B88BA9D209804538147 /* libPods-Examples.a */,
-				E97D43C46A45EE515A4DA3AF94398441 /* libSVProgressHUD.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		8143DAF43F11AA20C2E02A91898A5BF0 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				3AFC841BFE8E20C7A6914490238D88AF /* WechatOpenSDK.debug.xcconfig */,
-				46188D23115CC2B7C5A47C3AE9159133 /* WechatOpenSDK.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/WechatOpenSDK";
-			sourceTree = "<group>";
-		};
-		84C79B3268E75F1B186DB9478219B3DE /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				F930481EAC1AFC357C4AB3A120868107 /* AirwallexCardinalMobile.debug.xcconfig */,
-				3F04AD3C100BD0BE4F47E7422AFB2F02 /* AirwallexCardinalMobile.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/AirwallexCardinalMobile";
-			sourceTree = "<group>";
-		};
-		96476ADB13926A319FD60E9491DE0FCD /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				134006AE8E5323877B34EC8A08808C6B /* IQKeyboardManager.xcassets */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		B02D2C1946A7C52CACF4E05BDC900697 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				67016523854633D0F304206417BD2686 /* AlipaySDK.bundle */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		B57F9BF7CC5546EF7B8A7CDAE6D5A958 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				684E928C9BC280AEC5F09A2A0332DEDE /* SVProgressHUD-dummy.m */,
-				CB857E18B72EA2EA17118E33C5C23878 /* SVProgressHUD-prefix.pch */,
-				7F0AF15B96797A4221D021762DB7341A /* SVProgressHUD.debug.xcconfig */,
-				D7D67F20E974675B686FC84911F5FC6B /* SVProgressHUD.release.xcconfig */,
+				599B491D012F9F46FA0E8737A8D74150 /* SVProgressHUD-dummy.m */,
+				53DDCA5AAF0A60CF81CC7317F7A52158 /* SVProgressHUD-prefix.pch */,
+				1874B9D216AA608F27115EF4BA2204FB /* SVProgressHUD.debug.xcconfig */,
+				0985DAAF4FAFAE2EE3809517F74817F4 /* SVProgressHUD.release.xcconfig */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SVProgressHUD";
 			sourceTree = "<group>";
 		};
-		BB460251AE777264931970E3F7574DF1 /* Resources */ = {
+		15BF181BC43C767F8FAAD607554B5610 /* Pods-AirwallexTests */ = {
 			isa = PBXGroup;
 			children = (
-				467D022B3E32529C1E9FD664E184F6D8 /* SVProgressHUD.bundle */,
+				5906EB4BAB225C7E1BED62794F157237 /* Pods-AirwallexTests-acknowledgements.markdown */,
+				7ADB6996CF88F323C4227F6201E742D5 /* Pods-AirwallexTests-acknowledgements.plist */,
+				250A5A6B57109DBC25BE65D1552A4ACA /* Pods-AirwallexTests-dummy.m */,
+				7A6D439005EB56E1DF0C3261D405255E /* Pods-AirwallexTests-frameworks.sh */,
+				4F450932ECC4653337F928EB366CB137 /* Pods-AirwallexTests-resources.sh */,
+				DD2CFA096C9D6560E15438867DE9143F /* Pods-AirwallexTests.debug.xcconfig */,
+				C52C1B38D9A520AC9C341E4C5AF65351 /* Pods-AirwallexTests.release.xcconfig */,
 			);
-			name = Resources;
+			name = "Pods-AirwallexTests";
+			path = "Target Support Files/Pods-AirwallexTests";
 			sourceTree = "<group>";
 		};
-		BCE65CA34BDCF05A13893C13D8E6076D /* AirwallexCardinalMobile */ = {
+		282362B2F06FAC98E8593EE969FD17E4 /* Pods-Examples-Demo */ = {
 			isa = PBXGroup;
 			children = (
-				F4D2C110D5BA332A7F4087F8F143A0A0 /* Frameworks */,
-				84C79B3268E75F1B186DB9478219B3DE /* Support Files */,
+				C3FDA31B186F54292CA0E7C9ACF8EB22 /* Pods-Examples-Demo-acknowledgements.markdown */,
+				F52F65BDD7CD320C98C4B77F7CD4D4BF /* Pods-Examples-Demo-acknowledgements.plist */,
+				31D048EAC6F82E22AE9E0A70CB8D19A5 /* Pods-Examples-Demo-dummy.m */,
+				579B710A70F66A9CD96AF076F305AFEB /* Pods-Examples-Demo-frameworks.sh */,
+				7D2B4116BA1356E79264C649D4D3BA13 /* Pods-Examples-Demo-resources.sh */,
+				B031A8DFA99F0876A6524D62A36C6389 /* Pods-Examples-Demo.debug.xcconfig */,
+				52F6EBA27B507513469195F59CB87D2F /* Pods-Examples-Demo.release.xcconfig */,
+			);
+			name = "Pods-Examples-Demo";
+			path = "Target Support Files/Pods-Examples-Demo";
+			sourceTree = "<group>";
+		};
+		423B21E59FC8F5E365C5C0AB8FC58944 /* AirwallexTrustDefender */ = {
+			isa = PBXGroup;
+			children = (
+				95DC2E3A6A1EA67908AAA7680246CF70 /* Frameworks */,
+				B328C69F476FE70177D16B193C37CDD7 /* Support Files */,
+			);
+			name = AirwallexTrustDefender;
+			path = AirwallexTrustDefender;
+			sourceTree = "<group>";
+		};
+		476CEF6A2D012D16512C5AB2ACE0307E /* AirwallexCardinalMobile */ = {
+			isa = PBXGroup;
+			children = (
+				9CEC1B777C9804C45F99954173F33ACF /* Frameworks */,
+				E59759D1BA57E9F8DD4963B77D03AD37 /* Support Files */,
 			);
 			name = AirwallexCardinalMobile;
 			path = AirwallexCardinalMobile;
 			sourceTree = "<group>";
 		};
-		C9DA279ED8B5CA616C021796838C8F4C /* AirwallexTrustDefender */ = {
+		4CF7187D49556E0F3C7337E61E50822C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5A747C7BF8C59977080D3CC7C2E02503 /* Frameworks */,
-				EACA8F17DC1196589D7C3E902DCADC6D /* Support Files */,
+				097A265B884731B09E08AF9FF70D9468 /* SVProgressHUD.bundle */,
 			);
-			name = AirwallexTrustDefender;
-			path = AirwallexTrustDefender;
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		4EEB84E4D96018CAC18AEF05D8C6F2FD /* Pods-Airwallex */ = {
+			isa = PBXGroup;
+			children = (
+				A2CBD0DF570BC750230D2791449E83A6 /* Pods-Airwallex-acknowledgements.markdown */,
+				0172BD4E7CF3E5CAB85E6932BECD43C4 /* Pods-Airwallex-acknowledgements.plist */,
+				6902FEAA4634061347C5267763216F6B /* Pods-Airwallex-dummy.m */,
+				305DBEEB314A5FD9BA87FD5ABDD37935 /* Pods-Airwallex-resources.sh */,
+				0EA210FA1ABDB3F19465ECEC51CD3483 /* Pods-Airwallex.debug.xcconfig */,
+				27333BBEA52FA1332EB2A7C258B6A8A7 /* Pods-Airwallex.release.xcconfig */,
+			);
+			name = "Pods-Airwallex";
+			path = "Target Support Files/Pods-Airwallex";
+			sourceTree = "<group>";
+		};
+		730F0B8B90573019B3C7B959E283BC43 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				476CEF6A2D012D16512C5AB2ACE0307E /* AirwallexCardinalMobile */,
+				423B21E59FC8F5E365C5C0AB8FC58944 /* AirwallexTrustDefender */,
+				81DDC57F84CA2B3C682DFBB9B0D6FD3D /* AlipaySDK-iOS */,
+				A2D88024891C684C59C4C8B453D7FBD7 /* SVProgressHUD */,
+				F99E47E101DBEC258564A6C33EEA49DD /* WechatOpenSDK */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7684496AC5B504424285D7F8E4E362F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7DFDF4F7211ED9A2923131F0419B6AEC /* libWeChatSDK.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		81DDC57F84CA2B3C682DFBB9B0D6FD3D /* AlipaySDK-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				C40D8E7D12183E8C31D1362068BC26EE /* Frameworks */,
+				B0A1563E0D89979B73FF42467E0BDB39 /* Resources */,
+				FE9D3E8B59A6D44DC865518C80E1C1C5 /* Support Files */,
+			);
+			name = "AlipaySDK-iOS";
+			path = "AlipaySDK-iOS";
+			sourceTree = "<group>";
+		};
+		863A8EF3BDF771021A472FBBD3FC7619 /* Pods-Examples-Production */ = {
+			isa = PBXGroup;
+			children = (
+				DA457213DE99FD5B61D713A22DBD4B48 /* Pods-Examples-Production-acknowledgements.markdown */,
+				386A260F852432960B8800BABB331D7A /* Pods-Examples-Production-acknowledgements.plist */,
+				82EB9502ECC08D14C870AD50724D1C85 /* Pods-Examples-Production-dummy.m */,
+				D4AF76F21815FFF9F9B3036F3ACFF577 /* Pods-Examples-Production-frameworks.sh */,
+				8010F9319E2684EB6733314A2ADFD0E2 /* Pods-Examples-Production-resources.sh */,
+				386C94B59B41D34C683A71DFCDC4C387 /* Pods-Examples-Production.debug.xcconfig */,
+				7C8F763740009B012A6A494A95E386DA /* Pods-Examples-Production.release.xcconfig */,
+			);
+			name = "Pods-Examples-Production";
+			path = "Target Support Files/Pods-Examples-Production";
+			sourceTree = "<group>";
+		};
+		95DC2E3A6A1EA67908AAA7680246CF70 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F293125E486052D1BC2E73355C2C4C89 /* TrustDefender.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9CEC1B777C9804C45F99954173F33ACF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				78B5D0C43626FE3B34DDC18CD6179ED8 /* CardinalMobile.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A2D88024891C684C59C4C8B453D7FBD7 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				5052C3BF1B2F5D0F2F88D3D27F170D95 /* SVIndefiniteAnimatedView.h */,
+				FAEC469743DAF9E59E4F66ADEB7659E3 /* SVIndefiniteAnimatedView.m */,
+				1A283D463371855C6D808D7E8A7DB180 /* SVProgressAnimatedView.h */,
+				D146AA5CA42598F1089C4D30120411F5 /* SVProgressAnimatedView.m */,
+				75A6B0C96337AEC32741A905EE753FAB /* SVProgressHUD.h */,
+				B17365947A18645237F33510769FFF90 /* SVProgressHUD.m */,
+				DCB8D2676FA2C5A33F8BDACE020F3DEE /* SVRadialGradientLayer.h */,
+				CF8FFB7DCD72FF5433363817C6EF44D4 /* SVRadialGradientLayer.m */,
+				4CF7187D49556E0F3C7337E61E50822C /* Resources */,
+				03D98F6858575DC3820AE13434B70CC2 /* Support Files */,
+			);
+			name = SVProgressHUD;
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		B0A1563E0D89979B73FF42467E0BDB39 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F0F238CFFB038A73CC58F746C9021CE2 /* AlipaySDK.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		B328C69F476FE70177D16B193C37CDD7 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				86982BBE41308FE6909B620A626E460E /* AirwallexTrustDefender.debug.xcconfig */,
+				8EA3E9C129C54C3A84CE963A824E4F76 /* AirwallexTrustDefender.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/AirwallexTrustDefender";
+			sourceTree = "<group>";
+		};
+		C40D8E7D12183E8C31D1362068BC26EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				97CF28900A1A5CA37484B6E91E3BB702 /* AlipaySDK.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -575,25 +475,10 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D89477F20FB1DE18A04690586D7808C4 /* Frameworks */,
-				63AE07A2C823A278C796F1E422D79E80 /* Pods */,
-				80EA8369DA4C5B411988F867C5174CE7 /* Products */,
-				1525F1F7D39A8CCC934A27EC2E89C932 /* Targets Support Files */,
+				730F0B8B90573019B3C7B959E283BC43 /* Pods */,
+				FF75C069106BB72499FE763D5021B10C /* Products */,
+				EDFC3D79BF0CB35891DB0408AF283D8E /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		D6BC6E329BA5DB17CF0E01D217D7CB41 /* Pods-Examples */ = {
-			isa = PBXGroup;
-			children = (
-				9872870971BFB9CD65550C08267BF7E9 /* Pods-Examples-acknowledgements.markdown */,
-				2495C831673BCF4C805FF313DDF9E8DE /* Pods-Examples-acknowledgements.plist */,
-				D2D3A2A80AEB0CB59FA20D2A81D2B105 /* Pods-Examples-dummy.m */,
-				1D90A004D1925EA38C8BD51DC6102362 /* Pods-Examples-frameworks.sh */,
-				E4934D471A560D0B91F429CBA85DBD2D /* Pods-Examples-resources.sh */,
-				A82D98BDFB8946DC03FB17177E17E517 /* Pods-Examples.debug.xcconfig */,
-				31A973F86E79C67148271DA4C75B7F48 /* Pods-Examples.release.xcconfig */,
-			);
-			name = "Pods-Examples";
-			path = "Target Support Files/Pods-Examples";
 			sourceTree = "<group>";
 		};
 		D89477F20FB1DE18A04690586D7808C4 /* Frameworks */ = {
@@ -603,43 +488,70 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E501D59DC33AE91E690DE31E1A521486 /* WechatOpenSDK */ = {
+		E59759D1BA57E9F8DD4963B77D03AD37 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				B5C49715F8385F7B2924373EB97061E7 /* WechatAuthSDK.h */,
-				885D374F586B2E88E2B841423721CB0E /* WXApi.h */,
-				5E4C9E6277FC4EC40D79E86DED1DD461 /* WXApiObject.h */,
-				ECC5DFAB12D55B9BA4AA8BD9C285DF87 /* Frameworks */,
-				8143DAF43F11AA20C2E02A91898A5BF0 /* Support Files */,
+				7245A87FCEFDA71BD5E1DAD54A985CAC /* AirwallexCardinalMobile.debug.xcconfig */,
+				0704EAAACC48AD6F4327CFEB8C4CC7B8 /* AirwallexCardinalMobile.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/AirwallexCardinalMobile";
+			sourceTree = "<group>";
+		};
+		EDFC3D79BF0CB35891DB0408AF283D8E /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4EEB84E4D96018CAC18AEF05D8C6F2FD /* Pods-Airwallex */,
+				15BF181BC43C767F8FAAD607554B5610 /* Pods-AirwallexTests */,
+				282362B2F06FAC98E8593EE969FD17E4 /* Pods-Examples-Demo */,
+				863A8EF3BDF771021A472FBBD3FC7619 /* Pods-Examples-Production */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		F99E47E101DBEC258564A6C33EEA49DD /* WechatOpenSDK */ = {
+			isa = PBXGroup;
+			children = (
+				19223CA8545A75CA42277649519DDD3F /* WechatAuthSDK.h */,
+				ED7B755479E121F610B2456BDB5D69C8 /* WXApi.h */,
+				B3B19B964F77D4539777FAB67415722A /* WXApiObject.h */,
+				7684496AC5B504424285D7F8E4E362F7 /* Frameworks */,
+				F9CA5396B5A234DC7693FC1A9DEE18A4 /* Support Files */,
 			);
 			name = WechatOpenSDK;
 			path = WechatOpenSDK;
 			sourceTree = "<group>";
 		};
-		EACA8F17DC1196589D7C3E902DCADC6D /* Support Files */ = {
+		F9CA5396B5A234DC7693FC1A9DEE18A4 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				E22B99ED0C99B29C14AB2673A2294FA0 /* AirwallexTrustDefender.debug.xcconfig */,
-				5188A62C586048B53536795E3C25FAB0 /* AirwallexTrustDefender.release.xcconfig */,
+				7D825EF174C14FE30AE62AAE2499C379 /* WechatOpenSDK.debug.xcconfig */,
+				F6FC6B4F1B96D4F8F943CD8B606AB25A /* WechatOpenSDK.release.xcconfig */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/AirwallexTrustDefender";
+			path = "../Target Support Files/WechatOpenSDK";
 			sourceTree = "<group>";
 		};
-		ECC5DFAB12D55B9BA4AA8BD9C285DF87 /* Frameworks */ = {
+		FE9D3E8B59A6D44DC865518C80E1C1C5 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				03D2DB35C6CAF92FE120F5A3F3611ADC /* libWeChatSDK.a */,
+				F346E39339C1F5645B6E83530E4043A9 /* AlipaySDK-iOS.debug.xcconfig */,
+				A8648301CB145EC68C7F07CDA5A09546 /* AlipaySDK-iOS.release.xcconfig */,
 			);
-			name = Frameworks;
+			name = "Support Files";
+			path = "../Target Support Files/AlipaySDK-iOS";
 			sourceTree = "<group>";
 		};
-		F4D2C110D5BA332A7F4087F8F143A0A0 /* Frameworks */ = {
+		FF75C069106BB72499FE763D5021B10C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D7FFABDB11ED61FE2DCF7937A37A3648 /* CardinalMobile.framework */,
+				1E7494EB14C355A65FDD0C0DF6895B5F /* libPods-Airwallex.a */,
+				6B977302022559FAF8CDA1F700D7FEB2 /* libPods-AirwallexTests.a */,
+				EA7F3FE707DFBB3BFBFE23054E24A8EF /* libPods-Examples-Demo.a */,
+				7D7F9F2672C3F784B9DBFC6683AF5C04 /* libPods-Examples-Production.a */,
+				E97D43C46A45EE515A4DA3AF94398441 /* libSVProgressHUD.a */,
 			);
-			name = Frameworks;
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -659,29 +571,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		57EBD0507D210DB63FC28BEAADAB9C12 /* Headers */ = {
+		579FAD9DA339858D6900AB68E4C583E6 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AAF11F3D443FAC5FA05724E0D3BA619 /* IQBarButtonItem.h in Headers */,
-				E0C1FDB1F5617B1CC2A23A06B6F94A61 /* IQKeyboardManager.h in Headers */,
-				2D67FAEB37C5A19987B85C644F716011 /* IQKeyboardManagerConstants.h in Headers */,
-				DE5D87B242F8A5C968271E53A5E48036 /* IQKeyboardManagerConstantsInternal.h in Headers */,
-				4980DC99BBD4343E24E0A381DC97E617 /* IQKeyboardReturnKeyHandler.h in Headers */,
-				743A36219F41FAAE55F83E8A70F61B80 /* IQNSArray+Sort.h in Headers */,
-				C780B85D6AC87D7C5D4C7AD4F183C370 /* IQPreviousNextView.h in Headers */,
-				4F1095965D3C120675B3F15A441BAE54 /* IQTextView.h in Headers */,
-				6D5DD431FA37E82652B996D385282017 /* IQTitleBarButtonItem.h in Headers */,
-				EC6482B6C6A757A832C6BB34DCEF0BB3 /* IQToolbar.h in Headers */,
-				484F55CC26B18879D05B55130EB61F82 /* IQUIScrollView+Additions.h in Headers */,
-				FB6D71B30E54A6273883502C884A16C0 /* IQUITextFieldView+Additions.h in Headers */,
-				504F67BDC2B4230E8419142598EE4FEA /* IQUIView+Hierarchy.h in Headers */,
-				97B1C2165AD1B8B0F84F0D979BD3441F /* IQUIView+IQKeyboardToolbar.h in Headers */,
-				BFBD816F65F71F6620E678DF053E5DB8 /* IQUIViewController+Additions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BE10DE1C7D22088702AF1DFAEB7C8569 /* Headers */ = {
+		7C9CBE7B2CF44BDA965730ED65306610 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -702,23 +599,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		05B2A835D60F78761395189914B88047 /* IQKeyboardManager-IQKeyboardManager */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4B874819EFB80E3169DF561059274C94 /* Build configuration list for PBXNativeTarget "IQKeyboardManager-IQKeyboardManager" */;
-			buildPhases = (
-				B72B92E97C51586ED71CF7EEA447C2AA /* Sources */,
-				2F6563E907B5A4CB3C70F752D0CBD84A /* Frameworks */,
-				D604D878C17F73855A94606E7A0E0D1A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "IQKeyboardManager-IQKeyboardManager";
-			productName = "IQKeyboardManager-IQKeyboardManager";
-			productReference = A5B2838E4866923F3DA717B058EBFF5D /* IQKeyboardManager.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
 		1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F49D2BFAAA78D95C1429E59AB1A23ACE /* Build configuration list for PBXNativeTarget "SVProgressHUD" */;
@@ -736,27 +616,48 @@
 			productReference = E97D43C46A45EE515A4DA3AF94398441 /* libSVProgressHUD.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		798D7038185779650724117C84AA91DB /* Pods-Examples */ = {
+		BC72FF8A0FD941846AD5AA06E75F185B /* Pods-Examples-Production */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 52491A42B414FE0B8784CE214C2405C6 /* Build configuration list for PBXNativeTarget "Pods-Examples" */;
+			buildConfigurationList = 09C0357EC359F94C87826AC53ED223E6 /* Build configuration list for PBXNativeTarget "Pods-Examples-Production" */;
 			buildPhases = (
-				BE10DE1C7D22088702AF1DFAEB7C8569 /* Headers */,
-				7E4FF233FD94E82D30EE8B792AA4AD03 /* Sources */,
-				3BB9E8289971A3CFC0156E6C7505D843 /* Frameworks */,
+				7C9CBE7B2CF44BDA965730ED65306610 /* Headers */,
+				F618FC42D3C0668C16C5691882B0F7C4 /* Sources */,
+				224628FB8D06F99FE31BDFD9D993A43A /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				140FF964CD264D8925A24BB95DBFCE8A /* PBXTargetDependency */,
-				4D293CBA9D921A8DE7DD67000138085F /* PBXTargetDependency */,
-				7567CB2CB1292D91877BB04382D0FE18 /* PBXTargetDependency */,
-				B321B9CCD7D8A85202A90FB8B0E4B88C /* PBXTargetDependency */,
-				16CDB6D40AB82A6F21AFA334D2C1F078 /* PBXTargetDependency */,
-				B0908FD7E50CADE0915963721B592440 /* PBXTargetDependency */,
+				F77F270A5112FDD396F0927230F702F0 /* PBXTargetDependency */,
+				A1CE396274D2A8D5F8862D31510507B1 /* PBXTargetDependency */,
+				6324FFDF2BB78B1A97A1448C39C77784 /* PBXTargetDependency */,
+				8B25867D1CD7CB5384F323719DEC4319 /* PBXTargetDependency */,
+				90ACF6864800CA21EBF6FD09D02E4AA4 /* PBXTargetDependency */,
 			);
-			name = "Pods-Examples";
-			productName = "Pods-Examples";
-			productReference = 715F823A05067B88BA9D209804538147 /* libPods-Examples.a */;
+			name = "Pods-Examples-Production";
+			productName = "Pods-Examples-Production";
+			productReference = 7D7F9F2672C3F784B9DBFC6683AF5C04 /* libPods-Examples-Production.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		DDC35C9CEB0F569F95F9D81C2F21C012 /* Pods-Examples-Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C0CC1F7016A3FA32E38A99393EF15B14 /* Build configuration list for PBXNativeTarget "Pods-Examples-Demo" */;
+			buildPhases = (
+				579FAD9DA339858D6900AB68E4C583E6 /* Headers */,
+				DD91CCA1754F1F99A30E339907C1C760 /* Sources */,
+				70474154FEE80742B3D9347212C6988E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7BDD09DA747F15F48C5E83EED7AE6514 /* PBXTargetDependency */,
+				FF9E1CC6460D560E63CD84F0CEC5A284 /* PBXTargetDependency */,
+				18155F9B20CBC67D3DD0306C06742FE0 /* PBXTargetDependency */,
+				3F97D58DF41F6A31B983D6325CB2A235 /* PBXTargetDependency */,
+				EF140A7293BC443D1A77C3D2CFADAFB3 /* PBXTargetDependency */,
+			);
+			name = "Pods-Examples-Demo";
+			productName = "Pods-Examples-Demo";
+			productReference = EA7F3FE707DFBB3BFBFE23054E24A8EF /* libPods-Examples-Demo.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		F570EDABE55B540442303119D9625340 /* Pods-AirwallexTests */ = {
@@ -799,24 +700,6 @@
 			productReference = 1E7494EB14C355A65FDD0C0DF6895B5F /* libPods-Airwallex.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		FBA456CB50E371584C11231929A0971E /* IQKeyboardManager */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3E084E3DB21A11A106984879E0E58F1E /* Build configuration list for PBXNativeTarget "IQKeyboardManager" */;
-			buildPhases = (
-				57EBD0507D210DB63FC28BEAADAB9C12 /* Headers */,
-				41425946828C462FF2E5791A30DC4A00 /* Sources */,
-				F2EA58CE47398C23803750CFA2F0836A /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				17F292EE850977A16384C7F1E6FA1616 /* PBXTargetDependency */,
-			);
-			name = IQKeyboardManager;
-			productName = IQKeyboardManager;
-			productReference = 98527D7196957AAB07B79E2E2AFDE23E /* libIQKeyboardManager.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -835,57 +718,24 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 80EA8369DA4C5B411988F867C5174CE7 /* Products */;
+			productRefGroup = FF75C069106BB72499FE763D5021B10C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */,
 				FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */,
 				4847ACB1E2799345AA74D9E317048D58 /* AlipaySDK-iOS */,
-				FBA456CB50E371584C11231929A0971E /* IQKeyboardManager */,
-				05B2A835D60F78761395189914B88047 /* IQKeyboardManager-IQKeyboardManager */,
 				F58E9775E039168F7D40BFD110403F36 /* Pods-Airwallex */,
 				F570EDABE55B540442303119D9625340 /* Pods-AirwallexTests */,
-				798D7038185779650724117C84AA91DB /* Pods-Examples */,
+				DDC35C9CEB0F569F95F9D81C2F21C012 /* Pods-Examples-Demo */,
+				BC72FF8A0FD941846AD5AA06E75F185B /* Pods-Examples-Production */,
 				1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */,
 				8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		D604D878C17F73855A94606E7A0E0D1A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8D732177E62EF6A302ADF2FC0F6D5B81 /* IQKeyboardManager.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		41425946828C462FF2E5791A30DC4A00 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				240DA7531A3EEFBFE9A80EFFA6DF0334 /* IQBarButtonItem.m in Sources */,
-				5FA587C035E82EE68EE4703DDD5D24CB /* IQKeyboardManager-dummy.m in Sources */,
-				40DE126042024EC771303961E89824A6 /* IQKeyboardManager.m in Sources */,
-				19CB27C78074DF587684F968A7622D30 /* IQKeyboardReturnKeyHandler.m in Sources */,
-				06C533A2EDDA46ED58DC16A1A2538657 /* IQNSArray+Sort.m in Sources */,
-				097E253520E232C40BC89C2C8C59ECD3 /* IQPreviousNextView.m in Sources */,
-				E3D4450AEB2D0C9E6EC44BE160C72E43 /* IQTextView.m in Sources */,
-				23D60C47351F5088777DCE5A66E1A140 /* IQTitleBarButtonItem.m in Sources */,
-				0AF427776FADDE44561A6F311154F496 /* IQToolbar.m in Sources */,
-				7F5A64DCE11E74CDE82D1C0737A94E49 /* IQUIScrollView+Additions.m in Sources */,
-				D3ADDA388618D98E120DAA2EDE6D4211 /* IQUITextFieldView+Additions.m in Sources */,
-				40AAC5FD63D30F5CAF3263840042883C /* IQUIView+Hierarchy.m in Sources */,
-				A45369E414714EA3CD320D74C0CECE9B /* IQUIView+IQKeyboardToolbar.m in Sources */,
-				0F2AA3A031B9ED68C8BF5F8C651937C3 /* IQUIViewController+Additions.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		653EF978AC8050BE5586582A6F468FE9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -906,14 +756,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7E4FF233FD94E82D30EE8B792AA4AD03 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C22ECFFBDB8ED7A1C3045DCA0ED98EEF /* Pods-Examples-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9B897BDA287EC4F657AFB4CCFDA0585A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -922,10 +764,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B72B92E97C51586ED71CF7EEA447C2AA /* Sources */ = {
+		DD91CCA1754F1F99A30E339907C1C760 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D4710DED1E948065343292EEC567FCE /* Pods-Examples-Demo-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F618FC42D3C0668C16C5691882B0F7C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A8D8A6E86FF477ACC422CFD81280018 /* Pods-Examples-Production-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -938,23 +789,11 @@
 			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
 			targetProxy = 30E67E8034226F53B5CAE2B52F0FE818 /* PBXContainerItemProxy */;
 		};
-		140FF964CD264D8925A24BB95DBFCE8A /* PBXTargetDependency */ = {
+		18155F9B20CBC67D3DD0306C06742FE0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = AirwallexCardinalMobile;
-			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
-			targetProxy = 4756AD58AEC37A1BDF4B9B2E73119A63 /* PBXContainerItemProxy */;
-		};
-		16CDB6D40AB82A6F21AFA334D2C1F078 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SVProgressHUD;
-			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
-			targetProxy = 4C9C4DA304EE920E187495E816D7DAFB /* PBXContainerItemProxy */;
-		};
-		17F292EE850977A16384C7F1E6FA1616 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "IQKeyboardManager-IQKeyboardManager";
-			target = 05B2A835D60F78761395189914B88047 /* IQKeyboardManager-IQKeyboardManager */;
-			targetProxy = E88437170A0F140984F5043077768586 /* PBXContainerItemProxy */;
+			name = "AlipaySDK-iOS";
+			target = 4847ACB1E2799345AA74D9E317048D58 /* AlipaySDK-iOS */;
+			targetProxy = B1F6BDBA627EA63067C4AF4005B19892 /* PBXContainerItemProxy */;
 		};
 		1E5034EDFD5F6F6C1EF45060FB420423 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -962,23 +801,41 @@
 			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
 			targetProxy = 04200D3A3C177A2E956F1B9845075602 /* PBXContainerItemProxy */;
 		};
+		3F97D58DF41F6A31B983D6325CB2A235 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SVProgressHUD;
+			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
+			targetProxy = FAC76EF008E768EFF203075C9ACB5A23 /* PBXContainerItemProxy */;
+		};
 		48CD02E20FBF47E15F596E92DDDDD610 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AirwallexTrustDefender;
 			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
 			targetProxy = 2D56476A2781C330C07522DD256E2086 /* PBXContainerItemProxy */;
 		};
-		4D293CBA9D921A8DE7DD67000138085F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AirwallexTrustDefender;
-			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
-			targetProxy = FC10776F5BEEB99A94D8CEA425610F0E /* PBXContainerItemProxy */;
-		};
-		7567CB2CB1292D91877BB04382D0FE18 /* PBXTargetDependency */ = {
+		6324FFDF2BB78B1A97A1448C39C77784 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "AlipaySDK-iOS";
 			target = 4847ACB1E2799345AA74D9E317048D58 /* AlipaySDK-iOS */;
-			targetProxy = 6504B9EDCA440FE9295A3FA6C2B72544 /* PBXContainerItemProxy */;
+			targetProxy = 2C00A7EB136881052661C4819C2BD1D0 /* PBXContainerItemProxy */;
+		};
+		7BDD09DA747F15F48C5E83EED7AE6514 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AirwallexCardinalMobile;
+			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
+			targetProxy = A730EFC1B47E1438B29C046C62292998 /* PBXContainerItemProxy */;
+		};
+		8B25867D1CD7CB5384F323719DEC4319 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SVProgressHUD;
+			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
+			targetProxy = 70E2DD52CE3A1852D7740DA0F7EEDD05 /* PBXContainerItemProxy */;
+		};
+		90ACF6864800CA21EBF6FD09D02E4AA4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WechatOpenSDK;
+			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
+			targetProxy = 5192C688A84EB199307D9D272446A960 /* PBXContainerItemProxy */;
 		};
 		934A2C8B770F1FDC02D33C9BCD7BA216 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -986,23 +843,17 @@
 			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
 			targetProxy = B5653F10A960EFEC1C32EC2DE4F1B8B3 /* PBXContainerItemProxy */;
 		};
+		A1CE396274D2A8D5F8862D31510507B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AirwallexTrustDefender;
+			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
+			targetProxy = FB010731CBABA957C3C7E0229C0AB2BA /* PBXContainerItemProxy */;
+		};
 		A72049AB258F20F9228B35409E694053 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AirwallexCardinalMobile;
 			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
 			targetProxy = FC86706334B974FFF2261F85354292A8 /* PBXContainerItemProxy */;
-		};
-		B0908FD7E50CADE0915963721B592440 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = WechatOpenSDK;
-			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
-			targetProxy = F59FBDE987224A7B99366868D306032E /* PBXContainerItemProxy */;
-		};
-		B321B9CCD7D8A85202A90FB8B0E4B88C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IQKeyboardManager;
-			target = FBA456CB50E371584C11231929A0971E /* IQKeyboardManager */;
-			targetProxy = F3E30B31658D79DAD1A06EFC81EC43C0 /* PBXContainerItemProxy */;
 		};
 		D7D8E3FB8B9B3FCFD4D0422C5941A031 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1010,36 +861,30 @@
 			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
 			targetProxy = 9A5C0AC0AAF9F2DFEF7D74C485CD2792 /* PBXContainerItemProxy */;
 		};
+		EF140A7293BC443D1A77C3D2CFADAFB3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WechatOpenSDK;
+			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
+			targetProxy = C5038E7889A6E492288BD17E94303C33 /* PBXContainerItemProxy */;
+		};
+		F77F270A5112FDD396F0927230F702F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AirwallexCardinalMobile;
+			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
+			targetProxy = C433CCCD1E6D63FD79DF158C97C31BE6 /* PBXContainerItemProxy */;
+		};
+		FF9E1CC6460D560E63CD84F0CEC5A284 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AirwallexTrustDefender;
+			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
+			targetProxy = 7C7805B8ADBB5823FC322344A8A77E35 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		000F6C444426DF6F1901E52A430A9583 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C4275DA3C9C7EC9327A21D26147CA28 /* IQKeyboardManager.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/IQKeyboardManager/IQKeyboardManager-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = IQKeyboardManager;
-				PRODUCT_NAME = IQKeyboardManager;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		024507F7863F2F1E9F5657F60350DB19 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F930481EAC1AFC357C4AB3A120868107 /* AirwallexCardinalMobile.debug.xcconfig */;
+			baseConfigurationReference = 7245A87FCEFDA71BD5E1DAD54A985CAC /* AirwallexCardinalMobile.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1054,9 +899,31 @@
 			};
 			name = Debug;
 		};
+		0C0E7F16CCBDFB4D8BA1FE5A06DCDADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 386C94B59B41D34C683A71DFCDC4C387 /* Pods-Examples-Production.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		12B7F6A76AD29B031B19BFFB9CC5DD6B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 931F092F2B1D085D3136D15B7EC213C3 /* Pods-AirwallexTests.debug.xcconfig */;
+			baseConfigurationReference = DD2CFA096C9D6560E15438867DE9143F /* Pods-AirwallexTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1078,7 +945,7 @@
 		};
 		1812C58354D81E588727ABE23D670ECC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F04AD3C100BD0BE4F47E7422AFB2F02 /* AirwallexCardinalMobile.release.xcconfig */;
+			baseConfigurationReference = 0704EAAACC48AD6F4327CFEB8C4CC7B8 /* AirwallexCardinalMobile.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1160,7 +1027,7 @@
 		};
 		1FB4D849B0CC2A46BF6F5BD08F5063C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E22B99ED0C99B29C14AB2673A2294FA0 /* AirwallexTrustDefender.debug.xcconfig */;
+			baseConfigurationReference = 86982BBE41308FE6909B620A626E460E /* AirwallexTrustDefender.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1175,9 +1042,32 @@
 			};
 			name = Debug;
 		};
+		2A4CC46860A5CFBDCE3978FA4A179B85 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C8F763740009B012A6A494A95E386DA /* Pods-Examples-Production.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		3C3A8FC1D20E0026F0BA7CCC20511DA0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46188D23115CC2B7C5A47C3AE9159133 /* WechatOpenSDK.release.xcconfig */;
+			baseConfigurationReference = F6FC6B4F1B96D4F8F943CD8B606AB25A /* WechatOpenSDK.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1194,7 +1084,7 @@
 		};
 		412D1B1647A0E332832406A56D6B28FC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EDCF23597208462C625808943BA105C4 /* Pods-AirwallexTests.release.xcconfig */;
+			baseConfigurationReference = C52C1B38D9A520AC9C341E4C5AF65351 /* Pods-AirwallexTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1217,7 +1107,7 @@
 		};
 		5D26A4196FA0B249662BFBA5A4148DE0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5188A62C586048B53536795E3C25FAB0 /* AirwallexTrustDefender.release.xcconfig */;
+			baseConfigurationReference = 8EA3E9C129C54C3A84CE963A824E4F76 /* AirwallexTrustDefender.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1233,32 +1123,9 @@
 			};
 			name = Release;
 		};
-		5FF8FDC6B72B803AB9C87A39325D593C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31A973F86E79C67148271DA4C75B7F48 /* Pods-Examples.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		6323423DF7A8FCDE138E6FB559C4A709 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AFC841BFE8E20C7A6914490238D88AF /* WechatOpenSDK.debug.xcconfig */;
+			baseConfigurationReference = 7D825EF174C14FE30AE62AAE2499C379 /* WechatOpenSDK.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1272,34 +1139,9 @@
 			};
 			name = Debug;
 		};
-		6EFFF047AFE2E38DE9265771EEA9AB50 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A9B7278A158CC3A19173CE8ECE5DB7F /* IQKeyboardManager.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/IQKeyboardManager/IQKeyboardManager-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = IQKeyboardManager;
-				PRODUCT_NAME = IQKeyboardManager;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		8F11339F4A5352588165C8D79860AB8C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4BCD29AA12C386EAE57533C5AC7630F4 /* Pods-Airwallex.debug.xcconfig */;
+			baseConfigurationReference = 0EA210FA1ABDB3F19465ECEC51CD3483 /* Pods-Airwallex.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1321,7 +1163,7 @@
 		};
 		A0F052D5A8EE05A7189E03812B02B500 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC6C90C261D4DB2CD9CD61BFA22616EF /* AlipaySDK-iOS.release.xcconfig */;
+			baseConfigurationReference = A8648301CB145EC68C7F07CDA5A09546 /* AlipaySDK-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1336,26 +1178,9 @@
 			};
 			name = Release;
 		};
-		A109708AF7D801A449BA32153D1F97A9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C4275DA3C9C7EC9327A21D26147CA28 /* IQKeyboardManager.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/IQKeyboardManager";
-				IBSC_MODULE = IQKeyboardManager;
-				INFOPLIST_FILE = "Target Support Files/IQKeyboardManager/ResourceBundle-IQKeyboardManager-IQKeyboardManager-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_NAME = IQKeyboardManager;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
 		A2DB3C5A5BF6E2BA8A7A8E0178051515 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 59B12879DAF1743E95ADD9DECFA36E1D /* AlipaySDK-iOS.debug.xcconfig */;
+			baseConfigurationReference = F346E39339C1F5645B6E83530E4043A9 /* AlipaySDK-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1371,7 +1196,7 @@
 		};
 		AB44873072BB76717C501C42F248C808 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F0AF15B96797A4221D021762DB7341A /* SVProgressHUD.debug.xcconfig */;
+			baseConfigurationReference = 1874B9D216AA608F27115EF4BA2204FB /* SVProgressHUD.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1453,26 +1278,32 @@
 			};
 			name = Release;
 		};
-		B27D6CBF701B017E464A2D827800FEB8 /* Release */ = {
+		C8BE3F4744BDEB9AE9AE016AEA606641 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A9B7278A158CC3A19173CE8ECE5DB7F /* IQKeyboardManager.release.xcconfig */;
+			baseConfigurationReference = 52F6EBA27B507513469195F59CB87D2F /* Pods-Examples-Demo.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/IQKeyboardManager";
-				IBSC_MODULE = IQKeyboardManager;
-				INFOPLIST_FILE = "Target Support Files/IQKeyboardManager/ResourceBundle-IQKeyboardManager-IQKeyboardManager-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_NAME = IQKeyboardManager;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		CFAB9862E1B23D503E5DA6717B0C7C6B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2DDA7A3DC2B54732BF5A1C95E83CAFA8 /* Pods-Airwallex.release.xcconfig */;
+			baseConfigurationReference = 27333BBEA52FA1332EB2A7C258B6A8A7 /* Pods-Airwallex.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1495,7 +1326,7 @@
 		};
 		E34A83F7AB2F25FE45EC40F51110387C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D7D67F20E974675B686FC84911F5FC6B /* SVProgressHUD.release.xcconfig */;
+			baseConfigurationReference = 0985DAAF4FAFAE2EE3809517F74817F4 /* SVProgressHUD.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1518,9 +1349,9 @@
 			};
 			name = Release;
 		};
-		E39A5C91BCFD8C547BC4868CFFBBD9F5 /* Debug */ = {
+		FBFFFA485535C6D19E82E080724A0C98 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A82D98BDFB8946DC03FB17177E17E517 /* Pods-Examples.debug.xcconfig */;
+			baseConfigurationReference = B031A8DFA99F0876A6524D62A36C6389 /* Pods-Examples-Demo.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1543,20 +1374,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		09C0357EC359F94C87826AC53ED223E6 /* Build configuration list for PBXNativeTarget "Pods-Examples-Production" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0C0E7F16CCBDFB4D8BA1FE5A06DCDADF /* Debug */,
+				2A4CC46860A5CFBDCE3978FA4A179B85 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		16F3AC7138A9B070628DD311E97E4B96 /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8F11339F4A5352588165C8D79860AB8C /* Debug */,
 				CFAB9862E1B23D503E5DA6717B0C7C6B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3E084E3DB21A11A106984879E0E58F1E /* Build configuration list for PBXNativeTarget "IQKeyboardManager" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				000F6C444426DF6F1901E52A430A9583 /* Debug */,
-				6EFFF047AFE2E38DE9265771EEA9AB50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1588,15 +1419,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4B874819EFB80E3169DF561059274C94 /* Build configuration list for PBXNativeTarget "IQKeyboardManager-IQKeyboardManager" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A109708AF7D801A449BA32153D1F97A9 /* Debug */,
-				B27D6CBF701B017E464A2D827800FEB8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		4FA56C14997D06C2E93C4B6C96D25FD5 /* Build configuration list for PBXAggregateTarget "AirwallexTrustDefender" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1606,20 +1428,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		52491A42B414FE0B8784CE214C2405C6 /* Build configuration list for PBXNativeTarget "Pods-Examples" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E39A5C91BCFD8C547BC4868CFFBBD9F5 /* Debug */,
-				5FF8FDC6B72B803AB9C87A39325D593C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		615DA29BAE483F9E6BD98D01B92AD86E /* Build configuration list for PBXAggregateTarget "AirwallexCardinalMobile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				024507F7863F2F1E9F5657F60350DB19 /* Debug */,
 				1812C58354D81E588727ABE23D670ECC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C0CC1F7016A3FA32E38A99393EF15B14 /* Build configuration list for PBXNativeTarget "Pods-Examples-Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBFFFA485535C6D19E82E080724A0C98 /* Debug */,
+				C8BE3F4744BDEB9AE9AE016AEA606641 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

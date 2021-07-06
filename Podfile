@@ -25,17 +25,16 @@ end
 def shared_example_pods
   pod 'AlipaySDK-iOS', '15.7.9'
   pod 'WechatOpenSDK', '1.8.2'
-  pod 'IQKeyboardManager', '6.5.4'
 end
 
 target 'Examples-Demo' do
   project './Examples/Examples.xcodeproj'
-  shared_pods
+  shared_sdk_pods
   shared_example_pods
 end
 
 target 'Examples-Production' do
   project './Examples/Examples.xcodeproj'
-  shared_pods
+  shared_sdk_pods
   shared_example_pods
 end
