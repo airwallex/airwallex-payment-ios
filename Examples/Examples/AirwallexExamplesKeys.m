@@ -41,7 +41,7 @@
 
 - (NSDictionary *)loadConfigFile:(NSString *)filename
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:@"json"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:@"json" inDirectory:@"Keys"];
     if (path) {
         NSData *data = [[NSData alloc] initWithContentsOfFile:path];
         if (data) {
