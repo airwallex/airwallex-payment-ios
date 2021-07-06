@@ -29,8 +29,8 @@
 		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
-		57DCD63F26941E2800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD63E26941E2800705D5C /* Keys */; };
-		57DCD64026941E2800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD63E26941E2800705D5C /* Keys */; };
+		57DCD642269428C800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
+		57DCD643269428C800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
 		57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */; };
 		57F9EF8B268DCE3E00B744B2 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
 		57F9EF8C268DCE3E00B744B2 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BE264D06B400027311 /* WebViewController.m */; };
@@ -121,7 +121,7 @@
 		08A3E99E24246C30003FDAAF /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		08B55E372421D8C60054E254 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48E2B422F8587612E8D653BC /* libPods-Examples-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Examples-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		57DCD63E26941E2800705D5C /* Keys */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Keys; sourceTree = "<group>"; };
+		57DCD641269428C800705D5C /* Keys */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Keys; sourceTree = "<group>"; };
 		57F9EF83268DCB3600B744B2 /* AirwallexExamplesKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexExamplesKeys.h; sourceTree = "<group>"; };
 		57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirwallexExamplesKeys.m; sourceTree = "<group>"; };
 		57F9EFAC268DCE3E00B744B2 /* Examples-Production.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Examples-Production.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -207,7 +207,7 @@
 		085BD3ED23CC64B6002E8F27 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
-				57DCD63E26941E2800705D5C /* Keys */,
+				57DCD641269428C800705D5C /* Keys */,
 				085BD3EE23CC64B6002E8F27 /* AppDelegate.h */,
 				085BD3EF23CC64B6002E8F27 /* AppDelegate.m */,
 				57F9EF83268DCB3600B744B2 /* AirwallexExamplesKeys.h */,
@@ -365,7 +365,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57DCD63F26941E2800705D5C /* Keys in Resources */,
+				57DCD642269428C800705D5C /* Keys in Resources */,
 				085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */,
 				085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */,
 				088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */,
@@ -380,7 +380,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57DCD64026941E2800705D5C /* Keys in Resources */,
+				57DCD643269428C800705D5C /* Keys in Resources */,
 				57F9EF9D268DCE3E00B744B2 /* LaunchScreen.storyboard in Resources */,
 				57F9EF9E268DCE3E00B744B2 /* Splash.storyboard in Resources */,
 				57F9EF9F268DCE3E00B744B2 /* CircularStd-Medium.otf in Resources */,

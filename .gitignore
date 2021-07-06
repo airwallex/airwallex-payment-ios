@@ -3,7 +3,9 @@
 
 # Keys
 #
-**/Keys/*.json
+**/Keys/Demo.json
+**/Keys/Production.json
+
 
 # OSX
 #
