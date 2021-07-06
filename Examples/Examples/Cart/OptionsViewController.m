@@ -135,18 +135,18 @@
 //    [self.delegate optionsViewController:self didEditCurrency:defaultCurrency];
     
     // Test 1
-//    client.paymentBaseURL = [NSURL URLWithString:@"https://pci-api-staging.airwallex.com"];
-//    client.apiKey = @"63973457b747616b0e2762dfc77ccebbac45d48e1cb82f91c89506bd1ae6f43c6e6725e7dcdbd78e2c747515c64b2a5a";
-//    client.clientID = @"1zlCc8I_T-qEpCr6iijT5A";
-//    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://pci-api-staging.airwallex.com"]];
-//    self.currency  = @"MYR";
+    client.paymentBaseURL = [NSURL URLWithString:@"https://pci-api-staging.airwallex.com"];
+    client.apiKey = @"63973457b747616b0e2762dfc77ccebbac45d48e1cb82f91c89506bd1ae6f43c6e6725e7dcdbd78e2c747515c64b2a5a";
+    client.clientID = @"1zlCc8I_T-qEpCr6iijT5A";
+    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://pci-api-staging.airwallex.com"]];
+    self.currency  = @"MYR";
     
     // Test 2
-    client.paymentBaseURL = [NSURL URLWithString:@"https://pci-api-demo.airwallex.com"];
-    client.apiKey = @"cac0021cd41faa9d9633bc686b8728f91a165fbae7a69ed6f7ffe3482190ae64daf7e9255742030456eac4b59db71902";
-    client.clientID = @"WZIU9G6yQpumYxP5tsTMLQ";
-    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://pci-api-demo.airwallex.com"]];
-    self.currency  = @"CNY";
+//    client.paymentBaseURL = [NSURL URLWithString:@"https://pci-api-demo.airwallex.com"];
+//    client.apiKey = @"cac0021cd41faa9d9633bc686b8728f91a165fbae7a69ed6f7ffe3482190ae64daf7e9255742030456eac4b59db71902";
+//    client.clientID = @"WZIU9G6yQpumYxP5tsTMLQ";
+//    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://pci-api-demo.airwallex.com"]];
+//    self.currency  = @"CNY";
     
     [self.delegate optionsViewController:self didEditCurrency: self.currency];
 

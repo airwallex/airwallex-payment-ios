@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <WechatOpenSDK/WXApi.h>
-#import <Airwallex/Airwallex.h>
 #import "AirwallexExamplesKeys.h"
 
 @interface AppDelegate () <WXApiDelegate>
