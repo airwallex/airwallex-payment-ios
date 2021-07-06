@@ -31,6 +31,7 @@
 @property (strong, nonatomic) NSDecimalNumber *amount;
 @property (strong, nonatomic) NSString *currency;
 @property (strong, nonatomic) AWXPaymentIntent *paymentIntent;
+@property (nonatomic) BOOL paymentWithoutCustomer;
 
 @end
 
@@ -55,6 +56,7 @@
     self.products = [@[product0, product1] mutableCopy];
     self.amount = [NSDecimalNumber decimalNumberWithString:defaultAmount];
     self.currency = defaultCurrency;
+    self.paymentWithoutCustomer = NO;
     
     APIClient *client = [APIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
@@ -105,7 +107,7 @@
         [SVProgressHUD showErrorWithStatus:@"No products in your cart"];
         return;
     }
-    
+
     [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
@@ -115,8 +117,15 @@
         }
         
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        if (strongSelf.paymentWithoutCustomer) {
+            // No need customer
+            [strongSelf createPaymentIntentWithCustomerId:nil];
+            return;
+        }
+        
         NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
         if (customerId) {
+            // Exising customer
             [strongSelf createPaymentIntentWithCustomerId:customerId];
             return;
         }
@@ -141,6 +150,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:kCachedCustomerID];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
+            // New customer
             [strongSelf createPaymentIntentWithCustomerId:customerId];
         }];
     }];
@@ -148,7 +158,7 @@
 
 #pragma mark - Create Payment Intent
 
-- (void)createPaymentIntentWithCustomerId:(NSString *)customerId
+- (void)createPaymentIntentWithCustomerId:(nullable NSString *)customerId
 {
     [SVProgressHUD show];
     
@@ -162,9 +172,7 @@
                                          @"currency": self.currency,
                                          @"merchant_order_id": NSUUID.UUID.UUIDString,
                                          @"request_id": NSUUID.UUID.UUIDString,
-                                         @"customer_id": customerId,
                                          @"metadata": @{@"id": @1},
-//                                         @"return_url": @"https://staging-pacheckoutdemo.airwallex.com/checkout-success?isTesting=N",
                                          @"order": @{
                                                  @"products": @[@{
                                                                     @"type": @"Free engraving",
@@ -199,6 +207,9 @@
                                                  },
                                                  @"type": @"physical_goods"
                                          }} mutableCopy];
+    if (customerId) {
+        parameters[@"customer_id"] = customerId;
+    }
     
     dispatch_group_enter(group);
     [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
@@ -213,18 +224,19 @@
         dispatch_group_leave(group);
     }];
     
-    dispatch_group_enter(group);
-    [[APIClient sharedClient] createCustomerSecretWithId:customerId completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
-        if (error) {
-            _error = error;
+    if (customerId) {
+        dispatch_group_enter(group);
+        [[APIClient sharedClient] createCustomerSecretWithId:customerId completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                _error = error;
+                dispatch_group_leave(group);
+                return;
+            }
+            
+            _customerSecret = result[@"client_secret"];
             dispatch_group_leave(group);
-            return;
-        }
-        
-        _customerSecret = result[@"client_secret"];
-        dispatch_group_leave(group);
-        
-    }];
+        }];
+    }
     
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         if (_error) {
@@ -233,12 +245,16 @@
         }
         
         [SVProgressHUD dismiss];
-        if (_paymentIntent && _customerSecret) {
-            // Step2: Setup client secret & customer secret
+        if (_paymentIntent) {
+            // Step2: Setup client secret
             [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
-            [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
             
-            // Step3: Show payment flow
+            // Setup3: customer secret (Optional)
+            if (_customerSecret) {
+                [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
+            }
+            
+            // Step4: Show payment flow
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
         }
