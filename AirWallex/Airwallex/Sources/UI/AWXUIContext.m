@@ -50,7 +50,7 @@
     controller.currency = self.paymentIntent.currency;
     controller.customerPaymentMethods = self.paymentIntent.paymentMethods;
     controller.customerPaymentConsents = self.paymentIntent.paymentConsents;
-//    controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
+    controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
     controller.isFlow = YES;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -109,6 +109,5 @@
 @end
 
 @implementation AWXRecurringUIContext
-
 
 @end

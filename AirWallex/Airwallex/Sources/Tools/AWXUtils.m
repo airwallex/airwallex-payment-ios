@@ -106,7 +106,7 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 - (NSDecimalNumber *)toIntegerCents
 {
     if (self == [NSDecimalNumber notANumber]) {
-        [[AWXLogger sharedLogger] logException:@"NaN can't be convert to cents"];
+        [[AWXLogger sharedLogger] logException:NSLocalizedString(@"NaN can't be convert to cents", nil)];
     }
 
     NSDecimalNumberHandler *round = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain
@@ -121,7 +121,7 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 - (NSString *)string
 {
     if (self == [NSDecimalNumber zero]) {
-        return @"Free";
+        return NSLocalizedString(@"Free", nil);
     }
 
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
@@ -159,7 +159,7 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
                name:(NSString *)name
 {
     if (value == nil) {
-        [[AWXLogger sharedLogger] logException:[NSString stringWithFormat:@"%@ must not be nil", name]];
+        [[AWXLogger sharedLogger] logException:[NSString stringWithFormat:NSLocalizedString(@"%@ must not be nil", nil), name]];
     }
 }
 
@@ -167,7 +167,7 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
                     name:(NSString *)name
 {
     if ([value compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
-        [[AWXLogger sharedLogger] logException:[NSString stringWithFormat:@"%@ must not be negative", name]];
+        [[AWXLogger sharedLogger] logException:[NSString stringWithFormat:NSLocalizedString(@"%@ must not be negative", nil), name]];
     }
 }
 
@@ -183,6 +183,18 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 + (nullable UIImage *)imageNamed:(NSString *)name ofType:(NSString *)type inBundle:(nullable NSBundle *)bundle
 {
     return [UIImage imageWithContentsOfFile:[bundle pathForResource:name ofType:type]];
+}
+
++ (UIImage *)imageFromColor:(UIColor *)color
+{
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 @end
@@ -241,6 +253,44 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
         }
     }
     return nil;
+}
+
+@end
+
+@implementation UIView (Utils)
+
++ (instancetype)autoLayoutView
+{
+    UIView *view = [self new];
+    view.translatesAutoresizingMaskIntoConstraints = NO;
+    return view;
+}
+
+- (void)roundCorners:(UIRectCorner)corners radius:(CGFloat)radius
+{
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
+    CAShapeLayer *maskLayer = [CAShapeLayer new];
+    maskLayer.path = path.CGPath;
+    self.layer.mask = maskLayer;
+}
+
+@end
+
+@implementation UIColor (Utils)
+
++ (UIColor *)titleColor
+{
+    return [UIColor colorWithRed:0.1 green:0.11 blue:0.13 alpha:1];
+}
+
++ (UIColor *)textColor
+{
+    return [UIColor colorWithRed:0.33 green:0.36 blue:0.39 alpha:1];
+}
+
++ (UIColor *)buttonBackgroundColor
+{
+    return [UIColor colorWithRed:0.38 green:0.18 blue:1 alpha:1];
 }
 
 @end

@@ -14,6 +14,8 @@
 
 @interface AWXView ()
 
+@property (nonatomic, strong) NSString *key;
+
 @end
 
 @implementation AWXView
@@ -35,6 +37,14 @@
 {
     _borderColor = borderColor;
     self.layer.borderColor = borderColor.CGColor;
+}
+
+- (instancetype)initWithKey:(NSString *)key
+{
+    if (self = [super initWithFrame:CGRectZero]) {
+        self.key = key;
+    }
+    return self;
 }
 
 @end
@@ -366,13 +376,13 @@
                 isValidYear = year.integerValue > currentYear;
             }
             if (!(isValidYear && isValidMonth)) {
-                errorMessage = @"Please enter a valid expiry date";
+                errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
             }
         } else {
-            errorMessage = @"Please enter a valid expiry date";
+            errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
         }
     } else {
-        errorMessage = @"Please enter a valid expiry date";
+        errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
     }
     self.errorText = errorMessage;
 }
@@ -381,37 +391,37 @@
 {
     switch (self.fieldType) {
         case AWXTextFieldTypeFirstName:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter your first name";
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your first name", nil);
             break;
         case AWXTextFieldTypeLastName:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter your last name";
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your last name", nil);
             break;
         case AWXTextFieldTypeEmail:
             [self validateEmail:textField.text];
             break;
         case AWXTextFieldTypeCountry:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter your country";
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your country", nil);
             break;
         case AWXTextFieldTypeState:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter your state";
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your state", nil);
             break;
         case AWXTextFieldTypeCity:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter your city";
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your city", nil);
             break;
         case AWXTextFieldTypeStreet:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter your street";
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your street", nil);
             break;
         case AWXTextFieldTypeCardNumber:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter your card number";
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your card number", nil);
             break;
         case AWXTextFieldTypeNameOnCard:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter your name on card";
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your name on card", nil);
             break;
         case AWXTextFieldTypeExpires:
             [self validateExpires:textField.text];
             break;
         case AWXTextFieldTypeCVC:
-            self.errorText = textField.text.length > 0 ? nil : @"Please enter your card CVC";
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your card CVC", nil);
             break;
         default:
             break;
@@ -663,6 +673,19 @@
 - (void)setPrice:(NSString *)price
 {
     self.priceLabel.text = price;
+}
+
+@end
+
+@interface AWXPayButtonView ()
+@end
+@implementation AWXPayButtonView
+
+- (void)setTitle:(NSString *)title{
+    [self.payButton setTitle:title forState:(UIControlStateNormal)];
+}
+- (NSString *)title{
+    return  self.payButton.titleLabel.text;
 }
 
 @end

@@ -27,7 +27,13 @@ typedef NS_ENUM(NSInteger, AirwallexCheckoutMode) {
 
 typedef NS_ENUM(NSUInteger, AirwallexNextTriggerByType) {
     AirwallexNextTriggerByCustomerType,
-    AirwallexNextTriggerByMerchantType,
+    AirwallexNextTriggerByMerchantType
+};
+
+typedef NS_ENUM(NSUInteger, AWXFormType) {
+    AWXFormTypeOption,
+    AWXFormTypeField,
+    AWXFormTypeButton
 };
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
@@ -50,6 +56,12 @@ FOUNDATION_EXPORT NSString *const AWXKakaoPayKey;
 FOUNDATION_EXPORT NSString *const AWXTNGPayKey;
 FOUNDATION_EXPORT NSString *const AWXDANAPayKey;
 FOUNDATION_EXPORT NSString *const AWXGCashPayKey;
+FOUNDATION_EXPORT NSString *const AWXTrueMoneyPayKey;
+FOUNDATION_EXPORT NSString *const AWXBKashPayKey;
+FOUNDATION_EXPORT NSString *const AWXPoli;
+FOUNDATION_EXPORT NSString *const AWXFpx;
+FOUNDATION_EXPORT NSString *const AWXBankTransfer;
+FOUNDATION_EXPORT NSString *const AWXOnlineBanking;
 
 FOUNDATION_EXPORT NSString *const AWXCardKey;
 FOUNDATION_EXPORT NSString *const AWXThreeDSReturnURL;

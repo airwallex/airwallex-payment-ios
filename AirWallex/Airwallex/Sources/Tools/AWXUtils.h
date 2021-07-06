@@ -67,6 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable UIImage *)imageNamed:(NSString *)name inBundle:(nullable NSBundle *)bundle;
 + (nullable UIImage *)imageNamed:(NSString *)name ofType:(NSString *)type inBundle:(nullable NSBundle *)bundle;
++ (UIImage *)imageFromColor:(UIColor *)color;
 
 @end
 
@@ -88,6 +89,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSArray *)queryItems;
 - (nullable NSString *)queryValueForName:(NSString *)name;
+
+@end
+
+@interface UIView (Utils)
+
++ (instancetype)autoLayoutView;
+- (void)roundCorners:(UIRectCorner)corners radius:(CGFloat)radius;
+
+@end
+
+@interface UIColor (Utils)
+
++ (UIColor *)titleColor;
++ (UIColor *)textColor;
++ (UIColor *)buttonBackgroundColor;
 
 @end
 

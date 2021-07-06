@@ -252,7 +252,7 @@
     AWXPaymentItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentItemCell" forIndexPath:indexPath];
     cell.cvcField.delegate = self;
     cell.cvcField.text = self.cvc;
-    cell.titleLabel.text = @"Payment";
+    cell.titleLabel.text = NSLocalizedString(@"Payment", nil);
     NSString *type = self.paymentMethod.type;
     if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
         cell.selectionLabel.text = FormatPaymentMethodTypeString(type);

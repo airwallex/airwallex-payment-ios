@@ -67,7 +67,7 @@
         if (consumerSessionId) {
             [strongSelf confirmWithReferenceId:consumerSessionId];
         } else {
-            [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing consumer seesion id."}]];
+            [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing consumer seesion id.", nil)}]];
         }
     } didValidate:^(CardinalResponse * _Nonnull validateResponse) {
         [SVProgressHUD dismiss];
@@ -131,7 +131,7 @@
                 strongSelf.transactionId = redirectResponse.xid;
                 [strongSelf.session continueWithTransactionId:redirectResponse.xid payload:redirectResponse.req didValidateDelegate:self];
             } else {
-                [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing transaction id or payload."}]];
+                [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing transaction id or payload.", nil)}]];
             }
         } else if (redirectResponse.acs && redirectResponse.req) {
             // 3DS v1.x flow
@@ -161,7 +161,7 @@
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
             [strongSelf.presentingViewController presentViewController:navigationController animated:YES completion:nil];
         } else {
-            [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Failed to determine the challenge is 1.x or 2.x."}]];
+            [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to determine the challenge is 1.x or 2.x.", nil)}]];
         }
     }];
 }
@@ -170,7 +170,7 @@
 {
     if (validateResponse) {
         if (validateResponse.actionCode == CardinalResponseActionCodeCancel) {
-            [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: @"User cancelled."}]];
+            [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"User cancelled.", nil)}]];
         } else if ([validateResponse.errorDescription.uppercaseString isEqualToString:@"SUCCESS"]) {
             [self confirmWithTransactionId:validateResponse.payment.processorTransactionId];
         } else {
@@ -179,7 +179,7 @@
     } else if (self.transactionId) {
         [self confirmWithTransactionId:self.transactionId];
     } else {
-        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing transaction id."}]];
+        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing transaction id.", nil)}]];
     }
 }
 

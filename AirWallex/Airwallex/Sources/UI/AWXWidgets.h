@@ -33,6 +33,10 @@ IB_DESIGNABLE
 @property (nonatomic) IBInspectable CGFloat borderWidth;
 @property (nonatomic, strong) IBInspectable UIColor *borderColor;
 
+@property (nonatomic, readonly) NSString *key;
+
+- (instancetype)initWithKey:(NSString *)key;
+
 @end
 
 @interface AWXNibView : AWXView
@@ -79,6 +83,13 @@ IB_DESIGNABLE
 @property (nonatomic, weak) AWXCurrencyView *exclusiveView;
 @property (weak, nonatomic) IBOutlet UIButton *button;
 
+@end
+
+@interface AWXPayButtonView : AWXNibView
+
+@property (nonatomic, strong) NSString *title;
+
+@property (weak, nonatomic) IBOutlet AWXButton *payButton;
 @end
 
 NS_ASSUME_NONNULL_END

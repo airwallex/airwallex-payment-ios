@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)unregisterKeyboard;
 - (void)registerKeyboard;
+- (void)enableTapToDismiss;
 - (UIView *)activeField;
+- (NSLayoutConstraint *)bottomLayoutConstraint;
 - (void)setActiveField:(UIView *)field;
 - (UIScrollView *)activeScrollView;
 - (IBAction)close:(id)sender;

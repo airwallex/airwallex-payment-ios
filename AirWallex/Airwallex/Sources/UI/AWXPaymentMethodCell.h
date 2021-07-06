@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "AWXPaymentMethod.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXPaymentMethodCell : UITableViewCell

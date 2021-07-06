@@ -7,12 +7,10 @@
 //
 
 #import "AppDelegate.h"
-#import <SVProgressHUD/SVProgressHUD.h>
-#import <IQKeyboardManager/IQKeyboardManager.h>
-#import <WechatOpenSDK/WXApi.h>
 #import <Airwallex/Airwallex.h>
-#import "AirwallexExamplesKeys+Utils.h"
-#import "Constant.h"
+#import <SVProgressHUD/SVProgressHUD.h>
+#import <WechatOpenSDK/WXApi.h>
+#import "AirwallexExamplesKeys.h"
 
 @interface AppDelegate () <WXApiDelegate>
 
@@ -25,7 +23,6 @@
     [SVProgressHUD setBackgroundColor:[UIColor colorNamed:@"Line Color"]];
     [SVProgressHUD setMaximumDismissTimeInterval:2];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [IQKeyboardManager sharedManager].enable = YES;
 
     // Airwallex
     // Step1:
@@ -38,7 +35,7 @@
     [UIView.appearance setTintColor:tintColor];
     
     // WeChatSDK 1.8.2
-    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppID enableMTA:YES];
+    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppId enableMTA:YES];
     
     // WeChatSDK 1.8.6.1
     //    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppID universalLink:@"https://airwallex.com/"];

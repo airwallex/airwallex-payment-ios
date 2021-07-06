@@ -26,12 +26,17 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 #import <Airwallex/AWXPaymentViewController.h>
 #import <Airwallex/AWXCardViewController.h>
 
+// Views
+#import <Airwallex/AWXLabeledFormTextFieldView.h>
+
 // API
 #import <Airwallex/AWXAPIClient.h>
 #import <Airwallex/AWXPaymentIntentRequest.h>
 #import <Airwallex/AWXPaymentIntentResponse.h>
 #import <Airwallex/AWXPaymentMethodRequest.h>
 #import <Airwallex/AWXPaymentMethodResponse.h>
+#import <Airwallex/AWXPaymentConsentRequest.h>
+#import <Airwallex/AWXPaymentConsentResponse.h>
 #import <Airwallex/AWXThreeDSService.h>
 #import <Airwallex/AWXSecurityService.h>
 
@@ -42,11 +47,10 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 // Models
 #import <Airwallex/AWXCountry.h>
 #import <Airwallex/AWXCard.h>
-#import <Airwallex/AWXNonCard.h>
 #import <Airwallex/AWXAddress.h>
 #import <Airwallex/AWXPlaceDetails.h>
 #import <Airwallex/AWXPaymentMethod.h>
-#import <Airwallex/AWXWeChatPay.h>
 #import <Airwallex/AWXPaymentMethodOptions.h>
 #import <Airwallex/AWXPaymentIntent.h>
+#import <Airwallex/AWXPaymentConsent.h>
 #import <Airwallex/AWXDevice.h>

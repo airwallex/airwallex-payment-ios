@@ -2,7 +2,7 @@
 //  AWXTrackManager.m
 //  Airwallex
 //
-//  Created by 秋风木叶下 on 2021/4/8.
+//  Created by Victor Zhu on 2021/4/8.
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 

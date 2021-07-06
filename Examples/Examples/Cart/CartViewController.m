@@ -11,13 +11,12 @@
 #import <Airwallex/Airwallex.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <WechatOpenSDK/WXApi.h>
-#import "AirwallexExamplesKeys+Utils.h"
+#import "AirwallexExamplesKeys.h"
 #import "OptionsViewController.h"
 #import "ShippingCell.h"
 #import "ProductCell.h"
 #import "TotalCell.h"
 #import "APIClient.h"
-#import "Constant.h"
 
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate, OptionsViewControllerDelegate>
 
@@ -53,13 +52,13 @@
                                                detail:@"White x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"469"]];
     self.products = [@[product0, product1] mutableCopy];
-    self.amount = [NSDecimalNumber decimalNumberWithString:defaultAmount];
-    self.currency = defaultCurrency;
+    self.amount = [NSDecimalNumber decimalNumberWithString:[AirwallexExamplesKeys shared].amount];
+    self.currency = [AirwallexExamplesKeys shared].currency;
     
     APIClient *client = [APIClient sharedClient];
-    client.paymentBaseURL = [NSURL URLWithString:paymentBaseURL];
+    client.paymentBaseURL = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
-    client.clientID = [AirwallexExamplesKeys shared].clientID;
+    client.clientID = [AirwallexExamplesKeys shared].clientId;
         
    NSDictionary *shipping = @{
                               @"first_name": @"Verify",

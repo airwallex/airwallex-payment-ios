@@ -89,7 +89,7 @@
 
     _parameters[@"page_num"] = @(self.pageNum);
     _parameters[@"page_size"] = @(self.pageSize);
-    _parameters[@"active"] =   [NSNumber numberWithBool:self.active];
+    _parameters[@"active"] = [NSNumber numberWithBool:self.active];
     if (self.transactionCurrency) {
         _parameters[@"transaction_currency"] = self.transactionCurrency;
     }

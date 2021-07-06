@@ -31,8 +31,11 @@
 #import "AWXPaymentConsentResponse.h"
 #import "AWXTrackManager.h"
 #import "AWXPaymentConsent.h"
+#import "AWXPaymentFormViewController.h"
+#import "AWXFormMapping.h"
+#import "AWXForm.h"
 
-@interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
+@interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate, AWXPaymentFormViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
@@ -53,7 +56,6 @@
 {
     [super viewDidLoad];
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-   
     [self loadPaymentMethodTypesFromPageNum: 0];
 }
 
@@ -146,8 +148,6 @@
         if ([supportedTypes containsObject:type]) {
             AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
             paymentMethod.type = type;
-            AWXNonCard *nonCard = [AWXNonCard new];
-            paymentMethod.nonCard = nonCard;
             [paymentMethodTypes addObject:paymentMethod];
         }
     }
@@ -239,7 +239,7 @@
         [SVProgressHUD dismiss];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-            [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+            [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
             [strongSelf presentViewController:controller animated:YES completion:nil];
             return;
         }
@@ -333,7 +333,7 @@
         button.layer.borderWidth = 1;
         button.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
         button.layer.masksToBounds = YES;
-        [button setTitle:@"Enter a new card" forState:UIControlStateNormal];
+        [button setTitle:NSLocalizedString(@"Enter a new card", nil) forState:UIControlStateNormal];
         [button setTitleColor:[AWXTheme sharedTheme].tintColor forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
         button.backgroundColor = [UIColor clearColor];
@@ -388,7 +388,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return @"Delete";
+    return NSLocalizedString(@"Delete", nil);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -401,11 +401,11 @@
     AWXPaymentMethod *method = items[indexPath.row];
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Would you like to delete this card?" preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"Would you like to delete this card?", nil) preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self disableCard:method];
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
@@ -441,17 +441,51 @@
         return;
     }
     
+    if ([Airwallex.supportedExtensionNonCardTypes containsObject:self.paymentMethod.type]) {
+        AWXFormMapping *formMapping = [AWXFormMapping new];
+//        if ([self.paymentMethod.type isEqualToString:AWXBankTransfer]) {
+            formMapping.title = NSLocalizedString(@"Select your bank", @"Select your bank");
+            formMapping.forms = @[
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Affin Bank" placeholder:@"affin" logo:@"affin_bank"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Alliance Bank" placeholder:@"alliance" logo:@"alliance_bank"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"AmBank" placeholder:@"ambank" logo:@"ambank"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Islam" placeholder:@"islam" logo:@"bank_islam"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Kerjasama Rakyat Malaysia" placeholder:@"rakyat" logo:@"bank_kerjasama_rakyat"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Muamalat" placeholder:@"muamalat" logo:@"bank_muamalat"],
+                [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Simpanan Nasional" placeholder:@"bsn" logo:@"bank_simpanan_nasional"]
+            ];
+//        } else {
+//            formMapping.title = FormatPaymentMethodTypeString(self.paymentMethod.type);
+//            formMapping.forms = @[
+//                [AWXForm formWithKey:@"shopper_name" type:AWXFormTypeField title:@"Name"],
+//                [AWXForm formWithKey:@"shopper_email" type:AWXFormTypeField title:@"Email"],
+//                [AWXForm formWithKey:@"shopper_phone" type:AWXFormTypeField title:@"Phone"],
+//                [AWXForm formWithKey:@"pay" type:AWXFormTypeButton title:@"Pay now"]
+//            ];
+//        }
+        AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
+        controller.delegate = self;
+        controller.paymentMethod = method;
+        controller.formMapping = formMapping;
+        controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self presentViewController:controller animated:YES completion:nil];
+        return;
+    }
+    
     // Confirm directly (Only be valid for payment flow)
     if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
         // Confirm payment with wechat type directly
         [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
         return;
     }
+    
     for (AWXPaymentConsent * consent in  self.customerPaymentConsents) {
         if ([consent.paymentMethod.Id isEqualToString:self.paymentMethod.Id]) {
             self.paymentConsent = consent;
         }
     }
+    
     // No cvc provided and go to enter cvc in payment detail page
     [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
 }
@@ -473,6 +507,17 @@
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
 {
+    if (![paymentMethod.type isEqualToString:AWXCardKey]) {
+        NSDictionary *metaData = @{@"flow": @"inapp", @"os_type": @"ios"};
+        if (paymentMethod.additionalParams) {
+            NSMutableDictionary *params = paymentMethod.additionalParams.mutableCopy;
+            [params addEntriesFromDictionary:metaData];
+            paymentMethod.additionalParams = params;
+        } else {
+            paymentMethod.additionalParams = metaData;
+        }
+    }
+    
     __weak __typeof(self)weakSelf = self;
     [SVProgressHUD show];
     [[AWXSecurityService sharedService] doProfile:[AWXUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
@@ -639,6 +684,49 @@
 
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf finishConfirmationWithResponse:response error:error];
+    }];
+}
+
+-(void) paymentExtensionInfoData:(NSDictionary *) data{
+    NSString *message = @"";
+    for (NSString *key in data.allKeys) {
+        message =  [message stringByAppendingFormat:@"%@:%@",key,data[key]];
+    }
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+#pragma mark - AWXPaymentFormViewControllerDelegate
+
+- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didSelectOption:(NSDictionary *)params
+{
+    [self.paymentMethod appendAdditionalParams:params];
+
+    AWXFormMapping *formMapping = [AWXFormMapping new];
+    formMapping.title = NSLocalizedString(@"Bank transfer", @"Bank transfer");
+    formMapping.forms = @[
+        [AWXForm formWithKey:@"shopper_name" type:AWXFormTypeField title:@"Name"],
+        [AWXForm formWithKey:@"shopper_email" type:AWXFormTypeField title:@"Email"],
+        [AWXForm formWithKey:@"shopper_phone" type:AWXFormTypeField title:@"Phone"],
+        [AWXForm formWithKey:@"pay" type:AWXFormTypeButton title:@"Pay now"]
+    ];
+    AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
+    controller.delegate = self;
+    controller.paymentMethod = self.paymentMethod;
+    controller.formMapping = formMapping;
+    controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+        [self presentViewController:controller animated:YES completion:nil];
+    }];
+}
+
+- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPayment:(NSDictionary *)params
+{
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+        [self.paymentMethod appendAdditionalParams:params];
+        [self confirmPaymentIntentWithPaymentMethod:self.paymentMethod];
     }];
 }
 
