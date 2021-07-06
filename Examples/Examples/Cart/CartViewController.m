@@ -56,7 +56,7 @@
     self.products = [@[product0, product1] mutableCopy];
     self.amount = [NSDecimalNumber decimalNumberWithString:defaultAmount];
     self.currency = defaultCurrency;
-    self.paymentWithoutCustomer = NO;
+    self.paymentWithoutCustomer = YES;
     
     APIClient *client = [APIClient sharedClient];
     client.authBaseURL = [NSURL URLWithString:authenticationBaseURL];
