@@ -7,7 +7,6 @@ ENV['SWIFT_VERSION'] = '5'
 workspace 'Airwallex.xcworkspace'
 
 def shared_sdk_pods
-  pod 'SVProgressHUD', '2.2.5'
   pod 'AirwallexTrustDefender', '5.0.32'
   pod 'AirwallexCardinalMobile', '2.2.3'
 end

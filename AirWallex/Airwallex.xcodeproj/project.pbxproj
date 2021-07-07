@@ -625,7 +625,6 @@
 				085BD3C423CC62B4002E8F27 /* Sources */,
 				085BD3C523CC62B4002E8F27 /* Frameworks */,
 				085BD3C623CC62B4002E8F27 /* Resources */,
-				D46EC70E7ABC1CFC513731B3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -645,7 +644,6 @@
 				085BD3CE23CC62B4002E8F27 /* Frameworks */,
 				085BD3CF23CC62B4002E8F27 /* Resources */,
 				A6EEBDC668E1ADC16900AAC6 /* [CP] Embed Pods Frameworks */,
-				EBCA0096C3FD008C2241FA59 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -784,40 +782,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D46EC70E7ABC1CFC513731B3 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Airwallex/Pods-Airwallex-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Airwallex/Pods-Airwallex-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Airwallex/Pods-Airwallex-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EBCA0096C3FD008C2241FA59 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

@@ -46,282 +46,215 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		187C5F5470ADB98BBF80B3C55436411C /* Pods-Examples-Staging-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 647AB95CC020402D8192D664679BD8DE /* Pods-Examples-Staging-dummy.m */; };
-		1B77D7340EC83E839FAE3D9BB7DF0D1F /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = D146AA5CA42598F1089C4D30120411F5 /* SVProgressAnimatedView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		4A8D8A6E86FF477ACC422CFD81280018 /* Pods-Examples-Production-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 923C894DA70237C24659C6BC97C4F2DC /* Pods-Examples-Production-dummy.m */; };
-		4D4710DED1E948065343292EEC567FCE /* Pods-Examples-Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFAFA0AE4D86C174EC9DB03FE7ACED7 /* Pods-Examples-Demo-dummy.m */; };
-		56BC27D1E6C748409D085B72FBFB8C7F /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8FFB7DCD72FF5433363817C6EF44D4 /* SVRadialGradientLayer.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		6A823A45125967013ECFC2197E1D8DA5 /* Pods-AirwallexTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B8E52F3A136541640697CC0B6E8D28 /* Pods-AirwallexTests-dummy.m */; };
-		72EA5E1F693FE30D163352247713AEFF /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B17365947A18645237F33510769FFF90 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		7EE6C17BBFFD2AB808C0F09CCACE42F0 /* Pods-Airwallex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B4F6FD0A4F5A415B4E0DD74AB23216 /* Pods-Airwallex-dummy.m */; };
-		8649FA19DB7585214273380164946561 /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5052C3BF1B2F5D0F2F88D3D27F170D95 /* SVIndefiniteAnimatedView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		AF559EEBDEEDF421756966862ED3E746 /* SVProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 75A6B0C96337AEC32741A905EE753FAB /* SVProgressHUD.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		C0E2C41633CCA2B473A186ADDE148122 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEC469743DAF9E59E4F66ADEB7659E3 /* SVIndefiniteAnimatedView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		DC85A1CC87F3496C48D0CC2B09E5322F /* SVRadialGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = DCB8D2676FA2C5A33F8BDACE020F3DEE /* SVRadialGradientLayer.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		E56ED51862897266BF586BA26965E137 /* SVProgressAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A283D463371855C6D808D7E8A7DB180 /* SVProgressAnimatedView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		ED141E898A6F86747999A58190D2CBCB /* SVProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 599B491D012F9F46FA0E8737A8D74150 /* SVProgressHUD-dummy.m */; };
+		04E6284EDF38B5D37131BE9D7B52112E /* Pods-Examples-Production-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73ADC0E428542C715547B17F3FE25C67 /* Pods-Examples-Production-dummy.m */; };
+		98B0171EFB3B0F0128EE27392104B47A /* Pods-Examples-Staging-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FD789679015CBB58146C42C8124F4FB4 /* Pods-Examples-Staging-dummy.m */; };
+		A4A2FCC3AFC5B3D56EC5F9D759F84429 /* Pods-Examples-Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5A694E9D8BD436CE15D13761AE1F10 /* Pods-Examples-Demo-dummy.m */; };
+		C75DD4693EBD503826D0A2BFC192AC0D /* Pods-Airwallex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF83014756A6D7C1024701EEDE8EB81 /* Pods-Airwallex-dummy.m */; };
+		DB9E1DBB0B8A295A4A9EEE8BB5CAACAE /* Pods-AirwallexTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFBC352AA581CF3E6ACC5691EF82880 /* Pods-AirwallexTests-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		04200D3A3C177A2E956F1B9845075602 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FA08D9F61A9AFD54AEE434F54B902E55;
-			remoteInfo = AirwallexTrustDefender;
-		};
-		24D143EF87C4928856D4D890C01815DF /* PBXContainerItemProxy */ = {
+		2942E310DAC18EF106152A7C61E8195E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8554F6236D2AA202CF58503D2DF29730;
 			remoteInfo = WechatOpenSDK;
 		};
-		2C00A7EB136881052661C4819C2BD1D0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4847ACB1E2799345AA74D9E317048D58;
-			remoteInfo = "AlipaySDK-iOS";
-		};
-		2D56476A2781C330C07522DD256E2086 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FA08D9F61A9AFD54AEE434F54B902E55;
-			remoteInfo = AirwallexTrustDefender;
-		};
-		30E67E8034226F53B5CAE2B52F0FE818 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
-			remoteInfo = SVProgressHUD;
-		};
-		4A64B788DD7B3713AD98D54BE32456E7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
-			remoteInfo = SVProgressHUD;
-		};
-		5192C688A84EB199307D9D272446A960 /* PBXContainerItemProxy */ = {
+		2B6B0178314594A789439BA009192B0D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8554F6236D2AA202CF58503D2DF29730;
 			remoteInfo = WechatOpenSDK;
 		};
-		5242723E0F3EF4E5F92FAB920A0CC6F0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
-			remoteInfo = AirwallexCardinalMobile;
-		};
-		70E2DD52CE3A1852D7740DA0F7EEDD05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
-			remoteInfo = SVProgressHUD;
-		};
-		7C7805B8ADBB5823FC322344A8A77E35 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FA08D9F61A9AFD54AEE434F54B902E55;
-			remoteInfo = AirwallexTrustDefender;
-		};
-		9A5C0AC0AAF9F2DFEF7D74C485CD2792 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
-			remoteInfo = SVProgressHUD;
-		};
-		A730EFC1B47E1438B29C046C62292998 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
-			remoteInfo = AirwallexCardinalMobile;
-		};
-		B1F6BDBA627EA63067C4AF4005B19892 /* PBXContainerItemProxy */ = {
+		4C238D5CDEB58EEDD65B41261FB987A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4847ACB1E2799345AA74D9E317048D58;
 			remoteInfo = "AlipaySDK-iOS";
 		};
-		B5653F10A960EFEC1C32EC2DE4F1B8B3 /* PBXContainerItemProxy */ = {
+		522923F0CF8A8A49EA72819714CEA0A0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
 			remoteInfo = AirwallexCardinalMobile;
 		};
-		C433CCCD1E6D63FD79DF158C97C31BE6 /* PBXContainerItemProxy */ = {
+		5F73F4C8EC0D263EB99B1F2C13D55608 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
 			remoteInfo = AirwallexCardinalMobile;
 		};
-		C5038E7889A6E492288BD17E94303C33 /* PBXContainerItemProxy */ = {
+		6B17E54F07B1113259127A592986F2E6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8554F6236D2AA202CF58503D2DF29730;
 			remoteInfo = WechatOpenSDK;
 		};
-		C9461F7A5F109599A44D67A724BA0829 /* PBXContainerItemProxy */ = {
+		6BBD1E1CAB8BAF6D81987666F33594D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FA08D9F61A9AFD54AEE434F54B902E55;
 			remoteInfo = AirwallexTrustDefender;
 		};
-		F928482084A33B1758F8307FF279CC40 /* PBXContainerItemProxy */ = {
+		6DE4FBE3E3C3EF8C28923EE290FA4B46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
+			remoteInfo = AirwallexCardinalMobile;
+		};
+		799BB0458993E698950A319DB0302009 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA08D9F61A9AFD54AEE434F54B902E55;
+			remoteInfo = AirwallexTrustDefender;
+		};
+		8084680C33C1629439A050E93D76E3B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
+			remoteInfo = AirwallexCardinalMobile;
+		};
+		86E813260A9FCA69B19B2EEE4B2071CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA08D9F61A9AFD54AEE434F54B902E55;
+			remoteInfo = AirwallexTrustDefender;
+		};
+		884F95C40FDE3A5F26F3969C8163ED69 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA08D9F61A9AFD54AEE434F54B902E55;
+			remoteInfo = AirwallexTrustDefender;
+		};
+		91AAD9A11775AEF1D81632804872ECD5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
+			remoteInfo = AirwallexCardinalMobile;
+		};
+		A569FB9183883167DD6D95986470AABA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4847ACB1E2799345AA74D9E317048D58;
 			remoteInfo = "AlipaySDK-iOS";
 		};
-		FAC76EF008E768EFF203075C9ACB5A23 /* PBXContainerItemProxy */ = {
+		AB8A0BA124E11C13CB6BEBE93242C146 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
-			remoteInfo = SVProgressHUD;
+			remoteGlobalIDString = 4847ACB1E2799345AA74D9E317048D58;
+			remoteInfo = "AlipaySDK-iOS";
 		};
-		FB010731CBABA957C3C7E0229C0AB2BA /* PBXContainerItemProxy */ = {
+		C7FF0C806E3B474B4D34C35F9E25D193 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FA08D9F61A9AFD54AEE434F54B902E55;
 			remoteInfo = AirwallexTrustDefender;
-		};
-		FC86706334B974FFF2261F85354292A8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 305ADB149F8042B8AD00663B1B695D80;
-			remoteInfo = AirwallexCardinalMobile;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0704EAAACC48AD6F4327CFEB8C4CC7B8 /* AirwallexCardinalMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexCardinalMobile.release.xcconfig; sourceTree = "<group>"; };
-		08138D6EF976D99B72B9CFC43E871E74 /* Pods-Airwallex-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Airwallex-acknowledgements.plist"; sourceTree = "<group>"; };
-		097A265B884731B09E08AF9FF70D9468 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
-		0985DAAF4FAFAE2EE3809517F74817F4 /* SVProgressHUD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.release.xcconfig; sourceTree = "<group>"; };
-		11DE4903ECE0FC959DEBEACF697B4C8A /* Pods-Examples-Staging-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-Staging-acknowledgements.markdown"; sourceTree = "<group>"; };
-		13606EBCA18626875CFD8388C00F95BD /* Pods-AirwallexTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirwallexTests-frameworks.sh"; sourceTree = "<group>"; };
-		1874B9D216AA608F27115EF4BA2204FB /* SVProgressHUD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.debug.xcconfig; sourceTree = "<group>"; };
-		19223CA8545A75CA42277649519DDD3F /* WechatAuthSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = WechatSDK1.8.2/WechatAuthSDK.h; sourceTree = "<group>"; };
-		1A283D463371855C6D808D7E8A7DB180 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressAnimatedView.h; path = SVProgressHUD/SVProgressAnimatedView.h; sourceTree = "<group>"; };
-		1BD9D4AF27F97975B178E162A603F057 /* Pods-Examples-Staging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Staging.debug.xcconfig"; sourceTree = "<group>"; };
+		0AFD601B0CC094EEC96E34C9802D43F0 /* AlipaySDK-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AlipaySDK-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		0B5216C1F8FD9E5E08A9F98E46D6D660 /* AirwallexTrustDefender.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexTrustDefender.release.xcconfig; sourceTree = "<group>"; };
+		0B5A694E9D8BD436CE15D13761AE1F10 /* Pods-Examples-Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-Demo-dummy.m"; sourceTree = "<group>"; };
+		0BCC38708CEEA2253D82AA5675CA8FF4 /* AirwallexTrustDefender.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexTrustDefender.debug.xcconfig; sourceTree = "<group>"; };
+		0EE4B64804CB97DFDD307DE7DA1507A0 /* Pods-Airwallex-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Airwallex-acknowledgements.plist"; sourceTree = "<group>"; };
+		0F2D85117F071A7A441E41C5FECBF287 /* WechatAuthSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = WechatSDK1.8.2/WechatAuthSDK.h; sourceTree = "<group>"; };
+		18153F4F02E1322ABDCEEB50F0B8475D /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		1E7494EB14C355A65FDD0C0DF6895B5F /* libPods-Airwallex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Airwallex.a"; path = "libPods-Airwallex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FB1A977DB4891D14E145DC06D71C406 /* Pods-Examples-Staging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Staging.release.xcconfig"; sourceTree = "<group>"; };
-		2EBBC8A0288DA2215E30B76E00B5A8E0 /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
-		5052C3BF1B2F5D0F2F88D3D27F170D95 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		22112211785D8281458AEB2B7126DE37 /* WXApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = WechatSDK1.8.2/WXApi.h; sourceTree = "<group>"; };
+		2731A4FA4E1F704FF4CFA31CA6E35B9C /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
+		33F1A58D9BE39008E124A4CDB3E9C1DC /* Pods-AirwallexTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AirwallexTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		3C76215328962DFB1BD6C568FBAF3C5C /* Pods-Examples-Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Demo-acknowledgements.plist"; sourceTree = "<group>"; };
+		420B722C65EE1E4DEA6CE19DD807A3FF /* Pods-AirwallexTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AirwallexTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		45F77115B16C62472D92B9BB9C0A45A3 /* Pods-Examples-Demo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Demo-resources.sh"; sourceTree = "<group>"; };
 		516E70ACB29FF3865A572730413738CB /* libPods-Examples-Staging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Examples-Staging.a"; path = "libPods-Examples-Staging.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		53DDCA5AAF0A60CF81CC7317F7A52158 /* SVProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-prefix.pch"; sourceTree = "<group>"; };
-		58B6CCF177AF697C7C43BA1BC4A214A3 /* Pods-Examples-Production-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Production-frameworks.sh"; sourceTree = "<group>"; };
-		599B491D012F9F46FA0E8737A8D74150 /* SVProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD-dummy.m"; sourceTree = "<group>"; };
-		5AB7E86F964832231EEFA04E62C3599D /* Pods-Examples-Production.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Production.release.xcconfig"; sourceTree = "<group>"; };
-		5C61814F3E9205A506FEE2194B89C62D /* Pods-Examples-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Demo.release.xcconfig"; sourceTree = "<group>"; };
-		5C9E27B107FB618BBE19F7337A60F38F /* Pods-Examples-Production-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-Production-acknowledgements.markdown"; sourceTree = "<group>"; };
-		5D9C6EE6D11275BB03BA79708FE50405 /* Pods-AirwallexTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AirwallexTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		647AB95CC020402D8192D664679BD8DE /* Pods-Examples-Staging-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-Staging-dummy.m"; sourceTree = "<group>"; };
+		5A424A7B5B02219DEAB11DCFE26312D0 /* Pods-Examples-Production-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Production-frameworks.sh"; sourceTree = "<group>"; };
+		5CAD75A987B2AAEE9B7C1174DB522C51 /* WechatOpenSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.release.xcconfig; sourceTree = "<group>"; };
+		5EBDB7F59EFAA426881051BBCA32131A /* Pods-Examples-Staging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Staging.release.xcconfig"; sourceTree = "<group>"; };
+		5EFBC352AA581CF3E6ACC5691EF82880 /* Pods-AirwallexTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AirwallexTests-dummy.m"; sourceTree = "<group>"; };
+		638ADCB6CBA87A92D2556F3E7A844779 /* AlipaySDK-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AlipaySDK-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		6B977302022559FAF8CDA1F700D7FEB2 /* libPods-AirwallexTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-AirwallexTests.a"; path = "libPods-AirwallexTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C7AB1F7FABD2572FD021229ED39872B /* Pods-Airwallex-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Airwallex-acknowledgements.markdown"; sourceTree = "<group>"; };
-		6FACE73F65D51B1AE86ECED110EE1F89 /* Pods-Examples-Staging-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Staging-resources.sh"; sourceTree = "<group>"; };
-		7245A87FCEFDA71BD5E1DAD54A985CAC /* AirwallexCardinalMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexCardinalMobile.debug.xcconfig; sourceTree = "<group>"; };
-		72B935DD1F87E9649871C09488F9A27D /* Pods-Airwallex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.debug.xcconfig"; sourceTree = "<group>"; };
-		75A6B0C96337AEC32741A905EE753FAB /* SVProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
-		78B5D0C43626FE3B34DDC18CD6179ED8 /* CardinalMobile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CardinalMobile.framework; sourceTree = "<group>"; };
+		73ADC0E428542C715547B17F3FE25C67 /* Pods-Examples-Production-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-Production-dummy.m"; sourceTree = "<group>"; };
+		7A31B8F9D60F4E93D97B10DB1E9614E3 /* Pods-Examples-Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7C4A927AFE65C4141A0D8FD6A1DA3DF0 /* Pods-Examples-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		7D7F9F2672C3F784B9DBFC6683AF5C04 /* libPods-Examples-Production.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Examples-Production.a"; path = "libPods-Examples-Production.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D825EF174C14FE30AE62AAE2499C379 /* WechatOpenSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.debug.xcconfig; sourceTree = "<group>"; };
-		7DFDF4F7211ED9A2923131F0419B6AEC /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = WechatSDK1.8.2/libWeChatSDK.a; sourceTree = "<group>"; };
-		84B8E52F3A136541640697CC0B6E8D28 /* Pods-AirwallexTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AirwallexTests-dummy.m"; sourceTree = "<group>"; };
-		86982BBE41308FE6909B620A626E460E /* AirwallexTrustDefender.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexTrustDefender.debug.xcconfig; sourceTree = "<group>"; };
-		87FFBFC7D5524D36953FCB075B72797D /* Pods-Airwallex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.release.xcconfig"; sourceTree = "<group>"; };
-		8DFAFA0AE4D86C174EC9DB03FE7ACED7 /* Pods-Examples-Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-Demo-dummy.m"; sourceTree = "<group>"; };
-		8EA3E9C129C54C3A84CE963A824E4F76 /* AirwallexTrustDefender.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexTrustDefender.release.xcconfig; sourceTree = "<group>"; };
-		923C894DA70237C24659C6BC97C4F2DC /* Pods-Examples-Production-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-Production-dummy.m"; sourceTree = "<group>"; };
-		92F9E32E165FBD869A2C7B13FBD95D0E /* Pods-AirwallexTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirwallexTests-resources.sh"; sourceTree = "<group>"; };
-		97CF28900A1A5CA37484B6E91E3BB702 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
-		9886F9FB9FFA9394DA5A4399FD56C4D0 /* Pods-Examples-Production.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Production.debug.xcconfig"; sourceTree = "<group>"; };
-		9BE0327B1A6876E1E6EE192D5649481F /* Pods-Examples-Production-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Production-resources.sh"; sourceTree = "<group>"; };
+		84D07A30DBC03B6010D6E21D403E4B93 /* WechatOpenSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.debug.xcconfig; sourceTree = "<group>"; };
+		868D1A9225EC2923C87D4B67A82B74AF /* AlipaySDK.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		8E50D1492284B8D51D072F2D25252B03 /* Pods-Airwallex-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Airwallex-acknowledgements.markdown"; sourceTree = "<group>"; };
+		90A9D0BBE1FD3CB8033663A7435D0CFD /* Pods-Examples-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Demo-frameworks.sh"; sourceTree = "<group>"; };
+		989FC10DF41DA4AC198E1D026D6EBC49 /* Pods-Airwallex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.debug.xcconfig"; sourceTree = "<group>"; };
+		9AE98D45D88D1D29C8F20EF9233962C2 /* CardinalMobile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CardinalMobile.framework; sourceTree = "<group>"; };
+		9B3C5C7B0626155E2B4F2839C61C0537 /* Pods-Examples-Production-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Production-acknowledgements.plist"; sourceTree = "<group>"; };
+		9B86E6AA6325AE97B23E9014CA33CD54 /* Pods-AirwallexTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A8648301CB145EC68C7F07CDA5A09546 /* AlipaySDK-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AlipaySDK-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		B17365947A18645237F33510769FFF90 /* SVProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
-		B2B4F6FD0A4F5A415B4E0DD74AB23216 /* Pods-Airwallex-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Airwallex-dummy.m"; sourceTree = "<group>"; };
-		B3B19B964F77D4539777FAB67415722A /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = WechatSDK1.8.2/WXApiObject.h; sourceTree = "<group>"; };
-		BADEB5B1AC420768399C87B28E28F867 /* Pods-Examples-Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
-		BC70ACF1ED35558345900B5CE03A9B33 /* Pods-Examples-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Demo.debug.xcconfig"; sourceTree = "<group>"; };
-		BC96B7DDB1D388A7FA4BECC3DDCACA1E /* Pods-Examples-Staging-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Staging-acknowledgements.plist"; sourceTree = "<group>"; };
-		C7E1A6B36C746F4F10066ECB1A96F118 /* Pods-Examples-Staging-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Staging-frameworks.sh"; sourceTree = "<group>"; };
-		CD660E3AA78F58908C41B606A9FF5456 /* Pods-Examples-Production-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Production-acknowledgements.plist"; sourceTree = "<group>"; };
-		CE557C849090483FE399669424BF8575 /* Pods-AirwallexTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AirwallexTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		CF8FFB7DCD72FF5433363817C6EF44D4 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVRadialGradientLayer.m; path = SVProgressHUD/SVRadialGradientLayer.m; sourceTree = "<group>"; };
-		D146AA5CA42598F1089C4D30120411F5 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressAnimatedView.m; path = SVProgressHUD/SVProgressAnimatedView.m; sourceTree = "<group>"; };
-		D8A82C6DC2FF26730DBF57744922D400 /* Pods-Examples-Demo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Demo-resources.sh"; sourceTree = "<group>"; };
-		DCB8D2676FA2C5A33F8BDACE020F3DEE /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVRadialGradientLayer.h; path = SVProgressHUD/SVRadialGradientLayer.h; sourceTree = "<group>"; };
-		DECCDAAAA6DA18CA8B3CC4D8C8CA2588 /* Pods-Airwallex-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Airwallex-resources.sh"; sourceTree = "<group>"; };
-		E0704C734EEF70F1C15C572D29079A11 /* Pods-Examples-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Demo-frameworks.sh"; sourceTree = "<group>"; };
-		E97D43C46A45EE515A4DA3AF94398441 /* libSVProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSVProgressHUD.a; path = libSVProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABF83014756A6D7C1024701EEDE8EB81 /* Pods-Airwallex-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Airwallex-dummy.m"; sourceTree = "<group>"; };
+		AED1A6EA435157076916533C0A7D497A /* Pods-Examples-Staging-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Staging-resources.sh"; sourceTree = "<group>"; };
+		AF020FB700D3ECBDF83BBFAB9ABA064A /* Pods-Examples-Staging-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-Staging-acknowledgements.markdown"; sourceTree = "<group>"; };
+		B93F47C743D59D632F1C72B0EB1879FC /* Pods-Examples-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Demo.release.xcconfig"; sourceTree = "<group>"; };
+		BA7F4A4B2AA6B7F34A18CDEB04B1BEE7 /* Pods-Airwallex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.release.xcconfig"; sourceTree = "<group>"; };
+		BBD677152A957799073DEE13B6CA1AB5 /* Pods-Examples-Staging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Staging.debug.xcconfig"; sourceTree = "<group>"; };
+		C1836E8A5EB1077FCCA8BBF27303CB28 /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = WechatSDK1.8.2/WXApiObject.h; sourceTree = "<group>"; };
+		C6B30918982E780D722EC3D4698BB838 /* Pods-Examples-Staging-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Staging-frameworks.sh"; sourceTree = "<group>"; };
+		C8146BAD300A193F860F332160B361B3 /* Pods-Examples-Production-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-Production-acknowledgements.markdown"; sourceTree = "<group>"; };
+		CAB533E3EC3237608EE1808F85442AA0 /* Pods-Examples-Production-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Production-resources.sh"; sourceTree = "<group>"; };
+		CCD74AFFDF181ACC70E45C8FE47E9FB6 /* Pods-Examples-Staging-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Staging-acknowledgements.plist"; sourceTree = "<group>"; };
+		D1C05502837F753EA19C196557A045FF /* TrustDefender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TrustDefender.framework; sourceTree = "<group>"; };
+		D5FB2F3BB43A91D62FA642E900A03168 /* AirwallexCardinalMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexCardinalMobile.release.xcconfig; sourceTree = "<group>"; };
+		E995288DD050132183B784C316CE557E /* AirwallexCardinalMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexCardinalMobile.debug.xcconfig; sourceTree = "<group>"; };
+		E9FADCCFD2C9423195BE42427CF073FB /* Pods-Examples-Production.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Production.release.xcconfig"; sourceTree = "<group>"; };
+		EA00650DF2C10BD7DF15C0B39142AC04 /* Pods-AirwallexTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirwallexTests-frameworks.sh"; sourceTree = "<group>"; };
 		EA7F3FE707DFBB3BFBFE23054E24A8EF /* libPods-Examples-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Examples-Demo.a"; path = "libPods-Examples-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED7B755479E121F610B2456BDB5D69C8 /* WXApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = WechatSDK1.8.2/WXApi.h; sourceTree = "<group>"; };
-		F0F238CFFB038A73CC58F746C9021CE2 /* AlipaySDK.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
-		F293125E486052D1BC2E73355C2C4C89 /* TrustDefender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TrustDefender.framework; sourceTree = "<group>"; };
-		F346E39339C1F5645B6E83530E4043A9 /* AlipaySDK-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AlipaySDK-iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		F52650DE7EDB00AC96AE4E5CCB5C2CE7 /* Pods-Examples-Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Demo-acknowledgements.plist"; sourceTree = "<group>"; };
-		F6FC6B4F1B96D4F8F943CD8B606AB25A /* WechatOpenSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.release.xcconfig; sourceTree = "<group>"; };
-		F7E0EAA0DC9CBB2B74A32B5A0BE5956F /* Pods-AirwallexTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.debug.xcconfig"; sourceTree = "<group>"; };
-		FAEC469743DAF9E59E4F66ADEB7659E3 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		EEE8A99899410C3DA4EC2477F8A41FB8 /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = WechatSDK1.8.2/libWeChatSDK.a; sourceTree = "<group>"; };
+		FB8E372AEA34889A56C4013CE0562602 /* Pods-Examples-Production.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Production.debug.xcconfig"; sourceTree = "<group>"; };
+		FD789679015CBB58146C42C8124F4FB4 /* Pods-Examples-Staging-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-Staging-dummy.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		224628FB8D06F99FE31BDFD9D993A43A /* Frameworks */ = {
+		06E59DE265AF1032E4482522F910D16A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3AA4BCFDA1D701617A17CB8FAC873990 /* Frameworks */ = {
+		29A3A1F74F6996F407B46BA83F69CEDE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6F68A0F38F9B23A8D9C89E2C41B7CCED /* Frameworks */ = {
+		6F193B97B68D3922D9FE3F3B1325A543 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		70010619EE67FAA5998927DE2714A46F /* Frameworks */ = {
+		CCABF6166E8902B0AC4B6AAAC5B26AD2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		70474154FEE80742B3D9347212C6988E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DDECC8FA16DB523A3C6859759BC981D4 /* Frameworks */ = {
+		FD34F1D5DB9C5B4B8BCA1B25EB72CCA7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -331,111 +264,148 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		03D98F6858575DC3820AE13434B70CC2 /* Support Files */ = {
+		0AF8AC123EC62256264ECE3BFF1C855E /* Pods-Examples-Demo */ = {
 			isa = PBXGroup;
 			children = (
-				599B491D012F9F46FA0E8737A8D74150 /* SVProgressHUD-dummy.m */,
-				53DDCA5AAF0A60CF81CC7317F7A52158 /* SVProgressHUD-prefix.pch */,
-				1874B9D216AA608F27115EF4BA2204FB /* SVProgressHUD.debug.xcconfig */,
-				0985DAAF4FAFAE2EE3809517F74817F4 /* SVProgressHUD.release.xcconfig */,
+				7A31B8F9D60F4E93D97B10DB1E9614E3 /* Pods-Examples-Demo-acknowledgements.markdown */,
+				3C76215328962DFB1BD6C568FBAF3C5C /* Pods-Examples-Demo-acknowledgements.plist */,
+				0B5A694E9D8BD436CE15D13761AE1F10 /* Pods-Examples-Demo-dummy.m */,
+				90A9D0BBE1FD3CB8033663A7435D0CFD /* Pods-Examples-Demo-frameworks.sh */,
+				45F77115B16C62472D92B9BB9C0A45A3 /* Pods-Examples-Demo-resources.sh */,
+				7C4A927AFE65C4141A0D8FD6A1DA3DF0 /* Pods-Examples-Demo.debug.xcconfig */,
+				B93F47C743D59D632F1C72B0EB1879FC /* Pods-Examples-Demo.release.xcconfig */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/SVProgressHUD";
+			name = "Pods-Examples-Demo";
+			path = "Target Support Files/Pods-Examples-Demo";
 			sourceTree = "<group>";
 		};
-		15117CD47D53FCD6A6883010541D3828 /* Pods-Examples-Production */ = {
+		189C177315C1BE85E66F2D61AAF2EED1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5C9E27B107FB618BBE19F7337A60F38F /* Pods-Examples-Production-acknowledgements.markdown */,
-				CD660E3AA78F58908C41B606A9FF5456 /* Pods-Examples-Production-acknowledgements.plist */,
-				923C894DA70237C24659C6BC97C4F2DC /* Pods-Examples-Production-dummy.m */,
-				58B6CCF177AF697C7C43BA1BC4A214A3 /* Pods-Examples-Production-frameworks.sh */,
-				9BE0327B1A6876E1E6EE192D5649481F /* Pods-Examples-Production-resources.sh */,
-				9886F9FB9FFA9394DA5A4399FD56C4D0 /* Pods-Examples-Production.debug.xcconfig */,
-				5AB7E86F964832231EEFA04E62C3599D /* Pods-Examples-Production.release.xcconfig */,
+				D3630EB6F2552F09A73BA56049B2A636 /* AirwallexCardinalMobile */,
+				BC4FFAD8296F6E01F222C8A3C6ACBF8E /* AirwallexTrustDefender */,
+				7236D97F3A478ED8A5A069A659A6C96D /* AlipaySDK-iOS */,
+				9500761017F77C5145428C84B146461C /* WechatOpenSDK */,
 			);
-			name = "Pods-Examples-Production";
-			path = "Target Support Files/Pods-Examples-Production";
+			name = Pods;
 			sourceTree = "<group>";
 		};
-		33A28F509B43A336C12ACAEC356A8A14 /* Pods-Airwallex */ = {
+		35F1FEA9327B8070BFF58CACB31EAB16 /* Pods-AirwallexTests */ = {
 			isa = PBXGroup;
 			children = (
-				6C7AB1F7FABD2572FD021229ED39872B /* Pods-Airwallex-acknowledgements.markdown */,
-				08138D6EF976D99B72B9CFC43E871E74 /* Pods-Airwallex-acknowledgements.plist */,
-				B2B4F6FD0A4F5A415B4E0DD74AB23216 /* Pods-Airwallex-dummy.m */,
-				DECCDAAAA6DA18CA8B3CC4D8C8CA2588 /* Pods-Airwallex-resources.sh */,
-				72B935DD1F87E9649871C09488F9A27D /* Pods-Airwallex.debug.xcconfig */,
-				87FFBFC7D5524D36953FCB075B72797D /* Pods-Airwallex.release.xcconfig */,
-			);
-			name = "Pods-Airwallex";
-			path = "Target Support Files/Pods-Airwallex";
-			sourceTree = "<group>";
-		};
-		423B21E59FC8F5E365C5C0AB8FC58944 /* AirwallexTrustDefender */ = {
-			isa = PBXGroup;
-			children = (
-				95DC2E3A6A1EA67908AAA7680246CF70 /* Frameworks */,
-				B328C69F476FE70177D16B193C37CDD7 /* Support Files */,
-			);
-			name = AirwallexTrustDefender;
-			path = AirwallexTrustDefender;
-			sourceTree = "<group>";
-		};
-		476CEF6A2D012D16512C5AB2ACE0307E /* AirwallexCardinalMobile */ = {
-			isa = PBXGroup;
-			children = (
-				9CEC1B777C9804C45F99954173F33ACF /* Frameworks */,
-				E59759D1BA57E9F8DD4963B77D03AD37 /* Support Files */,
-			);
-			name = AirwallexCardinalMobile;
-			path = AirwallexCardinalMobile;
-			sourceTree = "<group>";
-		};
-		4CF7187D49556E0F3C7337E61E50822C /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				097A265B884731B09E08AF9FF70D9468 /* SVProgressHUD.bundle */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		6FDE12F09B649E1EB84365CE3910D7E1 /* Pods-AirwallexTests */ = {
-			isa = PBXGroup;
-			children = (
-				5D9C6EE6D11275BB03BA79708FE50405 /* Pods-AirwallexTests-acknowledgements.markdown */,
-				CE557C849090483FE399669424BF8575 /* Pods-AirwallexTests-acknowledgements.plist */,
-				84B8E52F3A136541640697CC0B6E8D28 /* Pods-AirwallexTests-dummy.m */,
-				13606EBCA18626875CFD8388C00F95BD /* Pods-AirwallexTests-frameworks.sh */,
-				92F9E32E165FBD869A2C7B13FBD95D0E /* Pods-AirwallexTests-resources.sh */,
-				F7E0EAA0DC9CBB2B74A32B5A0BE5956F /* Pods-AirwallexTests.debug.xcconfig */,
-				2EBBC8A0288DA2215E30B76E00B5A8E0 /* Pods-AirwallexTests.release.xcconfig */,
+				420B722C65EE1E4DEA6CE19DD807A3FF /* Pods-AirwallexTests-acknowledgements.markdown */,
+				33F1A58D9BE39008E124A4CDB3E9C1DC /* Pods-AirwallexTests-acknowledgements.plist */,
+				5EFBC352AA581CF3E6ACC5691EF82880 /* Pods-AirwallexTests-dummy.m */,
+				EA00650DF2C10BD7DF15C0B39142AC04 /* Pods-AirwallexTests-frameworks.sh */,
+				9B86E6AA6325AE97B23E9014CA33CD54 /* Pods-AirwallexTests.debug.xcconfig */,
+				2731A4FA4E1F704FF4CFA31CA6E35B9C /* Pods-AirwallexTests.release.xcconfig */,
 			);
 			name = "Pods-AirwallexTests";
 			path = "Target Support Files/Pods-AirwallexTests";
 			sourceTree = "<group>";
 		};
-		730F0B8B90573019B3C7B959E283BC43 /* Pods */ = {
+		4497411BB85C1686BAB3FC47B1181903 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				476CEF6A2D012D16512C5AB2ACE0307E /* AirwallexCardinalMobile */,
-				423B21E59FC8F5E365C5C0AB8FC58944 /* AirwallexTrustDefender */,
-				81DDC57F84CA2B3C682DFBB9B0D6FD3D /* AlipaySDK-iOS */,
-				A2D88024891C684C59C4C8B453D7FBD7 /* SVProgressHUD */,
-				F99E47E101DBEC258564A6C33EEA49DD /* WechatOpenSDK */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		7684496AC5B504424285D7F8E4E362F7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7DFDF4F7211ED9A2923131F0419B6AEC /* libWeChatSDK.a */,
+				D1C05502837F753EA19C196557A045FF /* TrustDefender.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		78063D9C4183F778C5335D9F6E088885 /* Products */ = {
+		472D053DA76031CFAC708352B2EE7E0B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EEE8A99899410C3DA4EC2477F8A41FB8 /* libWeChatSDK.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5C6369765D8D8AB597BE277F46DB7C82 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				DBCF244120FD8AB2129E4FC405A247E4 /* Pods-Airwallex */,
+				35F1FEA9327B8070BFF58CACB31EAB16 /* Pods-AirwallexTests */,
+				0AF8AC123EC62256264ECE3BFF1C855E /* Pods-Examples-Demo */,
+				B983DE2BEC41F177A353878520E2DCDE /* Pods-Examples-Production */,
+				954D821001CD8455AB52CB2115FD8308 /* Pods-Examples-Staging */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		601C3AC4CF85202F5C9C7F1FDB8033A3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18153F4F02E1322ABDCEEB50F0B8475D /* AlipaySDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		63B4D6CBB23DBE572542538ABCED45C0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				868D1A9225EC2923C87D4B67A82B74AF /* AlipaySDK.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7236D97F3A478ED8A5A069A659A6C96D /* AlipaySDK-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				601C3AC4CF85202F5C9C7F1FDB8033A3 /* Frameworks */,
+				63B4D6CBB23DBE572542538ABCED45C0 /* Resources */,
+				AB44A9D5073F725B791220C88E8B22C9 /* Support Files */,
+			);
+			name = "AlipaySDK-iOS";
+			path = "AlipaySDK-iOS";
+			sourceTree = "<group>";
+		};
+		8DF903C352166AA8E56641AD063DBD52 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				0BCC38708CEEA2253D82AA5675CA8FF4 /* AirwallexTrustDefender.debug.xcconfig */,
+				0B5216C1F8FD9E5E08A9F98E46D6D660 /* AirwallexTrustDefender.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/AirwallexTrustDefender";
+			sourceTree = "<group>";
+		};
+		9500761017F77C5145428C84B146461C /* WechatOpenSDK */ = {
+			isa = PBXGroup;
+			children = (
+				0F2D85117F071A7A441E41C5FECBF287 /* WechatAuthSDK.h */,
+				22112211785D8281458AEB2B7126DE37 /* WXApi.h */,
+				C1836E8A5EB1077FCCA8BBF27303CB28 /* WXApiObject.h */,
+				472D053DA76031CFAC708352B2EE7E0B /* Frameworks */,
+				CE08D857142F989CA4B3B782E3C24391 /* Support Files */,
+			);
+			name = WechatOpenSDK;
+			path = WechatOpenSDK;
+			sourceTree = "<group>";
+		};
+		954D821001CD8455AB52CB2115FD8308 /* Pods-Examples-Staging */ = {
+			isa = PBXGroup;
+			children = (
+				AF020FB700D3ECBDF83BBFAB9ABA064A /* Pods-Examples-Staging-acknowledgements.markdown */,
+				CCD74AFFDF181ACC70E45C8FE47E9FB6 /* Pods-Examples-Staging-acknowledgements.plist */,
+				FD789679015CBB58146C42C8124F4FB4 /* Pods-Examples-Staging-dummy.m */,
+				C6B30918982E780D722EC3D4698BB838 /* Pods-Examples-Staging-frameworks.sh */,
+				AED1A6EA435157076916533C0A7D497A /* Pods-Examples-Staging-resources.sh */,
+				BBD677152A957799073DEE13B6CA1AB5 /* Pods-Examples-Staging.debug.xcconfig */,
+				5EBDB7F59EFAA426881051BBCA32131A /* Pods-Examples-Staging.release.xcconfig */,
+			);
+			name = "Pods-Examples-Staging";
+			path = "Target Support Files/Pods-Examples-Staging";
+			sourceTree = "<group>";
+		};
+		A17529E305788AD71341A9A440BB86E4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9AE98D45D88D1D29C8F20EF9233962C2 /* CardinalMobile.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A80F9DE51A7A5FC6EBD2A36478924B17 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				1E7494EB14C355A65FDD0C0DF6895B5F /* libPods-Airwallex.a */,
@@ -443,107 +413,53 @@
 				EA7F3FE707DFBB3BFBFE23054E24A8EF /* libPods-Examples-Demo.a */,
 				7D7F9F2672C3F784B9DBFC6683AF5C04 /* libPods-Examples-Production.a */,
 				516E70ACB29FF3865A572730413738CB /* libPods-Examples-Staging.a */,
-				E97D43C46A45EE515A4DA3AF94398441 /* libSVProgressHUD.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		81DDC57F84CA2B3C682DFBB9B0D6FD3D /* AlipaySDK-iOS */ = {
+		AB44A9D5073F725B791220C88E8B22C9 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				C40D8E7D12183E8C31D1362068BC26EE /* Frameworks */,
-				B0A1563E0D89979B73FF42467E0BDB39 /* Resources */,
-				FE9D3E8B59A6D44DC865518C80E1C1C5 /* Support Files */,
-			);
-			name = "AlipaySDK-iOS";
-			path = "AlipaySDK-iOS";
-			sourceTree = "<group>";
-		};
-		95DC2E3A6A1EA67908AAA7680246CF70 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F293125E486052D1BC2E73355C2C4C89 /* TrustDefender.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		9CEC1B777C9804C45F99954173F33ACF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				78B5D0C43626FE3B34DDC18CD6179ED8 /* CardinalMobile.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A2D88024891C684C59C4C8B453D7FBD7 /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				5052C3BF1B2F5D0F2F88D3D27F170D95 /* SVIndefiniteAnimatedView.h */,
-				FAEC469743DAF9E59E4F66ADEB7659E3 /* SVIndefiniteAnimatedView.m */,
-				1A283D463371855C6D808D7E8A7DB180 /* SVProgressAnimatedView.h */,
-				D146AA5CA42598F1089C4D30120411F5 /* SVProgressAnimatedView.m */,
-				75A6B0C96337AEC32741A905EE753FAB /* SVProgressHUD.h */,
-				B17365947A18645237F33510769FFF90 /* SVProgressHUD.m */,
-				DCB8D2676FA2C5A33F8BDACE020F3DEE /* SVRadialGradientLayer.h */,
-				CF8FFB7DCD72FF5433363817C6EF44D4 /* SVRadialGradientLayer.m */,
-				4CF7187D49556E0F3C7337E61E50822C /* Resources */,
-				03D98F6858575DC3820AE13434B70CC2 /* Support Files */,
-			);
-			name = SVProgressHUD;
-			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
-		B0A1563E0D89979B73FF42467E0BDB39 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				F0F238CFFB038A73CC58F746C9021CE2 /* AlipaySDK.bundle */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		B251F6EE609533BE47C3DE1E0BECDA94 /* Pods-Examples-Staging */ = {
-			isa = PBXGroup;
-			children = (
-				11DE4903ECE0FC959DEBEACF697B4C8A /* Pods-Examples-Staging-acknowledgements.markdown */,
-				BC96B7DDB1D388A7FA4BECC3DDCACA1E /* Pods-Examples-Staging-acknowledgements.plist */,
-				647AB95CC020402D8192D664679BD8DE /* Pods-Examples-Staging-dummy.m */,
-				C7E1A6B36C746F4F10066ECB1A96F118 /* Pods-Examples-Staging-frameworks.sh */,
-				6FACE73F65D51B1AE86ECED110EE1F89 /* Pods-Examples-Staging-resources.sh */,
-				1BD9D4AF27F97975B178E162A603F057 /* Pods-Examples-Staging.debug.xcconfig */,
-				1FB1A977DB4891D14E145DC06D71C406 /* Pods-Examples-Staging.release.xcconfig */,
-			);
-			name = "Pods-Examples-Staging";
-			path = "Target Support Files/Pods-Examples-Staging";
-			sourceTree = "<group>";
-		};
-		B328C69F476FE70177D16B193C37CDD7 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				86982BBE41308FE6909B620A626E460E /* AirwallexTrustDefender.debug.xcconfig */,
-				8EA3E9C129C54C3A84CE963A824E4F76 /* AirwallexTrustDefender.release.xcconfig */,
+				638ADCB6CBA87A92D2556F3E7A844779 /* AlipaySDK-iOS.debug.xcconfig */,
+				0AFD601B0CC094EEC96E34C9802D43F0 /* AlipaySDK-iOS.release.xcconfig */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/AirwallexTrustDefender";
+			path = "../Target Support Files/AlipaySDK-iOS";
 			sourceTree = "<group>";
 		};
-		C40D8E7D12183E8C31D1362068BC26EE /* Frameworks */ = {
+		B983DE2BEC41F177A353878520E2DCDE /* Pods-Examples-Production */ = {
 			isa = PBXGroup;
 			children = (
-				97CF28900A1A5CA37484B6E91E3BB702 /* AlipaySDK.framework */,
+				C8146BAD300A193F860F332160B361B3 /* Pods-Examples-Production-acknowledgements.markdown */,
+				9B3C5C7B0626155E2B4F2839C61C0537 /* Pods-Examples-Production-acknowledgements.plist */,
+				73ADC0E428542C715547B17F3FE25C67 /* Pods-Examples-Production-dummy.m */,
+				5A424A7B5B02219DEAB11DCFE26312D0 /* Pods-Examples-Production-frameworks.sh */,
+				CAB533E3EC3237608EE1808F85442AA0 /* Pods-Examples-Production-resources.sh */,
+				FB8E372AEA34889A56C4013CE0562602 /* Pods-Examples-Production.debug.xcconfig */,
+				E9FADCCFD2C9423195BE42427CF073FB /* Pods-Examples-Production.release.xcconfig */,
 			);
-			name = Frameworks;
+			name = "Pods-Examples-Production";
+			path = "Target Support Files/Pods-Examples-Production";
 			sourceTree = "<group>";
 		};
-		CD5FC21F93A77550F172BEDE5B16EDC7 /* Targets Support Files */ = {
+		BC4FFAD8296F6E01F222C8A3C6ACBF8E /* AirwallexTrustDefender */ = {
 			isa = PBXGroup;
 			children = (
-				33A28F509B43A336C12ACAEC356A8A14 /* Pods-Airwallex */,
-				6FDE12F09B649E1EB84365CE3910D7E1 /* Pods-AirwallexTests */,
-				E04940D0B5EF46A60DCF2F29BF18C30A /* Pods-Examples-Demo */,
-				15117CD47D53FCD6A6883010541D3828 /* Pods-Examples-Production */,
-				B251F6EE609533BE47C3DE1E0BECDA94 /* Pods-Examples-Staging */,
+				4497411BB85C1686BAB3FC47B1181903 /* Frameworks */,
+				8DF903C352166AA8E56641AD063DBD52 /* Support Files */,
 			);
-			name = "Targets Support Files";
+			name = AirwallexTrustDefender;
+			path = AirwallexTrustDefender;
+			sourceTree = "<group>";
+		};
+		CE08D857142F989CA4B3B782E3C24391 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				84D07A30DBC03B6010D6E21D403E4B93 /* WechatOpenSDK.debug.xcconfig */,
+				5CAD75A987B2AAEE9B7C1174DB522C51 /* WechatOpenSDK.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/WechatOpenSDK";
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -551,10 +467,30 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D89477F20FB1DE18A04690586D7808C4 /* Frameworks */,
-				730F0B8B90573019B3C7B959E283BC43 /* Pods */,
-				78063D9C4183F778C5335D9F6E088885 /* Products */,
-				CD5FC21F93A77550F172BEDE5B16EDC7 /* Targets Support Files */,
+				189C177315C1BE85E66F2D61AAF2EED1 /* Pods */,
+				A80F9DE51A7A5FC6EBD2A36478924B17 /* Products */,
+				5C6369765D8D8AB597BE277F46DB7C82 /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		CFF514E54C0C67420E9020C0F0EA994D /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				E995288DD050132183B784C316CE557E /* AirwallexCardinalMobile.debug.xcconfig */,
+				D5FB2F3BB43A91D62FA642E900A03168 /* AirwallexCardinalMobile.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/AirwallexCardinalMobile";
+			sourceTree = "<group>";
+		};
+		D3630EB6F2552F09A73BA56049B2A636 /* AirwallexCardinalMobile */ = {
+			isa = PBXGroup;
+			children = (
+				A17529E305788AD71341A9A440BB86E4 /* Frameworks */,
+				CFF514E54C0C67420E9020C0F0EA994D /* Support Files */,
+			);
+			name = AirwallexCardinalMobile;
+			path = AirwallexCardinalMobile;
 			sourceTree = "<group>";
 		};
 		D89477F20FB1DE18A04690586D7808C4 /* Frameworks */ = {
@@ -564,149 +500,75 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E04940D0B5EF46A60DCF2F29BF18C30A /* Pods-Examples-Demo */ = {
+		DBCF244120FD8AB2129E4FC405A247E4 /* Pods-Airwallex */ = {
 			isa = PBXGroup;
 			children = (
-				BADEB5B1AC420768399C87B28E28F867 /* Pods-Examples-Demo-acknowledgements.markdown */,
-				F52650DE7EDB00AC96AE4E5CCB5C2CE7 /* Pods-Examples-Demo-acknowledgements.plist */,
-				8DFAFA0AE4D86C174EC9DB03FE7ACED7 /* Pods-Examples-Demo-dummy.m */,
-				E0704C734EEF70F1C15C572D29079A11 /* Pods-Examples-Demo-frameworks.sh */,
-				D8A82C6DC2FF26730DBF57744922D400 /* Pods-Examples-Demo-resources.sh */,
-				BC70ACF1ED35558345900B5CE03A9B33 /* Pods-Examples-Demo.debug.xcconfig */,
-				5C61814F3E9205A506FEE2194B89C62D /* Pods-Examples-Demo.release.xcconfig */,
+				8E50D1492284B8D51D072F2D25252B03 /* Pods-Airwallex-acknowledgements.markdown */,
+				0EE4B64804CB97DFDD307DE7DA1507A0 /* Pods-Airwallex-acknowledgements.plist */,
+				ABF83014756A6D7C1024701EEDE8EB81 /* Pods-Airwallex-dummy.m */,
+				989FC10DF41DA4AC198E1D026D6EBC49 /* Pods-Airwallex.debug.xcconfig */,
+				BA7F4A4B2AA6B7F34A18CDEB04B1BEE7 /* Pods-Airwallex.release.xcconfig */,
 			);
-			name = "Pods-Examples-Demo";
-			path = "Target Support Files/Pods-Examples-Demo";
-			sourceTree = "<group>";
-		};
-		E59759D1BA57E9F8DD4963B77D03AD37 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				7245A87FCEFDA71BD5E1DAD54A985CAC /* AirwallexCardinalMobile.debug.xcconfig */,
-				0704EAAACC48AD6F4327CFEB8C4CC7B8 /* AirwallexCardinalMobile.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/AirwallexCardinalMobile";
-			sourceTree = "<group>";
-		};
-		F99E47E101DBEC258564A6C33EEA49DD /* WechatOpenSDK */ = {
-			isa = PBXGroup;
-			children = (
-				19223CA8545A75CA42277649519DDD3F /* WechatAuthSDK.h */,
-				ED7B755479E121F610B2456BDB5D69C8 /* WXApi.h */,
-				B3B19B964F77D4539777FAB67415722A /* WXApiObject.h */,
-				7684496AC5B504424285D7F8E4E362F7 /* Frameworks */,
-				F9CA5396B5A234DC7693FC1A9DEE18A4 /* Support Files */,
-			);
-			name = WechatOpenSDK;
-			path = WechatOpenSDK;
-			sourceTree = "<group>";
-		};
-		F9CA5396B5A234DC7693FC1A9DEE18A4 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				7D825EF174C14FE30AE62AAE2499C379 /* WechatOpenSDK.debug.xcconfig */,
-				F6FC6B4F1B96D4F8F943CD8B606AB25A /* WechatOpenSDK.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/WechatOpenSDK";
-			sourceTree = "<group>";
-		};
-		FE9D3E8B59A6D44DC865518C80E1C1C5 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				F346E39339C1F5645B6E83530E4043A9 /* AlipaySDK-iOS.debug.xcconfig */,
-				A8648301CB145EC68C7F07CDA5A09546 /* AlipaySDK-iOS.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/AlipaySDK-iOS";
+			name = "Pods-Airwallex";
+			path = "Target Support Files/Pods-Airwallex";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		07A4BB3007F2B6C0A5F006CCAA8B8383 /* Headers */ = {
+		34CA29BD3BB0597326A76772A7742985 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3757D42012B5464BEB528943645C52D4 /* Headers */ = {
+		77E211400B344FEA05066E20292CA65A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4D9E0A98718578A173F5BA32597EAA87 /* Headers */ = {
+		85A6B6C33D8A99802C28EBB139C5ACBB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		579FAD9DA339858D6900AB68E4C583E6 /* Headers */ = {
+		A8A7F4AB3E10CB2DB91B50449CCBDBFF /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7C9CBE7B2CF44BDA965730ED65306610 /* Headers */ = {
+		DE23ADC2DB18271038E582324AF8756A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E41722A1BD41872D45B97FCEF2427E81 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8649FA19DB7585214273380164946561 /* SVIndefiniteAnimatedView.h in Headers */,
-				E56ED51862897266BF586BA26965E137 /* SVProgressAnimatedView.h in Headers */,
-				AF559EEBDEEDF421756966862ED3E746 /* SVProgressHUD.h in Headers */,
-				DC85A1CC87F3496C48D0CC2B09E5322F /* SVRadialGradientLayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F49D2BFAAA78D95C1429E59AB1A23ACE /* Build configuration list for PBXNativeTarget "SVProgressHUD" */;
-			buildPhases = (
-				E41722A1BD41872D45B97FCEF2427E81 /* Headers */,
-				653EF978AC8050BE5586582A6F468FE9 /* Sources */,
-				70010619EE67FAA5998927DE2714A46F /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SVProgressHUD;
-			productName = SVProgressHUD;
-			productReference = E97D43C46A45EE515A4DA3AF94398441 /* libSVProgressHUD.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		56F10FBEFE345F6B97E18191F7D9F0A6 /* Pods-Examples-Staging */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E88A0699D5226A2BDBAD1D26EC123C17 /* Build configuration list for PBXNativeTarget "Pods-Examples-Staging" */;
+			buildConfigurationList = 972FE9449406CE33B0F42ED63F6F6020 /* Build configuration list for PBXNativeTarget "Pods-Examples-Staging" */;
 			buildPhases = (
-				07A4BB3007F2B6C0A5F006CCAA8B8383 /* Headers */,
-				F90DD414BDFE346F9CC282A5914BEE47 /* Sources */,
-				3AA4BCFDA1D701617A17CB8FAC873990 /* Frameworks */,
+				34CA29BD3BB0597326A76772A7742985 /* Headers */,
+				DEF3200997349CD39850A127DCDA2E6A /* Sources */,
+				6F193B97B68D3922D9FE3F3B1325A543 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9D5D61C454CDCE72418E3342FE6AB53A /* PBXTargetDependency */,
-				CEC6F0029907EFE3FE2397677CAFECEE /* PBXTargetDependency */,
-				43A1A83DBBAA07A951AE59F884EAD29C /* PBXTargetDependency */,
-				8CA41C01D1D025101F2945BD4557DDF1 /* PBXTargetDependency */,
-				4577CB816AFE751304C6CE89C5881825 /* PBXTargetDependency */,
+				D56EBE547D75CF2C52C4BAD40A25710B /* PBXTargetDependency */,
+				EA2CFFA4DD389E8CDFD141C24148FFBB /* PBXTargetDependency */,
+				14854055EBD34BF890E47CE66EAAAEF2 /* PBXTargetDependency */,
+				1062C89EB0FE68EBC7948278185461F1 /* PBXTargetDependency */,
 			);
 			name = "Pods-Examples-Staging";
 			productName = "Pods-Examples-Staging";
@@ -715,20 +577,19 @@
 		};
 		BC72FF8A0FD941846AD5AA06E75F185B /* Pods-Examples-Production */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 09C0357EC359F94C87826AC53ED223E6 /* Build configuration list for PBXNativeTarget "Pods-Examples-Production" */;
+			buildConfigurationList = 635DDD06A606972E1139D7F04740D12B /* Build configuration list for PBXNativeTarget "Pods-Examples-Production" */;
 			buildPhases = (
-				7C9CBE7B2CF44BDA965730ED65306610 /* Headers */,
-				F618FC42D3C0668C16C5691882B0F7C4 /* Sources */,
-				224628FB8D06F99FE31BDFD9D993A43A /* Frameworks */,
+				85A6B6C33D8A99802C28EBB139C5ACBB /* Headers */,
+				0E7489E55DC90286BFB2FA840420B0ED /* Sources */,
+				CCABF6166E8902B0AC4B6AAAC5B26AD2 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F77F270A5112FDD396F0927230F702F0 /* PBXTargetDependency */,
-				A1CE396274D2A8D5F8862D31510507B1 /* PBXTargetDependency */,
-				6324FFDF2BB78B1A97A1448C39C77784 /* PBXTargetDependency */,
-				8B25867D1CD7CB5384F323719DEC4319 /* PBXTargetDependency */,
-				90ACF6864800CA21EBF6FD09D02E4AA4 /* PBXTargetDependency */,
+				1E205DF839B06D25888306F5584E925B /* PBXTargetDependency */,
+				88393793246F9B2A4A49AE5D3B41CECE /* PBXTargetDependency */,
+				AA9E5DE41BD0D84CFCD7198C9790F3B5 /* PBXTargetDependency */,
+				B477F4A5D0FE5F8AC35EF184C3ACAC47 /* PBXTargetDependency */,
 			);
 			name = "Pods-Examples-Production";
 			productName = "Pods-Examples-Production";
@@ -737,20 +598,19 @@
 		};
 		DDC35C9CEB0F569F95F9D81C2F21C012 /* Pods-Examples-Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C0CC1F7016A3FA32E38A99393EF15B14 /* Build configuration list for PBXNativeTarget "Pods-Examples-Demo" */;
+			buildConfigurationList = FF24A48C516679E0C06C0C57B49E7BD9 /* Build configuration list for PBXNativeTarget "Pods-Examples-Demo" */;
 			buildPhases = (
-				579FAD9DA339858D6900AB68E4C583E6 /* Headers */,
-				DD91CCA1754F1F99A30E339907C1C760 /* Sources */,
-				70474154FEE80742B3D9347212C6988E /* Frameworks */,
+				A8A7F4AB3E10CB2DB91B50449CCBDBFF /* Headers */,
+				3ED718D6C0EE9B2740B8EBEA4D3B089A /* Sources */,
+				06E59DE265AF1032E4482522F910D16A /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				7BDD09DA747F15F48C5E83EED7AE6514 /* PBXTargetDependency */,
-				FF9E1CC6460D560E63CD84F0CEC5A284 /* PBXTargetDependency */,
-				18155F9B20CBC67D3DD0306C06742FE0 /* PBXTargetDependency */,
-				3F97D58DF41F6A31B983D6325CB2A235 /* PBXTargetDependency */,
-				EF140A7293BC443D1A77C3D2CFADAFB3 /* PBXTargetDependency */,
+				F6E90A37BAC4A25B88E7232907D2D5EC /* PBXTargetDependency */,
+				5C78A65F661B0FD239B9DEE9E06833CE /* PBXTargetDependency */,
+				0FD8C310D4310E47A9D8541C77B710E8 /* PBXTargetDependency */,
+				44108C059D5D40227FD4EDCF98B99D98 /* PBXTargetDependency */,
 			);
 			name = "Pods-Examples-Demo";
 			productName = "Pods-Examples-Demo";
@@ -759,18 +619,17 @@
 		};
 		F570EDABE55B540442303119D9625340 /* Pods-AirwallexTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F55D36F7D2676C7B5940190A9A69CEA7 /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */;
+			buildConfigurationList = 4085184BCDA9E356956B755991A26E3C /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */;
 			buildPhases = (
-				3757D42012B5464BEB528943645C52D4 /* Headers */,
-				9B897BDA287EC4F657AFB4CCFDA0585A /* Sources */,
-				6F68A0F38F9B23A8D9C89E2C41B7CCED /* Frameworks */,
+				DE23ADC2DB18271038E582324AF8756A /* Headers */,
+				7915D684B6F79329A242BEEA9F53DE0A /* Sources */,
+				29A3A1F74F6996F407B46BA83F69CEDE /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				A72049AB258F20F9228B35409E694053 /* PBXTargetDependency */,
-				1E5034EDFD5F6F6C1EF45060FB420423 /* PBXTargetDependency */,
-				D7D8E3FB8B9B3FCFD4D0422C5941A031 /* PBXTargetDependency */,
+				F5236A9B15A0055FE6D142D1E7645688 /* PBXTargetDependency */,
+				93C81C6F9090C84FD436B1969D43495F /* PBXTargetDependency */,
 			);
 			name = "Pods-AirwallexTests";
 			productName = "Pods-AirwallexTests";
@@ -779,18 +638,17 @@
 		};
 		F58E9775E039168F7D40BFD110403F36 /* Pods-Airwallex */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 16F3AC7138A9B070628DD311E97E4B96 /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */;
+			buildConfigurationList = 685A0AD9A453D6EAF3F0C553997B8AC2 /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */;
 			buildPhases = (
-				4D9E0A98718578A173F5BA32597EAA87 /* Headers */,
-				75626206F42D3E10EDC110595309B7A9 /* Sources */,
-				DDECC8FA16DB523A3C6859759BC981D4 /* Frameworks */,
+				77E211400B344FEA05066E20292CA65A /* Headers */,
+				84F18D5CF3F016767DFF3CCED2BBC64B /* Sources */,
+				FD34F1D5DB9C5B4B8BCA1B25EB72CCA7 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				934A2C8B770F1FDC02D33C9BCD7BA216 /* PBXTargetDependency */,
-				48CD02E20FBF47E15F596E92DDDDD610 /* PBXTargetDependency */,
-				025BD51991BD0135F069BA04A14CA62E /* PBXTargetDependency */,
+				1E87B0338FC623F6AE7E542D24733C0B /* PBXTargetDependency */,
+				347B2B95F3652D9501824404639B2ACC /* PBXTargetDependency */,
 			);
 			name = "Pods-Airwallex";
 			productName = "Pods-Airwallex";
@@ -815,7 +673,7 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 78063D9C4183F778C5335D9F6E088885 /* Products */;
+			productRefGroup = A80F9DE51A7A5FC6EBD2A36478924B17 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -827,200 +685,179 @@
 				DDC35C9CEB0F569F95F9D81C2F21C012 /* Pods-Examples-Demo */,
 				BC72FF8A0FD941846AD5AA06E75F185B /* Pods-Examples-Production */,
 				56F10FBEFE345F6B97E18191F7D9F0A6 /* Pods-Examples-Staging */,
-				1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */,
 				8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		653EF978AC8050BE5586582A6F468FE9 /* Sources */ = {
+		0E7489E55DC90286BFB2FA840420B0ED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0E2C41633CCA2B473A186ADDE148122 /* SVIndefiniteAnimatedView.m in Sources */,
-				1B77D7340EC83E839FAE3D9BB7DF0D1F /* SVProgressAnimatedView.m in Sources */,
-				ED141E898A6F86747999A58190D2CBCB /* SVProgressHUD-dummy.m in Sources */,
-				72EA5E1F693FE30D163352247713AEFF /* SVProgressHUD.m in Sources */,
-				56BC27D1E6C748409D085B72FBFB8C7F /* SVRadialGradientLayer.m in Sources */,
+				04E6284EDF38B5D37131BE9D7B52112E /* Pods-Examples-Production-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		75626206F42D3E10EDC110595309B7A9 /* Sources */ = {
+		3ED718D6C0EE9B2740B8EBEA4D3B089A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7EE6C17BBFFD2AB808C0F09CCACE42F0 /* Pods-Airwallex-dummy.m in Sources */,
+				A4A2FCC3AFC5B3D56EC5F9D759F84429 /* Pods-Examples-Demo-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9B897BDA287EC4F657AFB4CCFDA0585A /* Sources */ = {
+		7915D684B6F79329A242BEEA9F53DE0A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A823A45125967013ECFC2197E1D8DA5 /* Pods-AirwallexTests-dummy.m in Sources */,
+				DB9E1DBB0B8A295A4A9EEE8BB5CAACAE /* Pods-AirwallexTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DD91CCA1754F1F99A30E339907C1C760 /* Sources */ = {
+		84F18D5CF3F016767DFF3CCED2BBC64B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D4710DED1E948065343292EEC567FCE /* Pods-Examples-Demo-dummy.m in Sources */,
+				C75DD4693EBD503826D0A2BFC192AC0D /* Pods-Airwallex-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F618FC42D3C0668C16C5691882B0F7C4 /* Sources */ = {
+		DEF3200997349CD39850A127DCDA2E6A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A8D8A6E86FF477ACC422CFD81280018 /* Pods-Examples-Production-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F90DD414BDFE346F9CC282A5914BEE47 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				187C5F5470ADB98BBF80B3C55436411C /* Pods-Examples-Staging-dummy.m in Sources */,
+				98B0171EFB3B0F0128EE27392104B47A /* Pods-Examples-Staging-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		025BD51991BD0135F069BA04A14CA62E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SVProgressHUD;
-			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
-			targetProxy = 30E67E8034226F53B5CAE2B52F0FE818 /* PBXContainerItemProxy */;
-		};
-		18155F9B20CBC67D3DD0306C06742FE0 /* PBXTargetDependency */ = {
+		0FD8C310D4310E47A9D8541C77B710E8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "AlipaySDK-iOS";
 			target = 4847ACB1E2799345AA74D9E317048D58 /* AlipaySDK-iOS */;
-			targetProxy = B1F6BDBA627EA63067C4AF4005B19892 /* PBXContainerItemProxy */;
+			targetProxy = AB8A0BA124E11C13CB6BEBE93242C146 /* PBXContainerItemProxy */;
 		};
-		1E5034EDFD5F6F6C1EF45060FB420423 /* PBXTargetDependency */ = {
+		1062C89EB0FE68EBC7948278185461F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = AirwallexTrustDefender;
-			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
-			targetProxy = 04200D3A3C177A2E956F1B9845075602 /* PBXContainerItemProxy */;
+			name = WechatOpenSDK;
+			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
+			targetProxy = 6B17E54F07B1113259127A592986F2E6 /* PBXContainerItemProxy */;
 		};
-		3F97D58DF41F6A31B983D6325CB2A235 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SVProgressHUD;
-			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
-			targetProxy = FAC76EF008E768EFF203075C9ACB5A23 /* PBXContainerItemProxy */;
-		};
-		43A1A83DBBAA07A951AE59F884EAD29C /* PBXTargetDependency */ = {
+		14854055EBD34BF890E47CE66EAAAEF2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "AlipaySDK-iOS";
 			target = 4847ACB1E2799345AA74D9E317048D58 /* AlipaySDK-iOS */;
-			targetProxy = F928482084A33B1758F8307FF279CC40 /* PBXContainerItemProxy */;
+			targetProxy = 4C238D5CDEB58EEDD65B41261FB987A3 /* PBXContainerItemProxy */;
 		};
-		4577CB816AFE751304C6CE89C5881825 /* PBXTargetDependency */ = {
+		1E205DF839B06D25888306F5584E925B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = WechatOpenSDK;
-			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
-			targetProxy = 24D143EF87C4928856D4D890C01815DF /* PBXContainerItemProxy */;
+			name = AirwallexCardinalMobile;
+			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
+			targetProxy = 522923F0CF8A8A49EA72819714CEA0A0 /* PBXContainerItemProxy */;
 		};
-		48CD02E20FBF47E15F596E92DDDDD610 /* PBXTargetDependency */ = {
+		1E87B0338FC623F6AE7E542D24733C0B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AirwallexCardinalMobile;
+			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
+			targetProxy = 8084680C33C1629439A050E93D76E3B2 /* PBXContainerItemProxy */;
+		};
+		347B2B95F3652D9501824404639B2ACC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AirwallexTrustDefender;
 			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
-			targetProxy = 2D56476A2781C330C07522DD256E2086 /* PBXContainerItemProxy */;
+			targetProxy = 884F95C40FDE3A5F26F3969C8163ED69 /* PBXContainerItemProxy */;
 		};
-		6324FFDF2BB78B1A97A1448C39C77784 /* PBXTargetDependency */ = {
+		44108C059D5D40227FD4EDCF98B99D98 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WechatOpenSDK;
+			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
+			targetProxy = 2B6B0178314594A789439BA009192B0D /* PBXContainerItemProxy */;
+		};
+		5C78A65F661B0FD239B9DEE9E06833CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AirwallexTrustDefender;
+			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
+			targetProxy = C7FF0C806E3B474B4D34C35F9E25D193 /* PBXContainerItemProxy */;
+		};
+		88393793246F9B2A4A49AE5D3B41CECE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AirwallexTrustDefender;
+			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
+			targetProxy = 799BB0458993E698950A319DB0302009 /* PBXContainerItemProxy */;
+		};
+		93C81C6F9090C84FD436B1969D43495F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AirwallexTrustDefender;
+			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
+			targetProxy = 86E813260A9FCA69B19B2EEE4B2071CF /* PBXContainerItemProxy */;
+		};
+		AA9E5DE41BD0D84CFCD7198C9790F3B5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "AlipaySDK-iOS";
 			target = 4847ACB1E2799345AA74D9E317048D58 /* AlipaySDK-iOS */;
-			targetProxy = 2C00A7EB136881052661C4819C2BD1D0 /* PBXContainerItemProxy */;
+			targetProxy = A569FB9183883167DD6D95986470AABA /* PBXContainerItemProxy */;
 		};
-		7BDD09DA747F15F48C5E83EED7AE6514 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AirwallexCardinalMobile;
-			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
-			targetProxy = A730EFC1B47E1438B29C046C62292998 /* PBXContainerItemProxy */;
-		};
-		8B25867D1CD7CB5384F323719DEC4319 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SVProgressHUD;
-			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
-			targetProxy = 70E2DD52CE3A1852D7740DA0F7EEDD05 /* PBXContainerItemProxy */;
-		};
-		8CA41C01D1D025101F2945BD4557DDF1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SVProgressHUD;
-			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
-			targetProxy = 4A64B788DD7B3713AD98D54BE32456E7 /* PBXContainerItemProxy */;
-		};
-		90ACF6864800CA21EBF6FD09D02E4AA4 /* PBXTargetDependency */ = {
+		B477F4A5D0FE5F8AC35EF184C3ACAC47 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = WechatOpenSDK;
 			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
-			targetProxy = 5192C688A84EB199307D9D272446A960 /* PBXContainerItemProxy */;
+			targetProxy = 2942E310DAC18EF106152A7C61E8195E /* PBXContainerItemProxy */;
 		};
-		934A2C8B770F1FDC02D33C9BCD7BA216 /* PBXTargetDependency */ = {
+		D56EBE547D75CF2C52C4BAD40A25710B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AirwallexCardinalMobile;
 			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
-			targetProxy = B5653F10A960EFEC1C32EC2DE4F1B8B3 /* PBXContainerItemProxy */;
+			targetProxy = 91AAD9A11775AEF1D81632804872ECD5 /* PBXContainerItemProxy */;
 		};
-		9D5D61C454CDCE72418E3342FE6AB53A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AirwallexCardinalMobile;
-			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
-			targetProxy = 5242723E0F3EF4E5F92FAB920A0CC6F0 /* PBXContainerItemProxy */;
-		};
-		A1CE396274D2A8D5F8862D31510507B1 /* PBXTargetDependency */ = {
+		EA2CFFA4DD389E8CDFD141C24148FFBB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AirwallexTrustDefender;
 			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
-			targetProxy = FB010731CBABA957C3C7E0229C0AB2BA /* PBXContainerItemProxy */;
+			targetProxy = 6BBD1E1CAB8BAF6D81987666F33594D7 /* PBXContainerItemProxy */;
 		};
-		A72049AB258F20F9228B35409E694053 /* PBXTargetDependency */ = {
+		F5236A9B15A0055FE6D142D1E7645688 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AirwallexCardinalMobile;
 			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
-			targetProxy = FC86706334B974FFF2261F85354292A8 /* PBXContainerItemProxy */;
+			targetProxy = 6DE4FBE3E3C3EF8C28923EE290FA4B46 /* PBXContainerItemProxy */;
 		};
-		CEC6F0029907EFE3FE2397677CAFECEE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AirwallexTrustDefender;
-			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
-			targetProxy = C9461F7A5F109599A44D67A724BA0829 /* PBXContainerItemProxy */;
-		};
-		D7D8E3FB8B9B3FCFD4D0422C5941A031 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SVProgressHUD;
-			target = 1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */;
-			targetProxy = 9A5C0AC0AAF9F2DFEF7D74C485CD2792 /* PBXContainerItemProxy */;
-		};
-		EF140A7293BC443D1A77C3D2CFADAFB3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = WechatOpenSDK;
-			target = 8554F6236D2AA202CF58503D2DF29730 /* WechatOpenSDK */;
-			targetProxy = C5038E7889A6E492288BD17E94303C33 /* PBXContainerItemProxy */;
-		};
-		F77F270A5112FDD396F0927230F702F0 /* PBXTargetDependency */ = {
+		F6E90A37BAC4A25B88E7232907D2D5EC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AirwallexCardinalMobile;
 			target = 305ADB149F8042B8AD00663B1B695D80 /* AirwallexCardinalMobile */;
-			targetProxy = C433CCCD1E6D63FD79DF158C97C31BE6 /* PBXContainerItemProxy */;
-		};
-		FF9E1CC6460D560E63CD84F0CEC5A284 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AirwallexTrustDefender;
-			target = FA08D9F61A9AFD54AEE434F54B902E55 /* AirwallexTrustDefender */;
-			targetProxy = 7C7805B8ADBB5823FC322344A8A77E35 /* PBXContainerItemProxy */;
+			targetProxy = 5F73F4C8EC0D263EB99B1F2C13D55608 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		0118231FBA1BCDF755F06012BA2B4856 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C4A927AFE65C4141A0D8FD6A1DA3DF0 /* Pods-Examples-Demo.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		024507F7863F2F1E9F5657F60350DB19 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7245A87FCEFDA71BD5E1DAD54A985CAC /* AirwallexCardinalMobile.debug.xcconfig */;
+			baseConfigurationReference = E995288DD050132183B784C316CE557E /* AirwallexCardinalMobile.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1035,9 +872,32 @@
 			};
 			name = Debug;
 		};
-		1375B04525B806DCB1302767A6D9CD48 /* Release */ = {
+		03BFACBFDF60CF94C9DE4F55EF1B10F3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB1A977DB4891D14E145DC06D71C406 /* Pods-Examples-Staging.release.xcconfig */;
+			baseConfigurationReference = 5EBDB7F59EFAA426881051BBCA32131A /* Pods-Examples-Staging.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0DF904611622DCF4F896E18961A7998A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E9FADCCFD2C9423195BE42427CF073FB /* Pods-Examples-Production.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1060,7 +920,7 @@
 		};
 		1812C58354D81E588727ABE23D670ECC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0704EAAACC48AD6F4327CFEB8C4CC7B8 /* AirwallexCardinalMobile.release.xcconfig */;
+			baseConfigurationReference = D5FB2F3BB43A91D62FA642E900A03168 /* AirwallexCardinalMobile.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1078,7 +938,7 @@
 		};
 		1FB4D849B0CC2A46BF6F5BD08F5063C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 86982BBE41308FE6909B620A626E460E /* AirwallexTrustDefender.debug.xcconfig */;
+			baseConfigurationReference = 0BCC38708CEEA2253D82AA5675CA8FF4 /* AirwallexTrustDefender.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1089,28 +949,6 @@
 					"@executable_path/Frameworks",
 				);
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		21CB2E664C5DA9EC7F81B3B5A6D2EBBC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC70ACF1ED35558345900B5CE03A9B33 /* Pods-Examples-Demo.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1175,26 +1013,9 @@
 			};
 			name = Release;
 		};
-		3C3A8FC1D20E0026F0BA7CCC20511DA0 /* Release */ = {
+		2E5CF21E09DBBB0CFC294556DD152468 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F6FC6B4F1B96D4F8F943CD8B606AB25A /* WechatOpenSDK.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		558EFAFBC96A2D01F1775728814552ED /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5AB7E86F964832231EEFA04E62C3599D /* Pods-Examples-Production.release.xcconfig */;
+			baseConfigurationReference = B93F47C743D59D632F1C72B0EB1879FC /* Pods-Examples-Demo.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1215,9 +1036,26 @@
 			};
 			name = Release;
 		};
+		3C3A8FC1D20E0026F0BA7CCC20511DA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5CAD75A987B2AAEE9B7C1174DB522C51 /* WechatOpenSDK.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		5D26A4196FA0B249662BFBA5A4148DE0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8EA3E9C129C54C3A84CE963A824E4F76 /* AirwallexTrustDefender.release.xcconfig */;
+			baseConfigurationReference = 0B5216C1F8FD9E5E08A9F98E46D6D660 /* AirwallexTrustDefender.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1233,31 +1071,9 @@
 			};
 			name = Release;
 		};
-		5E15C239F929CA693DCDF980EB39E30E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 72B935DD1F87E9649871C09488F9A27D /* Pods-Airwallex.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		6323423DF7A8FCDE138E6FB559C4A709 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D825EF174C14FE30AE62AAE2499C379 /* WechatOpenSDK.debug.xcconfig */;
+			baseConfigurationReference = 84D07A30DBC03B6010D6E21D403E4B93 /* WechatOpenSDK.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1271,9 +1087,9 @@
 			};
 			name = Debug;
 		};
-		7E890A5CC5E6DFFB3522910A27A96C6D /* Debug */ = {
+		7FB9E73BFA0B40EACABD2E422EC9B6F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1BD9D4AF27F97975B178E162A603F057 /* Pods-Examples-Staging.debug.xcconfig */;
+			baseConfigurationReference = 989FC10DF41DA4AC198E1D026D6EBC49 /* Pods-Airwallex.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1292,77 +1108,10 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
-		};
-		87F3602B6EA71FA9DFB663FE62150A92 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7E0EAA0DC9CBB2B74A32B5A0BE5956F /* Pods-AirwallexTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		8B8D02FA65E691EC1F6B1996CDF23372 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9886F9FB9FFA9394DA5A4399FD56C4D0 /* Pods-Examples-Production.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		9E0E1E90C242EC4BECD853DD871EB5AA /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87FFBFC7D5524D36953FCB075B72797D /* Pods-Airwallex.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
 		};
 		A0F052D5A8EE05A7189E03812B02B500 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A8648301CB145EC68C7F07CDA5A09546 /* AlipaySDK-iOS.release.xcconfig */;
+			baseConfigurationReference = 0AFD601B0CC094EEC96E34C9802D43F0 /* AlipaySDK-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1379,7 +1128,7 @@
 		};
 		A2DB3C5A5BF6E2BA8A7A8E0178051515 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F346E39339C1F5645B6E83530E4043A9 /* AlipaySDK-iOS.debug.xcconfig */;
+			baseConfigurationReference = 638ADCB6CBA87A92D2556F3E7A844779 /* AlipaySDK-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1393,33 +1142,9 @@
 			};
 			name = Debug;
 		};
-		AB44873072BB76717C501C42F248C808 /* Debug */ = {
+		B4CF50FD4AA73F4CB503159926F037B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1874B9D216AA608F27115EF4BA2204FB /* SVProgressHUD.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/SVProgressHUD/SVProgressHUD-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = SVProgressHUD;
-				PRODUCT_NAME = SVProgressHUD;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		CB082784FD2C1951E1144E95CCAD3C40 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C61814F3E9205A506FEE2194B89C62D /* Pods-Examples-Demo.release.xcconfig */;
+			baseConfigurationReference = FB8E372AEA34889A56C4013CE0562602 /* Pods-Examples-Production.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1436,13 +1161,34 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = Debug;
 		};
-		CB7661F0EBA98EE4E64DB72913C32265 /* Release */ = {
+		C58F1E57C840B204753198ABF6A58609 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EBBC8A0288DA2215E30B76E00B5A8E0 /* Pods-AirwallexTests.release.xcconfig */;
+			baseConfigurationReference = BBD677152A957799073DEE13B6CA1AB5 /* Pods-Examples-Staging.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DC3C4DAB2D42C6EE72B9658F723D7F08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2731A4FA4E1F704FF4CFA31CA6E35B9C /* Pods-AirwallexTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1527,26 +1273,46 @@
 			};
 			name = Debug;
 		};
-		E34A83F7AB2F25FE45EC40F51110387C /* Release */ = {
+		E73A952B0881681594E9DA3CD85010EF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0985DAAF4FAFAE2EE3809517F74817F4 /* SVProgressHUD.release.xcconfig */;
+			baseConfigurationReference = 9B86E6AA6325AE97B23E9014CA33CD54 /* Pods-AirwallexTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/SVProgressHUD/SVProgressHUD-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = SVProgressHUD;
-				PRODUCT_NAME = SVProgressHUD;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F248A40A7BB0DA4120DC1A8F4F22025C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA7F4A4B2AA6B7F34A18CDEB04B1BEE7 /* Pods-Airwallex.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1555,20 +1321,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		09C0357EC359F94C87826AC53ED223E6 /* Build configuration list for PBXNativeTarget "Pods-Examples-Production" */ = {
+		4085184BCDA9E356956B755991A26E3C /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8B8D02FA65E691EC1F6B1996CDF23372 /* Debug */,
-				558EFAFBC96A2D01F1775728814552ED /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		16F3AC7138A9B070628DD311E97E4B96 /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5E15C239F929CA693DCDF980EB39E30E /* Debug */,
-				9E0E1E90C242EC4BECD853DD871EB5AA /* Release */,
+				E73A952B0881681594E9DA3CD85010EF /* Debug */,
+				DC3C4DAB2D42C6EE72B9658F723D7F08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1618,38 +1375,38 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C0CC1F7016A3FA32E38A99393EF15B14 /* Build configuration list for PBXNativeTarget "Pods-Examples-Demo" */ = {
+		635DDD06A606972E1139D7F04740D12B /* Build configuration list for PBXNativeTarget "Pods-Examples-Production" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				21CB2E664C5DA9EC7F81B3B5A6D2EBBC /* Debug */,
-				CB082784FD2C1951E1144E95CCAD3C40 /* Release */,
+				B4CF50FD4AA73F4CB503159926F037B6 /* Debug */,
+				0DF904611622DCF4F896E18961A7998A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E88A0699D5226A2BDBAD1D26EC123C17 /* Build configuration list for PBXNativeTarget "Pods-Examples-Staging" */ = {
+		685A0AD9A453D6EAF3F0C553997B8AC2 /* Build configuration list for PBXNativeTarget "Pods-Airwallex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7E890A5CC5E6DFFB3522910A27A96C6D /* Debug */,
-				1375B04525B806DCB1302767A6D9CD48 /* Release */,
+				7FB9E73BFA0B40EACABD2E422EC9B6F8 /* Debug */,
+				F248A40A7BB0DA4120DC1A8F4F22025C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F49D2BFAAA78D95C1429E59AB1A23ACE /* Build configuration list for PBXNativeTarget "SVProgressHUD" */ = {
+		972FE9449406CE33B0F42ED63F6F6020 /* Build configuration list for PBXNativeTarget "Pods-Examples-Staging" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AB44873072BB76717C501C42F248C808 /* Debug */,
-				E34A83F7AB2F25FE45EC40F51110387C /* Release */,
+				C58F1E57C840B204753198ABF6A58609 /* Debug */,
+				03BFACBFDF60CF94C9DE4F55EF1B10F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F55D36F7D2676C7B5940190A9A69CEA7 /* Build configuration list for PBXNativeTarget "Pods-AirwallexTests" */ = {
+		FF24A48C516679E0C06C0C57B49E7BD9 /* Build configuration list for PBXNativeTarget "Pods-Examples-Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				87F3602B6EA71FA9DFB663FE62150A92 /* Debug */,
-				CB7661F0EBA98EE4E64DB72913C32265 /* Release */,
+				0118231FBA1BCDF755F06012BA2B4856 /* Debug */,
+				2E5CF21E09DBBB0CFC294556DD152468 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
