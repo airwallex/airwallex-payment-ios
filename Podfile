@@ -33,6 +33,12 @@ target 'Examples-Demo' do
   shared_example_pods
 end
 
+target 'Examples-Staging' do
+  project './Examples/Examples.xcodeproj'
+  shared_sdk_pods
+  shared_example_pods
+end
+
 target 'Examples-Production' do
   project './Examples/Examples.xcodeproj'
   shared_sdk_pods

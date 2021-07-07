@@ -29,6 +29,30 @@
 		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
+		57033F04269554BD008A4780 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
+		57033F05269554BD008A4780 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BE264D06B400027311 /* WebViewController.m */; };
+		57033F06269554BD008A4780 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
+		57033F07269554BD008A4780 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7B956265F44BA00F2CBB6 /* DemoViewController.m */; };
+		57033F08269554BD008A4780 /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BB264D06A900027311 /* InputViewController.m */; };
+		57033F09269554BD008A4780 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
+		57033F0A269554BD008A4780 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
+		57033F0B269554BD008A4780 /* ShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084F15E6247646FA00DAAD76 /* ShippingCell.m */; };
+		57033F0C269554BD008A4780 /* AirwallexExamplesKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */; };
+		57033F0D269554BD008A4780 /* WechatPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7B959265F45AF00F2CBB6 /* WechatPayViewController.m */; };
+		57033F0E269554BD008A4780 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
+		57033F0F269554BD008A4780 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308123CEEC3300C9D587 /* ProductCell.m */; };
+		57033F10269554BD008A4780 /* SuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501C1264D06BE00027311 /* SuccessViewController.m */; };
+		57033F11269554BD008A4780 /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
+		57033F13269554BD008A4780 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
+		57033F16269554BD008A4780 /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
+		57033F17269554BD008A4780 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
+		57033F18269554BD008A4780 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
+		57033F19269554BD008A4780 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
+		57033F1A269554BD008A4780 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
+		57033F1B269554BD008A4780 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3F723CC64B6002E8F27 /* Main.storyboard */; };
+		57033F1C269554BD008A4780 /* CircularXX-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 086F862E25230C330006DAB5 /* CircularXX-Regular.otf */; };
+		57033F1D269554BD008A4780 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
+		57033F20269554BD008A4780 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57DCD642269428C800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
 		57DCD643269428C800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
 		57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */; };
@@ -55,8 +79,9 @@
 		57F9EFA2268DCE3E00B744B2 /* CircularXX-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 086F862E25230C330006DAB5 /* CircularXX-Regular.otf */; };
 		57F9EFA4268DCE3E00B744B2 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
 		57F9EFA7268DCE3E00B744B2 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945478F23941A796D47F8011 /* libPods-Examples-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E2B422F8587612E8D653BC /* libPods-Examples-Demo.a */; };
+		945478F23941A796D47F8011 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		BB0A2A30E86F49A3911AE319 /* libPods-Examples-Production.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C41EB67CD6F97637F29AFDEA /* libPods-Examples-Production.a */; };
+		E831FE131F64421B7B49E6C2 /* libPods-Examples-Staging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD7AB69F36558E78404EE27 /* libPods-Examples-Staging.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,6 +92,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				084779D3244F240A00C41256 /* Airwallex.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57033F1F269554BD008A4780 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				57033F20269554BD008A4780 /* Airwallex.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,18 +156,21 @@
 		08A3E99D24246C30003FDAAF /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		08A3E99E24246C30003FDAAF /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		08B55E372421D8C60054E254 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		48E2B422F8587612E8D653BC /* libPods-Examples-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Examples-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42FDA8DF58E043CDD36FE269 /* Pods-Examples-Staging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-Staging.debug.xcconfig"; path = "Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging.debug.xcconfig"; sourceTree = "<group>"; };
+		57033F25269554BD008A4780 /* Examples-Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Examples-Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		57DCD641269428C800705D5C /* Keys */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Keys; sourceTree = "<group>"; };
 		57F9EF83268DCB3600B744B2 /* AirwallexExamplesKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexExamplesKeys.h; sourceTree = "<group>"; };
 		57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirwallexExamplesKeys.m; sourceTree = "<group>"; };
 		57F9EFAC268DCE3E00B744B2 /* Examples-Production.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Examples-Production.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 		89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
+		8FD7AB69F36558E78404EE27 /* libPods-Examples-Staging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Examples-Staging.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA110B18804B9452C886DD7 /* Pods-Examples-Production.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-Production.debug.xcconfig"; path = "Target Support Files/Pods-Examples-Production/Pods-Examples-Production.debug.xcconfig"; sourceTree = "<group>"; };
 		A3F041C56CDB8855CEBD78B2 /* Pods-Examples-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-Demo.debug.xcconfig"; path = "Target Support Files/Pods-Examples-Demo/Pods-Examples-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		AC1759BD636EFD39F1A0B2CF /* Pods-Examples-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-Demo.release.xcconfig"; path = "Target Support Files/Pods-Examples-Demo/Pods-Examples-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		C41EB67CD6F97637F29AFDEA /* libPods-Examples-Production.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Examples-Production.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3CAB1BA0330D0180788C686 /* Pods-Examples-Production.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-Production.release.xcconfig"; path = "Target Support Files/Pods-Examples-Production/Pods-Examples-Production.release.xcconfig"; sourceTree = "<group>"; };
+		FEAF19426E155BE9ACC7E236 /* Pods-Examples-Staging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-Staging.release.xcconfig"; path = "Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +179,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				084779D2244F240A00C41256 /* Airwallex.framework in Frameworks */,
-				945478F23941A796D47F8011 /* libPods-Examples-Demo.a in Frameworks */,
+				945478F23941A796D47F8011 /* (null) in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57033F12269554BD008A4780 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57033F13269554BD008A4780 /* Airwallex.framework in Frameworks */,
+				E831FE131F64421B7B49E6C2 /* libPods-Examples-Staging.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +248,7 @@
 			children = (
 				085BD3EB23CC64B6002E8F27 /* Examples-Demo.app */,
 				57F9EFAC268DCE3E00B744B2 /* Examples-Production.app */,
+				57033F25269554BD008A4780 /* Examples-Staging.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -254,6 +303,8 @@
 				AC1759BD636EFD39F1A0B2CF /* Pods-Examples-Demo.release.xcconfig */,
 				9CA110B18804B9452C886DD7 /* Pods-Examples-Production.debug.xcconfig */,
 				F3CAB1BA0330D0180788C686 /* Pods-Examples-Production.release.xcconfig */,
+				42FDA8DF58E043CDD36FE269 /* Pods-Examples-Staging.debug.xcconfig */,
+				FEAF19426E155BE9ACC7E236 /* Pods-Examples-Staging.release.xcconfig */,
 			);
 			name = Pods;
 			path = ../Pods;
@@ -276,8 +327,8 @@
 			isa = PBXGroup;
 			children = (
 				08B55E372421D8C60054E254 /* Airwallex.framework */,
-				48E2B422F8587612E8D653BC /* libPods-Examples-Demo.a */,
 				C41EB67CD6F97637F29AFDEA /* libPods-Examples-Production.a */,
+				8FD7AB69F36558E78404EE27 /* libPods-Examples-Staging.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -304,6 +355,27 @@
 			name = "Examples-Demo";
 			productName = Examples;
 			productReference = 085BD3EB23CC64B6002E8F27 /* Examples-Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		57033F01269554BD008A4780 /* Examples-Staging */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57033F22269554BD008A4780 /* Build configuration list for PBXNativeTarget "Examples-Staging" */;
+			buildPhases = (
+				57033F02269554BD008A4780 /* [CP] Check Pods Manifest.lock */,
+				57033F03269554BD008A4780 /* Sources */,
+				57033F12269554BD008A4780 /* Frameworks */,
+				57033F15269554BD008A4780 /* Resources */,
+				57033F1E269554BD008A4780 /* [CP] Embed Pods Frameworks */,
+				57033F1F269554BD008A4780 /* Embed Frameworks */,
+				57033F21269554BD008A4780 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Examples-Staging";
+			productName = Examples;
+			productReference = 57033F25269554BD008A4780 /* Examples-Staging.app */;
 			productType = "com.apple.product-type.application";
 		};
 		57F9EF88268DCE3E00B744B2 /* Examples-Production */ = {
@@ -355,6 +427,7 @@
 			projectRoot = "";
 			targets = (
 				085BD3EA23CC64B6002E8F27 /* Examples-Demo */,
+				57033F01269554BD008A4780 /* Examples-Staging */,
 				57F9EF88268DCE3E00B744B2 /* Examples-Production */,
 			);
 		};
@@ -373,6 +446,21 @@
 				085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */,
 				086F862F25230C330006DAB5 /* CircularXX-Regular.otf in Resources */,
 				088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57033F15269554BD008A4780 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57033F16269554BD008A4780 /* Keys in Resources */,
+				57033F17269554BD008A4780 /* LaunchScreen.storyboard in Resources */,
+				57033F18269554BD008A4780 /* Splash.storyboard in Resources */,
+				57033F19269554BD008A4780 /* CircularStd-Medium.otf in Resources */,
+				57033F1A269554BD008A4780 /* Assets.xcassets in Resources */,
+				57033F1B269554BD008A4780 /* Main.storyboard in Resources */,
+				57033F1C269554BD008A4780 /* CircularXX-Regular.otf in Resources */,
+				57033F1D269554BD008A4780 /* CircularStd-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +519,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Demo/Pods-Examples-Demo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57033F02269554BD008A4780 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Examples-Staging-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57033F1E269554BD008A4780 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57033F21269554BD008A4780 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		57F9EF89268DCE3E00B744B2 /* [CP] Check Pods Manifest.lock */ = {
@@ -527,6 +671,27 @@
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
 				00E501C2264D06BE00027311 /* SuccessViewController.m in Sources */,
 				08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57033F03269554BD008A4780 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57033F04269554BD008A4780 /* CartViewController.m in Sources */,
+				57033F05269554BD008A4780 /* WebViewController.m in Sources */,
+				57033F06269554BD008A4780 /* TotalCell.m in Sources */,
+				57033F07269554BD008A4780 /* DemoViewController.m in Sources */,
+				57033F08269554BD008A4780 /* InputViewController.m in Sources */,
+				57033F09269554BD008A4780 /* APIClient.m in Sources */,
+				57033F0A269554BD008A4780 /* AppDelegate.m in Sources */,
+				57033F0B269554BD008A4780 /* ShippingCell.m in Sources */,
+				57033F0C269554BD008A4780 /* AirwallexExamplesKeys.m in Sources */,
+				57033F0D269554BD008A4780 /* WechatPayViewController.m in Sources */,
+				57033F0E269554BD008A4780 /* main.m in Sources */,
+				57033F0F269554BD008A4780 /* ProductCell.m in Sources */,
+				57033F10269554BD008A4780 /* SuccessViewController.m in Sources */,
+				57033F11269554BD008A4780 /* OptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -741,6 +906,64 @@
 			};
 			name = Release;
 		};
+		57033F23269554BD008A4780 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 42FDA8DF58E043CDD36FE269 /* Pods-Examples-Staging.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 6AM6RAJ294;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"STAGING=1",
+				);
+				INFOPLIST_FILE = Examples/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Airwallex Enterprise";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		57033F24269554BD008A4780 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEAF19426E155BE9ACC7E236 /* Pods-Examples-Staging.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 6AM6RAJ294;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"STAGING=1",
+				);
+				INFOPLIST_FILE = Examples/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Airwallex Enterprise";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		57F9EFAA268DCE3E00B744B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9CA110B18804B9452C886DD7 /* Pods-Examples-Production.debug.xcconfig */;
@@ -806,6 +1029,15 @@
 			buildConfigurations = (
 				085BD40523CC64B9002E8F27 /* Debug */,
 				085BD40623CC64B9002E8F27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		57033F22269554BD008A4780 /* Build configuration list for PBXNativeTarget "Examples-Staging" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57033F23269554BD008A4780 /* Debug */,
+				57033F24269554BD008A4780 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
