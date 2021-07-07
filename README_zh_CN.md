@@ -329,17 +329,24 @@ service.delegate = ”The target to handle AWXThreeDSServiceDelegate protocol”
 ```objective-c
 - (void)onResp:(BaseResp *)resp
 {
-	if ([resp isKindOfClass:[PayResp class]]) {
-		PayResp *response = (PayResp *)resp;
-		switch (response.errCode) {
-			case WXSuccess:
-				[SVProgressHUD showSuccessWithStatus:@"Succeed to pay"];
-				break;
-			default:
-				[SVProgressHUD showErrorWithStatus:@"Failed to pay"];
-				break;
-		}
-	}
+    if ([resp isKindOfClass:[PayResp class]]) {
+        NSString *message = nil;
+        PayResp *response = (PayResp *)resp;
+        switch (response.errCode) {
+            case WXSuccess:
+                message = @"Succeed to pay";
+                break;
+            default:
+                message = @"Failed to pay";
+                break;
+        }
+        
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
+                                                                            message:message
+                                                                     preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
+    }
 }
 ```
 

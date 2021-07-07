@@ -7,7 +7,6 @@
 //
 
 #import "AWXCardViewController.h"
-#import <SVProgressHUD/SVProgressHUD.h>
 #import "AWXShippingViewController.h"
 #import "AWXConstants.h"
 #import "AWXWidgets.h"
@@ -33,6 +32,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet AWXCardTextField *cardNoField;
 @property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *nameField;
@@ -99,6 +99,11 @@
 
     self.switchButton.on = self.sameAsShipping;
     self.billingView.hidden = self.sameAsShipping;
+    
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator.hidesWhenStopped = YES;
+    self.activityIndicator.hidden = YES;
+    [self.view addSubview:self.activityIndicator];
 
     if (self.billing) {
         self.firstNameField.text = self.billing.firstName;
@@ -119,6 +124,12 @@
             self.zipcodeField.text = address.postcode;
         }
     }
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    self.activityIndicator.center = self.view.center;
 }
 
 - (UIScrollView *)activeScrollView
@@ -234,12 +245,12 @@
     request.requestId = NSUUID.UUID.UUIDString;
     request.paymentMethod = paymentMethod;
 
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
     __weak __typeof(self)weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [SVProgressHUD dismiss];
+        [strongSelf.activityIndicator stopAnimating];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -256,11 +267,11 @@
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
 {
     __weak __typeof(self)weakSelf = self;
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
     [[AWXSecurityService sharedService] doProfile:[AWXUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
-        [SVProgressHUD dismiss];
-        
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+        
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
         [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
@@ -292,12 +303,12 @@
     request.device = device;
     self.device = device;
 
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        [SVProgressHUD dismiss];
-        
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+        
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }
@@ -379,12 +390,12 @@
     request.useDCC = useDCC;
     request.device = self.device;
 
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        [SVProgressHUD dismiss];
-
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+        
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }

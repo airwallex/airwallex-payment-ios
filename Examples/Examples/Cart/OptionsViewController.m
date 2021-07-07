@@ -8,9 +8,9 @@
 
 #import "OptionsViewController.h"
 #import <Airwallex/Airwallex.h>
-#import <SVProgressHUD/SVProgressHUD.h>
 #import "AirwallexExamplesKeys.h"
 #import "APIClient.h"
+#import "UIViewController+Utils.h"
 
 @interface OptionsViewController () <UITextFieldDelegate>
 
@@ -201,7 +201,7 @@
             [APIClient sharedClient].paymentBaseURL = url;
             [Airwallex setDefaultBaseURL:url];
         } else {
-            [SVProgressHUD showErrorWithStatus:@"Not a valid payment url"];
+            [self showAlert:NSLocalizedString(@"Not a valid payment url", nil)];
         }
     } else if (textField == self.apiKeyTextField) {
         [APIClient sharedClient].apiKey = textField.text;
@@ -221,7 +221,7 @@
         if ([textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0) {
             [self.delegate optionsViewController:self didEditCurrency:textField.text.uppercaseString];
         } else {
-            [SVProgressHUD showErrorWithStatus:@"Please enter a valid currency"];
+            [self showAlert:NSLocalizedString(@"Please enter a valid currency", nil)];
         }
     }else if (textField == self.customerIdTextField) {
         if (textField.text.length == 0) {

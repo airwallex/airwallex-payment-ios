@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import <Airwallex/Airwallex.h>
-#import <SVProgressHUD/SVProgressHUD.h>
 #import <WechatOpenSDK/WXApi.h>
 #import "AirwallexExamplesKeys.h"
 
@@ -20,10 +19,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [SVProgressHUD setBackgroundColor:[UIColor colorNamed:@"Line Color"]];
-    [SVProgressHUD setMaximumDismissTimeInterval:2];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-
     // Airwallex
     // Step1:
     // or use a preset mode (Note: test mode as default)
@@ -85,15 +80,22 @@
 - (void)onResp:(BaseResp *)resp
 {
     if ([resp isKindOfClass:[PayResp class]]) {
+        NSString *message = nil;
         PayResp *response = (PayResp *)resp;
         switch (response.errCode) {
             case WXSuccess:
-                [SVProgressHUD showSuccessWithStatus:@"Succeed to pay"];
+                message = @"Succeed to pay";
                 break;
             default:
-                [SVProgressHUD showErrorWithStatus:@"Failed to pay"];
+                message = @"Failed to pay";
                 break;
         }
+        
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
+                                                                            message:message
+                                                                     preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
     }
 }
 

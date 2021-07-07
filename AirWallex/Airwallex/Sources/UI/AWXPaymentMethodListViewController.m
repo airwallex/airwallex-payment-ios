@@ -7,7 +7,6 @@
 //
 
 #import "AWXPaymentMethodListViewController.h"
-#import <SVProgressHUD/SVProgressHUD.h>
 #import "AWXDCCViewController.h"
 #import "AWXCardViewController.h"
 #import "AWXPaymentViewController.h"
@@ -39,6 +38,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) NSArray <NSArray <AWXPaymentMethod *> *> *paymentMethods;
 @property (strong, nonatomic) NSMutableArray <AWXPaymentMethod *> *cards;
@@ -56,7 +56,19 @@
 {
     [super viewDidLoad];
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator.hidesWhenStopped = YES;
+    self.activityIndicator.hidden = YES;
+    [self.view addSubview:self.activityIndicator];
+
     [self loadPaymentMethodTypesFromPageNum: 0];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    self.activityIndicator.center = self.view.center;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -86,7 +98,7 @@
 
 - (void) loadPaymentMethodTypesFromPageNum:(NSInteger)pageNum {
     AWXGetPaymentMethodsTypeRequest *request = [AWXGetPaymentMethodsTypeRequest new];
-    request.active = self.customerId;
+    request.active = YES;
     request.pageNum = pageNum;
     request.transactionCurrency = _currency;
     
@@ -178,7 +190,8 @@
     
     NSArray *cardTypes = @[@"visa", @"mastercard"];
 
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
+    
     dispatch_group_t group = dispatch_group_create();
 
     for (NSString *type in cardTypes) {
@@ -213,7 +226,7 @@
         self.paymentMethods = @[self.section0, self.cards];
         [self.tableView reloadData];
         self.nextPageNum = pageNum + 1;
-        [SVProgressHUD dismiss];
+        [self.activityIndicator stopAnimating];
     });
 }
 
@@ -225,7 +238,7 @@
         return;
     }
 
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
 
     AWXGetPaymentMethodsRequest *request = [AWXGetPaymentMethodsRequest new];
     request.customerId = self.customerId;
@@ -236,7 +249,8 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [SVProgressHUD dismiss];
+        [strongSelf.activityIndicator stopAnimating];
+        
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -261,7 +275,7 @@
 
 - (void)disableCard:(AWXPaymentMethod *)paymentMethod
 {
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
     
     AWXDisablePaymentMethodRequest *request = [AWXDisablePaymentMethodRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
@@ -271,7 +285,7 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [SVProgressHUD dismiss];
+        [strongSelf.activityIndicator stopAnimating];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
@@ -519,11 +533,11 @@
     }
     
     __weak __typeof(self)weakSelf = self;
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
     [[AWXSecurityService sharedService] doProfile:[AWXUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
-        [SVProgressHUD dismiss];
-                
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
         
@@ -548,9 +562,12 @@
     request.customerId = self.customerId;
     request.paymentMethod = paymentMethod;
     request.currency = self.currency;
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
+    __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        [SVProgressHUD dismiss];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+        
         AWXPaymentConsentResponse *result = response;
         completion(result.consent);
     }];
@@ -566,11 +583,12 @@
     AWXPaymentMethod * payment = paymentMethod;
     request.options = payment;
     request.returnURL =  @"airwallexcheckout://com.airwallex.paymentacceptance";
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        [SVProgressHUD dismiss];
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+        
         AWXVerifyPaymentConsentResponse *result = response;
         if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
             self.paymentIntentId = result.initialPaymentIntentId;
@@ -603,12 +621,12 @@
     request.device = device;
     self.device = device;
 
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        [SVProgressHUD dismiss];
-        
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+        
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }
@@ -677,12 +695,12 @@
     request.useDCC = useDCC;
     request.device = self.device;
 
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        [SVProgressHUD dismiss];
-
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+        
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }

@@ -7,9 +7,9 @@
 //
 
 #import "CartViewController.h"
+#import "UIViewController+Utils.h"
 #import <SafariServices/SFSafariViewController.h>
 #import <Airwallex/Airwallex.h>
-#import <SVProgressHUD/SVProgressHUD.h>
 #import <WechatOpenSDK/WXApi.h>
 #import "AirwallexExamplesKeys.h"
 #import "OptionsViewController.h"
@@ -20,6 +20,7 @@
 
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate, OptionsViewControllerDelegate>
 
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIView *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -46,6 +47,11 @@
     self.checkoutButton.layer.masksToBounds = YES;
     self.checkoutButton.layer.cornerRadius = 6;
     
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator.hidesWhenStopped = YES;
+    self.activityIndicator.hidden = YES;
+    [self.view addSubview:self.activityIndicator];
+    
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro"
                                                detail:@"Free engraving x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"399"]];
@@ -61,27 +67,28 @@
     client.paymentBaseURL = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientId;
-        
-   NSDictionary *shipping = @{
-                              @"first_name": @"Verify",
-                              @"last_name": @"Doe",
-                              @"phone_number": @"13800000000",
-                              @"address": @{
-                                      @"country_code": @"CN",
-                                      @"state": @"Shanghai",
-                                      @"city": @"Shanghai",
-                                      @"street": @"Pudong District",
-                                      @"postcode": @"100000"
-                              }
-                       };
+    
+    NSDictionary *shipping = @{
+        @"first_name": @"Verify",
+        @"last_name": @"Doe",
+        @"phone_number": @"13800000000",
+        @"address": @{
+                @"country_code": @"CN",
+                @"state": @"Shanghai",
+                @"city": @"Shanghai",
+                @"street": @"Pudong District",
+                @"postcode": @"100000"
+        }
+    };
     self.shipping =  [AWXPlaceDetails decodeFromJSON:shipping];
-
+    
     [self reloadData];
 }
 
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+    self.activityIndicator.center = self.view.center;
     self.badgeView.layer.cornerRadius = CGRectGetWidth(self.badgeView.bounds) / 2;
 }
 
@@ -116,19 +123,21 @@
 - (IBAction)checkoutPressed:(id)sender
 {
     if (self.products.count == 0) {
-        [SVProgressHUD showErrorWithStatus:@"No products in your cart"];
+        [self showAlert:NSLocalizedString(@"No products in your cart", nil)];
         return;
     }
-
-    [SVProgressHUD show];
+    
+    [self.activityIndicator startAnimating];
     __weak __typeof(self)weakSelf = self;
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        
         if (error) {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            [strongSelf.activityIndicator stopAnimating];
+            [strongSelf showAlert:error.localizedDescription];
             return;
         }
         
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (strongSelf.paymentWithoutCustomer) {
             // No need customer
             [strongSelf createPaymentIntentWithCustomerId:nil];
@@ -154,7 +163,8 @@
                                                                  @"metadata": @{@"id": @1}}
                                              completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
             if (error) {
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                [strongSelf.activityIndicator stopAnimating];
+                [strongSelf showAlert:error.localizedDescription];
                 return;
             }
             
@@ -172,7 +182,7 @@
 
 - (void)createPaymentIntentWithCustomerId:(nullable NSString *)customerId
 {
-    [SVProgressHUD show];
+    [self.activityIndicator startAnimating];
     
     __weak __typeof(self)weakSelf = self;
     dispatch_group_t group = dispatch_group_create();
@@ -234,12 +244,12 @@
                 dispatch_group_leave(group);
                 return;
             }
-
+            
             _paymentIntent = paymentIntent;
             dispatch_group_leave(group);
         }];
     }
-
+    
     if (customerId) {
         dispatch_group_enter(group);
         [[APIClient sharedClient] createCustomerSecretWithId:customerId completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
@@ -255,12 +265,14 @@
     }
     
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+        
         if (_error) {
-            [SVProgressHUD showErrorWithStatus:_error.localizedDescription];
+            [strongSelf showAlert:_error.localizedDescription];
             return;
         }
         
-        [SVProgressHUD dismiss];
         [AWXAPIClientConfiguration sharedConfiguration].baseURL = [APIClient sharedClient].paymentBaseURL;
         if (_paymentIntent) {
             // Step2: Setup client secret
@@ -272,7 +284,6 @@
             }
             
             // Step4: Show payment flow
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
         }
     });
@@ -431,18 +442,20 @@
      */
     NSURL *url = [NSURL URLWithString:response.prepayId];
     if (url.scheme && url.host) {
-        [SVProgressHUD show];
+        [self.activityIndicator startAnimating];
         
         __weak __typeof(self)weakSelf = self;
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                          completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf.activityIndicator stopAnimating];
+            
             if (error) {
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                [strongSelf showAlert:error.localizedDescription];
                 return;
             }
             
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf finishPayment];
         }] resume];
         return;
@@ -462,11 +475,11 @@
     //    WeChatSDK 1.8.6.1
     //    [WXApi sendReq:request completion:^(BOOL success) {
     //        if (!success) {
-    //            [SVProgressHUD showErrorWithStatus:@"Failed to call WeChat Pay"];
+    //            // Failed to call WeChat Pay
     //            return;
     //        }
     //
-    //        [SVProgressHUD showSuccessWithStatus:@"Succeed to pay"];
+    //        // Succeed to pay
     //    }];
 }
 
@@ -492,9 +505,13 @@
     AWXRetrievePaymentIntentRequest *request = [[AWXRetrievePaymentIntentRequest alloc] init];
     request.intentId = self.paymentIntent.Id;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+        
         if (error) {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            [strongSelf showAlert:error.localizedDescription];
             return;
         }
         
@@ -505,14 +522,16 @@
 
 - (void)finishPayment
 {
+    __weak __typeof(self)weakSelf = self;
     [self checkPaymentIntentStatusWithCompletion:^(BOOL success) {
-        [SVProgressHUD dismiss];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
         
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
                                                                             message:success ? @"Pay successfully": @"Waiting payment completion"
                                                                      preferredStyle:UIAlertControllerStyleAlert];
         [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
+        [strongSelf presentViewController:controller animated:YES completion:nil];
     }];
 }
 

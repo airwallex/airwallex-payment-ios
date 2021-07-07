@@ -15,7 +15,6 @@
 #import "AWXShippingViewController.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPlaceDetails.h"
-#import <SVProgressHUD/SVProgressHUD.h>
 
 @implementation AWXUIContext
 
@@ -32,7 +31,6 @@
 + (void)initialize
 {
     if (self == [AWXUIContext class]) {
-        [SVProgressHUD setMaxSupportedWindowLevel:2000];
         [AWXFontLoader loadFontIfNeeded];
         [[NSUserDefaults awxUserDefaults] reset];
     }

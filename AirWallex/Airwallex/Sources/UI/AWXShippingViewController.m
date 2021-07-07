@@ -7,7 +7,6 @@
 //
 
 #import "AWXShippingViewController.h"
-#import <SVProgressHUD/SVProgressHUD.h>
 #import "AWXCountryListViewController.h"
 #import "AWXWidgets.h"
 #import "AWXPlaceDetails.h"

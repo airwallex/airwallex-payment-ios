@@ -8,7 +8,6 @@
 
 #import "AWXThreeDSService.h"
 #import "AWXConstants.h"
-#import <SVProgressHUD/SVProgressHUD.h>
 #import <CardinalMobile/CardinalMobile.h>
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
@@ -59,10 +58,8 @@
 - (void)presentThreeDSFlowWithServerJwt:(NSString *)serverJwt
 {
     __weak __typeof(self)weakSelf = self;
-    [SVProgressHUD show];
     // Step 1: Request `referenceId` with `serverJwt` by Cardinal SDK
     [self.session setupWithJWT:serverJwt didComplete:^(NSString * _Nonnull consumerSessionId) {
-        [SVProgressHUD dismiss];
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (consumerSessionId) {
             [strongSelf confirmWithReferenceId:consumerSessionId];
@@ -70,7 +67,6 @@
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing consumer seesion id.", nil)}]];
         }
     } didValidate:^(CardinalResponse * _Nonnull validateResponse) {
-        [SVProgressHUD dismiss];
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:validateResponse.errorNumber userInfo:@{NSLocalizedDescriptionKey: validateResponse.errorDescription}]];
     }];
@@ -105,12 +101,10 @@
     request.deviceDataCollectionRes = referenceId;
     request.device = self.device;
 
-    [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
     // Step 2: Request 3DS lookup response by `confirmPaymentIntent` with `referenceId`
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [SVProgressHUD dismiss];
         if (error) {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
             return;
@@ -194,12 +188,10 @@
     request.dsTransactionId = transactionId;
     request.device = self.device;
 
-    [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
     // Step 4: Request 3DS JWT validation response by `confirmPaymentIntent` with `transactionId`
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [SVProgressHUD dismiss];
         if (error) {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
             return;
@@ -218,11 +210,9 @@
     AWXGetPaResRequest *request = [AWXGetPaResRequest new];
     request.paResId = Id;
 
-    [SVProgressHUD show];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [SVProgressHUD dismiss];
         if (error) {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
             return;
