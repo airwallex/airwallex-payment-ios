@@ -294,7 +294,7 @@
 {
     NSArray <AWXPaymentMethod *> *items = self.paymentMethods[section];
     if (section == 1) {
-        return MAX(items.count, [self.availablePaymentMethodTypes containsObject:AWXCardKey] ? 1 : 0);
+        return MAX(items.count, [self.availablePaymentMethodTypes containsObject:AWXCardKey] ? (self.customerId != nil ? 1 : 0) : 0);
     }
     return items.count;
 }
@@ -317,7 +317,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == 1 && self.customerId != nil && [self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
+    if (section == 1 && [self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
         return 60;
     }
     return CGFLOAT_MIN;
@@ -325,7 +325,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section == 1 && self.customerId != nil && [self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
+    if (section == 1 && [self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 56)];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(16, 8, CGRectGetWidth(self.view.bounds) - 32, 44);
@@ -333,7 +333,7 @@
         button.layer.borderWidth = 1;
         button.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
         button.layer.masksToBounds = YES;
-        [button setTitle:NSLocalizedString(@"Enter a new card", nil) forState:UIControlStateNormal];
+        [button setTitle:self.customerId == nil ? NSLocalizedString(@"Card", nil) : NSLocalizedString(@"Enter a new card", nil) forState:UIControlStateNormal];
         [button setTitleColor:[AWXTheme sharedTheme].tintColor forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
         button.backgroundColor = [UIColor clearColor];

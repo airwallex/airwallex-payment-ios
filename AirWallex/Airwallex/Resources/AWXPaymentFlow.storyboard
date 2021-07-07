@@ -200,13 +200,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="428" height="1269"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pii-iq-Wp8">
-                                                <rect key="frame" x="16" y="16.000000000000004" width="396" height="37.333333333333343"/>
+                                                <rect key="frame" x="16" y="15.999999999999996" width="396" height="40.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="32"/>
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="qTO-iC-quJ">
-                                                <rect key="frame" x="16" y="72.500000000000014" width="396" height="227.00000000000003"/>
+                                                <rect key="frame" x="16" y="72.500000000000014" width="396" height="226.99999999999997"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gN8-Ps-Ex7" customClass="AWXCardTextField">
                                                         <rect key="frame" x="0.0" y="0.0" width="396" height="67"/>
@@ -229,7 +229,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="auF-F2-v0B">
-                                                        <rect key="frame" x="0.0" y="159.99999999999997" width="396" height="67"/>
+                                                        <rect key="frame" x="0.0" y="160.00000000000003" width="396" height="67"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ek-4y-cnB" customClass="AWXFloatLabeledTextField">
                                                                 <rect key="frame" x="0.0" y="0.0" width="236" height="67"/>
@@ -257,22 +257,22 @@
                                                 <rect key="frame" x="0.0" y="315.5" width="428" height="877.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Billing info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSE-wt-y8v">
-                                                        <rect key="frame" x="16" y="7" width="396" height="37.333333333333336"/>
+                                                        <rect key="frame" x="16" y="7" width="396" height="40.666666666666664"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="32"/>
                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMl-za-xhb" userLabel="Switch">
-                                                        <rect key="frame" x="0.0" y="51.333333333333371" width="428" height="58"/>
+                                                        <rect key="frame" x="0.0" y="54.666666666666629" width="428" height="58"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Same as shipping address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qml-nv-10p">
-                                                                <rect key="frame" x="16" y="21" width="331" height="16.333333333333329"/>
+                                                                <rect key="frame" x="16" y="20" width="331" height="18"/>
                                                                 <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zp8-MB-K1P">
-                                                                <rect key="frame" x="363" y="13.666666666666629" width="51" height="31"/>
+                                                                <rect key="frame" x="363" y="13.666666666666686" width="51" height="31"/>
                                                                 <connections>
                                                                     <action selector="switchChanged:" destination="rjH-1d-ozb" eventType="valueChanged" id="yUx-1b-8Nh"/>
                                                                 </connections>
@@ -360,7 +360,7 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Chs-8R-CKN" customClass="AWXFloatLabeledTextField">
-                                                                        <rect key="frame" x="0.0" y="491.00000000000011" width="396" height="60"/>
+                                                                        <rect key="frame" x="0.0" y="490.99999999999989" width="396" height="60"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Eq6-sv-EVd"/>
@@ -370,7 +370,7 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dwc-HE-iw4" customClass="AWXFloatLabeledTextField">
-                                                                        <rect key="frame" x="0.0" y="567.00000000000011" width="396" height="67"/>
+                                                                        <rect key="frame" x="0.0" y="566.99999999999989" width="396" height="67"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="QOQ-tU-dZg"/>
@@ -380,7 +380,7 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rxO-1a-EKZ" customClass="AWXFloatLabeledTextField">
-                                                                        <rect key="frame" x="0.0" y="650.00000000000011" width="396" height="67"/>
+                                                                        <rect key="frame" x="0.0" y="649.99999999999989" width="396" height="67"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Hr1-Eg-Nyi"/>
@@ -494,6 +494,7 @@
                         <outlet property="stateField" destination="FCM-rb-vxF" id="3MJ-rR-k7U"/>
                         <outlet property="streetField" destination="36b-ed-KZp" id="AOu-h0-LLV"/>
                         <outlet property="switchButton" destination="zp8-MB-K1P" id="kOV-S7-sBm"/>
+                        <outlet property="titleLabel" destination="Pii-iq-Wp8" id="DSV-nI-cBo"/>
                         <outlet property="zipcodeField" destination="Chs-8R-CKN" id="gbG-xo-3Qe"/>
                         <segue destination="sUV-GC-INK" kind="presentation" identifier="selectCountries" id="Kt1-cg-dJB"/>
                     </connections>
@@ -579,13 +580,13 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQj-JH-JLD">
-                                            <rect key="frame" x="16" y="19.999999999999996" width="396" height="46.666666666666657"/>
+                                            <rect key="frame" x="16" y="19.999999999999996" width="396" height="50.666666666666657"/>
                                             <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="40"/>
                                             <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fVJ-3M-6VT">
-                                            <rect key="frame" x="16" y="77.666666666666671" width="396" height="16.333333333333329"/>
+                                            <rect key="frame" x="16" y="81.666666666666671" width="396" height="18"/>
                                             <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
                                             <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -666,19 +667,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select your currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A96-RZ-pnZ">
-                                <rect key="frame" x="24" y="88" width="380" height="21"/>
+                                <rect key="frame" x="24" y="88" width="380" height="23"/>
                                 <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
                                 <color key="textColor" red="0.25882352941176467" green="0.25882352941176467" blue="0.25882352941176467" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select the currency you would like to pay with" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWc-S2-kzZ">
-                                <rect key="frame" x="24" y="124.99999999999999" width="380" height="16.333333333333329"/>
+                                <rect key="frame" x="24" y="126.99999999999999" width="380" height="17.333333333333329"/>
                                 <fontDescription key="fontDescription" name="CircularXX-Regular" family="CircularXX" pointSize="14"/>
                                 <color key="textColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Rg-qo-MNb">
-                                <rect key="frame" x="24" y="165.33333333333334" width="380" height="110.00000000000003"/>
+                                <rect key="frame" x="24" y="168.33333333333334" width="380" height="110.00000000000003"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ml1-ty-Lvl" customClass="AWXCurrencyView">
                                         <rect key="frame" x="0.0" y="0.0" width="182.66666666666666" height="110"/>
@@ -703,14 +704,14 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wWG-b5-7Jp">
-                                <rect key="frame" x="24" y="293.33333333333331" width="16" height="16"/>
+                                <rect key="frame" x="24" y="296.33333333333331" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="0dn-Wr-rOA"/>
                                     <constraint firstAttribute="width" constant="16" id="0v1-N7-xu8"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vtf-pY-4ZL" customClass="AWXButton">
-                                <rect key="frame" x="24" y="349.66666666666669" width="380" height="44"/>
+                                <rect key="frame" x="24" y="353" width="380" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="80u-il-Xvg"/>
                                 </constraints>
@@ -728,7 +729,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="1 USD = 1 AUD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnP-UX-zys">
-                                <rect key="frame" x="48" y="293.33333333333331" width="356" height="16.333333333333314"/>
+                                <rect key="frame" x="48" y="295.66666666666669" width="356" height="17.333333333333314"/>
                                 <fontDescription key="fontDescription" name="CircularXX-Regular" family="CircularXX" pointSize="14"/>
                                 <color key="textColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.55686274509803924" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1084,18 +1085,18 @@
     </scenes>
     <designables>
         <designable name="BBj-j1-Rai">
-            <size key="intrinsicContentSize" width="54" height="29"/>
+            <size key="intrinsicContentSize" width="55" height="30"/>
         </designable>
         <designable name="Vtf-pY-4ZL">
-            <size key="intrinsicContentSize" width="109" height="29"/>
+            <size key="intrinsicContentSize" width="115" height="30"/>
         </designable>
         <designable name="vlZ-EY-gaZ">
-            <size key="intrinsicContentSize" width="50" height="29"/>
+            <size key="intrinsicContentSize" width="54" height="30"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="zYd-7e-r8R"/>
-        <segue reference="Oci-f4-ed5"/>
+        <segue reference="Kt1-cg-dJB"/>
         <segue reference="DKs-vZ-uzr"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.3803921569" green="0.1843137255" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

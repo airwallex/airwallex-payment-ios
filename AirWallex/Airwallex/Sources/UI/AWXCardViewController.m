@@ -21,11 +21,19 @@
 #import "AWXCountryListViewController.h"
 #import "AWXCountry.h"
 #import "AWXTheme.h"
+#import "AWXSecurityService.h"
+#import "AWXUIContext.h"
+#import "AWXPaymentIntent.h"
+#import "AWXThreeDSService.h"
+#import "AWXSecurityService.h"
+#import "AWXDevice.h"
+#import "AWXDCCViewController.h"
 
-@interface AWXCardViewController () <AWXCountryListViewControllerDelegate>
+@interface AWXCardViewController () <AWXCountryListViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet AWXCardTextField *cardNoField;
 @property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *nameField;
 @property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *expiresField;
@@ -45,6 +53,9 @@
 @property (strong, nonatomic, nullable) AWXCountry *country;
 @property (strong, nonatomic, nullable) AWXPlaceDetails *billing;
 @property (weak, nonatomic) IBOutlet AWXButton *confirmButton;
+@property (strong, nonatomic) AWXDevice *device;
+@property (strong, nonatomic) AWXThreeDSService *service;
+@property (strong, nonatomic) AWXPaymentMethod *paymentMethod;
 
 @end
 
@@ -54,6 +65,7 @@
 {
     [super viewDidLoad];
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.titleLabel.text = self.customerId != nil ? @"New card" : @"Card";
 
     self.cardNoField.fieldType = AWXTextFieldTypeCardNumber;
     self.cardNoField.nextTextField = self.nameField;
@@ -201,13 +213,23 @@
     card.expiryYear = dates.lastObject;
     card.expiryMonth = dates.firstObject;
     card.cvc = self.cvcField.text;
-
+    
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
     paymentMethod.type = AWXCardKey;
     paymentMethod.billing = self.billing;
     paymentMethod.card = card;
     paymentMethod.customerId = self.customerId;
+    
+    if (self.customerId == nil) {
+        [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
+        return;
+    } else {
+        [self createPaymentMethod:paymentMethod];
+    }
+}
 
+- (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod
+{
     AWXCreatePaymentMethodRequest *request = [AWXCreatePaymentMethodRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
     request.paymentMethod = paymentMethod;
@@ -226,8 +248,144 @@
         }
 
         AWXCreatePaymentMethodResponse *result = (AWXCreatePaymentMethodResponse *)response;
-        result.paymentMethod.card.cvc = card.cvc;
+        result.paymentMethod.card.cvc = strongSelf.cvcField.text;
         [strongSelf finishCreation:result.paymentMethod];
+    }];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
+{
+    __weak __typeof(self)weakSelf = self;
+    [SVProgressHUD show];
+    [[AWXSecurityService sharedService] doProfile:[AWXUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
+        [SVProgressHUD dismiss];
+        
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        AWXDevice *device = [AWXDevice new];
+        device.deviceId = sessionId;
+        [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
+    }];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod device:(AWXDevice *)device
+{
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
+    request.intentId = [AWXUIContext sharedContext].paymentIntent.Id;
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.customerId = self.customerId;
+
+    if ([paymentMethod.type isEqualToString:AWXCardKey]) {
+        AWXCardOptions *cardOptions = [AWXCardOptions new];
+        cardOptions.autoCapture = YES;
+        AWXThreeDs *threeDs = [AWXThreeDs new];
+        threeDs.returnURL = AWXThreeDSReturnURL;
+        cardOptions.threeDs = threeDs;
+
+        AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
+        options.cardOptions = cardOptions;
+        request.options = options;
+    }
+
+    request.paymentMethod = paymentMethod;
+    self.paymentMethod = paymentMethod;
+    request.device = device;
+    self.device = device;
+
+    [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [SVProgressHUD dismiss];
+        
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf finishConfirmationWithResponse:response error:error];
+    }];
+}
+
+- (void)finishConfirmationWithResponse:(AWXConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
+{
+    id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+    UIViewController *presentingViewController = self.presentingViewController;
+    if (error) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [delegate paymentViewController:presentingViewController didFinishWithStatus:AWXPaymentStatusError error:error];
+        }];
+        return;
+    }
+    
+    if ([response.status isEqualToString:@"SUCCEEDED"] || [response.status isEqualToString:@"REQUIRES_CAPTURE"]) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [delegate paymentViewController:presentingViewController didFinishWithStatus:AWXPaymentStatusSuccess error:error];
+        }];
+        return;
+    }
+    
+    if (!response.nextAction) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [delegate paymentViewController:presentingViewController didFinishWithStatus:AWXPaymentStatusSuccess error:error];
+        }];
+        return;
+    }
+    
+    if (response.nextAction.weChatPayResponse) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [delegate paymentViewController:presentingViewController nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
+        }];
+    } else if (response.nextAction.redirectResponse) {
+        AWXPaymentIntent *paymentIntent = [AWXUIContext sharedContext].paymentIntent;
+        AWXThreeDSService *service = [AWXThreeDSService new];
+        service.customerId = paymentIntent.customerId;
+        service.intentId = paymentIntent.Id;
+        service.paymentMethod = self.paymentMethod;
+        service.device = self.device;
+        service.presentingViewController = self;
+        service.delegate = self;
+        self.service = service;
+        [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
+    } else if (response.nextAction.dccResponse) {
+        [self performSegueWithIdentifier:@"showDCC" sender:response];
+    } else if (response.nextAction.url) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [delegate paymentViewController:presentingViewController nextActionWithAlipayURL:response.nextAction.url];
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [delegate paymentViewController:presentingViewController
+                        didFinishWithStatus:AWXPaymentStatusError
+                                      error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
+        }];
+    }
+}
+
+#pragma mark - AWXThreeDSServiceDelegate
+
+- (void)threeDSService:(AWXThreeDSService *)service didFinishWithResponse:(AWXConfirmPaymentIntentResponse *)response error:(NSError *)error
+{
+    [self finishConfirmationWithResponse:response error:error];
+}
+
+#pragma mark - AWXDCCViewControllerDelegate
+
+- (void)dccViewController:(AWXDCCViewController *)controller useDCC:(BOOL)useDCC
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+
+    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.intentId = [AWXUIContext sharedContext].paymentIntent.Id;
+    request.type = AWXDCC;
+    request.useDCC = useDCC;
+    request.device = self.device;
+
+    [SVProgressHUD show];
+    __weak __typeof(self)weakSelf = self;
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [SVProgressHUD dismiss];
+
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }
 
