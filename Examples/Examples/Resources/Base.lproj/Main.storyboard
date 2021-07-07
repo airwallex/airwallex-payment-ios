@@ -1002,6 +1002,7 @@
                         <outlet property="nextTriggerByBtn" destination="4fM-7O-jA1" id="QAH-bf-L71"/>
                         <outlet property="paymentURLTextField" destination="YSw-cs-6Pe" id="qdG-Sh-62V"/>
                         <outlet property="regionLabel" destination="iou-6j-t8u" id="Uq8-qd-c7A"/>
+                        <outlet property="scrollView" destination="lyV-gZ-kEV" id="Y8E-Uc-g8J"/>
                         <outlet property="versionLabel" destination="JTK-Dh-PCi" id="QI9-aU-Od5"/>
                     </connections>
                 </viewController>

@@ -14,6 +14,7 @@
 
 @interface OptionsViewController () <UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *paymentURLTextField;
 @property (weak, nonatomic) IBOutlet UITextField *apiKeyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *clientIDTextField;
@@ -50,7 +51,43 @@
     [self resetTextFields];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillChangeFrame:(NSNotification *)notification
+{
+    NSValue *rectValue = notification.userInfo[UIKeyboardFrameEndUserInfoKey];
+    CGFloat keyboardHeight = CGRectGetHeight(rectValue.CGRectValue);
+    UIScrollView *scrollView = self.scrollView;
+    if (scrollView) {
+        UIEdgeInsets contentInsets = scrollView.contentInset;
+        contentInsets.bottom = keyboardHeight;
+        scrollView.contentInset = contentInsets;
+        scrollView.scrollIndicatorInsets = scrollView.contentInset;
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification *)notification
+{
+    UIScrollView *scrollView = self.scrollView;
+    if (scrollView) {
+        UIEdgeInsets contentInsets = scrollView.contentInset;
+        contentInsets.bottom = 0;
+        scrollView.contentInset = UIEdgeInsetsZero;
+        scrollView.scrollIndicatorInsets = scrollView.contentInset;
+    }
+}
 
 - (void)resetTextFields
 {
