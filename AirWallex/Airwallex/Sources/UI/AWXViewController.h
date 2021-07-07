@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) BOOL isFlow;
 
+- (void)enableTapToEndEditting;
 - (void)unregisterKeyboard;
 - (void)registerKeyboard;
 - (UIView *)activeField;

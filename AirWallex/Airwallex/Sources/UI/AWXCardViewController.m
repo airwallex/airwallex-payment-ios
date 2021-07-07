@@ -64,6 +64,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self enableTapToEndEditting];
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.titleLabel.text = self.customerId != nil ? @"New card" : @"Card";
 

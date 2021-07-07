@@ -35,6 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self enableTapToEndEditting];
     self.firstNameField.fieldType = AWXTextFieldTypeFirstName;
     self.firstNameField.nextTextField = self.lastNameField;
     self.lastNameField.fieldType = AWXTextFieldTypeLastName;
