@@ -244,7 +244,7 @@
         button.layer.borderWidth = 1;
         button.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
         button.layer.masksToBounds = YES;
-        [button setTitle:self.customerId == nil ? @"Payment with card" : @"Enter a new card" forState:UIControlStateNormal];
+        [button setTitle:self.customerId == nil ? @"Card" : @"Enter a new card" forState:UIControlStateNormal];
         [button setTitleColor:[AWXTheme sharedTheme].tintColor forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
         button.backgroundColor = [UIColor clearColor];
