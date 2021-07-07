@@ -15,6 +15,19 @@
 
 @implementation AWXViewController
 
+- (void)enableTapToEndEditting
+{
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(dismissKeyboard)];
+    gestureRecognizer.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:gestureRecognizer];
+}
+
+- (void)dismissKeyboard
+{
+     [self.view endEditing:YES];
+}
+
 - (void)registerKeyboard
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
