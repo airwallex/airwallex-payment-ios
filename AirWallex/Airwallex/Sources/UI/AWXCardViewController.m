@@ -65,7 +65,7 @@
 {
     [super viewDidLoad];
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.titleLabel.text = self.customerId != nil ? @"New card" : @"Payment with card";
+    self.titleLabel.text = self.customerId != nil ? @"New card" : @"Card";
 
     self.cardNoField.fieldType = AWXTextFieldTypeCardNumber;
     self.cardNoField.nextTextField = self.nameField;
