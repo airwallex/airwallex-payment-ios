@@ -27,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
 @property (strong, nonatomic) AWXPlaceDetails *shipping;
-@property (strong, nonatomic) AWXPaymentIntent *paymentIntent;
 
 @end
 
@@ -240,6 +239,9 @@
             
             // Step4: Show payment flow
             [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
+        } else {
+            // Recurring
+            [strongSelf showPaymentFlowWithPaymentIntent:nil];
         }
     });
 }
@@ -378,14 +380,16 @@
         [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                          completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf.activityIndicator stopAnimating];
-            
-            if (error) {
-                [strongSelf showAlert:error.localizedDescription];
-                return;
-            }
-            
-            [strongSelf finishPayment];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [strongSelf.activityIndicator stopAnimating];
+                
+                if (error) {
+                    [strongSelf showAlert:error.localizedDescription];
+                    return;
+                }
+                
+                [strongSelf finishPayment];
+            });
         }] resume];
         return;
     }
@@ -447,7 +451,7 @@
 - (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
 {
     AWXRetrievePaymentIntentRequest *request = [[AWXRetrievePaymentIntentRequest alloc] init];
-    request.intentId = self.paymentIntent.Id;
+    request.intentId = [AWXUIContext sharedContext].paymentIntent.Id;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {

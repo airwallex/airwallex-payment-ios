@@ -118,21 +118,24 @@
         device.deviceId = sessionId;
         if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
             [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:self.paymentConsent];
-        }else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
+        } else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod  createCompletion:^(AWXPaymentConsent * _Nullable consent) {
                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
             }];
-        }else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringWithInsentMode){
+        } else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringWithIntentMode){
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod createCompletion:^(AWXPaymentConsent * _Nullable consent) {
-                [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:consent];
+                if ([paymentMethod.type isEqualToString:AWXCardKey]) {
+                    [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:consent];
+                } else {
+                    [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
+                }
             }];
         }
     }];
 }
 
-
-
--(void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod createCompletion:(void(^)(AWXPaymentConsent * _Nullable))completion{
+- (void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod createCompletion:(void(^)(AWXPaymentConsent * _Nullable))completion
+{
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXCreatePaymentConsentRequest *request = [AWXCreatePaymentConsentRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
@@ -154,8 +157,8 @@
 }
 
 
--(void)verifyPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod consent:(AWXPaymentConsent *)consent{
-    
+- (void)verifyPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod consent:(AWXPaymentConsent *)consent
+{
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXVerifyPaymentConsentRequest *request = [AWXVerifyPaymentConsentRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
@@ -177,8 +180,6 @@
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }
-
-
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod device:(AWXDevice *)device consent:(AWXPaymentConsent *)consent
 {

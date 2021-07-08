@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, AirwallexSDKMode) {
 typedef NS_ENUM(NSInteger, AirwallexCheckoutMode) {
     AirwallexCheckoutPaymentMode,
     AirwallexCheckoutRecurringMode,
-    AirwallexCheckoutRecurringWithInsentMode
+    AirwallexCheckoutRecurringWithIntentMode
 };
 
 typedef NS_ENUM(NSUInteger, AirwallexNextTriggerByType) {

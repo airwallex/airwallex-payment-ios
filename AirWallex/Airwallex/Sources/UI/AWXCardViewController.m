@@ -232,6 +232,7 @@
     paymentMethod.card = card;
     paymentMethod.customerId = self.customerId;
     
+    // TODO: create payment method if recurring
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
 }
 

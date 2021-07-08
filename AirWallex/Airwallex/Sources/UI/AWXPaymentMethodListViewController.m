@@ -533,13 +533,17 @@
         
         if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
             [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:nil];
-        }else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
+        } else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode) {
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod  createCompletion:^(AWXPaymentConsent * _Nullable consent) {
                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
             }];
-        }else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringWithInsentMode){
+        } else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringWithIntentMode) {
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod createCompletion:^(AWXPaymentConsent * _Nullable consent) {
-                [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:consent];
+                if ([paymentMethod.type isEqualToString:AWXCardKey]) {
+                    [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:consent];
+                } else {
+                    [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
+                }
             }];
         }
     }];

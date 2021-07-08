@@ -13,7 +13,6 @@
 #import "AWXPaymentMethod.h"
 #import "AWXFormMapping.h"
 #import "AWXForm.h"
-#import "AWXUIContext.h"
 
 @interface AWXPaymentFormViewController ()
 

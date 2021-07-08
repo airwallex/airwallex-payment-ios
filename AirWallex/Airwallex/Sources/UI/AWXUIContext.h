@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The payment intent to handle.
  */
-@property (nonatomic, strong) AWXPaymentIntent *paymentIntent;
+@property (nonatomic, strong, nullable) AWXPaymentIntent *paymentIntent;
 
 /**
  The shipping address.
