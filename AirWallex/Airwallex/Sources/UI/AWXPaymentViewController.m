@@ -25,6 +25,7 @@
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentConsent.h"
+#import "AWXViewController+Utils.h"
 
 @interface AWXPaymentViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
@@ -110,7 +111,7 @@
 {
     __weak __typeof(self)weakSelf = self;
     [self.activityIndicator startAnimating];
-    [[AWXSecurityService sharedService] doProfile:[AWXUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
+    [[AWXSecurityService sharedService] doProfile:self.paymentIntentId completion:^(NSString * _Nonnull sessionId) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.activityIndicator stopAnimating];
 
@@ -141,8 +142,7 @@
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.paymentMethod.customerId;
     request.paymentMethod = paymentMethod;
-    AWXUIContext *context = [AWXUIContext sharedContext];
-    request.currency = context.paymentIntent.currency;
+    request.currency = self.currency;
     [self.activityIndicator startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
@@ -162,6 +162,8 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXVerifyPaymentConsentRequest *request = [AWXVerifyPaymentConsentRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
+    request.currency = self.currency;
+    request.amount = self.amount;
     request.consent = consent;
     AWXPaymentMethod * payment = paymentMethod;
     request.options = payment;

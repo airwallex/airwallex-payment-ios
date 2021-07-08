@@ -18,6 +18,43 @@ typedef NS_ENUM(NSUInteger, AWXPaymentStatus) {
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface AWXSession : NSObject
+
+/**
+ The shipping address.
+ */
+@property (nonatomic, strong, nullable) AWXPlaceDetails *billing;
+
+@end
+
+@interface AWXOneOffSession : AWXSession
+
+/**
+ The payment intent to handle.
+ */
+@property (nonatomic, strong, nullable) AWXPaymentIntent *paymentIntent;
+
+@end
+
+@interface AWXRecurringSession : AWXSession
+
+/**
+ Payment amount. This is the order amount you would like to charge your customer.
+ */
+@property (nonatomic, copy) NSDecimalNumber *amount;
+
+/**
+ Amount currency.
+ */
+@property (nonatomic, copy) NSString *currency;
+
+/**
+ The customer who is paying for this payment intent.
+ */
+@property (nonatomic, copy, nullable) NSString *customerId;
+
+@end
+
 /**
  A delegate which handles checkout results.
  */
@@ -66,14 +103,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) UIViewController *hostViewController;
 
 /**
- The payment intent to handle.
+ Cureent session to handle.
  */
-@property (nonatomic, strong, nullable) AWXPaymentIntent *paymentIntent;
-
-/**
- The shipping address.
- */
-@property (nonatomic, strong, nullable) AWXPlaceDetails *shipping;
+@property (nonatomic, strong) AWXSession *session;
 
 /**
  Convenience constructor for a context.
@@ -88,32 +120,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)presentPaymentFlow;
 
 /**
- Push the payment flow.
- */
-- (void)pushPaymentFlow;
-
-/**
- Convenience constructor for a payment method list.
- 
- @return The newly created payment method list view controller.
- */
-+ (AWXPaymentMethodListViewController *)paymentMethodListViewController;
-
-/**
- Convenience constructor for a new card.
- 
- @return The newly created new card view controller.
- */
-+ (AWXCardViewController *)newCardViewController;
-
-/**
- Convenience constructor for a payment detail.
- 
- @return The newly created payment detail view controller.
- */
-+ (AWXPaymentViewController *)paymentDetailViewController;
-
-/**
  Convenience constructor for a shipping.
  
  @return The newly created shipping view controller.
@@ -123,11 +129,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
-
-@end
-
-
-@interface AWXRecurringUIContext: AWXUIContext
 
 @end
 

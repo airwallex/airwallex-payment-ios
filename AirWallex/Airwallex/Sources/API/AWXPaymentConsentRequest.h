@@ -47,6 +47,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *requestId;
 
 /**
+ A currency code.
+ */
+@property (nonatomic, strong, nullable) NSString *currency;
+
+/**
+ Amount.
+ */
+@property (nonatomic, strong) NSDecimalNumber *amount;
+
+/**
  Return url.
  */
 @property (nonatomic, copy) NSString *returnURL;

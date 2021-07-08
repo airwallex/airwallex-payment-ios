@@ -8,6 +8,7 @@
 
 #import "AWXViewController.h"
 #import "AWXLogger.h"
+#import "AWXPaymentIntent.h"
 
 @interface AWXViewController () <UIGestureRecognizerDelegate>
 

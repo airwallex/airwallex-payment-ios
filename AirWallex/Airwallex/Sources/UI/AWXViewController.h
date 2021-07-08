@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class AWXSession;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXViewController : UIViewController
 
 @property (nonatomic) BOOL isFlow;
+@property (nonatomic, strong) AWXSession *session;
 
 - (void)enableTapToEndEditting;
 - (void)unregisterKeyboard;

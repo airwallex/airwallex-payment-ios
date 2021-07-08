@@ -37,40 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, weak) id <AWXPaymentMethodListViewControllerDelegate> delegate;
 
-/**
- Selected payment method.
- */
-@property (nonatomic, strong, nullable) AWXPaymentMethod *paymentMethod;
-
-/**
- A  shipping address.
- */
-@property (nonatomic, strong, nullable) AWXPlaceDetails *shipping;
-
-/**
- Available payment method types.
- */
-@property (nonatomic, strong) NSArray <NSString *> *availablePaymentMethodTypes;
-
-/**
- A customer id.
- */
-@property (nonatomic, strong, nullable) NSString *customerId;
-
-/**
- A currency code.
- */
-@property (nonatomic, strong, nullable) NSString *currency;
-
-/**
- customer payment methods.
- */
-@property (nonatomic, strong) NSArray <AWXPaymentMethod *> *customerPaymentMethods;
-/**
- customer payment consents.
- */
-@property (nonatomic, strong) NSArray <AWXPaymentConsent *> *customerPaymentConsents;
-
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

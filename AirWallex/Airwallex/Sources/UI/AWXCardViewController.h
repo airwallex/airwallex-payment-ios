@@ -42,16 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) BOOL sameAsShipping;
 
-/**
- A  shipping address.
- */
-@property (nonatomic, strong, nullable) AWXPlaceDetails *shipping;
-
-/**
- A customer id.
- */
-@property (nonatomic, strong, nullable) NSString *customerId;
-
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
 @property (strong, nonatomic) AWXPlaceDetails *shipping;
+@property (strong, nonatomic) AWXPaymentIntent *paymentIntent;
 
 @end
 
@@ -231,30 +232,62 @@
         if (_paymentIntent) {
             // Step2: Setup client secret
             [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
-            
-            // Step3: customer secret
-            if (_customerSecret) {
-                [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
-            }
-            
-            // Step4: Show payment flow
-            [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
-        } else {
-            // Recurring
-            [strongSelf showPaymentFlowWithPaymentIntent:nil];
         }
+        
+        if (_customerSecret) {
+            // Step3: Setup customer secret
+            [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
+        }
+        
+        [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
     });
+}
+
+#pragma mark - Create session
+
+- (AWXSession *)createSession:(nullable AWXPaymentIntent *)paymentIntent
+{
+    switch (Airwallex.checkoutMode) {
+        case AirwallexCheckoutPaymentMode:
+        {
+            AWXOneOffSession *session = [AWXOneOffSession new];
+            session.billing = self.shipping;
+            session.paymentIntent = paymentIntent;
+            return session;
+        }
+        case AirwallexCheckoutRecurringMode:
+        {
+            AWXRecurringSession *session = [AWXRecurringSession new];
+            session.billing = self.shipping;
+            session.currency = [AirwallexExamplesKeys shared].currency;
+            session.amount = [NSDecimalNumber decimalNumberWithString:[AirwallexExamplesKeys shared].amount];
+            session.customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
+            return session;
+        }
+        case AirwallexCheckoutRecurringWithIntentMode:
+        {
+            AWXRecurringSession *session = [AWXRecurringSession new];
+            session.billing = self.shipping;
+            session.currency = paymentIntent.currency;
+            session.amount = paymentIntent.amount;
+            session.customerId = paymentIntent.customerId;
+            return session;
+        }
+    }
 }
 
 #pragma mark - Show Payment Method List
 
-- (void)showPaymentFlowWithPaymentIntent:(AWXPaymentIntent *)paymentIntent
+- (void)showPaymentFlowWithPaymentIntent:(nullable AWXPaymentIntent *)paymentIntent
 {
+    self.paymentIntent = paymentIntent;
+    AWXSession *session = [self createSession:paymentIntent];
+    
+    // Step4: Present payment flow
     AWXUIContext *context = [AWXUIContext sharedContext];
     context.delegate = self;
     context.hostViewController = self;
-    context.paymentIntent = paymentIntent;
-    context.shipping = self.shipping;
+    context.session = session;
     [context presentPaymentFlow];
 }
 
@@ -451,7 +484,7 @@
 - (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
 {
     AWXRetrievePaymentIntentRequest *request = [[AWXRetrievePaymentIntentRequest alloc] init];
-    request.intentId = [AWXUIContext sharedContext].paymentIntent.Id;
+    request.intentId = self.paymentIntent.Id;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {

@@ -69,11 +69,13 @@ static AirwallexNextTriggerByType    _nextTriggerByType      = AirwallexNextTrig
     return _checkoutMode;
 }
 
-
-+ (void)setNextTriggerByType:(AirwallexNextTriggerByType)type{
++ (void)setNextTriggerByType:(AirwallexNextTriggerByType)type
+{
     _nextTriggerByType = type;
 }
-+ (AirwallexNextTriggerByType)nextTriggerByType{
+
++ (AirwallexNextTriggerByType)nextTriggerByType
+{
     return  _nextTriggerByType;
 }
 
@@ -86,6 +88,7 @@ static AirwallexNextTriggerByType    _nextTriggerByType      = AirwallexNextTrig
 {
     return @[AWXPoli, AWXFpx, AWXBankTransfer, AWXOnlineBanking];
 }
+
 @end
 
 @implementation AWXAPIClientConfiguration

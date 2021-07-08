@@ -27,6 +27,7 @@
 #import "AWXSecurityService.h"
 #import "AWXDevice.h"
 #import "AWXDCCViewController.h"
+#import "AWXViewController+Utils.h"
 
 @interface AWXCardViewController () <AWXCountryListViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
@@ -51,11 +52,12 @@
 @property (weak, nonatomic) IBOutlet AWXFloatLabeledView *countryView;
 
 @property (strong, nonatomic, nullable) AWXCountry *country;
-@property (strong, nonatomic, nullable) AWXPlaceDetails *billing;
+@property (strong, nonatomic, nullable) AWXPlaceDetails *savedBilling;
 @property (weak, nonatomic) IBOutlet AWXButton *confirmButton;
 @property (strong, nonatomic) AWXDevice *device;
 @property (strong, nonatomic) AWXThreeDSService *service;
 @property (strong, nonatomic) AWXPaymentMethod *paymentMethod;
+@property (strong, nonatomic) NSString *initialPaymentIntentId;
 
 @end
 
@@ -94,7 +96,7 @@
     self.phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
     self.confirmButton.enabled = YES;
 
-    if (!self.shipping) {
+    if (!self.billing) {
         self.sameAsShipping = NO;
     }
 
@@ -162,7 +164,7 @@
 
 - (IBAction)switchChanged:(id)sender
 {
-    if (!self.shipping) {
+    if (!self.billing) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
                                                                             message:NSLocalizedString(@"No shipping address configured.", nil)
                                                                      preferredStyle:UIAlertControllerStyleAlert];
@@ -183,17 +185,10 @@
     [self performSegueWithIdentifier:@"selectCountries" sender:nil];
 }
 
-- (void)finishCreation:(AWXPaymentMethod *)paymentMethod
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(cardViewController:didCreatePaymentMethod:)]) {
-        [self.delegate cardViewController:self didCreatePaymentMethod:paymentMethod];
-    }
-}
-
 - (IBAction)savePressed:(id)sender
 {
     if (self.sameAsShipping) {
-        self.billing = [self.shipping copy];
+        self.savedBilling = [self.billing copy];
     } else {
         AWXPlaceDetails *billing = [AWXPlaceDetails new];
         billing.firstName = self.firstNameField.text;
@@ -215,7 +210,7 @@
             return;
         }
 
-        self.billing = billing;
+        self.savedBilling = billing;
     }
 
     AWXCard *card = [AWXCard new];
@@ -228,12 +223,15 @@
     
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
     paymentMethod.type = AWXCardKey;
-    paymentMethod.billing = self.billing;
+    paymentMethod.billing = self.savedBilling;
     paymentMethod.card = card;
     paymentMethod.customerId = self.customerId;
     
-    // TODO: create payment method if recurring
-    [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
+    if (Airwallex.checkoutMode == AirwallexCheckoutPaymentMode) {
+        [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
+    } else {
+        [self createPaymentMethod:paymentMethod];
+    }
 }
 
 - (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod
@@ -261,17 +259,90 @@
     }];
 }
 
+- (void)finishCreation:(AWXPaymentMethod *)paymentMethod
+{
+    if (self.isFlow) {
+        [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
+        return;
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cardViewController:didCreatePaymentMethod:)]) {
+        [self.delegate cardViewController:self didCreatePaymentMethod:paymentMethod];
+    }
+}
+
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
 {
     __weak __typeof(self)weakSelf = self;
     [self.activityIndicator startAnimating];
-    [[AWXSecurityService sharedService] doProfile:[AWXUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
+    [[AWXSecurityService sharedService] doProfile:self.paymentIntentId ?: self.initialPaymentIntentId completion:^(NSString * _Nonnull sessionId) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.activityIndicator stopAnimating];
-        
+
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
-        [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
+        if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
+            [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
+        } else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
+            [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod  createCompletion:^(AWXPaymentConsent * _Nullable consent) {
+                [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
+            }];
+        } else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringWithIntentMode){
+            [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod createCompletion:^(AWXPaymentConsent * _Nullable consent) {
+                if ([paymentMethod.type isEqualToString:AWXCardKey]) {
+                    [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
+                } else {
+                    [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
+                }
+            }];
+        }
+    }];
+}
+
+- (void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod createCompletion:(void(^)(AWXPaymentConsent * _Nullable))completion
+{
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    AWXCreatePaymentConsentRequest *request = [AWXCreatePaymentConsentRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.customerId = self.paymentMethod.customerId;
+    request.paymentMethod = paymentMethod;
+    request.currency = self.currency;
+    [self.activityIndicator startAnimating];
+    __weak __typeof(self)weakSelf = self;
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+
+        if (response && !error) {
+            AWXPaymentConsentResponse *result = response;
+            completion(result.consent);
+        }
+    }];
+}
+
+- (void)verifyPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod consent:(AWXPaymentConsent *)consent
+{
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    AWXVerifyPaymentConsentRequest *request = [AWXVerifyPaymentConsentRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.currency = self.currency;
+    request.amount = self.amount;
+    request.consent = consent;
+    AWXPaymentMethod * payment = paymentMethod;
+    request.options = payment;
+    request.returnURL =  @"airwallexcheckout://com.airwallex.paymentacceptance";
+    [self.activityIndicator startAnimating];
+    __weak __typeof(self)weakSelf = self;
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+
+        AWXVerifyPaymentConsentResponse *result = response;
+        if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode) {
+            strongSelf.initialPaymentIntentId = result.initialPaymentIntentId;
+        }
+
+        [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }
 
@@ -279,7 +350,7 @@
 {
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    request.intentId = [AWXUIContext sharedContext].paymentIntent.Id;
+    request.intentId = self.paymentIntentId ?: self.initialPaymentIntentId;
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.customerId;
 
@@ -304,14 +375,13 @@
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
-        
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
 }
 
 - (void)finishConfirmationWithResponse:(AWXConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
 {
+    [self.activityIndicator stopAnimating];
     id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
     UIViewController *presentingViewController = self.presentingViewController;
     if (error) {
@@ -340,15 +410,16 @@
             [delegate paymentViewController:presentingViewController nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
         }];
     } else if (response.nextAction.redirectResponse) {
-        AWXPaymentIntent *paymentIntent = [AWXUIContext sharedContext].paymentIntent;
         AWXThreeDSService *service = [AWXThreeDSService new];
-        service.customerId = paymentIntent.customerId;
-        service.intentId = paymentIntent.Id;
+        service.customerId = self.customerId;
+        service.intentId = self.paymentIntentId ?: self.initialPaymentIntentId;
         service.paymentMethod = self.paymentMethod;
         service.device = self.device;
         service.presentingViewController = self;
         service.delegate = self;
         self.service = service;
+        
+        [self.activityIndicator startAnimating];
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else if (response.nextAction.dccResponse) {
         [self performSegueWithIdentifier:@"showDCC" sender:response];
@@ -382,7 +453,7 @@
 
     AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
-    request.intentId = [AWXUIContext sharedContext].paymentIntent.Id;
+    request.intentId = self.paymentIntentId ?: self.initialPaymentIntentId;
     request.type = AWXDCC;
     request.useDCC = useDCC;
     request.device = self.device;

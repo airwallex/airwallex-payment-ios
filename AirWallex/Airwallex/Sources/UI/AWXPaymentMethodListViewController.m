@@ -7,6 +7,7 @@
 //
 
 #import "AWXPaymentMethodListViewController.h"
+#import "AWXViewController+Utils.h"
 #import "AWXDCCViewController.h"
 #import "AWXCardViewController.h"
 #import "AWXPaymentViewController.h"
@@ -48,6 +49,9 @@
 @property (strong, nonatomic) AWXDevice *device;
 @property (copy, nonatomic) NSString *paymentIntentId;
 @property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
+@property (nonatomic, strong, nullable) AWXPaymentMethod *paymentMethod;
+@property (nonatomic, strong) NSArray *availablePaymentMethodTypes;
+
 @end
 
 @implementation AWXPaymentMethodListViewController
@@ -76,7 +80,7 @@
     if ([segue.identifier isEqualToString:@"confirmPayment"]) {
         AWXPaymentViewController *controller = (AWXPaymentViewController *)segue.destinationViewController;
         controller.delegate = [AWXUIContext sharedContext].delegate;
-        controller.paymentIntent = [AWXUIContext sharedContext].paymentIntent;
+        controller.session = self.session;
         controller.paymentMethod = self.paymentMethod;
         controller.paymentConsent = self.paymentConsent;
         controller.isFlow = self.isFlow;
@@ -85,8 +89,7 @@
         AWXCardViewController *controller = (AWXCardViewController *)navigationController.topViewController;
         controller.delegate = self;
         controller.sameAsShipping = YES;
-        controller.customerId = self.customerId;
-        controller.shipping = self.shipping;
+        controller.session = self.session;
         controller.isFlow = self.isFlow;
     } else if ([segue.identifier isEqualToString:@"showDCC"] && [sender isKindOfClass:[AWXConfirmPaymentIntentResponse class]]) {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
@@ -98,7 +101,7 @@
 
 - (void)loadCustomerPaymentMethods
 {
-    self.paymentMethods = @[self.section0,@[]];
+    self.paymentMethods = @[self.section0, @[]];
     
     if (self.customerPaymentConsents.count) {
         self.cards = @[].mutableCopy;
@@ -148,7 +151,7 @@
     AWXGetPaymentMethodsTypeRequest *request = [AWXGetPaymentMethodsTypeRequest new];
     request.active = YES;
     request.pageNum = pageNum;
-    request.transactionCurrency = _currency;
+    request.transactionCurrency = self.currency;
     
     __weak __typeof(self)weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
@@ -524,7 +527,7 @@
     
     __weak __typeof(self)weakSelf = self;
     [self.activityIndicator startAnimating];
-    [[AWXSecurityService sharedService] doProfile:[AWXUIContext sharedContext].paymentIntent.Id completion:^(NSString * _Nonnull sessionId) {
+    [[AWXSecurityService sharedService] doProfile:self.paymentIntentId completion:^(NSString * _Nonnull sessionId) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.activityIndicator stopAnimating];
 
@@ -574,6 +577,8 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXVerifyPaymentConsentRequest *request = [AWXVerifyPaymentConsentRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
+    request.currency = self.currency;
+    request.amount = self.amount;
     request.consent = consent;
     AWXPaymentMethod * payment = paymentMethod;
     request.options = payment;
@@ -596,7 +601,7 @@
 {
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    request.intentId = [AWXUIContext sharedContext].paymentIntent.Id;
+    request.intentId = self.paymentIntentId;
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.customerId;
     request.paymentConsent = consent;
@@ -647,10 +652,9 @@
     if (response.nextAction.weChatPayResponse) {
         [delegate paymentViewController:self nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
     } else if (response.nextAction.redirectResponse) {
-        AWXPaymentIntent *paymentIntent = [AWXUIContext sharedContext].paymentIntent;
         AWXThreeDSService *service = [AWXThreeDSService new];
-        service.customerId = paymentIntent.customerId;
-        service.intentId   = paymentIntent.Id.length > 0 ? paymentIntent.Id : self.paymentIntentId;
+        service.customerId = self.customerId;
+        service.intentId   = self.paymentIntentId.length > 0 ? self.paymentIntentId : self.paymentIntentId;
         service.paymentMethod = self.paymentMethod;
         service.device = self.device;
         service.presentingViewController = self;
@@ -685,7 +689,7 @@
 
     AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
-    request.intentId = [AWXUIContext sharedContext].paymentIntent.Id;
+    request.intentId = self.paymentIntentId;
     request.type = AWXDCC;
     request.useDCC = useDCC;
     request.device = self.device;
