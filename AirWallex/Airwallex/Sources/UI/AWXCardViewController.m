@@ -66,7 +66,7 @@
     [super viewDidLoad];
     [self enableTapToEndEditting];
     self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.titleLabel.text = self.customerId != nil ? @"New card" : @"Card";
+    self.titleLabel.text = @"Card";
 
     self.cardNoField.fieldType = AWXTextFieldTypeCardNumber;
     self.cardNoField.nextTextField = self.nameField;
@@ -232,12 +232,7 @@
     paymentMethod.card = card;
     paymentMethod.customerId = self.customerId;
     
-    if (self.customerId == nil) {
-        [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
-        return;
-    } else {
-        [self createPaymentMethod:paymentMethod];
-    }
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
 }
 
 - (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod

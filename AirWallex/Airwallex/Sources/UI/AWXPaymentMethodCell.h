@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AWXPaymentMethod.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXPaymentMethodCell : UITableViewCell
@@ -15,14 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *tickView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineLeftConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineRightConstraint;
-@property (nonatomic) BOOL isLastCell;
-
-@end
-
-@interface AWXNoCardCell : UITableViewCell
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineLeftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineRightConstraint;
 @property (nonatomic) BOOL isLastCell;

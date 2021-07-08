@@ -96,7 +96,8 @@
     }
 }
 
--(void) loadCustomerPaymentMethods{
+- (void)loadCustomerPaymentMethods
+{
     self.paymentMethods = @[self.section0,@[]];
     
     if (self.customerPaymentConsents.count) {
@@ -307,9 +308,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSArray <AWXPaymentMethod *> *items = self.paymentMethods[section];
-    if (section == 1) {
-        return MAX(items.count, [self.availablePaymentMethodTypes containsObject:AWXCardKey] ? (self.customerId != nil ? 1 : 0) : 0);
-    }
     return items.count;
 }
 
@@ -361,14 +359,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray <AWXPaymentMethod *> *items = self.paymentMethods[indexPath.section];
-    if (indexPath.section == 1) {
-        if (items.count == 0) {
-            AWXNoCardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXNoCardCell" forIndexPath:indexPath];
-            cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
-            return cell;
-        }
-    }
-    
     AWXPaymentMethod *method = items[indexPath.row];
     AWXPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentMethodCell" forIndexPath:indexPath];
     if ([Airwallex.supportedNonCardTypes containsObject:method.type]) {
