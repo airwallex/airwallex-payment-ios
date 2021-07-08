@@ -62,7 +62,7 @@
     self.activityIndicator.hidden = YES;
     [self.view addSubview:self.activityIndicator];
 
-    [self loadPaymentMethodTypesFromPageNum: 0];
+    [self loadPaymentMethodTypesFromPageNum:0];
 }
 
 - (void)viewDidLayoutSubviews
@@ -94,43 +94,6 @@
         controller.response = sender;
         controller.delegate = self;
     }
-}
-
-- (void) loadPaymentMethodTypesFromPageNum:(NSInteger)pageNum {
-    AWXGetPaymentMethodsTypeRequest *request = [AWXGetPaymentMethodsTypeRequest new];
-    request.active = YES;
-    request.pageNum = pageNum;
-    request.transactionCurrency = _currency;
-    
-    __weak __typeof(self)weakSelf = self;
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-
-        if (response && !error) {
-            AWXGetPaymentMethodTypeResponse *result = (AWXGetPaymentMethodTypeResponse *)response;
-            NSMutableArray *typeArray = @[].mutableCopy;
-            for (AWXPaymentMethodType * type in result.items) {
-                if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
-                    if ([type.transactionMode isEqualToString:@"oneoff"]) {
-                        if (type.name){
-                            [typeArray addObject:type.name];
-                        }
-                    }
-                }else{
-                    if ([type.transactionMode isEqualToString:@"recurring"]){
-                        if (type.name){
-                            [typeArray addObject:type.name];
-                        }
-                    }
-                }
-            }
-            strongSelf.availablePaymentMethodTypes = typeArray;
-            [strongSelf reloadData];
-            [strongSelf.tableView reloadData];
-            strongSelf.nextPageNum = pageNum + 1;
-        }
-    }];
 }
 
 -(void) loadCustomerPaymentMethods{
@@ -178,6 +141,43 @@
     [self loadCustomerPaymentMethods];
     
 //    [self loadDataFromPageNum:0];
+}
+
+- (void)loadPaymentMethodTypesFromPageNum:(NSInteger)pageNum {
+    AWXGetPaymentMethodsTypeRequest *request = [AWXGetPaymentMethodsTypeRequest new];
+    request.active = YES;
+    request.pageNum = pageNum;
+    request.transactionCurrency = _currency;
+    
+    __weak __typeof(self)weakSelf = self;
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+
+        if (response && !error) {
+            AWXGetPaymentMethodTypeResponse *result = (AWXGetPaymentMethodTypeResponse *)response;
+            NSMutableArray *typeArray = @[].mutableCopy;
+            for (AWXPaymentMethodType * type in result.items) {
+                if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
+                    if ([type.transactionMode isEqualToString:@"oneoff"]) {
+                        if (type.name){
+                            [typeArray addObject:type.name];
+                        }
+                    }
+                }else{
+                    if ([type.transactionMode isEqualToString:@"recurring"]){
+                        if (type.name){
+                            [typeArray addObject:type.name];
+                        }
+                    }
+                }
+            }
+            strongSelf.availablePaymentMethodTypes = typeArray;
+            [strongSelf reloadData];
+            [strongSelf.tableView reloadData];
+            strongSelf.nextPageNum = pageNum + 1;
+        }
+    }];
 }
 
 - (void)loadMultipleDataFromPageNum:(NSInteger)pageNum
@@ -347,7 +347,7 @@
         button.layer.borderWidth = 1;
         button.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
         button.layer.masksToBounds = YES;
-        [button setTitle:self.customerId == nil ? NSLocalizedString(@"Card", nil) : NSLocalizedString(@"Enter a new card", nil) forState:UIControlStateNormal];
+        [button setTitle:NSLocalizedString(@"Card", nil) forState:UIControlStateNormal];
         [button setTitleColor:[AWXTheme sharedTheme].tintColor forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
         button.backgroundColor = [UIColor clearColor];
@@ -555,7 +555,8 @@
     }];
 }
 
--(void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod createCompletion:(void(^)(AWXPaymentConsent * _Nullable))completion{
+- (void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod createCompletion:(void(^)(AWXPaymentConsent * _Nullable))completion
+{
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXCreatePaymentConsentRequest *request = [AWXCreatePaymentConsentRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
@@ -574,8 +575,8 @@
 }
 
 
--(void)verifyPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod consent:(AWXPaymentConsent *)consent{
-    
+- (void)verifyPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod consent:(AWXPaymentConsent *)consent
+{
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXVerifyPaymentConsentRequest *request = [AWXVerifyPaymentConsentRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
@@ -705,10 +706,11 @@
     }];
 }
 
--(void) paymentExtensionInfoData:(NSDictionary *) data{
+- (void)paymentExtensionInfoData:(NSDictionary *)data
+{
     NSString *message = @"";
     for (NSString *key in data.allKeys) {
-        message =  [message stringByAppendingFormat:@"%@:%@",key,data[key]];
+        message =  [message stringByAppendingFormat:@"%@:%@", key, data[key]];
     }
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
     [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
