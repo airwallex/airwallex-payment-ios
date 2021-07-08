@@ -7,10 +7,10 @@
 //
 
 #import "CartViewController.h"
-#import "UIViewController+Utils.h"
 #import <SafariServices/SFSafariViewController.h>
 #import <Airwallex/Airwallex.h>
 #import <WechatOpenSDK/WXApi.h>
+#import "UIViewController+Utils.h"
 #import "AirwallexExamplesKeys.h"
 #import "OptionsViewController.h"
 #import "ShippingCell.h"
@@ -18,7 +18,7 @@
 #import "TotalCell.h"
 #import "APIClient.h"
 
-@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate, OptionsViewControllerDelegate>
+@interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIView *badgeView;
@@ -27,11 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
 @property (strong, nonatomic) AWXPlaceDetails *shipping;
-
-@property (strong, nonatomic) NSDecimalNumber *amount;
-@property (strong, nonatomic) NSString *currency;
 @property (strong, nonatomic) AWXPaymentIntent *paymentIntent;
-@property (nonatomic) BOOL paymentWithoutCustomer;
 
 @end
 
@@ -40,6 +36,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setupViews];
+    [self setupCartData];
+    [self setupExamplesAPIClient];
+    [self reloadData];
+}
+
+- (void)setupViews
+{
     self.badgeView.backgroundColor = [[AWXTheme sharedTheme].tintColor colorWithAlphaComponent:0.5];
     self.badgeLabel.textColor = [AWXTheme sharedTheme].tintColor;
     self.badgeView.layer.masksToBounds = YES;
@@ -51,7 +55,10 @@
     self.activityIndicator.hidesWhenStopped = YES;
     self.activityIndicator.hidden = YES;
     [self.view addSubview:self.activityIndicator];
-    
+}
+
+- (void)setupCartData
+{
     Product *product0 = [[Product alloc] initWithName:@"AirPods Pro"
                                                detail:@"Free engraving x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"399"]];
@@ -59,14 +66,6 @@
                                                detail:@"White x 1"
                                                 price:[NSDecimalNumber decimalNumberWithString:@"469"]];
     self.products = [@[product0, product1] mutableCopy];
-    self.amount = [NSDecimalNumber decimalNumberWithString:[AirwallexExamplesKeys shared].amount];
-    self.currency = [AirwallexExamplesKeys shared].currency;
-    self.paymentWithoutCustomer = YES;
-    
-    APIClient *client = [APIClient sharedClient];
-    client.paymentBaseURL = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
-    client.apiKey = [AirwallexExamplesKeys shared].apiKey;
-    client.clientID = [AirwallexExamplesKeys shared].clientId;
     
     NSDictionary *shipping = @{
         @"first_name": @"Verify",
@@ -81,8 +80,28 @@
         }
     };
     self.shipping =  [AWXPlaceDetails decodeFromJSON:shipping];
+}
+
+- (void)setupExamplesAPIClient
+{
+    APIClient *client = [APIClient sharedClient];
+    client.paymentBaseURL = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
+    client.apiKey = [AirwallexExamplesKeys shared].apiKey;
+    client.clientID = [AirwallexExamplesKeys shared].clientId;
     
-    [self reloadData];
+    [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+}
+
+- (void)setupSDK
+{
+    // Step1:
+    // or use a preset mode (Note: test mode as default)
+    [Airwallex setMode:AirwallexSDKTestMode];
+    
+    // Theme customization
+    UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
+    [AWXTheme sharedTheme].tintColor = tintColor;
+    [UIView.appearance setTintColor:tintColor];
 }
 
 - (void)viewDidLayoutSubviews
@@ -92,29 +111,15 @@
     self.badgeView.layer.cornerRadius = CGRectGetWidth(self.badgeView.bounds) / 2;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"goToSettings"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        OptionsViewController *controller = (OptionsViewController *)navigationController.topViewController;
-        controller.delegate = self;
-        controller.amount = self.amount;
-        controller.currency = self.currency;
-    }
-}
-
 - (void)reloadData
 {
     self.badgeView.hidden = self.products.count == 0;
     self.badgeLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.products.count];
     
-    NSDecimalNumber *subtotal = [self.products valueForKeyPath:@"@sum.self.price"];
-    NSDecimalNumber *shipping = [NSDecimalNumber zero];
-    NSDecimalNumber *total = [subtotal decimalNumberByAdding:shipping];
-    
-    self.checkoutButton.enabled = self.shipping != nil && total.doubleValue > 0 && self.amount.doubleValue > 0 && self.currency.length > 0;
+    NSString *amount = [AirwallexExamplesKeys shared].amount;
+    NSString *currency = [AirwallexExamplesKeys shared].currency;
+    self.checkoutButton.enabled = self.shipping != nil && amount.doubleValue > 0 && currency.length > 0;
     self.checkoutButton.backgroundColor = self.checkoutButton.enabled ? [AWXTheme sharedTheme].tintColor : [UIColor colorNamed:@"Line Color"];
-    
     [self.tableView reloadData];
 }
 
@@ -127,71 +132,22 @@
         return;
     }
     
-    [self.activityIndicator startAnimating];
-    __weak __typeof(self)weakSelf = self;
-    [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        
-        if (error) {
-            [strongSelf.activityIndicator stopAnimating];
-            [strongSelf showAlert:error.localizedDescription];
-            return;
-        }
-        
-        if (strongSelf.paymentWithoutCustomer) {
-            // No need customer
-            [strongSelf createPaymentIntentWithCustomerId:nil];
-            return;
-        }
-        
-        NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
-        if (customerId) {
-            // Exising customer
-            [strongSelf createPaymentIntentWithCustomerId:customerId];
-            return;
-        }
-        
-        [[APIClient sharedClient] createCustomerWithParameters:@{@"request_id": NSUUID.UUID.UUIDString,
-                                                                 @"merchant_customer_id": NSUUID.UUID.UUIDString,
-                                                                 @"first_name": @"John",
-                                                                 @"last_name": @"Doe",
-                                                                 @"email": @"john.doe@airwallex.com",
-                                                                 @"phone_number": @"13800000000",
-                                                                 @"additional_info": @{@"registered_via_social_media": @NO,
-                                                                                       @"registration_date": @"2019-09-18",
-                                                                                       @"first_successful_order_date": @"2019-09-18"},
-                                                                 @"metadata": @{@"id": @1}}
-                                             completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
-            if (error) {
-                [strongSelf.activityIndicator stopAnimating];
-                [strongSelf showAlert:error.localizedDescription];
-                return;
-            }
-            
-            NSString *customerId = result[@"id"];
-            [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:kCachedCustomerID];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            // New customer
-            [strongSelf createPaymentIntentWithCustomerId:customerId];
-        }];
-    }];
+    NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
+    [self createPaymentIntentWithCustomerId:customerId];
 }
 
 #pragma mark - Create Payment Intent
 
 - (void)createPaymentIntentWithCustomerId:(nullable NSString *)customerId
 {
-    [self.activityIndicator startAnimating];
-    
     __weak __typeof(self)weakSelf = self;
     dispatch_group_t group = dispatch_group_create();
     __block NSError *_error;
     __block AWXPaymentIntent *_paymentIntent;
     __block NSString *_customerSecret;
     
-    NSMutableDictionary *parameters = [@{@"amount": self.amount,
-                                         @"currency": self.currency,
+    NSMutableDictionary *parameters = [@{@"amount": [AirwallexExamplesKeys shared].amount,
+                                         @"currency": [AirwallexExamplesKeys shared].currency,
                                          @"merchant_order_id": NSUUID.UUID.UUIDString,
                                          @"request_id": NSUUID.UUID.UUIDString,
                                          @"metadata": @{@"id": @1},
@@ -233,7 +189,6 @@
     if (customerId) {
         parameters[@"customer_id"] = customerId;
     }
-    
     
     if ([Airwallex checkoutMode] != AirwallexCheckoutRecurringMode) {
         dispatch_group_enter(group);
@@ -278,7 +233,7 @@
             // Step2: Setup client secret
             [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
             
-            // Setup3: customer secret (Optional)
+            // Step3: customer secret
             if (_customerSecret) {
                 [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
             }
@@ -293,18 +248,6 @@
 
 - (void)showPaymentFlowWithPaymentIntent:(AWXPaymentIntent *)paymentIntent
 {
-    NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
-    NSString *clientSecret = [AWXAPIClientConfiguration sharedConfiguration].clientSecret;
-    if (!paymentIntent) {
-        AWXPaymentIntent *intent = AWXPaymentIntent.new;
-        intent.customerId   = customerId;
-        intent.currency     = self.currency;
-        intent.amount       = self.amount;
-        intent.clientSecret = clientSecret;
-        paymentIntent = intent;
-    }
-    self.paymentIntent = paymentIntent;
-    
     AWXUIContext *context = [AWXUIContext sharedContext];
     context.delegate = self;
     context.hostViewController = self;
@@ -402,20 +345,6 @@
     [self reloadData];
 }
 
-#pragma mark - OptionsViewControllerDelegate
-
-- (void)optionsViewController:(OptionsViewController *)viewController didEditAmount:(NSDecimalNumber *)amount
-{
-    self.amount = amount;
-    [self reloadData];
-}
-
-- (void)optionsViewController:(OptionsViewController *)viewController didEditCurrency:(NSString *)currency
-{
-    self.currency = currency;
-    [self reloadData];
-}
-
 #pragma mark - AWXPaymentResultDelegate
 
 - (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error
@@ -483,6 +412,21 @@
     //    }];
 }
 
+- (void)finishPayment
+{
+    __weak __typeof(self)weakSelf = self;
+    [self checkPaymentIntentStatusWithCompletion:^(BOOL success) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.activityIndicator stopAnimating];
+        
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
+                                                                            message:success ? @"Pay successfully": @"Waiting payment completion"
+                                                                     preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [strongSelf presentViewController:controller animated:YES completion:nil];
+    }];
+}
+
 - (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
 {
     [controller dismissViewControllerAnimated:YES completion:^{
@@ -517,21 +461,6 @@
         
         AWXGetPaymentIntentResponse *result = (AWXGetPaymentIntentResponse *)response;
         completionHandler([result.status isEqualToString:@"SUCCEEDED"]);
-    }];
-}
-
-- (void)finishPayment
-{
-    __weak __typeof(self)weakSelf = self;
-    [self checkPaymentIntentStatusWithCompletion:^(BOOL success) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
-        
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
-                                                                            message:success ? @"Pay successfully": @"Waiting payment completion"
-                                                                     preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-        [strongSelf presentViewController:controller animated:YES completion:nil];
     }];
 }
 

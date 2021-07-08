@@ -12,14 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AirwallexExamplesKeys : NSObject
 
-@property (nonatomic, readonly) NSString *apiKey;
-@property (nonatomic, readonly) NSString *clientId;
-@property (nonatomic, readonly) NSString *baseUrl;
-@property (nonatomic, readonly) NSString *weChatAppId;
-@property (nonatomic, readonly) NSString *amount;
-@property (nonatomic, readonly) NSString *currency;
+@property (nonatomic, strong) NSString *apiKey;
+@property (nonatomic, strong) NSString *clientId;
+@property (nonatomic, strong) NSString *baseUrl;
+@property (nonatomic, strong) NSString *weChatAppId;
+@property (nonatomic, strong) NSString *amount;
+@property (nonatomic, strong) NSString *currency;
 
 + (instancetype)shared;
+- (void)resetKeys;
 
 @end
 

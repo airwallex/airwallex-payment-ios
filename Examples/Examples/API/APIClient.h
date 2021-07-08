@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedClient;
 
-- (void)createAuthenticationTokenWithCompletionHandler:(void (^)(NSError * _Nullable error))completionHandler;
+- (void)createAuthenticationTokenWithCompletionHandler:(nullable void (^)(NSError * _Nullable error))completionHandler;
 
 - (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
                         completionHandler:(void (^)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;

@@ -37,6 +37,7 @@
 #else
         self.configJson = [self loadConfigFile:@"Production"];
 #endif
+        [self resetKeys];
     }
     return self;
 }
@@ -53,34 +54,14 @@
     return nil;
 }
 
-- (NSString *)apiKey
+- (void)resetKeys
 {
-    return self.configJson[@"api_key"];
-}
-
-- (NSString *)clientId
-{
-    return self.configJson[@"client_id"];
-}
-
-- (NSString *)baseUrl
-{
-    return self.configJson[@"base_url"];
-}
-
-- (NSString *)weChatAppId
-{
-    return self.configJson[@"we_chat_app_id"];
-}
-
-- (NSString *)amount
-{
-    return self.configJson[@"amount"] ?: @"0";
-}
-
-- (NSString *)currency
-{
-    return self.configJson[@"currency"];
+    self.apiKey = self.configJson[@"api_key"];
+    self.clientId = self.configJson[@"client_id"];
+    self.baseUrl = self.configJson[@"base_url"];
+    self.weChatAppId = self.configJson[@"we_chat_app_id"];
+    self.amount = self.configJson[@"amount"] ?: @"0";
+    self.currency = self.configJson[@"currency"];
 }
 
 @end

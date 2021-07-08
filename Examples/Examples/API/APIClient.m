@@ -26,7 +26,7 @@
     _paymentBaseURL = [paymentBaseURL URLByAppendingPathComponent:@""];
 }
 
-- (void)createAuthenticationTokenWithCompletionHandler:(void (^)(NSError * _Nullable error))completionHandler
+- (void)createAuthenticationTokenWithCompletionHandler:(nullable void (^)(NSError * _Nullable error))completionHandler
 {
     NSURL *requestURL = [NSURL URLWithString:@"api/v1/authentication/login" relativeToURL:self.paymentBaseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
@@ -38,9 +38,11 @@
     [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                      completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(error);
-            });
+            if (completionHandler) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionHandler(error);
+                });
+            }
             return;
         }
         
@@ -54,16 +56,13 @@
                 anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
             }
             self.token = json[@"token"];
-            
+        }
+        
+        if (completionHandler) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 completionHandler(anError);
             });
-            return;
         }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completionHandler(anError);
-        });
     }] resume];
 }
 

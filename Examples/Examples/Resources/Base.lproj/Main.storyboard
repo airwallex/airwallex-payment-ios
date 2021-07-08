@@ -337,7 +337,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="137.94642857142856"/>
+            <point key="canvasLocation" x="1014" y="138"/>
         </scene>
         <!--Demo View Controller-->
         <scene sceneID="mEr-aT-4OF">
@@ -395,7 +395,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EyA-SN-5AB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1046" y="1071"/>
+            <point key="canvasLocation" x="1013" y="1324"/>
         </scene>
         <!--Input View Controller-->
         <scene sceneID="WmO-Vf-pc5">
@@ -422,13 +422,12 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qBM-wU-dJa">
-                                <rect key="frame" x="110" y="242" width="100" height="44"/>
+                                <rect key="frame" x="20" y="242" width="280" height="44"/>
                                 <color key="backgroundColor" red="0.84705882349999995" green="0.89019607840000003" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="KV3-3I-oUm"/>
-                                    <constraint firstAttribute="width" constant="100" id="yBY-vW-Iju"/>
                                 </constraints>
-                                <state key="normal" title="点击">
+                                <state key="normal" title="Launch">
                                     <color key="titleColor" red="0.1647058824" green="0.1843137255" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -447,8 +446,9 @@
                             <constraint firstAttribute="trailing" secondItem="5oc-v0-fKZ" secondAttribute="trailing" constant="20" id="0mY-bQ-n5I"/>
                             <constraint firstItem="JNL-Sa-Ann" firstAttribute="top" secondItem="Uof-B0-4oI" secondAttribute="top" constant="60" id="AgD-ut-M0I"/>
                             <constraint firstAttribute="trailing" secondItem="JNL-Sa-Ann" secondAttribute="trailing" constant="20" id="BYi-QH-3dK"/>
-                            <constraint firstItem="qBM-wU-dJa" firstAttribute="centerX" secondItem="NlY-P6-FYU" secondAttribute="centerX" id="JJK-J9-ojK"/>
                             <constraint firstItem="JNL-Sa-Ann" firstAttribute="leading" secondItem="Uof-B0-4oI" secondAttribute="leading" constant="20" id="Ll3-CA-dmT"/>
+                            <constraint firstItem="qBM-wU-dJa" firstAttribute="leading" secondItem="Uof-B0-4oI" secondAttribute="leading" constant="20" id="Ora-eB-6t3"/>
+                            <constraint firstItem="Uof-B0-4oI" firstAttribute="trailing" secondItem="qBM-wU-dJa" secondAttribute="trailing" constant="20" id="btw-Of-vFJ"/>
                             <constraint firstItem="5oc-v0-fKZ" firstAttribute="leading" secondItem="Uof-B0-4oI" secondAttribute="leading" constant="20" id="cDS-pZ-XqS"/>
                             <constraint firstItem="5oc-v0-fKZ" firstAttribute="top" secondItem="JNL-Sa-Ann" secondAttribute="bottom" constant="20" id="oHv-MU-vwd"/>
                             <constraint firstItem="qBM-wU-dJa" firstAttribute="top" secondItem="5oc-v0-fKZ" secondAttribute="bottom" constant="30" id="rTh-uS-xyr"/>
@@ -462,7 +462,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OUh-yl-yM2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1824" y="901.00000000000011"/>
+            <point key="canvasLocation" x="1824" y="1730"/>
         </scene>
         <!--wechatPay-->
         <scene sceneID="Qo0-pv-jjd">
@@ -674,7 +674,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vcL-0v-hh2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1823" y="1641.0000000000002"/>
+            <point key="canvasLocation" x="1824" y="1020"/>
         </scene>
         <!--Options-->
         <scene sceneID="XgQ-3K-n2r">
@@ -688,10 +688,10 @@
                                 <rect key="frame" x="0.0" y="44" width="320" height="436"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iM6-7j-oWC">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="783"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="824"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P74-f6-EbX">
-                                                <rect key="frame" x="16" y="16" width="288" height="751"/>
+                                                <rect key="frame" x="16" y="16" width="288" height="792"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Environment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3F-HC-rpy">
                                                         <rect key="frame" x="0.0" y="0.0" width="288" height="23.5"/>
@@ -816,11 +816,19 @@
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kI2-hN-PcJ">
+                                                        <rect key="frame" x="0.0" y="260.5" width="288" height="31"/>
+                                                        <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="16"/>
+                                                        <state key="normal" title="Generate Customer"/>
+                                                        <connections>
+                                                            <action selector="generateCustomer:" destination="3dc-1g-4U7" eventType="touchUpInside" id="3NB-JF-gfC"/>
+                                                        </connections>
+                                                    </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dck-7L-Vck">
-                                                        <rect key="frame" x="0.0" y="260.5" width="288" height="36"/>
+                                                        <rect key="frame" x="0.0" y="301.5" width="288" height="36"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eE7-Om-WvW">
-                                                                <rect key="frame" x="0.0" y="0.0" width="239" height="36"/>
+                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eE7-Om-WvW">
+                                                                <rect key="frame" x="0.0" y="0.0" width="245" height="36"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="36" id="Nnu-uT-MEr"/>
                                                                 </constraints>
@@ -832,10 +840,9 @@
                                                                 </connections>
                                                             </textField>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPD-sh-aXs">
-                                                                <rect key="frame" x="244" y="8" width="44" height="20"/>
+                                                                <rect key="frame" x="250" y="8" width="38" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="YLJ-VC-2jr"/>
-                                                                    <constraint firstAttribute="width" constant="44" id="m2I-HG-1Nf"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="16"/>
                                                                 <state key="normal" title="Clear">
@@ -854,21 +861,21 @@
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstItem="oPD-sh-aXs" firstAttribute="centerY" secondItem="Dck-7L-Vck" secondAttribute="centerY" id="4Fe-dO-f8s"/>
+                                                            <constraint firstItem="oPD-sh-aXs" firstAttribute="leading" secondItem="eE7-Om-WvW" secondAttribute="trailing" constant="5" id="Cxs-Uf-6A4"/>
                                                             <constraint firstItem="eE7-Om-WvW" firstAttribute="leading" secondItem="Dck-7L-Vck" secondAttribute="leading" id="Rc6-H5-LpB"/>
-                                                            <constraint firstItem="oPD-sh-aXs" firstAttribute="leading" secondItem="eE7-Om-WvW" secondAttribute="trailing" constant="5" id="gXw-dF-Akx"/>
                                                             <constraint firstAttribute="bottom" secondItem="eE7-Om-WvW" secondAttribute="bottom" id="rXq-6A-lPh"/>
                                                             <constraint firstItem="eE7-Om-WvW" firstAttribute="top" secondItem="Dck-7L-Vck" secondAttribute="top" id="y4k-Rs-Ju8"/>
                                                             <constraint firstAttribute="trailing" secondItem="oPD-sh-aXs" secondAttribute="trailing" id="zYa-aZ-HwA"/>
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw3-vc-e4I">
-                                                        <rect key="frame" x="0.0" y="306.5" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="347.5" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YSw-cs-6Pe">
-                                                        <rect key="frame" x="0.0" y="340" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="381" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -877,13 +884,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J14-mn-E62">
-                                                        <rect key="frame" x="0.0" y="384" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="425" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ucc-VN-sfr">
-                                                        <rect key="frame" x="0.0" y="417.5" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="458.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -892,13 +899,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5p4-lS-mL2">
-                                                        <rect key="frame" x="0.0" y="461.5" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="502.5" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-cl-UUP">
-                                                        <rect key="frame" x="0.0" y="495" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="536" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -907,13 +914,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BH-xo-rjD">
-                                                        <rect key="frame" x="0.0" y="539" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="580" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ofq-7n-F5l">
-                                                        <rect key="frame" x="0.0" y="572.5" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="613.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -922,13 +929,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ap9-GE-PVt">
-                                                        <rect key="frame" x="0.0" y="616.5" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="657.5" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XwV-xj-OFr">
-                                                        <rect key="frame" x="0.0" y="650" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="691" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -937,13 +944,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeChat Region:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iou-6j-t8u">
-                                                        <rect key="frame" x="0.0" y="694" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="735" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTK-Dh-PCi">
-                                                        <rect key="frame" x="0.0" y="727.5" width="288" height="23.5"/>
+                                                        <rect key="frame" x="0.0" y="768.5" width="288" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
@@ -1008,7 +1015,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6DU-lc-9l6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2596.875" y="137.5"/>
+            <point key="canvasLocation" x="2631" y="138"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iHb-BI-1x5">
@@ -1016,7 +1023,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pG9-fq-6li" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lmz-Qw-MyF">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1034,7 +1041,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="ctT-KW-lCz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IXt-XM-enX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
