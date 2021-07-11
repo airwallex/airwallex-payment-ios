@@ -35,16 +35,7 @@
     parameters[@"customer_id"]       = self.customerId;
     parameters[@"currency"]          = self.currency;
     parameters[@"requires_cvc"] = [NSNumber numberWithBool:NO];
-//    parameters[@"merchant_trigger_reason"] = @"unscheduled";
-        
-    if ([Airwallex nextTriggerByType] == AirwallexNextTriggerByCustomerType) {
-        parameters[@"next_triggered_by"] = @"customer";
-//        if (self.paymentMethod.card) {
-//            parameters[@"requires_cvc"] = [NSNumber numberWithBool:YES];
-//        }
-    }else{
-        parameters[@"next_triggered_by"]  = @"merchant";
-    }
+    parameters[@"next_triggered_by"] = FormatNextTriggerByType(self.nextTriggerByType);
 
     NSMutableDictionary *paymentParams = @{}.mutableCopy;
     if (self.paymentMethod.Id) {

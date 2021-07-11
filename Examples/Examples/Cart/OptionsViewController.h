@@ -13,6 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 static NSString * const kCachedCustomerID = @"kCachedCustomerID";
+static NSString * const kCachedNextTriggerBy = @"kCachedNextTriggerBy";
 
 @interface OptionsViewController : UIViewController
 

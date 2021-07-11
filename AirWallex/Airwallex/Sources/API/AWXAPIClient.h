@@ -71,18 +71,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (AirwallexCheckoutMode)checkoutMode;
 
 /**
- Set User type.
- 
- @param type A NextTriggerByType required.
- */
-+ (void)setNextTriggerByType:(AirwallexNextTriggerByType)type;
-
-/**
- Get User type. customer  as default.
- */
-+ (AirwallexNextTriggerByType)nextTriggerByType;
-
-/**
  Supported non-card payment method types.
  */
 + (NSArray *)supportedNonCardTypes;

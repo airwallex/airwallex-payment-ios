@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "AWXConstants.h"
 
 @class AWXWeChatPaySDKResponse, AWXPaymentMethodListViewController, AWXCardViewController, AWXPaymentViewController, AWXShippingViewController, AWXPaymentIntent, AWXPlaceDetails;
 
@@ -52,6 +53,25 @@ NS_ASSUME_NONNULL_BEGIN
  The customer who is paying for this payment intent.
  */
 @property (nonatomic, copy, nullable) NSString *customerId;
+
+/**
+ Next trigger by.
+ */
+@property (nonatomic) AirwallexNextTriggerByType nextTriggerBy;
+
+@end
+
+@interface AWXRecurringWithIntentSession : AWXSession
+
+/**
+ The payment intent to handle.
+ */
+@property (nonatomic, strong, nullable) AWXPaymentIntent *paymentIntent;
+
+/**
+ Next trigger by.
+ */
+@property (nonatomic) AirwallexNextTriggerByType nextTriggerBy;
 
 @end
 

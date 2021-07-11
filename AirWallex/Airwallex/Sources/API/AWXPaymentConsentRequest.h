@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AWXRequestProtocol.h"
+#import "AWXConstants.h"
 
 @class AWXPaymentMethod;
 @class AWXPaymentMethodOptions;
@@ -36,6 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
  Payment method object.
  */
 @property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
+
+/**
+ Next trigger By type.
+ */
+@property (nonatomic) AirwallexNextTriggerByType nextTriggerByType;
 
 @end
 

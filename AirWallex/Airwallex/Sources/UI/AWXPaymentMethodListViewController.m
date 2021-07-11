@@ -560,6 +560,7 @@
     request.customerId = self.customerId;
     request.paymentMethod = paymentMethod;
     request.currency = self.currency;
+    request.nextTriggerByType = self.nextTriggerByType;
     [self.activityIndicator startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {

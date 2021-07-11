@@ -111,3 +111,13 @@ NSString * PaymentMethodTypeLogo(NSString *type)
     }
     return nil;
 }
+
+NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type)
+{
+    switch (type) {
+        case AirwallexNextTriggerByCustomerType:
+            return @"customer";
+        case AirwallexNextTriggerByMerchantType:
+            return @"merchant";
+    }
+}

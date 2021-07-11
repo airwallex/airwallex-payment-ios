@@ -106,7 +106,9 @@
     self.modeSwitch.on = Airwallex.mode == AirwallexSDKLiveMode;
     
     [self.checkoutBtn setTitle:self.checkoutModesList[Airwallex.checkoutMode] forState:(UIControlStateNormal)];
-    [self.nextTriggerByBtn setTitle:self.nextTriggerByList[Airwallex.nextTriggerByType] forState:(UIControlStateNormal)];
+    
+    NSInteger nextTriggerBy = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
+    [self.nextTriggerByBtn setTitle:self.nextTriggerByList[nextTriggerBy] forState:(UIControlStateNormal)];
     
     self.paymentURLTextField.text = [AirwallexExamplesKeys shared].baseUrl;
     self.apiKeyTextField.text = [AirwallexExamplesKeys shared].apiKey;
@@ -140,8 +142,8 @@
 - (IBAction)nextTriggerByTapped:(id)sender
 {
     [self showSelectViewWithArray:self.nextTriggerByList completion:^(NSInteger selectIndex) {
-        [Airwallex setNextTriggerByType:selectIndex];
-        [self.nextTriggerByBtn setTitle:self.nextTriggerByList[Airwallex.nextTriggerByType] forState:(UIControlStateNormal)];
+        [[NSUserDefaults standardUserDefaults] setInteger:selectIndex forKey:kCachedNextTriggerBy];
+        [self.nextTriggerByBtn setTitle:self.nextTriggerByList[selectIndex] forState:(UIControlStateNormal)];
     }];
 }
 
@@ -202,6 +204,7 @@
 {
     [[AirwallexExamplesKeys shared] resetKeys];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedNextTriggerBy];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self resetExamplesAPIClient];
@@ -223,7 +226,6 @@
 {
     [Airwallex setMode:AirwallexSDKTestMode];
     [Airwallex setCheckoutMode:AirwallexCheckoutPaymentMode];
-    [Airwallex setNextTriggerByType:AirwallexNextTriggerByCustomerType];
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl]];
 }
 
@@ -284,7 +286,9 @@
     NSLog(@"Payment Base URL (SDK): %@", [Airwallex defaultBaseURL].absoluteString);
     NSLog(@"SDK mode (SDK): %@", [Airwallex mode] == AirwallexSDKTestMode ? @"Test" : @"Production");
     NSLog(@"Checkout mode (SDK): %ld", (long)[Airwallex checkoutMode]);
-    NSLog(@"Next trigger by type (SDK): %ld", [Airwallex nextTriggerByType]);
+    
+    NSLog(@"Customer ID (SDK): %@", [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID]);
+    NSLog(@"Next trigger by type (SDK): %ld", [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy]);
 }
 
 @end

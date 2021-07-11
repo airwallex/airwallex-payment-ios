@@ -116,3 +116,7 @@
 @implementation AWXRecurringSession
 
 @end
+
+@implementation AWXRecurringWithIntentSession
+
+@end

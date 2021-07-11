@@ -262,15 +262,15 @@
             session.currency = [AirwallexExamplesKeys shared].currency;
             session.amount = [NSDecimalNumber decimalNumberWithString:[AirwallexExamplesKeys shared].amount];
             session.customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
+            session.nextTriggerBy = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
             return session;
         }
         case AirwallexCheckoutRecurringWithIntentMode:
         {
-            AWXRecurringSession *session = [AWXRecurringSession new];
+            AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
             session.billing = self.shipping;
-            session.currency = paymentIntent.currency;
-            session.amount = paymentIntent.amount;
-            session.customerId = paymentIntent.customerId;
+            session.paymentIntent = paymentIntent;
+            session.nextTriggerBy = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
             return session;
         }
     }

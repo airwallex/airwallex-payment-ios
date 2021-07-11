@@ -7,6 +7,7 @@
 //
 
 #import "AWXViewController.h"
+#import "AWXConstants.h"
 
 @class AWXPlaceDetails;
 
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)currency;
 - (NSDecimalNumber *)amount;
 - (nullable NSString *)paymentIntentId;
+- (AirwallexNextTriggerByType)nextTriggerByType;
 
 @end
 
