@@ -29,10 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
 
 /**
- A payment intent.
- */
-@property (nonatomic, strong) AWXPaymentIntent *paymentIntent;
-/**
  A payment consent.
  */
 @property (nonatomic, strong) AWXPaymentConsent *paymentConsent;

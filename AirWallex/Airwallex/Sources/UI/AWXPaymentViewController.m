@@ -38,8 +38,7 @@
 @property (strong, nonatomic) AWXThreeDSService *service;
 @property (strong, nonatomic) AWXDevice *device;
 
-@property (copy, nonatomic) NSString *paymentIntentId;
-
+@property (nullable, copy, nonatomic) NSString *initialPaymentIntentId;
 
 @end
 
@@ -52,7 +51,7 @@
     [self.payButton setImage:[UIImage imageNamed:@"lock-white" inBundle:[NSBundle resourceBundle]] forState:UIControlStateNormal];
     [self.payButton setImage:[UIImage imageNamed:@"lock-grey" inBundle:[NSBundle resourceBundle]] forState:UIControlStateDisabled];
     [self.payButton setImageAndTitleHorizontalAlignmentCenter:8];
-    self.totalLabel.text = [self.paymentIntent.amount stringWithCurrencyCode:self.paymentIntent.currency];
+    self.totalLabel.text = [self.amount stringWithCurrencyCode:self.currency];
     [self.tableView registerNib:[UINib nibWithNibName:@"AWXPaymentItemCell" bundle:[NSBundle sdkBundle]] forCellReuseIdentifier:@"AWXPaymentItemCell"];
     
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -111,7 +110,7 @@
 {
     __weak __typeof(self)weakSelf = self;
     [self.activityIndicator startAnimating];
-    [[AWXSecurityService sharedService] doProfile:self.paymentIntentId completion:^(NSString * _Nonnull sessionId) {
+    [[AWXSecurityService sharedService] doProfile:self.paymentIntentId ?: self.initialPaymentIntentId completion:^(NSString * _Nonnull sessionId) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.activityIndicator stopAnimating];
 
@@ -177,7 +176,7 @@
 
         AWXVerifyPaymentConsentResponse *result = response;
         if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
-            self.paymentIntentId = result.initialPaymentIntentId;
+            self.initialPaymentIntentId = result.initialPaymentIntentId;
         }
 
         [strongSelf finishConfirmationWithResponse:response error:error];
@@ -188,9 +187,9 @@
 {
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    request.intentId = self.paymentIntent.Id;
+    request.intentId = self.paymentIntentId ?: self.initialPaymentIntentId;
     request.requestId = NSUUID.UUID.UUIDString;
-    request.customerId = self.paymentIntent.customerId;
+    request.customerId = self.customerId;
     request.paymentConsent = consent;
     if ([paymentMethod.type isEqualToString:AWXCardKey]) {
         AWXCardOptions *cardOptions = [AWXCardOptions new];
@@ -240,8 +239,8 @@
                   nextActionWithWeChatPaySDK:response.nextAction.weChatPayResponse];
     } else if (response.nextAction.redirectResponse) {
         AWXThreeDSService *service = [AWXThreeDSService new];
-        service.customerId = self.paymentIntent.customerId;
-        service.intentId   = self.paymentIntent.Id.length > 0 ? self.paymentIntent.Id : self.paymentIntentId;
+        service.customerId = self.customerId;
+        service.intentId   = self.paymentIntentId ?: self.initialPaymentIntentId;
         service.paymentMethod = self.paymentMethod;
         service.device = self.device;
         service.presentingViewController = self;
@@ -324,7 +323,7 @@
 
     AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
-    request.intentId = self.paymentIntent.Id;
+    request.intentId = self.paymentIntentId ?: self.initialPaymentIntentId;
     request.type = AWXDCC;
     request.useDCC = useDCC;
     request.device = self.device;
