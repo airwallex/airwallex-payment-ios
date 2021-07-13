@@ -8,7 +8,7 @@
 
 #import "AWXViewController.h"
 
-@class AWXPaymentMethodListViewController, AWXPaymentMethod, AWXPlaceDetails,AWXPaymentConsent;
+@class AWXPaymentMethodListViewController, AWXPaymentMethod, AWXPlaceDetails, AWXPaymentConsent;
 
 NS_ASSUME_NONNULL_BEGIN
 
