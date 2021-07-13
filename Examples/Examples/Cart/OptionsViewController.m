@@ -248,10 +248,12 @@
         [APIClient sharedClient].apiKey = textField.text;
         [AirwallexExamplesKeys shared].apiKey = textField.text;
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
     } else if (textField == self.clientIDTextField) {
         [APIClient sharedClient].clientID = textField.text;
         [AirwallexExamplesKeys shared].clientId = textField.text;
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
     } else if (textField == self.amountTextField) {
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:textField.text];
         if (amount == NSDecimalNumber.notANumber) {

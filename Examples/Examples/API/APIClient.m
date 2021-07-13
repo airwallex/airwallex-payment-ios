@@ -28,6 +28,15 @@
 
 - (void)createAuthenticationTokenWithCompletionHandler:(nullable void (^)(NSError * _Nullable error))completionHandler
 {
+    if (self.paymentBaseURL == nil || self.clientID == nil || self.apiKey == nil) {
+        if (completionHandler) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler([NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing Payment base url, client id and api key."}]);
+            });
+        }
+        return;
+    }
+    
     NSURL *requestURL = [NSURL URLWithString:@"api/v1/authentication/login" relativeToURL:self.paymentBaseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"POST"];

@@ -111,6 +111,12 @@
     self.badgeView.layer.cornerRadius = CGRectGetWidth(self.badgeView.bounds) / 2;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self reloadData];
+}
+
 - (void)reloadData
 {
     self.badgeView.hidden = self.products.count == 0;
