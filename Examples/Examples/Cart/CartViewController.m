@@ -205,9 +205,9 @@
         }];
     }
     
-    if (customerId) {
+    if (customerId && [Airwallex checkoutMode] == AirwallexCheckoutRecurringMode) {
         dispatch_group_enter(group);
-        [[APIClient sharedClient] createCustomerSecretWithId:customerId completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
+        [[APIClient sharedClient] generateClientSecretWithCustomerId:customerId completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
             if (error) {
                 _error = error;
                 dispatch_group_leave(group);
@@ -230,15 +230,12 @@
         
         [AWXAPIClientConfiguration sharedConfiguration].baseURL = [APIClient sharedClient].paymentBaseURL;
         if (_paymentIntent) {
-            // Step2: Setup client secret
+            // Step2: Setup client secret from payment intent
             [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
+        } else if (_customerSecret) {
+            // Step3: Setup client secret generated with customer id
+            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
         }
-        
-        if (_customerSecret) {
-            // Step3: Setup customer secret
-            [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
-        }
-        
         [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
     });
 }

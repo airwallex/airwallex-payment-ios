@@ -101,13 +101,9 @@ When the customer wants to checkout an order, you should create a payment intent
 ```
 [AWXAPIClientConfiguration sharedConfiguration].clientSecret = "The payment intent's client secret";
 ```
-
-- Generate client secret for customer service account
-
-If you need create card, you should generate customer client secret and then pass it to the sdk.
-
+Note: When checkoutMode is AirwallexCheckoutRecurringMode, no need to create payment intent, then you need generate client secret with customer id and pass it to AWXAPIClientConfiguration.
 ```
-[AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = "The customer's client secret";
+[AWXAPIClientConfiguration sharedConfiguration].clientSecret = "The client secret generated with customer id";
 ```
 
 - Handle the payment flow

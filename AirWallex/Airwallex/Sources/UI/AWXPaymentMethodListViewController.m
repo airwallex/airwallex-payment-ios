@@ -103,7 +103,7 @@
 {
     self.paymentMethods = @[self.section0, @[]];
     
-    if (self.customerPaymentConsents.count) {
+    if (Airwallex.mode == AirwallexCheckoutPaymentMode && self.customerPaymentConsents.count > 0) {
         self.cards = @[].mutableCopy;
         for (AWXPaymentConsent * consent in  self.customerPaymentConsents) {
             if ([consent.nextTriggeredBy isEqualToString: @"customer"]) {
@@ -143,8 +143,6 @@
     
     self.cards = [NSMutableArray array];
     [self loadCustomerPaymentMethods];
-    
-//    [self loadDataFromPageNum:0];
 }
 
 - (void)loadPaymentMethodTypesFromPageNum:(NSInteger)pageNum {
@@ -184,94 +182,6 @@
     }];
 }
 
-- (void)loadMultipleDataFromPageNum:(NSInteger)pageNum
-{
-    if (![self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
-        self.paymentMethods = @[self.section0, self.cards];
-        [self.tableView reloadData];
-        return;
-    }
-    
-    NSArray *cardTypes = @[@"visa", @"mastercard"];
-
-    [self.activityIndicator startAnimating];
-    
-    dispatch_group_t group = dispatch_group_create();
-
-    for (NSString *type in cardTypes) {
-        dispatch_group_enter(group);
-
-        AWXGetPaymentMethodsRequest *request = [AWXGetPaymentMethodsRequest new];
-        request.customerId = self.customerId;
-        request.pageNum = pageNum;
-        request.methodType = AWXCardKey;
-        request.cardType = type;
-        
-        __weak __typeof(self)weakSelf = self;
-        AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
-        [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-
-            if (response && !error) {
-                AWXGetPaymentMethodsResponse *result = (AWXGetPaymentMethodsResponse *)response;
-                strongSelf.canLoadMore = strongSelf.canLoadMore || result.hasMore;
-                NSArray *cards = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-                    AWXPaymentMethod *obj = (AWXPaymentMethod *)evaluatedObject;
-                    return [cardTypes containsObject:obj.type];
-                }]];
-                [strongSelf.cards addObjectsFromArray:cards];
-            }
-            
-            dispatch_group_leave(group);
-        }];
-    }
-    
-    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        self.paymentMethods = @[self.section0, self.cards];
-        [self.tableView reloadData];
-        self.nextPageNum = pageNum + 1;
-        [self.activityIndicator stopAnimating];
-    });
-}
-
-- (void)loadDataFromPageNum:(NSInteger)pageNum
-{
-    if (![self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
-        self.paymentMethods = @[self.section0, self.cards];
-        [self.tableView reloadData];
-        return;
-    }
-
-    [self.activityIndicator startAnimating];
-
-    AWXGetPaymentMethodsRequest *request = [AWXGetPaymentMethodsRequest new];
-    request.customerId = self.customerId;
-    request.pageNum = pageNum;
-    request.methodType = AWXCardKey;
-
-    __weak __typeof(self)weakSelf = self;
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
-        
-        if (error) {
-            UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-            [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [strongSelf presentViewController:controller animated:YES completion:nil];
-            return;
-        }
-
-        AWXGetPaymentMethodsResponse *result = (AWXGetPaymentMethodsResponse *)response;
-        strongSelf.canLoadMore = result.hasMore;
-        [strongSelf.cards addObjectsFromArray:result.items];
-
-        strongSelf.paymentMethods = @[strongSelf.section0, strongSelf.cards];
-        [strongSelf.tableView reloadData];
-        strongSelf.nextPageNum = pageNum + 1;
-    }];
-}
-
 - (void)newPressed:(id)sender
 {
     [self performSegueWithIdentifier:@"addCard" sender:nil];
@@ -286,7 +196,7 @@
     request.paymentMethodId = paymentMethod.Id;
     
     __weak __typeof(self)weakSelf = self;
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXCustomerAPIClientConfiguration sharedConfiguration]];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.activityIndicator stopAnimating];
@@ -426,7 +336,6 @@
     CGFloat currentOffset = scrollView.contentOffset.y;
     CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
     if (maximumOffset - currentOffset <= 0) {
-//        [self loadDataFromPageNum:self.nextPageNum];
         [self loadPaymentMethodTypesFromPageNum:self.nextPageNum];
     }
 }

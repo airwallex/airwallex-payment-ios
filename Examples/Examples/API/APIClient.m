@@ -152,8 +152,8 @@
     }] resume];
 }
 
-- (void)createCustomerSecretWithId:(NSString *)Id
-                 completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
+- (void)generateClientSecretWithCustomerId:(NSString *)Id
+                         completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler
 {
     NSURL *requestURL = [NSURL URLWithString:[NSString stringWithFormat:@"api/v1/pa/customers/%@/generate_client_secret", Id] relativeToURL:self.paymentBaseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
