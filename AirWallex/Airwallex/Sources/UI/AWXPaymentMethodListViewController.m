@@ -47,7 +47,7 @@
 @property (nonatomic) NSInteger nextPageNum;
 @property (strong, nonatomic) AWXThreeDSService *service;
 @property (strong, nonatomic) AWXDevice *device;
-@property (copy, nonatomic) NSString *paymentIntentId;
+@property (strong, nonatomic) NSString *initialPaymentIntentId;
 @property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
 @property (nonatomic, strong, nullable) AWXPaymentMethod *paymentMethod;
 @property (nonatomic, strong) NSArray *availablePaymentMethodTypes;
@@ -527,7 +527,7 @@
     
     __weak __typeof(self)weakSelf = self;
     [self.activityIndicator startAnimating];
-    [[AWXSecurityService sharedService] doProfile:self.paymentIntentId completion:^(NSString * _Nonnull sessionId) {
+    [[AWXSecurityService sharedService] doProfile:self.paymentIntentId ?: self.initialPaymentIntentId completion:^(NSString * _Nonnull sessionId) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.activityIndicator stopAnimating];
 
@@ -592,7 +592,7 @@
         
         AWXVerifyPaymentConsentResponse *result = response;
         if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
-            self.paymentIntentId = result.initialPaymentIntentId;
+            self.initialPaymentIntentId = result.initialPaymentIntentId;
         }
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
@@ -602,7 +602,7 @@
 {
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    request.intentId = self.paymentIntentId;
+    request.intentId = self.paymentIntentId ?: self.initialPaymentIntentId;
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.customerId;
     request.paymentConsent = consent;
@@ -655,7 +655,7 @@
     } else if (response.nextAction.redirectResponse) {
         AWXThreeDSService *service = [AWXThreeDSService new];
         service.customerId = self.customerId;
-        service.intentId   = self.paymentIntentId.length > 0 ? self.paymentIntentId : self.paymentIntentId;
+        service.intentId = self.paymentIntentId ?: self.initialPaymentIntentId;
         service.paymentMethod = self.paymentMethod;
         service.device = self.device;
         service.presentingViewController = self;
@@ -690,7 +690,7 @@
 
     AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
-    request.intentId = self.paymentIntentId;
+    request.intentId = self.paymentIntentId ?: self.initialPaymentIntentId;
     request.type = AWXDCC;
     request.useDCC = useDCC;
     request.device = self.device;
