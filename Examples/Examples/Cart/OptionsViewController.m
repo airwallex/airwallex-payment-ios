@@ -238,6 +238,7 @@
         if (url.scheme && url.host) {
             [APIClient sharedClient].paymentBaseURL = url;
             [Airwallex setDefaultBaseURL:url];
+            [AirwallexExamplesKeys shared].baseUrl = url.absoluteString;
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
             [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
         } else {
@@ -245,9 +246,11 @@
         }
     } else if (textField == self.apiKeyTextField) {
         [APIClient sharedClient].apiKey = textField.text;
+        [AirwallexExamplesKeys shared].apiKey = textField.text;
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
     } else if (textField == self.clientIDTextField) {
         [APIClient sharedClient].clientID = textField.text;
+        [AirwallexExamplesKeys shared].clientId = textField.text;
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
     } else if (textField == self.amountTextField) {
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:textField.text];
