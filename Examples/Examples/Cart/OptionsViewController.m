@@ -110,10 +110,10 @@
     self.customerIdTextField.text = customerId;
     
     NSInteger checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
-    [self.checkoutBtn setTitle:self.checkoutModesList[checkoutMode] forState:(UIControlStateNormal)];
+    [self.checkoutBtn setTitle:self.checkoutModesList[checkoutMode] forState:UIControlStateNormal];
     
     NSInteger nextTriggerBy = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
-    [self.nextTriggerByBtn setTitle:self.nextTriggerByList[nextTriggerBy] forState:(UIControlStateNormal)];
+    [self.nextTriggerByBtn setTitle:self.nextTriggerByList[nextTriggerBy] forState:UIControlStateNormal];
     
     self.paymentURLTextField.text = [AirwallexExamplesKeys shared].baseUrl;
     self.apiKeyTextField.text = [AirwallexExamplesKeys shared].apiKey;
