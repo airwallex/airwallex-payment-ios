@@ -104,7 +104,7 @@ When the customer wants to checkout an order, you should create a payment intent
 
 - Generate client secret for customer service account
 
-If you need create card, you should generate customer client secret and then pass it to the sdk.
+If you need save card for a customer, you should generate customer client secret and then pass it to the sdk.
 
 ```
 [AWXCustomerAPIClientConfiguration sharedConfiguration].clientSecret = "The customer's client secret";
