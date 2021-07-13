@@ -116,13 +116,13 @@
 
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
-        if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
+        if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
             [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:self.paymentConsent];
-        } else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
+        } else if ([self.session isKindOfClass:[AWXRecurringSession class]]){
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod  createCompletion:^(AWXPaymentConsent * _Nullable consent) {
                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
             }];
-        } else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringWithIntentMode){
+        } else if ([self.session isKindOfClass:[AWXRecurringWithIntentSession class]]){
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod createCompletion:^(AWXPaymentConsent * _Nullable consent) {
                 if ([paymentMethod.type isEqualToString:AWXCardKey]) {
                     [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:consent];
@@ -174,7 +174,7 @@
         [strongSelf.activityIndicator stopAnimating];
 
         AWXVerifyPaymentConsentResponse *result = response;
-        if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
+        if ([self.session isKindOfClass:[AWXRecurringSession class]]){
             self.initialPaymentIntentId = result.initialPaymentIntentId;
         }
 

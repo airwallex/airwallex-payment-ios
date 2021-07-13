@@ -105,7 +105,12 @@
 {
     self.modeSwitch.on = Airwallex.mode == AirwallexSDKLiveMode;
     
-    [self.checkoutBtn setTitle:self.checkoutModesList[Airwallex.checkoutMode] forState:(UIControlStateNormal)];
+    self.customerIdTextField.enabled = NO;
+    NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
+    self.customerIdTextField.text = customerId;
+    
+    NSInteger checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
+    [self.checkoutBtn setTitle:self.checkoutModesList[checkoutMode] forState:(UIControlStateNormal)];
     
     NSInteger nextTriggerBy = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
     [self.nextTriggerByBtn setTitle:self.nextTriggerByList[nextTriggerBy] forState:(UIControlStateNormal)];
@@ -115,10 +120,6 @@
     self.clientIDTextField.text = [AirwallexExamplesKeys shared].clientId;
     self.amountTextField.text = [AirwallexExamplesKeys shared].amount;
     self.currencyTextField.text = [AirwallexExamplesKeys shared].currency;
-    
-    self.customerIdTextField.enabled = NO;
-    NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
-    self.customerIdTextField.text = customerId;
 }
 
 - (IBAction)dismiss:(id)sender
@@ -134,8 +135,9 @@
 - (IBAction)checkoutModeTapped:(id)sender
 {
     [self showSelectViewWithArray:self.checkoutModesList completion:^(NSInteger selectIndex) {
-        [Airwallex setCheckoutMode:selectIndex];
-        [self.checkoutBtn setTitle:self.checkoutModesList[Airwallex.checkoutMode] forState:(UIControlStateNormal)];
+        [[NSUserDefaults standardUserDefaults] setInteger:selectIndex forKey:kCachedCheckoutMode];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self.checkoutBtn setTitle:self.checkoutModesList[selectIndex] forState:UIControlStateNormal];
     }];
 }
 
@@ -143,7 +145,7 @@
 {
     [self showSelectViewWithArray:self.nextTriggerByList completion:^(NSInteger selectIndex) {
         [[NSUserDefaults standardUserDefaults] setInteger:selectIndex forKey:kCachedNextTriggerBy];
-        [self.nextTriggerByBtn setTitle:self.nextTriggerByList[selectIndex] forState:(UIControlStateNormal)];
+        [self.nextTriggerByBtn setTitle:self.nextTriggerByList[selectIndex] forState:UIControlStateNormal];
     }];
 }
 
@@ -204,6 +206,7 @@
 {
     [[AirwallexExamplesKeys shared] resetKeys];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCheckoutMode];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedNextTriggerBy];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -225,7 +228,6 @@
 - (void)resetSDK
 {
     [Airwallex setMode:AirwallexSDKTestMode];
-    [Airwallex setCheckoutMode:AirwallexCheckoutPaymentMode];
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl]];
 }
 
@@ -290,10 +292,10 @@
     
     NSLog(@"Payment Base URL (SDK): %@", [Airwallex defaultBaseURL].absoluteString);
     NSLog(@"SDK mode (SDK): %@", [Airwallex mode] == AirwallexSDKTestMode ? @"Test" : @"Production");
-    NSLog(@"Checkout mode (SDK): %ld", (long)[Airwallex checkoutMode]);
     
     NSLog(@"Customer ID (SDK): %@", [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID]);
-    NSLog(@"Next trigger by type (SDK): %ld", [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy]);
+    NSLog(@"Checkout mode (SDK): %@", self.checkoutModesList[[[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode]]);
+    NSLog(@"Next trigger by type (SDK): %@", self.nextTriggerByList[[[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy]]);
 }
 
 @end

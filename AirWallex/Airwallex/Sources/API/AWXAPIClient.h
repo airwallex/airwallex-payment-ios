@@ -59,18 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (AirwallexSDKMode)mode;
 
 /**
- Set sdk CheckoutMode.
- 
- @param checkoutMode A CheckoutMode required.
- */
-+ (void)setCheckoutMode:(AirwallexCheckoutMode)checkoutMode;
-
-/**
- Get CheckoutMode mode.  normal as default.
- */
-+ (AirwallexCheckoutMode)checkoutMode;
-
-/**
  Supported non-card payment method types.
  */
 + (NSArray *)supportedNonCardTypes;

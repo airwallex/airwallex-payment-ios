@@ -19,12 +19,6 @@ typedef NS_ENUM(NSInteger, AirwallexSDKMode) {
     AirwallexSDKLiveMode
 };
 
-typedef NS_ENUM(NSInteger, AirwallexCheckoutMode) {
-    AirwallexCheckoutPaymentMode,
-    AirwallexCheckoutRecurringMode,
-    AirwallexCheckoutRecurringWithIntentMode
-};
-
 typedef NS_ENUM(NSUInteger, AirwallexNextTriggerByType) {
     AirwallexNextTriggerByCustomerType,
     AirwallexNextTriggerByMerchantType

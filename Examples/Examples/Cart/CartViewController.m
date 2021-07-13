@@ -196,7 +196,8 @@
         parameters[@"customer_id"] = customerId;
     }
     
-    if ([Airwallex checkoutMode] != AirwallexCheckoutRecurringMode) {
+    AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
+    if (checkoutMode != AirwallexCheckoutRecurringMode) {
         dispatch_group_enter(group);
         [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
                                                   completionHandler:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
@@ -211,7 +212,7 @@
         }];
     }
     
-    if (customerId && [Airwallex checkoutMode] == AirwallexCheckoutRecurringMode) {
+    if (customerId && checkoutMode == AirwallexCheckoutRecurringMode) {
         dispatch_group_enter(group);
         [[APIClient sharedClient] generateClientSecretWithCustomerId:customerId completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
             if (error) {
@@ -250,8 +251,9 @@
 
 - (AWXSession *)createSession:(nullable AWXPaymentIntent *)paymentIntent
 {
-    switch (Airwallex.checkoutMode) {
-        case AirwallexCheckoutPaymentMode:
+    AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
+    switch (checkoutMode) {
+        case AirwallexCheckoutOneOffMode:
         {
             AWXOneOffSession *session = [AWXOneOffSession new];
             session.billing = self.shipping;

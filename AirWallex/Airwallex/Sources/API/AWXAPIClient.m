@@ -26,7 +26,6 @@ static NSURL *_defaultBaseURL;
 static NSString *_cybsURL;
 
 static AirwallexSDKMode _mode = AirwallexSDKTestMode;
-static AirwallexCheckoutMode _checkoutMode = AirwallexCheckoutPaymentMode;
 
 + (void)setDefaultBaseURL:(NSURL *)baseURL
 {
@@ -56,16 +55,6 @@ static AirwallexCheckoutMode _checkoutMode = AirwallexCheckoutPaymentMode;
 + (AirwallexSDKMode)mode
 {
     return _mode;
-}
-
-+ (void)setCheckoutMode:(AirwallexCheckoutMode)checkoutMode
-{
-    _checkoutMode = checkoutMode;
-}
-
-+ (AirwallexCheckoutMode)checkoutMode
-{
-    return _checkoutMode;
 }
 
 + (NSArray *)supportedNonCardTypes

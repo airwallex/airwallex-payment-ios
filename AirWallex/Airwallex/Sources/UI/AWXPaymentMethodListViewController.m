@@ -103,7 +103,7 @@
 {
     self.paymentMethods = @[self.section0, @[]];
     
-    if (Airwallex.mode == AirwallexCheckoutPaymentMode && self.customerPaymentConsents.count > 0) {
+    if ([self.session isKindOfClass:[AWXOneOffSession class]] && self.customerPaymentConsents.count > 0) {
         self.cards = @[].mutableCopy;
         for (AWXPaymentConsent * consent in  self.customerPaymentConsents) {
             if ([consent.nextTriggeredBy isEqualToString: @"customer"]) {
@@ -160,13 +160,13 @@
             AWXGetPaymentMethodTypeResponse *result = (AWXGetPaymentMethodTypeResponse *)response;
             NSMutableArray *typeArray = @[].mutableCopy;
             for (AWXPaymentMethodType * type in result.items) {
-                if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
+                if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
                     if ([type.transactionMode isEqualToString:@"oneoff"]) {
                         if (type.name){
                             [typeArray addObject:type.name];
                         }
                     }
-                }else{
+                } else {
                     if ([type.transactionMode isEqualToString:@"recurring"]){
                         if (type.name){
                             [typeArray addObject:type.name];
@@ -443,13 +443,13 @@
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
         
-        if ([Airwallex checkoutMode] == AirwallexCheckoutPaymentMode) {
+        if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
             [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:nil];
-        } else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode) {
+        } else if ([self.session isKindOfClass:[AWXRecurringSession class]]) {
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod  createCompletion:^(AWXPaymentConsent * _Nullable consent) {
                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
             }];
-        } else if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringWithIntentMode) {
+        } else if ([self.session isKindOfClass:[AWXRecurringWithIntentSession class]]) {
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod createCompletion:^(AWXPaymentConsent * _Nullable consent) {
                 if ([paymentMethod.type isEqualToString:AWXCardKey]) {
                     [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:consent];
@@ -500,7 +500,7 @@
         [strongSelf.activityIndicator stopAnimating];
         
         AWXVerifyPaymentConsentResponse *result = response;
-        if ([Airwallex checkoutMode] == AirwallexCheckoutRecurringMode){
+        if ([self.session isKindOfClass:[AWXRecurringSession class]]){
             self.initialPaymentIntentId = result.initialPaymentIntentId;
         }
         [strongSelf finishConfirmationWithResponse:response error:error];
