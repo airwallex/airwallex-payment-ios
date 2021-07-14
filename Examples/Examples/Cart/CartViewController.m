@@ -94,8 +94,7 @@
 
 - (void)setupSDK
 {
-    // Step1:
-    // or use a preset mode (Note: test mode as default)
+    // Step 1: Use a preset mode (Note: test mode as default)
     [Airwallex setMode:AirwallexSDKTestMode];
     
     // Theme customization
@@ -235,12 +234,10 @@
             return;
         }
         
-        [AWXAPIClientConfiguration sharedConfiguration].baseURL = [APIClient sharedClient].paymentBaseURL;
+        // Step 2: Setup client secret from payment intent or setup client secret generated with customer id
         if (_paymentIntent) {
-            // Step2: Setup client secret from payment intent
             [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _paymentIntent.clientSecret;
         } else if (_customerSecret) {
-            // Step3: Setup client secret generated with customer id
             [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
         }
         [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
@@ -288,7 +285,7 @@
     self.paymentIntent = paymentIntent;
     AWXSession *session = [self createSession:paymentIntent];
     
-    // Step4: Present payment flow
+    // Step 4: Present payment flow
     AWXUIContext *context = [AWXUIContext sharedContext];
     context.delegate = self;
     context.hostViewController = self;
