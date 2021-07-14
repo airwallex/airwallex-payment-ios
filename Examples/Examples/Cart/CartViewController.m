@@ -195,6 +195,8 @@
         parameters[@"customer_id"] = customerId;
     }
     
+    [self.activityIndicator startAnimating];
+
     AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
     if (checkoutMode != AirwallexCheckoutRecurringMode) {
         dispatch_group_enter(group);

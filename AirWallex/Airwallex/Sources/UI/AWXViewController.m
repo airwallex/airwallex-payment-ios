@@ -12,9 +12,38 @@
 
 @interface AWXViewController () <UIGestureRecognizerDelegate>
 
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+
 @end
 
 @implementation AWXViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator.hidesWhenStopped = YES;
+    self.activityIndicator.hidden = YES;
+    [self.view addSubview:self.activityIndicator];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    self.activityIndicator.center = self.view.center;
+}
+
+- (void)startAnimating
+{
+    [self.activityIndicator startAnimating];
+    self.view.userInteractionEnabled = false;
+}
+
+- (void)stopAnimating
+{
+    [self.activityIndicator stopAnimating];
+    self.view.userInteractionEnabled = true;
+}
 
 - (void)enableTapToEndEditting
 {

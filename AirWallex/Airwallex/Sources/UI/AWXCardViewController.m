@@ -33,7 +33,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet AWXCardTextField *cardNoField;
 @property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *nameField;
@@ -102,11 +101,6 @@
 
     self.switchButton.on = self.sameAsShipping;
     self.billingView.hidden = self.sameAsShipping;
-    
-    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.activityIndicator.hidesWhenStopped = YES;
-    self.activityIndicator.hidden = YES;
-    [self.view addSubview:self.activityIndicator];
 
     if (self.billing) {
         self.firstNameField.text = self.billing.firstName;
@@ -127,12 +121,6 @@
             self.zipcodeField.text = address.postcode;
         }
     }
-}
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    self.activityIndicator.center = self.view.center;
 }
 
 - (UIScrollView *)activeScrollView
@@ -160,6 +148,18 @@
         controller.country = self.country;
         controller.delegate = self;
     }
+}
+
+- (void)startAnimating
+{
+    [super startAnimating];
+    self.confirmButton.enabled = NO;
+}
+
+- (void)stopAnimating
+{
+    [super stopAnimating];
+    self.confirmButton.enabled = YES;
 }
 
 - (IBAction)switchChanged:(id)sender
@@ -240,12 +240,12 @@
     request.requestId = NSUUID.UUID.UUIDString;
     request.paymentMethod = paymentMethod;
 
-    [self.activityIndicator startAnimating];
+    [self startAnimating];
     __weak __typeof(self)weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
+        [strongSelf stopAnimating];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -274,10 +274,10 @@
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
 {
     __weak __typeof(self)weakSelf = self;
-    [self.activityIndicator startAnimating];
+    [self startAnimating];
     [[AWXSecurityService sharedService] doProfile:self.paymentIntentId ?: self.initialPaymentIntentId completion:^(NSString * _Nonnull sessionId) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
+        [strongSelf stopAnimating];
 
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
@@ -308,11 +308,11 @@
     request.paymentMethod = paymentMethod;
     request.currency = self.currency;
     request.nextTriggerByType = self.nextTriggerByType;
-    [self.activityIndicator startAnimating];
+    [self startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
+        [strongSelf stopAnimating];
 
         if (response && !error) {
             AWXPaymentConsentResponse *result = response;
@@ -332,11 +332,11 @@
     AWXPaymentMethod * payment = paymentMethod;
     request.options = payment;
     request.returnURL =  @"airwallexcheckout://com.airwallex.paymentacceptance";
-    [self.activityIndicator startAnimating];
+    [self startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
+        [strongSelf stopAnimating];
 
         AWXVerifyPaymentConsentResponse *result = response;
         if ([self.session isKindOfClass:[AWXRecurringSession class]]) {
@@ -373,7 +373,7 @@
     request.device = device;
     self.device = device;
 
-    [self.activityIndicator startAnimating];
+    [self startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -383,7 +383,7 @@
 
 - (void)finishConfirmationWithResponse:(AWXConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
 {
-    [self.activityIndicator stopAnimating];
+    [self stopAnimating];
     id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
     UIViewController *presentingViewController = self.presentingViewController;
     if (error) {
@@ -421,7 +421,7 @@
         service.delegate = self;
         self.service = service;
         
-        [self.activityIndicator startAnimating];
+        [self startAnimating];
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else if (response.nextAction.dccResponse) {
         [self performSegueWithIdentifier:@"showDCC" sender:response];
@@ -460,11 +460,11 @@
     request.useDCC = useDCC;
     request.device = self.device;
 
-    [self.activityIndicator startAnimating];
+    [self startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
+        [strongSelf stopAnimating];
         
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];

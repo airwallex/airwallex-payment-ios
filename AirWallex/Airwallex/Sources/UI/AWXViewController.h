@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isFlow;
 @property (nonatomic, strong) AWXSession *session;
 
+- (void)startAnimating;
+- (void)stopAnimating;
 - (void)enableTapToEndEditting;
 - (void)unregisterKeyboard;
 - (void)registerKeyboard;
