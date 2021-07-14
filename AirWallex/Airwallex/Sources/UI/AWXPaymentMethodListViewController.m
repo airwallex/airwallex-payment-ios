@@ -106,7 +106,7 @@
     if ([self.session isKindOfClass:[AWXOneOffSession class]] && self.customerPaymentConsents.count > 0) {
         self.cards = @[].mutableCopy;
         for (AWXPaymentConsent * consent in  self.customerPaymentConsents) {
-            if ([consent.nextTriggeredBy isEqualToString: @"customer"]) {
+            if ([consent.nextTriggeredBy isEqualToString:FormatNextTriggerByType(AirwallexNextTriggerByCustomerType)]) {
                 for (AWXPaymentMethod * method in  self.customerPaymentMethods) {
                     if ([consent.paymentMethod.Id isEqualToString:method.Id]) {
                         [self.cards addObject:method];
