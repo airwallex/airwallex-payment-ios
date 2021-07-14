@@ -282,7 +282,7 @@
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
         if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
-            [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
+            [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:nil];
         } else if ([self.session isKindOfClass:[AWXRecurringSession class]]){
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod  createCompletion:^(AWXPaymentConsent * _Nullable consent) {
                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
@@ -290,7 +290,7 @@
         } else if ([self.session isKindOfClass:[AWXRecurringWithIntentSession class]]){
             [strongSelf createPaymentConsentWithPaymentMethod:paymentMethod createCompletion:^(AWXPaymentConsent * _Nullable consent) {
                 if ([paymentMethod.type isEqualToString:AWXCardKey]) {
-                    [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device];
+                    [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod device:device consent:consent];
                 } else {
                     [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod consent:consent];
                 }
@@ -347,13 +347,14 @@
     }];
 }
 
-- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod device:(AWXDevice *)device
+- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod device:(AWXDevice *)device consent:(AWXPaymentConsent *)consent
 {
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
     request.intentId = self.paymentIntentId ?: self.initialPaymentIntentId;
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.customerId;
+    request.paymentConsent = consent;
 
     if ([paymentMethod.type isEqualToString:AWXCardKey]) {
         AWXCardOptions *cardOptions = [AWXCardOptions new];

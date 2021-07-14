@@ -34,7 +34,7 @@
         parameters[@"customer_id"] = self.customerId;
     }
     
-    if (self.paymentConsent.Id) {
+    if (self.paymentConsent && self.paymentConsent.Id) {
         NSMutableDictionary *consentParams = @{
             @"id": self.paymentConsent.Id,
         }.mutableCopy;
@@ -43,7 +43,7 @@
             consentParams[@"cvc"] = self.paymentMethod.card.cvc ?: @"";
         }
         [parameters addEntriesFromDictionary:@{
-            @"payment_consent_reference":consentParams
+            @"payment_consent_reference": consentParams
         }];
     }else{
         if (self.paymentMethod.Id) {
