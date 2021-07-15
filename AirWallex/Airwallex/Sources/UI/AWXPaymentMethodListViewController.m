@@ -426,7 +426,6 @@
     [self startAnimating];
     [[AWXSecurityService sharedService] doProfile:self.paymentIntentId ?: self.initialPaymentIntentId completion:^(NSString * _Nonnull sessionId) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf stopAnimating];
 
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
@@ -458,12 +457,7 @@
     request.paymentMethod = paymentMethod;
     request.currency = self.currency;
     request.nextTriggerByType = self.nextTriggerByType;
-    [self startAnimating];
-    __weak __typeof(self)weakSelf = self;
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf stopAnimating];
-        
+    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {        
         AWXPaymentConsentResponse *result = response;
         completion(result.consent);
     }];
@@ -481,11 +475,9 @@
     AWXPaymentMethod * payment = paymentMethod;
     request.options = payment;
     request.returnURL =  @"airwallexcheckout://com.airwallex.paymentacceptance";
-    [self startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf stopAnimating];
         
         AWXVerifyPaymentConsentResponse *result = response;
         if ([self.session isKindOfClass:[AWXRecurringSession class]]){
@@ -519,11 +511,9 @@
     request.device = device;
     self.device = device;
 
-    [self startAnimating];
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf stopAnimating];
         
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
@@ -531,6 +521,8 @@
 
 - (void)finishConfirmationWithResponse:(AWXConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
 {
+    [self stopAnimating];
+
     id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
     if (error) {
         [delegate paymentViewController:self didFinishWithStatus:AWXPaymentStatusError error:error];
@@ -558,6 +550,8 @@
         service.presentingViewController = self;
         service.delegate = self;
         self.service = service;
+        
+        [self startAnimating];
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else if (response.nextAction.dccResponse) {
         [self performSegueWithIdentifier:@"showDCC" sender:response];
@@ -596,7 +590,6 @@
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf stopAnimating];
         
         [strongSelf finishConfirmationWithResponse:response error:error];
     }];
