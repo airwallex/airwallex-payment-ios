@@ -85,11 +85,4 @@ IB_DESIGNABLE
 
 @end
 
-@interface AWXPayButtonView : AWXNibView
-
-@property (nonatomic, strong) NSString *title;
-
-@property (weak, nonatomic) IBOutlet AWXButton *payButton;
-@end
-
 NS_ASSUME_NONNULL_END

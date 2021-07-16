@@ -676,16 +676,3 @@
 }
 
 @end
-
-@interface AWXPayButtonView ()
-@end
-@implementation AWXPayButtonView
-
-- (void)setTitle:(NSString *)title{
-    [self.payButton setTitle:title forState:(UIControlStateNormal)];
-}
-- (NSString *)title{
-    return  self.payButton.titleLabel.text;
-}
-
-@end
