@@ -77,7 +77,7 @@
     if (self.token) {
         [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
     }
-    [request setHTTPBody:[NSJSONSerialization datAWXithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil]];
+    [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil]];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request
                                      completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {

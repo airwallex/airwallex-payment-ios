@@ -9,7 +9,6 @@
 #import "XCTestCase+Utils.h"
 #import "AWXTestAPIClient.h"
 #import "AWXAPIClient.h"
-#import <AirwallexExamplesKeys.h>
 
 @implementation XCTestCase (Utils)
 
@@ -36,9 +35,8 @@
 
     AWXTestAPIClient *client = [AWXTestAPIClient sharedClient];
     client.paymentBaseURL = [NSURL URLWithString:@"https://pci-api-demo.airwallex.com/"];
-    AirwallexExamplesKeys *keys = [AirwallexExamplesKeys new];
-    client.apiKey = keys.apiKey;
-    client.clientID = keys.clientID;
+    client.apiKey = @"cac0021cd41faa9d9633bc686b8728f91a165fbae7a69ed6f7ffe3482190ae64daf7e9255742030456eac4b59db71902";
+    client.clientID = @"WZIU9G6yQpumYxP5tsTMLQ";
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get auth token"];
     [client createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
@@ -47,8 +45,7 @@
                                              @"currency": @"USD",
                                              @"merchant_order_id": NSUUID.UUID.UUIDString,
                                              @"request_id": NSUUID.UUID.UUIDString,
-                                             @"order": @{},
-                                             @"customer_id": @"cus_7hFQRwZNxESFY8aiKrDRu27IlMc"} mutableCopy];
+                                             @"order": @{}} mutableCopy];
         [client createPaymentIntentWithParameters:parameters
                                 completionHandler:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
             XCTAssertNil(error);

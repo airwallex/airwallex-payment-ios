@@ -31,8 +31,10 @@
 
 - (void)testGetPaymentMethodList
 {
-    AWXGetPaymentMethodsRequest *request = [AWXGetPaymentMethodsRequest new];
-    request.customerId = @"cus_gSItdRkbwWQcyocadV93vQmdW0l";
+    AWXGetPaymentMethodsTypeRequest *request = [AWXGetPaymentMethodsTypeRequest new];
+    request.active = YES;
+    request.pageNum = 0;
+    request.transactionCurrency = @"HKD";
 
     AWXAPIClient *client = [AWXAPIClient sharedClient];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
