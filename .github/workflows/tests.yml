@@ -28,4 +28,4 @@ jobs:
     - name: Build
       run: xcodebuild build-for-testing -workspace Airwallex.xcworkspace -scheme Examples-Demo -destination "platform=iOS Simulator,name=iPhone 12"
     - name: Test
-      run: xcodebuild test-without-building -workspace Airwallex.xcworkspace -scheme AirwallexTests -destination "platform=iOS Simulator,name=iPhone 12"
+      run: xcodebuild clean test -workspace Airwallex.xcworkspace -scheme AirwallexTests -destination "platform=iOS Simulator,name=iPhone 12"
