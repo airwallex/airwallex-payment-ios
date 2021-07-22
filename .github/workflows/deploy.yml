@@ -37,7 +37,7 @@ jobs:
       
       - name: Xcode archive
         run: |
-          xcodebuild archive -quiet -project Airwallex.xcworkspace -scheme Examples-Demo -archivePath ios.xcarchive
+          xcodebuild archive -quiet -workspace Airwallex.xcworkspace -scheme Examples-Demo clean archive -configuration release -sdk iphoneos -archivePath ios.xcarchive
 
       - name: Xcode export
         run: |
