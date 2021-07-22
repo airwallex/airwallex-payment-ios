@@ -1,0 +1,67 @@
+name: Deploy demo app to testflight
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - build/development
+    tags: [ * ]
+
+jobs:
+  deploy:
+    runs-on: macOS-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Import signing certificate
+        env:
+          SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
+          SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+        run: |
+          exec .github/scripts/import-certificate.sh
+
+      - name: Import provisioning profile
+        env:
+          PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
+        run: |
+          exec .github/scripts/import-profile.sh
+    
+      - name: Cocoapods
+        run: pod install
+        
+      - name: Bump build number
+        run: |
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${{ github.run_id }}" Examples/Examples/Info.plist
+      
+      - name: Xcode archive
+        run: |
+          xcodebuild archive -quiet -project Airwallex.xcworkspace -scheme Examples-Demo -archivePath ios.xcarchive
+
+      - name: Xcode export
+        run: |
+          xcodebuild -exportArchive -archivePath ios.xcarchive -exportPath output -exportOptionsPlist BuildConfigs/ExportOptions.plist
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build.log
+          path: ~/Library/Logs/gym/*.log
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{ env.PRODUCT_NAME }}.ipa
+            ${{ env.PRODUCT_NAME }}.app.dSYM.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload app to App Store Connect
+        env:
+          APP_STORE_CONNECT_USERNAME: ${{ secrets.APP_STORE_CONNECT_USERNAME }}
+          APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
+        run: |
+          xcrun altool --upload-app -t ios -f "$PRODUCT_NAME.ipa" -u "$APP_STORE_CONNECT_USERNAME" -p "$APP_STORE_CONNECT_PASSWORD"
