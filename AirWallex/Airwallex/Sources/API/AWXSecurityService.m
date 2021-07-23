@@ -34,7 +34,10 @@
     if (self) {
         self.defender = [THMTrustDefender sharedInstance];
         [self.defender configure:@{
-            THMOrgID: AWXCyberSourceOrganizationID
+            THMOrgID: AWXCyberSourceOrganizationID,
+            THMUseUIWebView: @NO,
+            THMRegisterForPush: @NO,
+            THMLocationServices: @NO,
         }];
     }
     return self;
