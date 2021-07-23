@@ -19,11 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // WeChatSDK 1.8.2
-    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppId enableMTA:YES];
-    
-    // WeChatSDK 1.8.6.1
-    //    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppID universalLink:@"https://airwallex.com/"];
+    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppId universalLink:@"https://airwallex.com/"];
     
     [WXApi startLogByLevel:WXLogLevelNormal logBlock:^(NSString * _Nonnull log) {
         NSLog(@"WeChat Log: %@", log);

@@ -2,13 +2,13 @@ PODS:
   - AirwallexCardinalMobile (2.2.3)
   - AirwallexTrustDefender (5.0.32)
   - AlipaySDK-iOS (15.7.9)
-  - WechatOpenSDK (1.8.2)
+  - WechatOpenSDK (1.8.7.1)
 
 DEPENDENCIES:
   - AirwallexCardinalMobile (= 2.2.3)
   - AirwallexTrustDefender (= 5.0.32)
   - AlipaySDK-iOS (= 15.7.9)
-  - WechatOpenSDK (= 1.8.2)
+  - WechatOpenSDK (= 1.8.7.1)
 
 SPEC REPOS:
   trunk:
@@ -21,8 +21,8 @@ SPEC CHECKSUMS:
   AirwallexCardinalMobile: 8c5bee55e91819492fc953440482fe8e6727c1c3
   AirwallexTrustDefender: f32cce15b1f9982319630c559673b3a2f549ad50
   AlipaySDK-iOS: 94ff4c0e17c5e7d126b8207596d5033006534c25
-  WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
+  WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
 
-PODFILE CHECKSUM: 883ea961ac73f7f922d20466044265d5dfe97451
+PODFILE CHECKSUM: 3ad2e66a34adb79f76b59f71d8c61098c3121057
 
 COCOAPODS: 1.10.1

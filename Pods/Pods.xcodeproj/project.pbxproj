@@ -174,18 +174,19 @@
 		0B5A694E9D8BD436CE15D13761AE1F10 /* Pods-Examples-Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-Demo-dummy.m"; sourceTree = "<group>"; };
 		0BCC38708CEEA2253D82AA5675CA8FF4 /* AirwallexTrustDefender.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexTrustDefender.debug.xcconfig; sourceTree = "<group>"; };
 		0EE4B64804CB97DFDD307DE7DA1507A0 /* Pods-Airwallex-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Airwallex-acknowledgements.plist"; sourceTree = "<group>"; };
-		0F2D85117F071A7A441E41C5FECBF287 /* WechatAuthSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = WechatSDK1.8.2/WechatAuthSDK.h; sourceTree = "<group>"; };
+		12884096A0D9570A7F09C9F1415E1029 /* WXApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = OpenSDK1.8.7.1/WXApi.h; sourceTree = "<group>"; };
 		18153F4F02E1322ABDCEEB50F0B8475D /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		1E7494EB14C355A65FDD0C0DF6895B5F /* libPods-Airwallex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Airwallex.a"; path = "libPods-Airwallex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		22112211785D8281458AEB2B7126DE37 /* WXApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = WechatSDK1.8.2/WXApi.h; sourceTree = "<group>"; };
 		2731A4FA4E1F704FF4CFA31CA6E35B9C /* Pods-AirwallexTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AirwallexTests.release.xcconfig"; sourceTree = "<group>"; };
+		2A39D6D8875CF359E7E7B49696844748 /* WechatOpenSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.debug.xcconfig; sourceTree = "<group>"; };
 		33F1A58D9BE39008E124A4CDB3E9C1DC /* Pods-AirwallexTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AirwallexTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		361D8FDCED865DFD1FD6A7870FFEAE9A /* WechatAuthSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = OpenSDK1.8.7.1/WechatAuthSDK.h; sourceTree = "<group>"; };
 		3C76215328962DFB1BD6C568FBAF3C5C /* Pods-Examples-Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Demo-acknowledgements.plist"; sourceTree = "<group>"; };
 		420B722C65EE1E4DEA6CE19DD807A3FF /* Pods-AirwallexTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AirwallexTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		45F77115B16C62472D92B9BB9C0A45A3 /* Pods-Examples-Demo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Demo-resources.sh"; sourceTree = "<group>"; };
 		516E70ACB29FF3865A572730413738CB /* libPods-Examples-Staging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Examples-Staging.a"; path = "libPods-Examples-Staging.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		533A7D7CBCF69C7D6618AF8C1F195DAF /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = OpenSDK1.8.7.1/WXApiObject.h; sourceTree = "<group>"; };
 		5A424A7B5B02219DEAB11DCFE26312D0 /* Pods-Examples-Production-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Production-frameworks.sh"; sourceTree = "<group>"; };
-		5CAD75A987B2AAEE9B7C1174DB522C51 /* WechatOpenSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.release.xcconfig; sourceTree = "<group>"; };
 		5EBDB7F59EFAA426881051BBCA32131A /* Pods-Examples-Staging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Staging.release.xcconfig"; sourceTree = "<group>"; };
 		5EFBC352AA581CF3E6ACC5691EF82880 /* Pods-AirwallexTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AirwallexTests-dummy.m"; sourceTree = "<group>"; };
 		638ADCB6CBA87A92D2556F3E7A844779 /* AlipaySDK-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AlipaySDK-iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -194,7 +195,7 @@
 		7A31B8F9D60F4E93D97B10DB1E9614E3 /* Pods-Examples-Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
 		7C4A927AFE65C4141A0D8FD6A1DA3DF0 /* Pods-Examples-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		7D7F9F2672C3F784B9DBFC6683AF5C04 /* libPods-Examples-Production.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Examples-Production.a"; path = "libPods-Examples-Production.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		84D07A30DBC03B6010D6E21D403E4B93 /* WechatOpenSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.debug.xcconfig; sourceTree = "<group>"; };
+		85770A2A7503C7D48731E9207355B56F /* WechatOpenSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WechatOpenSDK.release.xcconfig; sourceTree = "<group>"; };
 		868D1A9225EC2923C87D4B67A82B74AF /* AlipaySDK.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		8E50D1492284B8D51D072F2D25252B03 /* Pods-Airwallex-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Airwallex-acknowledgements.markdown"; sourceTree = "<group>"; };
 		90A9D0BBE1FD3CB8033663A7435D0CFD /* Pods-Examples-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Demo-frameworks.sh"; sourceTree = "<group>"; };
@@ -209,10 +210,10 @@
 		B93F47C743D59D632F1C72B0EB1879FC /* Pods-Examples-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		BA7F4A4B2AA6B7F34A18CDEB04B1BEE7 /* Pods-Airwallex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Airwallex.release.xcconfig"; sourceTree = "<group>"; };
 		BBD677152A957799073DEE13B6CA1AB5 /* Pods-Examples-Staging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Staging.debug.xcconfig"; sourceTree = "<group>"; };
-		C1836E8A5EB1077FCCA8BBF27303CB28 /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = WechatSDK1.8.2/WXApiObject.h; sourceTree = "<group>"; };
 		C6B30918982E780D722EC3D4698BB838 /* Pods-Examples-Staging-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Staging-frameworks.sh"; sourceTree = "<group>"; };
 		C8146BAD300A193F860F332160B361B3 /* Pods-Examples-Production-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Examples-Production-acknowledgements.markdown"; sourceTree = "<group>"; };
 		CAB533E3EC3237608EE1808F85442AA0 /* Pods-Examples-Production-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Examples-Production-resources.sh"; sourceTree = "<group>"; };
+		CBCFEA7E4B9104868869C7779C7D23DA /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = OpenSDK1.8.7.1/libWeChatSDK.a; sourceTree = "<group>"; };
 		CCD74AFFDF181ACC70E45C8FE47E9FB6 /* Pods-Examples-Staging-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Examples-Staging-acknowledgements.plist"; sourceTree = "<group>"; };
 		D1C05502837F753EA19C196557A045FF /* TrustDefender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TrustDefender.framework; sourceTree = "<group>"; };
 		D5FB2F3BB43A91D62FA642E900A03168 /* AirwallexCardinalMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AirwallexCardinalMobile.release.xcconfig; sourceTree = "<group>"; };
@@ -220,7 +221,6 @@
 		E9FADCCFD2C9423195BE42427CF073FB /* Pods-Examples-Production.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Production.release.xcconfig"; sourceTree = "<group>"; };
 		EA00650DF2C10BD7DF15C0B39142AC04 /* Pods-AirwallexTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AirwallexTests-frameworks.sh"; sourceTree = "<group>"; };
 		EA7F3FE707DFBB3BFBFE23054E24A8EF /* libPods-Examples-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Examples-Demo.a"; path = "libPods-Examples-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EEE8A99899410C3DA4EC2477F8A41FB8 /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = WechatSDK1.8.2/libWeChatSDK.a; sourceTree = "<group>"; };
 		FB8E372AEA34889A56C4013CE0562602 /* Pods-Examples-Production.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Examples-Production.debug.xcconfig"; sourceTree = "<group>"; };
 		FD789679015CBB58146C42C8124F4FB4 /* Pods-Examples-Staging-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Examples-Staging-dummy.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -285,9 +285,22 @@
 				D3630EB6F2552F09A73BA56049B2A636 /* AirwallexCardinalMobile */,
 				BC4FFAD8296F6E01F222C8A3C6ACBF8E /* AirwallexTrustDefender */,
 				7236D97F3A478ED8A5A069A659A6C96D /* AlipaySDK-iOS */,
-				9500761017F77C5145428C84B146461C /* WechatOpenSDK */,
+				287AB7685A855D0EEEFDD590EF0781C9 /* WechatOpenSDK */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		287AB7685A855D0EEEFDD590EF0781C9 /* WechatOpenSDK */ = {
+			isa = PBXGroup;
+			children = (
+				361D8FDCED865DFD1FD6A7870FFEAE9A /* WechatAuthSDK.h */,
+				12884096A0D9570A7F09C9F1415E1029 /* WXApi.h */,
+				533A7D7CBCF69C7D6618AF8C1F195DAF /* WXApiObject.h */,
+				743C47910E102E8041B0D1C51F736AF1 /* Frameworks */,
+				C2D2ECCE15247AA4E1604ACD2CBDDF60 /* Support Files */,
+			);
+			name = WechatOpenSDK;
+			path = WechatOpenSDK;
 			sourceTree = "<group>";
 		};
 		35F1FEA9327B8070BFF58CACB31EAB16 /* Pods-AirwallexTests */ = {
@@ -308,14 +321,6 @@
 			isa = PBXGroup;
 			children = (
 				D1C05502837F753EA19C196557A045FF /* TrustDefender.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		472D053DA76031CFAC708352B2EE7E0B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EEE8A99899410C3DA4EC2477F8A41FB8 /* libWeChatSDK.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -359,6 +364,14 @@
 			path = "AlipaySDK-iOS";
 			sourceTree = "<group>";
 		};
+		743C47910E102E8041B0D1C51F736AF1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CBCFEA7E4B9104868869C7779C7D23DA /* libWeChatSDK.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8DF903C352166AA8E56641AD063DBD52 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,19 +380,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/AirwallexTrustDefender";
-			sourceTree = "<group>";
-		};
-		9500761017F77C5145428C84B146461C /* WechatOpenSDK */ = {
-			isa = PBXGroup;
-			children = (
-				0F2D85117F071A7A441E41C5FECBF287 /* WechatAuthSDK.h */,
-				22112211785D8281458AEB2B7126DE37 /* WXApi.h */,
-				C1836E8A5EB1077FCCA8BBF27303CB28 /* WXApiObject.h */,
-				472D053DA76031CFAC708352B2EE7E0B /* Frameworks */,
-				CE08D857142F989CA4B3B782E3C24391 /* Support Files */,
-			);
-			name = WechatOpenSDK;
-			path = WechatOpenSDK;
 			sourceTree = "<group>";
 		};
 		954D821001CD8455AB52CB2115FD8308 /* Pods-Examples-Staging */ = {
@@ -452,11 +452,11 @@
 			path = AirwallexTrustDefender;
 			sourceTree = "<group>";
 		};
-		CE08D857142F989CA4B3B782E3C24391 /* Support Files */ = {
+		C2D2ECCE15247AA4E1604ACD2CBDDF60 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				84D07A30DBC03B6010D6E21D403E4B93 /* WechatOpenSDK.debug.xcconfig */,
-				5CAD75A987B2AAEE9B7C1174DB522C51 /* WechatOpenSDK.release.xcconfig */,
+				2A39D6D8875CF359E7E7B49696844748 /* WechatOpenSDK.debug.xcconfig */,
+				85770A2A7503C7D48731E9207355B56F /* WechatOpenSDK.release.xcconfig */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/WechatOpenSDK";
@@ -887,6 +887,23 @@
 			};
 			name = Debug;
 		};
+		19EB48C8530FBA1DDEA8FFCDD602F307 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85770A2A7503C7D48731E9207355B56F /* WechatOpenSDK.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		20D59D6D444792DCC566C5A69F8DAE52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0B5216C1F8FD9E5E08A9F98E46D6D660 /* AirwallexTrustDefender.release.xcconfig */;
@@ -955,23 +972,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		6D2AA1F07B4130EB581CF0A04B5CFAE6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CAD75A987B2AAEE9B7C1174DB522C51 /* WechatOpenSDK.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1170,22 +1170,6 @@
 			};
 			name = Debug;
 		};
-		B9A8CE0595EEB964DD8751E8BCF56CBC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 84D07A30DBC03B6010D6E21D403E4B93 /* WechatOpenSDK.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		C0D0FE9EDFE423B17A3F975134EAC215 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2731A4FA4E1F704FF4CFA31CA6E35B9C /* Pods-AirwallexTests.release.xcconfig */;
@@ -1269,6 +1253,22 @@
 			};
 			name = Release;
 		};
+		E9034C3C8B274D7A7C62065B44D4B763 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A39D6D8875CF359E7E7B49696844748 /* WechatOpenSDK.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		E98BCD305D0610AA4F38DD2E0618D050 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B93F47C743D59D632F1C72B0EB1879FC /* Pods-Examples-Demo.release.xcconfig */;
@@ -1336,8 +1336,8 @@
 		4AF0DF2249DC5CF1F6B67BE5469CE54C /* Build configuration list for PBXAggregateTarget "WechatOpenSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B9A8CE0595EEB964DD8751E8BCF56CBC /* Debug */,
-				6D2AA1F07B4130EB581CF0A04B5CFAE6 /* Release */,
+				E9034C3C8B274D7A7C62065B44D4B763 /* Debug */,
+				19EB48C8530FBA1DDEA8FFCDD602F307 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -3,7 +3,7 @@ FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/AirwallexCardinalMobile" "${
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/WechatOpenSDK"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/WechatOpenSDK/WechatSDK1.8.2"
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/WechatOpenSDK/OpenSDK1.8.7.1"
 OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/WechatOpenSDK" -iframework "${PODS_ROOT}/AirwallexCardinalMobile" -iframework "${PODS_ROOT}/AirwallexTrustDefender" -iframework "${PODS_ROOT}/AlipaySDK-iOS"
 OTHER_LDFLAGS = $(inherited) -ObjC -l"WeChatSDK" -l"c++" -l"sqlite3.0" -l"z" -framework "AlipaySDK" -framework "CFNetwork" -framework "CardinalMobile" -framework "CoreGraphics" -framework "CoreMotion" -framework "CoreTelephony" -framework "CoreText" -framework "Foundation" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration" -framework "TrustDefender" -framework "UIKit" -framework "WebKit"
 PODS_BUILD_DIR = ${BUILD_DIR}

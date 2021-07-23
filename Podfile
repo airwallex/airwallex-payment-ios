@@ -23,7 +23,7 @@ end
 
 def shared_example_pods
   pod 'AlipaySDK-iOS', '15.7.9'
-  pod 'WechatOpenSDK', '1.8.2'
+  pod 'WechatOpenSDK', '1.8.7.1'
 end
 
 target 'Examples-Demo' do

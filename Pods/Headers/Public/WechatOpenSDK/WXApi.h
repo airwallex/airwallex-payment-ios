@@ -1,1 +1,1 @@
-../../../WechatOpenSDK/WechatSDK1.8.2/WXApi.h
+../../../WechatOpenSDK/OpenSDK1.8.7.1/WXApi.h

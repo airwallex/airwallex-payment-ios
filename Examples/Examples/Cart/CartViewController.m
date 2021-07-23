@@ -439,18 +439,13 @@
     request.timeStamp = response.timeStamp.doubleValue;
     request.sign = response.sign;
     
-    // WeChatSDK 1.8.2
-    [WXApi sendReq:request];
-    
-    //    WeChatSDK 1.8.6.1
-    //    [WXApi sendReq:request completion:^(BOOL success) {
-    //        if (!success) {
-    //            // Failed to call WeChat Pay
-    //            return;
-    //        }
-    //
-    //        // Succeed to pay
-    //    }];
+    [WXApi sendReq:request completion:^(BOOL success) {
+        if (!success) {
+            // Failed to call WeChat Pay
+            return;
+        }
+        // Succeed to pay
+    }];
 }
 
 - (void)finishPayment
