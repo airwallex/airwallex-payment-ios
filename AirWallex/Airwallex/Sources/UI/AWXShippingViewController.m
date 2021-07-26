@@ -178,16 +178,6 @@
     [self unregisterKeyboard];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"selectCountries"]) {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        AWXCountryListViewController *controller = (AWXCountryListViewController *)navigationController.topViewController;
-        controller.country = self.country;
-        controller.delegate = self;
-    }
-}
-
 - (IBAction)savePressed:(id)sender
 {
     AWXPlaceDetails *shipping = [AWXPlaceDetails new];
@@ -217,7 +207,11 @@
 
 - (IBAction)selectCountries:(id)sender
 {
-    [self performSegueWithIdentifier:@"selectCountries" sender:nil];
+    AWXCountryListViewController *controller = [[AWXCountryListViewController alloc] initWithNibName:nil bundle:nil];
+    controller.delegate = self;
+    controller.country = self.country;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)countryListViewController:(AWXCountryListViewController *)controller didSelectCountry:(AWXCountry *)country

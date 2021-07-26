@@ -895,14 +895,15 @@
         [self addSubview:borderView];
         
         _floatingLabel = [UILabel new];
-        _floatingLabel.textColor = [UIColor colorWithRed: 0.66 green: 0.66 blue: 0.66 alpha: 1.00];
+        _floatingLabel.textColor = [UIColor floatingTitleColor];
         _floatingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
         _floatingLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [borderView addSubview:_floatingLabel];
         
         _textLabel = [UILabel new];
-        _textLabel.textColor = [UIColor colorWithRed: 0.66 green: 0.66 blue: 0.66 alpha: 1.00];
-        _textLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
+        _textLabel.alpha = 0;
+        _textLabel.textColor = [UIColor textColor];
+        _textLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:16];
         _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [borderView addSubview:_textLabel];
         
@@ -950,7 +951,7 @@
 
 - (void)active
 {
-    if (self.floatingTopConstraint.constant == 9) {
+    if (self.textLabel.alpha == 1) {
         return;
     }
 

@@ -283,9 +283,14 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
     return [UIColor colorWithRed:0.1 green:0.11 blue:0.13 alpha:1];
 }
 
++ (UIColor *)floatingTitleColor
+{
+    return [UIColor colorWithRed:169.0f/255.0f green:169.0f/255.0f blue:174.0f/255.0f alpha:1];
+}
+
 + (UIColor *)textColor
 {
-    return [UIColor colorWithRed:0.33 green:0.36 blue:0.39 alpha:1];
+    return [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1];
 }
 
 + (UIColor *)buttonBackgroundColor

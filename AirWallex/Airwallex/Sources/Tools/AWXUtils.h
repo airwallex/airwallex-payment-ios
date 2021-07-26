@@ -102,6 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIColor (Utils)
 
 + (UIColor *)titleColor;
++ (UIColor *)floatingTitleColor;
 + (UIColor *)textColor;
 + (UIColor *)buttonBackgroundColor;
 + (UIColor *)errorColor;

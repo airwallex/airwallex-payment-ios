@@ -12,8 +12,8 @@
 
 @interface AWXCountryListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UISearchBar *searchBar;
+@property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSArray <AWXCountry *> *countries;
 @property (strong, nonatomic) NSArray <AWXCountry *> *matchedCountries;
 
@@ -24,6 +24,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", @"Close") style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
+
+    _searchBar = [UISearchBar new];
+    _searchBar.delegate = self;
+    _searchBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_searchBar];
+    
+    _tableView = [UITableView new];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    _tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"CountryCell"];
+    [self.view addSubview:_tableView];
+    
+    NSDictionary *views = @{@"searchBar": _searchBar, @"tableView": _tableView};
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[searchBar]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[searchBar][tableView]-|" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
+    
     self.countries = [AWXCountry allCountries];
     self.matchedCountries = self.countries;
 }
