@@ -102,8 +102,8 @@
     NSDictionary *views = NSDictionaryOfVariableBindings(promptView, titleLabel, stackView);
     NSDictionary *metrics = @{@"bottom": @(24 + UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom)};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[promptView]|" options:0 metrics:nil views:views]];
-    self.promptBottomConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:promptView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    [self.view addConstraint:self.promptBottomConstraint];
+    _promptBottomConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:promptView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    _promptBottomConstraint.active = YES;
     
     [promptView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-24-[titleLabel]-24-|" options:0 metrics:nil views:views]];
     [promptView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-24-[titleLabel]-24-[stackView]-bottom-|" options:NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing metrics:metrics views:views]];
