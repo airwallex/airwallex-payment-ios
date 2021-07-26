@@ -1,6 +1,10 @@
 # Airwallex iOS SDK Changelog
 All notable changes to the SDK will be documented in this file.
 
+## Version 2.0.2 (July 13, 2021)
+- Payment without customer id
+- Bug fix
+
 ## Version 2.0.1 (March 5, 2021)
 - Support Alipay、AlipayHK、DANA、GCash、Kakao Pay、Touch ‘n Go
 - Bug fix

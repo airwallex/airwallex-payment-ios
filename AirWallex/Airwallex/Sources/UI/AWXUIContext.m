@@ -98,8 +98,7 @@
 
 + (AWXShippingViewController *)shippingViewController
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWXPaymentFlow" bundle:[NSBundle sdkBundle]];
-    AWXShippingViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"shipping"];
+    AWXShippingViewController *controller = [[AWXShippingViewController alloc] initWithNibName:nil bundle:nil];
     return controller;
 }
 

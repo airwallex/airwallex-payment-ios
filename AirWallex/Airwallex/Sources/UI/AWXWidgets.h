@@ -62,10 +62,25 @@ IB_DESIGNABLE
 
 @end
 
+@interface AWXFloatingLabelTextField : AWXView
+
+@property (nonatomic, strong) NSString *text, *placeholder;
+@property (nonatomic, strong, nullable) NSString *errorText;
+@property (nonatomic) AWXTextFieldType fieldType;
+@property (nonatomic, weak) AWXFloatingLabelTextField *nextTextField;
+
+@end
+
 IB_DESIGNABLE
 @interface AWXFloatLabeledView : AWXNibView
 
 @property (nonatomic, strong) IBInspectable NSString *text, *placeholder;
+
+@end
+
+@interface AWXFloatingLabelView : AWXView
+
+@property (nonatomic, strong) NSString *text, *placeholder;
 
 @end
 

@@ -104,6 +104,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIColor *)titleColor;
 + (UIColor *)textColor;
 + (UIColor *)buttonBackgroundColor;
++ (UIColor *)errorColor;
++ (UIColor *)lineColor;
 
 @end
 

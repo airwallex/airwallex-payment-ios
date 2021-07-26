@@ -441,6 +441,365 @@
 
 @end
 
+@interface AWXFloatingLabelTextField () <UITextFieldDelegate>
+
+@property (strong, nonatomic) AWXView *borderView;
+@property (strong, nonatomic) UILabel *floatingLabel;
+@property (strong, nonatomic) UITextField *textField;
+@property (strong, nonatomic) UILabel *errorLabel;
+@property (strong, nonatomic) NSLayoutConstraint *floatingTopConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *textTopConstraint;
+
+@end
+
+@implementation AWXFloatingLabelTextField
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _borderView = [AWXView new];
+        _borderView.borderColor = [UIColor colorWithRed:235.0f/255.0f green:246.0f/255.0f blue:240.0f/255.0f alpha:1];
+        _borderView.cornerRadius = 4.0;
+        _borderView.borderWidth = 1.0;
+        _borderView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addSubview:_borderView];
+        
+        _floatingLabel = [UILabel new];
+        _floatingLabel.textColor = [UIColor colorWithRed: 0.66 green: 0.66 blue: 0.66 alpha: 1.00];
+        _floatingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
+        _floatingLabel.alpha = 0;
+        _floatingLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [_borderView addSubview:_floatingLabel];
+        
+        _textField = [UITextField new];
+        _textField.textColor = [UIColor colorWithRed: 0.16 green: 0.16 blue: 0.16 alpha: 1.00];
+        _textField.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:16];
+        _textField.delegate = self;
+        _textField.translatesAutoresizingMaskIntoConstraints = NO;
+        [_textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        [_borderView addSubview:_textField];
+        
+        _errorLabel = [UILabel new];
+        _errorLabel.textColor = [UIColor errorColor];
+        _errorLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
+        _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addSubview:_errorLabel];
+        
+        NSDictionary *views = @{@"borderView": _borderView, @"floatingLabel": _floatingLabel, @"textField": _textField, @"errorLabel": _errorLabel};
+        NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0};
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[errorLabel]-margin-|" options:0 metrics:metrics views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-margin-|" options:0 metrics:metrics views:views]];
+        _floatingTopConstraint = [NSLayoutConstraint constraintWithItem:_floatingLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:30.0];
+        [self addConstraint:_floatingTopConstraint];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[textField]-margin-|" options:0 metrics:metrics views:views]];
+        _textTopConstraint = [NSLayoutConstraint constraintWithItem:_textField attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:9];
+        [self addConstraint:_textTopConstraint];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_borderView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_textField attribute:NSLayoutAttributeBottom multiplier:1.0 constant:9]];
+    }
+    return self;
+}
+
+- (NSString *)text
+{
+    return [self.textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+}
+
+- (NSAttributedString *)formatText:(NSString *)text
+{
+    NSString *nonNilText = text ?: @"";
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:nonNilText attributes:@{NSFontAttributeName: [UIFont fontWithName:AWXFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [AWXTheme sharedTheme].textColor}];
+    return attributedString;
+}
+
+- (void)setText:(NSString *)text
+{
+    NSString *_text = text;
+    if (self.fieldType == AWXTextFieldTypeExpires) {
+        NSString *expirationMonth = [_text substringToIndex:MIN(_text.length, 2)];
+        NSString *expirationYear = _text.length < 2 ? @"" : [_text substringFromIndex:2];
+        if (expirationYear) {
+            expirationYear = [expirationYear stringByRemovingIllegalCharacters];
+            expirationYear = [expirationYear substringToIndex:MIN(expirationYear.length, 4)];
+        }
+
+        if (expirationMonth.length == 1 && ![expirationMonth isEqualToString:@"0"] && ![expirationMonth isEqualToString:@"1"]) {
+            expirationMonth = [NSString stringWithFormat:@"0%@", text];
+        }
+
+        NSMutableArray *array = [NSMutableArray array];
+        if (expirationMonth && ![expirationMonth isEqualToString:@""]) {
+            [array addObject:expirationMonth];
+        }
+        if (expirationMonth.length == 2 && expirationMonth.integerValue > 0 && expirationMonth.integerValue <= 12) {
+            [array addObject:expirationYear];
+        }
+
+        _text = [array componentsJoinedByString:@"/"];
+    }
+    self.textField.attributedText = [self formatText:_text];
+    text.length > 0 ? [self active] : [self inactive];
+}
+
+- (void)setFieldType:(AWXTextFieldType)fieldType
+{
+    _fieldType = fieldType;
+    switch (self.fieldType) {
+        case AWXTextFieldTypeFirstName:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeName;
+            break;
+        case AWXTextFieldTypeLastName:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeName;
+            break;
+        case AWXTextFieldTypeEmail:
+            self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+            self.textField.keyboardType = UIKeyboardTypeEmailAddress;
+            self.textField.textContentType = UITextContentTypeEmailAddress;
+            break;
+        case AWXTextFieldTypePhoneNumber:
+            self.textField.keyboardType = UIKeyboardTypePhonePad;
+            self.textField.textContentType = UITextContentTypeTelephoneNumber;
+            break;
+        case AWXTextFieldTypeCountry:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeCountryName;
+            break;
+        case AWXTextFieldTypeState:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeAddressState;
+            break;
+        case AWXTextFieldTypeCity:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeAddressCity;
+            break;
+        case AWXTextFieldTypeStreet:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeFullStreetAddress;
+            break;
+        case AWXTextFieldTypeZipcode:
+            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+            self.textField.textContentType = UITextContentTypePostalCode;
+            break;
+        case AWXTextFieldTypeCardNumber:
+            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+            break;
+        case AWXTextFieldTypeNameOnCard:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeName;
+            break;
+        case AWXTextFieldTypeExpires:
+            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+            break;
+        case AWXTextFieldTypeCVC:
+            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)setNextTextField:(AWXFloatingLabelTextField *)nextTextField
+{
+    _nextTextField = nextTextField;
+    self.textField.returnKeyType = nextTextField == nil ? UIReturnKeyDefault : UIReturnKeyNext;
+}
+
+- (nullable NSString *)errorText
+{
+    return self.errorLabel.text;
+}
+
+- (void)setErrorText:(nullable NSString *)errorText
+{
+    if (errorText) {
+        self.borderView.borderColor = [UIColor errorColor];
+        self.errorLabel.text = errorText;
+    } else {
+        self.borderView.borderColor = [UIColor lineColor];
+        self.errorLabel.text = nil;
+    }
+}
+
+- (NSString *)placeholder
+{
+    return self.textField.placeholder;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder
+{
+    self.floatingLabel.text = placeholder;
+    self.textField.placeholder = placeholder;
+}
+
+- (void)active
+{
+    if (self.floatingLabel.alpha == 1) {
+        return;
+    }
+
+    self.floatingTopConstraint.constant = 30;
+    self.textTopConstraint.constant = 9;
+    self.floatingLabel.alpha = 0;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.floatingTopConstraint.constant = 9;
+        self.textTopConstraint.constant = 30;
+        [self layoutIfNeeded];
+        self.floatingLabel.alpha = 1;
+    }];
+}
+
+- (void)inactive
+{
+    if (self.floatingLabel.alpha == 0) {
+        return;
+    }
+
+    self.floatingTopConstraint.constant = 9;
+    self.textTopConstraint.constant = 30;
+    self.floatingLabel.alpha = 1;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.floatingTopConstraint.constant = 30;
+        self.textTopConstraint.constant = 9;
+        [self layoutIfNeeded];
+        self.floatingLabel.alpha = 0;
+    }];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (!(self.fieldType == AWXTextFieldTypeExpires || self.fieldType == AWXTextFieldTypeCVC)) {
+        return YES;
+    }
+    
+    self.errorText = nil;
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (self.fieldType == AWXTextFieldTypeExpires) {
+        BOOL deleting = (range.location == textField.text.length - 1 && range.length == 1 && [string isEqualToString:@""]);
+        if (deleting) {
+            NSString *string = [textField.text stringByRemovingIllegalCharacters];
+            text = [string substringToIndex:string.length - 1];
+        }
+    } else if (self.fieldType == AWXTextFieldTypeCVC) {
+        text = [text substringToIndex:MIN(text.length, 4)];
+    }
+    text.length > 0 ? [self active] : [self inactive];
+    [self setText:text];
+    return NO;
+}
+
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    if (self.fieldType == AWXTextFieldTypeExpires || self.fieldType == AWXTextFieldTypeCVC) {
+        return;
+    }
+    
+    textField.text.length > 0 ? [self active] : [self inactive];
+}
+
+- (void)validateEmail:(NSString *)text
+{
+    NSString *errorMessage = nil;
+    if (text.length > 0) {
+        NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
+        NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+        if (![emailTest evaluateWithObject:text]) {
+            errorMessage = @"Invalid email";
+        }
+    }
+    self.errorText = errorMessage;
+}
+
+- (void)validateExpires:(NSString *)text
+{
+    NSString *errorMessage = nil;
+    if (text.length > 0) {
+        NSArray *array = [text componentsSeparatedByString:@"/"];
+        if (array.count == 2) {
+            NSString *month = array.firstObject;
+            NSString *year = array.lastObject;
+            BOOL isValidMonth = month.integerValue > 0 && month.integerValue <= 12;
+            NSCalendar *calendar = [NSCalendar currentCalendar];
+            NSDate *date = [NSDate date];
+            NSInteger currentYear = [calendar component:NSCalendarUnitYear fromDate:date];
+            NSInteger currentMonth = [calendar component:NSCalendarUnitMonth fromDate:date];
+            BOOL isValidYear;
+            if (year.integerValue == currentYear) {
+                isValidYear = month.integerValue >= currentMonth;
+            } else {
+                isValidYear = year.integerValue > currentYear;
+            }
+            if (!(isValidYear && isValidMonth)) {
+                errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
+            }
+        } else {
+            errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
+        }
+    } else {
+        errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
+    }
+    self.errorText = errorMessage;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    switch (self.fieldType) {
+        case AWXTextFieldTypeFirstName:
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your first name", nil);
+            break;
+        case AWXTextFieldTypeLastName:
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your last name", nil);
+            break;
+        case AWXTextFieldTypeEmail:
+            [self validateEmail:textField.text];
+            break;
+        case AWXTextFieldTypeCountry:
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your country", nil);
+            break;
+        case AWXTextFieldTypeState:
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your state", nil);
+            break;
+        case AWXTextFieldTypeCity:
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your city", nil);
+            break;
+        case AWXTextFieldTypeStreet:
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your street", nil);
+            break;
+        case AWXTextFieldTypeCardNumber:
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your card number", nil);
+            break;
+        case AWXTextFieldTypeNameOnCard:
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your name on card", nil);
+            break;
+        case AWXTextFieldTypeExpires:
+            [self validateExpires:textField.text];
+            break;
+        case AWXTextFieldTypeCVC:
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your card CVC", nil);
+            break;
+        default:
+            break;
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (!self.nextTextField) {
+        [textField resignFirstResponder];
+        return YES;
+    }
+
+    [self.nextTextField.textField becomeFirstResponder];
+    return NO;
+}
+
+@end
+
 @interface AWXFloatLabeledView ()
 
 @property (weak, nonatomic) IBOutlet UILabel *floatingLabel;
@@ -456,6 +815,116 @@
 {
     [super awakeFromNib];
     self.imageView.image = [UIImage imageNamed:@"down" inBundle:[NSBundle resourceBundle]];
+}
+
+- (NSString *)text
+{
+    return self.textLabel.text;
+}
+
+- (void)setText:(NSString *)text
+{
+    self.textLabel.text = text;
+    text.length > 0 ? [self active] : [self inactive];
+}
+
+- (NSString *)placeholder
+{
+    return self.floatingLabel.text;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder
+{
+    self.floatingLabel.text = placeholder;
+}
+
+- (void)active
+{
+    if (self.floatingTopConstraint.constant == 9) {
+        return;
+    }
+
+    self.floatingTopConstraint.constant = 20;
+    self.textLabel.alpha = 0;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.floatingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
+        self.floatingTopConstraint.constant = 9;
+        self.textLabel.alpha = 1;
+        [self layoutIfNeeded];
+    }];
+}
+
+- (void)inactive
+{
+    if (self.floatingTopConstraint.constant == 20) {
+        return;
+    }
+
+    self.floatingTopConstraint.constant = 9;
+    self.textLabel.alpha = 1;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.floatingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+        self.floatingTopConstraint.constant = 20;
+        self.textLabel.alpha = 0;
+        [self layoutIfNeeded];
+    }];
+}
+
+@end
+
+@interface AWXFloatingLabelView ()
+
+@property (strong, nonatomic) UILabel *floatingLabel;
+@property (strong, nonatomic) UILabel *textLabel;
+@property (strong, nonatomic) NSLayoutConstraint *floatingTopConstraint;
+@property (strong, nonatomic) UIImageView *imageView;
+
+@end
+
+@implementation AWXFloatingLabelView
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        AWXView *borderView = [AWXView new];
+        borderView.borderColor = [UIColor lineColor];
+        borderView.cornerRadius = 4.0;
+        borderView.borderWidth = 1.0;
+        borderView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addSubview:borderView];
+        
+        _floatingLabel = [UILabel new];
+        _floatingLabel.textColor = [UIColor colorWithRed: 0.66 green: 0.66 blue: 0.66 alpha: 1.00];
+        _floatingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
+        _floatingLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [borderView addSubview:_floatingLabel];
+        
+        _textLabel = [UILabel new];
+        _textLabel.textColor = [UIColor colorWithRed: 0.66 green: 0.66 blue: 0.66 alpha: 1.00];
+        _textLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
+        _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [borderView addSubview:_textLabel];
+        
+        _imageView = [UIImageView new];
+        _imageView.image = [UIImage imageNamed:@"down" inBundle:[NSBundle resourceBundle]];
+        _imageView.translatesAutoresizingMaskIntoConstraints = NO;
+        [borderView addSubview:_imageView];
+
+        NSDictionary *views = @{@"borderView": borderView, @"floatingLabel": _floatingLabel, @"textLabel": _textLabel, @"imageView": _imageView};
+        NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"top": @30.0};
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView]|" options:0 metrics:metrics views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-margin-[imageView]-margin-|" options:0 metrics:metrics views:views]];
+        _floatingTopConstraint = [NSLayoutConstraint constraintWithItem:_floatingLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:20.0];
+        [self addConstraint:_floatingTopConstraint];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[textLabel]-margin-[imageView]" options:0 metrics:metrics views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-top-[textLabel]->=spacing-|" options:0 metrics:metrics views:views]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:17.0]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:16.0]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:borderView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_imageView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+    }
+    return self;
 }
 
 - (NSString *)text
