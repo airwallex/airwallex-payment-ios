@@ -18,9 +18,6 @@
 #import "TotalCell.h"
 #import "APIClient.h"
 
-#import <RLTMXProfilingConnections/TMXProfilingConnections.h>
-#import <RLTMXProfilingConnections/TMXProfilingConnectionsProtocol.h>
-
 @interface CartViewController () <UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
@@ -39,7 +36,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [AWXSecurityService sharedService];
     [self setupViews];
     [self setupCartData];
     [self setupExamplesAPIClient];
