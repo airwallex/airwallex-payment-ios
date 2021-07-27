@@ -1,28 +1,36 @@
 PODS:
+  - AirwallexBehavioralBiometrics (6.1)
   - AirwallexCardinalMobile (2.2.3)
-  - AirwallexTrustDefender (5.0.32)
+  - AirwallexProfiling (6.1)
+  - AirwallexProfilingConnections (6.1)
   - AlipaySDK-iOS (15.7.9)
   - WechatOpenSDK (1.8.7.1)
 
 DEPENDENCIES:
+  - AirwallexBehavioralBiometrics (= 6.1)
   - AirwallexCardinalMobile (= 2.2.3)
-  - AirwallexTrustDefender (= 5.0.32)
+  - AirwallexProfiling (= 6.1)
+  - AirwallexProfilingConnections (= 6.1)
   - AlipaySDK-iOS (= 15.7.9)
   - WechatOpenSDK (= 1.8.7.1)
 
 SPEC REPOS:
   trunk:
+    - AirwallexBehavioralBiometrics
     - AirwallexCardinalMobile
-    - AirwallexTrustDefender
+    - AirwallexProfiling
+    - AirwallexProfilingConnections
     - AlipaySDK-iOS
     - WechatOpenSDK
 
 SPEC CHECKSUMS:
+  AirwallexBehavioralBiometrics: 055e10e94726652eb66e07c0842c315c6349e2f2
   AirwallexCardinalMobile: 8c5bee55e91819492fc953440482fe8e6727c1c3
-  AirwallexTrustDefender: f32cce15b1f9982319630c559673b3a2f549ad50
+  AirwallexProfiling: 34a2f642e0269f7ee197603a3c44c7e42184f344
+  AirwallexProfilingConnections: 0b5efe9f4797a0d18222cbfdde92b25f73880374
   AlipaySDK-iOS: 94ff4c0e17c5e7d126b8207596d5033006534c25
   WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
 
-PODFILE CHECKSUM: 3ad2e66a34adb79f76b59f71d8c61098c3121057
+PODFILE CHECKSUM: 8073e11e150d23ca0c1bdf1da28fd7596e028716
 
 COCOAPODS: 1.10.1
