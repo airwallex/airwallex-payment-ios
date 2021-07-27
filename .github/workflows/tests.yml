@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v2
     
     - name: Cocoapods
-      run: pod install --repo-update
+      run: rm ~/Library/Caches/CocoaPods/search_index.json && pod install
       
     - name: Build
       run: xcodebuild build-for-testing -workspace Airwallex.xcworkspace -scheme Examples-Demo -destination "platform=iOS Simulator,name=iPhone 12"
