@@ -29,7 +29,7 @@ jobs:
           exec .github/scripts/import-profile.sh
     
       - name: Cocoapods
-        run: pod install
+        run: pod install --repo-update
         
       - name: Bump build number
         run: |
