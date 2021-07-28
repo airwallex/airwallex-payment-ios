@@ -1,3 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-AirwallexTests/Pods-AirwallexTests-frameworks.sh
-${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt
 ${PODS_ROOT}/AirwallexCardinalMobile/CardinalMobile.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXBehavioralBiometrics/RLTMXBehavioralBiometrics.framework/RLTMXBehavioralBiometrics
+${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXProfiling/RLTMXProfiling.framework/RLTMXProfiling
+${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXProfilingConnections/RLTMXProfilingConnections.framework/RLTMXProfilingConnections

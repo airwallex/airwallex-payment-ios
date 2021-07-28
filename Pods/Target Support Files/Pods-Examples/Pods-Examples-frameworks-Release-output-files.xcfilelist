@@ -1,1 +1,4 @@
 ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CardinalMobile.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RLTMXBehavioralBiometrics.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RLTMXProfiling.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RLTMXProfilingConnections.framework
