@@ -1,6 +1,0 @@
-framework module Pods_Airwallex {
-  umbrella header "Pods-Airwallex-umbrella.h"
-
-  export *
-  module * { export * }
-}

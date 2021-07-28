@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-artifacts.sh
+${PODS_ROOT}/AirwallexBehavioralBiometrics/RLTMXBehavioralBiometrics.xcframework
+${PODS_ROOT}/AirwallexProfiling/RLTMXProfiling.xcframework
+${PODS_ROOT}/AirwallexProfilingConnections/RLTMXProfilingConnections.xcframework

@@ -17,7 +17,9 @@ plugin 'cocoapods-keys', {
 
 def shared_pods
     pod 'SVProgressHUD', '2.2.5'
-    pod 'AirwallexTrustDefender', '5.0.32'
+    pod 'AirwallexBehavioralBiometrics', '6.1'
+    pod 'AirwallexProfiling', '6.1'
+    pod 'AirwallexProfilingConnections', '6.1'
     pod 'AirwallexCardinalMobile', '2.2.3'
 end
 

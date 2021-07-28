@@ -8,11 +8,12 @@
 
 #import "AWXSecurityService.h"
 #import "AWXConstants.h"
-#import <TrustDefender/TrustDefender.h>
+#import <RLTMXProfiling/TMXProfiling.h>
+#import <RLTMXProfilingConnections/TMXProfilingConnections.h>
 
 @interface AWXSecurityService ()
 
-@property (nonatomic, strong) THMTrustDefender *defender;
+@property (nonatomic, strong) RLTMXProfiling *profiling;
 
 @end
 
@@ -32,9 +33,9 @@
 {
     self = [super init];
     if (self) {
-        self.defender = [THMTrustDefender sharedInstance];
-        [self.defender configure:@{
-            THMOrgID: AWXCyberSourceOrganizationID
+        self.profiling = [RLTMXProfiling sharedInstance];
+        [self.profiling configure:@{
+            RLTMXOrgID: AWXCyberSourceOrganizationID,
         }];
     }
     return self;
@@ -48,9 +49,8 @@
 #else
     NSString *fraudSessionId = [NSString stringWithFormat:@"%@%f", intentId, [[NSDate date] timeIntervalSince1970]];
     NSString *sessionId = [NSString stringWithFormat:@"%@%@", AWXCyberSourceMerchantID, fraudSessionId];
-    [self.defender doProfileRequestWithOptions:@{@"session_id": sessionId}
-                              andCallbackBlock:^(NSDictionary *result) {
-        NSString *sessionId = result[THMSessionID];
+    [self.profiling profileDeviceUsing:@{@"session_id": sessionId} callbackBlock:^(NSDictionary *result) {
+        NSString *sessionId = result[RLTMXSessionID];
         completion(sessionId ?: @"");
     }];
 #endif
