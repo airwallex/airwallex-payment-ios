@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.license						= { :type => 'MIT', :file => 'LICENSE' }
   s.homepage     				= "https://www.airwallex.com/docs/#overview"
   s.authors      				= { 'Airwallex' => 'pa_mobile_sdk@airwallex.com' }
-  s.source       				= { :git => "https://github.com/airwallex/airwallex-payment-ios.git", :branch => "feature/trust-defender" }
+  s.source                      = { :git => "https://github.com/airwallex/airwallex-payment-ios.git", :tag => "#{s.version}" }
   s.platform   					= :ios
   s.ios.deployment_target		= '10.0'
   s.resources					= ['Airwallex/Airwallex/Resources/**/*']
