@@ -7,9 +7,9 @@ ENV['SWIFT_VERSION'] = '5'
 workspace 'Airwallex.xcworkspace'
 
 def shared_sdk_pods
-  pod 'AirwallexBehavioralBiometrics', '6.1'
-  pod 'AirwallexProfiling', '6.1'
-  pod 'AirwallexProfilingConnections', '6.1'
+  pod 'AirwallexBehavioralBiometrics', '6.1.1'
+  pod 'AirwallexProfiling', '6.1.1'
+  pod 'AirwallexProfilingConnections', '6.1.1'
   pod 'AirwallexCardinalMobile', '2.2.3'
 end
 

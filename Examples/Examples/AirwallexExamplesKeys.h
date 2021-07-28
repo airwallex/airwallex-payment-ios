@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *apiKey;
 @property (nonatomic, strong) NSString *clientId;
 @property (nonatomic, strong) NSString *baseUrl;
-@property (nonatomic, strong) NSString *weChatAppId;
 @property (nonatomic, strong) NSString *amount;
 @property (nonatomic, strong) NSString *currency;
 

@@ -59,7 +59,6 @@
     self.apiKey = self.configJson[@"api_key"];
     self.clientId = self.configJson[@"client_id"];
     self.baseUrl = self.configJson[@"base_url"];
-    self.weChatAppId = self.configJson[@"we_chat_app_id"];
     self.amount = self.configJson[@"amount"] ?: @"0";
     self.currency = self.configJson[@"currency"];
 }
