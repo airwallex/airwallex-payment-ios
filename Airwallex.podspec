@@ -5,18 +5,14 @@ Pod::Spec.new do |s|
   s.license						= { :type => 'MIT', :file => 'LICENSE' }
   s.homepage     				= "https://www.airwallex.com/docs/#overview"
   s.authors      				= { 'Airwallex' => 'pa_mobile_sdk@airwallex.com' }
-  s.source       				= { :git => "https://github.com/airwallex/airwallex-payment-ios.git", :tag => "#{s.version}" }
+  s.source       				= { :git => "https://github.com/airwallex/airwallex-payment-ios.git", :branch => "feature/trust-defender" }
   s.platform   					= :ios
   s.ios.deployment_target		= '10.0'
   s.resources					= ['Airwallex/Airwallex/Resources/**/*']
   s.source_files				= 'Airwallex/Airwallex/Sources/*.{h,m}', 'Airwallex/Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Airwallex/Sources/API/*.{h,m}', 'Airwallex/Airwallex/Sources/Tools/*.{h,m}', 'Airwallex/Airwallex/Sources/Models/*.{h,m}'
   s.static_framework			= true
-  s.pod_target_xcconfig = {
-  'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
-  }
-  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   s.dependency					'SVProgressHUD'
-  s.dependency					'AirwallexBehavioralBiometrics'
+  s.dependency                  'AirwallexBehavioralBiometrics'
   s.dependency                  'AirwallexProfiling'
   s.dependency                  'AirwallexProfilingConnections'
   s.dependency					'AirwallexCardinalMobile'
