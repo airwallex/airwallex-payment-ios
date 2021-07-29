@@ -34,8 +34,13 @@
     self = [super init];
     if (self) {
         self.profiling = [RLTMXProfiling sharedInstance];
+        RLTMXProfilingConnections *profilingConnections = [RLTMXProfilingConnections new];
+        profilingConnections.connectionTimeout = 20;
+        profilingConnections.connectionRetryCount = 2;
         [self.profiling configure:@{
             RLTMXOrgID: AWXCyberSourceOrganizationID,
+            RLTMXProfileTimeout: @20,
+            RLTMXProfilingConnectionsInstance: profilingConnections,
         }];
     }
     return self;
