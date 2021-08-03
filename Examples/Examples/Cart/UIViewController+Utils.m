@@ -10,12 +10,12 @@
 
 @implementation UIViewController (Utils)
 
-- (void)showAlert:(NSString *)message
+- (void)showAlert:(NSString *)message withTitle:(nullable NSString *)title
 {
-    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:title
                                                                         message:message
                                                                  preferredStyle:UIAlertControllerStyleAlert];
-    [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+    [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:controller animated:YES completion:nil];
 }
 

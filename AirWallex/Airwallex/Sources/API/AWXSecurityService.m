@@ -8,11 +8,12 @@
 
 #import "AWXSecurityService.h"
 #import "AWXConstants.h"
-#import <TrustDefender/TrustDefender.h>
+#import <RLTMXProfiling/TMXProfiling.h>
+#import <RLTMXProfilingConnections/TMXProfilingConnections.h>
 
 @interface AWXSecurityService ()
 
-@property (nonatomic, strong) THMTrustDefender *defender;
+@property (nonatomic, strong) RLTMXProfiling *profiling;
 
 @end
 
@@ -32,12 +33,14 @@
 {
     self = [super init];
     if (self) {
-        self.defender = [THMTrustDefender sharedInstance];
-        [self.defender configure:@{
-            THMOrgID: AWXCyberSourceOrganizationID,
-            THMUseUIWebView: @NO,
-            THMRegisterForPush: @NO,
-            THMLocationServices: @NO,
+        self.profiling = [RLTMXProfiling sharedInstance];
+        RLTMXProfilingConnections *profilingConnections = [RLTMXProfilingConnections new];
+        profilingConnections.connectionTimeout = 20;
+        profilingConnections.connectionRetryCount = 2;
+        [self.profiling configure:@{
+            RLTMXOrgID: AWXCyberSourceOrganizationID,
+            RLTMXProfileTimeout: @20,
+            RLTMXProfilingConnectionsInstance: profilingConnections,
         }];
     }
     return self;
@@ -51,10 +54,14 @@
 #else
     NSString *fraudSessionId = [NSString stringWithFormat:@"%@%f", intentId, [[NSDate date] timeIntervalSince1970]];
     NSString *sessionId = [NSString stringWithFormat:@"%@%@", AWXCyberSourceMerchantID, fraudSessionId];
-    [self.defender doProfileRequestWithOptions:@{@"session_id": sessionId}
-                              andCallbackBlock:^(NSDictionary *result) {
-        NSString *sessionId = result[THMSessionID];
-        completion(sessionId ?: @"");
+    [self.profiling profileDeviceUsing:@{@"session_id": sessionId} callbackBlock:^(NSDictionary *result) {
+        RLTMXStatusCode statusCode = [[result valueForKey:RLTMXProfileStatus] integerValue];
+        if (statusCode == RLTMXStatusCodeOk) {
+            NSString *sessionId = result[RLTMXSessionID];
+            completion(sessionId ?: @"");
+            return;
+        }
+        completion(@"");
     }];
 #endif
 }

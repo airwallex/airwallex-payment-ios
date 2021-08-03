@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [WXApi registerApp:[AirwallexExamplesKeys shared].weChatAppId universalLink:@"https://airwallex.com/"];
+    [WXApi registerApp:@"wx4c86d73fe4f82431" universalLink:@"https://airwallex.com/"];
     
     [WXApi startLogByLevel:WXLogLevelNormal logBlock:^(NSString * _Nonnull log) {
         NSLog(@"WeChat Log: %@", log);
