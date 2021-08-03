@@ -146,7 +146,7 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.activityIndicator stopAnimating];
         if (error) {
-            [strongSelf showAlert:error.localizedDescription];
+            [strongSelf showAlert:error.localizedDescription withTitle:nil];
             return;
         }
         
@@ -246,7 +246,7 @@
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
             [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
         } else {
-            [self showAlert:NSLocalizedString(@"Not a valid payment url", nil)];
+            [self showAlert:NSLocalizedString(@"Not a valid payment url", nil) withTitle:nil];
         }
     } else if (textField == self.apiKeyTextField) {
         [APIClient sharedClient].apiKey = textField.text;
@@ -268,7 +268,7 @@
         if ([textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0) {
             [AirwallexExamplesKeys shared].currency = textField.text.uppercaseString;
         } else {
-            [self showAlert:NSLocalizedString(@"Please enter a valid currency", nil)];
+            [self showAlert:NSLocalizedString(@"Please enter a valid currency", nil) withTitle:nil];
         }
     } else if (textField == self.customerIdTextField) {
         if (textField.text.length == 0) {

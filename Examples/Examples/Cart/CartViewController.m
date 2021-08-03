@@ -133,7 +133,7 @@
 - (IBAction)checkoutPressed:(id)sender
 {
     if (self.products.count == 0) {
-        [self showAlert:NSLocalizedString(@"No products in your cart", nil)];
+        [self showAlert:NSLocalizedString(@"No products in your cart", nil) withTitle:nil];
         return;
     }
     
@@ -232,7 +232,7 @@
         [strongSelf.activityIndicator stopAnimating];
         
         if (_error) {
-            [strongSelf showAlert:_error.localizedDescription];
+            [strongSelf showAlert:_error.localizedDescription withTitle:nil];
             return;
         }
         
@@ -293,6 +293,19 @@
     context.hostViewController = self;
     context.session = session;
     [context presentPaymentFlow];
+}
+
+#pragma mark - Show Payment Result
+
+- (void)showPaymentResult:(nullable NSError *)error
+{
+    NSString *title = NSLocalizedString(@"Payment successful", nil);
+    NSString *message = NSLocalizedString(@"Your payment has been charged", nil);
+    if (error) {
+        title = NSLocalizedString(@"Payment failed", nil);
+        message = error.localizedDescription ?: NSLocalizedString(@"There was an error while processing your payment. Please try again.", nil);
+    }
+    [self showAlert:message withTitle:title];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -389,15 +402,7 @@
 - (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        NSString *message = error.localizedDescription;
-        if (status == AWXPaymentStatusSuccess) {
-            message = @"Pay successfully";
-        }
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
-                                                                            message:message
-                                                                     preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
+        [self showPaymentResult:error];
     }];
 }
 
@@ -421,11 +426,11 @@
                 [strongSelf.activityIndicator stopAnimating];
                 
                 if (error) {
-                    [strongSelf showAlert:error.localizedDescription];
+                    [strongSelf showAlert:error.localizedDescription withTitle:nil];
                     return;
                 }
                 
-                [strongSelf finishPayment];
+                [strongSelf showPaymentResult:error];
             });
         }] resume];
         return;
@@ -448,55 +453,11 @@
     }];
 }
 
-- (void)finishPayment
-{
-    __weak __typeof(self)weakSelf = self;
-    [self checkPaymentIntentStatusWithCompletion:^(BOOL success) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
-        
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
-                                                                            message:success ? @"Pay successfully": @"Waiting payment completion"
-                                                                     preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-        [strongSelf presentViewController:controller animated:YES completion:nil];
-    }];
-}
-
 - (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        UIAlertController *alertController = [[UIAlertController alloc] init];
-        alertController.message = url.absoluteString;
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Open Safari" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
-        }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alertController animated:YES completion:nil];
-        
         [UIPasteboard.generalPasteboard setString:url.absoluteString];
-    }];
-}
-
-#pragma mark - Check Payment Intent Status
-
-- (void)checkPaymentIntentStatusWithCompletion:(void (^)(BOOL success))completionHandler
-{
-    AWXRetrievePaymentIntentRequest *request = [[AWXRetrievePaymentIntentRequest alloc] init];
-    request.intentId = self.paymentIntent.Id;
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    __weak __typeof(self)weakSelf = self;
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
-        
-        if (error) {
-            [strongSelf showAlert:error.localizedDescription];
-            return;
-        }
-        
-        AWXGetPaymentIntentResponse *result = (AWXGetPaymentIntentResponse *)response;
-        completionHandler([result.status isEqualToString:@"SUCCEEDED"]);
+        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
     }];
 }
 
