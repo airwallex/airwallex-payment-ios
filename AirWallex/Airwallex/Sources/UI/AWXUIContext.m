@@ -42,14 +42,7 @@
 
     AWXPaymentMethodListViewController *controller = [self.class paymentMethodListViewController];
     controller.delegate = nil;
-//    controller.paymentMethod = nil;
     controller.session = self.session;
-//    controller.shipping = self.shipping;
-//    controller.customerId = self.paymentIntent.customerId;
-//    controller.currency = self.paymentIntent.currency;
-//    controller.customerPaymentMethods = self.paymentIntent.paymentMethods;
-//    controller.customerPaymentConsents = self.paymentIntent.paymentConsents;
-//    controller.availablePaymentMethodTypes = self.paymentIntent.availablePaymentMethodTypes;
     controller.isFlow = YES;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -69,7 +62,6 @@
 
     AWXPaymentMethodListViewController *controller = [self.class paymentMethodListViewController];
     controller.delegate = nil;
-//    controller.paymentMethod = nil;
     controller.session = self.session;
     controller.isFlow = YES;
     [navigationController pushViewController:controller animated:YES];
@@ -77,8 +69,7 @@
 
 + (AWXPaymentMethodListViewController *)paymentMethodListViewController
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWXPaymentFlow" bundle:[NSBundle sdkBundle]];
-    AWXPaymentMethodListViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodList"];
+    AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
     return controller;
 }
 

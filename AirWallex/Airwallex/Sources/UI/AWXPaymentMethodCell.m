@@ -7,21 +7,31 @@
 //
 
 #import "AWXPaymentMethodCell.h"
+#import "AWXConstants.h"
+#import "AWXUtils.h"
 
 @implementation AWXPaymentMethodCell
 
-- (void)setIsLastCell:(BOOL)isLastCell
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    _isLastCell = isLastCell;
-    CGFloat constant = isLastCell ? 0 : 16;
-    self.lineLeftConstraint.constant = constant;
-    self.lineRightConstraint.constant = constant;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    self.tickView.hidden = !selected;
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        _logoImageView = [UIImageView new];
+        _logoImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _logoImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addSubview:_logoImageView];
+        
+        _titleLabel = [UILabel new];
+        _titleLabel.textColor = [UIColor textColor];
+        _titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+        _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addSubview:_titleLabel];
+        
+        NSDictionary *views = @{@"logoImageView": _logoImageView, @"titleLabel": _titleLabel};
+        NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @20.0, @"logoWidth": @40.0, @"logoHeight": @23.0};
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[logoImageView(logoWidth)]-spacing-[titleLabel]-margin-|" options:NSLayoutFormatAlignAllCenterY metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-margin-[logoImageView(logoHeight)]-margin-|" options:0 metrics:metrics views:views]];
+    }
+    return self;
 }
 
 @end

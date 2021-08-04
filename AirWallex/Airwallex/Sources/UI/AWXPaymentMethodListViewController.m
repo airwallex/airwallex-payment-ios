@@ -37,8 +37,7 @@
 
 @interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXCardViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate, AWXPaymentFormViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
+@property (strong, nonatomic) UITableView *tableView;
 
 @property (strong, nonatomic) NSArray <NSArray <AWXPaymentMethod *> *> *paymentMethods;
 @property (strong, nonatomic) NSMutableArray <AWXPaymentMethod *> *cards;
@@ -58,9 +57,41 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
+    
+    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    _tableView.tableHeaderView = [self headerView];
+    _tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    [_tableView registerClass:[AWXPaymentMethodCell class] forCellReuseIdentifier:@"AWXPaymentMethodCell"];
+    [self.view addSubview:_tableView];
+    
+    NSDictionary *views = @{@"tableView": _tableView};
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tableView]-|" options:0 metrics:nil views:views]];
 
     [self loadPaymentMethodTypesFromPageNum:0];
+}
+
+- (UIView *)headerView
+{
+    UITableViewHeaderFooterView *headerView = [UITableViewHeaderFooterView new];
+    headerView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    UILabel *titleLabel = [UILabel new];
+    titleLabel.text = NSLocalizedString(@"Payment methods", @"Payment methods");
+    titleLabel.textColor = [UIColor textColor];
+    titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:32];
+    titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [headerView addSubview:titleLabel];
+    
+    NSDictionary *views = @{@"titleLabel": titleLabel};
+    NSDictionary *metrics = @{@"hMargin": @16, @"vMargin": @10};
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-hMargin-[titleLabel]-hMargin-|" options:0 metrics:metrics views:views]];
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-vMargin-[titleLabel]-vMargin-|" options:0 metrics:metrics views:views]];
+    
+    return headerView;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -212,22 +243,6 @@
     return items.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if (section == 0) {
-        return 9;
-    }
-    return 14;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    if (section == 0) {
-        return nil;
-    }
-    return [UIView new];
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     if (section == 1 && [self.availablePaymentMethodTypes containsObject:AWXCardKey]) {
@@ -278,7 +293,6 @@
         [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     }
     
-    cell.isLastCell = indexPath.item == [tableView numberOfRowsInSection:indexPath.section] - 1;
     return cell;
 }
 
