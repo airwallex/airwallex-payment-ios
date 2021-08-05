@@ -88,9 +88,9 @@
     [headerView addSubview:titleLabel];
     
     NSDictionary *views = @{@"titleLabel": titleLabel};
-    NSDictionary *metrics = @{@"hMargin": @16, @"vMargin": @10};
-    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-hMargin-[titleLabel]-hMargin-|" options:0 metrics:metrics views:views]];
-    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-vMargin-[titleLabel]-vMargin-|" options:0 metrics:metrics views:views]];
+    NSDictionary *metrics = @{@"margin": @16};
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[titleLabel]-margin-|" options:0 metrics:metrics views:views]];
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-margin-[titleLabel]-margin-|" options:0 metrics:metrics views:views]];
     
     return headerView;
 }

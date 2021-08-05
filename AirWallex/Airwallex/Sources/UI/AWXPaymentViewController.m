@@ -58,6 +58,8 @@
     stackView.alignment = UIStackViewAlignmentFill;
     stackView.distribution = UIStackViewDistributionEqualSpacing;
     stackView.spacing = 16;
+    stackView.layoutMargins = UIEdgeInsetsMake(16, 0, 16, 0);
+    stackView.layoutMarginsRelativeArrangement = YES;
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
     [_scrollView addSubview:stackView];
 
