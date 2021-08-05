@@ -278,6 +278,11 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 
 @implementation UIColor (Utils)
 
++ (UIColor *)bgColor
+{
+    return [UIColor colorWithRed:0.97 green:0.97 blue:0.98 alpha:1];
+}
+
 + (UIColor *)titleColor
 {
     return [UIColor colorWithRed:0.1 green:0.11 blue:0.13 alpha:1];

@@ -73,13 +73,6 @@
     return controller;
 }
 
-+ (AWXPaymentViewController *)paymentDetailViewController
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWXPaymentFlow" bundle:[NSBundle sdkBundle]];
-    AWXPaymentViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"paymentDetail"];
-    return controller;
-}
-
 + (AWXShippingViewController *)shippingViewController
 {
     AWXShippingViewController *controller = [[AWXShippingViewController alloc] initWithNibName:nil bundle:nil];

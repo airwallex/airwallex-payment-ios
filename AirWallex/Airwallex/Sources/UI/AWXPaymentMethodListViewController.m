@@ -60,6 +60,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    _tableView.backgroundColor = [UIColor bgColor];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.tableHeaderView = [self headerView];
@@ -96,14 +97,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"confirmPayment"]) {
-        AWXPaymentViewController *controller = (AWXPaymentViewController *)segue.destinationViewController;
-        controller.delegate = [AWXUIContext sharedContext].delegate;
-        controller.session = self.session;
-        controller.paymentMethod = self.paymentMethod;
-        controller.paymentConsent = self.paymentConsent;
-        controller.isFlow = self.isFlow;
-    } else if ([segue.identifier isEqualToString:@"showDCC"] && [sender isKindOfClass:[AWXConfirmPaymentIntentResponse class]]) {
+    if ([segue.identifier isEqualToString:@"showDCC"] && [sender isKindOfClass:[AWXConfirmPaymentIntentResponse class]]) {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         AWXDCCViewController *controller = (AWXDCCViewController *)navigationController.topViewController;
         controller.response = sender;
@@ -229,6 +223,17 @@
     }];
 }
 
+- (void)showPayment
+{
+    AWXPaymentViewController *controller = [[AWXPaymentViewController alloc] initWithNibName:nil bundle:nil];
+    controller.delegate = [AWXUIContext sharedContext].delegate;
+    controller.session = self.session;
+    controller.paymentMethod = self.paymentMethod;
+    controller.paymentConsent = self.paymentConsent;
+    controller.isFlow = self.isFlow;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -343,6 +348,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSArray *items = self.paymentMethods[indexPath.section];
     if (indexPath.section == 1 && items.count == 0) {
         return;
@@ -404,7 +410,7 @@
     }
     
     // No cvc provided and go to enter cvc in payment detail page
-    [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
+    [self showPayment];
 }
 
 #pragma mark - AWXCardViewControllerDelegate
@@ -415,7 +421,7 @@
     [self reloadData];
     [controller dismissViewControllerAnimated:YES completion:^{
         if (self.isFlow) {
-            [self performSegueWithIdentifier:@"confirmPayment" sender:nil];
+            [self showPayment];
         }
     }];
 }
