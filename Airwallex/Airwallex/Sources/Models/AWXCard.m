@@ -47,3 +47,24 @@
 }
 
 @end
+
+@implementation AWXCard (Utils)
+
+- (nullable NSString *)validate
+{
+    if (self.number.length == 0) {
+        return @"Please enter your card number";
+    }
+    if (self.name.length == 0) {
+        return @"Please enter your name on card";
+    }
+    if (self.expiryYear.length == 0 || self.expiryMonth.length == 0) {
+        return @"Please enter expires date";
+    }
+    if (self.cvc.length == 0) {
+        return @"Please enter CVC / VCC";
+    }
+    return nil;
+}
+
+@end

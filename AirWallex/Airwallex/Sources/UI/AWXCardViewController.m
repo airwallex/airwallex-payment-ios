@@ -224,6 +224,7 @@
     _confirmButton.cornerRadius = 6;
     [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
     _confirmButton.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
+    [_confirmButton addTarget:self action:@selector(savePressed:) forControlEvents:UIControlEventTouchUpInside];
     [stackView addArrangedSubview:_confirmButton];
     [_confirmButton.heightAnchor constraintEqualToConstant:44].active = YES;
     
@@ -293,7 +294,7 @@
     _phoneNumberField.hidden = sameAsShipping;
 }
 
-- (IBAction)switchChanged:(id)sender
+- (void)switchChanged:(id)sender
 {
     if (!self.billing) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
@@ -309,7 +310,7 @@
     self.sameAsShipping = self.switchButton.isOn;
 }
 
-- (IBAction)selectCountries:(id)sender
+- (void)selectCountries:(id)sender
 {
     AWXCountryListViewController *controller = [[AWXCountryListViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
@@ -318,7 +319,7 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (IBAction)savePressed:(id)sender
+- (void)savePressed:(id)sender
 {
     if (self.sameAsShipping) {
         self.savedBilling = [self.billing copy];
@@ -353,6 +354,14 @@
     card.expiryYear = dates.lastObject;
     card.expiryMonth = dates.firstObject;
     card.cvc = self.cvcField.text;
+    
+    NSString *error = [card validate];
+    if (error) {
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
+        return;
+    }
     
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
     paymentMethod.type = AWXCardKey;
