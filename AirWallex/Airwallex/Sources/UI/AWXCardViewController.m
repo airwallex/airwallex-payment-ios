@@ -31,28 +31,26 @@
 
 @interface AWXCardViewController () <AWXCountryListViewControllerDelegate, AWXThreeDSServiceDelegate, AWXDCCViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet AWXCardTextField *cardNoField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *nameField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *expiresField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *cvcField;
-@property (weak, nonatomic) IBOutlet UISwitch *switchButton;
-@property (weak, nonatomic) IBOutlet UIView *billingView;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *firstNameField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *lastNameField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *stateField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *cityField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *streetField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *zipcodeField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *emailField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledTextField *phoneNumberField;
-@property (weak, nonatomic) IBOutlet AWXFloatLabeledView *countryView;
+@property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) AWXFloatingCardTextField *cardNoField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *nameField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *expiresField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *cvcField;
+@property (strong, nonatomic) UISwitch *switchButton;
+@property (strong, nonatomic) AWXFloatingLabelTextField *firstNameField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *lastNameField;
+@property (strong, nonatomic) AWXFloatingLabelView *countryView;
+@property (strong, nonatomic) AWXFloatingLabelTextField *stateField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *cityField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *streetField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *zipcodeField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *emailField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *phoneNumberField;
+@property (strong, nonatomic) AWXButton *confirmButton;
 
 @property (strong, nonatomic, nullable) AWXCountry *country;
 @property (strong, nonatomic, nullable) AWXPlaceDetails *savedBilling;
-@property (weak, nonatomic) IBOutlet AWXButton *confirmButton;
 @property (strong, nonatomic) AWXDevice *device;
 @property (strong, nonatomic) AWXThreeDSService *service;
 @property (strong, nonatomic) AWXPaymentMethod *paymentMethod;
@@ -65,43 +63,170 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     [self enableTapToEndEditting];
-    self.closeBarButtonItem.image = [[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.titleLabel.text = @"Card";
+    
+    _scrollView = [UIScrollView new];
+    _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_scrollView];
+    
+    UIStackView *stackView = [UIStackView new];
+    stackView.axis = UILayoutConstraintAxisVertical;
+    stackView.alignment = UIStackViewAlignmentFill;
+    stackView.distribution = UIStackViewDistributionEqualSpacing;
+    stackView.spacing = 16;
+    stackView.layoutMargins = UIEdgeInsetsMake(16, 16, 16, 16);
+    stackView.layoutMarginsRelativeArrangement = YES;
+    stackView.translatesAutoresizingMaskIntoConstraints = NO;
+    [_scrollView addSubview:stackView];
 
-    self.cardNoField.fieldType = AWXTextFieldTypeCardNumber;
-    self.cardNoField.nextTextField = self.nameField;
-    self.nameField.fieldType = AWXTextFieldTypeNameOnCard;
-    self.nameField.nextTextField = self.expiresField;
-    self.expiresField.fieldType = AWXTextFieldTypeExpires;
-    self.expiresField.nextTextField = self.cvcField;
-    self.cvcField.fieldType = AWXTextFieldTypeCVC;
-    self.switchButton.onTintColor = [AWXTheme sharedTheme].tintColor;
+    NSDictionary *views = @{@"scrollView": _scrollView, @"stackView": stackView};
+    NSDictionary *metrics = @{@"margin": @16, @"padding": @33};
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[scrollView]-|" options:0 metrics:metrics views:views]];
+    [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[stackView]|" options:0 metrics:metrics views:views]];
+    [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[stackView]|" options:0 metrics:metrics views:views]];
+    [_scrollView.widthAnchor constraintEqualToAnchor:stackView.widthAnchor].active = YES;
+    
+    CGFloat fieldHeight = 60.00;
+    
+    _titleLabel = [UILabel new];
+    _titleLabel.text = NSLocalizedString(@"Card", @"Card");
+    _titleLabel.textColor = [UIColor textColor];
+    _titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:32];
+    _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [stackView addArrangedSubview:_titleLabel];
 
-    self.firstNameField.fieldType = AWXTextFieldTypeFirstName;
-    self.firstNameField.nextTextField = self.lastNameField;
-    self.lastNameField.fieldType = AWXTextFieldTypeLastName;
-    self.lastNameField.nextTextField = self.stateField;
-    self.stateField.fieldType = AWXTextFieldTypeState;
-    self.stateField.nextTextField = self.cityField;
-    self.cityField.fieldType = AWXTextFieldTypeCity;
-    self.cityField.nextTextField = self.streetField;
-    self.streetField.fieldType = AWXTextFieldTypeStreet;
-    self.streetField.nextTextField = self.zipcodeField;
-    self.zipcodeField.fieldType = AWXTextFieldTypeZipcode;
-    self.zipcodeField.nextTextField = self.emailField;
-    self.emailField.fieldType = AWXTextFieldTypeEmail;
-    self.emailField.nextTextField = self.phoneNumberField;
-    self.phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
-    self.confirmButton.enabled = YES;
+    _cardNoField = [AWXFloatingCardTextField new];
+    _cardNoField.fieldType = AWXTextFieldTypeCardNumber;
+    _cardNoField.placeholder = NSLocalizedString(@"Card number", @"Card number");
+    [stackView addArrangedSubview:_cardNoField];
+    [_cardNoField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+    
+    _nameField = [AWXFloatingLabelTextField new];
+    _nameField.fieldType = AWXTextFieldTypeNameOnCard;
+    _nameField.placeholder = NSLocalizedString(@"Name on card", @"Name on card");
+    _cardNoField.nextTextField = _nameField;
+    [stackView addArrangedSubview:_nameField];
+    [_nameField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+    
+    UIStackView *cvcStackView = [UIStackView new];
+    cvcStackView.axis = UILayoutConstraintAxisHorizontal;
+    cvcStackView.alignment = UIStackViewAlignmentFill;
+    cvcStackView.distribution = UIStackViewDistributionFill;
+    cvcStackView.spacing = 5;
+    cvcStackView.translatesAutoresizingMaskIntoConstraints = NO;
+    [stackView addArrangedSubview:cvcStackView];
+    
+    _expiresField = [AWXFloatingLabelTextField new];
+    _expiresField.fieldType = AWXTextFieldTypeExpires;
+    _expiresField.placeholder = NSLocalizedString(@"Expires MM / YYYY", @"Expires MM / YYYY");
+    _nameField.nextTextField = _expiresField;
+    [cvcStackView addArrangedSubview:_expiresField];
+    
+    _cvcField = [AWXFloatingLabelTextField new];
+    _cvcField.fieldType = AWXTextFieldTypeCVC;
+    _cvcField.placeholder = NSLocalizedString(@"CVC / VCC", @"CVC / VCC");
+    _expiresField.nextTextField = _cvcField;
+    [cvcStackView addArrangedSubview:_cvcField];
+    [_expiresField.widthAnchor constraintEqualToAnchor:_cvcField.widthAnchor multiplier:1.7].active = YES;
 
-    if (!self.billing) {
-        self.sameAsShipping = NO;
-    }
+    UILabel *billingLabel = [UILabel new];
+    billingLabel.text = NSLocalizedString(@"Billing info", @"Billing info");
+    billingLabel.textColor = [UIColor textColor];
+    billingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
+    [stackView addArrangedSubview:billingLabel];
+    
+    UIStackView *shippingStackView = [UIStackView new];
+    shippingStackView.axis = UILayoutConstraintAxisHorizontal;
+    shippingStackView.alignment = UIStackViewAlignmentFill;
+    shippingStackView.distribution = UIStackViewDistributionFill;
+    shippingStackView.spacing = 23;
+    shippingStackView.translatesAutoresizingMaskIntoConstraints = NO;
+    [stackView addArrangedSubview:shippingStackView];
+    
+    UILabel *shippingLabel = [UILabel new];
+    shippingLabel.text = NSLocalizedString(@"Same as shipping address", @"Same as shipping address");
+    shippingLabel.textColor = [UIColor textColor];
+    shippingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+    [shippingStackView addArrangedSubview:shippingLabel];
+    
+    _switchButton = [UISwitch new];
+    _switchButton.onTintColor = [AWXTheme sharedTheme].tintColor;
+    [_switchButton addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+    [shippingStackView addArrangedSubview:_switchButton];
 
-    self.switchButton.on = self.sameAsShipping;
-    self.billingView.hidden = self.sameAsShipping;
+    _firstNameField = [AWXFloatingLabelTextField new];
+    _firstNameField.fieldType = AWXTextFieldTypeFirstName;
+    _firstNameField.placeholder = NSLocalizedString(@"First name", @"First Name");
+    [stackView addArrangedSubview:_firstNameField];
+    [_firstNameField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+    
+    _lastNameField = [AWXFloatingLabelTextField new];
+    _lastNameField.fieldType = AWXTextFieldTypeLastName;
+    _lastNameField.placeholder = NSLocalizedString(@"Last name", @"Last Name");
+    _firstNameField.nextTextField = _lastNameField;
+    [stackView addArrangedSubview:_lastNameField];
+    [_lastNameField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+    
+    _countryView = [AWXFloatingLabelView new];
+    _countryView.placeholder = NSLocalizedString(@"Country / Region", @"Country / Region");
+    [stackView addArrangedSubview:_countryView];
+    [_countryView.heightAnchor constraintEqualToConstant:fieldHeight].active = YES;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectCountries:)];
+    [_countryView addGestureRecognizer:tap];
 
+    _stateField = [AWXFloatingLabelTextField new];
+    _stateField.fieldType = AWXTextFieldTypeState;
+    _stateField.placeholder = NSLocalizedString(@"State", @"State");
+    _phoneNumberField.nextTextField = _stateField;
+    [stackView addArrangedSubview:_stateField];
+    [_stateField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+
+    _cityField = [AWXFloatingLabelTextField new];
+    _cityField.fieldType = AWXTextFieldTypeCity;
+    _cityField.placeholder = NSLocalizedString(@"City", @"City");
+    _stateField.nextTextField = _cityField;
+    [stackView addArrangedSubview:_cityField];
+    [_cityField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+
+    _streetField = [AWXFloatingLabelTextField new];
+    _streetField.fieldType = AWXTextFieldTypeStreet;
+    _streetField.placeholder = NSLocalizedString(@"Street", @"Street");
+    _cityField.nextTextField = _streetField;
+    [stackView addArrangedSubview:_streetField];
+    [_streetField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+
+    _zipcodeField = [AWXFloatingLabelTextField new];
+    _zipcodeField.fieldType = AWXTextFieldTypeZipcode;
+    _zipcodeField.placeholder = NSLocalizedString(@"Zip code (optional)", @"Zip code (optional)");
+    _streetField.nextTextField = _zipcodeField;
+    [stackView addArrangedSubview:_zipcodeField];
+    [_zipcodeField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+
+    _emailField = [AWXFloatingLabelTextField new];
+    _emailField.fieldType = AWXTextFieldTypeZipcode;
+    _emailField.placeholder = NSLocalizedString(@"Zip code (optional)", @"Zip code (optional)");
+    _zipcodeField.nextTextField = _emailField;
+    [stackView addArrangedSubview:_emailField];
+    [_emailField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+    
+    _phoneNumberField = [AWXFloatingLabelTextField new];
+    _phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
+    _phoneNumberField.placeholder = NSLocalizedString(@"Phone number", @"Phone number");
+    _emailField.nextTextField = _phoneNumberField;
+    [stackView addArrangedSubview:_phoneNumberField];
+    [_phoneNumberField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+    
+    _confirmButton = [AWXButton new];
+    _confirmButton.enabled = YES;
+    _confirmButton.cornerRadius = 6;
+    [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
+    _confirmButton.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
+    [stackView addArrangedSubview:_confirmButton];
+    [_confirmButton.heightAnchor constraintEqualToConstant:44].active = YES;
+    
     if (self.billing) {
         self.firstNameField.text = self.billing.firstName;
         self.lastNameField.text = self.billing.lastName;
@@ -121,6 +246,8 @@
             self.zipcodeField.text = address.postcode;
         }
     }
+    self.sameAsShipping = self.billing != nil;
+    _switchButton.on = self.sameAsShipping;
 }
 
 - (UIScrollView *)activeScrollView
@@ -152,6 +279,20 @@
     self.confirmButton.enabled = YES;
 }
 
+- (void)setSameAsShipping:(BOOL)sameAsShipping
+{
+    _sameAsShipping = sameAsShipping;
+    _firstNameField.hidden = sameAsShipping;
+    _lastNameField.hidden = sameAsShipping;
+    _countryView.hidden = sameAsShipping;
+    _stateField.hidden = sameAsShipping;
+    _cityField.hidden = sameAsShipping;
+    _streetField.hidden = sameAsShipping;
+    _zipcodeField.hidden = sameAsShipping;
+    _emailField.hidden = sameAsShipping;
+    _phoneNumberField.hidden = sameAsShipping;
+}
+
 - (IBAction)switchChanged:(id)sender
 {
     if (!self.billing) {
@@ -166,8 +307,6 @@
     }
 
     self.sameAsShipping = self.switchButton.isOn;
-    self.billingView.hidden = self.switchButton.isOn;
-    self.cvcField.nextTextField = self.sameAsShipping ? self.firstNameField : nil;
 }
 
 - (IBAction)selectCountries:(id)sender

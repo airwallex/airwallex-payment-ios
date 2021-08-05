@@ -443,13 +443,6 @@
 
 @interface AWXFloatingLabelTextField () <UITextFieldDelegate>
 
-@property (strong, nonatomic) AWXView *borderView;
-@property (strong, nonatomic) UILabel *floatingLabel;
-@property (strong, nonatomic) UITextField *textField;
-@property (strong, nonatomic) UILabel *errorLabel;
-@property (strong, nonatomic) NSLayoutConstraint *floatingTopConstraint;
-@property (strong, nonatomic) NSLayoutConstraint *textTopConstraint;
-
 @end
 
 @implementation AWXFloatingLabelTextField
@@ -486,21 +479,26 @@
         _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_errorLabel];
         
-        NSDictionary *views = @{@"borderView": _borderView, @"floatingLabel": _floatingLabel, @"textField": _textField, @"errorLabel": _errorLabel};
-        NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0};
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[errorLabel]-margin-|" options:0 metrics:metrics views:views]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
-        
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-margin-|" options:0 metrics:metrics views:views]];
-        _floatingTopConstraint = [NSLayoutConstraint constraintWithItem:_floatingLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:30.0];
-        _floatingTopConstraint.active = YES;
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[textField]-margin-|" options:0 metrics:metrics views:views]];
-        _textTopConstraint = [NSLayoutConstraint constraintWithItem:_textField attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:9];
-        _textTopConstraint.active = YES;
-        [NSLayoutConstraint constraintWithItem:_borderView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_textField attribute:NSLayoutAttributeBottom multiplier:1.0 constant:9].active = YES;
+        [self setupLayouts];
     }
     return self;
+}
+
+- (void)setupLayouts
+{
+    NSDictionary *views = @{@"borderView": _borderView, @"floatingLabel": _floatingLabel, @"textField": _textField, @"errorLabel": _errorLabel};
+    NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0};
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[errorLabel]-margin-|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-margin-|" options:0 metrics:metrics views:views]];
+    _floatingTopConstraint = [NSLayoutConstraint constraintWithItem:_floatingLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:30.0];
+    _floatingTopConstraint.active = YES;
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[textField]-margin-|" options:0 metrics:metrics views:views]];
+    _textTopConstraint = [NSLayoutConstraint constraintWithItem:_textField attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:9];
+    _textTopConstraint.active = YES;
+    [NSLayoutConstraint constraintWithItem:_borderView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_textField attribute:NSLayoutAttributeBottom multiplier:1.0 constant:9].active = YES;
 }
 
 - (NSString *)text
@@ -998,6 +996,125 @@
     [super awakeFromNib];
     self.visaView.image = [UIImage imageNamed:@"visa" inBundle:[NSBundle resourceBundle]];
     self.masterView.image = [UIImage imageNamed:@"mastercard" inBundle:[NSBundle resourceBundle]];
+}
+
+- (NSAttributedString *)formatText:(NSString *)text
+{
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont fontWithName:AWXFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [AWXTheme sharedTheme].textColor}];
+    AWXBrandType type = [self typeOfNumber:text];
+    NSArray *cardNumberFormat = [AWXCardValidator cardNumberFormatForBrand:type];
+    NSUInteger index = 0;
+    for (NSNumber *segmentLength in cardNumberFormat) {
+        NSUInteger segmentIndex = 0;
+        for (; index < attributedString.length && segmentIndex < [segmentLength unsignedIntegerValue]; index++, segmentIndex++) {
+            if (index + 1 != attributedString.length && segmentIndex + 1 == [segmentLength unsignedIntegerValue]) {
+                [attributedString addAttribute:NSKernAttributeName value:@(5)
+                                         range:NSMakeRange(index, 1)];
+            } else {
+                [attributedString addAttribute:NSKernAttributeName value:@(0)
+                                         range:NSMakeRange(index, 1)];
+            }
+        }
+    }
+    return attributedString;
+}
+
+- (void)setText:(NSString *)text
+{
+    [super setText:text];
+    [self updateBrandWithNumber:text];
+}
+
+- (AWXBrandType)typeOfNumber:(NSString *)number
+{
+    AWXBrandType type = AWXBrandTypeUnknown;
+    if (number.length != 0) {
+        AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:number];
+        if (brand) {
+            type = brand.type;
+        }
+    }
+    return type;
+}
+
+- (void)updateBrandWithNumber:(NSString *)number
+{
+    AWXBrandType type = [self typeOfNumber:number];
+    self.brandView.alpha = (type == AWXBrandTypeVisa || type == AWXBrandTypeMastercard) ? 1 : 0.5;
+    if (self.brandView.alpha == 1) {
+        self.visaView.hidden = type != AWXBrandTypeVisa;
+        self.masterView.hidden = type != AWXBrandTypeMastercard;
+    } else {
+        self.visaView.hidden = NO;
+        self.masterView.hidden = NO;
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    self.errorText = nil;
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    text.length > 0 ? [self active] : [self inactive];
+
+    AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:text];
+    if (brand && text.length > brand.length) {
+        return NO;
+    }
+
+    [self setText:text];
+    return NO;
+}
+
+@end
+
+@interface AWXFloatingCardTextField ()
+
+@property (strong, nonatomic) UIStackView *brandView;
+@property (strong, nonatomic) UIImageView *visaView;
+@property (strong, nonatomic) UIImageView *masterView;
+
+@end
+
+@implementation AWXFloatingCardTextField
+
+- (void)setupLayouts
+{
+    _brandView = [UIStackView new];
+    _brandView.axis = UILayoutConstraintAxisHorizontal;
+    _brandView.alignment = UIStackViewAlignmentFill;
+    _brandView.distribution = UIStackViewDistributionFill;
+    _brandView.spacing = 5;
+    _brandView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:_brandView];
+    
+    _visaView = [UIImageView new];
+    _visaView.image = [UIImage imageNamed:@"visa" inBundle:[NSBundle resourceBundle]];
+    _visaView.contentMode = UIViewContentModeScaleAspectFit;
+    [_brandView addArrangedSubview:_visaView];
+    [_visaView.widthAnchor constraintEqualToConstant:35].active = YES;
+    [_visaView.heightAnchor constraintEqualToConstant:24].active = YES;
+    
+    _masterView = [UIImageView new];
+    _masterView.image = [UIImage imageNamed:@"mastercard" inBundle:[NSBundle resourceBundle]];
+    _masterView.contentMode = UIViewContentModeScaleAspectFit;
+    [_brandView addArrangedSubview:_masterView];
+    [_masterView.widthAnchor constraintEqualToConstant:35].active = YES;
+    [_masterView.heightAnchor constraintEqualToConstant:24].active = YES;
+    
+    NSDictionary *views = @{@"borderView": self.borderView, @"floatingLabel": self.floatingLabel, @"textField": self.textField, @"brandView": self.brandView, @"errorLabel": self.errorLabel};
+    NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0};
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[errorLabel]-margin-|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-spacing-[brandView]-margin-|" options:0 metrics:metrics views:views]];
+    [NSLayoutConstraint constraintWithItem:_brandView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.borderView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0].active = YES;
+    self.floatingTopConstraint = [NSLayoutConstraint constraintWithItem:self.floatingLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:30.0];
+    self.floatingTopConstraint.active = YES;
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[textField]-spacing-[brandView]-margin-|" options:0 metrics:metrics views:views]];
+    self.textTopConstraint = [NSLayoutConstraint constraintWithItem:self.textField attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:9];
+    self.textTopConstraint.active = YES;
+    [NSLayoutConstraint constraintWithItem:self.borderView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.textField attribute:NSLayoutAttributeBottom multiplier:1.0 constant:9].active = YES;
 }
 
 - (NSAttributedString *)formatText:(NSString *)text

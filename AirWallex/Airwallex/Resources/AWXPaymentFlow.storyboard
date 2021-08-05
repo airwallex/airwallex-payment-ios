@@ -521,7 +521,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9r-SV-AMe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-78720" y="-1352"/>
+            <point key="canvasLocation" x="-77821" y="-1359"/>
         </scene>
         <!--Payment View Controller-->
         <scene sceneID="ROv-Wc-s8C">
@@ -615,7 +615,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jey-4J-gPa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-78720" y="-532"/>
+            <point key="canvasLocation" x="-78721" y="-1359"/>
         </scene>
         <!--Select your currency-->
         <scene sceneID="6Ze-EK-vbw">
@@ -738,7 +738,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lTN-46-tmE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="4Ii-aE-D3k" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-76878.260869565216" y="-532.36607142857144"/>
+            <point key="canvasLocation" x="-77809" y="-533"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Adb-S2-obo">
@@ -756,7 +756,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qkz-ng-Ao8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-77788.405797101455" y="-532.36607142857144"/>
+            <point key="canvasLocation" x="-78721" y="-533"/>
         </scene>
     </scenes>
     <designables>
@@ -771,8 +771,8 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="jOs-vC-2Pn"/>
-        <segue reference="DKs-vZ-uzr"/>
+        <segue reference="zYd-7e-r8R"/>
+        <segue reference="LPD-wi-Lqa"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.3803921569" green="0.1843137255" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>

@@ -57,7 +57,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     _tableView.dataSource = self;
@@ -102,13 +102,6 @@
         controller.session = self.session;
         controller.paymentMethod = self.paymentMethod;
         controller.paymentConsent = self.paymentConsent;
-        controller.isFlow = self.isFlow;
-    } else if ([segue.identifier isEqualToString:@"addCard"]) {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        AWXCardViewController *controller = (AWXCardViewController *)navigationController.topViewController;
-        controller.delegate = self;
-        controller.sameAsShipping = YES;
-        controller.session = self.session;
         controller.isFlow = self.isFlow;
     } else if ([segue.identifier isEqualToString:@"showDCC"] && [sender isKindOfClass:[AWXConfirmPaymentIntentResponse class]]) {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
@@ -203,7 +196,13 @@
 
 - (void)newPressed:(id)sender
 {
-    [self performSegueWithIdentifier:@"addCard" sender:nil];
+    AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
+    controller.delegate = self;
+    controller.sameAsShipping = YES;
+    controller.session = self.session;
+    controller.isFlow = self.isFlow;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)disableCard:(AWXPaymentMethod *)paymentMethod

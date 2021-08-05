@@ -73,13 +73,6 @@
     return controller;
 }
 
-+ (AWXCardViewController *)newCardViewController
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWXPaymentFlow" bundle:[NSBundle sdkBundle]];
-    AWXCardViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"newCard"];
-    return controller;
-}
-
 + (AWXPaymentViewController *)paymentDetailViewController
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AWXPaymentFlow" bundle:[NSBundle sdkBundle]];

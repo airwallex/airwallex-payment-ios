@@ -64,10 +64,19 @@ IB_DESIGNABLE
 
 @interface AWXFloatingLabelTextField : AWXView
 
+@property (strong, nonatomic) AWXView *borderView;
+@property (strong, nonatomic) UILabel *floatingLabel;
+@property (strong, nonatomic) UITextField *textField;
+@property (strong, nonatomic) UILabel *errorLabel;
+@property (strong, nonatomic) NSLayoutConstraint *floatingTopConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *textTopConstraint;
+
 @property (nonatomic, strong) NSString *text, *placeholder;
 @property (nonatomic, strong, nullable) NSString *errorText;
 @property (nonatomic) AWXTextFieldType fieldType;
 @property (nonatomic, weak) AWXFloatingLabelTextField *nextTextField;
+
+- (void)setupLayouts;
 
 @end
 
@@ -86,6 +95,10 @@ IB_DESIGNABLE
 
 IB_DESIGNABLE
 @interface AWXCardTextField : AWXFloatLabeledTextField
+
+@end
+
+@interface AWXFloatingCardTextField : AWXFloatingLabelTextField
 
 @end
 
