@@ -546,7 +546,7 @@
         [delegate paymentViewController:self didFinishWithStatus:AWXPaymentStatusError error:error];
         return;
     }
-    
+
     if ([response.status isEqualToString:@"SUCCEEDED"] || [response.status isEqualToString:@"REQUIRES_CAPTURE"]) {
         [delegate paymentViewController:self didFinishWithStatus:AWXPaymentStatusSuccess error:error];
         return;

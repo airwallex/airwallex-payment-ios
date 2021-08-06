@@ -131,6 +131,7 @@
 
     _cvcField = [UITextField new];
     _cvcField.delegate = self;
+    _cvcField.textAlignment = NSTextAlignmentCenter;
     _cvcField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
     _cvcField.borderStyle = UITextBorderStyleRoundedRect;
     _cvcField.textColor = [UIColor textColor];

@@ -72,14 +72,14 @@
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = NSLocalizedString(@"Select your currency", @"Select your currency");
     titleLabel.textColor = [UIColor textColor];
-    titleLabel.font = [UIFont fontWithName:AWXFontFamilyNameCircularXX size:14];
+    titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:titleLabel];
     
     UILabel *subTitleLabel = [UILabel new];
     subTitleLabel.text = NSLocalizedString(@"Select the currency you would like to pay with", @"Select the currency you would like to pay with");
-    subTitleLabel.textColor = [UIColor textColor];
-    subTitleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
+    subTitleLabel.textColor = [UIColor floatingTitleColor];
+    subTitleLabel.font = [UIFont fontWithName:AWXFontFamilyNameCircularXX size:14];
     subTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:subTitleLabel];
     
@@ -102,7 +102,6 @@
     _leftCurrencyView.layer.shadowOffset = CGSizeMake(0, 0);
     _leftCurrencyView.layer.shadowOpacity = 1;
     _leftCurrencyView.layer.shadowRadius = 16;
-    _leftCurrencyView.exclusiveView = self.rightCurrencyView;
     _leftCurrencyView.isSelected = YES;
     _leftCurrencyView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:_leftCurrencyView];
@@ -114,10 +113,12 @@
     _rightCurrencyView.layer.shadowOffset = CGSizeMake(0, 0);
     _rightCurrencyView.layer.shadowOpacity = 1;
     _rightCurrencyView.layer.shadowRadius = 16;
-    _rightCurrencyView.exclusiveView = self.leftCurrencyView;
     _rightCurrencyView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:_rightCurrencyView];
     
+    _leftCurrencyView.exclusiveView = _rightCurrencyView;
+    _rightCurrencyView.exclusiveView = _leftCurrencyView;
+
     UIView *tipView = [UIView new];
     tipView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:tipView];
@@ -145,7 +146,8 @@
     NSDictionary *views = @{@"titleLabel": titleLabel, @"subTitleLabel": subTitleLabel, @"contentView": contentView, @"leftCurrencyView": _leftCurrencyView, @"rightCurrencyView": _rightCurrencyView, @"tipView": tipView, @"rateImageView": rateImageView, @"rateLabel": _rateLabel, @"confirmButton": _confirmButton};
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-24-[titleLabel]-24-|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-32-[titleLabel]-16-[subTitleLabel]-24-[contentView]-18-[tipView]-40-[confirmButton(44)]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[titleLabel]-16-[subTitleLabel]-24-[contentView(110)]-18-[tipView]-40-[confirmButton(44)]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
+    [titleLabel.topAnchor constraintEqualToAnchor:self.view.layoutMarginsGuide.topAnchor constant:24].active = YES;
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[leftCurrencyView]-16-[rightCurrencyView]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:views]];
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[leftCurrencyView]|" options:0 metrics:nil views:views]];
     [_leftCurrencyView.widthAnchor constraintEqualToAnchor:_rightCurrencyView.widthAnchor].active = YES;

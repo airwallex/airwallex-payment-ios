@@ -1202,11 +1202,12 @@
 {
     self = [super init];
     if (self) {
+        self.layer.masksToBounds = YES;
+        self.layer.cornerRadius = 6.0f;
+        self.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        self.layer.borderWidth = 1.0 / [UIScreen mainScreen].scale;
+        
         _contentView = [UIView new];
-        _contentView.layer.masksToBounds = YES;
-        _contentView.layer.cornerRadius = 6.0f;
-        _contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        _contentView.layer.borderWidth = 1.0 / [UIScreen mainScreen].scale;
         _contentView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_contentView];
         
@@ -1226,6 +1227,7 @@
         [topView addSubview:_currencyNameLabel];
         
         _priceLabel = [UILabel new];
+        _priceLabel.textAlignment = NSTextAlignmentCenter;
         _priceLabel.textColor = [UIColor textColor];
         _priceLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
         _priceLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -1242,10 +1244,13 @@
         [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[topView]|" options:0 metrics:metrics views:views]];
         [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topView]-margin-[priceLabel]|" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:metrics views:views]];
         
-        [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[flagImageView[imageWidth]]" options:0 metrics:metrics views:views]];
+        [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[flagImageView(imageWidth)]" options:0 metrics:metrics views:views]];
         [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[flagImageView(imageHeight)]|" options:0 metrics:metrics views:views]];
+        [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[currencyNameLabel]|" options:0 metrics:metrics views:views]];
+        [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[currencyNameLabel]|" options:0 metrics:metrics views:views]];
         
         _labelLeftConstraint = [_currencyNameLabel.leftAnchor constraintEqualToAnchor:topView.leftAnchor constant:44];
+        _labelLeftConstraint.active = YES;
         [_contentView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
         [_contentView.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
         
@@ -1271,8 +1276,8 @@
 - (void)setIsSelected:(BOOL)isSelected
 {
     self.button.selected = isSelected;
-    self.contentView.layer.borderWidth = isSelected ? 1.5 : (1.0 / [UIScreen mainScreen].scale);
-    self.contentView.layer.borderColor = isSelected ? [AWXTheme sharedTheme].tintColor.CGColor : [AWXTheme sharedTheme].lineColor.CGColor;
+    self.layer.borderWidth = isSelected ? 1.5 : (1.0 / [UIScreen mainScreen].scale);
+    self.layer.borderColor = isSelected ? [AWXTheme sharedTheme].tintColor.CGColor : [AWXTheme sharedTheme].lineColor.CGColor;
 }
 
 - (NSString *)currencyName
