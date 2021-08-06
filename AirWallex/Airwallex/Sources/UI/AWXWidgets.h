@@ -48,7 +48,7 @@ IB_DESIGNABLE
 IB_DESIGNABLE
 @interface AWXButton : UIButton
 
-@property (nonatomic) IBInspectable CGFloat cornerRadius;
+@property (nonatomic) CGFloat cornerRadius;
 
 @end
 
@@ -102,14 +102,14 @@ IB_DESIGNABLE
 
 @end
 
-@interface AWXCurrencyView : AWXNibView
+@interface AWXCurrencyView : AWXView
 
 @property (nonatomic, strong) NSString *currencyName;
 @property (nonatomic, strong, nullable) UIImage *flag;
 @property (nonatomic, strong) NSString *price;
 @property (nonatomic) BOOL isSelected;
 @property (nonatomic, weak) AWXCurrencyView *exclusiveView;
-@property (weak, nonatomic) IBOutlet UIButton *button;
+@property (strong, nonatomic) UIButton *button;
 
 @end
 

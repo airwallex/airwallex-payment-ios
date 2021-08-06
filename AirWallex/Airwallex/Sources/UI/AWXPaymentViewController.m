@@ -180,16 +180,6 @@
     [self checkPaymentEnabled];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"showDCC"] && [sender isKindOfClass:[AWXConfirmPaymentIntentResponse class]]) {
-        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        AWXDCCViewController *controller = (AWXDCCViewController *)navigationController.topViewController;
-        controller.response = sender;
-        controller.delegate = self;
-    }
-}
-
 - (void)startAnimating
 {
     [super startAnimating];
@@ -360,7 +350,7 @@
         [self startAnimating];
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else if (response.nextAction.dccResponse) {
-        [self performSegueWithIdentifier:@"showDCC" sender:response];
+        [self showDcc:response];
     } else if (response.nextAction.url) {
         [self.delegate paymentViewController:self nextActionWithAlipayURL:response.nextAction.url];
     } else {
@@ -368,6 +358,15 @@
                          didFinishWithStatus:AWXPaymentStatusError
                                        error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
     }
+}
+
+- (void)showDcc:(AWXConfirmPaymentIntentResponse *)response
+{
+    AWXDCCViewController *controller = [[AWXDCCViewController alloc] initWithNibName:nil bundle:nil];
+    controller.response = response;
+    controller.delegate = self;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - UITextFieldDelegate

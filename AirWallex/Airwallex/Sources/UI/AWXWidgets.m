@@ -1188,23 +1188,71 @@
 
 @interface AWXCurrencyView ()
 
-@property (weak, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet UIImageView *flagImageView;
-@property (weak, nonatomic) IBOutlet UILabel *currencyNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelLeftConstraint;
+@property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) UIImageView *flagImageView;
+@property (strong, nonatomic) UILabel *currencyNameLabel;
+@property (strong, nonatomic) UILabel *priceLabel;
+@property (strong, nonatomic) NSLayoutConstraint *labelLeftConstraint;
 
 @end
 
 @implementation AWXCurrencyView
 
-- (void)awakeFromNib
+- (instancetype)init
 {
-    [super awakeFromNib];
-    self.contentView.layer.masksToBounds = YES;
-    self.contentView.layer.cornerRadius = 6.0f;
-    self.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.contentView.layer.borderWidth = 1.0 / [UIScreen mainScreen].scale;
+    self = [super init];
+    if (self) {
+        _contentView = [UIView new];
+        _contentView.layer.masksToBounds = YES;
+        _contentView.layer.cornerRadius = 6.0f;
+        _contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _contentView.layer.borderWidth = 1.0 / [UIScreen mainScreen].scale;
+        _contentView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addSubview:_contentView];
+        
+        UIView *topView = [UIView new];
+        topView.translatesAutoresizingMaskIntoConstraints = NO;
+        [_contentView addSubview:topView];
+        
+        _flagImageView = [UIImageView new];
+        _flagImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _flagImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        [topView addSubview:_flagImageView];
+        
+        _currencyNameLabel = [UILabel new];
+        _currencyNameLabel.textColor = [UIColor textColor];
+        _currencyNameLabel.font = [UIFont fontWithName:AWXFontNameCircularXXRegular size:14];
+        _currencyNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [topView addSubview:_currencyNameLabel];
+        
+        _priceLabel = [UILabel new];
+        _priceLabel.textColor = [UIColor textColor];
+        _priceLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
+        _priceLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [_contentView addSubview:_priceLabel];
+        
+        _button = [UIButton new];
+        [_button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        _button.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addSubview:_button];
+        
+        NSDictionary *views = @{@"contentView": _contentView, @"topView": topView, @"flagImageView": _flagImageView, @"currencyNameLabel": _currencyNameLabel, @"priceLabel": _priceLabel, @"button": _button};
+        NSDictionary *metrics = @{@"margin": @16, @"imageWidth": @34, @"imageHeight": @24};
+        
+        [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[topView]|" options:0 metrics:metrics views:views]];
+        [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topView]-margin-[priceLabel]|" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:metrics views:views]];
+        
+        [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[flagImageView[imageWidth]]" options:0 metrics:metrics views:views]];
+        [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[flagImageView(imageHeight)]|" options:0 metrics:metrics views:views]];
+        
+        _labelLeftConstraint = [_currencyNameLabel.leftAnchor constraintEqualToAnchor:topView.leftAnchor constant:44];
+        [_contentView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
+        [_contentView.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[button]|" options:0 metrics:metrics views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[button]|" options:0 metrics:metrics views:views]];
+    }
+    return self;
 }
 
 - (IBAction)buttonPressed:(id)sender

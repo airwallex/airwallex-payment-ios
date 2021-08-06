@@ -559,7 +559,7 @@
         [self startAnimating];
         [service presentThreeDSFlowWithServerJwt:response.nextAction.redirectResponse.jwt];
     } else if (response.nextAction.dccResponse) {
-        [self performSegueWithIdentifier:@"showDCC" sender:response];
+        [self showDcc:response];
     } else if (response.nextAction.url) {
         [self dismissViewControllerAnimated:YES completion:^{
             [delegate paymentViewController:presentingViewController nextActionWithAlipayURL:response.nextAction.url];
@@ -571,6 +571,15 @@
                                       error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
         }];
     }
+}
+
+- (void)showDcc:(AWXConfirmPaymentIntentResponse *)response
+{
+    AWXDCCViewController *controller = [[AWXDCCViewController alloc] initWithNibName:nil bundle:nil];
+    controller.response = response;
+    controller.delegate = self;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - AWXThreeDSServiceDelegate
