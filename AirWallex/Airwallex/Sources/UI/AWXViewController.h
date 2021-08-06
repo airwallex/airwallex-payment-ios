@@ -27,9 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSLayoutConstraint *)bottomLayoutConstraint;
 - (void)setActiveField:(UIView *)field;
 - (UIScrollView *)activeScrollView;
-- (IBAction)close:(id)sender;
-- (IBAction)pop:(id)sender;
-- (IBAction)unwindToViewController:(UIStoryboardSegue *)unwindSegue;
+- (void)close:(id)sender;
+- (void)pop:(id)sender;
 
 @end
 

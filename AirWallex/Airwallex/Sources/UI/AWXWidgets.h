@@ -52,16 +52,6 @@ IB_DESIGNABLE
 
 @end
 
-IB_DESIGNABLE
-@interface AWXFloatLabeledTextField : AWXNibView
-
-@property (nonatomic, strong) IBInspectable NSString *text, *placeholder;
-@property (nonatomic, strong, nullable) NSString *errorText;
-@property (nonatomic) AWXTextFieldType fieldType;
-@property (nonatomic, weak) AWXFloatLabeledTextField *nextTextField;
-
-@end
-
 @interface AWXFloatingLabelTextField : AWXView
 
 @property (strong, nonatomic) AWXView *borderView;
@@ -80,21 +70,9 @@ IB_DESIGNABLE
 
 @end
 
-IB_DESIGNABLE
-@interface AWXFloatLabeledView : AWXNibView
-
-@property (nonatomic, strong) IBInspectable NSString *text, *placeholder;
-
-@end
-
 @interface AWXFloatingLabelView : AWXView
 
 @property (nonatomic, strong) NSString *text, *placeholder;
-
-@end
-
-IB_DESIGNABLE
-@interface AWXCardTextField : AWXFloatLabeledTextField
 
 @end
 

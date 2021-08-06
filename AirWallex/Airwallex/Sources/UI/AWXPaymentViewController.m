@@ -9,7 +9,6 @@
 #import "AWXPaymentViewController.h"
 #import "AWXDCCViewController.h"
 #import "AWXConstants.h"
-#import "AWXPaymentItemCell.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
 #import "AWXDevice.h"

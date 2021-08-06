@@ -150,18 +150,14 @@
     }
 }
 
-- (IBAction)close:(id)sender
+- (void)close:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)pop:(id)sender
+- (void)pop:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)unwindToViewController:(UIStoryboardSegue *)unwindSegue
-{
 }
 
 - (void)dealloc
