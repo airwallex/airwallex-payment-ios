@@ -10,22 +10,21 @@
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentResponse.h"
 
-@interface AWXPaymentConsentResponse ()
+@interface AWXCreatePaymentConsentResponse ()
 
 @property (nonatomic, strong, readwrite) AWXPaymentConsent *consent;
 
 @end
 
-@implementation AWXPaymentConsentResponse
+@implementation AWXCreatePaymentConsentResponse
 
 + (id<AWXResponseProtocol>)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    AWXPaymentConsentResponse *response = [AWXPaymentConsentResponse new];
+    AWXCreatePaymentConsentResponse *response = [AWXCreatePaymentConsentResponse new];
     response.consent = [AWXPaymentConsent decodeFromJSON:responseObject];
     return response;
-    
 }
 
 @end

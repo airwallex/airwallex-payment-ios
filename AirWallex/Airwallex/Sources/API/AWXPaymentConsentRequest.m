@@ -55,7 +55,7 @@
 
 - (Class)responseClass
 {
-    return AWXPaymentConsentResponse.class;
+    return AWXCreatePaymentConsentResponse.class;
 }
 
 @end
@@ -121,7 +121,7 @@
 
 - (Class)responseClass
 {
-    return AWXPaymentConsentResponse.class;
+    return AWXCreatePaymentConsentResponse.class;
 }
 
 @end

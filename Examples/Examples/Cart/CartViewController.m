@@ -250,12 +250,14 @@
 
 - (AWXSession *)createSession:(nullable AWXPaymentIntent *)paymentIntent
 {
+    NSString *returnURL = @"airwallexcheckout://com.airwallex.paymentacceptance";
     AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
     switch (checkoutMode) {
         case AirwallexCheckoutOneOffMode:
         {
             AWXOneOffSession *session = [AWXOneOffSession new];
             session.billing = self.shipping;
+            session.returnURL = returnURL;
             session.paymentIntent = paymentIntent;
             return session;
         }
@@ -263,18 +265,20 @@
         {
             AWXRecurringSession *session = [AWXRecurringSession new];
             session.billing = self.shipping;
+            session.returnURL = returnURL;
             session.currency = [AirwallexExamplesKeys shared].currency;
             session.amount = [NSDecimalNumber decimalNumberWithString:[AirwallexExamplesKeys shared].amount];
             session.customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
-            session.nextTriggerBy = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
+            session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
             return session;
         }
         case AirwallexCheckoutRecurringWithIntentMode:
         {
             AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
             session.billing = self.shipping;
+            session.returnURL = returnURL;
             session.paymentIntent = paymentIntent;
-            session.nextTriggerBy = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
+            session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
             return session;
         }
     }

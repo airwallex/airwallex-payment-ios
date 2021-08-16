@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "AWXConstants.h"
+#import "AWXSession.h"
 
 @class AWXWeChatPaySDKResponse, AWXPaymentMethodListViewController, AWXCardViewController, AWXPaymentViewController, AWXShippingViewController, AWXPaymentIntent, AWXPlaceDetails;
 
@@ -18,62 +19,6 @@ typedef NS_ENUM(NSUInteger, AWXPaymentStatus) {
 };
 
 NS_ASSUME_NONNULL_BEGIN
-
-@interface AWXSession : NSObject
-
-/**
- The shipping address.
- */
-@property (nonatomic, strong, nullable) AWXPlaceDetails *billing;
-
-@end
-
-@interface AWXOneOffSession : AWXSession
-
-/**
- The payment intent to handle.
- */
-@property (nonatomic, strong, nullable) AWXPaymentIntent *paymentIntent;
-
-@end
-
-@interface AWXRecurringSession : AWXSession
-
-/**
- Payment amount. This is the order amount you would like to charge your customer.
- */
-@property (nonatomic, copy) NSDecimalNumber *amount;
-
-/**
- Amount currency.
- */
-@property (nonatomic, copy) NSString *currency;
-
-/**
- The customer who is paying for this payment intent.
- */
-@property (nonatomic, copy, nullable) NSString *customerId;
-
-/**
- Next trigger by.
- */
-@property (nonatomic) AirwallexNextTriggerByType nextTriggerBy;
-
-@end
-
-@interface AWXRecurringWithIntentSession : AWXSession
-
-/**
- The payment intent to handle.
- */
-@property (nonatomic, strong, nullable) AWXPaymentIntent *paymentIntent;
-
-/**
- Next trigger by.
- */
-@property (nonatomic) AirwallexNextTriggerByType nextTriggerBy;
-
-@end
 
 /**
  A delegate which handles checkout results.

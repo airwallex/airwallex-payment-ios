@@ -42,11 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *intentId, *customerId;
 
 /**
- Payment method object.
- */
-@property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
-
-/**
  Device object. (Get by calling `AWXSecurityService` method)
  */
 @property (nonatomic, strong) AWXDevice *device;

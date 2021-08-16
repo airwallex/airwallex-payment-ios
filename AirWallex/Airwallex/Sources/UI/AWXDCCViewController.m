@@ -88,9 +88,9 @@
     [self.view addSubview:contentView];
     
     _leftCurrencyView = [AWXCurrencyView new];
-    _leftCurrencyView.currencyName = self.response.currency;
-    _leftCurrencyView.price = [NSString stringWithFormat:@"%@%@", [self.response.amount currencySymbol:self.response.currency], self.response.amount.stringValue];
-    NSString *flagPath = flags[self.response.currency];
+    _leftCurrencyView.currencyName = self.session.currency;
+    _leftCurrencyView.price = [NSString stringWithFormat:@"%@%@", [self.session.amount currencySymbol:self.session.currency], self.session.amount.stringValue];
+    NSString *flagPath = flags[self.session.currency];
     if (flagPath) {
         _leftCurrencyView.flag = [UIImage imageNamed:[NSString stringWithFormat:@"Flag/%@", flagPath] inBundle:[NSBundle resourceBundle]];
     } else {
@@ -154,7 +154,7 @@
     [tipView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[rateImageView(16)]-8-[rateLabel]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     [tipView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[rateImageView(16)]|" options:0 metrics:nil views:views]];
 
-    AWXDccResponse *dccResponse = self.response.nextAction.dccResponse;
+    AWXDccResponse *dccResponse = self.response;
     if (dccResponse) {
         _rightCurrencyView.currencyName = dccResponse.currency;
         _rightCurrencyView.price = [NSString stringWithFormat:@"%@%@", [dccResponse.amount currencySymbol:dccResponse.currency], dccResponse.amountString];
@@ -164,7 +164,7 @@
         } else {
             _rightCurrencyView.flag = nil;
         }
-        _rateLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@", self.response.currency, dccResponse.clientRateString, dccResponse.currency];
+        _rateLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@", self.session.currency, dccResponse.clientRateString, dccResponse.currency];
     }
 }
 

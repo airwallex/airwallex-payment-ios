@@ -33,7 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
 
-
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

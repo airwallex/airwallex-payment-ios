@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWXPaymentConsentResponse : NSObject <AWXResponseProtocol>
+@interface AWXCreatePaymentConsentResponse : NSObject <AWXResponseProtocol>
 
 /**
  Payment consent object.

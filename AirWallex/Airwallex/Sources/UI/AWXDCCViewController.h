@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The response including currency data.
  */
-@property (nonatomic, strong) AWXConfirmPaymentIntentResponse *response;
+@property (nonatomic, strong) AWXDccResponse *response;
 
 /**
  A delegate which handles confirm payment currency.
