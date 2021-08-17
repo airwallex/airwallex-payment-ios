@@ -440,7 +440,7 @@
     } else if (nextAction.dccResponse) {
         [self showDcc:nextAction.dccResponse];
     } else if (nextAction.url) {
-        [delegate paymentViewController:self nextActionWithAlipayURL:nextAction.url];
+        [delegate paymentViewController:self nextActionWithRedirectToURL:nextAction.url];
     } else {
         [delegate paymentViewController:self
                     didFinishWithStatus:AWXPaymentStatusError

@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param controller The controller handling payment result.
  @param url The url to launch alipay.
  */
-- (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url;
+- (void)paymentViewController:(UIViewController *)controller nextActionWithRedirectToURL:(NSURL *)url;
 
 @end
 

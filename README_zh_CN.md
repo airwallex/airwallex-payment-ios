@@ -350,7 +350,7 @@ service.delegate = ”The target to handle AWXThreeDSServiceDelegate protocol”
 处理从服务端返回的URL来完成支付。
 
 ```objective-c
-- (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
+- (void)paymentViewController:(UIViewController *)controller nextActionWithRedirectToURL:(NSURL *)url
 {
     [controller dismissViewControllerAnimated:YES completion:^{
         SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:url];

@@ -457,7 +457,7 @@
     }];
 }
 
-- (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
+- (void)paymentViewController:(UIViewController *)controller nextActionWithRedirectToURL:(NSURL *)url
 {
     [controller dismissViewControllerAnimated:YES completion:^{
         [UIPasteboard.generalPasteboard setString:url.absoluteString];

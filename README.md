@@ -352,7 +352,7 @@ Note: you can follow this official guide [WeChat In-App Pay](https://pay.weixin.
 Processing server side returned url to complete payment.
 
 ```objective-c
-- (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
+- (void)paymentViewController:(UIViewController *)controller nextActionWithRedirectToURL:(NSURL *)url
 {
     [controller dismissViewControllerAnimated:YES completion:^{
         SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:url];

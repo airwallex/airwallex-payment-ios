@@ -16,6 +16,7 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 
 // Constants
 #import <Airwallex/AWXConstants.h>
+#import <Airwallex/AWXSession.h>
 
 // UI
 #import <Airwallex/AWXUIContext.h>
