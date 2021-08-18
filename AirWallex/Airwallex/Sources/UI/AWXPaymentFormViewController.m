@@ -7,8 +7,7 @@
 //
 
 #import "AWXPaymentFormViewController.h"
-#import "AWXLabeledFormTextFieldView.h"
-#import "AWXOptionView.h"
+#import "AWXWidgets.h"
 #import "AWXUtils.h"
 #import "AWXPaymentMethod.h"
 #import "AWXFormMapping.h"

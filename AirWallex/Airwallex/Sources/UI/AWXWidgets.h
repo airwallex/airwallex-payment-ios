@@ -91,4 +91,22 @@ IB_DESIGNABLE
 
 @end
 
+@interface AWXLabeledFormTextFieldView : AWXView
+
+@property (nonatomic, readonly) NSString *label;
+@property (nonatomic, readonly) NSString *input;
+
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText textField:(UITextField *)textField;
+
+@end
+
+@interface AWXOptionView : AWXView
+
+@property (nonatomic, readonly) NSString *placeholder;
+
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText placeholder:(NSString *)placeholder logo:(NSString *)logo;
+- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
+
+@end
+
 NS_ASSUME_NONNULL_END
