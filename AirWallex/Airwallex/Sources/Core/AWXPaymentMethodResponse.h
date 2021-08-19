@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AWXResponseProtocol.h"
 
-@class AWXPaymentMethod,AWXPaymentMethodType;
+@class AWXPaymentMethod, AWXPaymentConsent, AWXPaymentMethodType;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaymentMethodTypesResponse` includes the list of payment methods.
  */
-@interface AWXGetPaymentMethodTypeResponse : NSObject <AWXResponseProtocol>
+@interface AWXGetPaymentMethodTypesResponse : NSObject <AWXResponseProtocol>
 
 /**
  Check whether there are more payment methods not loaded.
@@ -62,12 +62,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXDisablePaymentMethodResponse` includes the payment method disabled.
  */
-@interface AWXDisablePaymentMethodResponse : NSObject <AWXResponseProtocol>
+@interface AWXDisablePaymentConsentResponse : NSObject <AWXResponseProtocol>
 
 /**
  Payment method object.
  */
-@property (nonatomic, readonly) AWXPaymentMethod *paymentMethod;
+@property (nonatomic, readonly) AWXPaymentConsent *paymentConsent;
 
 @end
 

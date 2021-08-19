@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy) NSString *returnURL;
 
+- (NSString *)transactionMode;
+
 @end
 
 @interface AWXSession (Utils)

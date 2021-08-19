@@ -57,12 +57,7 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
     return _mode;
 }
 
-+ (NSArray *)supportedNonCardTypes
-{
-    return @[AWXWeChatPayKey, AWXAlipayCNKey, AWXAlipayHKKey, AWXKakaoPayKey, AWXTNGPayKey, AWXDANAPayKey, AWXGCashPayKey, AWXTrueMoneyPayKey, AWXBKashPayKey, AWXPoli, AWXFpx, AWXBankTransfer, AWXOnlineBanking];
-}
-
-+ (NSArray *)supportedExtensionNonCardTypes
++ (NSArray *)paymentFormRequiredTypes
 {
     return @[AWXPoli, AWXFpx, AWXBankTransfer, AWXOnlineBanking];
 }

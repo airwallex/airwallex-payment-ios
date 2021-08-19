@@ -13,29 +13,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- A delegate which handles card creation.
- */
-@protocol AWXCardViewControllerDelegate <NSObject>
-
-/**
- This method is called when a card has been created and saved to backend.
-
- @param controller The new card view controller.
- @param paymentMethod The saved card.
- */
-- (void)cardViewController:(AWXCardViewController *)controller didCreatePaymentMethod:(AWXPaymentMethod *)paymentMethod;
-
-@end
-
-/**
  `AWXCardViewController` provides a form to create card
  */
 @interface AWXCardViewController : AWXViewController
-
-/**
- A delegate which handles saved card.
- */
-@property (nonatomic, weak) id <AWXCardViewControllerDelegate> delegate;
 
 /**
  A boolean which can switch to billing form

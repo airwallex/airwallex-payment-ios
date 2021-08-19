@@ -163,17 +163,16 @@
     [_confirmButton.rightAnchor constraintEqualToAnchor:stackView.rightAnchor constant:-16].active = YES;
     [_confirmButton.heightAnchor constraintEqualToConstant:44].active = YES;
     
-    NSString *type = self.paymentMethod.type;
-    if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
-        methodLabel.text = FormatPaymentMethodTypeString(type);
-        cvcStackView.hidden = YES;
-    } else {
-        methodLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
+    if (self.paymentConsent.paymentMethod.card != nil) {
+        methodLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4];
         cvcStackView.hidden = NO;
+    } else {
+        methodLabel.text = self.paymentConsent.paymentMethod.type.capitalizedString;
+        cvcStackView.hidden = YES;
     }
     
-    if (self.paymentMethod.card.cvc) {
-        _cvcField.text = self.paymentMethod.card.cvc;
+    if (self.paymentConsent.paymentMethod.card.cvc) {
+        _cvcField.text = self.paymentConsent.paymentMethod.card.cvc;
     }
 
     [self checkPaymentEnabled];
@@ -199,7 +198,7 @@
 
 - (void)checkPaymentEnabled
 {
-    if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
+    if (self.paymentConsent.paymentMethod.card == nil) {
         _confirmButton.enabled = YES;
         return;
     }
@@ -214,9 +213,9 @@
 
 - (void)payPressed:(id)sender
 {
-    self.paymentMethod.card.cvc = _cvcField.text;
+    self.paymentConsent.paymentMethod.card.cvc = _cvcField.text;
 
-    [self.viewModel confirmPaymentIntentWithPaymentMethod:self.paymentMethod paymentConsent:self.paymentConsent];
+    [self.viewModel confirmPaymentIntentWithPaymentMethod:self.paymentConsent.paymentMethod paymentConsent:self.paymentConsent];
 }
 
 - (void)showDcc:(AWXDccResponse *)response
@@ -256,11 +255,6 @@
 {
     id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
     [delegate paymentViewController:self didFinishWithStatus:error != nil ? AWXPaymentStatusError : AWXPaymentStatusSuccess error:error];
-}
-
-- (void)viewModel:(AWXViewModel *)viewModel didCreatePaymentConsent:(AWXPaymentConsent *)paymentConsent
-{
-    self.paymentConsent = paymentConsent;
 }
 
 - (void)viewModel:(AWXViewModel *)viewModel didInitializePaymentIntentId:(NSString *)paymentIntentId

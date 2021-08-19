@@ -45,7 +45,7 @@
         [parameters addEntriesFromDictionary:@{
             @"payment_consent_reference": consentParams
         }];
-    }else{
+    } else {
         if (self.paymentMethod.Id) {
             [parameters addEntriesFromDictionary:@{
                 @"payment_method_reference": @{

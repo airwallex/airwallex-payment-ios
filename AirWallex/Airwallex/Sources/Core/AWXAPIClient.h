@@ -59,14 +59,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (AirwallexSDKMode)mode;
 
 /**
- Supported non-card payment method types.
+ The types requires more payment info.
  */
-+ (NSArray *)supportedNonCardTypes;
-
-/**
- Supported non-card payment method types and it can extension.
- */
-+ (NSArray *)supportedExtensionNonCardTypes;
++ (NSArray *)paymentFormRequiredTypes;
 
 @end
 

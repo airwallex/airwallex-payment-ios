@@ -9,6 +9,9 @@
 #import "AWXSession.h"
 #import "AWXPaymentIntentRequest.h"
 
+static NSString *const oneoff = @"oneoff";
+static NSString *const recurring = @"recurring";
+
 @interface AWXSession ()
 
 @property (nonatomic, strong, nullable) NSString *initialPaymentIntentId;
@@ -16,6 +19,11 @@
 @end
 
 @implementation AWXSession
+
+- (NSString *)transactionMode
+{
+    return oneoff;
+}
 
 @end
 
@@ -141,8 +149,18 @@
 
 @implementation AWXRecurringSession
 
+- (NSString *)transactionMode
+{
+    return recurring;
+}
+
 @end
 
 @implementation AWXRecurringWithIntentSession
+
+- (NSString *)transactionMode
+{
+    return recurring;
+}
 
 @end

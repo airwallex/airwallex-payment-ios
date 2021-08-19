@@ -24,11 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id <AWXPaymentResultDelegate> delegate;
 
 /**
- A payment method has been selected.
- */
-@property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
-
-/**
  A payment consent.
  */
 @property (nonatomic, strong) AWXPaymentConsent *paymentConsent;

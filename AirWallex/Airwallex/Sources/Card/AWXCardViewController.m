@@ -52,8 +52,6 @@
 @property (strong, nonatomic, nullable) AWXCountry *country;
 @property (strong, nonatomic, nullable) AWXPlaceDetails *savedBilling;
 @property (nonatomic, strong) AWXViewModel *viewModel;
-@property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
-@property (nonatomic, strong, nullable) AWXPaymentConsent *paymentConsent;
 
 @end
 
@@ -400,28 +398,11 @@
 
 - (void)viewModel:(AWXViewModel *)viewModel didCompleteWithError:(NSError *)error
 {
-    id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    [delegate paymentViewController:self didFinishWithStatus:error != nil ? AWXPaymentStatusError : AWXPaymentStatusSuccess error:error];
-}
-
-- (void)viewModel:(AWXViewModel *)viewModel didCreatePaymentMethod:(nullable AWXPaymentMethod *)paymentMethod error:(NSError *)error
-{
-    self.paymentMethod = paymentMethod;
-    if (error) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
-        return;
-    }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(cardViewController:didCreatePaymentMethod:)]) {
-        [self.delegate cardViewController:self didCreatePaymentMethod:paymentMethod];
-    }
-}
-
-- (void)viewModel:(AWXViewModel *)viewModel didCreatePaymentConsent:(AWXPaymentConsent *)paymentConsent
-{
-    self.paymentConsent = paymentConsent;
+    UIViewController *presentingViewController = self.presentingViewController;
+    [self dismissViewControllerAnimated:YES completion:^{
+        id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+        [delegate paymentViewController:presentingViewController didFinishWithStatus:error != nil ? AWXPaymentStatusError : AWXPaymentStatusSuccess error:error];
+    }];
 }
 
 - (void)viewModel:(AWXViewModel *)viewModel didInitializePaymentIntentId:(NSString *)paymentIntentId

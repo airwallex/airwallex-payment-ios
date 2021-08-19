@@ -8,6 +8,7 @@
 
 #import "AWXPaymentMethodResponse.h"
 #import "AWXPaymentMethod.h"
+#import "AWXPaymentConsent.h"
 
 @interface AWXGetPaymentMethodsResponse ()
 
@@ -37,20 +38,20 @@
 
 @end
 
-@interface AWXGetPaymentMethodTypeResponse ()
+@interface AWXGetPaymentMethodTypesResponse ()
 
 @property (nonatomic, readwrite) BOOL hasMore;
 @property (nonatomic, copy, readwrite) NSArray <AWXPaymentMethodType *> *items;
 
 @end
 
-@implementation AWXGetPaymentMethodTypeResponse
+@implementation AWXGetPaymentMethodTypesResponse
 
 + (id<AWXResponseProtocol>)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    AWXGetPaymentMethodTypeResponse *response = [AWXGetPaymentMethodTypeResponse new];
+    AWXGetPaymentMethodTypesResponse *response = [AWXGetPaymentMethodTypesResponse new];
     response.hasMore = [responseObject[@"has_more"] boolValue];
     NSMutableArray *items = [NSMutableArray array];
     NSArray *list = responseObject[@"items"];
@@ -86,20 +87,20 @@
 
 @end
 
-@interface AWXDisablePaymentMethodResponse ()
+@interface AWXDisablePaymentConsentResponse ()
 
-@property (nonatomic, strong, readwrite) AWXPaymentMethod *paymentMethod;
+@property (nonatomic, strong, readwrite) AWXPaymentConsent *paymentConsent;
 
 @end
 
-@implementation AWXDisablePaymentMethodResponse
+@implementation AWXDisablePaymentConsentResponse
 
 + (id<AWXResponseProtocol>)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    AWXDisablePaymentMethodResponse *response = [AWXDisablePaymentMethodResponse new];
-    response.paymentMethod = [AWXPaymentMethod decodeFromJSON:responseObject];
+    AWXDisablePaymentConsentResponse *response = [AWXDisablePaymentConsentResponse new];
+    response.paymentConsent = [AWXPaymentConsent decodeFromJSON:responseObject];
     return response;
 }
 

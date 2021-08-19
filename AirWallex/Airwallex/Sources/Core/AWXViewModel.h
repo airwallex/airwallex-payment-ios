@@ -18,12 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)viewModelDidStartRequest:(AWXViewModel *)viewModel;
 - (void)viewModelDidEndRequest:(AWXViewModel *)viewModel;
 - (void)viewModel:(AWXViewModel *)viewModel didCompleteWithError:(NSError *)error;
-- (void)viewModel:(AWXViewModel *)viewModel didCreatePaymentConsent:(AWXPaymentConsent *)paymentConsent;
 - (void)viewModel:(AWXViewModel *)viewModel didInitializePaymentIntentId:(NSString *)paymentIntentId;
 - (void)viewModel:(AWXViewModel *)viewModel shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction;
-
-@optional
-- (void)viewModel:(AWXViewModel *)viewModel didCreatePaymentMethod:(nullable AWXPaymentMethod *)paymentMethod error:(NSError *)error;
 
 @end
 

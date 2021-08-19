@@ -9,25 +9,7 @@
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentMethod.h"
 
-@interface AWXPaymentConsent ()
-
-@property (nonatomic, copy, readwrite) NSString *Id;
-@property (nonatomic, copy, readwrite) NSString *requestId;
-@property (nonatomic, copy, readwrite) NSString *customerId;
-@property (nonatomic, copy, readwrite) NSString *status;
-@property (nonatomic, strong, readwrite) AWXPaymentMethod *paymentMethod;
-@property (nonatomic, copy, readwrite) NSString *nextTriggeredBy;
-@property (nonatomic, copy, readwrite) NSString *merchantTriggerReason;
-
-@property (nonatomic, assign ,readwrite) BOOL requiresCvc;
-
-@property (nonatomic, copy, readwrite) NSString *createdAt;
-@property (nonatomic, copy, readwrite) NSString *updatedAt;
-@property (nonatomic, copy, readwrite) NSString *clientSecret;
-@end
-
 @implementation AWXPaymentConsent
-
 
 + (id)decodeFromJSON:(NSDictionary *)json
 {

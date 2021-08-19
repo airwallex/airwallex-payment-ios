@@ -61,7 +61,7 @@
 
 @end
 
-@implementation AWXGetPaymentMethodsTypeRequest
+@implementation AWXGetPaymentMethodTypesRequest
 
 - (instancetype)init
 {
@@ -98,7 +98,7 @@
 
 - (Class)responseClass
 {
-    return AWXGetPaymentMethodTypeResponse.class;
+    return AWXGetPaymentMethodTypesResponse.class;
 }
 
 @end
@@ -130,11 +130,11 @@
 
 @end
 
-@implementation AWXDisablePaymentMethodRequest
+@implementation AWXDisablePaymentConsentRequest
 
 - (NSString *)path
 {
-    return [NSString stringWithFormat:@"/api/v1/pa/payment_methods/%@/disable", self.paymentMethodId];
+    return [NSString stringWithFormat:@"/api/v1/pa/payment_consents/%@/disable", self.Id];
 }
 
 - (AWXHTTPMethod)method
@@ -149,7 +149,7 @@
 
 - (Class)responseClass
 {
-    return AWXDisablePaymentMethodResponse.class;
+    return AWXDisablePaymentConsentResponse.class;
 }
 
 @end

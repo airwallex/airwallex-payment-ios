@@ -110,15 +110,17 @@
 
 - (void)optionPressed:(UIButton *)sender
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didSelectOption:)]) {
-        [self.delegate paymentFormViewController:self didSelectOption:self.options];
+    [self.paymentMethod appendAdditionalParams:self.options];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didUpdatePaymentMethod:)]) {
+        [self.delegate paymentFormViewController:self didUpdatePaymentMethod:self.paymentMethod];
     }
 }
 
 - (void)buttonPressed:(id)sender
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didConfirmPayment:)]) {
-        [self.delegate paymentFormViewController:self didConfirmPayment:self.fields];
+    [self.paymentMethod appendAdditionalParams:self.fields];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didConfirmPaymentMethod:)]) {
+        [self.delegate paymentFormViewController:self didConfirmPaymentMethod:self.paymentMethod];
     }
 }
 

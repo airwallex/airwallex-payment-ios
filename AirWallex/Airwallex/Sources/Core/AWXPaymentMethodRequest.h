@@ -55,9 +55,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- `AWXGetPaymentMethodsTypeRequest` includes all of the parameters needed to get payment methods.
+ `AWXGetPaymentMethodTypesRequest` includes all of the parameters needed to get payment methods.
  */
-@interface AWXGetPaymentMethodsTypeRequest : NSObject <AWXRequestProtocol>
+@interface AWXGetPaymentMethodTypesRequest : NSObject <AWXRequestProtocol>
 
 /**
  active .
@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXDisablePaymentMethodRequest` disable a payment method.
  */
-@interface AWXDisablePaymentMethodRequest : NSObject <AWXRequestProtocol>
+@interface AWXDisablePaymentConsentRequest : NSObject <AWXRequestProtocol>
 
 /**
  Request ID.
@@ -111,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment method id.
  */
-@property (nonatomic, strong) NSString *paymentMethodId;
+@property (nonatomic, strong) NSString *Id;
 
 @end
 

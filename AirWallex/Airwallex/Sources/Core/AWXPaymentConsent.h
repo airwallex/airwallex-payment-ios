@@ -15,21 +15,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXPaymentConsent : NSObject <AWXJSONDecodable>
 
-@property (nonatomic, readonly) NSString *Id;
-@property (nonatomic, readonly) NSString *requestId;
-@property (nonatomic, readonly) NSString *customerId;
-@property (nonatomic, readonly) NSString *status;
-@property (nonatomic, readonly) AWXPaymentMethod *paymentMethod;
-
-@property (nonatomic, readonly) NSString *nextTriggeredBy;
-@property (nonatomic, readonly) NSString *merchantTriggerReason;
-
-
-@property (nonatomic, readonly) BOOL requiresCvc;
-
-@property (nonatomic, readonly) NSString *createdAt;
-@property (nonatomic, readonly) NSString *updatedAt;
-@property (nonatomic, readonly) NSString *clientSecret;
+@property (nonatomic, copy) NSString *Id;
+@property (nonatomic, copy) NSString *requestId;
+@property (nonatomic, copy) NSString *customerId;
+@property (nonatomic, copy) NSString *status;
+@property (nonatomic, strong, nullable) AWXPaymentMethod *paymentMethod;
+@property (nonatomic, copy) NSString *nextTriggeredBy;
+@property (nonatomic, copy) NSString *merchantTriggerReason;
+@property (nonatomic) BOOL requiresCvc;
+@property (nonatomic, copy) NSString *createdAt;
+@property (nonatomic, copy) NSString *updatedAt;
+@property (nonatomic, copy) NSString *clientSecret;
 
 @end
 

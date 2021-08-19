@@ -56,12 +56,11 @@
         __weak __typeof(self)weakSelf = self;
         [self createPaymentMethod:paymentMethod completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf.delegate viewModelDidEndRequest:self];
             if (response && !error) {
                 AWXCreatePaymentMethodResponse *result = (AWXCreatePaymentMethodResponse *)response;
-                [strongSelf.delegate viewModel:self didCreatePaymentMethod:result.paymentMethod error:error];
+                [strongSelf confirmPaymentIntentWithPaymentMethod:result.paymentMethod paymentConsent:nil];
             } else {
-                [strongSelf.delegate viewModel:self didCreatePaymentMethod:nil error:error];
+                [strongSelf.delegate viewModel:strongSelf didCompleteWithError:error];
             }
         }];
     }
@@ -278,7 +277,6 @@
         if (response && !error) {
             AWXCreatePaymentConsentResponse *result = response;
             strongSelf.paymentConsent = result.consent;
-            [strongSelf.delegate viewModel:strongSelf didCreatePaymentConsent:result.consent];
             completion(response, error);
         } else {
             completion(nil, error);
