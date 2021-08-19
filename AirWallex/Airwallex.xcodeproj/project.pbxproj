@@ -26,6 +26,8 @@
 		26346A618B1632CE13FD8BD8 /* libPods-Airwallex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F32234CF28FBF7DEF511F529 /* libPods-Airwallex.a */; };
 		570A139E25A82B280064B362 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139C25A82B270064B362 /* README.md */; };
 		570A139F25A82B280064B362 /* README_zh_CN.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139D25A82B280064B362 /* README_zh_CN.md */; };
+		571D982326CE186B00C91745 /* AWXComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 571D982126CE186B00C91745 /* AWXComponent.h */; };
+		571D982426CE186B00C91745 /* AWXComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 571D982226CE186B00C91745 /* AWXComponent.m */; };
 		57FB507E26CCD84300DBD7A2 /* AWXCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB501D26CCD84300DBD7A2 /* AWXCardViewController.m */; };
 		57FB507F26CCD84300DBD7A2 /* AWXWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB501E26CCD84300DBD7A2 /* AWXWebViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB508026CCD84300DBD7A2 /* AWXCardViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB501F26CCD84300DBD7A2 /* AWXCardViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -155,6 +157,8 @@
 		2467B1E77C4D87CAA384DD2F /* libPods-AirwallexTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AirwallexTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		570A139C25A82B270064B362 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		570A139D25A82B280064B362 /* README_zh_CN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../../README_zh_CN.md; sourceTree = "<group>"; };
+		571D982126CE186B00C91745 /* AWXComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXComponent.h; sourceTree = "<group>"; };
+		571D982226CE186B00C91745 /* AWXComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXComponent.m; sourceTree = "<group>"; };
 		57FB501D26CCD84300DBD7A2 /* AWXCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewController.m; sourceTree = "<group>"; };
 		57FB501E26CCD84300DBD7A2 /* AWXWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXWebViewController.h; sourceTree = "<group>"; };
 		57FB501F26CCD84300DBD7A2 /* AWXCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXCardViewController.h; sourceTree = "<group>"; };
@@ -499,6 +503,8 @@
 				57FB511926CCD8BD00DBD7A2 /* AWXUtils.m */,
 				57FB510226CCD8BC00DBD7A2 /* AWXViewModel.h */,
 				57FB512E26CCD8BD00DBD7A2 /* AWXViewModel.m */,
+				571D982126CE186B00C91745 /* AWXComponent.h */,
+				571D982226CE186B00C91745 /* AWXComponent.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -559,6 +565,7 @@
 				57FB50C126CCD84300DBD7A2 /* Airwallex.h in Headers */,
 				57FB513926CCD8BD00DBD7A2 /* AWXUtils.h in Headers */,
 				57FB50E026CCD87F00DBD7A2 /* AWXTheme.h in Headers */,
+				571D982326CE186B00C91745 /* AWXComponent.h in Headers */,
 				57FB514726CCD8BD00DBD7A2 /* AWXCodable.h in Headers */,
 				57FB516C26CCD8BD00DBD7A2 /* AWXFormMapping.h in Headers */,
 				57FB516226CCD8BD00DBD7A2 /* AWXCountry.h in Headers */,
@@ -785,6 +792,7 @@
 				57FB513B26CCD8BD00DBD7A2 /* AWXCard.m in Sources */,
 				57FB515326CCD8BD00DBD7A2 /* AWXAddress.m in Sources */,
 				57FB515D26CCD8BD00DBD7A2 /* AWXFormMapping.m in Sources */,
+				571D982426CE186B00C91745 /* AWXComponent.m in Sources */,
 				57FB507E26CCD84300DBD7A2 /* AWXCardViewController.m in Sources */,
 				57FB515B26CCD8BD00DBD7A2 /* AWXForm.m in Sources */,
 				57FB515426CCD8BD00DBD7A2 /* AWXPaymentMethodOptions.m in Sources */,

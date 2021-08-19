@@ -185,7 +185,6 @@
     controller.delegate = self;
     controller.sameAsShipping = YES;
     controller.session = self.session;
-    controller.isFlow = self.isFlow;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -221,7 +220,6 @@
     controller.session = self.session;
     controller.paymentMethod = self.paymentMethod;
     controller.paymentConsent = self.paymentConsent;
-    controller.isFlow = self.isFlow;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -358,13 +356,6 @@
     AWXPaymentMethod *method = items[indexPath.row];
     self.paymentMethod = method;
     
-    if (!self.isFlow) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(paymentMethodListViewController:didSelectPaymentMethod:)]) {
-            [self.delegate paymentMethodListViewController:self didSelectPaymentMethod:method];
-        }
-        return;
-    }
-    
     if ([Airwallex.supportedExtensionNonCardTypes containsObject:self.paymentMethod.type]) {
         AWXFormMapping *formMapping = [AWXFormMapping new];
 //        if ([self.paymentMethod.type isEqualToString:AWXBankTransfer]) {
@@ -422,9 +413,7 @@
     self.paymentMethod = paymentMethod;
     [self reloadData];
     [controller dismissViewControllerAnimated:YES completion:^{
-        if (self.isFlow) {
-            [self showPayment];
-        }
+        [self showPayment];
     }];
 }
 
