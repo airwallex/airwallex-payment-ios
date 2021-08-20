@@ -84,13 +84,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)presentPaymentFlow;
 
-/**
- Convenience constructor for a shipping.
- 
- @return The newly created shipping view controller.
- */
-+ (AWXShippingViewController *)shippingViewController;
-
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;

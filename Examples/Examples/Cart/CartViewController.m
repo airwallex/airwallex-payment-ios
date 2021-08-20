@@ -385,7 +385,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        AWXShippingViewController *controller = [AWXUIContext shippingViewController];
+        AWXShippingViewController *controller = [[AWXShippingViewController alloc] initWithNibName:nil bundle:nil];
         controller.delegate = self;
         controller.shipping = self.shipping;
         [self.navigationController pushViewController:controller animated:YES];

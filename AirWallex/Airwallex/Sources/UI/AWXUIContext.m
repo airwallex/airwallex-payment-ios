@@ -40,7 +40,7 @@
 {
     NSCAssert(self.hostViewController != nil, @"hostViewController must not be nil.");
 
-    AWXPaymentMethodListViewController *controller = [self.class paymentMethodListViewController];
+    AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -58,21 +58,9 @@
     }
     NSCAssert(navigationController != nil, @"The hostViewController is not a navigation controller, or is not contained in a navigation controller.");
 
-    AWXPaymentMethodListViewController *controller = [self.class paymentMethodListViewController];
+    AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
     [navigationController pushViewController:controller animated:YES];
-}
-
-+ (AWXPaymentMethodListViewController *)paymentMethodListViewController
-{
-    AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
-    return controller;
-}
-
-+ (AWXShippingViewController *)shippingViewController
-{
-    AWXShippingViewController *controller = [[AWXShippingViewController alloc] initWithNibName:nil bundle:nil];
-    return controller;
 }
 
 @end

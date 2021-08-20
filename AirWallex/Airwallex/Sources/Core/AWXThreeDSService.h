@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) AWXDevice *device;
 
 /**
- The hostViewController will present or push the payment flow.
+ The presentingViewController will present or push the 3ds flow.
  */
 @property (nonatomic, weak) UIViewController *presentingViewController;
 
