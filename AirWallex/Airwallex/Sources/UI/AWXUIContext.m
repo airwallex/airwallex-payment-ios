@@ -36,25 +36,25 @@
     }
 }
 
-- (void)presentPaymentFlow
+- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController
 {
-    NSCAssert(self.hostViewController != nil, @"hostViewController must not be nil.");
+    NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
 
     AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self.hostViewController presentViewController:navigationController animated:YES completion:nil];
+    [hostViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (void)pushPaymentFlow
+- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController
 {
-    NSCAssert(self.hostViewController != nil, @"hostViewController must not be nil.");
+    NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
     UINavigationController *navigationController;
-    if ([self.hostViewController isKindOfClass:[UINavigationController class]]) {
-        navigationController = (UINavigationController *)self.hostViewController;
+    if ([hostViewController isKindOfClass:[UINavigationController class]]) {
+        navigationController = (UINavigationController *)hostViewController;
     } else {
-        navigationController = self.hostViewController.navigationController;
+        navigationController = hostViewController.navigationController;
     }
     NSCAssert(navigationController != nil, @"The hostViewController is not a navigation controller, or is not contained in a navigation controller.");
 

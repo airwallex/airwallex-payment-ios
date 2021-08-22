@@ -7,6 +7,7 @@
 //
 
 #import "AWXConstants.h"
+#import "AWXAPIClient.h"
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
@@ -55,5 +56,16 @@ NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type)
             return @"customer";
         case AirwallexNextTriggerByMerchantType:
             return @"merchant";
+    }
+}
+
+Class ClassToHandleFlowForPaymentMethodType(NSString *type)
+{
+    if ([type isEqualToString:AWXCardKey]) {
+        return NSClassFromString(@"AWXCardProvider");
+    } else if ([Airwallex.paymentFormRequiredTypes containsObject:type]) {
+        return NSClassFromString(@"AWXPPROProvider");
+    } else {
+        return NSClassFromString(@"AWXDefaultProvider");
     }
 }

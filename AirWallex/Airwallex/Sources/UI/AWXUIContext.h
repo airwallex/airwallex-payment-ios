@@ -82,7 +82,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Present the payment flow.
  */
-- (void)presentPaymentFlow;
+- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController;
+
+/**
+ Push the payment flow.
+ */
+- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

@@ -294,9 +294,8 @@
     // Step 4: Present payment flow
     AWXUIContext *context = [AWXUIContext sharedContext];
     context.delegate = self;
-    context.hostViewController = self;
     context.session = session;
-    [context presentPaymentFlow];
+    [context presentPaymentFlowFrom:self];
 }
 
 #pragma mark - Show Payment Result

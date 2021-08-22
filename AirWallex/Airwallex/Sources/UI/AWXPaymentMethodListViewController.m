@@ -34,8 +34,9 @@
 #import "AWXPaymentFormViewController.h"
 #import "AWXFormMapping.h"
 #import "AWXForm.h"
+#import "AWXDefaultProvider.h"
 
-@interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXDCCViewControllerDelegate, AWXPaymentFormViewControllerDelegate, AWXViewModelDelegate>
+@interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXDCCViewControllerDelegate, AWXProviderDelegate, AWXViewModelDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 
@@ -145,15 +146,6 @@
     }
 }
 
-- (void)showNewCard
-{
-    AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
-    controller.sameAsShipping = YES;
-    controller.session = self.session;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
 - (void)disablePaymentConsent:(AWXPaymentConsent *)paymentConsent index:(NSInteger)index
 {
     [self startAnimating];
@@ -187,40 +179,6 @@
     controller.session = self.session;
     controller.paymentConsent = paymentConsent;
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (void)showPaymentForm:(AWXPaymentMethod *)paymentMethod
-{
-    AWXFormMapping *formMapping = [AWXFormMapping new];
-    //        if ([self.paymentMethod.type isEqualToString:AWXBankTransfer]) {
-    formMapping.title = NSLocalizedString(@"Select your bank", @"Select your bank");
-    formMapping.forms = @[
-        [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Affin Bank" placeholder:@"affin" logo:@"affin_bank"],
-        [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Alliance Bank" placeholder:@"alliance" logo:@"alliance_bank"],
-        [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"AmBank" placeholder:@"ambank" logo:@"ambank"],
-        [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Islam" placeholder:@"islam" logo:@"bank_islam"],
-        [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Kerjasama Rakyat Malaysia" placeholder:@"rakyat" logo:@"bank_kerjasama_rakyat"],
-        [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Muamalat" placeholder:@"muamalat" logo:@"bank_muamalat"],
-        [AWXForm formWithKey:@"bank_name" type:AWXFormTypeOption title:@"Bank Simpanan Nasional" placeholder:@"bsn" logo:@"bank_simpanan_nasional"]
-    ];
-    //        } else {
-    //            formMapping.title = FormatPaymentMethodTypeString(self.paymentMethod.type);
-    //            formMapping.forms = @[
-    //                [AWXForm formWithKey:@"shopper_name" type:AWXFormTypeField title:@"Name"],
-    //                [AWXForm formWithKey:@"shopper_email" type:AWXFormTypeField title:@"Email"],
-    //                [AWXForm formWithKey:@"shopper_phone" type:AWXFormTypeField title:@"Phone"],
-    //                [AWXForm formWithKey:@"pay" type:AWXFormTypeButton title:@"Pay now"]
-    //            ];
-    //        }
-    
-    AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
-    controller.delegate = self;
-    controller.session = self.session;
-    controller.paymentMethod = paymentMethod;
-    controller.formMapping = formMapping;
-    controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)showDcc:(AWXDccResponse *)response
@@ -305,16 +263,19 @@
     
     if (indexPath.section == 0) {
         AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
+        Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType.name);
+        if (class == nil) {
+            UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the payment method.", nil) preferredStyle:UIAlertControllerStyleAlert];
+            [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [self presentViewController:controller animated:YES completion:nil];
+            return;
+        }
+
         AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
         paymentMethod.type = paymentMethodType.name;
         
-        if ([Airwallex.paymentFormRequiredTypes containsObject:paymentMethodType.name]) {
-            [self showPaymentForm:paymentMethod];
-        } else if ([paymentMethodType.name isEqualToString:AWXCardKey]) {
-            [self showNewCard];
-        } else {
-            [self.viewModel confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil];
-        }
+        AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self viewModel:self.viewModel paymentMethod:paymentMethod];
+        [provider handleFlow];
         return;
     }
     
@@ -389,37 +350,19 @@
     [self.viewModel confirmThreeDSWithUseDCC:useDCC];
 }
 
-#pragma mark - AWXPaymentFormViewControllerDelegate
+#pragma mark - AWXProviderDelegate
 
-- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didUpdatePaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod
+- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss
 {
-    AWXFormMapping *formMapping = [AWXFormMapping new];
-    formMapping.title = NSLocalizedString(@"Bank transfer", @"Bank transfer");
-    formMapping.forms = @[
-        [AWXForm formWithKey:@"shopper_name" type:AWXFormTypeField title:@"Name"],
-        [AWXForm formWithKey:@"shopper_email" type:AWXFormTypeField title:@"Email"],
-        [AWXForm formWithKey:@"shopper_phone" type:AWXFormTypeField title:@"Phone"],
-        [AWXForm formWithKey:@"pay" type:AWXFormTypeButton title:@"Pay now"]
-    ];
-    
-    AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
-    controller.delegate = self;
-    controller.session = self.session;
-    controller.paymentMethod = paymentMethod;
-    controller.formMapping = formMapping;
-    controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+    if (forceToDismiss) {
+        [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+            if (controller) {
+                [self presentViewController:controller animated:YES completion:nil];
+            }
+        }];
+    } else if (controller) {
         [self presentViewController:controller animated:YES completion:nil];
-    }];
-}
-
-- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod
-{
-    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
-        [self.viewModel confirmPaymentIntentWithPaymentMethod:paymentMethod
-                                               paymentConsent:nil];
-    }];
+    }
 }
 
 @end

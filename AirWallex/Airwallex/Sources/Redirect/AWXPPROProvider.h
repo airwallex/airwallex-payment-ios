@@ -1,8 +1,8 @@
 //
-//  AWXCardProvider.h
+//  AWXPPROProvider.h
 //  Airwallex
 //
-//  Created by Victor Zhu on 2021/8/19.
+//  Created by Victor Zhu on 2021/8/20.
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWXCardProvider : AWXDefaultProvider
+@interface AWXPPROProvider : AWXDefaultProvider
 
 @end
 
