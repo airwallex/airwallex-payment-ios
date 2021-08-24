@@ -12,7 +12,6 @@
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentConsentResponse.h"
-#import "Airwallex.h"
 #import "AWXPaymentConsent.h"
 
 

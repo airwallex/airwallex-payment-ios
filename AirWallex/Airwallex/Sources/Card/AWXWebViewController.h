@@ -6,7 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Airwallex/Airwallex.h>
+#import "AWXViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

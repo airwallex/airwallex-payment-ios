@@ -7,7 +7,7 @@
 //
 
 #import "OptionsViewController.h"
-#import <Airwallex/Airwallex.h>
+#import <Airwallex/Core.h>
 #import "AirwallexExamplesKeys.h"
 #import "APIClient.h"
 #import "UIViewController+Utils.h"

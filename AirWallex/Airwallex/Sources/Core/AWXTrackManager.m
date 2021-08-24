@@ -7,7 +7,7 @@
 //
 
 #import "AWXTrackManager.h"
-#import <Airwallex/Airwallex.h>
+#import "AWXAPIClient.h"
 
 @implementation AWXTrackManager
 

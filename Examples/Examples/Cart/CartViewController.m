@@ -8,7 +8,7 @@
 
 #import "CartViewController.h"
 #import <SafariServices/SFSafariViewController.h>
-#import <Airwallex/Airwallex.h>
+#import <Airwallex/Core.h>
 #import "UIViewController+Utils.h"
 #import "AirwallexExamplesKeys.h"
 #import "OptionsViewController.h"

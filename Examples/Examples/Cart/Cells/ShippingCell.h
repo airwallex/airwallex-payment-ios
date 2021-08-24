@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Airwallex/Airwallex.h>
+#import <Airwallex/UI.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

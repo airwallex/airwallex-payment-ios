@@ -10,6 +10,9 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXDccResponse.h"
 #import "AWXDCCViewController.h"
+#import "AWXPaymentIntentRequest.h"
+#import "AWXSession.h"
+#import "AWXAPIClient.h"
 
 @interface AWXDccActionProvider () <AWXDCCViewControllerDelegate>
 

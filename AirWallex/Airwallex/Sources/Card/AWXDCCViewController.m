@@ -10,6 +10,7 @@
 #import "AWXWidgets.h"
 #import "AWXUtils.h"
 #import "AWXDccResponse.h"
+#import "AWXSession.h"
 
 @interface AWXDCCViewController ()
 

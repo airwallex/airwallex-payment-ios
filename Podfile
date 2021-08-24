@@ -25,7 +25,6 @@ target 'AirwallexTests' do
 end
 
 def shared_example_pods
-  pod 'AlipaySDK-iOS', '15.7.9'
 end
 
 target 'Examples-Demo' do

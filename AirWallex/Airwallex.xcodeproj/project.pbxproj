@@ -26,44 +26,46 @@
 		26346A618B1632CE13FD8BD8 /* libPods-Airwallex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F32234CF28FBF7DEF511F529 /* libPods-Airwallex.a */; };
 		570A139E25A82B280064B362 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139C25A82B270064B362 /* README.md */; };
 		570A139F25A82B280064B362 /* README_zh_CN.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139D25A82B280064B362 /* README_zh_CN.md */; };
-		5780603726D4949E00693A18 /* AWXCardViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780603126D4949E00693A18 /* AWXCardViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780603826D4949E00693A18 /* AWXWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780603226D4949E00693A18 /* AWXWebViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780603926D4949E00693A18 /* AWXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780603326D4949E00693A18 /* AWXWebViewController.m */; };
-		5780603A26D4949E00693A18 /* AWXCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780603426D4949E00693A18 /* AWXCardViewController.m */; };
-		5780603B26D4949E00693A18 /* AWXCardProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780603526D4949E00693A18 /* AWXCardProvider.m */; };
-		5780603C26D4949E00693A18 /* AWXCardProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780603626D4949E00693A18 /* AWXCardProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780603F26D4B9FA00693A18 /* AWXWeChatPaySDKResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780603D26D4B9FA00693A18 /* AWXWeChatPaySDKResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780604026D4B9FA00693A18 /* AWXWeChatPaySDKResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780603E26D4B9FA00693A18 /* AWXWeChatPaySDKResponse.m */; };
-		5780604326D4BBC800693A18 /* AWXRedirectThreeDSResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780604126D4BBC800693A18 /* AWXRedirectThreeDSResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780604426D4BBC800693A18 /* AWXRedirectThreeDSResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780604226D4BBC800693A18 /* AWXRedirectThreeDSResponse.m */; };
-		5780604726D4BC7D00693A18 /* AWXDccResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780604526D4BC7D00693A18 /* AWXDccResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780604826D4BC7D00693A18 /* AWXDccResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780604626D4BC7D00693A18 /* AWXDccResponse.m */; };
-		5780604B26D4BCFC00693A18 /* AWXDCCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780604926D4BCFB00693A18 /* AWXDCCViewController.m */; };
-		5780604C26D4BCFC00693A18 /* AWXDCCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780604A26D4BCFB00693A18 /* AWXDCCViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780604F26D4BD3A00693A18 /* AWXThreeDSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780604D26D4BD3900693A18 /* AWXThreeDSService.m */; };
-		5780605026D4BD3A00693A18 /* AWXThreeDSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780604E26D4BD3A00693A18 /* AWXThreeDSService.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780605726D4CDE700693A18 /* AWXWeChatPayActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780605526D4CDE700693A18 /* AWXWeChatPayActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780605826D4CDE700693A18 /* AWXWeChatPayActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780605626D4CDE700693A18 /* AWXWeChatPayActionProvider.m */; };
-		5780605B26D4D04400693A18 /* AWXRedirectActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780605926D4D04400693A18 /* AWXRedirectActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780605C26D4D04400693A18 /* AWXRedirectActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780605A26D4D04400693A18 /* AWXRedirectActionProvider.m */; };
-		5780605F26D4D0DB00693A18 /* AWXThreeDSActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780605D26D4D0DB00693A18 /* AWXThreeDSActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780606026D4D0DB00693A18 /* AWXThreeDSActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780605E26D4D0DB00693A18 /* AWXThreeDSActionProvider.m */; };
-		5780606326D4D0F100693A18 /* AWXDccActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780606126D4D0F100693A18 /* AWXDccActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5780606426D4D0F100693A18 /* AWXDccActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780606226D4D0F100693A18 /* AWXDccActionProvider.m */; };
 		5780606726D4D3BD00693A18 /* AWXDefaultActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780606526D4D3BD00693A18 /* AWXDefaultActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5780606826D4D3BD00693A18 /* AWXDefaultActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780606626D4D3BD00693A18 /* AWXDefaultActionProvider.m */; };
-		57B23DD426CF79D900EE5E27 /* AWXPPROProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 57B23DD226CF79D900EE5E27 /* AWXPPROProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		57B23DD526CF79D900EE5E27 /* AWXPPROProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 57B23DD326CF79D900EE5E27 /* AWXPPROProvider.m */; };
+		5780607526D515DB00693A18 /* AWXWeChatPaySDKResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780607126D515DB00693A18 /* AWXWeChatPaySDKResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5780607626D515DB00693A18 /* AWXWeChatPaySDKResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780607226D515DB00693A18 /* AWXWeChatPaySDKResponse.m */; };
+		5780607726D515DB00693A18 /* AWXWeChatPayActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780607326D515DB00693A18 /* AWXWeChatPayActionProvider.m */; };
+		5780607826D515DB00693A18 /* AWXWeChatPayActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780607426D515DB00693A18 /* AWXWeChatPayActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5780607F26D515EA00693A18 /* AWXPPROProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780607926D515EA00693A18 /* AWXPPROProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5780608026D515EA00693A18 /* AWXRedirectActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780607A26D515EA00693A18 /* AWXRedirectActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5780608126D515EA00693A18 /* AWXPPROProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780607B26D515EA00693A18 /* AWXPPROProvider.m */; };
+		5780608226D515EA00693A18 /* AWXRedirectActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780607C26D515EA00693A18 /* AWXRedirectActionProvider.m */; };
+		5780608326D515EA00693A18 /* AWXPaymentFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780607D26D515EA00693A18 /* AWXPaymentFormViewController.m */; };
+		5780608426D515EA00693A18 /* AWXPaymentFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780607E26D515EA00693A18 /* AWXPaymentFormViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5780609726D5162200693A18 /* AWXCardProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780608526D5162200693A18 /* AWXCardProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5780609826D5162200693A18 /* AWXDccActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780608626D5162200693A18 /* AWXDccActionProvider.m */; };
+		5780609926D5162200693A18 /* AWXRedirectThreeDSResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780608726D5162200693A18 /* AWXRedirectThreeDSResponse.m */; };
+		5780609A26D5162200693A18 /* AWXDccResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780608826D5162200693A18 /* AWXDccResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5780609B26D5162200693A18 /* AWXCardProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780608926D5162200693A18 /* AWXCardProvider.m */; };
+		5780609C26D5162200693A18 /* AWXThreeDSActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780608A26D5162200693A18 /* AWXThreeDSActionProvider.m */; };
+		5780609D26D5162200693A18 /* AWXThreeDSActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780608B26D5162200693A18 /* AWXThreeDSActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5780609E26D5162200693A18 /* AWXRedirectThreeDSResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780608C26D5162200693A18 /* AWXRedirectThreeDSResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5780609F26D5162200693A18 /* AWXDCCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780608D26D5162200693A18 /* AWXDCCViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		578060A026D5162200693A18 /* AWXCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780608E26D5162200693A18 /* AWXCardViewController.m */; };
+		578060A126D5162200693A18 /* AWXThreeDSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780608F26D5162200693A18 /* AWXThreeDSService.m */; };
+		578060A226D5162200693A18 /* AWXCardViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780609026D5162200693A18 /* AWXCardViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		578060A326D5162200693A18 /* AWXWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780609126D5162200693A18 /* AWXWebViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		578060A426D5162200693A18 /* AWXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780609226D5162200693A18 /* AWXWebViewController.m */; };
+		578060A526D5162200693A18 /* AWXDCCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780609326D5162200693A18 /* AWXDCCViewController.m */; };
+		578060A626D5162200693A18 /* AWXDccResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780609426D5162200693A18 /* AWXDccResponse.m */; };
+		578060A726D5162200693A18 /* AWXDccActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780609526D5162200693A18 /* AWXDccActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		578060A826D5162200693A18 /* AWXThreeDSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780609626D5162200693A18 /* AWXThreeDSService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		578060AB26D518B200693A18 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 578060AA26D517B000693A18 /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		578060AC26D518C700693A18 /* UI.h in Headers */ = {isa = PBXBuildFile; fileRef = 578060A926D5168000693A18 /* UI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57DB271026D1F96B00C830FF /* AWXDefaultProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 57DB270E26D1F96B00C830FF /* AWXDefaultProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57DB271126D1F96B00C830FF /* AWXDefaultProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 57DB270F26D1F96B00C830FF /* AWXDefaultProvider.m */; };
-		57FB50C126CCD84300DBD7A2 /* Airwallex.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB506226CCD84300DBD7A2 /* Airwallex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB50DC26CCD87F00DBD7A2 /* AWXShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB50C226CCD87E00DBD7A2 /* AWXShippingViewController.m */; };
 		57FB50DF26CCD87F00DBD7A2 /* AWXPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB50C526CCD87E00DBD7A2 /* AWXPaymentViewController.m */; };
 		57FB50E026CCD87F00DBD7A2 /* AWXTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB50C626CCD87E00DBD7A2 /* AWXTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB50E126CCD87F00DBD7A2 /* AWXCountryListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB50C726CCD87E00DBD7A2 /* AWXCountryListViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB50E226CCD87F00DBD7A2 /* AWXViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB50C826CCD87E00DBD7A2 /* AWXViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB50E326CCD87F00DBD7A2 /* AWXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB50C926CCD87E00DBD7A2 /* AWXViewController.m */; };
-		57FB50E626CCD87F00DBD7A2 /* AWXPaymentFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB50CC26CCD87E00DBD7A2 /* AWXPaymentFormViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB50E726CCD87F00DBD7A2 /* AWXUIContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB50CD26CCD87E00DBD7A2 /* AWXUIContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB50E826CCD87F00DBD7A2 /* AWXShippingViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB50CE26CCD87F00DBD7A2 /* AWXShippingViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB50E926CCD87F00DBD7A2 /* AWXUIContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB50CF26CCD87F00DBD7A2 /* AWXUIContext.m */; };
@@ -76,7 +78,6 @@
 		57FB50F126CCD87F00DBD7A2 /* AWXTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB50D726CCD87F00DBD7A2 /* AWXTheme.m */; };
 		57FB50F226CCD87F00DBD7A2 /* AWXPaymentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB50D826CCD87F00DBD7A2 /* AWXPaymentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB50F326CCD87F00DBD7A2 /* AWXWidgets.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB50D926CCD87F00DBD7A2 /* AWXWidgets.m */; };
-		57FB50F526CCD87F00DBD7A2 /* AWXPaymentFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB50DB26CCD87F00DBD7A2 /* AWXPaymentFormViewController.m */; };
 		57FB513526CCD8BD00DBD7A2 /* AWXPlaceDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB50F626CCD8BC00DBD7A2 /* AWXPlaceDetails.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB513626CCD8BD00DBD7A2 /* AWXPaymentIntentResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB50F726CCD8BC00DBD7A2 /* AWXPaymentIntentResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB513826CCD8BD00DBD7A2 /* AWXAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB50F926CCD8BC00DBD7A2 /* AWXAPIClient.m */; };
@@ -175,44 +176,46 @@
 		2467B1E77C4D87CAA384DD2F /* libPods-AirwallexTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AirwallexTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		570A139C25A82B270064B362 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		570A139D25A82B280064B362 /* README_zh_CN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../../README_zh_CN.md; sourceTree = "<group>"; };
-		5780603126D4949E00693A18 /* AWXCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXCardViewController.h; sourceTree = "<group>"; };
-		5780603226D4949E00693A18 /* AWXWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXWebViewController.h; sourceTree = "<group>"; };
-		5780603326D4949E00693A18 /* AWXWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXWebViewController.m; sourceTree = "<group>"; };
-		5780603426D4949E00693A18 /* AWXCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewController.m; sourceTree = "<group>"; };
-		5780603526D4949E00693A18 /* AWXCardProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXCardProvider.m; sourceTree = "<group>"; };
-		5780603626D4949E00693A18 /* AWXCardProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXCardProvider.h; sourceTree = "<group>"; };
-		5780603D26D4B9FA00693A18 /* AWXWeChatPaySDKResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXWeChatPaySDKResponse.h; sourceTree = "<group>"; };
-		5780603E26D4B9FA00693A18 /* AWXWeChatPaySDKResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXWeChatPaySDKResponse.m; sourceTree = "<group>"; };
-		5780604126D4BBC800693A18 /* AWXRedirectThreeDSResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXRedirectThreeDSResponse.h; sourceTree = "<group>"; };
-		5780604226D4BBC800693A18 /* AWXRedirectThreeDSResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXRedirectThreeDSResponse.m; sourceTree = "<group>"; };
-		5780604526D4BC7D00693A18 /* AWXDccResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXDccResponse.h; sourceTree = "<group>"; };
-		5780604626D4BC7D00693A18 /* AWXDccResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXDccResponse.m; sourceTree = "<group>"; };
-		5780604926D4BCFB00693A18 /* AWXDCCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXDCCViewController.m; sourceTree = "<group>"; };
-		5780604A26D4BCFB00693A18 /* AWXDCCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXDCCViewController.h; sourceTree = "<group>"; };
-		5780604D26D4BD3900693A18 /* AWXThreeDSService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXThreeDSService.m; sourceTree = "<group>"; };
-		5780604E26D4BD3A00693A18 /* AWXThreeDSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXThreeDSService.h; sourceTree = "<group>"; };
-		5780605526D4CDE700693A18 /* AWXWeChatPayActionProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXWeChatPayActionProvider.h; sourceTree = "<group>"; };
-		5780605626D4CDE700693A18 /* AWXWeChatPayActionProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXWeChatPayActionProvider.m; sourceTree = "<group>"; };
-		5780605926D4D04400693A18 /* AWXRedirectActionProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXRedirectActionProvider.h; sourceTree = "<group>"; };
-		5780605A26D4D04400693A18 /* AWXRedirectActionProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXRedirectActionProvider.m; sourceTree = "<group>"; };
-		5780605D26D4D0DB00693A18 /* AWXThreeDSActionProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXThreeDSActionProvider.h; sourceTree = "<group>"; };
-		5780605E26D4D0DB00693A18 /* AWXThreeDSActionProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXThreeDSActionProvider.m; sourceTree = "<group>"; };
-		5780606126D4D0F100693A18 /* AWXDccActionProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXDccActionProvider.h; sourceTree = "<group>"; };
-		5780606226D4D0F100693A18 /* AWXDccActionProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXDccActionProvider.m; sourceTree = "<group>"; };
 		5780606526D4D3BD00693A18 /* AWXDefaultActionProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXDefaultActionProvider.h; sourceTree = "<group>"; };
 		5780606626D4D3BD00693A18 /* AWXDefaultActionProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXDefaultActionProvider.m; sourceTree = "<group>"; };
-		57B23DD226CF79D900EE5E27 /* AWXPPROProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXPPROProvider.h; sourceTree = "<group>"; };
-		57B23DD326CF79D900EE5E27 /* AWXPPROProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPPROProvider.m; sourceTree = "<group>"; };
+		5780607126D515DB00693A18 /* AWXWeChatPaySDKResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXWeChatPaySDKResponse.h; sourceTree = "<group>"; };
+		5780607226D515DB00693A18 /* AWXWeChatPaySDKResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXWeChatPaySDKResponse.m; sourceTree = "<group>"; };
+		5780607326D515DB00693A18 /* AWXWeChatPayActionProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXWeChatPayActionProvider.m; sourceTree = "<group>"; };
+		5780607426D515DB00693A18 /* AWXWeChatPayActionProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXWeChatPayActionProvider.h; sourceTree = "<group>"; };
+		5780607926D515EA00693A18 /* AWXPPROProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPPROProvider.h; sourceTree = "<group>"; };
+		5780607A26D515EA00693A18 /* AWXRedirectActionProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXRedirectActionProvider.h; sourceTree = "<group>"; };
+		5780607B26D515EA00693A18 /* AWXPPROProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXPPROProvider.m; sourceTree = "<group>"; };
+		5780607C26D515EA00693A18 /* AWXRedirectActionProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXRedirectActionProvider.m; sourceTree = "<group>"; };
+		5780607D26D515EA00693A18 /* AWXPaymentFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewController.m; sourceTree = "<group>"; };
+		5780607E26D515EA00693A18 /* AWXPaymentFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPaymentFormViewController.h; sourceTree = "<group>"; };
+		5780608526D5162200693A18 /* AWXCardProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXCardProvider.h; sourceTree = "<group>"; };
+		5780608626D5162200693A18 /* AWXDccActionProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXDccActionProvider.m; sourceTree = "<group>"; };
+		5780608726D5162200693A18 /* AWXRedirectThreeDSResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXRedirectThreeDSResponse.m; sourceTree = "<group>"; };
+		5780608826D5162200693A18 /* AWXDccResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXDccResponse.h; sourceTree = "<group>"; };
+		5780608926D5162200693A18 /* AWXCardProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXCardProvider.m; sourceTree = "<group>"; };
+		5780608A26D5162200693A18 /* AWXThreeDSActionProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXThreeDSActionProvider.m; sourceTree = "<group>"; };
+		5780608B26D5162200693A18 /* AWXThreeDSActionProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXThreeDSActionProvider.h; sourceTree = "<group>"; };
+		5780608C26D5162200693A18 /* AWXRedirectThreeDSResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXRedirectThreeDSResponse.h; sourceTree = "<group>"; };
+		5780608D26D5162200693A18 /* AWXDCCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXDCCViewController.h; sourceTree = "<group>"; };
+		5780608E26D5162200693A18 /* AWXCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewController.m; sourceTree = "<group>"; };
+		5780608F26D5162200693A18 /* AWXThreeDSService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXThreeDSService.m; sourceTree = "<group>"; };
+		5780609026D5162200693A18 /* AWXCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXCardViewController.h; sourceTree = "<group>"; };
+		5780609126D5162200693A18 /* AWXWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXWebViewController.h; sourceTree = "<group>"; };
+		5780609226D5162200693A18 /* AWXWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXWebViewController.m; sourceTree = "<group>"; };
+		5780609326D5162200693A18 /* AWXDCCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXDCCViewController.m; sourceTree = "<group>"; };
+		5780609426D5162200693A18 /* AWXDccResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXDccResponse.m; sourceTree = "<group>"; };
+		5780609526D5162200693A18 /* AWXDccActionProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXDccActionProvider.h; sourceTree = "<group>"; };
+		5780609626D5162200693A18 /* AWXThreeDSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXThreeDSService.h; sourceTree = "<group>"; };
+		578060A926D5168000693A18 /* UI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UI.h; sourceTree = "<group>"; };
+		578060AA26D517B000693A18 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		57DB270E26D1F96B00C830FF /* AWXDefaultProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXDefaultProvider.h; sourceTree = "<group>"; };
 		57DB270F26D1F96B00C830FF /* AWXDefaultProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXDefaultProvider.m; sourceTree = "<group>"; };
-		57FB506226CCD84300DBD7A2 /* Airwallex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Airwallex.h; sourceTree = "<group>"; };
 		57FB50C226CCD87E00DBD7A2 /* AWXShippingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXShippingViewController.m; sourceTree = "<group>"; };
 		57FB50C526CCD87E00DBD7A2 /* AWXPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentViewController.m; sourceTree = "<group>"; };
 		57FB50C626CCD87E00DBD7A2 /* AWXTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXTheme.h; sourceTree = "<group>"; };
 		57FB50C726CCD87E00DBD7A2 /* AWXCountryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXCountryListViewController.h; sourceTree = "<group>"; };
 		57FB50C826CCD87E00DBD7A2 /* AWXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXViewController.h; sourceTree = "<group>"; };
 		57FB50C926CCD87E00DBD7A2 /* AWXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXViewController.m; sourceTree = "<group>"; };
-		57FB50CC26CCD87E00DBD7A2 /* AWXPaymentFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPaymentFormViewController.h; sourceTree = "<group>"; };
 		57FB50CD26CCD87E00DBD7A2 /* AWXUIContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXUIContext.h; sourceTree = "<group>"; };
 		57FB50CE26CCD87F00DBD7A2 /* AWXShippingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXShippingViewController.h; sourceTree = "<group>"; };
 		57FB50CF26CCD87F00DBD7A2 /* AWXUIContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXUIContext.m; sourceTree = "<group>"; };
@@ -225,7 +228,6 @@
 		57FB50D726CCD87F00DBD7A2 /* AWXTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXTheme.m; sourceTree = "<group>"; };
 		57FB50D826CCD87F00DBD7A2 /* AWXPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPaymentViewController.h; sourceTree = "<group>"; };
 		57FB50D926CCD87F00DBD7A2 /* AWXWidgets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXWidgets.m; sourceTree = "<group>"; };
-		57FB50DB26CCD87F00DBD7A2 /* AWXPaymentFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewController.m; sourceTree = "<group>"; };
 		57FB50F626CCD8BC00DBD7A2 /* AWXPlaceDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPlaceDetails.h; sourceTree = "<group>"; };
 		57FB50F726CCD8BC00DBD7A2 /* AWXPaymentIntentResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPaymentIntentResponse.h; sourceTree = "<group>"; };
 		57FB50F926CCD8BC00DBD7A2 /* AWXAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXAPIClient.m; sourceTree = "<group>"; };
@@ -427,7 +429,6 @@
 				57FB501C26CCD84300DBD7A2 /* Card */,
 				57FB506326CCD84300DBD7A2 /* Redirect */,
 				57FB506126CCD84300DBD7A2 /* WeChatPay */,
-				57FB506226CCD84300DBD7A2 /* Airwallex.h */,
 			);
 			name = Sources;
 			path = ../../AirWallex/Airwallex/Sources;
@@ -436,18 +437,7 @@
 		57FB500126CCD84300DBD7A2 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				57FB50C726CCD87E00DBD7A2 /* AWXCountryListViewController.h */,
-				57FB50D526CCD87F00DBD7A2 /* AWXCountryListViewController.m */,
-				57FB50CC26CCD87E00DBD7A2 /* AWXPaymentFormViewController.h */,
-				57FB50DB26CCD87F00DBD7A2 /* AWXPaymentFormViewController.m */,
-				57FB50D426CCD87F00DBD7A2 /* AWXPaymentMethodCell.h */,
-				57FB50D126CCD87F00DBD7A2 /* AWXPaymentMethodCell.m */,
-				57FB50D326CCD87F00DBD7A2 /* AWXPaymentMethodListViewController.h */,
-				57FB50D226CCD87F00DBD7A2 /* AWXPaymentMethodListViewController.m */,
-				57FB50D826CCD87F00DBD7A2 /* AWXPaymentViewController.h */,
-				57FB50C526CCD87E00DBD7A2 /* AWXPaymentViewController.m */,
-				57FB50CE26CCD87F00DBD7A2 /* AWXShippingViewController.h */,
-				57FB50C226CCD87E00DBD7A2 /* AWXShippingViewController.m */,
+				578060A926D5168000693A18 /* UI.h */,
 				57FB50C626CCD87E00DBD7A2 /* AWXTheme.h */,
 				57FB50D726CCD87F00DBD7A2 /* AWXTheme.m */,
 				57FB50CD26CCD87E00DBD7A2 /* AWXUIContext.h */,
@@ -456,6 +446,16 @@
 				57FB50C926CCD87E00DBD7A2 /* AWXViewController.m */,
 				57FB50D626CCD87F00DBD7A2 /* AWXWidgets.h */,
 				57FB50D926CCD87F00DBD7A2 /* AWXWidgets.m */,
+				57FB50C726CCD87E00DBD7A2 /* AWXCountryListViewController.h */,
+				57FB50D526CCD87F00DBD7A2 /* AWXCountryListViewController.m */,
+				57FB50D426CCD87F00DBD7A2 /* AWXPaymentMethodCell.h */,
+				57FB50D126CCD87F00DBD7A2 /* AWXPaymentMethodCell.m */,
+				57FB50D326CCD87F00DBD7A2 /* AWXPaymentMethodListViewController.h */,
+				57FB50D226CCD87F00DBD7A2 /* AWXPaymentMethodListViewController.m */,
+				57FB50D826CCD87F00DBD7A2 /* AWXPaymentViewController.h */,
+				57FB50C526CCD87E00DBD7A2 /* AWXPaymentViewController.m */,
+				57FB50CE26CCD87F00DBD7A2 /* AWXShippingViewController.h */,
+				57FB50C226CCD87E00DBD7A2 /* AWXShippingViewController.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -463,24 +463,24 @@
 		57FB501C26CCD84300DBD7A2 /* Card */ = {
 			isa = PBXGroup;
 			children = (
-				5780604E26D4BD3A00693A18 /* AWXThreeDSService.h */,
-				5780604D26D4BD3900693A18 /* AWXThreeDSService.m */,
-				5780603626D4949E00693A18 /* AWXCardProvider.h */,
-				5780603526D4949E00693A18 /* AWXCardProvider.m */,
-				5780603126D4949E00693A18 /* AWXCardViewController.h */,
-				5780603426D4949E00693A18 /* AWXCardViewController.m */,
-				5780604A26D4BCFB00693A18 /* AWXDCCViewController.h */,
-				5780604926D4BCFB00693A18 /* AWXDCCViewController.m */,
-				5780603226D4949E00693A18 /* AWXWebViewController.h */,
-				5780603326D4949E00693A18 /* AWXWebViewController.m */,
-				5780604126D4BBC800693A18 /* AWXRedirectThreeDSResponse.h */,
-				5780604226D4BBC800693A18 /* AWXRedirectThreeDSResponse.m */,
-				5780604526D4BC7D00693A18 /* AWXDccResponse.h */,
-				5780604626D4BC7D00693A18 /* AWXDccResponse.m */,
-				5780605D26D4D0DB00693A18 /* AWXThreeDSActionProvider.h */,
-				5780605E26D4D0DB00693A18 /* AWXThreeDSActionProvider.m */,
-				5780606126D4D0F100693A18 /* AWXDccActionProvider.h */,
-				5780606226D4D0F100693A18 /* AWXDccActionProvider.m */,
+				5780608526D5162200693A18 /* AWXCardProvider.h */,
+				5780608926D5162200693A18 /* AWXCardProvider.m */,
+				5780609026D5162200693A18 /* AWXCardViewController.h */,
+				5780608E26D5162200693A18 /* AWXCardViewController.m */,
+				5780609526D5162200693A18 /* AWXDccActionProvider.h */,
+				5780608626D5162200693A18 /* AWXDccActionProvider.m */,
+				5780608826D5162200693A18 /* AWXDccResponse.h */,
+				5780609426D5162200693A18 /* AWXDccResponse.m */,
+				5780608D26D5162200693A18 /* AWXDCCViewController.h */,
+				5780609326D5162200693A18 /* AWXDCCViewController.m */,
+				5780608C26D5162200693A18 /* AWXRedirectThreeDSResponse.h */,
+				5780608726D5162200693A18 /* AWXRedirectThreeDSResponse.m */,
+				5780608B26D5162200693A18 /* AWXThreeDSActionProvider.h */,
+				5780608A26D5162200693A18 /* AWXThreeDSActionProvider.m */,
+				5780609626D5162200693A18 /* AWXThreeDSService.h */,
+				5780608F26D5162200693A18 /* AWXThreeDSService.m */,
+				5780609126D5162200693A18 /* AWXWebViewController.h */,
+				5780609226D5162200693A18 /* AWXWebViewController.m */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -488,29 +488,30 @@
 		57FB502126CCD84300DBD7A2 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				578060AA26D517B000693A18 /* Core.h */,
+				57FB510026CCD8BC00DBD7A2 /* AWXConstants.h */,
+				57FB510C26CCD8BC00DBD7A2 /* AWXConstants.m */,
 				57DB270E26D1F96B00C830FF /* AWXDefaultProvider.h */,
 				57DB270F26D1F96B00C830FF /* AWXDefaultProvider.m */,
 				5780606526D4D3BD00693A18 /* AWXDefaultActionProvider.h */,
 				5780606626D4D3BD00693A18 /* AWXDefaultActionProvider.m */,
-				57FB512126CCD8BD00DBD7A2 /* AWXAddress.h */,
-				57FB511426CCD8BD00DBD7A2 /* AWXAddress.m */,
+				57FB512626CCD8BD00DBD7A2 /* AWXFontLoader.h */,
+				57FB512726CCD8BD00DBD7A2 /* AWXFontLoader.m */,
+				57FB513026CCD8BD00DBD7A2 /* AWXCardValidator.h */,
+				57FB510626CCD8BC00DBD7A2 /* AWXCardValidator.m */,
 				57FB512426CCD8BD00DBD7A2 /* AWXAPIClient.h */,
 				57FB50F926CCD8BC00DBD7A2 /* AWXAPIClient.m */,
 				57FB512226CCD8BD00DBD7A2 /* AWXAPIResponse.h */,
 				57FB510126CCD8BC00DBD7A2 /* AWXAPIResponse.m */,
+				57FB510826CCD8BC00DBD7A2 /* AWXCodable.h */,
+				57FB512126CCD8BD00DBD7A2 /* AWXAddress.h */,
+				57FB511426CCD8BD00DBD7A2 /* AWXAddress.m */,
 				57FB511326CCD8BD00DBD7A2 /* AWXCard.h */,
 				57FB50FC26CCD8BC00DBD7A2 /* AWXCard.m */,
-				57FB513026CCD8BD00DBD7A2 /* AWXCardValidator.h */,
-				57FB510626CCD8BC00DBD7A2 /* AWXCardValidator.m */,
-				57FB510826CCD8BC00DBD7A2 /* AWXCodable.h */,
-				57FB510026CCD8BC00DBD7A2 /* AWXConstants.h */,
-				57FB510C26CCD8BC00DBD7A2 /* AWXConstants.m */,
 				57FB512326CCD8BD00DBD7A2 /* AWXCountry.h */,
 				57FB511F26CCD8BD00DBD7A2 /* AWXCountry.m */,
 				57FB513126CCD8BD00DBD7A2 /* AWXDevice.h */,
 				57FB510726CCD8BC00DBD7A2 /* AWXDevice.m */,
-				57FB512626CCD8BD00DBD7A2 /* AWXFontLoader.h */,
-				57FB512726CCD8BD00DBD7A2 /* AWXFontLoader.m */,
 				57FB50FD26CCD8BC00DBD7A2 /* AWXForm.h */,
 				57FB511C26CCD8BD00DBD7A2 /* AWXForm.m */,
 				57FB512D26CCD8BD00DBD7A2 /* AWXFormMapping.h */,
@@ -558,10 +559,10 @@
 		57FB506126CCD84300DBD7A2 /* WeChatPay */ = {
 			isa = PBXGroup;
 			children = (
-				5780603D26D4B9FA00693A18 /* AWXWeChatPaySDKResponse.h */,
-				5780603E26D4B9FA00693A18 /* AWXWeChatPaySDKResponse.m */,
-				5780605526D4CDE700693A18 /* AWXWeChatPayActionProvider.h */,
-				5780605626D4CDE700693A18 /* AWXWeChatPayActionProvider.m */,
+				5780607426D515DB00693A18 /* AWXWeChatPayActionProvider.h */,
+				5780607326D515DB00693A18 /* AWXWeChatPayActionProvider.m */,
+				5780607126D515DB00693A18 /* AWXWeChatPaySDKResponse.h */,
+				5780607226D515DB00693A18 /* AWXWeChatPaySDKResponse.m */,
 			);
 			path = WeChatPay;
 			sourceTree = "<group>";
@@ -569,10 +570,12 @@
 		57FB506326CCD84300DBD7A2 /* Redirect */ = {
 			isa = PBXGroup;
 			children = (
-				57B23DD226CF79D900EE5E27 /* AWXPPROProvider.h */,
-				57B23DD326CF79D900EE5E27 /* AWXPPROProvider.m */,
-				5780605926D4D04400693A18 /* AWXRedirectActionProvider.h */,
-				5780605A26D4D04400693A18 /* AWXRedirectActionProvider.m */,
+				5780607E26D515EA00693A18 /* AWXPaymentFormViewController.h */,
+				5780607D26D515EA00693A18 /* AWXPaymentFormViewController.m */,
+				5780607926D515EA00693A18 /* AWXPPROProvider.h */,
+				5780607B26D515EA00693A18 /* AWXPPROProvider.m */,
+				5780607A26D515EA00693A18 /* AWXRedirectActionProvider.h */,
+				5780607C26D515EA00693A18 /* AWXRedirectActionProvider.m */,
 			);
 			path = Redirect;
 			sourceTree = "<group>";
@@ -596,7 +599,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57FB50E626CCD87F00DBD7A2 /* AWXPaymentFormViewController.h in Headers */,
 				57FB516126CCD8BD00DBD7A2 /* AWXAPIResponse.h in Headers */,
 				57FB514226CCD8BD00DBD7A2 /* AWXPaymentConsentRequest.h in Headers */,
 				57FB514C26CCD8BD00DBD7A2 /* AWXResponseProtocol.h in Headers */,
@@ -613,7 +615,6 @@
 				57FB516726CCD8BD00DBD7A2 /* AWXPaymentConsent.h in Headers */,
 				57FB50E726CCD87F00DBD7A2 /* AWXUIContext.h in Headers */,
 				57FB514D26CCD8BD00DBD7A2 /* AWXPaymentMethodResponse.h in Headers */,
-				57FB50C126CCD84300DBD7A2 /* Airwallex.h in Headers */,
 				57FB513926CCD8BD00DBD7A2 /* AWXUtils.h in Headers */,
 				57FB50E026CCD87F00DBD7A2 /* AWXTheme.h in Headers */,
 				57FB514726CCD8BD00DBD7A2 /* AWXCodable.h in Headers */,
@@ -627,32 +628,35 @@
 				57FB513F26CCD8BD00DBD7A2 /* AWXConstants.h in Headers */,
 				57FB50ED26CCD87F00DBD7A2 /* AWXPaymentMethodListViewController.h in Headers */,
 				57FB50E826CCD87F00DBD7A2 /* AWXShippingViewController.h in Headers */,
+				5780609726D5162200693A18 /* AWXCardProvider.h in Headers */,
+				5780609E26D5162200693A18 /* AWXRedirectThreeDSResponse.h in Headers */,
+				5780609A26D5162200693A18 /* AWXDccResponse.h in Headers */,
+				578060A726D5162200693A18 /* AWXDccActionProvider.h in Headers */,
+				578060A826D5162200693A18 /* AWXThreeDSService.h in Headers */,
+				5780609D26D5162200693A18 /* AWXThreeDSActionProvider.h in Headers */,
+				5780607F26D515EA00693A18 /* AWXPPROProvider.h in Headers */,
+				5780608026D515EA00693A18 /* AWXRedirectActionProvider.h in Headers */,
+				5780609F26D5162200693A18 /* AWXDCCViewController.h in Headers */,
+				5780608426D515EA00693A18 /* AWXPaymentFormViewController.h in Headers */,
+				578060A226D5162200693A18 /* AWXCardViewController.h in Headers */,
+				5780607526D515DB00693A18 /* AWXWeChatPaySDKResponse.h in Headers */,
+				578060A326D5162200693A18 /* AWXWebViewController.h in Headers */,
+				5780607826D515DB00693A18 /* AWXWeChatPayActionProvider.h in Headers */,
 				57FB514A26CCD8BD00DBD7A2 /* AWXPaymentMethodRequest.h in Headers */,
 				57FB516326CCD8BD00DBD7A2 /* AWXAPIClient.h in Headers */,
 				57FB516426CCD8BD00DBD7A2 /* AWXTrackManager.h in Headers */,
 				57FB517026CCD8BE00DBD7A2 /* AWXDevice.h in Headers */,
 				57FB50EE26CCD87F00DBD7A2 /* AWXPaymentMethodCell.h in Headers */,
-				5780603C26D4949E00693A18 /* AWXCardProvider.h in Headers */,
-				5780603826D4949E00693A18 /* AWXWebViewController.h in Headers */,
-				5780603F26D4B9FA00693A18 /* AWXWeChatPaySDKResponse.h in Headers */,
-				5780605F26D4D0DB00693A18 /* AWXThreeDSActionProvider.h in Headers */,
-				5780604C26D4BCFC00693A18 /* AWXDCCViewController.h in Headers */,
-				5780605B26D4D04400693A18 /* AWXRedirectActionProvider.h in Headers */,
 				5780606726D4D3BD00693A18 /* AWXDefaultActionProvider.h in Headers */,
-				5780605726D4CDE700693A18 /* AWXWeChatPayActionProvider.h in Headers */,
-				5780606326D4D0F100693A18 /* AWXDccActionProvider.h in Headers */,
-				5780604726D4BC7D00693A18 /* AWXDccResponse.h in Headers */,
-				5780604326D4BBC800693A18 /* AWXRedirectThreeDSResponse.h in Headers */,
-				5780605026D4BD3A00693A18 /* AWXThreeDSService.h in Headers */,
-				57B23DD426CF79D900EE5E27 /* AWXPPROProvider.h in Headers */,
 				57DB271026D1F96B00C830FF /* AWXDefaultProvider.h in Headers */,
-				5780603726D4949E00693A18 /* AWXCardViewController.h in Headers */,
 				57FB515A26CCD8BD00DBD7A2 /* AWXPaymentIntent.h in Headers */,
 				57FB515926CCD8BD00DBD7A2 /* AWXProtocol.h in Headers */,
 				57FB513A26CCD8BD00DBD7A2 /* AWXPaymentMethod.h in Headers */,
 				57FB516026CCD8BD00DBD7A2 /* AWXAddress.h in Headers */,
 				57FB513C26CCD8BD00DBD7A2 /* AWXForm.h in Headers */,
 				57FB516926CCD8BD00DBD7A2 /* AWXRequestProtocol.h in Headers */,
+				578060AB26D518B200693A18 /* Core.h in Headers */,
+				578060AC26D518C700693A18 /* UI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,41 +832,40 @@
 			buildActionMask = 2147483647;
 			files = (
 				57FB514426CCD8BD00DBD7A2 /* AWXSession.m in Sources */,
+				5780608326D515EA00693A18 /* AWXPaymentFormViewController.m in Sources */,
 				57FB514026CCD8BD00DBD7A2 /* AWXAPIResponse.m in Sources */,
 				57FB515526CCD8BD00DBD7A2 /* AWXPaymentIntentRequest.m in Sources */,
+				5780609826D5162200693A18 /* AWXDccActionProvider.m in Sources */,
 				57FB514626CCD8BD00DBD7A2 /* AWXDevice.m in Sources */,
-				5780606426D4D0F100693A18 /* AWXDccActionProvider.m in Sources */,
-				5780604B26D4BCFC00693A18 /* AWXDCCViewController.m in Sources */,
+				578060A526D5162200693A18 /* AWXDCCViewController.m in Sources */,
+				5780607626D515DB00693A18 /* AWXWeChatPaySDKResponse.m in Sources */,
+				5780609B26D5162200693A18 /* AWXCardProvider.m in Sources */,
 				57FB50E926CCD87F00DBD7A2 /* AWXUIContext.m in Sources */,
-				57B23DD526CF79D900EE5E27 /* AWXPPROProvider.m in Sources */,
 				57FB513826CCD8BD00DBD7A2 /* AWXAPIClient.m in Sources */,
-				5780603B26D4949E00693A18 /* AWXCardProvider.m in Sources */,
 				57FB517226CCD8BE00DBD7A2 /* AWXPlaceDetails.m in Sources */,
+				5780608126D515EA00693A18 /* AWXPPROProvider.m in Sources */,
 				57FB514526CCD8BD00DBD7A2 /* AWXCardValidator.m in Sources */,
 				57FB50EC26CCD87F00DBD7A2 /* AWXPaymentMethodListViewController.m in Sources */,
-				5780603A26D4949E00693A18 /* AWXCardViewController.m in Sources */,
 				57FB515726CCD8BD00DBD7A2 /* AWXProtocol.m in Sources */,
 				57FB515F26CCD8BD00DBD7A2 /* AWXPaymentConsent.m in Sources */,
 				57FB50EF26CCD87F00DBD7A2 /* AWXCountryListViewController.m in Sources */,
 				57FB517326CCD8BE00DBD7A2 /* AWXPaymentMethodRequest.m in Sources */,
 				57FB50E326CCD87F00DBD7A2 /* AWXViewController.m in Sources */,
+				578060A026D5162200693A18 /* AWXCardViewController.m in Sources */,
 				57FB50DF26CCD87F00DBD7A2 /* AWXPaymentViewController.m in Sources */,
 				57FB516826CCD8BD00DBD7A2 /* AWXPaymentIntent.m in Sources */,
+				578060A426D5162200693A18 /* AWXWebViewController.m in Sources */,
 				57FB50F326CCD87F00DBD7A2 /* AWXWidgets.m in Sources */,
-				5780606026D4D0DB00693A18 /* AWXThreeDSActionProvider.m in Sources */,
 				57FB50DC26CCD87F00DBD7A2 /* AWXShippingViewController.m in Sources */,
 				57FB515826CCD8BD00DBD7A2 /* AWXUtils.m in Sources */,
 				57FB515026CCD8BD00DBD7A2 /* AWXSecurityService.m in Sources */,
 				57FB514B26CCD8BD00DBD7A2 /* AWXConstants.m in Sources */,
+				578060A626D5162200693A18 /* AWXDccResponse.m in Sources */,
 				57FB516A26CCD8BD00DBD7A2 /* AWXPaymentConsentResponse.m in Sources */,
-				5780605826D4CDE700693A18 /* AWXWeChatPayActionProvider.m in Sources */,
+				5780607726D515DB00693A18 /* AWXWeChatPayActionProvider.m in Sources */,
 				57FB515126CCD8BD00DBD7A2 /* AWXPaymentMethod.m in Sources */,
-				5780604426D4BBC800693A18 /* AWXRedirectThreeDSResponse.m in Sources */,
-				5780604026D4B9FA00693A18 /* AWXWeChatPaySDKResponse.m in Sources */,
-				57FB50F526CCD87F00DBD7A2 /* AWXPaymentFormViewController.m in Sources */,
 				57FB513B26CCD8BD00DBD7A2 /* AWXCard.m in Sources */,
 				57FB515326CCD8BD00DBD7A2 /* AWXAddress.m in Sources */,
-				5780603926D4949E00693A18 /* AWXWebViewController.m in Sources */,
 				57FB515D26CCD8BD00DBD7A2 /* AWXFormMapping.m in Sources */,
 				5780606826D4D3BD00693A18 /* AWXDefaultActionProvider.m in Sources */,
 				57FB515B26CCD8BD00DBD7A2 /* AWXForm.m in Sources */,
@@ -873,11 +876,12 @@
 				57FB516E26CCD8BD00DBD7A2 /* AWXTrackManager.m in Sources */,
 				57FB516626CCD8BD00DBD7A2 /* AWXFontLoader.m in Sources */,
 				57FB50F126CCD87F00DBD7A2 /* AWXTheme.m in Sources */,
+				5780608226D515EA00693A18 /* AWXRedirectActionProvider.m in Sources */,
 				57FB514826CCD8BD00DBD7A2 /* AWXPaymentIntentResponse.m in Sources */,
-				5780605C26D4D04400693A18 /* AWXRedirectActionProvider.m in Sources */,
-				5780604F26D4BD3A00693A18 /* AWXThreeDSService.m in Sources */,
+				578060A126D5162200693A18 /* AWXThreeDSService.m in Sources */,
 				57FB50EB26CCD87F00DBD7A2 /* AWXPaymentMethodCell.m in Sources */,
-				5780604826D4BC7D00693A18 /* AWXDccResponse.m in Sources */,
+				5780609926D5162200693A18 /* AWXRedirectThreeDSResponse.m in Sources */,
+				5780609C26D5162200693A18 /* AWXThreeDSActionProvider.m in Sources */,
 				57FB513D26CCD8BD00DBD7A2 /* AWXPaymentConsentRequest.m in Sources */,
 				57FB515E26CCD8BD00DBD7A2 /* AWXCountry.m in Sources */,
 			);
