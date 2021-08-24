@@ -25,7 +25,6 @@ FOUNDATION_EXPORT const unsigned char AirwallexVersionString[];
 #import <Airwallex/AWXShippingViewController.h>
 #import <Airwallex/AWXPaymentMethodListViewController.h>
 #import <Airwallex/AWXPaymentViewController.h>
-#import <Airwallex/AWXCardViewController.h>
 
 // API
 #import <Airwallex/AWXAPIClient.h>
