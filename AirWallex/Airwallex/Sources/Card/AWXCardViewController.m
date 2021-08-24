@@ -26,10 +26,10 @@
 #import "AWXThreeDSService.h"
 #import "AWXSecurityService.h"
 #import "AWXDevice.h"
-#import "AWXViewModel.h"
-#import "AWXDCCViewController.h"
+#import "AWXDefaultProvider.h"
+#import "AWXDefaultActionProvider.h"
 
-@interface AWXCardViewController () <AWXCountryListViewControllerDelegate, AWXViewModelDelegate, AWXDCCViewControllerDelegate>
+@interface AWXCardViewController () <AWXCountryListViewControllerDelegate, AWXProviderDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -51,7 +51,6 @@
 
 @property (strong, nonatomic, nullable) AWXCountry *country;
 @property (strong, nonatomic, nullable) AWXPlaceDetails *savedBilling;
-@property (nonatomic, strong) AWXViewModel *viewModel;
 
 @end
 
@@ -60,8 +59,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.viewModel = [[AWXViewModel alloc] initWithSession:self.session delegate:self];
-
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     [self enableTapToEndEditting];
     
@@ -362,17 +359,9 @@
         return;
     }
     
-    [self.viewModel confirmPaymentIntentWithCard:card billing:self.savedBilling];
-}
-
-- (void)showDcc:(AWXDccResponse *)response
-{
-    AWXDCCViewController *controller = [[AWXDCCViewController alloc] initWithNibName:nil bundle:nil];
-    controller.session = self.session;
-    controller.response = response;
-    controller.delegate = self;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:nav animated:YES completion:nil];
+    AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
+    [provider confirmPaymentIntentWithCard:card billing:self.savedBilling];
+    self.provider = provider;
 }
 
 #pragma mark - AWXCountryListViewControllerDelegate
@@ -384,19 +373,19 @@
     self.countryView.text = country.countryName;
 }
 
-#pragma mark - AWXViewModelDelegate
+#pragma mark - AWXProviderDelegate
 
-- (void)viewModelDidStartRequest:(AWXViewModel *)viewModel
+- (void)providerDidStartRequest:(AWXDefaultProvider *)provider
 {
     [self startAnimating];
 }
 
-- (void)viewModelDidEndRequest:(AWXViewModel *)viewModel
+- (void)providerDidEndRequest:(AWXDefaultProvider *)provider
 {
     [self stopAnimating];
 }
 
-- (void)viewModel:(AWXViewModel *)viewModel didCompleteWithError:(NSError *)error
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithError:(NSError *)error
 {
     UIViewController *presentingViewController = self.presentingViewController;
     [self dismissViewControllerAnimated:YES completion:^{
@@ -405,37 +394,37 @@
     }];
 }
 
-- (void)viewModel:(AWXViewModel *)viewModel didInitializePaymentIntentId:(NSString *)paymentIntentId
+- (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId
 {
     [self.session updateInitialPaymentIntentId:paymentIntentId];
 }
 
-- (void)viewModel:(AWXViewModel *)viewModel shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction
+- (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction
 {
-    id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    if (nextAction.weChatPayResponse) {
-        [delegate paymentViewController:self nextActionWithWeChatPaySDK:nextAction.weChatPayResponse];
-    } else if (nextAction.redirectResponse) {
-        [self.viewModel handleThreeDSWithJwt:nextAction.redirectResponse.jwt
-                    presentingViewController:self];
-    } else if (nextAction.dccResponse) {
-        [self showDcc:nextAction.dccResponse];
-    } else if (nextAction.url) {
-        [delegate paymentViewController:self nextActionWithRedirectToURL:nextAction.url];
-    } else {
-        [delegate paymentViewController:self
-                    didFinishWithStatus:AWXPaymentStatusError
-                                  error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
+    Class class = ClassToHandleNextActionForType(nextAction);
+    if (class == nil) {
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
+        return;
     }
+    
+    AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:self session:self.session];
+    [actionProvider handleNextAction:nextAction];
+    self.provider = actionProvider;
 }
 
-#pragma mark - AWXDCCViewControllerDelegate
-
-- (void)dccViewController:(AWXDCCViewController *)controller useDCC:(BOOL)useDCC
+- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss
 {
-    [controller dismissViewControllerAnimated:YES completion:nil];
-
-    [self.viewModel confirmThreeDSWithUseDCC:useDCC];
+    if (forceToDismiss) {
+        [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+            if (controller) {
+                [self presentViewController:controller animated:YES completion:nil];
+            }
+        }];
+    } else if (controller) {
+        [self presentViewController:controller animated:YES completion:nil];
+    }
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "AWXDCCViewController.h"
 #import "AWXWidgets.h"
 #import "AWXUtils.h"
+#import "AWXDccResponse.h"
 
 @interface AWXDCCViewController ()
 

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class AWXConfirmPaymentNextAction;
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define AIRWALLEX_VERSION (@"2.0.0")
@@ -73,5 +75,6 @@ FOUNDATION_EXPORT NSString *const AWXFontNameCircularXXRegular;
 
 FOUNDATION_EXPORT NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type);
 FOUNDATION_EXPORT Class ClassToHandleFlowForPaymentMethodType(NSString *type);
+FOUNDATION_EXPORT Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction);
 
 NS_ASSUME_NONNULL_END

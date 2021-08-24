@@ -9,7 +9,6 @@
 #import "CartViewController.h"
 #import <SafariServices/SFSafariViewController.h>
 #import <Airwallex/Airwallex.h>
-#import <WechatOpenSDK/WXApi.h>
 #import "UIViewController+Utils.h"
 #import "AirwallexExamplesKeys.h"
 #import "OptionsViewController.h"
@@ -406,53 +405,6 @@
 {
     [controller dismissViewControllerAnimated:YES completion:^{
         [self showPaymentResult:error];
-    }];
-}
-
-- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWXWeChatPaySDKResponse *)response
-{
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    /**
-     To mock the wechat payment flow, we use an url to call instead wechat callback.
-     */
-    NSURL *url = [NSURL URLWithString:response.prepayId];
-    if (url.scheme && url.host) {
-        [self.activityIndicator startAnimating];
-        
-        __weak __typeof(self)weakSelf = self;
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        [[[NSURLSession sharedSession] dataTaskWithRequest:request
-                                         completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [strongSelf.activityIndicator stopAnimating];
-                
-                if (error) {
-                    [strongSelf showAlert:error.localizedDescription withTitle:nil];
-                    return;
-                }
-                
-                [strongSelf showPaymentResult:error];
-            });
-        }] resume];
-        return;
-    }
-    
-    PayReq *request = [[PayReq alloc] init];
-    request.partnerId = response.partnerId;
-    request.prepayId = response.prepayId;
-    request.package = response.package;
-    request.nonceStr = response.nonceStr;
-    request.timeStamp = response.timeStamp.doubleValue;
-    request.sign = response.sign;
-    
-    [WXApi sendReq:request completion:^(BOOL success) {
-        if (!success) {
-            // Failed to call WeChat Pay
-            return;
-        }
-        // Succeed to pay
     }];
 }
 

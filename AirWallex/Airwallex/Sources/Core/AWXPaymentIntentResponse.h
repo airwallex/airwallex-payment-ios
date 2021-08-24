@@ -59,68 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly) NSString *type;
 
-/**
- Redirect URL.
- */
-@property (nonatomic, readonly, nullable) NSURL *url;
-
-/**
- The parameters for WeChatSDK.
- */
-@property (nonatomic, readonly, nullable) AWXWeChatPaySDKResponse *weChatPayResponse;
-
-/**
- The parameters for redirection.
- */
-@property (nonatomic, readonly, nullable) AWXRedirectResponse *redirectResponse;
-
-/**
-  The parameters for dcc.
- */
-@property (nonatomic, readonly, nullable) AWXDccResponse *dccResponse;
-
-@end
-
-/**
- `AWXWeChatPaySDKResponse` includes the parameters for WeChatSDK.
- */
-@interface AWXWeChatPaySDKResponse: NSObject <AWXJSONDecodable>
-
-@property (nonatomic, readonly, nullable) NSString *appId;
-@property (nonatomic, readonly) NSString *timeStamp;
-@property (nonatomic, readonly) NSString *nonceStr;
-@property (nonatomic, readonly) NSString *prepayId;
-@property (nonatomic, readonly) NSString *partnerId;
-@property (nonatomic, readonly) NSString *package;
-@property (nonatomic, readonly) NSString *sign;
-
-@end
-
-/**
- `AWXRedirectResponse` includes the parameters for redirection.
- */
-@interface AWXRedirectResponse : NSObject <AWXJSONDecodable>
-
-@property (nonatomic, readonly) NSString *jwt;
-@property (nonatomic, readonly) NSString *stage;
-@property (nonatomic, readonly, nullable) NSString *acs;
-@property (nonatomic, readonly, nullable) NSString *xid;
-@property (nonatomic, readonly, nullable) NSString *req;
-
-@end
-
-/**
- `AWXDccResponse` includes the parameters for dcc.
- */
-@interface AWXDccResponse : NSObject <AWXJSONDecodable>
-
-@property (nonatomic, readonly) NSString *currency;
-@property (nonatomic, readonly) NSString *currencyPair;
-@property (nonatomic, readonly) NSDecimalNumber *amount;
-@property (nonatomic, readonly) NSString *amountString;
-@property (nonatomic, readonly) NSDecimalNumber *clientRate;
-@property (nonatomic, readonly) NSString *clientRateString;
-@property (nonatomic, readonly) NSString *rateTimestamp, *rateExpiry;
+@property (nonatomic, readonly) NSDictionary *payload;
 
 @end
 

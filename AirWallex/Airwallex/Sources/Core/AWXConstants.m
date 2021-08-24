@@ -8,6 +8,7 @@
 
 #import "AWXConstants.h"
 #import "AWXAPIClient.h"
+#import "AWXPaymentIntentResponse.h"
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
@@ -67,5 +68,22 @@ Class ClassToHandleFlowForPaymentMethodType(NSString *type)
         return NSClassFromString(@"AWXPPROProvider");
     } else {
         return NSClassFromString(@"AWXDefaultProvider");
+    }
+}
+
+Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction)
+{
+    if ([nextAction.type isEqualToString:@"call_sdk"]) {
+        return NSClassFromString(@"AWXWeChatPayActionProvider");
+    } else if ([nextAction.type isEqualToString:@"redirect"]) {
+        if (nextAction.payload[@"data"]) {
+            return NSClassFromString(@"AWXThreeDSActionProvider");
+        } else {
+            return NSClassFromString(@"AWXRedirectActionProvider");
+        }
+    } else if ([nextAction.type isEqualToString:@"dcc"]) {
+        return NSClassFromString(@"AWXDccActionProvider");
+    } else {
+        return NSClassFromString(@"AWXDefaultActionProvider");
     }
 }

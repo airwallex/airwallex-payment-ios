@@ -31,6 +31,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+    [self.view bringSubviewToFront:self.activityIndicator];
     self.activityIndicator.center = self.view.center;
 }
 

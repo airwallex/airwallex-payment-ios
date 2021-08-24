@@ -12,6 +12,7 @@
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethodOptions.h"
+#import "AWXRedirectThreeDSResponse.h"
 #import "AWXAPIClient.h"
 #import "AWXUtils.h"
 #import "AWXDevice.h"
@@ -118,7 +119,7 @@
 
         // Step 3: Show 3DS UI, then wait user input. After user input, will receive `processorTransactionId`
         AWXAuthenticationData *authenticationData = result.latestPaymentAttempt.authenticationData;
-        AWXRedirectResponse *redirectResponse = result.nextAction.redirectResponse;
+        AWXRedirectThreeDSResponse *redirectResponse = [AWXRedirectThreeDSResponse decodeFromJSON:result.nextAction.payload[@"data"]];
         if (authenticationData.isThreeDSVersion2) {
             // 3DS v2.x flow
             if (redirectResponse.xid && redirectResponse.req) {
@@ -153,7 +154,7 @@
             }];
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
             navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-            [strongSelf.presentingViewController presentViewController:navigationController animated:YES completion:nil];
+            [strongSelf.delegate threeDSService:strongSelf shouldPresentViewController:navigationController];
         } else {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to determine the challenge is 1.x or 2.x.", nil)}]];
         }

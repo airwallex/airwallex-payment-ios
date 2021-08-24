@@ -45,10 +45,7 @@
 @interface AWXConfirmPaymentNextAction ()
 
 @property (nonatomic, copy, readwrite) NSString *type;
-@property (nonatomic, copy, readwrite, nullable) NSURL *url;
-@property (nonatomic, strong, readwrite, nullable) AWXWeChatPaySDKResponse *weChatPayResponse;
-@property (nonatomic, strong, readwrite, nullable) AWXRedirectResponse *redirectResponse;
-@property (nonatomic, strong, readwrite, nullable) AWXDccResponse *dccResponse;
+@property (nonatomic, copy, readwrite) NSDictionary *payload;
 
 @end
 
@@ -58,110 +55,7 @@
 {
     AWXConfirmPaymentNextAction *response = [[AWXConfirmPaymentNextAction alloc] init];
     response.type = json[@"type"];
-    NSString *url = json[@"url"];
-    if (url) {
-        response.url = [NSURL URLWithString:url];
-    }
-    NSDictionary *data = json[@"data"];
-    if (data) {
-        if ([response.type isEqualToString:@"call_sdk"]) {
-            response.weChatPayResponse = [AWXWeChatPaySDKResponse decodeFromJSON:data];
-        } else if ([response.type isEqualToString:@"redirect"]) {
-            response.redirectResponse = [AWXRedirectResponse decodeFromJSON:data];
-        }
-    }
-    NSDictionary *dccData = json[@"dcc_data"];
-    if (dccData) {
-        if ([response.type isEqualToString:@"dcc"]) {
-            response.dccResponse = [AWXDccResponse decodeFromJSON:dccData];
-        }
-    }
-    return response;
-}
-
-@end
-
-@interface AWXWeChatPaySDKResponse ()
-
-@property (nonatomic, copy, readwrite) NSString *appId;
-@property (nonatomic, copy, readwrite) NSString *timeStamp;
-@property (nonatomic, copy, readwrite) NSString *nonceStr;
-@property (nonatomic, copy, readwrite) NSString *prepayId;
-@property (nonatomic, copy, readwrite) NSString *partnerId;
-@property (nonatomic, copy, readwrite) NSString *package;
-@property (nonatomic, copy, readwrite) NSString *sign;
-
-@end
-
-@implementation AWXWeChatPaySDKResponse
-
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
-    AWXWeChatPaySDKResponse *response = [[AWXWeChatPaySDKResponse alloc] init];
-    response.appId = json[@"appId"];
-    response.timeStamp = json[@"timeStamp"];
-    response.nonceStr = json[@"nonceStr"];
-    response.prepayId = json[@"prepayId"];
-    response.partnerId = json[@"partnerId"];
-    response.package = json[@"package"];
-    response.sign = json[@"sign"];
-    return response;
-}
-
-@end
-
-@interface AWXRedirectResponse ()
-
-@property (nonatomic, copy, readwrite) NSString *jwt;
-@property (nonatomic, copy, readwrite) NSString *stage;
-@property (nonatomic, copy, readwrite, nullable) NSString *acs;
-@property (nonatomic, copy, readwrite, nullable) NSString *xid;
-@property (nonatomic, copy, readwrite, nullable) NSString *req;
-
-@end
-
-@implementation AWXRedirectResponse
-
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
-    AWXRedirectResponse *response = [[AWXRedirectResponse alloc] init];
-    response.jwt = json[@"jwt"];
-    response.stage = json[@"stage"];
-    response.acs = json[@"acs"];
-    response.xid = json[@"xid"];
-    response.req = json[@"req"];
-    return response;
-}
-
-@end
-
-@interface AWXDccResponse ()
-
-@property (nonatomic, copy, readwrite) NSString *currency;
-@property (nonatomic, copy, readwrite) NSString *currencyPair;
-@property (nonatomic, copy, readwrite) NSDecimalNumber *amount;
-@property (nonatomic, copy, readwrite) NSString *amountString;
-@property (nonatomic, copy, readwrite) NSDecimalNumber *clientRate;
-@property (nonatomic, copy, readwrite) NSString *clientRateString;
-@property (nonatomic, copy, readwrite) NSString *rateTimestamp, *rateExpiry;
-
-@end
-
-@implementation AWXDccResponse
-
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
-    AWXDccResponse *response = [[AWXDccResponse alloc] init];
-    response.currency = json[@"currency"];
-    response.currencyPair = json[@"currency_pair"];
-    NSNumber *amount = json[@"amount"];
-    response.amount = [NSDecimalNumber decimalNumberWithDecimal:amount.decimalValue];
-    response.amountString = @(amount.floatValue).description;
-    NSNumber *clientRate = json[@"client_rate"];
-    response.clientRate = [NSDecimalNumber decimalNumberWithDecimal:clientRate.decimalValue];
-    response.clientRateString = @(clientRate.floatValue).description;
-    response.rateTimestamp = json[@"rate_timestamp"];
-    response.rateExpiry = json[@"rate_expiry"];
+    response.payload = json;
     return response;
 }
 

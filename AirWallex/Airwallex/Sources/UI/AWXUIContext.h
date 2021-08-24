@@ -34,22 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error;
 
-/**
- This method is called when wechat pay is needed.
-
- @param controller The controller handling payment result.
- @param response The wechat object.
- */
-- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWXWeChatPaySDKResponse *)response;
-
-/**
- This method is called when alipay is needed.
-
- @param controller The controller handling payment result.
- @param url The url to launch alipay.
- */
-- (void)paymentViewController:(UIViewController *)controller nextActionWithRedirectToURL:(NSURL *)url;
-
 @end
 
 /**

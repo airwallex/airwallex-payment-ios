@@ -22,6 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
  This method is called when the user has completed the 3ds flow.
  
  @param service The service handling 3ds flow.
+ @param controller The webview controller.
+ */
+- (void)threeDSService:(AWXThreeDSService *)service shouldPresentViewController:(UIViewController *)controller;
+
+/**
+ This method is called when the user has completed the 3ds flow.
+ 
+ @param service The service handling 3ds flow.
  @param response The response of 3ds auth.
  @param error The error if 3ds auth failed.
  */
@@ -45,11 +53,6 @@ NS_ASSUME_NONNULL_BEGIN
  Device object. (Get by calling `AWXSecurityService` method)
  */
 @property (nonatomic, strong) AWXDevice *device;
-
-/**
- The presentingViewController will present or push the 3ds flow.
- */
-@property (nonatomic, weak) UIViewController *presentingViewController;
 
 /**
  The delegate which handles 3ds result.

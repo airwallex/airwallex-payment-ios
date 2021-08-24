@@ -43,7 +43,7 @@
     
     AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
-    controller.session = self.viewModel.session;
+    controller.session = self.session;
     controller.paymentMethod = self.paymentMethod;
     controller.formMapping = formMapping;
     controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
@@ -66,7 +66,7 @@
     
     AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
-    controller.session = self.viewModel.session;
+    controller.session = self.session;
     controller.paymentMethod = self.paymentMethod;
     controller.formMapping = formMapping;
     controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
@@ -77,8 +77,8 @@
 - (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod
 {
     [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES];
-    [self.viewModel confirmPaymentIntentWithPaymentMethod:paymentMethod
-                                           paymentConsent:nil];
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod
+                                 paymentConsent:nil];
 }
 
 @end

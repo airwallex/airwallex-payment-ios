@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class AWXSession;
+@class AWXSession, AWXDefaultProvider;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXViewController : UIViewController
 
 @property (nonatomic, strong) AWXSession *session;
+@property (nonatomic, strong) AWXDefaultProvider *provider;
 
 - (void)startAnimating;
 - (void)stopAnimating;
