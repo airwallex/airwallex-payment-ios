@@ -128,17 +128,17 @@ static NSString *const recurring = @"recurring";
     return nil;
 }
 
-- (AirwallexNextTriggerByType)nextTriggerByType
+- (BOOL)requiresCVC
 {
     if ([self isKindOfClass:[AWXRecurringSession class]]) {
         AWXRecurringSession *session = (AWXRecurringSession *)self;
-        return session.nextTriggerByType;
+        return session.requiresCVC;
     }
     if ([self isKindOfClass:[AWXRecurringWithIntentSession class]]) {
         AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self;
-        return session.nextTriggerByType;
+        return session.requiresCVC;
     }
-    return AirwallexNextTriggerByCustomerType;
+    return NO;
 }
 
 @end

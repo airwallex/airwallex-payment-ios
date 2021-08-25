@@ -124,7 +124,7 @@
     NSArray *customerPaymentConsents = self.session.customerPaymentConsents;
     
     if ([self.session isKindOfClass:[AWXOneOffSession class]] && customerPaymentConsents.count > 0 && customerPaymentMethods.count > 0) {
-        NSArray *paymentConsents = [customerPaymentConsents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"nextTriggeredBy == %@", FormatNextTriggerByType(AirwallexNextTriggerByCustomerType)]];
+        NSArray *paymentConsents = [customerPaymentConsents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"nextTriggeredBy == %@ AND status == 'VERIFIED'", FormatNextTriggerByType(AirwallexNextTriggerByCustomerType)]];
         NSMutableArray *availablePaymentConsents = [@[] mutableCopy];
         for (AWXPaymentConsent *consent in paymentConsents) {
             AWXPaymentMethod *paymentMethod = [customerPaymentMethods filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Id == %@", consent.paymentMethod.Id]].firstObject;
@@ -264,7 +264,13 @@
     
     // No cvc provided and go to enter cvc in payment detail page
     AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
-    [self showPayment:paymentConsent];
+    if (self.session.requiresCVC) {
+        [self showPayment:paymentConsent];
+    } else {
+        AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
+        [provider confirmPaymentIntentWithPaymentMethod:paymentConsent.paymentMethod paymentConsent:paymentConsent];
+        self.provider = provider;
+    }
 }
 
 #pragma mark - UIScrollViewDelegate

@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)currency;
 - (NSDecimalNumber *)amount;
 - (nullable NSString *)paymentIntentId;
-- (AirwallexNextTriggerByType)nextTriggerByType;
+- (BOOL)requiresCVC;
 
 @end
 
