@@ -269,6 +269,8 @@
             session.amount = [NSDecimalNumber decimalNumberWithString:[AirwallexExamplesKeys shared].amount];
             session.customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
             session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
+            session.requiresCVC = NO;
+            session.merchantTriggerReason = AirwallexMerchantTriggerReasonUnscheduled;
             return session;
         }
         case AirwallexCheckoutRecurringWithIntentMode:
@@ -278,6 +280,8 @@
             session.returnURL = returnURL;
             session.paymentIntent = paymentIntent;
             session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
+            session.requiresCVC = YES;
+            session.merchantTriggerReason = AirwallexMerchantTriggerReasonScheduled;
             return session;
         }
     }

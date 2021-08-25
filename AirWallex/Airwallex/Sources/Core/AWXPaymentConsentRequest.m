@@ -30,15 +30,16 @@
 - (nullable NSDictionary *)parameters
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"request_id"]        = self.requestId;
-    parameters[@"customer_id"]       = self.customerId;
-    parameters[@"currency"]          = self.currency;
-    parameters[@"requires_cvc"] = [NSNumber numberWithBool:NO];
+    parameters[@"request_id"] = self.requestId;
+    parameters[@"customer_id"] = self.customerId;
+    parameters[@"currency"] = self.currency;
+    parameters[@"requires_cvc"] = [NSNumber numberWithBool:self.requiresCVC];
     parameters[@"next_triggered_by"] = FormatNextTriggerByType(self.nextTriggerByType);
-
+    parameters[@"merchant_trigger_reason"] = FormatMerchantTriggerReason(self.merchantTriggerReason);
+    
     NSMutableDictionary *paymentParams = @{}.mutableCopy;
     if (self.paymentMethod.Id) {
-        paymentParams[@"id"]   = self.paymentMethod.Id;
+        paymentParams[@"id"] = self.paymentMethod.Id;
     }
     if (self.paymentMethod.type) {
         paymentParams[@"type"] = self.paymentMethod.type;

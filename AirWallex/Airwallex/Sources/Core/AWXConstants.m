@@ -60,6 +60,16 @@ NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type)
     }
 }
 
+NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason)
+{
+    switch (reason) {
+        case AirwallexMerchantTriggerReasonUnscheduled:
+            return @"unscheduled";
+        case AirwallexMerchantTriggerReasonScheduled:
+            return @"scheduled";
+    }
+}
+
 Class ClassToHandleFlowForPaymentMethodType(NSString *type)
 {
     if ([type isEqualToString:AWXCardKey]) {

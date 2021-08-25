@@ -73,6 +73,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) AirwallexNextTriggerByType nextTriggerByType;
 
+/**
+ Only applicable when next_triggered_by is customer and the payment_method.type is card.If true, the customer must provide cvc for the subsequent payment with this PaymentConsent.
+ Default: NO
+ */
+@property (nonatomic) BOOL requiresCVC;
+
+/**
+ Merchant trigger reason
+ */
+@property (nonatomic) AirwallexMerchantTriggerReason merchantTriggerReason;
+
 @end
 
 @interface AWXRecurringWithIntentSession : AWXSession
@@ -86,6 +97,17 @@ NS_ASSUME_NONNULL_BEGIN
  Next trigger by.
  */
 @property (nonatomic) AirwallexNextTriggerByType nextTriggerByType;
+
+/**
+ Only applicable when next_triggered_by is customer and the payment_method.type is card.If true, the customer must provide cvc for the subsequent payment with this PaymentConsent.
+ Default: NO
+ */
+@property (nonatomic) BOOL requiresCVC;
+
+/**
+ Merchant trigger reason
+ */
+@property (nonatomic) AirwallexMerchantTriggerReason merchantTriggerReason;
 
 @end
 

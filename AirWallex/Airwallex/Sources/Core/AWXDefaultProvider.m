@@ -144,6 +144,8 @@
                                          customerId:session.customerId
                                            currency:session.currency
                                   nextTriggerByType:session.nextTriggerByType
+                                        requiresCVC:session.requiresCVC
+                              merchantTriggerReason:session.merchantTriggerReason
                                          completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             if (response && !error) {
@@ -164,6 +166,8 @@
                                          customerId:session.paymentIntent.customerId
                                            currency:session.paymentIntent.currency
                                   nextTriggerByType:session.nextTriggerByType
+                                        requiresCVC:session.requiresCVC
+                              merchantTriggerReason:session.merchantTriggerReason
                                          completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             if ([paymentMethod.type isEqualToString:AWXCardKey]) {
@@ -244,6 +248,8 @@
                                    customerId:(nullable NSString *)customerId
                                      currency:(NSString *)currency
                             nextTriggerByType:(AirwallexNextTriggerByType)nextTriggerByType
+                                  requiresCVC:(BOOL)requiresCVC
+                        merchantTriggerReason:(AirwallexMerchantTriggerReason)merchantTriggerReason
                                    completion:(AWXRequestHandler)completion
 {
     AWXCreatePaymentConsentRequest *request = [AWXCreatePaymentConsentRequest new];
@@ -252,6 +258,8 @@
     request.customerId = customerId;
     request.currency = currency;
     request.nextTriggerByType = nextTriggerByType;
+    request.requiresCVC = requiresCVC;
+    request.merchantTriggerReason = merchantTriggerReason;
     
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self)weakSelf = self;

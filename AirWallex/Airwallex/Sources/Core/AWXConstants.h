@@ -26,6 +26,11 @@ typedef NS_ENUM(NSUInteger, AirwallexNextTriggerByType) {
     AirwallexNextTriggerByMerchantType
 };
 
+typedef NS_ENUM(NSUInteger, AirwallexMerchantTriggerReason) {
+    AirwallexMerchantTriggerReasonUnscheduled,
+    AirwallexMerchantTriggerReasonScheduled
+};
+
 typedef NS_ENUM(NSUInteger, AWXFormType) {
     AWXFormTypeOption,
     AWXFormTypeField,
@@ -74,6 +79,7 @@ FOUNDATION_EXPORT NSString *const AWXFontFamilyNameCircularXX;
 FOUNDATION_EXPORT NSString *const AWXFontNameCircularXXRegular;
 
 FOUNDATION_EXPORT NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type);
+FOUNDATION_EXPORT NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason);
 FOUNDATION_EXPORT Class ClassToHandleFlowForPaymentMethodType(NSString *type);
 FOUNDATION_EXPORT Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction);
 

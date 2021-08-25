@@ -43,6 +43,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) AirwallexNextTriggerByType nextTriggerByType;
 
+/**
+ Whether it requires CVC.
+ */
+@property (nonatomic) BOOL requiresCVC;
+
+/**
+ Merchant trigger reason
+ */
+@property (nonatomic) AirwallexMerchantTriggerReason merchantTriggerReason;
+
 @end
 
 @interface AWXVerifyPaymentConsentRequest : NSObject <AWXRequestProtocol>
