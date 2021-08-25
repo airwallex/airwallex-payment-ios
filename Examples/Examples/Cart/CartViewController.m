@@ -38,6 +38,7 @@
     [self setupViews];
     [self setupCartData];
     [self setupExamplesAPIClient];
+    [self setupSDK];
     [self reloadData];
 }
 
@@ -84,17 +85,20 @@
 - (void)setupExamplesAPIClient
 {
     APIClient *client = [APIClient sharedClient];
-    client.paymentBaseURL = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
+    NSURL *url = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
+    client.paymentBaseURL = url;
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientId;
-    
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
 }
 
 - (void)setupSDK
 {
     // Step 1: Use a preset mode (Note: test mode as default)
-    [Airwallex setMode:AirwallexSDKTestMode];
+//    [Airwallex setMode:AirwallexSDKTestMode];
+    // Or set base URL directly
+    NSURL *url = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
+    [Airwallex setDefaultBaseURL:url];
     
     // Theme customization
     UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
@@ -249,7 +253,7 @@
 
 - (AWXSession *)createSession:(nullable AWXPaymentIntent *)paymentIntent
 {
-    NSString *returnURL = @"airwallexcheckout://com.airwallex.paymentacceptance";
+    NSString *returnURL = @"https://airwallex.com";
     AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
     switch (checkoutMode) {
         case AirwallexCheckoutOneOffMode:
@@ -405,18 +409,12 @@
 
 #pragma mark - AWXPaymentResultDelegate
 
-- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        [self showPaymentResult:error];
-    }];
-}
-
-- (void)paymentViewController:(UIViewController *)controller nextActionWithRedirectToURL:(NSURL *)url
-{
-    [controller dismissViewControllerAnimated:YES completion:^{
-        [UIPasteboard.generalPasteboard setString:url.absoluteString];
-        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+        if (status != AirwallexPaymentStatusInProgress) {
+            [self showPaymentResult:error];
+        }
     }];
 }
 

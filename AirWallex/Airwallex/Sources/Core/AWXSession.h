@@ -25,6 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy) NSString *returnURL;
 
+///**
+// Universal link.
+// */
+//@property (nonatomic, copy, nullable) NSString *uni;
+
 - (NSString *)transactionMode;
 
 @end

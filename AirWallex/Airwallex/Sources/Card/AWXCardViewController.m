@@ -385,12 +385,12 @@
     [self stopAnimating];
 }
 
-- (void)provider:(AWXDefaultProvider *)provider didCompleteWithError:(NSError *)error
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error
 {
     UIViewController *presentingViewController = self.presentingViewController;
     [self dismissViewControllerAnimated:YES completion:^{
         id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-        [delegate paymentViewController:presentingViewController didFinishWithStatus:error != nil ? AWXPaymentStatusError : AWXPaymentStatusSuccess error:error];
+        [delegate paymentViewController:presentingViewController didCompleteWithStatus:status error:error];
     }];
 }
 

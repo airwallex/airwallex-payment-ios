@@ -7,6 +7,7 @@
 //
 
 #import "AWXWeChatPayActionProvider.h"
+#import "AWXSession.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXWeChatPaySDKResponse.h"
 #import <WechatOpenSDK/WXApi.h>
@@ -31,11 +32,13 @@
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf.delegate providerDidEndRequest:strongSelf];
-                [strongSelf.delegate provider:strongSelf didCompleteWithError:error];
+                [strongSelf.delegate provider:strongSelf didCompleteWithStatus:error != nil ? AirwallexPaymentStatusFailure : AirwallexPaymentStatusSuccess error:error];
             });
         }] resume];
         return;
     }
+    
+    [WXApi registerApp:response.appId universalLink:self.session.returnURL];
     
     PayReq *request = [[PayReq alloc] init];
     request.partnerId = response.partnerId;
@@ -47,13 +50,11 @@
     
     [WXApi sendReq:request completion:^(BOOL success) {
         if (!success) {
-            // Failed to call WeChat app
+            [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to request WeChat service.", nil)}]];
             return;
         }
-        // Succeed to call WeChat app
+        [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
     }];
-    
-    [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES];
 }
 
 @end

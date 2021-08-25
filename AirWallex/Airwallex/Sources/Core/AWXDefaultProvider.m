@@ -73,7 +73,7 @@
                 AWXCreatePaymentMethodResponse *result = (AWXCreatePaymentMethodResponse *)response;
                 [strongSelf confirmPaymentIntentWithPaymentMethod:result.paymentMethod paymentConsent:nil];
             } else {
-                [strongSelf.delegate provider:strongSelf didCompleteWithError:error];
+                [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
             }
         }];
     }
@@ -196,7 +196,7 @@
     if (response && response.nextAction) {
         [self.delegate provider:self shouldHandleNextAction:response.nextAction];
     } else {
-        [self.delegate provider:self didCompleteWithError:error];
+        [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
     }
 }
 

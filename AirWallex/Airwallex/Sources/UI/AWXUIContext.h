@@ -13,11 +13,6 @@
 
 @class AWXWeChatPaySDKResponse, AWXPaymentMethodListViewController, AWXCardViewController, AWXPaymentViewController, AWXShippingViewController, AWXPaymentIntent, AWXPlaceDetails;
 
-typedef NS_ENUM(NSUInteger, AWXPaymentStatus) {
-    AWXPaymentStatusSuccess,
-    AWXPaymentStatusError,
-};
-
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -32,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param status The status of checkout result.
  @param error The error if checkout failed.
  */
-- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error;
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error;
 
 @end
 

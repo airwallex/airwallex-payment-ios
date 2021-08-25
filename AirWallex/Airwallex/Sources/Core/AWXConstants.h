@@ -21,6 +21,12 @@ typedef NS_ENUM(NSInteger, AirwallexSDKMode) {
     AirwallexSDKLiveMode
 };
 
+typedef NS_ENUM(NSUInteger, AirwallexPaymentStatus) {
+    AirwallexPaymentStatusSuccess,
+    AirwallexPaymentStatusInProgress,
+    AirwallexPaymentStatusFailure,
+};
+
 typedef NS_ENUM(NSUInteger, AirwallexNextTriggerByType) {
     AirwallexNextTriggerByCustomerType,
     AirwallexNextTriggerByMerchantType

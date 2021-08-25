@@ -294,10 +294,10 @@
     [self stopAnimating];
 }
 
-- (void)provider:(AWXDefaultProvider *)provider didCompleteWithError:(NSError *)error
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error
 {
     id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    [delegate paymentViewController:self didFinishWithStatus:error != nil ? AWXPaymentStatusError : AWXPaymentStatusSuccess error:error];
+    [delegate paymentViewController:self didCompleteWithStatus:status error:error];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId
