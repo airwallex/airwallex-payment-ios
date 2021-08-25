@@ -10,7 +10,6 @@
 #import "AWXFontLoader.h"
 #import "AWXUtils.h"
 #import "AWXPaymentMethodListViewController.h"
-#import "AWXCardViewController.h"
 #import "AWXPaymentViewController.h"
 #import "AWXShippingViewController.h"
 #import "AWXPaymentIntent.h"
