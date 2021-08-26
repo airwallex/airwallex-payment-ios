@@ -12,6 +12,8 @@
 #import "AWXPlaceDetails.h"
 #import "AWXCountry.h"
 #import "AWXConstants.h"
+#import "AWXUtils.h"
+#import "AWXTheme.h"
 
 @interface AWXShippingViewController () <AWXCountryListViewControllerDelegate>
 
@@ -47,8 +49,8 @@
     
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = NSLocalizedString(@"Shipping", @"Shipping");
-    titleLabel.textColor = [UIColor colorWithRed: 0.16 green: 0.16 blue: 0.16 alpha: 1.00];
-    titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:32];
+    titleLabel.textColor = [UIColor gray100Color];
+    titleLabel.font = [UIFont titleFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:titleLabel];
     
@@ -74,8 +76,8 @@
     
     UILabel *contactLabel = [UILabel new];
     contactLabel.text = NSLocalizedString(@"Contact", @"Contact");
-    contactLabel.textColor = [UIColor colorWithRed: 0.16 green: 0.16 blue: 0.16 alpha: 1.00];
-    contactLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
+    contactLabel.textColor = [UIColor gray100Color];
+    contactLabel.font = [UIFont subhead2Font];
     [stackView addArrangedSubview:contactLabel];
     
     _firstNameField = [AWXFloatingLabelTextField new];
@@ -100,8 +102,8 @@
 
     UILabel *addressLabel = [UILabel new];
     addressLabel.text = NSLocalizedString(@"Shipping address", @"Shipping address");
-    addressLabel.textColor = [UIColor colorWithRed: 0.16 green: 0.16 blue: 0.16 alpha: 1.00];
-    addressLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
+    addressLabel.textColor = [AWXTheme sharedTheme].textColor;
+    addressLabel.font = [UIFont bodyFont];
     [stackView addArrangedSubview:addressLabel];
 
     _countryView = [AWXFloatingLabelView new];

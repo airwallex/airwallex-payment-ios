@@ -39,7 +39,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor bgColor];
     [self enableTapToEndEditting];
     
     _scrollView = [UIScrollView new];
@@ -67,15 +66,15 @@
     _totalLabel = [UILabel new];
     _totalLabel.text = [self.session.amount stringWithCurrencyCode:self.session.currency];
     _totalLabel.textAlignment = NSTextAlignmentCenter;
-    _totalLabel.textColor = [UIColor textColor];
-    _totalLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:40];
+    _totalLabel.textColor = [UIColor gray50Color];
+    _totalLabel.font = [UIFont subhead1Font];
     [stackView addArrangedSubview:_totalLabel];
     
     UILabel *totalLabel = [UILabel new];
     totalLabel.text = NSLocalizedString(@"Total", @"Total");
     totalLabel.textAlignment = NSTextAlignmentCenter;
-    totalLabel.textColor = [UIColor textColor];
-    totalLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+    totalLabel.textColor = [UIColor gray50Color];
+    totalLabel.font = [UIFont subhead1Font];
     [stackView addArrangedSubview:totalLabel];
     
     UIStackView *contentView = [UIStackView new];
@@ -101,13 +100,13 @@
     
     UILabel *paymentLabel = [UILabel new];
     paymentLabel.text = NSLocalizedString(@"Payment", @"Payment");
-    paymentLabel.textColor = [UIColor textColor];
-    paymentLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+    paymentLabel.textColor = [UIColor gray100Color];
+    paymentLabel.font = [UIFont subhead2Font];
     [paymentMethodStackView addArrangedSubview:paymentLabel];
     
     UILabel *methodLabel = [UILabel new];
-    methodLabel.textColor = [UIColor floatingTitleColor];
-    methodLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+    methodLabel.textColor = [UIColor gray100Color];
+    methodLabel.font = [UIFont subhead2Font];
     [paymentMethodStackView addArrangedSubview:methodLabel];
     
     UIStackView *cvcStackView = [UIStackView new];
@@ -127,9 +126,9 @@
     _cvcField.textAlignment = NSTextAlignmentCenter;
     _cvcField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
     _cvcField.borderStyle = UITextBorderStyleRoundedRect;
-    _cvcField.textColor = [UIColor textColor];
+    _cvcField.textColor = [AWXTheme sharedTheme].textColor;
     _cvcField.placeholder = NSLocalizedString(@"CVC/VCC", @"CVC/VCC");
-    _cvcField.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+    _cvcField.font = [UIFont subhead2Font];
     [_cvcField addTarget:self action:@selector(cvcChanged:) forControlEvents:UIControlEventEditingChanged];
     _cvcField.translatesAutoresizingMaskIntoConstraints = NO;
     [cvcStackView addArrangedSubview:_cvcField];
@@ -145,9 +144,9 @@
 
     _confirmButton = [AWXButton new];
     _confirmButton.enabled = YES;
-    _confirmButton.cornerRadius = 6;
+    _confirmButton.cornerRadius = 8;
     [_confirmButton setTitle:NSLocalizedString(@"Pay now", @"Pay now") forState:UIControlStateNormal];
-    _confirmButton.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
+    _confirmButton.titleLabel.font = [UIFont headlineFont];
     [_confirmButton addTarget:self action:@selector(payPressed:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmButton setImage:[UIImage imageNamed:@"lock-white" inBundle:[NSBundle resourceBundle]] forState:UIControlStateNormal];
     [_confirmButton setImage:[UIImage imageNamed:@"lock-grey" inBundle:[NSBundle resourceBundle]] forState:UIControlStateDisabled];

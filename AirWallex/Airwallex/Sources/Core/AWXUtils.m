@@ -278,39 +278,88 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 
 @implementation UIColor (Utils)
 
-+ (UIColor *)bgColor
++ (UIColor *)colorWithHex:(NSUInteger)hex
 {
-    return [UIColor colorWithRed:0.97 green:0.97 blue:0.98 alpha:1];
+    CGFloat red, green, blue, alpha;
+    red = ((CGFloat)((hex >> 16) & 0xFF)) / ((CGFloat)0xFF);
+    green = ((CGFloat)((hex >> 8) & 0xFF)) / ((CGFloat)0xFF);
+    blue = ((CGFloat)((hex >> 0) & 0xFF)) / ((CGFloat)0xFF);
+    alpha = hex > 0xFFFFFF ? ((CGFloat)((hex >> 24) & 0xFF)) / ((CGFloat)0xFF) : 1;
+    return [UIColor colorWithRed: red green:green blue:blue alpha:alpha];
 }
 
-+ (UIColor *)titleColor
++ (UIColor *)gray10Color
 {
-    return [UIColor colorWithRed:0.1 green:0.11 blue:0.13 alpha:1];
+    return [UIColor colorWithHex:0xF6F7F8];
 }
 
-+ (UIColor *)floatingTitleColor
++ (UIColor *)gray30Color
 {
-    return [UIColor colorWithRed:169.0f/255.0f green:169.0f/255.0f blue:174.0f/255.0f alpha:1];
+    return [UIColor colorWithHex:0xD7DBE0];
 }
 
-+ (UIColor *)textColor
++ (UIColor *)gray50Color
 {
-    return [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1];
+    return [UIColor colorWithHex:0x868E98];
 }
 
-+ (UIColor *)buttonBackgroundColor
++ (UIColor *)gray70Color
 {
-    return [UIColor colorWithRed:0.38 green:0.18 blue:1 alpha:1];
+    return [UIColor colorWithHex:0x545B63];
 }
 
-+ (UIColor *)errorColor
++ (UIColor *)gray100Color
 {
-    return [UIColor colorWithRed:255.0f/255.0f green:79.0f/255.0f blue:66.0f/255.0f alpha:1];
+    return [UIColor colorWithHex:0x1A1D21];
 }
 
-+ (UIColor *)lineColor
++ (UIColor *)ultravioletColor
 {
-    return [UIColor colorWithRed:235.0f/255.0f green:246.0f/255.0f blue:240.0f/255.0f alpha:1];
+    return [UIColor colorWithHex:0x612FFF];
+}
+
++ (UIColor *)infraredColor
+{
+    return [UIColor colorWithHex:0xFF4F42];
+}
+
+@end
+
+@implementation UIFont (Utils)
+
++ (UIFont *)titleFont
+{
+    return [UIFont systemFontOfSize:28 weight:UIFontWeightBold];
+}
+
++ (UIFont *)headlineFont
+{
+    return [UIFont systemFontOfSize:17 weight:UIFontWeightBold];
+}
+
++ (UIFont *)bodyFont
+{
+    return [UIFont systemFontOfSize:17 weight:UIFontWeightRegular];
+}
+
++ (UIFont *)subhead1Font
+{
+    return [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
+}
+
++ (UIFont *)subhead2Font
+{
+    return [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+}
+
++ (UIFont *)caption1Font
+{
+    return [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
+}
+
++ (UIFont *)caption2Font
+{
+    return [UIFont systemFontOfSize:12 weight:UIFontWeightSemibold];
 }
 
 @end

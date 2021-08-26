@@ -7,7 +7,6 @@
 //
 
 #import "AWXUIContext.h"
-#import "AWXFontLoader.h"
 #import "AWXUtils.h"
 #import "AWXPaymentMethodListViewController.h"
 #import "AWXPaymentViewController.h"
@@ -30,7 +29,6 @@
 + (void)initialize
 {
     if (self == [AWXUIContext class]) {
-        [AWXFontLoader loadFontIfNeeded];
         [[NSUserDefaults awxUserDefaults] reset];
     }
 }

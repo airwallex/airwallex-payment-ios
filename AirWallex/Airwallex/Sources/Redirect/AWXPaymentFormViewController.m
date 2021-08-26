@@ -12,6 +12,7 @@
 #import "AWXPaymentMethod.h"
 #import "AWXFormMapping.h"
 #import "AWXForm.h"
+#import "AWXTheme.h"
 
 @interface AWXPaymentFormViewController ()
 
@@ -63,8 +64,8 @@
     
     UILabel *titleLabel = [UILabel autoLayoutView];
     titleLabel.text = self.formMapping.title;
-    titleLabel.textColor = [UIColor titleColor];
-    titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:22];
+    titleLabel.textColor = [UIColor gray100Color];
+    titleLabel.font = [UIFont subhead2Font];
     [promptView addSubview:titleLabel];
     
     UIStackView *stackView = [UIStackView autoLayoutView];
@@ -86,11 +87,11 @@
         } else if (form.type == AWXFormTypeButton) {
             UIButton *button = [UIButton autoLayoutView];
             button.layer.masksToBounds = YES;
-            button.layer.cornerRadius = 6;
-            button.backgroundColor = [UIColor buttonBackgroundColor];
+            button.layer.cornerRadius = 8;
+            button.backgroundColor = [AWXTheme sharedTheme].tintColor;
             [button setTitle:form.title forState:UIControlStateNormal];
             button.titleLabel.textColor = [UIColor whiteColor];
-            button.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
+            button.titleLabel.font = [UIFont headlineFont];
             [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [stackView addArrangedSubview:button];
             self.stackView = stackView;

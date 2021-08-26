@@ -7,6 +7,7 @@
 //
 
 #import "AWXTheme.h"
+#import "AWXUtils.h"
 
 static UIColor *AWXThemeDefaultLineColor = nil;
 static UIColor *AWXThemeDefaultPurpleColor = nil;
@@ -26,9 +27,9 @@ static UIColor *AWXThemeDefaultTextColor = nil;
 
 + (void)initialize
 {
-    AWXThemeDefaultLineColor = [UIColor colorWithRed:235.0f/255.0f green:236.0f/255.0f blue:240.0f/255.0f alpha:1];
-    AWXThemeDefaultPurpleColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
-    AWXThemeDefaultTextColor = [UIColor colorWithRed:42.0f/255.0f green:42.0f/255.0f blue:42.0f/255.0f alpha:1];
+    AWXThemeDefaultLineColor = [UIColor gray30Color];
+    AWXThemeDefaultPurpleColor = [UIColor ultravioletColor];
+    AWXThemeDefaultTextColor = [UIColor gray100Color];
 }
 
 - (UIColor *)lineColor

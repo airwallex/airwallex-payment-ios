@@ -24,9 +24,6 @@
 		085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
 		085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
 		085BD40123CC64B9002E8F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
-		086F862F25230C330006DAB5 /* CircularXX-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 086F862E25230C330006DAB5 /* CircularXX-Regular.otf */; };
-		088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
-		088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
 		57033F04269554BD008A4780 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
@@ -47,11 +44,8 @@
 		57033F16269554BD008A4780 /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
 		57033F17269554BD008A4780 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
 		57033F18269554BD008A4780 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
-		57033F19269554BD008A4780 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		57033F1A269554BD008A4780 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
 		57033F1B269554BD008A4780 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3F723CC64B6002E8F27 /* Main.storyboard */; };
-		57033F1C269554BD008A4780 /* CircularXX-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 086F862E25230C330006DAB5 /* CircularXX-Regular.otf */; };
-		57033F1D269554BD008A4780 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
 		57033F20269554BD008A4780 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57033F2926958C94008A4780 /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 57033F2826958C94008A4780 /* UIViewController+Utils.m */; };
 		57033F2A26958C94008A4780 /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 57033F2826958C94008A4780 /* UIViewController+Utils.m */; };
@@ -76,14 +70,11 @@
 		57F9EF9A268DCE3E00B744B2 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
 		57F9EF9D268DCE3E00B744B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
 		57F9EF9E268DCE3E00B744B2 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
-		57F9EF9F268DCE3E00B744B2 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB922407B329001ADC71 /* CircularStd-Medium.otf */; };
 		57F9EFA0268DCE3E00B744B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
 		57F9EFA1268DCE3E00B744B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3F723CC64B6002E8F27 /* Main.storyboard */; };
-		57F9EFA2268DCE3E00B744B2 /* CircularXX-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 086F862E25230C330006DAB5 /* CircularXX-Regular.otf */; };
-		57F9EFA4268DCE3E00B744B2 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 088ADB912407B329001ADC71 /* CircularStd-Bold.otf */; };
 		57F9EFA7268DCE3E00B744B2 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		59E19DECEF8F90561DAEAC02 /* libPods-Examples-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E6C1F12354AFFB6FF952FA /* libPods-Examples-Demo.a */; };
-		945478F23941A796D47F8011 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		945478F23941A796D47F8011 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		BB0A2A30E86F49A3911AE319 /* libPods-Examples-Production.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C41EB67CD6F97637F29AFDEA /* libPods-Examples-Production.a */; };
 		E831FE131F64421B7B49E6C2 /* libPods-Examples-Staging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD7AB69F36558E78404EE27 /* libPods-Examples-Staging.a */; };
 /* End PBXBuildFile section */
@@ -152,9 +143,6 @@
 		085BD3FD23CC64B9002E8F27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		085BD3FF23CC64B9002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD40023CC64B9002E8F27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		086F862E25230C330006DAB5 /* CircularXX-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularXX-Regular.otf"; sourceTree = "<group>"; };
-		088ADB912407B329001ADC71 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.otf"; sourceTree = "<group>"; };
-		088ADB922407B329001ADC71 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
 		088F3E8123CEB7FF005AE40F /* APIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
 		088F3E8223CEB7FF005AE40F /* APIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		08A3E99D24246C30003FDAAF /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
@@ -186,7 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				084779D2244F240A00C41256 /* Airwallex.framework in Frameworks */,
-				945478F23941A796D47F8011 /* BuildFile in Frameworks */,
+				945478F23941A796D47F8011 /* (null) in Frameworks */,
 				59E19DECEF8F90561DAEAC02 /* libPods-Examples-Demo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,9 +272,6 @@
 		088ADB902407B329001ADC71 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				086F862E25230C330006DAB5 /* CircularXX-Regular.otf */,
-				088ADB912407B329001ADC71 /* CircularStd-Bold.otf */,
-				088ADB922407B329001ADC71 /* CircularStd-Medium.otf */,
 				085BD3FA23CC64B9002E8F27 /* Assets.xcassets */,
 				085BD3F723CC64B6002E8F27 /* Main.storyboard */,
 				085BA64E23F0FB8A00FD33FA /* Splash.storyboard */,
@@ -449,11 +434,8 @@
 				57DCD642269428C800705D5C /* Keys in Resources */,
 				085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */,
 				085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */,
-				088ADB942407B329001ADC71 /* CircularStd-Medium.otf in Resources */,
 				085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */,
 				085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */,
-				086F862F25230C330006DAB5 /* CircularXX-Regular.otf in Resources */,
-				088ADB932407B329001ADC71 /* CircularStd-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,11 +446,8 @@
 				57033F16269554BD008A4780 /* Keys in Resources */,
 				57033F17269554BD008A4780 /* LaunchScreen.storyboard in Resources */,
 				57033F18269554BD008A4780 /* Splash.storyboard in Resources */,
-				57033F19269554BD008A4780 /* CircularStd-Medium.otf in Resources */,
 				57033F1A269554BD008A4780 /* Assets.xcassets in Resources */,
 				57033F1B269554BD008A4780 /* Main.storyboard in Resources */,
-				57033F1C269554BD008A4780 /* CircularXX-Regular.otf in Resources */,
-				57033F1D269554BD008A4780 /* CircularStd-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,11 +458,8 @@
 				57DCD643269428C800705D5C /* Keys in Resources */,
 				57F9EF9D268DCE3E00B744B2 /* LaunchScreen.storyboard in Resources */,
 				57F9EF9E268DCE3E00B744B2 /* Splash.storyboard in Resources */,
-				57F9EF9F268DCE3E00B744B2 /* CircularStd-Medium.otf in Resources */,
 				57F9EFA0268DCE3E00B744B2 /* Assets.xcassets in Resources */,
 				57F9EFA1268DCE3E00B744B2 /* Main.storyboard in Resources */,
-				57F9EFA2268DCE3E00B744B2 /* CircularXX-Regular.otf in Resources */,
-				57F9EFA4268DCE3E00B744B2 /* CircularStd-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

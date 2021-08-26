@@ -101,13 +101,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIColor (Utils)
 
-+ (UIColor *)bgColor;
-+ (UIColor *)titleColor;
-+ (UIColor *)floatingTitleColor;
-+ (UIColor *)textColor;
-+ (UIColor *)buttonBackgroundColor;
-+ (UIColor *)errorColor;
-+ (UIColor *)lineColor;
++ (UIColor *)colorWithHex:(NSUInteger)hex;
++ (UIColor *)gray10Color;
++ (UIColor *)gray30Color;
++ (UIColor *)gray50Color;
++ (UIColor *)gray70Color;
++ (UIColor *)gray100Color;
++ (UIColor *)ultravioletColor;
++ (UIColor *)infraredColor;
+
+@end
+
+@interface UIFont (Utils)
+
++ (UIFont *)titleFont;
++ (UIFont *)headlineFont;
++ (UIFont *)bodyFont;
++ (UIFont *)subhead1Font;
++ (UIFont *)subhead2Font;
++ (UIFont *)caption1Font;
++ (UIFont *)caption2Font;
 
 @end
 

@@ -51,7 +51,6 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    _tableView.backgroundColor = [UIColor bgColor];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.tableHeaderView = [self headerView];
@@ -73,8 +72,8 @@
     
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = NSLocalizedString(@"Payment methods", @"Payment methods");
-    titleLabel.textColor = [UIColor textColor];
-    titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:32];
+    titleLabel.textColor = [UIColor gray100Color];
+    titleLabel.font = [UIFont titleFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [headerView addSubview:titleLabel];
     

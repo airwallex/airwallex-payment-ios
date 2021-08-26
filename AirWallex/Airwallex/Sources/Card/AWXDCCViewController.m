@@ -73,15 +73,15 @@
     
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = NSLocalizedString(@"Select your currency", @"Select your currency");
-    titleLabel.textColor = [UIColor textColor];
-    titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
+    titleLabel.textColor = [UIColor gray100Color];
+    titleLabel.font = [UIFont headlineFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:titleLabel];
     
     UILabel *subTitleLabel = [UILabel new];
     subTitleLabel.text = NSLocalizedString(@"Select the currency you would like to pay with", @"Select the currency you would like to pay with");
-    subTitleLabel.textColor = [UIColor floatingTitleColor];
-    subTitleLabel.font = [UIFont fontWithName:AWXFontFamilyNameCircularXX size:14];
+    subTitleLabel.textColor = [UIColor gray50Color];
+    subTitleLabel.font = [UIFont subhead1Font];
     subTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:subTitleLabel];
     
@@ -99,7 +99,7 @@
         _leftCurrencyView.flag = nil;
     }
     _leftCurrencyView.layer.masksToBounds = NO;
-    _leftCurrencyView.layer.cornerRadius = 6.0f;
+    _leftCurrencyView.layer.cornerRadius = 8;
     _leftCurrencyView.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.08].CGColor;
     _leftCurrencyView.layer.shadowOffset = CGSizeMake(0, 0);
     _leftCurrencyView.layer.shadowOpacity = 1;
@@ -110,7 +110,7 @@
     
     _rightCurrencyView = [AWXCurrencyView new];
     _rightCurrencyView.layer.masksToBounds = NO;
-    _rightCurrencyView.layer.cornerRadius = 6.0f;
+    _rightCurrencyView.layer.cornerRadius = 8;
     _rightCurrencyView.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.08].CGColor;
     _rightCurrencyView.layer.shadowOffset = CGSizeMake(0, 0);
     _rightCurrencyView.layer.shadowOpacity = 1;
@@ -131,16 +131,16 @@
     [tipView addSubview:rateImageView];
 
     _rateLabel = [UILabel new];
-    _rateLabel.textColor = [UIColor floatingTitleColor];
-    _rateLabel.font = [UIFont fontWithName:AWXFontFamilyNameCircularXX size:14];
+    _rateLabel.textColor = [UIColor gray50Color];
+    _rateLabel.font = [UIFont subhead1Font];
     _rateLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [tipView addSubview:_rateLabel];
     
     _confirmButton = [AWXButton new];
     _confirmButton.enabled = YES;
-    _confirmButton.cornerRadius = 6;
+    _confirmButton.cornerRadius = 8;
     [_confirmButton setTitle:NSLocalizedString(@"Confirm payment", @"Confirm payment") forState:UIControlStateNormal];
-    _confirmButton.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
+    _confirmButton.titleLabel.font = [UIFont subhead2Font];
     [_confirmButton addTarget:self action:@selector(confirmPressed:) forControlEvents:UIControlEventTouchUpInside];
     _confirmButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_confirmButton];

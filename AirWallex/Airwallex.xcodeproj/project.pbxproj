@@ -123,8 +123,6 @@
 		57FB516226CCD8BD00DBD7A2 /* AWXCountry.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB512326CCD8BD00DBD7A2 /* AWXCountry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB516326CCD8BD00DBD7A2 /* AWXAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB512426CCD8BD00DBD7A2 /* AWXAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB516426CCD8BD00DBD7A2 /* AWXTrackManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB512526CCD8BD00DBD7A2 /* AWXTrackManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		57FB516526CCD8BD00DBD7A2 /* AWXFontLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB512626CCD8BD00DBD7A2 /* AWXFontLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		57FB516626CCD8BD00DBD7A2 /* AWXFontLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB512726CCD8BD00DBD7A2 /* AWXFontLoader.m */; };
 		57FB516726CCD8BD00DBD7A2 /* AWXPaymentConsent.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB512826CCD8BD00DBD7A2 /* AWXPaymentConsent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FB516826CCD8BD00DBD7A2 /* AWXPaymentIntent.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FB512926CCD8BD00DBD7A2 /* AWXPaymentIntent.m */; };
 		57FB516926CCD8BD00DBD7A2 /* AWXRequestProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FB512A26CCD8BD00DBD7A2 /* AWXRequestProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -273,8 +271,6 @@
 		57FB512326CCD8BD00DBD7A2 /* AWXCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXCountry.h; sourceTree = "<group>"; };
 		57FB512426CCD8BD00DBD7A2 /* AWXAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXAPIClient.h; sourceTree = "<group>"; };
 		57FB512526CCD8BD00DBD7A2 /* AWXTrackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXTrackManager.h; sourceTree = "<group>"; };
-		57FB512626CCD8BD00DBD7A2 /* AWXFontLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXFontLoader.h; sourceTree = "<group>"; };
-		57FB512726CCD8BD00DBD7A2 /* AWXFontLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXFontLoader.m; sourceTree = "<group>"; };
 		57FB512826CCD8BD00DBD7A2 /* AWXPaymentConsent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPaymentConsent.h; sourceTree = "<group>"; };
 		57FB512926CCD8BD00DBD7A2 /* AWXPaymentIntent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentIntent.m; sourceTree = "<group>"; };
 		57FB512A26CCD8BD00DBD7A2 /* AWXRequestProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXRequestProtocol.h; sourceTree = "<group>"; };
@@ -497,8 +493,6 @@
 				57DB270F26D1F96B00C830FF /* AWXDefaultProvider.m */,
 				5780606526D4D3BD00693A18 /* AWXDefaultActionProvider.h */,
 				5780606626D4D3BD00693A18 /* AWXDefaultActionProvider.m */,
-				57FB512626CCD8BD00DBD7A2 /* AWXFontLoader.h */,
-				57FB512726CCD8BD00DBD7A2 /* AWXFontLoader.m */,
 				57FB513026CCD8BD00DBD7A2 /* AWXCardValidator.h */,
 				57FB510626CCD8BC00DBD7A2 /* AWXCardValidator.m */,
 				57FB512426CCD8BD00DBD7A2 /* AWXAPIClient.h */,
@@ -606,7 +600,6 @@
 				57FB50F026CCD87F00DBD7A2 /* AWXWidgets.h in Headers */,
 				57FB516F26CCD8BE00DBD7A2 /* AWXCardValidator.h in Headers */,
 				57E5A72026D60D66008E30B0 /* AWXWeChatPaySDKResponse.h in Headers */,
-				57FB516526CCD8BD00DBD7A2 /* AWXFontLoader.h in Headers */,
 				57E5A71126D60D5F008E30B0 /* AWXDccActionProvider.h in Headers */,
 				57FB513E26CCD8BD00DBD7A2 /* AWXSecurityService.h in Headers */,
 				57FB516B26CCD8BD00DBD7A2 /* AWXPaymentConsentResponse.h in Headers */,
@@ -875,7 +868,6 @@
 				57E5A70A26D60D5F008E30B0 /* AWXDccActionProvider.m in Sources */,
 				57E5A6F326D60BA2008E30B0 /* AWXPPROProvider.m in Sources */,
 				57FB516E26CCD8BD00DBD7A2 /* AWXTrackManager.m in Sources */,
-				57FB516626CCD8BD00DBD7A2 /* AWXFontLoader.m in Sources */,
 				57E5A72126D60D66008E30B0 /* AWXWeChatPaySDKResponse.m in Sources */,
 				57FB50F126CCD87F00DBD7A2 /* AWXTheme.m in Sources */,
 				57E5A71626D60D5F008E30B0 /* AWXCardProvider.m in Sources */,

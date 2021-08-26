@@ -8,6 +8,7 @@
 
 #import "AWXPaymentMethodCell.h"
 #import "AWXConstants.h"
+#import "AWXTheme.h"
 #import "AWXUtils.h"
 
 @implementation AWXPaymentMethodCell
@@ -21,8 +22,8 @@
         [self.contentView addSubview:_logoImageView];
         
         _titleLabel = [UILabel new];
-        _titleLabel.textColor = [UIColor textColor];
-        _titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+        _titleLabel.textColor = [AWXTheme sharedTheme].textColor;
+        _titleLabel.font = [UIFont subhead1Font];
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:_titleLabel];
         

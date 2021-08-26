@@ -43,13 +43,6 @@ NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
 NSString *const AWXThreeDSValidate = @"3dsValidate";
 NSString *const AWXDCC = @"dcc";
 
-NSString *const AWXFontFamilyNameCircularStd = @"Circular Std";
-NSString *const AWXFontNameCircularStdMedium = @"CircularStd-Medium";
-NSString *const AWXFontNameCircularStdBold = @"CircularStd-Bold";
-
-NSString *const AWXFontFamilyNameCircularXX = @"CircularXX";
-NSString *const AWXFontNameCircularXXRegular = @"CircularXX-Regular";
-
 NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type)
 {
     switch (type) {

@@ -88,8 +88,8 @@
     
     _titleLabel = [UILabel new];
     _titleLabel.text = NSLocalizedString(@"Card", @"Card");
-    _titleLabel.textColor = [UIColor textColor];
-    _titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:32];
+    _titleLabel.textColor = [UIColor gray100Color];
+    _titleLabel.font = [UIFont titleFont];
     _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [stackView addArrangedSubview:_titleLabel];
 
@@ -129,8 +129,8 @@
 
     UILabel *billingLabel = [UILabel new];
     billingLabel.text = NSLocalizedString(@"Billing info", @"Billing info");
-    billingLabel.textColor = [UIColor textColor];
-    billingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
+    billingLabel.textColor = [UIColor gray100Color];
+    billingLabel.font = [UIFont subhead2Font];
     [stackView addArrangedSubview:billingLabel];
     
     UIStackView *shippingStackView = [UIStackView new];
@@ -143,8 +143,8 @@
     
     UILabel *shippingLabel = [UILabel new];
     shippingLabel.text = NSLocalizedString(@"Same as shipping address", @"Same as shipping address");
-    shippingLabel.textColor = [UIColor textColor];
-    shippingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+    shippingLabel.textColor = [UIColor gray70Color];
+    shippingLabel.font = [UIFont subhead1Font];
     [shippingStackView addArrangedSubview:shippingLabel];
     
     _switchButton = [UISwitch new];
@@ -217,9 +217,9 @@
     
     _confirmButton = [AWXButton new];
     _confirmButton.enabled = YES;
-    _confirmButton.cornerRadius = 6;
+    _confirmButton.cornerRadius = 8;
     [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
-    _confirmButton.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
+    _confirmButton.titleLabel.font = [UIFont headlineFont];
     [_confirmButton addTarget:self action:@selector(savePressed:) forControlEvents:UIControlEventTouchUpInside];
     [stackView addArrangedSubview:_confirmButton];
     [_confirmButton.heightAnchor constraintEqualToConstant:44].active = YES;

@@ -77,13 +77,6 @@ FOUNDATION_EXPORT NSString *const AWXThreeDSCheckEnrollment;
 FOUNDATION_EXPORT NSString *const AWXThreeDSValidate;
 FOUNDATION_EXPORT NSString *const AWXDCC;
 
-FOUNDATION_EXPORT NSString *const AWXFontFamilyNameCircularStd;
-FOUNDATION_EXPORT NSString *const AWXFontNameCircularStdMedium;
-FOUNDATION_EXPORT NSString *const AWXFontNameCircularStdBold;
-
-FOUNDATION_EXPORT NSString *const AWXFontFamilyNameCircularXX;
-FOUNDATION_EXPORT NSString *const AWXFontNameCircularXXRegular;
-
 FOUNDATION_EXPORT NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type);
 FOUNDATION_EXPORT NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason);
 FOUNDATION_EXPORT Class ClassToHandleFlowForPaymentMethodType(NSString *type);
