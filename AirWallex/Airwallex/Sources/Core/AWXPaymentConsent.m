@@ -20,7 +20,7 @@
     intent.status     = json[@"status"];
     intent.nextTriggeredBy = json[@"next_triggered_by"];
     intent.merchantTriggerReason = json[@"merchant_trigger_reason"];
-    intent.requiresCvc = [json[@"requires_cvc"] boolValue];
+    intent.requiresCVC = [json[@"requires_cvc"] boolValue];
     NSDictionary *paymentMethod = json[@"payment_method"];
     if (paymentMethod) {
         intent.paymentMethod = [AWXPaymentMethod decodeFromJSON:paymentMethod];

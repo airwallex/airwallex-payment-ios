@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) AWXPaymentMethod *paymentMethod;
 @property (nonatomic, copy) NSString *nextTriggeredBy;
 @property (nonatomic, copy) NSString *merchantTriggerReason;
-@property (nonatomic) BOOL requiresCvc;
+@property (nonatomic) BOOL requiresCVC;
 @property (nonatomic, copy) NSString *createdAt;
 @property (nonatomic, copy) NSString *updatedAt;
 @property (nonatomic, copy) NSString *clientSecret;

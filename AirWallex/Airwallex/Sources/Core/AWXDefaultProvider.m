@@ -71,7 +71,9 @@
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             if (response && !error) {
                 AWXCreatePaymentMethodResponse *result = (AWXCreatePaymentMethodResponse *)response;
-                [strongSelf confirmPaymentIntentWithPaymentMethod:result.paymentMethod paymentConsent:nil];
+                AWXPaymentMethod *paymentMethod = result.paymentMethod;
+                paymentMethod.card.cvc = card.cvc;
+                [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil];
             } else {
                 [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
             }

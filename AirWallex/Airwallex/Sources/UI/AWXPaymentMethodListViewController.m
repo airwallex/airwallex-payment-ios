@@ -263,7 +263,7 @@
     
     // No cvc provided and go to enter cvc in payment detail page
     AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
-    if (self.session.requiresCVC) {
+    if (paymentConsent.requiresCVC) {
         [self showPayment:paymentConsent];
     } else {
         AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
