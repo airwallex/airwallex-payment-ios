@@ -108,7 +108,7 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
     if (self == [NSDecimalNumber notANumber]) {
         [[AWXLogger sharedLogger] logException:NSLocalizedString(@"NaN can't be convert to cents", nil)];
     }
-
+    
     NSDecimalNumberHandler *round = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain
                                                                                            scale:0
                                                                                 raiseOnExactness:YES
@@ -123,7 +123,7 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
     if (self == [NSDecimalNumber zero]) {
         return NSLocalizedString(@"Free", nil);
     }
-
+    
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     formatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;

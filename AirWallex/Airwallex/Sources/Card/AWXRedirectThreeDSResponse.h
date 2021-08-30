@@ -16,10 +16,29 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AWXRedirectThreeDSResponse : NSObject <AWXJSONDecodable>
 
+/**
+ JWT token
+ */
 @property (nonatomic, readonly) NSString *jwt;
+
+/**
+ Stage
+ */
 @property (nonatomic, readonly) NSString *stage;
+
+/**
+ ACS
+ */
 @property (nonatomic, readonly, nullable) NSString *acs;
+
+/**
+ Xid
+ */
 @property (nonatomic, readonly, nullable) NSString *xid;
+
+/**
+ Req
+ */
 @property (nonatomic, readonly, nullable) NSString *req;
 
 @end

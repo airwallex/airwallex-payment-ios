@@ -193,6 +193,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXGetPaResResponse` includes the 3ds information of payment.
+ */
 @interface AWXGetPaResResponse : NSObject <AWXResponseProtocol>
 
 /**

@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This method is called when a payment currency has been selected.
-
+ 
  @param controller The payment method list view controller.
  @param useDCC Use dcc to confirm payment.
  */
@@ -27,6 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXDCCViewController` handles dcc flow.
+ */
 @interface AWXDCCViewController : AWXViewController
 
 /**

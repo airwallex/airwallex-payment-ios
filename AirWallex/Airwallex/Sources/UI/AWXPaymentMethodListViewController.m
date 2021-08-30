@@ -250,7 +250,7 @@
             [self presentViewController:controller animated:YES completion:nil];
             return;
         }
-
+        
         AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
         paymentMethod.type = paymentMethodType.name;
         

@@ -18,7 +18,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-
+/**
+ `AWXCreatePaymentConsentRequest` includes the request of creating payment consent.
+ */
 @interface AWXCreatePaymentConsentRequest : NSObject <AWXRequestProtocol>
 
 /**
@@ -55,6 +57,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXVerifyPaymentConsentRequest` includes the request of verifying payment consent.
+ */
 @interface AWXVerifyPaymentConsentRequest : NSObject <AWXRequestProtocol>
 
 /**
@@ -87,19 +92,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXRetrievePaymentConsentRequest` includes the request of payment consent.
+ */
 @interface AWXRetrievePaymentConsentRequest : NSObject <AWXRequestProtocol>
 
 /**
  Consent ID.
  */
 @property (nonatomic, copy) NSString *consentId;
+
 /**
  Request ID.
  */
 @property (nonatomic, copy) NSString *requestId;
 
-
 @end
-
 
 NS_ASSUME_NONNULL_END

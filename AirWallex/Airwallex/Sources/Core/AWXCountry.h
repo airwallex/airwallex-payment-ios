@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Get a matched country object.
-
+ 
  @param code Country code.
  @return A country object.
  */

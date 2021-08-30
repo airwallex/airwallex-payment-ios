@@ -53,7 +53,7 @@
     stackView.layoutMarginsRelativeArrangement = YES;
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
     [_scrollView addSubview:stackView];
-
+    
     NSDictionary *views = @{@"scrollView": _scrollView, @"stackView": stackView};
     NSDictionary *metrics = @{@"margin": @16, @"padding": @33};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:metrics views:views]];
@@ -116,10 +116,10 @@
     cvcStackView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addArrangedSubview:cvcStackView];
     [cvcStackView.heightAnchor constraintEqualToConstant:44].active = YES;
-
+    
     UIView *view = [UIView new];
     [cvcStackView addArrangedSubview:view];
-
+    
     _cvcField = [UITextField new];
     _cvcField.delegate = self;
     _cvcField.textAlignment = NSTextAlignmentCenter;
@@ -132,7 +132,7 @@
     _cvcField.translatesAutoresizingMaskIntoConstraints = NO;
     [cvcStackView addArrangedSubview:_cvcField];
     [_cvcField.widthAnchor constraintEqualToConstant:92].active = YES;
-
+    
     UIImageView *cvcImageView = [UIImageView new];
     cvcImageView.image = [UIImage imageNamed:@"cvv" inBundle:[NSBundle resourceBundle]];
     cvcImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -140,7 +140,7 @@
     [cvcStackView addArrangedSubview:cvcImageView];
     [cvcImageView.widthAnchor constraintEqualToConstant:36].active = YES;
     [cvcImageView.heightAnchor constraintEqualToConstant:24].active = YES;
-
+    
     _confirmButton = [AWXButton new];
     _confirmButton.enabled = YES;
     _confirmButton.cornerRadius = 8;
@@ -167,7 +167,7 @@
     if (self.paymentConsent.paymentMethod.card.cvc) {
         _cvcField.text = self.paymentConsent.paymentMethod.card.cvc;
     }
-
+    
     [self checkPaymentEnabled];
 }
 
@@ -195,7 +195,7 @@
         _confirmButton.enabled = YES;
         return;
     }
-
+    
     _confirmButton.enabled = _cvcField.text.length > 0;
 }
 
@@ -207,7 +207,7 @@
 - (void)payPressed:(id)sender
 {
     self.paymentConsent.paymentMethod.card.cvc = _cvcField.text;
-
+    
     AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
     [provider confirmPaymentIntentWithPaymentMethod:self.paymentConsent.paymentMethod paymentConsent:self.paymentConsent];
     self.provider = provider;

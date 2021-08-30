@@ -10,6 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWXDccActionProvider` is a provider to handle dcc flow.
+ */
 @interface AWXDccActionProvider : AWXDefaultActionProvider
 
 @end

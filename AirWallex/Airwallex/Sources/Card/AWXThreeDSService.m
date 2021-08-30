@@ -32,16 +32,16 @@
     self = [super init];
     if (self) {
         self.session = [CardinalSession new];
-
+        
         CardinalSessionConfiguration *config = [CardinalSessionConfiguration new];
         config.deploymentEnvironment = [Airwallex mode] == AirwallexSDKLiveMode ? CardinalSessionEnvironmentProduction : CardinalSessionEnvironmentStaging;
         config.requestTimeout = CardinalSessionTimeoutStandard;
         config.challengeTimeout = 8;
         config.uiType = CardinalSessionUITypeBoth;
-
+        
         UiCustomization *customUI = [UiCustomization new];
         config.uiCustomization = customUI;
-
+        
         CardinalSessionRenderTypeArray *renderType = [[CardinalSessionRenderTypeArray alloc] initWithObjects:
                                                       CardinalSessionRenderTypeOTP,
                                                       CardinalSessionRenderTypeHTML,
@@ -50,7 +50,7 @@
                                                       CardinalSessionRenderTypeMultiSelect,
                                                       nil];
         config.renderType = renderType;
-
+        
         [self.session configure:config];
     }
     return self;
@@ -79,13 +79,13 @@
     request.intentId = self.intentId;
     request.requestId = NSUUID.UUID.UUIDString;
     request.customerId = self.customerId;
-
+    
     AWXCardOptions *cardOptions = [AWXCardOptions new];
     cardOptions.threeDs = threeDs;
-
+    
     AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
     options.cardOptions = cardOptions;
-
+    
     request.options = options;
     request.device = self.device;
     return request;
@@ -94,14 +94,14 @@
 - (void)confirmWithReferenceId:(NSString *)referenceId
 {
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-
+    
     AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
     request.intentId = self.intentId;
     request.type = AWXThreeDSCheckEnrollment;
     request.deviceDataCollectionRes = referenceId;
     request.device = self.device;
-
+    
     __weak __typeof(self)weakSelf = self;
     // Step 2: Request 3DS lookup response by `confirmPaymentIntent` with `referenceId`
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
@@ -110,13 +110,13 @@
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
             return;
         }
-
+        
         AWXConfirmPaymentIntentResponse *result = (AWXConfirmPaymentIntentResponse *)response;
         if ([result.status isEqualToString:@"REQUIRES_CAPTURE"] || result.nextAction == nil) {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:result error:nil];
             return;
         }
-
+        
         // Step 3: Show 3DS UI, then wait user input. After user input, will receive `processorTransactionId`
         AWXAuthenticationData *authenticationData = result.latestPaymentAttempt.authenticationData;
         AWXRedirectThreeDSResponse *redirectResponse = [AWXRedirectThreeDSResponse decodeFromJSON:result.nextAction.payload[@"data"]];
@@ -181,14 +181,14 @@
 - (void)confirmWithTransactionId:(NSString *)transactionId
 {
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-
+    
     AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
     request.intentId = self.intentId;
     request.type = AWXThreeDSValidate;
     request.dsTransactionId = transactionId;
     request.device = self.device;
-
+    
     __weak __typeof(self)weakSelf = self;
     // Step 4: Request 3DS JWT validation response by `confirmPaymentIntent` with `transactionId`
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
@@ -197,7 +197,7 @@
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
             return;
         }
-
+        
         [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:response error:error];
     }];
 }
@@ -207,10 +207,10 @@
     AWXAPIClientConfiguration *configuration = [[AWXAPIClientConfiguration alloc] init];
     configuration.baseURL = [NSURL URLWithString:[Airwallex cybsURL]];
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:configuration];
-
+    
     AWXGetPaResRequest *request = [AWXGetPaResRequest new];
     request.paResId = Id;
-
+    
     __weak __typeof(self)weakSelf = self;
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -218,7 +218,7 @@
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
             return;
         }
-
+        
         completion(response);
     }];
 }

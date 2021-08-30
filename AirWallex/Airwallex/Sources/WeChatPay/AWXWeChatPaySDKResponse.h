@@ -16,12 +16,39 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AWXWeChatPaySDKResponse: NSObject <AWXJSONDecodable>
 
+/**
+ WeChat pay app id.
+ */
 @property (nonatomic, readonly, nullable) NSString *appId;
+
+/**
+ Timestamp
+ */
 @property (nonatomic, readonly) NSString *timeStamp;
+
+/**
+ Nonce string
+ */
 @property (nonatomic, readonly) NSString *nonceStr;
+
+/**
+ Prepay id
+ */
 @property (nonatomic, readonly) NSString *prepayId;
+
+/**
+ Partner id
+ */
 @property (nonatomic, readonly) NSString *partnerId;
+
+/**
+ Package
+ */
 @property (nonatomic, readonly) NSString *package;
+
+/**
+ Sign
+ */
 @property (nonatomic, readonly) NSString *sign;
 
 @end

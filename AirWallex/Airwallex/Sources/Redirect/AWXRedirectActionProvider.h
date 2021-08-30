@@ -10,6 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWXRedirectActionProvider` handles Redirect flow.
+ */
 @interface AWXRedirectActionProvider : AWXDefaultActionProvider
 
 @end

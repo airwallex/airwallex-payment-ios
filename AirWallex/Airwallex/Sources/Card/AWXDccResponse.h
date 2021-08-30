@@ -16,12 +16,39 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AWXDccResponse : NSObject <AWXJSONDecodable>
 
+/**
+ Currency code.
+ */
 @property (nonatomic, readonly) NSString *currency;
+
+/**
+ Currency pair.
+ */
 @property (nonatomic, readonly) NSString *currencyPair;
+
+/**
+ The total amount.
+ */
 @property (nonatomic, readonly) NSDecimalNumber *amount;
+
+/**
+ The amount string.
+ */
 @property (nonatomic, readonly) NSString *amountString;
+
+/**
+ The rate.
+ */
 @property (nonatomic, readonly) NSDecimalNumber *clientRate;
+
+/**
+ The rate string.
+ */
 @property (nonatomic, readonly) NSString *clientRateString;
+
+/**
+ The currency rate expired date.
+ */
 @property (nonatomic, readonly) NSString *rateTimestamp, *rateExpiry;
 
 @end

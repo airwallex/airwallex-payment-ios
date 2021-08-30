@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "AWXCodable.h"
+
 @class AWXPaymentMethod,AWXPaymentConsent;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -55,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
  Payment methods.
  */
 @property (nonatomic, strong) NSArray <AWXPaymentMethod *> *paymentMethods;
+
 /**
  Payment consents .
  */

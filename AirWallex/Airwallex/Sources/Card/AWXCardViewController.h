@@ -8,8 +8,6 @@
 
 #import "AWXViewController.h"
 
-@class AWXCardViewController, AWXPaymentMethod, AWXPlaceDetails;
-
 NS_ASSUME_NONNULL_BEGIN
 
 /**

@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- `AWXTheme` manages text styles & colors.
+ `AWXTheme` manages text styles.
  */
 @interface AWXTheme : NSObject
 

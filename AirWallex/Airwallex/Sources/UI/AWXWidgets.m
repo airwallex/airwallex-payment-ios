@@ -49,61 +49,6 @@
 
 @end
 
-@interface AWXNibView ()
-
-@property (nonatomic, strong) UIView *view;
-
-@end
-
-@implementation AWXNibView
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    if (self = [super initWithCoder:aDecoder]) {
-        [self addNibView];
-    }
-    return self;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    if (self = [super initWithFrame:frame]) {
-        [self addNibView];
-    }
-    return self;
-}
-
-- (void)addNibView
-{
-    UIView *view = [self loadFromNib:self.nibName index:self.nibIndex];
-    view.frame = self.bounds;
-    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self addSubview:_view = view];
-    [self setup];
-}
-
-- (void)setup
-{
-}
-
-- (NSString *)nibName
-{
-    return NSStringFromClass(self.class);
-}
-
-- (NSInteger)nibIndex
-{
-    return 0;
-}
-
-- (UIView *)loadFromNib:(NSString *)nibName index:(NSInteger)index
-{
-    UINib *nib = [UINib nibWithNibName:self.nibName bundle:[NSBundle bundleForClass:self.class]];
-    return [nib instantiateWithOwner:self options:nil][self.nibIndex];
-}
-
-@end
-
 @interface AWXButton ()
 
 @end
@@ -207,11 +152,11 @@
             expirationYear = [expirationYear stringByRemovingIllegalCharacters];
             expirationYear = [expirationYear substringToIndex:MIN(expirationYear.length, 4)];
         }
-
+        
         if (expirationMonth.length == 1 && ![expirationMonth isEqualToString:@"0"] && ![expirationMonth isEqualToString:@"1"]) {
             expirationMonth = [NSString stringWithFormat:@"0%@", text];
         }
-
+        
         NSMutableArray *array = [NSMutableArray array];
         if (expirationMonth && ![expirationMonth isEqualToString:@""]) {
             [array addObject:expirationMonth];
@@ -219,7 +164,7 @@
         if (expirationMonth.length == 2 && expirationMonth.integerValue > 0 && expirationMonth.integerValue <= 12) {
             [array addObject:expirationYear];
         }
-
+        
         _text = [array componentsJoinedByString:@"/"];
     }
     self.textField.attributedText = [self formatText:_text];
@@ -324,7 +269,7 @@
     if (self.floatingLabel.alpha == 1) {
         return;
     }
-
+    
     self.floatingTopConstraint.constant = 30;
     self.textTopConstraint.constant = 9;
     self.floatingLabel.alpha = 0;
@@ -341,7 +286,7 @@
     if (self.floatingLabel.alpha == 0) {
         return;
     }
-
+    
     self.floatingTopConstraint.constant = 9;
     self.textTopConstraint.constant = 30;
     self.floatingLabel.alpha = 1;
@@ -475,7 +420,7 @@
         [textField resignFirstResponder];
         return YES;
     }
-
+    
     [self.nextTextField.textField becomeFirstResponder];
     return NO;
 }
@@ -521,7 +466,7 @@
         _imageView.image = [UIImage imageNamed:@"down" inBundle:[NSBundle resourceBundle]];
         _imageView.translatesAutoresizingMaskIntoConstraints = NO;
         [borderView addSubview:_imageView];
-
+        
         NSDictionary *views = @{@"borderView": borderView, @"floatingLabel": _floatingLabel, @"textLabel": _textLabel, @"imageView": _imageView};
         NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"top": @30.0};
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
@@ -564,7 +509,7 @@
     if (self.textLabel.alpha == 1) {
         return;
     }
-
+    
     self.floatingTopConstraint.constant = 20;
     self.textLabel.alpha = 0;
     [UIView animateWithDuration:0.25 animations:^{
@@ -580,7 +525,7 @@
     if (self.floatingTopConstraint.constant == 20) {
         return;
     }
-
+    
     self.floatingTopConstraint.constant = 9;
     self.textLabel.alpha = 1;
     [UIView animateWithDuration:0.25 animations:^{
@@ -700,12 +645,12 @@
     self.errorText = nil;
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     text.length > 0 ? [self active] : [self inactive];
-
+    
     AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:text];
     if (brand && text.length > brand.length) {
         return NO;
     }
-
+    
     [self setText:text];
     return NO;
 }
@@ -872,20 +817,20 @@
         formLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.formLabel = formLabel;
         [self addSubview:formLabel];
-
+        
         UIView *contentView = [UIView autoLayoutView];
         contentView.layer.masksToBounds = YES;
         contentView.layer.cornerRadius = 8;
         contentView.layer.borderWidth = 1.0 / [UIScreen mainScreen].scale;
         contentView.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
         [self addSubview:contentView];
-
+        
         textField.textColor = [AWXTheme sharedTheme].textColor;
         textField.font = [UIFont bodyFont];
         textField.translatesAutoresizingMaskIntoConstraints = NO;
         self.textField = textField;
         [contentView addSubview:textField];
-
+        
         NSDictionary *views = @{@"formLabel": formLabel, @"contentView": contentView, @"textField": textField};
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[formLabel]|"
                                                                      options:0
@@ -896,13 +841,13 @@
                                                                      metrics:nil
                                                                        views:views]];
         [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[textField]-8-|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
+                                                                            options:0
+                                                                            metrics:nil
+                                                                              views:views]];
         [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textField(40)]|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
+                                                                            options:0
+                                                                            metrics:nil
+                                                                              views:views]];
     }
     return self;
 }
@@ -930,7 +875,7 @@
         contentView.layer.cornerRadius = 8;
         [contentView setBackgroundImage:[UIImage imageFromColor:[UIColor colorWithRed:0.94 green:0.94 blue:1 alpha:1]] forState:UIControlStateHighlighted];
         [self addSubview:contentView];
-
+        
         UILabel *formLabel = [UILabel new];
         self.formLabel = formLabel;
         formLabel.text = formLabelText;
@@ -938,14 +883,14 @@
         formLabel.font = [UIFont subhead1Font];
         formLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [contentView addSubview:formLabel];
-    
+        
         [contentView addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-
+        
         UIImageView *imageView = [UIImageView autoLayoutView];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.image = [UIImage imageNamed:logo];
         [contentView addSubview:imageView];
-
+        
         NSDictionary *views = @{@"formLabel": formLabel, @"contentView": contentView, @"imageView": imageView};
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
                                                                      options:0
@@ -956,13 +901,13 @@
                                                                      metrics:nil
                                                                        views:views]];
         [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[formLabel]->=0-[imageView]-8-|"
-                                                                     options:NSLayoutFormatAlignAllCenterY
-                                                                     metrics:nil
-                                                                       views:views]];
+                                                                            options:NSLayoutFormatAlignAllCenterY
+                                                                            metrics:nil
+                                                                              views:views]];
         [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[imageView(20)]-10-|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
+                                                                            options:0
+                                                                            metrics:nil
+                                                                              views:views]];
     }
     return self;
 }

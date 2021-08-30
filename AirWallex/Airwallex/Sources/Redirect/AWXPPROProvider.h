@@ -10,6 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWXPPROProvider` handles PPRO flow.
+ */
 @interface AWXPPROProvider : AWXDefaultProvider
 
 @end

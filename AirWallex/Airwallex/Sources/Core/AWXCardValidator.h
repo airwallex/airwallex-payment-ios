@@ -21,19 +21,41 @@ typedef enum : NSUInteger {
     AWXBrandTypeUnionPay
 } AWXBrandType;
 
+/**
+ `AWXBrand` manages the bank brand.
+ */
 @interface AWXBrand : NSObject
 
+/**
+ The brand name.
+ */
 @property (nonatomic, strong) NSString *name;
+
+/**
+ The start of  card No.
+ */
 @property (nonatomic, strong) NSString *rangeStart;
+
+/**
+ The end of  card No.
+ */
 @property (nonatomic, strong) NSString *rangeEnd;
+
+/**
+ The length of  card No.
+ */
 @property (nonatomic) NSInteger length;
+
+/**
+ The brand type.
+ */
 @property (nonatomic) AWXBrandType type;
 
 - (instancetype)initWithName:(NSString *)name
                   rangeStart:(NSString *)rangeStart
                     rangeEnd:(NSString *)rangeEnd
                       length:(NSInteger)length
-                       type:(AWXBrandType)type;
+                        type:(AWXBrandType)type;
 + (instancetype)brandWithName:(NSString *)name
                    rangeStart:(NSString *)rangeStart
                      rangeEnd:(NSString *)rangeEnd
@@ -43,6 +65,9 @@ typedef enum : NSUInteger {
 
 @end
 
+/**
+ `AWXCardValidator` manages the card info.
+ */
 @interface AWXCardValidator : NSObject
 
 + (instancetype)sharedCardValidator;

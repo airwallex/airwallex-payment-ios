@@ -14,7 +14,6 @@
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentConsent.h"
 
-
 @implementation AWXCreatePaymentConsentRequest
 
 - (NSString *)path

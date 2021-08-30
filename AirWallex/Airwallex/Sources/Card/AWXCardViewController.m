@@ -72,7 +72,7 @@
     stackView.layoutMarginsRelativeArrangement = YES;
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
     [_scrollView addSubview:stackView];
-
+    
     NSDictionary *views = @{@"scrollView": _scrollView, @"stackView": stackView};
     NSDictionary *metrics = @{@"margin": @16, @"padding": @33};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:metrics views:views]];
@@ -89,7 +89,7 @@
     _titleLabel.font = [UIFont titleFont];
     _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [stackView addArrangedSubview:_titleLabel];
-
+    
     _cardNoField = [AWXFloatingCardTextField new];
     _cardNoField.fieldType = AWXTextFieldTypeCardNumber;
     _cardNoField.placeholder = NSLocalizedString(@"Card number", @"Card number");
@@ -123,7 +123,7 @@
     _expiresField.nextTextField = _cvcField;
     [cvcStackView addArrangedSubview:_cvcField];
     [_expiresField.widthAnchor constraintEqualToAnchor:_cvcField.widthAnchor multiplier:1.7].active = YES;
-
+    
     UILabel *billingLabel = [UILabel new];
     billingLabel.text = NSLocalizedString(@"Billing info", @"Billing info");
     billingLabel.textColor = [UIColor gray100Color];
@@ -148,7 +148,7 @@
     _switchButton.onTintColor = [AWXTheme sharedTheme].tintColor;
     [_switchButton addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     [shippingStackView addArrangedSubview:_switchButton];
-
+    
     _firstNameField = [AWXFloatingLabelTextField new];
     _firstNameField.fieldType = AWXTextFieldTypeFirstName;
     _firstNameField.placeholder = NSLocalizedString(@"First name", @"First Name");
@@ -169,35 +169,35 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectCountries:)];
     [_countryView addGestureRecognizer:tap];
-
+    
     _stateField = [AWXFloatingLabelTextField new];
     _stateField.fieldType = AWXTextFieldTypeState;
     _stateField.placeholder = NSLocalizedString(@"State", @"State");
     _phoneNumberField.nextTextField = _stateField;
     [stackView addArrangedSubview:_stateField];
     [_stateField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
-
+    
     _cityField = [AWXFloatingLabelTextField new];
     _cityField.fieldType = AWXTextFieldTypeCity;
     _cityField.placeholder = NSLocalizedString(@"City", @"City");
     _stateField.nextTextField = _cityField;
     [stackView addArrangedSubview:_cityField];
     [_cityField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
-
+    
     _streetField = [AWXFloatingLabelTextField new];
     _streetField.fieldType = AWXTextFieldTypeStreet;
     _streetField.placeholder = NSLocalizedString(@"Street", @"Street");
     _cityField.nextTextField = _streetField;
     [stackView addArrangedSubview:_streetField];
     [_streetField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
-
+    
     _zipcodeField = [AWXFloatingLabelTextField new];
     _zipcodeField.fieldType = AWXTextFieldTypeZipcode;
     _zipcodeField.placeholder = NSLocalizedString(@"Zip code (optional)", @"Zip code (optional)");
     _streetField.nextTextField = _zipcodeField;
     [stackView addArrangedSubview:_zipcodeField];
     [_zipcodeField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
-
+    
     _emailField = [AWXFloatingLabelTextField new];
     _emailField.fieldType = AWXTextFieldTypeZipcode;
     _emailField.placeholder = NSLocalizedString(@"Zip code (optional)", @"Zip code (optional)");
@@ -226,7 +226,7 @@
         self.lastNameField.text = self.session.billing.lastName;
         self.emailField.text = self.session.billing.email;
         self.phoneNumberField.text = self.session.billing.phoneNumber;
-
+        
         AWXAddress *address = self.session.billing.address;
         if (address) {
             AWXCountry *matchedCountry = [AWXCountry countryWithCode:address.countryCode];
@@ -299,7 +299,7 @@
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }
-
+    
     self.sameAsShipping = self.switchButton.isOn;
 }
 
@@ -336,10 +336,10 @@
             [self presentViewController:controller animated:YES completion:nil];
             return;
         }
-
+        
         self.savedBilling = billing;
     }
-
+    
     AWXCard *card = [AWXCard new];
     card.name = self.nameField.text;
     card.number = [self.cardNoField.text stringByReplacingOccurrencesOfString:@" " withString:@""];

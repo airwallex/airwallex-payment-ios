@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This method is called when the user has completed the checkout.
-
+ 
  @param controller The controller handling payment result.
  @param status The status of checkout result.
  @param error The error if checkout failed.

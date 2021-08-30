@@ -10,8 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ A provider which handles next action business.
+ */
 @interface AWXDefaultActionProvider : AWXDefaultProvider
 
+/**
+ Start next action.
+ 
+ @param nextAction The response including next action.
+ */
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction;
 
 @end

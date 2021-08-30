@@ -296,6 +296,7 @@
 - (void)showPaymentFlowWithPaymentIntent:(nullable AWXPaymentIntent *)paymentIntent
 {
     self.paymentIntent = paymentIntent;
+    // Step 3: Create session
     AWXSession *session = [self createSession:paymentIntent];
     
     // Step 4: Present payment flow

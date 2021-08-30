@@ -10,9 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWXPaymentMethodCell` is the cell of paymetn method info
+ */
 @interface AWXPaymentMethodCell : UITableViewCell
 
+/**
+ Image view for displaying payment method logo
+ */
 @property (strong, nonatomic) UIImageView *logoImageView;
+
+/**
+ Label for displaying payment method name
+ */
 @property (strong, nonatomic) UILabel *titleLabel;
 
 @end

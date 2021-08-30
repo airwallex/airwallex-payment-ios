@@ -57,7 +57,7 @@
 
 - (void)dismissKeyboard
 {
-     [self.view endEditing:YES];
+    [self.view endEditing:YES];
 }
 
 - (void)registerKeyboard

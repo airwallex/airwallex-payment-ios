@@ -86,7 +86,7 @@
 - (nullable NSDictionary *)parameters
 {
     NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
-
+    
     _parameters[@"page_num"] = @(self.pageNum);
     _parameters[@"page_size"] = @(self.pageSize);
     _parameters[@"active"] = [NSNumber numberWithBool:self.active];

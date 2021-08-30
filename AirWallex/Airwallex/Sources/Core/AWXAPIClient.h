@@ -65,6 +65,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXAPIClientConfiguration` contains the base configuration the API client needs.
+ */
 @interface AWXAPIClientConfiguration : NSObject <NSCopying>
 
 /**

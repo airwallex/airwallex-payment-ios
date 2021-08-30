@@ -10,6 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWXThreeDSActionProvider` handles 3ds flow.
+ */
 @interface AWXThreeDSActionProvider : AWXDefaultActionProvider
 
 @end

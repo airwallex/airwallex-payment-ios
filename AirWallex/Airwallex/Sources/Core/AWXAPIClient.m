@@ -183,10 +183,10 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
         method = @"GET";
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", url.absoluteString, request.parameters ? [request.parameters queryURLEncoding] : @""]];
     }
-
+    
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     urlRequest.HTTPMethod = method;
-
+    
     NSDictionary *headers = request.headers;
     for (NSString *key in headers) {
         [urlRequest setValue:headers[key] forHTTPHeaderField:key];
@@ -198,7 +198,7 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
     if (request.parameters && [NSJSONSerialization isValidJSONObject:request.parameters] && request.method == AWXHTTPMethodPOST) {
         urlRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:request.parameters options:NSJSONWritingPrettyPrinted error:nil];
     }
-
+    
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:urlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (handler) {
             NSHTTPURLResponse *result = (NSHTTPURLResponse *)response;

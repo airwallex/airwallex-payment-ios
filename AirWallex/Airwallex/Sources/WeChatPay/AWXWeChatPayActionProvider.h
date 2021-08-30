@@ -10,6 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWXWeChatPayActionProvider` handles WeChat pay flow.
+ */
 @interface AWXWeChatPayActionProvider : AWXDefaultActionProvider
 
 @end

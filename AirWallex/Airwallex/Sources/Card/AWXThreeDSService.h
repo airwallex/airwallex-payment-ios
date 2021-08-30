@@ -63,6 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
  Present the 3ds flow.
  */
 - (void)presentThreeDSFlowWithServerJwt:(NSString *)serverJwt;
+
+/**
+ Confirm payment intent with reference id.
+ */
 - (void)confirmWithReferenceId:(NSString *)referenceId;
 
 + (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;

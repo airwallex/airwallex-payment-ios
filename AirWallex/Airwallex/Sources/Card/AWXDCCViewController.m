@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel") style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
-
+    
     NSDictionary *flags = @{@"AED": @"AE",
                             @"AUD": @"AU",
                             @"BEL" :@"BE",
@@ -120,7 +120,7 @@
     
     _leftCurrencyView.exclusiveView = _rightCurrencyView;
     _rightCurrencyView.exclusiveView = _leftCurrencyView;
-
+    
     UIView *tipView = [UIView new];
     tipView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:tipView];
@@ -129,7 +129,7 @@
     rateImageView.image = [UIImage imageNamed:@"fxRate" inBundle:[NSBundle resourceBundle]];
     rateImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [tipView addSubview:rateImageView];
-
+    
     _rateLabel = [UILabel new];
     _rateLabel.textColor = [UIColor gray50Color];
     _rateLabel.font = [UIFont subhead1Font];
@@ -155,7 +155,7 @@
     [_leftCurrencyView.widthAnchor constraintEqualToAnchor:_rightCurrencyView.widthAnchor].active = YES;
     [tipView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[rateImageView(16)]-8-[rateLabel]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     [tipView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[rateImageView(16)]|" options:0 metrics:nil views:views]];
-
+    
     AWXDccResponse *dccResponse = self.response;
     if (dccResponse) {
         _rightCurrencyView.currencyName = dccResponse.currency;

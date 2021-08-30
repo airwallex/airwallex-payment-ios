@@ -14,7 +14,7 @@
                   rangeStart:(NSString *)rangeStart
                     rangeEnd:(NSString *)rangeEnd
                       length:(NSInteger)length
-                       type:(AWXBrandType)type
+                        type:(AWXBrandType)type
 {
     if (self = [super init]) {
         self.name = name;
@@ -30,7 +30,7 @@
                    rangeStart:(NSString *)rangeStart
                      rangeEnd:(NSString *)rangeEnd
                        length:(NSInteger)length
-                        type:(AWXBrandType)type
+                         type:(AWXBrandType)type
 {
     return [[AWXBrand alloc] initWithName:name rangeStart:rangeStart rangeEnd:rangeEnd length:length type:type];
 }
@@ -39,19 +39,19 @@
 {
     BOOL withinLowRange = NO;
     BOOL withinHighRange = NO;
-
+    
     if (number.length < self.rangeStart.length) {
         withinLowRange = number.integerValue >= [self.rangeStart substringToIndex:number.length].integerValue;
     } else {
         withinLowRange = [number substringToIndex:self.rangeStart.length].integerValue >= self.rangeStart.integerValue;
     }
-
+    
     if (number.length < self.rangeEnd.length) {
         withinHighRange = number.integerValue <= [self.rangeEnd substringToIndex:number.length].integerValue;
     } else {
         withinHighRange = [number substringToIndex:self.rangeEnd.length].integerValue <= self.rangeEnd.integerValue;
     }
-
+    
     return withinLowRange && withinHighRange;
 }
 
@@ -78,31 +78,31 @@
     return @[
         // Unknown
         [AWXBrand brandWithName:@"" rangeStart:@"" rangeEnd:@"" length:16 type:AWXBrandTypeUnknown],
-
+        
         // American Express
         [AWXBrand brandWithName:@"American Express" rangeStart:@"34" rangeEnd:@"34" length:15 type:AWXBrandTypeAmex],
         [AWXBrand brandWithName:@"American Express" rangeStart:@"37" rangeEnd:@"37" length:15 type:AWXBrandTypeAmex],
-
+        
         // Diners Club
         [AWXBrand brandWithName:@"Diners Club" rangeStart:@"30" rangeEnd:@"30" length:14 type:AWXBrandTypeDinersClub],
         [AWXBrand brandWithName:@"Diners Club" rangeStart:@"36" rangeEnd:@"36" length:14 type:AWXBrandTypeDinersClub],
         [AWXBrand brandWithName:@"Diners Club" rangeStart:@"38" rangeEnd:@"39" length:14 type:AWXBrandTypeDinersClub],
-
+        
         // Discover
         [AWXBrand brandWithName:@"Discover" rangeStart:@"60" rangeEnd:@"60" length:16 type:AWXBrandTypeDiscover],
         [AWXBrand brandWithName:@"Discover" rangeStart:@"64" rangeEnd:@"65" length:16 type:AWXBrandTypeDiscover],
-
+        
         // JCB
         [AWXBrand brandWithName:@"JCB" rangeStart:@"35" rangeEnd:@"35" length:16 type:AWXBrandTypeJCB],
-
+        
         // Mastercard
         [AWXBrand brandWithName:@"Mastercard" rangeStart:@"50" rangeEnd:@"59" length:16 type:AWXBrandTypeMastercard],
         [AWXBrand brandWithName:@"Mastercard" rangeStart:@"22" rangeEnd:@"27" length:16 type:AWXBrandTypeMastercard],
         [AWXBrand brandWithName:@"Mastercard" rangeStart:@"67" rangeEnd:@"67" length:16 type:AWXBrandTypeMastercard],
-
+        
         // UnionPay
         [AWXBrand brandWithName:@"UnionPay" rangeStart:@"62" rangeEnd:@"62" length:16 type:AWXBrandTypeUnionPay],
-
+        
         // Visa
         [AWXBrand brandWithName:@"Visa" rangeStart:@"40" rangeEnd:@"49" length:16 type:AWXBrandTypeVisa],
         [AWXBrand brandWithName:@"Visa" rangeStart:@"413600" rangeEnd:@"413600" length:13 type:AWXBrandTypeVisa],

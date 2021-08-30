@@ -13,10 +13,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ `AWXSession` is the base session.
+ */
 @interface AWXSession : NSObject
 
 /**
- The shipping address.
+ The billing address.
  */
 @property (nonatomic, strong, nullable) AWXPlaceDetails *billing;
 
@@ -25,28 +28,60 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy) NSString *returnURL;
 
-///**
-// Universal link.
-// */
-//@property (nonatomic, copy, nullable) NSString *uni;
-
+/**
+ Return transaction mode.
+ */
 - (NSString *)transactionMode;
 
 @end
 
 @interface AWXSession (Utils)
 
+/**
+ Update payment intent id.
+ */
 - (void)updateInitialPaymentIntentId:(NSString *)initialPaymentIntentId;
+
+/**
+ Return all of customer payment consents
+ */
 - (NSArray *)customerPaymentConsents;
+
+/**
+ Return all of customer payment methods
+ */
 - (NSArray *)customerPaymentMethods;
+
+/**
+ Return customer id
+ */
 - (nullable NSString *)customerId;
+
+/**
+ Return currency
+ */
 - (NSString *)currency;
+
+/**
+ The total amount
+ */
 - (NSDecimalNumber *)amount;
+
+/**
+ Return payment intent id
+ */
 - (nullable NSString *)paymentIntentId;
+
+/**
+ Return whether it requres CVC.
+ */
 - (BOOL)requiresCVC;
 
 @end
 
+/**
+ `AWXOneOffSession` is the session used for one-off payment.
+ */
 @interface AWXOneOffSession : AWXSession
 
 /**
@@ -56,6 +91,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXRecurringSession` is the session used for recurring.
+ */
 @interface AWXRecurringSession : AWXSession
 
 /**
@@ -64,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSDecimalNumber *amount;
 
 /**
- Amount currency.
+ Currency.
  */
 @property (nonatomic, copy) NSString *currency;
 
@@ -91,6 +129,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXRecurringWithIntentSession` is the session used for recurring with intent.
+ */
 @interface AWXRecurringWithIntentSession : AWXSession
 
 /**
@@ -115,6 +156,5 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) AirwallexMerchantTriggerReason merchantTriggerReason;
 
 @end
-
 
 NS_ASSUME_NONNULL_END
