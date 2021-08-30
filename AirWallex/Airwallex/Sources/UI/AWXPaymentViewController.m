@@ -18,7 +18,6 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXTheme.h"
 #import "AWXPaymentIntent.h"
-#import "AWXSecurityService.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentConsent.h"
