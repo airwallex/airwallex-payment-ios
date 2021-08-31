@@ -43,13 +43,13 @@
 }
 
 - (void)setupViews
-{
+{    
     self.badgeView.backgroundColor = [[AWXTheme sharedTheme].tintColor colorWithAlphaComponent:0.5];
     self.badgeLabel.textColor = [AWXTheme sharedTheme].tintColor;
     self.badgeView.layer.masksToBounds = YES;
     self.badgeView.layer.cornerRadius = 12;
     self.checkoutButton.layer.masksToBounds = YES;
-    self.checkoutButton.layer.cornerRadius = 8;
+    self.checkoutButton.layer.cornerRadius = 6;
     
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicator.hidesWhenStopped = YES;
@@ -101,9 +101,8 @@
     [Airwallex setDefaultBaseURL:url];
     
     // Theme customization
-//    UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
-//    [AWXTheme sharedTheme].tintColor = tintColor;
-//    [UIView.appearance setTintColor:tintColor];
+    UIColor *tintColor = [UIColor colorNamed:@"Purple Color"];
+    [AWXTheme sharedTheme].tintColor = tintColor;
 }
 
 - (void)viewDidLayoutSubviews

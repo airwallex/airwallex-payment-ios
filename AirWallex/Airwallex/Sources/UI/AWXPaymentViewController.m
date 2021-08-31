@@ -143,18 +143,15 @@
     
     _confirmButton = [AWXButton new];
     _confirmButton.enabled = YES;
-    _confirmButton.cornerRadius = 8;
+    _confirmButton.cornerRadius = 6;
     [_confirmButton setTitle:NSLocalizedString(@"Pay now", @"Pay now") forState:UIControlStateNormal];
     _confirmButton.titleLabel.font = [UIFont headlineFont];
     [_confirmButton addTarget:self action:@selector(payPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [_confirmButton setImage:[UIImage imageNamed:@"lock-white" inBundle:[NSBundle resourceBundle]] forState:UIControlStateNormal];
-    [_confirmButton setImage:[UIImage imageNamed:@"lock-grey" inBundle:[NSBundle resourceBundle]] forState:UIControlStateDisabled];
-    [_confirmButton setImageAndTitleHorizontalAlignmentCenter:8];
     _confirmButton.translatesAutoresizingMaskIntoConstraints = NO;
     [stackView addArrangedSubview:_confirmButton];
     [_confirmButton.leftAnchor constraintEqualToAnchor:stackView.leftAnchor constant:16].active = YES;
     [_confirmButton.rightAnchor constraintEqualToAnchor:stackView.rightAnchor constant:-16].active = YES;
-    [_confirmButton.heightAnchor constraintEqualToConstant:44].active = YES;
+    [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
     
     if (self.paymentConsent.paymentMethod.card != nil) {
         methodLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4];

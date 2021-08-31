@@ -200,26 +200,26 @@
     
     _emailField = [AWXFloatingLabelTextField new];
     _emailField.fieldType = AWXTextFieldTypeZipcode;
-    _emailField.placeholder = NSLocalizedString(@"Zip code (optional)", @"Zip code (optional)");
+    _emailField.placeholder = NSLocalizedString(@"Email (optional)", @"Email (optional)");
     _zipcodeField.nextTextField = _emailField;
     [stackView addArrangedSubview:_emailField];
     [_emailField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _phoneNumberField = [AWXFloatingLabelTextField new];
     _phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
-    _phoneNumberField.placeholder = NSLocalizedString(@"Phone number", @"Phone number");
+    _phoneNumberField.placeholder = NSLocalizedString(@"Phone number (optional)", @"Phone number (optional)");
     _emailField.nextTextField = _phoneNumberField;
     [stackView addArrangedSubview:_phoneNumberField];
     [_phoneNumberField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _confirmButton = [AWXButton new];
     _confirmButton.enabled = YES;
-    _confirmButton.cornerRadius = 8;
+    _confirmButton.cornerRadius = 6;
     [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
     _confirmButton.titleLabel.font = [UIFont headlineFont];
     [_confirmButton addTarget:self action:@selector(savePressed:) forControlEvents:UIControlEventTouchUpInside];
     [stackView addArrangedSubview:_confirmButton];
-    [_confirmButton.heightAnchor constraintEqualToConstant:44].active = YES;
+    [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
     
     if (self.session.billing) {
         self.firstNameField.text = self.session.billing.firstName;

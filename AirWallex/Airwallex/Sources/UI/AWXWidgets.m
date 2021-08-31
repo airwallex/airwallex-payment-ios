@@ -83,7 +83,7 @@
         _borderView = [AWXView new];
         _borderView.borderColor = [AWXTheme sharedTheme].lineColor;
         _borderView.cornerRadius = 8.0;
-        _borderView.borderWidth = 1.0 / [UIScreen mainScreen].scale;
+        _borderView.borderWidth = 1.0;
         _borderView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_borderView];
         
@@ -445,7 +445,7 @@
         AWXView *borderView = [AWXView new];
         borderView.borderColor = [AWXTheme sharedTheme].lineColor;
         borderView.cornerRadius = 8.0;
-        borderView.borderWidth = 1.0 / [UIScreen mainScreen].scale;
+        borderView.borderWidth = 1.0;
         borderView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:borderView];
         
@@ -676,7 +676,7 @@
         self.layer.masksToBounds = YES;
         self.layer.cornerRadius = 8.0f;
         self.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
-        self.layer.borderWidth = 1.0 / [UIScreen mainScreen].scale;
+        self.layer.borderWidth = 1.0;
         
         _contentView = [UIView new];
         _contentView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -821,7 +821,7 @@
         UIView *contentView = [UIView autoLayoutView];
         contentView.layer.masksToBounds = YES;
         contentView.layer.cornerRadius = 8;
-        contentView.layer.borderWidth = 1.0 / [UIScreen mainScreen].scale;
+        contentView.layer.borderWidth = 1.0;
         contentView.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
         [self addSubview:contentView];
         

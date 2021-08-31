@@ -87,7 +87,7 @@
         } else if (form.type == AWXFormTypeButton) {
             UIButton *button = [UIButton autoLayoutView];
             button.layer.masksToBounds = YES;
-            button.layer.cornerRadius = 8;
+            button.layer.cornerRadius = 6;
             button.backgroundColor = [AWXTheme sharedTheme].tintColor;
             [button setTitle:form.title forState:UIControlStateNormal];
             button.titleLabel.textColor = [UIColor whiteColor];

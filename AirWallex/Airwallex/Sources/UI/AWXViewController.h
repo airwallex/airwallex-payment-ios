@@ -78,14 +78,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (UIScrollView *)activeScrollView;
 
 /**
- Dismiss the current view controller
+ Dismiss or pop the current view controller
  */
 - (void)close:(id)sender;
-
-/**
- Pop the current view controller
- */
-- (void)pop:(id)sender;
 
 @end
 

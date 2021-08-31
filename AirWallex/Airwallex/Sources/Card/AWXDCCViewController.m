@@ -138,7 +138,7 @@
     
     _confirmButton = [AWXButton new];
     _confirmButton.enabled = YES;
-    _confirmButton.cornerRadius = 8;
+    _confirmButton.cornerRadius = 6;
     [_confirmButton setTitle:NSLocalizedString(@"Confirm payment", @"Confirm payment") forState:UIControlStateNormal];
     _confirmButton.titleLabel.font = [UIFont subhead2Font];
     [_confirmButton addTarget:self action:@selector(confirmPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -148,7 +148,7 @@
     NSDictionary *views = @{@"titleLabel": titleLabel, @"subTitleLabel": subTitleLabel, @"contentView": contentView, @"leftCurrencyView": _leftCurrencyView, @"rightCurrencyView": _rightCurrencyView, @"tipView": tipView, @"rateImageView": rateImageView, @"rateLabel": _rateLabel, @"confirmButton": _confirmButton};
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-24-[titleLabel]-24-|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[titleLabel]-16-[subTitleLabel]-24-[contentView(110)]-18-[tipView]-40-[confirmButton(44)]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[titleLabel]-16-[subTitleLabel]-24-[contentView(110)]-18-[tipView]-40-[confirmButton(52)]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
     [titleLabel.topAnchor constraintEqualToAnchor:self.view.layoutMarginsGuide.topAnchor constant:24].active = YES;
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[leftCurrencyView]-16-[rightCurrencyView]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:views]];
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[leftCurrencyView]|" options:0 metrics:nil views:views]];

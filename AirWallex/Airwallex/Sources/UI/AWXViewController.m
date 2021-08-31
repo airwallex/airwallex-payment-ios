@@ -9,6 +9,8 @@
 #import "AWXViewController.h"
 #import "AWXLogger.h"
 #import "AWXPaymentIntent.h"
+#import "AWXTheme.h"
+#import "AWXUtils.h"
 
 @interface AWXViewController () <UIGestureRecognizerDelegate>
 
@@ -21,6 +23,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBar.tintColor = [AWXTheme sharedTheme].tintColor;
+    
+    self.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIImage *backImage = [UIImage imageNamed:@"back" inBundle:[NSBundle resourceBundle]];
+    self.navigationController.navigationBar.backIndicatorImage = backImage;
+    self.navigationController.navigationBar.backIndicatorTransitionMaskImage = backImage;
+
     self.view.backgroundColor = [UIColor whiteColor];
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicator.hidesWhenStopped = YES;
@@ -153,12 +162,11 @@
 
 - (void)close:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)pop:(id)sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.presentingViewController) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)dealloc
