@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *checkoutBtn;
 @property (weak, nonatomic) IBOutlet UIButton *nextTriggerByBtn;
+@property (weak, nonatomic) IBOutlet UISwitch *cvcSwitch;
 @property (weak, nonatomic) IBOutlet UITextField *customerIdTextField;
 @property (weak, nonatomic) IBOutlet UIButton *clearCustomerIdButton;
 
@@ -106,7 +107,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)switchPressed:(id)sender
+- (IBAction)modeSwitchPressed:(id)sender
 {
     [Airwallex setMode:self.modeSwitch.isOn ? AirwallexSDKLiveMode : AirwallexSDKTestMode];
 }
@@ -126,6 +127,11 @@
         [[NSUserDefaults standardUserDefaults] setInteger:selectIndex forKey:kCachedNextTriggerBy];
         [self.nextTriggerByBtn setTitle:self.nextTriggerByList[selectIndex] forState:UIControlStateNormal];
     }];
+}
+
+- (IBAction)cvcSwitchPressed:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults] setBool:self.cvcSwitch.isOn forKey:kCachedRequiresCVC];
 }
 
 - (IBAction)generateCustomer:(id)sender
@@ -187,6 +193,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCheckoutMode];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedNextTriggerBy];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedRequiresCVC];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self resetExamplesAPIClient];
@@ -225,6 +232,9 @@
     NSInteger nextTriggerBy = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
     [self.nextTriggerByBtn setTitle:self.nextTriggerByList[nextTriggerBy] forState:UIControlStateNormal];
     
+    BOOL requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
+    self.cvcSwitch.on = requiresCVC;
+
     self.paymentURLTextField.text = [AirwallexExamplesKeys shared].baseUrl;
     self.apiKeyTextField.text = [AirwallexExamplesKeys shared].apiKey;
     self.clientIDTextField.text = [AirwallexExamplesKeys shared].clientId;
@@ -298,6 +308,7 @@
     NSLog(@"Customer ID (SDK): %@", [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID]);
     NSLog(@"Checkout mode (SDK): %@", self.checkoutModesList[[[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode]]);
     NSLog(@"Next trigger by type (SDK): %@", self.nextTriggerByList[[[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy]]);
+    NSLog(@"Requires CVC (SDK): %@", [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC] ? @"Yes" : @"No");
 }
 
 @end
