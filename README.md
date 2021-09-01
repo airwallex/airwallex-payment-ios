@@ -30,16 +30,14 @@ Table of contents
 	  * [Carthage](#carthage)
 	  * [Swift](#swift)
       * [Basic Integration](#basic-integration)
-      * [Customize Usage](#customize-usage)
       * [Set Up WeChat Pay](#set-up-wechat-pay)
-      * [Set Up Alipay](#set-up-alipay)
       * [Theme Color](#theme-color)
    * [Examples](#examples)
    * [Contributing](#contributing)
 <!--te-->
 
 ## Requirements
-The Airwallex iOS SDK requires Xcode 10.0 or later and is compatible with apps targeting iOS 10 or above.
+The Airwallex iOS SDK requires Xcode 11.0 or later and is compatible with apps targeting iOS 11.0 or above.
 
 ## Integration
 
@@ -85,7 +83,7 @@ use_frameworks!
 When your app starts, configure the SDK with  `mode`.
 
 ```objective-c
-[Airwallex setMode:AirwallexSDKLiveMode];
+[Airwallex setMode:AirwallexSDKTestMode]; // AirwallexSDKTestMode or AirwallexSDKLiveMode
 ```
 
 If you want to test on different endpoint, you can customize mode and payment URL.
@@ -106,17 +104,49 @@ Note: When checkoutMode is AirwallexCheckoutRecurringMode, no need to create pay
 [AWXAPIClientConfiguration sharedConfiguration].clientSecret = "The client secret generated with customer id";
 ```
 
-- Handle the payment flow
+- Create session
 
-In your checkout screen, add a button to let the customer enter or change their payment method. When tapped, use `AWXUIContext` to present the payment flow.
+If you want to make one-off payment, create one-off session.
+```
+AWXOneOffSession *session = [AWXOneOffSession new];
+session.billing = "Your shipping address";
+session.returnURL = "App return url";
+session.paymentIntent = "Payment intent";
+```
+
+If you want to make recurring, create recurring session.
+```
+AWXRecurringSession *session = [AWXRecurringSession new];
+session.billing = "Your shipping address";
+session.returnURL = "App return url";
+session.currency = "Currency code";
+session.amount = "Total amount";
+session.customerId = "Customer id";
+session.nextTriggerByType = "customer or merchant";
+session.requiresCVC = "Whether it requires CVC";
+session.merchantTriggerReason = "Unscheduled or scheduled";
+```
+
+If you want to make recurring with payment intent, create recurring with intent session.
+```
+AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
+session.billing = "Your shipping address";
+session.returnURL = "App return url";
+session.paymentIntent = "Payment intent";
+session.nextTriggerByType = "customer or merchant";
+session.requiresCVC = "Whether it requires CVC";
+session.merchantTriggerReason = "Unscheduled or scheduled";
+```
+
+- Handle the one-off payment or recurring flow
+
+Add a button to let the customer enter or change their payment method. When tapped, use `AWXUIContext` to present the payment flow.
 
 ```objective-c
 AWXUIContext *context = [AWXUIContext sharedContext];
 context.delegate = ”The target to handle AWXPaymentResultDelegate protocol”;
-context.hostViewController = “The host viewController present or push the payment UIs”;
-context.paymentIntent = “The payment intent merchant provides”;
-context.shipping = “The shipping address merchant provides”;
-[context presentPaymentFlow];
+context.session = session;
+[context presentPaymentFlowFrom:self];
 ```
 
 - Handle the payment result
@@ -124,206 +154,42 @@ context.shipping = “The shipping address merchant provides”;
 After the user completes the payment successfully or with error, you need to handle the payment result.
 
 ```objective-c
-/**
- A delegate which handles checkout results.
- */
-@protocol AWXPaymentResultDelegate <NSObject>
- 
-/**
- This method is called when the user has completed the checkout.
- 
- @param controller The controller handling payment result.
- @param status The status of checkout result.
- @param error The error if checkout failed.
- */
-- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error;
- 
-/**
- This method is called when the user has completed the checkout with wechat pay.
- 
- @param controller The controller handling payment result.
- @param response The wechat object.
- */
-- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWXWeChatPaySDKResponse *)response;
- 
-@end
-```
+#pragma mark - AWXPaymentResultDelegate
 
-### Customize Usage
-
-- Customize the usage of shipping info
-
-Use `AWXUIContext` to get an instance of `AWXShippingViewController` and show it contained in a `UINavigationController`.
-
-```objective-c
-AWXShippingViewController *controller = [AWXUIContext shippingViewController];
-controller.delegate = "The target to handle AWXShippingViewControllerDelegate protocol";
-controller.shipping = "The shipping address merchant provides";
-UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-[self presentViewController:navigationController animated:YES completion:nil];
-```
-
-- Handle the shipping result
-
-```objective-c
-/**
- A delegate which handles selected shipping.
- */
-@protocol AWXShippingViewControllerDelegate <NSObject>
- 
-/**
- This method is called when a shipping has been saved.
- 
- @param controller The shipping view controller.
- @param shipping The selected shipping.
- */
-- (void)shippingViewController:(AWXShippingViewController *)controller didEditShipping:(AWXPlaceDetails *)shipping;
- 
-@end
-```
-
-- Customize the usage of card creation
-
-Use `AWXUIContext` to get an instance of `AWXCardViewController` and show it contained in a `UINavigationController`.
-
-```objective-c
-AWXCardViewController *controller = [AWXUIContext newCardViewController];
-controller.delegate = "The target to handle AWXCardViewControllerDelegate protocol";
-controller.customerId = "The customer id merchant provides";
-controller.sameAsShipping = YES;
-controller.shipping = "The shipping address merchant provides";
-UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-[self presentViewController:navigationController animated:YES completion:nil];
-```
-
-- Handle new card result
-
-```objective-c
-/**
- A delegate which handles card creation.
- */
-@protocol AWXCardViewControllerDelegate <NSObject>
- 
-/**
- This method is called when a card has been created and saved to backend.
- 
- @param controller The new card view controller.
- @param paymentMethod The saved card.
- */
-- (void)cardViewController:(AWXCardViewController *)controller didCreatePaymentMethod:(AWXPaymentMethod *)paymentMethod;
- 
-@end
-```
-
-- Customize the usage of payment detail
-
-Use `AWXUIContext` to get an instance of `AWXPaymentViewController` and show it contained in a `UINavigationController`.
-
-```objective-c
-AWXPaymentViewController *controller = [AWXUIContext paymentDetailViewController];
-controller.delegate = "The target to handle AWXPaymentResultDelegate protocol";
-controller.paymentIntent = "The payment intent merchant provides";
-controller.paymentMethod = "The payment method merchant provides";
-UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-[self presentViewController:navigationController animated:YES completion:nil];
-```
-
-- Customize the usage of confirming payment intent
-
-Please set client secret before using `AWXAPIClient` to send a request.
-
-```objective-c
-[AWXAPIClientConfiguration sharedConfiguration].clientSecret = "The client secret merchant provides";
-```
-
-```objective-c
-AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-request.intentId = "The payment intent id merchant provides";
-request.paymentMethod = "The payment method merchant provides";
-AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
-options.autoCapture = YES;
-options.threeDsOption = NO;
-request.options = options;
-request.requestId = NSUUID.UUID.UUIDString;
-
-AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-[client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-	if (error) {
-		return;
-	}
- 
-	AWXConfirmPaymentIntentResponse *result = (AWXConfirmPaymentIntentResponse *)response;
-	// Handle the payment result.
-}];
-```
-
-- Customize the usage of 3ds flow
-
-```
-AWXThreeDSService *service = [AWXThreeDSService new];
-service.customerId = "The customer id merchant provides";
-service.intentId = "The intent id merchant provides";
-service.paymentMethod = "The payment method merchant provides";
-service.device = "The device id got by AWXSecurityService";
-service.presentingViewController = “The host viewController present or push the payment UIs”;
-service.delegate = ”The target to handle AWXThreeDSServiceDelegate protocol”;
-[service presentThreeDSFlowWithServerJwt:"The server jwt backend provides"];
-```
-
-- Handle the result of 3ds flow
-
-```objective-c
-/**
- A delegate which handles 3ds results.
- */
-@protocol AWXThreeDSServiceDelegate <NSObject>
-
-/**
- This method is called when the user has completed the 3ds flow.
- 
- @param service The service handling 3ds flow.
- @param response The response of 3ds auth.
- @param error The error if 3ds auth failed.
- */
-- (void)threeDSService:(AWXThreeDSService *)service
- didFinishWithResponse:(nullable AWXConfirmPaymentIntentResponse *)response
-                 error:(nullable NSError *)error;
-
-@end
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        // Status may be success/in progress/ failure
+    }];
+}
 ```
 
 ### Set Up WeChat Pay
 
-Note: you can follow this official guide [WeChat In-App Pay](https://pay.weixin.qq.com/wiki/doc/api/wxpay/pay/In-AppPay/chapter6_2.shtml).
-
-1. After the Merchant has successfully applied for an App in the WeChat Open Platform, the Platform will provide an unique APPID to the Merchant. When creating a project in Xcode, the developer should enter the APPID value in the “URL Schemes” field.
-
-2. Before calling the API, you should register your APPID with WeChat.
+After completing payment, WeChat will be redirected to the merchant's app and do a callback using onResp(), then it can retrieve the payment intent status after the merchant server is notified, so please keep listening to the notification.
 
 ```objective-c
-[WXApi registerApp:@"Wechat app id" enableMTA:YES];
-```
+@interface AppDelegate () <WXApiDelegate>
 
-3. The merchant's server calls the Unified Order API to create an advanced transaction. After obtaining prepay_id and signing relevant parameters, the advanced transaction data is transferred to the app to start a payment.
+@end
 
-```objective-c
-- (void)paymentWithWechatPaySDK:(AWXWeChatPaySDKResponse *)response
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	PayReq *request = [[PayReq alloc] init];
-	request.partnerId = response.partnerId;
-	request.prepayId = response.prepayId;
-	request.package = response.package;
-	request.nonceStr = response.nonceStr;
-	request.timeStamp = response.timeStamp.doubleValue;
-	request.sign = response.sign;
-
-	[WXApi sendReq:request];
+    [WXApi registerApp:@"WeChat app id" universalLink:@"https://airwallex.com/"];
+    
+    return YES;
 }
-```
 
-4. After completing payment, WeChat will be redirected to the merchant's app and do a callback using onResp(), then it can retrieve the payment intent status after the merchant server is notified, so please keep listening to the notification.
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    return [WXApi handleOpenURL:url delegate:self];
+}
 
-```objective-c
+/**
+ You can retrieve the payment intent status after your server is notified
+ */
 - (void)onResp:(BaseResp *)resp
 {
     if ([resp isKindOfClass:[PayResp class]]) {
@@ -331,35 +197,25 @@ Note: you can follow this official guide [WeChat In-App Pay](https://pay.weixin.
         PayResp *response = (PayResp *)resp;
         switch (response.errCode) {
             case WXSuccess:
-                message = @"Succeed to pay";
+                message = NSLocalizedString(@"Succeed to pay", nil);
+                break;
+            case WXErrCodeUserCancel:
+                message = NSLocalizedString(@"User cancelled.", nil);
                 break;
             default:
-                message = @"Failed to pay";
+                message = NSLocalizedString(@"Failed to pay", nil);
                 break;
         }
         
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
                                                                             message:message
                                                                      preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
         [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
     }
 }
-```
 
-### Set Up Alipay
-
-Processing server side returned url to complete payment.
-
-```objective-c
-- (void)paymentViewController:(UIViewController *)controller nextActionWithRedirectToURL:(NSURL *)url
-{
-    [controller dismissViewControllerAnimated:YES completion:^{
-        SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:url];
-        webViewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-        [self presentViewController:webViewController animated:YES completion:nil];
-    }];
-}
+@end
 ```
 
 ### Theme Color
