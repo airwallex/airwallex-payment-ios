@@ -26,6 +26,7 @@
 		26346A618B1632CE13FD8BD8 /* libPods-Airwallex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F32234CF28FBF7DEF511F529 /* libPods-Airwallex.a */; };
 		570A139E25A82B280064B362 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139C25A82B270064B362 /* README.md */; };
 		570A139F25A82B280064B362 /* README_zh_CN.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139D25A82B280064B362 /* README_zh_CN.md */; };
+		572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */; };
 		5780606726D4D3BD00693A18 /* AWXDefaultActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5780606526D4D3BD00693A18 /* AWXDefaultActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5780606826D4D3BD00693A18 /* AWXDefaultActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5780606626D4D3BD00693A18 /* AWXDefaultActionProvider.m */; };
 		578060AB26D518B200693A18 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 578060AA26D517B000693A18 /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -174,6 +175,7 @@
 		2467B1E77C4D87CAA384DD2F /* libPods-AirwallexTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AirwallexTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		570A139C25A82B270064B362 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		570A139D25A82B280064B362 /* README_zh_CN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../../README_zh_CN.md; sourceTree = "<group>"; };
+		572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXSessionTest.m; path = ../../../AirWallex/AirwallexTests/Models/AWXSessionTest.m; sourceTree = "<group>"; };
 		5780606526D4D3BD00693A18 /* AWXDefaultActionProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXDefaultActionProvider.h; sourceTree = "<group>"; };
 		5780606626D4D3BD00693A18 /* AWXDefaultActionProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXDefaultActionProvider.m; sourceTree = "<group>"; };
 		578060A926D5168000693A18 /* UI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UI.h; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				0829FD012431D10800557DB2 /* AWXAddressTest.m */,
 				0829FD072431D25800557DB2 /* AWXBillingTest.m */,
 				0829FD0D2431D3C200557DB2 /* AWXPaymentMethodTest.m */,
+				572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -887,6 +890,7 @@
 				0829FD4E243584E300557DB2 /* AWXTestAPIClient.m in Sources */,
 				0829FD022431D10800557DB2 /* AWXAddressTest.m in Sources */,
 				082442CC2431C00E00D04A2C /* AWXCardTest.m in Sources */,
+				572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */,
 				0829FD082431D25800557DB2 /* AWXBillingTest.m in Sources */,
 				0829FD132431E11E00557DB2 /* AWXPaymentMethodFunctionalTest.m in Sources */,
 				0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */,

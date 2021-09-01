@@ -18,7 +18,12 @@
 - (void)testCardValidator
 {
     XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"4242424242424242"].type == AWXBrandTypeVisa);
-    XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"5555555555554444"].type == AWXBrandTypeMastercard);
+    XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"4012000300001003"].type == AWXBrandTypeVisa);
+    XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"378282246310005"].type == AWXBrandTypeAmex);
+    XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"6011111111111117"].type == AWXBrandTypeDiscover);
+    XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"3056930009020004"].type == AWXBrandTypeDinersClub);
+    XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"3566002020360505"].type == AWXBrandTypeJCB);
+    XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"6200000000000005"].type == AWXBrandTypeUnionPay);
 }
 
 @end
