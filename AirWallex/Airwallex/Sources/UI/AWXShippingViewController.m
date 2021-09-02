@@ -12,18 +12,21 @@
 #import "AWXPlaceDetails.h"
 #import "AWXCountry.h"
 #import "AWXConstants.h"
+#import "AWXUtils.h"
+#import "AWXTheme.h"
 
 @interface AWXShippingViewController () <AWXCountryListViewControllerDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) AWXFloatingLabelTextField *firstNameField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *lastNameField;
-@property (strong, nonatomic) AWXFloatingLabelTextField *phoneNumberField;
+@property (strong, nonatomic) AWXFloatingLabelView *countryView;
 @property (strong, nonatomic) AWXFloatingLabelTextField *stateField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *cityField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *streetField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *zipcodeField;
-@property (strong, nonatomic) AWXFloatingLabelView *countryView;
+@property (strong, nonatomic) AWXFloatingLabelTextField *emailField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *phoneNumberField;
 
 @property (strong, nonatomic, nullable) AWXCountry *country;
 
@@ -47,8 +50,8 @@
     
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = NSLocalizedString(@"Shipping", @"Shipping");
-    titleLabel.textColor = [UIColor colorWithRed: 0.16 green: 0.16 blue: 0.16 alpha: 1.00];
-    titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:32];
+    titleLabel.textColor = [UIColor gray100Color];
+    titleLabel.font = [UIFont titleFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:titleLabel];
     
@@ -72,12 +75,6 @@
     
     CGFloat fieldHeight = 60.00;
     
-    UILabel *contactLabel = [UILabel new];
-    contactLabel.text = NSLocalizedString(@"Contact", @"Contact");
-    contactLabel.textColor = [UIColor colorWithRed: 0.16 green: 0.16 blue: 0.16 alpha: 1.00];
-    contactLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
-    [stackView addArrangedSubview:contactLabel];
-    
     _firstNameField = [AWXFloatingLabelTextField new];
     _firstNameField.fieldType = AWXTextFieldTypeFirstName;
     _firstNameField.placeholder = NSLocalizedString(@"First name", @"First Name");
@@ -90,20 +87,7 @@
     _firstNameField.nextTextField = _lastNameField;
     [stackView addArrangedSubview:_lastNameField];
     [_lastNameField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
-
-    _phoneNumberField = [AWXFloatingLabelTextField new];
-    _phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
-    _phoneNumberField.placeholder = NSLocalizedString(@"Phone number", @"Phone number");
-    _lastNameField.nextTextField = _phoneNumberField;
-    [stackView addArrangedSubview:_phoneNumberField];
-    [_phoneNumberField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
-
-    UILabel *addressLabel = [UILabel new];
-    addressLabel.text = NSLocalizedString(@"Shipping address", @"Shipping address");
-    addressLabel.textColor = [UIColor colorWithRed: 0.16 green: 0.16 blue: 0.16 alpha: 1.00];
-    addressLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
-    [stackView addArrangedSubview:addressLabel];
-
+    
     _countryView = [AWXFloatingLabelView new];
     _countryView.placeholder = NSLocalizedString(@"Country / Region", @"Country / Region");
     [stackView addArrangedSubview:_countryView];
@@ -111,38 +95,53 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectCountries:)];
     [_countryView addGestureRecognizer:tap];
-
+    
     _stateField = [AWXFloatingLabelTextField new];
     _stateField.fieldType = AWXTextFieldTypeState;
     _stateField.placeholder = NSLocalizedString(@"State", @"State");
-    _phoneNumberField.nextTextField = _stateField;
+    _lastNameField.nextTextField = _stateField;
     [stackView addArrangedSubview:_stateField];
     [_stateField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
-
+    
     _cityField = [AWXFloatingLabelTextField new];
     _cityField.fieldType = AWXTextFieldTypeCity;
     _cityField.placeholder = NSLocalizedString(@"City", @"City");
     _stateField.nextTextField = _cityField;
     [stackView addArrangedSubview:_cityField];
     [_cityField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
-
+    
     _streetField = [AWXFloatingLabelTextField new];
     _streetField.fieldType = AWXTextFieldTypeStreet;
     _streetField.placeholder = NSLocalizedString(@"Street", @"Street");
     _cityField.nextTextField = _streetField;
     [stackView addArrangedSubview:_streetField];
     [_streetField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
-
+    
     _zipcodeField = [AWXFloatingLabelTextField new];
     _zipcodeField.fieldType = AWXTextFieldTypeZipcode;
     _zipcodeField.placeholder = NSLocalizedString(@"Zip code (optional)", @"Zip code (optional)");
     _streetField.nextTextField = _zipcodeField;
     [stackView addArrangedSubview:_zipcodeField];
     [_zipcodeField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
-
+    
+    _emailField = [AWXFloatingLabelTextField new];
+    _emailField.fieldType = AWXTextFieldTypeZipcode;
+    _emailField.placeholder = NSLocalizedString(@"Email (optional)", @"Email (optional)");
+    _zipcodeField.nextTextField = _emailField;
+    [stackView addArrangedSubview:_emailField];
+    [_emailField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+    
+    _phoneNumberField = [AWXFloatingLabelTextField new];
+    _phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
+    _phoneNumberField.placeholder = NSLocalizedString(@"Phone number (optional)", @"Phone number (optional)");
+    _emailField.nextTextField = _phoneNumberField;
+    [stackView addArrangedSubview:_phoneNumberField];
+    [_phoneNumberField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+    
     if (self.shipping) {
-        _lastNameField.text = self.shipping.lastName;
         _firstNameField.text = self.shipping.firstName;
+        _lastNameField.text = self.shipping.lastName;
+        _emailField.text = self.shipping.email;
         _phoneNumberField.text = self.shipping.phoneNumber;
         
         AWXAddress *address = self.shipping.address;
@@ -182,7 +181,6 @@
     AWXPlaceDetails *shipping = [AWXPlaceDetails new];
     shipping.lastName = self.lastNameField.text;
     shipping.firstName = self.firstNameField.text;
-    shipping.phoneNumber = self.phoneNumberField.text;
     AWXAddress *address = [AWXAddress new];
     address.countryCode = self.country.countryCode;
     address.state = self.stateField.text;
@@ -190,6 +188,8 @@
     address.street = self.streetField.text;
     address.postcode = self.zipcodeField.text;
     shipping.address = address;
+    shipping.email = self.emailField.text;
+    shipping.phoneNumber = self.phoneNumberField.text;
     NSString *error = [shipping validate];
     if (error) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];

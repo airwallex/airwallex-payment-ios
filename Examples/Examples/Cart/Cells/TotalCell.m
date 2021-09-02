@@ -7,7 +7,7 @@
 //
 
 #import "TotalCell.h"
-#import <Airwallex/Airwallex.h>
+#import <Airwallex/Core.h>
 
 @implementation TotalCell
 

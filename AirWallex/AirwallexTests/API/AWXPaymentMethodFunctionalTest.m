@@ -31,7 +31,7 @@
 
 - (void)testGetPaymentMethodList
 {
-    AWXGetPaymentMethodsTypeRequest *request = [AWXGetPaymentMethodsTypeRequest new];
+    AWXGetPaymentMethodTypesRequest *request = [AWXGetPaymentMethodTypesRequest new];
     request.active = YES;
     request.pageNum = 0;
     request.transactionCurrency = @"HKD";

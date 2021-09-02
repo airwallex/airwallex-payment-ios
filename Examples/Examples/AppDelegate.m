@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <Airwallex/Airwallex.h>
+#import <Airwallex/UI.h>
 #import <WechatOpenSDK/WXApi.h>
 #import "AirwallexExamplesKeys.h"
 
@@ -19,6 +19,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [UINavigationBar appearance].barTintColor = [UIColor whiteColor];
+    [UINavigationBar appearance].shadowImage = [UIImage new];
+
     [WXApi registerApp:@"wx4c86d73fe4f82431" universalLink:@"https://airwallex.com/"];
     
     [WXApi startLogByLevel:WXLogLevelNormal logBlock:^(NSString * _Nonnull log) {
@@ -70,17 +73,20 @@
         PayResp *response = (PayResp *)resp;
         switch (response.errCode) {
             case WXSuccess:
-                message = @"Succeed to pay";
+                message = NSLocalizedString(@"Succeed to pay", nil);
+                break;
+            case WXErrCodeUserCancel:
+                message = NSLocalizedString(@"User cancelled.", nil);
                 break;
             default:
-                message = @"Failed to pay";
+                message = NSLocalizedString(@"Failed to pay", nil);
                 break;
         }
         
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
                                                                             message:message
                                                                      preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
         [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
     }
 }

@@ -49,61 +49,6 @@
 
 @end
 
-@interface AWXNibView ()
-
-@property (nonatomic, strong) UIView *view;
-
-@end
-
-@implementation AWXNibView
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    if (self = [super initWithCoder:aDecoder]) {
-        [self addNibView];
-    }
-    return self;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    if (self = [super initWithFrame:frame]) {
-        [self addNibView];
-    }
-    return self;
-}
-
-- (void)addNibView
-{
-    UIView *view = [self loadFromNib:self.nibName index:self.nibIndex];
-    view.frame = self.bounds;
-    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self addSubview:_view = view];
-    [self setup];
-}
-
-- (void)setup
-{
-}
-
-- (NSString *)nibName
-{
-    return NSStringFromClass(self.class);
-}
-
-- (NSInteger)nibIndex
-{
-    return 0;
-}
-
-- (UIView *)loadFromNib:(NSString *)nibName index:(NSInteger)index
-{
-    UINib *nib = [UINib nibWithNibName:self.nibName bundle:[NSBundle bundleForClass:self.class]];
-    return [nib instantiateWithOwner:self options:nil][self.nibIndex];
-}
-
-@end
-
 @interface AWXButton ()
 
 @end
@@ -120,7 +65,7 @@
 - (void)setEnabled:(BOOL)enabled
 {
     super.enabled = enabled;
-    self.backgroundColor = enabled ? [AWXTheme sharedTheme].tintColor : [AWXTheme sharedTheme].lineColor;
+    self.backgroundColor = enabled ? [AWXTheme sharedTheme].tintColor : [UIColor gray10Color];
 }
 
 @end
@@ -136,30 +81,30 @@
     self = [super init];
     if (self) {
         _borderView = [AWXView new];
-        _borderView.borderColor = [UIColor colorWithRed:235.0f/255.0f green:246.0f/255.0f blue:240.0f/255.0f alpha:1];
-        _borderView.cornerRadius = 4.0;
+        _borderView.borderColor = [AWXTheme sharedTheme].lineColor;
+        _borderView.cornerRadius = 8.0;
         _borderView.borderWidth = 1.0;
         _borderView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_borderView];
         
         _floatingLabel = [UILabel new];
-        _floatingLabel.textColor = [UIColor colorWithRed: 0.66 green: 0.66 blue: 0.66 alpha: 1.00];
-        _floatingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
+        _floatingLabel.textColor = [UIColor gray50Color];
+        _floatingLabel.font = [UIFont bodyFont];
         _floatingLabel.alpha = 0;
         _floatingLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_borderView addSubview:_floatingLabel];
         
         _textField = [UITextField new];
-        _textField.textColor = [UIColor colorWithRed: 0.16 green: 0.16 blue: 0.16 alpha: 1.00];
-        _textField.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:16];
+        _textField.textColor = [AWXTheme sharedTheme].textColor;
+        _textField.font = [UIFont bodyFont];
         _textField.delegate = self;
         _textField.translatesAutoresizingMaskIntoConstraints = NO;
         [_textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         [_borderView addSubview:_textField];
         
         _errorLabel = [UILabel new];
-        _errorLabel.textColor = [UIColor errorColor];
-        _errorLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
+        _errorLabel.textColor = [UIColor infraredColor];
+        _errorLabel.font = [UIFont caption1Font];
         _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_errorLabel];
         
@@ -193,7 +138,7 @@
 - (NSAttributedString *)formatText:(NSString *)text
 {
     NSString *nonNilText = text ?: @"";
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:nonNilText attributes:@{NSFontAttributeName: [UIFont fontWithName:AWXFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [AWXTheme sharedTheme].textColor}];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:nonNilText attributes:@{NSFontAttributeName: [UIFont bodyFont], NSForegroundColorAttributeName: [AWXTheme sharedTheme].textColor}];
     return attributedString;
 }
 
@@ -207,11 +152,11 @@
             expirationYear = [expirationYear stringByRemovingIllegalCharacters];
             expirationYear = [expirationYear substringToIndex:MIN(expirationYear.length, 4)];
         }
-
+        
         if (expirationMonth.length == 1 && ![expirationMonth isEqualToString:@"0"] && ![expirationMonth isEqualToString:@"1"]) {
             expirationMonth = [NSString stringWithFormat:@"0%@", text];
         }
-
+        
         NSMutableArray *array = [NSMutableArray array];
         if (expirationMonth && ![expirationMonth isEqualToString:@""]) {
             [array addObject:expirationMonth];
@@ -219,7 +164,7 @@
         if (expirationMonth.length == 2 && expirationMonth.integerValue > 0 && expirationMonth.integerValue <= 12) {
             [array addObject:expirationYear];
         }
-
+        
         _text = [array componentsJoinedByString:@"/"];
     }
     self.textField.attributedText = [self formatText:_text];
@@ -300,10 +245,10 @@
 - (void)setErrorText:(nullable NSString *)errorText
 {
     if (errorText) {
-        self.borderView.borderColor = [UIColor errorColor];
+        self.borderView.borderColor = [UIColor infraredColor];
         self.errorLabel.text = errorText;
     } else {
-        self.borderView.borderColor = [UIColor lineColor];
+        self.borderView.borderColor = [AWXTheme sharedTheme].lineColor;
         self.errorLabel.text = nil;
     }
 }
@@ -324,7 +269,7 @@
     if (self.floatingLabel.alpha == 1) {
         return;
     }
-
+    
     self.floatingTopConstraint.constant = 30;
     self.textTopConstraint.constant = 9;
     self.floatingLabel.alpha = 0;
@@ -341,7 +286,7 @@
     if (self.floatingLabel.alpha == 0) {
         return;
     }
-
+    
     self.floatingTopConstraint.constant = 9;
     self.textTopConstraint.constant = 30;
     self.floatingLabel.alpha = 1;
@@ -475,7 +420,7 @@
         [textField resignFirstResponder];
         return YES;
     }
-
+    
     [self.nextTextField.textField becomeFirstResponder];
     return NO;
 }
@@ -498,22 +443,22 @@
     self = [super init];
     if (self) {
         AWXView *borderView = [AWXView new];
-        borderView.borderColor = [UIColor lineColor];
-        borderView.cornerRadius = 4.0;
+        borderView.borderColor = [AWXTheme sharedTheme].lineColor;
+        borderView.cornerRadius = 8.0;
         borderView.borderWidth = 1.0;
         borderView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:borderView];
         
         _floatingLabel = [UILabel new];
-        _floatingLabel.textColor = [UIColor floatingTitleColor];
-        _floatingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
+        _floatingLabel.textColor = [UIColor gray50Color];
+        _floatingLabel.font = [UIFont caption2Font];
         _floatingLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [borderView addSubview:_floatingLabel];
         
         _textLabel = [UILabel new];
         _textLabel.alpha = 0;
-        _textLabel.textColor = [UIColor textColor];
-        _textLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:16];
+        _textLabel.textColor = [AWXTheme sharedTheme].textColor;
+        _textLabel.font = [UIFont bodyFont];
         _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [borderView addSubview:_textLabel];
         
@@ -521,7 +466,7 @@
         _imageView.image = [UIImage imageNamed:@"down" inBundle:[NSBundle resourceBundle]];
         _imageView.translatesAutoresizingMaskIntoConstraints = NO;
         [borderView addSubview:_imageView];
-
+        
         NSDictionary *views = @{@"borderView": borderView, @"floatingLabel": _floatingLabel, @"textLabel": _textLabel, @"imageView": _imageView};
         NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"top": @30.0};
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
@@ -564,11 +509,11 @@
     if (self.textLabel.alpha == 1) {
         return;
     }
-
+    
     self.floatingTopConstraint.constant = 20;
     self.textLabel.alpha = 0;
     [UIView animateWithDuration:0.25 animations:^{
-        self.floatingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:12];
+        self.floatingLabel.font = [UIFont caption2Font];
         self.floatingTopConstraint.constant = 9;
         self.textLabel.alpha = 1;
         [self layoutIfNeeded];
@@ -580,11 +525,11 @@
     if (self.floatingTopConstraint.constant == 20) {
         return;
     }
-
+    
     self.floatingTopConstraint.constant = 9;
     self.textLabel.alpha = 1;
     [UIView animateWithDuration:0.25 animations:^{
-        self.floatingLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+        self.floatingLabel.font = [UIFont bodyFont];
         self.floatingTopConstraint.constant = 20;
         self.textLabel.alpha = 0;
         [self layoutIfNeeded];
@@ -645,7 +590,7 @@
 
 - (NSAttributedString *)formatText:(NSString *)text
 {
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont fontWithName:AWXFontNameCircularStdMedium size:16], NSForegroundColorAttributeName: [AWXTheme sharedTheme].textColor}];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont bodyFont], NSForegroundColorAttributeName: [AWXTheme sharedTheme].textColor}];
     AWXBrandType type = [self typeOfNumber:text];
     NSArray *cardNumberFormat = [AWXCardValidator cardNumberFormatForBrand:type];
     NSUInteger index = 0;
@@ -700,12 +645,12 @@
     self.errorText = nil;
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     text.length > 0 ? [self active] : [self inactive];
-
+    
     AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:text];
     if (brand && text.length > brand.length) {
         return NO;
     }
-
+    
     [self setText:text];
     return NO;
 }
@@ -729,9 +674,9 @@
     self = [super init];
     if (self) {
         self.layer.masksToBounds = YES;
-        self.layer.cornerRadius = 6.0f;
-        self.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        self.layer.borderWidth = 1.0 / [UIScreen mainScreen].scale;
+        self.layer.cornerRadius = 8.0f;
+        self.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
+        self.layer.borderWidth = 1.0;
         
         _contentView = [UIView new];
         _contentView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -747,15 +692,15 @@
         [topView addSubview:_flagImageView];
         
         _currencyNameLabel = [UILabel new];
-        _currencyNameLabel.textColor = [UIColor textColor];
-        _currencyNameLabel.font = [UIFont fontWithName:AWXFontNameCircularXXRegular size:14];
+        _currencyNameLabel.textColor = [AWXTheme sharedTheme].textColor;
+        _currencyNameLabel.font = [UIFont subhead1Font];
         _currencyNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [topView addSubview:_currencyNameLabel];
         
         _priceLabel = [UILabel new];
         _priceLabel.textAlignment = NSTextAlignmentCenter;
-        _priceLabel.textColor = [UIColor textColor];
-        _priceLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:18];
+        _priceLabel.textColor = [AWXTheme sharedTheme].textColor;
+        _priceLabel.font = [UIFont headlineFont];
         _priceLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_contentView addSubview:_priceLabel];
         
@@ -802,7 +747,7 @@
 - (void)setIsSelected:(BOOL)isSelected
 {
     self.button.selected = isSelected;
-    self.layer.borderWidth = isSelected ? 1.5 : (1.0 / [UIScreen mainScreen].scale);
+    self.layer.borderWidth = (isSelected ? 1.5 : 1.0) / [UIScreen mainScreen].scale;
     self.layer.borderColor = isSelected ? [AWXTheme sharedTheme].tintColor.CGColor : [AWXTheme sharedTheme].lineColor.CGColor;
 }
 
@@ -839,6 +784,144 @@
 - (void)setPrice:(NSString *)price
 {
     self.priceLabel.text = price;
+}
+
+@end
+
+@interface AWXLabeledFormTextFieldView ()
+
+@property (nonatomic, strong) UILabel *formLabel;
+@property (nonatomic, strong) UITextField *textField;
+
+@end
+
+@implementation AWXLabeledFormTextFieldView
+
+- (NSString *)label
+{
+    return self.formLabel.text;
+}
+
+- (NSString *)input
+{
+    return self.textField.text;
+}
+
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText textField:(UITextField *)textField
+{
+    if (self = [super initWithKey:key]) {
+        UILabel *formLabel = [UILabel new];
+        formLabel.text = formLabelText;
+        formLabel.textColor = [AWXTheme sharedTheme].textColor;
+        formLabel.font = [UIFont bodyFont];
+        formLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.formLabel = formLabel;
+        [self addSubview:formLabel];
+        
+        UIView *contentView = [UIView autoLayoutView];
+        contentView.layer.masksToBounds = YES;
+        contentView.layer.cornerRadius = 8;
+        contentView.layer.borderWidth = 1.0;
+        contentView.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
+        [self addSubview:contentView];
+        
+        textField.textColor = [AWXTheme sharedTheme].textColor;
+        textField.font = [UIFont bodyFont];
+        textField.translatesAutoresizingMaskIntoConstraints = NO;
+        self.textField = textField;
+        [contentView addSubview:textField];
+        
+        NSDictionary *views = @{@"formLabel": formLabel, @"contentView": contentView, @"textField": textField};
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[formLabel]|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[formLabel(21)][contentView]|"
+                                                                     options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                     metrics:nil
+                                                                       views:views]];
+        [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[textField]-8-|"
+                                                                            options:0
+                                                                            metrics:nil
+                                                                              views:views]];
+        [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textField(40)]|"
+                                                                            options:0
+                                                                            metrics:nil
+                                                                              views:views]];
+    }
+    return self;
+}
+
+@end
+
+@interface AWXOptionView ()
+
+@property (nonatomic, strong) UIButton *contentView;
+@property (nonatomic, strong) UILabel *formLabel;
+@property (nonatomic, strong) NSString *placeholder;
+
+@end
+
+@implementation AWXOptionView
+
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText placeholder:(NSString *)placeholder logo:(NSString *)logo
+{
+    if (self = [super initWithKey:key]) {
+        self.placeholder = placeholder;
+        
+        UIButton *contentView = [UIButton autoLayoutView];
+        self.contentView = contentView;
+        contentView.layer.masksToBounds = YES;
+        contentView.layer.cornerRadius = 8;
+        [contentView setBackgroundImage:[UIImage imageFromColor:[UIColor colorWithRed:0.94 green:0.94 blue:1 alpha:1]] forState:UIControlStateHighlighted];
+        [self addSubview:contentView];
+        
+        UILabel *formLabel = [UILabel new];
+        self.formLabel = formLabel;
+        formLabel.text = formLabelText;
+        formLabel.textColor = [AWXTheme sharedTheme].textColor;
+        formLabel.font = [UIFont subhead1Font];
+        formLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [contentView addSubview:formLabel];
+        
+        [contentView addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+        
+        UIImageView *imageView = [UIImageView autoLayoutView];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.image = [UIImage imageNamed:logo];
+        [contentView addSubview:imageView];
+        
+        NSDictionary *views = @{@"formLabel": formLabel, @"contentView": contentView, @"imageView": imageView};
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[contentView]-8-|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:views]];
+        [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[formLabel]->=0-[imageView]-8-|"
+                                                                            options:NSLayoutFormatAlignAllCenterY
+                                                                            metrics:nil
+                                                                              views:views]];
+        [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[imageView(20)]-10-|"
+                                                                            options:0
+                                                                            metrics:nil
+                                                                              views:views]];
+    }
+    return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([@"highlighted" isEqualToString:keyPath]) {
+        self.formLabel.textColor = self.contentView.isHighlighted ? [AWXTheme sharedTheme].tintColor : [UIColor gray70Color];
+    }
+}
+
+- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
+{
+    [self.contentView addTarget:target action:action forControlEvents:controlEvents];
 }
 
 @end

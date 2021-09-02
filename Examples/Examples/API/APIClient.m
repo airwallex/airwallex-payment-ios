@@ -7,7 +7,7 @@
 //
 
 #import "APIClient.h"
-#import <Airwallex/Airwallex.h>
+#import <Airwallex/Core.h>
 
 @implementation APIClient
 

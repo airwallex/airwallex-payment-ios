@@ -7,7 +7,6 @@
 //
 
 #import "AWXPaymentViewController.h"
-#import "AWXDCCViewController.h"
 #import "AWXConstants.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
@@ -19,21 +18,18 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXTheme.h"
 #import "AWXPaymentIntent.h"
-#import "AWXThreeDSService.h"
-#import "AWXSecurityService.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentConsent.h"
-#import "AWXViewModel.h"
+#import "AWXDefaultProvider.h"
+#import "AWXDefaultActionProvider.h"
 
-@interface AWXPaymentViewController () <UITextFieldDelegate, AWXDCCViewControllerDelegate, AWXViewModelDelegate>
+@interface AWXPaymentViewController () <UITextFieldDelegate, AWXProviderDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UILabel *totalLabel;
 @property (strong, nonatomic) UITextField *cvcField;
 @property (strong, nonatomic) AWXButton *confirmButton;
-
-@property (nonatomic, strong) AWXViewModel *viewModel;
 
 @end
 
@@ -42,9 +38,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.viewModel = [[AWXViewModel alloc] initWithSession:self.session delegate:self];
-
-    self.view.backgroundColor = [UIColor bgColor];
     [self enableTapToEndEditting];
     
     _scrollView = [UIScrollView new];
@@ -60,7 +53,7 @@
     stackView.layoutMarginsRelativeArrangement = YES;
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
     [_scrollView addSubview:stackView];
-
+    
     NSDictionary *views = @{@"scrollView": _scrollView, @"stackView": stackView};
     NSDictionary *metrics = @{@"margin": @16, @"padding": @33};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:metrics views:views]];
@@ -72,15 +65,15 @@
     _totalLabel = [UILabel new];
     _totalLabel.text = [self.session.amount stringWithCurrencyCode:self.session.currency];
     _totalLabel.textAlignment = NSTextAlignmentCenter;
-    _totalLabel.textColor = [UIColor textColor];
-    _totalLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:40];
+    _totalLabel.textColor = [UIColor gray50Color];
+    _totalLabel.font = [UIFont subhead1Font];
     [stackView addArrangedSubview:_totalLabel];
     
     UILabel *totalLabel = [UILabel new];
     totalLabel.text = NSLocalizedString(@"Total", @"Total");
     totalLabel.textAlignment = NSTextAlignmentCenter;
-    totalLabel.textColor = [UIColor textColor];
-    totalLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+    totalLabel.textColor = [UIColor gray50Color];
+    totalLabel.font = [UIFont subhead1Font];
     [stackView addArrangedSubview:totalLabel];
     
     UIStackView *contentView = [UIStackView new];
@@ -106,13 +99,13 @@
     
     UILabel *paymentLabel = [UILabel new];
     paymentLabel.text = NSLocalizedString(@"Payment", @"Payment");
-    paymentLabel.textColor = [UIColor textColor];
-    paymentLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+    paymentLabel.textColor = [UIColor gray100Color];
+    paymentLabel.font = [UIFont subhead2Font];
     [paymentMethodStackView addArrangedSubview:paymentLabel];
     
     UILabel *methodLabel = [UILabel new];
-    methodLabel.textColor = [UIColor floatingTitleColor];
-    methodLabel.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+    methodLabel.textColor = [UIColor gray100Color];
+    methodLabel.font = [UIFont subhead2Font];
     [paymentMethodStackView addArrangedSubview:methodLabel];
     
     UIStackView *cvcStackView = [UIStackView new];
@@ -123,23 +116,23 @@
     cvcStackView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addArrangedSubview:cvcStackView];
     [cvcStackView.heightAnchor constraintEqualToConstant:44].active = YES;
-
+    
     UIView *view = [UIView new];
     [cvcStackView addArrangedSubview:view];
-
+    
     _cvcField = [UITextField new];
     _cvcField.delegate = self;
     _cvcField.textAlignment = NSTextAlignmentCenter;
     _cvcField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
     _cvcField.borderStyle = UITextBorderStyleRoundedRect;
-    _cvcField.textColor = [UIColor textColor];
+    _cvcField.textColor = [AWXTheme sharedTheme].textColor;
     _cvcField.placeholder = NSLocalizedString(@"CVC/VCC", @"CVC/VCC");
-    _cvcField.font = [UIFont fontWithName:AWXFontNameCircularStdMedium size:14];
+    _cvcField.font = [UIFont subhead2Font];
     [_cvcField addTarget:self action:@selector(cvcChanged:) forControlEvents:UIControlEventEditingChanged];
     _cvcField.translatesAutoresizingMaskIntoConstraints = NO;
     [cvcStackView addArrangedSubview:_cvcField];
     [_cvcField.widthAnchor constraintEqualToConstant:92].active = YES;
-
+    
     UIImageView *cvcImageView = [UIImageView new];
     cvcImageView.image = [UIImage imageNamed:@"cvv" inBundle:[NSBundle resourceBundle]];
     cvcImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -147,35 +140,31 @@
     [cvcStackView addArrangedSubview:cvcImageView];
     [cvcImageView.widthAnchor constraintEqualToConstant:36].active = YES;
     [cvcImageView.heightAnchor constraintEqualToConstant:24].active = YES;
-
+    
     _confirmButton = [AWXButton new];
     _confirmButton.enabled = YES;
     _confirmButton.cornerRadius = 6;
     [_confirmButton setTitle:NSLocalizedString(@"Pay now", @"Pay now") forState:UIControlStateNormal];
-    _confirmButton.titleLabel.font = [UIFont fontWithName:AWXFontNameCircularStdBold size:14];
+    _confirmButton.titleLabel.font = [UIFont headlineFont];
     [_confirmButton addTarget:self action:@selector(payPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [_confirmButton setImage:[UIImage imageNamed:@"lock-white" inBundle:[NSBundle resourceBundle]] forState:UIControlStateNormal];
-    [_confirmButton setImage:[UIImage imageNamed:@"lock-grey" inBundle:[NSBundle resourceBundle]] forState:UIControlStateDisabled];
-    [_confirmButton setImageAndTitleHorizontalAlignmentCenter:8];
     _confirmButton.translatesAutoresizingMaskIntoConstraints = NO;
     [stackView addArrangedSubview:_confirmButton];
     [_confirmButton.leftAnchor constraintEqualToAnchor:stackView.leftAnchor constant:16].active = YES;
     [_confirmButton.rightAnchor constraintEqualToAnchor:stackView.rightAnchor constant:-16].active = YES;
-    [_confirmButton.heightAnchor constraintEqualToConstant:44].active = YES;
+    [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
     
-    NSString *type = self.paymentMethod.type;
-    if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
-        methodLabel.text = FormatPaymentMethodTypeString(type);
-        cvcStackView.hidden = YES;
-    } else {
-        methodLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentMethod.card.brand.capitalizedString, self.paymentMethod.card.last4];
+    if (self.paymentConsent.paymentMethod.card != nil) {
+        methodLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4];
         cvcStackView.hidden = NO;
+    } else {
+        methodLabel.text = self.paymentConsent.paymentMethod.type.capitalizedString;
+        cvcStackView.hidden = YES;
     }
     
-    if (self.paymentMethod.card.cvc) {
-        _cvcField.text = self.paymentMethod.card.cvc;
+    if (self.paymentConsent.paymentMethod.card.cvc) {
+        _cvcField.text = self.paymentConsent.paymentMethod.card.cvc;
     }
-
+    
     [self checkPaymentEnabled];
 }
 
@@ -199,11 +188,11 @@
 
 - (void)checkPaymentEnabled
 {
-    if ([Airwallex.supportedNonCardTypes containsObject:self.paymentMethod.type]) {
+    if (self.paymentConsent.paymentMethod.card == nil) {
         _confirmButton.enabled = YES;
         return;
     }
-
+    
     _confirmButton.enabled = _cvcField.text.length > 0;
 }
 
@@ -214,19 +203,11 @@
 
 - (void)payPressed:(id)sender
 {
-    self.paymentMethod.card.cvc = _cvcField.text;
-
-    [self.viewModel confirmPaymentIntentWithPaymentMethod:self.paymentMethod paymentConsent:self.paymentConsent];
-}
-
-- (void)showDcc:(AWXDccResponse *)response
-{
-    AWXDCCViewController *controller = [[AWXDCCViewController alloc] initWithNibName:nil bundle:nil];
-    controller.session = self.session;
-    controller.response = response;
-    controller.delegate = self;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:nav animated:YES completion:nil];
+    self.paymentConsent.paymentMethod.card.cvc = _cvcField.text;
+    
+    AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
+    [provider confirmPaymentIntentWithPaymentMethod:self.paymentConsent.paymentMethod paymentConsent:self.paymentConsent];
+    self.provider = provider;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -242,58 +223,53 @@
 
 #pragma mark - AWXViewModelDelegate
 
-- (void)viewModelDidStartRequest:(AWXViewModel *)viewModel
+- (void)providerDidStartRequest:(AWXDefaultProvider *)provider
 {
     [self startAnimating];
 }
 
-- (void)viewModelDidEndRequest:(AWXViewModel *)viewModel
+- (void)providerDidEndRequest:(AWXDefaultProvider *)provider
 {
     [self stopAnimating];
 }
 
-- (void)viewModel:(AWXViewModel *)viewModel didCompleteWithError:(NSError *)error
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error
 {
     id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    [delegate paymentViewController:self didFinishWithStatus:error != nil ? AWXPaymentStatusError : AWXPaymentStatusSuccess error:error];
+    [delegate paymentViewController:self didCompleteWithStatus:status error:error];
 }
 
-- (void)viewModel:(AWXViewModel *)viewModel didCreatePaymentConsent:(AWXPaymentConsent *)paymentConsent
-{
-    self.paymentConsent = paymentConsent;
-}
-
-- (void)viewModel:(AWXViewModel *)viewModel didInitializePaymentIntentId:(NSString *)paymentIntentId
+- (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId
 {
     [self.session updateInitialPaymentIntentId:paymentIntentId];
 }
 
-- (void)viewModel:(AWXViewModel *)viewModel shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction
+- (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction
 {
-    id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    if (nextAction.weChatPayResponse) {
-        [delegate paymentViewController:self nextActionWithWeChatPaySDK:nextAction.weChatPayResponse];
-    } else if (nextAction.redirectResponse) {
-        [self.viewModel handleThreeDSWithJwt:nextAction.redirectResponse.jwt
-                    presentingViewController:self];
-    } else if (nextAction.dccResponse) {
-        [self showDcc:nextAction.dccResponse];
-    } else if (nextAction.url) {
-        [delegate paymentViewController:self nextActionWithAlipayURL:nextAction.url];
-    } else {
-        [delegate paymentViewController:self
-                    didFinishWithStatus:AWXPaymentStatusError
-                                  error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unsupported next action."}]];
+    Class class = ClassToHandleNextActionForType(nextAction);
+    if (class == nil) {
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
+        return;
     }
+    
+    AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:self session:self.session];
+    [actionProvider handleNextAction:nextAction];
+    self.provider = actionProvider;
 }
 
-#pragma mark - AWXDCCViewControllerDelegate
-
-- (void)dccViewController:(AWXDCCViewController *)controller useDCC:(BOOL)useDCC
+- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss
 {
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    [self.viewModel confirmThreeDSWithUseDCC:useDCC];
+    if (forceToDismiss) {
+        [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+            if (controller) {
+                [self presentViewController:controller animated:YES completion:nil];
+            }
+        }];
+    } else if (controller) {
+        [self presentViewController:controller animated:YES completion:nil];
+    }
 }
 
 @end

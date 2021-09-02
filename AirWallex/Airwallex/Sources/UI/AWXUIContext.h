@@ -13,11 +13,6 @@
 
 @class AWXWeChatPaySDKResponse, AWXPaymentMethodListViewController, AWXCardViewController, AWXPaymentViewController, AWXShippingViewController, AWXPaymentIntent, AWXPlaceDetails;
 
-typedef NS_ENUM(NSUInteger, AWXPaymentStatus) {
-    AWXPaymentStatusSuccess,
-    AWXPaymentStatusError,
-};
-
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -27,28 +22,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This method is called when the user has completed the checkout.
-
+ 
  @param controller The controller handling payment result.
  @param status The status of checkout result.
  @param error The error if checkout failed.
  */
-- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error;
-
-/**
- This method is called when wechat pay is needed.
-
- @param controller The controller handling payment result.
- @param response The wechat object.
- */
-- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWXWeChatPaySDKResponse *)response;
-
-/**
- This method is called when alipay is needed.
-
- @param controller The controller handling payment result.
- @param url The url to launch alipay.
- */
-- (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url;
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error;
 
 @end
 
@@ -82,14 +61,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Present the payment flow.
  */
-- (void)presentPaymentFlow;
+- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController;
 
 /**
- Convenience constructor for a shipping.
- 
- @return The newly created shipping view controller.
+ Push the payment flow.
  */
-+ (AWXShippingViewController *)shippingViewController;
+- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

@@ -8,14 +8,34 @@ Pod::Spec.new do |s|
   s.source       				= { :git => "https://github.com/airwallex/airwallex-payment-ios.git", :tag => "#{s.version}" }
   s.platform   					= :ios
   s.ios.deployment_target		= '11.0'
-  s.resources					= ['Airwallex/Airwallex/Resources/**/*']
-  s.source_files				= 'Airwallex/Airwallex/Sources/*.{h,m}', 'Airwallex/Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Airwallex/Sources/API/*.{h,m}', 'Airwallex/Airwallex/Sources/Tools/*.{h,m}', 'Airwallex/Airwallex/Sources/Models/*.{h,m}'
   s.static_framework			= true
-  s.dependency					'SVProgressHUD'
-  s.dependency					'AirwallexBehavioralBiometrics'
-  s.dependency                  'AirwallexProfiling'
-  s.dependency                  'AirwallexProfilingConnections'
-  s.dependency					'AirwallexCardinalMobile'
+  s.default_subspecs            = 'Core', 'WeChat', 'Card', 'Redirect'
+  
+  s.subspec 'Core' do |plugin|
+    plugin.source_files = 'Airwallex/Airwallex/Sources/Core/*.{h,m}', 'Airwallex/Airwallex/Sources/Core/*.{h,m}', 'Airwallex/Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Airwallex/Sources/UI/*.{h,m}'
+    plugin.dependency 'AirwallexBehavioralBiometrics'
+    plugin.dependency 'AirwallexProfiling'
+    plugin.dependency 'AirwallexProfilingConnections'
+  end
+  
+  s.subspec 'WeChatPay' do |plugin|
+    plugin.dependency 'Airwallex/Core'
+    plugin.dependency 'WechatOpenSDK'
+    plugin.source_files = 'Airwallex/Airwallex/Sources/WeChatPay/*.{h,m}'
+  end
+  
+  s.subspec 'Card' do |plugin|
+    plugin.dependency 'Airwallex/Core'
+    plugin.dependency 'AirwallexCardinalMobile'
+    plugin.source_files = 'Airwallex/Airwallex/Sources/Card/*.{h,m}'
+  end
+  
+  s.subspec 'Redirect' do |plugin|
+    plugin.dependency 'Airwallex/Core'
+    plugin.source_files = 'Airwallex/Airwallex/Sources/Redirect/*.{h,m}'
+  end
+  
+  s.resources                    = ['Airwallex/Airwallex/Resources/**/*']
 
   # s.resource_bundles = {
   #   'AirwallexSDK' => ['Airwallex/Airwallex/Resources/**/*.{lproj,storyboard,xib,xcassets,json,imageset,png}']

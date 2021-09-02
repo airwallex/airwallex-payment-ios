@@ -26,12 +26,14 @@ typedef NS_ENUM(NSUInteger, AWXTextFieldType) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-IB_DESIGNABLE
+/**
+ Base view
+ */
 @interface AWXView : UIView
 
-@property (nonatomic) IBInspectable CGFloat cornerRadius;
-@property (nonatomic) IBInspectable CGFloat borderWidth;
-@property (nonatomic, strong) IBInspectable UIColor *borderColor;
+@property (nonatomic) CGFloat cornerRadius;
+@property (nonatomic) CGFloat borderWidth;
+@property (nonatomic, strong) UIColor *borderColor;
 
 @property (nonatomic, readonly) NSString *key;
 
@@ -39,19 +41,18 @@ IB_DESIGNABLE
 
 @end
 
-@interface AWXNibView : AWXView
-
-- (void)setup;
-
-@end
-
-IB_DESIGNABLE
+/**
+ A customized button with corner radius
+ */
 @interface AWXButton : UIButton
 
 @property (nonatomic) CGFloat cornerRadius;
 
 @end
 
+/**
+ A customized text field for inputing
+ */
 @interface AWXFloatingLabelTextField : AWXView
 
 @property (strong, nonatomic) AWXView *borderView;
@@ -70,16 +71,25 @@ IB_DESIGNABLE
 
 @end
 
+/**
+ A customized view for options
+ */
 @interface AWXFloatingLabelView : AWXView
 
 @property (nonatomic, strong) NSString *text, *placeholder;
 
 @end
 
+/**
+ A customized view for card no
+ */
 @interface AWXFloatingCardTextField : AWXFloatingLabelTextField
 
 @end
 
+/**
+ A customized view for currency
+ */
 @interface AWXCurrencyView : AWXView
 
 @property (nonatomic, strong) NSString *currencyName;
@@ -88,6 +98,30 @@ IB_DESIGNABLE
 @property (nonatomic) BOOL isSelected;
 @property (nonatomic, weak) AWXCurrencyView *exclusiveView;
 @property (strong, nonatomic) UIButton *button;
+
+@end
+
+/**
+ A customized view for input form
+ */
+@interface AWXLabeledFormTextFieldView : AWXView
+
+@property (nonatomic, readonly) NSString *label;
+@property (nonatomic, readonly) NSString *input;
+
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText textField:(UITextField *)textField;
+
+@end
+
+/**
+ A customized view for option form
+ */
+@interface AWXOptionView : AWXView
+
+@property (nonatomic, readonly) NSString *placeholder;
+
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText placeholder:(NSString *)placeholder logo:(NSString *)logo;
+- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 
 @end
 

@@ -14,7 +14,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- `AWXPaymentViewController` provides a confirm button for user to finish checkout flow.
+ `AWXPaymentViewController` provides a confirm button for user to finish checkout flow with payment consent.
  */
 @interface AWXPaymentViewController : AWXViewController
 
@@ -22,11 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
  A delegate which handles confirmed payment intent.
  */
 @property (nonatomic, weak) id <AWXPaymentResultDelegate> delegate;
-
-/**
- A payment method has been selected.
- */
-@property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
 
 /**
  A payment consent.

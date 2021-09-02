@@ -25,7 +25,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", @"Close") style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
-
+    
     _searchBar = [UISearchBar new];
     _searchBar.delegate = self;
     _searchBar.translatesAutoresizingMaskIntoConstraints = NO;

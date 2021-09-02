@@ -11,6 +11,7 @@ def shared_sdk_pods
   pod 'AirwallexProfiling', '6.1.1'
   pod 'AirwallexProfilingConnections', '6.1.1'
   pod 'AirwallexCardinalMobile', '2.2.3'
+  pod 'WechatOpenSDK', '1.8.7.1'
 end
 
 target 'Airwallex' do
@@ -24,8 +25,6 @@ target 'AirwallexTests' do
 end
 
 def shared_example_pods
-  pod 'AlipaySDK-iOS', '15.7.9'
-  pod 'WechatOpenSDK', '1.8.7.1'
 end
 
 target 'Examples-Demo' do

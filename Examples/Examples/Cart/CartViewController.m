@@ -8,8 +8,7 @@
 
 #import "CartViewController.h"
 #import <SafariServices/SFSafariViewController.h>
-#import <Airwallex/Airwallex.h>
-#import <WechatOpenSDK/WXApi.h>
+#import <Airwallex/Core.h>
 #import "UIViewController+Utils.h"
 #import "AirwallexExamplesKeys.h"
 #import "OptionsViewController.h"
@@ -39,11 +38,12 @@
     [self setupViews];
     [self setupCartData];
     [self setupExamplesAPIClient];
+    [self setupSDK];
     [self reloadData];
 }
 
 - (void)setupViews
-{
+{    
     self.badgeView.backgroundColor = [[AWXTheme sharedTheme].tintColor colorWithAlphaComponent:0.5];
     self.badgeLabel.textColor = [AWXTheme sharedTheme].tintColor;
     self.badgeView.layer.masksToBounds = YES;
@@ -85,22 +85,24 @@
 - (void)setupExamplesAPIClient
 {
     APIClient *client = [APIClient sharedClient];
-    client.paymentBaseURL = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
+    NSURL *url = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
+    client.paymentBaseURL = url;
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientId;
-    
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
 }
 
 - (void)setupSDK
 {
     // Step 1: Use a preset mode (Note: test mode as default)
-    [Airwallex setMode:AirwallexSDKTestMode];
+//    [Airwallex setMode:AirwallexSDKTestMode];
+    // Or set base URL directly
+    NSURL *url = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
+    [Airwallex setDefaultBaseURL:url];
     
     // Theme customization
-    UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:255.0f/255.0f alpha:1];
+    UIColor *tintColor = [UIColor colorNamed:@"Purple Color"];
     [AWXTheme sharedTheme].tintColor = tintColor;
-    [UIView.appearance setTintColor:tintColor];
 }
 
 - (void)viewDidLayoutSubviews
@@ -250,7 +252,7 @@
 
 - (AWXSession *)createSession:(nullable AWXPaymentIntent *)paymentIntent
 {
-    NSString *returnURL = @"airwallexcheckout://com.airwallex.paymentacceptance";
+    NSString *returnURL = @"https://airwallex.com";
     AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
     switch (checkoutMode) {
         case AirwallexCheckoutOneOffMode:
@@ -270,6 +272,8 @@
             session.amount = [NSDecimalNumber decimalNumberWithString:[AirwallexExamplesKeys shared].amount];
             session.customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
             session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
+            session.requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
+            session.merchantTriggerReason = AirwallexMerchantTriggerReasonUnscheduled;
             return session;
         }
         case AirwallexCheckoutRecurringWithIntentMode:
@@ -279,6 +283,8 @@
             session.returnURL = returnURL;
             session.paymentIntent = paymentIntent;
             session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
+            session.requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
+            session.merchantTriggerReason = AirwallexMerchantTriggerReasonScheduled;
             return session;
         }
     }
@@ -289,14 +295,14 @@
 - (void)showPaymentFlowWithPaymentIntent:(nullable AWXPaymentIntent *)paymentIntent
 {
     self.paymentIntent = paymentIntent;
+    // Step 3: Create session
     AWXSession *session = [self createSession:paymentIntent];
     
     // Step 4: Present payment flow
     AWXUIContext *context = [AWXUIContext sharedContext];
     context.delegate = self;
-    context.hostViewController = self;
     context.session = session;
-    [context presentPaymentFlow];
+    [context presentPaymentFlowFrom:self];
 }
 
 #pragma mark - Show Payment Result
@@ -385,7 +391,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        AWXShippingViewController *controller = [AWXUIContext shippingViewController];
+        AWXShippingViewController *controller = [[AWXShippingViewController alloc] initWithNibName:nil bundle:nil];
         controller.delegate = self;
         controller.shipping = self.shipping;
         [self.navigationController pushViewController:controller animated:YES];
@@ -403,65 +409,12 @@
 
 #pragma mark - AWXPaymentResultDelegate
 
-- (void)paymentViewController:(UIViewController *)controller didFinishWithStatus:(AWXPaymentStatus)status error:(nullable NSError *)error
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        [self showPaymentResult:error];
-    }];
-}
-
-- (void)paymentViewController:(UIViewController *)controller nextActionWithWeChatPaySDK:(AWXWeChatPaySDKResponse *)response
-{
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    /**
-     To mock the wechat payment flow, we use an url to call instead wechat callback.
-     */
-    NSURL *url = [NSURL URLWithString:response.prepayId];
-    if (url.scheme && url.host) {
-        [self.activityIndicator startAnimating];
-        
-        __weak __typeof(self)weakSelf = self;
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        [[[NSURLSession sharedSession] dataTaskWithRequest:request
-                                         completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [strongSelf.activityIndicator stopAnimating];
-                
-                if (error) {
-                    [strongSelf showAlert:error.localizedDescription withTitle:nil];
-                    return;
-                }
-                
-                [strongSelf showPaymentResult:error];
-            });
-        }] resume];
-        return;
-    }
-    
-    PayReq *request = [[PayReq alloc] init];
-    request.partnerId = response.partnerId;
-    request.prepayId = response.prepayId;
-    request.package = response.package;
-    request.nonceStr = response.nonceStr;
-    request.timeStamp = response.timeStamp.doubleValue;
-    request.sign = response.sign;
-    
-    [WXApi sendReq:request completion:^(BOOL success) {
-        if (!success) {
-            // Failed to call WeChat Pay
-            return;
+        if (status != AirwallexPaymentStatusInProgress) {
+            [self showPaymentResult:error];
         }
-        // Succeed to pay
-    }];
-}
-
-- (void)paymentViewController:(UIViewController *)controller nextActionWithAlipayURL:(NSURL *)url
-{
-    [controller dismissViewControllerAnimated:YES completion:^{
-        [UIPasteboard.generalPasteboard setString:url.absoluteString];
-        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
     }];
 }
 
