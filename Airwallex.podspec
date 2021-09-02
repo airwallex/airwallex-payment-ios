@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.platform   					= :ios
   s.ios.deployment_target		= '11.0'
   s.static_framework			= true
-  s.default_subspecs            = 'Core', 'WeChat', 'Card', 'Redirect'
+  s.default_subspecs            = 'Core', 'WeChatPay', 'Card', 'Redirect'
   
   s.subspec 'Core' do |plugin|
     plugin.source_files = 'Airwallex/Airwallex/Sources/Core/*.{h,m}', 'Airwallex/Airwallex/Sources/Core/*.{h,m}', 'Airwallex/Airwallex/Sources/UI/*.{h,m}', 'Airwallex/Airwallex/Sources/UI/*.{h,m}'
