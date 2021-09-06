@@ -1,0 +1,32 @@
+PODS:
+  - AirwallexBehavioralBiometrics (6.1.1)
+  - AirwallexCardinalMobile (2.2.3)
+  - AirwallexProfiling (6.1.1)
+  - AirwallexProfilingConnections (6.1.1)
+  - WechatOpenSDK (1.8.7.1)
+
+DEPENDENCIES:
+  - AirwallexBehavioralBiometrics (= 6.1.1)
+  - AirwallexCardinalMobile (= 2.2.3)
+  - AirwallexProfiling (= 6.1.1)
+  - AirwallexProfilingConnections (= 6.1.1)
+  - WechatOpenSDK (= 1.8.7.1)
+
+SPEC REPOS:
+  trunk:
+    - AirwallexBehavioralBiometrics
+    - AirwallexCardinalMobile
+    - AirwallexProfiling
+    - AirwallexProfilingConnections
+    - WechatOpenSDK
+
+SPEC CHECKSUMS:
+  AirwallexBehavioralBiometrics: e5e8f32a74ca1429b9d071f9ff7d279ea69b61bc
+  AirwallexCardinalMobile: 8c5bee55e91819492fc953440482fe8e6727c1c3
+  AirwallexProfiling: 25de52cc42b2f14985f88b48a6fe716003305c00
+  AirwallexProfilingConnections: 5236c85b5c77ef32563da9d72b4d0726eb7a9b70
+  WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
+
+PODFILE CHECKSUM: c0d800b3819db32196c0912bb361eef1c2761ad3
+
+COCOAPODS: 1.10.1
