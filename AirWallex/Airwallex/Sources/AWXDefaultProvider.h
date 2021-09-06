@@ -85,11 +85,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) AWXSession *session;
 
 /**
- The current device info.
- */
-@property (nonatomic, readonly, nullable) AWXDevice *device;
-
-/**
  A payment method.
  */
 @property (nonatomic, readonly, nullable) AWXPaymentMethod *paymentMethod;
@@ -105,22 +100,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)handleFlow;
 
 /**
- Confirm the payment intent with card and billing.
- 
- @param card The card info.
- @param billing The billing info.
- */
-- (void)confirmPaymentIntentWithCard:(AWXCard *)card
-                             billing:(AWXPlaceDetails *)billing;
-
-/**
  Confirm the payment intent with payment method and consent.
  
  @param paymentMethod The payment method info.
  @param paymentConsent The payment consent info.
+ @param device The current device info.
  */
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent;
+                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
+                                       device:(nullable AWXDevice *)device;
 
 /**
  Complete the payment flow.

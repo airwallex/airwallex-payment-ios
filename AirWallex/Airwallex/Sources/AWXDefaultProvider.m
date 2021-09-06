@@ -9,7 +9,6 @@
 #import "AWXDefaultProvider.h"
 #import "AWXSession.h"
 #import "AWXAPIClient.h"
-#import "AWXSecurityService.h"
 #import "AWXDevice.h"
 #import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
@@ -23,7 +22,6 @@
 
 @property (nonatomic, weak, readwrite) id <AWXProviderDelegate> delegate;
 @property (nonatomic, strong, readwrite) AWXSession *session;
-@property (nonatomic, strong, readwrite, nullable) AWXDevice *device;
 @property (nonatomic, strong, readwrite, nullable) AWXPaymentMethod *paymentMethod;
 @property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
 @property (nonatomic, strong) NSString *paymentIntentId;
@@ -50,39 +48,13 @@
 
 - (void)handleFlow
 {
-    [self confirmPaymentIntentWithPaymentMethod:_paymentMethod paymentConsent:nil];
+    [self confirmPaymentIntentWithPaymentMethod:_paymentMethod paymentConsent:nil device:nil];
 }
 
-- (void)confirmPaymentIntentWithCard:(AWXCard *)card
-                             billing:(AWXPlaceDetails *)billing
-{
-    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-    paymentMethod.type = AWXCardKey;
-    paymentMethod.billing = billing;
-    paymentMethod.card = card;
-    paymentMethod.customerId = self.session.customerId;
-    
-    [self.delegate providerDidStartRequest:self];
-    if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
-        [self confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil];
-    } else {
-        __weak __typeof(self)weakSelf = self;
-        [self createPaymentMethod:paymentMethod completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            if (response && !error) {
-                AWXCreatePaymentMethodResponse *result = (AWXCreatePaymentMethodResponse *)response;
-                AWXPaymentMethod *paymentMethod = result.paymentMethod;
-                paymentMethod.card.cvc = card.cvc;
-                [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil];
-            } else {
-                [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-            }
-        }];
-    }
-}
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
+                                       device:(nullable AWXDevice *)device
 {
     self.paymentConsent = paymentConsent;
     
@@ -99,31 +71,13 @@
     
     __weak __typeof(self)weakSelf = self;
     [self.delegate providerDidStartRequest:self];
-    
-    if (self.device) {
-        [self confirmPaymentIntentWithPaymentMethod:paymentMethod
-                                     paymentConsent:paymentConsent
-                                             device:self.device
-                                         completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf completeWithResponse:response error:error];
-        }];
-    } else {
-        [[AWXSecurityService sharedService] doProfile:self.session.paymentIntentId completion:^(NSString * _Nullable sessionId) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            
-            AWXDevice *device = [AWXDevice new];
-            device.deviceId = sessionId;
-            strongSelf.device = device;
-            
-            [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod
-                                               paymentConsent:paymentConsent
-                                                       device:device
-                                                   completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
-                [strongSelf completeWithResponse:response error:error];
-            }];
-        }];
-    }
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod
+                                 paymentConsent:paymentConsent
+                                         device:device
+                                     completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf completeWithResponse:response error:error];
+    }];
 }
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
@@ -203,17 +157,6 @@
 }
 
 #pragma mark - Internal Actions
-
-- (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                 completion:(AWXRequestHandler)completion
-{
-    AWXCreatePaymentMethodRequest *request = [AWXCreatePaymentMethodRequest new];
-    request.requestId = NSUUID.UUID.UUIDString;
-    request.paymentMethod = paymentMethod;
-    
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:completion];
-}
 
 - (void)confirmPaymentIntentWithId:(NSString *)paymentIntentId
                         customerId:(nullable NSString *)customerId

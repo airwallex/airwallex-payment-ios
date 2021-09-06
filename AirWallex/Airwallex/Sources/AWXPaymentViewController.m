@@ -206,7 +206,7 @@
     self.paymentConsent.paymentMethod.card.cvc = _cvcField.text;
     
     AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
-    [provider confirmPaymentIntentWithPaymentMethod:self.paymentConsent.paymentMethod paymentConsent:self.paymentConsent];
+    [provider confirmPaymentIntentWithPaymentMethod:self.paymentConsent.paymentMethod paymentConsent:self.paymentConsent device:nil];
     self.provider = provider;
 }
 

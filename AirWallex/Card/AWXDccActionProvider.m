@@ -13,6 +13,8 @@
 #import "AWXPaymentIntentRequest.h"
 #import "AWXSession.h"
 #import "AWXAPIClient.h"
+#import "AWXSecurityService.h"
+#import "AWXDevice.h"
 
 @interface AWXDccActionProvider () <AWXDCCViewControllerDelegate>
 
@@ -34,19 +36,27 @@
 
 - (void)confirmThreeDSWithUseDCC:(BOOL)useDCC
 {
-    [self.delegate providerDidStartRequest:self];
-    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
-    request.requestId = NSUUID.UUID.UUIDString;
-    request.intentId = self.session.paymentIntentId;
-    request.type = AWXDCC;
-    request.useDCC = useDCC;
-    request.device = self.device;
-    
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self)weakSelf = self;
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [self.delegate providerDidStartRequest:self];
+    [[AWXSecurityService sharedService] doProfile:self.session.paymentIntentId completion:^(NSString * _Nullable sessionId) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf completeWithResponse:response error:error];
+        
+        AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
+        request.requestId = NSUUID.UUID.UUIDString;
+        request.intentId = strongSelf.session.paymentIntentId;
+        request.type = AWXDCC;
+        request.useDCC = useDCC;
+        
+        AWXDevice *device = [AWXDevice new];
+        device.deviceId = sessionId;
+        request.device = device;
+
+        AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+        __weak __typeof(self)weakSelf = self;
+        [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf completeWithResponse:response error:error];
+        }];
     }];
 }
 

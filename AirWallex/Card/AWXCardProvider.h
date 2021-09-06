@@ -15,6 +15,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AWXCardProvider : AWXDefaultProvider
 
+/**
+ Confirm the payment intent with card and billing.
+ 
+ @param card The card info.
+ @param billing The billing info.
+ */
+- (void)confirmPaymentIntentWithCard:(AWXCard *)card
+                             billing:(AWXPlaceDetails *)billing;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -78,7 +78,8 @@
 {
     [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES];
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod
-                                 paymentConsent:nil];
+                                 paymentConsent:nil
+                                         device:nil];
 }
 
 @end

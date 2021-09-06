@@ -25,6 +25,7 @@
 #import "AWXDevice.h"
 #import "AWXDefaultProvider.h"
 #import "AWXDefaultActionProvider.h"
+#import "AWXCardProvider.h"
 
 @interface AWXCardViewController () <AWXCountryListViewControllerDelegate, AWXProviderDelegate>
 
@@ -356,7 +357,7 @@
         return;
     }
     
-    AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:self session:self.session];
     [provider confirmPaymentIntentWithCard:card billing:self.savedBilling];
     self.provider = provider;
 }
