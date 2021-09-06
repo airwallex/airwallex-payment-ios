@@ -144,11 +144,8 @@
 		5775CF9E26E5F8CD00C6AFE3 /* AWXSecurityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF9C26E5F8CC00C6AFE3 /* AWXSecurityService.m */; };
 		5775CF9F26E5F8CD00C6AFE3 /* AWXSecurityService.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF9D26E5F8CC00C6AFE3 /* AWXSecurityService.h */; };
 		57CEC81426E5FB3500695740 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
-		57CEC81526E5FB3500695740 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57CEC81926E5FB4000695740 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
-		57CEC81A26E5FB4000695740 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57CEC81E26E5FB4400695740 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
-		57CEC81F26E5FB4400695740 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5C561B08A5DA1BE418BF0CD6 /* libPods-Airwallex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CE7E26E5DC3300C6AFE3 /* libPods-Airwallex.a */; };
 		87F4FB59F509D0C0BA44FE97 /* libPods-Card.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E529C13B3F7D43293C86CF /* libPods-Card.a */; };
 		A56D02CF82D812DC123E6CB2 /* libPods-AirwallexTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2467B1E77C4D87CAA384DD2F /* libPods-AirwallexTests.a */; };
@@ -206,42 +203,6 @@
 			remoteInfo = Airwallex;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		57CEC81826E5FB3500695740 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				57CEC81526E5FB3500695740 /* Airwallex.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		57CEC81D26E5FB4000695740 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				57CEC81A26E5FB4000695740 /* Airwallex.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		57CEC82226E5FB4400695740 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				57CEC81F26E5FB4400695740 /* Airwallex.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		05E529C13B3F7D43293C86CF /* libPods-Card.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Card.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -935,7 +896,6 @@
 				5775CE5B26E5D86100C6AFE3 /* Sources */,
 				5775CE5C26E5D86100C6AFE3 /* Frameworks */,
 				5775CE5D26E5D86100C6AFE3 /* Resources */,
-				57CEC81826E5FB3500695740 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -974,7 +934,6 @@
 				5775CE8126E5DDDE00C6AFE3 /* Sources */,
 				5775CE8226E5DDDE00C6AFE3 /* Frameworks */,
 				5775CE8326E5DDDE00C6AFE3 /* Resources */,
-				57CEC81D26E5FB4000695740 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1013,7 +972,6 @@
 				5775CEA726E5DF3300C6AFE3 /* Sources */,
 				5775CEA826E5DF3300C6AFE3 /* Frameworks */,
 				5775CEA926E5DF3300C6AFE3 /* Resources */,
-				57CEC82226E5FB4400695740 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
