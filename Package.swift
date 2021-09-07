@@ -50,7 +50,7 @@ let package = Package(
         .target(
             name: "WeChatPay",
             dependencies: [
-                .target(name: "Airwallex"),
+                .target(name: "WeChatPay"),
             ],
             path: "Airwallex/WeChatPay",
             exclude: [
@@ -60,8 +60,8 @@ let package = Package(
         .target(
             name: "Card",
             dependencies: [
-                .target(name: "Airwallex"),
-                .product(name: "TrustDefender", package: "TrustDefender")
+                .target(name: "Card"),
+                .product(name: "TrustDefender", package: "TrustDefender"),
                 .product(name: "CardinalMobile", package: "CardinalMobile")
             ],
             path: "Airwallex/Card",
@@ -72,7 +72,7 @@ let package = Package(
         .target(
             name: "Redirect",
             dependencies: [
-                .target(name: "Airwallex"),
+                .target(name: "Redirect"),
             ],
             path: "Airwallex/Redirect",
             exclude: [
