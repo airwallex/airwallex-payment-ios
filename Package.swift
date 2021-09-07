@@ -31,12 +31,12 @@ let package = Package(
         .package(
             name: "TrustDefender",
             url: "https://github.com/ilabsvictor/TrustDefender",
-            .exact(Version(6, 1, 2))
+            .exact(Version(6, 1, 3))
         ),
         .package(
             name: "CardinalMobile",
             url: "https://github.com/ilabsvictor/CardinalMobile",
-            .exact(Version(2, 2, 4))
+            .exact(Version(2, 2, 5))
         ),
     ],
     targets: [
