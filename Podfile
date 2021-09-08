@@ -1,3 +1,4 @@
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '11.0'
 
 inhibit_all_warnings!
@@ -22,9 +23,9 @@ end
 target 'Card' do
   project './Airwallex/Airwallex.xcodeproj'
   pod 'AirwallexCardinalMobile', '2.2.3'
-  pod 'AirwallexBehavioralBiometrics', '6.1.1'
-  pod 'AirwallexProfiling', '6.1.1'
-  pod 'AirwallexProfilingConnections', '6.1.1'
+  pod 'AirwallexBehavioralBiometrics', '6.1.55'
+  pod 'AirwallexProfiling', '6.1.55'
+  pod 'AirwallexProfilingConnections', '6.1.55'
 end
 
 target 'Redirect' do
@@ -34,9 +35,9 @@ end
 def shared_example_pods
   pod 'WechatOpenSDK', '1.8.7.1'
   pod 'AirwallexCardinalMobile', '2.2.3'
-  pod 'AirwallexBehavioralBiometrics', '6.1.1'
-  pod 'AirwallexProfiling', '6.1.1'
-  pod 'AirwallexProfilingConnections', '6.1.1'
+  pod 'AirwallexBehavioralBiometrics', '6.1.55'
+  pod 'AirwallexProfiling', '6.1.55'
+  pod 'AirwallexProfilingConnections', '6.1.55'
 end
 
 target 'Examples-Demo' do
