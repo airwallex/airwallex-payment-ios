@@ -190,21 +190,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIImage *logoImage = nil;
-    NSString *title = nil;
+    AWXPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentMethodCell" forIndexPath:indexPath];
+
     if (indexPath.section == 1) {
         AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
-        logoImage = [UIImage imageNamed:paymentMethodType.name inBundle:[NSBundle resourceBundle]];
-        title = paymentMethodType.name.capitalizedString;
+        [cell.logoImageView setImageURL:paymentMethodType.resources.logoURL
+                            placeholder:[UIImage imageNamed:paymentMethodType.name inBundle:[NSBundle resourceBundle]]];
+        cell.titleLabel.text = paymentMethodType.displayName;
     } else {
         AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
-        logoImage = [UIImage imageNamed:paymentConsent.paymentMethod.card.brand inBundle:[NSBundle resourceBundle]];
-        title = [NSString stringWithFormat:@"%@ •••• %@", paymentConsent.paymentMethod.card.brand.capitalizedString, paymentConsent.paymentMethod.card.last4];
+        cell.logoImageView.image = [UIImage imageNamed:paymentConsent.paymentMethod.card.brand inBundle:[NSBundle resourceBundle]];
+        cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", paymentConsent.paymentMethod.card.brand.capitalizedString, paymentConsent.paymentMethod.card.last4];
     }
     
-    AWXPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentMethodCell" forIndexPath:indexPath];
-    cell.logoImageView.image = logoImage;
-    cell.titleLabel.text = title;
     return cell;
 }
 

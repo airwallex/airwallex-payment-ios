@@ -99,6 +99,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface UIImageView (Utils)
+
+- (void)setImageURL:(NSURL *)imageURL placeholder:(UIImage *)placeholder;
+
+@end
+
 @interface UIColor (Utils)
 
 + (UIColor *)colorWithHex:(NSUInteger)hex;

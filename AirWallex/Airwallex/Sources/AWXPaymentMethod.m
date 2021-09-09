@@ -56,30 +56,30 @@
 
 @end
 
-@implementation AWXPaymentMethodType
+@implementation AWXResources
 
-- (NSDictionary *)encodeToJSON
++ (id)decodeFromJSON:(NSDictionary *)json
 {
-    NSMutableDictionary *items = [[NSMutableDictionary alloc] init];
-    if (self.name) {
-        items[@"name"] = self.name;
-    }
-    items[@"transaction_mode"] = self.transactionMode;
-    items[@"flows"] = self.flows;
-    items[@"transaction_currencies"] = self.transactionCurrencies;
-    items[@"active"] = [NSNumber numberWithBool:self.active] ;
-    
-    return items;
+    AWXResources *resources = [AWXResources new];
+    resources.logoURL = [NSURL URLWithString:@"https://csdnimg.cn/medal/github@240.png"];//[NSURL URLWithString:json[@"logo_url"]];
+    resources.hasSchema = [json[@"has_schema"] boolValue];
+    return resources;
 }
+
+@end
+
+@implementation AWXPaymentMethodType
 
 + (id)decodeFromJSON:(NSDictionary *)json
 {
     AWXPaymentMethodType *method = [AWXPaymentMethodType new];
     method.name = json[@"name"];
+    method.displayName = @"Card";//json[@"display_name"];
     method.transactionMode = json[@"transaction_mode"];
     method.flows = json[@"flows"];
     method.transactionCurrencies = json[@"transaction_currencies"];
     method.active = [json[@"active"] boolValue];
+    method.resources = [AWXResources decodeFromJSON:json[@"resources"]];
     return method;
 }
 
