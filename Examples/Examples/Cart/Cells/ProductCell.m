@@ -8,7 +8,6 @@
 
 #import "ProductCell.h"
 #import <Airwallex/Core.h>
-#import <Airwallex/UI.h>
 
 @implementation Product
 

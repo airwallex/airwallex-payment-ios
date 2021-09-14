@@ -1,0 +1,6 @@
+framework module RLTMXProfiling {
+    umbrella header "TMXProfiling.h"
+
+    export *
+    module * { export * }
+}
