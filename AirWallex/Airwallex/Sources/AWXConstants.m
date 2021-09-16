@@ -63,11 +63,11 @@ NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason)
     }
 }
 
-Class ClassToHandleFlowForPaymentMethodType(NSString *type)
+Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type)
 {
-    if ([type isEqualToString:AWXCardKey]) {
+    if ([type.name isEqualToString:AWXCardKey]) {
         return NSClassFromString(@"AWXCardProvider");
-    } else if ([Airwallex.paymentFormRequiredTypes containsObject:type]) {
+    } else if (type.hasSchema) {
         return NSClassFromString(@"AWXPPROProvider");
     } else {
         return NSClassFromString(@"AWXDefaultProvider");

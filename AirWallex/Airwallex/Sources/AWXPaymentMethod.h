@@ -104,7 +104,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) BOOL active;
 
+/**
+ Resources
+ */
 @property (nonatomic, strong) AWXResources *resources;
+
+/**
+ Whether it has schema
+ */
+@property (nonatomic, readonly) BOOL hasSchema;
 
 @end
 

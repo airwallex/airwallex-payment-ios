@@ -244,7 +244,7 @@
     
     if (indexPath.section == 1) {
         AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
-        Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType.name);
+        Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType);
         if (class == nil) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the payment method.", nil) preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];

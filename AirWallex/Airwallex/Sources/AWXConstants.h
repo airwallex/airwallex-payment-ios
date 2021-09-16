@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class AWXConfirmPaymentNextAction;
+@class AWXPaymentMethodType, AWXConfirmPaymentNextAction;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -79,7 +79,7 @@ FOUNDATION_EXPORT NSString *const AWXDCC;
 
 FOUNDATION_EXPORT NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type);
 FOUNDATION_EXPORT NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason);
-FOUNDATION_EXPORT Class ClassToHandleFlowForPaymentMethodType(NSString *type);
+FOUNDATION_EXPORT Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type);
 FOUNDATION_EXPORT Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction);
 
 NS_ASSUME_NONNULL_END

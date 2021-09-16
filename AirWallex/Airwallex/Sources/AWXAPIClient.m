@@ -57,11 +57,6 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
     return _mode;
 }
 
-+ (NSArray *)paymentFormRequiredTypes
-{
-    return @[AWXPoli, AWXFpx, AWXBankTransfer, AWXOnlineBanking];
-}
-
 @end
 
 @implementation AWXAPIClientConfiguration

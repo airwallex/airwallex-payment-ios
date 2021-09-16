@@ -58,11 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (AirwallexSDKMode)mode;
 
-/**
- The types requires more payment info.
- */
-+ (NSArray *)paymentFormRequiredTypes;
-
 @end
 
 /**

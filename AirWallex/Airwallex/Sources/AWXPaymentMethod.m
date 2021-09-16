@@ -83,4 +83,9 @@
     return method;
 }
 
+- (BOOL)hasSchema
+{
+    return self.resources.hasSchema;
+}
+
 @end
