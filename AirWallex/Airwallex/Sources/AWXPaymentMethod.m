@@ -61,7 +61,7 @@
 + (id)decodeFromJSON:(NSDictionary *)json
 {
     AWXResources *resources = [AWXResources new];
-    resources.logoURL = [NSURL URLWithString:@"https://csdnimg.cn/medal/github@240.png"];//[NSURL URLWithString:json[@"logo_url"]];
+    resources.logoURL = [NSURL URLWithString:json[@"logo_url"]];
     resources.hasSchema = [json[@"has_schema"] boolValue];
     return resources;
 }
@@ -74,7 +74,7 @@
 {
     AWXPaymentMethodType *method = [AWXPaymentMethodType new];
     method.name = json[@"name"];
-    method.displayName = @"Card";//json[@"display_name"];
+    method.displayName = json[@"display_name"];
     method.transactionMode = json[@"transaction_mode"];
     method.flows = json[@"flows"];
     method.transactionCurrencies = json[@"transaction_currencies"];

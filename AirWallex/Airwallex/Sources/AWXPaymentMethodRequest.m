@@ -67,8 +67,12 @@
 {
     self = [super init];
     if (self) {
+        self.active = YES;
         self.pageNum = 0;
         self.pageSize = 10;
+        self.resources = YES;
+        self.osType = @"ios";
+        self.lang = [NSLocale currentLocale].localeIdentifier;
     }
     return self;
 }
@@ -87,12 +91,23 @@
 {
     NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
     
+    _parameters[@"active"] = [NSNumber numberWithBool:self.active];
     _parameters[@"page_num"] = @(self.pageNum);
     _parameters[@"page_size"] = @(self.pageSize);
-    _parameters[@"active"] = [NSNumber numberWithBool:self.active];
     if (self.transactionCurrency) {
         _parameters[@"transaction_currency"] = self.transactionCurrency;
     }
+    if (self.transactionMode) {
+        _parameters[@"transaction_mode"] = self.transactionMode;
+    }
+    if (self.countryCode) {
+        _parameters[@"country_code"] = self.countryCode;
+    }
+    if (self.resources) {
+        _parameters[@"__resources"] = @(self.resources);
+    }
+    _parameters[@"os_type"] = self.osType;
+    _parameters[@"lang"] = self.lang;
     return _parameters;
 }
 

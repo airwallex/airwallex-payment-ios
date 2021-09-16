@@ -78,6 +78,30 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy, nullable) NSString *transactionCurrency;
 
+/**
+ Transaction code.
+ */
+@property (nonatomic, copy, nullable) NSString *transactionMode;
+
+/**
+ Country code.
+ */
+@property (nonatomic, copy, nullable) NSString *countryCode;
+
+/**
+ Whether it requres resources
+ */
+@property (nonatomic) BOOL resources;
+
+/**
+ Os type
+ */
+@property (nonatomic, copy) NSString *osType;
+
+/**
+ Lang
+ */
+@property (nonatomic, copy) NSString *lang;
 
 @end
 

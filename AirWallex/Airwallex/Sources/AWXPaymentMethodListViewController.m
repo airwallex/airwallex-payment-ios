@@ -99,15 +99,16 @@
 - (void)loadAvailablePaymentMethodTypesWithPageNum:(NSInteger)pageNum
 {
     AWXGetPaymentMethodTypesRequest *request = [AWXGetPaymentMethodTypesRequest new];
-    request.active = YES;
     request.pageNum = pageNum;
     request.transactionCurrency = self.session.currency;
+    request.transactionMode = self.session.transactionMode;
+    request.countryCode = self.session.countryCode;
     
     __weak __typeof(self)weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        
+
         if (response && !error) {
             AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
             strongSelf.availablePaymentMethodTypes = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"transactionMode == %@", strongSelf.session.transactionMode]];
