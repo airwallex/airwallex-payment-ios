@@ -116,4 +116,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXSchema` includes the schema of payment method.
+ */
+@interface AWXSchema : NSObject <AWXJSONDecodable>
+
+@end
+
 NS_ASSUME_NONNULL_END

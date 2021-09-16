@@ -71,8 +71,8 @@
         self.pageNum = 0;
         self.pageSize = 10;
         self.resources = YES;
-        self.osType = @"ios";
         self.lang = [NSLocale currentLocale].localeIdentifier;
+        self.osType = @"ios";
     }
     return self;
 }
@@ -106,14 +106,67 @@
     if (self.resources) {
         _parameters[@"__resources"] = @(self.resources);
     }
-    _parameters[@"os_type"] = self.osType;
-    _parameters[@"lang"] = self.lang;
+    if (self.lang) {
+        _parameters[@"lang"] = self.lang;
+    }
+    if (self.osType) {
+        _parameters[@"os_type"] = self.osType;
+    }
     return _parameters;
 }
 
 - (Class)responseClass
 {
     return AWXGetPaymentMethodTypesResponse.class;
+}
+
+@end
+
+@implementation AWXGetPaymentMethodTypeRequest
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.flow = @"inapp";
+        self.lang = [NSLocale currentLocale].localeIdentifier;
+        self.osType = @"ios";
+    }
+    return self;
+}
+
+- (NSString *)path
+{
+    return [NSString stringWithFormat:@"/api/v1/pa/config/payment_method_types/%@", self.name];
+}
+
+- (AWXHTTPMethod)method
+{
+    return AWXHTTPMethodGET;
+}
+
+- (nullable NSDictionary *)parameters
+{
+    NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
+    
+    if (self.flow) {
+        _parameters[@"flow"] = self.flow;
+    }
+    if (self.transactionMode) {
+        _parameters[@"transaction_mode"] = self.transactionMode;
+    }
+    if (self.lang) {
+        _parameters[@"lang"] = self.lang;
+    }
+    if (self.osType) {
+        _parameters[@"os_type"] = self.osType;
+    }
+    return _parameters;
+}
+
+- (Class)responseClass
+{
+    return AWXGetPaymentMethodTypeResponse.class;
 }
 
 @end

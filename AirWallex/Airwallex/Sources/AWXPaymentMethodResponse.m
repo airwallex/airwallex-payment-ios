@@ -66,7 +66,33 @@
 
 @end
 
+@interface AWXGetPaymentMethodTypeResponse ()
 
+@end
+
+@implementation AWXGetPaymentMethodTypeResponse
+
++ (id<AWXResponseProtocol>)parse:(NSData *)data
+{
+    NSError *error = nil;
+    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    AWXGetPaymentMethodTypeResponse *response = [AWXGetPaymentMethodTypeResponse new];
+    response.name = responseObject[@"name"];
+    response.displayName = responseObject[@"display_name"];
+
+    
+    NSMutableArray *items = [NSMutableArray array];
+    NSArray *list = responseObject[@"field_schemas"];
+    if (list && [list isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *item in list) {
+            [items addObject:[AWXSchema decodeFromJSON:item]];
+        }
+    }
+    response.schemas = items;
+    return response;
+}
+
+@end
 
 @interface AWXCreatePaymentMethodResponse ()
 

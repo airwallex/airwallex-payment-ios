@@ -89,3 +89,13 @@
 }
 
 @end
+
+@implementation AWXSchema
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWXSchema *schema = [AWXSchema new];
+    return schema;
+}
+
+@end
