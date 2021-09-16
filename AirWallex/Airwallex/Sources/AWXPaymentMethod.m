@@ -38,7 +38,10 @@
     if (card) {
         method.card = [AWXCard decodeFromJSON:card];
     }
-    method.billing = [AWXPlaceDetails decodeFromJSON:json[@"billing"]];
+    NSDictionary *billing = json[@"billing"];
+    if (billing) {
+        method.billing = [AWXPlaceDetails decodeFromJSON:billing];
+    }
     method.customerId = json[@"customer_id"];
     return method;
 }
