@@ -130,6 +130,24 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - Menu
+
+- (IBAction)menuPressed:(id)sender
+{
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [controller addAction:[UIAlertAction actionWithTitle:@"WeChat Demo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self performSegueWithIdentifier:@"showWeChatDemo" sender:nil];
+    }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"H5 Demo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self performSegueWithIdentifier:@"showH5Demo" sender:nil];
+    }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self performSegueWithIdentifier:@"showSettings" sender:nil];
+    }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
 #pragma mark - Check Out
 
 - (IBAction)checkoutPressed:(id)sender

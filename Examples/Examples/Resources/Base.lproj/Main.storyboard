@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -309,14 +309,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="n69-eD-JJv">
-                        <barButtonItem key="leftBarButtonItem" title="Demo" id="Vey-Yf-bW7">
+                        <barButtonItem key="rightBarButtonItem" image="gear" id="Cdb-jb-CTr">
                             <connections>
-                                <segue destination="sjh-bq-Gpe" kind="show" id="SEY-uX-EVz"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="Cdb-jb-CTr">
-                            <connections>
-                                <segue destination="ctT-KW-lCz" kind="presentation" identifier="" id="udD-0y-ARe"/>
+                                <action selector="menuPressed:" destination="BYZ-38-t0r" id="H5c-X1-esh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -325,71 +320,16 @@
                         <outlet property="badgeView" destination="iGg-5K-pEc" id="Ry4-6g-ckh"/>
                         <outlet property="checkoutButton" destination="w6M-w5-GdE" id="G6z-As-pH4"/>
                         <outlet property="tableView" destination="eCS-DG-9uu" id="txh-yI-DFo"/>
+                        <segue destination="VhN-Ut-ggN" kind="show" identifier="showWeChatDemo" id="SiD-Sj-pmk"/>
+                        <segue destination="7Ab-n5-deV" kind="show" identifier="showH5Demo" id="b6a-Zb-aFA"/>
+                        <segue destination="3dc-1g-4U7" kind="show" identifier="showSettings" id="hc8-sX-8J3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1014" y="138"/>
+            <point key="canvasLocation" x="1134" y="155"/>
         </scene>
-        <!--Demo View Controller-->
-        <scene sceneID="mEr-aT-4OF">
-            <objects>
-                <viewController id="sjh-bq-Gpe" customClass="DemoViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="HYd-9i-30L">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xSD-xH-URV">
-                                <rect key="frame" x="170" y="144" width="100" height="44"/>
-                                <color key="backgroundColor" name="Light Purple Color"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="ER4-HN-QRj"/>
-                                    <constraint firstAttribute="width" constant="100" id="nzK-VL-LbK"/>
-                                </constraints>
-                                <state key="normal" title="Web Page"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="6"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="7Ab-n5-deV" kind="show" id="i3P-v1-6JP"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VVd-xH-Grd">
-                                <rect key="frame" x="50" y="144" width="100" height="44"/>
-                                <color key="backgroundColor" name="Light Purple Color"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="6re-RI-vlZ"/>
-                                    <constraint firstAttribute="height" constant="44" id="mNP-LP-YGm"/>
-                                </constraints>
-                                <state key="normal" title="WeChatPay"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="6"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="VhN-Ut-ggN" kind="show" id="gJl-aD-xWf"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="1fp-ad-Hcj"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="VVd-xH-Grd" firstAttribute="centerX" secondItem="HYd-9i-30L" secondAttribute="centerX" constant="-60" id="ONd-zh-SJT"/>
-                            <constraint firstItem="xSD-xH-URV" firstAttribute="top" secondItem="1fp-ad-Hcj" secondAttribute="top" constant="100" id="YEC-Mp-FIa"/>
-                            <constraint firstItem="xSD-xH-URV" firstAttribute="centerX" secondItem="HYd-9i-30L" secondAttribute="centerX" constant="60" id="mfO-CR-99W"/>
-                            <constraint firstItem="VVd-xH-Grd" firstAttribute="top" secondItem="1fp-ad-Hcj" secondAttribute="top" constant="100" id="zdf-R2-0kG"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="75I-fQ-hdv"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EyA-SN-5AB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1013" y="1324"/>
-        </scene>
-        <!--Input View Controller-->
+        <!--H5 Demo-->
         <scene sceneID="WmO-Vf-pc5">
             <objects>
                 <viewController id="7Ab-n5-deV" customClass="InputViewController" sceneMemberID="viewController">
@@ -403,7 +343,7 @@
                                     <constraint firstAttribute="height" constant="44" id="Pdu-OK-fXh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Referer" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5oc-v0-fKZ">
                                 <rect key="frame" x="20" y="168" width="280" height="44"/>
@@ -446,7 +386,7 @@
                             <constraint firstItem="qBM-wU-dJa" firstAttribute="top" secondItem="5oc-v0-fKZ" secondAttribute="bottom" constant="30" id="rTh-uS-xyr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ELM-p0-t0p"/>
+                    <navigationItem key="navigationItem" title="H5 Demo" id="ELM-p0-t0p"/>
                     <connections>
                         <outlet property="url1TextField" destination="JNL-Sa-Ann" id="uy2-h0-Rd7"/>
                         <outlet property="url2TextField" destination="5oc-v0-fKZ" id="TWc-kV-x5I"/>
@@ -454,7 +394,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OUh-yl-yM2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1824" y="1730"/>
+            <point key="canvasLocation" x="2074" y="156"/>
         </scene>
         <!--WeChatPay-->
         <scene sceneID="Qo0-pv-jjd">
@@ -653,7 +593,7 @@
                             <constraint firstItem="8MJ-m3-MiG" firstAttribute="top" secondItem="gCp-cK-47s" secondAttribute="top" id="gIg-0l-qzW"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="WeChatPay" id="Izd-X6-NRy"/>
+                    <navigationItem key="navigationItem" title="WeChat Demo" id="Izd-X6-NRy"/>
                     <connections>
                         <outlet property="appIdTextField" destination="wo6-Ql-fyB" id="WWI-b0-Jdo"/>
                         <outlet property="nonceStrTextField" destination="mh1-Za-kDK" id="mdd-C2-Rpn"/>
@@ -666,9 +606,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vcL-0v-hh2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1824" y="1020"/>
+            <point key="canvasLocation" x="2074" y="-575"/>
         </scene>
-        <!--Options-->
+        <!--Settings-->
         <scene sceneID="XgQ-3K-n2r">
             <objects>
                 <viewController id="3dc-1g-4U7" customClass="OptionsViewController" sceneMemberID="viewController">
@@ -994,12 +934,7 @@
                             <constraint firstItem="iM6-7j-oWC" firstAttribute="width" secondItem="8AO-7M-Nu3" secondAttribute="width" id="uep-vN-Zym"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Options" id="iLW-z0-cq9">
-                        <barButtonItem key="leftBarButtonItem" title="Close" id="233-eG-3Hj">
-                            <connections>
-                                <action selector="dismiss:" destination="3dc-1g-4U7" id="dL8-sv-rLa"/>
-                            </connections>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" title="Settings" id="iLW-z0-cq9">
                         <barButtonItem key="rightBarButtonItem" title="Reset" id="hcb-eB-hqs">
                             <connections>
                                 <action selector="resetPressed:" destination="3dc-1g-4U7" id="XK6-fc-8vh"/>
@@ -1025,7 +960,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6DU-lc-9l6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2631" y="138"/>
+            <point key="canvasLocation" x="2074" y="874"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iHb-BI-1x5">
@@ -1043,29 +978,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ccL-a3-Yao" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Nt5-rV-h4V">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="ctT-KW-lCz" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IXt-XM-enX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="3dc-1g-4U7" kind="relationship" relationship="rootViewController" id="czH-wU-zv0"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Oqc-Rz-HlF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1825" y="138"/>
+            <point key="canvasLocation" x="259" y="155"/>
         </scene>
     </scenes>
     <color key="tintColor" name="Purple Color"/>
     <resources>
+        <image name="gear" width="20" height="20"/>
         <image name="right" width="16" height="16"/>
         <namedColor name="Background Color">
             <color red="0.92156862745098034" green="0.92549019607843142" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
