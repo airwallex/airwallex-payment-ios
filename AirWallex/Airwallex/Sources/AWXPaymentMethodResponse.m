@@ -79,7 +79,8 @@
     AWXGetPaymentMethodTypeResponse *response = [AWXGetPaymentMethodTypeResponse new];
     response.name = responseObject[@"name"];
     response.displayName = responseObject[@"display_name"];
-
+    response.logoURL = responseObject[@"logo_url"];
+    response.hasSchema = [responseObject[@"has_schema"] boolValue];
     
     NSMutableArray *items = [NSMutableArray array];
     NSArray *list = responseObject[@"field_schemas"];
@@ -89,6 +90,34 @@
         }
     }
     response.schemas = items;
+    return response;
+}
+
+@end
+
+@interface AWXGetAvailableBanksResponse ()
+
+@property (nonatomic, readwrite) BOOL hasMore;
+@property (nonatomic, copy, readwrite) NSArray <AWXBank *> *items;
+
+@end
+
+@implementation AWXGetAvailableBanksResponse
+
++ (id<AWXResponseProtocol>)parse:(NSData *)data
+{
+    NSError *error = nil;
+    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    AWXGetAvailableBanksResponse *response = [AWXGetAvailableBanksResponse new];
+    response.hasMore = [responseObject[@"has_more"] boolValue];
+    NSMutableArray *items = [NSMutableArray array];
+    NSArray *list = responseObject[@"items"];
+    if (list && [list isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *item in list) {
+            [items addObject:[AWXBank decodeFromJSON:item]];
+        }
+    }
+    response.items = items;
     return response;
 }
 

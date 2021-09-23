@@ -117,9 +117,95 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
+ `AWXValidation` includes the regex of field.
+ */
+@interface AWXValidation : NSObject <AWXJSONDecodable>
+
+/**
+ regex.
+ */
+@property (nonatomic, copy) NSString *regex;
+
+/**
+ max length.
+ */
+@property (nonatomic) NSInteger max;
+
+@end
+
+/**
+ `AWXField` includes the field of schema.
+ */
+@interface AWXField : NSObject <AWXJSONDecodable>
+
+/**
+ name of the payment method.
+ */
+@property (nonatomic, copy) NSString *name;
+
+/**
+ display name of the payment method.
+ */
+@property (nonatomic, copy) NSString *displayName;
+
+/**
+ ui type.
+ */
+@property (nonatomic, copy) NSString *uiType;
+
+/**
+ type of field.
+ */
+@property (nonatomic, copy) NSString *type;
+
+/**
+ validation.
+ */
+@property (nonatomic, strong) AWXValidation *validation;
+
+@end
+
+/**
  `AWXSchema` includes the schema of payment method.
  */
 @interface AWXSchema : NSObject <AWXJSONDecodable>
+
+/**
+ transaction_mode of the payment method. One of oneoff, recurring.
+ */
+@property (nonatomic, copy) NSString *transactionMode;
+
+/**
+ Flow.
+ */
+@property (nonatomic, copy, nullable) NSString *flow;
+
+/**
+ Fields.
+ */
+@property (nonatomic, copy) NSArray<AWXField* > *fields;
+
+@end
+
+/**
+ `AWXBank` includes the bank info.
+ */
+@interface AWXBank : NSObject <AWXJSONDecodable>
+
+/**
+ name of the payment method.
+ */
+@property (nonatomic, copy) NSString *name;
+
+/**
+ display name of the payment method.
+ */
+@property (nonatomic, copy) NSString *displayName;
+
+/**
+ Resources
+ */
+@property (nonatomic, strong) AWXResources *resources;
 
 @end
 

@@ -13,8 +13,10 @@
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction
 {
-    NSURL *url = [NSURL URLWithString:nextAction.payload[@"url"]];
     [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES];
+    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
+
+    NSURL *url = [NSURL URLWithString:nextAction.payload[@"url"]];
     [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 }
 

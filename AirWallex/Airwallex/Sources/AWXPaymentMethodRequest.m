@@ -171,6 +171,53 @@
 
 @end
 
+@implementation AWXGetAvailableBanksRequest
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.lang = [NSLocale currentLocale].localeIdentifier;
+        self.osType = @"ios";
+    }
+    return self;
+}
+
+- (NSString *)path
+{
+    return @"/api/v1/pa/config/banks";
+}
+
+- (AWXHTTPMethod)method
+{
+    return AWXHTTPMethodGET;
+}
+
+- (nullable NSDictionary *)parameters
+{
+    NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
+    
+    _parameters[@"payment_method_type"] = self.paymentMethodType;
+    if (self.lang) {
+        _parameters[@"lang"] = self.lang;
+    }
+    if (self.osType) {
+        _parameters[@"os_type"] = self.osType;
+    }
+    if (self.countryCode) {
+        _parameters[@"country_code"] = self.countryCode;
+    }
+    return _parameters;
+}
+
+- (Class)responseClass
+{
+    return AWXGetAvailableBanksResponse.class;
+}
+
+
+@end
+
 @implementation AWXCreatePaymentMethodRequest
 
 - (NSString *)path

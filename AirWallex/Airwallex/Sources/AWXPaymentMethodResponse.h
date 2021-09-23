@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AWXResponseProtocol.h"
 
-@class AWXPaymentMethod, AWXPaymentConsent, AWXPaymentMethodType, AWXSchema;
+@class AWXPaymentMethod, AWXPaymentConsent, AWXPaymentMethodType, AWXSchema, AWXBank;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -76,6 +76,23 @@ NS_ASSUME_NONNULL_BEGIN
  Field schemas
  */
 @property (nonatomic, strong) NSArray<AWXSchema *> *schemas;
+
+@end
+
+/**
+ `AWXGetAvailableBanksResponse` includes the list of banks.
+ */
+@interface AWXGetAvailableBanksResponse : NSObject <AWXResponseProtocol>
+
+/**
+ Check whether there are more payment methods not loaded.
+ */
+@property (nonatomic, readonly) BOOL hasMore;
+
+/**
+ Payment methods.
+ */
+@property (nonatomic, readonly) NSArray <AWXBank *> *items;
 
 @end
 
