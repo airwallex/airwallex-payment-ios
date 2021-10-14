@@ -11,9 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: macOS-latest
-    timeout-minutes: 20
-
+    runs-on: macos-10.15
     steps:
     - name: Checkout project
       uses: actions/checkout@v2
