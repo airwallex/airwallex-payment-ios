@@ -14,8 +14,6 @@
 
 @interface AWXView ()
 
-@property (nonatomic, strong) NSString *key;
-
 @end
 
 @implementation AWXView
@@ -788,72 +786,6 @@
 
 @end
 
-@interface AWXLabeledFormTextFieldView ()
-
-@property (nonatomic, strong) UILabel *formLabel;
-@property (nonatomic, strong) UITextField *textField;
-
-@end
-
-@implementation AWXLabeledFormTextFieldView
-
-- (NSString *)label
-{
-    return self.formLabel.text;
-}
-
-- (NSString *)input
-{
-    return self.textField.text;
-}
-
-- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText textField:(UITextField *)textField
-{
-    if (self = [super initWithKey:key]) {
-        UILabel *formLabel = [UILabel new];
-        formLabel.text = formLabelText;
-        formLabel.textColor = [AWXTheme sharedTheme].textColor;
-        formLabel.font = [UIFont bodyFont];
-        formLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.formLabel = formLabel;
-        [self addSubview:formLabel];
-        
-        UIView *contentView = [UIView autoLayoutView];
-        contentView.layer.masksToBounds = YES;
-        contentView.layer.cornerRadius = 8;
-        contentView.layer.borderWidth = 1.0;
-        contentView.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
-        [self addSubview:contentView];
-        
-        textField.textColor = [AWXTheme sharedTheme].textColor;
-        textField.font = [UIFont bodyFont];
-        textField.translatesAutoresizingMaskIntoConstraints = NO;
-        self.textField = textField;
-        [contentView addSubview:textField];
-        
-        NSDictionary *views = @{@"formLabel": formLabel, @"contentView": contentView, @"textField": textField};
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[formLabel]|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[formLabel(21)][contentView]|"
-                                                                     options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-                                                                     metrics:nil
-                                                                       views:views]];
-        [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[textField]-8-|"
-                                                                            options:0
-                                                                            metrics:nil
-                                                                              views:views]];
-        [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textField(40)]|"
-                                                                            options:0
-                                                                            metrics:nil
-                                                                              views:views]];
-    }
-    return self;
-}
-
-@end
-
 @interface AWXOptionView ()
 
 @property (nonatomic, strong) UIButton *contentView;
@@ -864,10 +796,9 @@
 
 @implementation AWXOptionView
 
-- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText placeholder:(NSString *)placeholder logo:(NSString *)logo
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText logoURL:(NSURL *)logoURL
 {
     if (self = [super initWithKey:key]) {
-        self.placeholder = placeholder;
         
         UIButton *contentView = [UIButton autoLayoutView];
         self.contentView = contentView;
@@ -888,7 +819,8 @@
         
         UIImageView *imageView = [UIImageView autoLayoutView];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
-        imageView.image = [UIImage imageNamed:logo];
+        [imageView setImageURL:logoURL
+                   placeholder:nil];
         [contentView addSubview:imageView];
         
         NSDictionary *views = @{@"formLabel": formLabel, @"contentView": contentView, @"imageView": imageView};
@@ -900,7 +832,7 @@
                                                                      options:0
                                                                      metrics:nil
                                                                        views:views]];
-        [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[formLabel]->=0-[imageView]-8-|"
+        [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[formLabel]->=0-[imageView]|"
                                                                             options:NSLayoutFormatAlignAllCenterY
                                                                             metrics:nil
                                                                               views:views]];

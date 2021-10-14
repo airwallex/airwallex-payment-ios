@@ -195,6 +195,7 @@
     NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
     
     _parameters[@"payment_method_type"] = self.paymentMethodType;
+    _parameters[@"__all_logos"] = @YES;
     if (self.lang) {
         _parameters[@"lang"] = self.lang;
     }
@@ -211,7 +212,6 @@
 {
     return AWXGetAvailableBanksResponse.class;
 }
-
 
 @end
 

@@ -17,10 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *placeholder;
 @property (nonatomic, strong) NSString *defaultValue;
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong, nullable) NSString *logo;
+@property (nonatomic, strong, nullable) NSURL *logo;
 
 + (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title;
-+ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title placeholder:(nullable NSString *)placeholder logo:(nullable NSString *)logo;
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title placeholder:(nullable NSString *)placeholder logo:(nullable NSURL *)logo;
 
 @end
 

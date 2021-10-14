@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImageView (Utils)
 
-- (void)setImageURL:(NSURL *)imageURL placeholder:(UIImage *)placeholder;
+- (void)setImageURL:(NSURL *)imageURL placeholder:(nullable UIImage *)placeholder;
 
 @end
 

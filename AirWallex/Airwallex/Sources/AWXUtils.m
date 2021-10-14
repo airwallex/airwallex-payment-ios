@@ -278,7 +278,7 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 
 @implementation UIImageView (Utils)
 
-- (void)setImageURL:(NSURL *)imageURL placeholder:(UIImage *)placeholder
+- (void)setImageURL:(NSURL *)imageURL placeholder:(nullable UIImage *)placeholder
 {
     [[[NSURLSession sharedSession] dataTaskWithURL:imageURL
                                  completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {

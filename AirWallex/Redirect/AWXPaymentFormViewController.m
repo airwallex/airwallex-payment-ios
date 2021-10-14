@@ -75,13 +75,22 @@
     self.stackView = stackView;
     [promptView addSubview:stackView];
     
+    CGFloat fieldHeight = 60.00;
+    AWXFloatingLabelTextField *lastTextField = nil;
+
     for (AWXForm *form in self.formMapping.forms) {
         if (form.type == AWXFormTypeField) {
-            UITextField *textField = [UITextField new];
-            AWXLabeledFormTextFieldView *fieldView = [[AWXLabeledFormTextFieldView alloc] initWithKey:form.key formLabel:form.title textField:textField];
-            [stackView addArrangedSubview:fieldView];
+            AWXFloatingLabelTextField *textField = [AWXFloatingLabelTextField new];
+            textField.key = form.key;
+            textField.placeholder = form.placeholder;
+            if (lastTextField) {
+                lastTextField.nextTextField = textField;
+            }
+            [stackView addArrangedSubview:textField];
+            [textField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
+            lastTextField = textField;
         } else if (form.type == AWXFormTypeOption) {
-            AWXOptionView *optionView = [[AWXOptionView alloc] initWithKey:form.key formLabel:form.title placeholder:form.placeholder logo:form.logo];
+            AWXOptionView *optionView = [[AWXOptionView alloc] initWithKey:form.key formLabel:form.title logoURL:form.logo];
             [optionView addTarget:self action:@selector(optionPressed:) forControlEvents:UIControlEventTouchUpInside];
             [stackView addArrangedSubview:optionView];
         } else if (form.type == AWXFormTypeButton) {
@@ -131,7 +140,7 @@
     for (UIView *view in self.stackView.arrangedSubviews) {
         if ([view isKindOfClass:[AWXOptionView class]]) {
             AWXOptionView *option = (AWXOptionView *)view;
-            dictionary[option.key] = option.placeholder;
+            dictionary[@"bank_name"] = option.key;
         }
     }
     return dictionary;
@@ -141,9 +150,9 @@
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     for (UIView *view in self.stackView.arrangedSubviews) {
-        if ([view isKindOfClass:[AWXLabeledFormTextFieldView class]]) {
-            AWXLabeledFormTextFieldView *field = (AWXLabeledFormTextFieldView *)view;
-            dictionary[field.key] = field.input;
+        if ([view isKindOfClass:[AWXFloatingLabelTextField class]]) {
+            AWXFloatingLabelTextField *field = (AWXFloatingLabelTextField *)view;
+            dictionary[field.key] = field.textField.text;
         }
     }
     return dictionary;

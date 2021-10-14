@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) AWXFormMapping *banksMapping;
 @property (nonatomic, strong) AWXFormMapping *fieldsMapping;
+@property (nonatomic, strong) AWXPaymentMethod *updatedPaymentMethod;
 
 @end
 
@@ -57,10 +58,10 @@
     NSArray *uiFields = [schema.fields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type != %@ && uiType != %@", @"banks", @"logo_list"]];
     
     AWXFormMapping *formMapping = [AWXFormMapping new];
-    formMapping.title = NSLocalizedString(@"Bank transfer", @"Bank transfer");
+    formMapping.title = response.displayName;
     NSMutableArray *forms = [NSMutableArray array];
     for (AWXField *field in uiFields) {
-        [forms addObject:[AWXForm formWithKey:field.name type:AWXFormTypeField title:field.displayName]];
+        [forms addObject:[AWXForm formWithKey:field.name type:AWXFormTypeField title:field.displayName placeholder:field.displayName logo:nil]];
     }
     [forms addObject:[AWXForm formWithKey:@"pay" type:AWXFormTypeButton title:@"Pay now"]];
     formMapping.forms = forms;
@@ -79,7 +80,7 @@
     AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
     controller.session = self.session;
-    controller.paymentMethod = self.paymentMethod;
+    controller.paymentMethod = self.updatedPaymentMethod;
     controller.formMapping = self.fieldsMapping;
     controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
     controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -112,7 +113,7 @@
     formMapping.title = NSLocalizedString(@"Select your bank", @"Select your bank");
     NSMutableArray *forms = [NSMutableArray array];
     for (AWXBank *bank in response.items) {
-        [forms addObject:[AWXForm formWithKey:bank.name type:AWXFormTypeOption title:bank.displayName]];
+        [forms addObject:[AWXForm formWithKey:bank.name type:AWXFormTypeOption title:bank.displayName placeholder:nil logo:bank.resources.logoURL]];
     }
     formMapping.forms = forms;
     self.banksMapping = formMapping;
@@ -125,7 +126,7 @@
     AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
     controller.session = self.session;
-    controller.paymentMethod = self.paymentMethod;
+    controller.paymentMethod = self.updatedPaymentMethod;
     controller.formMapping = self.banksMapping;
     controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
     controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -134,6 +135,7 @@
 
 - (void)handleFlow
 {
+    self.updatedPaymentMethod = self.paymentMethod;
     [self getPaymentMethodType];
 }
 
@@ -141,11 +143,13 @@
 
 - (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didUpdatePaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod
 {
+    self.updatedPaymentMethod = paymentMethod;
     [self renderFields:YES];
 }
 
 - (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod
 {
+    self.updatedPaymentMethod = paymentMethod;
     [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES];
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod
                                  paymentConsent:nil

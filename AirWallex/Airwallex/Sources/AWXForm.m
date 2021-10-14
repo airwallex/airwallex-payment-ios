@@ -15,7 +15,7 @@
     return [self formWithKey:key type:type title:title placeholder:nil logo:nil];
 }
 
-+ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title placeholder:(nullable NSString *)placeholder logo:(nullable NSString *)logo
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title placeholder:(nullable NSString *)placeholder logo:(nullable NSURL *)logo
 {
     AWXForm *form = [AWXForm new];
     form.key = key;

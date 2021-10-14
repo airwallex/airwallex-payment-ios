@@ -64,8 +64,13 @@
 + (id)decodeFromJSON:(NSDictionary *)json
 {
     AWXResources *resources = [AWXResources new];
-    resources.logoURL = [NSURL URLWithString:json[@"logo_url"]];
-    resources.hasSchema = [json[@"has_schema"] boolValue];
+    NSDictionary *logos = json[@"logos"];
+    if (logos && logos[@"png"]) {
+        resources.logoURL = [NSURL URLWithString:logos[@"png"]];
+    }
+    if (json[@"has_schema"]) {
+        resources.hasSchema = [json[@"has_schema"] boolValue];
+    }
     return resources;
 }
 
@@ -149,7 +154,7 @@
 + (id)decodeFromJSON:(NSDictionary *)json
 {
     AWXBank *bank = [AWXBank new];
-    bank.name = json[@"name"];
+    bank.name = json[@"bank_name"];
     bank.displayName = json[@"display_name"];
     bank.resources = [AWXResources decodeFromJSON:json[@"resources"]];
     return bank;
