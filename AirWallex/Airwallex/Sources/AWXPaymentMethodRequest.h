@@ -98,11 +98,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy, nullable) NSString *lang;
 
-/**
- Os type
- */
-@property (nonatomic, copy, nullable) NSString *osType;
-
 @end
 
 /**
@@ -130,11 +125,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy, nullable) NSString *lang;
 
-/**
- Os type
- */
-@property (nonatomic, copy, nullable) NSString *osType;
-
 @end
 
 /**
@@ -156,11 +146,6 @@ NS_ASSUME_NONNULL_BEGIN
  Lang
  */
 @property (nonatomic, copy, nullable) NSString *lang;
-
-/**
- Os type
- */
-@property (nonatomic, copy, nullable) NSString *osType;
 
 @end
 

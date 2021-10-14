@@ -71,7 +71,6 @@
         self.pageNum = 0;
         self.pageSize = 10;
         self.resources = YES;
-        self.osType = @"ios";
     }
     return self;
 }
@@ -108,9 +107,6 @@
     if (self.lang) {
         _parameters[@"lang"] = self.lang;
     }
-    if (self.osType) {
-        _parameters[@"os_type"] = self.osType;
-    }
     return _parameters;
 }
 
@@ -128,7 +124,6 @@
     self = [super init];
     if (self) {
         self.flow = @"inapp";
-        self.osType = @"ios";
     }
     return self;
 }
@@ -156,9 +151,6 @@
     if (self.lang) {
         _parameters[@"lang"] = self.lang;
     }
-    if (self.osType) {
-        _parameters[@"os_type"] = self.osType;
-    }
     return _parameters;
 }
 
@@ -170,15 +162,6 @@
 @end
 
 @implementation AWXGetAvailableBanksRequest
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.osType = @"ios";
-    }
-    return self;
-}
 
 - (NSString *)path
 {
@@ -198,9 +181,6 @@
     _parameters[@"__all_logos"] = @YES;
     if (self.lang) {
         _parameters[@"lang"] = self.lang;
-    }
-    if (self.osType) {
-        _parameters[@"os_type"] = self.osType;
     }
     if (self.countryCode) {
         _parameters[@"country_code"] = self.countryCode;
