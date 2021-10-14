@@ -21,7 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The country code.
  */
-@property (nonatomic, strong) NSString *countryCode;
+@property (nonatomic, copy) NSString *countryCode;
+
+/**
+ The lang.
+ */
+@property (nonatomic, copy, nullable) NSString *lang;
 
 /**
  The billing address.

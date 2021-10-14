@@ -276,7 +276,7 @@
         case AirwallexCheckoutOneOffMode:
         {
             AWXOneOffSession *session = [AWXOneOffSession new];
-            session.countryCode = @"AU";
+            session.countryCode = self.shipping.address.countryCode;
             session.billing = self.shipping;
             session.returnURL = returnURL;
             session.paymentIntent = paymentIntent;
@@ -285,7 +285,7 @@
         case AirwallexCheckoutRecurringMode:
         {
             AWXRecurringSession *session = [AWXRecurringSession new];
-            session.countryCode = @"AU";
+            session.countryCode = self.shipping.address.countryCode;
             session.billing = self.shipping;
             session.returnURL = returnURL;
             session.currency = [AirwallexExamplesKeys shared].currency;
@@ -299,7 +299,7 @@
         case AirwallexCheckoutRecurringWithIntentMode:
         {
             AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
-            session.countryCode = @"AU";
+            session.countryCode = self.shipping.address.countryCode;
             session.billing = self.shipping;
             session.returnURL = returnURL;
             session.paymentIntent = paymentIntent;

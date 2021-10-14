@@ -29,6 +29,7 @@
     AWXGetPaymentMethodTypeRequest *request = [AWXGetPaymentMethodTypeRequest new];
     request.name = self.paymentMethod.type;
     request.transactionMode = self.session.transactionMode;
+    request.lang = self.session.lang;
     
     [self.delegate providerDidStartRequest:self];
     __weak __typeof(self)weakSelf = self;
@@ -90,6 +91,7 @@
     AWXGetAvailableBanksRequest *request = [AWXGetAvailableBanksRequest new];
     request.paymentMethodType = paymentMethodType;
     request.countryCode = self.session.countryCode;
+    request.lang = self.session.lang;
     
     __weak __typeof(self)weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];

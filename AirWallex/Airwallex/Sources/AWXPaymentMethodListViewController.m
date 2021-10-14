@@ -103,6 +103,7 @@
     request.transactionCurrency = self.session.currency;
     request.transactionMode = self.session.transactionMode;
     request.countryCode = self.session.countryCode;
+    request.lang = self.session.lang;
     
     __weak __typeof(self)weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];

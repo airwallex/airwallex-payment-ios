@@ -71,7 +71,6 @@
         self.pageNum = 0;
         self.pageSize = 10;
         self.resources = YES;
-        self.lang = [NSLocale currentLocale].localeIdentifier;
         self.osType = @"ios";
     }
     return self;
@@ -129,7 +128,6 @@
     self = [super init];
     if (self) {
         self.flow = @"inapp";
-        self.lang = [NSLocale currentLocale].localeIdentifier;
         self.osType = @"ios";
     }
     return self;
@@ -177,7 +175,6 @@
 {
     self = [super init];
     if (self) {
-        self.lang = [NSLocale currentLocale].localeIdentifier;
         self.osType = @"ios";
     }
     return self;
