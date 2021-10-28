@@ -18,7 +18,9 @@
 
 @property (strong, nonatomic) UIView *dimmedView;
 @property (nonatomic) CGFloat maxDimmedAlpha, maximumContainerHeight, currentContainerHeight;
-@property (strong, nonatomic) NSLayoutConstraint *containerViewBottomConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *scrollViewHeightConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *scrollViewBottomConstraint;
+@property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIView *containerView;
 @property (strong, nonatomic) UIStackView *stackView;
 
@@ -38,11 +40,13 @@
     [super viewDidLayoutSubviews];
     [self.containerView roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight radius:16];
     self.currentContainerHeight = CGRectGetHeight(self.containerView.frame);
+    self.scrollViewHeightConstraint.constant = MIN(self.currentContainerHeight, self.maximumContainerHeight);
+    [self.view layoutIfNeeded];
 }
 
 - (NSLayoutConstraint *)bottomLayoutConstraint
 {
-    return self.containerViewBottomConstraint;
+    return self.scrollViewBottomConstraint;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -78,18 +82,22 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [dimmedView addGestureRecognizer:tap];
     
+    UIScrollView *scrollView = [UIScrollView autoLayoutView];
+    scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    [self.view addSubview:scrollView];
+    
     UIView *containerView = [UIView autoLayoutView];
     containerView.backgroundColor = [UIColor whiteColor];
     containerView.clipsToBounds = YES;
     self.containerView = containerView;
-    [self.view addSubview:containerView];
+    [scrollView addSubview:containerView];
     
     UILabel *titleLabel = [UILabel autoLayoutView];
     titleLabel.text = self.formMapping.title;
     titleLabel.textColor = [UIColor gray100Color];
     titleLabel.font = [UIFont subhead2Font];
     [containerView addSubview:titleLabel];
-    
+
     UIStackView *stackView = [UIStackView autoLayoutView];
     stackView.axis = UILayoutConstraintAxisVertical;
     stackView.spacing = 24;
@@ -130,16 +138,22 @@
         }
     }
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(dimmedView, containerView, titleLabel, stackView);
+    NSDictionary *views = NSDictionaryOfVariableBindings(dimmedView, scrollView, containerView, titleLabel, stackView);
     NSDictionary *metrics = @{@"bottom": @(24 + UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom)};
 
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[dimmedView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[dimmedView]|" options:NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing metrics:metrics views:views]];
-
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[containerView]|" options:0 metrics:nil views:views]];
-    _containerViewBottomConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:containerView attribute:NSLayoutAttributeBottom multiplier:1 constant:-self.currentContainerHeight];
-    _containerViewBottomConstraint.active = YES;
     
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[scrollView]|" options:0 metrics:nil views:views]];
+    self.scrollViewHeightConstraint = [NSLayoutConstraint constraintWithItem:scrollView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:self.currentContainerHeight];
+    self.scrollViewHeightConstraint.active = YES;
+    self.scrollViewBottomConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:scrollView attribute:NSLayoutAttributeBottom multiplier:1 constant:-self.currentContainerHeight];
+    self.scrollViewBottomConstraint.active = YES;
+
+    [scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[containerView]|" options:0 metrics:nil views:views]];
+    [scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[containerView]|" options:0 metrics:nil views:views]];
+    
+    [containerView.widthAnchor constraintEqualToAnchor:self.view.widthAnchor].active = YES;
     [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-24-[titleLabel]-24-|" options:0 metrics:nil views:views]];
     [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-24-[titleLabel]-24-[stackView]-bottom-|" options:NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing metrics:metrics views:views]];
 }
@@ -198,7 +212,7 @@
             NSLog(@"Pan gesture: UIGestureRecognizerStateChanged %f", translation.y);
 
             if (translation.y >= 0) {
-                self.containerViewBottomConstraint.constant = -translation.y;
+                self.scrollViewBottomConstraint.constant = -translation.y;
                 [self.view layoutIfNeeded];
             }
             break;
@@ -224,7 +238,7 @@
 - (void)animatePresentContainer
 {
     [UIView animateWithDuration:0.25 animations:^{
-        self.containerViewBottomConstraint.constant = 0;
+        self.scrollViewBottomConstraint.constant = 0;
         [self.view layoutIfNeeded];
     }];
 }
@@ -242,7 +256,7 @@
     self.dimmedView.alpha = self.maxDimmedAlpha;
     [UIView animateWithDuration:0.25 animations:^{
         self.dimmedView.alpha = 0;
-        self.containerViewBottomConstraint.constant = -self.currentContainerHeight;
+        self.scrollViewBottomConstraint.constant = -self.currentContainerHeight;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         [self dismissViewControllerAnimated:YES completion:nil];
