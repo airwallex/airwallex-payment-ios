@@ -124,17 +124,15 @@
             [optionView addTarget:self action:@selector(optionPressed:) forControlEvents:UIControlEventTouchUpInside];
             [stackView addArrangedSubview:optionView];
         } else if (form.type == AWXFormTypeButton) {
-            UIButton *button = [UIButton autoLayoutView];
-            button.layer.masksToBounds = YES;
-            button.layer.cornerRadius = 6;
-            button.backgroundColor = [AWXTheme sharedTheme].tintColor;
+            AWXButton *button = [AWXButton new];
+            button.enabled = YES;
+            button.cornerRadius = 6;
             [button setTitle:form.title forState:UIControlStateNormal];
-            button.titleLabel.textColor = [UIColor whiteColor];
             button.titleLabel.font = [UIFont headlineFont];
             [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [stackView addArrangedSubview:button];
             self.stackView = stackView;
-            [button.heightAnchor constraintEqualToConstant:40].active = YES;
+            [button.heightAnchor constraintEqualToConstant:52].active = YES;
         }
     }
     
@@ -168,6 +166,28 @@
 
 - (void)buttonPressed:(id)sender
 {
+    [self.view endEditing:YES];
+    
+    NSString *error;
+    NSArray *fields = self.stackView.arrangedSubviews;
+    for (UIView *view in fields) {
+        if ([view isKindOfClass:[AWXFloatingLabelTextField class]]) {
+            AWXFloatingLabelTextField *textField = (AWXFloatingLabelTextField *)view;
+            if (textField.errorText) {
+                error = textField.errorText;
+                break;
+            }
+        }
+    }
+    
+    if (error) {
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
+        return;
+    }
+    
+    
     [self.paymentMethod appendAdditionalParams:self.fields];
     if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didConfirmPaymentMethod:)]) {
         [self.delegate paymentFormViewController:self didConfirmPaymentMethod:self.paymentMethod];
