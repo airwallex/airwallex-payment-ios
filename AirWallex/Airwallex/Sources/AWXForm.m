@@ -12,15 +12,25 @@
 
 + (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title
 {
-    return [self formWithKey:key type:type title:title placeholder:nil logo:nil];
+    return [self formWithKey:key type:type title:title textFieldType:AWXTextFieldTypeFirstName];
 }
 
-+ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title placeholder:(nullable NSString *)placeholder logo:(nullable NSURL *)logo
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title textFieldType:(AWXTextFieldType)textFieldType
+{
+    return [self formWithKey:key type:type title:title textFieldType:textFieldType logo:nil];
+}
+
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title logo:(NSURL *)logo
+{
+    return [self formWithKey:key type:type title:title textFieldType:AWXTextFieldTypeFirstName logo:logo];
+}
+
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title textFieldType:(AWXTextFieldType)textFieldType logo:(nullable NSURL *)logo
 {
     AWXForm *form = [AWXForm new];
     form.key = key;
     form.type = type;
-    form.placeholder = placeholder;
+    form.textFieldType = textFieldType;
     form.title = title;
     form.logo = logo;
     return form;

@@ -98,14 +98,14 @@
 
 @end
 
-@implementation AWXValidation
+@implementation AWXCandidate
 
 + (id)decodeFromJSON:(NSDictionary *)json
 {
-    AWXValidation *validation = [AWXValidation new];
-    validation.regex = json[@"regex"];
-    validation.max = [json[@"max"] integerValue];
-    return validation;
+    AWXCandidate *candidate = [AWXCandidate new];
+    candidate.displayName = json[@"display_name"];
+    candidate.value = json[@"value"];
+    return candidate;
 }
 
 @end
@@ -119,10 +119,15 @@
     field.displayName = json[@"display_name"];
     field.uiType = json[@"ui_type"];
     field.type = json[@"type"];
-    NSDictionary *validations = json[@"validations"];
-    if (validations) {
-        field.validation = [AWXValidation decodeFromJSON:validations];
+    field.hidden = [json[@"hidden"] boolValue];
+    NSMutableArray *items = [NSMutableArray array];
+    NSArray *candidates = json[@"candidates"];
+    if (candidates && [candidates isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *item in candidates) {
+            [items addObject:[AWXCandidate decodeFromJSON:item]];
+        }
     }
+    field.candidates = items;
     return field;
 }
 

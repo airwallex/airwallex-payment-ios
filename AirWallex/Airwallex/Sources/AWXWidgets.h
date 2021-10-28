@@ -7,22 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef NS_ENUM(NSUInteger, AWXTextFieldType) {
-    AWXTextFieldTypeFirstName = 1,
-    AWXTextFieldTypeLastName,
-    AWXTextFieldTypeEmail,
-    AWXTextFieldTypePhoneNumber,
-    AWXTextFieldTypeCountry,
-    AWXTextFieldTypeState,
-    AWXTextFieldTypeCity,
-    AWXTextFieldTypeStreet,
-    AWXTextFieldTypeZipcode,
-    AWXTextFieldTypeCardNumber,
-    AWXTextFieldTypeNameOnCard,
-    AWXTextFieldTypeExpires,
-    AWXTextFieldTypeCVC
-};
+#import "AWXConstants.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

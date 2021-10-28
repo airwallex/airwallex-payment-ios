@@ -1,12 +1,12 @@
 //
-//  AWXPPROProvider.m
-//  Airwallex
+//  AWXSchemaProvider.m
+//  Redirect
 //
-//  Created by Victor Zhu on 2021/8/20.
+//  Created by Victor Zhu on 2021/10/28.
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import "AWXPPROProvider.h"
+#import "AWXSchemaProvider.h"
 #import "AWXFormMapping.h"
 #import "AWXForm.h"
 #import "AWXPaymentFormViewController.h"
@@ -15,7 +15,7 @@
 #import "AWXSession.h"
 #import "AWXAPIClient.h"
 
-@interface AWXPPROProvider () <AWXPaymentFormViewControllerDelegate>
+@interface AWXSchemaProvider () <AWXPaymentFormViewControllerDelegate>
 
 @property (nonatomic, strong) AWXFormMapping *banksMapping;
 @property (nonatomic, strong) AWXFormMapping *fieldsMapping;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation AWXPPROProvider
+@implementation AWXSchemaProvider
 
 - (void)getPaymentMethodType
 {
@@ -55,24 +55,72 @@
         return;
     }
     
-    NSArray *uiFields = [schema.fields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type != %@ && uiType != %@", @"banks", @"logo_list"]];
+    NSArray *hiddenFields = [schema.fields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hidden == TRUE"]];
+    [self updatePaymentMethodWithHiddenFields:hiddenFields];
     
+    BOOL hasBankList = [schema.fields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == %@ && uiType == %@ && hidden == FALSE", @"banks", @"logo_list"]].count > 0;
+    NSArray *uiFields = [schema.fields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(uiType == %@ || uiType == %@ || uiType == %@) && hidden == FALSE", @"text", @"email", @"phone"]];
+    BOOL hasUIFields = uiFields.count > 0;
+    if (hasUIFields) {
+        self.fieldsMapping = [self getUIFields:response schema:schema];
+    }
+    
+    if (hasBankList) {
+        [self getAvailableBankList:response.name];
+        return;
+    }
+    
+    if (!hasUIFields) {
+        [self confirmPaymentIntentWithPaymentMethod:self.updatedPaymentMethod
+                                     paymentConsent:nil
+                                             device:nil];
+        return;
+    }
+    
+    [self.delegate providerDidEndRequest:self];
+    [self renderFields:NO];
+}
+
+- (AWXFormMapping *)getUIFields:(AWXGetPaymentMethodTypeResponse *)response schema:(AWXSchema *)schema
+{
+    // type: enum && ui_type: list not supported
+    // type: boolean && ui_type: checkbox not supported
+    NSArray *uiFields = [schema.fields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(uiType == %@ || uiType == %@ || uiType == %@) && hidden == FALSE", @"text", @"email", @"phone"]];
     AWXFormMapping *formMapping = [AWXFormMapping new];
     formMapping.title = response.displayName;
     NSMutableArray *forms = [NSMutableArray array];
     for (AWXField *field in uiFields) {
-        [forms addObject:[AWXForm formWithKey:field.name type:AWXFormTypeField title:field.displayName placeholder:field.displayName logo:nil]];
+        [forms addObject:[AWXForm formWithKey:field.name type:AWXFormTypeText title:field.displayName textFieldType:GetTextFieldTypeByUIType(field.uiType)]];
     }
     [forms addObject:[AWXForm formWithKey:@"pay" type:AWXFormTypeButton title:@"Pay now"]];
     formMapping.forms = forms;
-    self.fieldsMapping = formMapping;
-    
-    if (uiFields.count != schema.fields.count) {
-        [self getAvailableBankList:response.name];
-    } else {
-        [self.delegate providerDidEndRequest:self];
-        [self renderFields:NO];
+    return formMapping;
+}
+
+- (void)updatePaymentMethodWithHiddenFields:(NSArray<AWXField* > *)hiddenFields
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    AWXField *flowField = [hiddenFields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", @"flow"]].firstObject;
+    if (flowField) {
+        BOOL isInApp = [flowField.candidates filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"value == %@", @"inapp"]].count > 0;
+        if (isInApp) {
+            params[@"flow"] = @"inapp";
+        } else {
+            AWXCandidate *first = flowField.candidates.firstObject;
+            if (first) {
+                params[@"flow"] = first.value;
+            }
+        }
     }
+    AWXField *osTypeField = [hiddenFields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", @"osType"]].firstObject;
+    if (osTypeField) {
+        params[@"osType"] = @"ios";
+    }
+    AWXField *countryCodeField = [hiddenFields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", @"country_code"]].firstObject;
+    if (countryCodeField) {
+        params[@"country_code"] = self.session.countryCode;
+    }
+    [self.updatedPaymentMethod appendAdditionalParams:params];
 }
 
 - (void)renderFields:(BOOL)forceToDismiss
@@ -82,9 +130,8 @@
     controller.session = self.session;
     controller.paymentMethod = self.updatedPaymentMethod;
     controller.formMapping = self.fieldsMapping;
-    controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:forceToDismiss];
+    controller.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:forceToDismiss withAnimation:NO];
 }
 
 - (void)getAvailableBankList:(NSString *)paymentMethodType
@@ -113,7 +160,7 @@
     formMapping.title = NSLocalizedString(@"Select your bank", @"Select your bank");
     NSMutableArray *forms = [NSMutableArray array];
     for (AWXBank *bank in response.items) {
-        [forms addObject:[AWXForm formWithKey:bank.name type:AWXFormTypeOption title:bank.displayName placeholder:nil logo:bank.resources.logoURL]];
+        [forms addObject:[AWXForm formWithKey:bank.name type:AWXFormTypeListCell title:bank.displayName logo:bank.resources.logoURL]];
     }
     formMapping.forms = forms;
     self.banksMapping = formMapping;
@@ -130,7 +177,7 @@
     controller.formMapping = self.banksMapping;
     controller.modalPresentationStyle = UIModalPresentationOverFullScreen;
     controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO];
+    [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:NO];
 }
 
 - (void)handleFlow
@@ -150,7 +197,6 @@
 - (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod
 {
     self.updatedPaymentMethod = paymentMethod;
-    [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES];
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod
                                  paymentConsent:nil
                                          device:nil];

@@ -24,7 +24,7 @@
     controller.sameAsShipping = YES;
     controller.session = self.session;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self.delegate provider:self shouldPresentViewController:nav forceToDismiss:NO];
+    [self.delegate provider:self shouldPresentViewController:nav forceToDismiss:NO withAnimation:YES];
 }
 
 - (void)confirmPaymentIntentWithCard:(AWXCard *)card

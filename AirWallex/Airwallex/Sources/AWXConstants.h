@@ -38,9 +38,25 @@ typedef NS_ENUM(NSUInteger, AirwallexMerchantTriggerReason) {
 };
 
 typedef NS_ENUM(NSUInteger, AWXFormType) {
-    AWXFormTypeOption,
-    AWXFormTypeField,
+    AWXFormTypeText,
+    AWXFormTypeListCell,
     AWXFormTypeButton
+};
+
+typedef NS_ENUM(NSUInteger, AWXTextFieldType) {
+    AWXTextFieldTypeFirstName = 1,
+    AWXTextFieldTypeLastName,
+    AWXTextFieldTypeEmail,
+    AWXTextFieldTypePhoneNumber,
+    AWXTextFieldTypeCountry,
+    AWXTextFieldTypeState,
+    AWXTextFieldTypeCity,
+    AWXTextFieldTypeStreet,
+    AWXTextFieldTypeZipcode,
+    AWXTextFieldTypeCardNumber,
+    AWXTextFieldTypeNameOnCard,
+    AWXTextFieldTypeExpires,
+    AWXTextFieldTypeCVC
 };
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
@@ -78,6 +94,7 @@ FOUNDATION_EXPORT NSString *const AWXThreeDSValidate;
 FOUNDATION_EXPORT NSString *const AWXDCC;
 
 FOUNDATION_EXPORT NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type);
+FOUNDATION_EXPORT AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType);
 FOUNDATION_EXPORT NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason);
 FOUNDATION_EXPORT Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type);
 FOUNDATION_EXPORT Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction);

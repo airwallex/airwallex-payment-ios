@@ -14,5 +14,5 @@ FOUNDATION_EXPORT double RedirectVersionNumber;
 //! Project version string for Redirect.
 FOUNDATION_EXPORT const unsigned char RedirectVersionString[];
 
-#import "AWXPPROProvider.h"
+#import "AWXSchemaProvider.h"
 #import "AWXRedirectActionProvider.h"

@@ -117,19 +117,19 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- `AWXValidation` includes the regex of field.
+ `AWXCandidate` includes the values of list
  */
-@interface AWXValidation : NSObject <AWXJSONDecodable>
+@interface AWXCandidate : NSObject <AWXJSONDecodable>
 
 /**
- regex.
+ display name.
  */
-@property (nonatomic, copy) NSString *regex;
+@property (nonatomic, copy) NSString *displayName;
 
 /**
- max length.
+ value.
  */
-@property (nonatomic) NSInteger max;
+@property (nonatomic, copy) NSString *value;
 
 @end
 
@@ -159,9 +159,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *type;
 
 /**
- validation.
+ hidden.
  */
-@property (nonatomic, strong) AWXValidation *validation;
+@property (nonatomic) BOOL hidden;
+
+/**
+ candidates.
+ */
+@property (nonatomic, strong) NSArray<AWXCandidate* > *candidates;
 
 @end
 

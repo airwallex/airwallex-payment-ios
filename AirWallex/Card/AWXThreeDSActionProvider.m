@@ -52,7 +52,7 @@
 
 - (void)threeDSService:(AWXThreeDSService *)service shouldPresentViewController:(UIViewController *)controller
 {
-    [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO];
+    [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
 }
 
 - (void)threeDSService:(AWXThreeDSService *)service didFinishWithResponse:(nullable AWXConfirmPaymentIntentResponse *)response error:(nullable NSError *)error

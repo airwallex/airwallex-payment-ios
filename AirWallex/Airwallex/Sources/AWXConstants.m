@@ -53,6 +53,17 @@ NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type)
     }
 }
 
+AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType)
+{
+    if ([uiType isEqualToString:@"email"]) {
+        return AWXTextFieldTypeEmail;
+    } else if ([uiType isEqualToString:@"phone"]) {
+        return AWXTextFieldTypePhoneNumber;
+    }
+    return AWXTextFieldTypeFirstName;
+}
+
+
 NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason)
 {
     switch (reason) {
@@ -68,7 +79,7 @@ Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type)
     if ([type.name isEqualToString:AWXCardKey]) {
         return NSClassFromString(@"AWXCardProvider");
     } else if (type.hasSchema) {
-        return NSClassFromString(@"AWXPPROProvider");
+        return NSClassFromString(@"AWXSchemaProvider");
     } else {
         return NSClassFromString(@"AWXDefaultProvider");
     }

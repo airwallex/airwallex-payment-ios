@@ -259,16 +259,16 @@
     self.provider = actionProvider;
 }
 
-- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss
+- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation
 {
     if (forceToDismiss) {
         [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
             if (controller) {
-                [self presentViewController:controller animated:YES completion:nil];
+                [self presentViewController:controller animated:withAnimation completion:nil];
             }
         }];
     } else if (controller) {
-        [self presentViewController:controller animated:YES completion:nil];
+        [self presentViewController:controller animated:withAnimation completion:nil];
     }
 }
 
