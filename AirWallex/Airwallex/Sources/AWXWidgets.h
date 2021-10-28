@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSUInteger, AWXTextFieldType) {
-    AWXTextFieldTypeFirstName,
+    AWXTextFieldTypeFirstName = 1,
     AWXTextFieldTypeLastName,
     AWXTextFieldTypeEmail,
     AWXTextFieldTypePhoneNumber,

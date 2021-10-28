@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *baseUrl;
 @property (nonatomic, strong) NSString *amount;
 @property (nonatomic, strong) NSString *currency;
+@property (nonatomic, strong) NSString *countryCode;
+@property (nonatomic, strong) NSString *returnUrl;
 
 + (instancetype)shared;
 - (void)resetKeys;

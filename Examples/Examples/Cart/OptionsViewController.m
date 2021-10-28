@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *clientIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *amountTextField;
 @property (weak, nonatomic) IBOutlet UITextField *currencyTextField;
+@property (weak, nonatomic) IBOutlet UITextField *countryCodeTextField;
+@property (weak, nonatomic) IBOutlet UITextField *returnURLTextField;
 
 @property (weak, nonatomic) IBOutlet UILabel *regionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
@@ -140,8 +142,8 @@
     __weak __typeof(self)weakSelf = self;
     [[APIClient sharedClient] createCustomerWithParameters:@{@"request_id": NSUUID.UUID.UUIDString,
                                                              @"merchant_customer_id": NSUUID.UUID.UUIDString,
-                                                             @"first_name": @"John",
-                                                             @"last_name": @"Doe",
+                                                             @"first_name": @"Jason",
+                                                             @"last_name": @"Wang",
                                                              @"email": @"john.doe@airwallex.com",
                                                              @"phone_number": @"13800000000",
                                                              @"additional_info": @{@"registered_via_social_media": @NO,
@@ -240,6 +242,8 @@
     self.clientIDTextField.text = [AirwallexExamplesKeys shared].clientId;
     self.amountTextField.text = [AirwallexExamplesKeys shared].amount;
     self.currencyTextField.text = [AirwallexExamplesKeys shared].currency;
+    self.countryCodeTextField.text = [AirwallexExamplesKeys shared].countryCode;
+    self.returnURLTextField.text = [AirwallexExamplesKeys shared].returnUrl;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -280,6 +284,19 @@
         } else {
             [self showAlert:NSLocalizedString(@"Please enter a valid currency", nil) withTitle:nil];
         }
+    } else if (textField == self.countryCodeTextField) {
+        if ([textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0) {
+            [AirwallexExamplesKeys shared].countryCode = textField.text.uppercaseString;
+        } else {
+            [self showAlert:NSLocalizedString(@"Please enter a valid country code", nil) withTitle:nil];
+        }
+    }  else if (textField == self.returnURLTextField) {
+        NSURL *url = [NSURL URLWithString:textField.text];
+        if (url.scheme && url.host) {
+            [AirwallexExamplesKeys shared].returnUrl = textField.text;
+        } else {
+            [self showAlert:NSLocalizedString(@"Please enter a valid return url", nil) withTitle:nil];
+        }
     } else if (textField == self.customerIdTextField) {
         if (textField.text.length == 0) {
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
@@ -301,7 +318,9 @@
     NSLog(@"Client ID (Example): %@", [APIClient sharedClient].clientID);
     NSLog(@"Amount (Example): %@", self.amountTextField.text);
     NSLog(@"Currency (Example): %@", self.currencyTextField.text);
-    
+    NSLog(@"Country Code (Example): %@", self.countryCodeTextField.text);
+    NSLog(@"Return URL (Example): %@", self.returnURLTextField.text);
+
     NSLog(@"Payment Base URL (SDK): %@", [Airwallex defaultBaseURL].absoluteString);
     NSLog(@"SDK mode (SDK): %@", [Airwallex mode] == AirwallexSDKTestMode ? @"Test" : @"Production");
     

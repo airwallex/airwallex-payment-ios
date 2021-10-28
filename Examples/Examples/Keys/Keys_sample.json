@@ -3,5 +3,7 @@
   "client_id": "",
   "base_url": "https://airwallex.com/",
   "amount": "0.10",
-  "currency": "HKD"
+  "currency": "HKD",
+  "country_code": "CN",
+  "return_url": "airwallexcheckout://com.airwallex.paymentacceptance"
 }

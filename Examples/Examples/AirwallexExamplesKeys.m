@@ -61,6 +61,8 @@
     self.baseUrl = self.configJson[@"base_url"];
     self.amount = self.configJson[@"amount"] ?: @"0";
     self.currency = self.configJson[@"currency"];
+    self.countryCode = self.configJson[@"country_code"];
+    self.returnUrl = self.configJson[@"return_url"];
 }
 
 @end

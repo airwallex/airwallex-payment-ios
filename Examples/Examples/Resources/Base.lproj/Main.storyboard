@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pG9-fq-6li">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -606,7 +606,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vcL-0v-hh2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2074" y="-575"/>
+            <point key="canvasLocation" x="2074" y="-613"/>
         </scene>
         <!--Settings-->
         <scene sceneID="XgQ-3K-n2r">
@@ -620,10 +620,10 @@
                                 <rect key="frame" x="0.0" y="44" width="320" height="436"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iM6-7j-oWC">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="871.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1027.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P74-f6-EbX">
-                                                <rect key="frame" x="16" y="16" width="288" height="839.5"/>
+                                                <rect key="frame" x="16" y="16" width="288" height="995.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Environment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3F-HC-rpy">
                                                         <rect key="frame" x="0.0" y="0.0" width="288" height="24"/>
@@ -892,14 +892,44 @@
                                                             <outlet property="delegate" destination="3dc-1g-4U7" id="ylw-Is-jt0"/>
                                                         </connections>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeChat Region:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iou-6j-t8u">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTx-Ag-RWK">
                                                         <rect key="frame" x="0.0" y="781.5" width="288" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qdt-5n-Aof">
+                                                        <rect key="frame" x="0.0" y="815.5" width="288" height="34"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="3dc-1g-4U7" id="vdP-Kj-Nzy"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Return URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0po-GZ-hyq">
+                                                        <rect key="frame" x="0.0" y="859.5" width="288" height="24"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KSE-Ui-RbN">
+                                                        <rect key="frame" x="0.0" y="893.5" width="288" height="34"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="3dc-1g-4U7" id="Gyt-fM-6Wm"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeChat Region:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iou-6j-t8u">
+                                                        <rect key="frame" x="0.0" y="937.5" width="288" height="24"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <color key="textColor" name="Black Text Color"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTK-Dh-PCi">
-                                                        <rect key="frame" x="0.0" y="815.5" width="288" height="24"/>
+                                                        <rect key="frame" x="0.0" y="971.5" width="288" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
@@ -947,6 +977,7 @@
                         <outlet property="checkoutBtn" destination="7eK-wj-8Bg" id="s1k-Sl-oux"/>
                         <outlet property="clearCustomerIdButton" destination="oPD-sh-aXs" id="7X4-On-5Ee"/>
                         <outlet property="clientIDTextField" destination="Qvi-cl-UUP" id="VQT-UV-ejR"/>
+                        <outlet property="countryCodeTextField" destination="Qdt-5n-Aof" id="JMC-aB-lIc"/>
                         <outlet property="currencyTextField" destination="XwV-xj-OFr" id="TLL-Jw-HkG"/>
                         <outlet property="customerIdTextField" destination="eE7-Om-WvW" id="v9O-Ri-qhU"/>
                         <outlet property="cvcSwitch" destination="wjD-bf-hn5" id="tdJ-dy-5gO"/>
@@ -954,13 +985,14 @@
                         <outlet property="nextTriggerByBtn" destination="4fM-7O-jA1" id="QAH-bf-L71"/>
                         <outlet property="paymentURLTextField" destination="YSw-cs-6Pe" id="qdG-Sh-62V"/>
                         <outlet property="regionLabel" destination="iou-6j-t8u" id="Uq8-qd-c7A"/>
+                        <outlet property="returnURLTextField" destination="KSE-Ui-RbN" id="yO1-ik-1ai"/>
                         <outlet property="scrollView" destination="lyV-gZ-kEV" id="Y8E-Uc-g8J"/>
                         <outlet property="versionLabel" destination="JTK-Dh-PCi" id="QI9-aU-Od5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6DU-lc-9l6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2074" y="874"/>
+            <point key="canvasLocation" x="2074" y="928"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iHb-BI-1x5">
@@ -968,7 +1000,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pG9-fq-6li" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lmz-Qw-MyF">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

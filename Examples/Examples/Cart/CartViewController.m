@@ -68,8 +68,8 @@
     self.products = [@[product0, product1] mutableCopy];
     
     NSDictionary *shipping = @{
-        @"first_name": @"Verify",
-        @"last_name": @"Doe",
+        @"first_name": @"Jason",
+        @"last_name": @"Wang",
         @"phone_number": @"13800000000",
         @"address": @{
                 @"country_code": @"CN",
@@ -125,7 +125,10 @@
     
     NSString *amount = [AirwallexExamplesKeys shared].amount;
     NSString *currency = [AirwallexExamplesKeys shared].currency;
-    self.checkoutButton.enabled = self.shipping != nil && amount.doubleValue > 0 && currency.length > 0;
+    NSString *countryCode = [AirwallexExamplesKeys shared].countryCode;
+    NSString *returnUrl = [AirwallexExamplesKeys shared].returnUrl;
+
+    self.checkoutButton.enabled = self.shipping != nil && amount.doubleValue > 0 && currency.length > 0 && countryCode.length > 0 && returnUrl.length > 0;
     self.checkoutButton.backgroundColor = self.checkoutButton.enabled ? [AWXTheme sharedTheme].tintColor : [UIColor colorNamed:@"Line Color"];
     [self.tableView reloadData];
 }
@@ -176,7 +179,7 @@
                                          @"merchant_order_id": NSUUID.UUID.UUIDString,
                                          @"request_id": NSUUID.UUID.UUIDString,
                                          @"metadata": @{@"id": @1},
-                                         @"return_url": @"airwallexcheckout://com.airwallex.paymentacceptance",
+                                         @"return_url": [AirwallexExamplesKeys shared].returnUrl,
                                          @"order": @{
                                                  @"products": @[@{
                                                                     @"type": @"Free engraving",
@@ -198,8 +201,8 @@
                                                                     @"url": @"www.aircross.com"
                                                  }],
                                                  @"shipping": @{
-                                                         @"first_name": @"Verify",
-                                                         @"last_name": @"Doe",
+                                                         @"first_name": @"Jason",
+                                                         @"last_name": @"Wang",
                                                          @"phone_number": @"13800000000",
                                                          @"address": @{
                                                                  @"country_code": @"CN",
@@ -270,24 +273,23 @@
 
 - (AWXSession *)createSession:(nullable AWXPaymentIntent *)paymentIntent
 {
-    NSString *returnURL = @"https://airwallex.com";
     AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
     switch (checkoutMode) {
         case AirwallexCheckoutOneOffMode:
         {
             AWXOneOffSession *session = [AWXOneOffSession new];
-            session.countryCode = self.shipping.address.countryCode;
+            session.countryCode = [AirwallexExamplesKeys shared].countryCode;
             session.billing = self.shipping;
-            session.returnURL = returnURL;
+            session.returnURL = [AirwallexExamplesKeys shared].returnUrl;
             session.paymentIntent = paymentIntent;
             return session;
         }
         case AirwallexCheckoutRecurringMode:
         {
             AWXRecurringSession *session = [AWXRecurringSession new];
-            session.countryCode = self.shipping.address.countryCode;
+            session.countryCode = [AirwallexExamplesKeys shared].countryCode;
             session.billing = self.shipping;
-            session.returnURL = returnURL;
+            session.returnURL = [AirwallexExamplesKeys shared].returnUrl;
             session.currency = [AirwallexExamplesKeys shared].currency;
             session.amount = [NSDecimalNumber decimalNumberWithString:[AirwallexExamplesKeys shared].amount];
             session.customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
@@ -299,9 +301,9 @@
         case AirwallexCheckoutRecurringWithIntentMode:
         {
             AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
-            session.countryCode = self.shipping.address.countryCode;
+            session.countryCode = [AirwallexExamplesKeys shared].countryCode;
             session.billing = self.shipping;
-            session.returnURL = returnURL;
+            session.returnURL = [AirwallexExamplesKeys shared].returnUrl;
             session.paymentIntent = paymentIntent;
             session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
             session.requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
