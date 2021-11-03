@@ -34,7 +34,7 @@
         self.session = [CardinalSession new];
         
         CardinalSessionConfiguration *config = [CardinalSessionConfiguration new];
-        config.deploymentEnvironment = [Airwallex mode] == AirwallexSDKLiveMode ? CardinalSessionEnvironmentProduction : CardinalSessionEnvironmentStaging;
+        config.deploymentEnvironment = [Airwallex mode] == AirwallexSDKProductionMode ? CardinalSessionEnvironmentProduction : CardinalSessionEnvironmentStaging;
         config.requestTimeout = CardinalSessionTimeoutStandard;
         config.challengeTimeout = 8;
         config.uiType = CardinalSessionUITypeBoth;

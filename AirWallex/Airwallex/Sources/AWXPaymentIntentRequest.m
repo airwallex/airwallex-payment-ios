@@ -14,6 +14,8 @@
 #import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentConsent.h"
+#import "AWXAPIClient.h"
+
 @implementation AWXConfirmPaymentIntentRequest
 
 - (NSString *)path
@@ -49,8 +51,8 @@
         if (self.paymentMethod.Id) {
             [parameters addEntriesFromDictionary:@{
                 @"payment_method_reference": @{
-                        @"id": self.paymentMethod.Id,
-                        @"cvc": self.paymentMethod.card.cvc ?: @""
+                    @"id": self.paymentMethod.Id,
+                    @"cvc": self.paymentMethod.card.cvc ?: @""
                 }
             }];
         } else {
@@ -65,6 +67,8 @@
     if (self.device) {
         parameters[@"device"] = [self.device encodeToJSON];
     }
+    parameters[@"integration_data"] = @{@"type": @"mobile_sdk",
+                                        @"version": [NSString stringWithFormat:@"ios-%@-%@", FormatAirwallexSDKMode(Airwallex.mode), AIRWALLEX_VERSION]};
     return parameters;
 }
 

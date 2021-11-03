@@ -43,6 +43,18 @@ NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
 NSString *const AWXThreeDSValidate = @"3dsValidate";
 NSString *const AWXDCC = @"dcc";
 
+NSString * FormatAirwallexSDKMode(AirwallexSDKMode mode)
+{
+    switch (mode) {
+        case AirwallexSDKDemoMode:
+            return @"demo";
+        case AirwallexSDKStagingMode:
+            return @"staging";
+        case AirwallexSDKProductionMode:
+            return @"production";
+    }
+}
+
 NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type)
 {
     switch (type) {

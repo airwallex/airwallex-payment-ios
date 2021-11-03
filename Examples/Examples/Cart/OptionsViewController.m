@@ -26,7 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *regionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *modeButton;
 @property (weak, nonatomic) IBOutlet UIButton *checkoutBtn;
 @property (weak, nonatomic) IBOutlet UIButton *nextTriggerByBtn;
 @property (weak, nonatomic) IBOutlet UISwitch *cvcSwitch;
@@ -109,9 +109,23 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)modeSwitchPressed:(id)sender
+- (IBAction)modePressed:(id)sender
 {
-    [Airwallex setMode:self.modeSwitch.isOn ? AirwallexSDKLiveMode : AirwallexSDKTestMode];
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Demo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [Airwallex setMode:AirwallexSDKDemoMode];
+        [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
+    }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Staging" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [Airwallex setMode:AirwallexSDKStagingMode];
+        [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
+    }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Production" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [Airwallex setMode:AirwallexSDKProductionMode];
+        [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
+    }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (IBAction)checkoutModeTapped:(id)sender
@@ -214,7 +228,7 @@
 
 - (void)resetSDK
 {
-    [Airwallex setMode:AirwallexSDKTestMode];
+    [Airwallex setMode:AirwallexSDKProductionMode];
     NSURL *url = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
     [Airwallex setDefaultBaseURL:url];
     [AWXAPIClientConfiguration sharedConfiguration].baseURL = url;
@@ -222,7 +236,7 @@
 
 - (void)resetTextFields
 {
-    self.modeSwitch.on = Airwallex.mode == AirwallexSDKLiveMode;
+    [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
     
     self.customerIdTextField.enabled = NO;
     NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
@@ -322,7 +336,7 @@
     NSLog(@"Return URL (Example): %@", self.returnURLTextField.text);
 
     NSLog(@"Payment Base URL (SDK): %@", [Airwallex defaultBaseURL].absoluteString);
-    NSLog(@"SDK mode (SDK): %@", [Airwallex mode] == AirwallexSDKTestMode ? @"Test" : @"Production");
+    NSLog(@"SDK mode (SDK): %@", FormatAirwallexSDKMode(Airwallex.mode));
     
     NSLog(@"Customer ID (SDK): %@", [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID]);
     NSLog(@"Checkout mode (SDK): %@", self.checkoutModesList[[[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode]]);

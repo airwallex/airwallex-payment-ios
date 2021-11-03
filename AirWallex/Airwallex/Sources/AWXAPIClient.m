@@ -14,18 +14,20 @@
 #import "AWXAPIResponse.h"
 #import "AWXUtils.h"
 
-static NSString * const AWXAPIBaseTestURL = @"https://pci-api-demo.airwallex.com/";
-static NSString * const AWXAPIBaseLiveURL = @"https://pci-api.airwallex.com/";
+static NSString * const AWXAPIDemoBaseURL = @"https://pci-api-demo.airwallex.com/";
+static NSString * const AWXAPIStagingBaseURL = @"https://pci-api-staging.airwallex.com/";
+static NSString * const AWXAPIProductionBaseURL = @"https://pci-api.airwallex.com/";
 
-static NSString *const AWXCybsTestURL = @"https://pci-api-demo.airwallex.com/";
-static NSString *const AWXCybsLiveURL = @"https://pci-api.airwallex.com/";
+static NSString *const AWXCybsDemoBaseURL = @"https://pci-api-demo.airwallex.com/";
+static NSString *const AWXCybsStagingBaseURL = @"https://pci-api-staging.airwallex.com/";
+static NSString *const AWXCybsProductionBaseURL = @"https://pci-api.airwallex.com/";
 
 @implementation Airwallex
 
 static NSURL *_defaultBaseURL;
 static NSString *_cybsURL;
 
-static AirwallexSDKMode _mode = AirwallexSDKTestMode;
+static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 
 + (void)setDefaultBaseURL:(NSURL *)baseURL
 {
@@ -34,7 +36,18 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
 
 + (NSURL *)defaultBaseURL
 {
-    return _defaultBaseURL ?: (_mode == AirwallexSDKLiveMode ? [NSURL URLWithString:AWXAPIBaseLiveURL] : [NSURL URLWithString:AWXAPIBaseTestURL]);
+    if (_defaultBaseURL) {
+        return _defaultBaseURL;
+    }
+    
+    switch (_mode) {
+        case AirwallexSDKProductionMode:
+            return [NSURL URLWithString:AWXAPIProductionBaseURL];
+        case AirwallexSDKStagingMode:
+            return [NSURL URLWithString:AWXAPIStagingBaseURL];
+        case AirwallexSDKDemoMode:
+            return [NSURL URLWithString:AWXAPIDemoBaseURL];
+    }
 }
 
 + (void)setCybsURL:(NSString *)cybsURL
@@ -44,7 +57,18 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
 
 + (NSString *)cybsURL
 {
-    return _cybsURL ?: (_mode == AirwallexSDKLiveMode ? AWXCybsLiveURL : AWXCybsTestURL);
+    if (_cybsURL) {
+        return _cybsURL;
+    }
+    
+    switch (_mode) {
+        case AirwallexSDKProductionMode:
+            return AWXCybsProductionBaseURL;
+        case AirwallexSDKStagingMode:
+            return AWXCybsStagingBaseURL;
+        case AirwallexSDKDemoMode:
+            return AWXCybsDemoBaseURL;
+    }
 }
 
 + (void)setMode:(AirwallexSDKMode)mode

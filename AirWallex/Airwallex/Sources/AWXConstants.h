@@ -17,8 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 #define AIRWALLEX_API_VERSION (@"2020-04-30")
 
 typedef NS_ENUM(NSInteger, AirwallexSDKMode) {
-    AirwallexSDKTestMode,
-    AirwallexSDKLiveMode
+    AirwallexSDKDemoMode,
+    AirwallexSDKStagingMode,
+    AirwallexSDKProductionMode
 };
 
 typedef NS_ENUM(NSUInteger, AirwallexPaymentStatus) {
@@ -94,6 +95,7 @@ FOUNDATION_EXPORT NSString *const AWXThreeDSCheckEnrollment;
 FOUNDATION_EXPORT NSString *const AWXThreeDSValidate;
 FOUNDATION_EXPORT NSString *const AWXDCC;
 
+FOUNDATION_EXPORT NSString * FormatAirwallexSDKMode(AirwallexSDKMode mode);
 FOUNDATION_EXPORT NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type);
 FOUNDATION_EXPORT AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType);
 FOUNDATION_EXPORT NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason);
