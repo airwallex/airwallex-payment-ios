@@ -175,6 +175,12 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (void)close:(id)sender
+{
+    id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+    [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

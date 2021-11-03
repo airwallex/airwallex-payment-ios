@@ -330,14 +330,24 @@
 
 #pragma mark - Show Payment Result
 
-- (void)showPaymentResult:(nullable NSError *)error
+- (void)showPaymentSuccess
 {
     NSString *title = NSLocalizedString(@"Payment successful", nil);
     NSString *message = NSLocalizedString(@"Your payment has been charged", nil);
-    if (error) {
-        title = NSLocalizedString(@"Payment failed", nil);
-        message = error.localizedDescription ?: NSLocalizedString(@"There was an error while processing your payment. Please try again.", nil);
-    }
+    [self showAlert:message withTitle:title];
+}
+
+- (void)showPaymentFailure:(nullable NSError *)error
+{
+    NSString *title = NSLocalizedString(@"Payment failed", nil);
+    NSString *message = error.localizedDescription ?: NSLocalizedString(@"There was an error while processing your payment. Please try again.", nil);
+    [self showAlert:message withTitle:title];
+}
+
+- (void)showPaymentCancel
+{
+    NSString *title = NSLocalizedString(@"Payment cancelled", nil);
+    NSString *message = NSLocalizedString(@"Your payment has been cancelled", nil);
     [self showAlert:message withTitle:title];
 }
 
@@ -435,8 +445,18 @@
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        if (status != AirwallexPaymentStatusInProgress) {
-            [self showPaymentResult:error];
+        switch (status) {
+            case AirwallexPaymentStatusSuccess:
+                [self showPaymentSuccess];
+                break;
+            case AirwallexPaymentStatusFailure:
+                [self showPaymentFailure:error];
+                break;
+            case AirwallexPaymentStatusCancel:
+                [self showPaymentCancel];
+                break;
+            default:
+                break;
         }
     }];
 }

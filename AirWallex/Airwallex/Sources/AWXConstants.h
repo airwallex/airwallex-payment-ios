@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, AirwallexPaymentStatus) {
     AirwallexPaymentStatusSuccess,
     AirwallexPaymentStatusInProgress,
     AirwallexPaymentStatusFailure,
+    AirwallexPaymentStatusCancel
 };
 
 typedef NS_ENUM(NSUInteger, AirwallexNextTriggerByType) {
