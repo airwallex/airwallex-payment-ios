@@ -620,10 +620,10 @@
                                 <rect key="frame" x="0.0" y="44" width="320" height="436"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iM6-7j-oWC">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1034.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="956.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P74-f6-EbX">
-                                                <rect key="frame" x="16" y="16" width="288" height="1002.5"/>
+                                                <rect key="frame" x="16" y="16" width="288" height="924.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Environment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3F-HC-rpy">
                                                         <rect key="frame" x="0.0" y="0.0" width="288" height="24"/>
@@ -841,29 +841,14 @@
                                                             <constraint firstAttribute="trailing" secondItem="oPD-sh-aXs" secondAttribute="trailing" id="zYa-aZ-HwA"/>
                                                         </constraints>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw3-vc-e4I">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J14-mn-E62">
                                                         <rect key="frame" x="0.0" y="398.5" width="288" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YSw-cs-6Pe">
-                                                        <rect key="frame" x="0.0" y="432.5" width="288" height="34"/>
-                                                        <color key="textColor" name="Black Text Color"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                        <connections>
-                                                            <outlet property="delegate" destination="3dc-1g-4U7" id="5hV-Eu-cPh"/>
-                                                        </connections>
-                                                    </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J14-mn-E62">
-                                                        <rect key="frame" x="0.0" y="476.5" width="288" height="24"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                        <color key="textColor" name="Black Text Color"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ucc-VN-sfr">
-                                                        <rect key="frame" x="0.0" y="510.5" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="432.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -872,13 +857,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5p4-lS-mL2">
-                                                        <rect key="frame" x="0.0" y="554.5" width="288" height="24"/>
+                                                        <rect key="frame" x="0.0" y="476.5" width="288" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-cl-UUP">
-                                                        <rect key="frame" x="0.0" y="588.5" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="510.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -887,13 +872,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BH-xo-rjD">
-                                                        <rect key="frame" x="0.0" y="632.5" width="288" height="24"/>
+                                                        <rect key="frame" x="0.0" y="554.5" width="288" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ofq-7n-F5l">
-                                                        <rect key="frame" x="0.0" y="666.5" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="588.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -902,13 +887,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ap9-GE-PVt">
-                                                        <rect key="frame" x="0.0" y="710.5" width="288" height="24"/>
+                                                        <rect key="frame" x="0.0" y="632.5" width="288" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XwV-xj-OFr">
-                                                        <rect key="frame" x="0.0" y="744.5" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="666.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -917,13 +902,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTx-Ag-RWK">
-                                                        <rect key="frame" x="0.0" y="788.5" width="288" height="24"/>
+                                                        <rect key="frame" x="0.0" y="710.5" width="288" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qdt-5n-Aof">
-                                                        <rect key="frame" x="0.0" y="822.5" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="744.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -932,13 +917,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Return URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0po-GZ-hyq">
-                                                        <rect key="frame" x="0.0" y="866.5" width="288" height="24"/>
+                                                        <rect key="frame" x="0.0" y="788.5" width="288" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KSE-Ui-RbN">
-                                                        <rect key="frame" x="0.0" y="900.5" width="288" height="34"/>
+                                                        <rect key="frame" x="0.0" y="822.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -947,13 +932,13 @@
                                                         </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeChat Region:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iou-6j-t8u">
-                                                        <rect key="frame" x="0.0" y="944.5" width="288" height="24"/>
+                                                        <rect key="frame" x="0.0" y="866.5" width="288" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTK-Dh-PCi">
-                                                        <rect key="frame" x="0.0" y="978.5" width="288" height="24"/>
+                                                        <rect key="frame" x="0.0" y="900.5" width="288" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
@@ -1007,7 +992,6 @@
                         <outlet property="cvcSwitch" destination="wjD-bf-hn5" id="tdJ-dy-5gO"/>
                         <outlet property="modeButton" destination="Bgd-ni-rbG" id="9YE-6Q-HI8"/>
                         <outlet property="nextTriggerByBtn" destination="4fM-7O-jA1" id="QAH-bf-L71"/>
-                        <outlet property="paymentURLTextField" destination="YSw-cs-6Pe" id="qdG-Sh-62V"/>
                         <outlet property="regionLabel" destination="iou-6j-t8u" id="Uq8-qd-c7A"/>
                         <outlet property="returnURLTextField" destination="KSE-Ui-RbN" id="yO1-ik-1ai"/>
                         <outlet property="scrollView" destination="lyV-gZ-kEV" id="Y8E-Uc-g8J"/>

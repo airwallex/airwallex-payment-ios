@@ -18,14 +18,9 @@ static NSString * const AWXAPIDemoBaseURL = @"https://pci-api-demo.airwallex.com
 static NSString * const AWXAPIStagingBaseURL = @"https://pci-api-staging.airwallex.com/";
 static NSString * const AWXAPIProductionBaseURL = @"https://pci-api.airwallex.com/";
 
-static NSString *const AWXCybsDemoBaseURL = @"https://pci-api-demo.airwallex.com/";
-static NSString *const AWXCybsStagingBaseURL = @"https://pci-api-staging.airwallex.com/";
-static NSString *const AWXCybsProductionBaseURL = @"https://pci-api.airwallex.com/";
-
 @implementation Airwallex
 
 static NSURL *_defaultBaseURL;
-static NSString *_cybsURL;
 
 static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 
@@ -47,27 +42,6 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
             return [NSURL URLWithString:AWXAPIStagingBaseURL];
         case AirwallexSDKDemoMode:
             return [NSURL URLWithString:AWXAPIDemoBaseURL];
-    }
-}
-
-+ (void)setCybsURL:(NSString *)cybsURL
-{
-    _cybsURL = cybsURL;
-}
-
-+ (NSString *)cybsURL
-{
-    if (_cybsURL) {
-        return _cybsURL;
-    }
-    
-    switch (_mode) {
-        case AirwallexSDKProductionMode:
-            return AWXCybsProductionBaseURL;
-        case AirwallexSDKStagingMode:
-            return AWXCybsStagingBaseURL;
-        case AirwallexSDKDemoMode:
-            return AWXCybsDemoBaseURL;
     }
 }
 
@@ -95,19 +69,14 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
     return sharedConfiguration;
 }
 
-- (instancetype)init
+- (NSURL *)baseURL
 {
-    self = [super init];
-    if (self) {
-        self.baseURL = [Airwallex defaultBaseURL];
-    }
-    return self;
+    return Airwallex.defaultBaseURL;
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
     AWXAPIClientConfiguration *copy = [[AWXAPIClientConfiguration allocWithZone:zone] init];
-    copy.baseURL = [self.baseURL copyWithZone:zone];
     copy.clientSecret = [self.clientSecret copyWithZone:zone];
     return copy;
 }

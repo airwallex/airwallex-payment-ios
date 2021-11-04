@@ -58,7 +58,6 @@
 {
     self.apiKey = self.configJson[@"api_key"];
     self.clientId = self.configJson[@"client_id"];
-    self.baseUrl = self.configJson[@"base_url"];
     self.amount = self.configJson[@"amount"] ?: @"0";
     self.currency = self.configJson[@"currency"];
     self.countryCode = self.configJson[@"country_code"];

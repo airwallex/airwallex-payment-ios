@@ -16,7 +16,6 @@
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UITextField *paymentURLTextField;
 @property (weak, nonatomic) IBOutlet UITextField *apiKeyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *clientIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *amountTextField;
@@ -114,14 +113,20 @@
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [controller addAction:[UIAlertAction actionWithTitle:@"Demo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [Airwallex setMode:AirwallexSDKDemoMode];
+        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+        
         [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
     }]];
     [controller addAction:[UIAlertAction actionWithTitle:@"Staging" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [Airwallex setMode:AirwallexSDKStagingMode];
+        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+        
         [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
     }]];
     [controller addAction:[UIAlertAction actionWithTitle:@"Production" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [Airwallex setMode:AirwallexSDKProductionMode];
+        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+        
         [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
     }]];
     [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
@@ -220,7 +225,6 @@
 - (void)resetExamplesAPIClient
 {
     APIClient *client = [APIClient sharedClient];
-    client.paymentBaseURL = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientId;
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
@@ -229,9 +233,6 @@
 - (void)resetSDK
 {
     [Airwallex setMode:AirwallexSDKProductionMode];
-    NSURL *url = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
-    [Airwallex setDefaultBaseURL:url];
-    [AWXAPIClientConfiguration sharedConfiguration].baseURL = url;
 }
 
 - (void)resetTextFields
@@ -251,7 +252,6 @@
     BOOL requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
     self.cvcSwitch.on = requiresCVC;
 
-    self.paymentURLTextField.text = [AirwallexExamplesKeys shared].baseUrl;
     self.apiKeyTextField.text = [AirwallexExamplesKeys shared].apiKey;
     self.clientIDTextField.text = [AirwallexExamplesKeys shared].clientId;
     self.amountTextField.text = [AirwallexExamplesKeys shared].amount;
@@ -264,19 +264,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (textField == self.paymentURLTextField) {
-        NSURL *url = [NSURL URLWithString:textField.text];
-        if (url.scheme && url.host) {
-            [APIClient sharedClient].paymentBaseURL = url;
-            [Airwallex setDefaultBaseURL:url];
-            [AWXAPIClientConfiguration sharedConfiguration].baseURL = url;
-            [AirwallexExamplesKeys shared].baseUrl = url.absoluteString;
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
-            [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
-        } else {
-            [self showAlert:NSLocalizedString(@"Not a valid payment url", nil) withTitle:nil];
-        }
-    } else if (textField == self.apiKeyTextField) {
+    if (textField == self.apiKeyTextField) {
         [APIClient sharedClient].apiKey = textField.text;
         [AirwallexExamplesKeys shared].apiKey = textField.text;
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];

@@ -21,9 +21,9 @@
     return sharedClient;
 }
 
-- (void)setPaymentBaseURL:(NSURL *)paymentBaseURL
+- (NSURL *)paymentBaseURL
 {
-    _paymentBaseURL = [paymentBaseURL URLByAppendingPathComponent:@""];
+    return Airwallex.defaultBaseURL;
 }
 
 - (void)createAuthenticationTokenWithCompletionHandler:(nullable void (^)(NSError * _Nullable error))completionHandler

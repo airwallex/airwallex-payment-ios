@@ -37,8 +37,8 @@
     [super viewDidLoad];
     [self setupViews];
     [self setupCartData];
-    [self setupExamplesAPIClient];
     [self setupSDK];
+    [self setupExamplesAPIClient];
     [self reloadData];
 }
 
@@ -85,8 +85,6 @@
 - (void)setupExamplesAPIClient
 {
     APIClient *client = [APIClient sharedClient];
-    NSURL *url = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
-    client.paymentBaseURL = url;
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientId;
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
@@ -97,8 +95,7 @@
     // Step 1: Use a preset mode (Note: test mode as default)
 //    [Airwallex setMode:AirwallexSDKTestMode];
     // Or set base URL directly
-    NSURL *url = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
-    [Airwallex setDefaultBaseURL:url];
+    [Airwallex setMode:AirwallexSDKStagingMode];
     
     // Theme customization
     UIColor *tintColor = [UIColor colorNamed:@"Purple Color"];

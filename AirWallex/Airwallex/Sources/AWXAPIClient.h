@@ -35,18 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURL *)defaultBaseURL;
 
 /**
- Set term URL.
- 
- @param cybsURL A cybs URL.
- */
-+ (void)setCybsURL:(NSString *)cybsURL;
-
-/**
- Get term URL.
- */
-+ (NSString *)cybsURL;
-
-/**
  Set sdk mode.
  
  @param mode A mode required.
@@ -68,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The base URL.
  */
-@property (nonatomic, copy) NSURL *baseURL;
+@property (nonatomic, readonly) NSURL *baseURL;
 
 /**
  The client secret for payment.

@@ -149,8 +149,12 @@
                        error:(nullable NSError *)error
 {
     [self.delegate providerDidEndRequest:self];
-    if (response && response.nextAction) {
-        [self.delegate provider:self shouldHandleNextAction:response.nextAction];
+    if (response && !error) {
+        if (response.nextAction) {
+            [self.delegate provider:self shouldHandleNextAction:response.nextAction];
+        } else {
+            [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
+        }
     } else {
         [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
     }
