@@ -113,18 +113,21 @@
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [controller addAction:[UIAlertAction actionWithTitle:@"Demo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [Airwallex setMode:AirwallexSDKDemoMode];
+        [AirwallexExamplesKeys shared].environment = AirwallexSDKDemoMode;
         [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
         
         [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
     }]];
     [controller addAction:[UIAlertAction actionWithTitle:@"Staging" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [Airwallex setMode:AirwallexSDKStagingMode];
+        [AirwallexExamplesKeys shared].environment = AirwallexSDKStagingMode;
         [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
         
         [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
     }]];
     [controller addAction:[UIAlertAction actionWithTitle:@"Production" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [Airwallex setMode:AirwallexSDKProductionMode];
+        [AirwallexExamplesKeys shared].environment = AirwallexSDKProductionMode;
         [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
         
         [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
@@ -136,8 +139,7 @@
 - (IBAction)checkoutModeTapped:(id)sender
 {
     [self showSelectViewWithArray:self.checkoutModesList completion:^(NSInteger selectIndex) {
-        [[NSUserDefaults standardUserDefaults] setInteger:selectIndex forKey:kCachedCheckoutMode];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [AirwallexExamplesKeys shared].checkoutMode = selectIndex;
         [self.checkoutBtn setTitle:self.checkoutModesList[selectIndex] forState:UIControlStateNormal];
     }];
 }
@@ -145,14 +147,14 @@
 - (IBAction)nextTriggerByTapped:(id)sender
 {
     [self showSelectViewWithArray:self.nextTriggerByList completion:^(NSInteger selectIndex) {
-        [[NSUserDefaults standardUserDefaults] setInteger:selectIndex forKey:kCachedNextTriggerBy];
+        [AirwallexExamplesKeys shared].nextTriggerByType = selectIndex;
         [self.nextTriggerByBtn setTitle:self.nextTriggerByList[selectIndex] forState:UIControlStateNormal];
     }];
 }
 
 - (IBAction)cvcSwitchPressed:(id)sender
 {
-    [[NSUserDefaults standardUserDefaults] setBool:self.cvcSwitch.isOn forKey:kCachedRequiresCVC];
+    [AirwallexExamplesKeys shared].requireCVC = self.cvcSwitch.isOn;
 }
 
 - (IBAction)generateCustomer:(id)sender
@@ -178,16 +180,14 @@
         }
         
         NSString *customerId = result[@"id"];
-        [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:kCachedCustomerID];
-        [[NSUserDefaults standardUserDefaults] synchronize];
         strongSelf.customerIdTextField.text = customerId;
+        [AirwallexExamplesKeys shared].customerId = customerId;
     }];
 }
 
 - (IBAction)clearCustomerBtnTapped:(id)sender
 {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [AirwallexExamplesKeys shared].customerId = nil;
     self.customerIdTextField.text = nil;
 }
 
@@ -211,12 +211,6 @@
 - (IBAction)resetPressed:(id)sender
 {
     [[AirwallexExamplesKeys shared] resetKeys];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCheckoutMode];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedNextTriggerBy];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedRequiresCVC];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
     [self resetExamplesAPIClient];
     [self resetSDK];
     [self resetTextFields];
@@ -232,26 +226,26 @@
 
 - (void)resetSDK
 {
-    [Airwallex setMode:AirwallexSDKProductionMode];
+    [Airwallex setMode:[AirwallexExamplesKeys shared].environment];
 }
 
 - (void)resetTextFields
 {
-    [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
-    
-    self.customerIdTextField.enabled = NO;
-    NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
-    self.customerIdTextField.text = customerId;
-    
-    NSInteger checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
+    [self.modeButton setTitle:FormatAirwallexSDKMode([AirwallexExamplesKeys shared].environment).capitalizedString forState:UIControlStateNormal];
+
+    NSInteger checkoutMode = [AirwallexExamplesKeys shared].checkoutMode;
     [self.checkoutBtn setTitle:self.checkoutModesList[checkoutMode] forState:UIControlStateNormal];
     
-    NSInteger nextTriggerBy = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
+    NSInteger nextTriggerBy = [AirwallexExamplesKeys shared].nextTriggerByType;
     [self.nextTriggerByBtn setTitle:self.nextTriggerByList[nextTriggerBy] forState:UIControlStateNormal];
     
-    BOOL requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
+    BOOL requiresCVC = [AirwallexExamplesKeys shared].requireCVC;
     self.cvcSwitch.on = requiresCVC;
-
+    
+    self.customerIdTextField.enabled = NO;
+    NSString *customerId = [AirwallexExamplesKeys shared].customerId;
+    self.customerIdTextField.text = customerId;
+    
     self.apiKeyTextField.text = [AirwallexExamplesKeys shared].apiKey;
     self.clientIDTextField.text = [AirwallexExamplesKeys shared].clientId;
     self.amountTextField.text = [AirwallexExamplesKeys shared].amount;
@@ -267,12 +261,12 @@
     if (textField == self.apiKeyTextField) {
         [APIClient sharedClient].apiKey = textField.text;
         [AirwallexExamplesKeys shared].apiKey = textField.text;
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+        [AirwallexExamplesKeys shared].customerId = nil;
         [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
     } else if (textField == self.clientIDTextField) {
         [APIClient sharedClient].clientID = textField.text;
         [AirwallexExamplesKeys shared].clientId = textField.text;
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
+        [AirwallexExamplesKeys shared].customerId = nil;
         [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
     } else if (textField == self.amountTextField) {
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:textField.text];
@@ -299,12 +293,7 @@
         } else {
             [self showAlert:NSLocalizedString(@"Please enter a valid return url", nil) withTitle:nil];
         }
-    } else if (textField == self.customerIdTextField) {
-        if (textField.text.length == 0) {
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
-        }
     }
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -318,18 +307,18 @@
     NSLog(@"Payment Base URL (Example): %@", [APIClient sharedClient].paymentBaseURL.absoluteString);
     NSLog(@"API Key (Example): %@", [APIClient sharedClient].apiKey);
     NSLog(@"Client ID (Example): %@", [APIClient sharedClient].clientID);
-    NSLog(@"Amount (Example): %@", self.amountTextField.text);
-    NSLog(@"Currency (Example): %@", self.currencyTextField.text);
-    NSLog(@"Country Code (Example): %@", self.countryCodeTextField.text);
-    NSLog(@"Return URL (Example): %@", self.returnURLTextField.text);
+    NSLog(@"Amount (Example): %@", [AirwallexExamplesKeys shared].amount);
+    NSLog(@"Currency (Example): %@", [AirwallexExamplesKeys shared].currency);
+    NSLog(@"Country Code (Example): %@", [AirwallexExamplesKeys shared].countryCode);
+    NSLog(@"Return URL (Example): %@", [AirwallexExamplesKeys shared].returnUrl);
 
     NSLog(@"Payment Base URL (SDK): %@", [Airwallex defaultBaseURL].absoluteString);
     NSLog(@"SDK mode (SDK): %@", FormatAirwallexSDKMode(Airwallex.mode));
     
-    NSLog(@"Customer ID (SDK): %@", [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID]);
-    NSLog(@"Checkout mode (SDK): %@", self.checkoutModesList[[[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode]]);
-    NSLog(@"Next trigger by type (SDK): %@", self.nextTriggerByList[[[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy]]);
-    NSLog(@"Requires CVC (SDK): %@", [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC] ? @"Yes" : @"No");
+    NSLog(@"Customer ID (SDK): %@", [AirwallexExamplesKeys shared].customerId);
+    NSLog(@"Checkout mode (SDK): %@", self.checkoutModesList[[AirwallexExamplesKeys shared].checkoutMode]);
+    NSLog(@"Next trigger by type (SDK): %@", self.nextTriggerByList[[AirwallexExamplesKeys shared].nextTriggerByType]);
+    NSLog(@"Requires CVC (SDK): %@", [AirwallexExamplesKeys shared].requireCVC ? @"Yes" : @"No");
 }
 
 @end

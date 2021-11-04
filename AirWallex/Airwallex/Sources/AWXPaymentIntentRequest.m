@@ -68,7 +68,7 @@
         parameters[@"device"] = [self.device encodeToJSON];
     }
     parameters[@"integration_data"] = @{@"type": @"mobile_sdk",
-                                        @"version": [NSString stringWithFormat:@"ios-%@-%@", FormatAirwallexSDKMode(Airwallex.mode), AIRWALLEX_VERSION]};
+                                        @"version": [NSString stringWithFormat:@"ios-%@-%@", @"debug", AIRWALLEX_VERSION]};
     return parameters;
 }
 

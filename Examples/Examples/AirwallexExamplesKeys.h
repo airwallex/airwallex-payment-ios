@@ -7,11 +7,35 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Airwallex/Core.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+static NSString * const kCachedEnvironment = @"kCachedEnvironment";
+static NSString * const kCachedCheckoutMode = @"kCachedCheckoutMode";
+static NSString * const kCachedNextTriggerBy = @"kCachedNextTriggerBy";
+static NSString * const kCachedRequiresCVC = @"kCachedRequiresCVC";
+static NSString * const kCachedCustomerID = @"kCachedCustomerID";
+static NSString * const kCachedApiKey = @"kCachedApiKey";
+static NSString * const kCachedClientId = @"kCachedClientId";
+static NSString * const kCachedAmount = @"kCachedAmount";
+static NSString * const kCachedCurrency = @"kCachedCurrency";
+static NSString * const kCachedCountryCode = @"kCachedCountryCode";
+static NSString * const kCachedReturnURL = @"kCachedReturnURL";
+
+typedef NS_ENUM(NSInteger, AirwallexCheckoutMode) {
+    AirwallexCheckoutOneOffMode,
+    AirwallexCheckoutRecurringMode,
+    AirwallexCheckoutRecurringWithIntentMode
+};
+
 @interface AirwallexExamplesKeys : NSObject
 
+@property (nonatomic) AirwallexSDKMode environment;
+@property (nonatomic) AirwallexCheckoutMode checkoutMode;
+@property (nonatomic) AirwallexNextTriggerByType nextTriggerByType;
+@property (nonatomic) BOOL requireCVC;
+@property (nonatomic, strong, nullable) NSString *customerId;
 @property (nonatomic, strong) NSString *apiKey;
 @property (nonatomic, strong) NSString *clientId;
 @property (nonatomic, strong) NSString *amount;
@@ -20,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *returnUrl;
 
 + (instancetype)shared;
+- (void)syncKeys;
 - (void)resetKeys;
 
 @end

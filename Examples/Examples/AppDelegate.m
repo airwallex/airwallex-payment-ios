@@ -40,6 +40,11 @@
     return [WXApi handleOpenURL:url delegate:self];
 }
 
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 #pragma mark - UI
 
 - (void)loadCartView

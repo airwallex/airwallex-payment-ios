@@ -95,7 +95,8 @@
     // Step 1: Use a preset mode (Note: test mode as default)
 //    [Airwallex setMode:AirwallexSDKTestMode];
     // Or set base URL directly
-    [Airwallex setMode:AirwallexSDKStagingMode];
+    AirwallexSDKMode mode = [AirwallexExamplesKeys shared].environment;
+    [Airwallex setMode:mode];
     
     // Theme customization
     UIColor *tintColor = [UIColor colorNamed:@"Purple Color"];
