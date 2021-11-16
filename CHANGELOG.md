@@ -1,7 +1,7 @@
 # Airwallex iOS SDK Changelog
 All notable changes to the SDK will be documented in this file.
 
-## Version 3.0.0 (September 1, 2021)
+## Version 3.0.0 (November 16, 2021)
 - Module refactoring
 - Module separation
 - New ui design (text styles & assets update)
