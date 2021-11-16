@@ -1,10 +1,11 @@
-name: Deploy demo app to testflight
-
+name: Manually triggered workflow
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - build/development
+    inputs:
+      job:
+        description: 'Deploy demo app to testflight'
+        required: true
+        default: 'deploy'
 
 jobs:
   deploy:

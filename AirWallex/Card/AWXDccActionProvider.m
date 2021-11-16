@@ -31,7 +31,7 @@
     controller.response = response;
     controller.delegate = self;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self.delegate provider:self shouldPresentViewController:nav forceToDismiss:NO];
+    [self.delegate provider:self shouldPresentViewController:nav forceToDismiss:NO withAnimation:YES];
 }
 
 - (void)confirmThreeDSWithUseDCC:(BOOL)useDCC

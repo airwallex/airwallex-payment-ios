@@ -67,8 +67,10 @@
 {
     self = [super init];
     if (self) {
+        self.active = YES;
         self.pageNum = 0;
         self.pageSize = 10;
+        self.resources = YES;
     }
     return self;
 }
@@ -87,11 +89,23 @@
 {
     NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
     
+    _parameters[@"active"] = [NSNumber numberWithBool:self.active];
     _parameters[@"page_num"] = @(self.pageNum);
     _parameters[@"page_size"] = @(self.pageSize);
-    _parameters[@"active"] = [NSNumber numberWithBool:self.active];
     if (self.transactionCurrency) {
         _parameters[@"transaction_currency"] = self.transactionCurrency;
+    }
+    if (self.transactionMode) {
+        _parameters[@"transaction_mode"] = self.transactionMode;
+    }
+    if (self.countryCode) {
+        _parameters[@"country_code"] = self.countryCode;
+    }
+    if (self.resources) {
+        _parameters[@"__resources"] = @(self.resources);
+    }
+    if (self.lang) {
+        _parameters[@"lang"] = self.lang;
     }
     return _parameters;
 }
@@ -99,6 +113,84 @@
 - (Class)responseClass
 {
     return AWXGetPaymentMethodTypesResponse.class;
+}
+
+@end
+
+@implementation AWXGetPaymentMethodTypeRequest
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.flow = @"inapp";
+    }
+    return self;
+}
+
+- (NSString *)path
+{
+    return [NSString stringWithFormat:@"/api/v1/pa/config/payment_method_types/%@", self.name];
+}
+
+- (AWXHTTPMethod)method
+{
+    return AWXHTTPMethodGET;
+}
+
+- (nullable NSDictionary *)parameters
+{
+    NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
+    
+    if (self.flow) {
+        _parameters[@"flow"] = self.flow;
+    }
+    if (self.transactionMode) {
+        _parameters[@"transaction_mode"] = self.transactionMode;
+    }
+    if (self.lang) {
+        _parameters[@"lang"] = self.lang;
+    }
+    return _parameters;
+}
+
+- (Class)responseClass
+{
+    return AWXGetPaymentMethodTypeResponse.class;
+}
+
+@end
+
+@implementation AWXGetAvailableBanksRequest
+
+- (NSString *)path
+{
+    return @"/api/v1/pa/config/banks";
+}
+
+- (AWXHTTPMethod)method
+{
+    return AWXHTTPMethodGET;
+}
+
+- (nullable NSDictionary *)parameters
+{
+    NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
+    
+    _parameters[@"payment_method_type"] = self.paymentMethodType;
+    _parameters[@"__all_logos"] = @YES;
+    if (self.lang) {
+        _parameters[@"lang"] = self.lang;
+    }
+    if (self.countryCode) {
+        _parameters[@"country_code"] = self.countryCode;
+    }
+    return _parameters;
+}
+
+- (Class)responseClass
+{
+    return AWXGetAvailableBanksResponse.class;
 }
 
 @end

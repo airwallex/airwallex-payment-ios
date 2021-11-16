@@ -7,22 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef NS_ENUM(NSUInteger, AWXTextFieldType) {
-    AWXTextFieldTypeFirstName,
-    AWXTextFieldTypeLastName,
-    AWXTextFieldTypeEmail,
-    AWXTextFieldTypePhoneNumber,
-    AWXTextFieldTypeCountry,
-    AWXTextFieldTypeState,
-    AWXTextFieldTypeCity,
-    AWXTextFieldTypeStreet,
-    AWXTextFieldTypeZipcode,
-    AWXTextFieldTypeCardNumber,
-    AWXTextFieldTypeNameOnCard,
-    AWXTextFieldTypeExpires,
-    AWXTextFieldTypeCVC
-};
+#import "AWXConstants.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGFloat borderWidth;
 @property (nonatomic, strong) UIColor *borderColor;
 
-@property (nonatomic, readonly) NSString *key;
+@property (nonatomic, copy) NSString *key;
 
 - (instancetype)initWithKey:(NSString *)key;
 
@@ -102,25 +87,11 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- A customized view for input form
- */
-@interface AWXLabeledFormTextFieldView : AWXView
-
-@property (nonatomic, readonly) NSString *label;
-@property (nonatomic, readonly) NSString *input;
-
-- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText textField:(UITextField *)textField;
-
-@end
-
-/**
  A customized view for option form
  */
 @interface AWXOptionView : AWXView
 
-@property (nonatomic, readonly) NSString *placeholder;
-
-- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText placeholder:(NSString *)placeholder logo:(NSString *)logo;
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText logoURL:(NSURL *)logoURL;
 - (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 
 @end

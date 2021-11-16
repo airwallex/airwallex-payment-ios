@@ -19,6 +19,16 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXSession : NSObject
 
 /**
+ The country code.
+ */
+@property (nonatomic, copy) NSString *countryCode;
+
+/**
+ The lang.
+ */
+@property (nonatomic, copy, nullable) NSString *lang;
+
+/**
  The billing address.
  */
 @property (nonatomic, strong, nullable) AWXPlaceDetails *billing;

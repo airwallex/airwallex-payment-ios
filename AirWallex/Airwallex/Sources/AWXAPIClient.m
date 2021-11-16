@@ -14,18 +14,15 @@
 #import "AWXAPIResponse.h"
 #import "AWXUtils.h"
 
-static NSString * const AWXAPIBaseTestURL = @"https://pci-api-demo.airwallex.com/";
-static NSString * const AWXAPIBaseLiveURL = @"https://pci-api.airwallex.com/";
-
-static NSString *const AWXCybsTestURL = @"https://pci-api-demo.airwallex.com/";
-static NSString *const AWXCybsLiveURL = @"https://pci-api.airwallex.com/";
+static NSString * const AWXAPIDemoBaseURL = @"https://pci-api-demo.airwallex.com/";
+static NSString * const AWXAPIStagingBaseURL = @"https://pci-api-staging.airwallex.com/";
+static NSString * const AWXAPIProductionBaseURL = @"https://pci-api.airwallex.com/";
 
 @implementation Airwallex
 
 static NSURL *_defaultBaseURL;
-static NSString *_cybsURL;
 
-static AirwallexSDKMode _mode = AirwallexSDKTestMode;
+static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 
 + (void)setDefaultBaseURL:(NSURL *)baseURL
 {
@@ -34,17 +31,18 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
 
 + (NSURL *)defaultBaseURL
 {
-    return _defaultBaseURL ?: (_mode == AirwallexSDKLiveMode ? [NSURL URLWithString:AWXAPIBaseLiveURL] : [NSURL URLWithString:AWXAPIBaseTestURL]);
-}
-
-+ (void)setCybsURL:(NSString *)cybsURL
-{
-    _cybsURL = cybsURL;
-}
-
-+ (NSString *)cybsURL
-{
-    return _cybsURL ?: (_mode == AirwallexSDKLiveMode ? AWXCybsLiveURL : AWXCybsTestURL);
+    if (_defaultBaseURL) {
+        return _defaultBaseURL;
+    }
+    
+    switch (_mode) {
+        case AirwallexSDKProductionMode:
+            return [NSURL URLWithString:AWXAPIProductionBaseURL];
+        case AirwallexSDKStagingMode:
+            return [NSURL URLWithString:AWXAPIStagingBaseURL];
+        case AirwallexSDKDemoMode:
+            return [NSURL URLWithString:AWXAPIDemoBaseURL];
+    }
 }
 
 + (void)setMode:(AirwallexSDKMode)mode
@@ -55,11 +53,6 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
 + (AirwallexSDKMode)mode
 {
     return _mode;
-}
-
-+ (NSArray *)paymentFormRequiredTypes
-{
-    return @[AWXPoli, AWXFpx, AWXBankTransfer, AWXOnlineBanking];
 }
 
 @end
@@ -76,19 +69,14 @@ static AirwallexSDKMode _mode = AirwallexSDKTestMode;
     return sharedConfiguration;
 }
 
-- (instancetype)init
+- (NSURL *)baseURL
 {
-    self = [super init];
-    if (self) {
-        self.baseURL = [Airwallex defaultBaseURL];
-    }
-    return self;
+    return Airwallex.defaultBaseURL;
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
     AWXAPIClientConfiguration *copy = [[AWXAPIClientConfiguration allocWithZone:zone] init];
-    copy.baseURL = [self.baseURL copyWithZone:zone];
     copy.clientSecret = [self.clientSecret copyWithZone:zone];
     return copy;
 }

@@ -23,25 +23,23 @@ NSString *const AWXSDKErrorDomain = @"com.airwallex.error";
 NSString *const AWXCyberSourceOrganizationID = @"1snn5n9w";
 NSString *const AWXCyberSourceMerchantID = @"airwallex_cybs";
 
-NSString *const AWXWeChatPayKey = @"wechatpay";
-NSString *const AWXAlipayCNKey = @"alipaycn";
-NSString *const AWXAlipayHKKey = @"alipayhk";
-NSString *const AWXKakaoPayKey = @"kakaopay";
-NSString *const AWXTNGPayKey = @"tng";
-NSString *const AWXDANAPayKey = @"dana";
-NSString *const AWXGCashPayKey = @"gcash";
-NSString *const AWXTrueMoneyPayKey = @"truemoney";
-NSString *const AWXBKashPayKey = @"bkash";
-NSString *const AWXPoli = @"poli";
-NSString *const AWXFpx = @"fpx";
-NSString *const AWXBankTransfer = @"bank_transfer";
-NSString *const AWXOnlineBanking = @"online_banking";
-
 NSString *const AWXCardKey = @"card";
 NSString *const AWXThreeDSReturnURL = @"https://www.airwallex.com";
 NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
 NSString *const AWXThreeDSValidate = @"3dsValidate";
 NSString *const AWXDCC = @"dcc";
+
+NSString * FormatAirwallexSDKMode(AirwallexSDKMode mode)
+{
+    switch (mode) {
+        case AirwallexSDKDemoMode:
+            return @"demo";
+        case AirwallexSDKStagingMode:
+            return @"staging";
+        case AirwallexSDKProductionMode:
+            return @"production";
+    }
+}
 
 NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type)
 {
@@ -53,6 +51,17 @@ NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type)
     }
 }
 
+AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType)
+{
+    if ([uiType isEqualToString:@"email"]) {
+        return AWXTextFieldTypeEmail;
+    } else if ([uiType isEqualToString:@"phone"]) {
+        return AWXTextFieldTypePhoneNumber;
+    }
+    return AWXTextFieldTypeFirstName;
+}
+
+
 NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason)
 {
     switch (reason) {
@@ -63,12 +72,12 @@ NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason)
     }
 }
 
-Class ClassToHandleFlowForPaymentMethodType(NSString *type)
+Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type)
 {
-    if ([type isEqualToString:AWXCardKey]) {
+    if ([type.name isEqualToString:AWXCardKey]) {
         return NSClassFromString(@"AWXCardProvider");
-    } else if ([Airwallex.paymentFormRequiredTypes containsObject:type]) {
-        return NSClassFromString(@"AWXPPROProvider");
+    } else if (type.hasSchema) {
+        return NSClassFromString(@"AWXSchemaProvider");
     } else {
         return NSClassFromString(@"AWXDefaultProvider");
     }

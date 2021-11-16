@@ -17,8 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol AWXPaymentFormViewControllerDelegate <NSObject>
 
-- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didUpdatePaymentMethod:(AWXPaymentMethod *)paymentMethod;
-- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPaymentMethod:(AWXPaymentMethod *)paymentMethod;
+- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController
+           didUpdatePaymentMethod:(AWXPaymentMethod *)paymentMethod;
+- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController
+          didConfirmPaymentMethod:(AWXPaymentMethod *)paymentMethod;
 
 @end
 

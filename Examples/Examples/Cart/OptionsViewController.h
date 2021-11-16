@@ -12,17 +12,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static NSString * const kCachedCustomerID = @"kCachedCustomerID";
-static NSString * const kCachedCheckoutMode = @"kCachedCheckoutMode";
-static NSString * const kCachedNextTriggerBy = @"kCachedNextTriggerBy";
-static NSString * const kCachedRequiresCVC = @"kCachedRequiresCVC";
-
-typedef NS_ENUM(NSInteger, AirwallexCheckoutMode) {
-    AirwallexCheckoutOneOffMode,
-    AirwallexCheckoutRecurringMode,
-    AirwallexCheckoutRecurringWithIntentMode
-};
-
 @interface OptionsViewController : UIViewController
 
 @end

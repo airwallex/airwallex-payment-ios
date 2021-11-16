@@ -99,15 +99,17 @@
 - (void)loadAvailablePaymentMethodTypesWithPageNum:(NSInteger)pageNum
 {
     AWXGetPaymentMethodTypesRequest *request = [AWXGetPaymentMethodTypesRequest new];
-    request.active = YES;
     request.pageNum = pageNum;
     request.transactionCurrency = self.session.currency;
+    request.transactionMode = self.session.transactionMode;
+    request.countryCode = self.session.countryCode;
+    request.lang = self.session.lang;
     
     __weak __typeof(self)weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        
+
         if (response && !error) {
             AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
             strongSelf.availablePaymentMethodTypes = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"transactionMode == %@", strongSelf.session.transactionMode]];
@@ -173,6 +175,12 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (void)close:(id)sender
+{
+    id <AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+    [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -190,21 +198,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIImage *logoImage = nil;
-    NSString *title = nil;
+    AWXPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentMethodCell" forIndexPath:indexPath];
+
     if (indexPath.section == 1) {
         AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
-        logoImage = [UIImage imageNamed:paymentMethodType.name inBundle:[NSBundle resourceBundle]];
-        title = paymentMethodType.name.capitalizedString;
+        [cell.logoImageView setImageURL:paymentMethodType.resources.logoURL
+                            placeholder:nil];
+        cell.titleLabel.text = paymentMethodType.displayName;
     } else {
         AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
-        logoImage = [UIImage imageNamed:paymentConsent.paymentMethod.card.brand inBundle:[NSBundle resourceBundle]];
-        title = [NSString stringWithFormat:@"%@ •••• %@", paymentConsent.paymentMethod.card.brand.capitalizedString, paymentConsent.paymentMethod.card.last4];
+        cell.logoImageView.image = [UIImage imageNamed:paymentConsent.paymentMethod.card.brand inBundle:[NSBundle resourceBundle]];
+        cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", paymentConsent.paymentMethod.card.brand.capitalizedString, paymentConsent.paymentMethod.card.last4];
     }
     
-    AWXPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentMethodCell" forIndexPath:indexPath];
-    cell.logoImageView.image = logoImage;
-    cell.titleLabel.text = title;
     return cell;
 }
 
@@ -245,7 +251,7 @@
     
     if (indexPath.section == 1) {
         AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
-        Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType.name);
+        Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType);
         if (class == nil) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the payment method.", nil) preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -326,16 +332,16 @@
     self.provider = actionProvider;
 }
 
-- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss
+- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation
 {
     if (forceToDismiss) {
         [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
             if (controller) {
-                [self presentViewController:controller animated:YES completion:nil];
+                [self presentViewController:controller animated:withAnimation completion:nil];
             }
         }];
     } else if (controller) {
-        [self presentViewController:controller animated:YES completion:nil];
+        [self presentViewController:controller animated:withAnimation completion:nil];
     }
 }
 

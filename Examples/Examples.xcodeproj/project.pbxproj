@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00D7B957265F44BA00F2CBB6 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7B956265F44BA00F2CBB6 /* DemoViewController.m */; };
 		00D7B95A265F45AF00F2CBB6 /* WechatPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7B959265F45AF00F2CBB6 /* WechatPayViewController.m */; };
 		00E501BC264D06A900027311 /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BB264D06A900027311 /* InputViewController.m */; };
 		00E501BF264D06B400027311 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BE264D06B400027311 /* WebViewController.m */; };
@@ -29,7 +28,6 @@
 		57033F04269554BD008A4780 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
 		57033F05269554BD008A4780 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BE264D06B400027311 /* WebViewController.m */; };
 		57033F06269554BD008A4780 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
-		57033F07269554BD008A4780 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7B956265F44BA00F2CBB6 /* DemoViewController.m */; };
 		57033F08269554BD008A4780 /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BB264D06A900027311 /* InputViewController.m */; };
 		57033F09269554BD008A4780 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		57033F0A269554BD008A4780 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
@@ -74,7 +72,6 @@
 		57F9EF8B268DCE3E00B744B2 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* CartViewController.m */; };
 		57F9EF8C268DCE3E00B744B2 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BE264D06B400027311 /* WebViewController.m */; };
 		57F9EF8D268DCE3E00B744B2 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
-		57F9EF8E268DCE3E00B744B2 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7B956265F44BA00F2CBB6 /* DemoViewController.m */; };
 		57F9EF8F268DCE3E00B744B2 /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501BB264D06A900027311 /* InputViewController.m */; };
 		57F9EF90268DCE3E00B744B2 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* APIClient.m */; };
 		57F9EF91268DCE3E00B744B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
@@ -142,8 +139,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00D7B955265F44BA00F2CBB6 /* DemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
-		00D7B956265F44BA00F2CBB6 /* DemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		00D7B958265F45AF00F2CBB6 /* WechatPayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WechatPayViewController.h; sourceTree = "<group>"; };
 		00D7B959265F45AF00F2CBB6 /* WechatPayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WechatPayViewController.m; sourceTree = "<group>"; };
 		00E501BA264D06A900027311 /* InputViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputViewController.h; sourceTree = "<group>"; };
@@ -246,8 +241,6 @@
 		00E501B9264CD2EF00027311 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				00D7B955265F44BA00F2CBB6 /* DemoViewController.h */,
-				00D7B956265F44BA00F2CBB6 /* DemoViewController.m */,
 				00D7B958265F45AF00F2CBB6 /* WechatPayViewController.h */,
 				00D7B959265F45AF00F2CBB6 /* WechatPayViewController.m */,
 				00E501BA264D06A900027311 /* InputViewController.h */,
@@ -645,7 +638,6 @@
 				082D308823CEEDC100C9D587 /* CartViewController.m in Sources */,
 				00E501BF264D06B400027311 /* WebViewController.m in Sources */,
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,
-				00D7B957265F44BA00F2CBB6 /* DemoViewController.m in Sources */,
 				00E501BC264D06A900027311 /* InputViewController.m in Sources */,
 				088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */,
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
@@ -667,7 +659,6 @@
 				57033F04269554BD008A4780 /* CartViewController.m in Sources */,
 				57033F05269554BD008A4780 /* WebViewController.m in Sources */,
 				57033F06269554BD008A4780 /* TotalCell.m in Sources */,
-				57033F07269554BD008A4780 /* DemoViewController.m in Sources */,
 				57033F08269554BD008A4780 /* InputViewController.m in Sources */,
 				57033F09269554BD008A4780 /* APIClient.m in Sources */,
 				57033F0A269554BD008A4780 /* AppDelegate.m in Sources */,
@@ -689,7 +680,6 @@
 				57F9EF8B268DCE3E00B744B2 /* CartViewController.m in Sources */,
 				57F9EF8C268DCE3E00B744B2 /* WebViewController.m in Sources */,
 				57F9EF8D268DCE3E00B744B2 /* TotalCell.m in Sources */,
-				57F9EF8E268DCE3E00B744B2 /* DemoViewController.m in Sources */,
 				57F9EF8F268DCE3E00B744B2 /* InputViewController.m in Sources */,
 				57F9EF90268DCE3E00B744B2 /* APIClient.m in Sources */,
 				57F9EF91268DCE3E00B744B2 /* AppDelegate.m in Sources */,

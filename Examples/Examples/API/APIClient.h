@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface APIClient : NSObject
 
-@property (nonatomic, strong) NSURL *paymentBaseURL;
+@property (nonatomic, readonly) NSURL *paymentBaseURL;
 @property (nonatomic, strong) NSString *apiKey;
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSString *token;

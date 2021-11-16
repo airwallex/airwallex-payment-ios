@@ -53,14 +53,36 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- `AWXPaymentMethodType` includes the information of a payment method.
+ `AWXResources` includes the resources of payment method.
  */
-@interface AWXPaymentMethodType : NSObject <AWXJSONEncodable, AWXJSONDecodable>
+@interface AWXResources : NSObject <AWXJSONDecodable>
 
 /**
- name of the payment method. One of card, wechatpay.
+ Logo url
+ */
+@property (nonatomic, copy) NSURL *logoURL;
+
+/**
+ has_schema
+ */
+@property (nonatomic) BOOL hasSchema;
+
+@end
+
+/**
+ `AWXPaymentMethodType` includes the information of a payment method.
+ */
+@interface AWXPaymentMethodType : NSObject <AWXJSONDecodable>
+
+/**
+ name of the payment method.
  */
 @property (nonatomic, copy) NSString *name;
+
+/**
+ display name of the payment method.
+ */
+@property (nonatomic, copy) NSString *displayName;
 
 /**
  transaction_mode of the payment method. One of oneoff, recurring.
@@ -73,14 +95,122 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray<NSString* > *flows;
 
 /**
- transaction_currencies of the payment method.  "AUD", "CHF", "HKD", "SGD", "JPY", "EUR", "GBP", "USD", "CAD", "NZD", "CNY"],
+ transaction_currencies of the payment method.  "*", "AUD", "CHF", "HKD", "SGD", "JPY", "EUR", "GBP", "USD", "CAD", "NZD", "CNY"
  */
 @property (nonatomic, copy) NSArray<NSString* > *transactionCurrencies;
 
 /**
- active
+ Whether payment method is active.
  */
-@property (nonatomic, assign) BOOL active;
+@property (nonatomic) BOOL active;
+
+/**
+ Resources
+ */
+@property (nonatomic, strong) AWXResources *resources;
+
+/**
+ Whether it has schema
+ */
+@property (nonatomic, readonly) BOOL hasSchema;
+
+@end
+
+/**
+ `AWXCandidate` includes the values of list
+ */
+@interface AWXCandidate : NSObject <AWXJSONDecodable>
+
+/**
+ display name.
+ */
+@property (nonatomic, copy) NSString *displayName;
+
+/**
+ value.
+ */
+@property (nonatomic, copy) NSString *value;
+
+@end
+
+/**
+ `AWXField` includes the field of schema.
+ */
+@interface AWXField : NSObject <AWXJSONDecodable>
+
+/**
+ name of the payment method.
+ */
+@property (nonatomic, copy) NSString *name;
+
+/**
+ display name of the payment method.
+ */
+@property (nonatomic, copy) NSString *displayName;
+
+/**
+ ui type.
+ */
+@property (nonatomic, copy) NSString *uiType;
+
+/**
+ type of field.
+ */
+@property (nonatomic, copy) NSString *type;
+
+/**
+ hidden.
+ */
+@property (nonatomic) BOOL hidden;
+
+/**
+ candidates.
+ */
+@property (nonatomic, strong) NSArray<AWXCandidate* > *candidates;
+
+@end
+
+/**
+ `AWXSchema` includes the schema of payment method.
+ */
+@interface AWXSchema : NSObject <AWXJSONDecodable>
+
+/**
+ transaction_mode of the payment method. One of oneoff, recurring.
+ */
+@property (nonatomic, copy) NSString *transactionMode;
+
+/**
+ Flow.
+ */
+@property (nonatomic, copy, nullable) NSString *flow;
+
+/**
+ Fields.
+ */
+@property (nonatomic, copy) NSArray<AWXField* > *fields;
+
+@end
+
+/**
+ `AWXBank` includes the bank info.
+ */
+@interface AWXBank : NSObject <AWXJSONDecodable>
+
+/**
+ name of the payment method.
+ */
+@property (nonatomic, copy) NSString *name;
+
+/**
+ display name of the payment method.
+ */
+@property (nonatomic, copy) NSString *displayName;
+
+/**
+ Resources
+ */
+@property (nonatomic, strong) AWXResources *resources;
 
 @end
 

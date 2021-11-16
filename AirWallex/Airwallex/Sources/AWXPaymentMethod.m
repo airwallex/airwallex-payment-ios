@@ -38,7 +38,10 @@
     if (card) {
         method.card = [AWXCard decodeFromJSON:card];
     }
-    method.billing = [AWXPlaceDetails decodeFromJSON:json[@"billing"]];
+    NSDictionary *billing = json[@"billing"];
+    if (billing) {
+        method.billing = [AWXPlaceDetails decodeFromJSON:billing];
+    }
     method.customerId = json[@"customer_id"];
     return method;
 }
@@ -56,31 +59,110 @@
 
 @end
 
-@implementation AWXPaymentMethodType
+@implementation AWXResources
 
-- (NSDictionary *)encodeToJSON
++ (id)decodeFromJSON:(NSDictionary *)json
 {
-    NSMutableDictionary *items = [[NSMutableDictionary alloc] init];
-    if (self.name) {
-        items[@"name"] = self.name;
+    AWXResources *resources = [AWXResources new];
+    NSDictionary *logos = json[@"logos"];
+    if (logos && logos[@"png"]) {
+        resources.logoURL = [NSURL URLWithString:logos[@"png"]];
     }
-    items[@"transaction_mode"] = self.transactionMode;
-    items[@"flows"] = self.flows;
-    items[@"transaction_currencies"] = self.transactionCurrencies;
-    items[@"active"] = [NSNumber numberWithBool:self.active] ;
-    
-    return items;
+    if (json[@"has_schema"]) {
+        resources.hasSchema = [json[@"has_schema"] boolValue];
+    }
+    return resources;
 }
+
+@end
+
+@implementation AWXPaymentMethodType
 
 + (id)decodeFromJSON:(NSDictionary *)json
 {
     AWXPaymentMethodType *method = [AWXPaymentMethodType new];
     method.name = json[@"name"];
+    method.displayName = json[@"display_name"];
     method.transactionMode = json[@"transaction_mode"];
     method.flows = json[@"flows"];
     method.transactionCurrencies = json[@"transaction_currencies"];
     method.active = [json[@"active"] boolValue];
+    method.resources = [AWXResources decodeFromJSON:json[@"resources"]];
     return method;
+}
+
+- (BOOL)hasSchema
+{
+    return self.resources.hasSchema;
+}
+
+@end
+
+@implementation AWXCandidate
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWXCandidate *candidate = [AWXCandidate new];
+    candidate.displayName = json[@"display_name"];
+    candidate.value = json[@"value"];
+    return candidate;
+}
+
+@end
+
+@implementation AWXField
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWXField *field = [AWXField new];
+    field.name = json[@"name"];
+    field.displayName = json[@"display_name"];
+    field.uiType = json[@"ui_type"];
+    field.type = json[@"type"];
+    field.hidden = [json[@"hidden"] boolValue];
+    NSMutableArray *items = [NSMutableArray array];
+    NSArray *candidates = json[@"candidates"];
+    if (candidates && [candidates isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *item in candidates) {
+            [items addObject:[AWXCandidate decodeFromJSON:item]];
+        }
+    }
+    field.candidates = items;
+    return field;
+}
+
+@end
+
+@implementation AWXSchema
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWXSchema *schema = [AWXSchema new];
+    schema.transactionMode = json[@"transaction_mode"];
+    schema.flow = json[@"flow"];
+    
+    NSMutableArray *items = [NSMutableArray array];
+    NSArray *list = json[@"fields"];
+    if (list && [list isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *item in list) {
+            [items addObject:[AWXField decodeFromJSON:item]];
+        }
+    }
+    schema.fields = items;
+    return schema;
+}
+
+@end
+
+@implementation AWXBank
+
++ (id)decodeFromJSON:(NSDictionary *)json
+{
+    AWXBank *bank = [AWXBank new];
+    bank.name = json[@"bank_name"];
+    bank.displayName = json[@"display_name"];
+    bank.resources = [AWXResources decodeFromJSON:json[@"resources"]];
+    return bank;
 }
 
 @end

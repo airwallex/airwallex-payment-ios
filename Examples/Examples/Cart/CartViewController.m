@@ -37,8 +37,8 @@
     [super viewDidLoad];
     [self setupViews];
     [self setupCartData];
-    [self setupExamplesAPIClient];
     [self setupSDK];
+    [self setupExamplesAPIClient];
     [self reloadData];
 }
 
@@ -68,8 +68,8 @@
     self.products = [@[product0, product1] mutableCopy];
     
     NSDictionary *shipping = @{
-        @"first_name": @"Verify",
-        @"last_name": @"Doe",
+        @"first_name": @"Jason",
+        @"last_name": @"Wang",
         @"phone_number": @"13800000000",
         @"address": @{
                 @"country_code": @"CN",
@@ -85,8 +85,6 @@
 - (void)setupExamplesAPIClient
 {
     APIClient *client = [APIClient sharedClient];
-    NSURL *url = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
-    client.paymentBaseURL = url;
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientId;
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
@@ -97,8 +95,8 @@
     // Step 1: Use a preset mode (Note: test mode as default)
 //    [Airwallex setMode:AirwallexSDKTestMode];
     // Or set base URL directly
-    NSURL *url = [NSURL URLWithString:[AirwallexExamplesKeys shared].baseUrl];
-    [Airwallex setDefaultBaseURL:url];
+    AirwallexSDKMode mode = [AirwallexExamplesKeys shared].environment;
+    [Airwallex setMode:mode];
     
     // Theme customization
     UIColor *tintColor = [UIColor colorNamed:@"Purple Color"];
@@ -125,9 +123,30 @@
     
     NSString *amount = [AirwallexExamplesKeys shared].amount;
     NSString *currency = [AirwallexExamplesKeys shared].currency;
-    self.checkoutButton.enabled = self.shipping != nil && amount.doubleValue > 0 && currency.length > 0;
+    NSString *countryCode = [AirwallexExamplesKeys shared].countryCode;
+    NSString *returnUrl = [AirwallexExamplesKeys shared].returnUrl;
+
+    self.checkoutButton.enabled = self.shipping != nil && amount.doubleValue > 0 && currency.length > 0 && countryCode.length > 0 && returnUrl.length > 0;
     self.checkoutButton.backgroundColor = self.checkoutButton.enabled ? [AWXTheme sharedTheme].tintColor : [UIColor colorNamed:@"Line Color"];
     [self.tableView reloadData];
+}
+
+#pragma mark - Menu
+
+- (IBAction)menuPressed:(id)sender
+{
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [controller addAction:[UIAlertAction actionWithTitle:@"WeChat Demo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self performSegueWithIdentifier:@"showWeChatDemo" sender:nil];
+    }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"H5 Demo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self performSegueWithIdentifier:@"showH5Demo" sender:nil];
+    }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self performSegueWithIdentifier:@"showSettings" sender:nil];
+    }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark - Check Out
@@ -158,7 +177,7 @@
                                          @"merchant_order_id": NSUUID.UUID.UUIDString,
                                          @"request_id": NSUUID.UUID.UUIDString,
                                          @"metadata": @{@"id": @1},
-                                         @"return_url": @"airwallexcheckout://com.airwallex.paymentacceptance",
+                                         @"return_url": [AirwallexExamplesKeys shared].returnUrl,
                                          @"order": @{
                                                  @"products": @[@{
                                                                     @"type": @"Free engraving",
@@ -180,8 +199,8 @@
                                                                     @"url": @"www.aircross.com"
                                                  }],
                                                  @"shipping": @{
-                                                         @"first_name": @"Verify",
-                                                         @"last_name": @"Doe",
+                                                         @"first_name": @"Jason",
+                                                         @"last_name": @"Wang",
                                                          @"phone_number": @"13800000000",
                                                          @"address": @{
                                                                  @"country_code": @"CN",
@@ -252,22 +271,23 @@
 
 - (AWXSession *)createSession:(nullable AWXPaymentIntent *)paymentIntent
 {
-    NSString *returnURL = @"https://airwallex.com";
     AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
     switch (checkoutMode) {
         case AirwallexCheckoutOneOffMode:
         {
             AWXOneOffSession *session = [AWXOneOffSession new];
+            session.countryCode = [AirwallexExamplesKeys shared].countryCode;
             session.billing = self.shipping;
-            session.returnURL = returnURL;
+            session.returnURL = [AirwallexExamplesKeys shared].returnUrl;
             session.paymentIntent = paymentIntent;
             return session;
         }
         case AirwallexCheckoutRecurringMode:
         {
             AWXRecurringSession *session = [AWXRecurringSession new];
+            session.countryCode = [AirwallexExamplesKeys shared].countryCode;
             session.billing = self.shipping;
-            session.returnURL = returnURL;
+            session.returnURL = [AirwallexExamplesKeys shared].returnUrl;
             session.currency = [AirwallexExamplesKeys shared].currency;
             session.amount = [NSDecimalNumber decimalNumberWithString:[AirwallexExamplesKeys shared].amount];
             session.customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
@@ -279,8 +299,9 @@
         case AirwallexCheckoutRecurringWithIntentMode:
         {
             AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
+            session.countryCode = [AirwallexExamplesKeys shared].countryCode;
             session.billing = self.shipping;
-            session.returnURL = returnURL;
+            session.returnURL = [AirwallexExamplesKeys shared].returnUrl;
             session.paymentIntent = paymentIntent;
             session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
             session.requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
@@ -307,14 +328,24 @@
 
 #pragma mark - Show Payment Result
 
-- (void)showPaymentResult:(nullable NSError *)error
+- (void)showPaymentSuccess
 {
     NSString *title = NSLocalizedString(@"Payment successful", nil);
     NSString *message = NSLocalizedString(@"Your payment has been charged", nil);
-    if (error) {
-        title = NSLocalizedString(@"Payment failed", nil);
-        message = error.localizedDescription ?: NSLocalizedString(@"There was an error while processing your payment. Please try again.", nil);
-    }
+    [self showAlert:message withTitle:title];
+}
+
+- (void)showPaymentFailure:(nullable NSError *)error
+{
+    NSString *title = NSLocalizedString(@"Payment failed", nil);
+    NSString *message = error.localizedDescription ?: NSLocalizedString(@"There was an error while processing your payment. Please try again.", nil);
+    [self showAlert:message withTitle:title];
+}
+
+- (void)showPaymentCancel
+{
+    NSString *title = NSLocalizedString(@"Payment cancelled", nil);
+    NSString *message = NSLocalizedString(@"Your payment has been cancelled", nil);
     [self showAlert:message withTitle:title];
 }
 
@@ -412,8 +443,18 @@
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        if (status != AirwallexPaymentStatusInProgress) {
-            [self showPaymentResult:error];
+        switch (status) {
+            case AirwallexPaymentStatusSuccess:
+                [self showPaymentSuccess];
+                break;
+            case AirwallexPaymentStatusFailure:
+                [self showPaymentFailure:error];
+                break;
+            case AirwallexPaymentStatusCancel:
+                [self showPaymentCancel];
+                break;
+            default:
+                break;
         }
     }];
 }

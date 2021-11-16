@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- `AWXGetPaymentMethodTypesRequest` includes all of the parameters needed to get payment methods.
+ `AWXGetPaymentMethodTypesRequest` includes all of the parameters needed to get payment method types.
  */
 @interface AWXGetPaymentMethodTypesRequest : NSObject <AWXRequestProtocol>
 
@@ -78,6 +78,74 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy, nullable) NSString *transactionCurrency;
 
+/**
+ Transaction code.
+ */
+@property (nonatomic, copy, nullable) NSString *transactionMode;
+
+/**
+ Country code.
+ */
+@property (nonatomic, copy, nullable) NSString *countryCode;
+
+/**
+ Whether it requres resources
+ */
+@property (nonatomic) BOOL resources;
+
+/**
+ Lang
+ */
+@property (nonatomic, copy, nullable) NSString *lang;
+
+@end
+
+/**
+ `AWXGetPaymentMethodTypeRequest` includes all of the parameters needed to get payment method type.
+ */
+@interface AWXGetPaymentMethodTypeRequest : NSObject <AWXRequestProtocol>
+
+/**
+ Name of the payment method type
+ */
+@property (nonatomic, copy) NSString *name;
+
+/**
+ Flow.
+ */
+@property (nonatomic, copy, nullable) NSString *flow;
+
+/**
+ Transaction code.
+ */
+@property (nonatomic, copy, nullable) NSString *transactionMode;
+
+/**
+ Lang
+ */
+@property (nonatomic, copy, nullable) NSString *lang;
+
+@end
+
+/**
+ `AWXGetPaymentMethodTypeRequest` includes all of the parameters needed to get payment method type.
+ */
+@interface AWXGetAvailableBanksRequest : NSObject <AWXRequestProtocol>
+
+/**
+ Name of the payment method type
+ */
+@property (nonatomic, copy) NSString *paymentMethodType;
+
+/**
+ Flow.
+ */
+@property (nonatomic, copy, nullable) NSString *countryCode;
+
+/**
+ Lang
+ */
+@property (nonatomic, copy, nullable) NSString *lang;
 
 @end
 

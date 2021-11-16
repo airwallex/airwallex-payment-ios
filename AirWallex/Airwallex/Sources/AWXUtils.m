@@ -276,6 +276,24 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 
 @end
 
+@implementation UIImageView (Utils)
+
+- (void)setImageURL:(NSURL *)imageURL placeholder:(nullable UIImage *)placeholder
+{
+    [[[NSURLSession sharedSession] dataTaskWithURL:imageURL
+                                 completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (data && !error) {
+                self.image = [UIImage imageWithData:data];
+            } else {
+                self.image = placeholder;
+            }
+        });
+    }] resume];
+}
+
+@end
+
 @implementation UIColor (Utils)
 
 + (UIColor *)colorWithHex:(NSUInteger)hex
