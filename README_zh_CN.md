@@ -82,7 +82,7 @@ use_frameworks!
 启动应用时，请先配置SDK的`mode`.
 
 ```objective-c
-[Airwallex setMode:AirwallexSDKTestMode]; // AirwallexSDKTestMode or AirwallexSDKLiveMode
+[Airwallex setMode:AirwallexSDKStagingMode]; // AirwallexSDKDemoMode, AirwallexSDKStagingMode, AirwallexSDKProductionMode
 ```
 
 如果你想在不同的服务端进行测试，你可以自定义mode和payment URL.
@@ -108,6 +108,7 @@ use_frameworks!
 如果你想完成一次性支付，请创建一次性支付的session。
 ```
 AWXOneOffSession *session = [AWXOneOffSession new];
+session.countryCode = "Your country code";
 session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.paymentIntent = "Payment intent";
@@ -116,6 +117,7 @@ session.paymentIntent = "Payment intent";
 如果你想完成订阅，请创建订阅session.
 ```
 AWXRecurringSession *session = [AWXRecurringSession new];
+session.countryCode = "Your country code";
 session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.currency = "Currency code";
@@ -129,6 +131,7 @@ session.merchantTriggerReason = "Unscheduled or scheduled";
 如果你想完成特定payment intent的订阅，请使用payment intent创建session。
 ```
 AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
+session.countryCode = "Your country code";
 session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.paymentIntent = "Payment intent";
@@ -158,7 +161,7 @@ context.session = session;
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        // Status may be success/in progress/ failure
+        // Status may be success/in progress/ failure / cancel
     }];
 }
 ```

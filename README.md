@@ -83,7 +83,7 @@ use_frameworks!
 When your app starts, configure the SDK with  `mode`.
 
 ```objective-c
-[Airwallex setMode:AirwallexSDKTestMode]; // AirwallexSDKTestMode or AirwallexSDKLiveMode
+[Airwallex setMode:AirwallexSDKStagingMode]; // AirwallexSDKDemoMode, AirwallexSDKStagingMode, AirwallexSDKProductionMode
 ```
 
 If you want to test on different endpoint, you can customize mode and payment URL.
@@ -109,6 +109,7 @@ Note: When checkoutMode is AirwallexCheckoutRecurringMode, no need to create pay
 If you want to make one-off payment, create one-off session.
 ```
 AWXOneOffSession *session = [AWXOneOffSession new];
+session.countryCode = "Your country code";
 session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.paymentIntent = "Payment intent";
@@ -117,6 +118,7 @@ session.paymentIntent = "Payment intent";
 If you want to make recurring, create recurring session.
 ```
 AWXRecurringSession *session = [AWXRecurringSession new];
+session.countryCode = "Your country code";
 session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.currency = "Currency code";
@@ -130,6 +132,7 @@ session.merchantTriggerReason = "Unscheduled or scheduled";
 If you want to make recurring with payment intent, create recurring with intent session.
 ```
 AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
+session.countryCode = "Your country code";
 session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.paymentIntent = "Payment intent";
@@ -159,7 +162,7 @@ After the user completes the payment successfully or with error, you need to han
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        // Status may be success/in progress/ failure
+        // Status may be success/in progress/ failure / cancel
     }];
 }
 ```
