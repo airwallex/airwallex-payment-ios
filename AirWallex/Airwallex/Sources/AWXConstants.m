@@ -23,20 +23,6 @@ NSString *const AWXSDKErrorDomain = @"com.airwallex.error";
 NSString *const AWXCyberSourceOrganizationID = @"1snn5n9w";
 NSString *const AWXCyberSourceMerchantID = @"airwallex_cybs";
 
-NSString *const AWXWeChatPayKey = @"wechatpay";
-NSString *const AWXAlipayCNKey = @"alipaycn";
-NSString *const AWXAlipayHKKey = @"alipayhk";
-NSString *const AWXKakaoPayKey = @"kakaopay";
-NSString *const AWXTNGPayKey = @"tng";
-NSString *const AWXDANAPayKey = @"dana";
-NSString *const AWXGCashPayKey = @"gcash";
-NSString *const AWXTrueMoneyPayKey = @"truemoney";
-NSString *const AWXBKashPayKey = @"bkash";
-NSString *const AWXPoli = @"poli";
-NSString *const AWXFpx = @"fpx";
-NSString *const AWXBankTransfer = @"bank_transfer";
-NSString *const AWXOnlineBanking = @"online_banking";
-
 NSString *const AWXCardKey = @"card";
 NSString *const AWXThreeDSReturnURL = @"https://www.airwallex.com";
 NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";

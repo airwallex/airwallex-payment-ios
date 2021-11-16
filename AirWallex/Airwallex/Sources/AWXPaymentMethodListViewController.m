@@ -203,7 +203,7 @@
     if (indexPath.section == 1) {
         AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
         [cell.logoImageView setImageURL:paymentMethodType.resources.logoURL
-                            placeholder:[UIImage imageNamed:paymentMethodType.name inBundle:[NSBundle resourceBundle]]];
+                            placeholder:nil];
         cell.titleLabel.text = paymentMethodType.displayName;
     } else {
         AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];

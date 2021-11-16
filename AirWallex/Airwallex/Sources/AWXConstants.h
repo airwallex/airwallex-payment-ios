@@ -74,20 +74,6 @@ FOUNDATION_EXPORT NSString *const AWXSDKErrorDomain;
 FOUNDATION_EXPORT NSString *const AWXCyberSourceOrganizationID;
 FOUNDATION_EXPORT NSString *const AWXCyberSourceMerchantID;
 
-FOUNDATION_EXPORT NSString *const AWXWeChatPayKey;
-FOUNDATION_EXPORT NSString *const AWXAlipayCNKey;
-FOUNDATION_EXPORT NSString *const AWXAlipayHKKey;
-FOUNDATION_EXPORT NSString *const AWXKakaoPayKey;
-FOUNDATION_EXPORT NSString *const AWXTNGPayKey;
-FOUNDATION_EXPORT NSString *const AWXDANAPayKey;
-FOUNDATION_EXPORT NSString *const AWXGCashPayKey;
-FOUNDATION_EXPORT NSString *const AWXTrueMoneyPayKey;
-FOUNDATION_EXPORT NSString *const AWXBKashPayKey;
-FOUNDATION_EXPORT NSString *const AWXPoli;
-FOUNDATION_EXPORT NSString *const AWXFpx;
-FOUNDATION_EXPORT NSString *const AWXBankTransfer;
-FOUNDATION_EXPORT NSString *const AWXOnlineBanking;
-
 FOUNDATION_EXPORT NSString *const AWXCardKey;
 FOUNDATION_EXPORT NSString *const AWXThreeDSReturnURL;
 FOUNDATION_EXPORT NSString *const AWXCybsURL;
