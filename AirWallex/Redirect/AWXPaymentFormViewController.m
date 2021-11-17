@@ -17,7 +17,7 @@
 @interface AWXPaymentFormViewController ()
 
 @property (strong, nonatomic) UIView *dimmedView;
-@property (nonatomic) CGFloat maxDimmedAlpha, maximumContainerHeight, currentContainerHeight;
+@property (nonatomic) CGFloat initialBottomOffset, maxDimmedAlpha, maximumContainerHeight, currentContainerHeight;
 @property (strong, nonatomic) NSLayoutConstraint *scrollViewHeightConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *scrollViewBottomConstraint;
 @property (strong, nonatomic) UIScrollView *scrollView;
@@ -228,11 +228,14 @@
     NSLog(@"Dragging direction: %@", isDraggingDown ? @"going down" : @"going up");
         
     switch (gesture.state) {
+        case UIGestureRecognizerStateBegan:
+            self.initialBottomOffset = self.scrollViewBottomConstraint.constant;
+            break;
         case UIGestureRecognizerStateChanged:
             NSLog(@"Pan gesture: UIGestureRecognizerStateChanged %f", translation.y);
 
             if (translation.y >= 0) {
-                self.scrollViewBottomConstraint.constant = -translation.y;
+                self.scrollViewBottomConstraint.constant = self.initialBottomOffset - translation.y;
                 [self.view layoutIfNeeded];
             }
             break;
