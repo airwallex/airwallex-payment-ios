@@ -113,10 +113,10 @@
 - (void)setupLayouts
 {
     NSDictionary *views = @{@"borderView": _borderView, @"floatingLabel": _floatingLabel, @"textField": _textField, @"errorLabel": _errorLabel};
-    NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0};
+    NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"fieldHeight": @60.0};
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[errorLabel]-margin-|" options:0 metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView(fieldHeight)]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-margin-|" options:0 metrics:metrics views:views]];
     _floatingTopConstraint = [NSLayoutConstraint constraintWithItem:_floatingLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:30.0];
@@ -359,13 +359,13 @@
                 isValidYear = year.integerValue > currentYear;
             }
             if (!(isValidYear && isValidMonth)) {
-                errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
+                errorMessage = NSLocalizedString(@"Invalid expiry date", nil);
             }
         } else {
-            errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
+            errorMessage = NSLocalizedString(@"Invalid expiry date", nil);
         }
     } else {
-        errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
+        errorMessage = NSLocalizedString(@"Invalid expiry date", nil);
     }
     self.errorText = errorMessage;
 }
@@ -374,37 +374,37 @@
 {
     switch (self.fieldType) {
         case AWXTextFieldTypeFirstName:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your first name", nil);
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid first name", nil);
             break;
         case AWXTextFieldTypeLastName:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your last name", nil);
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid last name", nil);
             break;
         case AWXTextFieldTypeEmail:
             [self validateEmail:textField.text];
             break;
         case AWXTextFieldTypeCountry:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your country", nil);
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid country", nil);
             break;
         case AWXTextFieldTypeState:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your state", nil);
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid state", nil);
             break;
         case AWXTextFieldTypeCity:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your city", nil);
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid city", nil);
             break;
         case AWXTextFieldTypeStreet:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your street", nil);
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid street", nil);
             break;
         case AWXTextFieldTypeCardNumber:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your card number", nil);
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid card number", nil);
             break;
         case AWXTextFieldTypeNameOnCard:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your name on card", nil);
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid name on card", nil);
             break;
         case AWXTextFieldTypeExpires:
             [self validateExpires:textField.text];
             break;
         case AWXTextFieldTypeCVC:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your card CVC", nil);
+            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid card CVC", nil);
             break;
         default:
             break;
@@ -465,9 +465,9 @@
         [borderView addSubview:_imageView];
         
         NSDictionary *views = @{@"borderView": borderView, @"floatingLabel": _floatingLabel, @"textLabel": _textLabel, @"imageView": _imageView};
-        NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"top": @30.0};
+        NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"fieldHeight": @60.0, @"top": @30.0};
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView]|" options:0 metrics:metrics views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView(fieldHeight)]|" options:0 metrics:metrics views:views]];
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-margin-[imageView]-margin-|" options:0 metrics:metrics views:views]];
         _floatingTopConstraint = [NSLayoutConstraint constraintWithItem:_floatingLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:20.0];
         _floatingTopConstraint.active = YES;
@@ -570,10 +570,10 @@
     [_masterView.heightAnchor constraintEqualToConstant:24].active = YES;
     
     NSDictionary *views = @{@"borderView": self.borderView, @"floatingLabel": self.floatingLabel, @"textField": self.textField, @"brandView": self.brandView, @"errorLabel": self.errorLabel};
-    NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0};
+    NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"fieldHeight": @60.0};
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[errorLabel]-margin-|" options:0 metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView(fieldHeight)]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-spacing-[brandView]-margin-|" options:0 metrics:metrics views:views]];
     [NSLayoutConstraint constraintWithItem:_brandView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.borderView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0].active = YES;

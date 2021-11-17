@@ -104,7 +104,6 @@
     self.stackView = stackView;
     [containerView addSubview:stackView];
     
-    CGFloat fieldHeight = 60.00;
     AWXFloatingLabelTextField *lastTextField = nil;
 
     for (AWXForm *form in self.formMapping.forms) {
@@ -117,7 +116,6 @@
             }
             textField.fieldType = form.textFieldType;
             [stackView addArrangedSubview:textField];
-            [textField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
             lastTextField = textField;
         } else if (form.type == AWXFormTypeListCell) {
             AWXOptionView *optionView = [[AWXOptionView alloc] initWithKey:form.key formLabel:form.title logoURL:form.logo];

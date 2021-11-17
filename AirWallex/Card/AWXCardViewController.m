@@ -81,9 +81,7 @@
     [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[stackView]|" options:0 metrics:metrics views:views]];
     [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[stackView]|" options:0 metrics:metrics views:views]];
     [_scrollView.widthAnchor constraintEqualToAnchor:stackView.widthAnchor].active = YES;
-    
-    CGFloat fieldHeight = 60.00;
-    
+        
     _titleLabel = [UILabel new];
     _titleLabel.text = NSLocalizedString(@"Card", @"Card");
     _titleLabel.textColor = [UIColor gray100Color];
@@ -95,14 +93,12 @@
     _cardNoField.fieldType = AWXTextFieldTypeCardNumber;
     _cardNoField.placeholder = NSLocalizedString(@"Card number", @"Card number");
     [stackView addArrangedSubview:_cardNoField];
-    [_cardNoField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _nameField = [AWXFloatingLabelTextField new];
     _nameField.fieldType = AWXTextFieldTypeNameOnCard;
     _nameField.placeholder = NSLocalizedString(@"Name on card", @"Name on card");
     _cardNoField.nextTextField = _nameField;
     [stackView addArrangedSubview:_nameField];
-    [_nameField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     UIStackView *cvcStackView = [UIStackView new];
     cvcStackView.axis = UILayoutConstraintAxisHorizontal;
@@ -124,7 +120,7 @@
     _expiresField.nextTextField = _cvcField;
     [cvcStackView addArrangedSubview:_cvcField];
     [_expiresField.widthAnchor constraintEqualToAnchor:_cvcField.widthAnchor multiplier:1.7].active = YES;
-    
+
     UILabel *billingLabel = [UILabel new];
     billingLabel.text = NSLocalizedString(@"Billing info", @"Billing info");
     billingLabel.textColor = [UIColor gray100Color];
@@ -154,19 +150,16 @@
     _firstNameField.fieldType = AWXTextFieldTypeFirstName;
     _firstNameField.placeholder = NSLocalizedString(@"First name", @"First Name");
     [stackView addArrangedSubview:_firstNameField];
-    [_firstNameField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _lastNameField = [AWXFloatingLabelTextField new];
     _lastNameField.fieldType = AWXTextFieldTypeLastName;
     _lastNameField.placeholder = NSLocalizedString(@"Last name", @"Last Name");
     _firstNameField.nextTextField = _lastNameField;
     [stackView addArrangedSubview:_lastNameField];
-    [_lastNameField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _countryView = [AWXFloatingLabelView new];
     _countryView.placeholder = NSLocalizedString(@"Country / Region", @"Country / Region");
     [stackView addArrangedSubview:_countryView];
-    [_countryView.heightAnchor constraintEqualToConstant:fieldHeight].active = YES;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectCountries:)];
     [_countryView addGestureRecognizer:tap];
@@ -176,42 +169,36 @@
     _stateField.placeholder = NSLocalizedString(@"State", @"State");
     _phoneNumberField.nextTextField = _stateField;
     [stackView addArrangedSubview:_stateField];
-    [_stateField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _cityField = [AWXFloatingLabelTextField new];
     _cityField.fieldType = AWXTextFieldTypeCity;
     _cityField.placeholder = NSLocalizedString(@"City", @"City");
     _stateField.nextTextField = _cityField;
     [stackView addArrangedSubview:_cityField];
-    [_cityField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _streetField = [AWXFloatingLabelTextField new];
     _streetField.fieldType = AWXTextFieldTypeStreet;
     _streetField.placeholder = NSLocalizedString(@"Street", @"Street");
     _cityField.nextTextField = _streetField;
     [stackView addArrangedSubview:_streetField];
-    [_streetField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _zipcodeField = [AWXFloatingLabelTextField new];
     _zipcodeField.fieldType = AWXTextFieldTypeZipcode;
     _zipcodeField.placeholder = NSLocalizedString(@"Zip code (optional)", @"Zip code (optional)");
     _streetField.nextTextField = _zipcodeField;
     [stackView addArrangedSubview:_zipcodeField];
-    [_zipcodeField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _emailField = [AWXFloatingLabelTextField new];
     _emailField.fieldType = AWXTextFieldTypeZipcode;
     _emailField.placeholder = NSLocalizedString(@"Email (optional)", @"Email (optional)");
     _zipcodeField.nextTextField = _emailField;
     [stackView addArrangedSubview:_emailField];
-    [_emailField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _phoneNumberField = [AWXFloatingLabelTextField new];
     _phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
     _phoneNumberField.placeholder = NSLocalizedString(@"Phone number (optional)", @"Phone number (optional)");
     _emailField.nextTextField = _phoneNumberField;
     [stackView addArrangedSubview:_phoneNumberField];
-    [_phoneNumberField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _confirmButton = [AWXButton new];
     _confirmButton.enabled = YES;
@@ -221,7 +208,7 @@
     [_confirmButton addTarget:self action:@selector(savePressed:) forControlEvents:UIControlEventTouchUpInside];
     [stackView addArrangedSubview:_confirmButton];
     [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
-    
+
     if (self.session.billing) {
         self.firstNameField.text = self.session.billing.firstName;
         self.lastNameField.text = self.session.billing.lastName;

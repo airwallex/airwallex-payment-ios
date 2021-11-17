@@ -57,10 +57,10 @@
 - (nullable NSString *)validate
 {
     if (self.firstName.length == 0) {
-        return @"Please enter your first name";
+        return @"Invalid first name";
     }
     if (self.lastName.length == 0) {
-        return @"Please enter your last name";
+        return @"Invalid last name";
     }
     if (self.email.length > 0) {
         NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
@@ -70,16 +70,16 @@
         }
     }
     if (!self.address) {
-        return @"Please enter your shipping address";
+        return @"Invalid shipping address";
     }
     if (self.address.countryCode.length == 0) {
-        return @"Please choose your country/region";
+        return @"Invalid country/region";
     }
     if (self.address.city.length == 0) {
-        return @"Please enter your city";
+        return @"Invalid your city";
     }
     if (self.address.street.length == 0) {
-        return @"Please enter your street";
+        return @"Invalid street";
     }
     return nil;
 }

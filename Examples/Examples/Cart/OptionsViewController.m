@@ -278,20 +278,20 @@
         if ([textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0) {
             [AirwallexExamplesKeys shared].currency = textField.text.uppercaseString;
         } else {
-            [self showAlert:NSLocalizedString(@"Please enter a valid currency", nil) withTitle:nil];
+            [self showAlert:NSLocalizedString(@"Invalid currency", nil) withTitle:nil];
         }
     } else if (textField == self.countryCodeTextField) {
         if ([textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0) {
             [AirwallexExamplesKeys shared].countryCode = textField.text.uppercaseString;
         } else {
-            [self showAlert:NSLocalizedString(@"Please enter a valid country code", nil) withTitle:nil];
+            [self showAlert:NSLocalizedString(@"Invalid country code", nil) withTitle:nil];
         }
     }  else if (textField == self.returnURLTextField) {
         NSURL *url = [NSURL URLWithString:textField.text];
         if (url.scheme && url.host) {
             [AirwallexExamplesKeys shared].returnUrl = textField.text;
         } else {
-            [self showAlert:NSLocalizedString(@"Please enter a valid return url", nil) withTitle:nil];
+            [self showAlert:NSLocalizedString(@"Invalid return url", nil) withTitle:nil];
         }
     }
 }

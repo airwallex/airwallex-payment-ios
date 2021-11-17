@@ -53,16 +53,16 @@
 - (nullable NSString *)validate
 {
     if (self.number.length == 0) {
-        return @"Please enter your card number";
+        return @"Invalid card number";
     }
     if (self.name.length == 0) {
-        return @"Please enter your name on card";
+        return @"Invalid name on card";
     }
     if (self.expiryYear.length == 0 || self.expiryMonth.length == 0) {
-        return @"Please enter expires date";
+        return @"Invalid expires date";
     }
     if (self.cvc.length == 0) {
-        return @"Please enter CVC / VCC";
+        return @"Invalid CVC / VCC";
     }
     return nil;
 }

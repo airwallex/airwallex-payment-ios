@@ -72,26 +72,21 @@
     [contentView.widthAnchor constraintEqualToAnchor:self.view.widthAnchor].active = YES;
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[titleLabel]-margin-|" options:0 metrics:metrics views:views]];
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-margin-[titleLabel]-padding-[stackView]-margin-|" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:metrics views:views]];
-    
-    CGFloat fieldHeight = 60.00;
-    
+        
     _firstNameField = [AWXFloatingLabelTextField new];
     _firstNameField.fieldType = AWXTextFieldTypeFirstName;
     _firstNameField.placeholder = NSLocalizedString(@"First name", @"First Name");
     [stackView addArrangedSubview:_firstNameField];
-    [_firstNameField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _lastNameField = [AWXFloatingLabelTextField new];
     _lastNameField.fieldType = AWXTextFieldTypeLastName;
     _lastNameField.placeholder = NSLocalizedString(@"Last name", @"Last Name");
     _firstNameField.nextTextField = _lastNameField;
     [stackView addArrangedSubview:_lastNameField];
-    [_lastNameField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _countryView = [AWXFloatingLabelView new];
     _countryView.placeholder = NSLocalizedString(@"Country / Region", @"Country / Region");
     [stackView addArrangedSubview:_countryView];
-    [_countryView.heightAnchor constraintEqualToConstant:fieldHeight].active = YES;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectCountries:)];
     [_countryView addGestureRecognizer:tap];
@@ -101,42 +96,36 @@
     _stateField.placeholder = NSLocalizedString(@"State", @"State");
     _lastNameField.nextTextField = _stateField;
     [stackView addArrangedSubview:_stateField];
-    [_stateField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _cityField = [AWXFloatingLabelTextField new];
     _cityField.fieldType = AWXTextFieldTypeCity;
     _cityField.placeholder = NSLocalizedString(@"City", @"City");
     _stateField.nextTextField = _cityField;
     [stackView addArrangedSubview:_cityField];
-    [_cityField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _streetField = [AWXFloatingLabelTextField new];
     _streetField.fieldType = AWXTextFieldTypeStreet;
     _streetField.placeholder = NSLocalizedString(@"Street", @"Street");
     _cityField.nextTextField = _streetField;
     [stackView addArrangedSubview:_streetField];
-    [_streetField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _zipcodeField = [AWXFloatingLabelTextField new];
     _zipcodeField.fieldType = AWXTextFieldTypeZipcode;
     _zipcodeField.placeholder = NSLocalizedString(@"Zip code (optional)", @"Zip code (optional)");
     _streetField.nextTextField = _zipcodeField;
     [stackView addArrangedSubview:_zipcodeField];
-    [_zipcodeField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _emailField = [AWXFloatingLabelTextField new];
     _emailField.fieldType = AWXTextFieldTypeZipcode;
     _emailField.placeholder = NSLocalizedString(@"Email (optional)", @"Email (optional)");
     _zipcodeField.nextTextField = _emailField;
     [stackView addArrangedSubview:_emailField];
-    [_emailField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     _phoneNumberField = [AWXFloatingLabelTextField new];
     _phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
     _phoneNumberField.placeholder = NSLocalizedString(@"Phone number (optional)", @"Phone number (optional)");
     _emailField.nextTextField = _phoneNumberField;
     [stackView addArrangedSubview:_phoneNumberField];
-    [_phoneNumberField.heightAnchor constraintGreaterThanOrEqualToConstant:fieldHeight].active = YES;
     
     if (self.shipping) {
         _firstNameField.text = self.shipping.firstName;
