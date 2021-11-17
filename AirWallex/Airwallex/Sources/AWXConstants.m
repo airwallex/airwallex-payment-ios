@@ -58,7 +58,7 @@ AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType)
     } else if ([uiType isEqualToString:@"phone"]) {
         return AWXTextFieldTypePhoneNumber;
     }
-    return AWXTextFieldTypeFirstName;
+    return AWXTextFieldTypeDefault;
 }
 
 

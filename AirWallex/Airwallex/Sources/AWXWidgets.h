@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSLayoutConstraint *textTopConstraint;
 
 @property (nonatomic, strong) NSString *text, *placeholder;
-@property (nonatomic, strong, nullable) NSString *errorText;
+@property (nonatomic, strong, nullable) NSString *errorText, *defaultErrorMessage;
 @property (nonatomic) AWXTextFieldType fieldType;
 @property (nonatomic, weak) AWXFloatingLabelTextField *nextTextField;
 

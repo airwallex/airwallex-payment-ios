@@ -172,6 +172,10 @@
 {
     _fieldType = fieldType;
     switch (self.fieldType) {
+        case AWXTextFieldTypeDefault:
+            self.textField.keyboardType = UIKeyboardTypeDefault;
+            self.textField.textContentType = UITextContentTypeName;
+            break;
         case AWXTextFieldTypeFirstName:
             self.textField.keyboardType = UIKeyboardTypeDefault;
             self.textField.textContentType = UITextContentTypeName;
@@ -373,6 +377,9 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     switch (self.fieldType) {
+        case AWXTextFieldTypeDefault:
+            self.errorText = textField.text.length > 0 ? nil : self.defaultErrorMessage;
+            break;
         case AWXTextFieldTypeFirstName:
             self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid first name", nil);
             break;
@@ -813,7 +820,8 @@
         formLabel.font = [UIFont subhead1Font];
         formLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [contentView addSubview:formLabel];
-        
+        [formLabel setContentHuggingPriority:249 forAxis:UILayoutConstraintAxisHorizontal];
+
         [contentView addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
         
         UIImageView *imageView = [UIImageView autoLayoutView];
@@ -831,7 +839,7 @@
                                                                      options:0
                                                                      metrics:nil
                                                                        views:views]];
-        [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[formLabel]->=0-[imageView]|"
+        [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[formLabel][imageView]|"
                                                                             options:NSLayoutFormatAlignAllCenterY
                                                                             metrics:nil
                                                                               views:views]];

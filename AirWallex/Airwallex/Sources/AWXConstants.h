@@ -46,7 +46,8 @@ typedef NS_ENUM(NSUInteger, AWXFormType) {
 };
 
 typedef NS_ENUM(NSUInteger, AWXTextFieldType) {
-    AWXTextFieldTypeFirstName = 1,
+    AWXTextFieldTypeDefault,
+    AWXTextFieldTypeFirstName,
     AWXTextFieldTypeLastName,
     AWXTextFieldTypeEmail,
     AWXTextFieldTypePhoneNumber,

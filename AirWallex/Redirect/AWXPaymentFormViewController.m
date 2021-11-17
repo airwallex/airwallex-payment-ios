@@ -111,6 +111,7 @@
             AWXFloatingLabelTextField *textField = [AWXFloatingLabelTextField new];
             textField.key = form.key;
             textField.placeholder = form.title;
+            textField.defaultErrorMessage = [NSString stringWithFormat:@"Invalid %@", form.title.lowercaseString];
             if (lastTextField) {
                 lastTextField.nextTextField = textField;
             }

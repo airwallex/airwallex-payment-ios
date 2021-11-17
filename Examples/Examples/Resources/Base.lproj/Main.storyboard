@@ -852,7 +852,7 @@
                                                         <rect key="frame" x="0.0" y="666.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="3dc-1g-4U7" id="ylw-Is-jt0"/>
                                                         </connections>
@@ -867,7 +867,7 @@
                                                         <rect key="frame" x="0.0" y="744.5" width="288" height="34"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="3dc-1g-4U7" id="vdP-Kj-Nzy"/>
                                                         </connections>
@@ -964,7 +964,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pG9-fq-6li" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lmz-Qw-MyF">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
