@@ -116,6 +116,7 @@
                 lastTextField.nextTextField = textField;
             }
             textField.fieldType = form.textFieldType;
+            textField.isRequired = YES;
             [stackView addArrangedSubview:textField];
             lastTextField = textField;
         } else if (form.type == AWXFormTypeListCell) {

@@ -98,6 +98,7 @@
     _nameField.fieldType = AWXTextFieldTypeNameOnCard;
     _nameField.placeholder = NSLocalizedString(@"Name on card", @"Name on card");
     _cardNoField.nextTextField = _nameField;
+    _nameField.isRequired = YES;
     [stackView addArrangedSubview:_nameField];
     
     UIStackView *cvcStackView = [UIStackView new];
@@ -112,12 +113,14 @@
     _expiresField.fieldType = AWXTextFieldTypeExpires;
     _expiresField.placeholder = NSLocalizedString(@"Expires MM / YYYY", @"Expires MM / YYYY");
     _nameField.nextTextField = _expiresField;
+    _expiresField.isRequired = YES;
     [cvcStackView addArrangedSubview:_expiresField];
     
     _cvcField = [AWXFloatingLabelTextField new];
     _cvcField.fieldType = AWXTextFieldTypeCVC;
     _cvcField.placeholder = NSLocalizedString(@"CVC / VCC", @"CVC / VCC");
     _expiresField.nextTextField = _cvcField;
+    _cvcField.isRequired = YES;
     [cvcStackView addArrangedSubview:_cvcField];
     [_expiresField.widthAnchor constraintEqualToAnchor:_cvcField.widthAnchor multiplier:1.7].active = YES;
 
@@ -149,12 +152,14 @@
     _firstNameField = [AWXFloatingLabelTextField new];
     _firstNameField.fieldType = AWXTextFieldTypeFirstName;
     _firstNameField.placeholder = NSLocalizedString(@"First name", @"First Name");
+    _firstNameField.isRequired = YES;
     [stackView addArrangedSubview:_firstNameField];
     
     _lastNameField = [AWXFloatingLabelTextField new];
     _lastNameField.fieldType = AWXTextFieldTypeLastName;
     _lastNameField.placeholder = NSLocalizedString(@"Last name", @"Last Name");
     _firstNameField.nextTextField = _lastNameField;
+    _lastNameField.isRequired = YES;
     [stackView addArrangedSubview:_lastNameField];
     
     _countryView = [AWXFloatingLabelView new];
@@ -168,18 +173,21 @@
     _stateField.fieldType = AWXTextFieldTypeState;
     _stateField.placeholder = NSLocalizedString(@"State", @"State");
     _phoneNumberField.nextTextField = _stateField;
+    _stateField.isRequired = YES;
     [stackView addArrangedSubview:_stateField];
     
     _cityField = [AWXFloatingLabelTextField new];
     _cityField.fieldType = AWXTextFieldTypeCity;
     _cityField.placeholder = NSLocalizedString(@"City", @"City");
     _stateField.nextTextField = _cityField;
+    _cityField.isRequired = YES;
     [stackView addArrangedSubview:_cityField];
     
     _streetField = [AWXFloatingLabelTextField new];
     _streetField.fieldType = AWXTextFieldTypeStreet;
     _streetField.placeholder = NSLocalizedString(@"Street", @"Street");
     _cityField.nextTextField = _streetField;
+    _streetField.isRequired = YES;
     [stackView addArrangedSubview:_streetField];
     
     _zipcodeField = [AWXFloatingLabelTextField new];
