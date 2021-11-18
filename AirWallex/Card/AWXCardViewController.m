@@ -90,6 +90,7 @@
     [stackView addArrangedSubview:_titleLabel];
     
     _cardNoField = [AWXFloatingCardTextField new];
+    _cardNoField.isRequired = YES;
     _cardNoField.fieldType = AWXTextFieldTypeCardNumber;
     _cardNoField.placeholder = NSLocalizedString(@"Card number", @"Card number");
     [stackView addArrangedSubview:_cardNoField];
