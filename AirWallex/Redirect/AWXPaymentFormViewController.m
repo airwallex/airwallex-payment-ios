@@ -70,7 +70,8 @@
     [self.view addGestureRecognizer:pan];
     
     self.maxDimmedAlpha = 0.6;
-    self.maximumContainerHeight = UIScreen.mainScreen.bounds.size.height - UIApplication.sharedApplication.keyWindow.safeAreaInsets.top;
+    // UIScreen.mainScreen.bounds.size.height - UIApplication.sharedApplication.keyWindow.safeAreaInsets.top
+    self.maximumContainerHeight = UIScreen.mainScreen.bounds.size.height / 2;
     self.currentContainerHeight = self.view.bounds.size.height;
     
     UIView *dimmedView = [UIView autoLayoutView];
@@ -261,7 +262,7 @@
 - (void)animatePresentContainer
 {
     [UIView animateWithDuration:0.25 animations:^{
-        self.scrollViewBottomConstraint.constant = 0;
+        self.scrollViewBottomConstraint.constant = self.initialBottomOffset;
         [self.view layoutIfNeeded];
     }];
 }
