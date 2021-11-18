@@ -66,6 +66,19 @@
     [self reloadListItems];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIView *headerView = self.tableView.tableHeaderView;
+    CGFloat height = [headerView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    CGRect frame = headerView.frame;
+    if (height != frame.size.height) {
+        frame.size.height = height;
+        headerView.frame = frame;
+        self.tableView.tableHeaderView = headerView;
+    }
+}
+
 - (UIView *)headerView
 {
     UITableViewHeaderFooterView *headerView = [UITableViewHeaderFooterView new];
