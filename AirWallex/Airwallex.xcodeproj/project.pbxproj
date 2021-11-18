@@ -26,6 +26,8 @@
 		4F6AEAD8321D83715F8BB502 /* libPods-WeChatPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86CF3479E682A965E3274EF7 /* libPods-WeChatPay.a */; };
 		570A139E25A82B280064B362 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139C25A82B270064B362 /* README.md */; };
 		570A139F25A82B280064B362 /* README_zh_CN.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139D25A82B280064B362 /* README_zh_CN.md */; };
+		5714F5C52746430500E2C954 /* UPGRADE.md in Resources */ = {isa = PBXBuildFile; fileRef = 5714F5C32746430500E2C954 /* UPGRADE.md */; };
+		5714F5C92746430500E2C954 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 5714F5C42746430500E2C954 /* CHANGELOG.md */; };
 		572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */; };
 		5775CE6826E5D86100C6AFE3 /* WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */; };
 		5775CE6D26E5D86100C6AFE3 /* WeChatPayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CE6C26E5D86100C6AFE3 /* WeChatPayTests.m */; };
@@ -233,6 +235,8 @@
 		3706CA20DEF6BFA47CAF17BB /* Pods-Redirect.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Redirect.debug.xcconfig"; path = "Target Support Files/Pods-Redirect/Pods-Redirect.debug.xcconfig"; sourceTree = "<group>"; };
 		570A139C25A82B270064B362 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		570A139D25A82B280064B362 /* README_zh_CN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../../README_zh_CN.md; sourceTree = "<group>"; };
+		5714F5C32746430500E2C954 /* UPGRADE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = UPGRADE.md; path = ../../UPGRADE.md; sourceTree = "<group>"; };
+		5714F5C42746430500E2C954 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../../CHANGELOG.md; sourceTree = "<group>"; };
 		572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXSessionTest.m; path = ../../../AirWallex/AirwallexTests/Models/AWXSessionTest.m; sourceTree = "<group>"; };
 		5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5775CE6226E5D86100C6AFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -536,9 +540,11 @@
 		085BD3CA23CC62B4002E8F27 /* Airwallex */ = {
 			isa = PBXGroup;
 			children = (
-				57FB500026CCD84300DBD7A2 /* Sources */,
 				570A139D25A82B280064B362 /* README_zh_CN.md */,
 				570A139C25A82B270064B362 /* README.md */,
+				5714F5C42746430500E2C954 /* CHANGELOG.md */,
+				5714F5C32746430500E2C954 /* UPGRADE.md */,
+				57FB500026CCD84300DBD7A2 /* Sources */,
 				085BD40723CC6C89002E8F27 /* Resources */,
 				085BD3CC23CC62B4002E8F27 /* Info.plist */,
 			);
@@ -1067,6 +1073,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				570A139F25A82B280064B362 /* README_zh_CN.md in Resources */,
+				5714F5C92746430500E2C954 /* CHANGELOG.md in Resources */,
+				5714F5C52746430500E2C954 /* UPGRADE.md in Resources */,
 				08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */,
 				570A139E25A82B280064B362 /* README.md in Resources */,
 			);
@@ -1535,7 +1543,7 @@
 				);
 				INFOPLIST_FILE = Airwallex/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1559,7 +1567,7 @@
 				);
 				INFOPLIST_FILE = Airwallex/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1621,7 +1629,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.WeChatPay;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1649,7 +1657,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.WeChatPay;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1714,7 +1722,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Card;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1741,7 +1749,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Card;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1806,7 +1814,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Redirect;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1833,7 +1841,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Redirect;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
