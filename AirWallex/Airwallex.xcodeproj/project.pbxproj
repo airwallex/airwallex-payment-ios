@@ -28,6 +28,7 @@
 		570A139F25A82B280064B362 /* README_zh_CN.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139D25A82B280064B362 /* README_zh_CN.md */; };
 		5714F5C52746430500E2C954 /* UPGRADE.md in Resources */ = {isa = PBXBuildFile; fileRef = 5714F5C32746430500E2C954 /* UPGRADE.md */; };
 		5714F5C92746430500E2C954 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 5714F5C42746430500E2C954 /* CHANGELOG.md */; };
+		5714F5CE2746441D00E2C954 /* Airwallex.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 5714F5CD2746441D00E2C954 /* Airwallex.podspec */; };
 		572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */; };
 		5775CE6826E5D86100C6AFE3 /* WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */; };
 		5775CE6D26E5D86100C6AFE3 /* WeChatPayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CE6C26E5D86100C6AFE3 /* WeChatPayTests.m */; };
@@ -237,6 +238,7 @@
 		570A139D25A82B280064B362 /* README_zh_CN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../../README_zh_CN.md; sourceTree = "<group>"; };
 		5714F5C32746430500E2C954 /* UPGRADE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = UPGRADE.md; path = ../../UPGRADE.md; sourceTree = "<group>"; };
 		5714F5C42746430500E2C954 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../../CHANGELOG.md; sourceTree = "<group>"; };
+		5714F5CD2746441D00E2C954 /* Airwallex.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Airwallex.podspec; path = ../../Airwallex.podspec; sourceTree = "<group>"; };
 		572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXSessionTest.m; path = ../../../AirWallex/AirwallexTests/Models/AWXSessionTest.m; sourceTree = "<group>"; };
 		5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5775CE6226E5D86100C6AFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -540,6 +542,7 @@
 		085BD3CA23CC62B4002E8F27 /* Airwallex */ = {
 			isa = PBXGroup;
 			children = (
+				5714F5CD2746441D00E2C954 /* Airwallex.podspec */,
 				570A139D25A82B280064B362 /* README_zh_CN.md */,
 				570A139C25A82B270064B362 /* README.md */,
 				5714F5C42746430500E2C954 /* CHANGELOG.md */,
@@ -1072,6 +1075,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5714F5CE2746441D00E2C954 /* Airwallex.podspec in Resources */,
 				570A139F25A82B280064B362 /* README_zh_CN.md in Resources */,
 				5714F5C92746430500E2C954 /* CHANGELOG.md in Resources */,
 				5714F5C52746430500E2C954 /* UPGRADE.md in Resources */,
