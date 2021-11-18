@@ -24,11 +24,12 @@
 #import "AWXDefaultProvider.h"
 #import "AWXDefaultActionProvider.h"
 
-@interface AWXPaymentViewController () <UITextFieldDelegate, AWXProviderDelegate>
+@interface AWXPaymentViewController () <AWXFloatingLabelTextFieldDelegate, AWXProviderDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *totalLabel;
-@property (strong, nonatomic) UITextField *cvcField;
+@property (strong, nonatomic) AWXFloatingLabelTextField *cvcField;
 @property (strong, nonatomic) AWXButton *confirmButton;
 
 @end
@@ -40,138 +41,74 @@
     [super viewDidLoad];
     [self enableTapToEndEditting];
     
-    _scrollView = [UIScrollView new];
-    _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    _scrollView = [UIScrollView autoLayoutView];
     [self.view addSubview:_scrollView];
     
-    UIStackView *stackView = [UIStackView new];
-    stackView.axis = UILayoutConstraintAxisVertical;
-    stackView.alignment = UIStackViewAlignmentFill;
-    stackView.distribution = UIStackViewDistributionEqualSpacing;
-    stackView.spacing = 16;
-    stackView.layoutMargins = UIEdgeInsetsMake(16, 0, 16, 0);
-    stackView.layoutMarginsRelativeArrangement = YES;
-    stackView.translatesAutoresizingMaskIntoConstraints = NO;
-    [_scrollView addSubview:stackView];
+    UIView *contentView = [UIView autoLayoutView];
+    [_scrollView addSubview:contentView];
+
+    _titleLabel = [UILabel autoLayoutView];
+    _titleLabel.numberOfLines = 0;
+    _titleLabel.textColor = [UIColor gray100Color];
+    _titleLabel.font = [UIFont titleFont];
+    [contentView addSubview:_titleLabel];
     
-    NSDictionary *views = @{@"scrollView": _scrollView, @"stackView": stackView};
-    NSDictionary *metrics = @{@"margin": @16, @"padding": @33};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:metrics views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[scrollView]-|" options:0 metrics:metrics views:views]];
-    [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[stackView]|" options:0 metrics:metrics views:views]];
-    [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[stackView]|" options:0 metrics:metrics views:views]];
-    [_scrollView.widthAnchor constraintEqualToAnchor:stackView.widthAnchor].active = YES;
-    
-    _totalLabel = [UILabel new];
-    _totalLabel.text = [self.session.amount stringWithCurrencyCode:self.session.currency];
-    _totalLabel.textAlignment = NSTextAlignmentCenter;
+    _totalLabel = [UILabel autoLayoutView];
+    _totalLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Total %@", nil), [self.session.amount stringWithCurrencyCode:self.session.currency]];
     _totalLabel.textColor = [UIColor gray50Color];
     _totalLabel.font = [UIFont subhead1Font];
-    [stackView addArrangedSubview:_totalLabel];
+    [contentView addSubview:_totalLabel];
     
-    UILabel *totalLabel = [UILabel new];
-    totalLabel.text = NSLocalizedString(@"Total", @"Total");
-    totalLabel.textAlignment = NSTextAlignmentCenter;
-    totalLabel.textColor = [UIColor gray50Color];
-    totalLabel.font = [UIFont subhead1Font];
-    [stackView addArrangedSubview:totalLabel];
-    
-    UIStackView *contentView = [UIStackView new];
-    contentView.backgroundColor = [UIColor whiteColor];
-    contentView.axis = UILayoutConstraintAxisVertical;
-    contentView.alignment = UIStackViewAlignmentFill;
-    contentView.distribution = UIStackViewDistributionEqualSpacing;
-    contentView.spacing = 16;
-    contentView.layoutMargins = UIEdgeInsetsMake(16, 16, 16, 16);
-    contentView.layoutMarginsRelativeArrangement = YES;
-    contentView.translatesAutoresizingMaskIntoConstraints = NO;
-    [stackView addArrangedSubview:contentView];
-    [contentView.leftAnchor constraintEqualToAnchor:stackView.leftAnchor constant:0].active = YES;
-    [contentView.rightAnchor constraintEqualToAnchor:stackView.rightAnchor constant:0].active = YES;
-    
-    UIStackView *paymentMethodStackView = [UIStackView new];
-    paymentMethodStackView.axis = UILayoutConstraintAxisHorizontal;
-    paymentMethodStackView.alignment = UIStackViewAlignmentFill;
-    paymentMethodStackView.distribution = UIStackViewDistributionFill;
-    paymentMethodStackView.spacing = 5;
-    paymentMethodStackView.translatesAutoresizingMaskIntoConstraints = NO;
-    [contentView addArrangedSubview:paymentMethodStackView];
-    
-    UILabel *paymentLabel = [UILabel new];
-    paymentLabel.text = NSLocalizedString(@"Payment", @"Payment");
-    paymentLabel.textColor = [UIColor gray100Color];
-    paymentLabel.font = [UIFont subhead2Font];
-    [paymentMethodStackView addArrangedSubview:paymentLabel];
-    
-    UILabel *methodLabel = [UILabel new];
-    methodLabel.textColor = [UIColor gray100Color];
-    methodLabel.font = [UIFont subhead2Font];
-    [paymentMethodStackView addArrangedSubview:methodLabel];
-    
-    UIStackView *cvcStackView = [UIStackView new];
-    cvcStackView.axis = UILayoutConstraintAxisHorizontal;
-    cvcStackView.alignment = UIStackViewAlignmentFill;
-    cvcStackView.distribution = UIStackViewDistributionFill;
-    cvcStackView.spacing = 20;
-    cvcStackView.translatesAutoresizingMaskIntoConstraints = NO;
-    [contentView addArrangedSubview:cvcStackView];
-    [cvcStackView.heightAnchor constraintEqualToConstant:44].active = YES;
-    
-    UIView *view = [UIView new];
-    [cvcStackView addArrangedSubview:view];
-    
-    _cvcField = [UITextField new];
+    _cvcField = [AWXFloatingLabelTextField autoLayoutView];
     _cvcField.delegate = self;
-    _cvcField.textAlignment = NSTextAlignmentCenter;
-    _cvcField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
-    _cvcField.borderStyle = UITextBorderStyleRoundedRect;
-    _cvcField.textColor = [AWXTheme sharedTheme].textColor;
-    _cvcField.placeholder = NSLocalizedString(@"CVC/VCC", @"CVC/VCC");
-    _cvcField.font = [UIFont subhead2Font];
-    [_cvcField addTarget:self action:@selector(cvcChanged:) forControlEvents:UIControlEventEditingChanged];
-    _cvcField.translatesAutoresizingMaskIntoConstraints = NO;
-    [cvcStackView addArrangedSubview:_cvcField];
-    [_cvcField.widthAnchor constraintEqualToConstant:92].active = YES;
-    
-    UIImageView *cvcImageView = [UIImageView new];
-    cvcImageView.image = [UIImage imageNamed:@"cvv" inBundle:[NSBundle resourceBundle]];
-    cvcImageView.contentMode = UIViewContentModeScaleAspectFit;
-    cvcImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [cvcStackView addArrangedSubview:cvcImageView];
-    [cvcImageView.widthAnchor constraintEqualToConstant:36].active = YES;
-    [cvcImageView.heightAnchor constraintEqualToConstant:24].active = YES;
-    
-    _confirmButton = [AWXButton new];
+    _cvcField.fieldType = AWXTextFieldTypeCVC;
+    _cvcField.placeholder = NSLocalizedString(@"CVC / VCC", @"CVC / VCC");
+    _cvcField.isRequired = YES;
+    [contentView addSubview:_cvcField];
+    [_cvcField.widthAnchor constraintEqualToAnchor:contentView.widthAnchor multiplier:0.328].active = YES;
+
+    _confirmButton = [AWXButton autoLayoutView];
     _confirmButton.enabled = YES;
     _confirmButton.cornerRadius = 6;
     [_confirmButton setTitle:NSLocalizedString(@"Pay now", @"Pay now") forState:UIControlStateNormal];
     _confirmButton.titleLabel.font = [UIFont headlineFont];
     [_confirmButton addTarget:self action:@selector(payPressed:) forControlEvents:UIControlEventTouchUpInside];
     _confirmButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [stackView addArrangedSubview:_confirmButton];
-    [_confirmButton.leftAnchor constraintEqualToAnchor:stackView.leftAnchor constant:16].active = YES;
-    [_confirmButton.rightAnchor constraintEqualToAnchor:stackView.rightAnchor constant:-16].active = YES;
+    [contentView addSubview:_confirmButton];
     [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
     
+    NSDictionary *views = @{@"scrollView": _scrollView, @"contentView": contentView, @"titleLabel": _titleLabel, @"totalLabel": _totalLabel, @"cvcField": _cvcField, @"confirmButton": _confirmButton};
+    NSDictionary *metrics = @{@"margin": @24.0, @"padding": @16.0, @"offset": @108.0};
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[scrollView]-|" options:0 metrics:metrics views:views]];
+    [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:0 metrics:metrics views:views]];
+    [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:metrics views:views]];
+    [_scrollView.widthAnchor constraintEqualToAnchor:contentView.widthAnchor].active = YES;
+    
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[titleLabel]-margin-|" options:0 metrics:metrics views:views]];
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel][totalLabel]->=offset-[confirmButton]|" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:metrics views:views]];
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[totalLabel]-padding-[cvcField]" options:0 metrics:metrics views:views]];
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[cvcField]" options:0 metrics:metrics views:views]];
+
     if (self.paymentConsent.paymentMethod.card != nil) {
-        methodLabel.text = [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4];
-        cvcStackView.hidden = NO;
+        _titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Enter CVC/VCC for\n%@", nil), [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4]];
+        _cvcField.hidden = NO;
     } else {
-        methodLabel.text = self.paymentConsent.paymentMethod.type.capitalizedString;
-        cvcStackView.hidden = YES;
+        _titleLabel.text = self.paymentConsent.paymentMethod.type.capitalizedString;
+        _cvcField.hidden = YES;
     }
     
     if (self.paymentConsent.paymentMethod.card.cvc) {
         _cvcField.text = self.paymentConsent.paymentMethod.card.cvc;
     }
     
-    [self checkPaymentEnabled];
+    [self checkPaymentEnabled:_cvcField.text];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [_cvcField becomeFirstResponder];
+    [_cvcField.textField becomeFirstResponder];
 }
 
 - (void)startAnimating
@@ -186,19 +123,14 @@
     _confirmButton.enabled = YES;
 }
 
-- (void)checkPaymentEnabled
+- (void)checkPaymentEnabled:(NSString *)text
 {
     if (self.paymentConsent.paymentMethod.card == nil) {
         _confirmButton.enabled = YES;
         return;
     }
     
-    _confirmButton.enabled = _cvcField.text.length > 0;
-}
-
-- (void)cvcChanged:(id)sender
-{
-    [self checkPaymentEnabled];
+    _confirmButton.enabled = text.length > 0;
 }
 
 - (void)payPressed:(id)sender
@@ -210,15 +142,11 @@
     self.provider = provider;
 }
 
-#pragma mark - UITextFieldDelegate
+#pragma mark - AWXFloatingLabelTextFieldDelegate
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (void)floatingLabelTextField:(AWXFloatingLabelTextField *)textField textDidChange:(NSString *)text
 {
-    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    if (text.length <= 4) {
-        return YES;
-    }
-    return NO;
+    [self checkPaymentEnabled:text];
 }
 
 #pragma mark - AWXViewModelDelegate

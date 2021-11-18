@@ -35,11 +35,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@class AWXFloatingLabelTextField;
+@protocol AWXFloatingLabelTextFieldDelegate <NSObject>
+
+- (void)floatingLabelTextField:(AWXFloatingLabelTextField *)textField textDidChange:(NSString *)text;
+
+@end
+
 /**
  A customized text field for inputing
  */
 @interface AWXFloatingLabelTextField : AWXView
 
+@property (weak, nonatomic, nullable) id <AWXFloatingLabelTextFieldDelegate> delegate;
 @property (strong, nonatomic) AWXView *borderView;
 @property (strong, nonatomic) UILabel *floatingLabel;
 @property (strong, nonatomic) UITextField *textField;

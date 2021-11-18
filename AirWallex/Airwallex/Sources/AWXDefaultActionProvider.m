@@ -12,6 +12,8 @@
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction
 {
+    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unknown next action type.", nil)}]];
+    [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES withAnimation:YES];
 }
 
 @end

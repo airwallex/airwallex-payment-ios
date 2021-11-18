@@ -301,12 +301,15 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if (!(self.fieldType == AWXTextFieldTypeExpires || self.fieldType == AWXTextFieldTypeCVC)) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(floatingLabelTextField:textDidChange:)]) {
+            [self.delegate floatingLabelTextField:self textDidChange:text];
+        }
         return YES;
     }
     
     self.errorText = nil;
-    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if (self.fieldType == AWXTextFieldTypeExpires) {
         BOOL deleting = (range.location == textField.text.length - 1 && range.length == 1 && [string isEqualToString:@""]);
         if (deleting) {
@@ -318,11 +321,18 @@
     }
     text.length > 0 ? [self active] : [self inactive];
     [self setText:text];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(floatingLabelTextField:textDidChange:)]) {
+        [self.delegate floatingLabelTextField:self textDidChange:text];
+    }
     return NO;
 }
 
 - (void)textFieldDidChange:(UITextField *)textField
 {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(floatingLabelTextField:textDidChange:)]) {
+        [self.delegate floatingLabelTextField:self textDidChange:textField.text];
+    }
+    
     if (self.fieldType == AWXTextFieldTypeExpires || self.fieldType == AWXTextFieldTypeCVC) {
         return;
     }

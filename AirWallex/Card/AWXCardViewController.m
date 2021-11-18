@@ -81,7 +81,7 @@
     [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[stackView]|" options:0 metrics:metrics views:views]];
     [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[stackView]|" options:0 metrics:metrics views:views]];
     [_scrollView.widthAnchor constraintEqualToAnchor:stackView.widthAnchor].active = YES;
-        
+    
     _titleLabel = [UILabel new];
     _titleLabel.text = NSLocalizedString(@"Card", @"Card");
     _titleLabel.textColor = [UIColor gray100Color];
