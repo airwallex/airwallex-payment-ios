@@ -162,12 +162,6 @@
     for (AWXBank *bank in response.items) {
         [forms addObject:[AWXForm formWithKey:bank.name type:AWXFormTypeListCell title:bank.displayName logo:bank.resources.logoURL]];
     }
-    for (AWXBank *bank in response.items) {
-        [forms addObject:[AWXForm formWithKey:bank.name type:AWXFormTypeListCell title:bank.displayName logo:bank.resources.logoURL]];
-    }
-    for (AWXBank *bank in response.items) {
-        [forms addObject:[AWXForm formWithKey:bank.name type:AWXFormTypeListCell title:bank.displayName logo:bank.resources.logoURL]];
-    }
     formMapping.forms = forms;
     self.banksMapping = formMapping;
     
