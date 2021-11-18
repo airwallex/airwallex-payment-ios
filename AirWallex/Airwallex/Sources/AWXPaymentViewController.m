@@ -31,6 +31,7 @@
 @property (strong, nonatomic) UILabel *totalLabel;
 @property (strong, nonatomic) AWXFloatingLabelTextField *cvcField;
 @property (strong, nonatomic) AWXButton *confirmButton;
+@property (strong, nonatomic) NSLayoutConstraint *bottomConstraint;
 
 @end
 
@@ -43,6 +44,9 @@
     
     _scrollView = [UIScrollView autoLayoutView];
     [self.view addSubview:_scrollView];
+    
+    UIView *bottomLine = [UIView autoLayoutView];
+    [self.view addSubview:bottomLine];
     
     UIView *contentView = [UIView autoLayoutView];
     [_scrollView addSubview:contentView];
@@ -77,16 +81,20 @@
     [contentView addSubview:_confirmButton];
     [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
     
-    NSDictionary *views = @{@"scrollView": _scrollView, @"contentView": contentView, @"titleLabel": _titleLabel, @"totalLabel": _totalLabel, @"cvcField": _cvcField, @"confirmButton": _confirmButton};
+    NSDictionary *views = @{@"scrollView": _scrollView, @"bottomLine": bottomLine, @"contentView": contentView, @"titleLabel": _titleLabel, @"totalLabel": _totalLabel, @"cvcField": _cvcField, @"confirmButton": _confirmButton};
     NSDictionary *metrics = @{@"margin": @24.0, @"padding": @16.0, @"offset": @108.0};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:metrics views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[scrollView]-|" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[scrollView][bottomLine]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:metrics views:views]];
     [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:0 metrics:metrics views:views]];
     [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:metrics views:views]];
     [_scrollView.widthAnchor constraintEqualToAnchor:contentView.widthAnchor].active = YES;
+    [_scrollView.heightAnchor constraintEqualToAnchor:contentView.heightAnchor].active = YES;
+    
+    _bottomConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:bottomLine attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+    [self.view addConstraint:_bottomConstraint];
     
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[titleLabel]-margin-|" options:0 metrics:metrics views:views]];
-    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel][totalLabel]->=offset-[confirmButton]|" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:metrics views:views]];
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel][totalLabel]->=offset-[confirmButton]-margin-|" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:metrics views:views]];
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[totalLabel]-padding-[cvcField]" options:0 metrics:metrics views:views]];
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[cvcField]" options:0 metrics:metrics views:views]];
 
@@ -108,7 +116,19 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self registerKeyboard];
     [_cvcField.textField becomeFirstResponder];
+}
+
+- (NSLayoutConstraint *)bottomLayoutConstraint
+{
+    return self.bottomConstraint;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self unregisterKeyboard];
 }
 
 - (void)startAnimating
