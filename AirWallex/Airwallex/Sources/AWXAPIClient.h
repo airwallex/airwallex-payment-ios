@@ -79,12 +79,12 @@ typedef enum : NSUInteger {
 /**
  The base URL.
  */
-@property (nonatomic, readonly) NSURL *baseURL;
+@property (nonatomic, copy) NSURL *baseURL;
 
 /**
  The client secret for payment.
  */
-@property (nonatomic, copy) NSString *clientSecret;
+@property (nonatomic, copy, nullable) NSString *clientSecret;
 
 /**
  Convenience constructor for a configuration.

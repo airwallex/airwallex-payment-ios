@@ -80,6 +80,7 @@ FOUNDATION_EXPORT NSString *const AWXThreeDSReturnURL;
 FOUNDATION_EXPORT NSString *const AWXCybsURL;
 FOUNDATION_EXPORT NSString *const AWXThreeDSCheckEnrollment;
 FOUNDATION_EXPORT NSString *const AWXThreeDSValidate;
+FOUNDATION_EXPORT NSString *const AWXThreeDSContinue;
 FOUNDATION_EXPORT NSString *const AWXDCC;
 
 FOUNDATION_EXPORT NSString * FormatAirwallexSDKMode(AirwallexSDKMode mode);

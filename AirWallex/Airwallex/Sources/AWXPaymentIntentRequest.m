@@ -102,6 +102,8 @@
         parameters[@"three_ds"] = @{@"ds_transaction_id": self.dsTransactionId};
     } else if ([self.type isEqualToString:AWXDCC]) {
         parameters[@"use_dcc"] = self.useDCC ? @"true" : @"false";
+    } else if ([self.type isEqualToString:AWXThreeDSContinue]) {
+        parameters[@"three_ds"] = @{@"acs_response": self.acsResponse, @"return_url": self.returnURL};
     }
     if (self.device) {
         parameters[@"device"] = [self.device encodeToJSON];

@@ -93,6 +93,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *dsTransactionId;
 
 /**
+ 3DS acs response.
+ */
+@property (nonatomic, copy, nullable) NSString *acsResponse;
+
+/**
+ Return url.
+ */
+@property (nonatomic, copy, nullable) NSString *returnURL;
+
+/**
  Use dcc.
  */
 @property (nonatomic) BOOL useDCC;

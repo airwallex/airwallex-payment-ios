@@ -27,6 +27,7 @@ NSString *const AWXCardKey = @"card";
 NSString *const AWXThreeDSReturnURL = @"https://www.airwallex.com";
 NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
 NSString *const AWXThreeDSValidate = @"3dsValidate";
+NSString *const AWXThreeDSContinue = @"3ds_continue";
 NSString *const AWXDCC = @"dcc";
 
 NSString * FormatAirwallexSDKMode(AirwallexSDKMode mode)

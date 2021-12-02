@@ -146,6 +146,10 @@
 		57A3AD6F27589BEF00EFF0A1 /* AWX3DSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A3AD6D27589BEF00EFF0A1 /* AWX3DSService.m */; };
 		57A3AD722758B7F100EFF0A1 /* AWXRedirect3DSResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 57A3AD702758B7F100EFF0A1 /* AWXRedirect3DSResponse.h */; };
 		57A3AD732758B7F100EFF0A1 /* AWXRedirect3DSResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A3AD712758B7F100EFF0A1 /* AWXRedirect3DSResponse.m */; };
+		57A3AD762758C0A900EFF0A1 /* AWX3DSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 57A3AD742758C0A900EFF0A1 /* AWX3DSRequest.h */; };
+		57A3AD772758C0A900EFF0A1 /* AWX3DSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A3AD752758C0A900EFF0A1 /* AWX3DSRequest.m */; };
+		57A3AD7A2758C61B00EFF0A1 /* AWX3DSResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 57A3AD782758C61B00EFF0A1 /* AWX3DSResponse.h */; };
+		57A3AD7B2758C61B00EFF0A1 /* AWX3DSResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A3AD792758C61B00EFF0A1 /* AWX3DSResponse.m */; };
 		57CEC81426E5FB3500695740 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
 		57CEC81926E5FB4000695740 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
 		57CEC81E26E5FB4400695740 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
@@ -368,6 +372,10 @@
 		57A3AD6D27589BEF00EFF0A1 /* AWX3DSService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWX3DSService.m; sourceTree = "<group>"; };
 		57A3AD702758B7F100EFF0A1 /* AWXRedirect3DSResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXRedirect3DSResponse.h; sourceTree = "<group>"; };
 		57A3AD712758B7F100EFF0A1 /* AWXRedirect3DSResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXRedirect3DSResponse.m; sourceTree = "<group>"; };
+		57A3AD742758C0A900EFF0A1 /* AWX3DSRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWX3DSRequest.h; sourceTree = "<group>"; };
+		57A3AD752758C0A900EFF0A1 /* AWX3DSRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWX3DSRequest.m; sourceTree = "<group>"; };
+		57A3AD782758C61B00EFF0A1 /* AWX3DSResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWX3DSResponse.h; sourceTree = "<group>"; };
+		57A3AD792758C61B00EFF0A1 /* AWX3DSResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWX3DSResponse.m; sourceTree = "<group>"; };
 		57CEC82426E5FE2A00695740 /* WeChatPay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WeChatPay.h; path = ../../AirWallex/WeChatPay/WeChatPay.h; sourceTree = "<group>"; };
 		57E73717272AC043009905DC /* AWXSchemaProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXSchemaProvider.h; sourceTree = "<group>"; };
 		57E73718272AC043009905DC /* AWXSchemaProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXSchemaProvider.m; sourceTree = "<group>"; };
@@ -631,6 +639,10 @@
 				5775CF7A26E5E28400C6AFE3 /* AWXThreeDSService.m */,
 				57A3AD6C27589BEF00EFF0A1 /* AWX3DSService.h */,
 				57A3AD6D27589BEF00EFF0A1 /* AWX3DSService.m */,
+				57A3AD742758C0A900EFF0A1 /* AWX3DSRequest.h */,
+				57A3AD752758C0A900EFF0A1 /* AWX3DSRequest.m */,
+				57A3AD782758C61B00EFF0A1 /* AWX3DSResponse.h */,
+				57A3AD792758C61B00EFF0A1 /* AWX3DSResponse.m */,
 				5775CF7026E5E28400C6AFE3 /* AWXWebViewController.h */,
 				5775CF7526E5E28400C6AFE3 /* AWXWebViewController.m */,
 				5775CE8726E5DDDE00C6AFE3 /* Card.h */,
@@ -840,6 +852,7 @@
 				5775CE9526E5DDDF00C6AFE3 /* Card.h in Headers */,
 				57A3AD722758B7F100EFF0A1 /* AWXRedirect3DSResponse.h in Headers */,
 				5775CF8D26E5E28500C6AFE3 /* AWXCardViewController.h in Headers */,
+				57A3AD762758C0A900EFF0A1 /* AWX3DSRequest.h in Headers */,
 				5775CF9F26E5F8CD00C6AFE3 /* AWXSecurityService.h in Headers */,
 				5775CF8226E5E28400C6AFE3 /* AWXWebViewController.h in Headers */,
 				57A3AD6A2758731400EFF0A1 /* AWX3DSActionProvider.h in Headers */,
@@ -847,6 +860,7 @@
 				5775CF8426E5E28400C6AFE3 /* AWXCardProvider.h in Headers */,
 				5775CF8326E5E28400C6AFE3 /* AWXDccResponse.h in Headers */,
 				5775CF8526E5E28500C6AFE3 /* AWXDccActionProvider.h in Headers */,
+				57A3AD7A2758C61B00EFF0A1 /* AWX3DSResponse.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1348,10 +1362,12 @@
 				5775CF8826E5E28500C6AFE3 /* AWXCardProvider.m in Sources */,
 				5775CF7D26E5E28400C6AFE3 /* AWXDCCViewController.m in Sources */,
 				5775CF7C26E5E28400C6AFE3 /* AWXCardViewController.m in Sources */,
+				57A3AD7B2758C61B00EFF0A1 /* AWX3DSResponse.m in Sources */,
 				5775CF8B26E5E28500C6AFE3 /* AWXDccActionProvider.m in Sources */,
 				5775CF8726E5E28500C6AFE3 /* AWXWebViewController.m in Sources */,
 				57A3AD6F27589BEF00EFF0A1 /* AWX3DSService.m in Sources */,
 				57A3AD732758B7F100EFF0A1 /* AWXRedirect3DSResponse.m in Sources */,
+				57A3AD772758C0A900EFF0A1 /* AWX3DSRequest.m in Sources */,
 				5775CF8926E5E28500C6AFE3 /* AWXDccResponse.m in Sources */,
 				5775CF8626E5E28500C6AFE3 /* AWXRedirectThreeDSResponse.m in Sources */,
 			);

@@ -58,6 +58,20 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly) NSString *type;
 
+/**
+ URL.
+ */
+@property (nonatomic, readonly, nullable) NSURL *url;
+
+/**
+ Method.
+ */
+@property (nonatomic, readonly) AWXHTTPMethod method;
+
+
+/**
+ Payload of next action.
+ */
 @property (nonatomic, readonly) NSDictionary *payload;
 
 @end

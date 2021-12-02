@@ -33,18 +33,18 @@
         device.deviceId = sessionId;
 
         AWXRedirect3DSResponse *response = [AWXRedirect3DSResponse decodeFromJSON:nextAction.payload[@"data"]];
-        [strongSelf handle3DSAction:response device:device];
+        [strongSelf handle3DSAction:response url:nextAction.url device:device];
     }];
 }
 
-- (void)handle3DSAction:(AWXRedirect3DSResponse *)response device:(AWXDevice *)device
+- (void)handle3DSAction:(AWXRedirect3DSResponse *)response url:(NSURL *)url device:(AWXDevice *)device
 {
     AWX3DSService *service = [AWX3DSService new];
     service.customerId = self.session.customerId;
     service.intentId = self.session.paymentIntentId;
     service.device = device;
     service.delegate = self;
-    [service presentThreeDSFlowWithServerJwt:response.jwt];
+    [service presentThreeDSFlowWithServerJwt:response.jwt url:url];
     self.service = service;
 }
 
