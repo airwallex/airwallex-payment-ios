@@ -87,6 +87,8 @@ Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction)
 {
     if ([nextAction.type isEqualToString:@"call_sdk"]) {
         return NSClassFromString(@"AWXWeChatPayActionProvider");
+    } else if ([nextAction.type isEqualToString:@"redirect_form"]) {
+        return NSClassFromString(@"AWX3DSActionProvider");
     } else if ([nextAction.type isEqualToString:@"redirect"]) {
         if (nextAction.payload[@"data"]) {
             return NSClassFromString(@"AWXThreeDSActionProvider");

@@ -16,3 +16,4 @@ FOUNDATION_EXPORT const unsigned char CardVersionString[];
 
 #import "AWXCardProvider.h"
 #import "AWXThreeDSActionProvider.h"
+#import "AWX3DSActionProvider.h"
