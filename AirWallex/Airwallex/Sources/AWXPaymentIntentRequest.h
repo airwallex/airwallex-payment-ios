@@ -6,8 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "AWXRequestProtocol.h"
+#import "AWXAPIClient.h"
 
 @class AWXPaymentMethod;
 @class AWXPaymentMethodOptions;
@@ -19,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXConfirmPaymentIntentRequest` includes all of the parameters needed to confirm payment intent.
  */
-@interface AWXConfirmPaymentIntentRequest : NSObject <AWXRequestProtocol>
+@interface AWXConfirmPaymentIntentRequest : AWXRequest
 
 /**
  Intent ID.
@@ -66,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXConfirmThreeDSRequest` includes all of the parameters needed to confirm 3ds.
  */
-@interface AWXConfirmThreeDSRequest : NSObject <AWXRequestProtocol>
+@interface AWXConfirmThreeDSRequest : AWXRequest
 
 /**
  Intent ID.
@@ -108,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXRetrievePaymentIntentRequest` includes all of the parameters needed to get payment intent.
  */
-@interface AWXRetrievePaymentIntentRequest : NSObject <AWXRequestProtocol>
+@interface AWXRetrievePaymentIntentRequest : AWXRequest
 
 /**
  Intent ID.
@@ -120,7 +119,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXRetrievePaymentIntentRequest` includes all of the parameters needed to get payment intent.
  */
-@interface AWXGetPaResRequest : NSObject <AWXRequestProtocol>
+@interface AWXGetPaResRequest : AWXRequest
 
 /**
  PaRes ID.

@@ -74,9 +74,9 @@
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod
                                  paymentConsent:paymentConsent
                                          device:device
-                                     completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+                                     completion:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf completeWithResponse:response error:error];
+        [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
     }];
 }
 
@@ -102,7 +102,7 @@
                                   nextTriggerByType:session.nextTriggerByType
                                         requiresCVC:session.requiresCVC
                               merchantTriggerReason:session.merchantTriggerReason
-                                         completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+                                         completion:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             if (response && !error) {
                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod
@@ -124,7 +124,7 @@
                                   nextTriggerByType:session.nextTriggerByType
                                         requiresCVC:session.requiresCVC
                               merchantTriggerReason:session.merchantTriggerReason
-                                         completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+                                         completion:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             if ([paymentMethod.type isEqualToString:AWXCardKey]) {
                 [strongSelf confirmPaymentIntentWithId:session.paymentIntent.Id
@@ -212,10 +212,10 @@
     
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self)weakSelf = self;
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (response && !error) {
-            AWXCreatePaymentConsentResponse *result = response;
+            AWXCreatePaymentConsentResponse *result = (AWXCreatePaymentConsentResponse *)response;
             strongSelf.paymentConsent = result.consent;
             completion(response, error);
         } else {
@@ -241,7 +241,7 @@
     
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self)weakSelf = self;
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (response && !error) {
             AWXVerifyPaymentConsentResponse *result = (AWXVerifyPaymentConsentResponse *)response;

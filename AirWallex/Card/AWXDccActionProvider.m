@@ -53,9 +53,9 @@
 
         AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
         __weak __typeof(self)weakSelf = self;
-        [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf completeWithResponse:response error:error];
+            [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
         }];
     }];
 }

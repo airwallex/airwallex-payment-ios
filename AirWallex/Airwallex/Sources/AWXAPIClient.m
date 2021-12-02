@@ -7,9 +7,6 @@
 //
 
 #import "AWXAPIClient.h"
-#import "AWXProtocol.h"
-#import "AWXRequestProtocol.h"
-#import "AWXResponseProtocol.h"
 #import "AWXLogger.h"
 #import "AWXAPIResponse.h"
 #import "AWXUtils.h"
@@ -83,7 +80,7 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 
 @end
 
-@defs(AWXRequestProtocol)
+@implementation AWXRequest
 
 - (NSString *)path
 {
@@ -114,15 +111,15 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 
 @end
 
-@defs(AWXResponseProtocol)
+@implementation AWXResponse
 
-+ (id <AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     [[AWXLogger sharedLogger] logException:NSLocalizedString(@"parse method require override", nil)];
     return nil;
 }
 
-+ (nullable id <AWXResponseProtocol>)parseError:(NSData *)data
++ (nullable AWXResponse *)parseError:(NSData *)data
 {
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -162,7 +159,7 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
     return self;
 }
 
-- (void)send:(id <AWXRequestProtocol>)request handler:(AWXRequestHandler)handler
+- (void)send:(AWXRequest *)request handler:(AWXRequestHandler)handler
 {
     NSString *method = @"POST";
     NSURL *url = [NSURL URLWithString:request.path relativeToURL:self.configuration.baseURL];

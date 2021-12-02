@@ -54,8 +54,6 @@
 		5775CF1F26E5DF4F00C6AFE3 /* AWXPaymentMethodOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CECF26E5DF4D00C6AFE3 /* AWXPaymentMethodOptions.m */; };
 		5775CF2026E5DF4F00C6AFE3 /* AWXPaymentMethodListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED026E5DF4D00C6AFE3 /* AWXPaymentMethodListViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF2126E5DF4F00C6AFE3 /* AWXCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CED126E5DF4D00C6AFE3 /* AWXCountry.m */; };
-		5775CF2226E5DF4F00C6AFE3 /* AWXProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CED226E5DF4D00C6AFE3 /* AWXProtocol.m */; };
-		5775CF2326E5DF4F00C6AFE3 /* AWXResponseProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED326E5DF4E00C6AFE3 /* AWXResponseProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF2426E5DF4F00C6AFE3 /* AWXPaymentIntentResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CED426E5DF4E00C6AFE3 /* AWXPaymentIntentResponse.m */; };
 		5775CF2526E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CED526E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.m */; };
 		5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED626E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -63,7 +61,6 @@
 		5775CF2826E5DF4F00C6AFE3 /* AWXAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED826E5DF4E00C6AFE3 /* AWXAPIResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF2926E5DF4F00C6AFE3 /* AWXDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CED926E5DF4E00C6AFE3 /* AWXDevice.m */; };
 		5775CF2A26E5DF4F00C6AFE3 /* AWXPlaceDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEDA26E5DF4E00C6AFE3 /* AWXPlaceDetails.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF2C26E5DF4F00C6AFE3 /* AWXRequestProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEDC26E5DF4E00C6AFE3 /* AWXRequestProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF2D26E5DF4F00C6AFE3 /* AWXUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEDD26E5DF4E00C6AFE3 /* AWXUtils.m */; };
 		5775CF2E26E5DF4F00C6AFE3 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEDE26E5DF4E00C6AFE3 /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF2F26E5DF4F00C6AFE3 /* AWXSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEDF26E5DF4E00C6AFE3 /* AWXSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -102,7 +99,6 @@
 		5775CF5026E5DF5000C6AFE3 /* AWXCountryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0026E5DF4F00C6AFE3 /* AWXCountryListViewController.m */; };
 		5775CF5126E5DF5000C6AFE3 /* AWXConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0126E5DF4F00C6AFE3 /* AWXConstants.m */; };
 		5775CF5226E5DF5000C6AFE3 /* AWXAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0226E5DF4F00C6AFE3 /* AWXAddress.m */; };
-		5775CF5326E5DF5000C6AFE3 /* AWXProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0326E5DF4F00C6AFE3 /* AWXProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF5526E5DF5000C6AFE3 /* AWXPaymentMethodResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0526E5DF4F00C6AFE3 /* AWXPaymentMethodResponse.m */; };
 		5775CF5626E5DF5000C6AFE3 /* AWXPaymentMethodRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0626E5DF4F00C6AFE3 /* AWXPaymentMethodRequest.m */; };
 		5775CF5726E5DF5000C6AFE3 /* AWXPaymentMethodResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0726E5DF4F00C6AFE3 /* AWXPaymentMethodResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -274,8 +270,6 @@
 		5775CECF26E5DF4D00C6AFE3 /* AWXPaymentMethodOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentMethodOptions.m; sourceTree = "<group>"; };
 		5775CED026E5DF4D00C6AFE3 /* AWXPaymentMethodListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPaymentMethodListViewController.h; sourceTree = "<group>"; };
 		5775CED126E5DF4D00C6AFE3 /* AWXCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXCountry.m; sourceTree = "<group>"; };
-		5775CED226E5DF4D00C6AFE3 /* AWXProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXProtocol.m; sourceTree = "<group>"; };
-		5775CED326E5DF4E00C6AFE3 /* AWXResponseProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXResponseProtocol.h; sourceTree = "<group>"; };
 		5775CED426E5DF4E00C6AFE3 /* AWXPaymentIntentResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentIntentResponse.m; sourceTree = "<group>"; };
 		5775CED526E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentConsentRequest.m; sourceTree = "<group>"; };
 		5775CED626E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPaymentConsentRequest.h; sourceTree = "<group>"; };
@@ -283,7 +277,6 @@
 		5775CED826E5DF4E00C6AFE3 /* AWXAPIResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXAPIResponse.h; sourceTree = "<group>"; };
 		5775CED926E5DF4E00C6AFE3 /* AWXDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXDevice.m; sourceTree = "<group>"; };
 		5775CEDA26E5DF4E00C6AFE3 /* AWXPlaceDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPlaceDetails.h; sourceTree = "<group>"; };
-		5775CEDC26E5DF4E00C6AFE3 /* AWXRequestProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXRequestProtocol.h; sourceTree = "<group>"; };
 		5775CEDD26E5DF4E00C6AFE3 /* AWXUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXUtils.m; sourceTree = "<group>"; };
 		5775CEDE26E5DF4E00C6AFE3 /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		5775CEDF26E5DF4E00C6AFE3 /* AWXSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXSession.h; sourceTree = "<group>"; };
@@ -322,7 +315,6 @@
 		5775CF0026E5DF4F00C6AFE3 /* AWXCountryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXCountryListViewController.m; sourceTree = "<group>"; };
 		5775CF0126E5DF4F00C6AFE3 /* AWXConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXConstants.m; sourceTree = "<group>"; };
 		5775CF0226E5DF4F00C6AFE3 /* AWXAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXAddress.m; sourceTree = "<group>"; };
-		5775CF0326E5DF4F00C6AFE3 /* AWXProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXProtocol.h; sourceTree = "<group>"; };
 		5775CF0526E5DF4F00C6AFE3 /* AWXPaymentMethodResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentMethodResponse.m; sourceTree = "<group>"; };
 		5775CF0626E5DF4F00C6AFE3 /* AWXPaymentMethodRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentMethodRequest.m; sourceTree = "<group>"; };
 		5775CF0726E5DF4F00C6AFE3 /* AWXPaymentMethodResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPaymentMethodResponse.h; sourceTree = "<group>"; };
@@ -722,10 +714,6 @@
 				5775CECD26E5DF4D00C6AFE3 /* AWXPaymentViewController.m */,
 				5775CEDA26E5DF4E00C6AFE3 /* AWXPlaceDetails.h */,
 				5775CEC826E5DF4D00C6AFE3 /* AWXPlaceDetails.m */,
-				5775CF0326E5DF4F00C6AFE3 /* AWXProtocol.h */,
-				5775CED226E5DF4D00C6AFE3 /* AWXProtocol.m */,
-				5775CEDC26E5DF4E00C6AFE3 /* AWXRequestProtocol.h */,
-				5775CED326E5DF4E00C6AFE3 /* AWXResponseProtocol.h */,
 				5775CEDF26E5DF4E00C6AFE3 /* AWXSession.h */,
 				5775CEFC26E5DF4F00C6AFE3 /* AWXSession.m */,
 				5775CF1126E5DF4F00C6AFE3 /* AWXShippingViewController.h */,
@@ -779,7 +767,6 @@
 				5775CF5E26E5DF5000C6AFE3 /* AWXTheme.h in Headers */,
 				5775CF2A26E5DF4F00C6AFE3 /* AWXPlaceDetails.h in Headers */,
 				5775CF1326E5DF4F00C6AFE3 /* AWXDefaultProvider.h in Headers */,
-				5775CF5326E5DF5000C6AFE3 /* AWXProtocol.h in Headers */,
 				5775CF3826E5DF4F00C6AFE3 /* AWXCard.h in Headers */,
 				5775CF3726E5DF4F00C6AFE3 /* AWXAPIClient.h in Headers */,
 				5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */,
@@ -787,10 +774,8 @@
 				5775CF4526E5DF5000C6AFE3 /* AWXPaymentConsent.h in Headers */,
 				5775CF2726E5DF4F00C6AFE3 /* AWXLogger.h in Headers */,
 				5775CF4626E5DF5000C6AFE3 /* AWXUIContext.h in Headers */,
-				5775CF2326E5DF4F00C6AFE3 /* AWXResponseProtocol.h in Headers */,
 				5775CF3326E5DF4F00C6AFE3 /* AWXPaymentMethodRequest.h in Headers */,
 				5775CF4E26E5DF5000C6AFE3 /* AWXDevice.h in Headers */,
-				5775CF2C26E5DF4F00C6AFE3 /* AWXRequestProtocol.h in Headers */,
 				5775CF4826E5DF5000C6AFE3 /* AWXConstants.h in Headers */,
 				5775CF3626E5DF4F00C6AFE3 /* AWXForm.h in Headers */,
 				5775CF5926E5DF5000C6AFE3 /* AWXPaymentMethod.h in Headers */,
@@ -1016,7 +1001,7 @@
 		085BD3BF23CC62B4002E8F27 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1110;
+				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = Airwallex;
 				TargetAttributes = {
 					085BD3C723CC62B4002E8F27 = {
@@ -1280,7 +1265,6 @@
 				5775CF1D26E5DF4F00C6AFE3 /* AWXPaymentViewController.m in Sources */,
 				5775CF1526E5DF4F00C6AFE3 /* AWXPaymentIntent.m in Sources */,
 				5775CF5526E5DF5000C6AFE3 /* AWXPaymentMethodResponse.m in Sources */,
-				5775CF2226E5DF4F00C6AFE3 /* AWXProtocol.m in Sources */,
 				5775CF5126E5DF5000C6AFE3 /* AWXConstants.m in Sources */,
 				5775CF1B26E5DF4F00C6AFE3 /* AWXDefaultActionProvider.m in Sources */,
 				5775CF4726E5DF5000C6AFE3 /* AWXAPIResponse.m in Sources */,
@@ -1442,6 +1426,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1467,7 +1452,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1503,6 +1488,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1522,7 +1508,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1627,7 +1613,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WeChatPay/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1655,7 +1641,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WeChatPay/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1720,7 +1706,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Card/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1747,7 +1733,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Card/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1812,7 +1798,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Redirect/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1839,7 +1825,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Redirect/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

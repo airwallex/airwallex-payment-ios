@@ -38,7 +38,7 @@
 
     AWXAPIClient *client = [AWXAPIClient sharedClient];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         XCTAssertNil(error);
         [expectation fulfill];
     }];
@@ -64,7 +64,7 @@
 
     AWXAPIClient *client = [AWXAPIClient sharedClient];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Create payment method"];
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         XCTAssertNotNil(error);
         [expectation fulfill];
     }];

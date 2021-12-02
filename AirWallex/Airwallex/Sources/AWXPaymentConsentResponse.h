@@ -6,8 +6,7 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "AWXResponseProtocol.h"
+#import "AWXAPIClient.h"
 
 @class  AWXPaymentConsent, AWXConfirmPaymentNextAction, AWXPaymentMethod;
 
@@ -16,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXCreatePaymentConsentResponse` includes the response of payment consent.
  */
-@interface AWXCreatePaymentConsentResponse : NSObject <AWXResponseProtocol>
+@interface AWXCreatePaymentConsentResponse : AWXResponse
 
 /**
  Payment consent object.
@@ -28,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXVerifyPaymentConsentResponse` includes the response of payment consent.
  */
-@interface AWXVerifyPaymentConsentResponse : NSObject <AWXResponseProtocol>
+@interface AWXVerifyPaymentConsentResponse : AWXResponse
 
 /**
  Payment status.

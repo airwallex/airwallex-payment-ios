@@ -20,7 +20,7 @@
 
 @implementation AWXConfirmPaymentIntentResponse
 
-+ (id<AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -154,7 +154,7 @@
 
 @implementation AWXGetPaymentIntentResponse
 
-+ (id <AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -187,7 +187,7 @@
 
 @implementation AWXGetPaResResponse
 
-+ (id <AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];

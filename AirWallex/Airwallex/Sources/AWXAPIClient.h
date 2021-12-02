@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "AWXConstants.h"
 
-@protocol AWXRequestProtocol, AWXResponseProtocol;
-
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -49,6 +47,31 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
+ Http request
+ */
+typedef enum : NSUInteger {
+    AWXHTTPMethodGET,
+    AWXHTTPMethodPOST,
+} AWXHTTPMethod;
+
+@interface AWXRequest : NSObject
+
+- (NSString *)path;
+- (AWXHTTPMethod)method;
+- (nullable NSDictionary *)parameters;
+- (Class)responseClass;
+- (NSDictionary *)headers;
+
+@end
+
+@interface AWXResponse : NSObject
+
++ (AWXResponse *)parse:(NSData *)data;
++ (nullable AWXResponse *)parseError:(NSData *)data;
+
+@end
+
+/**
  `AWXAPIClientConfiguration` contains the base configuration the API client needs.
  */
 @interface AWXAPIClientConfiguration : NSObject <NSCopying>
@@ -72,7 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-typedef void (^AWXRequestHandler)(id <AWXResponseProtocol> _Nullable response, NSError * _Nullable error);
+typedef void (^AWXRequestHandler)(AWXResponse * _Nullable response, NSError * _Nullable error);
 
 /**
  `AWXAPIClient` is a http request client.
@@ -105,7 +128,7 @@ typedef void (^AWXRequestHandler)(id <AWXResponseProtocol> _Nullable response, N
  @param request A request object.
  @param handler A handler which includes response.
  */
-- (void)send:(id <AWXRequestProtocol>)request handler:(AWXRequestHandler)handler;
+- (void)send:(AWXRequest *)request handler:(AWXRequestHandler)handler;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

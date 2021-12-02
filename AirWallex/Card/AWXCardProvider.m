@@ -41,7 +41,7 @@
         [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
     } else {
         __weak __typeof(self)weakSelf = self;
-        [self createPaymentMethod:paymentMethod completion:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+        [self createPaymentMethod:paymentMethod completion:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             if (response && !error) {
                 AWXCreatePaymentMethodResponse *result = (AWXCreatePaymentMethodResponse *)response;

@@ -6,10 +6,9 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "AWXAPIClient.h"
 #import "AWXCodable.h"
 #import "AWXPaymentMethod.h"
-#import "AWXResponseProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXConfirmPaymentIntentResponse` includes the result of payment flow.
  */
-@interface AWXConfirmPaymentIntentResponse : NSObject <AWXResponseProtocol>
+@interface AWXConfirmPaymentIntentResponse : AWXResponse
 
 /**
  Currency.
@@ -124,7 +123,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaymentIntentResponse` includes the information of payment intent.
  */
-@interface AWXGetPaymentIntentResponse : NSObject <AWXResponseProtocol>
+@interface AWXGetPaymentIntentResponse : AWXResponse
 
 /**
  Intent id.
@@ -196,7 +195,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaResResponse` includes the 3ds information of payment.
  */
-@interface AWXGetPaResResponse : NSObject <AWXResponseProtocol>
+@interface AWXGetPaResResponse : AWXResponse
 
 /**
  PaRes

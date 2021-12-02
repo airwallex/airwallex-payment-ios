@@ -6,8 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "AWXRequestProtocol.h"
+#import "AWXAPIClient.h"
 #import "AWXPaymentMethod.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -15,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaymentMethodsRequest` includes all of the parameters needed to get payment methods.
  */
-@interface AWXGetPaymentMethodsRequest : NSObject <AWXRequestProtocol>
+@interface AWXGetPaymentMethodsRequest : AWXRequest
 
 /**
  Customer ID.
@@ -57,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaymentMethodTypesRequest` includes all of the parameters needed to get payment method types.
  */
-@interface AWXGetPaymentMethodTypesRequest : NSObject <AWXRequestProtocol>
+@interface AWXGetPaymentMethodTypesRequest : AWXRequest
 
 /**
  active .
@@ -103,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaymentMethodTypeRequest` includes all of the parameters needed to get payment method type.
  */
-@interface AWXGetPaymentMethodTypeRequest : NSObject <AWXRequestProtocol>
+@interface AWXGetPaymentMethodTypeRequest : AWXRequest
 
 /**
  Name of the payment method type
@@ -130,7 +129,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaymentMethodTypeRequest` includes all of the parameters needed to get payment method type.
  */
-@interface AWXGetAvailableBanksRequest : NSObject <AWXRequestProtocol>
+@interface AWXGetAvailableBanksRequest : AWXRequest
 
 /**
  Name of the payment method type
@@ -152,7 +151,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXCreatePaymentMethodRequest` includes all of the parameters needed to create a payment method.
  */
-@interface AWXCreatePaymentMethodRequest : NSObject <AWXRequestProtocol>
+@interface AWXCreatePaymentMethodRequest : AWXRequest
 
 /**
  Request ID.
@@ -169,7 +168,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXDisablePaymentMethodRequest` disable a payment method.
  */
-@interface AWXDisablePaymentConsentRequest : NSObject <AWXRequestProtocol>
+@interface AWXDisablePaymentConsentRequest : AWXRequest
 
 /**
  Request ID.

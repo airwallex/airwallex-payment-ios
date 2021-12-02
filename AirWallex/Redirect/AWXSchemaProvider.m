@@ -35,10 +35,10 @@
     [self.delegate providerDidStartRequest:self];
     __weak __typeof(self)weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (response && !error) {
-            [strongSelf verifyPaymentMethodType:response];
+            [strongSelf verifyPaymentMethodType:(AWXGetPaymentMethodTypeResponse *)response];
         } else {
             [strongSelf.delegate providerDidEndRequest:strongSelf];
             [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
@@ -143,11 +143,11 @@
     
     __weak __typeof(self)weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         [strongSelf.delegate providerDidEndRequest:strongSelf];
         if (response && !error) {
-            [strongSelf verifyAvailableBankList:response];
+            [strongSelf verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response];
         } else {
             [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         }

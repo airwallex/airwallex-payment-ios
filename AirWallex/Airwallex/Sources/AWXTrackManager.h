@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AWXRequestProtocol.h"
-#import "AWXResponseProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

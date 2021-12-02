@@ -42,7 +42,7 @@
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Retrieve payment intent"];
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         XCTAssertNil(error);
         [expectation fulfill];
     }];

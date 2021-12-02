@@ -19,7 +19,7 @@
 
 @implementation AWXGetPaymentMethodsResponse
 
-+ (id<AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -47,7 +47,7 @@
 
 @implementation AWXGetPaymentMethodTypesResponse
 
-+ (id<AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -72,7 +72,7 @@
 
 @implementation AWXGetPaymentMethodTypeResponse
 
-+ (id<AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -104,7 +104,7 @@
 
 @implementation AWXGetAvailableBanksResponse
 
-+ (id<AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -131,7 +131,7 @@
 
 @implementation AWXCreatePaymentMethodResponse
 
-+ (id<AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -150,7 +150,7 @@
 
 @implementation AWXDisablePaymentConsentResponse
 
-+ (id<AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];

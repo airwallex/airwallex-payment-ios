@@ -6,8 +6,7 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "AWXRequestProtocol.h"
+#import "AWXAPIClient.h"
 #import "AWXConstants.h"
 
 @class AWXPaymentMethod;
@@ -21,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXCreatePaymentConsentRequest` includes the request of creating payment consent.
  */
-@interface AWXCreatePaymentConsentRequest : NSObject <AWXRequestProtocol>
+@interface AWXCreatePaymentConsentRequest : AWXRequest
 
 /**
  Request ID.
@@ -60,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXVerifyPaymentConsentRequest` includes the request of verifying payment consent.
  */
-@interface AWXVerifyPaymentConsentRequest : NSObject <AWXRequestProtocol>
+@interface AWXVerifyPaymentConsentRequest : AWXRequest
 
 /**
  Request ID.
@@ -95,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXRetrievePaymentConsentRequest` includes the request of payment consent.
  */
-@interface AWXRetrievePaymentConsentRequest : NSObject <AWXRequestProtocol>
+@interface AWXRetrievePaymentConsentRequest : AWXRequest
 
 /**
  Consent ID.

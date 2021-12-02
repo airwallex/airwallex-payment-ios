@@ -6,8 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "AWXResponseProtocol.h"
+#import "AWXAPIClient.h"
 
 @class AWXPaymentMethod, AWXPaymentConsent, AWXPaymentMethodType, AWXSchema, AWXBank;
 
@@ -16,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaymentMethodsResponse` includes the list of payment methods.
  */
-@interface AWXGetPaymentMethodsResponse : NSObject <AWXResponseProtocol>
+@interface AWXGetPaymentMethodsResponse : AWXResponse
 
 /**
  Check whether there are more payment methods not loaded.
@@ -33,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaymentMethodTypesResponse` includes the list of payment methods.
  */
-@interface AWXGetPaymentMethodTypesResponse : NSObject <AWXResponseProtocol>
+@interface AWXGetPaymentMethodTypesResponse : AWXResponse
 
 /**
  Check whether there are more payment methods not loaded.
@@ -50,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaymentMethodTypeResponse` includes the list of payment methods.
  */
-@interface AWXGetPaymentMethodTypeResponse : NSObject <AWXResponseProtocol>
+@interface AWXGetPaymentMethodTypeResponse : AWXResponse
 
 /**
  name of the payment method.
@@ -82,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetAvailableBanksResponse` includes the list of banks.
  */
-@interface AWXGetAvailableBanksResponse : NSObject <AWXResponseProtocol>
+@interface AWXGetAvailableBanksResponse : AWXResponse
 
 /**
  Check whether there are more payment methods not loaded.
@@ -99,7 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXCreatePaymentMethodResponse` includes the payment method created.
  */
-@interface AWXCreatePaymentMethodResponse : NSObject <AWXResponseProtocol>
+@interface AWXCreatePaymentMethodResponse : AWXResponse
 
 /**
  Payment method object.
@@ -111,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXDisablePaymentMethodResponse` includes the payment method disabled.
  */
-@interface AWXDisablePaymentConsentResponse : NSObject <AWXResponseProtocol>
+@interface AWXDisablePaymentConsentResponse : AWXResponse
 
 /**
  Payment method object.

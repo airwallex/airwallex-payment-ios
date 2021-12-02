@@ -18,7 +18,7 @@
 
 @implementation AWXCreatePaymentConsentResponse
 
-+ (id<AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -40,7 +40,7 @@
 
 @implementation AWXVerifyPaymentConsentResponse
 
-+ (id<AWXResponseProtocol>)parse:(NSData *)data
++ (AWXResponse *)parse:(NSData *)data
 {
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];

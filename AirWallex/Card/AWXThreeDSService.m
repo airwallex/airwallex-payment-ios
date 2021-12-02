@@ -104,7 +104,7 @@
     
     __weak __typeof(self)weakSelf = self;
     // Step 2: Request 3DS lookup response by `confirmPaymentIntent` with `referenceId`
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (error) {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
@@ -191,14 +191,14 @@
     
     __weak __typeof(self)weakSelf = self;
     // Step 4: Request 3DS JWT validation response by `confirmPaymentIntent` with `transactionId`
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (error) {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
             return;
         }
         
-        [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:response error:error];
+        [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
     }];
 }
 
@@ -211,14 +211,14 @@
     request.paResId = Id;
     
     __weak __typeof(self)weakSelf = self;
-    [client send:request handler:^(id<AWXResponseProtocol>  _Nullable response, NSError * _Nullable error) {
+    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (error) {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
             return;
         }
         
-        completion(response);
+        completion((AWXGetPaResResponse *)response);
     }];
 }
 

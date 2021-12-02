@@ -6,15 +6,14 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "AWXResponseProtocol.h"
+#import "AWXAPIClient.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  An `AWXAPIErrorResponse` includes error details.
  */
-@interface AWXAPIErrorResponse : NSObject <AWXResponseProtocol>
+@interface AWXAPIErrorResponse : AWXResponse
 
 /**
  Error message.
