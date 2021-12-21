@@ -28,7 +28,7 @@
     return self;
 }
 
-- (void)presentThreeDSFlowWithServerJwt:(NSString *)serverJwt url:(NSURL *)url
+- (void)presentThreeDSFlowWithServerJwt:(NSString *)serverJwt bin:(NSString *)bin url:(NSURL *)url
 {
     AWXAPIClientConfiguration *configuration = [AWXAPIClientConfiguration new];
     configuration.baseURL = url;
@@ -36,6 +36,7 @@
     
     AWX3DSCollectDeviceDataRequest *request = [AWX3DSCollectDeviceDataRequest new];
     request.jwt = serverJwt;
+    request.bin = bin;
     [self.client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
     
     }];

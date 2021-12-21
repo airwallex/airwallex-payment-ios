@@ -62,18 +62,15 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedConfiguration = [self new];
+        sharedConfiguration.baseURL = Airwallex.defaultBaseURL;
     });
     return sharedConfiguration;
-}
-
-- (NSURL *)baseURL
-{
-    return Airwallex.defaultBaseURL;
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
     AWXAPIClientConfiguration *copy = [[AWXAPIClientConfiguration allocWithZone:zone] init];
+    copy.baseURL = [self.baseURL copyWithZone:zone];
     copy.clientSecret = [self.clientSecret copyWithZone:zone];
     return copy;
 }
@@ -99,6 +96,11 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 }
 
 - (nullable NSDictionary *)parameters
+{
+    return nil;
+}
+
+- (nullable NSData *)postData
 {
     return nil;
 }
@@ -182,6 +184,9 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
     [urlRequest setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
     if (request.parameters && [NSJSONSerialization isValidJSONObject:request.parameters] && request.method == AWXHTTPMethodPOST) {
         urlRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:request.parameters options:NSJSONWritingPrettyPrinted error:nil];
+    }
+    if (request.postData) {
+        urlRequest.HTTPBody = request.postData;
     }
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:urlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {

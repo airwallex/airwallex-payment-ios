@@ -59,6 +59,7 @@ typedef enum : NSUInteger {
 - (NSString *)path;
 - (AWXHTTPMethod)method;
 - (nullable NSDictionary *)parameters;
+- (nullable NSData *)postData;
 - (Class)responseClass;
 - (NSDictionary *)headers;
 

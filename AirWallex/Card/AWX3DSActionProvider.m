@@ -44,7 +44,7 @@
     service.intentId = self.session.paymentIntentId;
     service.device = device;
     service.delegate = self;
-    [service presentThreeDSFlowWithServerJwt:response.jwt url:url];
+    [service presentThreeDSFlowWithServerJwt:response.jwt bin:response.bin url:url];
     self.service = service;
 }
 

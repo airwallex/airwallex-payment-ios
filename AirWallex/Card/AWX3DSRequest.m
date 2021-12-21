@@ -16,6 +16,11 @@
     return @"";
 }
 
+- (NSDictionary *)headers
+{
+    return @{@"content-type": @"application/x-www-form-urlencoded"};
+}
+
 - (AWXHTTPMethod)method
 {
     return AWXHTTPMethodPOST;
@@ -24,6 +29,12 @@
 - (nullable NSDictionary *)parameters
 {
     return @{@"JWT": self.jwt, @"Bin": self.bin};
+}
+
+
+- (NSData *)postData
+{
+    return [[NSString stringWithFormat:@"JWT=%@&Bin=%@", self.jwt, self.bin] dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (Class)responseClass

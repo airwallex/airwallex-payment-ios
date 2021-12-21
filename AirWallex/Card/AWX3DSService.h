@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Present the 3ds flow.
  */
-- (void)presentThreeDSFlowWithServerJwt:(NSString *)serverJwt url:(NSURL *)url;
+- (void)presentThreeDSFlowWithServerJwt:(NSString *)serverJwt bin:(NSString *)bin url:(NSURL *)url;
 
 /**
  Confirm payment intent with reference id.

@@ -10,4 +10,15 @@
 
 @implementation AWX3DSCollectDeviceDataResponse
 
++ (AWXResponse *)parse:(NSData *)data
+{
+    NSString *html = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", html);
+    
+    NSError *error = nil;
+    id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    AWX3DSCollectDeviceDataResponse *response = [[AWX3DSCollectDeviceDataResponse alloc] init];
+    return response;
+}
+
 @end
