@@ -21,7 +21,7 @@
 {
     AWXRedirect3DSResponse *response = [[AWXRedirect3DSResponse alloc] init];
     response.jwt = json[@"JWT"];
-    response.bin = json[@"Bin"];
+    response.bin = json[@"threeDSMethodData"];
     return response;
 }
 

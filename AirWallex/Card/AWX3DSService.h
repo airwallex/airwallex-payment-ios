@@ -61,11 +61,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)presentThreeDSFlowWithServerJwt:(NSString *)serverJwt bin:(NSString *)bin url:(NSURL *)url;
 
-/**
- Confirm payment intent with reference id.
- */
-- (void)confirmWithReferenceId:(NSString *)referenceId;
-
 + (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
 
 @end

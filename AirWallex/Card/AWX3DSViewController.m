@@ -1,30 +1,30 @@
 //
-//  AWXWebViewController.m
-//  Airwallex
+//  AWX3DSViewController.m
+//  Card
 //
-//  Created by Victor Zhu on 2020/5/18.
-//  Copyright © 2020 Airwallex. All rights reserved.
+//  Created by Victor Zhu on 2022/1/5.
+//  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import "AWXWebViewController.h"
+#import "AWX3DSViewController.h"
 #import <WebKit/WebKit.h>
 #import "AWXUtils.h"
-#import "AWXAPIClient.h"
+#import "AWXConstants.h"
 
-@interface AWXWebViewController () <WKNavigationDelegate>
+@interface AWX3DSViewController () <WKNavigationDelegate>
 
 @property (nonatomic, strong) WKWebView *webView;
-@property (nonatomic, strong) NSURLRequest *urlRequest;
+@property (nonatomic, strong) NSString *HTMLString;
 @property (nonatomic, strong, nullable) AWXWebHandler webHandler;
 
 @end
 
-@implementation AWXWebViewController
+@implementation AWX3DSViewController
 
-- (instancetype)initWithURLRequest:(NSURLRequest *)urlRequest webHandler:(AWXWebHandler)webHandler
+- (instancetype)initWithHTMLString:(NSString *)HTMLString webHandler:(AWXWebHandler)webHandler
 {
     if (self = [super initWithNibName:nil bundle:nil]) {
-        _urlRequest = urlRequest;
+        _HTMLString = HTMLString;
         _webHandler = webHandler;
     }
     return self;
@@ -50,7 +50,7 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
     
-    [self.webView loadRequest:self.urlRequest];
+    [self.webView loadHTMLString:self.HTMLString baseURL:nil];
 }
 
 - (void)cancel:(id)sender
@@ -67,10 +67,14 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     NSURL *url = navigationAction.request.URL;
-    if (url && [url.absoluteString containsString:[NSString stringWithFormat:@"%@pa/webhook/cybs/pares/callback?paRes=", [Airwallex defaultBaseURL]]] && self.webHandler) {
-        NSString *paResId = [url queryValueForName:@"paRes"];
+    NSLog(@"3DS URL:\n%@", url.absoluteString);
+
+    if (url && [url.absoluteString hasPrefix:AWXThreeDSReturnURL] && self.webHandler) {
+        NSString *response = [[NSString alloc] initWithData:navigationAction.request.HTTPBody encoding:NSUTF8StringEncoding];
+        NSLog(@"3DS Response:\n%@", response);
+
         [self dismissViewControllerAnimated:YES completion:^{
-            self.webHandler(paResId, nil);
+            self.webHandler(response, nil);
         }];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
@@ -101,4 +105,3 @@
 }
 
 @end
-
