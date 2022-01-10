@@ -53,6 +53,11 @@
     [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
 }
 
+- (void)threeDSService:(AWX3DSService *)service shouldInsertViewController:(UIViewController *)controller
+{
+    [self.delegate provider:self shouldInsertViewController:controller];
+}
+
 - (void)threeDSService:(nonnull AWX3DSService *)service didFinishWithResponse:(nullable AWXConfirmPaymentIntentResponse *)response error:(nullable NSError *)error
 {
     [self completeWithResponse:response error:error];

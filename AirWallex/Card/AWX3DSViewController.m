@@ -73,9 +73,7 @@
         NSString *response = [[NSString alloc] initWithData:navigationAction.request.HTTPBody encoding:NSUTF8StringEncoding];
         NSLog(@"3DS Response:\n%@", response);
 
-        [self dismissViewControllerAnimated:YES completion:^{
-            self.webHandler(response, nil);
-        }];
+        self.webHandler(response, nil);
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }

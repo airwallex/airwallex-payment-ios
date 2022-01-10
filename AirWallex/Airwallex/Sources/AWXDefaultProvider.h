@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId;
 
 /**
- This method is called when it is generated new payment intent.
+ This method is called when the next action is requiredt.
  
  @param provider The provider handling payment.
  @param nextAction The next action.
@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction;
 
 /**
- This method is called when it is generated new payment intent.
+ This method is called when payment is completed.
  
  @param provider The provider handling payment.
  @param status The status of payment.
@@ -59,13 +59,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 /**
- This method is called when it is generated new payment intent.
+ This method is called when new controller is required.
  
  @param provider The provider handling payment.
  @param controller The view controller will be presented.
  @param forceToDismiss Whether the presenting view controller needs be dismissed forcibly.
  */
 - (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation;
+
+/**
+ This method is called when new controller is required. (as child view controller)
+ 
+ @param provider The provider handling payment.
+ @param controller The view controller will be presented.
+ */
+- (void)provider:(AWXDefaultProvider *)provider shouldInsertViewController:(nullable UIViewController *)controller;
 
 @end
 

@@ -19,12 +19,20 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol AWX3DSServiceDelegate <NSObject>
 
 /**
- This method is called when the user has completed the 3ds flow.
+ This method is called when the user has started the 3ds flow.
  
  @param service The service handling 3ds flow.
  @param controller The webview controller.
  */
 - (void)threeDSService:(AWX3DSService *)service shouldPresentViewController:(UIViewController *)controller;
+
+/**
+ This method is called when the user needs to go through 3ds flow.
+ 
+ @param service The service handling 3ds flow.
+ @param controller The webview controller.
+ */
+- (void)threeDSService:(AWX3DSService *)service shouldInsertViewController:(UIViewController *)controller;
 
 /**
  This method is called when the user has completed the 3ds flow.
