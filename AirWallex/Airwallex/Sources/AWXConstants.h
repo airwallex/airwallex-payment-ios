@@ -79,6 +79,8 @@ FOUNDATION_EXPORT NSString *const AWXCardKey;
 FOUNDATION_EXPORT NSString *const AWXThreeDSReturnURL;
 FOUNDATION_EXPORT NSString *const AWXCybsURL;
 FOUNDATION_EXPORT NSString *const AWXThreeDSCheckEnrollment;
+FOUNDATION_EXPORT NSString *const AWXThreeDSWatingDeviceDataCollection;
+FOUNDATION_EXPORT NSString *const AWXThreeDSWaitingUserInfoInput;
 FOUNDATION_EXPORT NSString *const AWXThreeDSValidate;
 FOUNDATION_EXPORT NSString *const AWXThreeDSContinue;
 FOUNDATION_EXPORT NSString *const AWXDCC;

@@ -8,10 +8,10 @@
 
 #import "AWX3DSService.h"
 #import "AWXAPIClient.h"
-#import "AWX3DSRequest.h"
 #import "AWX3DSViewController.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
+#import "AWXUtils.h"
 
 @interface AWX3DSService ()
 
@@ -26,30 +26,28 @@
 {
     self = [super init];
     if (self) {
-        
     }
     return self;
 }
 
-- (void)presentThreeDSFlowWithServerJwt:(NSString *)serverJwt bin:(NSString *)bin url:(NSURL *)url
+- (void)present3DSFlowWithNextAction:(AWXConfirmPaymentNextAction *)nextAction
 {
-    //    AWXAPIClientConfiguration *configuration = [AWXAPIClientConfiguration new];
-    //    configuration.baseURL = url;
-    //    self.client = [[AWXAPIClient alloc] initWithConfiguration:configuration];
-    //
-    //    AWX3DSCollectDeviceDataRequest *request = [AWX3DSCollectDeviceDataRequest new];
-    //    request.jwt = serverJwt;
-    //    request.bin = bin;
-    //    [self.client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
-    //
-    //    }];
+    NSString *stage = nextAction.stage;
+    NSString *method = nextAction.method;
+    NSString *action = nextAction.url;
+    
+    NSMutableArray *inputs = [NSMutableArray array];
+    NSDictionary *payload = nextAction.payload;
+    for (NSString *key in payload.keyEnumerator) {
+        [inputs addObject:[NSString stringWithFormat:@"<input type='hidden' name='%@' value='%@' />", key, payload[key]]];
+    }
+    NSString *inputsText = [inputs componentsJoinedByString:@""];
     
     NSString *template = @"\
      <html>\
      <body>\
-       <form id='collectionForm' name='devicedata' method='POST' action='https://centinelapistag.cardinalcommerce.com/V1/Cruise/Collect'>\
-         <input type='hidden' name='Bin' value='${BIN}' />\
-         <input type='hidden' name='JWT' value='${JWT}' />\
+       <form id='collectionForm' name='devicedata' method='${METHOD}' action='${ACTION}'>\
+         ${INPUT}\
          <input type='submit' name='continue' value='Continue' />\
        </form>\
      <script>\
@@ -63,11 +61,13 @@
      </script>\
      </body>\
      </html>";
-    NSString *HTMLString = [template stringByReplacingOccurrencesOfString:@"${BIN}" withString:bin];
-    HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"${JWT}" withString:serverJwt];
+    
+    NSString *HTMLString = [template stringByReplacingOccurrencesOfString:@"${METHOD}" withString:method];
+    HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"${ACTION}" withString:action];
+    HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"${INPUT}" withString:inputsText];
     
     __weak __typeof(self)weakSelf = self;
-    AWX3DSViewController *webViewController = [[AWX3DSViewController alloc] initWithHTMLString:HTMLString webHandler:^(NSString * _Nullable payload, NSError * _Nullable error) {
+    AWX3DSViewController *webViewController = [[AWX3DSViewController alloc] initWithHTMLString:HTMLString stage:stage webHandler:^(NSString * _Nullable payload, NSError * _Nullable error) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (payload) {
             [strongSelf confirmWithAcsResponse:payload];
@@ -75,7 +75,15 @@
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
         }
     }];
-    [self.delegate threeDSService:self shouldInsertViewController:webViewController];
+    
+    if ([stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
+        [self.delegate threeDSService:self shouldInsertViewController:webViewController];
+    } else if ([stage isEqualToString:AWXThreeDSWaitingUserInfoInput]) {
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
+        [self.delegate threeDSService:self.delegate shouldPresentViewController:navigationController];
+    } else {
+        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid stage.", nil)}]];
+    }
 }
 
 - (void)confirmWithAcsResponse:(NSString *)acsResponse
@@ -99,52 +107,12 @@
         }
         
         AWXConfirmPaymentIntentResponse *result = (AWXConfirmPaymentIntentResponse *)response;
-        if ([result.status isEqualToString:@"REQUIRES_CAPTURE"] || result.nextAction == nil) {
+        if (result.nextAction == nil) {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:result error:nil];
             return;
         }
-        //
-        //        // Step 3: Show 3DS UI, then wait user input. After user input, will receive `processorTransactionId`
-        //        AWXAuthenticationData *authenticationData = result.latestPaymentAttempt.authenticationData;
-        //        AWXRedirectThreeDSResponse *redirectResponse = [AWXRedirectThreeDSResponse decodeFromJSON:result.nextAction.payload[@"data"]];
-        //        if (authenticationData.isThreeDSVersion2) {
-        //            // 3DS v2.x flow
-        //            if (redirectResponse.xid && redirectResponse.req) {
-        //                strongSelf.transactionId = redirectResponse.xid;
-        //                [strongSelf.session continueWithTransactionId:redirectResponse.xid payload:redirectResponse.req didValidateDelegate:self];
-        //            } else {
-        //                [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing transaction id or payload.", nil)}]];
-        //            }
-        //        } else if (redirectResponse.acs && redirectResponse.req) {
-        //            // 3DS v1.x flow
-        //            NSURL *url = [NSURL URLWithString:redirectResponse.acs];
-        //            NSString *reqEncoding = [redirectResponse.req stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
-        //            NSString *termUrlEncoding = [[NSString stringWithFormat:@"%@pa/webhook/cybs/pares/callback", [Airwallex defaultBaseURL]] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet allURLQueryAllowedCharacterSet]];
-        //            NSString *body = [NSString stringWithFormat:@"&PaReq=%@&TermUrl=%@", reqEncoding, termUrlEncoding];
-        //            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-        //            urlRequest.HTTPMethod = @"POST";
-        //            urlRequest.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
-        //            [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-        //            [urlRequest setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
-        //            __weak __typeof(self)weakSelf = self;
-        //            AWXWebViewController *webViewController = [[AWXWebViewController alloc] initWithURLRequest:urlRequest webHandler:^(NSString * _Nullable paResId, NSError * _Nullable error) {
-        //                __strong __typeof(weakSelf)strongSelf = weakSelf;
-        //                if (paResId) {
-        //                    __weak __typeof(self)_weakSelf = strongSelf;
-        //                    [strongSelf getPaRes:paResId completion:^(AWXGetPaResResponse *paResResponse) {
-        //                        __strong __typeof(weakSelf)_strongSelf = _weakSelf;
-        //                        [_strongSelf confirmWithTransactionId:paResResponse.paRes];
-        //                    }];
-        //                } else {
-        //                    [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
-        //                }
-        //            }];
-        //            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
-        //            navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-        //            [strongSelf.delegate threeDSService:strongSelf shouldPresentViewController:navigationController];
-        //        } else {
-        //            [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to determine the challenge is 1.x or 2.x.", nil)}]];
-        //        }
+        
+        [strongSelf present3DSFlowWithNextAction:result.nextAction];
     }];
 }
 

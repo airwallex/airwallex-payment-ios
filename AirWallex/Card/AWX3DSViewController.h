@@ -14,7 +14,7 @@ typedef void (^AWXWebHandler)(NSString * _Nullable payload, NSError * _Nullable 
 
 @interface AWX3DSViewController : AWXViewController
 
-- (instancetype)initWithHTMLString:(NSString *)HTMLString webHandler:(AWXWebHandler)webHandler;
+- (instancetype)initWithHTMLString:(NSString *)HTMLString stage:(NSString *)stage webHandler:(AWXWebHandler)webHandler;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

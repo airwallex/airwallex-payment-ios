@@ -45,8 +45,9 @@
 @interface AWXConfirmPaymentNextAction ()
 
 @property (nonatomic, copy, readwrite) NSString *type;
-@property (nonatomic, copy, readwrite) NSURL *url;
-@property (nonatomic, readwrite) AWXHTTPMethod method;
+@property (nonatomic, copy, readwrite) NSString *url;
+@property (nonatomic, copy, readwrite) NSString *method;
+@property (nonatomic, copy, readwrite) NSString *stage;
 @property (nonatomic, copy, readwrite) NSDictionary *payload;
 
 @end
@@ -57,17 +58,10 @@
 {
     AWXConfirmPaymentNextAction *response = [[AWXConfirmPaymentNextAction alloc] init];
     response.type = json[@"type"];
-    NSString *url = json[@"url"];
-    if (url) {
-        response.url = [NSURL URLWithString:url];
-    }
-    NSString *method = json[@"method"];
-    if ([method isEqualToString:@"GET"]) {
-        response.method = AWXHTTPMethodGET;
-    } else if ([method isEqualToString:@"POST"]) {
-        response.method = AWXHTTPMethodPOST;
-    }
-    response.payload = json;
+    response.url = json[@"url"];
+    response.method = json[@"method"];
+    response.stage = json[@"stage"];
+    response.payload = json[@"data"];
     return response;
 }
 

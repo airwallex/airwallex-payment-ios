@@ -130,4 +130,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface NSArray (Utils)
+
+- (NSArray *)mapObjectsUsingBlock:(id (^)(id obj, NSUInteger idx))block;
+
+@end
+
 NS_ASSUME_NONNULL_END

@@ -26,6 +26,9 @@ NSString *const AWXCyberSourceMerchantID = @"airwallex_cybs";
 NSString *const AWXCardKey = @"card";
 NSString *const AWXThreeDSReturnURL = @"https://www.airwallex.com";
 NSString *const AWXThreeDSCheckEnrollment = @"3dsCheckEnrollment";
+NSString *const AWXThreeDSWatingDeviceDataCollection = @"WAITING_DEVICE_DATA_COLLECTION";
+NSString *const AWXThreeDSWaitingUserInfoInput = @"WAITING_USER_INFO_INPUT";
+
 NSString *const AWXThreeDSValidate = @"3dsValidate";
 NSString *const AWXThreeDSContinue = @"3ds_continue";
 NSString *const AWXDCC = @"dcc";

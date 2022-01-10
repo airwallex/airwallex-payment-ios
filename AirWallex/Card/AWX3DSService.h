@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class AWX3DSService, AWXConfirmPaymentIntentResponse, AWXPaymentMethod, AWXDevice, AWXRedirectResponse;
+@class AWX3DSService, AWXConfirmPaymentIntentResponse, AWXConfirmPaymentNextAction, AWXPaymentMethod, AWXDevice, AWXRedirectResponse;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Present the 3ds flow.
  */
-- (void)presentThreeDSFlowWithServerJwt:(NSString *)serverJwt bin:(NSString *)bin url:(NSURL *)url;
+- (void)present3DSFlowWithNextAction:(AWXConfirmPaymentNextAction *)nextAction;
 
 + (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
 

@@ -112,7 +112,7 @@
         }
         
         AWXConfirmPaymentIntentResponse *result = (AWXConfirmPaymentIntentResponse *)response;
-        if ([result.status isEqualToString:@"REQUIRES_CAPTURE"] || result.nextAction == nil) {
+        if (result.nextAction == nil) {
             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:result error:nil];
             return;
         }

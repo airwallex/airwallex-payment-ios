@@ -11,21 +11,26 @@
 #import "AWXUtils.h"
 #import "AWXConstants.h"
 
-@interface AWX3DSViewController () <WKNavigationDelegate>
+@interface AWX3DSViewController () <WKNavigationDelegate, WKUIDelegate>
 
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) NSString *HTMLString;
+@property (nonatomic, strong) NSString *stage;
 @property (nonatomic, strong, nullable) AWXWebHandler webHandler;
 
 @end
 
 @implementation AWX3DSViewController
 
-- (instancetype)initWithHTMLString:(NSString *)HTMLString webHandler:(AWXWebHandler)webHandler
+- (instancetype)initWithHTMLString:(NSString *)HTMLString stage:(NSString *)stage webHandler:(AWXWebHandler)webHandler
 {
     if (self = [super initWithNibName:nil bundle:nil]) {
         _HTMLString = HTMLString;
+        _stage = stage;
         _webHandler = webHandler;
+        if (@available(iOS 13.0, *)) {
+            self.modalInPresentation = YES;
+        }
     }
     return self;
 }
@@ -44,6 +49,7 @@
     WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
     webView.multipleTouchEnabled = NO;
     webView.navigationDelegate = self;
+    webView.UIDelegate = self;
     webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:webView];
     self.webView = webView;
@@ -67,17 +73,34 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     NSURL *url = navigationAction.request.URL;
-    NSLog(@"3DS URL:\n%@", url.absoluteString);
-
     if (url && [url.absoluteString hasPrefix:AWXThreeDSReturnURL] && self.webHandler) {
-        NSString *response = [[NSString alloc] initWithData:navigationAction.request.HTTPBody encoding:NSUTF8StringEncoding];
-        NSLog(@"3DS Response:\n%@", response);
-
-        self.webHandler(response, nil);
+        NSString *response = [[NSString alloc] initWithData:navigationAction.request.HTTPBody encoding:NSUTF8StringEncoding];        
+        if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
+            self.webHandler(response, nil);
+        } else {
+            [self dismissViewControllerAnimated:YES completion:^{
+                self.webHandler(response, nil);
+            }];
+        }
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
     decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
+{
+    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+    if (response.statusCode == 400) {
+        if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
+            self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unknown issue.", nil)}]);
+        } else {
+            [self dismissViewControllerAnimated:YES completion:^{
+                self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unknown issue.", nil)}]);
+            }];
+        }
+    }
+    decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
@@ -86,20 +109,24 @@
         return;
     }
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        if (self.webHandler) {
+    if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
+        self.webHandler(nil, error);
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^{
             self.webHandler(nil, error);
-        }
-    }];
+        }];
+    }
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
-    [self dismissViewControllerAnimated:YES completion:^{
-        if (self.webHandler) {
+    if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
+        self.webHandler(nil, error);
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^{
             self.webHandler(nil, error);
-        }
-    }];
+        }];
+    }
 }
 
 @end

@@ -12,7 +12,6 @@
 #import "AWXSession.h"
 #import "AWXDevice.h"
 #import "AWX3DSService.h"
-#import "AWXRedirect3DSResponse.h"
 
 @interface AWX3DSActionProvider () <AWX3DSServiceDelegate>
 
@@ -32,20 +31,14 @@
         AWXDevice *device = [AWXDevice new];
         device.deviceId = sessionId;
 
-        AWXRedirect3DSResponse *response = [AWXRedirect3DSResponse decodeFromJSON:nextAction.payload[@"data"]];
-        [strongSelf handle3DSAction:response url:nextAction.url device:device];
+        AWX3DSService *service = [AWX3DSService new];
+        service.customerId = strongSelf.session.customerId;
+        service.intentId = strongSelf.session.paymentIntentId;
+        service.device = device;
+        service.delegate = strongSelf;
+        [service present3DSFlowWithNextAction:nextAction];
+        strongSelf.service = service;
     }];
-}
-
-- (void)handle3DSAction:(AWXRedirect3DSResponse *)response url:(NSURL *)url device:(AWXDevice *)device
-{
-    AWX3DSService *service = [AWX3DSService new];
-    service.customerId = self.session.customerId;
-    service.intentId = self.session.paymentIntentId;
-    service.device = device;
-    service.delegate = self;
-    [service presentThreeDSFlowWithServerJwt:response.jwt bin:response.bin url:url];
-    self.service = service;
 }
 
 - (void)threeDSService:(nonnull AWX3DSService *)service shouldPresentViewController:(nonnull UIViewController *)controller
