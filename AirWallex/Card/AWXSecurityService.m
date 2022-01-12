@@ -56,12 +56,14 @@
     NSString *sessionId = [NSString stringWithFormat:@"%@%@", AWXCyberSourceMerchantID, fraudSessionId];
     [self.profiling profileDeviceUsing:@{@"session_id": sessionId} callbackBlock:^(NSDictionary *result) {
         RLTMXStatusCode statusCode = [[result valueForKey:RLTMXProfileStatus] integerValue];
-        if (statusCode == RLTMXStatusCodeOk) {
-            NSString *sessionId = result[RLTMXSessionID];
-            completion(sessionId ?: @"");
-            return;
-        }
-        completion(@"");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (statusCode == RLTMXStatusCodeOk) {
+                NSString *sessionId = result[RLTMXSessionID];
+                completion(sessionId ?: @"");
+                return;
+            }
+            completion(@"");
+        });
     }];
 #endif
 }
