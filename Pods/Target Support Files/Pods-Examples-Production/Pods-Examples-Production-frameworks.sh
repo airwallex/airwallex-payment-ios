@@ -175,13 +175,11 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${PODS_ROOT}/AirwallexCardinalMobile/CardinalMobile.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXBehavioralBiometrics/RLTMXBehavioralBiometrics.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXProfiling/RLTMXProfiling.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXProfilingConnections/RLTMXProfilingConnections.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${PODS_ROOT}/AirwallexCardinalMobile/CardinalMobile.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXBehavioralBiometrics/RLTMXBehavioralBiometrics.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXProfiling/RLTMXProfiling.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXProfilingConnections/RLTMXProfilingConnections.framework"

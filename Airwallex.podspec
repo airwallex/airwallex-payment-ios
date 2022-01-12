@@ -23,7 +23,6 @@ Pod::Spec.new do |s|
   
   s.subspec 'Card' do |plugin|
     plugin.dependency 'Airwallex/Core'
-    plugin.dependency 'AirwallexCardinalMobile'
     plugin.dependency 'AirwallexBehavioralBiometrics'
     plugin.dependency 'AirwallexProfiling'
     plugin.dependency 'AirwallexProfilingConnections'

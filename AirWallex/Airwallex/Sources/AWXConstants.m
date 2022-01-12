@@ -94,11 +94,7 @@ Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction)
     } else if ([nextAction.type isEqualToString:@"redirect_form"]) {
         return NSClassFromString(@"AWX3DSActionProvider");
     } else if ([nextAction.type isEqualToString:@"redirect"]) {
-        if (nextAction.payload[@"data"]) {
-            return NSClassFromString(@"AWXThreeDSActionProvider");
-        } else {
-            return NSClassFromString(@"AWXRedirectActionProvider");
-        }
+        return NSClassFromString(@"AWXRedirectActionProvider");
     } else if ([nextAction.type isEqualToString:@"dcc"]) {
         return NSClassFromString(@"AWXDccActionProvider");
     } else {
