@@ -86,12 +86,17 @@
                                    completion:(AWXRequestHandler)completion
 {
     if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
+        NSString *returnURL = nil;
+        if (paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
+            returnURL = AWXThreeDSReturnURL;
+        }
         AWXOneOffSession *session = (AWXOneOffSession *)self.session;
         [self confirmPaymentIntentWithId:session.paymentIntent.Id
                               customerId:session.paymentIntent.customerId
                            paymentMethod:paymentMethod
                           paymentConsent:paymentConsent
                                   device:device
+                               returnURL:returnURL
                               completion:completion];
     } else if ([self.session isKindOfClass:[AWXRecurringSession class]]) {
         AWXRecurringSession *session = (AWXRecurringSession *)self.session;
@@ -105,11 +110,15 @@
                                          completion:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             if (response && !error) {
+                NSString *returnURL = session.returnURL;
+                if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
+                    returnURL = AWXThreeDSReturnURL;
+                }
                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod
                                                    paymentConsent:strongSelf.paymentConsent
                                                          currency:session.currency
                                                            amount:session.amount
-                                                        returnURL:session.returnURL
+                                                        returnURL:returnURL
                                                        completion:completion];
             } else {
                 completion(nil, error);
@@ -135,11 +144,15 @@
                                              returnURL:AWXThreeDSReturnURL
                                             completion:completion];
             } else {
+                NSString *returnURL = session.returnURL;
+                if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
+                    returnURL = AWXThreeDSReturnURL;
+                }
                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod
                                                    paymentConsent:strongSelf.paymentConsent
                                                          currency:session.paymentIntent.currency
                                                            amount:session.paymentIntent.amount
-                                                        returnURL:session.returnURL
+                                                        returnURL:returnURL
                                                        completion:completion];
             }
         }];
@@ -162,22 +175,6 @@
 }
 
 #pragma mark - Internal Actions
-
-- (void)confirmPaymentIntentWithId:(NSString *)paymentIntentId
-                        customerId:(nullable NSString *)customerId
-                     paymentMethod:(AWXPaymentMethod *)paymentMethod
-                    paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
-                            device:(AWXDevice *)device
-                        completion:(AWXRequestHandler)completion
-{
-    [self confirmPaymentIntentWithId:paymentIntentId
-                          customerId:customerId
-                       paymentMethod:paymentMethod
-                      paymentConsent:paymentConsent
-                              device:device
-                           returnURL:nil
-                          completion:completion];
-}
 
 - (void)confirmPaymentIntentWithId:(NSString *)paymentIntentId
                         customerId:(nullable NSString *)customerId
@@ -256,7 +253,7 @@
     request.consent = paymentConsent;
     request.currency = currency;
     request.amount = amount;
-    request.returnURL = AWXThreeDSReturnURL;
+    request.returnURL = returnURL;
     
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self)weakSelf = self;
