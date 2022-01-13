@@ -132,6 +132,7 @@
                                          paymentMethod:paymentMethod
                                         paymentConsent:strongSelf.paymentConsent
                                                 device:device
+                                             returnURL:AWXThreeDSReturnURL
                                             completion:completion];
             } else {
                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod
@@ -169,6 +170,23 @@
                             device:(AWXDevice *)device
                         completion:(AWXRequestHandler)completion
 {
+    [self confirmPaymentIntentWithId:paymentIntentId
+                          customerId:customerId
+                       paymentMethod:paymentMethod
+                      paymentConsent:paymentConsent
+                              device:device
+                           returnURL:nil
+                          completion:completion];
+}
+
+- (void)confirmPaymentIntentWithId:(NSString *)paymentIntentId
+                        customerId:(nullable NSString *)customerId
+                     paymentMethod:(AWXPaymentMethod *)paymentMethod
+                    paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
+                            device:(AWXDevice *)device
+                         returnURL:(NSString *)returnURL
+                        completion:(AWXRequestHandler)completion
+{
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
     request.intentId = paymentIntentId;
@@ -176,6 +194,7 @@
     request.paymentMethod = paymentMethod;
     request.paymentConsent = paymentConsent;
     request.device = device;
+    request.returnURL = returnURL;
     
     if ([paymentMethod.type isEqualToString:AWXCardKey]) {
         AWXCardOptions *cardOptions = [AWXCardOptions new];
@@ -237,7 +256,7 @@
     request.consent = paymentConsent;
     request.currency = currency;
     request.amount = amount;
-    request.returnURL = returnURL;
+    request.returnURL = AWXThreeDSReturnURL;
     
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self)weakSelf = self;

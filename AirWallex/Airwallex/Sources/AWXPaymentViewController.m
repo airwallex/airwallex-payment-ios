@@ -220,4 +220,12 @@
     }
 }
 
+- (void)provider:(AWXDefaultProvider *)provider shouldInsertViewController:(UIViewController *)controller
+{
+    [self addChildViewController:controller];
+    controller.view.frame = CGRectInset(self.view.frame, 0, CGRectGetMaxY(self.view.bounds));
+    [self.view addSubview:controller.view];
+    [controller didMoveToParentViewController:self];
+}
+
 @end

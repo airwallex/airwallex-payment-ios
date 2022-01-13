@@ -21,6 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXConfirmPaymentIntentRequest : AWXRequest
 
 /**
+ Return url (only be valid for recurring)
+ */
+@property (nonatomic, copy, nullable) NSString *returnURL;
+
+/**
  Intent ID.
  */
 @property (nonatomic, copy) NSString *intentId;

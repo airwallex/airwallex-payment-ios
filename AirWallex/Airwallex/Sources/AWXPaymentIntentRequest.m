@@ -63,6 +63,10 @@
     if (self.options) {
         parameters[@"payment_method_options"] = self.options.encodeToJSON;
     }
+    if (self.returnURL) {
+        parameters[@"return_url"] = self.returnURL;
+    }
+    
     parameters[@"save_payment_method"] = @(self.savePaymentMethod);
     if (self.device) {
         parameters[@"device"] = [self.device encodeToJSON];
