@@ -16,7 +16,7 @@
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction
 {
-    AWXWeChatPaySDKResponse *response = [AWXWeChatPaySDKResponse decodeFromJSON:nextAction.payload[@"data"]];
+    AWXWeChatPaySDKResponse *response = [AWXWeChatPaySDKResponse decodeFromJSON:nextAction.payload];
     
     /**
      To mock the wechat payment flow, we use an url to call instead wechat callback.

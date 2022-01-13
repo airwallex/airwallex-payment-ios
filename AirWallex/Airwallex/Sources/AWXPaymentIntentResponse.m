@@ -61,7 +61,12 @@
     response.url = json[@"url"];
     response.method = json[@"method"];
     response.stage = json[@"stage"];
-    response.payload = json[@"data"];
+    NSDictionary *data = json[@"data"];
+    if (data) {
+        response.payload = data;
+    } else {
+        response.payload = json[@"dcc_data"];;
+    }
     return response;
 }
 

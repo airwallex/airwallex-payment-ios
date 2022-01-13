@@ -24,7 +24,7 @@
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction
 {
-    AWXDccResponse *response = [AWXDccResponse decodeFromJSON:nextAction.payload[@"dcc_data"]];
+    AWXDccResponse *response = [AWXDccResponse decodeFromJSON:nextAction.payload];
     
     AWXDCCViewController *controller = [[AWXDCCViewController alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
