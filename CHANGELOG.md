@@ -1,7 +1,7 @@
 # Airwallex iOS SDK Changelog
 All notable changes to the SDK will be documented in this file.
 
-## Version 3.0.3 (January 12, 2022)
+## Version 4.0.0 (January 20, 2022)
 - Support netcetera
 - Remove cardinal
 
