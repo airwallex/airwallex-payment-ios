@@ -60,6 +60,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCheckoutMode];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedNextTriggerBy];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedRequiresCVC];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedAutoCapture];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedApiKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedClientId];
@@ -79,6 +80,7 @@
     self.checkoutMode = [userDefaults integerForKey:kCachedCheckoutMode];
     self.nextTriggerByType = [userDefaults integerForKey:kCachedNextTriggerBy];
     self.requireCVC = [userDefaults boolForKey:kCachedRequiresCVC];
+    self.autoCapture = [userDefaults boolForKey:kCachedAutoCapture];
     self.customerId = [userDefaults stringForKey:kCachedCustomerID];
     self.apiKey = [userDefaults stringForKey:kCachedApiKey] ?: self.configJson[@"api_key"];
     self.clientId = [userDefaults stringForKey:kCachedClientId] ?: self.configJson[@"client_id"];
@@ -110,6 +112,12 @@
 {
     _requireCVC = requireCVC;
     [[NSUserDefaults standardUserDefaults] setBool:requireCVC forKey:kCachedRequiresCVC];
+}
+
+- (void)setAutoCapture:(BOOL)autoCapture
+{
+    _autoCapture = autoCapture;
+    [[NSUserDefaults standardUserDefaults] setBool:autoCapture forKey:kCachedAutoCapture];
 }
 
 - (void)setCustomerId:(nullable NSString *)customerId

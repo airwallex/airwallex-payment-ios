@@ -37,6 +37,7 @@
     session.billing = billing;
     session.returnURL = @"airwallex://";
     session.paymentIntent = self.paymentIntent;
+    session.autoCapture = YES;
     XCTAssertNotNil(session.customerPaymentConsents);
     XCTAssertNotNil(session.customerPaymentMethods);
     XCTAssertNil(session.customerId);
@@ -72,6 +73,7 @@
     session.paymentIntent = self.paymentIntent;
     session.nextTriggerByType = AirwallexNextTriggerByCustomerType;
     session.requiresCVC = YES;
+    session.autoCapture = YES;
     session.merchantTriggerReason = AirwallexMerchantTriggerReasonUnscheduled;
     XCTAssertNotNil(session.customerPaymentConsents);
     XCTAssertNotNil(session.customerPaymentMethods);
