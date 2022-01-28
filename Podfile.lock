@@ -15,7 +15,6 @@ SPEC REPOS:
     - AirwallexBehavioralBiometrics
     - AirwallexProfiling
     - AirwallexProfilingConnections
-  trunk:
     - WechatOpenSDK
 
 SPEC CHECKSUMS:
@@ -26,4 +25,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ccc265b3c95509e0cd639301fabac369cd021262
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

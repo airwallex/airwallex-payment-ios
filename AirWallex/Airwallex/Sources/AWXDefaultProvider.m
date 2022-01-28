@@ -97,6 +97,7 @@
                           paymentConsent:paymentConsent
                                   device:device
                                returnURL:returnURL
+                             autoCapture:session.autoCapture
                               completion:completion];
     } else if ([self.session isKindOfClass:[AWXRecurringSession class]]) {
         AWXRecurringSession *session = (AWXRecurringSession *)self.session;
@@ -142,6 +143,7 @@
                                         paymentConsent:strongSelf.paymentConsent
                                                 device:device
                                              returnURL:AWXThreeDSReturnURL
+                                           autoCapture:session.autoCapture
                                             completion:completion];
             } else {
                 NSString *returnURL = session.returnURL;
@@ -182,6 +184,7 @@
                     paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
                             device:(AWXDevice *)device
                          returnURL:(NSString *)returnURL
+                       autoCapture:(BOOL)autoCapture
                         completion:(AWXRequestHandler)completion
 {
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
@@ -195,7 +198,7 @@
     
     if ([paymentMethod.type isEqualToString:AWXCardKey]) {
         AWXCardOptions *cardOptions = [AWXCardOptions new];
-        cardOptions.autoCapture = YES;
+        cardOptions.autoCapture = autoCapture;
         AWXThreeDs *threeDs = [AWXThreeDs new];
         threeDs.returnURL = AWXThreeDSReturnURL;
         cardOptions.threeDs = threeDs;

@@ -87,6 +87,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)requiresCVC;
 
+/**
+ Return whether auto_capture is enabled.
+ */
+- (BOOL)autoCapture;
+
 @end
 
 /**
@@ -98,6 +103,12 @@ NS_ASSUME_NONNULL_BEGIN
  The payment intent to handle.
  */
 @property (nonatomic, strong, nullable) AWXPaymentIntent *paymentIntent;
+
+/**
+ Only applicable when payment_method.type is card. If true the payment will be captured immediately after authorization succeeds.
+ Default: YES
+ */
+@property (nonatomic) BOOL autoCapture;
 
 @end
 
@@ -127,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) AirwallexNextTriggerByType nextTriggerByType;
 
 /**
- Only applicable when next_triggered_by is customer and the payment_method.type is card.If true, the customer must provide cvc for the subsequent payment with this PaymentConsent.
+ Only applicable when next_triggered_by is customer and the payment_method.type is card. If true, the customer must provide cvc for the subsequent payment with this PaymentConsent.
  Default: NO
  */
 @property (nonatomic) BOOL requiresCVC;
@@ -155,10 +166,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) AirwallexNextTriggerByType nextTriggerByType;
 
 /**
- Only applicable when next_triggered_by is customer and the payment_method.type is card.If true, the customer must provide cvc for the subsequent payment with this PaymentConsent.
+ Only applicable when next_triggered_by is customer and the payment_method.type is card. If true, the customer must provide cvc for the subsequent payment with this PaymentConsent.
  Default: NO
  */
 @property (nonatomic) BOOL requiresCVC;
+
+/**
+ Only applicable when payment_method.type is card. If true the payment will be captured immediately after authorization succeeds.
+ Default: YES
+ */
+@property (nonatomic) BOOL autoCapture;
 
 /**
  Merchant trigger reason

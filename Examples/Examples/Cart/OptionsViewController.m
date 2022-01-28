@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *checkoutBtn;
 @property (weak, nonatomic) IBOutlet UIButton *nextTriggerByBtn;
 @property (weak, nonatomic) IBOutlet UISwitch *cvcSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *autoCaptureSwitch;
 @property (weak, nonatomic) IBOutlet UITextField *customerIdTextField;
 @property (weak, nonatomic) IBOutlet UIButton *clearCustomerIdButton;
 
@@ -157,6 +158,11 @@
     [AirwallexExamplesKeys shared].requireCVC = self.cvcSwitch.isOn;
 }
 
+- (IBAction)autoCaptureSwitchPressed:(id)sender
+{
+    [AirwallexExamplesKeys shared].autoCapture = self.autoCaptureSwitch.isOn;
+}
+
 - (IBAction)generateCustomer:(id)sender
 {
     [self.activityIndicator startAnimating];
@@ -242,6 +248,9 @@
     BOOL requiresCVC = [AirwallexExamplesKeys shared].requireCVC;
     self.cvcSwitch.on = requiresCVC;
     
+    BOOL autoCapture = [AirwallexExamplesKeys shared].autoCapture;
+    self.autoCaptureSwitch.on = autoCapture;
+    
     self.customerIdTextField.enabled = NO;
     NSString *customerId = [AirwallexExamplesKeys shared].customerId;
     self.customerIdTextField.text = customerId;
@@ -319,6 +328,7 @@
     NSLog(@"Checkout mode (SDK): %@", self.checkoutModesList[[AirwallexExamplesKeys shared].checkoutMode]);
     NSLog(@"Next trigger by type (SDK): %@", self.nextTriggerByList[[AirwallexExamplesKeys shared].nextTriggerByType]);
     NSLog(@"Requires CVC (SDK): %@", [AirwallexExamplesKeys shared].requireCVC ? @"Yes" : @"No");
+    NSLog(@"Auto Capture (SDK): %@", [AirwallexExamplesKeys shared].autoCapture ? @"Enabled" : @"Disabled");
 }
 
 @end

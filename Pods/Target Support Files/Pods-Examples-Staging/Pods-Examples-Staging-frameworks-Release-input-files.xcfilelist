@@ -1,4 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-frameworks.sh
-${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXBehavioralBiometrics/RLTMXBehavioralBiometrics.framework/RLTMXBehavioralBiometrics
-${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXProfiling/RLTMXProfiling.framework/RLTMXProfiling
-${PODS_XCFRAMEWORKS_BUILD_DIR}/RLTMXProfilingConnections/RLTMXProfilingConnections.framework/RLTMXProfilingConnections
+${PODS_XCFRAMEWORKS_BUILD_DIR}/AirwallexBehavioralBiometrics/RLTMXBehavioralBiometrics.framework/RLTMXBehavioralBiometrics
+${PODS_XCFRAMEWORKS_BUILD_DIR}/AirwallexProfiling/RLTMXProfiling.framework/RLTMXProfiling
+${PODS_XCFRAMEWORKS_BUILD_DIR}/AirwallexProfilingConnections/RLTMXProfilingConnections.framework/RLTMXProfilingConnections

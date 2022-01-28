@@ -280,6 +280,7 @@
             session.billing = self.shipping;
             session.returnURL = [AirwallexExamplesKeys shared].returnUrl;
             session.paymentIntent = paymentIntent;
+            session.autoCapture = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedAutoCapture];
             return session;
         }
         case AirwallexCheckoutRecurringMode:
@@ -305,6 +306,7 @@
             session.paymentIntent = paymentIntent;
             session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
             session.requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
+            session.autoCapture = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedAutoCapture];
             session.merchantTriggerReason = AirwallexMerchantTriggerReasonScheduled;
             return session;
         }
