@@ -113,6 +113,7 @@ session.countryCode = "Your country code";
 session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.paymentIntent = "Payment intent";
+session.autoCapture = "Whether the card payment will be captured automatically (Default YES)";
 ```
 
 If you want to make recurring, create recurring session.
@@ -125,7 +126,7 @@ session.currency = "Currency code";
 session.amount = "Total amount";
 session.customerId = "Customer id";
 session.nextTriggerByType = "customer or merchant";
-session.requiresCVC = "Whether it requires CVC";
+session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
 ```
 
@@ -136,8 +137,9 @@ session.countryCode = "Your country code";
 session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.paymentIntent = "Payment intent";
+session.autoCapture = "Whether the card payment will be captured automatically (Default YES)";
 session.nextTriggerByType = "customer or merchant";
-session.requiresCVC = "Whether it requires CVC";
+session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
 ```
 
