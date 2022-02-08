@@ -36,6 +36,9 @@ Pod::Spec.new do |s|
   
   s.resources                    = ['Airwallex/Airwallex/Resources/**/*']
 
+  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+
   # s.resource_bundles = {
   #   'AirwallexSDK' => ['Airwallex/Airwallex/Resources/**/*.{lproj,storyboard,xib,xcassets,json,imageset,png}']
   # }
