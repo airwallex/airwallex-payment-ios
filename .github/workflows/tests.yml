@@ -46,13 +46,13 @@ jobs:
         .github/scripts/xccov-to-sonarqube-generic.sh action.xccovarchive > sonarqube-generic-coverage.xml
 
     - name: Store coverage for Sonar job
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
         name: coverage
         path: sonarqube-generic-coverage.xml
 
     - name: Store coverage for Sonar job (Objective-C)
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
         name: coverage-objc
         path: build_wrapper_output_directory
@@ -66,15 +66,14 @@ jobs:
         fetch-depth: 0
 
     - name: Get coverage from build job
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v3
       with:
         name: coverage
 
     - name: Get coverage from build job (Objective-C)
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v3
       with:
         name: coverage-objc
-        path: build_wrapper_output_directory
 
     - name: SonarQube Scan with Pull Request Decoration
       uses: sonarsource/sonarqube-scan-action@master
