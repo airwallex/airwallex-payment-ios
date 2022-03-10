@@ -46,19 +46,17 @@ jobs:
     #     .github/scripts/xccov-to-sonarqube-generic.sh action.xccovarchive > sonarqube-generic-coverage.xml
 
     - name: SonarQube Scan with Pull Request Decoration
-      run: fastlane run sonar 
+      run: fastlane run sonar \
+          pull_request_key:${{ github.event.number }} \
+          pull_request_branch:${{ github.ref }} \
+          pull_request_base:${{ github.base_ref }} \
+          sonar_url:${{ SONAR_HOST_URL }} \
+          sonar_login:${{ SONAR_TOKEN }} \
+          project_configuration_path:${{ sonar-project.properties }}
       if: github.event.number != null
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      with:
-        args: >
-          -Dpull_request_key=${{ github.event.number }}
-          -Dpull_request_branch=${{ github.ref }}
-          -Dpull_request_base=${{ github.base_ref }}
-          -Dsonar_url=${{ SONAR_HOST_URL }}
-          -Dsonar_login=${{ SONAR_TOKEN }}
-          -Dproject_configuration_path=${{ sonar-project.properties }}
 
     # - name: SonarQube Scan without Pull Request Decoration
     #   run: fastlane sonar 
