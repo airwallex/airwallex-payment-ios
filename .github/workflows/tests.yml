@@ -74,6 +74,7 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: coverage-objc
+        path: build_wrapper_output_directory
 
     - name: SonarQube Scan with Pull Request Decoration
       uses: sonarsource/sonarqube-scan-action@master
