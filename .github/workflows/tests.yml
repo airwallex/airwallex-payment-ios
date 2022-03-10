@@ -44,38 +44,8 @@ jobs:
 
         xcparse codecov airwallex.xcresult
         .github/scripts/xccov-to-sonarqube-generic.sh action.xccovarchive > sonarqube-generic-coverage.xml
-
-    - name: Store coverage for Sonar job
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage
-        path: sonarqube-generic-coverage.xml
-
-    - name: Store coverage for Sonar job (Objective-C)
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-objc
-        path: build_wrapper_output_directory
-
-  sonar:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-
-    - name: Get coverage from build job
-      uses: actions/download-artifact@v3
-      with:
-        name: coverage
-
-    - name: Get coverage from build job (Objective-C)
-      uses: actions/download-artifact@v3
-      with:
-        name: coverage-objc
-
-    - name: SonarQube Scan with Pull Request Decoration
+ 
+     - name: SonarQube Scan with Pull Request Decoration
       uses: sonarsource/sonarqube-scan-action@master
       if: github.event.number != null
       env:
@@ -96,5 +66,4 @@ jobs:
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       with:
         args: >
-          -Dsonar.qualitygate.wait=true
-    
+          -Dsonar.qualitygate.wait=true   
