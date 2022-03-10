@@ -35,8 +35,7 @@ jobs:
       
     - name: Test
       run: |
-        .github/scripts/build-wrapper-macosx-x86/build-wrapper-macosx-x86 --out-dir build_wrapper_output_directory make clean
-        xcodebuild clean test -workspace Airwallex.xcworkspace -scheme AirwallexTests -destination 'platform=iOS Simulator,name=iPhone 13' -clonedSourcePackagesDirPath Packages -resultBundlePath airwallex.xcresult
+        .github/scripts/build-wrapper-macosx-x86/build-wrapper-macosx-x86 --out-dir build_wrapper_output_directory xcodebuild clean test -workspace Airwallex.xcworkspace -scheme AirwallexTests -destination 'platform=iOS Simulator,name=iPhone 13' -clonedSourcePackagesDirPath Packages -resultBundlePath airwallex.xcresult
     
     - name: Create code coverage report
       # Convert xcov coverage format. See https://github.com/SonarSource/sonar-scanning-examples/tree/master/swift-coverage
