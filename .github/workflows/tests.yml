@@ -34,9 +34,10 @@ jobs:
       run: xcodebuild build-for-testing -workspace Airwallex.xcworkspace -scheme Examples-Demo -destination "platform=iOS Simulator,name=iPhone 12"
       
     - name: Test
-      run: xcodebuild clean test -workspace Airwallex.xcworkspace -scheme AirwallexTests -destination 'platform=iOS Simulator,name=iPhone 13' -clonedSourcePackagesDirPath Packages -resultBundlePath airwallex.xcresult
+      run: |
+        .github/scripts/build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory make clean
+        xcodebuild clean test -workspace Airwallex.xcworkspace -scheme AirwallexTests -destination 'platform=iOS Simulator,name=iPhone 13' -clonedSourcePackagesDirPath Packages -resultBundlePath airwallex.xcresult
     
-
     - name: Create code coverage report
       # Convert xcov coverage format. See https://github.com/SonarSource/sonar-scanning-examples/tree/master/swift-coverage
       run: |
@@ -51,6 +52,11 @@ jobs:
         name: coverage
         path: sonarqube-generic-coverage.xml
 
+    - name: Store coverage for Sonar job (Objective-C)
+      uses: actions/upload-artifact@v1
+      with:
+        name: coverage-objc
+        path: build_wrapper_output_directory
 
   sonar:
     needs: build
@@ -59,10 +65,16 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
+
     - name: Get coverage from build job
       uses: actions/download-artifact@v1
       with:
         name: coverage
+
+    - name: Get coverage from build job (Objective-C)
+      uses: actions/download-artifact@v1
+      with:
+        name: coverage-objc
 
     - name: SonarQube Scan with Pull Request Decoration
       uses: sonarsource/sonarqube-scan-action@master
