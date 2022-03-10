@@ -75,6 +75,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: coverage-objc
+        path: coverage-objc
 
     - name: Display structure of downloaded files
       run: ls -R
