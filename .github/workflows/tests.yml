@@ -35,7 +35,7 @@ jobs:
       
     - name: Test
       run: |
-        .github/scripts/build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory make clean
+        .github/scripts/build-wrapper-macosx-x86/build-wrapper-macosx-x86 --out-dir build_wrapper_output_directory make clean
         xcodebuild clean test -workspace Airwallex.xcworkspace -scheme AirwallexTests -destination 'platform=iOS Simulator,name=iPhone 13' -clonedSourcePackagesDirPath Packages -resultBundlePath airwallex.xcresult
     
     - name: Create code coverage report
