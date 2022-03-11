@@ -14,54 +14,112 @@ jobs:
     - name: Checkout project
       uses: actions/checkout@v2
     
-    - name: Setup Xcode version
-      uses: maxim-lobanov/setup-xcode@v1.2.3
-      with:
-        xcode-version: latest-stable
+    # - name: Setup Xcode version
+    #   uses: maxim-lobanov/setup-xcode@v1.2.3
+    #   with:
+    #     xcode-version: latest-stable
 
-    - name: Restore Cocoapods cache
-      uses: actions/cache@v1
-      with:
-        path: Pods
-        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-pods-
+    # - name: Restore Cocoapods cache
+    #   uses: actions/cache@v1
+    #   with:
+    #     path: Pods
+    #     key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-pods-
 
-    - name: Cocoapods
-      run: pod install --verbose #--repo-update
+    # - name: Cocoapods
+    #   run: pod install --verbose #--repo-update
       
-    - name: Build
-      run: xcodebuild build-for-testing -workspace Airwallex.xcworkspace -scheme Examples-Demo -destination "platform=iOS Simulator,name=iPhone 12"
+    # - name: Build
+    #   run: xcodebuild build-for-testing -workspace Airwallex.xcworkspace -scheme Examples-Demo -destination "platform=iOS Simulator,name=iPhone 12"
       
-    - name: Test
-      run: |
-        .github/scripts/build-wrapper-macosx-x86/build-wrapper-macosx-x86 --out-dir build_wrapper_output_directory xcodebuild clean test -workspace Airwallex.xcworkspace -scheme AirwallexTests -destination 'platform=iOS Simulator,name=iPhone 13' -clonedSourcePackagesDirPath Packages -resultBundlePath airwallex.xcresult
+    # - name: Test
+    #   run: |
+    #     .github/scripts/build-wrapper-macosx-x86/build-wrapper-macosx-x86 --out-dir build_wrapper_output_directory xcodebuild clean test -workspace Airwallex.xcworkspace -scheme AirwallexTests -destination 'platform=iOS Simulator,name=iPhone 13' -clonedSourcePackagesDirPath Packages -resultBundlePath airwallex.xcresult
     
-    - name: Create code coverage report
-      # Convert xcov coverage format. See https://github.com/SonarSource/sonar-scanning-examples/tree/master/swift-coverage
-      run: |
-        brew install chargepoint/xcparse/xcparse
+    # - name: Create code coverage report
+    #   # Convert xcov coverage format. See https://github.com/SonarSource/sonar-scanning-examples/tree/master/swift-coverage
+    #   run: |
+    #     brew install chargepoint/xcparse/xcparse
 
-        xcparse codecov airwallex.xcresult
-        .github/scripts/xccov-to-sonarqube-generic.sh action.xccovarchive > sonarqube-generic-coverage.xml
-
-
+    #     xcparse codecov airwallex.xcresult
+    #     .github/scripts/xccov-to-sonarqube-generic.sh action.xccovarchive > sonarqube-generic-coverage.xml
 
 
 
 
-    # - name: Install sonar
-    #   run: brew install sonar-scanner
+
+
+    - name: Install sonar
+      run: brew install sonar-scanner
+
+    - name: SonarQube Scan with Pull Request Decoration
+      run: fastlane run sonar pull_request_key:${{ github.event.number }} pull_request_branch:${{ github.ref }} pull_request_base:${{ github.base_ref }} sonar_url:$SONAR_HOST_URL sonar_login:$SONAR_TOKEN project_configuration_path:sonar-project.properties
+      if: github.event.number != null
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+    - name: SonarQube Scan without Pull Request Decoration
+      run: fastlane run sonar sonar_url:$SONAR_HOST_URL sonar_login:$SONAR_TOKEN project_configuration_path:sonar-project.properties
+      if: github.event.number == null
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+
+    # - name: Fastlane Sonar
+      # run: fastlane run sonar
+    # - name: Store coverage for Sonar job
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: coverage
+    #     path: sonarqube-generic-coverage.xml
+
+    # - name: Store coverage for Sonar job (Objective-C)
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: coverage-objc
+    #     path: build_wrapper_output_directory/
+
+  # # sonar can only run on Linux for... reasons.
+  # sonar:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #     with:
+  #       fetch-depth: 0
+
+  #   - name: Get coverage from build job
+  #     uses: actions/download-artifact@v3
+  #     with:
+  #       name: coverage
+
+  #   - name: Get coverage from build job (Objective-C)
+  #     uses: actions/download-artifact@v3
+  #     with:
+  #       name: coverage-objc
+  #       path: coverage-objc
+
+  #   - name: Display structure of downloaded files
+  #     run: ls -R
 
     # - name: SonarQube Scan with Pull Request Decoration
-    #   run: fastlane run sonar pull_request_key:${{ github.event.number }} pull_request_branch:${{ github.ref }} pull_request_base:${{ github.base_ref }} sonar_url:$SONAR_HOST_URL sonar_login:$SONAR_TOKEN project_configuration_path:sonar-project.properties
+    #   uses: sonarsource/sonarqube-scan-action@master
     #   if: github.event.number != null
     #   env:
     #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    #   with:
+    #     args: >
+    #       -Dsonar.qualitygate.wait=true
+    #       -Dsonar.pullrequest.key=${{ github.event.number }}
+    #       -Dsonar.pullrequest.branch=${{ github.ref }}
+    #       -Dsonar.pullrequest.base=${{ github.base_ref }}
 
     # - name: SonarQube Scan without Pull Request Decoration
-    #   run: fastlane sonar 
+    #   uses: sonarsource/sonarqube-scan-action@master
     #   if: github.event.number == null
     #   env:
     #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -69,73 +127,4 @@ jobs:
     #   with:
     #     args: >
     #       -Dsonar.qualitygate.wait=true
-
-
-    - name: Store coverage for Sonar job
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage
-        path: sonarqube-generic-coverage.xml
-
-    - name: Store coverage for Sonar job (Objective-C)
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-objc
-        path: build_wrapper_output_directory/
-
-    - name: Store Derived Data
-      uses: actions/upload-artifact@v3
-      with:
-        name: DerivedData
-        path: ~/Library/Developer/Xcode/DerivedData
-
-
-  # sonar can only run on Linux because it uses Docker which requires it on Github Actions
-  sonar:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-
-    - name: Get coverage from build job
-      uses: actions/download-artifact@v3
-      with:
-        name: coverage
-
-    - name: Get coverage from build job (Objective-C)
-      uses: actions/download-artifact@v3
-      with:
-        name: coverage-objc
-        path: coverage-objc
-
-    - name: Get DerivedData
-      uses: actions/download-artifact@v3
-      with:
-        name: DerivedData
-        path: ~Library/Developer/Xcode/DerivedData
-
-    - name: SonarQube Scan with Pull Request Decoration
-      uses: sonarsource/sonarqube-scan-action@master
-      if: github.event.number != null
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      with:
-        args: >
-          -Dsonar.qualitygate.wait=true
-          -Dsonar.pullrequest.key=${{ github.event.number }}
-          -Dsonar.pullrequest.branch=${{ github.ref }}
-          -Dsonar.pullrequest.base=${{ github.base_ref }}
-
-    - name: SonarQube Scan without Pull Request Decoration
-      uses: sonarsource/sonarqube-scan-action@master
-      if: github.event.number == null
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      with:
-        args: >
-          -Dsonar.qualitygate.wait=true
     
