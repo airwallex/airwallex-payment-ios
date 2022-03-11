@@ -45,9 +45,10 @@ jobs:
     #     xcparse codecov airwallex.xcresult
     #     .github/scripts/xccov-to-sonarqube-generic.sh action.xccovarchive > sonarqube-generic-coverage.xml
 
+    - name: Setup sonarqube
+      uses: warchant/setup-sonar-scanner@v3
 
     - name: SonarQube Scan with Pull Request Decoration
-      uses: warchant/setup-sonar-scanner@v3
       if: github.event.number != null
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -59,7 +60,6 @@ jobs:
           -Dsonar.pullrequest.base=${{ github.base_ref }}
 
     - name: SonarQube Scan without Pull Request Decoration
-      uses: warchant/setup-sonar-scanner@v3
       if: github.event.number == null
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
