@@ -53,7 +53,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       with:
-        version: 4.2.0.1873
+        version: 4.7
         typescript: true
         scan: true
         args: >
@@ -69,7 +69,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       with:
-        version: 4.2.0.1873
+        version: 4.7
         typescript: true
         scan: true
         args: >
