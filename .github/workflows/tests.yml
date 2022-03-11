@@ -46,8 +46,34 @@ jobs:
     #     .github/scripts/xccov-to-sonarqube-generic.sh action.xccovarchive > sonarqube-generic-coverage.xml
 
 
+    - name: SonarQube Scan with Pull Request Decoration
+      uses: mathrix-education/sonar-scanner@master
+      if: github.event.number != null
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      with:
+        version: 4.2.0.1873
+        typescript: true
+        scan: true
+        args: >
+          -Dsonar.qualitygate.wait=true
+          -Dsonar.pullrequest.key=${{ github.event.number }}
+          -Dsonar.pullrequest.branch=${{ github.ref }}
+          -Dsonar.pullrequest.base=${{ github.base_ref }}
 
-
+    - name: SonarQube Scan without Pull Request Decoration
+      uses: mathrix-education/sonar-scanner@master
+      if: github.event.number == null
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      with:
+        version: 4.2.0.1873
+        typescript: true
+        scan: true
+        args: >
+          -Dsonar.qualitygate.wait=true
 
 
     # - name: Install sonar
@@ -70,11 +96,11 @@ jobs:
 
     # - name: Fastlane Sonar
       # run: fastlane run sonar
-    - name: Store coverage for Sonar job
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage
-        path: sonarqube-generic-coverage.xml
+    # - name: Store coverage for Sonar job
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: coverage
+    #     path: sonarqube-generic-coverage.xml
 
     # - name: Store coverage for Sonar job (Objective-C)
     #   uses: actions/upload-artifact@v3
@@ -83,48 +109,48 @@ jobs:
     #     path: build_wrapper_output_directory/
 
   # sonar can only run on Linux for... reasons.
-  sonar:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+  # sonar:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #     with:
+  #       fetch-depth: 0
 
-    - name: Get coverage from build job
-      uses: actions/download-artifact@v3
-      with:
-        name: coverage
+  #   - name: Get coverage from build job
+  #     uses: actions/download-artifact@v3
+  #     with:
+  #       name: coverage
 
-    # - name: Get coverage from build job (Objective-C)
-    #   uses: actions/download-artifact@v3
-    #   with:
-    #     name: coverage-objc
-    #     path: coverage-objc
+  #   # - name: Get coverage from build job (Objective-C)
+  #   #   uses: actions/download-artifact@v3
+  #   #   with:
+  #   #     name: coverage-objc
+  #   #     path: coverage-objc
 
-    - name: Display structure of downloaded files
-      run: ls -R
+  #   - name: Display structure of downloaded files
+  #     run: ls -R
 
-    - name: SonarQube Scan with Pull Request Decoration
-      uses: sonarsource/sonarqube-scan-action@master
-      if: github.event.number != null
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      with:
-        args: >
-          -Dsonar.qualitygate.wait=true
-          -Dsonar.pullrequest.key=${{ github.event.number }}
-          -Dsonar.pullrequest.branch=${{ github.ref }}
-          -Dsonar.pullrequest.base=${{ github.base_ref }}
+  #   - name: SonarQube Scan with Pull Request Decoration
+  #     uses: sonarsource/sonarqube-scan-action@master
+  #     if: github.event.number != null
+  #     env:
+  #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  #     with:
+  #       args: >
+  #         -Dsonar.qualitygate.wait=true
+  #         -Dsonar.pullrequest.key=${{ github.event.number }}
+  #         -Dsonar.pullrequest.branch=${{ github.ref }}
+  #         -Dsonar.pullrequest.base=${{ github.base_ref }}
 
-    - name: SonarQube Scan without Pull Request Decoration
-      uses: sonarsource/sonarqube-scan-action@master
-      if: github.event.number == null
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      with:
-        args: >
-          -Dsonar.qualitygate.wait=true
+  #   - name: SonarQube Scan without Pull Request Decoration
+  #     uses: sonarsource/sonarqube-scan-action@master
+  #     if: github.event.number == null
+  #     env:
+  #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  #     with:
+  #       args: >
+  #         -Dsonar.qualitygate.wait=true
     
