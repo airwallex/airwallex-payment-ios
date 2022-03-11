@@ -38,13 +38,11 @@
 		57033F0F269554BD008A4780 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308123CEEC3300C9D587 /* ProductCell.m */; };
 		57033F10269554BD008A4780 /* SuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501C1264D06BE00027311 /* SuccessViewController.m */; };
 		57033F11269554BD008A4780 /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
-		57033F13269554BD008A4780 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; };
 		57033F16269554BD008A4780 /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
 		57033F17269554BD008A4780 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */; };
 		57033F18269554BD008A4780 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
 		57033F1A269554BD008A4780 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
 		57033F1B269554BD008A4780 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3F723CC64B6002E8F27 /* Main.storyboard */; };
-		57033F20269554BD008A4780 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08B55E372421D8C60054E254 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57033F2926958C94008A4780 /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 57033F2826958C94008A4780 /* UIViewController+Utils.m */; };
 		57033F2A26958C94008A4780 /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 57033F2826958C94008A4780 /* UIViewController+Utils.m */; };
 		57033F2B26958C94008A4780 /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 57033F2826958C94008A4780 /* UIViewController+Utils.m */; };
@@ -54,12 +52,6 @@
 		57CEC83A26E603B400695740 /* Redirect.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC82726E6005400695740 /* Redirect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57CEC83B26E603B500695740 /* WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC82926E6005700695740 /* WeChatPay.framework */; };
 		57CEC83C26E603B500695740 /* WeChatPay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC82926E6005700695740 /* WeChatPay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		57CEC83D26E6042000695740 /* Card.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC82B26E6007100695740 /* Card.framework */; };
-		57CEC83E26E6042000695740 /* Card.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC82B26E6007100695740 /* Card.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		57CEC83F26E6042200695740 /* Redirect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC82D26E6007400695740 /* Redirect.framework */; };
-		57CEC84026E6042200695740 /* Redirect.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC82D26E6007400695740 /* Redirect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		57CEC84126E6042300695740 /* WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC82F26E6007700695740 /* WeChatPay.framework */; };
-		57CEC84226E6042300695740 /* WeChatPay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC82F26E6007700695740 /* WeChatPay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57CEC84326E6042700695740 /* Card.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC83126E6007C00695740 /* Card.framework */; };
 		57CEC84426E6042700695740 /* Card.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC83126E6007C00695740 /* Card.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57CEC84526E6042800695740 /* Redirect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CEC83326E6007F00695740 /* Redirect.framework */; };
@@ -104,20 +96,6 @@
 				57CEC83C26E603B500695740 /* WeChatPay.framework in Embed Frameworks */,
 				084779D3244F240A00C41256 /* Airwallex.framework in Embed Frameworks */,
 				57CEC83A26E603B400695740 /* Redirect.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		57033F1F269554BD008A4780 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				57CEC83E26E6042000695740 /* Card.framework in Embed Frameworks */,
-				57CEC84226E6042300695740 /* WeChatPay.framework in Embed Frameworks */,
-				57033F20269554BD008A4780 /* Airwallex.framework in Embed Frameworks */,
-				57CEC84026E6042200695740 /* Redirect.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,11 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57033F13269554BD008A4780 /* Airwallex.framework in Frameworks */,
 				E831FE131F64421B7B49E6C2 /* libPods-Examples-Staging.a in Frameworks */,
-				57CEC83F26E6042200695740 /* Redirect.framework in Frameworks */,
-				57CEC84126E6042300695740 /* WeChatPay.framework in Frameworks */,
-				57CEC83D26E6042000695740 /* Card.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +360,8 @@
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
 				084779D1244F23CC00C41256 /* Embed Frameworks */,
-				FDC31AD10E25F0CCB2A0824D /* [CP] Embed Pods Frameworks */,
+				E48FE8DFA1CB7DA1E54CED76 /* [CP] Embed Pods Frameworks */,
+				EB834BF86B9A4A6BDE437F37 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -405,8 +380,8 @@
 				57033F03269554BD008A4780 /* Sources */,
 				57033F12269554BD008A4780 /* Frameworks */,
 				57033F15269554BD008A4780 /* Resources */,
-				57033F1F269554BD008A4780 /* Embed Frameworks */,
-				9F1797B22FE309F9B362F81F /* [CP] Embed Pods Frameworks */,
+				3C9040A5FBF6B8CE692BC28D /* [CP] Embed Pods Frameworks */,
+				F47B86B5D5215D98A9587A74 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -426,7 +401,8 @@
 				57F9EF99268DCE3E00B744B2 /* Frameworks */,
 				57F9EF9C268DCE3E00B744B2 /* Resources */,
 				57F9EFA6268DCE3E00B744B2 /* Embed Frameworks */,
-				5602D34C265B77D8471DFD2C /* [CP] Embed Pods Frameworks */,
+				1D539BD8EE6496D5D9ACD88B /* [CP] Embed Pods Frameworks */,
+				76ACE9ABAC43206FA8F85D44 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -511,6 +487,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1D539BD8EE6496D5D9ACD88B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Production/Pods-Examples-Production-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Production/Pods-Examples-Production-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Production/Pods-Examples-Production-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		27213DDF7CB718263CED259E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -533,21 +526,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5602D34C265B77D8471DFD2C /* [CP] Embed Pods Frameworks */ = {
+		3C9040A5FBF6B8CE692BC28D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples-Production/Pods-Examples-Production-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples-Production/Pods-Examples-Production-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Production/Pods-Examples-Production-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		57033F02269554BD008A4780 /* [CP] Check Pods Manifest.lock */ = {
@@ -594,24 +587,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9F1797B22FE309F9B362F81F /* [CP] Embed Pods Frameworks */ = {
+		76ACE9ABAC43206FA8F85D44 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Production/Pods-Examples-Production-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Production/Pods-Examples-Production-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Production/Pods-Examples-Production-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FDC31AD10E25F0CCB2A0824D /* [CP] Embed Pods Frameworks */ = {
+		E48FE8DFA1CB7DA1E54CED76 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -626,6 +619,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Demo/Pods-Examples-Demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB834BF86B9A4A6BDE437F37 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Demo/Pods-Examples-Demo-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Demo/Pods-Examples-Demo-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Demo/Pods-Examples-Demo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F47B86B5D5215D98A9587A74 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples-Staging/Pods-Examples-Staging-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -767,7 +794,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -820,7 +847,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -1,28 +1,35 @@
 PODS:
-  - AirwallexBehavioralBiometrics (6.1.55)
-  - AirwallexProfiling (6.1.55)
-  - AirwallexProfilingConnections (6.1.55)
+  - Airwallex (4.0.1):
+    - Airwallex/Card (= 4.0.1)
+    - Airwallex/Core (= 4.0.1)
+    - Airwallex/Redirect (= 4.0.1)
+    - Airwallex/WeChatPay (= 4.0.1)
+  - Airwallex/Card (4.0.1):
+    - Airwallex/Core
+  - Airwallex/Core (4.0.1)
+  - Airwallex/Redirect (4.0.1):
+    - Airwallex/Core
+  - Airwallex/WeChatPay (4.0.1):
+    - Airwallex/Core
+    - WechatOpenSDK
   - WechatOpenSDK (1.8.7.1)
 
 DEPENDENCIES:
-  - AirwallexBehavioralBiometrics (= 6.1.55)
-  - AirwallexProfiling (= 6.1.55)
-  - AirwallexProfilingConnections (= 6.1.55)
+  - Airwallex (from `./`)
   - WechatOpenSDK (= 1.8.7.1)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - AirwallexBehavioralBiometrics
-    - AirwallexProfiling
-    - AirwallexProfilingConnections
     - WechatOpenSDK
 
+EXTERNAL SOURCES:
+  Airwallex:
+    :path: "./"
+
 SPEC CHECKSUMS:
-  AirwallexBehavioralBiometrics: 00311c0d2e8ac216475ab79f4a84435ee428c856
-  AirwallexProfiling: 74aba2d27e7debe2d6c34d22b7407af06e0f152f
-  AirwallexProfilingConnections: 082af210db1af39e8834aff831bae45aecb877dc
+  Airwallex: b1ff6fb3ad2271c2f24ce087e477ae6fd6f6dd43
   WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
 
-PODFILE CHECKSUM: 1a77c217ce502cf470dfcbdd801b7987c1444efe
+PODFILE CHECKSUM: 0f71c8e5e187e0aa939b79cad29909650e8f4484
 
 COCOAPODS: 1.11.2
