@@ -47,32 +47,24 @@ jobs:
 
 
     - name: SonarQube Scan with Pull Request Decoration
-      uses: mathrix-education/sonar-scanner@master
+      uses: warchant/setup-sonar-scanner@v3
       if: github.event.number != null
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      with:
-        version: 4.7.0.2747
-        typescript: true
-        scan: true
-        args: >
+      run: sonar-scanner
           -Dsonar.qualitygate.wait=true
           -Dsonar.pullrequest.key=${{ github.event.number }}
           -Dsonar.pullrequest.branch=${{ github.ref }}
           -Dsonar.pullrequest.base=${{ github.base_ref }}
 
     - name: SonarQube Scan without Pull Request Decoration
-      uses: mathrix-education/sonar-scanner@master
+      uses: warchant/setup-sonar-scanner@v3
       if: github.event.number == null
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      with:
-        version: 4.7.0.2747
-        typescript: true
-        scan: true
-        args: >
+      run: sonar-scanner
           -Dsonar.qualitygate.wait=true
 
 
