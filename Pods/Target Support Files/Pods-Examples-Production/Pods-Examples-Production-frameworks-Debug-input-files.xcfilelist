@@ -1,4 +1,0 @@
-${PODS_ROOT}/Target Support Files/Pods-Examples-Production/Pods-Examples-Production-frameworks.sh
-${PODS_XCFRAMEWORKS_BUILD_DIR}/AirwallexBehavioralBiometrics/RLTMXBehavioralBiometrics.framework/RLTMXBehavioralBiometrics
-${PODS_XCFRAMEWORKS_BUILD_DIR}/AirwallexProfiling/RLTMXProfiling.framework/RLTMXProfiling
-${PODS_XCFRAMEWORKS_BUILD_DIR}/AirwallexProfilingConnections/RLTMXProfilingConnections.framework/RLTMXProfilingConnections
