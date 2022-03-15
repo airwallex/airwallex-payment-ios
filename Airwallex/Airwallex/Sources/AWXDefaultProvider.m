@@ -8,7 +8,6 @@
 
 #import "AWXDefaultProvider.h"
 #import "AWXSession.h"
-#import "AWXAPIClient.h"
 #import "AWXDevice.h"
 #import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
@@ -29,6 +28,11 @@
 @end
 
 @implementation AWXDefaultProvider
+
++ (BOOL)canHandleSession:(AWXSession *)session
+{
+    return YES;
+}
 
 - (instancetype)initWithDelegate:(id <AWXProviderDelegate>)delegate session:(AWXSession *)session
 {
@@ -81,8 +85,8 @@
 }
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                               paymentConsent:(AWXPaymentConsent *)paymentConsent
-                                       device:(AWXDevice *)device
+                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
+                                       device:(nullable AWXDevice *)device
                                    completion:(AWXRequestHandler)completion
 {
     if ([self.session isKindOfClass:[AWXOneOffSession class]]) {

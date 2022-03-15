@@ -29,6 +29,15 @@
 		3C455EB927E03B04009DB492 /* RLTMXProfiling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C455EBA27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */; };
 		3C455EBB27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3C68573D27E07AA300E41864 /* ApplePay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C68573527E07AA300E41864 /* ApplePay.framework */; };
+		3C68574227E07AA300E41864 /* ApplePayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C68574127E07AA300E41864 /* ApplePayTests.m */; };
+		3C68574327E07AA300E41864 /* ApplePay.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68573727E07AA300E41864 /* ApplePay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C68574A27E07B1B00E41864 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; platformFilter = ios; };
+		3C68574B27E07B1B00E41864 /* Airwallex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3C68575427E07C4600E41864 /* AWXApplePayProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C68575227E07C4600E41864 /* AWXApplePayProvider.m */; };
+		3C68575527E07C4600E41864 /* AWXApplePayProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68575327E07C4600E41864 /* AWXApplePayProvider.h */; };
+		3C68575827E07CD800E41864 /* AWXApplePayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C68575627E07CD800E41864 /* AWXApplePayOptions.m */; };
+		3C68575927E07CD800E41864 /* AWXApplePayOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68575727E07CD800E41864 /* AWXApplePayOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		570A139E25A82B280064B362 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139C25A82B270064B362 /* README.md */; };
 		570A139F25A82B280064B362 /* README_zh_CN.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139D25A82B280064B362 /* README_zh_CN.md */; };
 		5714F5C52746430500E2C954 /* UPGRADE.md in Resources */ = {isa = PBXBuildFile; fileRef = 5714F5C32746430500E2C954 /* UPGRADE.md */; };
@@ -162,6 +171,20 @@
 			remoteGlobalIDString = 085BD3C723CC62B4002E8F27;
 			remoteInfo = Airwallex;
 		};
+		3C68573E27E07AA300E41864 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C68573427E07AA300E41864;
+			remoteInfo = ApplePay;
+		};
+		3C68574C27E07B1B00E41864 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 085BD3C723CC62B4002E8F27;
+			remoteInfo = Airwallex;
+		};
 		5775CE6926E5D86100C6AFE3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
@@ -220,6 +243,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3C68574E27E07B1B00E41864 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3C68574B27E07B1B00E41864 /* Airwallex.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -248,6 +282,14 @@
 		3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfilingConnections.xcframework; path = ../TrustDefender/RLTMXProfilingConnections.xcframework; sourceTree = "<group>"; };
 		3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfiling.xcframework; path = ../TrustDefender/RLTMXProfiling.xcframework; sourceTree = "<group>"; };
 		3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXBehavioralBiometrics.xcframework; path = ../TrustDefender/RLTMXBehavioralBiometrics.xcframework; sourceTree = "<group>"; };
+		3C68573527E07AA300E41864 /* ApplePay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ApplePay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C68573727E07AA300E41864 /* ApplePay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplePay.h; sourceTree = "<group>"; };
+		3C68573C27E07AA300E41864 /* ApplePayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApplePayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C68574127E07AA300E41864 /* ApplePayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplePayTests.m; sourceTree = "<group>"; };
+		3C68575227E07C4600E41864 /* AWXApplePayProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXApplePayProvider.m; sourceTree = "<group>"; };
+		3C68575327E07C4600E41864 /* AWXApplePayProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXApplePayProvider.h; sourceTree = "<group>"; };
+		3C68575627E07CD800E41864 /* AWXApplePayOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWXApplePayOptions.m; sourceTree = "<group>"; };
+		3C68575727E07CD800E41864 /* AWXApplePayOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXApplePayOptions.h; sourceTree = "<group>"; };
 		570A139C25A82B270064B362 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		570A139D25A82B280064B362 /* README_zh_CN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../../README_zh_CN.md; sourceTree = "<group>"; };
 		5714F5C32746430500E2C954 /* UPGRADE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = UPGRADE.md; path = ../../UPGRADE.md; sourceTree = "<group>"; };
@@ -397,6 +439,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3C68573227E07AA300E41864 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C68574A27E07B1B00E41864 /* Airwallex.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C68573927E07AA300E41864 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C68573D27E07AA300E41864 /* ApplePay.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5775CE5C26E5D86100C6AFE3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -505,6 +563,8 @@
 				5775CE9126E5DDDF00C6AFE3 /* CardTests */,
 				5775CEAC26E5DF3300C6AFE3 /* Redirect */,
 				5775CEB726E5DF3300C6AFE3 /* RedirectTests */,
+				3C68573627E07AA300E41864 /* ApplePay */,
+				3C68574027E07AA300E41864 /* ApplePayTests */,
 				085BD3C923CC62B4002E8F27 /* Products */,
 				B6CB5D85D9AF529D3A580470 /* Pods */,
 				9261DD5DE5B6EE3DE55C5588 /* Frameworks */,
@@ -522,6 +582,8 @@
 				5775CE8D26E5DDDF00C6AFE3 /* CardTests.xctest */,
 				5775CEAB26E5DF3300C6AFE3 /* Redirect.framework */,
 				5775CEB326E5DF3300C6AFE3 /* RedirectTests.xctest */,
+				3C68573527E07AA300E41864 /* ApplePay.framework */,
+				3C68573C27E07AA300E41864 /* ApplePayTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -563,6 +625,24 @@
 				08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		3C68573627E07AA300E41864 /* ApplePay */ = {
+			isa = PBXGroup;
+			children = (
+				3C68573727E07AA300E41864 /* ApplePay.h */,
+				3C68575327E07C4600E41864 /* AWXApplePayProvider.h */,
+				3C68575227E07C4600E41864 /* AWXApplePayProvider.m */,
+			);
+			path = ApplePay;
+			sourceTree = "<group>";
+		};
+		3C68574027E07AA300E41864 /* ApplePayTests */ = {
+			isa = PBXGroup;
+			children = (
+				3C68574127E07AA300E41864 /* ApplePayTests.m */,
+			);
+			path = ApplePayTests;
 			sourceTree = "<group>";
 		};
 		5775CE6026E5D86100C6AFE3 /* WeChatPay */ = {
@@ -658,6 +738,8 @@
 				5775CF0826E5DF4F00C6AFE3 /* AWXAPIClient.m */,
 				5775CED826E5DF4E00C6AFE3 /* AWXAPIResponse.h */,
 				5775CEF726E5DF4F00C6AFE3 /* AWXAPIResponse.m */,
+				3C68575727E07CD800E41864 /* AWXApplePayOptions.h */,
+				3C68575627E07CD800E41864 /* AWXApplePayOptions.m */,
 				5775CEE826E5DF4E00C6AFE3 /* AWXCard.h */,
 				5775CEE426E5DF4E00C6AFE3 /* AWXCard.m */,
 				5775CEC426E5DF4D00C6AFE3 /* AWXCardValidator.h */,
@@ -778,6 +860,7 @@
 				5775CF3626E5DF4F00C6AFE3 /* AWXForm.h in Headers */,
 				5775CF5926E5DF5000C6AFE3 /* AWXPaymentMethod.h in Headers */,
 				5775CF6126E5DF5000C6AFE3 /* AWXShippingViewController.h in Headers */,
+				3C68575927E07CD800E41864 /* AWXApplePayOptions.h in Headers */,
 				5775CF5F26E5DF5000C6AFE3 /* AWXAddress.h in Headers */,
 				5775CF5C26E5DF5000C6AFE3 /* AWXPaymentViewController.h in Headers */,
 				5775CF1226E5DF4F00C6AFE3 /* AWXPaymentIntent.h in Headers */,
@@ -797,6 +880,15 @@
 				5775CF5D26E5DF5000C6AFE3 /* AWXPaymentMethodOptions.h in Headers */,
 				5775CF3126E5DF4F00C6AFE3 /* AWXPaymentMethodCell.h in Headers */,
 				5775CF5A26E5DF5000C6AFE3 /* AWXTrackManager.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C68573027E07AA300E41864 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C68575527E07C4600E41864 /* AWXApplePayProvider.h in Headers */,
+				3C68574327E07AA300E41864 /* ApplePay.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -876,6 +968,44 @@
 			name = AirwallexTests;
 			productName = AirwallexTests;
 			productReference = 085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		3C68573427E07AA300E41864 /* ApplePay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C68574827E07AA300E41864 /* Build configuration list for PBXNativeTarget "ApplePay" */;
+			buildPhases = (
+				3C68573027E07AA300E41864 /* Headers */,
+				3C68573127E07AA300E41864 /* Sources */,
+				3C68573227E07AA300E41864 /* Frameworks */,
+				3C68573327E07AA300E41864 /* Resources */,
+				3C68574E27E07B1B00E41864 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3C68574D27E07B1B00E41864 /* PBXTargetDependency */,
+			);
+			name = ApplePay;
+			productName = ApplePay;
+			productReference = 3C68573527E07AA300E41864 /* ApplePay.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3C68573B27E07AA300E41864 /* ApplePayTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C68574927E07AA300E41864 /* Build configuration list for PBXNativeTarget "ApplePayTests" */;
+			buildPhases = (
+				3C68573827E07AA300E41864 /* Sources */,
+				3C68573927E07AA300E41864 /* Frameworks */,
+				3C68573A27E07AA300E41864 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3C68573F27E07AA300E41864 /* PBXTargetDependency */,
+			);
+			name = ApplePayTests;
+			productName = ApplePayTests;
+			productReference = 3C68573C27E07AA300E41864 /* ApplePayTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		5775CE5E26E5D86100C6AFE3 /* WeChatPay */ = {
@@ -1006,6 +1136,12 @@
 					085BD3D023CC62B4002E8F27 = {
 						CreatedOnToolsVersion = 11.1;
 					};
+					3C68573427E07AA300E41864 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					3C68573B27E07AA300E41864 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 					5775CE5E26E5D86100C6AFE3 = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -1047,6 +1183,8 @@
 				5775CE8C26E5DDDF00C6AFE3 /* CardTests */,
 				5775CEAA26E5DF3300C6AFE3 /* Redirect */,
 				5775CEB226E5DF3300C6AFE3 /* RedirectTests */,
+				3C68573427E07AA300E41864 /* ApplePay */,
+				3C68573B27E07AA300E41864 /* ApplePayTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1073,6 +1211,20 @@
 				0829FD0C2431D3A500557DB2 /* PaymentMethod.json in Resources */,
 				0829FD002431D0DE00557DB2 /* Address.json in Resources */,
 				082442C52431AA5100D04A2C /* Card.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C68573327E07AA300E41864 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C68573A27E07AA300E41864 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1163,6 +1315,7 @@
 				5775CF3426E5DF4F00C6AFE3 /* AWXCard.m in Sources */,
 				5775CF5826E5DF5000C6AFE3 /* AWXAPIClient.m in Sources */,
 				5775CF2526E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.m in Sources */,
+				3C68575827E07CD800E41864 /* AWXApplePayOptions.m in Sources */,
 				5775CF1A26E5DF4F00C6AFE3 /* AWXUIContext.m in Sources */,
 				5775CF1926E5DF4F00C6AFE3 /* AWXTheme.m in Sources */,
 				5775CF3526E5DF4F00C6AFE3 /* AWXTrackManager.m in Sources */,
@@ -1204,6 +1357,22 @@
 				0829FD152431F13A00557DB2 /* AWXPaymentIntentFunctionalTest.m in Sources */,
 				082442C82431BD5100D04A2C /* AWXTestUtils.m in Sources */,
 				0829FD0E2431D3C200557DB2 /* AWXPaymentMethodTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C68573127E07AA300E41864 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C68575427E07C4600E41864 /* AWXApplePayProvider.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C68573827E07AA300E41864 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C68574227E07AA300E41864 /* ApplePayTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1274,6 +1443,17 @@
 			isa = PBXTargetDependency;
 			target = 085BD3C723CC62B4002E8F27 /* Airwallex */;
 			targetProxy = 085BD3D323CC62B4002E8F27 /* PBXContainerItemProxy */;
+		};
+		3C68573F27E07AA300E41864 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C68573427E07AA300E41864 /* ApplePay */;
+			targetProxy = 3C68573E27E07AA300E41864 /* PBXContainerItemProxy */;
+		};
+		3C68574D27E07B1B00E41864 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 085BD3C723CC62B4002E8F27 /* Airwallex */;
+			targetProxy = 3C68574C27E07B1B00E41864 /* PBXContainerItemProxy */;
 		};
 		5775CE6A26E5D86100C6AFE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1501,6 +1681,94 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.AirwallexTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3C68574427E07AA300E41864 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Airwallex. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 4.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.ApplePay;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3C68574527E07AA300E41864 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Airwallex. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 4.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.ApplePay;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3C68574627E07AA300E41864 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.ApplePayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3C68574727E07AA300E41864 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.ApplePayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1793,6 +2061,24 @@
 			buildConfigurations = (
 				085BD3E023CC62B4002E8F27 /* Debug */,
 				085BD3E123CC62B4002E8F27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C68574827E07AA300E41864 /* Build configuration list for PBXNativeTarget "ApplePay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C68574427E07AA300E41864 /* Debug */,
+				3C68574527E07AA300E41864 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C68574927E07AA300E41864 /* Build configuration list for PBXNativeTarget "ApplePayTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C68574627E07AA300E41864 /* Debug */,
+				3C68574727E07AA300E41864 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

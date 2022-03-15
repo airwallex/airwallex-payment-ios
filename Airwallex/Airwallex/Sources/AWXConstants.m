@@ -33,6 +33,26 @@ NSString *const AWXThreeDSValidate = @"3dsValidate";
 NSString *const AWXThreeDSContinue = @"3ds_continue";
 NSString *const AWXDCC = @"dcc";
 
+NSString *const AWXApplePayKey = @"applepay";
+
+NSArray <PKPaymentNetwork> * AWXApplePaySupportedNetworks(void)
+{
+    if (@available(iOS 12.0, *)) {
+        return @[
+            PKPaymentNetworkVisa,
+            PKPaymentNetworkMasterCard,
+            PKPaymentNetworkChinaUnionPay,
+            PKPaymentNetworkMaestro
+        ];
+    } else {
+        return @[
+            PKPaymentNetworkVisa,
+            PKPaymentNetworkMasterCard,
+            PKPaymentNetworkChinaUnionPay
+        ];
+    }
+}
+
 NSString * FormatAirwallexSDKMode(AirwallexSDKMode mode)
 {
     switch (mode) {
@@ -80,6 +100,8 @@ Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type)
 {
     if ([type.name isEqualToString:AWXCardKey]) {
         return NSClassFromString(@"AWXCardProvider");
+    } else if ([type.name isEqualToString:AWXApplePayKey]) {
+        return NSClassFromString(@"AWXApplePayProvider");
     } else if (type.hasSchema) {
         return NSClassFromString(@"AWXSchemaProvider");
     } else {

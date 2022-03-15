@@ -10,6 +10,7 @@
 #import "AWXPlaceDetails.h"
 #import "AWXPaymentIntent.h"
 #import "AWXConstants.h"
+#import "AWXApplePayOptions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,6 +33,11 @@ NS_ASSUME_NONNULL_BEGIN
  The billing address.
  */
 @property (nonatomic, strong, nullable) AWXPlaceDetails *billing;
+
+/**
+ Apple Pay options.
+ */
+@property (nonatomic, strong, nullable) AWXApplePayOptions *applePayOptions;
 
 /**
  Return URL.
