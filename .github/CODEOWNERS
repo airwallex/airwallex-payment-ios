@@ -3,5 +3,5 @@
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
 
-*         @airwallex/airwallex-mobile @airwallex/awx-pa-admins @airwallex/awx-dev-paymentacceptance
-.github/* @airwallex/airwallex-mobile @airwallex/awx-pa-admins
+*         @airwallex/airwallex-ios @airwallex/awx-pa-admins @airwallex/awx-dev-paymentacceptance
+.github/* @airwallex/airwallex-ios @airwallex/awx-pa-admins
