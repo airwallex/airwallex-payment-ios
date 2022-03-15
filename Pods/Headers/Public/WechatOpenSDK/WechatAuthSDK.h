@@ -1,1 +1,0 @@
-../../../WechatOpenSDK/OpenSDK1.8.7.1/WechatAuthSDK.h

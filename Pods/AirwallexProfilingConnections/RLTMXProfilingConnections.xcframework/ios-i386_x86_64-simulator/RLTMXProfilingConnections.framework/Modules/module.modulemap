@@ -1,6 +1,0 @@
-framework module RLTMXProfilingConnections {
-    umbrella header "TMXProfilingConnections.h"
-
-    export *
-    module * { export * }
-}
