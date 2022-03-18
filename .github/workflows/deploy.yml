@@ -63,7 +63,7 @@ jobs:
 
       - name: Xcode archive
         run: |
-          xcodebuild archive -quiet -workspace Airwallex.xcworkspace -scheme Examples-Demo clean archive -configuration release -sdk iphoneos -archivePath ios.xcarchive
+          xcodebuild archive -quiet -workspace Airwallex.xcworkspace -scheme Examples clean archive -configuration release -sdk iphoneos -archivePath ios.xcarchive
 
       - name: Xcode export
         run: |
@@ -72,7 +72,7 @@ jobs:
       - name: Upload app to TestFlight
         uses: apple-actions/upload-testflight-build@v1
         with: 
-          app-path: 'output/Examples-Demo.ipa'
+          app-path: 'output/Examples.ipa'
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}

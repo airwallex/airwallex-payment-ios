@@ -31,7 +31,7 @@ jobs:
       run: pod install --verbose --repo-update
       
     - name: Build
-      run: xcodebuild build-for-testing -workspace Airwallex.xcworkspace -scheme Examples-Demo -destination "platform=iOS Simulator,name=iPhone 12"
+      run: xcodebuild build-for-testing -workspace Airwallex.xcworkspace -scheme Examples -destination "platform=iOS Simulator,name=iPhone 12"
       
       # Sonar coverage is broken up into two formats for Objective-C and Swift code. 
       # All Objective-C analysis requires the build-wrapper (https://docs.sonarqube.org/latest/analysis/languages/cfamily/). Without it, sonar-scanner

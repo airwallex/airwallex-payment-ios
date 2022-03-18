@@ -5,29 +5,15 @@ inhibit_all_warnings!
 
 workspace 'Airwallex.xcworkspace'
 
-def shared_example_pods
-  pod 'Airwallex', :path => './'
-  pod 'WechatOpenSDK', '1.8.7.1'
-end
-
 target 'WeChatPay' do
   project './Airwallex/Airwallex.xcodeproj'
   pod 'WechatOpenSDK', '1.8.7.1'
 end
 
-target 'Examples-Demo' do
+target 'Examples' do
   project './Examples/Examples.xcodeproj'
-  shared_example_pods
-end
-
-target 'Examples-Staging' do
-  project './Examples/Examples.xcodeproj'
-  shared_example_pods
-end
-
-target 'Examples-Production' do
-  project './Examples/Examples.xcodeproj'
-  shared_example_pods
+  pod 'Airwallex', :path => './'
+  pod 'WechatOpenSDK', '1.8.7.1'
 end
 
 post_install do |installer|
