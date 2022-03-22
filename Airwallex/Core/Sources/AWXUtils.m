@@ -36,7 +36,7 @@ static NSString * const kSDKSuiteName = @"com.airwallex.sdk";
 
 + (NSBundle *)resourceBundle
 {
-    return [NSBundle bundleWithPath:[self.sdkBundle pathForResource:@"AirwallexSDK" ofType:@"bundle"]];
+    return [NSBundle bundleWithPath:[self.sdkBundle pathForResource:@"Core" ofType:@"bundle"]];
 }
 
 @end

@@ -97,6 +97,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly, nullable) AWXPaymentMethod *paymentMethod;
 
+/**
+ Indicating whether the provider can handle a particular session. Default implementation returns YES. Subclasses can override to
+ do additional checks.
+ */
++ (BOOL)canHandleSession:(AWXSession *)session;
+
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)initWithDelegate:(id <AWXProviderDelegate>)delegate session:(AWXSession *)session;
