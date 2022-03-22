@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <PassKit/PassKit.h>
 
 @class AWXPaymentMethodType, AWXConfirmPaymentNextAction;
 
@@ -84,6 +85,9 @@ FOUNDATION_EXPORT NSString *const AWXThreeDSWaitingUserInfoInput;
 FOUNDATION_EXPORT NSString *const AWXThreeDSValidate;
 FOUNDATION_EXPORT NSString *const AWXThreeDSContinue;
 FOUNDATION_EXPORT NSString *const AWXDCC;
+
+FOUNDATION_EXPORT NSString *const AWXApplePayKey;
+FOUNDATION_EXPORT NSArray <PKPaymentNetwork> *AWXApplePaySupportedNetworks(void);
 
 FOUNDATION_EXPORT NSString * FormatAirwallexSDKMode(AirwallexSDKMode mode);
 FOUNDATION_EXPORT NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type);

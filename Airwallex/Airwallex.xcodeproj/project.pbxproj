@@ -34,6 +34,11 @@
 		3C455EB927E03B04009DB492 /* RLTMXProfiling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C455EBA27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */; };
 		3C455EBB27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3C99E73C27E9A0730074156C /* AWXApplePayOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C99E73A27E9A0730074156C /* AWXApplePayOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C99E73D27E9A0730074156C /* AWXApplePayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C99E73B27E9A0730074156C /* AWXApplePayOptions.m */; };
+		3C99E73F27E9A3380074156C /* AWXDefaultProviderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C99E73E27E9A3380074156C /* AWXDefaultProviderTest.m */; };
+		3C99E74527E9A51C0074156C /* AWXConstantsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C99E74427E9A51C0074156C /* AWXConstantsTest.m */; };
+		3C99E74727E9A6B70074156C /* AWXApplePayOptionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C99E74627E9A6B70074156C /* AWXApplePayOptionsTest.m */; };
 		3C9ED16F27E97E800056615A /* Core.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F532404B6C3008E65D3 /* Core.bundle */; };
 		571D10862796DE4D005DE2CA /* WeChatPay.h in Headers */ = {isa = PBXBuildFile; fileRef = 57CEC82426E5FE2A00695740 /* WeChatPay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */; };
@@ -266,6 +271,11 @@
 		3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfilingConnections.xcframework; path = ../TrustDefender/RLTMXProfilingConnections.xcframework; sourceTree = "<group>"; };
 		3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfiling.xcframework; path = ../TrustDefender/RLTMXProfiling.xcframework; sourceTree = "<group>"; };
 		3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXBehavioralBiometrics.xcframework; path = ../TrustDefender/RLTMXBehavioralBiometrics.xcframework; sourceTree = "<group>"; };
+		3C99E73A27E9A0730074156C /* AWXApplePayOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXApplePayOptions.h; sourceTree = "<group>"; };
+		3C99E73B27E9A0730074156C /* AWXApplePayOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXApplePayOptions.m; sourceTree = "<group>"; };
+		3C99E73E27E9A3380074156C /* AWXDefaultProviderTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXDefaultProviderTest.m; sourceTree = "<group>"; };
+		3C99E74427E9A51C0074156C /* AWXConstantsTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXConstantsTest.m; sourceTree = "<group>"; };
+		3C99E74627E9A6B70074156C /* AWXApplePayOptionsTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXApplePayOptionsTest.m; sourceTree = "<group>"; };
 		3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Airwallex.xctestplan; sourceTree = "<group>"; };
 		570A139C25A82B270064B362 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		570A139D25A82B280064B362 /* README_zh_CN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../../README_zh_CN.md; sourceTree = "<group>"; };
@@ -575,6 +585,9 @@
 			children = (
 				0829FD4F24358E5600557DB2 /* XCTestCase+Utils.h */,
 				0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */,
+				3C99E74627E9A6B70074156C /* AWXApplePayOptionsTest.m */,
+				3C99E74427E9A51C0074156C /* AWXConstantsTest.m */,
+				3C99E73E27E9A3380074156C /* AWXDefaultProviderTest.m */,
 				082442C62431BD5100D04A2C /* AWXTestUtils.h */,
 				082442C72431BD5100D04A2C /* AWXTestUtils.m */,
 				0829FD182432016900557DB2 /* Tools */,
@@ -701,6 +714,8 @@
 				5775CF0226E5DF4F00C6AFE3 /* AWXAddress.m */,
 				5775CEE726E5DF4E00C6AFE3 /* AWXAPIClient.h */,
 				5775CF0826E5DF4F00C6AFE3 /* AWXAPIClient.m */,
+				3C99E73A27E9A0730074156C /* AWXApplePayOptions.h */,
+				3C99E73B27E9A0730074156C /* AWXApplePayOptions.m */,
 				5775CED826E5DF4E00C6AFE3 /* AWXAPIResponse.h */,
 				5775CEF726E5DF4F00C6AFE3 /* AWXAPIResponse.m */,
 				5775CEE826E5DF4E00C6AFE3 /* AWXCard.h */,
@@ -822,6 +837,7 @@
 				5775CF4326E5DF5000C6AFE3 /* AWXViewController.h in Headers */,
 				5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */,
 				5775CF4526E5DF5000C6AFE3 /* AWXPaymentConsent.h in Headers */,
+				3C99E73C27E9A0730074156C /* AWXApplePayOptions.h in Headers */,
 				5775CF2726E5DF4F00C6AFE3 /* AWXLogger.h in Headers */,
 				5775CF3326E5DF4F00C6AFE3 /* AWXPaymentMethodRequest.h in Headers */,
 				5775CF3626E5DF4F00C6AFE3 /* AWXForm.h in Headers */,
@@ -1236,6 +1252,7 @@
 				5775CF3426E5DF4F00C6AFE3 /* AWXCard.m in Sources */,
 				5775CF5826E5DF5000C6AFE3 /* AWXAPIClient.m in Sources */,
 				5775CF2526E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.m in Sources */,
+				3C99E73D27E9A0730074156C /* AWXApplePayOptions.m in Sources */,
 				5775CF1A26E5DF4F00C6AFE3 /* AWXUIContext.m in Sources */,
 				5775CF1926E5DF4F00C6AFE3 /* AWXTheme.m in Sources */,
 				5775CF3526E5DF4F00C6AFE3 /* AWXTrackManager.m in Sources */,
@@ -1269,12 +1286,15 @@
 				0829FD1A2432019E00557DB2 /* AWXCardValidatorTest.m in Sources */,
 				0829FD4E243584E300557DB2 /* AWXTestAPIClient.m in Sources */,
 				0829FD022431D10800557DB2 /* AWXAddressTest.m in Sources */,
+				3C99E73F27E9A3380074156C /* AWXDefaultProviderTest.m in Sources */,
 				082442CC2431C00E00D04A2C /* AWXCardTest.m in Sources */,
 				572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */,
 				0829FD082431D25800557DB2 /* AWXBillingTest.m in Sources */,
+				3C99E74727E9A6B70074156C /* AWXApplePayOptionsTest.m in Sources */,
 				0829FD132431E11E00557DB2 /* AWXPaymentMethodFunctionalTest.m in Sources */,
 				0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */,
 				0829FD152431F13A00557DB2 /* AWXPaymentIntentFunctionalTest.m in Sources */,
+				3C99E74527E9A51C0074156C /* AWXConstantsTest.m in Sources */,
 				082442C82431BD5100D04A2C /* AWXTestUtils.m in Sources */,
 				0829FD0E2431D3C200557DB2 /* AWXPaymentMethodTest.m in Sources */,
 			);

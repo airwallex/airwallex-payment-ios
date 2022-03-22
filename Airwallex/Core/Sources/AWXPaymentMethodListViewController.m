@@ -125,12 +125,30 @@
 
         if (response && !error) {
             AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
-            strongSelf.availablePaymentMethodTypes = [result.items filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"transactionMode == %@", strongSelf.session.transactionMode]];
+            strongSelf.availablePaymentMethodTypes = [self filterPaymentMethodTypes:result.items];
             strongSelf.canLoadMore = result.hasMore;
             strongSelf.nextPageNum = pageNum + 1;
             [strongSelf.tableView reloadData];
         }
     }];
+}
+
+- (NSArray<AWXPaymentMethodType *> *)filterPaymentMethodTypes:(NSArray<AWXPaymentMethodType *> *)items
+{
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+        AWXPaymentMethodType *item = (AWXPaymentMethodType *)evaluatedObject;
+        Class class = ClassToHandleFlowForPaymentMethodType(item);
+        
+        // If no provider is available or if the provider is not able to handle the particular session,
+        // then we should filter this method out.
+        if (class == nil || ![class canHandleSession: self.session]) {
+            return NO;
+        }
+        
+        return [item.transactionMode isEqualToString:self.session.transactionMode];
+    }];
+    
+    return [items filteredArrayUsingPredicate:predicate];
 }
 
 - (void)loadAvailablePaymentConsents
@@ -265,6 +283,9 @@
     if (indexPath.section == 1) {
         AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
         Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType);
+        
+        // This should not happen since we've filtered out the types that no providers support when we get the data.
+        // For now, we'll leave it here but we should be able to remove it.
         if (class == nil) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the payment method.", nil) preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];

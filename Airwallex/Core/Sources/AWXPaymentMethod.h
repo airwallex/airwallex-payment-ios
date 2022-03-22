@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXPaymentMethod : NSObject <AWXJSONEncodable, AWXJSONDecodable>
 
 /**
- Type of the payment method. One of card, wechatpay.
+ Type of the payment method. One of card, wechatpay, applepay.
  */
 @property (nonatomic, copy) NSString *type;
 
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) AWXCard *card;
 
 /**
- Additional params  for wechat or redirect type.
+ Additional params  for wechat, redirect or applepay type.
  */
 @property (nonatomic, strong, nullable) NSDictionary *additionalParams;
 

@@ -30,6 +30,11 @@
 
 @implementation AWXDefaultProvider
 
++ (BOOL)canHandleSession:(AWXSession *)session
+{
+    return YES;
+}
+
 - (instancetype)initWithDelegate:(id <AWXProviderDelegate>)delegate session:(AWXSession *)session
 {
     return [self initWithDelegate:delegate session:session paymentMethod:nil];
