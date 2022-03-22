@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "28F29006-083A-4490-8EB9-1FE8FE6A4220",
+      "name" : "CI",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
+        "identifier" : "085BD3D023CC62B4002E8F27",
+        "name" : "CoreTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -30,9 +30,6 @@ jobs:
     - name: Cocoapods
       run: pod install --verbose --repo-update
       
-    - name: Build
-      run: xcodebuild build-for-testing -workspace Airwallex.xcworkspace -scheme Examples -destination "platform=iOS Simulator,name=iPhone 12"
-      
       # Sonar coverage is broken up into two formats for Objective-C and Swift code. 
       # All Objective-C analysis requires the build-wrapper (https://docs.sonarqube.org/latest/analysis/languages/cfamily/). Without it, sonar-scanner
       # will fail. Some documentation suggests it's not necessary to use the build-wrapper, however this appears to have been changed in 2019 or so.
@@ -40,7 +37,7 @@ jobs:
       # to accomplish this.
     - name: Test
       run: |
-        .github/scripts/build-wrapper-macosx-x86/build-wrapper-macosx-x86 --out-dir build_wrapper_output_directory xcodebuild clean test -workspace Airwallex.xcworkspace -scheme AirwallexTests -destination 'platform=iOS Simulator,name=iPhone 13' -clonedSourcePackagesDirPath Packages -resultBundlePath airwallex.xcresult
+        .github/scripts/build-wrapper-macosx-x86/build-wrapper-macosx-x86 --out-dir build_wrapper_output_directory xcodebuild clean test -quiet -workspace Airwallex.xcworkspace -testPlan Airwallex -destination 'platform=iOS Simulator,name=iPhone 13' -resultBundlePath airwallex.xcresult
     
     - name: Create code coverage report
       # Convert xcov coverage format. See https://github.com/SonarSource/sonar-scanning-examples/tree/master/swift-coverage

@@ -10,12 +10,12 @@ Pod::Spec.new do |s|
   s.ios.deployment_target   = '11.0'
   s.static_framework        = true
   s.default_subspecs        = 'Core', 'WeChatPay', 'Card', 'Redirect'
-  s.resources               = ['Airwallex/Airwallex/Resources/**/*']
   s.pod_target_xcconfig     = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   s.user_target_xcconfig    = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   
   s.subspec 'Core' do |plugin|
-    plugin.source_files = 'Airwallex/Airwallex/Sources/*.{h,m}'
+    plugin.source_files = 'Airwallex/Core/Sources/*.{h,m}'
+    plugin.resources    = ['Airwallex/Core/Resources/**/*']
   end
   
   s.subspec 'WeChatPay' do |plugin|
