@@ -21,19 +21,20 @@
 		0829FD1A2432019E00557DB2 /* AWXCardValidatorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD192432019E00557DB2 /* AWXCardValidatorTest.m */; };
 		0829FD4E243584E300557DB2 /* AWXTestAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD4D243584E300557DB2 /* AWXTestAPIClient.m */; };
 		0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */; };
-		085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
-		08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */; };
+		085BD3D223CC62B4002E8F27 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; };
+		3C2B649227E98858002FAF3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649127E98858002FAF3E /* AppDelegate.m */; };
+		3C2B649827E98858002FAF3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649727E98858002FAF3E /* ViewController.m */; };
+		3C2B649B27E98858002FAF3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C2B649927E98858002FAF3E /* Main.storyboard */; };
+		3C2B649D27E98859002FAF3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C2B649C27E98859002FAF3E /* Assets.xcassets */; };
+		3C2B64A027E98859002FAF3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C2B649E27E98859002FAF3E /* LaunchScreen.storyboard */; };
+		3C2B64A327E98859002FAF3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B64A227E98859002FAF3E /* main.m */; };
 		3C455EB627E03B04009DB492 /* RLTMXProfilingConnections.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */; };
 		3C455EB727E03B04009DB492 /* RLTMXProfilingConnections.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C455EB827E03B04009DB492 /* RLTMXProfiling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */; };
 		3C455EB927E03B04009DB492 /* RLTMXProfiling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C455EBA27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */; };
 		3C455EBB27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		570A139E25A82B280064B362 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139C25A82B270064B362 /* README.md */; };
-		570A139F25A82B280064B362 /* README_zh_CN.md in Resources */ = {isa = PBXBuildFile; fileRef = 570A139D25A82B280064B362 /* README_zh_CN.md */; };
-		5714F5C52746430500E2C954 /* UPGRADE.md in Resources */ = {isa = PBXBuildFile; fileRef = 5714F5C32746430500E2C954 /* UPGRADE.md */; };
-		5714F5C92746430500E2C954 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 5714F5C42746430500E2C954 /* CHANGELOG.md */; };
-		5714F5CE2746441D00E2C954 /* Airwallex.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 5714F5CD2746441D00E2C954 /* Airwallex.podspec */; };
+		3C9ED16F27E97E800056615A /* Core.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F532404B6C3008E65D3 /* Core.bundle */; };
 		571D10862796DE4D005DE2CA /* WeChatPay.h in Headers */ = {isa = PBXBuildFile; fileRef = 57CEC82426E5FE2A00695740 /* WeChatPay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */; };
 		5775CE6826E5D86100C6AFE3 /* WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */; };
@@ -46,9 +47,9 @@
 		5775CEBB26E5DF3300C6AFE3 /* Redirect.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEAD26E5DF3300C6AFE3 /* Redirect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF1226E5DF4F00C6AFE3 /* AWXPaymentIntent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEC226E5DF4D00C6AFE3 /* AWXPaymentIntent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF1326E5DF4F00C6AFE3 /* AWXDefaultProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEC326E5DF4D00C6AFE3 /* AWXDefaultProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF1426E5DF4F00C6AFE3 /* AWXCardValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEC426E5DF4D00C6AFE3 /* AWXCardValidator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF1426E5DF4F00C6AFE3 /* AWXCardValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEC426E5DF4D00C6AFE3 /* AWXCardValidator.h */; };
 		5775CF1526E5DF4F00C6AFE3 /* AWXPaymentIntent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEC526E5DF4D00C6AFE3 /* AWXPaymentIntent.m */; };
-		5775CF1626E5DF4F00C6AFE3 /* AWXPaymentIntentResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEC626E5DF4D00C6AFE3 /* AWXPaymentIntentResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF1626E5DF4F00C6AFE3 /* AWXPaymentIntentResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEC626E5DF4D00C6AFE3 /* AWXPaymentIntentResponse.h */; };
 		5775CF1726E5DF4F00C6AFE3 /* AWXCardValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEC726E5DF4D00C6AFE3 /* AWXCardValidator.m */; };
 		5775CF1826E5DF4F00C6AFE3 /* AWXPlaceDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEC826E5DF4D00C6AFE3 /* AWXPlaceDetails.m */; };
 		5775CF1926E5DF4F00C6AFE3 /* AWXTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEC926E5DF4D00C6AFE3 /* AWXTheme.m */; };
@@ -58,40 +59,40 @@
 		5775CF1D26E5DF4F00C6AFE3 /* AWXPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CECD26E5DF4D00C6AFE3 /* AWXPaymentViewController.m */; };
 		5775CF1E26E5DF4F00C6AFE3 /* AWXPaymentMethodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CECE26E5DF4D00C6AFE3 /* AWXPaymentMethodCell.m */; };
 		5775CF1F26E5DF4F00C6AFE3 /* AWXPaymentMethodOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CECF26E5DF4D00C6AFE3 /* AWXPaymentMethodOptions.m */; };
-		5775CF2026E5DF4F00C6AFE3 /* AWXPaymentMethodListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED026E5DF4D00C6AFE3 /* AWXPaymentMethodListViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF2026E5DF4F00C6AFE3 /* AWXPaymentMethodListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED026E5DF4D00C6AFE3 /* AWXPaymentMethodListViewController.h */; };
 		5775CF2126E5DF4F00C6AFE3 /* AWXCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CED126E5DF4D00C6AFE3 /* AWXCountry.m */; };
 		5775CF2426E5DF4F00C6AFE3 /* AWXPaymentIntentResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CED426E5DF4E00C6AFE3 /* AWXPaymentIntentResponse.m */; };
 		5775CF2526E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CED526E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.m */; };
-		5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED626E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF2726E5DF4F00C6AFE3 /* AWXLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED726E5DF4E00C6AFE3 /* AWXLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF2826E5DF4F00C6AFE3 /* AWXAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED826E5DF4E00C6AFE3 /* AWXAPIResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED626E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.h */; };
+		5775CF2726E5DF4F00C6AFE3 /* AWXLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED726E5DF4E00C6AFE3 /* AWXLogger.h */; };
+		5775CF2826E5DF4F00C6AFE3 /* AWXAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CED826E5DF4E00C6AFE3 /* AWXAPIResponse.h */; };
 		5775CF2926E5DF4F00C6AFE3 /* AWXDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CED926E5DF4E00C6AFE3 /* AWXDevice.m */; };
 		5775CF2A26E5DF4F00C6AFE3 /* AWXPlaceDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEDA26E5DF4E00C6AFE3 /* AWXPlaceDetails.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF2D26E5DF4F00C6AFE3 /* AWXUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEDD26E5DF4E00C6AFE3 /* AWXUtils.m */; };
 		5775CF2E26E5DF4F00C6AFE3 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEDE26E5DF4E00C6AFE3 /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF2F26E5DF4F00C6AFE3 /* AWXSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEDF26E5DF4E00C6AFE3 /* AWXSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF3026E5DF4F00C6AFE3 /* AWXPaymentMethodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEE026E5DF4E00C6AFE3 /* AWXPaymentMethodListViewController.m */; };
-		5775CF3126E5DF4F00C6AFE3 /* AWXPaymentMethodCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEE126E5DF4E00C6AFE3 /* AWXPaymentMethodCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF3126E5DF4F00C6AFE3 /* AWXPaymentMethodCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEE126E5DF4E00C6AFE3 /* AWXPaymentMethodCell.h */; };
 		5775CF3226E5DF4F00C6AFE3 /* AWXPaymentIntentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEE226E5DF4E00C6AFE3 /* AWXPaymentIntentRequest.m */; };
-		5775CF3326E5DF4F00C6AFE3 /* AWXPaymentMethodRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEE326E5DF4E00C6AFE3 /* AWXPaymentMethodRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF3326E5DF4F00C6AFE3 /* AWXPaymentMethodRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEE326E5DF4E00C6AFE3 /* AWXPaymentMethodRequest.h */; };
 		5775CF3426E5DF4F00C6AFE3 /* AWXCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEE426E5DF4E00C6AFE3 /* AWXCard.m */; };
 		5775CF3526E5DF4F00C6AFE3 /* AWXTrackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEE526E5DF4E00C6AFE3 /* AWXTrackManager.m */; };
-		5775CF3626E5DF4F00C6AFE3 /* AWXForm.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEE626E5DF4E00C6AFE3 /* AWXForm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF3626E5DF4F00C6AFE3 /* AWXForm.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEE626E5DF4E00C6AFE3 /* AWXForm.h */; };
 		5775CF3726E5DF4F00C6AFE3 /* AWXAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEE726E5DF4E00C6AFE3 /* AWXAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF3826E5DF4F00C6AFE3 /* AWXCard.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEE826E5DF4E00C6AFE3 /* AWXCard.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF3926E5DF4F00C6AFE3 /* AWXPaymentConsentResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEE926E5DF4E00C6AFE3 /* AWXPaymentConsentResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF3926E5DF4F00C6AFE3 /* AWXPaymentConsentResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEE926E5DF4E00C6AFE3 /* AWXPaymentConsentResponse.h */; };
 		5775CF3A26E5DF4F00C6AFE3 /* AWXWidgets.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEEA26E5DF4E00C6AFE3 /* AWXWidgets.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF3B26E5DF5000C6AFE3 /* AWXCountryListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEEB26E5DF4E00C6AFE3 /* AWXCountryListViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF3B26E5DF5000C6AFE3 /* AWXCountryListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEEB26E5DF4E00C6AFE3 /* AWXCountryListViewController.h */; };
 		5775CF3C26E5DF5000C6AFE3 /* AWXFormMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEEC26E5DF4E00C6AFE3 /* AWXFormMapping.m */; };
 		5775CF3D26E5DF5000C6AFE3 /* AWXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEED26E5DF4E00C6AFE3 /* AWXViewController.m */; };
 		5775CF3E26E5DF5000C6AFE3 /* AWXPaymentConsent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEEE26E5DF4E00C6AFE3 /* AWXPaymentConsent.m */; };
-		5775CF3F26E5DF5000C6AFE3 /* AWXFormMapping.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEEF26E5DF4E00C6AFE3 /* AWXFormMapping.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF3F26E5DF5000C6AFE3 /* AWXFormMapping.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEEF26E5DF4E00C6AFE3 /* AWXFormMapping.h */; };
 		5775CF4026E5DF5000C6AFE3 /* AWXPaymentMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEF026E5DF4E00C6AFE3 /* AWXPaymentMethod.m */; };
 		5775CF4126E5DF5000C6AFE3 /* AWXLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEF126E5DF4F00C6AFE3 /* AWXLogger.m */; };
 		5775CF4226E5DF5000C6AFE3 /* AWXShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEF226E5DF4F00C6AFE3 /* AWXShippingViewController.m */; };
 		5775CF4326E5DF5000C6AFE3 /* AWXViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF326E5DF4F00C6AFE3 /* AWXViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF4426E5DF5000C6AFE3 /* AWXCountry.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF426E5DF4F00C6AFE3 /* AWXCountry.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF4526E5DF5000C6AFE3 /* AWXPaymentConsent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF526E5DF4F00C6AFE3 /* AWXPaymentConsent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF4426E5DF5000C6AFE3 /* AWXCountry.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF426E5DF4F00C6AFE3 /* AWXCountry.h */; };
+		5775CF4526E5DF5000C6AFE3 /* AWXPaymentConsent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF526E5DF4F00C6AFE3 /* AWXPaymentConsent.h */; };
 		5775CF4626E5DF5000C6AFE3 /* AWXUIContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF626E5DF4F00C6AFE3 /* AWXUIContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF4726E5DF5000C6AFE3 /* AWXAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEF726E5DF4F00C6AFE3 /* AWXAPIResponse.m */; };
 		5775CF4826E5DF5000C6AFE3 /* AWXConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF826E5DF4F00C6AFE3 /* AWXConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -107,47 +108,47 @@
 		5775CF5226E5DF5000C6AFE3 /* AWXAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0226E5DF4F00C6AFE3 /* AWXAddress.m */; };
 		5775CF5526E5DF5000C6AFE3 /* AWXPaymentMethodResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0526E5DF4F00C6AFE3 /* AWXPaymentMethodResponse.m */; };
 		5775CF5626E5DF5000C6AFE3 /* AWXPaymentMethodRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0626E5DF4F00C6AFE3 /* AWXPaymentMethodRequest.m */; };
-		5775CF5726E5DF5000C6AFE3 /* AWXPaymentMethodResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0726E5DF4F00C6AFE3 /* AWXPaymentMethodResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF5726E5DF5000C6AFE3 /* AWXPaymentMethodResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0726E5DF4F00C6AFE3 /* AWXPaymentMethodResponse.h */; };
 		5775CF5826E5DF5000C6AFE3 /* AWXAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0826E5DF4F00C6AFE3 /* AWXAPIClient.m */; };
-		5775CF5926E5DF5000C6AFE3 /* AWXPaymentMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0926E5DF4F00C6AFE3 /* AWXPaymentMethod.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF5A26E5DF5000C6AFE3 /* AWXTrackManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0A26E5DF4F00C6AFE3 /* AWXTrackManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF5B26E5DF5000C6AFE3 /* AWXPaymentIntentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0B26E5DF4F00C6AFE3 /* AWXPaymentIntentRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF5C26E5DF5000C6AFE3 /* AWXPaymentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0C26E5DF4F00C6AFE3 /* AWXPaymentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF5D26E5DF5000C6AFE3 /* AWXPaymentMethodOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0D26E5DF4F00C6AFE3 /* AWXPaymentMethodOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF5926E5DF5000C6AFE3 /* AWXPaymentMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0926E5DF4F00C6AFE3 /* AWXPaymentMethod.h */; };
+		5775CF5A26E5DF5000C6AFE3 /* AWXTrackManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0A26E5DF4F00C6AFE3 /* AWXTrackManager.h */; };
+		5775CF5B26E5DF5000C6AFE3 /* AWXPaymentIntentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0B26E5DF4F00C6AFE3 /* AWXPaymentIntentRequest.h */; };
+		5775CF5C26E5DF5000C6AFE3 /* AWXPaymentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0C26E5DF4F00C6AFE3 /* AWXPaymentViewController.h */; };
+		5775CF5D26E5DF5000C6AFE3 /* AWXPaymentMethodOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0D26E5DF4F00C6AFE3 /* AWXPaymentMethodOptions.h */; };
 		5775CF5E26E5DF5000C6AFE3 /* AWXTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0E26E5DF4F00C6AFE3 /* AWXTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF5F26E5DF5000C6AFE3 /* AWXAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0F26E5DF4F00C6AFE3 /* AWXAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF6026E5DF5000C6AFE3 /* AWXWidgets.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF1026E5DF4F00C6AFE3 /* AWXWidgets.m */; };
 		5775CF6126E5DF5000C6AFE3 /* AWXShippingViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF1126E5DF4F00C6AFE3 /* AWXShippingViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF6626E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF6226E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF6626E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF6226E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.h */; };
 		5775CF6726E5E27B00C6AFE3 /* AWXWeChatPayActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF6326E5E27B00C6AFE3 /* AWXWeChatPayActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF6826E5E27B00C6AFE3 /* AWXWeChatPayActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF6426E5E27B00C6AFE3 /* AWXWeChatPayActionProvider.m */; };
 		5775CF6926E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF6526E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.m */; };
 		5775CF7C26E5E28400C6AFE3 /* AWXCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF6A26E5E28400C6AFE3 /* AWXCardViewController.m */; };
 		5775CF7D26E5E28400C6AFE3 /* AWXDCCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF6B26E5E28400C6AFE3 /* AWXDCCViewController.m */; };
-		5775CF8226E5E28400C6AFE3 /* AWXWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7026E5E28400C6AFE3 /* AWXWebViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF8326E5E28400C6AFE3 /* AWXDccResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7126E5E28400C6AFE3 /* AWXDccResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF8226E5E28400C6AFE3 /* AWXWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7026E5E28400C6AFE3 /* AWXWebViewController.h */; };
+		5775CF8326E5E28400C6AFE3 /* AWXDccResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7126E5E28400C6AFE3 /* AWXDccResponse.h */; };
 		5775CF8426E5E28400C6AFE3 /* AWXCardProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7226E5E28400C6AFE3 /* AWXCardProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF8526E5E28500C6AFE3 /* AWXDccActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7326E5E28400C6AFE3 /* AWXDccActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF8526E5E28500C6AFE3 /* AWXDccActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7326E5E28400C6AFE3 /* AWXDccActionProvider.h */; };
 		5775CF8726E5E28500C6AFE3 /* AWXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF7526E5E28400C6AFE3 /* AWXWebViewController.m */; };
 		5775CF8826E5E28500C6AFE3 /* AWXCardProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF7626E5E28400C6AFE3 /* AWXCardProvider.m */; };
 		5775CF8926E5E28500C6AFE3 /* AWXDccResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF7726E5E28400C6AFE3 /* AWXDccResponse.m */; };
-		5775CF8A26E5E28500C6AFE3 /* AWXDCCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7826E5E28400C6AFE3 /* AWXDCCViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF8A26E5E28500C6AFE3 /* AWXDCCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7826E5E28400C6AFE3 /* AWXDCCViewController.h */; };
 		5775CF8B26E5E28500C6AFE3 /* AWXDccActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF7926E5E28400C6AFE3 /* AWXDccActionProvider.m */; };
-		5775CF8D26E5E28500C6AFE3 /* AWXCardViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7B26E5E28400C6AFE3 /* AWXCardViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5775CF9426E5E28D00C6AFE3 /* AWXPaymentFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF8E26E5E28C00C6AFE3 /* AWXPaymentFormViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF8D26E5E28500C6AFE3 /* AWXCardViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7B26E5E28400C6AFE3 /* AWXCardViewController.h */; };
+		5775CF9426E5E28D00C6AFE3 /* AWXPaymentFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF8E26E5E28C00C6AFE3 /* AWXPaymentFormViewController.h */; };
 		5775CF9626E5E28D00C6AFE3 /* AWXPaymentFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF9026E5E28C00C6AFE3 /* AWXPaymentFormViewController.m */; };
 		5775CF9826E5E28D00C6AFE3 /* AWXRedirectActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF9226E5E28D00C6AFE3 /* AWXRedirectActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF9926E5E28D00C6AFE3 /* AWXRedirectActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF9326E5E28D00C6AFE3 /* AWXRedirectActionProvider.m */; };
 		5775CF9E26E5F8CD00C6AFE3 /* AWXSecurityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF9C26E5F8CC00C6AFE3 /* AWXSecurityService.m */; };
-		5775CF9F26E5F8CD00C6AFE3 /* AWXSecurityService.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF9D26E5F8CC00C6AFE3 /* AWXSecurityService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5775CF9F26E5F8CD00C6AFE3 /* AWXSecurityService.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF9D26E5F8CC00C6AFE3 /* AWXSecurityService.h */; };
 		57A3AD6A2758731400EFF0A1 /* AWX3DSActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 57A3AD682758731400EFF0A1 /* AWX3DSActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57A3AD6B2758731400EFF0A1 /* AWX3DSActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A3AD692758731400EFF0A1 /* AWX3DSActionProvider.m */; };
-		57A3AD6E27589BEF00EFF0A1 /* AWX3DSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 57A3AD6C27589BEF00EFF0A1 /* AWX3DSService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		57A3AD6E27589BEF00EFF0A1 /* AWX3DSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 57A3AD6C27589BEF00EFF0A1 /* AWX3DSService.h */; };
 		57A3AD6F27589BEF00EFF0A1 /* AWX3DSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A3AD6D27589BEF00EFF0A1 /* AWX3DSService.m */; };
-		57CEC81426E5FB3500695740 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
-		57CEC81926E5FB4000695740 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
-		57CEC81E26E5FB4400695740 /* Airwallex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */; };
-		57D4A44F2785AF4500487E1C /* AWX3DSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D4A44D2785AF4500487E1C /* AWX3DSViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		57CEC81426E5FB3500695740 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; };
+		57CEC81926E5FB4000695740 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; };
+		57CEC81E26E5FB4400695740 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; };
+		57D4A44F2785AF4500487E1C /* AWX3DSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D4A44D2785AF4500487E1C /* AWX3DSViewController.h */; };
 		57D4A4502785AF4500487E1C /* AWX3DSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D4A44E2785AF4500487E1C /* AWX3DSViewController.m */; };
 		57E73719272AC043009905DC /* AWXSchemaProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 57E73717272AC043009905DC /* AWXSchemaProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57E7371A272AC043009905DC /* AWXSchemaProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E73718272AC043009905DC /* AWXSchemaProvider.m */; };
@@ -161,6 +162,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 085BD3C723CC62B4002E8F27;
 			remoteInfo = Airwallex;
+		};
+		3C2B64A727E98863002FAF3E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C2B648D27E98858002FAF3E;
+			remoteInfo = TestHost;
 		};
 		5775CE6926E5D86100C6AFE3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -240,20 +248,31 @@
 		0829FD4D243584E300557DB2 /* AWXTestAPIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXTestAPIClient.m; sourceTree = "<group>"; };
 		0829FD4F24358E5600557DB2 /* XCTestCase+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Utils.h"; sourceTree = "<group>"; };
 		0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Utils.m"; sourceTree = "<group>"; };
-		085BD3C823CC62B4002E8F27 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		085BD3C823CC62B4002E8F27 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3CC23CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		085BD3D123CC62B4002E8F27 /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3D823CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AirwallexSDK.bundle; sourceTree = "<group>"; };
+		08D26F532404B6C3008E65D3 /* Core.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Core.bundle; sourceTree = "<group>"; };
+		3C2B648E27E98858002FAF3E /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C2B649027E98858002FAF3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3C2B649127E98858002FAF3E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3C2B649627E98858002FAF3E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		3C2B649727E98858002FAF3E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		3C2B649A27E98858002FAF3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3C2B649C27E98859002FAF3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3C2B649F27E98859002FAF3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3C2B64A127E98859002FAF3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3C2B64A227E98859002FAF3E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfilingConnections.xcframework; path = ../TrustDefender/RLTMXProfilingConnections.xcframework; sourceTree = "<group>"; };
 		3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfiling.xcframework; path = ../TrustDefender/RLTMXProfiling.xcframework; sourceTree = "<group>"; };
 		3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXBehavioralBiometrics.xcframework; path = ../TrustDefender/RLTMXBehavioralBiometrics.xcframework; sourceTree = "<group>"; };
+		3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Airwallex.xctestplan; sourceTree = "<group>"; };
 		570A139C25A82B270064B362 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		570A139D25A82B280064B362 /* README_zh_CN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../../README_zh_CN.md; sourceTree = "<group>"; };
 		5714F5C32746430500E2C954 /* UPGRADE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = UPGRADE.md; path = ../../UPGRADE.md; sourceTree = "<group>"; };
 		5714F5C42746430500E2C954 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../../CHANGELOG.md; sourceTree = "<group>"; };
-		5714F5CD2746441D00E2C954 /* Airwallex.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Airwallex.podspec; path = ../../Airwallex.podspec; sourceTree = "<group>"; };
-		572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWXSessionTest.m; path = ../../../Airwallex/AirwallexTests/Models/AWXSessionTest.m; sourceTree = "<group>"; };
+		5714F5CD2746441D00E2C954 /* Airwallex.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Airwallex.podspec; path = ../../Airwallex.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXSessionTest.m; sourceTree = "<group>"; };
 		5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5775CE6226E5D86100C6AFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5775CE6726E5D86100C6AFE3 /* WeChatPayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeChatPayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,7 +412,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				085BD3D223CC62B4002E8F27 /* Airwallex.framework in Frameworks */,
+				085BD3D223CC62B4002E8F27 /* Core.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C2B648B27E98858002FAF3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,7 +427,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57CEC81426E5FB3500695740 /* Airwallex.framework in Frameworks */,
+				57CEC81426E5FB3500695740 /* Core.framework in Frameworks */,
 				FB3A40A35045223F14992EB6 /* libPods-WeChatPay.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,7 +446,7 @@
 			files = (
 				3C455EB627E03B04009DB492 /* RLTMXProfilingConnections.xcframework in Frameworks */,
 				3C455EBA27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Frameworks */,
-				57CEC81926E5FB4000695740 /* Airwallex.framework in Frameworks */,
+				57CEC81926E5FB4000695740 /* Core.framework in Frameworks */,
 				3C455EB827E03B04009DB492 /* RLTMXProfiling.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,7 +463,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57CEC81E26E5FB4400695740 /* Airwallex.framework in Frameworks */,
+				57CEC81E26E5FB4400695740 /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,14 +523,16 @@
 		085BD3BE23CC62B4002E8F27 = {
 			isa = PBXGroup;
 			children = (
-				085BD3CA23CC62B4002E8F27 /* Airwallex */,
-				085BD3D523CC62B4002E8F27 /* AirwallexTests */,
+				3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */,
+				085BD3CA23CC62B4002E8F27 /* Core */,
+				085BD3D523CC62B4002E8F27 /* CoreTests */,
 				5775CE6026E5D86100C6AFE3 /* WeChatPay */,
 				5775CE6B26E5D86100C6AFE3 /* WeChatPayTests */,
 				5775CE8626E5DDDE00C6AFE3 /* Card */,
 				5775CE9126E5DDDF00C6AFE3 /* CardTests */,
 				5775CEAC26E5DF3300C6AFE3 /* Redirect */,
 				5775CEB726E5DF3300C6AFE3 /* RedirectTests */,
+				3C2B648F27E98858002FAF3E /* TestHost */,
 				085BD3C923CC62B4002E8F27 /* Products */,
 				B6CB5D85D9AF529D3A580470 /* Pods */,
 				9261DD5DE5B6EE3DE55C5588 /* Frameworks */,
@@ -514,19 +542,20 @@
 		085BD3C923CC62B4002E8F27 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				085BD3C823CC62B4002E8F27 /* Airwallex.framework */,
-				085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */,
+				085BD3C823CC62B4002E8F27 /* Core.framework */,
+				085BD3D123CC62B4002E8F27 /* CoreTests.xctest */,
 				5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */,
 				5775CE6726E5D86100C6AFE3 /* WeChatPayTests.xctest */,
 				5775CE8526E5DDDE00C6AFE3 /* Card.framework */,
 				5775CE8D26E5DDDF00C6AFE3 /* CardTests.xctest */,
 				5775CEAB26E5DF3300C6AFE3 /* Redirect.framework */,
 				5775CEB326E5DF3300C6AFE3 /* RedirectTests.xctest */,
+				3C2B648E27E98858002FAF3E /* TestHost.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		085BD3CA23CC62B4002E8F27 /* Airwallex */ = {
+		085BD3CA23CC62B4002E8F27 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				5714F5CD2746441D00E2C954 /* Airwallex.podspec */,
@@ -538,10 +567,10 @@
 				085BD40723CC6C89002E8F27 /* Resources */,
 				085BD3CC23CC62B4002E8F27 /* Info.plist */,
 			);
-			path = Airwallex;
+			path = Core;
 			sourceTree = "<group>";
 		};
-		085BD3D523CC62B4002E8F27 /* AirwallexTests */ = {
+		085BD3D523CC62B4002E8F27 /* CoreTests */ = {
 			isa = PBXGroup;
 			children = (
 				0829FD4F24358E5600557DB2 /* XCTestCase+Utils.h */,
@@ -554,15 +583,31 @@
 				082442C32431AA1B00D04A2C /* Resources */,
 				085BD3D823CC62B4002E8F27 /* Info.plist */,
 			);
-			path = AirwallexTests;
+			path = CoreTests;
 			sourceTree = "<group>";
 		};
 		085BD40723CC6C89002E8F27 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				08D26F532404B6C3008E65D3 /* AirwallexSDK.bundle */,
+				08D26F532404B6C3008E65D3 /* Core.bundle */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		3C2B648F27E98858002FAF3E /* TestHost */ = {
+			isa = PBXGroup;
+			children = (
+				3C2B649027E98858002FAF3E /* AppDelegate.h */,
+				3C2B649127E98858002FAF3E /* AppDelegate.m */,
+				3C2B649627E98858002FAF3E /* ViewController.h */,
+				3C2B649727E98858002FAF3E /* ViewController.m */,
+				3C2B649927E98858002FAF3E /* Main.storyboard */,
+				3C2B649C27E98859002FAF3E /* Assets.xcassets */,
+				3C2B649E27E98859002FAF3E /* LaunchScreen.storyboard */,
+				3C2B64A127E98859002FAF3E /* Info.plist */,
+				3C2B64A227E98859002FAF3E /* main.m */,
+			);
+			path = TestHost;
 			sourceTree = "<group>";
 		};
 		5775CE6026E5D86100C6AFE3 /* WeChatPay */ = {
@@ -727,8 +772,7 @@
 				5775CF1026E5DF4F00C6AFE3 /* AWXWidgets.m */,
 				5775CEDE26E5DF4E00C6AFE3 /* Core.h */,
 			);
-			name = Sources;
-			path = ../../Airwallex/Airwallex/Sources;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		9261DD5DE5B6EE3DE55C5588 /* Frameworks */ = {
@@ -760,35 +804,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				5775CF2E26E5DF4F00C6AFE3 /* Core.h in Headers */,
-				5775CF4A26E5DF5000C6AFE3 /* AWXCodable.h in Headers */,
-				5775CF4D26E5DF5000C6AFE3 /* AWXDefaultActionProvider.h in Headers */,
-				5775CF5E26E5DF5000C6AFE3 /* AWXTheme.h in Headers */,
-				5775CF2A26E5DF4F00C6AFE3 /* AWXPlaceDetails.h in Headers */,
-				5775CF1326E5DF4F00C6AFE3 /* AWXDefaultProvider.h in Headers */,
-				5775CF3826E5DF4F00C6AFE3 /* AWXCard.h in Headers */,
+				5775CF5F26E5DF5000C6AFE3 /* AWXAddress.h in Headers */,
 				5775CF3726E5DF4F00C6AFE3 /* AWXAPIClient.h in Headers */,
-				5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */,
+				5775CF3826E5DF4F00C6AFE3 /* AWXCard.h in Headers */,
+				5775CF4826E5DF5000C6AFE3 /* AWXConstants.h in Headers */,
+				5775CF4D26E5DF5000C6AFE3 /* AWXDefaultActionProvider.h in Headers */,
+				5775CF1326E5DF4F00C6AFE3 /* AWXDefaultProvider.h in Headers */,
+				5775CF4E26E5DF5000C6AFE3 /* AWXDevice.h in Headers */,
+				5775CF1226E5DF4F00C6AFE3 /* AWXPaymentIntent.h in Headers */,
+				5775CF2A26E5DF4F00C6AFE3 /* AWXPlaceDetails.h in Headers */,
 				5775CF2F26E5DF4F00C6AFE3 /* AWXSession.h in Headers */,
+				5775CF4A26E5DF5000C6AFE3 /* AWXCodable.h in Headers */,
+				5775CF6126E5DF5000C6AFE3 /* AWXShippingViewController.h in Headers */,
+				5775CF5E26E5DF5000C6AFE3 /* AWXTheme.h in Headers */,
+				5775CF4626E5DF5000C6AFE3 /* AWXUIContext.h in Headers */,
+				5775CF1C26E5DF4F00C6AFE3 /* AWXUtils.h in Headers */,
+				5775CF4326E5DF5000C6AFE3 /* AWXViewController.h in Headers */,
+				5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */,
 				5775CF4526E5DF5000C6AFE3 /* AWXPaymentConsent.h in Headers */,
 				5775CF2726E5DF4F00C6AFE3 /* AWXLogger.h in Headers */,
-				5775CF4626E5DF5000C6AFE3 /* AWXUIContext.h in Headers */,
 				5775CF3326E5DF4F00C6AFE3 /* AWXPaymentMethodRequest.h in Headers */,
-				5775CF4E26E5DF5000C6AFE3 /* AWXDevice.h in Headers */,
-				5775CF4826E5DF5000C6AFE3 /* AWXConstants.h in Headers */,
 				5775CF3626E5DF4F00C6AFE3 /* AWXForm.h in Headers */,
 				5775CF5926E5DF5000C6AFE3 /* AWXPaymentMethod.h in Headers */,
-				5775CF6126E5DF5000C6AFE3 /* AWXShippingViewController.h in Headers */,
-				5775CF5F26E5DF5000C6AFE3 /* AWXAddress.h in Headers */,
 				5775CF5C26E5DF5000C6AFE3 /* AWXPaymentViewController.h in Headers */,
-				5775CF1226E5DF4F00C6AFE3 /* AWXPaymentIntent.h in Headers */,
 				5775CF2826E5DF4F00C6AFE3 /* AWXAPIResponse.h in Headers */,
 				5775CF5B26E5DF5000C6AFE3 /* AWXPaymentIntentRequest.h in Headers */,
 				5775CF1426E5DF4F00C6AFE3 /* AWXCardValidator.h in Headers */,
 				5775CF3A26E5DF4F00C6AFE3 /* AWXWidgets.h in Headers */,
 				5775CF5726E5DF5000C6AFE3 /* AWXPaymentMethodResponse.h in Headers */,
-				5775CF4326E5DF5000C6AFE3 /* AWXViewController.h in Headers */,
 				5775CF3F26E5DF5000C6AFE3 /* AWXFormMapping.h in Headers */,
-				5775CF1C26E5DF4F00C6AFE3 /* AWXUtils.h in Headers */,
 				5775CF3926E5DF4F00C6AFE3 /* AWXPaymentConsentResponse.h in Headers */,
 				5775CF2026E5DF4F00C6AFE3 /* AWXPaymentMethodListViewController.h in Headers */,
 				5775CF3B26E5DF5000C6AFE3 /* AWXCountryListViewController.h in Headers */,
@@ -842,9 +886,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		085BD3C723CC62B4002E8F27 /* Airwallex */ = {
+		085BD3C723CC62B4002E8F27 /* Core */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 085BD3DC23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "Airwallex" */;
+			buildConfigurationList = 085BD3DC23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "Core" */;
 			buildPhases = (
 				085BD3C323CC62B4002E8F27 /* Headers */,
 				085BD3C423CC62B4002E8F27 /* Sources */,
@@ -855,14 +899,14 @@
 			);
 			dependencies = (
 			);
-			name = Airwallex;
+			name = Core;
 			productName = Airwallex;
-			productReference = 085BD3C823CC62B4002E8F27 /* Airwallex.framework */;
+			productReference = 085BD3C823CC62B4002E8F27 /* Core.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		085BD3D023CC62B4002E8F27 /* AirwallexTests */ = {
+		085BD3D023CC62B4002E8F27 /* CoreTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 085BD3DF23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "AirwallexTests" */;
+			buildConfigurationList = 085BD3DF23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "CoreTests" */;
 			buildPhases = (
 				085BD3CD23CC62B4002E8F27 /* Sources */,
 				085BD3CE23CC62B4002E8F27 /* Frameworks */,
@@ -872,11 +916,29 @@
 			);
 			dependencies = (
 				085BD3D423CC62B4002E8F27 /* PBXTargetDependency */,
+				3C2B64A827E98863002FAF3E /* PBXTargetDependency */,
 			);
-			name = AirwallexTests;
+			name = CoreTests;
 			productName = AirwallexTests;
-			productReference = 085BD3D123CC62B4002E8F27 /* AirwallexTests.xctest */;
+			productReference = 085BD3D123CC62B4002E8F27 /* CoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		3C2B648D27E98858002FAF3E /* TestHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C2B64A427E98859002FAF3E /* Build configuration list for PBXNativeTarget "TestHost" */;
+			buildPhases = (
+				3C2B648A27E98858002FAF3E /* Sources */,
+				3C2B648B27E98858002FAF3E /* Frameworks */,
+				3C2B648C27E98858002FAF3E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestHost;
+			productName = TestHost;
+			productReference = 3C2B648E27E98858002FAF3E /* TestHost.app */;
+			productType = "com.apple.product-type.application";
 		};
 		5775CE5E26E5D86100C6AFE3 /* WeChatPay */ = {
 			isa = PBXNativeTarget;
@@ -997,6 +1059,7 @@
 		085BD3BF23CC62B4002E8F27 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = Airwallex;
 				TargetAttributes = {
@@ -1005,6 +1068,10 @@
 					};
 					085BD3D023CC62B4002E8F27 = {
 						CreatedOnToolsVersion = 11.1;
+						TestTargetID = 3C2B648D27E98858002FAF3E;
+					};
+					3C2B648D27E98858002FAF3E = {
+						CreatedOnToolsVersion = 13.3;
 					};
 					5775CE5E26E5D86100C6AFE3 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -1039,14 +1106,15 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				085BD3C723CC62B4002E8F27 /* Airwallex */,
-				085BD3D023CC62B4002E8F27 /* AirwallexTests */,
+				085BD3C723CC62B4002E8F27 /* Core */,
+				085BD3D023CC62B4002E8F27 /* CoreTests */,
 				5775CE5E26E5D86100C6AFE3 /* WeChatPay */,
 				5775CE6626E5D86100C6AFE3 /* WeChatPayTests */,
 				5775CE8426E5DDDE00C6AFE3 /* Card */,
 				5775CE8C26E5DDDF00C6AFE3 /* CardTests */,
 				5775CEAA26E5DF3300C6AFE3 /* Redirect */,
 				5775CEB226E5DF3300C6AFE3 /* RedirectTests */,
+				3C2B648D27E98858002FAF3E /* TestHost */,
 			);
 		};
 /* End PBXProject section */
@@ -1056,12 +1124,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5714F5CE2746441D00E2C954 /* Airwallex.podspec in Resources */,
-				570A139F25A82B280064B362 /* README_zh_CN.md in Resources */,
-				5714F5C92746430500E2C954 /* CHANGELOG.md in Resources */,
-				5714F5C52746430500E2C954 /* UPGRADE.md in Resources */,
-				08D26F542404B6C3008E65D3 /* AirwallexSDK.bundle in Resources */,
-				570A139E25A82B280064B362 /* README.md in Resources */,
+				3C9ED16F27E97E800056615A /* Core.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1073,6 +1136,16 @@
 				0829FD0C2431D3A500557DB2 /* PaymentMethod.json in Resources */,
 				0829FD002431D0DE00557DB2 /* Address.json in Resources */,
 				082442C52431AA5100D04A2C /* Card.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C2B648C27E98858002FAF3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C2B64A027E98859002FAF3E /* LaunchScreen.storyboard in Resources */,
+				3C2B649D27E98859002FAF3E /* Assets.xcassets in Resources */,
+				3C2B649B27E98858002FAF3E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1207,6 +1280,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3C2B648A27E98858002FAF3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C2B649827E98858002FAF3E /* ViewController.m in Sources */,
+				3C2B649227E98858002FAF3E /* AppDelegate.m in Sources */,
+				3C2B64A327E98859002FAF3E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5775CE5B26E5D86100C6AFE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1272,8 +1355,13 @@
 /* Begin PBXTargetDependency section */
 		085BD3D423CC62B4002E8F27 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 085BD3C723CC62B4002E8F27 /* Airwallex */;
+			target = 085BD3C723CC62B4002E8F27 /* Core */;
 			targetProxy = 085BD3D323CC62B4002E8F27 /* PBXContainerItemProxy */;
+		};
+		3C2B64A827E98863002FAF3E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C2B648D27E98858002FAF3E /* TestHost */;
+			targetProxy = 3C2B64A727E98863002FAF3E /* PBXContainerItemProxy */;
 		};
 		5775CE6A26E5D86100C6AFE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1282,7 +1370,7 @@
 		};
 		5775CE7726E5DAF100C6AFE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 085BD3C723CC62B4002E8F27 /* Airwallex */;
+			target = 085BD3C723CC62B4002E8F27 /* Core */;
 			targetProxy = 5775CE7626E5DAF100C6AFE3 /* PBXContainerItemProxy */;
 		};
 		5775CE9026E5DDDF00C6AFE3 /* PBXTargetDependency */ = {
@@ -1292,7 +1380,7 @@
 		};
 		5775CE9D26E5DDEC00C6AFE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 085BD3C723CC62B4002E8F27 /* Airwallex */;
+			target = 085BD3C723CC62B4002E8F27 /* Core */;
 			targetProxy = 5775CE9C26E5DDEC00C6AFE3 /* PBXContainerItemProxy */;
 		};
 		5775CEB626E5DF3300C6AFE3 /* PBXTargetDependency */ = {
@@ -1302,10 +1390,29 @@
 		};
 		5775CF9B26E5F87100C6AFE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 085BD3C723CC62B4002E8F27 /* Airwallex */;
+			target = 085BD3C723CC62B4002E8F27 /* Core */;
 			targetProxy = 5775CF9A26E5F87100C6AFE3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3C2B649927E98858002FAF3E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C2B649A27E98858002FAF3E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3C2B649E27E98859002FAF3E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C2B649F27E98859002FAF3E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		085BD3DA23CC62B4002E8F27 /* Debug */ = {
@@ -1439,10 +1546,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = Airwallex/Info.plist;
+				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				MARKETING_VERSION = 4.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.sdk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Core;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -1462,10 +1569,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = Airwallex/Info.plist;
+				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				MARKETING_VERSION = 4.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.sdk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Core;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -1476,31 +1583,91 @@
 		085BD3E023CC62B4002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AirwallexTests/Info.plist;
+				INFOPLIST_FILE = CoreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.AirwallexTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.CoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Debug;
 		};
 		085BD3E123CC62B4002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AirwallexTests/Info.plist;
+				INFOPLIST_FILE = CoreTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.AirwallexTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.CoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
+			};
+			name = Release;
+		};
+		3C2B64A527E98859002FAF3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TestHost/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.TestHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3C2B64A627E98859002FAF3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TestHost/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.TestHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1515,7 +1682,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WeChatPay/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1542,7 +1708,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WeChatPay/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1648,7 +1813,6 @@
 		5775CE9826E5DDDF00C6AFE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K294E2HD3N;
 				INFOPLIST_FILE = CardTests/Info.plist;
@@ -1666,7 +1830,6 @@
 		5775CE9926E5DDDF00C6AFE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K294E2HD3N;
 				INFOPLIST_FILE = CardTests/Info.plist;
@@ -1779,7 +1942,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		085BD3DC23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "Airwallex" */ = {
+		085BD3DC23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "Core" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				085BD3DD23CC62B4002E8F27 /* Debug */,
@@ -1788,11 +1951,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		085BD3DF23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "AirwallexTests" */ = {
+		085BD3DF23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "CoreTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				085BD3E023CC62B4002E8F27 /* Debug */,
 				085BD3E123CC62B4002E8F27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C2B64A427E98859002FAF3E /* Build configuration list for PBXNativeTarget "TestHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C2B64A527E98859002FAF3E /* Debug */,
+				3C2B64A627E98859002FAF3E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

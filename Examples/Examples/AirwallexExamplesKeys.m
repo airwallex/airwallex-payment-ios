@@ -30,13 +30,7 @@
 {
     self = [super init];
     if (self) {
-#ifdef DEMO
-        self.configJson = [self loadConfigFile:@"Demo"];
-#elif STAGING
-        self.configJson = [self loadConfigFile:@"Staging"];
-#else
-        self.configJson = [self loadConfigFile:@"Production"];
-#endif
+        self.configJson = [self loadConfigFile:@"Keys"];
         [self syncKeys];
     }
     return self;

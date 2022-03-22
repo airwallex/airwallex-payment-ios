@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  Airwallex: b1ff6fb3ad2271c2f24ce087e477ae6fd6f6dd43
+  Airwallex: 6885ef51edc5453ded47ed6522ea93a2e2fd7921
   WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
 
 PODFILE CHECKSUM: 86b90d9822bc5e5e858f9dead9bb3a189dbe7ae1
