@@ -276,6 +276,10 @@
         case AirwallexCheckoutOneOffMode:
         {
             AWXOneOffSession *session = [AWXOneOffSession new];
+            
+            AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchant.com.airwallex.paymentacceptance"];
+            session.applePayOptions = options;
+            
             session.countryCode = [AirwallexExamplesKeys shared].countryCode;
             session.billing = self.shipping;
             session.returnURL = [AirwallexExamplesKeys shared].returnUrl;

@@ -96,6 +96,8 @@ Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type)
 {
     if ([type.name isEqualToString:AWXCardKey]) {
         return NSClassFromString(@"AWXCardProvider");
+    } else if ([type.name isEqualToString:AWXApplePayKey]) {
+        return NSClassFromString(@"AWXApplePayProvider");
     } else if (type.hasSchema) {
         return NSClassFromString(@"AWXSchemaProvider");
     } else {
