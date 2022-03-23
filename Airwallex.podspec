@@ -34,4 +34,10 @@ Pod::Spec.new do |s|
     plugin.dependency 'Airwallex/Core'
     plugin.source_files = 'Airwallex/Redirect/*.{h,m}'
   end
+  
+  s.subspec 'ApplePay' do |plugin|
+    plugin.dependency 'Airwallex/Core'
+    plugin.source_files = 'Airwallex/ApplePay/**/*.{h,m}'
+    plugin.public_header_files = 'Airwallex/ApplePay/*.h'
+  end
 end

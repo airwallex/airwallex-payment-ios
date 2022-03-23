@@ -10,9 +10,15 @@ target 'WeChatPay' do
   pod 'WechatOpenSDK', '1.8.7.1'
 end
 
+target 'ApplePayTests' do
+  project './Airwallex/Airwallex.xcodeproj'
+  pod 'OCMock'
+end
+
 target 'Examples' do
   project './Examples/Examples.xcodeproj'
   pod 'Airwallex', :path => './'
+  pod 'Airwallex/ApplePay', :path => './'
   pod 'WechatOpenSDK', '1.8.7.1'
 end
 

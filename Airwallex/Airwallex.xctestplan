@@ -18,6 +18,13 @@
         "identifier" : "085BD3D023CC62B4002E8F27",
         "name" : "CoreTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
+        "identifier" : "3C99E78D27EAF1A20074156C",
+        "name" : "ApplePayTests"
+      }
     }
   ],
   "version" : 1
