@@ -37,11 +37,13 @@
 
 @implementation AWXConstantsTest
 
-- (void)testApplePayKey {
+- (void)testApplePayKey
+{
     XCTAssertEqualObjects(AWXApplePayKey, @"applepay");
 }
 
-- (void)testApplePaySupportedNetworks {
+- (void)testApplePaySupportedNetworks
+{
     XCTAssertTrue([AWXApplePaySupportedNetworks() containsObject:PKPaymentNetworkVisa]);
     XCTAssertTrue([AWXApplePaySupportedNetworks() containsObject:PKPaymentNetworkMasterCard]);
     XCTAssertTrue([AWXApplePaySupportedNetworks() containsObject:PKPaymentNetworkChinaUnionPay]);

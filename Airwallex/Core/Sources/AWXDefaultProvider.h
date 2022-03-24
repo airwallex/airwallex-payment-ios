@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AWXConstants.h"
+#import "AWXAPIClient.h"
 
 @class AWXDefaultProvider, AWXConfirmPaymentNextAction, AWXSession, AWXDevice, AWXPaymentMethod, AWXPaymentConsent, AWXConfirmPaymentIntentResponse, AWXCard, AWXPlaceDetails;
 
@@ -123,6 +124,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
                                        device:(nullable AWXDevice *)device;
+
+/**
+ Confirm the payment intent with payment method and consent as well as a custom completion block.
+ 
+ @param paymentMethod The payment method info.
+ @param paymentConsent The payment consent info.
+ @param device The current device info.
+ @param completion The completion block to be called with the response and error.
+ */
+- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
+                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
+                                       device:(nullable AWXDevice *)device
+                                   completion:(AWXRequestHandler)completion;
 
 /**
  Complete the payment flow.

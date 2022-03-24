@@ -6,8 +6,24 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import <PassKit/PassKit.h>
 #import "AWXApplePayProvider.h"
 #import "AWXSession.h"
+#import "AWXPaymentIntent.h"
+#import "AWXPaymentIntentRequest.h"
+#import "AWXPaymentMethod.h"
+#import "AWXConstants.h"
+#import "AWXPaymentIntentResponse.h"
+#import "PKPaymentToken+Request.h"
+#import "AWXOneOffSession+Request.h"
+
+@interface AWXApplePayProvider () <PKPaymentAuthorizationControllerDelegate>
+
+@property (nonatomic, strong, nullable) AWXConfirmPaymentIntentResponse *lastResponse;
+@property (nonatomic, strong, nullable) NSError *lastError;
+@property (nonatomic) BOOL shouldInvokeCompleteWithResponse;
+
+@end
 
 @implementation AWXApplePayProvider
 
@@ -27,8 +43,131 @@
 
 - (void)handleFlow
 {
-    // TODO: This will be replaced with real implementation.
-    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error: nil];
+    if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
+        [self handleFlowForOneOffSession:(AWXOneOffSession *)self.session];
+    } else {
+        NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
+                                             code:-1
+                                         userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unsupported session type.", nil)}];
+        [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+    }
+}
+
+- (void)handleFlowForOneOffSession:(AWXOneOffSession *)session
+{
+    NSError *error;
+    PKPaymentRequest *request = [session makePaymentRequestOrError:&error];
+    
+    if (!request) {
+        [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+        return;
+    }
+    
+    PKPaymentAuthorizationController *controller = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
+    
+    if (!controller) {
+        NSString *description = NSLocalizedString(@"Failed to initialize PKPaymentAuthorizationController.", nil);
+        NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
+                                             code:-1
+                                         userInfo:@{NSLocalizedDescriptionKey: description}];
+        [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+        return;
+    }
+    
+    controller.delegate = self;
+    
+    __weak __typeof(self)weakSelf = self;
+    [controller presentWithCompletion:^(BOOL success) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        
+        if (success) {
+            NSLog(@"PKPaymentAuthorizationController presents succesfully!");
+        } else {
+            NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
+                                                 code:-1
+                                             userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present PKPaymentAuthorizationController.", nil)}];
+            [[strongSelf delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+        }
+    }];
+}
+
+#pragma mark - PKPaymentAuthorizationControllerDelegate
+
+- (void)paymentAuthorizationController:(PKPaymentAuthorizationController *)controller
+                   didAuthorizePayment:(PKPayment *)payment
+                               handler:(void (^)(PKPaymentAuthorizationResult * _Nonnull))completion
+{
+    self.shouldInvokeCompleteWithResponse = YES;
+    
+    AWXPaymentMethod *method = [AWXPaymentMethod new];
+    method.type = AWXApplePayKey;
+    method.customerId = self.session.customerId;
+    method.billing = self.session.billing;
+    
+    NSError *error;
+    
+    NSDictionary *applePayParams = [payment.token payloadForRequestOrError:&error];
+    
+    if (!applePayParams) {
+        self.lastError = error;
+        
+        NSArray *errors;
+        if (error) {
+            errors = @[error];
+        }
+        
+        PKPaymentAuthorizationResult *result = [[PKPaymentAuthorizationResult alloc] initWithStatus:PKPaymentAuthorizationStatusFailure
+                                                                                             errors:errors];
+        completion(result);
+        
+        return;
+    }
+    
+    [method appendAdditionalParams:applePayParams];
+    
+    __weak __typeof(self)weakSelf = self;
+    [self confirmPaymentIntentWithPaymentMethod:method
+                                 paymentConsent:nil
+                                         device:nil
+                                     completion:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
+        AWXConfirmPaymentIntentResponse *confirmResponse = (AWXConfirmPaymentIntentResponse *)response;
+        
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.lastResponse = confirmResponse;
+        strongSelf.lastError = error;
+        
+        PKPaymentAuthorizationStatus status;
+        NSArray<NSError *> *errors;
+        
+        if (confirmResponse && !error) {
+            status = PKPaymentAuthorizationStatusSuccess;
+        } else {
+            status = PKPaymentAuthorizationStatusFailure;
+            
+            if (error) {
+                errors = @[error];
+            }
+        }
+        
+        PKPaymentAuthorizationResult *result = [[PKPaymentAuthorizationResult alloc] initWithStatus:status errors:errors];
+        completion(result);
+    }];
+}
+
+- (void)paymentAuthorizationControllerDidFinish:(nonnull PKPaymentAuthorizationController *)controller
+{
+    __weak __typeof(self)weakSelf = self;
+    [controller dismissWithCompletion:^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        if (strongSelf.shouldInvokeCompleteWithResponse) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [strongSelf completeWithResponse:strongSelf.lastResponse error:strongSelf.lastError];
+            });
+        } else {
+            // The user most likely has cancelled the authorization.
+            // Do nothing here to allow the user to select another payment method.
+        }
+    }];
 }
 
 @end

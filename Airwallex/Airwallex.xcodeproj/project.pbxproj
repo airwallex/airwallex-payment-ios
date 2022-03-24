@@ -35,6 +35,20 @@
 		3C455EBA27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */; };
 		3C455EBB27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C5A37D627EAFD9F00CFC2EF /* AWXApplePayProviderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37D527EAFD9F00CFC2EF /* AWXApplePayProviderTest.m */; };
+		3C5A37E327ED443E00CFC2EF /* PKPaymentMethod+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E127ED443E00CFC2EF /* PKPaymentMethod+Request.h */; };
+		3C5A37E427ED443E00CFC2EF /* PKPaymentMethod+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37E227ED443E00CFC2EF /* PKPaymentMethod+Request.m */; };
+		3C5A37E727ED451600CFC2EF /* PKPaymentToken+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E527ED451600CFC2EF /* PKPaymentToken+Request.h */; };
+		3C5A37E827ED451600CFC2EF /* PKPaymentToken+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37E627ED451600CFC2EF /* PKPaymentToken+Request.m */; };
+		3C5A37EB27ED491100CFC2EF /* AWXPaymentIntent+Summary.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E927ED491100CFC2EF /* AWXPaymentIntent+Summary.h */; };
+		3C5A37EC27ED491100CFC2EF /* AWXPaymentIntent+Summary.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37EA27ED491100CFC2EF /* AWXPaymentIntent+Summary.m */; };
+		3C5A37EF27ED4A0500CFC2EF /* AWXOneOffSession+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37ED27ED4A0500CFC2EF /* AWXOneOffSession+Request.h */; };
+		3C5A37F027ED4A0500CFC2EF /* AWXOneOffSession+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37EE27ED4A0500CFC2EF /* AWXOneOffSession+Request.m */; };
+		3C5A37F227ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F127ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m */; };
+		3C5A37F427ED53F400CFC2EF /* PKPaymentTokenRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F327ED53F400CFC2EF /* PKPaymentTokenRequestTest.m */; };
+		3C5A37F627ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */; };
+		3C5A37F827ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F727ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m */; };
+		3C5A37FF27F2DDB400CFC2EF /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
+		3C5A380027F2DDB500CFC2EF /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
 		3C99E73C27E9A0730074156C /* AWXApplePayOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C99E73A27E9A0730074156C /* AWXApplePayOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C99E73D27E9A0730074156C /* AWXApplePayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C99E73B27E9A0730074156C /* AWXApplePayOptions.m */; };
 		3C99E73F27E9A3380074156C /* AWXDefaultProviderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C99E73E27E9A3380074156C /* AWXDefaultProviderTest.m */; };
@@ -46,6 +60,7 @@
 		3C99E7A527EAF2840074156C /* AWXApplePayProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C99E7A327EAF2840074156C /* AWXApplePayProvider.m */; };
 		3C99E7A627EAF4890074156C /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; platformFilter = ios; };
 		3C9ED16F27E97E800056615A /* Core.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F532404B6C3008E65D3 /* Core.bundle */; };
+		47D5CC718C177018EAC8C67C /* libPods-CoreTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 609C49FC2EBB0A433BF64C29 /* libPods-CoreTests.a */; };
 		571D10862796DE4D005DE2CA /* WeChatPay.h in Headers */ = {isa = PBXBuildFile; fileRef = 57CEC82426E5FE2A00695740 /* WeChatPay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */; };
 		5775CE6826E5D86100C6AFE3 /* WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */; };
@@ -300,6 +315,21 @@
 		3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfiling.xcframework; path = ../TrustDefender/RLTMXProfiling.xcframework; sourceTree = "<group>"; };
 		3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXBehavioralBiometrics.xcframework; path = ../TrustDefender/RLTMXBehavioralBiometrics.xcframework; sourceTree = "<group>"; };
 		3C5A37D527EAFD9F00CFC2EF /* AWXApplePayProviderTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXApplePayProviderTest.m; sourceTree = "<group>"; };
+		3C5A37DB27ED404700CFC2EF /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		3C5A37E127ED443E00CFC2EF /* PKPaymentMethod+Request.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PKPaymentMethod+Request.h"; sourceTree = "<group>"; };
+		3C5A37E227ED443E00CFC2EF /* PKPaymentMethod+Request.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PKPaymentMethod+Request.m"; sourceTree = "<group>"; };
+		3C5A37E527ED451600CFC2EF /* PKPaymentToken+Request.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PKPaymentToken+Request.h"; sourceTree = "<group>"; };
+		3C5A37E627ED451600CFC2EF /* PKPaymentToken+Request.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PKPaymentToken+Request.m"; sourceTree = "<group>"; };
+		3C5A37E927ED491100CFC2EF /* AWXPaymentIntent+Summary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXPaymentIntent+Summary.h"; sourceTree = "<group>"; };
+		3C5A37EA27ED491100CFC2EF /* AWXPaymentIntent+Summary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXPaymentIntent+Summary.m"; sourceTree = "<group>"; };
+		3C5A37ED27ED4A0500CFC2EF /* AWXOneOffSession+Request.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXOneOffSession+Request.h"; sourceTree = "<group>"; };
+		3C5A37EE27ED4A0500CFC2EF /* AWXOneOffSession+Request.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXOneOffSession+Request.m"; sourceTree = "<group>"; };
+		3C5A37F127ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKPaymentMethodRequestTest.m; sourceTree = "<group>"; };
+		3C5A37F327ED53F400CFC2EF /* PKPaymentTokenRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKPaymentTokenRequestTest.m; sourceTree = "<group>"; };
+		3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentIntentSummaryTest.m; sourceTree = "<group>"; };
+		3C5A37F727ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXOneOffSessionRequestTest.m; sourceTree = "<group>"; };
+		3C5A37FA27F29DD200CFC2EF /* AWXProviderDelegateSpy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXProviderDelegateSpy.h; sourceTree = "<group>"; };
+		3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXProviderDelegateSpy.m; sourceTree = "<group>"; };
 		3C99E73A27E9A0730074156C /* AWXApplePayOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXApplePayOptions.h; sourceTree = "<group>"; };
 		3C99E73B27E9A0730074156C /* AWXApplePayOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXApplePayOptions.m; sourceTree = "<group>"; };
 		3C99E73E27E9A3380074156C /* AWXDefaultProviderTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXDefaultProviderTest.m; sourceTree = "<group>"; };
@@ -439,11 +469,14 @@
 		57D4A44E2785AF4500487E1C /* AWX3DSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWX3DSViewController.m; sourceTree = "<group>"; };
 		57E73717272AC043009905DC /* AWXSchemaProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXSchemaProvider.h; sourceTree = "<group>"; };
 		57E73718272AC043009905DC /* AWXSchemaProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXSchemaProvider.m; sourceTree = "<group>"; };
+		609C49FC2EBB0A433BF64C29 /* libPods-CoreTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CoreTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		79CC91FEFC20844097DA8051 /* Pods-ApplePayTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApplePayTests.debug.xcconfig"; path = "Target Support Files/Pods-ApplePayTests/Pods-ApplePayTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8096B137EDD3F3FFD5786CEB /* Pods-WeChatPay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatPay.debug.xcconfig"; path = "Target Support Files/Pods-WeChatPay/Pods-WeChatPay.debug.xcconfig"; sourceTree = "<group>"; };
 		899E89AF61B2429D20A09351 /* libPods-ApplePayTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ApplePayTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD25D2EFD8E73A8E45ECDB24 /* Pods-ApplePayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApplePayTests.release.xcconfig"; path = "Target Support Files/Pods-ApplePayTests/Pods-ApplePayTests.release.xcconfig"; sourceTree = "<group>"; };
+		CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DB09DF046200297622B4A4A7 /* libPods-WeChatPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeChatPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
 		FBC8B399FD2DBF11F6F2E2CF /* Pods-WeChatPay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatPay.release.xcconfig"; path = "Target Support Files/Pods-WeChatPay/Pods-WeChatPay.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -460,6 +493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				085BD3D223CC62B4002E8F27 /* Core.framework in Frameworks */,
+				47D5CC718C177018EAC8C67C /* libPods-CoreTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +702,7 @@
 		3C2B648F27E98858002FAF3E /* TestHost */ = {
 			isa = PBXGroup;
 			children = (
+				3C5A37F927F29DB000CFC2EF /* Shared */,
 				3C2B649027E98858002FAF3E /* AppDelegate.h */,
 				3C2B649127E98858002FAF3E /* AppDelegate.m */,
 				3C2B649627E98858002FAF3E /* ViewController.h */,
@@ -681,12 +716,29 @@
 			path = TestHost;
 			sourceTree = "<group>";
 		};
+		3C5A37F927F29DB000CFC2EF /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				3C5A37FA27F29DD200CFC2EF /* AWXProviderDelegateSpy.h */,
+				3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		3C99E78827EAF1A20074156C /* ApplePay */ = {
 			isa = PBXGroup;
 			children = (
 				3C99E78927EAF1A20074156C /* ApplePay.h */,
 				3C99E7A227EAF2840074156C /* AWXApplePayProvider.h */,
 				3C99E7A327EAF2840074156C /* AWXApplePayProvider.m */,
+				3C5A37E127ED443E00CFC2EF /* PKPaymentMethod+Request.h */,
+				3C5A37E227ED443E00CFC2EF /* PKPaymentMethod+Request.m */,
+				3C5A37E527ED451600CFC2EF /* PKPaymentToken+Request.h */,
+				3C5A37E627ED451600CFC2EF /* PKPaymentToken+Request.m */,
+				3C5A37E927ED491100CFC2EF /* AWXPaymentIntent+Summary.h */,
+				3C5A37EA27ED491100CFC2EF /* AWXPaymentIntent+Summary.m */,
+				3C5A37ED27ED4A0500CFC2EF /* AWXOneOffSession+Request.h */,
+				3C5A37EE27ED4A0500CFC2EF /* AWXOneOffSession+Request.m */,
 			);
 			path = ApplePay;
 			sourceTree = "<group>";
@@ -695,6 +747,10 @@
 			isa = PBXGroup;
 			children = (
 				3C5A37D527EAFD9F00CFC2EF /* AWXApplePayProviderTest.m */,
+				3C5A37F127ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m */,
+				3C5A37F327ED53F400CFC2EF /* PKPaymentTokenRequestTest.m */,
+				3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */,
+				3C5A37F727ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m */,
 			);
 			path = ApplePayTests;
 			sourceTree = "<group>";
@@ -869,11 +925,13 @@
 		9261DD5DE5B6EE3DE55C5588 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C5A37DB27ED404700CFC2EF /* PassKit.framework */,
 				3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */,
 				3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */,
 				3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */,
 				DB09DF046200297622B4A4A7 /* libPods-WeChatPay.a */,
 				899E89AF61B2429D20A09351 /* libPods-ApplePayTests.a */,
+				609C49FC2EBB0A433BF64C29 /* libPods-CoreTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -885,6 +943,8 @@
 				FBC8B399FD2DBF11F6F2E2CF /* Pods-WeChatPay.release.xcconfig */,
 				79CC91FEFC20844097DA8051 /* Pods-ApplePayTests.debug.xcconfig */,
 				BD25D2EFD8E73A8E45ECDB24 /* Pods-ApplePayTests.release.xcconfig */,
+				CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */,
+				F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = ../Pods;
@@ -943,6 +1003,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C5A37E727ED451600CFC2EF /* PKPaymentToken+Request.h in Headers */,
+				3C5A37EB27ED491100CFC2EF /* AWXPaymentIntent+Summary.h in Headers */,
+				3C5A37E327ED443E00CFC2EF /* PKPaymentMethod+Request.h in Headers */,
+				3C5A37EF27ED4A0500CFC2EF /* AWXOneOffSession+Request.h in Headers */,
 				3C99E7A427EAF2840074156C /* AWXApplePayProvider.h in Headers */,
 				3C99E79527EAF1A20074156C /* ApplePay.h in Headers */,
 			);
@@ -1012,6 +1076,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 085BD3DF23CC62B4002E8F27 /* Build configuration list for PBXNativeTarget "CoreTests" */;
 			buildPhases = (
+				AC59F1933E06F497BC90DC4B /* [CP] Check Pods Manifest.lock */,
 				085BD3CD23CC62B4002E8F27 /* Sources */,
 				085BD3CE23CC62B4002E8F27 /* Frameworks */,
 				085BD3CF23CC62B4002E8F27 /* Resources */,
@@ -1382,6 +1447,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AC59F1933E06F497BC90DC4B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CoreTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		D48332BEDB887DCB4D599389 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1455,6 +1542,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C5A380027F2DDB500CFC2EF /* AWXProviderDelegateSpy.m in Sources */,
 				0829FD1A2432019E00557DB2 /* AWXCardValidatorTest.m in Sources */,
 				0829FD4E243584E300557DB2 /* AWXTestAPIClient.m in Sources */,
 				0829FD022431D10800557DB2 /* AWXAddressTest.m in Sources */,
@@ -1487,6 +1575,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C99E7A527EAF2840074156C /* AWXApplePayProvider.m in Sources */,
+				3C5A37E827ED451600CFC2EF /* PKPaymentToken+Request.m in Sources */,
+				3C5A37EC27ED491100CFC2EF /* AWXPaymentIntent+Summary.m in Sources */,
+				3C5A37F027ED4A0500CFC2EF /* AWXOneOffSession+Request.m in Sources */,
+				3C5A37E427ED443E00CFC2EF /* PKPaymentMethod+Request.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1494,6 +1586,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C5A37F427ED53F400CFC2EF /* PKPaymentTokenRequestTest.m in Sources */,
+				3C5A37F827ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m in Sources */,
+				3C5A37F227ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m in Sources */,
+				3C5A37FF27F2DDB400CFC2EF /* AWXProviderDelegateSpy.m in Sources */,
+				3C5A37F627ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m in Sources */,
 				3C5A37D627EAFD9F00CFC2EF /* AWXApplePayProviderTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1806,6 +1903,7 @@
 		};
 		085BD3E023CC62B4002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1824,6 +1922,7 @@
 		};
 		085BD3E123CC62B4002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

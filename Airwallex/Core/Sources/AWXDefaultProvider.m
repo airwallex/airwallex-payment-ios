@@ -8,7 +8,6 @@
 
 #import "AWXDefaultProvider.h"
 #import "AWXSession.h"
-#import "AWXAPIClient.h"
 #import "AWXDevice.h"
 #import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
@@ -56,10 +55,24 @@
     [self confirmPaymentIntentWithPaymentMethod:_paymentMethod paymentConsent:nil device:nil];
 }
 
+- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
+                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
+                                       device:(nullable AWXDevice *)device
+{
+    __weak __typeof(self)weakSelf = self;
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod
+                                 paymentConsent:paymentConsent
+                                         device:device
+                                     completion:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
+    }];
+}
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
                                        device:(nullable AWXDevice *)device
+                                   completion:(AWXRequestHandler)completion
 {
     self.paymentConsent = paymentConsent;
     
@@ -74,21 +87,17 @@
         }
     }
     
-    __weak __typeof(self)weakSelf = self;
     [self.delegate providerDidStartRequest:self];
-    [self confirmPaymentIntentWithPaymentMethod:paymentMethod
+    [self confirmPaymentIntentWithPaymentMethodInternal:paymentMethod
                                  paymentConsent:paymentConsent
                                          device:device
-                                     completion:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
-    }];
+                                     completion:completion];
 }
 
-- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                               paymentConsent:(AWXPaymentConsent *)paymentConsent
-                                       device:(AWXDevice *)device
-                                   completion:(AWXRequestHandler)completion
+- (void)confirmPaymentIntentWithPaymentMethodInternal:(AWXPaymentMethod *)paymentMethod
+                                       paymentConsent:(AWXPaymentConsent *)paymentConsent
+                                               device:(AWXDevice *)device
+                                           completion:(AWXRequestHandler)completion
 {
     if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
         NSString *returnURL = nil;
