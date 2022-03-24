@@ -15,7 +15,8 @@
 
 @implementation AWXApplePayOptionsTest
 
-- (void)testInitWithMerchantIdentifier {
+- (void)testInitWithMerchantIdentifier
+{
     NSString *identifier = @"merchantIdentifier";
     AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:identifier];
     

@@ -277,7 +277,7 @@
         {
             AWXOneOffSession *session = [AWXOneOffSession new];
             
-            AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchant.com.airwallex.paymentacceptance"];
+            AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchant.com.airwallex.checkout"];
             session.applePayOptions = options;
             
             session.countryCode = [AirwallexExamplesKeys shared].countryCode;
