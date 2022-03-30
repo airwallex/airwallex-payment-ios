@@ -14,5 +14,6 @@ FOUNDATION_EXPORT double CardVersionNumber;
 //! Project version string for Card.
 FOUNDATION_EXPORT const unsigned char CardVersionString[];
 
-#import "AWXCardProvider.h"
 #import "AWX3DSActionProvider.h"
+#import "AWXCardProvider.h"
+#import "AWXDccActionProvider.h"
