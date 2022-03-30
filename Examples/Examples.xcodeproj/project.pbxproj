@@ -26,7 +26,7 @@
 		57033F2926958C94008A4780 /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 57033F2826958C94008A4780 /* UIViewController+Utils.m */; };
 		57DCD642269428C800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
 		57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */; };
-		F672130DEE4AC99AB2009F4F /* libPods-Examples.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B76EF28E4B4F8F57B04D21C7 /* libPods-Examples.a */; };
+		8C8B48417A8089F01476F8CD /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,8 +76,8 @@
 		57F9EF83268DCB3600B744B2 /* AirwallexExamplesKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexExamplesKeys.h; sourceTree = "<group>"; };
 		57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirwallexExamplesKeys.m; sourceTree = "<group>"; };
 		617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
+		7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
-		B76EF28E4B4F8F57B04D21C7 /* libPods-Examples.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Examples.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F672130DEE4AC99AB2009F4F /* libPods-Examples.a in Frameworks */,
+				8C8B48417A8089F01476F8CD /* Pods_Examples.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +214,7 @@
 				57CEC82726E6005400695740 /* Redirect.framework */,
 				57CEC82526E6005000695740 /* Card.framework */,
 				08B55E372421D8C60054E254 /* Airwallex.framework */,
-				B76EF28E4B4F8F57B04D21C7 /* libPods-Examples.a */,
+				7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
