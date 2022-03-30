@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXPaymentIntent (Summary)
 
-- (NSArray <PKPaymentSummaryItem *> *)paymenetSummaryItemsWithTotalPriceLabel:(nullable NSString *)label;
+- (NSArray <PKPaymentSummaryItem *> *)paymentSummaryItemsWithTotalPriceLabel:(nullable NSString *)label;
 
 @end
 

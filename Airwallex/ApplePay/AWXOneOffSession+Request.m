@@ -24,7 +24,7 @@
     }
     
     PKPaymentRequest *request = [PKPaymentRequest new];
-    request.paymentSummaryItems = [self.paymentIntent paymenetSummaryItemsWithTotalPriceLabel:options.totalPriceLabel];
+    request.paymentSummaryItems = [self.paymentIntent paymentSummaryItemsWithTotalPriceLabel:options.totalPriceLabel];
     request.merchantIdentifier = options.merchantIdentifier;
     request.merchantCapabilities = options.merchantCapabilities;
     request.countryCode = self.countryCode;
