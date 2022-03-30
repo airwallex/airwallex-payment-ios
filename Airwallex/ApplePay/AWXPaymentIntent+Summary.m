@@ -10,7 +10,7 @@
 
 @implementation AWXPaymentIntent (Summary)
 
-- (NSArray<PKPaymentSummaryItem *> *)paymenetSummaryItemsWithTotalPriceLabel:(nullable NSString *)label
+- (NSArray<PKPaymentSummaryItem *> *)paymentSummaryItemsWithTotalPriceLabel:(nullable NSString *)label
 {
     PKPaymentSummaryItem *item = [PKPaymentSummaryItem new];
     item.type = PKPaymentSummaryItemTypeFinal;
