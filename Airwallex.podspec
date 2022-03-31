@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.subspec 'Core' do |plugin|
     plugin.source_files = 'Airwallex/Core/Sources/**/*.{h,m}'
     plugin.public_header_files = 'Airwallex/Core/Sources/*.h'
-    plugin.resources    = ['Airwallex/Core/Resources/**/*']
+    plugin.resources    = ['Airwallex/Core/Resources/AirwallexCore.bundle']
   end
   
   s.subspec 'WeChatPay' do |plugin|
