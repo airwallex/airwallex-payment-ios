@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                    = "Airwallex"
-  s.version                 = "4.0.1"
+  s.version                 = "5.0.0"
   s.summary                 = "Integrate Airwallex into your iOS app"
   s.license                 = { :type => 'MIT', :file => 'LICENSE' }
   s.homepage                = "https://www.airwallex.com/docs/#overview"
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.platform                = :ios
   s.ios.deployment_target   = '11.0'
   s.static_framework        = true
-  s.default_subspecs        = 'Core', 'WeChatPay', 'Card', 'Redirect'
+  s.default_subspecs        = 'Core', 'WeChatPay', 'Card', 'Redirect', 'ApplePay'
   s.pod_target_xcconfig     = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   s.user_target_xcconfig    = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   

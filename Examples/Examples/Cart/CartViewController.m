@@ -277,8 +277,14 @@
         {
             AWXOneOffSession *session = [AWXOneOffSession new];
             
-            AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchant.com.airwallex.checkout"];
-            options.requiredBillingContactFields = [NSSet setWithObjects:PKContactFieldName, PKContactFieldPostalAddress, nil];
+            AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchant.com.airwallex.paymentacceptance"];
+            
+            options.additionalPaymentSummaryItems = @[
+                [PKPaymentSummaryItem summaryItemWithLabel:@"goods" amount:[NSDecimalNumber decimalNumberWithString:@"2"]],
+                [PKPaymentSummaryItem summaryItemWithLabel:@"tax" amount:[NSDecimalNumber decimalNumberWithString:@"1"]]
+            ];
+            options.requiredBillingContactFields = [NSSet setWithObjects:PKContactFieldPostalAddress, nil];
+            options.totalPriceLabel = @"COMPANY, INC.";
             
             session.applePayOptions = options;
             
