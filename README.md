@@ -3,7 +3,6 @@
 ![Pod Version](https://img.shields.io/cocoapods/v/Airwallex.svg?style=flat)
 ![Pod Platform](https://img.shields.io/cocoapods/p/Airwallex.svg?style=flat)
 ![Pod License](https://img.shields.io/cocoapods/l/Airwallex.svg?style=flat)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-green.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-green.svg?style=flat)](https://cocoapods.org)
 
 - [Chinese Tutorial](README_zh_CN.md)
@@ -27,10 +26,10 @@ Table of contents
    * [Requirements](#requirements)
    * [Integration](#integration)
       * [CocoaPods](#cocoapods)
-	  * [Carthage](#carthage)
 	  * [Swift](#swift)
       * [Basic Integration](#basic-integration)
       * [Set Up WeChat Pay](#set-up-wechat-pay)
+      * [Set Up Apple Pay](#set-up-apple-pay)
       * [Theme Color](#theme-color)
    * [Examples](#examples)
    * [Contributing](#contributing)
@@ -43,7 +42,7 @@ The Airwallex iOS SDK requires Xcode 11.0 or later and is compatible with apps t
 
 ### CocoaPods
 
-Airwallex for iOS is available through either [CocoaPods](https://cocoapods.org/) or [Carthage](https://github.com/Carthage/Carthage).
+Airwallex for iOS is available through [CocoaPods](https://cocoapods.org/).
 
 If you haven't already, install the latest version of [CocoaPods](https://cocoapods.org/).
 If you don't have an existing `Podfile`, run the following command to create one:
@@ -54,6 +53,17 @@ Add this line to your Podfile:
 ```ruby
 pod 'Airwallex'
 ```
+
+Optionally, you can also include the modules directly (This is recommended to ensure minimal dependency):
+
+```ruby
+pod 'Airwallex/Core'
+pod 'Airwallex/Card'
+pod 'Airwallex/WechatPay'
+pod 'Airwallex/Redirect'
+pod 'Airwallex/ApplePay'
+```
+
 Run the following command
 ```ruby
 pod install
@@ -62,12 +72,6 @@ Don’t forget to use the `.xcworkspace` file to open your project in Xcode, ins
 In the feature, to update to the latest version of the SDK, just run:
 ```ruby
 pod update Airwallex
-```
-
-### Carthage
-
-```ogdl
-github "airwallex/airwallex-payment-ios"
 ```
 
 ### Swift
@@ -80,7 +84,7 @@ use_frameworks!
 
 ### Basic Integration
 
-When your app starts, configure the SDK with  `mode`.
+When your app starts, configure the SDK with `mode`.
 
 ```objective-c
 [Airwallex setMode:AirwallexSDKStagingMode]; // AirwallexSDKDemoMode, AirwallexSDKStagingMode, AirwallexSDKProductionMode
@@ -99,14 +103,15 @@ When the customer wants to checkout an order, you should create a payment intent
 ```
 [AWXAPIClientConfiguration sharedConfiguration].clientSecret = "The payment intent's client secret";
 ```
-Note: When checkoutMode is AirwallexCheckoutRecurringMode, no need to create payment intent, then you need generate client secret with customer id and pass it to AWXAPIClientConfiguration.
+
+Note: When `checkoutMode` is `AirwallexCheckoutRecurringMode`, there is no need to create a payment intent. Instead, you'll need to generate a client secret with the customer id and pass it to `AWXAPIClientConfiguration`.
 ```
 [AWXAPIClientConfiguration sharedConfiguration].clientSecret = "The client secret generated with customer id";
 ```
 
 - Create session
 
-If you want to make one-off payment, create one-off session.
+If you want to make a one-off payment, create a one-off session.
 ```
 AWXOneOffSession *session = [AWXOneOffSession new];
 session.countryCode = "Your country code";
@@ -116,7 +121,7 @@ session.paymentIntent = "Payment intent";
 session.autoCapture = "Whether the card payment will be captured automatically (Default YES)";
 ```
 
-If you want to make recurring, create recurring session.
+If you want to make a recurring payment, create a recurring session.
 ```
 AWXRecurringSession *session = [AWXRecurringSession new];
 session.countryCode = "Your country code";
@@ -130,7 +135,7 @@ session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
 ```
 
-If you want to make recurring with payment intent, create recurring with intent session.
+If you want to make a recurring with payment intent, create a recurring with intent session.
 ```
 AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
 session.countryCode = "Your country code";
@@ -145,12 +150,12 @@ session.merchantTriggerReason = "Unscheduled or scheduled";
 
 - Handle the one-off payment or recurring flow
 
-Add a button to let the customer enter or change their payment method. When tapped, use `AWXUIContext` to present the payment flow.
+Upon checkout, use `AWXUIContext` to present the payment flow where the user will be able to select the payment method.
 
 ```objective-c
 AWXUIContext *context = [AWXUIContext sharedContext];
-context.delegate = ”The target to handle AWXPaymentResultDelegate protocol”;
-context.session = session;
+context.delegate = "The target to handle AWXPaymentResultDelegate protocol";
+context.session = "The session created above";
 [context presentPaymentFlowFrom:self];
 ```
 
@@ -222,6 +227,56 @@ After completing payment, WeChat will be redirected to the merchant's app and do
 
 @end
 ```
+
+### Set Up Apple Pay
+
+The Airwallex iOS SDK allows merchants to provide Apple Pay as a payment method to their customers. 
+
+- Make sure Apple Pay is set up correctly in the app. For more information, refer to Apple's official [doc](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay).
+- Make sure Apple Pay is enabled on your Airallex account.
+- Include the Apple Pay module when installing the SDK.
+- Prepare the [Merchant Identifier](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay) and configure `applePayOptions` on the payment session object.
+
+Apple Pay will now be presented as an option in the payment method sheet.
+
+```objective-c
+AWXOneOffSession *session = [AWXOneOffSession new];
+...
+... configure other properties
+...
+
+session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"Merchant Identifier"];
+```
+
+> Please note that Apple Pay only supports `AWXOneOffSession` at the moment. We'll add support for recurring payment sessions in the future.
+
+#### Customize Apple Pay
+
+You can customize the Apple Pay options to restrict it as well as provide extra context. For more information, please refer to the `AWXApplePayOptions.h` header file.
+
+```
+AWXApplePayOptions *options = ...;
+options.additionalPaymentSummaryItems = @[
+    [PKPaymentSummaryItem summaryItemWithLabel:@"goods" amount:[NSDecimalNumber decimalNumberWithString:@"10"]],
+    [PKPaymentSummaryItem summaryItemWithLabel:@"tax" amount:[NSDecimalNumber decimalNumberWithString:@"5"]]
+];
+options.merchantCapabilities = PKMerchantCapability3DS | PKMerchantCapabilityDebit;
+options.requiredBillingContactFields = [NSSet setWithObjects:PKContactFieldPostalAddress, nil];
+options.supportedCountries = [NSSet setWithObjects:@"AU", nil];
+options.totalPriceLabel = @"COMPANY, INC.";
+```
+
+#### Limitations
+
+Be aware that we currently support the following payment networks for Apple Pay:
+- Visa
+- MasterCard
+- ChinaUnionPay
+- Maestro (iOS 12+)
+
+Customers will only be able to select the cards of the above payment networks during Apple Pay.
+
+Coupon is also not supported at this stage.
 
 ### Theme Color
 

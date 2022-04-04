@@ -3,7 +3,6 @@
 ![Pod Version](https://img.shields.io/cocoapods/v/Airwallex.svg?style=flat)
 ![Pod Platform](https://img.shields.io/cocoapods/p/Airwallex.svg?style=flat)
 ![Pod License](https://img.shields.io/cocoapods/l/Airwallex.svg?style=flat)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-green.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-green.svg?style=flat)](https://cocoapods.org)
 
 - [API Reference](https://airwallex.github.io/airwallex-payment-ios/)
@@ -26,10 +25,10 @@ Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松
    * [要求](#要求)
    * [整合](#整合)
       * [CocoaPods](#cocoapods)
-	  * [Carthage](#carthage)
 	  * [Swift](#swift)
       * [基本整合](#基本整合)
       * [设置微信支付](#设置微信支付)
+      * [设置 Apple Pay](#设置-Apple-Pay)
       * [主题色](#主题色)
    * [例子](#例子)
    * [贡献](#贡献)
@@ -42,7 +41,7 @@ Airwallex iOS SDK需要Xcode 11.0或更高版本，并且与面向iOS 11.0或更
 
 ### CocoaPods
 
-Airwallex可通过[CocoaPods](https://cocoapods.org/) 或者 [Carthage](https://github.com/Carthage/Carthage)整合。
+Airwallex可通过[CocoaPods](https://cocoapods.org/) 整合。
 
 如果尚未安装，请安装最新版本的[CocoaPods](https://cocoapods.org/).
 如果您还没有`Podfile`, 请运行以下命令来创建一个:
@@ -61,12 +60,6 @@ pod install
 以后如果要更新到最新版本的SDK，只需运行：
 ```ruby
 pod update Airwallex
-```
-
-### Carthage
-
-```ogdl
-github "airwallex/airwallex-payment-ios"
 ```
 
 ### Swift
@@ -221,6 +214,56 @@ context.session = session;
 
 @end
 ```
+
+### 设置 Apple Pay
+
+Airwallex iOS SDK 允许商户向客户提供 Apple Pay 作为付款方式。
+
+- 首先确保 Apple Pay 已在应用中开启并配置。请参考 Apple 的[官方文档](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay).
+- 确保 Apple Pay 已在您的 Airallex 账户中开启。
+- 安装 Airwallex iOS SDK 时添加 Apple Pay 模组。
+- 生成 [Merchant Identifier](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay) 并配置 `applePayOptions`。
+
+完成上述步骤后，Apple Pay 会作为一种选项出现在付款方式列表里。
+
+```objective-c
+AWXOneOffSession *session = [AWXOneOffSession new];
+...
+... configure other properties
+...
+
+session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"Merchant Identifier"];
+```
+
+> 请注意，Apple Pay 目前仅支持 `AWXOneOffSession` 一次性支付。我们将在以后添加对订阅支付的支持。
+
+#### 自定义 Apple Pay
+
+你也可以自定义 Apple Pay 选项来限制支付场景和提供额外的信息。请参考 `AWXApplePayOptions.h` 头文件以获取更多信息。
+
+```
+AWXApplePayOptions *options = ...;
+options.additionalPaymentSummaryItems = @[
+    [PKPaymentSummaryItem summaryItemWithLabel:@"goods" amount:[NSDecimalNumber decimalNumberWithString:@"10"]],
+    [PKPaymentSummaryItem summaryItemWithLabel:@"tax" amount:[NSDecimalNumber decimalNumberWithString:@"5"]]
+];
+options.merchantCapabilities = PKMerchantCapability3DS | PKMerchantCapabilityDebit;
+options.requiredBillingContactFields = [NSSet setWithObjects:PKContactFieldPostalAddress, nil];
+options.supportedCountries = [NSSet setWithObjects:@"AU", nil];
+options.totalPriceLabel = @"COMPANY, INC.";
+```
+
+#### 限制
+
+目前 Apple Pay 我们支持以下几种支付系统：
+- Visa
+- MasterCard
+- ChinaUnionPay
+- Maestro (iOS 12+)
+
+用户在 Apple Pay 的过程中只能选择这几种支付系统的卡片进行付款。
+
+优惠卷也暂时不支持。
 
 ### 主题色
 

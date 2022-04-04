@@ -1,6 +1,12 @@
 # Airwallex iOS SDK Changelog
 All notable changes to the SDK will be documented in this file.
 
+## Version 5.0.0 (April 13, 2022)
+- Added Apple Pay module.
+- Fixed an issue where the SDK introduced duplicated image resources to the host app.
+- Fixed an issue where the SDK was exposing all headers as public.
+- Removed reference to both Swift Package Manager and Carthage as they weren't actually supported.
+
 ## Version 4.0.1 (January 28, 2022)
 - Allow Card to disable auto_capture
 
