@@ -54,7 +54,7 @@
 #else
     NSString *fraudSessionId = [NSString stringWithFormat:@"%@%f", intentId, [[NSDate date] timeIntervalSince1970]];
     NSString *sessionId = [NSString stringWithFormat:@"%@%@", AWXCyberSourceMerchantID, fraudSessionId];
-    [self.profiling profileDeviceUsing:@{@"session_id": sessionId} callbackBlock:^(NSDictionary *result) {
+    [self.profiling profileDeviceUsing:@{RLTMXSessionID: sessionId} callbackBlock:^(NSDictionary *result) {
         RLTMXStatusCode statusCode = [[result valueForKey:RLTMXProfileStatus] integerValue];
         dispatch_async(dispatch_get_main_queue(), ^{
             if (statusCode == RLTMXStatusCodeOk) {
