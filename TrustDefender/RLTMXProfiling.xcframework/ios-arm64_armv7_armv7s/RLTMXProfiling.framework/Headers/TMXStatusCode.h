@@ -34,9 +34,15 @@
  @constant RLTMXStatusCodeCertificateMismatch      Certificate hash or public key hash provided to networking module does not match with what server uses.
  @constant RLTMXStatusCodeInvalidParameter         A parameter was supplied that is not recognised by this version of the SDK.
  @constant RLTMXStatusCodeProfilingTimeoutError    Profiling process timed out, profiling incomplete
+ @constant THMStatusCodeStrongAuthOK             Registration/stepup was performed successfully.
+ @constant THMStatusCodeStrongAuthFailed         System has rejected registration/stepup attempt.
+ @constant THMStatusCodeStrongAuthCancelled      User has chosen not to proceed with registration/stepup.
+ @constant THMStatusCodeStrongAuthUnsupported    Local device is missing functionality required to execute Strong Auth request.
+ @constant THMStatusCodeStrongAuthUserNotFound   User context used for Strong Auth not found.
  */
 typedef NS_ENUM(NSInteger, RLTMXStatusCode)
 {
+    TMXStatusCodeStrongAuthOK = 0,
     RLTMXStatusCodeNotYet = 0,
     RLTMXStatusCodeOk,
     RLTMXStatusCodeConnectionError,
@@ -51,6 +57,11 @@ typedef NS_ENUM(NSInteger, RLTMXStatusCode)
     RLTMXStatusCodeCertificateMismatch,
     RLTMXStatusCodeInvalidParameter,
     RLTMXStatusCodeProfilingTimeoutError,
+    TMXStatusCodeStrongAuthFailed,
+    TMXStatusCodeStrongAuthCancelled,
+    TMXStatusCodeStrongAuthUnsupported,
+    TMXStatusCodeStrongAuthUserNotFound,
+    TMXStatusCodeStrongAuthAlreadyRegistered
 };
 
 #endif

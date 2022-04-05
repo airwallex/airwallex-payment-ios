@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/TMXProfilingConnections.h</key>
 		<data>
-		Z1lQc57RfdG6b98+6zzf4N+ZigA=
+		IwIWvHm+9Q+yI49PJ00L7SeNlkE=
 		</data>
 		<key>Headers/TMXProfilingConnectionsProtocol.h</key>
 		<data>
@@ -14,7 +14,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		FUQBNWhBQe88k+kpr+4ZrsxPnM8=
+		IGjvQgmHxNWpEtfqwZA5z8DdV9I=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -27,11 +27,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Z1lQc57RfdG6b98+6zzf4N+ZigA=
+			IwIWvHm+9Q+yI49PJ00L7SeNlkE=
 			</data>
 			<key>hash2</key>
 			<data>
-			eokf4OUGsxtSyS3S7Apb5bVJ1hwamCiwYpWeLaM0p3E=
+			A8TimCl+4+rCIB33KvgkI8G2pM5UYpmApASl6qrsHus=
 			</data>
 		</dict>
 		<key>Headers/TMXProfilingConnectionsProtocol.h</key>

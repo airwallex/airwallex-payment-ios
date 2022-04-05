@@ -38,7 +38,7 @@ __attribute__((visibility("default")))
  * @discussion This module is designed for transferring ThreatMetrix profiling data and is not a general
  * purpose networking module.
  */
-@interface RLTMXProfilingConnections : NSObject <NSURLSessionDelegate, RLTMXProfilingConnectionsProtocol>
+@interface RLTMXProfilingConnections : NSObject <RLTMXProfilingConnectionsProtocol>
 
 /*!
  * @abstract List of SHA256 hash of public keys used for public key pinning.

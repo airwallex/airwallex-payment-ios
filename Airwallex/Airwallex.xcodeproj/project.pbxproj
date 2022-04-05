@@ -39,8 +39,6 @@
 		3C455EB727E03B04009DB492 /* RLTMXProfilingConnections.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C455EB827E03B04009DB492 /* RLTMXProfiling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */; };
 		3C455EB927E03B04009DB492 /* RLTMXProfiling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3C455EBA27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */; };
-		3C455EBB27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C5A37D627EAFD9F00CFC2EF /* AWXApplePayProviderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37D527EAFD9F00CFC2EF /* AWXApplePayProviderTest.m */; };
 		3C5A37E327ED443E00CFC2EF /* PKPaymentMethod+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E127ED443E00CFC2EF /* PKPaymentMethod+Request.h */; };
 		3C5A37E427ED443E00CFC2EF /* PKPaymentMethod+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37E227ED443E00CFC2EF /* PKPaymentMethod+Request.m */; };
@@ -283,7 +281,6 @@
 			files = (
 				3C455EB927E03B04009DB492 /* RLTMXProfiling.xcframework in Embed Frameworks */,
 				3C455EB727E03B04009DB492 /* RLTMXProfilingConnections.xcframework in Embed Frameworks */,
-				3C455EBB27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,7 +328,6 @@
 		3C324F9427FC108500CF7315 /* AWXConstantsInternalTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXConstantsInternalTest.m; sourceTree = "<group>"; };
 		3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfilingConnections.xcframework; path = ../TrustDefender/RLTMXProfilingConnections.xcframework; sourceTree = "<group>"; };
 		3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfiling.xcframework; path = ../TrustDefender/RLTMXProfiling.xcframework; sourceTree = "<group>"; };
-		3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXBehavioralBiometrics.xcframework; path = ../TrustDefender/RLTMXBehavioralBiometrics.xcframework; sourceTree = "<group>"; };
 		3C5A37D527EAFD9F00CFC2EF /* AWXApplePayProviderTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXApplePayProviderTest.m; sourceTree = "<group>"; };
 		3C5A37DB27ED404700CFC2EF /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		3C5A37E127ED443E00CFC2EF /* PKPaymentMethod+Request.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PKPaymentMethod+Request.h"; sourceTree = "<group>"; };
@@ -567,7 +563,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C455EB627E03B04009DB492 /* RLTMXProfilingConnections.xcframework in Frameworks */,
-				3C455EBA27E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework in Frameworks */,
 				57CEC81926E5FB4000695740 /* Core.framework in Frameworks */,
 				3C455EB827E03B04009DB492 /* RLTMXProfiling.xcframework in Frameworks */,
 			);
@@ -1002,7 +997,6 @@
 			isa = PBXGroup;
 			children = (
 				3C5A37DB27ED404700CFC2EF /* PassKit.framework */,
-				3C455EB527E03B04009DB492 /* RLTMXBehavioralBiometrics.xcframework */,
 				3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */,
 				3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */,
 				766C109E04EF1051D97CC9A3 /* Pods_ApplePayTests.framework */,

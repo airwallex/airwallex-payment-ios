@@ -10,15 +10,15 @@
 		</data>
 		<key>Headers/TMXProfiling.h</key>
 		<data>
-		Fv5x1SiUYuMeYusnt5raH49S6FM=
+		Oy7N42se7WkIOT7mWjeUBLtSZSg=
 		</data>
 		<key>Headers/TMXStatusCode.h</key>
 		<data>
-		XO0c2Et7sAujX8EQtMygGLH6WTQ=
+		dhvhslI/RvY0oUSI1Ev+xlX7GLE=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		b5F1S208ArG6NsWP2kxLaPwvHdw=
+		6KKPF9FTrUvVJ6tljLqM5nQGArY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -42,22 +42,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Fv5x1SiUYuMeYusnt5raH49S6FM=
+			Oy7N42se7WkIOT7mWjeUBLtSZSg=
 			</data>
 			<key>hash2</key>
 			<data>
-			7ouwrJszNhs9aipHNffwr4vCE7bUhD+iKywUsAjCwYk=
+			Nk4nxFFvaUb7RGzSH8XR9eviE4JfVFgRf5gxWTrEgN8=
 			</data>
 		</dict>
 		<key>Headers/TMXStatusCode.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			XO0c2Et7sAujX8EQtMygGLH6WTQ=
+			dhvhslI/RvY0oUSI1Ev+xlX7GLE=
 			</data>
 			<key>hash2</key>
 			<data>
-			b+9MhNhsocAPSbrab1P1m2qJys5PINMheGKezt6kn9o=
+			iib1q9A6MNVdjO7Sqtfe5RDSVgS5rBXMC8YoXSZLSbY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

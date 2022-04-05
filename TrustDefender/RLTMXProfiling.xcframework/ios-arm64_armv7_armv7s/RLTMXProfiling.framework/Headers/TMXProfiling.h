@@ -39,6 +39,9 @@
 #if (!TARGET_OS_IPHONE && !TARGET_OS_SIMULATOR) //macOS Only
 #endif
 
+#if (TARGET_OS_IPHONE || TARGET_OS_SIMULATOR) //iOS only
+#endif
+
 //Profiling attributes
 
 #endif
@@ -132,6 +135,30 @@ EXTERN NSString *const RLTMXDisableOptions;
  */
 EXTERN NSString *const RLTMXDisableNonFatalLog;
 
+
+#if (TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
+/*!
+ * @const RLTMXDisableAuthenticationModule
+ * @abstract NSDictionary key to allow SDK to grab an Apple Push Notification token
+ * @discussion Valid at init time to disable TMXAuthentication module
+ */
+EXTERN NSString *const RLTMXDisableAuthenticationModule;
+
+/*!
+ * @const RLTMXPushTokenSwizzling
+ * @abstract NSDictionary key to allow method swizzling in Strong Authentication.
+ * @discussion Valid at init time for allowing method swizzling to get push token
+ * automatically. Should be @NO in case integrity protection tools are used in the
+ * final application.
+ * @remark When method swizzling is enabled, configure method MUST be called
+ * on the main thread and host application should NOT block the main thread. By
+ * default the host application is responsible for passing push token to the
+ * push token to SDK
+ * Default value is \@NO (note use of NSNumber to store BOOL)
+ */
+EXTERN NSString *const RLTMXPushTokenSwizzling;
+#endif
+
 #if (!TARGET_OS_IPHONE && !TARGET_OS_SIMULATOR)
 /*!
  * @const TMXKeychainAccessPrompt
@@ -192,8 +219,6 @@ EXTERN NSString *const RLTMXLocation;
  */
 EXTERN NSString *const RLTMXProfileStatus;
 
-NS_ASSUME_NONNULL_END
-
 // NOTE: headerdoc2html gets confused if this __attribute__ is after the comment
 __attribute__((visibility("default")))
 /*!
@@ -201,9 +226,9 @@ __attribute__((visibility("default")))
  */
 @interface RLTMXProfiling : NSObject
 
-- (instancetype _Null_unspecified)init NS_UNAVAILABLE;
-+ (instancetype _Null_unspecified)allocWithZone:(struct _NSZone * _Nullable)zone NS_UNAVAILABLE;
-+ (instancetype _Null_unspecified)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)allocWithZone:(struct _NSZone * _Nullable)zone NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 
 /*!
  * @abstract Initialise a shared instance of RLTMXProfiling object.
@@ -231,7 +256,7 @@ __attribute__((visibility("default")))
  * @throws An exception of type NSInvalidArgumentException if config dictionary contains invalid keys or malformed values
  *
  */
-- (void)configure:(NSDictionary * _Nonnull)config NS_SWIFT_NAME(configure(configData:));
+- (void)configure:(NSDictionary *)config NS_SWIFT_NAME(configure(configData:));
 
 /*!
  * @abstract Performs profiling process.
@@ -239,7 +264,7 @@ __attribute__((visibility("default")))
  * @param callbackBlock A block interface which is fired when profiling request is completed.
  * @return RLTMXProfileHandle which can be used to cancel current profiling and retrieve the session id
  */
-- (RLTMXProfileHandle * _Nonnull)profileDeviceWithCallback:(void (^ _Nullable)(NSDictionary * _Nullable))callbackBlock NS_SWIFT_NAME(profileDevice(callbackBlock:));
+- (RLTMXProfileHandle *)profileDeviceWithCallback:(void (^ _Nullable)(NSDictionary * _Nullable))callbackBlock NS_SWIFT_NAME(profileDevice(callbackBlock:));
 
 /*!
  * @abstract Performs profiling process.
@@ -248,7 +273,44 @@ __attribute__((visibility("default")))
  * @param callbackBlock A block interface which is fired when profiling request is completed.
  * @return RLTMXProfileHandle which can be used to cancel current profiling and retrieve the session id
  */
-- (RLTMXProfileHandle * _Nonnull)profileDeviceUsing:(NSDictionary * _Nullable)profileOptions callbackBlock:(void (^ _Nullable)(NSDictionary * _Nullable))callbackBlock NS_SWIFT_NAME(profileDevice(profileOptions:callbackBlock:));
+- (RLTMXProfileHandle *)profileDeviceUsing:(NSDictionary * _Nullable)profileOptions callbackBlock:(void (^ _Nullable)(NSDictionary * _Nullable))callbackBlock NS_SWIFT_NAME(profileDevice(profileOptions:callbackBlock:));
+
+/*!
+ * @discussion Perform a registration request.
+ * @param userContext the username to register this device to
+ * @param prompt a message to display to the user
+ * @param completionCallback a callback block to be invoked with the result of the registration request
+ * @return the Session ID of registration request or nil if registration request failed to send.
+ */
+- (NSString * _Nullable)registerUserContext:(NSString *)userContext prompt:(NSString *)prompt completionCallback:(void (^ _Nullable)(NSDictionary * _Nullable))completionCallback NS_SWIFT_NAME(registerUserContext(userContext:prompt:completionCallback:));
+
+/*!
+ * @discussion Perform a de-registration request.
+ * @param userContext the username to de-register from this device
+ * @param completionCallback a callback block to be invoked with the result of the de-registration request
+ */
+-(void) deregisterUserContext:(NSString *)userContext completionCallback:(void (^)(NSDictionary *))completionCallback NS_SWIFT_NAME(deregisterUserContext(userContext:completionCallback:));
+
+/*!
+ * @discussion Perform a stepup request.
+ * @param prompt APN message dictionary
+ * @param completionCallback A block interface which is fired when step up processing is finished
+ * @return the Session ID of registration/step up request or nil if failed.
+ */
+- (NSString * _Nullable)processStrongAuthPrompt:(NSDictionary * _Nullable)prompt completionCallback:(void (^ _Nullable)(NSDictionary * _Nullable))completionCallback NS_SWIFT_NAME(processStrongAuthPrompt(prompt:completionCallback:));
+
+/*!
+ * @discussion Perform a stepup request.
+ * @param prompt APN message dictionary
+ * @return the Session ID of registration/step up request or nil if failed.
+ */
+-(NSString * _Nullable)processStrongAuthPrompt:(NSDictionary * _Nullable)prompt NS_SWIFT_NAME(processStrongAuthPrompt(prompt:));
+
+/*!
+ * @discussion Set a stepup token, if one wishes to use push messaging without swizzling methods.
+ * @param token is a NSData object returned by Application:didRegisterForRemoteNotificationsWithDeviceToken.
+ */
+- (void)setStepupToken:(NSData * _Nullable)token NS_SWIFT_NAME(setStepupToken(token:));
 
 /*!
  * @abstract Pauses or resumes location services
@@ -259,8 +321,10 @@ __attribute__((visibility("default")))
 /*!
  * @abstract Query the build number, for debugging purposes only.
  */
-- (NSString * _Nonnull)version NS_SWIFT_NAME(version());
+- (NSString *)version NS_SWIFT_NAME(version());
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* _TMXPROFILING_H_ */
