@@ -80,9 +80,7 @@
     [controller presentWithCompletion:^(BOOL success) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         
-        if (success) {
-            NSLog(@"PKPaymentAuthorizationController presents succesfully!");
-        } else {
+        if (!success) {
             NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                                  code:-1
                                              userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present PKPaymentAuthorizationController.", nil)}];

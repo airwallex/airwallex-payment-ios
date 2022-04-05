@@ -30,6 +30,7 @@
 #import "AWXForm.h"
 #import "AWXDefaultProvider.h"
 #import "AWXDefaultActionProvider.h"
+#import "AWXSession+Internal.h"
 
 @interface AWXPaymentMethodListViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXProviderDelegate>
 
@@ -125,30 +126,12 @@
 
         if (response && !error) {
             AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
-            strongSelf.availablePaymentMethodTypes = [self filterPaymentMethodTypes:result.items];
+            strongSelf.availablePaymentMethodTypes = [self.session filterPaymentMethodTypes:result.items];
             strongSelf.canLoadMore = result.hasMore;
             strongSelf.nextPageNum = pageNum + 1;
             [strongSelf.tableView reloadData];
         }
     }];
-}
-
-- (NSArray<AWXPaymentMethodType *> *)filterPaymentMethodTypes:(NSArray<AWXPaymentMethodType *> *)items
-{
-    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-        AWXPaymentMethodType *item = (AWXPaymentMethodType *)evaluatedObject;
-        Class class = ClassToHandleFlowForPaymentMethodType(item);
-        
-        // If no provider is available or if the provider is not able to handle the particular session,
-        // then we should filter this method out.
-        if (class == nil || ![class canHandleSession: self.session]) {
-            return NO;
-        }
-        
-        return [item.transactionMode isEqualToString:self.session.transactionMode];
-    }];
-    
-    return [items filteredArrayUsingPredicate:predicate];
 }
 
 - (void)loadAvailablePaymentConsents
