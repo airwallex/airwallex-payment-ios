@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXSession (Internal)
 
-- (NSArray <AWXPaymentMethodType *> *)filterPaymentMethodTypes:(NSArray<AWXPaymentMethodType *> *)items;
+- (NSArray <AWXPaymentMethodType *> *)filteredPaymentMethodTypes:(NSArray<AWXPaymentMethodType *> *)items;
 
 @end
 

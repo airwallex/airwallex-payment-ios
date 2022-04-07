@@ -13,7 +13,7 @@
 
 @implementation AWXSession (Internal)
 
-- (NSArray<AWXPaymentMethodType *> *)filterPaymentMethodTypes:(NSArray<AWXPaymentMethodType *> *)items
+- (NSArray<AWXPaymentMethodType *> *)filteredPaymentMethodTypes:(NSArray<AWXPaymentMethodType *> *)items
 {
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
         AWXPaymentMethodType *item = (AWXPaymentMethodType *)evaluatedObject;
