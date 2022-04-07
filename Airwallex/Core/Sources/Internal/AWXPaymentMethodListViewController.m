@@ -126,7 +126,7 @@
 
         if (response && !error) {
             AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
-            strongSelf.availablePaymentMethodTypes = [self.session filterPaymentMethodTypes:result.items];
+            strongSelf.availablePaymentMethodTypes = [self.session filteredPaymentMethodTypes:result.items];
             strongSelf.canLoadMore = result.hasMore;
             strongSelf.nextPageNum = pageNum + 1;
             [strongSelf.tableView reloadData];

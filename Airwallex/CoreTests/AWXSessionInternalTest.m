@@ -42,7 +42,7 @@
         unsupportedMethod
     ];
     
-    NSArray<AWXPaymentMethodType *> *filtered = [sessionMock filterPaymentMethodTypes:methodTypes];
+    NSArray<AWXPaymentMethodType *> *filtered = [sessionMock filteredPaymentMethodTypes:methodTypes];
     
     XCTAssertEqual(filtered.count, 1);
     XCTAssertEqualObjects(filtered[0], validMethod);
@@ -65,7 +65,7 @@
         validMethod
     ];
     
-    NSArray<AWXPaymentMethodType *> *filtered = [sessionMock filterPaymentMethodTypes:methodTypes];
+    NSArray<AWXPaymentMethodType *> *filtered = [sessionMock filteredPaymentMethodTypes:methodTypes];
     
     XCTAssertEqual(filtered.count, 0);
 }
