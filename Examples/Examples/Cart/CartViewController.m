@@ -278,6 +278,8 @@
             AWXOneOffSession *session = [AWXOneOffSession new];
             
             AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchant.com.airwallex.checkout"];
+            options.requiredBillingContactFields = [NSSet setWithObjects:PKContactFieldName, PKContactFieldPostalAddress, nil];
+            
             session.applePayOptions = options;
             
             session.countryCode = [AirwallexExamplesKeys shared].countryCode;

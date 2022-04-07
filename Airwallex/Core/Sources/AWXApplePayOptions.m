@@ -17,9 +17,7 @@
     if (self) {
         _merchantIdentifier = merchantIdentifier;
         _merchantCapabilities = PKMerchantCapability3DS | PKMerchantCapabilityEMV | PKMerchantCapabilityDebit | PKMerchantCapabilityCredit;
-        _shippingType = PKShippingTypeShipping;
         _requiredBillingContactFields = [NSSet new];
-        _requiredShippingContactFields = [NSSet new];
     }
     return self;
 }

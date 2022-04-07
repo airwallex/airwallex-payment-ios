@@ -16,6 +16,7 @@
 #import "AWXPaymentIntentResponse.h"
 #import "PKPaymentToken+Request.h"
 #import "AWXOneOffSession+Request.h"
+#import "PKContact+Request.h"
 
 @interface AWXApplePayProvider () <PKPaymentAuthorizationControllerDelegate>
 
@@ -100,11 +101,15 @@
     AWXPaymentMethod *method = [AWXPaymentMethod new];
     method.type = AWXApplePayKey;
     method.customerId = self.session.customerId;
-    method.billing = self.session.billing;
     
     NSError *error;
+    NSDictionary *billingPayload;
     
-    NSDictionary *applePayParams = [payment.token payloadForRequestOrError:&error];
+    if (payment.billingContact) {
+        billingPayload = [payment.billingContact payloadForRequest];
+    }
+    
+    NSDictionary *applePayParams = [payment.token payloadForRequestWithBilling:billingPayload orError:&error];
     
     if (!applePayParams) {
         self.lastError = error;

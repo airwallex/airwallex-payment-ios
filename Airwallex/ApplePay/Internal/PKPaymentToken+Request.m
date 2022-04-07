@@ -11,7 +11,8 @@
 
 @implementation PKPaymentToken (Request)
 
-- (nullable NSDictionary *)payloadForRequestOrError:(NSError * _Nullable *)error
+- (nullable NSDictionary *)payloadForRequestWithBilling:(nullable NSDictionary *)billingPayload
+                                                orError:(NSError * _Nullable *)error;
 {
     NSData *paymentData = self.paymentData;
     NSDictionary *paymentJSON = [NSJSONSerialization JSONObjectWithData:paymentData
@@ -24,7 +25,13 @@
     
     NSDictionary *header = paymentJSON[@"header"];
     
-    return @{
+    NSMutableDictionary *payload = [NSMutableDictionary dictionary];
+    
+    if (billingPayload) {
+        payload[@"billing"] = billingPayload;
+    }
+    
+    [payload addEntriesFromDictionary:@{
         @"card_brand": self.paymentMethod.network.lowercaseString,
         @"card_type": self.paymentMethod.typeNameForRequest,
         @"data": paymentJSON[@"data"],
@@ -33,7 +40,9 @@
         @"transaction_id": header[@"transactionId"],
         @"signature": paymentJSON[@"signature"],
         @"version": paymentJSON[@"version"]
-    };
+    }];
+    
+    return payload;
 }
 
 @end
