@@ -23,11 +23,7 @@
     
     NSString *label = @"label";
     
-    NSArray <PKPaymentSummaryItem *> *items = [intent paymentSummaryItemsWithTotalPriceLabel:label];
-    
-    XCTAssertEqual(items.count, 1);
-    
-    PKPaymentSummaryItem *item = items[0];
+    PKPaymentSummaryItem *item = [intent paymentSummaryItemWithTotalPriceLabel:label];
     
     XCTAssertEqualObjects(item.label, label);
     XCTAssertEqual(item.type, PKPaymentSummaryItemTypeFinal);
@@ -39,11 +35,7 @@
     AWXPaymentIntent *intent = [AWXPaymentIntent new];
     intent.amount = [[NSDecimalNumber alloc] initWithString:@"1234.5"];
     
-    NSArray <PKPaymentSummaryItem *> *items = [intent paymentSummaryItemsWithTotalPriceLabel:nil];
-    
-    XCTAssertEqual(items.count, 1);
-    
-    PKPaymentSummaryItem *item = items[0];
+    PKPaymentSummaryItem *item = [intent paymentSummaryItemWithTotalPriceLabel:nil];
     
     XCTAssertEqualObjects(item.label, @"");
 }

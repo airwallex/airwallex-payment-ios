@@ -53,7 +53,7 @@
     OCMStub([method network]).andReturn(network);
     OCMStub([method typeNameForRequest]).andReturn(type);
     
-    NSDictionary *payload = [token payloadForRequestOrError:nil];
+    NSDictionary *payload = [token payloadForRequestWithBilling:nil orError:nil];
     
     NSDictionary *expectedPayload = @{
         @"card_brand": network,
@@ -67,6 +67,14 @@
     };
     
     XCTAssertEqualObjects(payload, expectedPayload);
+    
+    NSDictionary *billingPayload = @{@"key": @"value"};
+    NSDictionary *payloadWithBilling = [token payloadForRequestWithBilling:billingPayload orError:nil];
+    
+    NSMutableDictionary *expectedPayloadWithBilling = [NSMutableDictionary dictionaryWithDictionary:expectedPayload];
+    expectedPayloadWithBilling[@"billing"] = billingPayload;
+    
+    XCTAssertEqualObjects(payloadWithBilling, expectedPayloadWithBilling);
 }
 
 - (void)testPayloadForRequestWithError
@@ -78,7 +86,7 @@
     OCMStub([tokenMock paymentData]).andReturn(paymentData);
     
     NSError *error;
-    NSDictionary *payload = [token payloadForRequestOrError:&error];
+    NSDictionary *payload = [token payloadForRequestWithBilling:nil orError:&error];
     
     XCTAssertNil(payload);
     XCTAssertNotNil(error);

@@ -11,6 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ Object used to construct PKPaymentRequest for Apple Pay.
+ */
 @interface AWXApplePayOptions : NSObject
 
 /**
@@ -19,14 +22,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *merchantIdentifier;
 
 /**
+ An additional array of payment summary item objects that summarize the amount of the payment. Default value is nil.
+ 
+ The SDK will automatically construct a PKPaymentSummaryItem with the total amount from the session object and
+ the label defined with the totalPriceLabel property. Please make sure the sum of all the items in the array equals the total amount
+ you set on the session object.
+ */
+@property (nonatomic, copy, nullable) NSArray <PKPaymentSummaryItem *> *additionalPaymentSummaryItems;
+
+/**
  Apple Pay merchant capabilities. Default value includes 3DS, EMV, Credit and Debit.
  */
 @property (nonatomic, assign) PKMerchantCapability merchantCapabilities;
-
-/**
- How the item are to be shipped. Default value is PKShippingTypeShipping.
- */
-@property (nonatomic, assign) PKShippingType shippingType;
 
 /**
  The billing information that you require from the user in order to process the transaction. Default value is empty set.
@@ -34,34 +41,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSSet <PKContactField> *requiredBillingContactFields;
 
 /**
- The shipping information that you require from the user in order to fulfill the order. Default value is empty set.
- */
-@property (nonatomic, strong) NSSet <PKContactField> *requiredShippingContactFields;
-
-/**
- Description of the total price. Default value is nil.
- */
-@property (nonatomic, copy, nullable) NSString *totalPriceLabel;
-
-/**
  A list of ISO 3166 country codes for limiting payments to cards from specific countries. Default value is null, meaning all countries are allowed.
  */
 @property (nonatomic, copy, nullable) NSSet <NSString *> *supportedCountries;
 
 /**
- A set of shipping method objects that describe the available shipping methods. Default value is nil.
+ Description of the total price. Default value is nil.
  */
-@property (nonatomic, strong, nullable) NSArray <PKShippingMethod *> *shippingMethods;
-
-/**
- Shipping contact information for the user. Default value is nil.
- */
-@property (nonatomic, strong, nullable) PKContact *shippingContact;
-
-/**
- Billing contact information for the user. Default value is nil.
- */
-@property (nonatomic, strong, nullable) PKContact *billingContact;
+@property (nonatomic, copy, nullable) NSString *totalPriceLabel;
 
 - (instancetype)initWithMerchantIdentifier:(NSString *)merchantIdentifier;
 

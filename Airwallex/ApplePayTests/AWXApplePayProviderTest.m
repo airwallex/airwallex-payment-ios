@@ -111,7 +111,7 @@
 
 - (void)testHandleFlowWhenPaymentControllerFailedToInitialize
 {
-    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXOneOffSession *session = [self makeSession];
     session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
     
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
@@ -132,7 +132,7 @@
 
 - (void)testHandleFlowWhenPaymentControllerFailedToPresent
 {
-    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXOneOffSession *session = [self makeSession];
     session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
     
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
@@ -216,7 +216,9 @@
     delegate.statusExpectation = [self expectationWithDescription:@"Expect completeWithStatus to be called"];
     
     PKPaymentAuthorizationResult *result;
-    [self prepareAuthorizationControllerMock:@{} result:&result];
+    NSDictionary *additionalPayload = @{@"key": @"value"};
+    
+    [self prepareAuthorizationControllerMock:additionalPayload result:&result];
     
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
@@ -234,7 +236,7 @@
         AWXPaymentMethod *method = (AWXPaymentMethod *)obj;
         XCTAssertEqualObjects(method.type, @"applepay");
         XCTAssertEqualObjects(method.customerId, session.paymentIntent.customerId);
-        XCTAssertEqualObjects(method.billing, session.billing);
+        XCTAssertEqualObjects(method.additionalParams, additionalPayload);
         return YES;
     }]
                                                             paymentConsent:[OCMArg isNil]
@@ -279,7 +281,6 @@
         AWXPaymentMethod *method = (AWXPaymentMethod *)obj;
         XCTAssertEqualObjects(method.type, @"applepay");
         XCTAssertEqualObjects(method.customerId, session.paymentIntent.customerId);
-        XCTAssertEqualObjects(method.billing, session.billing);
         return YES;
     }]
                                                             paymentConsent:[OCMArg isNil]
@@ -336,11 +337,11 @@
     OCMStub([payment token]).andReturn(token);
     
     if ([payloadOrError isKindOfClass: [NSDictionary class]]) {
-        OCMStub([token payloadForRequestOrError:[OCMArg anyObjectRef]]).andReturn(payloadOrError);
+        OCMStub([token payloadForRequestWithBilling:[OCMArg any] orError:[OCMArg anyObjectRef]]).andReturn(payloadOrError);
     } else if ([payloadOrError isKindOfClass:[NSError class]]) {
-        OCMStub([token payloadForRequestOrError:[OCMArg anyObjectRef]]).andDo(^(NSInvocation *invocation) {
+        OCMStub([token payloadForRequestWithBilling:[OCMArg any] orError:[OCMArg anyObjectRef]]).andDo(^(NSInvocation *invocation) {
             NSError * __autoreleasing *error;
-            [invocation getArgument:&error atIndex:2];
+            [invocation getArgument:&error atIndex:3];
             
             *error = payloadOrError;
             

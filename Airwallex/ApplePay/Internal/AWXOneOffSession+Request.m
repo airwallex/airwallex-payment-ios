@@ -8,6 +8,7 @@
 
 #import "AWXOneOffSession+Request.h"
 #import "AWXPaymentIntent+Summary.h"
+#import "AWXPlaceDetails+PKContact.h"
 
 @implementation AWXOneOffSession (Request)
 
@@ -24,19 +25,36 @@
     }
     
     PKPaymentRequest *request = [PKPaymentRequest new];
-    request.paymentSummaryItems = [self.paymentIntent paymentSummaryItemsWithTotalPriceLabel:options.totalPriceLabel];
-    request.merchantIdentifier = options.merchantIdentifier;
-    request.merchantCapabilities = options.merchantCapabilities;
+    
+    if (self.billing) {
+        request.billingContact = [self.billing convertToPaymentContact];
+    }
+    
     request.countryCode = self.countryCode;
     request.currencyCode = self.currency;
-    request.supportedNetworks = AWXApplePaySupportedNetworks();
-    request.shippingContact = options.shippingContact;
-    request.shippingType = options.shippingType;
-    request.shippingMethods = options.shippingMethods;
-    request.billingContact = options.billingContact;
+    request.merchantCapabilities = options.merchantCapabilities;
+    request.merchantIdentifier = options.merchantIdentifier;
+    
+    if (!self.paymentIntent) {
+        if (error) {
+            *error = [NSError errorWithDomain:AWXSDKErrorDomain
+                                        code:-1
+                                    userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"paymentIntent cannot be nil.", nil)}];
+        }
+        return nil;
+    }
+    
+    PKPaymentSummaryItem *totalPriceItem = [self.paymentIntent paymentSummaryItemWithTotalPriceLabel:options.totalPriceLabel];
+    
+    if (options.additionalPaymentSummaryItems) {
+        request.paymentSummaryItems = [options.additionalPaymentSummaryItems arrayByAddingObject:totalPriceItem];
+    } else {
+        request.paymentSummaryItems = @[totalPriceItem];
+    }
+    
     request.requiredBillingContactFields = options.requiredBillingContactFields;
-    request.requiredShippingContactFields = options.requiredShippingContactFields;
     request.supportedCountries = options.supportedCountries;
+    request.supportedNetworks = AWXApplePaySupportedNetworks();
     
     return request;
 }
