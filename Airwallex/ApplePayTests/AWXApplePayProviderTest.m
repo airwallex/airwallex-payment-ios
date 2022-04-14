@@ -15,6 +15,7 @@
 #import "AWXProviderDelegateSpy.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentIntentResponse.h"
+#import "PKContact+Request.h"
 
 // There's a bug where OCMockVerify will cause compiler to warn about
 // Expression result unused. This pragma helps ignore the warning.
@@ -163,7 +164,7 @@
     
     delegate.statusExpectation = expectation;
     
-    [self prepareAuthorizationControllerMock:nil result:nil endImmediately:YES];
+    [self prepareAuthorizationControllerMock:nil billingPayload:nil result:nil endImmediately:YES];
     
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     
@@ -184,6 +185,7 @@
     NSError *error = [NSError errorWithDomain:@"domain" code:-1 userInfo:nil];
     PKPaymentAuthorizationResult *result;
     [self prepareAuthorizationControllerMock:error
+                              billingPayload:nil
                                       result:&result];
     
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
@@ -216,9 +218,7 @@
     delegate.statusExpectation = [self expectationWithDescription:@"Expect completeWithStatus to be called"];
     
     PKPaymentAuthorizationResult *result;
-    NSDictionary *additionalPayload = @{@"key": @"value"};
-    
-    [self prepareAuthorizationControllerMock:additionalPayload result:&result];
+    [self prepareAuthorizationControllerMock:@{} billingPayload:@{} result:&result];
     
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
@@ -236,7 +236,6 @@
         AWXPaymentMethod *method = (AWXPaymentMethod *)obj;
         XCTAssertEqualObjects(method.type, @"applepay");
         XCTAssertEqualObjects(method.customerId, session.paymentIntent.customerId);
-        XCTAssertEqualObjects(method.additionalParams, additionalPayload);
         return YES;
     }]
                                                             paymentConsent:[OCMArg isNil]
@@ -263,7 +262,10 @@
     delegate.statusExpectation = [self expectationWithDescription:@"Expect completeWithStatus to be called"];
     
     PKPaymentAuthorizationResult *result;
-    [self prepareAuthorizationControllerMock:@{} result:&result];
+    NSDictionary *additionalPayload = @{@"key": @"value"};
+    NSDictionary *billingPayload = @{@"billingKey": @"billingValue"};
+    
+    [self prepareAuthorizationControllerMock:additionalPayload billingPayload:billingPayload result:&result];
     
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
@@ -281,6 +283,7 @@
         AWXPaymentMethod *method = (AWXPaymentMethod *)obj;
         XCTAssertEqualObjects(method.type, @"applepay");
         XCTAssertEqualObjects(method.customerId, session.paymentIntent.customerId);
+        XCTAssertEqualObjects(method.additionalParams, additionalPayload);
         return YES;
     }]
                                                             paymentConsent:[OCMArg isNil]
@@ -324,6 +327,7 @@
 }
 
 - (void)prepareAuthorizationControllerMock:(id)payloadOrError
+                            billingPayload:(nullable NSDictionary *)billingPayload
                                     result:(PKPaymentAuthorizationResult * __strong *)completionResult
                             endImmediately:(BOOL)endImmediately
 {
@@ -334,12 +338,16 @@
     
     PKPayment *payment = OCMClassMock([PKPayment class]);
     PKPaymentToken *token = OCMClassMock([PKPaymentToken class]);
+    PKContact *contact = OCMClassMock([PKContact class]);
+    OCMStub([contact payloadForRequest]).andReturn(billingPayload);
+    
     OCMStub([payment token]).andReturn(token);
+    OCMStub([payment billingContact]).andReturn(contact);
     
     if ([payloadOrError isKindOfClass: [NSDictionary class]]) {
-        OCMStub([token payloadForRequestWithBilling:[OCMArg any] orError:[OCMArg anyObjectRef]]).andReturn(payloadOrError);
+        OCMStub([token payloadForRequestWithBilling:billingPayload orError:[OCMArg anyObjectRef]]).andReturn(payloadOrError);
     } else if ([payloadOrError isKindOfClass:[NSError class]]) {
-        OCMStub([token payloadForRequestWithBilling:[OCMArg any] orError:[OCMArg anyObjectRef]]).andDo(^(NSInvocation *invocation) {
+        OCMStub([token payloadForRequestWithBilling:billingPayload orError:[OCMArg anyObjectRef]]).andDo(^(NSInvocation *invocation) {
             NSError * __autoreleasing *error;
             [invocation getArgument:&error atIndex:3];
             
@@ -367,9 +375,10 @@
 }
 
 - (void)prepareAuthorizationControllerMock:(id)payloadOrError
+                            billingPayload:(nullable NSDictionary *)billingPayload
                                     result:(PKPaymentAuthorizationResult * __strong *)completionResult
 {
-    [self prepareAuthorizationControllerMock:payloadOrError result:completionResult endImmediately:NO];
+    [self prepareAuthorizationControllerMock:payloadOrError billingPayload:billingPayload result:completionResult endImmediately:NO];
 }
 
 @end

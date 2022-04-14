@@ -27,18 +27,20 @@
     address.countryCode = @"AU";
     address.city = @"Melbourne";
     address.street = @"Name St.";
+    address.state = @"VIC";
+    address.postcode = @"3000";
     
     details.address = address;
     
     PKContact *contact = [details convertToPaymentContact];
     
-    XCTAssertEqual(contact.name.givenName, details.firstName);
-    XCTAssertEqual(contact.name.familyName, details.lastName);
-    XCTAssertEqual(contact.postalAddress.ISOCountryCode, address.countryCode);
-    XCTAssertEqual(contact.postalAddress.city, address.city);
-    XCTAssertEqual(contact.postalAddress.street, address.street);
-    XCTAssertEqualObjects(contact.postalAddress.state, @"");
-    XCTAssertEqualObjects(contact.postalAddress.postalCode, @"");
+    XCTAssertEqual(contact.name.givenName, @"firstName");
+    XCTAssertEqual(contact.name.familyName, @"lastName");
+    XCTAssertEqual(contact.postalAddress.ISOCountryCode, @"AU");
+    XCTAssertEqual(contact.postalAddress.city, @"Melbourne");
+    XCTAssertEqual(contact.postalAddress.street, @"Name St.");
+    XCTAssertEqualObjects(contact.postalAddress.state, @"VIC");
+    XCTAssertEqualObjects(contact.postalAddress.postalCode, @"3000");
     XCTAssertNil(contact.emailAddress);
     XCTAssertNil(contact.phoneNumber);
 }
