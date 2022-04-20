@@ -52,6 +52,17 @@ pod init
 ```ruby
 pod 'Airwallex'
 ```
+
+或者，你也可以选择直接安装可选模组（最小化依赖）：
+
+```ruby
+pod 'Airwallex/Core'
+pod 'Airwallex/Card'
+pod 'Airwallex/WechatPay'
+pod 'Airwallex/Redirect'
+pod 'Airwallex/ApplePay'
+```
+
 运行以下命令
 ```ruby
 pod install
