@@ -35,6 +35,8 @@
     request.active = YES;
     request.pageNum = 0;
     request.transactionCurrency = @"HKD";
+    
+    XCTAssertEqualObjects(request.flow, @"inapp");
 
     AWXAPIClient *client = [AWXAPIClient sharedClient];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];

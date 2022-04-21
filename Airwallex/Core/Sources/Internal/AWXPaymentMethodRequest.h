@@ -97,6 +97,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy, nullable) NSString *lang;
 
+/**
+ Filter payment methods for a specific flow. Defaults to inapp.
+ */
+@property (nonatomic, copy, nullable) NSString *flow;
+
 @end
 
 /**

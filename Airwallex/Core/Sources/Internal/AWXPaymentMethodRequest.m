@@ -71,6 +71,7 @@
         self.pageNum = 0;
         self.pageSize = 10;
         self.resources = YES;
+        self.flow = @"inapp";
     }
     return self;
 }
@@ -106,6 +107,9 @@
     }
     if (self.lang) {
         _parameters[@"lang"] = self.lang;
+    }
+    if (self.flow) {
+        _parameters[@"flow"] = self.flow;
     }
     return _parameters;
 }
