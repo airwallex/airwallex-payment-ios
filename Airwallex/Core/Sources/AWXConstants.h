@@ -73,8 +73,9 @@ FOUNDATION_EXPORT NSString *const AWXSDKErrorDomain;
 
 #endif
 
-FOUNDATION_EXPORT NSString *const AWXCyberSourceOrganizationID;
-FOUNDATION_EXPORT NSString *const AWXCyberSourceMerchantID;
+FOUNDATION_EXPORT NSString *const AWXThreatMatrixOrganizationID;
+FOUNDATION_EXPORT NSString *const AWXThreatMatrixMerchantID;
+FOUNDATION_EXPORT NSString *const AWXThreatMatrixFingerprintServer;
 
 FOUNDATION_EXPORT NSString *const AWXCardKey;
 FOUNDATION_EXPORT NSString *const AWXThreeDSReturnURL;

@@ -24,7 +24,6 @@ end
 target 'Examples' do
   project './Examples/Examples.xcodeproj'
   pod 'Airwallex', :path => './'
-  pod 'Airwallex/ApplePay', :path => './'
   pod 'WechatOpenSDK', '1.8.7.1'
 end
 

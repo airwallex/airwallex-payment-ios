@@ -38,7 +38,8 @@
         profilingConnections.connectionTimeout = 20;
         profilingConnections.connectionRetryCount = 2;
         [self.profiling configure:@{
-            RLTMXOrgID: AWXCyberSourceOrganizationID,
+            RLTMXOrgID: AWXThreatMatrixOrganizationID,
+            RLTMXFingerprintServer: AWXThreatMatrixFingerprintServer,
             RLTMXProfileTimeout: @20,
             RLTMXProfilingConnectionsInstance: profilingConnections,
         }];
@@ -53,7 +54,7 @@
     completion([UIDevice currentDevice].identifierForVendor.UUIDString);
 #else
     NSString *fraudSessionId = [NSString stringWithFormat:@"%@%f", intentId, [[NSDate date] timeIntervalSince1970]];
-    NSString *sessionId = [NSString stringWithFormat:@"%@%@", AWXCyberSourceMerchantID, fraudSessionId];
+    NSString *sessionId = [NSString stringWithFormat:@"%@%@", AWXThreatMatrixMerchantID, fraudSessionId];
     [self.profiling profileDeviceUsing:@{RLTMXSessionID: sessionId} callbackBlock:^(NSDictionary *result) {
         RLTMXStatusCode statusCode = [[result valueForKey:RLTMXProfileStatus] integerValue];
         dispatch_async(dispatch_get_main_queue(), ^{
