@@ -21,7 +21,6 @@ NSString *const AWXSDKErrorDomain = @"com.airwallex.error";
 #endif
 
 NSString *const AWXThreatMatrixOrganizationID = @"w2txo5aa";
-NSString *const AWXThreatMatrixMerchantID = @"airwallex_cybs";
 NSString *const AWXThreatMatrixFingerprintServer = @"imgs.signifyd.com";
 
 NSString *const AWXCardKey = @"card";

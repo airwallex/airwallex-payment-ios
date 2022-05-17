@@ -53,9 +53,9 @@
 #if TARGET_OS_SIMULATOR
     completion([UIDevice currentDevice].identifierForVendor.UUIDString);
 #else
-    NSString *fraudSessionId = [NSString stringWithFormat:@"%@%f", intentId, [[NSDate date] timeIntervalSince1970]];
-    NSString *sessionId = [NSString stringWithFormat:@"%@%@", AWXThreatMatrixMerchantID, fraudSessionId];
-    [self.profiling profileDeviceUsing:@{RLTMXSessionID: sessionId} callbackBlock:^(NSDictionary *result) {
+    double timestamp = [[NSDate date] timeIntervalSince1970] * 1000;
+    NSString *fraudSessionId = [NSString stringWithFormat:@"%@%.0f", intentId, timestamp];
+    [self.profiling profileDeviceUsing:@{RLTMXSessionID: fraudSessionId} callbackBlock:^(NSDictionary *result) {
         RLTMXStatusCode statusCode = [[result valueForKey:RLTMXProfileStatus] integerValue];
         dispatch_async(dispatch_get_main_queue(), ^{
             if (statusCode == RLTMXStatusCodeOk) {
