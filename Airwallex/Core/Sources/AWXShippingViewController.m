@@ -121,7 +121,7 @@
     [stackView addArrangedSubview:_zipcodeField];
     
     _emailField = [AWXFloatingLabelTextField new];
-    _emailField.fieldType = AWXTextFieldTypeZipcode;
+    _emailField.fieldType = AWXTextFieldTypeEmail;
     _emailField.placeholder = NSLocalizedString(@"Email (optional)", @"Email (optional)");
     _zipcodeField.nextTextField = _emailField;
     [stackView addArrangedSubview:_emailField];
