@@ -1,6 +1,9 @@
 # Airwallex iOS SDK Changelog
 All notable changes to the SDK will be documented in this file.
 
+## Version 5.0.1 (May 17, 2022)
+- Update Fingerprinting SDKs.
+
 ## Version 5.0.0 (April 13, 2022)
 - Added Apple Pay module.
 - Fixed an issue where the SDK introduced duplicated image resources to the host app.
