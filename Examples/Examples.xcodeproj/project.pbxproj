@@ -249,7 +249,7 @@
 		085BD3E323CC64B6002E8F27 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1310;
+				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = Airwallex;
 				TargetAttributes = {
 					085BD3EA23CC64B6002E8F27 = {
