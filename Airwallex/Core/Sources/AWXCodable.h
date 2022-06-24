@@ -6,6 +6,8 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 #ifndef AWXCodable_h
 #define AWXCodable_h
 
