@@ -125,7 +125,7 @@
 
 #pragma mark - Menu
 
-- (IBAction)menuPressed:(id)sender {
+- (IBAction)menuPressed:(UIBarButtonItem *)sender {
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [controller addAction:[UIAlertAction actionWithTitle:@"WeChat Demo"
                                                    style:UIAlertActionStyleDefault
@@ -143,6 +143,10 @@
                                                      [self performSegueWithIdentifier:@"showSettings" sender:nil];
                                                  }]];
     [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+    UIPopoverPresentationController *popPresenter = [controller popoverPresentationController];
+    popPresenter.barButtonItem = sender;
+
     [self presentViewController:controller animated:YES completion:nil];
 }
 
