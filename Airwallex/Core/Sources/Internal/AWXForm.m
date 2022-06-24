@@ -10,23 +10,19 @@
 
 @implementation AWXForm
 
-+ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title
-{
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title {
     return [self formWithKey:key type:type title:title textFieldType:AWXTextFieldTypeFirstName];
 }
 
-+ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title textFieldType:(AWXTextFieldType)textFieldType
-{
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title textFieldType:(AWXTextFieldType)textFieldType {
     return [self formWithKey:key type:type title:title textFieldType:textFieldType logo:nil];
 }
 
-+ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title logo:(NSURL *)logo
-{
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title logo:(NSURL *)logo {
     return [self formWithKey:key type:type title:title textFieldType:AWXTextFieldTypeFirstName logo:logo];
 }
 
-+ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title textFieldType:(AWXTextFieldType)textFieldType logo:(nullable NSURL *)logo
-{
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title textFieldType:(AWXTextFieldType)textFieldType logo:(nullable NSURL *)logo {
     AWXForm *form = [AWXForm new];
     form.key = key;
     form.type = type;

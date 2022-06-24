@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Initializer.
- 
+
  @param message Error message.
  @param code Error code.
  @return The initialized error object.

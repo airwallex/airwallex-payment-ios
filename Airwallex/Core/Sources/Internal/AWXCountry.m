@@ -14,8 +14,7 @@
 
 @implementation AWXCountry (Utils)
 
-+ (NSArray <AWXCountry *> *)allCountries
-{
++ (NSArray<AWXCountry *> *)allCountries {
     NSLocale *locale = [NSLocale currentLocale];
     NSArray *isoCountryCodes = [NSLocale ISOCountryCodes];
     NSMutableArray *countries = [[NSMutableArray alloc] init];
@@ -26,14 +25,13 @@
         country.countryName = countryName;
         [countries addObject:country];
     }
-    [countries sortUsingComparator:^NSComparisonResult(AWXCountry * _Nonnull obj1, AWXCountry * _Nonnull obj2) {
+    [countries sortUsingComparator:^NSComparisonResult(AWXCountry *_Nonnull obj1, AWXCountry *_Nonnull obj2) {
         return [obj1.countryName localizedCompare:obj2.countryName];
     }];
     return countries;
 }
 
-+ (nullable AWXCountry *)countryWithCode:(NSString *)code
-{
++ (nullable AWXCountry *)countryWithCode:(NSString *)code {
     NSArray *filtered = [[self allCountries] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"countryCode == %@", code]];
     return filtered.firstObject;
 }

@@ -6,9 +6,9 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "AWXTestUtils.h"
 #import "AWXPlaceDetails.h"
+#import "AWXTestUtils.h"
+#import <XCTest/XCTest.h>
 
 @interface AWXPlaceDetailsTest : XCTestCase
 
@@ -16,8 +16,7 @@
 
 @implementation AWXPlaceDetailsTest
 
-- (void)testBilling
-{
+- (void)testBilling {
     AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSON:[AWXTestUtils jsonNamed:@"Billing"]];
     XCTAssertNotNil(billing);
     XCTAssertNotNil(billing.firstName);

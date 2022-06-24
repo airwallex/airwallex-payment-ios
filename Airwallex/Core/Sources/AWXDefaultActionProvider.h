@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Start next action.
- 
+
  @param nextAction The response including next action.
  */
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction;

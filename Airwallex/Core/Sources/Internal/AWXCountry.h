@@ -32,11 +32,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Return all of the supported countries.
  */
-+ (NSArray <AWXCountry *> *)allCountries;
++ (NSArray<AWXCountry *> *)allCountries;
 
 /**
  Get a matched country object.
- 
+
  @param code Country code.
  @return A country object.
  */

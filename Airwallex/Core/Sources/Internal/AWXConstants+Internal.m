@@ -8,8 +8,7 @@
 
 #import "AWXConstants+Internal.h"
 
-NSArray <NSString *> *AWXUnsupportedPaymentMethodTypes(void)
-{
+NSArray<NSString *> *AWXUnsupportedPaymentMethodTypes(void) {
     return @[
         @"googlepay",
         @"ach_direct_debit",

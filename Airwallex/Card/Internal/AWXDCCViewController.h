@@ -15,11 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles selected payment currency.
  */
-@protocol AWXDCCViewControllerDelegate <NSObject>
+@protocol AWXDCCViewControllerDelegate<NSObject>
 
 /**
  This method is called when a payment currency has been selected.
- 
+
  @param controller The payment method list view controller.
  @param useDCC Use dcc to confirm payment.
  */
@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles confirm payment currency.
  */
-@property (nonatomic, weak) id <AWXDCCViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<AWXDCCViewControllerDelegate> delegate;
 
 @end
 

@@ -6,17 +6,17 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "AWXCodable.h"
+#import <Foundation/Foundation.h>
 
-@class AWXPaymentMethod,AWXPaymentConsent;
+@class AWXPaymentMethod, AWXPaymentConsent;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWXPaymentIntent` includes the information of payment intent.
  */
-@interface AWXPaymentIntent : NSObject <AWXJSONDecodable>
+@interface AWXPaymentIntent : NSObject<AWXJSONDecodable>
 
 /**
  Unique identifier for the payment intent.
@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Available payment method types.
  */
-@property (nonatomic, copy) NSArray <NSString *> *availablePaymentMethodTypes;
+@property (nonatomic, copy) NSArray<NSString *> *availablePaymentMethodTypes;
 
 /**
  Client secret for browser or app.
@@ -56,12 +56,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment methods.
  */
-@property (nonatomic, strong) NSArray <AWXPaymentMethod *> *paymentMethods;
+@property (nonatomic, strong) NSArray<AWXPaymentMethod *> *paymentMethods;
 
 /**
  Payment consents .
  */
-@property (nonatomic, strong) NSArray <AWXPaymentConsent *> *paymentConsents;
+@property (nonatomic, strong) NSArray<AWXPaymentConsent *> *paymentConsents;
 
 @end
 

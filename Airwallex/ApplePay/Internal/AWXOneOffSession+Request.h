@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXOneOffSession (Request)
 
-- (nullable PKPaymentRequest *)makePaymentRequestOrError:(NSError * _Nullable *)error;
+- (nullable PKPaymentRequest *)makePaymentRequestOrError:(NSError *_Nullable *)error;
 
 @end
 

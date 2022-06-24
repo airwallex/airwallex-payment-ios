@@ -6,11 +6,11 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import "AWXSession.h"
-#import "XCTestCase+Utils.h"
-#import "AWXTestUtils.h"
 #import "AWXPlaceDetails.h"
+#import "AWXTestUtils.h"
+#import "XCTestCase+Utils.h"
+#import <XCTest/XCTest.h>
 
 @interface AWXSessionTest : XCTestCase
 
@@ -20,18 +20,16 @@
 
 @implementation AWXSessionTest
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
-    [self prepareEphemeralKeys:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
+    [self prepareEphemeralKeys:^(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error) {
         self.paymentIntent = paymentIntent;
         XCTAssertNotNil(paymentIntent);
         XCTAssertNil(error);
     }];
 }
 
-- (void)testOneOffSession
-{
+- (void)testOneOffSession {
     AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSON:[AWXTestUtils jsonNamed:@"Billing"]];
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.billing = billing;
@@ -45,8 +43,7 @@
     XCTAssertNotNil(session.amount);
 }
 
-- (void)testRecurringSession
-{
+- (void)testRecurringSession {
     AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSON:[AWXTestUtils jsonNamed:@"Billing"]];
     AWXRecurringSession *session = [AWXRecurringSession new];
     session.billing = billing;
@@ -64,8 +61,7 @@
     XCTAssertNotNil(session.amount);
 }
 
-- (void)testRecurringWithIntentSession
-{
+- (void)testRecurringWithIntentSession {
     AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSON:[AWXTestUtils jsonNamed:@"Billing"]];
     AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
     session.billing = billing;

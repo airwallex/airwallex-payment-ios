@@ -14,9 +14,8 @@ FOUNDATION_EXPORT double CoreVersionNumber;
 //! Project version string for Airwallex.
 FOUNDATION_EXPORT const unsigned char CoreVersionString[];
 
-
-#import "AWXAddress.h"
 #import "AWXAPIClient.h"
+#import "AWXAddress.h"
 #import "AWXApplePayOptions.h"
 #import "AWXCard.h"
 #import "AWXCodable.h"

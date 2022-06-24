@@ -18,8 +18,7 @@
 
 @implementation AWXCreatePaymentConsentResponse
 
-+ (AWXResponse *)parse:(NSData *)data
-{
++ (AWXResponse *)parse:(NSData *)data {
     NSError *error = nil;
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWXCreatePaymentConsentResponse *response = [AWXCreatePaymentConsentResponse new];
@@ -31,7 +30,6 @@
 
 @interface AWXVerifyPaymentConsentResponse ()
 
-
 @property (nonatomic, copy, readwrite) NSString *status;
 @property (nonatomic, copy, readwrite) NSString *initialPaymentIntentId;
 @property (nonatomic, strong, readwrite, nullable) AWXConfirmPaymentNextAction *nextAction;
@@ -40,19 +38,18 @@
 
 @implementation AWXVerifyPaymentConsentResponse
 
-+ (AWXResponse *)parse:(NSData *)data
-{
++ (AWXResponse *)parse:(NSData *)data {
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWXVerifyPaymentConsentResponse *response = [[AWXVerifyPaymentConsentResponse alloc] init];
-    
+
     response.status = json[@"status"];
     response.initialPaymentIntentId = json[@"initial_payment_intent_id"];
     NSDictionary *nextAction = json[@"next_action"];
     if (nextAction && [nextAction isKindOfClass:[NSDictionary class]]) {
         response.nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:nextAction];
     }
-    
+
     return response;
 }
 

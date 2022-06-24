@@ -6,9 +6,9 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "AWXConstants.h"
 #import "AWXAPIClient.h"
+#import "AWXConstants.h"
+#import <UIKit/UIKit.h>
 
 @class AWXDefaultProvider, AWXConfirmPaymentNextAction, AWXSession, AWXDevice, AWXPaymentMethod, AWXPaymentConsent, AWXConfirmPaymentIntentResponse, AWXCard, AWXPlaceDetails;
 
@@ -17,25 +17,25 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles checkout results.
  */
-@protocol AWXProviderDelegate <NSObject>
+@protocol AWXProviderDelegate<NSObject>
 
 /**
  This method is called when it is doing requesting.
- 
+
  @param provider The provider handling payment.
  */
 - (void)providerDidStartRequest:(AWXDefaultProvider *)provider;
 
 /**
  This method is called when it is completing requesting.
- 
+
  @param provider The provider handling payment.
  */
 - (void)providerDidEndRequest:(AWXDefaultProvider *)provider;
 
 /**
  This method is called when it is generated new payment intent.
- 
+
  @param provider The provider handling payment.
  @param paymentIntentId The new payment intent id.
  */
@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This method is called when the next action is requiredt.
- 
+
  @param provider The provider handling payment.
  @param nextAction The next action.
  */
@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This method is called when payment is completed.
- 
+
  @param provider The provider handling payment.
  @param status The status of payment.
  @param error The error of payment.
@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 /**
  This method is called when new controller is required.
- 
+
  @param provider The provider handling payment.
  @param controller The view controller will be presented.
  @param forceToDismiss Whether the presenting view controller needs be dismissed forcibly.
@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This method is called when new controller is required. (as child view controller)
- 
+
  @param provider The provider handling payment.
  @param controller The view controller will be presented.
  */
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles payment result.
  */
-@property (nonatomic, weak, readonly) id <AWXProviderDelegate> delegate;
+@property (nonatomic, weak, readonly) id<AWXProviderDelegate> delegate;
 
 /**
  A session which includes the detail of payment.
@@ -106,8 +106,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
-- (instancetype)initWithDelegate:(id <AWXProviderDelegate>)delegate session:(AWXSession *)session;
-- (instancetype)initWithDelegate:(id <AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethod:(nullable AWXPaymentMethod *)paymentMethod;
+- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session;
+- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethod:(nullable AWXPaymentMethod *)paymentMethod;
 
 /**
  Start the payment flow.
@@ -116,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Confirm the payment intent with payment method and consent.
- 
+
  @param paymentMethod The payment method info.
  @param paymentConsent The payment consent info.
  @param device The current device info.
@@ -127,7 +127,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Confirm the payment intent with payment method and consent as well as a custom completion block.
- 
+
  @param paymentMethod The payment method info.
  @param paymentConsent The payment consent info.
  @param device The current device info.
@@ -140,7 +140,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Complete the payment flow.
- 
+
  @param response The payment response.
  @param error The error of payment flow.
  */

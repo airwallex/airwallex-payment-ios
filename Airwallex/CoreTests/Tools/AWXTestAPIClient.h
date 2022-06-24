@@ -6,8 +6,8 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "AWXPaymentIntent.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,9 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedClient;
 
-- (void)createAuthenticationTokenWithCompletionHandler:(void (^)(NSError * _Nullable error))completionHandler;
+- (void)createAuthenticationTokenWithCompletionHandler:(void (^)(NSError *_Nullable error))completionHandler;
 - (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
-                        completionHandler:(void (^ _Nullable)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;
+                        completionHandler:(void (^_Nullable)(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error))completionHandler;
 
 @end
 

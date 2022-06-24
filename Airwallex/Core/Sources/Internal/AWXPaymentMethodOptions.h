@@ -6,15 +6,15 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "AWXCodable.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWXThreeDs` includes the information of 3ds.
  */
-@interface AWXThreeDs : NSObject <AWXJSONEncodable>
+@interface AWXThreeDs : NSObject<AWXJSONEncodable>
 
 /**
  Three domain request.
@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXCardOptions` includes the options of card.
  */
-@interface AWXCardOptions : NSObject <AWXJSONEncodable>
+@interface AWXCardOptions : NSObject<AWXJSONEncodable>
 
 /**
  Should capture automatically when confirm. Default to false. The payment intent will be captured automatically if it is true, and authorized only if it is false.
@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXPaymentMethodOptions` includes the information of payment method options
  */
-@interface AWXPaymentMethodOptions : NSObject <AWXJSONEncodable>
+@interface AWXPaymentMethodOptions : NSObject<AWXJSONEncodable>
 
 /**
  The options for card.

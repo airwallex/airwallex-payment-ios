@@ -6,8 +6,8 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "AWXViewController.h"
 #import "AWXUIContext.h"
+#import "AWXViewController.h"
 
 @class AWXPaymentIntent, AWXPaymentMethod, AWXPaymentConsent;
 
@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles confirmed payment intent.
  */
-@property (nonatomic, weak) id <AWXPaymentResultDelegate> delegate;
+@property (nonatomic, weak) id<AWXPaymentResultDelegate> delegate;
 
 /**
  A payment consent.

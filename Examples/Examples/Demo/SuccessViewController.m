@@ -16,18 +16,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 100)];
+
+    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
     lab.center = self.view.center;
     lab.text = @"Pay Result";
     lab.textColor = UIColor.blackColor;
     lab.font = [UIFont systemFontOfSize:30];
     lab.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:lab];
-    
 }
-
 
 @end

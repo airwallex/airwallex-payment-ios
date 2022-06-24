@@ -6,14 +6,14 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "XCTestCase+Utils.h"
-#import "AWXTestUtils.h"
-#import "AWXConstants.h"
 #import "AWXAPIClient.h"
+#import "AWXConstants.h"
+#import "AWXPaymentIntent.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
-#import "AWXPaymentIntent.h"
+#import "AWXTestUtils.h"
+#import "XCTestCase+Utils.h"
+#import <XCTest/XCTest.h>
 
 @interface AWXPaymentIntentFunctionalTest : XCTestCase
 
@@ -23,29 +23,28 @@
 
 @implementation AWXPaymentIntentFunctionalTest
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
-    __weak __typeof(self)weakSelf = self;
-    [self prepareEphemeralKeys:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
+    __weak __typeof(self) weakSelf = self;
+    [self prepareEphemeralKeys:^(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error) {
         XCTAssertNotNil(paymentIntent);
         XCTAssertNil(error);
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
         strongSelf.paymentIntent = paymentIntent;
     }];
 }
 
-- (void)testRetrievePaymentIntent
-{
+- (void)testRetrievePaymentIntent {
     AWXRetrievePaymentIntentRequest *request = [AWXRetrievePaymentIntentRequest new];
     request.intentId = self.paymentIntent.Id;
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Retrieve payment intent"];
-    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
-        XCTAssertNil(error);
-        [expectation fulfill];
-    }];
+    [client send:request
+         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+             XCTAssertNil(error);
+             [expectation fulfill];
+         }];
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 

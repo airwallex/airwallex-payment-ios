@@ -6,15 +6,15 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "AWXCodable.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWXDevice` includes the information of device.
  */
-@interface AWXDevice : NSObject <AWXJSONEncodable>
+@interface AWXDevice : NSObject<AWXJSONEncodable>
 
 /**
  Device id.

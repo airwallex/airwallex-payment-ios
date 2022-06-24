@@ -6,9 +6,9 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import "AWXPlaceDetails.h"
 #import <Foundation/Foundation.h>
 #import <PassKit/PassKit.h>
-#import "AWXPlaceDetails.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

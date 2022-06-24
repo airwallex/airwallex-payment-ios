@@ -74,12 +74,10 @@
 		571D10862796DE4D005DE2CA /* WeChatPay.h in Headers */ = {isa = PBXBuildFile; fileRef = 57CEC82426E5FE2A00695740 /* WeChatPay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */; };
 		5775CE6826E5D86100C6AFE3 /* WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */; };
-		5775CE6D26E5D86100C6AFE3 /* WeChatPayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CE6C26E5D86100C6AFE3 /* WeChatPayTests.m */; };
 		5775CE8E26E5DDDF00C6AFE3 /* Card.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CE8526E5DDDE00C6AFE3 /* Card.framework */; };
 		5775CE9326E5DDDF00C6AFE3 /* CardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CE9226E5DDDF00C6AFE3 /* CardTests.m */; };
 		5775CE9526E5DDDF00C6AFE3 /* Card.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CE8726E5DDDE00C6AFE3 /* Card.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CEB426E5DF3300C6AFE3 /* Redirect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CEAB26E5DF3300C6AFE3 /* Redirect.framework */; };
-		5775CEB926E5DF3300C6AFE3 /* RedirectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEB826E5DF3300C6AFE3 /* RedirectTests.m */; };
 		5775CEBB26E5DF3300C6AFE3 /* Redirect.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEAD26E5DF3300C6AFE3 /* Redirect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF1226E5DF4F00C6AFE3 /* AWXPaymentIntent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEC226E5DF4D00C6AFE3 /* AWXPaymentIntent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF1326E5DF4F00C6AFE3 /* AWXDefaultProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEC326E5DF4D00C6AFE3 /* AWXDefaultProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -370,7 +368,6 @@
 		5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5775CE6226E5D86100C6AFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5775CE6726E5D86100C6AFE3 /* WeChatPayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeChatPayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5775CE6C26E5D86100C6AFE3 /* WeChatPayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeChatPayTests.m; sourceTree = "<group>"; };
 		5775CE6E26E5D86100C6AFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5775CE8526E5DDDE00C6AFE3 /* Card.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Card.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5775CE8726E5DDDE00C6AFE3 /* Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Card.h; sourceTree = "<group>"; };
@@ -382,7 +379,6 @@
 		5775CEAD26E5DF3300C6AFE3 /* Redirect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Redirect.h; sourceTree = "<group>"; };
 		5775CEAE26E5DF3300C6AFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5775CEB326E5DF3300C6AFE3 /* RedirectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedirectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5775CEB826E5DF3300C6AFE3 /* RedirectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedirectTests.m; sourceTree = "<group>"; };
 		5775CEBA26E5DF3300C6AFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5775CEC226E5DF4D00C6AFE3 /* AWXPaymentIntent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXPaymentIntent.h; sourceTree = "<group>"; };
 		5775CEC326E5DF4D00C6AFE3 /* AWXDefaultProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWXDefaultProvider.h; sourceTree = "<group>"; };
@@ -895,7 +891,6 @@
 		5775CE6B26E5D86100C6AFE3 /* WeChatPayTests */ = {
 			isa = PBXGroup;
 			children = (
-				5775CE6C26E5D86100C6AFE3 /* WeChatPayTests.m */,
 				5775CE6E26E5D86100C6AFE3 /* Info.plist */,
 			);
 			path = WeChatPayTests;
@@ -943,7 +938,6 @@
 		5775CEB726E5DF3300C6AFE3 /* RedirectTests */ = {
 			isa = PBXGroup;
 			children = (
-				5775CEB826E5DF3300C6AFE3 /* RedirectTests.m */,
 				5775CEBA26E5DF3300C6AFE3 /* Info.plist */,
 			);
 			path = RedirectTests;
@@ -1726,7 +1720,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5775CE6D26E5D86100C6AFE3 /* WeChatPayTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1769,7 +1762,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5775CEB926E5DF3300C6AFE3 /* RedirectTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

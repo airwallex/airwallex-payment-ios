@@ -11,13 +11,12 @@
 
 @implementation AWXPaymentConsent
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXPaymentConsent *intent = [AWXPaymentConsent new];
     intent.Id = json[@"id"];
     intent.requestId = json[@"request_id"];
     intent.customerId = json[@"customer_id"];
-    intent.status     = json[@"status"];
+    intent.status = json[@"status"];
     intent.nextTriggeredBy = json[@"next_triggered_by"];
     intent.merchantTriggerReason = json[@"merchant_trigger_reason"];
     intent.requiresCVC = [json[@"requires_cvc"] boolValue];

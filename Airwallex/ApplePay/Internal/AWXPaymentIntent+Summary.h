@@ -6,8 +6,8 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import <PassKit/PassKit.h>
 #import "AWXPaymentIntent.h"
+#import <PassKit/PassKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

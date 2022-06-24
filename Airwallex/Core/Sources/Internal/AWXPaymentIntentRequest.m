@@ -6,41 +6,39 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "AWXPaymentIntentRequest.h"
+#import "AWXAPIClient.h"
 #import "AWXConstants.h"
 #import "AWXDevice.h"
-#import "AWXPaymentIntentRequest.h"
+#import "AWXPaymentConsent.h"
+#import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodOptions.h"
-#import "AWXPaymentIntentResponse.h"
-#import "AWXPaymentConsent.h"
-#import "AWXAPIClient.h"
+#import <UIKit/UIKit.h>
 
 @implementation AWXConfirmPaymentIntentRequest
 
-- (NSString *)path
-{
+- (NSString *)path {
     return [NSString stringWithFormat:@"/api/v1/pa/payment_intents/%@/confirm", self.intentId];
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodPOST;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
     if (self.customerId) {
         parameters[@"customer_id"] = self.customerId;
     }
-    
+
     if (self.paymentConsent && self.paymentConsent.Id) {
         NSMutableDictionary *consentParams = @{
             @"id": self.paymentConsent.Id,
-        }.mutableCopy;
-        
+        }
+                                                 .mutableCopy;
+
         if (self.paymentMethod.card.cvc) {
             consentParams[@"cvc"] = self.paymentMethod.card.cvc ?: @"";
         }
@@ -59,14 +57,14 @@
             parameters[@"payment_method"] = self.paymentMethod.encodeToJSON;
         }
     }
-    
+
     if (self.options) {
         parameters[@"payment_method_options"] = self.options.encodeToJSON;
     }
     if (self.returnURL) {
         parameters[@"return_url"] = self.returnURL;
     }
-    
+
     parameters[@"save_payment_method"] = @(self.savePaymentMethod);
     if (self.device) {
         parameters[@"device"] = [self.device encodeToJSON];
@@ -76,8 +74,7 @@
     return parameters;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXConfirmPaymentIntentResponse.class;
 }
 
@@ -85,18 +82,15 @@
 
 @implementation AWXConfirmThreeDSRequest
 
-- (NSString *)path
-{
+- (NSString *)path {
     return [NSString stringWithFormat:@"/api/v1/pa/payment_intents/%@/confirm_continue", self.intentId];
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodPOST;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
     parameters[@"type"] = self.type;
@@ -115,8 +109,7 @@
     return parameters;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXConfirmPaymentIntentResponse.class;
 }
 
@@ -124,18 +117,15 @@
 
 @implementation AWXRetrievePaymentIntentRequest
 
-- (NSString *)path
-{
+- (NSString *)path {
     return [NSString stringWithFormat:@"/api/v1/pa/payment_intents/%@", self.intentId];
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodGET;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXGetPaymentIntentResponse.class;
 }
 
@@ -143,23 +133,19 @@
 
 @implementation AWXGetPaResRequest
 
-- (NSString *)path
-{
+- (NSString *)path {
     return @"/pa/webhook/cybs/paresCache";
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodGET;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     return @{@"paResId": self.paResId};
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXGetPaResResponse.class;
 }
 

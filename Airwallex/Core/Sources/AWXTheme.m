@@ -15,8 +15,7 @@ static UIColor *AWXThemeDefaultTextColor = nil;
 
 @implementation AWXTheme
 
-+ (instancetype)sharedTheme
-{
++ (instancetype)sharedTheme {
     static AWXTheme *sharedTheme;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -25,25 +24,21 @@ static UIColor *AWXThemeDefaultTextColor = nil;
     return sharedTheme;
 }
 
-+ (void)initialize
-{
++ (void)initialize {
     AWXThemeDefaultLineColor = [UIColor gray30Color];
     AWXThemeDefaultPurpleColor = [UIColor ultravioletColor];
     AWXThemeDefaultTextColor = [UIColor gray100Color];
 }
 
-- (UIColor *)lineColor
-{
+- (UIColor *)lineColor {
     return _lineColor ?: AWXThemeDefaultLineColor;
 }
 
-- (UIColor *)tintColor
-{
+- (UIColor *)tintColor {
     return _tintColor ?: AWXThemeDefaultPurpleColor;
 }
 
-- (UIColor *)textColor
-{
+- (UIColor *)textColor {
     return _textColor ?: AWXThemeDefaultTextColor;
 }
 

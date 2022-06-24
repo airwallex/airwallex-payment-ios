@@ -6,15 +6,15 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "AWXCodable.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWXWeChatPaySDKResponse` includes the parameters for WeChatSDK.
  */
-@interface AWXWeChatPaySDKResponse: NSObject <AWXJSONDecodable>
+@interface AWXWeChatPaySDKResponse : NSObject<AWXJSONDecodable>
 
 /**
  WeChat pay app id.

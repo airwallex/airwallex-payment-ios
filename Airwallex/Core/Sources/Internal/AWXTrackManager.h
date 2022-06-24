@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedTrackManager;
 
 - (void)trackWithParameters:(NSDictionary *)parameters
-                   completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+          completionHandler:(void (^)(NSDictionary *_Nullable result, NSError *_Nullable error))completionHandler;
 @end
 
 NS_ASSUME_NONNULL_END

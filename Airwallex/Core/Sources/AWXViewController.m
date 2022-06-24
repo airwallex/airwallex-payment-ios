@@ -12,7 +12,7 @@
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 
-@interface AWXViewController () <UIGestureRecognizerDelegate>
+@interface AWXViewController ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
@@ -20,11 +20,10 @@
 
 @implementation AWXViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.tintColor = [AWXTheme sharedTheme].tintColor;
-    
+
     self.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     UIImage *backImage = [UIImage imageNamed:@"back" inBundle:[NSBundle resourceBundle]];
     self.navigationController.navigationBar.backIndicatorImage = backImage;
@@ -37,27 +36,23 @@
     [self.view addSubview:self.activityIndicator];
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self.view bringSubviewToFront:self.activityIndicator];
     self.activityIndicator.center = self.view.center;
 }
 
-- (void)startAnimating
-{
+- (void)startAnimating {
     [self.activityIndicator startAnimating];
     self.view.userInteractionEnabled = false;
 }
 
-- (void)stopAnimating
-{
+- (void)stopAnimating {
     [self.activityIndicator stopAnimating];
     self.view.userInteractionEnabled = true;
 }
 
-- (void)enableTapToEndEditting
-{
+- (void)enableTapToEndEditting {
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                         action:@selector(dismissKeyboard)];
     gestureRecognizer.delegate = self;
@@ -65,47 +60,39 @@
     [self.view addGestureRecognizer:gestureRecognizer];
 }
 
-- (void)dismissKeyboard
-{
+- (void)dismissKeyboard {
     [self.view endEditing:YES];
 }
 
-- (void)registerKeyboard
-{
+- (void)registerKeyboard {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)unregisterKeyboard
-{
+- (void)unregisterKeyboard {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)enableTapToDismiss
-{
+- (void)enableTapToDismiss {
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
     tapGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:tapGestureRecognizer];
 }
 
-- (UIView *)activeField
-{
+- (UIView *)activeField {
     return nil;
 }
 
-- (UIScrollView *)activeScrollView
-{
+- (UIScrollView *)activeScrollView {
     return nil;
 }
 
-- (NSLayoutConstraint *)bottomLayoutConstraint
-{
+- (NSLayoutConstraint *)bottomLayoutConstraint {
     return nil;
 }
 
-- (void)keyboardWillChangeFrame:(NSNotification *)notification
-{
+- (void)keyboardWillChangeFrame:(NSNotification *)notification {
     NSValue *rectValue = notification.userInfo[UIKeyboardFrameEndUserInfoKey];
     CGFloat keyboardHeight = CGRectGetHeight(rectValue.CGRectValue);
     UIScrollView *scrollView = self.activeScrollView;
@@ -115,7 +102,7 @@
         contentInsets.bottom = keyboardHeight;
         scrollView.contentInset = contentInsets;
         scrollView.scrollIndicatorInsets = scrollView.contentInset;
-        
+
         UIView *activeField = self.activeField;
         if (activeField) {
             CGRect frame = [activeField.superview convertRect:activeField.frame toView:scrollView];
@@ -123,16 +110,16 @@
         }
     } else if (bottomLayoutConstraint) {
         bottomLayoutConstraint.constant = keyboardHeight;
-        [UIView animateWithDuration:0.25 animations:^{
-            [self.view setNeedsUpdateConstraints];
-            [self.view setNeedsLayout];
-            [self.view layoutIfNeeded];
-        }];
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             [self.view setNeedsUpdateConstraints];
+                             [self.view setNeedsLayout];
+                             [self.view layoutIfNeeded];
+                         }];
     }
 }
 
-- (void)setActiveField:(UIView *)field
-{
+- (void)setActiveField:(UIView *)field {
     UIScrollView *scrollView = self.activeScrollView;
     if (scrollView) {
         CGRect frame = [field.superview convertRect:field.frame toView:scrollView];
@@ -142,8 +129,7 @@
     }
 }
 
-- (void)keyboardWillBeHidden:(NSNotification *)notification
-{
+- (void)keyboardWillBeHidden:(NSNotification *)notification {
     UIScrollView *scrollView = self.activeScrollView;
     NSLayoutConstraint *bottomLayoutConstraint = self.bottomLayoutConstraint;
     if (scrollView) {
@@ -153,16 +139,16 @@
         scrollView.scrollIndicatorInsets = scrollView.contentInset;
     } else if (bottomLayoutConstraint) {
         bottomLayoutConstraint.constant = 0;
-        [UIView animateWithDuration:0.25 animations:^{
-            [self.view setNeedsUpdateConstraints];
-            [self.view setNeedsLayout];
-            [self.view layoutIfNeeded];
-        }];
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             [self.view setNeedsUpdateConstraints];
+                             [self.view setNeedsLayout];
+                             [self.view layoutIfNeeded];
+                         }];
     }
 }
 
-- (void)close:(id)sender
-{
+- (void)close:(id)sender {
     if (self.presentingViewController) {
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
@@ -170,14 +156,12 @@
     }
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[AWXLogger sharedLogger] logEvent:[NSString stringWithFormat:@"%@ dealloc", NSStringFromClass(self.class)]];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     CGPoint point = [gestureRecognizer locationInView:self.view];
     UIView *viewTouched = [self.view hitTest:point withEvent:nil];
     if (viewTouched == self.view) {

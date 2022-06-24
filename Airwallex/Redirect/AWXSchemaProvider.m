@@ -7,15 +7,15 @@
 //
 
 #import "AWXSchemaProvider.h"
-#import "AWXFormMapping.h"
+#import "AWXAPIClient.h"
 #import "AWXForm.h"
+#import "AWXFormMapping.h"
 #import "AWXPaymentFormViewController.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
-#import "AWXAPIClient.h"
 
-@interface AWXSchemaProvider () <AWXPaymentFormViewControllerDelegate>
+@interface AWXSchemaProvider ()<AWXPaymentFormViewControllerDelegate>
 
 @property (nonatomic, strong) AWXFormMapping *banksMapping;
 @property (nonatomic, strong) AWXFormMapping *fieldsMapping;
@@ -25,64 +25,62 @@
 
 @implementation AWXSchemaProvider
 
-- (void)getPaymentMethodType
-{
+- (void)getPaymentMethodType {
     AWXGetPaymentMethodTypeRequest *request = [AWXGetPaymentMethodTypeRequest new];
     request.name = self.paymentMethod.type;
     request.transactionMode = self.session.transactionMode;
     request.lang = self.session.lang;
-    
+
     [self.delegate providerDidStartRequest:self];
-    __weak __typeof(self)weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        if (response && !error) {
-            [strongSelf verifyPaymentMethodType:(AWXGetPaymentMethodTypeResponse *)response];
-        } else {
-            [strongSelf.delegate providerDidEndRequest:strongSelf];
-            [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-        }
-    }];
+    [client send:request
+         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+             __strong __typeof(weakSelf) strongSelf = weakSelf;
+             if (response && !error) {
+                 [strongSelf verifyPaymentMethodType:(AWXGetPaymentMethodTypeResponse *)response];
+             } else {
+                 [strongSelf.delegate providerDidEndRequest:strongSelf];
+                 [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+             }
+         }];
 }
 
-- (void)verifyPaymentMethodType:(AWXGetPaymentMethodTypeResponse *)response
-{
+- (void)verifyPaymentMethodType:(AWXGetPaymentMethodTypeResponse *)response {
     AWXSchema *schema = [response.schemas filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"transactionMode == %@", self.session.transactionMode]].firstObject;
     if (!schema || schema.fields.count == 0) {
         [self.delegate providerDidEndRequest:self];
         [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid schema.", nil)}]];
         return;
     }
-    
+
     NSArray *hiddenFields = [schema.fields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hidden == TRUE"]];
     [self updatePaymentMethodWithHiddenFields:hiddenFields];
-    
+
     BOOL hasBankList = [schema.fields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == %@ && uiType == %@ && hidden == FALSE", @"banks", @"logo_list"]].count > 0;
     NSArray *uiFields = [schema.fields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(uiType == %@ || uiType == %@ || uiType == %@) && hidden == FALSE", @"text", @"email", @"phone"]];
     BOOL hasUIFields = uiFields.count > 0;
     if (hasUIFields) {
         self.fieldsMapping = [self getUIFields:response schema:schema];
     }
-    
+
     if (hasBankList) {
         [self getAvailableBankList:response.name];
         return;
     }
-    
+
     if (!hasUIFields) {
         [self confirmPaymentIntentWithPaymentMethod:self.updatedPaymentMethod
                                      paymentConsent:nil
                                              device:nil];
         return;
     }
-    
+
     [self.delegate providerDidEndRequest:self];
     [self renderFields:NO];
 }
 
-- (AWXFormMapping *)getUIFields:(AWXGetPaymentMethodTypeResponse *)response schema:(AWXSchema *)schema
-{
+- (AWXFormMapping *)getUIFields:(AWXGetPaymentMethodTypeResponse *)response schema:(AWXSchema *)schema {
     // type: enum && ui_type: list not supported
     // type: boolean && ui_type: checkbox not supported
     NSArray *uiFields = [schema.fields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(uiType == %@ || uiType == %@ || uiType == %@) && hidden == FALSE", @"text", @"email", @"phone"]];
@@ -97,8 +95,7 @@
     return formMapping;
 }
 
-- (void)updatePaymentMethodWithHiddenFields:(NSArray<AWXField* > *)hiddenFields
-{
+- (void)updatePaymentMethodWithHiddenFields:(NSArray<AWXField *> *)hiddenFields {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     AWXField *flowField = [hiddenFields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", @"flow"]].firstObject;
     if (flowField) {
@@ -123,8 +120,7 @@
     [self.updatedPaymentMethod appendAdditionalParams:params];
 }
 
-- (void)renderFields:(BOOL)forceToDismiss
-{
+- (void)renderFields:(BOOL)forceToDismiss {
     AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
     controller.session = self.session;
@@ -134,28 +130,27 @@
     [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:forceToDismiss withAnimation:NO];
 }
 
-- (void)getAvailableBankList:(NSString *)paymentMethodType
-{
+- (void)getAvailableBankList:(NSString *)paymentMethodType {
     AWXGetAvailableBanksRequest *request = [AWXGetAvailableBanksRequest new];
     request.paymentMethodType = paymentMethodType;
     request.countryCode = self.session.countryCode;
     request.lang = self.session.lang;
-    
-    __weak __typeof(self)weakSelf = self;
+
+    __weak __typeof(self) weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.delegate providerDidEndRequest:strongSelf];
-        if (response && !error) {
-            [strongSelf verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response];
-        } else {
-            [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-        }
-    }];
+    [client send:request
+         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+             __strong __typeof(weakSelf) strongSelf = weakSelf;
+             [strongSelf.delegate providerDidEndRequest:strongSelf];
+             if (response && !error) {
+                 [strongSelf verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response];
+             } else {
+                 [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+             }
+         }];
 }
 
-- (void)verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response
-{
+- (void)verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response {
     AWXFormMapping *formMapping = [AWXFormMapping new];
     formMapping.title = NSLocalizedString(@"Select your bank", @"Select your bank");
     NSMutableArray *forms = [NSMutableArray array];
@@ -164,12 +159,11 @@
     }
     formMapping.forms = forms;
     self.banksMapping = formMapping;
-    
+
     [self renderBanks];
 }
 
-- (void)renderBanks
-{
+- (void)renderBanks {
     AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
     controller.session = self.session;
@@ -180,22 +174,19 @@
     [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:NO];
 }
 
-- (void)handleFlow
-{
+- (void)handleFlow {
     self.updatedPaymentMethod = self.paymentMethod;
     [self getPaymentMethodType];
 }
 
 #pragma mark - AWXPaymentFormViewControllerDelegate
 
-- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didUpdatePaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod
-{
+- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didUpdatePaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod {
     self.updatedPaymentMethod = paymentMethod;
     [self renderFields:YES];
 }
 
-- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod
-{
+- (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod {
     self.updatedPaymentMethod = paymentMethod;
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod
                                  paymentConsent:nil

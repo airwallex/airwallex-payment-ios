@@ -19,8 +19,7 @@
 
 @implementation AWXSecurityService
 
-+ (instancetype)sharedService
-{
++ (instancetype)sharedService {
     static AWXSecurityService *sharedService;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -29,8 +28,7 @@
     return sharedService;
 }
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         self.profiling = [RLTMXProfiling sharedInstance];
@@ -48,24 +46,24 @@
 }
 
 - (void)doProfile:(NSString *)intentId
-       completion:(void(^)(NSString * _Nullable))completion
-{
+       completion:(void (^)(NSString *_Nullable))completion {
 #if TARGET_OS_SIMULATOR
     completion([UIDevice currentDevice].identifierForVendor.UUIDString);
 #else
     double timestamp = [[NSDate date] timeIntervalSince1970] * 1000;
     NSString *fraudSessionId = [NSString stringWithFormat:@"%@%.0f", intentId, timestamp];
-    [self.profiling profileDeviceUsing:@{RLTMXSessionID: fraudSessionId} callbackBlock:^(NSDictionary *result) {
-        RLTMXStatusCode statusCode = [[result valueForKey:RLTMXProfileStatus] integerValue];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (statusCode == RLTMXStatusCodeOk) {
-                NSString *sessionId = result[RLTMXSessionID];
-                completion(sessionId ?: @"");
-                return;
-            }
-            completion(@"");
-        });
-    }];
+    [self.profiling profileDeviceUsing:@{RLTMXSessionID: fraudSessionId}
+                         callbackBlock:^(NSDictionary *result) {
+                             RLTMXStatusCode statusCode = [[result valueForKey:RLTMXProfileStatus] integerValue];
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 if (statusCode == RLTMXStatusCodeOk) {
+                                     NSString *sessionId = result[RLTMXSessionID];
+                                     completion(sessionId ?: @"");
+                                     return;
+                                 }
+                                 completion(@"");
+                             });
+                         }];
 #endif
 }
 

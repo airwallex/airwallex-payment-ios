@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WebViewController : UIViewController
 
-@property(nonatomic, copy) NSString * url;
-@property(nonatomic, copy) NSString * referer;
+@property (nonatomic, copy) NSString *url;
+@property (nonatomic, copy) NSString *referer;
 
 @end
 

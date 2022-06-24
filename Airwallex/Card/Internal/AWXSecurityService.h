@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Convenience constructor for a security service.
- 
+
  @return The shared security service.
  */
 + (instancetype)sharedService;
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  Request device id.
  */
 - (void)doProfile:(NSString *)intentId
-       completion:(void(^)(NSString * _Nullable))completion;
+       completion:(void (^)(NSString *_Nullable))completion;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

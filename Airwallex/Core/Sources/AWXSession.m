@@ -20,8 +20,7 @@ static NSString *const recurring = @"recurring";
 
 @implementation AWXSession
 
-- (NSString *)transactionMode
-{
+- (NSString *)transactionMode {
     return oneoff;
 }
 
@@ -29,13 +28,11 @@ static NSString *const recurring = @"recurring";
 
 @implementation AWXSession (Utils)
 
-- (void)updateInitialPaymentIntentId:(NSString *)initialPaymentIntentId
-{
+- (void)updateInitialPaymentIntentId:(NSString *)initialPaymentIntentId {
     self.initialPaymentIntentId = initialPaymentIntentId;
 }
 
-- (NSArray *)customerPaymentMethods
-{
+- (NSArray *)customerPaymentMethods {
     if ([self isKindOfClass:[AWXOneOffSession class]]) {
         AWXOneOffSession *session = (AWXOneOffSession *)self;
         return session.paymentIntent.paymentMethods;
@@ -47,8 +44,7 @@ static NSString *const recurring = @"recurring";
     return @[];
 }
 
-- (NSArray *)customerPaymentConsents
-{
+- (NSArray *)customerPaymentConsents {
     if ([self isKindOfClass:[AWXOneOffSession class]]) {
         AWXOneOffSession *session = (AWXOneOffSession *)self;
         return session.paymentIntent.paymentConsents;
@@ -60,8 +56,7 @@ static NSString *const recurring = @"recurring";
     return @[];
 }
 
-- (nullable NSString *)customerId
-{
+- (nullable NSString *)customerId {
     if ([self isKindOfClass:[AWXOneOffSession class]]) {
         AWXOneOffSession *session = (AWXOneOffSession *)self;
         return session.paymentIntent.customerId;
@@ -77,8 +72,7 @@ static NSString *const recurring = @"recurring";
     return nil;
 }
 
-- (NSString *)currency
-{
+- (NSString *)currency {
     if ([self isKindOfClass:[AWXOneOffSession class]]) {
         AWXOneOffSession *session = (AWXOneOffSession *)self;
         return session.paymentIntent.currency;
@@ -94,8 +88,7 @@ static NSString *const recurring = @"recurring";
     return @"";
 }
 
-- (NSDecimalNumber *)amount
-{
+- (NSDecimalNumber *)amount {
     if ([self isKindOfClass:[AWXOneOffSession class]]) {
         AWXOneOffSession *session = (AWXOneOffSession *)self;
         return session.paymentIntent.amount;
@@ -111,8 +104,7 @@ static NSString *const recurring = @"recurring";
     return nil;
 }
 
-- (nullable NSString *)paymentIntentId
-{
+- (nullable NSString *)paymentIntentId {
     if ([self isKindOfClass:[AWXOneOffSession class]]) {
         AWXOneOffSession *session = (AWXOneOffSession *)self;
         return session.paymentIntent.Id;
@@ -128,8 +120,7 @@ static NSString *const recurring = @"recurring";
     return nil;
 }
 
-- (BOOL)requiresCVC
-{
+- (BOOL)requiresCVC {
     if ([self isKindOfClass:[AWXRecurringSession class]]) {
         AWXRecurringSession *session = (AWXRecurringSession *)self;
         return session.requiresCVC;
@@ -141,8 +132,7 @@ static NSString *const recurring = @"recurring";
     return NO;
 }
 
-- (BOOL)autoCapture
-{
+- (BOOL)autoCapture {
     if ([self isKindOfClass:[AWXOneOffSession class]]) {
         AWXOneOffSession *session = (AWXOneOffSession *)self;
         return session.autoCapture;
@@ -162,8 +152,7 @@ static NSString *const recurring = @"recurring";
 
 @implementation AWXRecurringSession
 
-- (NSString *)transactionMode
-{
+- (NSString *)transactionMode {
     return recurring;
 }
 
@@ -171,8 +160,7 @@ static NSString *const recurring = @"recurring";
 
 @implementation AWXRecurringWithIntentSession
 
-- (NSString *)transactionMode
-{
+- (NSString *)transactionMode {
     return recurring;
 }
 

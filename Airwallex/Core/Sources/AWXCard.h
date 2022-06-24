@@ -6,15 +6,15 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "AWXCodable.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWXCard` includes the information of a card.
  */
-@interface AWXCard : NSObject <AWXJSONEncodable, AWXJSONDecodable>
+@interface AWXCard : NSObject<AWXJSONEncodable, AWXJSONDecodable>
 
 /**
  Card number.

@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXConfirmPaymentNextAction` includes the parameters for next action.
  */
-@interface AWXConfirmPaymentNextAction : NSObject <AWXJSONDecodable>
+@interface AWXConfirmPaymentNextAction : NSObject<AWXJSONDecodable>
 
 /**
  Next action type.
@@ -83,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXAuthenticationData` includes the parameters for 3ds authentication.
  */
-@interface AWXAuthenticationData : NSObject <AWXJSONDecodable>
+@interface AWXAuthenticationData : NSObject<AWXJSONDecodable>
 
 @property (nonatomic, readonly) NSString *action;
 @property (nonatomic, readonly) NSString *score;
@@ -99,7 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXPaymentAttempt` includes the information of payment attempt.
  */
-@interface AWXPaymentAttempt : NSObject <AWXJSONDecodable>
+@interface AWXPaymentAttempt : NSObject<AWXJSONDecodable>
 
 /**
  Attempt id.
@@ -201,7 +201,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Available payment method types.
  */
-@property (nonatomic, readonly) NSArray <NSString *> *availablePaymentMethodTypes;
+@property (nonatomic, readonly) NSArray<NSString *> *availablePaymentMethodTypes;
 
 /**
  Client secret.

@@ -11,13 +11,11 @@
 
 @implementation AWXTestUtils
 
-+ (NSBundle *)testBundle
-{
++ (NSBundle *)testBundle {
     return [NSBundle bundleForClass:[AWXTestUtils class]];
 }
 
-+ (nullable NSData *)dataFromJsonFile:(NSString *)filename
-{
++ (nullable NSData *)dataFromJsonFile:(NSString *)filename {
     NSBundle *bundle = [self testBundle];
     NSString *path = [bundle pathForResource:filename ofType:@"json"];
 
@@ -35,8 +33,7 @@
     return [jsonString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
-+ (NSDictionary *)jsonNamed:(NSString *)name
-{
++ (NSDictionary *)jsonNamed:(NSString *)name {
     NSData *data = [self dataFromJsonFile:name];
     if (data != nil) {
         return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];

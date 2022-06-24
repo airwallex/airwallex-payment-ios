@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Confirm the payment intent with card and billing.
- 
+
  @param card The card info.
  @param billing The billing info.
  */

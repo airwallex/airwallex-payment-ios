@@ -6,9 +6,9 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "AWXTestUtils.h"
 #import "AWXAddress.h"
+#import "AWXTestUtils.h"
+#import <XCTest/XCTest.h>
 
 @interface AWXAddressTest : XCTestCase
 
@@ -16,8 +16,7 @@
 
 @implementation AWXAddressTest
 
-- (void)testAddress
-{
+- (void)testAddress {
     AWXAddress *address = [AWXAddress decodeFromJSON:[AWXTestUtils jsonNamed:@"Address"]];
     XCTAssertNotNil(address);
     XCTAssertNotNil(address.countryCode);

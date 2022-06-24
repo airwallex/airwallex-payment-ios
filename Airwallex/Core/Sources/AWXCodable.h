@@ -9,13 +9,13 @@
 #ifndef AWXCodable_h
 #define AWXCodable_h
 
-@protocol AWXJSONDecodable <NSObject>
+@protocol AWXJSONDecodable<NSObject>
 
 + (id)decodeFromJSON:(NSDictionary *)json;
 
 @end
 
-@protocol AWXJSONEncodable <NSObject>
+@protocol AWXJSONEncodable<NSObject>
 
 - (NSDictionary *)encodeToJSON;
 

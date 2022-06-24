@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)waitForDuration:(NSTimeInterval)duration;
 - (void)waitForElement:(XCUIElement *)element duration:(NSTimeInterval)duration;
-- (void)prepareEphemeralKeys:(void (^)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;
+- (void)prepareEphemeralKeys:(void (^)(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error))completionHandler;
 
 @end
 

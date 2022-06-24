@@ -21,16 +21,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedClient;
 
-- (void)createAuthenticationTokenWithCompletionHandler:(nullable void (^)(NSError * _Nullable error))completionHandler;
+- (void)createAuthenticationTokenWithCompletionHandler:(nullable void (^)(NSError *_Nullable error))completionHandler;
 
 - (void)createPaymentIntentWithParameters:(NSDictionary *)parameters
-                        completionHandler:(void (^)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler;
+                        completionHandler:(void (^)(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error))completionHandler;
 
 - (void)createCustomerWithParameters:(NSDictionary *)parameters
-                   completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+                   completionHandler:(void (^)(NSDictionary *_Nullable result, NSError *_Nullable error))completionHandler;
 
 - (void)generateClientSecretWithCustomerId:(NSString *)Id
-                         completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler;
+                         completionHandler:(void (^)(NSDictionary *_Nullable result, NSError *_Nullable error))completionHandler;
 
 @end
 

@@ -7,12 +7,12 @@
 //
 
 #import "OptionsViewController.h"
-#import <Airwallex/Core.h>
-#import "AirwallexExamplesKeys.h"
 #import "APIClient.h"
+#import "AirwallexExamplesKeys.h"
 #import "UIViewController+Utils.h"
+#import <Airwallex/Core.h>
 
-@interface OptionsViewController () <UITextFieldDelegate>
+@interface OptionsViewController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -33,55 +33,50 @@
 @property (weak, nonatomic) IBOutlet UITextField *customerIdTextField;
 @property (weak, nonatomic) IBOutlet UIButton *clearCustomerIdButton;
 
-@property(nonatomic, strong) NSArray *checkoutModesList;
-@property(nonatomic, strong) NSArray *nextTriggerByList;
+@property (nonatomic, strong) NSArray *checkoutModesList;
+@property (nonatomic, strong) NSArray *nextTriggerByList;
 
 @end
 
 @implementation OptionsViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicator.hidesWhenStopped = YES;
     self.activityIndicator.hidden = YES;
     [self.view addSubview:self.activityIndicator];
-    
+
     self.regionLabel.text = @"WeChat Region: HK";
-    
-    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-    NSString *build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *build = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     self.versionLabel.text = [NSString stringWithFormat:@"App Version: v%@ (%@)", version, build];
-    
+
     self.checkoutModesList = @[@"Payment", @"Recurring", @"Recurring with intent"];
     self.nextTriggerByList = @[@"Customer", @"Merchant"];
-    
+
     [self resetTextFields];
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     self.activityIndicator.center = self.view.center;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)keyboardWillChangeFrame:(NSNotification *)notification
-{
+- (void)keyboardWillChangeFrame:(NSNotification *)notification {
     NSValue *rectValue = notification.userInfo[UIKeyboardFrameEndUserInfoKey];
     CGFloat keyboardHeight = CGRectGetHeight(rectValue.CGRectValue);
     UIScrollView *scrollView = self.scrollView;
@@ -93,8 +88,7 @@
     }
 }
 
-- (void)keyboardWillBeHidden:(NSNotification *)notification
-{
+- (void)keyboardWillBeHidden:(NSNotification *)notification {
     UIScrollView *scrollView = self.scrollView;
     if (scrollView) {
         UIEdgeInsets contentInsets = scrollView.contentInset;
@@ -104,69 +98,70 @@
     }
 }
 
-- (IBAction)dismiss:(id)sender
-{
+- (IBAction)dismiss:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)modePressed:(id)sender
-{
+- (IBAction)modePressed:(id)sender {
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [controller addAction:[UIAlertAction actionWithTitle:@"Demo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [Airwallex setMode:AirwallexSDKDemoMode];
-        [AirwallexExamplesKeys shared].environment = AirwallexSDKDemoMode;
-        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
-        
-        [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
-    }]];
-    [controller addAction:[UIAlertAction actionWithTitle:@"Staging" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [Airwallex setMode:AirwallexSDKStagingMode];
-        [AirwallexExamplesKeys shared].environment = AirwallexSDKStagingMode;
-        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
-        
-        [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
-    }]];
-    [controller addAction:[UIAlertAction actionWithTitle:@"Production" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [Airwallex setMode:AirwallexSDKProductionMode];
-        [AirwallexExamplesKeys shared].environment = AirwallexSDKProductionMode;
-        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
-        
-        [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
-    }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Demo"
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction *_Nonnull action) {
+                                                     [Airwallex setMode:AirwallexSDKDemoMode];
+                                                     [AirwallexExamplesKeys shared].environment = AirwallexSDKDemoMode;
+                                                     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+
+                                                     [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
+                                                 }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Staging"
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction *_Nonnull action) {
+                                                     [Airwallex setMode:AirwallexSDKStagingMode];
+                                                     [AirwallexExamplesKeys shared].environment = AirwallexSDKStagingMode;
+                                                     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+
+                                                     [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
+                                                 }]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Production"
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction *_Nonnull action) {
+                                                     [Airwallex setMode:AirwallexSDKProductionMode];
+                                                     [AirwallexExamplesKeys shared].environment = AirwallexSDKProductionMode;
+                                                     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+
+                                                     [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
+                                                 }]];
     [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:controller animated:YES completion:nil];
 }
 
-- (IBAction)checkoutModeTapped:(id)sender
-{
-    [self showSelectViewWithArray:self.checkoutModesList completion:^(NSInteger selectIndex) {
-        [AirwallexExamplesKeys shared].checkoutMode = selectIndex;
-        [self.checkoutBtn setTitle:self.checkoutModesList[selectIndex] forState:UIControlStateNormal];
-    }];
+- (IBAction)checkoutModeTapped:(id)sender {
+    [self showSelectViewWithArray:self.checkoutModesList
+                       completion:^(NSInteger selectIndex) {
+                           [AirwallexExamplesKeys shared].checkoutMode = selectIndex;
+                           [self.checkoutBtn setTitle:self.checkoutModesList[selectIndex] forState:UIControlStateNormal];
+                       }];
 }
 
-- (IBAction)nextTriggerByTapped:(id)sender
-{
-    [self showSelectViewWithArray:self.nextTriggerByList completion:^(NSInteger selectIndex) {
-        [AirwallexExamplesKeys shared].nextTriggerByType = selectIndex;
-        [self.nextTriggerByBtn setTitle:self.nextTriggerByList[selectIndex] forState:UIControlStateNormal];
-    }];
+- (IBAction)nextTriggerByTapped:(id)sender {
+    [self showSelectViewWithArray:self.nextTriggerByList
+                       completion:^(NSInteger selectIndex) {
+                           [AirwallexExamplesKeys shared].nextTriggerByType = selectIndex;
+                           [self.nextTriggerByBtn setTitle:self.nextTriggerByList[selectIndex] forState:UIControlStateNormal];
+                       }];
 }
 
-- (IBAction)cvcSwitchPressed:(id)sender
-{
+- (IBAction)cvcSwitchPressed:(id)sender {
     [AirwallexExamplesKeys shared].requireCVC = self.cvcSwitch.isOn;
 }
 
-- (IBAction)autoCaptureSwitchPressed:(id)sender
-{
+- (IBAction)autoCaptureSwitchPressed:(id)sender {
     [AirwallexExamplesKeys shared].autoCapture = self.autoCaptureSwitch.isOn;
 }
 
-- (IBAction)generateCustomer:(id)sender
-{
+- (IBAction)generateCustomer:(id)sender {
     [self.activityIndicator startAnimating];
-    __weak __typeof(self)weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [[APIClient sharedClient] createCustomerWithParameters:@{@"request_id": NSUUID.UUID.UUIDString,
                                                              @"merchant_customer_id": NSUUID.UUID.UUIDString,
                                                              @"first_name": @"Jason",
@@ -177,84 +172,79 @@
                                                                                    @"registration_date": @"2019-09-18",
                                                                                    @"first_successful_order_date": @"2019-09-18"},
                                                              @"metadata": @{@"id": @1}}
-                                         completionHandler:^(NSDictionary * _Nullable result, NSError * _Nullable error) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
-        if (error) {
-            [strongSelf showAlert:error.localizedDescription withTitle:nil];
-            return;
-        }
-        
-        NSString *customerId = result[@"id"];
-        strongSelf.customerIdTextField.text = customerId;
-        [AirwallexExamplesKeys shared].customerId = customerId;
-    }];
+                                         completionHandler:^(NSDictionary *_Nullable result, NSError *_Nullable error) {
+                                             __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                             [strongSelf.activityIndicator stopAnimating];
+                                             if (error) {
+                                                 [strongSelf showAlert:error.localizedDescription withTitle:nil];
+                                                 return;
+                                             }
+
+                                             NSString *customerId = result[@"id"];
+                                             strongSelf.customerIdTextField.text = customerId;
+                                             [AirwallexExamplesKeys shared].customerId = customerId;
+                                         }];
 }
 
-- (IBAction)clearCustomerBtnTapped:(id)sender
-{
+- (IBAction)clearCustomerBtnTapped:(id)sender {
     [AirwallexExamplesKeys shared].customerId = nil;
     self.customerIdTextField.text = nil;
 }
 
-- (void)showSelectViewWithArray:(NSArray *) arr completion:(void (^)(NSInteger selectIndex))completion
-{
+- (void)showSelectViewWithArray:(NSArray *)arr completion:(void (^)(NSInteger selectIndex))completion {
     if (arr.count) {
         UIAlertController *alertView = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
         for (int i = 0; i < arr.count; i++) {
             NSString *str = arr[i];
-            UIAlertAction *ac = [UIAlertAction actionWithTitle: str style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-                completion(i);
-            }];
+            UIAlertAction *ac = [UIAlertAction actionWithTitle:str
+                                                         style:(UIAlertActionStyleDefault)handler:^(UIAlertAction *_Nonnull action) {
+                                                             completion(i);
+                                                         }];
             [alertView addAction:ac];
         }
-        UIAlertAction *cancelAc = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:(UIAlertActionStyleCancel) handler:nil];
+        UIAlertAction *cancelAc = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:(UIAlertActionStyleCancel)handler:nil];
         [alertView addAction:cancelAc];
         [self.navigationController presentViewController:alertView animated:YES completion:nil];
     }
 }
 
-- (IBAction)resetPressed:(id)sender
-{
+- (IBAction)resetPressed:(id)sender {
     [[AirwallexExamplesKeys shared] resetKeys];
     [self resetExamplesAPIClient];
     [self resetSDK];
     [self resetTextFields];
 }
 
-- (void)resetExamplesAPIClient
-{
+- (void)resetExamplesAPIClient {
     APIClient *client = [APIClient sharedClient];
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientId;
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
 }
 
-- (void)resetSDK
-{
+- (void)resetSDK {
     [Airwallex setMode:[AirwallexExamplesKeys shared].environment];
 }
 
-- (void)resetTextFields
-{
+- (void)resetTextFields {
     [self.modeButton setTitle:FormatAirwallexSDKMode([AirwallexExamplesKeys shared].environment).capitalizedString forState:UIControlStateNormal];
 
     NSInteger checkoutMode = [AirwallexExamplesKeys shared].checkoutMode;
     [self.checkoutBtn setTitle:self.checkoutModesList[checkoutMode] forState:UIControlStateNormal];
-    
+
     NSInteger nextTriggerBy = [AirwallexExamplesKeys shared].nextTriggerByType;
     [self.nextTriggerByBtn setTitle:self.nextTriggerByList[nextTriggerBy] forState:UIControlStateNormal];
-    
+
     BOOL requiresCVC = [AirwallexExamplesKeys shared].requireCVC;
     self.cvcSwitch.on = requiresCVC;
-    
+
     BOOL autoCapture = [AirwallexExamplesKeys shared].autoCapture;
     self.autoCaptureSwitch.on = autoCapture;
-    
+
     self.customerIdTextField.enabled = NO;
     NSString *customerId = [AirwallexExamplesKeys shared].customerId;
     self.customerIdTextField.text = customerId;
-    
+
     self.apiKeyTextField.text = [AirwallexExamplesKeys shared].apiKey;
     self.clientIDTextField.text = [AirwallexExamplesKeys shared].clientId;
     self.amountTextField.text = [AirwallexExamplesKeys shared].amount;
@@ -265,8 +255,7 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
+- (void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField == self.apiKeyTextField) {
         [APIClient sharedClient].apiKey = textField.text;
         [AirwallexExamplesKeys shared].apiKey = textField.text;
@@ -295,7 +284,7 @@
         } else {
             [self showAlert:NSLocalizedString(@"Invalid country code", nil) withTitle:nil];
         }
-    }  else if (textField == self.returnURLTextField) {
+    } else if (textField == self.returnURLTextField) {
         NSURL *url = [NSURL URLWithString:textField.text];
         if (url.scheme && url.host) {
             [AirwallexExamplesKeys shared].returnUrl = textField.text;
@@ -305,14 +294,12 @@
     }
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     NSLog(@"Payment Base URL (Example): %@", [APIClient sharedClient].paymentBaseURL.absoluteString);
     NSLog(@"API Key (Example): %@", [APIClient sharedClient].apiKey);
     NSLog(@"Client ID (Example): %@", [APIClient sharedClient].clientID);
@@ -323,7 +310,7 @@
 
     NSLog(@"Payment Base URL (SDK): %@", [Airwallex defaultBaseURL].absoluteString);
     NSLog(@"SDK mode (SDK): %@", FormatAirwallexSDKMode(Airwallex.mode));
-    
+
     NSLog(@"Customer ID (SDK): %@", [AirwallexExamplesKeys shared].customerId);
     NSLog(@"Checkout mode (SDK): %@", self.checkoutModesList[[AirwallexExamplesKeys shared].checkoutMode]);
     NSLog(@"Next trigger by type (SDK): %@", self.nextTriggerByList[[AirwallexExamplesKeys shared].nextTriggerByType]);

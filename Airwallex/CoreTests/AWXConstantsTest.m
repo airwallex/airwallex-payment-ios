@@ -6,12 +6,12 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import "AWXConstants.h"
-#import "AWXPaymentMethod.h"
 #import "AWXDefaultProvider.h"
+#import "AWXPaymentMethod.h"
+#import <XCTest/XCTest.h>
 
-# pragma mark - Sample providers for test purposes
+#pragma mark - Sample providers for test purposes
 
 @interface AWXApplePayProvider : AWXDefaultProvider
 @end
@@ -37,13 +37,11 @@
 
 @implementation AWXConstantsTest
 
-- (void)testApplePayKey
-{
+- (void)testApplePayKey {
     XCTAssertEqualObjects(AWXApplePayKey, @"applepay");
 }
 
-- (void)testApplePaySupportedNetworks
-{
+- (void)testApplePaySupportedNetworks {
     XCTAssertTrue([AWXApplePaySupportedNetworks() containsObject:PKPaymentNetworkVisa]);
     XCTAssertTrue([AWXApplePaySupportedNetworks() containsObject:PKPaymentNetworkMasterCard]);
     XCTAssertTrue([AWXApplePaySupportedNetworks() containsObject:PKPaymentNetworkChinaUnionPay]);
@@ -52,41 +50,37 @@
     }
 }
 
-- (void)testClassToHandleFlowForPaymentMethodTypeApplePay
-{
+- (void)testClassToHandleFlowForPaymentMethodTypeApplePay {
     AWXPaymentMethodType *type = [AWXPaymentMethodType new];
     type.name = @"applepay";
-    
+
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXApplePayProvider class]);
 }
 
-- (void)testClassToHandleFlowForPaymentMethodTypeCard
-{
+- (void)testClassToHandleFlowForPaymentMethodTypeCard {
     AWXPaymentMethodType *type = [AWXPaymentMethodType new];
     type.name = @"card";
-    
+
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXCardProvider class]);
 }
 
-- (void)testClassToHandleFlowForPaymentMethodTypeSchema
-{
+- (void)testClassToHandleFlowForPaymentMethodTypeSchema {
     AWXPaymentMethodType *type = [AWXPaymentMethodType new];
     type.name = @"wechatpay";
     AWXResources *resources = [AWXResources new];
     resources.hasSchema = YES;
     type.resources = resources;
-    
+
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXSchemaProvider class]);
 }
 
-- (void)testClassToHandleFlowForPaymentMethodTypeDefault
-{
+- (void)testClassToHandleFlowForPaymentMethodTypeDefault {
     AWXPaymentMethodType *type = [AWXPaymentMethodType new];
     type.name = @"somethingelse";
     AWXResources *resources = [AWXResources new];
     resources.hasSchema = NO;
     type.resources = resources;
-    
+
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXDefaultProvider class]);
 }
 

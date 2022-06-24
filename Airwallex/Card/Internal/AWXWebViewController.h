@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^AWXWebHandler)(NSString * _Nullable payload, NSError * _Nullable error);
+typedef void (^AWXWebHandler)(NSString *_Nullable payload, NSError *_Nullable error);
 
 @interface AWXWebViewController : AWXViewController
 
