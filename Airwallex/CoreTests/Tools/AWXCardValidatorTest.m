@@ -6,8 +6,8 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import "AWXCardValidator.h"
+#import <XCTest/XCTest.h>
 
 @interface AWXCardValidatorTest : XCTestCase
 
@@ -15,8 +15,7 @@
 
 @implementation AWXCardValidatorTest
 
-- (void)testCardValidator
-{
+- (void)testCardValidator {
     XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"4242424242424242"].type == AWXBrandTypeVisa);
     XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"4012000300001003"].type == AWXBrandTypeVisa);
     XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"378282246310005"].type == AWXBrandTypeAmex);

@@ -6,9 +6,9 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "AWXTestUtils.h"
 #import "AWXCard.h"
+#import "AWXTestUtils.h"
+#import <XCTest/XCTest.h>
 
 @interface AWXCardTest : XCTestCase
 
@@ -16,8 +16,7 @@
 
 @implementation AWXCardTest
 
-- (void)testCard
-{
+- (void)testCard {
     AWXCard *card = [AWXCard decodeFromJSON:[AWXTestUtils jsonNamed:@"Card"]];
     XCTAssertNotNil(card);
     XCTAssertNotNil(card.expiryYear);

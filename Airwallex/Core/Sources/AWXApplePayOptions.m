@@ -11,8 +11,7 @@
 
 @implementation AWXApplePayOptions
 
-- (instancetype)initWithMerchantIdentifier:(NSString *)merchantIdentifier
-{
+- (instancetype)initWithMerchantIdentifier:(NSString *)merchantIdentifier {
     self = [super init];
     if (self) {
         _merchantIdentifier = merchantIdentifier;

@@ -11,20 +11,17 @@
 
 @implementation TotalCell
 
-- (void)setSubtotal:(NSDecimalNumber *)subtotal
-{
+- (void)setSubtotal:(NSDecimalNumber *)subtotal {
     _subtotal = subtotal;
     self.subtotalLabel.text = [NSString stringWithFormat:@"$%@", subtotal.string];
 }
 
-- (void)setShipping:(NSDecimalNumber *)shipping
-{
+- (void)setShipping:(NSDecimalNumber *)shipping {
     _shipping = shipping;
     self.shippingLabel.text = [NSString stringWithFormat:@"$%@", shipping.string];
 }
 
-- (void)setTotal:(NSDecimalNumber *)total
-{
+- (void)setTotal:(NSDecimalNumber *)total {
     _total = total;
     self.totalLabel.text = [NSString stringWithFormat:@"$%@", total.string];
 }

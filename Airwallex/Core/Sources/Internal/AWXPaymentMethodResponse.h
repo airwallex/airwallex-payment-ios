@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment methods.
  */
-@property (nonatomic, readonly) NSArray <AWXPaymentMethod *> *items;
+@property (nonatomic, readonly) NSArray<AWXPaymentMethod *> *items;
 
 @end
 
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment methods.
  */
-@property (nonatomic, readonly) NSArray <AWXPaymentMethodType *> *items;
+@property (nonatomic, readonly) NSArray<AWXPaymentMethodType *> *items;
 
 @end
 
@@ -91,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment methods.
  */
-@property (nonatomic, readonly) NSArray <AWXBank *> *items;
+@property (nonatomic, readonly) NSArray<AWXBank *> *items;
 
 @end
 

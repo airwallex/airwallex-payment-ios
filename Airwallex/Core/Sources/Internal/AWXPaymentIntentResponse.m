@@ -20,8 +20,7 @@
 
 @implementation AWXConfirmPaymentIntentResponse
 
-+ (AWXResponse *)parse:(NSData *)data
-{
++ (AWXResponse *)parse:(NSData *)data {
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWXConfirmPaymentIntentResponse *response = [[AWXConfirmPaymentIntentResponse alloc] init];
@@ -54,8 +53,7 @@
 
 @implementation AWXConfirmPaymentNextAction
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXConfirmPaymentNextAction *response = [[AWXConfirmPaymentNextAction alloc] init];
     response.type = json[@"type"];
     response.url = json[@"url"];
@@ -65,7 +63,8 @@
     if (data) {
         response.payload = data;
     } else {
-        response.payload = json[@"dcc_data"];;
+        response.payload = json[@"dcc_data"];
+        ;
     }
     return response;
 }
@@ -86,8 +85,7 @@
 
 @implementation AWXPaymentAttempt
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXPaymentAttempt *response = [[AWXPaymentAttempt alloc] init];
     response.Id = json[@"id"];
     NSNumber *amount = json[@"amount"];
@@ -120,16 +118,14 @@
 
 @implementation AWXAuthenticationData
 
-- (BOOL)isThreeDSVersion2
-{
+- (BOOL)isThreeDSVersion2 {
     if (self.version && [self.version hasPrefix:@"2."]) {
         return YES;
     }
     return NO;
 }
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXAuthenticationData *authenticationData = [[AWXAuthenticationData alloc] init];
     NSDictionary *fraudData = json[@"fraud_data"];
     if (fraudData) {
@@ -158,15 +154,14 @@
 @property (nonatomic, copy, readwrite) NSDecimalNumber *capturedAmount;
 @property (nonatomic, copy, readwrite) NSString *createdAt;
 @property (nonatomic, copy, readwrite) NSString *updatedAt;
-@property (nonatomic, copy, readwrite) NSArray <NSString *> *availablePaymentMethodTypes;
+@property (nonatomic, copy, readwrite) NSArray<NSString *> *availablePaymentMethodTypes;
 @property (nonatomic, copy, readwrite) NSString *clientSecret;
 
 @end
 
 @implementation AWXGetPaymentIntentResponse
 
-+ (AWXResponse *)parse:(NSData *)data
-{
++ (AWXResponse *)parse:(NSData *)data {
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWXGetPaymentIntentResponse *response = [[AWXGetPaymentIntentResponse alloc] init];
@@ -198,8 +193,7 @@
 
 @implementation AWXGetPaResResponse
 
-+ (AWXResponse *)parse:(NSData *)data
-{
++ (AWXResponse *)parse:(NSData *)data {
     NSError *error = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     AWXGetPaResResponse *response = [[AWXGetPaResResponse alloc] init];

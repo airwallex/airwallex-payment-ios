@@ -10,32 +10,27 @@
 
 @implementation AWXProviderDelegateSpy
 
-- (void)providerDidStartRequest:(AWXDefaultProvider *)provider
-{
+- (void)providerDidStartRequest:(AWXDefaultProvider *)provider {
     self.providerDidStartRequestCount += 1;
 }
 
-- (void)providerDidEndRequest:(AWXDefaultProvider *)provider
-{
+- (void)providerDidEndRequest:(AWXDefaultProvider *)provider {
     self.providerDidEndRequestCount += 1;
 }
 
-- (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId
-{
+- (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {
     // no op
 }
 
-- (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction
-{
+- (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     // no op
 }
 
-- (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(NSError *)error
-{
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(NSError *)error {
     self.providerDidCompleteWithStatusCount += 1;
     self.lastStatus = status;
     self.lastStatusError = error;
-    
+
     if (self.statusExpectation) {
         [self.statusExpectation fulfill];
     }

@@ -22,8 +22,7 @@
 
 @implementation AWXDccResponse
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXDccResponse *response = [[AWXDccResponse alloc] init];
     response.currency = json[@"currency"];
     response.currencyPair = json[@"currency_pair"];

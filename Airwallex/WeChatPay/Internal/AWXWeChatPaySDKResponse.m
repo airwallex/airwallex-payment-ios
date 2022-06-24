@@ -22,8 +22,7 @@
 
 @implementation AWXWeChatPaySDKResponse
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXWeChatPaySDKResponse *response = [[AWXWeChatPaySDKResponse alloc] init];
     response.appId = json[@"appId"];
     response.timeStamp = json[@"timeStamp"];

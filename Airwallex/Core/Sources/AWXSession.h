@@ -6,11 +6,11 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "AWXPlaceDetails.h"
-#import "AWXPaymentIntent.h"
-#import "AWXConstants.h"
 #import "AWXApplePayOptions.h"
+#import "AWXConstants.h"
+#import "AWXPaymentIntent.h"
+#import "AWXPlaceDetails.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

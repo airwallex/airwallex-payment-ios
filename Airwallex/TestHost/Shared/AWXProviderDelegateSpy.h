@@ -6,13 +6,13 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import "AWXDefaultProvider.h"
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
-#import "AWXDefaultProvider.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWXProviderDelegateSpy : NSObject <AWXProviderDelegate>
+@interface AWXProviderDelegateSpy : NSObject<AWXProviderDelegate>
 
 @property (nonatomic) int providerDidStartRequestCount;
 @property (nonatomic) int providerDidEndRequestCount;

@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PKPaymentToken (Request)
 
 - (nullable NSDictionary *)payloadForRequestWithBilling:(nullable NSDictionary *)billingPayload
-                                                orError:(NSError * _Nullable *)error;
+                                                orError:(NSError *_Nullable *)error;
 
 @end
 

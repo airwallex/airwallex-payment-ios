@@ -15,11 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles selected shipping.
  */
-@protocol AWXShippingViewControllerDelegate <NSObject>
+@protocol AWXShippingViewControllerDelegate<NSObject>
 
 /**
  This method is called when a shipping has been saved.
- 
+
  @param controller The shipping view controller.
  @param shipping The selected shipping.
  */
@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles saved shipping.
  */
-@property (nonatomic, weak) id <AWXShippingViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<AWXShippingViewControllerDelegate> delegate;
 
 /**
  Saved shippping.

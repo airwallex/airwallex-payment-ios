@@ -10,13 +10,13 @@
 
 @implementation AWXPlaceDetails
 
-- (NSDictionary *)encodeToJSON
-{
+- (NSDictionary *)encodeToJSON {
     NSMutableDictionary *json = [@{
         @"first_name": self.firstName,
         @"last_name": self.lastName,
         @"date_of_birth": self.dateOfBirth ?: @"",
-        @"address": self.address.encodeToJSON} mutableCopy];
+        @"address": self.address.encodeToJSON
+    } mutableCopy];
     if (self.email && self.email.length > 0) {
         json[@"email"] = self.email;
     }
@@ -26,8 +26,7 @@
     return json;
 }
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXPlaceDetails *billing = [AWXPlaceDetails new];
     billing.firstName = json[@"first_name"];
     billing.lastName = json[@"last_name"];
@@ -38,8 +37,7 @@
     return billing;
 }
 
-- (id)copyWithZone:(nullable NSZone *)zone
-{
+- (id)copyWithZone:(nullable NSZone *)zone {
     AWXPlaceDetails *copy = [[AWXPlaceDetails allocWithZone:zone] init];
     copy.address = [self.address copyWithZone:zone];
     copy.firstName = [self.firstName copyWithZone:zone];
@@ -54,8 +52,7 @@
 
 @implementation AWXPlaceDetails (Utils)
 
-- (nullable NSString *)validate
-{
+- (nullable NSString *)validate {
     if (self.firstName.length == 0) {
         return @"Invalid first name";
     }

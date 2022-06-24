@@ -35,12 +35,12 @@
     NSString *timeStamp = self.timestampTextField.text;
     if (!(appId.length && nonceStr.length && package.length && partnerId.length && prepayId.length && sign.length && timeStamp.length)) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"Please fill in all the fields" preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Sure" style:(UIAlertActionStyleDefault) handler:nil];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Sure" style:(UIAlertActionStyleDefault)handler:nil];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
         return;
     }
-    
+
     PayReq *request = [[PayReq alloc] init];
     request.partnerId = partnerId;
     request.prepayId = prepayId;
@@ -48,15 +48,15 @@
     request.nonceStr = nonceStr;
     request.timeStamp = timeStamp.doubleValue;
     request.sign = sign;
-    
-    [WXApi sendReq:request completion:^(BOOL success) {
-        if (!success) {
-            // Failed to call WeChat Pay
-            return;
-        }
-        // Succeed to pay
-    }];
-}
 
+    [WXApi sendReq:request
+        completion:^(BOOL success) {
+            if (!success) {
+                // Failed to call WeChat Pay
+                return;
+            }
+            // Succeed to pay
+        }];
+}
 
 @end

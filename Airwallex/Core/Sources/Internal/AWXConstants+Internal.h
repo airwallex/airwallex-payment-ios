@@ -10,6 +10,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-FOUNDATION_EXPORT NSArray <NSString *> *AWXUnsupportedPaymentMethodTypes(void);
+FOUNDATION_EXPORT NSArray<NSString *> *AWXUnsupportedPaymentMethodTypes(void);
 
 NS_ASSUME_NONNULL_END

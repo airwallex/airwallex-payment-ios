@@ -7,13 +7,12 @@
 //
 
 #import "AWXDevice.h"
-#import <UIKit/UIKit.h>
 #import "AWXConstants.h"
+#import <UIKit/UIKit.h>
 
 @implementation AWXDevice
 
-- (NSDictionary *)encodeToJSON
-{
+- (NSDictionary *)encodeToJSON {
     UIDevice *device = [UIDevice currentDevice];
     return @{
         @"device_id": self.deviceId,

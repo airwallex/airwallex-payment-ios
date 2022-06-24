@@ -10,8 +10,7 @@
 
 @implementation AWXCard
 
-- (NSDictionary *)encodeToJSON
-{
+- (NSDictionary *)encodeToJSON {
     return @{
         @"number": self.number,
         @"expiry_month": self.expiryMonth,
@@ -21,8 +20,7 @@
     };
 }
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXCard *card = [AWXCard new];
     NSString *number = json[@"number"];
     NSString *last4 = json[@"last4"];
@@ -50,8 +48,7 @@
 
 @implementation AWXCard (Utils)
 
-- (nullable NSString *)validate
-{
+- (nullable NSString *)validate {
     if (self.number.length == 0) {
         return @"Invalid card number";
     }

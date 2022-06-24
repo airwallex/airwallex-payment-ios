@@ -11,8 +11,7 @@
 
 @implementation AWXGetPaymentMethodsRequest
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         self.pageNum = 0;
@@ -21,18 +20,15 @@
     return self;
 }
 
-- (NSString *)path
-{
+- (NSString *)path {
     return @"/api/v1/pa/payment_methods";
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodGET;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
     if (self.customerId) {
         _parameters[@"customer_id"] = self.customerId;
@@ -54,8 +50,7 @@
     return _parameters;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXGetPaymentMethodsResponse.class;
 }
 
@@ -63,8 +58,7 @@
 
 @implementation AWXGetPaymentMethodTypesRequest
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         self.active = YES;
@@ -76,20 +70,17 @@
     return self;
 }
 
-- (NSString *)path
-{
+- (NSString *)path {
     return @"/api/v1/pa/config/payment_method_types";
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodGET;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
-    
+
     _parameters[@"active"] = [NSNumber numberWithBool:self.active];
     _parameters[@"page_num"] = @(self.pageNum);
     _parameters[@"page_size"] = @(self.pageSize);
@@ -114,8 +105,7 @@
     return _parameters;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXGetPaymentMethodTypesResponse.class;
 }
 
@@ -123,8 +113,7 @@
 
 @implementation AWXGetPaymentMethodTypeRequest
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         self.flow = @"inapp";
@@ -132,20 +121,17 @@
     return self;
 }
 
-- (NSString *)path
-{
+- (NSString *)path {
     return [NSString stringWithFormat:@"/api/v1/pa/config/payment_method_types/%@", self.name];
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodGET;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
-    
+
     if (self.flow) {
         _parameters[@"flow"] = self.flow;
     }
@@ -158,8 +144,7 @@
     return _parameters;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXGetPaymentMethodTypeResponse.class;
 }
 
@@ -167,20 +152,17 @@
 
 @implementation AWXGetAvailableBanksRequest
 
-- (NSString *)path
-{
+- (NSString *)path {
     return @"/api/v1/pa/config/banks";
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodGET;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
-    
+
     _parameters[@"payment_method_type"] = self.paymentMethodType;
     _parameters[@"__all_logos"] = @YES;
     if (self.lang) {
@@ -192,8 +174,7 @@
     return _parameters;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXGetAvailableBanksResponse.class;
 }
 
@@ -201,26 +182,22 @@
 
 @implementation AWXCreatePaymentMethodRequest
 
-- (NSString *)path
-{
+- (NSString *)path {
     return @"/api/v1/pa/payment_methods/create";
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodPOST;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
     [parameters addEntriesFromDictionary:self.paymentMethod.encodeToJSON];
     return parameters;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXCreatePaymentMethodResponse.class;
 }
 
@@ -228,23 +205,19 @@
 
 @implementation AWXDisablePaymentConsentRequest
 
-- (NSString *)path
-{
+- (NSString *)path {
     return [NSString stringWithFormat:@"/api/v1/pa/payment_consents/%@/disable", self.Id];
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodPOST;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     return @{@"request_id": self.requestId};
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXDisablePaymentConsentResponse.class;
 }
 

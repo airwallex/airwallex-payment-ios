@@ -10,8 +10,7 @@
 
 @implementation AWXPaymentMethod
 
-- (NSDictionary *)encodeToJSON
-{
+- (NSDictionary *)encodeToJSON {
     NSMutableDictionary *items = [[NSMutableDictionary alloc] init];
     items[@"type"] = self.type;
     if (self.billing) {
@@ -29,8 +28,7 @@
     return items;
 }
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXPaymentMethod *method = [AWXPaymentMethod new];
     method.Id = json[@"id"];
     method.type = json[@"type"];
@@ -46,8 +44,7 @@
     return method;
 }
 
-- (void)appendAdditionalParams:(NSDictionary *)params
-{
+- (void)appendAdditionalParams:(NSDictionary *)params {
     if (self.additionalParams) {
         NSMutableDictionary *dictionary = [self.additionalParams mutableCopy];
         [dictionary addEntriesFromDictionary:params];
@@ -61,8 +58,7 @@
 
 @implementation AWXResources
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXResources *resources = [AWXResources new];
     NSDictionary *logos = json[@"logos"];
     if (logos && logos[@"png"]) {
@@ -78,8 +74,7 @@
 
 @implementation AWXPaymentMethodType
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXPaymentMethodType *method = [AWXPaymentMethodType new];
     method.name = json[@"name"];
     method.displayName = json[@"display_name"];
@@ -91,8 +86,7 @@
     return method;
 }
 
-- (BOOL)hasSchema
-{
+- (BOOL)hasSchema {
     return self.resources.hasSchema;
 }
 
@@ -100,8 +94,7 @@
 
 @implementation AWXCandidate
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXCandidate *candidate = [AWXCandidate new];
     candidate.displayName = json[@"display_name"];
     candidate.value = json[@"value"];
@@ -112,8 +105,7 @@
 
 @implementation AWXField
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXField *field = [AWXField new];
     field.name = json[@"name"];
     field.displayName = json[@"display_name"];
@@ -135,12 +127,11 @@
 
 @implementation AWXSchema
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXSchema *schema = [AWXSchema new];
     schema.transactionMode = json[@"transaction_mode"];
     schema.flow = json[@"flow"];
-    
+
     NSMutableArray *items = [NSMutableArray array];
     NSArray *list = json[@"fields"];
     if (list && [list isKindOfClass:[NSArray class]]) {
@@ -156,8 +147,7 @@
 
 @implementation AWXBank
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXBank *bank = [AWXBank new];
     bank.name = json[@"bank_name"];
     bank.displayName = json[@"display_name"];

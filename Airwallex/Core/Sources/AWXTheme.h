@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Convenience constructor for a theme.
- 
+
  @return The shared theme.
  */
 + (instancetype)sharedTheme;

@@ -16,8 +16,7 @@
 
 @implementation AirwallexExamplesKeys
 
-+ (instancetype)shared
-{
++ (instancetype)shared {
     static AirwallexExamplesKeys *keys;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -26,8 +25,7 @@
     return keys;
 }
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         self.configJson = [self loadConfigFile:@"Keys"];
@@ -36,8 +34,7 @@
     return self;
 }
 
-- (NSDictionary *)loadConfigFile:(NSString *)filename
-{
+- (NSDictionary *)loadConfigFile:(NSString *)filename {
     NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:@"json" inDirectory:@"Keys"];
     if (path) {
         NSData *data = [[NSData alloc] initWithContentsOfFile:path];
@@ -48,8 +45,7 @@
     return nil;
 }
 
-- (void)resetKeys
-{
+- (void)resetKeys {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedEnvironment];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCheckoutMode];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedNextTriggerBy];
@@ -63,12 +59,11 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCountryCode];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedReturnURL];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+
     [self syncKeys];
 }
 
-- (void)syncKeys
-{
+- (void)syncKeys {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.environment = [userDefaults integerForKey:kCachedEnvironment];
     self.checkoutMode = [userDefaults integerForKey:kCachedCheckoutMode];
@@ -78,44 +73,39 @@
     self.customerId = [userDefaults stringForKey:kCachedCustomerID];
     self.apiKey = [userDefaults stringForKey:kCachedApiKey] ?: self.configJson[@"api_key"];
     self.clientId = [userDefaults stringForKey:kCachedClientId] ?: self.configJson[@"client_id"];
-    self.amount = [userDefaults stringForKey:kCachedAmount] ?: self.configJson[@"amount"] ?: @"0";
+    self.amount = [userDefaults stringForKey:kCachedAmount] ?: self.configJson[@"amount"] ?
+                                                                                          : @"0";
     self.currency = [userDefaults stringForKey:kCachedCurrency] ?: self.configJson[@"currency"];
     self.countryCode = [userDefaults stringForKey:kCachedCountryCode] ?: self.configJson[@"country_code"];
     self.returnUrl = [userDefaults stringForKey:kCachedReturnURL] ?: self.configJson[@"return_url"];
 }
 
-- (void)setEnvironment:(AirwallexSDKMode)environment
-{
+- (void)setEnvironment:(AirwallexSDKMode)environment {
     _environment = environment;
     [[NSUserDefaults standardUserDefaults] setInteger:environment forKey:kCachedEnvironment];
 }
 
-- (void)setCheckoutMode:(AirwallexCheckoutMode)checkoutMode
-{
+- (void)setCheckoutMode:(AirwallexCheckoutMode)checkoutMode {
     _checkoutMode = checkoutMode;
     [[NSUserDefaults standardUserDefaults] setInteger:checkoutMode forKey:kCachedCheckoutMode];
 }
 
-- (void)setNextTriggerByType:(AirwallexNextTriggerByType)nextTriggerByType
-{
+- (void)setNextTriggerByType:(AirwallexNextTriggerByType)nextTriggerByType {
     _nextTriggerByType = nextTriggerByType;
     [[NSUserDefaults standardUserDefaults] setInteger:nextTriggerByType forKey:kCachedNextTriggerBy];
 }
 
-- (void)setRequireCVC:(BOOL)requireCVC
-{
+- (void)setRequireCVC:(BOOL)requireCVC {
     _requireCVC = requireCVC;
     [[NSUserDefaults standardUserDefaults] setBool:requireCVC forKey:kCachedRequiresCVC];
 }
 
-- (void)setAutoCapture:(BOOL)autoCapture
-{
+- (void)setAutoCapture:(BOOL)autoCapture {
     _autoCapture = autoCapture;
     [[NSUserDefaults standardUserDefaults] setBool:autoCapture forKey:kCachedAutoCapture];
 }
 
-- (void)setCustomerId:(nullable NSString *)customerId
-{
+- (void)setCustomerId:(nullable NSString *)customerId {
     _customerId = customerId;
     if (customerId) {
         [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:kCachedCustomerID];
@@ -124,38 +114,32 @@
     }
 }
 
-- (void)setApiKey:(NSString *)apiKey
-{
+- (void)setApiKey:(NSString *)apiKey {
     _apiKey = apiKey;
     [[NSUserDefaults standardUserDefaults] setObject:apiKey forKey:kCachedApiKey];
 }
 
-- (void)setClientId:(NSString *)clientId
-{
+- (void)setClientId:(NSString *)clientId {
     _clientId = clientId;
     [[NSUserDefaults standardUserDefaults] setObject:clientId forKey:kCachedClientId];
 }
 
-- (void)setAmount:(NSString *)amount
-{
+- (void)setAmount:(NSString *)amount {
     _amount = amount;
     [[NSUserDefaults standardUserDefaults] setObject:amount forKey:kCachedAmount];
 }
 
-- (void)setCurrency:(NSString *)currency
-{
+- (void)setCurrency:(NSString *)currency {
     _currency = currency;
     [[NSUserDefaults standardUserDefaults] setObject:currency forKey:kCachedCurrency];
 }
 
-- (void)setCountryCode:(NSString *)countryCode
-{
+- (void)setCountryCode:(NSString *)countryCode {
     _countryCode = countryCode;
     [[NSUserDefaults standardUserDefaults] setObject:countryCode forKey:kCachedCountryCode];
 }
 
-- (void)setReturnUrl:(NSString *)returnUrl
-{
+- (void)setReturnUrl:(NSString *)returnUrl {
     _returnUrl = returnUrl;
     [[NSUserDefaults standardUserDefaults] setObject:returnUrl forKey:kCachedReturnURL];
 }

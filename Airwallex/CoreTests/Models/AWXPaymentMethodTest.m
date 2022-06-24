@@ -6,9 +6,9 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "AWXTestUtils.h"
 #import "AWXPaymentMethod.h"
+#import "AWXTestUtils.h"
+#import <XCTest/XCTest.h>
 
 @interface AWXPaymentMethodTest : XCTestCase
 
@@ -16,8 +16,7 @@
 
 @implementation AWXPaymentMethodTest
 
-- (void)testPaymentMethod
-{
+- (void)testPaymentMethod {
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod decodeFromJSON:[AWXTestUtils jsonNamed:@"PaymentMethod"]];
     XCTAssertNotNil(paymentMethod);
     XCTAssertNotNil(paymentMethod.Id);

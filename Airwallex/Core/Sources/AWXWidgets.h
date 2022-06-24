@@ -6,8 +6,8 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "AWXConstants.h"
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @class AWXFloatingLabelTextField;
-@protocol AWXFloatingLabelTextFieldDelegate <NSObject>
+@protocol AWXFloatingLabelTextFieldDelegate<NSObject>
 
 - (void)floatingLabelTextField:(AWXFloatingLabelTextField *)textField textDidChange:(NSString *)text;
 
@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AWXFloatingLabelTextField : AWXView
 
-@property (weak, nonatomic, nullable) id <AWXFloatingLabelTextFieldDelegate> delegate;
+@property (weak, nonatomic, nullable) id<AWXFloatingLabelTextFieldDelegate> delegate;
 @property (strong, nonatomic) AWXView *borderView;
 @property (strong, nonatomic) UILabel *floatingLabel;
 @property (strong, nonatomic) UITextField *textField;
@@ -105,19 +105,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-typedef enum
-{
+typedef enum {
     UIImageViewAlignmentMaskCenter = 0,
-    UIImageViewAlignmentMaskLeft   = 1,
-    UIImageViewAlignmentMaskRight  = 2,
-    UIImageViewAlignmentMaskTop    = 4,
+    UIImageViewAlignmentMaskLeft = 1,
+    UIImageViewAlignmentMaskRight = 2,
+    UIImageViewAlignmentMaskTop = 4,
     UIImageViewAlignmentMaskBottom = 8,
-    
+
     UIImageViewAlignmentMaskBottomLeft = UIImageViewAlignmentMaskBottom | UIImageViewAlignmentMaskLeft,
     UIImageViewAlignmentMaskBottomRight = UIImageViewAlignmentMaskBottom | UIImageViewAlignmentMaskRight,
     UIImageViewAlignmentMaskTopLeft = UIImageViewAlignmentMaskTop | UIImageViewAlignmentMaskLeft,
     UIImageViewAlignmentMaskTopRight = UIImageViewAlignmentMaskTop | UIImageViewAlignmentMaskRight,
-    
+
 } UIImageViewAlignmentMask;
 
 typedef UIImageViewAlignmentMask UIImageViewAignmentMask __attribute__((deprecated("Use UIImageViewAlignmentMask. Use of UIImageViewAignmentMask (misspelled) is deprecated.")));
@@ -131,7 +130,7 @@ typedef UIImageViewAlignmentMask UIImageViewAignmentMask __attribute__((deprecat
 @property (nonatomic) BOOL alignBottom;
 @property (nonatomic) BOOL enableScaleUp;
 @property (nonatomic) BOOL enableScaleDown;
-@property (nonatomic, readonly) UIImageView* realImageView;
+@property (nonatomic, readonly) UIImageView *realImageView;
 
 @end
 

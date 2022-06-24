@@ -6,16 +6,16 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "AWXCodable.h"
 #import "AWXAddress.h"
+#import "AWXCodable.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWXPlaceDetails` includes the information of a billing address.
  */
-@interface AWXPlaceDetails : NSObject <AWXJSONEncodable, AWXJSONDecodable, NSCopying>
+@interface AWXPlaceDetails : NSObject<AWXJSONEncodable, AWXJSONDecodable, NSCopying>
 
 /**
  First name of the customer.

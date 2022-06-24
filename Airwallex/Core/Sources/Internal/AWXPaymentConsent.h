@@ -6,8 +6,8 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "AWXCodable.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXPaymentConsent` includes the info of payment consent.
  */
-@interface AWXPaymentConsent : NSObject <AWXJSONDecodable>
+@interface AWXPaymentConsent : NSObject<AWXJSONDecodable>
 
 /**
  Consent ID.
@@ -76,5 +76,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-
-

@@ -6,10 +6,10 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "AWXConstants.h"
 #import "AWXSession.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @class AWXWeChatPaySDKResponse, AWXPaymentMethodListViewController, AWXCardViewController, AWXPaymentViewController, AWXShippingViewController, AWXPaymentIntent, AWXPlaceDetails;
 
@@ -18,11 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles checkout results.
  */
-@protocol AWXPaymentResultDelegate <NSObject>
+@protocol AWXPaymentResultDelegate<NSObject>
 
 /**
  This method is called when the user has completed the checkout.
- 
+
  @param controller The controller handling payment result.
  @param status The status of checkout result.
  @param error The error if checkout failed.
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The delegate which handles checkout events.
  */
-@property (nonatomic, weak) id <AWXPaymentResultDelegate> delegate;
+@property (nonatomic, weak) id<AWXPaymentResultDelegate> delegate;
 
 /**
  The hostViewController will present or push the payment flow.
@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Convenience constructor for a context.
- 
+
  @return The shared context.
  */
 + (instancetype)sharedContext;

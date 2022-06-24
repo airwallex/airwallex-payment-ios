@@ -6,9 +6,9 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import <PassKit/PassKit.h>
 #import "PKContact+Request.h"
+#import <PassKit/PassKit.h>
+#import <XCTest/XCTest.h>
 
 @interface PKContactRequestTest : XCTestCase
 
@@ -19,22 +19,22 @@
 - (void)testPayloadForRequest {
     PKContact *contact = [PKContact new];
     contact.emailAddress = @"email@address.com";
-    
+
     NSPersonNameComponents *nameComponents = [NSPersonNameComponents new];
     nameComponents.givenName = @"firstName";
     nameComponents.familyName = @"lastName";
     contact.name = nameComponents;
     contact.phoneNumber = [CNPhoneNumber phoneNumberWithStringValue:@"12345678"];
-    
+
     CNMutablePostalAddress *address = [CNMutablePostalAddress new];
     address.ISOCountryCode = @"AU";
     address.city = @"Melbourne";
     address.postalCode = @"3008";
     address.state = @"VIC";
     address.street = @"Name St.";
-    
+
     contact.postalAddress = address;
-    
+
     NSDictionary *payload = [contact payloadForRequest];
     NSDictionary *expected = @{
         @"email": @"email@address.com",
@@ -49,27 +49,27 @@
             @"street": @"Name St."
         }
     };
-    
+
     XCTAssertEqualObjects(payload, expected);
 }
 
 - (void)testPayloadForRequestWithPartialNilValues {
     PKContact *contact = [PKContact new];
-    
+
     NSPersonNameComponents *nameComponents = [NSPersonNameComponents new];
     nameComponents.givenName = nil;
     nameComponents.familyName = @"lastName";
     contact.name = nameComponents;
-    
+
     CNMutablePostalAddress *address = [CNMutablePostalAddress new];
     address.ISOCountryCode = @"";
     address.city = @"";
     address.postalCode = @"";
     address.state = @"";
     address.street = @"";
-    
+
     contact.postalAddress = address;
-    
+
     NSDictionary *payload = [contact payloadForRequest];
     NSDictionary *expected = @{
         @"last_name": @"lastName",
@@ -81,7 +81,7 @@
             @"street": @""
         }
     };
-    
+
     XCTAssertEqualObjects(payload, expected);
 }
 
@@ -89,7 +89,7 @@
     PKContact *contact = [PKContact new];
     NSDictionary *payload = [contact payloadForRequest];
     NSDictionary *expected = @{};
-    
+
     XCTAssertEqualObjects(payload, expected);
 }
 

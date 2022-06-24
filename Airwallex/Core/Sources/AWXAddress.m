@@ -10,8 +10,7 @@
 
 @implementation AWXAddress
 
-- (NSDictionary *)encodeToJSON
-{
+- (NSDictionary *)encodeToJSON {
     return @{
         @"country_code": self.countryCode,
         @"city": self.city,
@@ -21,8 +20,7 @@
     };
 }
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXAddress *address = [AWXAddress new];
     address.countryCode = json[@"country_code"];
     address.city = json[@"city"];
@@ -32,8 +30,7 @@
     return address;
 }
 
-- (id)copyWithZone:(nullable NSZone *)zone
-{
+- (id)copyWithZone:(nullable NSZone *)zone {
     AWXAddress *copy = [[AWXAddress allocWithZone:zone] init];
     copy.countryCode = [self.countryCode copyWithZone:zone];
     copy.city = [self.city copyWithZone:zone];

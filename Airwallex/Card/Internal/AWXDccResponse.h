@@ -6,15 +6,15 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "AWXCodable.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWXDccResponse` includes the parameters for dcc.
  */
-@interface AWXDccResponse : NSObject <AWXJSONDecodable>
+@interface AWXDccResponse : NSObject<AWXJSONDecodable>
 
 /**
  Currency code.

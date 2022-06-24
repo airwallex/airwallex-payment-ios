@@ -6,14 +6,13 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "XCTestCase+Utils.h"
-#import "AWXTestAPIClient.h"
 #import "AWXAPIClient.h"
+#import "AWXTestAPIClient.h"
+#import "XCTestCase+Utils.h"
 
 @implementation XCTestCase (Utils)
 
-- (void)waitForDuration:(NSTimeInterval)duration
-{
+- (void)waitForDuration:(NSTimeInterval)duration {
     XCTestExpectation *waitExpectation = [[XCTestExpectation alloc] initWithDescription:@"Waiting"];
     NSTimeInterval when = DISPATCH_TIME_NOW + duration;
     dispatch_after(when, dispatch_get_main_queue(), ^{
@@ -22,15 +21,13 @@
     [self waitForExpectationsWithTimeout:duration handler:nil];
 }
 
-- (void)waitForElement:(XCUIElement *)element duration:(NSTimeInterval)duration
-{
+- (void)waitForElement:(XCUIElement *)element duration:(NSTimeInterval)duration {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == YES"];
     [self expectationForPredicate:predicate evaluatedWithObject:element handler:nil];
     [self waitForExpectationsWithTimeout:duration handler:nil];
 }
 
-- (void)prepareEphemeralKeys:(void (^)(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error))completionHandler
-{
+- (void)prepareEphemeralKeys:(void (^)(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error))completionHandler {
     [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://pci-api-demo.airwallex.com/"]];
 
     AWXTestAPIClient *client = [AWXTestAPIClient sharedClient];
@@ -39,7 +36,7 @@
     client.clientID = @"WZIU9G6yQpumYxP5tsTMLQ";
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get auth token"];
-    [client createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
+    [client createAuthenticationTokenWithCompletionHandler:^(NSError *_Nullable error) {
         XCTAssertNil(error);
         NSMutableDictionary *parameters = [@{@"amount": @0.10,
                                              @"currency": @"USD",
@@ -47,16 +44,16 @@
                                              @"request_id": NSUUID.UUID.UUIDString,
                                              @"order": @{}} mutableCopy];
         [client createPaymentIntentWithParameters:parameters
-                                completionHandler:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
-            XCTAssertNil(error);
+                                completionHandler:^(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error) {
+                                    XCTAssertNil(error);
 
-            [AWXAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
-            XCTAssertNotNil([AWXAPIClientConfiguration sharedConfiguration].clientSecret);
+                                    [AWXAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
+                                    XCTAssertNotNil([AWXAPIClientConfiguration sharedConfiguration].clientSecret);
 
-            completionHandler(paymentIntent, error);
+                                    completionHandler(paymentIntent, error);
 
-            [expectation fulfill];
-        }];
+                                    [expectation fulfill];
+                                }];
     }];
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }

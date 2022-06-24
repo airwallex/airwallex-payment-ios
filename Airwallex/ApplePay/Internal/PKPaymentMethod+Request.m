@@ -10,21 +10,20 @@
 
 @implementation PKPaymentMethod (Request)
 
-- (NSString *)typeNameForRequest
-{
+- (NSString *)typeNameForRequest {
     switch (self.type) {
-        case PKPaymentMethodTypeCredit:
-            return @"credit";
-        case PKPaymentMethodTypeDebit:
-            return @"debit";
-        case PKPaymentMethodTypeEMoney:
-            return @"emoney";
-        case PKPaymentMethodTypePrepaid:
-            return @"prepaid";
-        case PKPaymentMethodTypeStore:
-            return @"store";
-        case PKPaymentMethodTypeUnknown:
-            return @"unknown";
+    case PKPaymentMethodTypeCredit:
+        return @"credit";
+    case PKPaymentMethodTypeDebit:
+        return @"debit";
+    case PKPaymentMethodTypeEMoney:
+        return @"emoney";
+    case PKPaymentMethodTypePrepaid:
+        return @"prepaid";
+    case PKPaymentMethodTypeStore:
+        return @"store";
+    case PKPaymentMethodTypeUnknown:
+        return @"unknown";
     }
 }
 

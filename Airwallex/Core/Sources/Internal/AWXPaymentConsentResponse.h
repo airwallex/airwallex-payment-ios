@@ -8,7 +8,7 @@
 
 #import "AWXAPIClient.h"
 
-@class  AWXPaymentConsent, AWXConfirmPaymentNextAction, AWXPaymentMethod;
+@class AWXPaymentConsent, AWXConfirmPaymentNextAction, AWXPaymentMethod;
 
 NS_ASSUME_NONNULL_BEGIN
 

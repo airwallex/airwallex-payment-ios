@@ -35,9 +35,8 @@ NSString *const AWXDCC = @"dcc";
 
 NSString *const AWXApplePayKey = @"applepay";
 
-NSArray <PKPaymentNetwork> * AWXApplePaySupportedNetworks(void)
-{
-    NSArray <PKPaymentNetwork> *shared = @[
+NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void) {
+    NSArray<PKPaymentNetwork> *shared = @[
         PKPaymentNetworkVisa,
         PKPaymentNetworkMasterCard,
         PKPaymentNetworkChinaUnionPay
@@ -49,30 +48,27 @@ NSArray <PKPaymentNetwork> * AWXApplePaySupportedNetworks(void)
     }
 }
 
-NSString * FormatAirwallexSDKMode(AirwallexSDKMode mode)
-{
+NSString *FormatAirwallexSDKMode(AirwallexSDKMode mode) {
     switch (mode) {
-        case AirwallexSDKDemoMode:
-            return @"demo";
-        case AirwallexSDKStagingMode:
-            return @"staging";
-        case AirwallexSDKProductionMode:
-            return @"production";
+    case AirwallexSDKDemoMode:
+        return @"demo";
+    case AirwallexSDKStagingMode:
+        return @"staging";
+    case AirwallexSDKProductionMode:
+        return @"production";
     }
 }
 
-NSString * FormatNextTriggerByType(AirwallexNextTriggerByType type)
-{
+NSString *FormatNextTriggerByType(AirwallexNextTriggerByType type) {
     switch (type) {
-        case AirwallexNextTriggerByCustomerType:
-            return @"customer";
-        case AirwallexNextTriggerByMerchantType:
-            return @"merchant";
+    case AirwallexNextTriggerByCustomerType:
+        return @"customer";
+    case AirwallexNextTriggerByMerchantType:
+        return @"merchant";
     }
 }
 
-AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType)
-{
+AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType) {
     if ([uiType isEqualToString:@"email"]) {
         return AWXTextFieldTypeEmail;
     } else if ([uiType isEqualToString:@"phone"]) {
@@ -81,19 +77,16 @@ AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType)
     return AWXTextFieldTypeDefault;
 }
 
-
-NSString * FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason)
-{
+NSString *FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason) {
     switch (reason) {
-        case AirwallexMerchantTriggerReasonUnscheduled:
-            return @"unscheduled";
-        case AirwallexMerchantTriggerReasonScheduled:
-            return @"scheduled";
+    case AirwallexMerchantTriggerReasonUnscheduled:
+        return @"unscheduled";
+    case AirwallexMerchantTriggerReasonScheduled:
+        return @"scheduled";
     }
 }
 
-Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type)
-{
+Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type) {
     if ([type.name isEqualToString:AWXCardKey]) {
         return NSClassFromString(@"AWXCardProvider");
     } else if ([type.name isEqualToString:AWXApplePayKey]) {
@@ -105,8 +98,7 @@ Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type)
     }
 }
 
-Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction)
-{
+Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction) {
     if ([nextAction.type isEqualToString:@"call_sdk"]) {
         return NSClassFromString(@"AWXWeChatPayActionProvider");
     } else if ([nextAction.type isEqualToString:@"redirect_form"]) {

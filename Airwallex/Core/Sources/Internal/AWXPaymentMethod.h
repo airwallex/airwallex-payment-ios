@@ -6,17 +6,17 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "AWXCard.h"
 #import "AWXCodable.h"
 #import "AWXPlaceDetails.h"
-#import "AWXCard.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWXPaymentMethod` includes the information of a payment method.
  */
-@interface AWXPaymentMethod : NSObject <AWXJSONEncodable, AWXJSONDecodable>
+@interface AWXPaymentMethod : NSObject<AWXJSONEncodable, AWXJSONDecodable>
 
 /**
  Type of the payment method. One of card, wechatpay, applepay.
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXResources` includes the resources of payment method.
  */
-@interface AWXResources : NSObject <AWXJSONDecodable>
+@interface AWXResources : NSObject<AWXJSONDecodable>
 
 /**
  Logo url
@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXPaymentMethodType` includes the information of a payment method.
  */
-@interface AWXPaymentMethodType : NSObject <AWXJSONDecodable>
+@interface AWXPaymentMethodType : NSObject<AWXJSONDecodable>
 
 /**
  name of the payment method.
@@ -92,12 +92,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  flows of the payment method.
  */
-@property (nonatomic, copy) NSArray<NSString* > *flows;
+@property (nonatomic, copy) NSArray<NSString *> *flows;
 
 /**
  transaction_currencies of the payment method.  "*", "AUD", "CHF", "HKD", "SGD", "JPY", "EUR", "GBP", "USD", "CAD", "NZD", "CNY"
  */
-@property (nonatomic, copy) NSArray<NSString* > *transactionCurrencies;
+@property (nonatomic, copy) NSArray<NSString *> *transactionCurrencies;
 
 /**
  Whether payment method is active.
@@ -119,7 +119,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXCandidate` includes the values of list
  */
-@interface AWXCandidate : NSObject <AWXJSONDecodable>
+@interface AWXCandidate : NSObject<AWXJSONDecodable>
 
 /**
  display name.
@@ -136,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXField` includes the field of schema.
  */
-@interface AWXField : NSObject <AWXJSONDecodable>
+@interface AWXField : NSObject<AWXJSONDecodable>
 
 /**
  name of the payment method.
@@ -166,14 +166,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  candidates.
  */
-@property (nonatomic, strong) NSArray<AWXCandidate* > *candidates;
+@property (nonatomic, strong) NSArray<AWXCandidate *> *candidates;
 
 @end
 
 /**
  `AWXSchema` includes the schema of payment method.
  */
-@interface AWXSchema : NSObject <AWXJSONDecodable>
+@interface AWXSchema : NSObject<AWXJSONDecodable>
 
 /**
  transaction_mode of the payment method. One of oneoff, recurring.
@@ -188,14 +188,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Fields.
  */
-@property (nonatomic, copy) NSArray<AWXField* > *fields;
+@property (nonatomic, copy) NSArray<AWXField *> *fields;
 
 @end
 
 /**
  `AWXBank` includes the bank info.
  */
-@interface AWXBank : NSObject <AWXJSONDecodable>
+@interface AWXBank : NSObject<AWXJSONDecodable>
 
 /**
  name of the payment method.

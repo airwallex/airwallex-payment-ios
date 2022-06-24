@@ -6,8 +6,8 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "AWXConstants.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Set base URL.
- 
+
  @param baseURL A baseURL required.
  */
 + (void)setDefaultBaseURL:(NSURL *)baseURL;
@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Set sdk mode.
- 
+
  @param mode A mode required.
  */
 + (void)setMode:(AirwallexSDKMode)mode;
@@ -75,7 +75,7 @@ typedef enum : NSUInteger {
 /**
  `AWXAPIClientConfiguration` contains the base configuration the API client needs.
  */
-@interface AWXAPIClientConfiguration : NSObject <NSCopying>
+@interface AWXAPIClientConfiguration : NSObject<NSCopying>
 
 /**
  The base URL.
@@ -89,14 +89,14 @@ typedef enum : NSUInteger {
 
 /**
  Convenience constructor for a configuration.
- 
+
  @return The shared configuration.
  */
 + (instancetype)sharedConfiguration;
 
 @end
 
-typedef void (^AWXRequestHandler)(AWXResponse * _Nullable response, NSError * _Nullable error);
+typedef void (^AWXRequestHandler)(AWXResponse *_Nullable response, NSError *_Nullable error);
 
 /**
  `AWXAPIClient` is a http request client.
@@ -105,7 +105,7 @@ typedef void (^AWXRequestHandler)(AWXResponse * _Nullable response, NSError * _N
 
 /**
  Convenience constructor for an api client.
- 
+
  @return The shared api client.
  */
 + (instancetype)sharedClient;
@@ -117,7 +117,7 @@ typedef void (^AWXRequestHandler)(AWXResponse * _Nullable response, NSError * _N
 
 /**
  Initializer.
- 
+
  @param configuration A configuration required.
  @return The initialized http request client.
  */
@@ -125,7 +125,7 @@ typedef void (^AWXRequestHandler)(AWXResponse * _Nullable response, NSError * _N
 
 /**
  Send request.
- 
+
  @param request A request object.
  @param handler A handler which includes response.
  */

@@ -6,31 +6,31 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import "PKPaymentToken+Request.h"
 #import "PKPaymentMethod+Request.h"
+#import "PKPaymentToken+Request.h"
 
 @implementation PKPaymentToken (Request)
 
 - (nullable NSDictionary *)payloadForRequestWithBilling:(nullable NSDictionary *)billingPayload
-                                                orError:(NSError * _Nullable *)error;
+                                                orError:(NSError *_Nullable *)error;
 {
     NSData *paymentData = self.paymentData;
     NSDictionary *paymentJSON = [NSJSONSerialization JSONObjectWithData:paymentData
                                                                 options:0
                                                                   error:error];
-    
+
     if (!paymentJSON) {
         return nil;
     }
-    
+
     NSDictionary *header = paymentJSON[@"header"];
-    
+
     NSMutableDictionary *payload = [NSMutableDictionary dictionary];
-    
+
     if (billingPayload) {
         payload[@"billing"] = billingPayload;
     }
-    
+
     [payload addEntriesFromDictionary:@{
         @"card_brand": self.paymentMethod.network.lowercaseString,
         @"card_type": self.paymentMethod.typeNameForRequest,
@@ -41,7 +41,7 @@
         @"signature": paymentJSON[@"signature"],
         @"version": paymentJSON[@"version"]
     }];
-    
+
     return payload;
 }
 

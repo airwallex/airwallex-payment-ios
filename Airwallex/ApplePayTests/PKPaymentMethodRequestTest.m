@@ -6,9 +6,9 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import <OCMock/OCMock.h>
 #import "PKPaymentMethod+Request.h"
+#import <OCMock/OCMock.h>
+#import <XCTest/XCTest.h>
 
 @interface PKPaymentMethodRequestTest : XCTestCase
 
@@ -19,44 +19,37 @@
 
 @implementation PKPaymentMethodRequestTest
 
-- (void)setUp
-{
+- (void)setUp {
     self.method = [PKPaymentMethod new];
     self.methodMock = OCMPartialMock(self.method);
 }
 
-- (void)testTypeNameForRequestCredit
-{
+- (void)testTypeNameForRequestCredit {
     OCMStub([self.methodMock type]).andReturn(PKPaymentMethodTypeCredit);
     XCTAssertEqualObjects([self.method typeNameForRequest], @"credit");
 }
 
-- (void)testTypeNameForRequestDebit
-{
+- (void)testTypeNameForRequestDebit {
     OCMStub([self.methodMock type]).andReturn(PKPaymentMethodTypeDebit);
     XCTAssertEqualObjects([self.method typeNameForRequest], @"debit");
 }
 
-- (void)testTypeNameForRequestStore
-{
+- (void)testTypeNameForRequestStore {
     OCMStub([self.methodMock type]).andReturn(PKPaymentMethodTypeStore);
     XCTAssertEqualObjects([self.method typeNameForRequest], @"store");
 }
 
-- (void)testTypeNameForRequestPrepaid
-{
+- (void)testTypeNameForRequestPrepaid {
     OCMStub([self.methodMock type]).andReturn(PKPaymentMethodTypePrepaid);
     XCTAssertEqualObjects([self.method typeNameForRequest], @"prepaid");
 }
 
-- (void)testTypeNameForRequestEMoney
-{
+- (void)testTypeNameForRequestEMoney {
     OCMStub([self.methodMock type]).andReturn(PKPaymentMethodTypeEMoney);
     XCTAssertEqualObjects([self.method typeNameForRequest], @"emoney");
 }
 
-- (void)testTypeNameForRequestUnknown
-{
+- (void)testTypeNameForRequestUnknown {
     OCMStub([self.methodMock type]).andReturn(PKPaymentMethodTypeUnknown);
     XCTAssertEqualObjects([self.method typeNameForRequest], @"unknown");
 }

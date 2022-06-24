@@ -7,13 +7,12 @@
 //
 
 #import "AWXPaymentIntent.h"
-#import "AWXPaymentMethod.h"
 #import "AWXPaymentConsent.h"
+#import "AWXPaymentMethod.h"
 
 @implementation AWXPaymentIntent
 
-+ (id)decodeFromJSON:(NSDictionary *)json
-{
++ (id)decodeFromJSON:(NSDictionary *)json {
     AWXPaymentIntent *intent = [AWXPaymentIntent new];
     intent.Id = json[@"id"];
     NSNumber *amount = json[@"amount"];
@@ -25,7 +24,7 @@
     intent.customerId = json[@"customer_id"];
     intent.paymentMethods = json[@"customer_payment_methods"];
     intent.paymentConsents = json[@"customer_payment_consents"];
-    
+
     NSMutableArray *paymentMethods = [NSMutableArray array];
     NSArray *methods = json[@"customer_payment_methods"];
     if (methods && [methods isKindOfClass:[NSArray class]]) {
@@ -34,7 +33,7 @@
         }
     }
     intent.paymentMethods = paymentMethods;
-    
+
     NSMutableArray *paymentConsents = [NSMutableArray array];
     NSArray *consents = json[@"customer_payment_consents"];
     if (consents && [consents isKindOfClass:[NSArray class]]) {

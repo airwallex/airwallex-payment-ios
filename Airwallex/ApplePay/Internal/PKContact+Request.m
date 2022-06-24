@@ -10,23 +10,22 @@
 
 @implementation PKContact (Request)
 
-- (NSDictionary *)payloadForRequest
-{
+- (NSDictionary *)payloadForRequest {
     NSMutableDictionary *billing = [NSMutableDictionary dictionary];
-    
+
     if (self.name) {
         billing[@"first_name"] = self.name.givenName;
         billing[@"last_name"] = self.name.familyName;
     }
-    
+
     billing[@"email"] = self.emailAddress;
-    
+
     if (self.phoneNumber) {
         billing[@"phone_number"] = self.phoneNumber.stringValue;
     }
-    
+
     CNPostalAddress *postalAddress = self.postalAddress;
-    
+
     if (postalAddress) {
         billing[@"address"] = @{
             @"city": postalAddress.city,
@@ -36,7 +35,7 @@
             @"street": postalAddress.street
         };
     }
-    
+
     return billing;
 }
 

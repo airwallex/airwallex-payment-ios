@@ -6,13 +6,13 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "XCTestCase+Utils.h"
-#import "AWXTestUtils.h"
-#import "AWXConstants.h"
 #import "AWXAPIClient.h"
+#import "AWXConstants.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
+#import "AWXTestUtils.h"
+#import "XCTestCase+Utils.h"
+#import <XCTest/XCTest.h>
 
 @interface AWXPaymentMethodFunctionalTest : XCTestCase
 
@@ -20,35 +20,33 @@
 
 @implementation AWXPaymentMethodFunctionalTest
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
-    [self prepareEphemeralKeys:^(AWXPaymentIntent * _Nullable paymentIntent, NSError * _Nullable error) {
+    [self prepareEphemeralKeys:^(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error) {
         XCTAssertNotNil(paymentIntent);
         XCTAssertNil(error);
     }];
 }
 
-- (void)testGetPaymentMethodList
-{
+- (void)testGetPaymentMethodList {
     AWXGetPaymentMethodTypesRequest *request = [AWXGetPaymentMethodTypesRequest new];
     request.active = YES;
     request.pageNum = 0;
     request.transactionCurrency = @"HKD";
-    
+
     XCTAssertEqualObjects(request.flow, @"inapp");
 
     AWXAPIClient *client = [AWXAPIClient sharedClient];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
-    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
-        XCTAssertNil(error);
-        [expectation fulfill];
-    }];
+    [client send:request
+         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+             XCTAssertNil(error);
+             [expectation fulfill];
+         }];
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 
-- (void)testCreatePaymentMethod
-{
+- (void)testCreatePaymentMethod {
     AWXCreatePaymentMethodRequest *request = [AWXCreatePaymentMethodRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
@@ -66,10 +64,11 @@
 
     AWXAPIClient *client = [AWXAPIClient sharedClient];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Create payment method"];
-    [client send:request handler:^(AWXResponse * _Nullable response, NSError * _Nullable error) {
-        XCTAssertNotNil(error);
-        [expectation fulfill];
-    }];
+    [client send:request
+         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+             XCTAssertNotNil(error);
+             [expectation fulfill];
+         }];
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 

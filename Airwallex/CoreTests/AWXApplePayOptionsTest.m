@@ -6,8 +6,8 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import "AWXApplePayOptions.h"
+#import <XCTest/XCTest.h>
 
 @interface AWXApplePayOptionsTest : XCTestCase
 
@@ -15,11 +15,10 @@
 
 @implementation AWXApplePayOptionsTest
 
-- (void)testInitWithMerchantIdentifier
-{
+- (void)testInitWithMerchantIdentifier {
     NSString *identifier = @"merchantIdentifier";
     AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:identifier];
-    
+
     XCTAssertEqualObjects(options.merchantIdentifier, identifier);
     XCTAssertEqualObjects(options.requiredBillingContactFields, [NSSet new]);
     XCTAssertNil(options.totalPriceLabel);

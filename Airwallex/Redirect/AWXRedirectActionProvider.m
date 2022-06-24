@@ -11,8 +11,7 @@
 
 @implementation AWXRedirectActionProvider
 
-- (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction
-{
+- (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES withAnimation:YES];
     [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
 

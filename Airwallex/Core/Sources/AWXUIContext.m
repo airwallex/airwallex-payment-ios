@@ -7,17 +7,16 @@
 //
 
 #import "AWXUIContext.h"
-#import "AWXUtils.h"
+#import "AWXPaymentIntent.h"
 #import "AWXPaymentMethodListViewController.h"
 #import "AWXPaymentViewController.h"
-#import "AWXShippingViewController.h"
-#import "AWXPaymentIntent.h"
 #import "AWXPlaceDetails.h"
+#import "AWXShippingViewController.h"
+#import "AWXUtils.h"
 
 @implementation AWXUIContext
 
-+ (instancetype)sharedContext
-{
++ (instancetype)sharedContext {
     static AWXUIContext *sharedContext;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -26,17 +25,15 @@
     return sharedContext;
 }
 
-+ (void)initialize
-{
++ (void)initialize {
     if (self == [AWXUIContext class]) {
         [[NSUserDefaults awxUserDefaults] reset];
     }
 }
 
-- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController
-{
+- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController {
     NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
-    
+
     AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
@@ -44,8 +41,7 @@
     [hostViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController
-{
+- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController {
     NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
     UINavigationController *navigationController;
     if ([hostViewController isKindOfClass:[UINavigationController class]]) {
@@ -54,7 +50,7 @@
         navigationController = hostViewController.navigationController;
     }
     NSCAssert(navigationController != nil, @"The hostViewController is not a navigation controller, or is not contained in a navigation controller.");
-    
+
     AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
     [navigationController pushViewController:controller animated:YES];

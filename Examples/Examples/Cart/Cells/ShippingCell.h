@@ -6,8 +6,8 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <Airwallex/Core.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

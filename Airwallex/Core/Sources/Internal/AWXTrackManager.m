@@ -11,8 +11,7 @@
 
 @implementation AWXTrackManager
 
-+ (instancetype)sharedTrackManager
-{
++ (instancetype)sharedTrackManager {
     static AWXTrackManager *shared;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -22,8 +21,7 @@
 }
 
 - (void)trackWithParameters:(NSDictionary *)parameters
-                   completionHandler:(void (^)(NSDictionary * _Nullable result, NSError * _Nullable error))completionHandler{
-    
+          completionHandler:(void (^)(NSDictionary *_Nullable result, NSError *_Nullable error))completionHandler {
     NSURL *paymentBaseURL = [AWXAPIClientConfiguration sharedConfiguration].baseURL;
     NSURL *requestURL = [NSURL URLWithString:@"api/v1/checkout" relativeToURL:paymentBaseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
@@ -33,32 +31,32 @@
     [request setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
     [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil]];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request
-                                     completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(nil, error);
-            });
-            return;
-        }
-        
-        NSError *anError;
-        if (data) {
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
-                                                                 options:NSJSONReadingMutableContainers
-                                                                   error:&anError];
-            NSString *errorMessage = json[@"message"];
-            if (errorMessage) {
-                anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(json, anError);
-            });
-            return;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completionHandler(nil, anError);
-        });
-    }] resume];
+                                     completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
+                                         if (error) {
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                 completionHandler(nil, error);
+                                             });
+                                             return;
+                                         }
+
+                                         NSError *anError;
+                                         if (data) {
+                                             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                  options:NSJSONReadingMutableContainers
+                                                                                                    error:&anError];
+                                             NSString *errorMessage = json[@"message"];
+                                             if (errorMessage) {
+                                                 anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
+                                             }
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                 completionHandler(json, anError);
+                                             });
+                                             return;
+                                         }
+
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             completionHandler(nil, anError);
+                                         });
+                                     }] resume];
 }
 @end

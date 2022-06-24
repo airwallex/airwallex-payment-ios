@@ -6,8 +6,8 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import "AWXConstants+Internal.h"
+#import <XCTest/XCTest.h>
 
 @interface AWXConstantsInternalTest : XCTestCase
 
@@ -23,7 +23,7 @@
         @"sepa_direct_debit",
         @"bacs_direct_debit"
     ];
-    
+
     XCTAssertEqualObjects(AWXUnsupportedPaymentMethodTypes(), expected);
 }
 

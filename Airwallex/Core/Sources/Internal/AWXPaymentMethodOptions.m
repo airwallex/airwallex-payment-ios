@@ -10,8 +10,7 @@
 
 @implementation AWXThreeDs
 
-- (NSDictionary *)encodeToJSON
-{
+- (NSDictionary *)encodeToJSON {
     NSMutableDictionary *threeDs = [NSMutableDictionary dictionary];
     if (self.paRes) {
         threeDs[@"pa_res"] = self.paRes;
@@ -35,8 +34,7 @@
 
 @implementation AWXCardOptions
 
-- (NSDictionary *)encodeToJSON
-{
+- (NSDictionary *)encodeToJSON {
     NSMutableDictionary *options = [NSMutableDictionary dictionary];
     if (self.threeDs) {
         options[@"three_ds"] = [self.threeDs encodeToJSON];
@@ -49,8 +47,7 @@
 
 @implementation AWXPaymentMethodOptions
 
-- (NSDictionary *)encodeToJSON
-{
+- (NSDictionary *)encodeToJSON {
     NSMutableDictionary *options = [NSMutableDictionary dictionary];
     if (self.cardOptions) {
         options[@"card"] = [self.cardOptions encodeToJSON];

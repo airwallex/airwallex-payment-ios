@@ -9,25 +9,22 @@
 #import "AWXPaymentConsentRequest.h"
 #import "AWXConstants.h"
 #import "AWXDevice.h"
+#import "AWXPaymentConsent.h"
+#import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodOptions.h"
-#import "AWXPaymentConsentResponse.h"
-#import "AWXPaymentConsent.h"
 
 @implementation AWXCreatePaymentConsentRequest
 
-- (NSString *)path
-{
+- (NSString *)path {
     return [NSString stringWithFormat:@"/api/v1/pa/payment_consents/create"];
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodPOST;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
     parameters[@"customer_id"] = self.customerId;
@@ -35,7 +32,7 @@
     parameters[@"requires_cvc"] = [NSNumber numberWithBool:self.requiresCVC];
     parameters[@"next_triggered_by"] = FormatNextTriggerByType(self.nextTriggerByType);
     parameters[@"merchant_trigger_reason"] = FormatMerchantTriggerReason(self.merchantTriggerReason);
-    
+
     NSMutableDictionary *paymentParams = @{}.mutableCopy;
     if (self.paymentMethod.Id) {
         paymentParams[@"id"] = self.paymentMethod.Id;
@@ -45,15 +42,14 @@
     }
     if (paymentParams.allKeys) {
         [parameters addEntriesFromDictionary:@{
-            @"payment_method":paymentParams
+            @"payment_method": paymentParams
         }];
     }
-    
+
     return parameters;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXCreatePaymentConsentResponse.class;
 }
 
@@ -61,18 +57,15 @@
 
 @implementation AWXVerifyPaymentConsentRequest
 
-- (NSString *)path
-{
-    return [NSString stringWithFormat:@"/api/v1/pa/payment_consents/%@/verify",self.consent.Id];
+- (NSString *)path {
+    return [NSString stringWithFormat:@"/api/v1/pa/payment_consents/%@/verify", self.consent.Id];
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodPOST;
 }
 
-- (nullable NSDictionary *)parameters
-{
+- (nullable NSDictionary *)parameters {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
     if (self.returnURL) {
@@ -85,22 +78,21 @@
             NSMutableDictionary *cardParams = @{}.mutableCopy;
             cardParams[@"amount"] = self.amount.stringValue;
             cardParams[@"currency"] = self.currency;
-            if (self.options.card.cvc ) {
+            if (self.options.card.cvc) {
                 cardParams[@"cvc"] = self.options.card.cvc;
             }
             value = cardParams.copy;
         }
     }
-    
+
     NSDictionary *options = @{
-        self.options.type : value
+        self.options.type: value
     };
     parameters[@"verification_options"] = options;
     return parameters;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXVerifyPaymentConsentResponse.class;
 }
 
@@ -108,18 +100,15 @@
 
 @implementation AWXRetrievePaymentConsentRequest
 
-- (NSString *)path
-{
-    return [NSString stringWithFormat:@"/api/v1/pa/payment_consents/%@",self.consentId];
+- (NSString *)path {
+    return [NSString stringWithFormat:@"/api/v1/pa/payment_consents/%@", self.consentId];
 }
 
-- (AWXHTTPMethod)method
-{
+- (AWXHTTPMethod)method {
     return AWXHTTPMethodGET;
 }
 
-- (Class)responseClass
-{
+- (Class)responseClass {
     return AWXCreatePaymentConsentResponse.class;
 }
 

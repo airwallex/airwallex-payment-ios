@@ -10,8 +10,7 @@
 
 @implementation UIViewController (Utils)
 
-- (void)showAlert:(NSString *)message withTitle:(nullable NSString *)title
-{
+- (void)showAlert:(NSString *)message withTitle:(nullable NSString *)title {
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:title
                                                                         message:message
                                                                  preferredStyle:UIAlertControllerStyleAlert];

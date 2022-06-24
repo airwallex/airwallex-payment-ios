@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate handles payment form result.
  */
-@protocol AWXPaymentFormViewControllerDelegate <NSObject>
+@protocol AWXPaymentFormViewControllerDelegate<NSObject>
 
 - (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController
            didUpdatePaymentMethod:(AWXPaymentMethod *)paymentMethod;
@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles the result of payment form.
  */
-@property (nonatomic, weak) id <AWXPaymentFormViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<AWXPaymentFormViewControllerDelegate> delegate;
 
 /**
  Payment method.

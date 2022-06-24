@@ -17,27 +17,23 @@
 
 @implementation AWXView
 
-- (void)setCornerRadius:(CGFloat)cornerRadius
-{
+- (void)setCornerRadius:(CGFloat)cornerRadius {
     _cornerRadius = cornerRadius;
     self.layer.cornerRadius = cornerRadius;
     self.layer.masksToBounds = cornerRadius > 0;
 }
 
-- (void)setBorderWidth:(CGFloat)borderWidth
-{
+- (void)setBorderWidth:(CGFloat)borderWidth {
     _borderWidth = borderWidth;
     self.layer.borderWidth = borderWidth / [UIScreen mainScreen].scale;
 }
 
-- (void)setBorderColor:(UIColor *)borderColor
-{
+- (void)setBorderColor:(UIColor *)borderColor {
     _borderColor = borderColor;
     self.layer.borderColor = borderColor.CGColor;
 }
 
-- (instancetype)initWithKey:(NSString *)key
-{
+- (instancetype)initWithKey:(NSString *)key {
     if (self = [super initWithFrame:CGRectZero]) {
         self.key = key;
     }
@@ -52,29 +48,26 @@
 
 @implementation AWXButton
 
-- (void)setCornerRadius:(CGFloat)cornerRadius
-{
+- (void)setCornerRadius:(CGFloat)cornerRadius {
     _cornerRadius = cornerRadius;
     self.layer.cornerRadius = cornerRadius;
     self.layer.masksToBounds = cornerRadius > 0;
 }
 
-- (void)setEnabled:(BOOL)enabled
-{
+- (void)setEnabled:(BOOL)enabled {
     super.enabled = enabled;
     self.backgroundColor = enabled ? [AWXTheme sharedTheme].tintColor : [UIColor gray10Color];
 }
 
 @end
 
-@interface AWXFloatingLabelTextField () <UITextFieldDelegate>
+@interface AWXFloatingLabelTextField ()<UITextFieldDelegate>
 
 @end
 
 @implementation AWXFloatingLabelTextField
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         _borderView = [AWXView new];
@@ -83,14 +76,14 @@
         _borderView.borderWidth = 1.0;
         _borderView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_borderView];
-        
+
         _floatingLabel = [UILabel new];
         _floatingLabel.textColor = [UIColor gray50Color];
         _floatingLabel.font = [UIFont bodyFont];
         _floatingLabel.alpha = 0;
         _floatingLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_borderView addSubview:_floatingLabel];
-        
+
         _textField = [UITextField new];
         _textField.textColor = [AWXTheme sharedTheme].textColor;
         _textField.font = [UIFont bodyFont];
@@ -98,26 +91,25 @@
         _textField.translatesAutoresizingMaskIntoConstraints = NO;
         [_textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         [_borderView addSubview:_textField];
-        
+
         _errorLabel = [UILabel new];
         _errorLabel.textColor = [UIColor infraredColor];
         _errorLabel.font = [UIFont caption1Font];
         _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_errorLabel];
-        
+
         [self setupLayouts];
     }
     return self;
 }
 
-- (void)setupLayouts
-{
+- (void)setupLayouts {
     NSDictionary *views = @{@"borderView": _borderView, @"floatingLabel": _floatingLabel, @"textField": _textField, @"errorLabel": _errorLabel};
     NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"fieldHeight": @60.0};
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[errorLabel]-margin-|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView(fieldHeight)]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
-    
+
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-margin-|" options:0 metrics:metrics views:views]];
     _floatingTopConstraint = [NSLayoutConstraint constraintWithItem:_floatingLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:30.0];
     _floatingTopConstraint.active = YES;
@@ -127,20 +119,17 @@
     [NSLayoutConstraint constraintWithItem:_borderView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_textField attribute:NSLayoutAttributeBottom multiplier:1.0 constant:9].active = YES;
 }
 
-- (NSString *)text
-{
+- (NSString *)text {
     return [self.textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
-- (NSAttributedString *)formatText:(NSString *)text
-{
+- (NSAttributedString *)formatText:(NSString *)text {
     NSString *nonNilText = text ?: @"";
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:nonNilText attributes:@{NSFontAttributeName: [UIFont bodyFont], NSForegroundColorAttributeName: [AWXTheme sharedTheme].textColor}];
     return attributedString;
 }
 
-- (void)setText:(NSString *)text
-{
+- (void)setText:(NSString *)text {
     NSString *_text = text;
     if (self.fieldType == AWXTextFieldTypeExpires) {
         NSString *expirationMonth = [_text substringToIndex:MIN(_text.length, 2)];
@@ -149,11 +138,11 @@
             expirationYear = [expirationYear stringByRemovingIllegalCharacters];
             expirationYear = [expirationYear substringToIndex:MIN(expirationYear.length, 4)];
         }
-        
+
         if (expirationMonth.length == 1 && ![expirationMonth isEqualToString:@"0"] && ![expirationMonth isEqualToString:@"1"]) {
             expirationMonth = [NSString stringWithFormat:@"0%@", text];
         }
-        
+
         NSMutableArray *array = [NSMutableArray array];
         if (expirationMonth && ![expirationMonth isEqualToString:@""]) {
             [array addObject:expirationMonth];
@@ -161,90 +150,86 @@
         if (expirationMonth.length == 2 && expirationMonth.integerValue > 0 && expirationMonth.integerValue <= 12) {
             [array addObject:expirationYear];
         }
-        
+
         _text = [array componentsJoinedByString:@"/"];
     }
     self.textField.attributedText = [self formatText:_text];
     text.length > 0 ? [self active] : [self inactive];
 }
 
-- (void)setFieldType:(AWXTextFieldType)fieldType
-{
+- (void)setFieldType:(AWXTextFieldType)fieldType {
     _fieldType = fieldType;
     switch (self.fieldType) {
-        case AWXTextFieldTypeDefault:
-            self.textField.keyboardType = UIKeyboardTypeDefault;
-            self.textField.textContentType = UITextContentTypeName;
-            break;
-        case AWXTextFieldTypeFirstName:
-            self.textField.keyboardType = UIKeyboardTypeDefault;
-            self.textField.textContentType = UITextContentTypeName;
-            break;
-        case AWXTextFieldTypeLastName:
-            self.textField.keyboardType = UIKeyboardTypeDefault;
-            self.textField.textContentType = UITextContentTypeName;
-            break;
-        case AWXTextFieldTypeEmail:
-            self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-            self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-            self.textField.keyboardType = UIKeyboardTypeEmailAddress;
-            self.textField.textContentType = UITextContentTypeEmailAddress;
-            break;
-        case AWXTextFieldTypePhoneNumber:
-            self.textField.keyboardType = UIKeyboardTypePhonePad;
-            self.textField.textContentType = UITextContentTypeTelephoneNumber;
-            break;
-        case AWXTextFieldTypeCountry:
-            self.textField.keyboardType = UIKeyboardTypeDefault;
-            self.textField.textContentType = UITextContentTypeCountryName;
-            break;
-        case AWXTextFieldTypeState:
-            self.textField.keyboardType = UIKeyboardTypeDefault;
-            self.textField.textContentType = UITextContentTypeAddressState;
-            break;
-        case AWXTextFieldTypeCity:
-            self.textField.keyboardType = UIKeyboardTypeDefault;
-            self.textField.textContentType = UITextContentTypeAddressCity;
-            break;
-        case AWXTextFieldTypeStreet:
-            self.textField.keyboardType = UIKeyboardTypeDefault;
-            self.textField.textContentType = UITextContentTypeFullStreetAddress;
-            break;
-        case AWXTextFieldTypeZipcode:
-            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
-            self.textField.textContentType = UITextContentTypePostalCode;
-            break;
-        case AWXTextFieldTypeCardNumber:
-            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
-            break;
-        case AWXTextFieldTypeNameOnCard:
-            self.textField.keyboardType = UIKeyboardTypeDefault;
-            self.textField.textContentType = UITextContentTypeName;
-            break;
-        case AWXTextFieldTypeExpires:
-            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
-            break;
-        case AWXTextFieldTypeCVC:
-            self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
-            break;
-        default:
-            break;
+    case AWXTextFieldTypeDefault:
+        self.textField.keyboardType = UIKeyboardTypeDefault;
+        self.textField.textContentType = UITextContentTypeName;
+        break;
+    case AWXTextFieldTypeFirstName:
+        self.textField.keyboardType = UIKeyboardTypeDefault;
+        self.textField.textContentType = UITextContentTypeName;
+        break;
+    case AWXTextFieldTypeLastName:
+        self.textField.keyboardType = UIKeyboardTypeDefault;
+        self.textField.textContentType = UITextContentTypeName;
+        break;
+    case AWXTextFieldTypeEmail:
+        self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        self.textField.keyboardType = UIKeyboardTypeEmailAddress;
+        self.textField.textContentType = UITextContentTypeEmailAddress;
+        break;
+    case AWXTextFieldTypePhoneNumber:
+        self.textField.keyboardType = UIKeyboardTypePhonePad;
+        self.textField.textContentType = UITextContentTypeTelephoneNumber;
+        break;
+    case AWXTextFieldTypeCountry:
+        self.textField.keyboardType = UIKeyboardTypeDefault;
+        self.textField.textContentType = UITextContentTypeCountryName;
+        break;
+    case AWXTextFieldTypeState:
+        self.textField.keyboardType = UIKeyboardTypeDefault;
+        self.textField.textContentType = UITextContentTypeAddressState;
+        break;
+    case AWXTextFieldTypeCity:
+        self.textField.keyboardType = UIKeyboardTypeDefault;
+        self.textField.textContentType = UITextContentTypeAddressCity;
+        break;
+    case AWXTextFieldTypeStreet:
+        self.textField.keyboardType = UIKeyboardTypeDefault;
+        self.textField.textContentType = UITextContentTypeFullStreetAddress;
+        break;
+    case AWXTextFieldTypeZipcode:
+        self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+        self.textField.textContentType = UITextContentTypePostalCode;
+        break;
+    case AWXTextFieldTypeCardNumber:
+        self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+        break;
+    case AWXTextFieldTypeNameOnCard:
+        self.textField.keyboardType = UIKeyboardTypeDefault;
+        self.textField.textContentType = UITextContentTypeName;
+        break;
+    case AWXTextFieldTypeExpires:
+        self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+        break;
+    case AWXTextFieldTypeCVC:
+        self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+        break;
+    default:
+        break;
     }
 }
 
-- (void)setNextTextField:(AWXFloatingLabelTextField *)nextTextField
-{
+- (void)setNextTextField:(AWXFloatingLabelTextField *)nextTextField {
     _nextTextField = nextTextField;
     self.textField.returnKeyType = nextTextField == nil ? UIReturnKeyDefault : UIReturnKeyNext;
 }
 
-- (nullable NSString *)errorText
-{
+- (nullable NSString *)errorText {
     return self.errorLabel.text;
 }
 
-- (void)setErrorText:(nullable NSString *)errorText
-{
+- (void)setErrorText:(nullable NSString *)errorText {
     if (errorText) {
         self.borderView.borderColor = [UIColor infraredColor];
         self.errorLabel.text = errorText;
@@ -254,53 +239,50 @@
     }
 }
 
-- (NSString *)placeholder
-{
+- (NSString *)placeholder {
     return self.textField.placeholder;
 }
 
-- (void)setPlaceholder:(NSString *)placeholder
-{
+- (void)setPlaceholder:(NSString *)placeholder {
     self.floatingLabel.text = placeholder;
     self.textField.placeholder = placeholder;
 }
 
-- (void)active
-{
+- (void)active {
     if (self.floatingLabel.alpha == 1) {
         return;
     }
-    
+
     self.floatingTopConstraint.constant = 30;
     self.textTopConstraint.constant = 9;
     self.floatingLabel.alpha = 0;
-    [UIView animateWithDuration:0.25 animations:^{
-        self.floatingTopConstraint.constant = 9;
-        self.textTopConstraint.constant = 30;
-        [self layoutIfNeeded];
-        self.floatingLabel.alpha = 1;
-    }];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         self.floatingTopConstraint.constant = 9;
+                         self.textTopConstraint.constant = 30;
+                         [self layoutIfNeeded];
+                         self.floatingLabel.alpha = 1;
+                     }];
 }
 
-- (void)inactive
-{
+- (void)inactive {
     if (self.floatingLabel.alpha == 0) {
         return;
     }
-    
+
     self.floatingTopConstraint.constant = 9;
     self.textTopConstraint.constant = 30;
     self.floatingLabel.alpha = 1;
-    [UIView animateWithDuration:0.25 animations:^{
-        self.floatingTopConstraint.constant = 30;
-        self.textTopConstraint.constant = 9;
-        [self layoutIfNeeded];
-        self.floatingLabel.alpha = 0;
-    }];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         self.floatingTopConstraint.constant = 30;
+                         self.textTopConstraint.constant = 9;
+                         [self layoutIfNeeded];
+                         self.floatingLabel.alpha = 0;
+                     }];
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if (!(self.fieldType == AWXTextFieldTypeExpires || self.fieldType == AWXTextFieldTypeCVC)) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(floatingLabelTextField:textDidChange:)]) {
@@ -308,7 +290,7 @@
         }
         return YES;
     }
-    
+
     self.errorText = nil;
     if (self.fieldType == AWXTextFieldTypeExpires) {
         BOOL deleting = (range.location == textField.text.length - 1 && range.length == 1 && [string isEqualToString:@""]);
@@ -327,21 +309,19 @@
     return NO;
 }
 
-- (void)textFieldDidChange:(UITextField *)textField
-{
+- (void)textFieldDidChange:(UITextField *)textField {
     if (self.delegate && [self.delegate respondsToSelector:@selector(floatingLabelTextField:textDidChange:)]) {
         [self.delegate floatingLabelTextField:self textDidChange:textField.text];
     }
-    
+
     if (self.fieldType == AWXTextFieldTypeExpires || self.fieldType == AWXTextFieldTypeCVC) {
         return;
     }
-    
+
     textField.text.length > 0 ? [self active] : [self inactive];
 }
 
-- (void)validateEmail:(NSString *)text
-{
+- (void)validateEmail:(NSString *)text {
     NSString *errorMessage = nil;
     if (text.length > 0) {
         NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
@@ -353,8 +333,7 @@
     self.errorText = errorMessage;
 }
 
-- (void)validateExpires:(NSString *)text
-{
+- (void)validateExpires:(NSString *)text {
     NSString *errorMessage = nil;
     if (text.length > 0) {
         NSArray *array = [text componentsSeparatedByString:@"/"];
@@ -384,63 +363,61 @@
     self.errorText = errorMessage;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
+- (void)textFieldDidEndEditing:(UITextField *)textField {
     if (!self.isRequired && textField.text.length == 0) {
         return;
     }
-    
+
     switch (self.fieldType) {
-        case AWXTextFieldTypeFirstName:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid first name", nil);
-            break;
-        case AWXTextFieldTypeLastName:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid last name", nil);
-            break;
-        case AWXTextFieldTypeEmail:
-            if (textField.text.length > 0) {
-                [self validateEmail:textField.text];
-            } else {
-                self.errorText = self.defaultErrorMessage;
-            }
-            break;
-        case AWXTextFieldTypeCountry:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid country", nil);
-            break;
-        case AWXTextFieldTypeState:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid state", nil);
-            break;
-        case AWXTextFieldTypeCity:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid city", nil);
-            break;
-        case AWXTextFieldTypeStreet:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid street", nil);
-            break;
-        case AWXTextFieldTypeCardNumber:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid card number", nil);
-            break;
-        case AWXTextFieldTypeNameOnCard:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid name on card", nil);
-            break;
-        case AWXTextFieldTypeExpires:
-            [self validateExpires:textField.text];
-            break;
-        case AWXTextFieldTypeCVC:
-            self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid card CVC", nil);
-            break;
-        default:
-            self.errorText = textField.text.length > 0 ? nil : self.defaultErrorMessage;
-            break;
+    case AWXTextFieldTypeFirstName:
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid first name", nil);
+        break;
+    case AWXTextFieldTypeLastName:
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid last name", nil);
+        break;
+    case AWXTextFieldTypeEmail:
+        if (textField.text.length > 0) {
+            [self validateEmail:textField.text];
+        } else {
+            self.errorText = self.defaultErrorMessage;
+        }
+        break;
+    case AWXTextFieldTypeCountry:
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid country", nil);
+        break;
+    case AWXTextFieldTypeState:
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid state", nil);
+        break;
+    case AWXTextFieldTypeCity:
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid city", nil);
+        break;
+    case AWXTextFieldTypeStreet:
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid street", nil);
+        break;
+    case AWXTextFieldTypeCardNumber:
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid card number", nil);
+        break;
+    case AWXTextFieldTypeNameOnCard:
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid name on card", nil);
+        break;
+    case AWXTextFieldTypeExpires:
+        [self validateExpires:textField.text];
+        break;
+    case AWXTextFieldTypeCVC:
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid card CVC", nil);
+        break;
+    default:
+        self.errorText = textField.text.length > 0 ? nil : self.defaultErrorMessage;
+        break;
     }
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (!self.nextTextField) {
         [textField resignFirstResponder];
         return YES;
     }
-    
+
     [self.nextTextField.textField becomeFirstResponder];
     return NO;
 }
@@ -458,8 +435,7 @@
 
 @implementation AWXFloatingLabelView
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         AWXView *borderView = [AWXView new];
@@ -468,25 +444,25 @@
         borderView.borderWidth = 1.0;
         borderView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:borderView];
-        
+
         _floatingLabel = [UILabel new];
         _floatingLabel.textColor = [UIColor gray50Color];
         _floatingLabel.font = [UIFont caption2Font];
         _floatingLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [borderView addSubview:_floatingLabel];
-        
+
         _textLabel = [UILabel new];
         _textLabel.alpha = 0;
         _textLabel.textColor = [AWXTheme sharedTheme].textColor;
         _textLabel.font = [UIFont bodyFont];
         _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [borderView addSubview:_textLabel];
-        
+
         _imageView = [UIImageView new];
         _imageView.image = [UIImage imageNamed:@"down" inBundle:[NSBundle resourceBundle]];
         _imageView.translatesAutoresizingMaskIntoConstraints = NO;
         [borderView addSubview:_imageView];
-        
+
         NSDictionary *views = @{@"borderView": borderView, @"floatingLabel": _floatingLabel, @"textLabel": _textLabel, @"imageView": _imageView};
         NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"fieldHeight": @60.0, @"top": @30.0};
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
@@ -503,57 +479,53 @@
     return self;
 }
 
-- (NSString *)text
-{
+- (NSString *)text {
     return self.textLabel.text;
 }
 
-- (void)setText:(NSString *)text
-{
+- (void)setText:(NSString *)text {
     self.textLabel.text = text;
     text.length > 0 ? [self active] : [self inactive];
 }
 
-- (NSString *)placeholder
-{
+- (NSString *)placeholder {
     return self.floatingLabel.text;
 }
 
-- (void)setPlaceholder:(NSString *)placeholder
-{
+- (void)setPlaceholder:(NSString *)placeholder {
     self.floatingLabel.text = placeholder;
 }
 
-- (void)active
-{
+- (void)active {
     if (self.textLabel.alpha == 1) {
         return;
     }
-    
+
     self.floatingTopConstraint.constant = 20;
     self.textLabel.alpha = 0;
-    [UIView animateWithDuration:0.25 animations:^{
-        self.floatingLabel.font = [UIFont caption2Font];
-        self.floatingTopConstraint.constant = 9;
-        self.textLabel.alpha = 1;
-        [self layoutIfNeeded];
-    }];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         self.floatingLabel.font = [UIFont caption2Font];
+                         self.floatingTopConstraint.constant = 9;
+                         self.textLabel.alpha = 1;
+                         [self layoutIfNeeded];
+                     }];
 }
 
-- (void)inactive
-{
+- (void)inactive {
     if (self.floatingTopConstraint.constant == 20) {
         return;
     }
-    
+
     self.floatingTopConstraint.constant = 9;
     self.textLabel.alpha = 1;
-    [UIView animateWithDuration:0.25 animations:^{
-        self.floatingLabel.font = [UIFont bodyFont];
-        self.floatingTopConstraint.constant = 20;
-        self.textLabel.alpha = 0;
-        [self layoutIfNeeded];
-    }];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         self.floatingLabel.font = [UIFont bodyFont];
+                         self.floatingTopConstraint.constant = 20;
+                         self.textLabel.alpha = 0;
+                         [self layoutIfNeeded];
+                     }];
 }
 
 @end
@@ -568,8 +540,7 @@
 
 @implementation AWXFloatingCardTextField
 
-- (void)setupLayouts
-{
+- (void)setupLayouts {
     _brandView = [UIStackView new];
     _brandView.axis = UILayoutConstraintAxisHorizontal;
     _brandView.alignment = UIStackViewAlignmentFill;
@@ -577,27 +548,27 @@
     _brandView.spacing = 5;
     _brandView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:_brandView];
-    
+
     _visaView = [UIImageView new];
     _visaView.image = [UIImage imageNamed:@"visa" inBundle:[NSBundle resourceBundle]];
     _visaView.contentMode = UIViewContentModeScaleAspectFit;
     [_brandView addArrangedSubview:_visaView];
     [_visaView.widthAnchor constraintEqualToConstant:35].active = YES;
     [_visaView.heightAnchor constraintEqualToConstant:24].active = YES;
-    
+
     _masterView = [UIImageView new];
     _masterView.image = [UIImage imageNamed:@"mastercard" inBundle:[NSBundle resourceBundle]];
     _masterView.contentMode = UIViewContentModeScaleAspectFit;
     [_brandView addArrangedSubview:_masterView];
     [_masterView.widthAnchor constraintEqualToConstant:35].active = YES;
     [_masterView.heightAnchor constraintEqualToConstant:24].active = YES;
-    
+
     NSDictionary *views = @{@"borderView": self.borderView, @"floatingLabel": self.floatingLabel, @"textField": self.textField, @"brandView": self.brandView, @"errorLabel": self.errorLabel};
     NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"fieldHeight": @60.0};
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[errorLabel]-margin-|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView(fieldHeight)]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
-    
+
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-spacing-[brandView]-margin-|" options:0 metrics:metrics views:views]];
     [NSLayoutConstraint constraintWithItem:_brandView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.borderView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0].active = YES;
     self.floatingTopConstraint = [NSLayoutConstraint constraintWithItem:self.floatingLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:30.0];
@@ -608,8 +579,7 @@
     [NSLayoutConstraint constraintWithItem:self.borderView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.textField attribute:NSLayoutAttributeBottom multiplier:1.0 constant:9].active = YES;
 }
 
-- (NSAttributedString *)formatText:(NSString *)text
-{
+- (NSAttributedString *)formatText:(NSString *)text {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont bodyFont], NSForegroundColorAttributeName: [AWXTheme sharedTheme].textColor}];
     AWXBrandType type = [self typeOfNumber:text];
     NSArray *cardNumberFormat = [AWXCardValidator cardNumberFormatForBrand:type];
@@ -618,10 +588,12 @@
         NSUInteger segmentIndex = 0;
         for (; index < attributedString.length && segmentIndex < [segmentLength unsignedIntegerValue]; index++, segmentIndex++) {
             if (index + 1 != attributedString.length && segmentIndex + 1 == [segmentLength unsignedIntegerValue]) {
-                [attributedString addAttribute:NSKernAttributeName value:@(5)
+                [attributedString addAttribute:NSKernAttributeName
+                                         value:@(5)
                                          range:NSMakeRange(index, 1)];
             } else {
-                [attributedString addAttribute:NSKernAttributeName value:@(0)
+                [attributedString addAttribute:NSKernAttributeName
+                                         value:@(0)
                                          range:NSMakeRange(index, 1)];
             }
         }
@@ -629,14 +601,12 @@
     return attributedString;
 }
 
-- (void)setText:(NSString *)text
-{
+- (void)setText:(NSString *)text {
     [super setText:text];
     [self updateBrandWithNumber:text];
 }
 
-- (AWXBrandType)typeOfNumber:(NSString *)number
-{
+- (AWXBrandType)typeOfNumber:(NSString *)number {
     AWXBrandType type = AWXBrandTypeUnknown;
     if (number.length != 0) {
         AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:number];
@@ -647,8 +617,7 @@
     return type;
 }
 
-- (void)updateBrandWithNumber:(NSString *)number
-{
+- (void)updateBrandWithNumber:(NSString *)number {
     AWXBrandType type = [self typeOfNumber:number];
     self.brandView.alpha = (type == AWXBrandTypeVisa || type == AWXBrandTypeMastercard) ? 1 : 0.5;
     if (self.brandView.alpha == 1) {
@@ -660,17 +629,16 @@
     }
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     self.errorText = nil;
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     text.length > 0 ? [self active] : [self inactive];
-    
+
     AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:text];
     if (brand && text.length > brand.length) {
         return NO;
     }
-    
+
     [self setText:text];
     return NO;
 }
@@ -689,105 +657,97 @@
 
 @implementation AWXCurrencyView
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         self.layer.masksToBounds = YES;
         self.layer.cornerRadius = 8.0f;
         self.layer.borderColor = [AWXTheme sharedTheme].lineColor.CGColor;
         self.layer.borderWidth = 1.0;
-        
+
         _contentView = [UIView new];
         _contentView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_contentView];
-        
+
         UIView *topView = [UIView new];
         topView.translatesAutoresizingMaskIntoConstraints = NO;
         [_contentView addSubview:topView];
-        
+
         _flagImageView = [UIImageView new];
         _flagImageView.contentMode = UIViewContentModeScaleAspectFit;
         _flagImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [topView addSubview:_flagImageView];
-        
+
         _currencyNameLabel = [UILabel new];
         _currencyNameLabel.textColor = [AWXTheme sharedTheme].textColor;
         _currencyNameLabel.font = [UIFont subhead1Font];
         _currencyNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [topView addSubview:_currencyNameLabel];
-        
+
         _priceLabel = [UILabel new];
         _priceLabel.textAlignment = NSTextAlignmentCenter;
         _priceLabel.textColor = [AWXTheme sharedTheme].textColor;
         _priceLabel.font = [UIFont headlineFont];
         _priceLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_contentView addSubview:_priceLabel];
-        
+
         _button = [UIButton new];
         [_button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         _button.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_button];
-        
+
         NSDictionary *views = @{@"contentView": _contentView, @"topView": topView, @"flagImageView": _flagImageView, @"currencyNameLabel": _currencyNameLabel, @"priceLabel": _priceLabel, @"button": _button};
         NSDictionary *metrics = @{@"margin": @16, @"imageWidth": @34, @"imageHeight": @24};
-        
+
         [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[topView]|" options:0 metrics:metrics views:views]];
         [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topView]-margin-[priceLabel]|" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:metrics views:views]];
-        
+
         [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[flagImageView(imageWidth)]" options:0 metrics:metrics views:views]];
         [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[flagImageView(imageHeight)]|" options:0 metrics:metrics views:views]];
         [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[currencyNameLabel]|" options:0 metrics:metrics views:views]];
         [topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[currencyNameLabel]|" options:0 metrics:metrics views:views]];
-        
+
         _labelLeftConstraint = [_currencyNameLabel.leftAnchor constraintEqualToAnchor:topView.leftAnchor constant:44];
         _labelLeftConstraint.active = YES;
         [_contentView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
         [_contentView.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
-        
+
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[button]|" options:0 metrics:metrics views:views]];
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[button]|" options:0 metrics:metrics views:views]];
     }
     return self;
 }
 
-- (IBAction)buttonPressed:(id)sender
-{
+- (IBAction)buttonPressed:(id)sender {
     self.isSelected = YES;
     if (self.exclusiveView) {
         self.exclusiveView.isSelected = NO;
     }
 }
 
-- (BOOL)isSelected
-{
+- (BOOL)isSelected {
     return self.button.isSelected;
 }
 
-- (void)setIsSelected:(BOOL)isSelected
-{
+- (void)setIsSelected:(BOOL)isSelected {
     self.button.selected = isSelected;
     self.layer.borderWidth = (isSelected ? 1.5 : 1.0) / [UIScreen mainScreen].scale;
     self.layer.borderColor = isSelected ? [AWXTheme sharedTheme].tintColor.CGColor : [AWXTheme sharedTheme].lineColor.CGColor;
 }
 
-- (NSString *)currencyName
-{
+- (NSString *)currencyName {
     return self.currencyNameLabel.text;
 }
 
-- (void)setCurrencyName:(NSString *)currencyName
-{
+- (void)setCurrencyName:(NSString *)currencyName {
     self.currencyNameLabel.text = currencyName;
 }
 
-- (UIImage *)flag
-{
+- (UIImage *)flag {
     return self.flagImageView.image;
 }
 
-- (void)setFlag:(nullable UIImage *)flag
-{
+- (void)setFlag:(nullable UIImage *)flag {
     if (flag) {
         self.labelLeftConstraint.constant = 44;
     } else {
@@ -796,13 +756,11 @@
     self.flagImageView.image = flag;
 }
 
-- (NSString *)price
-{
+- (NSString *)price {
     return self.priceLabel.text;
 }
 
-- (void)setPrice:(NSString *)price
-{
+- (void)setPrice:(NSString *)price {
     self.priceLabel.text = price;
 }
 
@@ -818,17 +776,15 @@
 
 @implementation AWXOptionView
 
-- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText logoURL:(NSURL *)logoURL
-{
+- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText logoURL:(NSURL *)logoURL {
     if (self = [super initWithKey:key]) {
-        
         UIButton *contentView = [UIButton autoLayoutView];
         self.contentView = contentView;
         contentView.layer.masksToBounds = YES;
         contentView.layer.cornerRadius = 8;
         [contentView setBackgroundImage:[UIImage imageFromColor:[UIColor colorWithRed:0.94 green:0.94 blue:1 alpha:1]] forState:UIControlStateHighlighted];
         [self addSubview:contentView];
-        
+
         UILabel *formLabel = [UILabel new];
         self.formLabel = formLabel;
         formLabel.text = formLabelText;
@@ -838,14 +794,14 @@
         [contentView addSubview:formLabel];
 
         [contentView addObserver:self forKeyPath:@"highlighted" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-        
+
         UIImageViewAligned *imageView = [UIImageViewAligned autoLayoutView];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.alignRight = YES;
         [imageView setImageURL:logoURL
                    placeholder:nil];
         [contentView addSubview:imageView];
-        
+
         NSDictionary *views = @{@"formLabel": formLabel, @"contentView": contentView, @"imageView": imageView};
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
                                                                      options:0
@@ -867,15 +823,13 @@
     return self;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([@"highlighted" isEqualToString:keyPath]) {
         self.formLabel.textColor = self.contentView.isHighlighted ? [AWXTheme sharedTheme].tintColor : [UIColor gray70Color];
     }
 }
 
-- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
-{
+- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents {
     [self.contentView addTarget:target action:action forControlEvents:controlEvents];
 }
 
@@ -883,167 +837,148 @@
 
 @implementation UIImageViewAligned
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
-    if (self)
-    {
+    if (self) {
         [self commonInit];
     }
     return self;
 }
 
-
-- (id)initWithImage:(UIImage *)image
-{
+- (instancetype)initWithImage:(UIImage *)image {
     self = [super initWithImage:image];
-    if (self)
-    {
+    if (self) {
         [self commonInit];
     }
     return self;
 }
 
-- (id)initWithImage:(UIImage *)image highlightedImage:(UIImage *)highlightedImage
-{
+- (instancetype)initWithImage:(UIImage *)image highlightedImage:(UIImage *)highlightedImage {
     self = [super initWithImage:image highlightedImage:highlightedImage];
     if (self)
         [self commonInit];
-    
+
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self)
         [self commonInit];
     return self;
 }
 
-- (void)commonInit
-{
+- (void)commonInit {
     _enableScaleDown = TRUE;
     _enableScaleUp = TRUE;
-    
+
     _alignment = UIImageViewAlignmentMaskCenter;
-    
+
     _realImageView = [[UIImageView alloc] initWithFrame:self.bounds];
     _realImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _realImageView.contentMode = self.contentMode;
     [self addSubview:_realImageView];
-    
-    if (super.image != nil)
-    {
-        UIImage* img = super.image;
+
+    if (super.image != nil) {
+        UIImage *img = super.image;
         super.image = nil;
         self.image = img;
     }
 }
 
-- (UIImage*)image
-{
+- (UIImage *)image {
     return _realImageView.image;
 }
 
-- (void)setImage:(UIImage *)image
-{
+- (void)setImage:(UIImage *)image {
     [_realImageView setImage:image];
     [self setNeedsLayout];
 }
 
-- (void)setContentMode:(UIViewContentMode)contentMode
-{
+- (void)setContentMode:(UIViewContentMode)contentMode {
     [super setContentMode:contentMode];
     _realImageView.contentMode = contentMode;
     [self setNeedsLayout];
 }
 
-- (void)setAlignment:(UIImageViewAlignmentMask)alignment
-{
+- (void)setAlignment:(UIImageViewAlignmentMask)alignment {
     if (_alignment == alignment)
-        return ;
-    
+        return;
+
     _alignment = alignment;
     [self setNeedsLayout];
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     CGSize realsize = [self realContentSize];
-    
-    CGRect realframe = CGRectMake((self.bounds.size.width - realsize.width)/2, (self.bounds.size.height - realsize.height) / 2, realsize.width, realsize.height);
-    
+
+    CGRect realframe = CGRectMake((self.bounds.size.width - realsize.width) / 2, (self.bounds.size.height - realsize.height) / 2, realsize.width, realsize.height);
+
     if ((_alignment & UIImageViewAlignmentMaskLeft) != 0)
         realframe.origin.x = 0;
     else if ((_alignment & UIImageViewAlignmentMaskRight) != 0)
         realframe.origin.x = CGRectGetMaxX(self.bounds) - realframe.size.width;
-    
+
     if ((_alignment & UIImageViewAlignmentMaskTop) != 0)
         realframe.origin.y = 0;
     else if ((_alignment & UIImageViewAlignmentMaskBottom) != 0)
         realframe.origin.y = CGRectGetMaxY(self.bounds) - realframe.size.height;
-    
+
     _realImageView.frame = realframe;
 
     self.layer.contents = nil;
 }
 
-- (CGSize)realContentSize
-{
+- (CGSize)realContentSize {
     CGSize size = self.bounds.size;
 
     if (self.image == nil)
         return size;
 
-    switch (self.contentMode)
-    {
-        case UIViewContentModeScaleAspectFit:
-        {
-            float scalex = self.bounds.size.width / _realImageView.image.size.width;
-            float scaley = self.bounds.size.height / _realImageView.image.size.height;
-            float scale = MIN(scalex, scaley);
+    switch (self.contentMode) {
+    case UIViewContentModeScaleAspectFit: {
+        float scalex = self.bounds.size.width / _realImageView.image.size.width;
+        float scaley = self.bounds.size.height / _realImageView.image.size.height;
+        float scale = MIN(scalex, scaley);
 
-            if ((scale > 1.0f && !_enableScaleUp) ||
-                (scale < 1.0f && !_enableScaleDown))
-                scale = 1.0f;
-            size = CGSizeMake(_realImageView.image.size.width * scale, _realImageView.image.size.height * scale);
-            break;
-        }
-            
-        case UIViewContentModeScaleAspectFill:
-        {
-            float scalex = self.bounds.size.width / _realImageView.image.size.width;
-            float scaley = self.bounds.size.height / _realImageView.image.size.height;
-            float scale = MAX(scalex, scaley);
-            
-            if ((scale > 1.0f && !_enableScaleUp) ||
-                (scale < 1.0f && !_enableScaleDown))
-                scale = 1.0f;
-            
-            size = CGSizeMake(_realImageView.image.size.width * scale, _realImageView.image.size.height * scale);
-            break;
-        }
-            
-        case UIViewContentModeScaleToFill:
-        {
-            float scalex = self.bounds.size.width / _realImageView.image.size.width;
-            float scaley = self.bounds.size.height / _realImageView.image.size.height;
+        if ((scale > 1.0f && !_enableScaleUp) ||
+            (scale < 1.0f && !_enableScaleDown))
+            scale = 1.0f;
+        size = CGSizeMake(_realImageView.image.size.width * scale, _realImageView.image.size.height * scale);
+        break;
+    }
 
-            if ((scalex > 1.0f && !_enableScaleUp) ||
-                (scalex < 1.0f && !_enableScaleDown))
-                scalex = 1.0f;
-            if ((scaley > 1.0f && !_enableScaleUp) ||
-                (scaley < 1.0f && !_enableScaleDown))
-                scaley = 1.0f;
-            
-            size = CGSizeMake(_realImageView.image.size.width * scalex, _realImageView.image.size.height * scaley);
-            break;
-        }
+    case UIViewContentModeScaleAspectFill: {
+        float scalex = self.bounds.size.width / _realImageView.image.size.width;
+        float scaley = self.bounds.size.height / _realImageView.image.size.height;
+        float scale = MAX(scalex, scaley);
 
-        default:
-            size = _realImageView.image.size;
-            break;
+        if ((scale > 1.0f && !_enableScaleUp) ||
+            (scale < 1.0f && !_enableScaleDown))
+            scale = 1.0f;
+
+        size = CGSizeMake(_realImageView.image.size.width * scale, _realImageView.image.size.height * scale);
+        break;
+    }
+
+    case UIViewContentModeScaleToFill: {
+        float scalex = self.bounds.size.width / _realImageView.image.size.width;
+        float scaley = self.bounds.size.height / _realImageView.image.size.height;
+
+        if ((scalex > 1.0f && !_enableScaleUp) ||
+            (scalex < 1.0f && !_enableScaleDown))
+            scalex = 1.0f;
+        if ((scaley > 1.0f && !_enableScaleUp) ||
+            (scaley < 1.0f && !_enableScaleDown))
+            scaley = 1.0f;
+
+        size = CGSizeMake(_realImageView.image.size.width * scalex, _realImageView.image.size.height * scaley);
+        break;
+    }
+
+    default:
+        size = _realImageView.image.size;
+        break;
     }
 
     return size;
@@ -1058,49 +993,40 @@
 
 #pragma mark - Properties needed for Interface Builder
 
-- (BOOL)alignLeft
-{
+- (BOOL)alignLeft {
     return (_alignment & UIImageViewAlignmentMaskLeft) != 0;
 }
-- (void)setAlignLeft:(BOOL)alignLeft
-{
+- (void)setAlignLeft:(BOOL)alignLeft {
     if (alignLeft)
         self.alignment |= UIImageViewAlignmentMaskLeft;
     else
         self.alignment &= ~UIImageViewAlignmentMaskLeft;
 }
 
-- (BOOL)alignRight
-{
+- (BOOL)alignRight {
     return (_alignment & UIImageViewAlignmentMaskRight) != 0;
 }
-- (void)setAlignRight:(BOOL)alignRight
-{
+- (void)setAlignRight:(BOOL)alignRight {
     if (alignRight)
         self.alignment |= UIImageViewAlignmentMaskRight;
     else
         self.alignment &= ~UIImageViewAlignmentMaskRight;
 }
 
-
-- (BOOL)alignTop
-{
+- (BOOL)alignTop {
     return (_alignment & UIImageViewAlignmentMaskTop) != 0;
 }
-- (void)setAlignTop:(BOOL)alignTop
-{
+- (void)setAlignTop:(BOOL)alignTop {
     if (alignTop)
         self.alignment |= UIImageViewAlignmentMaskTop;
     else
         self.alignment &= ~UIImageViewAlignmentMaskTop;
 }
 
-- (BOOL)alignBottom
-{
+- (BOOL)alignBottom {
     return (_alignment & UIImageViewAlignmentMaskBottom) != 0;
 }
-- (void)setAlignBottom:(BOOL)alignBottom
-{
+- (void)setAlignBottom:(BOOL)alignBottom {
     if (alignBottom)
         self.alignment |= UIImageViewAlignmentMaskBottom;
     else

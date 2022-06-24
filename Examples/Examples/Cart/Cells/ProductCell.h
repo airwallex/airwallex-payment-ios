@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-typedef void(^ProductCellRemovalHandler)(Product *product);
+typedef void (^ProductCellRemovalHandler)(Product *product);
 
 @interface ProductCell : UITableViewCell
 

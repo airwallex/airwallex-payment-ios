@@ -15,11 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles selected country.
  */
-@protocol AWXCountryListViewControllerDelegate <NSObject>
+@protocol AWXCountryListViewControllerDelegate<NSObject>
 
 /**
  This method is called when a country has been selected.
- 
+
  @param controller The country list view controller.
  @param country The selected country.
  */
@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles country selection events.
  */
-@property (nonatomic, weak) id <AWXCountryListViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<AWXCountryListViewControllerDelegate> delegate;
 
 /**
  A country has been selected.
