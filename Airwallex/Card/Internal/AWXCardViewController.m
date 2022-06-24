@@ -218,22 +218,22 @@
     [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
 
     if (self.session.billing) {
-        self.firstNameField.text = self.session.billing.firstName;
-        self.lastNameField.text = self.session.billing.lastName;
-        self.emailField.text = self.session.billing.email;
-        self.phoneNumberField.text = self.session.billing.phoneNumber;
+        [self.firstNameField setText:self.session.billing.firstName animated:NO];
+        [self.lastNameField setText:self.session.billing.lastName animated:NO];
+        [self.emailField setText:self.session.billing.email animated:NO];
+        [self.phoneNumberField setText:self.session.billing.phoneNumber animated:NO];
 
         AWXAddress *address = self.session.billing.address;
         if (address) {
             AWXCountry *matchedCountry = [AWXCountry countryWithCode:address.countryCode];
             if (matchedCountry) {
                 self.country = matchedCountry;
-                self.countryView.text = matchedCountry.countryName;
+                [self.countryView setText:matchedCountry.countryName animated:NO];
             }
-            self.stateField.text = address.state;
-            self.cityField.text = address.city;
-            self.streetField.text = address.street;
-            self.zipcodeField.text = address.postcode;
+            [self.stateField setText:address.state animated:NO];
+            [self.cityField setText:address.city animated:NO];
+            [self.streetField setText:address.street animated:NO];
+            [self.zipcodeField setText:address.postcode animated:NO];
         }
     }
     self.sameAsShipping = self.session.billing != nil;
@@ -355,7 +355,7 @@
 - (void)countryListViewController:(AWXCountryListViewController *)controller didSelectCountry:(AWXCountry *)country {
     [controller dismissViewControllerAnimated:YES completion:nil];
     self.country = country;
-    self.countryView.text = country.countryName;
+    [self.countryView setText:country.countryName animated:NO];
 }
 
 #pragma mark - AWXProviderDelegate

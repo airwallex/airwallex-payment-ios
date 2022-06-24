@@ -56,10 +56,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSLayoutConstraint *textTopConstraint;
 
 @property (nonatomic) BOOL isRequired;
-@property (nonatomic, strong) NSString *text, *placeholder;
+@property (nonatomic, strong) NSString *placeholder;
 @property (nonatomic, strong, nullable) NSString *errorText, *defaultErrorMessage;
 @property (nonatomic) AWXTextFieldType fieldType;
 @property (nonatomic, weak) AWXFloatingLabelTextField *nextTextField;
+
+- (NSString *)text;
+- (void)setText:(NSString *)text animated:(BOOL)animated;
 
 - (void)setupLayouts;
 
@@ -70,7 +73,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AWXFloatingLabelView : AWXView
 
-@property (nonatomic, strong) NSString *text, *placeholder;
+@property (nonatomic, strong) NSString *placeholder;
+
+- (NSString *)text;
+- (void)setText:(NSString *)text animated:(BOOL)animated;
 
 @end
 
