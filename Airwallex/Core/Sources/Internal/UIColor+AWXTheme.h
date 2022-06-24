@@ -10,7 +10,6 @@
 
 @interface UIColor (AWXTheme)
 
-+ (UIColor *)colorWithHex:(NSUInteger)hex;
 + (UIColor *)airwallexGray10Color;
 + (UIColor *)airwallexGray30Color;
 + (UIColor *)airwallexGray50Color;
