@@ -132,11 +132,16 @@
                                                      [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
                                                  }]];
     [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+    UIPopoverPresentationController *popPresenter = [controller popoverPresentationController];
+    popPresenter.sourceView = sender;
+
     [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (IBAction)checkoutModeTapped:(id)sender {
     [self showSelectViewWithArray:self.checkoutModesList
+                           sender:sender
                        completion:^(NSInteger selectIndex) {
                            [AirwallexExamplesKeys shared].checkoutMode = selectIndex;
                            [self.checkoutBtn setTitle:self.checkoutModesList[selectIndex] forState:UIControlStateNormal];
@@ -145,6 +150,7 @@
 
 - (IBAction)nextTriggerByTapped:(id)sender {
     [self showSelectViewWithArray:self.nextTriggerByList
+                           sender:sender
                        completion:^(NSInteger selectIndex) {
                            [AirwallexExamplesKeys shared].nextTriggerByType = selectIndex;
                            [self.nextTriggerByBtn setTitle:self.nextTriggerByList[selectIndex] forState:UIControlStateNormal];
@@ -191,7 +197,7 @@
     self.customerIdTextField.text = nil;
 }
 
-- (void)showSelectViewWithArray:(NSArray *)arr completion:(void (^)(NSInteger selectIndex))completion {
+- (void)showSelectViewWithArray:(NSArray *)arr sender:(id)sender completion:(void (^)(NSInteger selectIndex))completion {
     if (arr.count) {
         UIAlertController *alertView = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
         for (int i = 0; i < arr.count; i++) {
@@ -204,6 +210,10 @@
         }
         UIAlertAction *cancelAc = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:(UIAlertActionStyleCancel)handler:nil];
         [alertView addAction:cancelAc];
+
+        UIPopoverPresentationController *popPresenter = [alertView popoverPresentationController];
+        popPresenter.sourceView = sender;
+
         [self.navigationController presentViewController:alertView animated:YES completion:nil];
     }
 }
