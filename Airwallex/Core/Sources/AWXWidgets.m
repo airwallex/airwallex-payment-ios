@@ -129,7 +129,7 @@
     return attributedString;
 }
 
-- (void)setText:(NSString *)text {
+- (void)setText:(NSString *)text animated:(BOOL)animated {
     NSString *_text = text;
     if (self.fieldType == AWXTextFieldTypeExpires) {
         NSString *expirationMonth = [_text substringToIndex:MIN(_text.length, 2)];
@@ -154,7 +154,7 @@
         _text = [array componentsJoinedByString:@"/"];
     }
     self.textField.attributedText = [self formatText:_text];
-    text.length > 0 ? [self active] : [self inactive];
+    text.length > 0 ? [self activateAnimated:animated] : [self deactivateAnimated:animated];
 }
 
 - (void)setFieldType:(AWXTextFieldType)fieldType {
@@ -248,38 +248,56 @@
     self.textField.placeholder = placeholder;
 }
 
-- (void)active {
+- (void)activateAnimated:(BOOL)animated {
     if (self.floatingLabel.alpha == 1) {
         return;
     }
 
-    self.floatingTopConstraint.constant = 30;
-    self.textTopConstraint.constant = 9;
+    self.floatingTopConstraint.constant = 30; // not 9?
     self.floatingLabel.alpha = 0;
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         self.floatingTopConstraint.constant = 9;
-                         self.textTopConstraint.constant = 30;
-                         [self layoutIfNeeded];
-                         self.floatingLabel.alpha = 1;
-                     }];
+
+    void (^callback)(void) = ^{
+        self.floatingLabel.font = [UIFont caption2Font];
+        self.floatingTopConstraint.constant = 9;
+        self.textTopConstraint.constant = 30;
+        self.floatingLabel.alpha = 1;
+        [self layoutIfNeeded];
+    };
+
+    if (animated) {
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             callback();
+                         }];
+    } else {
+        callback();
+    }
 }
 
-- (void)inactive {
-    if (self.floatingLabel.alpha == 0) {
+- (void)deactivateAnimated:(BOOL)animated {
+    if (self.floatingTopConstraint.constant == 20) {
         return;
     }
 
     self.floatingTopConstraint.constant = 9;
-    self.textTopConstraint.constant = 30;
     self.floatingLabel.alpha = 1;
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         self.floatingTopConstraint.constant = 30;
-                         self.textTopConstraint.constant = 9;
-                         [self layoutIfNeeded];
-                         self.floatingLabel.alpha = 0;
-                     }];
+
+    void (^callback)(void) = ^{
+        self.floatingLabel.font = [UIFont bodyFont];
+        self.floatingTopConstraint.constant = 30; // not 20?
+        self.textTopConstraint.constant = 9;
+        self.floatingLabel.alpha = 0;
+    };
+
+    if (animated) {
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             callback();
+                             [self layoutIfNeeded];
+                         }];
+    } else {
+        callback();
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -301,8 +319,8 @@
     } else if (self.fieldType == AWXTextFieldTypeCVC) {
         text = [text substringToIndex:MIN(text.length, 4)];
     }
-    text.length > 0 ? [self active] : [self inactive];
-    [self setText:text];
+    text.length > 0 ? [self activateAnimated:YES] : [self deactivateAnimated:YES];
+    [self setText:text animated:YES];
     if (self.delegate && [self.delegate respondsToSelector:@selector(floatingLabelTextField:textDidChange:)]) {
         [self.delegate floatingLabelTextField:self textDidChange:text];
     }
@@ -318,7 +336,7 @@
         return;
     }
 
-    textField.text.length > 0 ? [self active] : [self inactive];
+    textField.text.length > 0 ? [self activateAnimated:YES] : [self deactivateAnimated:YES];
 }
 
 - (void)validateEmail:(NSString *)text {
@@ -483,9 +501,9 @@
     return self.textLabel.text;
 }
 
-- (void)setText:(NSString *)text {
+- (void)setText:(NSString *)text animated:(BOOL)animated {
     self.textLabel.text = text;
-    text.length > 0 ? [self active] : [self inactive];
+    text.length > 0 ? [self activateAnimated:animated] : [self deactivateAnimated:animated];
 }
 
 - (NSString *)placeholder {
@@ -496,36 +514,54 @@
     self.floatingLabel.text = placeholder;
 }
 
-- (void)active {
+- (void)activateAnimated:(BOOL)animated {
     if (self.textLabel.alpha == 1) {
         return;
     }
 
     self.floatingTopConstraint.constant = 20;
     self.textLabel.alpha = 0;
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         self.floatingLabel.font = [UIFont caption2Font];
-                         self.floatingTopConstraint.constant = 9;
-                         self.textLabel.alpha = 1;
-                         [self layoutIfNeeded];
-                     }];
+
+    void (^callback)(void) = ^{
+        self.floatingLabel.font = [UIFont caption2Font];
+        self.floatingTopConstraint.constant = 9;
+        self.textLabel.alpha = 1;
+        [self layoutIfNeeded];
+    };
+
+    if (animated) {
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             callback();
+                         }];
+    } else {
+        callback();
+    }
 }
 
-- (void)inactive {
+- (void)deactivateAnimated:(BOOL)animated {
     if (self.floatingTopConstraint.constant == 20) {
         return;
     }
 
     self.floatingTopConstraint.constant = 9;
     self.textLabel.alpha = 1;
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         self.floatingLabel.font = [UIFont bodyFont];
-                         self.floatingTopConstraint.constant = 20;
-                         self.textLabel.alpha = 0;
-                         [self layoutIfNeeded];
-                     }];
+
+    void (^callback)(void) = ^{
+        self.floatingLabel.font = [UIFont bodyFont];
+        self.floatingTopConstraint.constant = 20;
+        self.textLabel.alpha = 0;
+    };
+
+    if (animated) {
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             callback();
+                             [self layoutIfNeeded];
+                         }];
+    } else {
+        callback();
+    }
 }
 
 @end
@@ -601,8 +637,8 @@
     return attributedString;
 }
 
-- (void)setText:(NSString *)text {
-    [super setText:text];
+- (void)setText:(NSString *)text animated:(BOOL)animated {
+    [super setText:text animated:animated];
     [self updateBrandWithNumber:text];
 }
 
@@ -632,14 +668,14 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     self.errorText = nil;
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    text.length > 0 ? [self active] : [self inactive];
+    text.length > 0 ? [self activateAnimated:YES] : [self deactivateAnimated:YES];
 
     AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:text];
     if (brand && text.length > brand.length) {
         return NO;
     }
 
-    [self setText:text];
+    [self setText:text animated:YES];
     return NO;
 }
 
@@ -837,7 +873,7 @@
 
 @implementation UIImageViewAligned
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self commonInit];
@@ -845,7 +881,7 @@
     return self;
 }
 
-- (instancetype)initWithImage:(UIImage *)image {
+- (id)initWithImage:(UIImage *)image {
     self = [super initWithImage:image];
     if (self) {
         [self commonInit];
@@ -853,7 +889,7 @@
     return self;
 }
 
-- (instancetype)initWithImage:(UIImage *)image highlightedImage:(UIImage *)highlightedImage {
+- (id)initWithImage:(UIImage *)image highlightedImage:(UIImage *)highlightedImage {
     self = [super initWithImage:image highlightedImage:highlightedImage];
     if (self)
         [self commonInit];
@@ -861,7 +897,7 @@
     return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+- (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self)
         [self commonInit];
@@ -869,8 +905,8 @@
 }
 
 - (void)commonInit {
-    _enableScaleDown = TRUE;
-    _enableScaleUp = TRUE;
+    _enableScaleDown = YES;
+    _enableScaleUp = YES;
 
     _alignment = UIImageViewAlignmentMaskCenter;
 

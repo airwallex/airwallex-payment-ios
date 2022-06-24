@@ -106,7 +106,7 @@
     }
 
     if (self.paymentConsent.paymentMethod.card.cvc) {
-        _cvcField.text = self.paymentConsent.paymentMethod.card.cvc;
+        [_cvcField setText:self.paymentConsent.paymentMethod.card.cvc animated:NO];
     }
 
     [self checkPaymentEnabled:_cvcField.text];

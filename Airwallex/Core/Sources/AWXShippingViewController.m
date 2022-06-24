@@ -132,22 +132,22 @@
     [stackView addArrangedSubview:_phoneNumberField];
 
     if (self.shipping) {
-        _firstNameField.text = self.shipping.firstName;
-        _lastNameField.text = self.shipping.lastName;
-        _emailField.text = self.shipping.email;
-        _phoneNumberField.text = self.shipping.phoneNumber;
+        [_firstNameField setText:self.shipping.firstName animated:NO];
+        [_lastNameField setText:self.shipping.lastName animated:NO];
+        [_emailField setText:self.shipping.email animated:NO];
+        [_phoneNumberField setText:self.shipping.phoneNumber animated:NO];
 
         AWXAddress *address = self.shipping.address;
         if (address) {
             AWXCountry *matchedCountry = [AWXCountry countryWithCode:address.countryCode];
             if (matchedCountry) {
                 self.country = matchedCountry;
-                self.countryView.text = matchedCountry.countryName;
+                [self.countryView setText:matchedCountry.countryName animated:NO];
             }
-            _stateField.text = address.state;
-            _cityField.text = address.city;
-            _streetField.text = address.street;
-            _zipcodeField.text = address.postcode;
+            [_stateField setText:address.state animated:NO];
+            [_cityField setText:address.city animated:NO];
+            [_streetField setText:address.street animated:NO];
+            [_zipcodeField setText:address.postcode animated:NO];
         }
     }
 }
@@ -204,7 +204,7 @@
 - (void)countryListViewController:(AWXCountryListViewController *)controller didSelectCountry:(AWXCountry *)country {
     [controller dismissViewControllerAnimated:YES completion:nil];
     self.country = country;
-    self.countryView.text = country.countryName;
+    [self.countryView setText:country.countryName animated:NO];
 }
 
 @end
