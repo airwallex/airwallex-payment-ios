@@ -16,14 +16,14 @@
 
 @property (strong, nonatomic, nonnull) IBOutletCollection(UITextField) NSArray<UITextField *> *textFields;
 
-@property (strong, nonatomic) IBOutlet UITextField *appIdTextField;
-@property (strong, nonatomic) IBOutlet UITextField *nonceStrTextField;
-@property (strong, nonatomic) IBOutlet UITextField *packageTextField;
-@property (strong, nonatomic) IBOutlet UITextField *partnerIdTextField;
-@property (strong, nonatomic) IBOutlet UITextField *prepayIdTextField;
-@property (strong, nonatomic) IBOutlet UITextField *signTextField;
-@property (strong, nonatomic) IBOutlet UITextField *timestampTextField;
-@property (strong, nonatomic) IBOutlet UIButton *submitButton;
+@property (strong, nonatomic, nonnull) IBOutlet UITextField *appIdTextField;
+@property (strong, nonatomic, nonnull) IBOutlet UITextField *nonceStrTextField;
+@property (strong, nonatomic, nonnull) IBOutlet UITextField *packageTextField;
+@property (strong, nonatomic, nonnull) IBOutlet UITextField *partnerIdTextField;
+@property (strong, nonatomic, nonnull) IBOutlet UITextField *prepayIdTextField;
+@property (strong, nonatomic, nonnull) IBOutlet UITextField *signTextField;
+@property (strong, nonatomic, nonnull) IBOutlet UITextField *timestampTextField;
+@property (strong, nonatomic, nonnull) IBOutlet AWXActionButton *submitButton;
 
 @end
 
@@ -46,9 +46,6 @@
     for (UITextField *textField in _textFields) {
         textField.font = [UIFont bodyFont];
     }
-
-    self.submitButton.layer.masksToBounds = YES;
-    self.submitButton.layer.cornerRadius = 6;
 
     [self.submitButton awx_setBackgroundColor:[AWXTheme sharedTheme].tintColor forState:UIControlStateNormal];
     [self.submitButton awx_setBackgroundColor:[AWXTheme sharedTheme].disabledButtonColor forState:UIControlStateDisabled];

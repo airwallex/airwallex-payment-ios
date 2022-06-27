@@ -10,7 +10,7 @@
 
 @interface WebViewController : UIViewController
 
-@property (nonatomic, copy) NSString *url;
-@property (nonatomic, copy) NSString *referer;
+@property (nonatomic, copy, nonnull) NSString *url;
+@property (nonatomic, copy, nonnull) NSString *referer;
 
 @end
