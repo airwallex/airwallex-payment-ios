@@ -181,8 +181,9 @@
 
     [self.paymentMethod appendAdditionalParams:self.fields];
     if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didConfirmPaymentMethod:)]) {
-        [self.delegate paymentFormViewController:self didConfirmPaymentMethod:self.paymentMethod];
-        [self animateDismissView];
+        [self animateDismissViewWithCompletion:^{
+            [self.delegate paymentFormViewController:self didConfirmPaymentMethod:self.paymentMethod];
+        }];
     }
 }
 
@@ -262,6 +263,10 @@
 }
 
 - (void)animateDismissView {
+    [self animateDismissViewWithCompletion:nil];
+}
+
+- (void)animateDismissViewWithCompletion:(nullable void (^)())completionHandler {
     self.dimmedView.alpha = self.maxDimmedAlpha;
     [UIView animateWithDuration:0.25
         animations:^{
@@ -271,6 +276,9 @@
         }
         completion:^(BOOL finished) {
             [self dismissViewControllerAnimated:YES completion:nil];
+            if (completionHandler) {
+                completionHandler();
+            }
         }];
 }
 
