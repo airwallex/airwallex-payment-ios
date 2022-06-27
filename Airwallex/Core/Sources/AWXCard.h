@@ -9,8 +9,6 @@
 #import "AWXCodable.h"
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
  `AWXCard` includes the information of a card.
  */
@@ -19,17 +17,17 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Card number.
  */
-@property (nonatomic, copy) NSString *number;
+@property (nonatomic, copy, nonnull) NSString *number;
 
 /**
  Two digit number representing the card’s expiration month. Example: 12.
  */
-@property (nonatomic, copy) NSString *expiryMonth;
+@property (nonatomic, copy, nonnull) NSString *expiryMonth;
 
 /**
  Four digit number representing the card’s expiration year. Example: 2030.
  */
-@property (nonatomic, copy) NSString *expiryYear;
+@property (nonatomic, copy, nonnull) NSString *expiryYear;
 
 /**
  Card holder name.
@@ -88,5 +86,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)validate;
 
 @end
-
-NS_ASSUME_NONNULL_END

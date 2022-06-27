@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIImage (Utils)
 
 + (nullable UIImage *)imageNamed:(NSString *)name inBundle:(nullable NSBundle *)bundle;
-+ (nullable UIImage *)imageNamed:(NSString *)name ofType:(NSString *)type inBundle:(nullable NSBundle *)bundle;
+
 + (UIImage *)imageFromColor:(UIColor *)color;
 
 @end
@@ -102,19 +102,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIImageView (Utils)
 
 - (void)setImageURL:(NSURL *)imageURL placeholder:(nullable UIImage *)placeholder;
-
-@end
-
-@interface UIColor (Utils)
-
-+ (UIColor *)colorWithHex:(NSUInteger)hex;
-+ (UIColor *)gray10Color;
-+ (UIColor *)gray30Color;
-+ (UIColor *)gray50Color;
-+ (UIColor *)gray70Color;
-+ (UIColor *)gray100Color;
-+ (UIColor *)ultravioletColor;
-+ (UIColor *)infraredColor;
 
 @end
 

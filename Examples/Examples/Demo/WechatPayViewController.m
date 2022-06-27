@@ -7,22 +7,51 @@
 //
 
 #import "WechatPayViewController.h"
+#import <Airwallex/Core.h>
 #import <WechatOpenSDK/WXApi.h>
 
 @interface WechatPayViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *appIdTextField;
-@property (weak, nonatomic) IBOutlet UITextField *nonceStrTextField;
-@property (weak, nonatomic) IBOutlet UITextField *packageTextField;
-@property (weak, nonatomic) IBOutlet UITextField *partnerIdTextField;
-@property (weak, nonatomic) IBOutlet UITextField *prepayIdTextField;
-@property (weak, nonatomic) IBOutlet UITextField *signTextField;
-@property (weak, nonatomic) IBOutlet UITextField *timestampTextField;
+
+@property (strong, nonatomic, nonnull) IBOutletCollection(UILabel) NSArray<UILabel *> *titleLabels;
+
+@property (strong, nonatomic, nonnull) IBOutletCollection(UITextField) NSArray<UITextField *> *textFields;
+
+@property (strong, nonatomic) IBOutlet UITextField *appIdTextField;
+@property (strong, nonatomic) IBOutlet UITextField *nonceStrTextField;
+@property (strong, nonatomic) IBOutlet UITextField *packageTextField;
+@property (strong, nonatomic) IBOutlet UITextField *partnerIdTextField;
+@property (strong, nonatomic) IBOutlet UITextField *prepayIdTextField;
+@property (strong, nonatomic) IBOutlet UITextField *signTextField;
+@property (strong, nonatomic) IBOutlet UITextField *timestampTextField;
+@property (strong, nonatomic) IBOutlet UIButton *submitButton;
+
 @end
 
 @implementation WechatPayViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self setupViews];
+}
+
+- (void)setupViews {
+    self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
+
+    for (UILabel *label in _titleLabels) {
+        label.textColor = [AWXTheme sharedTheme].primaryTextColor;
+        label.font = [UIFont subhead2Font];
+    }
+
+    for (UITextField *textField in _textFields) {
+        textField.font = [UIFont bodyFont];
+    }
+
+    self.submitButton.layer.masksToBounds = YES;
+    self.submitButton.layer.cornerRadius = 6;
+
+    [self.submitButton awx_setBackgroundColor:[AWXTheme sharedTheme].tintColor forState:UIControlStateNormal];
+    [self.submitButton awx_setBackgroundColor:[AWXTheme sharedTheme].disabledButtonColor forState:UIControlStateDisabled];
 }
 
 - (IBAction)checkOutTap:(id)sender {

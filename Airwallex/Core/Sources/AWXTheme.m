@@ -8,10 +8,8 @@
 
 #import "AWXTheme.h"
 #import "AWXUtils.h"
-
-static UIColor *AWXThemeDefaultLineColor = nil;
-static UIColor *AWXThemeDefaultPurpleColor = nil;
-static UIColor *AWXThemeDefaultTextColor = nil;
+#import "UIColor+AWXTheme.h"
+#import "UIColor+ViewCompat.h"
 
 @implementation AWXTheme
 
@@ -24,22 +22,62 @@ static UIColor *AWXThemeDefaultTextColor = nil;
     return sharedTheme;
 }
 
-+ (void)initialize {
-    AWXThemeDefaultLineColor = [UIColor gray30Color];
-    AWXThemeDefaultPurpleColor = [UIColor ultravioletColor];
-    AWXThemeDefaultTextColor = [UIColor gray100Color];
+- (UIColor *)toolbarColor {
+    return self.primaryBackgroundColor;
+}
+
+- (UIColor *)primaryBackgroundColor {
+    return [UIColor colorWithDynamicLightColor:UIColor.whiteColor
+                                     darkColor:UIColor.airwallexGray100Color];
+}
+
+- (UIColor *)surfaceBackgroundColor {
+    return [UIColor colorWithDynamicLightColor:UIColor.whiteColor
+                                     darkColor:UIColor.airwallexGray90Color];
+}
+
+- (UIColor *)primaryTextColor {
+    return [UIColor colorWithDynamicLightColor:UIColor.airwallexGray100Color
+                                     darkColor:UIColor.whiteColor];
+}
+
+- (UIColor *)secondaryTextColor {
+    return UIColor.airwallexGray50Color;
+}
+
+- (UIColor *)disabledButtonColor {
+    return self.lineColor;
+}
+
+- (UIColor *)primaryButtonTextColor {
+    return [UIColor colorWithDynamicLightColor:UIColor.whiteColor
+                                     darkColor:UIColor.airwallexGray100Color];
 }
 
 - (UIColor *)lineColor {
-    return _lineColor ?: AWXThemeDefaultLineColor;
+    return [UIColor colorWithDynamicLightColor:UIColor.airwallexGray30Color
+                                     darkColor:UIColor.airwallexGray80Color];
+}
+
+- (UIColor *)glyphColor {
+    return UIColor.airwallexGray70Color;
 }
 
 - (UIColor *)tintColor {
-    return _tintColor ?: AWXThemeDefaultPurpleColor;
+    if (_tintColor != nil) {
+        return _tintColor;
+    } else {
+        return [UIColor colorWithDynamicLightColor:UIColor.airwallexUltraviolet70Color
+                                         darkColor:UIColor.airwallexUltraviolet40Color];
+    }
 }
 
-- (UIColor *)textColor {
-    return _textColor ?: AWXThemeDefaultTextColor;
+- (UIColor *)errorColor {
+    return UIColor.airwallexRed50Color;
+}
+
+- (UIColor *)shadowColor {
+    return [UIColor.blackColor colorWithAlphaComponent:0.08];
 }
 
 @end

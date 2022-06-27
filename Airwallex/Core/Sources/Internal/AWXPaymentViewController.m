@@ -30,7 +30,7 @@
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *totalLabel;
 @property (strong, nonatomic) AWXFloatingLabelTextField *cvcField;
-@property (strong, nonatomic) AWXButton *confirmButton;
+@property (strong, nonatomic) AWXActionButton *confirmButton;
 @property (strong, nonatomic) NSLayoutConstraint *bottomConstraint;
 
 @end
@@ -39,9 +39,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self enableTapToEndEditting];
+    [self enableTapToEndEditing];
+
+    self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
 
     _scrollView = [UIScrollView autoLayoutView];
+    _scrollView.backgroundColor = UIColor.clearColor;
     [self.view addSubview:_scrollView];
 
     UIView *bottomLine = [UIView autoLayoutView];
@@ -52,13 +55,13 @@
 
     _titleLabel = [UILabel autoLayoutView];
     _titleLabel.numberOfLines = 0;
-    _titleLabel.textColor = [UIColor gray100Color];
+    _titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     _titleLabel.font = [UIFont titleFont];
     [contentView addSubview:_titleLabel];
 
     _totalLabel = [UILabel autoLayoutView];
     _totalLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Total %@", nil), [self.session.amount stringWithCurrencyCode:self.session.currency]];
-    _totalLabel.textColor = [UIColor gray50Color];
+    _totalLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
     _totalLabel.font = [UIFont subhead1Font];
     [contentView addSubview:_totalLabel];
 
@@ -70,9 +73,8 @@
     [contentView addSubview:_cvcField];
     [_cvcField.widthAnchor constraintEqualToAnchor:contentView.widthAnchor multiplier:0.328].active = YES;
 
-    _confirmButton = [AWXButton autoLayoutView];
+    _confirmButton = [AWXActionButton autoLayoutView];
     _confirmButton.enabled = YES;
-    _confirmButton.cornerRadius = 6;
     [_confirmButton setTitle:NSLocalizedString(@"Pay now", @"Pay now") forState:UIControlStateNormal];
     _confirmButton.titleLabel.font = [UIFont headlineFont];
     [_confirmButton addTarget:self action:@selector(payPressed:) forControlEvents:UIControlEventTouchUpInside];

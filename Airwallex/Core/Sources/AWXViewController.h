@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Enable user to tap the view to end editting state
  */
-- (void)enableTapToEndEditting;
+- (void)enableTapToEndEditing;
 
 /**
  Unregister keyboard listener

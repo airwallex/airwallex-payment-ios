@@ -36,11 +36,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Save", @"Save") style:UIBarButtonItemStylePlain target:self action:@selector(savePressed:)];
-    [self enableTapToEndEditting];
+    [self enableTapToEndEditing];
 
     _scrollView = [UIScrollView new];
     _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    _scrollView.backgroundColor = UIColor.clearColor;
     [self.view addSubview:_scrollView];
 
     UIView *contentView = [UIView new];
@@ -49,7 +51,7 @@
 
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = NSLocalizedString(@"Shipping", @"Shipping");
-    titleLabel.textColor = [UIColor gray100Color];
+    titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     titleLabel.font = [UIFont titleFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:titleLabel];

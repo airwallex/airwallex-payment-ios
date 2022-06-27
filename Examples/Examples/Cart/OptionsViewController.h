@@ -10,10 +10,6 @@
 
 @class OptionsViewController;
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface OptionsViewController : UIViewController
 
 @end
-
-NS_ASSUME_NONNULL_END

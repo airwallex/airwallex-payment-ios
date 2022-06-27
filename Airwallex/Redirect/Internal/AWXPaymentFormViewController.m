@@ -37,8 +37,10 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self.containerView roundCorners:UIRectCornerTopLeft | UIRectCornerTopRight radius:16];
+    self.maximumContainerHeight = CGRectGetHeight(self.view.bounds) / 2;
     self.currentContainerHeight = CGRectGetHeight(self.containerView.frame);
     self.scrollViewHeightConstraint.constant = MIN(self.currentContainerHeight, self.maximumContainerHeight);
+
     [self.view layoutIfNeeded];
 }
 
@@ -63,13 +65,12 @@
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     [self.view addGestureRecognizer:pan];
 
-    self.maxDimmedAlpha = 0.6;
-    // UIScreen.mainScreen.bounds.size.height - UIApplication.sharedApplication.keyWindow.safeAreaInsets.top
-    self.maximumContainerHeight = UIScreen.mainScreen.bounds.size.height / 2;
-    self.currentContainerHeight = self.view.bounds.size.height;
+    self.maxDimmedAlpha = 1.0;
+    self.maximumContainerHeight = CGRectGetHeight(self.view.bounds) / 2;
+    self.currentContainerHeight = CGRectGetHeight(self.view.bounds);
 
     UIView *dimmedView = [UIView autoLayoutView];
-    dimmedView.backgroundColor = [UIColor blackColor];
+    dimmedView.backgroundColor = [AWXTheme sharedTheme].shadowColor;
     dimmedView.alpha = self.maxDimmedAlpha;
     self.dimmedView = dimmedView;
     [self.view addSubview:dimmedView];
@@ -82,14 +83,14 @@
     [self.view addSubview:scrollView];
 
     UIView *containerView = [UIView autoLayoutView];
-    containerView.backgroundColor = [UIColor whiteColor];
+    containerView.backgroundColor = [AWXTheme sharedTheme].surfaceBackgroundColor;
     containerView.clipsToBounds = YES;
     self.containerView = containerView;
     [scrollView addSubview:containerView];
 
     UILabel *titleLabel = [UILabel autoLayoutView];
     titleLabel.text = self.formMapping.title;
-    titleLabel.textColor = [UIColor gray100Color];
+    titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     titleLabel.font = [UIFont subhead2Font];
     [containerView addSubview:titleLabel];
 
@@ -119,11 +120,9 @@
             [optionView addTarget:self action:@selector(optionPressed:) forControlEvents:UIControlEventTouchUpInside];
             [stackView addArrangedSubview:optionView];
         } else if (form.type == AWXFormTypeButton) {
-            AWXButton *button = [AWXButton new];
+            AWXActionButton *button = [AWXActionButton new];
             button.enabled = YES;
-            button.cornerRadius = 6;
             [button setTitle:form.title forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont headlineFont];
             [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [stackView addArrangedSubview:button];
             self.stackView = stackView;

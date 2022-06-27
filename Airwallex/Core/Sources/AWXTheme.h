@@ -9,17 +9,22 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
  `AWXTheme` manages text styles.
  */
 @interface AWXTheme : NSObject
 
-/**
- Line Color.
- */
-@property (nonatomic, copy, null_resettable) UIColor *lineColor;
+- (UIColor *_Nonnull)toolbarColor;
+- (UIColor *_Nonnull)primaryBackgroundColor;
+- (UIColor *_Nonnull)surfaceBackgroundColor;
+- (UIColor *_Nonnull)primaryTextColor;
+- (UIColor *_Nonnull)secondaryTextColor;
+- (UIColor *_Nonnull)disabledButtonColor;
+- (UIColor *_Nonnull)lineColor;
+- (UIColor *_Nonnull)glyphColor;
+- (UIColor *_Nonnull)errorColor;
+- (UIColor *_Nonnull)primaryButtonTextColor;
+- (UIColor *_Nonnull)shadowColor;
 
 /**
  Tint Color.
@@ -27,21 +32,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, null_resettable) UIColor *tintColor;
 
 /**
- Text Color.
- */
-@property (nonatomic, copy, null_resettable) UIColor *textColor;
-
-/**
  Convenience constructor for a theme.
 
  @return The shared theme.
  */
-+ (instancetype)sharedTheme;
++ (instancetype _Nonnull)sharedTheme;
 
-+ (instancetype)new NS_UNAVAILABLE;
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
++ (instancetype _Nonnull)new NS_UNAVAILABLE;
+- (instancetype _Nonnull)init NS_UNAVAILABLE;
++ (instancetype _Nonnull)allocWithZone:(struct _NSZone *_Nonnull)zone NS_UNAVAILABLE;
 
 @end
-
-NS_ASSUME_NONNULL_END

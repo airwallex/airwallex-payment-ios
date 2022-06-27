@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
  `AWXPaymentMethodCell` is the cell of paymetn method info
  */
@@ -18,13 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Image view for displaying payment method logo
  */
-@property (strong, nonatomic) UIImageView *logoImageView;
+@property (strong, nonatomic, nonnull) UIImageView *logoImageView;
 
 /**
  Label for displaying payment method name
  */
-@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic, nonnull) UILabel *titleLabel;
 
 @end
-
-NS_ASSUME_NONNULL_END

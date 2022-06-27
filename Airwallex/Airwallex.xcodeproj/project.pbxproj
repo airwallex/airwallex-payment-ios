@@ -26,7 +26,6 @@
 		3C2B649227E98858002FAF3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649127E98858002FAF3E /* AppDelegate.m */; };
 		3C2B649827E98858002FAF3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649727E98858002FAF3E /* ViewController.m */; };
 		3C2B649B27E98858002FAF3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C2B649927E98858002FAF3E /* Main.storyboard */; };
-		3C2B649D27E98859002FAF3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C2B649C27E98859002FAF3E /* Assets.xcassets */; };
 		3C2B64A027E98859002FAF3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C2B649E27E98859002FAF3E /* LaunchScreen.storyboard */; };
 		3C2B64A327E98859002FAF3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B64A227E98859002FAF3E /* main.m */; };
 		3C324F8827FBE2D300CF7315 /* AWXConstants+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C324F8627FBE2D300CF7315 /* AWXConstants+Internal.h */; };
@@ -187,6 +186,10 @@
 		57E73719272AC043009905DC /* AWXSchemaProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 57E73717272AC043009905DC /* AWXSchemaProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57E7371A272AC043009905DC /* AWXSchemaProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E73718272AC043009905DC /* AWXSchemaProvider.m */; };
 		9184A98A3FB097B3E30DFD42 /* Pods_WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A5DE28F611F49B21B3B1DA1 /* Pods_WeChatPay.framework */; };
+		C556103B286032140036F63C /* UIColor+AWXTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = C5561039286032140036F63C /* UIColor+AWXTheme.h */; };
+		C556103C286032140036F63C /* UIColor+AWXTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = C556103A286032140036F63C /* UIColor+AWXTheme.m */; };
+		C5AB0C5528603CF400B436C3 /* UIColor+ViewCompat.h in Headers */ = {isa = PBXBuildFile; fileRef = C5AB0C5328603CF400B436C3 /* UIColor+ViewCompat.h */; };
+		C5AB0C5628603CF400B436C3 /* UIColor+ViewCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB0C5428603CF400B436C3 /* UIColor+ViewCompat.m */; };
 		CA09778887CAF1A3CB3519E4 /* Pods_ApplePayTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 766C109E04EF1051D97CC9A3 /* Pods_ApplePayTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -314,7 +317,6 @@
 		3C2B649627E98858002FAF3E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3C2B649727E98858002FAF3E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		3C2B649A27E98858002FAF3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3C2B649C27E98859002FAF3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3C2B649F27E98859002FAF3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3C2B64A127E98859002FAF3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C2B64A227E98859002FAF3E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -490,6 +492,10 @@
 		7A5DE28F611F49B21B3B1DA1 /* Pods_WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8096B137EDD3F3FFD5786CEB /* Pods-WeChatPay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatPay.debug.xcconfig"; path = "Target Support Files/Pods-WeChatPay/Pods-WeChatPay.debug.xcconfig"; sourceTree = "<group>"; };
 		BD25D2EFD8E73A8E45ECDB24 /* Pods-ApplePayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApplePayTests.release.xcconfig"; path = "Target Support Files/Pods-ApplePayTests/Pods-ApplePayTests.release.xcconfig"; sourceTree = "<group>"; };
+		C5561039286032140036F63C /* UIColor+AWXTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+AWXTheme.h"; sourceTree = "<group>"; };
+		C556103A286032140036F63C /* UIColor+AWXTheme.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AWXTheme.m"; sourceTree = "<group>"; };
+		C5AB0C5328603CF400B436C3 /* UIColor+ViewCompat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+ViewCompat.h"; sourceTree = "<group>"; };
+		C5AB0C5428603CF400B436C3 /* UIColor+ViewCompat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ViewCompat.m"; sourceTree = "<group>"; };
 		CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -725,7 +731,6 @@
 				3C2B649627E98858002FAF3E /* ViewController.h */,
 				3C2B649727E98858002FAF3E /* ViewController.m */,
 				3C2B649927E98858002FAF3E /* Main.storyboard */,
-				3C2B649C27E98859002FAF3E /* Assets.xcassets */,
 				3C2B649E27E98859002FAF3E /* LaunchScreen.storyboard */,
 				3C2B64A127E98859002FAF3E /* Info.plist */,
 				3C2B64A227E98859002FAF3E /* main.m */,
@@ -799,6 +804,10 @@
 				3C324F8F27FC09AD00CF7315 /* AWXSession+Internal.m */,
 				5775CF0A26E5DF4F00C6AFE3 /* AWXTrackManager.h */,
 				5775CEE526E5DF4E00C6AFE3 /* AWXTrackManager.m */,
+				C5561039286032140036F63C /* UIColor+AWXTheme.h */,
+				C556103A286032140036F63C /* UIColor+AWXTheme.m */,
+				C5AB0C5328603CF400B436C3 /* UIColor+ViewCompat.h */,
+				C5AB0C5428603CF400B436C3 /* UIColor+ViewCompat.m */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -1040,6 +1049,7 @@
 				5775CF1C26E5DF4F00C6AFE3 /* AWXUtils.h in Headers */,
 				5775CF4326E5DF5000C6AFE3 /* AWXViewController.h in Headers */,
 				5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */,
+				C556103B286032140036F63C /* UIColor+AWXTheme.h in Headers */,
 				5775CF4526E5DF5000C6AFE3 /* AWXPaymentConsent.h in Headers */,
 				3C99E73C27E9A0730074156C /* AWXApplePayOptions.h in Headers */,
 				5775CF2726E5DF4F00C6AFE3 /* AWXLogger.h in Headers */,
@@ -1061,6 +1071,7 @@
 				5775CF1626E5DF4F00C6AFE3 /* AWXPaymentIntentResponse.h in Headers */,
 				5775CF5D26E5DF5000C6AFE3 /* AWXPaymentMethodOptions.h in Headers */,
 				5775CF3126E5DF4F00C6AFE3 /* AWXPaymentMethodCell.h in Headers */,
+				C5AB0C5528603CF400B436C3 /* UIColor+ViewCompat.h in Headers */,
 				5775CF5A26E5DF5000C6AFE3 /* AWXTrackManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1431,7 +1442,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C2B64A027E98859002FAF3E /* LaunchScreen.storyboard in Resources */,
-				3C2B649D27E98859002FAF3E /* Assets.xcassets in Resources */,
 				3C2B649B27E98858002FAF3E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1610,6 +1620,8 @@
 				5775CF4926E5DF5000C6AFE3 /* AWXDefaultProvider.m in Sources */,
 				5775CF1F26E5DF4F00C6AFE3 /* AWXPaymentMethodOptions.m in Sources */,
 				5775CF3C26E5DF5000C6AFE3 /* AWXFormMapping.m in Sources */,
+				C5AB0C5628603CF400B436C3 /* UIColor+ViewCompat.m in Sources */,
+				C556103C286032140036F63C /* UIColor+AWXTheme.m in Sources */,
 				5775CF4B26E5DF5000C6AFE3 /* AWXPaymentConsentResponse.m in Sources */,
 				3C324F9127FC09AD00CF7315 /* AWXSession+Internal.m in Sources */,
 				5775CF1E26E5DF4F00C6AFE3 /* AWXPaymentMethodCell.m in Sources */,

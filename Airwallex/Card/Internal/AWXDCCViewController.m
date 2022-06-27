@@ -9,6 +9,7 @@
 #import "AWXDCCViewController.h"
 #import "AWXDccResponse.h"
 #import "AWXSession.h"
+#import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
 
@@ -17,7 +18,7 @@
 @property (strong, nonatomic) AWXCurrencyView *leftCurrencyView;
 @property (strong, nonatomic) AWXCurrencyView *rightCurrencyView;
 @property (strong, nonatomic) UILabel *rateLabel;
-@property (strong, nonatomic) AWXButton *confirmButton;
+@property (strong, nonatomic) AWXActionButton *confirmButton;
 
 @end
 
@@ -25,6 +26,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
+
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel") style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
 
     NSDictionary *flags = @{@"AED": @"AE",
@@ -72,14 +76,14 @@
 
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = NSLocalizedString(@"Select your currency", @"Select your currency");
-    titleLabel.textColor = [UIColor gray100Color];
+    titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     titleLabel.font = [UIFont headlineFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:titleLabel];
 
     UILabel *subTitleLabel = [UILabel new];
     subTitleLabel.text = NSLocalizedString(@"Select the currency you would like to pay with", @"Select the currency you would like to pay with");
-    subTitleLabel.textColor = [UIColor gray50Color];
+    subTitleLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
     subTitleLabel.font = [UIFont subhead1Font];
     subTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:subTitleLabel];
@@ -99,7 +103,7 @@
     }
     _leftCurrencyView.layer.masksToBounds = NO;
     _leftCurrencyView.layer.cornerRadius = 8;
-    _leftCurrencyView.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.08].CGColor;
+    _leftCurrencyView.layer.shadowColor = [AWXTheme sharedTheme].shadowColor.CGColor;
     _leftCurrencyView.layer.shadowOffset = CGSizeMake(0, 0);
     _leftCurrencyView.layer.shadowOpacity = 1;
     _leftCurrencyView.layer.shadowRadius = 16;
@@ -110,7 +114,7 @@
     _rightCurrencyView = [AWXCurrencyView new];
     _rightCurrencyView.layer.masksToBounds = NO;
     _rightCurrencyView.layer.cornerRadius = 8;
-    _rightCurrencyView.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.08].CGColor;
+    _rightCurrencyView.layer.shadowColor = [AWXTheme sharedTheme].shadowColor.CGColor;
     _rightCurrencyView.layer.shadowOffset = CGSizeMake(0, 0);
     _rightCurrencyView.layer.shadowOpacity = 1;
     _rightCurrencyView.layer.shadowRadius = 16;
@@ -130,14 +134,13 @@
     [tipView addSubview:rateImageView];
 
     _rateLabel = [UILabel new];
-    _rateLabel.textColor = [UIColor gray50Color];
+    _rateLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
     _rateLabel.font = [UIFont subhead1Font];
     _rateLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [tipView addSubview:_rateLabel];
 
-    _confirmButton = [AWXButton new];
+    _confirmButton = [AWXActionButton new];
     _confirmButton.enabled = YES;
-    _confirmButton.cornerRadius = 6;
     [_confirmButton setTitle:NSLocalizedString(@"Confirm payment", @"Confirm payment") forState:UIControlStateNormal];
     _confirmButton.titleLabel.font = [UIFont subhead2Font];
     [_confirmButton addTarget:self action:@selector(confirmPressed:) forControlEvents:UIControlEventTouchUpInside];
