@@ -22,14 +22,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBar.tintColor = [AWXTheme sharedTheme].tintColor;
 
     self.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     UIImage *backImage = [UIImage imageNamed:@"back" inBundle:[NSBundle resourceBundle]];
     self.navigationController.navigationBar.backIndicatorImage = backImage;
     self.navigationController.navigationBar.backIndicatorTransitionMaskImage = backImage;
 
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicator.hidesWhenStopped = YES;
     self.activityIndicator.hidden = YES;
@@ -49,10 +48,10 @@
 
 - (void)stopAnimating {
     [self.activityIndicator stopAnimating];
-    self.view.userInteractionEnabled = true;
+    self.view.userInteractionEnabled = YES;
 }
 
-- (void)enableTapToEndEditting {
+- (void)enableTapToEndEditing {
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                         action:@selector(dismissKeyboard)];
     gestureRecognizer.delegate = self;

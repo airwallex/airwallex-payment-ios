@@ -26,6 +26,7 @@
 
     AWXPaymentMethodType *validMethod = [AWXPaymentMethodType new];
     validMethod.name = @"validMethod";
+    validMethod.displayName = @"Valid Method";
     validMethod.transactionMode = @"transactionMode";
 
     AWXPaymentMethodType *mismatchTransactionMode = [AWXPaymentMethodType new];
@@ -34,12 +35,18 @@
 
     AWXPaymentMethodType *unsupportedMethod = [AWXPaymentMethodType new];
     unsupportedMethod.name = @"googlepay";
+    unsupportedMethod.displayName = @"Google Pay";
     unsupportedMethod.transactionMode = @"transactionMode";
+
+    AWXPaymentMethodType *unsupportedMethod2 = [AWXPaymentMethodType new];
+    unsupportedMethod2.name = @"something";
+    unsupportedMethod2.transactionMode = @"transactionMode";
 
     NSArray<AWXPaymentMethodType *> *methodTypes = @[
         validMethod,
         mismatchTransactionMode,
-        unsupportedMethod
+        unsupportedMethod,
+        unsupportedMethod2
     ];
 
     NSArray<AWXPaymentMethodType *> *filtered = [sessionMock filteredPaymentMethodTypes:methodTypes];

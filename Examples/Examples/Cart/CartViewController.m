@@ -20,8 +20,7 @@
 @interface CartViewController ()<UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UIView *badgeView;
-@property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *checkoutButton;
 @property (strong, nonatomic) NSMutableArray *products;
@@ -42,12 +41,8 @@
 }
 
 - (void)setupViews {
-    self.badgeView.backgroundColor = [[AWXTheme sharedTheme].tintColor colorWithAlphaComponent:0.5];
-    self.badgeLabel.textColor = [AWXTheme sharedTheme].tintColor;
-    self.badgeView.layer.masksToBounds = YES;
-    self.badgeView.layer.cornerRadius = 12;
-    self.checkoutButton.layer.masksToBounds = YES;
-    self.checkoutButton.layer.cornerRadius = 6;
+    self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
+    self.titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
 
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicator.hidesWhenStopped = YES;
@@ -94,14 +89,13 @@
     [Airwallex setMode:mode];
 
     // Theme customization
-    UIColor *tintColor = [UIColor colorNamed:@"Purple Color"];
-    [AWXTheme sharedTheme].tintColor = tintColor;
+    //    UIColor *tintColor = [UIColor systemPinkColor];
+    //    [AWXTheme sharedTheme].tintColor = tintColor;
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     self.activityIndicator.center = self.view.center;
-    self.badgeView.layer.cornerRadius = CGRectGetWidth(self.badgeView.bounds) / 2;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -110,16 +104,13 @@
 }
 
 - (void)reloadData {
-    self.badgeView.hidden = self.products.count == 0;
-    self.badgeLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.products.count];
-
     NSString *amount = [AirwallexExamplesKeys shared].amount;
     NSString *currency = [AirwallexExamplesKeys shared].currency;
     NSString *countryCode = [AirwallexExamplesKeys shared].countryCode;
     NSString *returnUrl = [AirwallexExamplesKeys shared].returnUrl;
 
     self.checkoutButton.enabled = self.shipping != nil && amount.doubleValue > 0 && currency.length > 0 && countryCode.length > 0 && returnUrl.length > 0;
-    self.checkoutButton.backgroundColor = self.checkoutButton.enabled ? [AWXTheme sharedTheme].tintColor : [UIColor colorNamed:@"Line Color"];
+
     [self.tableView reloadData];
 }
 

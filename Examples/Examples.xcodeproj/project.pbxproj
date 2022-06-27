@@ -27,6 +27,8 @@
 		57DCD642269428C800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
 		57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */; };
 		8C8B48417A8089F01476F8CD /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */; };
+		C52EE6AD2864177B000571A1 /* OptionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C52EE6AC2864177B000571A1 /* OptionButton.m */; };
+		C5AB0C592860454200B436C3 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB0C582860454200B436C3 /* Product.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +80,10 @@
 		617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 		7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
+		C52EE6AB2864177B000571A1 /* OptionButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionButton.h; sourceTree = "<group>"; };
+		C52EE6AC2864177B000571A1 /* OptionButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionButton.m; sourceTree = "<group>"; };
+		C5AB0C572860454200B436C3 /* Product.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
+		C5AB0C582860454200B436C3 /* Product.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,8 @@
 				08A3E99E24246C30003FDAAF /* OptionsViewController.m */,
 				57033F2726958C94008A4780 /* UIViewController+Utils.h */,
 				57033F2826958C94008A4780 /* UIViewController+Utils.m */,
+				C52EE6AB2864177B000571A1 /* OptionButton.h */,
+				C52EE6AC2864177B000571A1 /* OptionButton.m */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -197,6 +205,8 @@
 				082D308123CEEC3300C9D587 /* ProductCell.m */,
 				082D308323CEECE400C9D587 /* TotalCell.h */,
 				082D308423CEECE400C9D587 /* TotalCell.m */,
+				C5AB0C572860454200B436C3 /* Product.h */,
+				C5AB0C582860454200B436C3 /* Product.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -378,6 +388,7 @@
 				00E501BC264D06A900027311 /* InputViewController.m in Sources */,
 				088F3E8323CEB7FF005AE40F /* APIClient.m in Sources */,
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
+				C5AB0C592860454200B436C3 /* Product.m in Sources */,
 				084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */,
 				57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */,
 				00D7B95A265F45AF00F2CBB6 /* WechatPayViewController.m in Sources */,
@@ -385,6 +396,7 @@
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
 				00E501C2264D06BE00027311 /* SuccessViewController.m in Sources */,
 				57033F2926958C94008A4780 /* UIViewController+Utils.m in Sources */,
+				C52EE6AD2864177B000571A1 /* OptionButton.m in Sources */,
 				08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

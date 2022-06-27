@@ -7,16 +7,30 @@
 //
 
 #import "ShippingCell.h"
+#import "AWXTheme.h"
 
 @implementation ShippingCell
+
+#pragma mark - Init
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    self.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
+    self.shippingTitleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
+    self.shippingLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
+    self.separator.backgroundColor = [AWXTheme sharedTheme].lineColor;
+    self.disclosureIndicator.tintColor = [AWXTheme sharedTheme].glyphColor;
+}
+
+#pragma mark - ShippingCell
 
 - (void)setShipping:(AWXPlaceDetails *)shipping {
     if (shipping) {
         self.shippingLabel.text = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@ %@", shipping.firstName, shipping.lastName, shipping.address.street, shipping.address.city, shipping.address.state, shipping.address.countryCode];
-        self.shippingLabel.textColor = [UIColor colorNamed:@"Black Text Color"];
+        self.shippingLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     } else {
         self.shippingLabel.text = @"Enter shipping information";
-        self.shippingLabel.textColor = [UIColor colorNamed:@"Placeholder Color"];
+        self.shippingLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
     }
 }
 

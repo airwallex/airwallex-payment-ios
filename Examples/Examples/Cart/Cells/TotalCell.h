@@ -8,16 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface TotalCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *subtotalLabel;
-@property (weak, nonatomic) IBOutlet UILabel *shippingLabel;
-@property (weak, nonatomic) IBOutlet UILabel *totalLabel;
+@property (strong, nonatomic, nonnull) IBOutlet UILabel *subtotalTitleLabel;
+@property (strong, nonatomic, nonnull) IBOutlet UILabel *subtotalLabel;
 
-@property (strong, nonatomic) NSDecimalNumber *subtotal, *shipping, *total;
+@property (strong, nonatomic, nonnull) IBOutlet UILabel *totalTitleLabel;
+@property (strong, nonatomic, nonnull) IBOutlet UILabel *totalLabel;
+@property (strong, nonatomic, nonnull) IBOutletCollection(UIView) NSArray<UIView *> *separators;
+
+@property (strong, nonatomic, nonnull) NSDecimalNumber *subtotal;
+@property (strong, nonatomic, nonnull) NSDecimalNumber *shipping;
+@property (strong, nonatomic, nonnull) NSDecimalNumber *total;
 
 @end
-
-NS_ASSUME_NONNULL_END

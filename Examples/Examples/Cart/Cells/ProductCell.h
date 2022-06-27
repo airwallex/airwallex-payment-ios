@@ -6,32 +6,23 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
+#import "Product.h"
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
-@interface Product : NSObject
-
-@property (nonatomic, strong) NSString *name, *detail;
-@property (nonatomic, strong) NSDecimalNumber *price;
-
-- (instancetype)initWithName:(NSString *)name
-                      detail:(NSString *)detail
-                       price:(NSDecimalNumber *)price;
-
-@end
 
 typedef void (^ProductCellRemovalHandler)(Product *product);
 
 @interface ProductCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
-@property (weak, nonatomic) IBOutlet UIButton *removeButton;
+@property (strong, nonatomic, nonnull) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic, nonnull) IBOutlet UILabel *priceLabel;
+@property (strong, nonatomic, nonnull) IBOutlet UILabel *detailLabel;
+@property (strong, nonatomic, nonnull) IBOutlet UIButton *removeButton;
+@property (strong, nonatomic, nonnull) IBOutlet UIView *separator;
 
-@property (strong, nonatomic) Product *product;
-@property (strong, nonatomic) ProductCellRemovalHandler handler;
+@property (strong, nonatomic, nonnull) Product *product;
+@property (strong, nonatomic, nonnull) ProductCellRemovalHandler handler;
 
 @end
 

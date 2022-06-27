@@ -45,7 +45,7 @@
 @property (strong, nonatomic) AWXFloatingLabelTextField *zipcodeField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *emailField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *phoneNumberField;
-@property (strong, nonatomic) AWXButton *confirmButton;
+@property (strong, nonatomic) AWXActionButton *confirmButton;
 
 @property (strong, nonatomic, nullable) AWXCountry *country;
 @property (strong, nonatomic, nullable) AWXPlaceDetails *savedBilling;
@@ -57,7 +57,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
-    [self enableTapToEndEditting];
+    [self enableTapToEndEditing];
 
     _scrollView = [UIScrollView new];
     _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -83,7 +83,7 @@
 
     _titleLabel = [UILabel new];
     _titleLabel.text = NSLocalizedString(@"Card", @"Card");
-    _titleLabel.textColor = [UIColor gray100Color];
+    _titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     _titleLabel.font = [UIFont titleFont];
     _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [stackView addArrangedSubview:_titleLabel];
@@ -126,7 +126,7 @@
 
     UILabel *billingLabel = [UILabel new];
     billingLabel.text = NSLocalizedString(@"Billing info", @"Billing info");
-    billingLabel.textColor = [UIColor gray100Color];
+    billingLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     billingLabel.font = [UIFont subhead2Font];
     [stackView addArrangedSubview:billingLabel];
 
@@ -140,12 +140,11 @@
 
     UILabel *shippingLabel = [UILabel new];
     shippingLabel.text = NSLocalizedString(@"Same as shipping address", @"Same as shipping address");
-    shippingLabel.textColor = [UIColor gray70Color];
+    shippingLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
     shippingLabel.font = [UIFont subhead1Font];
     [shippingStackView addArrangedSubview:shippingLabel];
 
     _switchButton = [UISwitch new];
-    _switchButton.onTintColor = [AWXTheme sharedTheme].tintColor;
     [_switchButton addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     [shippingStackView addArrangedSubview:_switchButton];
 
@@ -208,11 +207,9 @@
     _emailField.nextTextField = _phoneNumberField;
     [stackView addArrangedSubview:_phoneNumberField];
 
-    _confirmButton = [AWXButton new];
+    _confirmButton = [AWXActionButton new];
     _confirmButton.enabled = YES;
-    _confirmButton.cornerRadius = 6;
     [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
-    _confirmButton.titleLabel.font = [UIFont headlineFont];
     [_confirmButton addTarget:self action:@selector(savePressed:) forControlEvents:UIControlEventTouchUpInside];
     [stackView addArrangedSubview:_confirmButton];
     [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;

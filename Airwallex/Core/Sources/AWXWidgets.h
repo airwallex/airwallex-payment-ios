@@ -26,15 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/**
- A customized button with corner radius
- */
-@interface AWXButton : UIButton
-
-@property (nonatomic) CGFloat cornerRadius;
-
-@end
-
 @class AWXFloatingLabelTextField;
 @protocol AWXFloatingLabelTextFieldDelegate<NSObject>
 
@@ -111,6 +102,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ A common button type used for submission
+ */
+@interface AWXActionButton : UIButton
+
+@end
+
 typedef enum {
     UIImageViewAlignmentMaskCenter = 0,
     UIImageViewAlignmentMaskLeft = 1,
@@ -141,3 +139,9 @@ typedef UIImageViewAlignmentMask UIImageViewAignmentMask __attribute__((deprecat
 @end
 
 NS_ASSUME_NONNULL_END
+
+@interface UIButton (BackgroundColor)
+
+- (void)awx_setBackgroundColor:(UIColor *_Nonnull)color forState:(UIControlState)state;
+
+@end

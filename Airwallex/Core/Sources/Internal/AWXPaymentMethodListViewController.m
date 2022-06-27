@@ -49,11 +49,15 @@
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
 
+    self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
+
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _tableView.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.tableHeaderView = [self headerView];
     _tableView.tableFooterView = [UIView new];
+    _tableView.separatorColor = [AWXTheme sharedTheme].lineColor;
     _tableView.separatorInset = UIEdgeInsetsMake(0, 24, 0, 24);
     _tableView.translatesAutoresizingMaskIntoConstraints = NO;
     [_tableView registerClass:[AWXPaymentMethodCell class] forCellReuseIdentifier:@"AWXPaymentMethodCell"];
@@ -84,7 +88,7 @@
 
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = NSLocalizedString(@"Payment methods", @"Payment methods");
-    titleLabel.textColor = [UIColor gray100Color];
+    titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     titleLabel.font = [UIFont titleFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [headerView addSubview:titleLabel];

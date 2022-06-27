@@ -9,14 +9,14 @@
 #import <Airwallex/Core.h>
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface ShippingCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *shippingLabel;
+@property (strong, nonatomic, nonnull) IBOutlet UILabel *shippingTitleLabel;
 
-@property (strong, nonatomic) AWXPlaceDetails *shipping;
+@property (strong, nonatomic, nonnull) IBOutlet UILabel *shippingLabel;
+
+@property (strong, nonatomic, nonnull) IBOutlet UIView *separator;
+@property (strong, nonatomic, nonnull) IBOutlet UIImageView *disclosureIndicator;
+@property (strong, nonatomic, nonnull) AWXPlaceDetails *shipping;
 
 @end
-
-NS_ASSUME_NONNULL_END

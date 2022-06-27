@@ -22,6 +22,11 @@
             return NO;
         }
 
+        // Filter out anything that doesn't even have a display name
+        if (item.displayName == nil) {
+            return NO;
+        }
+
         Class class = ClassToHandleFlowForPaymentMethodType(item);
 
         // If no provider is available or if the provider is not able to handle the particular session,

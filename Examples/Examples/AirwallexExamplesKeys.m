@@ -71,7 +71,10 @@
     self.requireCVC = [userDefaults boolForKey:kCachedRequiresCVC];
     self.autoCapture = [userDefaults boolForKey:kCachedAutoCapture];
     self.customerId = [userDefaults stringForKey:kCachedCustomerID];
-    self.apiKey = [userDefaults stringForKey:kCachedApiKey] ?: self.configJson[@"api_key"];
+
+    NSString *cachedApiKey = [userDefaults stringForKey:kCachedApiKey];
+
+    self.apiKey = cachedApiKey ?: self.configJson[@"api_key"];
     self.clientId = [userDefaults stringForKey:kCachedClientId] ?: self.configJson[@"client_id"];
     self.amount = [userDefaults stringForKey:kCachedAmount] ?: self.configJson[@"amount"] ?
                                                                                           : @"0";

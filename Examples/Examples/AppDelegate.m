@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "AWXTheme.h"
 #import "AirwallexExamplesKeys.h"
 #import <WechatOpenSDK/WXApi.h>
 
@@ -17,8 +18,11 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [UINavigationBar appearance].barTintColor = [UIColor whiteColor];
+    [UINavigationBar appearance].barTintColor = [AWXTheme sharedTheme].toolbarColor;
+    [UINavigationBar appearance].tintColor = [AWXTheme sharedTheme].tintColor;
     [UINavigationBar appearance].shadowImage = [UIImage new];
+    [UIView appearance].tintColor = [AWXTheme sharedTheme].tintColor;
+    [UISwitch appearance].onTintColor = [AWXTheme sharedTheme].tintColor;
 
     [WXApi registerApp:@"wx4c86d73fe4f82431" universalLink:@"https://airwallex.com/"];
 

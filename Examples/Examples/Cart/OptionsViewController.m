@@ -9,10 +9,17 @@
 #import "OptionsViewController.h"
 #import "APIClient.h"
 #import "AirwallexExamplesKeys.h"
+#import "OptionButton.h"
 #import "UIViewController+Utils.h"
 #import <Airwallex/Core.h>
 
 @interface OptionsViewController ()<UITextFieldDelegate>
+
+@property (strong, nonatomic, nonnull) IBOutletCollection(UILabel) NSArray<UILabel *> *titleLabels;
+
+@property (strong, nonatomic, nonnull) IBOutletCollection(UITextField) NSArray<UITextField *> *textFields;
+
+@property (strong, nonatomic, nonnull) IBOutletCollection(UIButton) NSArray<UIButton *> *optionButtons;
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -25,9 +32,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *regionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
-@property (weak, nonatomic) IBOutlet UIButton *modeButton;
-@property (weak, nonatomic) IBOutlet UIButton *checkoutBtn;
-@property (weak, nonatomic) IBOutlet UIButton *nextTriggerByBtn;
+@property (weak, nonatomic) IBOutlet OptionButton *modeButton;
+@property (weak, nonatomic) IBOutlet OptionButton *checkoutBtn;
+@property (weak, nonatomic) IBOutlet OptionButton *nextTriggerByBtn;
 @property (weak, nonatomic) IBOutlet UISwitch *cvcSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *autoCaptureSwitch;
 @property (weak, nonatomic) IBOutlet UITextField *customerIdTextField;
@@ -42,6 +49,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupViews];
+
+    self.checkoutModesList = @[@"Payment", @"Recurring", @"Recurring with intent"];
+    self.nextTriggerByList = @[@"Customer", @"Merchant"];
+
+    [self resetTextFields];
+}
+
+- (void)setupViews {
+    self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
+
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicator.hidesWhenStopped = YES;
     self.activityIndicator.hidden = YES;
@@ -53,10 +71,17 @@
     NSString *build = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     self.versionLabel.text = [NSString stringWithFormat:@"App Version: v%@ (%@)", version, build];
 
-    self.checkoutModesList = @[@"Payment", @"Recurring", @"Recurring with intent"];
-    self.nextTriggerByList = @[@"Customer", @"Merchant"];
+    for (UILabel *label in _titleLabels) {
+        label.textColor = [AWXTheme sharedTheme].primaryTextColor;
+        label.font = [UIFont subhead2Font];
+    }
 
-    [self resetTextFields];
+    for (UITextField *textField in _textFields) {
+        textField.font = [UIFont bodyFont];
+    }
+
+    self.regionLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
+    self.versionLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
 }
 
 - (void)viewDidLayoutSubviews {
