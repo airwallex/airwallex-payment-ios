@@ -22,6 +22,7 @@
 		0829FD4E243584E300557DB2 /* AWXTestAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD4D243584E300557DB2 /* AWXTestAPIClient.m */; };
 		0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */; };
 		085BD3D223CC62B4002E8F27 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; };
+		18A06644286E88760018DAEC /* AWXPaymentFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A06643286E88760018DAEC /* AWXPaymentFormViewModel.swift */; };
 		2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */; };
 		3C2B649227E98858002FAF3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649127E98858002FAF3E /* AppDelegate.m */; };
 		3C2B649827E98858002FAF3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649727E98858002FAF3E /* ViewController.m */; };
@@ -311,6 +312,7 @@
 		085BD3D123CC62B4002E8F27 /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3D823CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08D26F532404B6C3008E65D3 /* AirwallexCore.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AirwallexCore.bundle; sourceTree = "<group>"; };
+		18A06643286E88760018DAEC /* AWXPaymentFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentFormViewModel.swift; sourceTree = "<group>"; };
 		3C2B648E27E98858002FAF3E /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2B649027E98858002FAF3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3C2B649127E98858002FAF3E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -847,6 +849,7 @@
 			children = (
 				5775CF8E26E5E28C00C6AFE3 /* AWXPaymentFormViewController.h */,
 				5775CF9026E5E28C00C6AFE3 /* AWXPaymentFormViewController.m */,
+				18A06643286E88760018DAEC /* AWXPaymentFormViewModel.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -1766,6 +1769,7 @@
 			files = (
 				5775CF9926E5E28D00C6AFE3 /* AWXRedirectActionProvider.m in Sources */,
 				57E7371A272AC043009905DC /* AWXSchemaProvider.m in Sources */,
+				18A06644286E88760018DAEC /* AWXPaymentFormViewModel.swift in Sources */,
 				5775CF9626E5E28D00C6AFE3 /* AWXPaymentFormViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2389,6 +2393,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2413,6 +2418,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

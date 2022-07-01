@@ -81,6 +81,13 @@
     return self;
 }
 
+- (void)layoutSubviews {
+    if (_prefixText) {
+        _textField.text = _prefixText;
+        [self showFloatingLabel];
+    }
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     [self updateColors];
@@ -247,11 +254,7 @@
     self.floatingLabel.alpha = 0;
 
     void (^callback)(void) = ^{
-        self.floatingLabel.font = [UIFont caption2Font];
-        self.floatingTopConstraint.constant = 9;
-        self.textTopConstraint.constant = 30;
-        self.floatingLabel.alpha = 1;
-        [self layoutIfNeeded];
+        [self showFloatingLabel];
     };
 
     if (animated) {
@@ -288,6 +291,14 @@
     } else {
         callback();
     }
+}
+
+- (void)showFloatingLabel {
+    self.floatingLabel.font = [UIFont caption2Font];
+    self.floatingTopConstraint.constant = 9;
+    self.textTopConstraint.constant = 30;
+    self.floatingLabel.alpha = 1;
+    [self layoutIfNeeded];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -377,6 +388,8 @@
     }
 
     switch (self.fieldType) {
+    case AWXTextFieldTypePhoneNumber:
+            textField.text = [[textField.text componentsSeparatedByCharactersInSet:NSCharacterSet.whitespaceCharacterSet] componentsJoinedByString:@""];
     case AWXTextFieldTypeFirstName:
         self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid first name", nil);
         break;
