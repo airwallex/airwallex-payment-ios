@@ -10,9 +10,11 @@
 #import "AWXForm.h"
 #import "AWXFormMapping.h"
 #import "AWXPaymentMethod.h"
+#import "AWXSession.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
+#import <Redirect/Redirect-Swift.h>
 
 @interface AWXPaymentFormViewController ()
 
@@ -108,6 +110,10 @@
             textField.key = form.key;
             textField.placeholder = form.title;
             textField.defaultErrorMessage = [NSString stringWithFormat:@"Invalid %@", form.title.lowercaseString];
+            
+            if (form.textFieldType == AWXTextFieldTypePhoneNumber) {
+                textField.prefixText = [self.viewModel getPhonePrefix];
+            }
             if (lastTextField) {
                 lastTextField.nextTextField = textField;
             }
@@ -266,7 +272,7 @@
     [self animateDismissViewWithCompletion:nil];
 }
 
-- (void)animateDismissViewWithCompletion:(nullable void (^)())completionHandler {
+- (void)animateDismissViewWithCompletion:(nullable void (^)(void))completionHandler {
     self.dimmedView.alpha = self.maxDimmedAlpha;
     [UIView animateWithDuration:0.25
         animations:^{

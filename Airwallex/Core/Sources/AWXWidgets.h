@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isRequired;
 @property (nonatomic, strong) NSString *placeholder;
 @property (nonatomic, strong, nullable) NSString *errorText, *defaultErrorMessage;
+@property (nonatomic, strong, nullable) NSString *prefixText;
 @property (nonatomic) AWXTextFieldType fieldType;
 @property (nonatomic, weak) AWXFloatingLabelTextField *nextTextField;
 

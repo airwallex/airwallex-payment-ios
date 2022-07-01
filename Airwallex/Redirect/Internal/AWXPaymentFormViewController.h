@@ -7,10 +7,11 @@
 //
 
 #import "AWXViewController.h"
+#import "AWXPaymentMethod.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class AWXPaymentFormViewController, AWXPaymentMethod;
+@class AWXPaymentFormViewController, AWXPaymentFormViewModel;
 
 /**
  A delegate handles payment form result.
@@ -30,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
  `AWXPaymentFormViewController` handles payment form.
  */
 @interface AWXPaymentFormViewController : AWXViewController
+
+@property (nonatomic, strong) AWXPaymentFormViewModel *viewModel;
 
 /**
  A delegate which handles the result of payment form.
