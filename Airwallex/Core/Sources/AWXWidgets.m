@@ -389,7 +389,7 @@
 
     switch (self.fieldType) {
     case AWXTextFieldTypePhoneNumber:
-            textField.text = [[textField.text componentsSeparatedByCharactersInSet:NSCharacterSet.whitespaceCharacterSet] componentsJoinedByString:@""];
+        textField.text = [[textField.text componentsSeparatedByCharactersInSet:NSCharacterSet.whitespaceCharacterSet] componentsJoinedByString:@""];
     case AWXTextFieldTypeFirstName:
         self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid first name", nil);
         break;
