@@ -9,12 +9,12 @@
 #import "AWXPaymentFormViewController.h"
 #import "AWXForm.h"
 #import "AWXFormMapping.h"
+#import "AWXPaymentFormViewModel.h"
 #import "AWXPaymentMethod.h"
 #import "AWXSession.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
-#import <Redirect/Redirect-Swift.h>
 
 @interface AWXPaymentFormViewController ()
 
@@ -110,9 +110,9 @@
             textField.key = form.key;
             textField.placeholder = form.title;
             textField.defaultErrorMessage = [NSString stringWithFormat:@"Invalid %@", form.title.lowercaseString];
-            
+
             if (form.textFieldType == AWXTextFieldTypePhoneNumber) {
-                textField.prefixText = [self.viewModel getPhonePrefix];
+                textField.prefixText = [self.viewModel phonePrefix];
             }
             if (lastTextField) {
                 lastTextField.nextTextField = textField;

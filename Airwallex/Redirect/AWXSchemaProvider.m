@@ -11,10 +11,10 @@
 #import "AWXForm.h"
 #import "AWXFormMapping.h"
 #import "AWXPaymentFormViewController.h"
+#import "AWXPaymentFormViewModel.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
-#import <Redirect/Redirect-Swift.h>
 
 @interface AWXSchemaProvider ()<AWXPaymentFormViewControllerDelegate>
 
