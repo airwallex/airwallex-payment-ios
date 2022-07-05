@@ -14,7 +14,7 @@
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
-#import <Redirect/Redirect-Swift.h>
+#import <Airwallex/Airwallex-Swift.h>
 
 @interface AWXSchemaProvider ()<AWXPaymentFormViewControllerDelegate>
 

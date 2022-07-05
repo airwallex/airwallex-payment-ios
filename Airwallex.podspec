@@ -7,6 +7,7 @@ Pod::Spec.new do |s|
   s.authors                 = { 'Airwallex' => 'pa_mobile_sdk@airwallex.com' }
   s.source                  = { :git => "https://github.com/airwallex/airwallex-payment-ios.git", :tag => "#{s.version}" }
   s.platform                = :ios
+  s.swift_version           = '5.0'
   s.ios.deployment_target   = '11.0'
   s.static_framework        = true
   s.default_subspecs        = 'Core', 'WeChatPay', 'Card', 'Redirect', 'ApplePay'
@@ -35,7 +36,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Redirect' do |plugin|
     plugin.dependency 'Airwallex/Core'
-    plugin.source_files = 'Airwallex/Redirect/**/*.{h,m}'
+    plugin.source_files = 'Airwallex/Redirect/**/*.{swift,h,m}'
     plugin.public_header_files = 'Airwallex/Redirect/*.h'
   end
   

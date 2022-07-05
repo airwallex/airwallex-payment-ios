@@ -65,12 +65,6 @@
 		3C5A37D427EAF68F00CFC2EF /* Examples.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Examples.entitlements; sourceTree = "<group>"; };
 		57033F2726958C94008A4780 /* UIViewController+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Utils.h"; sourceTree = "<group>"; };
 		57033F2826958C94008A4780 /* UIViewController+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Utils.m"; sourceTree = "<group>"; };
-		57CEC82526E6005000695740 /* Card.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Card.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		57CEC82726E6005400695740 /* Redirect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Redirect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		57CEC82926E6005700695740 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		57CEC82B26E6007100695740 /* Card.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Card.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		57CEC82D26E6007400695740 /* Redirect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Redirect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		57CEC82F26E6007700695740 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC83126E6007C00695740 /* Card.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Card.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC83326E6007F00695740 /* Redirect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Redirect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC83526E6008100695740 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,12 +211,6 @@
 				57CEC83526E6008100695740 /* WeChatPay.framework */,
 				57CEC83326E6007F00695740 /* Redirect.framework */,
 				57CEC83126E6007C00695740 /* Card.framework */,
-				57CEC82F26E6007700695740 /* WeChatPay.framework */,
-				57CEC82D26E6007400695740 /* Redirect.framework */,
-				57CEC82B26E6007100695740 /* Card.framework */,
-				57CEC82926E6005700695740 /* WeChatPay.framework */,
-				57CEC82726E6005400695740 /* Redirect.framework */,
-				57CEC82526E6005000695740 /* Card.framework */,
 				08B55E372421D8C60054E254 /* Airwallex.framework */,
 				7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */,
 			);
@@ -426,6 +414,7 @@
 		085BD40223CC64B9002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -485,6 +474,7 @@
 		085BD40323CC64B9002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -540,18 +530,28 @@
 			baseConfigurationReference = 617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Examples/Examples.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = K294E2HD3N;
 				INFOPLIST_FILE = Examples/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					/usr/lib/swift,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/WechatOpenSDK/OpenSDK1.8.7.1\"",
+					"$(SDKROOT)/usr/lib/swift",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -561,18 +561,28 @@
 			baseConfigurationReference = 89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Examples/Examples.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = K294E2HD3N;
 				INFOPLIST_FILE = Examples/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					/usr/lib/swift,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/WechatOpenSDK/OpenSDK1.8.7.1\"",
+					"$(SDKROOT)/usr/lib/swift",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.paymentacceptance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.airwallex.paymentacceptance";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

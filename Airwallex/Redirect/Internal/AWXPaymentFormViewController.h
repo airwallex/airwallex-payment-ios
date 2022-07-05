@@ -6,8 +6,8 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import "AWXViewController.h"
 #import "AWXPaymentMethod.h"
+#import "AWXViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

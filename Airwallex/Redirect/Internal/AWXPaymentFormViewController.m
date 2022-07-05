@@ -14,7 +14,7 @@
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
-#import <Redirect/Redirect-Swift.h>
+#import <Airwallex/Airwallex-Swift.h>
 
 @interface AWXPaymentFormViewController ()
 
@@ -110,7 +110,7 @@
             textField.key = form.key;
             textField.placeholder = form.title;
             textField.defaultErrorMessage = [NSString stringWithFormat:@"Invalid %@", form.title.lowercaseString];
-            
+
             if (form.textFieldType == AWXTextFieldTypePhoneNumber) {
                 textField.prefixText = [self.viewModel getPhonePrefix];
             }
