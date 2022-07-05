@@ -24,6 +24,7 @@
 		085BD3D223CC62B4002E8F27 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; };
 		1803601B2873C878003EA943 /* AWXPaymentFormViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1803601A2873C878003EA943 /* AWXPaymentFormViewModel.h */; };
 		1803601D2873CAE2003EA943 /* AWXPaymentFormViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601C2873CAE2003EA943 /* AWXPaymentFormViewModel.m */; };
+		1803601F2873D73A003EA943 /* AWXPaymentFormViewModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTest.m */; };
 		2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */; };
 		3C2B649227E98858002FAF3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649127E98858002FAF3E /* AppDelegate.m */; };
 		3C2B649827E98858002FAF3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649727E98858002FAF3E /* ViewController.m */; };
@@ -193,6 +194,7 @@
 		C5AB0C5528603CF400B436C3 /* UIColor+ViewCompat.h in Headers */ = {isa = PBXBuildFile; fileRef = C5AB0C5328603CF400B436C3 /* UIColor+ViewCompat.h */; };
 		C5AB0C5628603CF400B436C3 /* UIColor+ViewCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB0C5428603CF400B436C3 /* UIColor+ViewCompat.m */; };
 		CA09778887CAF1A3CB3519E4 /* Pods_ApplePayTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 766C109E04EF1051D97CC9A3 /* Pods_ApplePayTests.framework */; };
+		FB357E04D7E4A8E8C5F54146 /* Pods_RedirectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9DFB3C3391C7ABDA4375D4 /* Pods_RedirectTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +204,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 085BD3C723CC62B4002E8F27;
 			remoteInfo = Airwallex;
+		};
+		1898B6D62873DF6000325C58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C2B648D27E98858002FAF3E;
+			remoteInfo = TestHost;
+		};
+		1898B6D82873ED3400325C58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C2B648D27E98858002FAF3E;
+			remoteInfo = TestHost;
 		};
 		3C2B64A727E98863002FAF3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -223,13 +239,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 085BD3C723CC62B4002E8F27;
 			remoteInfo = Core;
-		};
-		3C99E7AB27EAF4B90074156C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C2B648D27E98858002FAF3E;
-			remoteInfo = TestHost;
 		};
 		5775CE6926E5D86100C6AFE3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -315,6 +324,7 @@
 		08D26F532404B6C3008E65D3 /* AirwallexCore.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AirwallexCore.bundle; sourceTree = "<group>"; };
 		1803601A2873C878003EA943 /* AWXPaymentFormViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXPaymentFormViewModel.h; sourceTree = "<group>"; };
 		1803601C2873CAE2003EA943 /* AWXPaymentFormViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModel.m; sourceTree = "<group>"; };
+		1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModelTest.m; sourceTree = "<group>"; };
 		3C2B648E27E98858002FAF3E /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2B649027E98858002FAF3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3C2B649127E98858002FAF3E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -503,7 +513,10 @@
 		CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
+		F9330DB1F34C6DD83245F7CF /* Pods-RedirectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.release.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.release.xcconfig"; sourceTree = "<group>"; };
 		FBC8B399FD2DBF11F6F2E2CF /* Pods-WeChatPay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatPay.release.xcconfig"; path = "Target Support Files/Pods-WeChatPay/Pods-WeChatPay.release.xcconfig"; sourceTree = "<group>"; };
+		FC522BD223B734E323755856 /* Pods-RedirectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.debug.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FC9DFB3C3391C7ABDA4375D4 /* Pods_RedirectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RedirectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -595,6 +608,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5775CEB426E5DF3300C6AFE3 /* Redirect.framework in Frameworks */,
+				FB357E04D7E4A8E8C5F54146 /* Pods_RedirectTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -954,6 +968,7 @@
 			isa = PBXGroup;
 			children = (
 				5775CEBA26E5DF3300C6AFE3 /* Info.plist */,
+				1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTest.m */,
 			);
 			path = RedirectTests;
 			sourceTree = "<group>";
@@ -1011,6 +1026,7 @@
 				766C109E04EF1051D97CC9A3 /* Pods_ApplePayTests.framework */,
 				F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */,
 				7A5DE28F611F49B21B3B1DA1 /* Pods_WeChatPay.framework */,
+				FC9DFB3C3391C7ABDA4375D4 /* Pods_RedirectTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1024,6 +1040,8 @@
 				BD25D2EFD8E73A8E45ECDB24 /* Pods-ApplePayTests.release.xcconfig */,
 				CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */,
 				F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */,
+				FC522BD223B734E323755856 /* Pods-RedirectTests.debug.xcconfig */,
+				F9330DB1F34C6DD83245F7CF /* Pods-RedirectTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = ../Pods;
@@ -1229,7 +1247,7 @@
 			);
 			dependencies = (
 				3C99E79127EAF1A20074156C /* PBXTargetDependency */,
-				3C99E7AC27EAF4B90074156C /* PBXTargetDependency */,
+				1898B6D72873DF6000325C58 /* PBXTargetDependency */,
 			);
 			name = ApplePayTests;
 			productName = ApplePayTests;
@@ -1335,6 +1353,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5775CEBF26E5DF3300C6AFE3 /* Build configuration list for PBXNativeTarget "RedirectTests" */;
 			buildPhases = (
+				E84F2B82800DCD68917B9F17 /* [CP] Check Pods Manifest.lock */,
 				5775CEAF26E5DF3300C6AFE3 /* Sources */,
 				5775CEB026E5DF3300C6AFE3 /* Frameworks */,
 				5775CEB126E5DF3300C6AFE3 /* Resources */,
@@ -1342,6 +1361,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1898B6D92873ED3400325C58 /* PBXTargetDependency */,
 				5775CEB626E5DF3300C6AFE3 /* PBXTargetDependency */,
 			);
 			name = RedirectTests;
@@ -1393,6 +1413,7 @@
 					};
 					5775CEB226E5DF3300C6AFE3 = {
 						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = 3C2B648D27E98858002FAF3E;
 					};
 				};
 			};
@@ -1612,6 +1633,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E84F2B82800DCD68917B9F17 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RedirectTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1782,6 +1825,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1803601F2873D73A003EA943 /* AWXPaymentFormViewModelTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1792,6 +1836,16 @@
 			isa = PBXTargetDependency;
 			target = 085BD3C723CC62B4002E8F27 /* Core */;
 			targetProxy = 085BD3D323CC62B4002E8F27 /* PBXContainerItemProxy */;
+		};
+		1898B6D72873DF6000325C58 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C2B648D27E98858002FAF3E /* TestHost */;
+			targetProxy = 1898B6D62873DF6000325C58 /* PBXContainerItemProxy */;
+		};
+		1898B6D92873ED3400325C58 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C2B648D27E98858002FAF3E /* TestHost */;
+			targetProxy = 1898B6D82873ED3400325C58 /* PBXContainerItemProxy */;
 		};
 		3C2B64A827E98863002FAF3E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1808,11 +1862,6 @@
 			platformFilter = ios;
 			target = 085BD3C723CC62B4002E8F27 /* Core */;
 			targetProxy = 3C99E7A827EAF4890074156C /* PBXContainerItemProxy */;
-		};
-		3C99E7AC27EAF4B90074156C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C2B648D27E98858002FAF3E /* TestHost */;
-			targetProxy = 3C99E7AB27EAF4B90074156C /* PBXContainerItemProxy */;
 		};
 		5775CE6A26E5D86100C6AFE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2427,37 +2476,29 @@
 		};
 		5775CEC026E5DF3300C6AFE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC522BD223B734E323755856 /* Pods-RedirectTests.debug.xcconfig */;
 			buildSettings = {
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K294E2HD3N;
 				INFOPLIST_FILE = RedirectTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.RedirectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Debug;
 		};
 		5775CEC126E5DF3300C6AFE3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F9330DB1F34C6DD83245F7CF /* Pods-RedirectTests.release.xcconfig */;
 			buildSettings = {
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K294E2HD3N;
 				INFOPLIST_FILE = RedirectTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.RedirectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Release;
 		};

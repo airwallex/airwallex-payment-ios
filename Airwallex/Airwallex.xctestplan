@@ -25,6 +25,13 @@
         "identifier" : "3C99E78D27EAF1A20074156C",
         "name" : "ApplePayTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Airwallex.xcodeproj",
+        "identifier" : "5775CEB226E5DF3300C6AFE3",
+        "name" : "RedirectTests"
+      }
     }
   ],
   "version" : 1
