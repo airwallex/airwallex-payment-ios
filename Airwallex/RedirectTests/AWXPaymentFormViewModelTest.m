@@ -18,11 +18,11 @@
 
 - (void)testPrefixWithCountryCodeAndCurrency {
     AWXPaymentIntent *intent = [self dummyPaymentIntent];
-    
+
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.countryCode = @"HK";
     session.paymentIntent = intent;
-    
+
     AWXPaymentFormViewModel *viewModel = [[AWXPaymentFormViewModel alloc] initWithSession:session];
     XCTAssertEqualObjects(viewModel.phonePrefix, @"+852");
 }
@@ -31,7 +31,7 @@
     AWXPaymentIntent *intent = [self dummyPaymentIntent];
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.paymentIntent = intent;
-    
+
     AWXPaymentFormViewModel *viewModel = [[AWXPaymentFormViewModel alloc] initWithSession:session];
     XCTAssertEqualObjects(viewModel.phonePrefix, @"+65");
 }
@@ -39,9 +39,23 @@
 - (void)testPrefixWithCountryCode {
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.countryCode = @"TH";
-    
+
     AWXPaymentFormViewModel *viewModel = [[AWXPaymentFormViewModel alloc] initWithSession:session];
     XCTAssertEqualObjects(viewModel.phonePrefix, @"+66");
+}
+
+- (void)testPrefixWithInvalidCountryCode {
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.countryCode = @"ABC";
+
+    AWXPaymentFormViewModel *viewModel = [[AWXPaymentFormViewModel alloc] initWithSession:session];
+    XCTAssertNil(viewModel.phonePrefix);
+}
+
+- (void)testPrefixWithoutCountryCodeAndCurrency {
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXPaymentFormViewModel *viewModel = [[AWXPaymentFormViewModel alloc] initWithSession:session];
+    XCTAssertNil(viewModel.phonePrefix);
 }
 
 - (AWXPaymentIntent *)dummyPaymentIntent {

@@ -28,7 +28,7 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Airwallex.xcodeproj",
+        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
         "identifier" : "5775CEB226E5DF3300C6AFE3",
         "name" : "RedirectTests"
       }
