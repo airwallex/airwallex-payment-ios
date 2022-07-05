@@ -21,6 +21,10 @@ target 'ApplePayTests' do
   pod 'OCMock'
 end
 
+target 'RedirectTests' do
+  project './Airwallex/Airwallex.xcodeproj'
+end
+
 target 'Examples' do
   project './Examples/Examples.xcodeproj'
   pod 'Airwallex', :path => './'
