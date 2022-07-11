@@ -1,6 +1,11 @@
 # Airwallex iOS SDK Changelog
 All notable changes to the SDK will be documented in this file.
 
+## Version 5.1.0 (May 17, 2022)
+- Added full support for Dark Mode.
+- Fixed an issue where submission could fail when using Atome if the user’s phone number was not entered in the expected format. Spaces and symbols are now ignored.
+- Fixed various small UI bugs and inconsistencies.
+
 ## Version 5.0.1 (May 17, 2022)
 - Update Fingerprinting SDKs.
 
