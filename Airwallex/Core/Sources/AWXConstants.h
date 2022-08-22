@@ -36,6 +36,7 @@ typedef NS_ENUM(NSUInteger, AirwallexNextTriggerByType) {
 };
 
 typedef NS_ENUM(NSUInteger, AirwallexMerchantTriggerReason) {
+    AirwallexMerchantTriggerReasonUndefined,
     AirwallexMerchantTriggerReasonUnscheduled,
     AirwallexMerchantTriggerReasonScheduled
 };
