@@ -239,15 +239,15 @@
                                              if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
                                                  returnURL = AWXThreeDSReturnURL;
                                              }
-                                             AWXOneOffSession *session = (AWXOneOffSession *)self.session;
-                                             [self confirmPaymentIntentWithId:session.paymentIntent.Id
-                                                                   customerId:session.paymentIntent.customerId
-                                                                paymentMethod:paymentMethod
-                                                               paymentConsent:strongSelf.paymentConsent
-                                                                       device:device
-                                                                    returnURL:returnURL
-                                                                  autoCapture:session.autoCapture
-                                                                   completion:completion];
+                                             AWXOneOffSession *session = (AWXOneOffSession *)strongSelf.session;
+                                             [strongSelf confirmPaymentIntentWithId:session.paymentIntent.Id
+                                                                         customerId:session.paymentIntent.customerId
+                                                                      paymentMethod:paymentMethod
+                                                                     paymentConsent:strongSelf.paymentConsent
+                                                                             device:device
+                                                                          returnURL:returnURL
+                                                                        autoCapture:session.autoCapture
+                                                                         completion:completion];
                                          }];
     } else if ([self.session isKindOfClass:[AWXRecurringSession class]]) {
         AWXRecurringSession *session = (AWXRecurringSession *)self.session;
@@ -265,6 +265,7 @@
                                                  if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
                                                      returnURL = AWXThreeDSReturnURL;
                                                  }
+                                                 AWXRecurringSession *session = (AWXRecurringSession *)strongSelf.session;
                                                  [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod
                                                                                     paymentConsent:strongSelf.paymentConsent
                                                                                           currency:session.currency
@@ -286,6 +287,7 @@
                               merchantTriggerReason:session.merchantTriggerReason
                                          completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
                                              __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                             AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self.session;
                                              if ([paymentMethod.type isEqualToString:AWXCardKey]) {
                                                  [strongSelf confirmPaymentIntentWithId:session.paymentIntent.Id
                                                                              customerId:session.paymentIntent.customerId
