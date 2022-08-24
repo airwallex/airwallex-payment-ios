@@ -102,11 +102,11 @@ NSString *const kMockKey = @"MOCK";
     [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:[AWXPaymentMethod new]
                                                                   device:nil];
     OCMVerify(times(1), [self.providerMock createPaymentConsentWithPaymentMethod:[OCMArg any]
-                                                                 customerId:[OCMArg any]
-                                                                   currency:[OCMArg any]
-                                                          nextTriggerByType:AirwallexNextTriggerByCustomerType
-                                                                requiresCVC:[OCMArg any]
-                                                      merchantTriggerReason:AirwallexMerchantTriggerReasonUndefined
+                                                                      customerId:[OCMArg any]
+                                                                        currency:[OCMArg any]
+                                                               nextTriggerByType:AirwallexNextTriggerByCustomerType
+                                                                     requiresCVC:[OCMArg any]
+                                                           merchantTriggerReason:AirwallexMerchantTriggerReasonUndefined
                                                                       completion:([OCMArg invokeBlockWithArgs:self.response, [NSNull null], nil])]);
     OCMVerify(times(1), [self.providerMock verifyPaymentConsentWithPaymentMethod:[OCMArg any]
                                                                   paymentConsent:[OCMArg any]
@@ -207,7 +207,7 @@ NSString *const kMockKey = @"MOCK";
                                               merchantTriggerReason:AirwallexMerchantTriggerReasonUndefined
                                                          completion:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
     }
-    
+
     OCMStub([providerMock confirmPaymentIntentWithId:[OCMArg any]
                                           customerId:[OCMArg any]
                                        paymentMethod:[OCMArg any]

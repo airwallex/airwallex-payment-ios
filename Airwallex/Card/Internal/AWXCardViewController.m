@@ -298,7 +298,7 @@ typedef enum {
 }
 
 - (void)saveCardSwitchChanged:(id)sender {
-    self.saveCard = !self.saveCard;
+    self.saveCard = [(UISwitch *)sender isOn];
 }
 
 - (void)addressSwitchChanged:(id)sender {
