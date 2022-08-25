@@ -141,11 +141,15 @@
     if ([self.session isKindOfClass:[AWXOneOffSession class]] && customerPaymentConsents.count > 0 && customerPaymentMethods.count > 0) {
         NSArray *paymentConsents = [customerPaymentConsents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"nextTriggeredBy == %@ AND status == 'VERIFIED'", FormatNextTriggerByType(AirwallexNextTriggerByCustomerType)]];
         NSMutableArray *availablePaymentConsents = [@[] mutableCopy];
+        NSMutableArray *cardsFingerprint = [NSMutableArray new];
         for (AWXPaymentConsent *consent in paymentConsents) {
             AWXPaymentMethod *paymentMethod = [customerPaymentMethods filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Id == %@", consent.paymentMethod.Id]].firstObject;
             if (paymentMethod != nil) {
-                consent.paymentMethod = paymentMethod;
-                [availablePaymentConsents addObject:consent];
+                if (![cardsFingerprint containsObject:paymentMethod.card.fingerprint]) {
+                    [cardsFingerprint addObject:paymentMethod.card.fingerprint];
+                    consent.paymentMethod = paymentMethod;
+                    [availablePaymentConsents addObject:consent];
+                }
             }
         }
         self.availablePaymentConsents = availablePaymentConsents;

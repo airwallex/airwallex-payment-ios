@@ -35,7 +35,7 @@
 @property (strong, nonatomic) AWXFloatingLabelTextField *nameField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *expiresField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *cvcField;
-@property (strong, nonatomic) UISwitch *switchButton;
+@property (strong, nonatomic) UISwitch *addressSwitch;
 @property (strong, nonatomic) AWXFloatingLabelTextField *firstNameField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *lastNameField;
 @property (strong, nonatomic) AWXFloatingLabelView *countryView;
@@ -49,10 +49,16 @@
 
 @property (strong, nonatomic, nullable) AWXCountry *country;
 @property (strong, nonatomic, nullable) AWXPlaceDetails *savedBilling;
+@property (nonatomic) BOOL saveCard;
 
 @end
 
 @implementation AWXCardViewController
+
+typedef enum {
+    AddressSwitch,
+    SaveCardSwitch
+} SwitchType;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -124,29 +130,17 @@
     [cvcStackView addArrangedSubview:_cvcField];
     [_expiresField.widthAnchor constraintEqualToAnchor:_cvcField.widthAnchor multiplier:1.7].active = YES;
 
+    if ([self.session isKindOfClass:[AWXOneOffSession class]] && self.session.customerId) {
+        [stackView addArrangedSubview:[self switchOfType:SaveCardSwitch]];
+    }
+
     UILabel *billingLabel = [UILabel new];
     billingLabel.text = NSLocalizedString(@"Billing info", @"Billing info");
     billingLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     billingLabel.font = [UIFont subhead2Font];
     [stackView addArrangedSubview:billingLabel];
 
-    UIStackView *shippingStackView = [UIStackView new];
-    shippingStackView.axis = UILayoutConstraintAxisHorizontal;
-    shippingStackView.alignment = UIStackViewAlignmentFill;
-    shippingStackView.distribution = UIStackViewDistributionFill;
-    shippingStackView.spacing = 23;
-    shippingStackView.translatesAutoresizingMaskIntoConstraints = NO;
-    [stackView addArrangedSubview:shippingStackView];
-
-    UILabel *shippingLabel = [UILabel new];
-    shippingLabel.text = NSLocalizedString(@"Same as shipping address", @"Same as shipping address");
-    shippingLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
-    shippingLabel.font = [UIFont subhead1Font];
-    [shippingStackView addArrangedSubview:shippingLabel];
-
-    _switchButton = [UISwitch new];
-    [_switchButton addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
-    [shippingStackView addArrangedSubview:_switchButton];
+    [stackView addArrangedSubview:[self switchOfType:AddressSwitch]];
 
     _firstNameField = [AWXFloatingLabelTextField new];
     _firstNameField.fieldType = AWXTextFieldTypeFirstName;
@@ -234,7 +228,36 @@
         }
     }
     self.sameAsShipping = self.session.billing != nil;
-    _switchButton.on = self.sameAsShipping;
+    _addressSwitch.on = self.sameAsShipping;
+    self.saveCard = false;
+}
+
+- (UIStackView *)switchOfType:(SwitchType)type {
+    UIStackView *container = [UIStackView new];
+    container.axis = UILayoutConstraintAxisHorizontal;
+    container.alignment = UIStackViewAlignmentFill;
+    container.distribution = UIStackViewDistributionFill;
+    container.spacing = 23;
+    container.translatesAutoresizingMaskIntoConstraints = NO;
+
+    UISwitch *switchButton = [UISwitch new];
+    UILabel *titleLabel = [UILabel new];
+    switch (type) {
+    case AddressSwitch:
+        titleLabel.text = NSLocalizedString(@"Same as shipping address", @"Same as shipping address");
+        self.addressSwitch = switchButton;
+        [switchButton addTarget:self action:@selector(addressSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        break;
+    case SaveCardSwitch:
+        titleLabel.text = NSLocalizedString(@"Save this card for future payments", @"Save this card for future payments");
+        [switchButton addTarget:self action:@selector(saveCardSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        break;
+    }
+    titleLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
+    titleLabel.font = [UIFont subhead1Font];
+    [container addArrangedSubview:titleLabel];
+    [container addArrangedSubview:switchButton];
+    return container;
 }
 
 - (UIScrollView *)activeScrollView {
@@ -274,7 +297,11 @@
     _phoneNumberField.hidden = sameAsShipping;
 }
 
-- (void)switchChanged:(id)sender {
+- (void)saveCardSwitchChanged:(id)sender {
+    self.saveCard = [(UISwitch *)sender isOn];
+}
+
+- (void)addressSwitchChanged:(id)sender {
     if (!self.session.billing) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
                                                                             message:NSLocalizedString(@"No shipping address configured.", nil)
@@ -282,13 +309,13 @@
         [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
                                                        style:UIAlertActionStyleCancel
                                                      handler:^(UIAlertAction *_Nonnull action) {
-                                                         self.switchButton.on = NO;
+                                                         self.addressSwitch.on = NO;
                                                      }]];
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }
 
-    self.sameAsShipping = self.switchButton.isOn;
+    self.sameAsShipping = self.addressSwitch.isOn;
 }
 
 - (void)selectCountries:(id)sender {
@@ -343,7 +370,7 @@
     }
 
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:self session:self.session];
-    [provider confirmPaymentIntentWithCard:card billing:self.savedBilling];
+    [provider confirmPaymentIntentWithCard:card billing:self.savedBilling saveCard:self.saveCard];
     self.provider = provider;
 }
 

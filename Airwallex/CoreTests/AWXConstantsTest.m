@@ -37,6 +37,12 @@
 
 @implementation AWXConstantsTest
 
+- (void)testFormatMerchantTriggerReason {
+    XCTAssertNil(FormatMerchantTriggerReason(AirwallexMerchantTriggerReasonUndefined));
+    XCTAssertEqualObjects(FormatMerchantTriggerReason(AirwallexMerchantTriggerReasonScheduled), @"scheduled");
+    XCTAssertEqualObjects(FormatMerchantTriggerReason(AirwallexMerchantTriggerReasonUnscheduled), @"unscheduled");
+}
+
 - (void)testApplePayKey {
     XCTAssertEqualObjects(AWXApplePayKey, @"applepay");
 }

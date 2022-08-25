@@ -115,6 +115,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)handleFlow;
 
 /**
+ Create a new payment consent and confirm the payment intent with payment method.
+
+ @param paymentMethod The payment method info.
+ @param device The current device info.
+ */
+- (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
+                                                       device:(nullable AWXDevice *)device;
+
+/**
  Confirm the payment intent with payment method and consent.
 
  @param paymentMethod The payment method info.

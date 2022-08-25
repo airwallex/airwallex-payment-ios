@@ -31,8 +31,10 @@
     parameters[@"currency"] = self.currency;
     parameters[@"requires_cvc"] = [NSNumber numberWithBool:self.requiresCVC];
     parameters[@"next_triggered_by"] = FormatNextTriggerByType(self.nextTriggerByType);
-    parameters[@"merchant_trigger_reason"] = FormatMerchantTriggerReason(self.merchantTriggerReason);
-
+    NSString *merchantTriggerReasonString = FormatMerchantTriggerReason(self.merchantTriggerReason);
+    if (merchantTriggerReasonString) {
+        parameters[@"merchant_trigger_reason"] = merchantTriggerReasonString;
+    }
     NSMutableDictionary *paymentParams = @{}.mutableCopy;
     if (self.paymentMethod.Id) {
         paymentParams[@"id"] = self.paymentMethod.Id;

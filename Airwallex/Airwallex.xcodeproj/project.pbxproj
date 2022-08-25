@@ -25,6 +25,7 @@
 		1803601B2873C878003EA943 /* AWXPaymentFormViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1803601A2873C878003EA943 /* AWXPaymentFormViewModel.h */; };
 		1803601D2873CAE2003EA943 /* AWXPaymentFormViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601C2873CAE2003EA943 /* AWXPaymentFormViewModel.m */; };
 		1803601F2873D73A003EA943 /* AWXPaymentFormViewModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTest.m */; };
+		187AFA6928B522C000561EEB /* AWXPaymentConsentRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */; };
 		2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */; };
 		3C2B649227E98858002FAF3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649127E98858002FAF3E /* AppDelegate.m */; };
 		3C2B649827E98858002FAF3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649727E98858002FAF3E /* ViewController.m */; };
@@ -325,6 +326,7 @@
 		1803601A2873C878003EA943 /* AWXPaymentFormViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXPaymentFormViewModel.h; sourceTree = "<group>"; };
 		1803601C2873CAE2003EA943 /* AWXPaymentFormViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModel.m; sourceTree = "<group>"; };
 		1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModelTest.m; sourceTree = "<group>"; };
+		187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentConsentRequestTest.m; sourceTree = "<group>"; };
 		3C2B648E27E98858002FAF3E /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2B649027E98858002FAF3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3C2B649127E98858002FAF3E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -643,6 +645,7 @@
 			children = (
 				0829FD122431E11E00557DB2 /* AWXPaymentMethodFunctionalTest.m */,
 				0829FD142431F13A00557DB2 /* AWXPaymentIntentFunctionalTest.m */,
+				187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1716,6 +1719,7 @@
 				0829FD022431D10800557DB2 /* AWXAddressTest.m in Sources */,
 				3C324F9327FC0BF200CF7315 /* AWXSessionInternalTest.m in Sources */,
 				3C99E73F27E9A3380074156C /* AWXDefaultProviderTest.m in Sources */,
+				187AFA6928B522C000561EEB /* AWXPaymentConsentRequestTest.m in Sources */,
 				082442CC2431C00E00D04A2C /* AWXCardTest.m in Sources */,
 				3C324F9527FC108500CF7315 /* AWXConstantsInternalTest.m in Sources */,
 				572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */,
