@@ -133,7 +133,7 @@
         NSString *expirationYear = _text.length < 2 ? @"" : [_text substringFromIndex:2];
         if (expirationYear) {
             expirationYear = [expirationYear stringByRemovingIllegalCharacters];
-            expirationYear = [expirationYear substringToIndex:MIN(expirationYear.length, 4)];
+            expirationYear = [expirationYear substringToIndex:MIN(expirationYear.length, 2)];
         }
 
         if (expirationMonth.length == 1 && ![expirationMonth isEqualToString:@"0"] && ![expirationMonth isEqualToString:@"1"]) {
@@ -362,7 +362,7 @@
             BOOL isValidMonth = month.integerValue > 0 && month.integerValue <= 12;
             NSCalendar *calendar = [NSCalendar currentCalendar];
             NSDate *date = [NSDate date];
-            NSInteger currentYear = [calendar component:NSCalendarUnitYear fromDate:date];
+            NSInteger currentYear = [calendar component:NSCalendarUnitYear fromDate:date] % 100;
             NSInteger currentMonth = [calendar component:NSCalendarUnitMonth fromDate:date];
             BOOL isValidYear;
             if (year.integerValue == currentYear) {

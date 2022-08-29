@@ -58,7 +58,7 @@
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod {
     __weak __typeof(self) weakSelf = self;
-    [self setDevice:^(AWXDevice * _Nonnull device) {
+    [self setDevice:^(AWXDevice *_Nonnull device) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil device:device];
     }];
@@ -66,7 +66,7 @@
 
 - (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod {
     __weak __typeof(self) weakSelf = self;
-    [self setDevice:^(AWXDevice * _Nonnull device) {
+    [self setDevice:^(AWXDevice *_Nonnull device) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod device:device];
     }];
@@ -77,10 +77,10 @@
 - (void)setDevice:(void (^)(AWXDevice *_Nonnull))completion {
     [[AWXSecurityService sharedService] doProfile:self.session.paymentIntentId
                                        completion:^(NSString *_Nullable sessionId) {
-        AWXDevice *device = [AWXDevice new];
-        device.deviceId = sessionId;
-        completion(device);
-    }];
+                                           AWXDevice *device = [AWXDevice new];
+                                           device.deviceId = sessionId;
+                                           completion(device);
+                                       }];
 }
 
 - (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod

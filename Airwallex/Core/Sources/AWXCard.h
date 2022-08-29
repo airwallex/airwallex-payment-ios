@@ -25,7 +25,7 @@
 @property (nonatomic, copy, nonnull) NSString *expiryMonth;
 
 /**
- Four digit number representing the card’s expiration year. Example: 2030.
+ Two digit number representing the card’s expiration year. Example: 30.
  */
 @property (nonatomic, copy, nonnull) NSString *expiryYear;
 
