@@ -117,7 +117,7 @@ typedef enum {
 
     _expiresField = [AWXFloatingLabelTextField new];
     _expiresField.fieldType = AWXTextFieldTypeExpires;
-    _expiresField.placeholder = NSLocalizedString(@"Expires MM / YYYY", @"Expires MM / YYYY");
+    _expiresField.placeholder = NSLocalizedString(@"Expires MM / YY", @"Expires MM / YY");
     _nameField.nextTextField = _expiresField;
     _expiresField.isRequired = YES;
     [cvcStackView addArrangedSubview:_expiresField];
