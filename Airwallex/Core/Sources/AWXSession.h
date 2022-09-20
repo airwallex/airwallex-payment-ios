@@ -30,6 +30,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *lang;
 
 /**
+ Whether or not to prompt for billing information during checkout. If set to `NO`, any billing information will be ignored.
+ */
+@property (nonatomic) BOOL requiresBilling;
+
+/**
  The billing address.
  */
 @property (nonatomic, strong, nullable) AWXPlaceDetails *billing;
