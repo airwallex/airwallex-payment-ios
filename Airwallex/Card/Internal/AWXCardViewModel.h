@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXCardViewModel : NSObject
 
-@property (nonatomic, strong, nonnull) AWXSession *session;
-
 - (instancetype)initWithSession:(AWXSession *)session;
 
 - (void)saveBillingWithPlaceDetails:(AWXPlaceDetails *)placeDetails
@@ -24,7 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)saveCardWithName:(NSString *)name
                   CardNo:(NSString *)cardNo
               ExpiryText:(NSString *)expiryText
-                     Cvc:(NSString *)cvc completionHandler:(void (^)(AWXCard *_Nullable address, NSError *_Nullable error))completionHandler;
+                     Cvc:(NSString *)cvc
+       completionHandler:(void (^)(AWXCard *_Nullable address, NSError *_Nullable error))completionHandler;
 
 @end
 

@@ -8,6 +8,12 @@
 
 #import "AWXCardViewModel.h"
 
+@interface AWXCardViewModel ()
+
+@property (nonatomic, strong, nonnull) AWXSession *session;
+
+@end
+
 @implementation AWXCardViewModel
 
 - (instancetype)initWithSession:(AWXSession *)session {
@@ -18,9 +24,9 @@
     return self;
 }
 
-- (void)saveBillingWithPlaceDetails:(AWXPlaceDetails *)placeDetails Address:(AWXAddress *)address completionHandler:(void (^)(AWXPlaceDetails * _Nullable, NSString * _Nullable))completionHandler {
+- (void)saveBillingWithPlaceDetails:(AWXPlaceDetails *)placeDetails Address:(AWXAddress *)address completionHandler:(void (^)(AWXPlaceDetails *_Nullable, NSString *_Nullable))completionHandler {
     placeDetails.address = address;
-    NSString *error = [billing validate];
+    NSString *error = [placeDetails validate];
     if (error) {
         completionHandler(NULL, error);
     } else {
@@ -28,7 +34,7 @@
     }
 }
 
-- (void)saveCardWithName:(NSString *)name CardNo:(NSString *)cardNo ExpiryText:(NSString *)expiryText Cvc:(NSString *)cvc completionHandler:(void (^)(AWXCard * _Nullable, NSError * _Nullable))completionHandler {
+- (void)saveCardWithName:(NSString *)name CardNo:(NSString *)cardNo ExpiryText:(NSString *)expiryText Cvc:(NSString *)cvc completionHandler:(void (^)(AWXCard *_Nullable, NSError *_Nullable))completionHandler {
     AWXCard *card = [AWXCard new];
     card.name = name;
     card.number = [cardNo stringByReplacingOccurrencesOfString:@" " withString:@""];
