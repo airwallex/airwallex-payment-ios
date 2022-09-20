@@ -9,6 +9,7 @@
 #import "AWXCardProvider.h"
 #import "AWXAPIClient.h"
 #import "AWXCardViewController.h"
+#import "AWXCardViewModel.h"
 #import "AWXDevice.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodRequest.h"
@@ -21,7 +22,7 @@
 - (void)handleFlow {
     AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
     controller.sameAsShipping = YES;
-    controller.session = self.session;
+    controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
     [self.delegate provider:self shouldPresentViewController:nav forceToDismiss:NO withAnimation:YES];
 }

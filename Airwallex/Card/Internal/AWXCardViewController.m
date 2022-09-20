@@ -341,37 +341,32 @@ typedef enum {
         address.city = self.cityField.text;
         address.street = self.streetField.text;
         address.postcode = self.zipcodeField.text;
-        billing.address = address;
-        NSString *error = [billing validate];
+        [self.viewModel saveBillingWithPlaceDetails:billing Address:address completionHandler:^(AWXPlaceDetails * _Nullable address, NSString * _Nullable error) {
+            if (error) {
+                UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
+                [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self presentViewController:controller animated:YES completion:nil];
+            } else {
+                self.savedBilling = billing;
+            }
+        }];
+    }
+
+    [self.viewModel saveCardWithName:self.nameField.text
+                              CardNo:self.cardNoField.text
+                          ExpiryText:self.expiresField.text
+                                 Cvc:self.cvcField.text
+                   completionHandler:^(AWXCard * _Nullable card, NSError * _Nullable error) {
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:controller animated:YES completion:nil];
-            return;
+        } else {
+            AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:self session:self.session];
+            [provider confirmPaymentIntentWithCard:card billing:self.savedBilling saveCard:self.saveCard];
+            self.provider = provider;
         }
-
-        self.savedBilling = billing;
-    }
-
-    AWXCard *card = [AWXCard new];
-    card.name = self.nameField.text;
-    card.number = [self.cardNoField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSArray *dates = [self.expiresField.text componentsSeparatedByString:@"/"];
-    card.expiryYear = dates.lastObject;
-    card.expiryMonth = dates.firstObject;
-    card.cvc = self.cvcField.text;
-
-    NSString *error = [card validate];
-    if (error) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
-        return;
-    }
-
-    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:self session:self.session];
-    [provider confirmPaymentIntentWithCard:card billing:self.savedBilling saveCard:self.saveCard];
-    self.provider = provider;
+    }];
 }
 
 #pragma mark - AWXCountryListViewControllerDelegate
