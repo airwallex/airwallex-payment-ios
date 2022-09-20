@@ -134,6 +134,77 @@ typedef enum {
         [stackView addArrangedSubview:[self switchOfType:SaveCardSwitch]];
     }
 
+    if (self.viewModel.shouldRequestBillingInformation) {
+        [stackView addArrangedSubview:self.billingStackView];
+    }
+
+    _confirmButton = [AWXActionButton new];
+    _confirmButton.enabled = YES;
+    [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
+    [_confirmButton addTarget:self action:@selector(savePressed:) forControlEvents:UIControlEventTouchUpInside];
+    [stackView addArrangedSubview:_confirmButton];
+    [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
+
+    if (self.session.billing) {
+        [self.firstNameField setText:self.session.billing.firstName animated:NO];
+        [self.lastNameField setText:self.session.billing.lastName animated:NO];
+        [self.emailField setText:self.session.billing.email animated:NO];
+        [self.phoneNumberField setText:self.session.billing.phoneNumber animated:NO];
+
+        AWXAddress *address = self.session.billing.address;
+        if (address) {
+            AWXCountry *matchedCountry = [AWXCountry countryWithCode:address.countryCode];
+            if (matchedCountry) {
+                self.country = matchedCountry;
+                [self.countryView setText:matchedCountry.countryName animated:NO];
+            }
+            [self.stateField setText:address.state animated:NO];
+            [self.cityField setText:address.city animated:NO];
+            [self.streetField setText:address.street animated:NO];
+            [self.zipcodeField setText:address.postcode animated:NO];
+        }
+    }
+    self.sameAsShipping = self.session.billing != nil;
+    _addressSwitch.on = self.sameAsShipping;
+    self.saveCard = false;
+}
+
+- (UIStackView *)switchOfType:(SwitchType)type {
+    UIStackView *container = [UIStackView new];
+    container.axis = UILayoutConstraintAxisHorizontal;
+    container.alignment = UIStackViewAlignmentFill;
+    container.distribution = UIStackViewDistributionFill;
+    container.spacing = 23;
+    container.translatesAutoresizingMaskIntoConstraints = NO;
+
+    UISwitch *switchButton = [UISwitch new];
+    UILabel *titleLabel = [UILabel new];
+    switch (type) {
+    case AddressSwitch:
+        titleLabel.text = NSLocalizedString(@"Same as shipping address", @"Same as shipping address");
+        self.addressSwitch = switchButton;
+        [switchButton addTarget:self action:@selector(addressSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        break;
+    case SaveCardSwitch:
+        titleLabel.text = NSLocalizedString(@"Save this card for future payments", @"Save this card for future payments");
+        [switchButton addTarget:self action:@selector(saveCardSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        break;
+    }
+    titleLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
+    titleLabel.font = [UIFont subhead1Font];
+    [container addArrangedSubview:titleLabel];
+    [container addArrangedSubview:switchButton];
+    return container;
+}
+
+- (UIStackView *)billingStackView {
+    UIStackView *stackView = [UIStackView new];
+    stackView.axis = UILayoutConstraintAxisVertical;
+    stackView.alignment = UIStackViewAlignmentFill;
+    stackView.distribution = UIStackViewDistributionEqualSpacing;
+    stackView.spacing = 16;
+    stackView.translatesAutoresizingMaskIntoConstraints = NO;
+    
     UILabel *billingLabel = [UILabel new];
     billingLabel.text = NSLocalizedString(@"Billing info", @"Billing info");
     billingLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
@@ -200,64 +271,8 @@ typedef enum {
     _phoneNumberField.placeholder = NSLocalizedString(@"Phone number (optional)", @"Phone number (optional)");
     _emailField.nextTextField = _phoneNumberField;
     [stackView addArrangedSubview:_phoneNumberField];
-
-    _confirmButton = [AWXActionButton new];
-    _confirmButton.enabled = YES;
-    [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
-    [_confirmButton addTarget:self action:@selector(savePressed:) forControlEvents:UIControlEventTouchUpInside];
-    [stackView addArrangedSubview:_confirmButton];
-    [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
-
-    if (self.session.billing) {
-        [self.firstNameField setText:self.session.billing.firstName animated:NO];
-        [self.lastNameField setText:self.session.billing.lastName animated:NO];
-        [self.emailField setText:self.session.billing.email animated:NO];
-        [self.phoneNumberField setText:self.session.billing.phoneNumber animated:NO];
-
-        AWXAddress *address = self.session.billing.address;
-        if (address) {
-            AWXCountry *matchedCountry = [AWXCountry countryWithCode:address.countryCode];
-            if (matchedCountry) {
-                self.country = matchedCountry;
-                [self.countryView setText:matchedCountry.countryName animated:NO];
-            }
-            [self.stateField setText:address.state animated:NO];
-            [self.cityField setText:address.city animated:NO];
-            [self.streetField setText:address.street animated:NO];
-            [self.zipcodeField setText:address.postcode animated:NO];
-        }
-    }
-    self.sameAsShipping = self.session.billing != nil;
-    _addressSwitch.on = self.sameAsShipping;
-    self.saveCard = false;
-}
-
-- (UIStackView *)switchOfType:(SwitchType)type {
-    UIStackView *container = [UIStackView new];
-    container.axis = UILayoutConstraintAxisHorizontal;
-    container.alignment = UIStackViewAlignmentFill;
-    container.distribution = UIStackViewDistributionFill;
-    container.spacing = 23;
-    container.translatesAutoresizingMaskIntoConstraints = NO;
-
-    UISwitch *switchButton = [UISwitch new];
-    UILabel *titleLabel = [UILabel new];
-    switch (type) {
-    case AddressSwitch:
-        titleLabel.text = NSLocalizedString(@"Same as shipping address", @"Same as shipping address");
-        self.addressSwitch = switchButton;
-        [switchButton addTarget:self action:@selector(addressSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-        break;
-    case SaveCardSwitch:
-        titleLabel.text = NSLocalizedString(@"Save this card for future payments", @"Save this card for future payments");
-        [switchButton addTarget:self action:@selector(saveCardSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-        break;
-    }
-    titleLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
-    titleLabel.font = [UIFont subhead1Font];
-    [container addArrangedSubview:titleLabel];
-    [container addArrangedSubview:switchButton];
-    return container;
+    
+    return stackView;
 }
 
 - (UIScrollView *)activeScrollView {

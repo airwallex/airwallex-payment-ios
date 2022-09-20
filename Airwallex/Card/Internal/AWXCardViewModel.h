@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
                      Cvc:(NSString *)cvc
        completionHandler:(void (^)(AWXCard *_Nullable address, NSError *_Nullable error))completionHandler;
 
+- (BOOL)shouldRequestBillingInformation;
+
 @end
 
 NS_ASSUME_NONNULL_END

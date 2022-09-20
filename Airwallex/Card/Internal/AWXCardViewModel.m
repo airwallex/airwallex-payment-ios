@@ -51,4 +51,8 @@
     }
 }
 
+- (BOOL)shouldRequestBillingInformation {
+    return self.session.requiresBilling;
+}
+
 @end
