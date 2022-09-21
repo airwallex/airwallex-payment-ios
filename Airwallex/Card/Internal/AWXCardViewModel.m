@@ -30,7 +30,7 @@
 }
 
 - (BOOL)isBillingInformationRequired {
-    return self.session.requiresBilling;
+    return self.session.isBillingInformationRequired;
 }
 
 #pragma mark Data validation
