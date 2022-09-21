@@ -28,6 +28,14 @@ static NSString *const recurring = @"recurring";
     return self;
 }
 
+- (AWXPlaceDetails *)billing {
+    if (!self.isBillingInformationRequired) {
+        return nil;
+    }
+    
+    return _billing;
+}
+
 - (NSString *)transactionMode {
     return oneoff;
 }
