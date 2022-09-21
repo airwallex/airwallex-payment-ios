@@ -22,7 +22,7 @@ static NSString *const recurring = @"recurring";
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.requiresBilling = YES;
+        self.isBillingInformationRequired = YES;
     }
     
     return self;
