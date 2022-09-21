@@ -25,9 +25,7 @@
 		1803601B2873C878003EA943 /* AWXPaymentFormViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1803601A2873C878003EA943 /* AWXPaymentFormViewModel.h */; };
 		1803601D2873CAE2003EA943 /* AWXPaymentFormViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601C2873CAE2003EA943 /* AWXPaymentFormViewModel.m */; };
 		1803601F2873D73A003EA943 /* AWXPaymentFormViewModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTest.m */; };
-		184EADB028D15C1600FD965D /* AWXCardViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 184EADAF28D15C1600FD965D /* AWXCardViewModel.m */; };
 		187AFA6928B522C000561EEB /* AWXPaymentConsentRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */; };
-		18FA911428D8BC7A00F96D97 /* AWXCardViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 18FA911328D8BC7A00F96D97 /* AWXCardViewModel.h */; };
 		2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */; };
 		3C2B649227E98858002FAF3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649127E98858002FAF3E /* AppDelegate.m */; };
 		3C2B649827E98858002FAF3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649727E98858002FAF3E /* ViewController.m */; };
@@ -191,6 +189,8 @@
 		57D4A4502785AF4500487E1C /* AWX3DSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D4A44E2785AF4500487E1C /* AWX3DSViewController.m */; };
 		57E73719272AC043009905DC /* AWXSchemaProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 57E73717272AC043009905DC /* AWXSchemaProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57E7371A272AC043009905DC /* AWXSchemaProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E73718272AC043009905DC /* AWXSchemaProvider.m */; };
+		6EE990B728D9A300008C22B7 /* AWXCardViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 184EADAF28D15C1600FD965D /* AWXCardViewModel.m */; };
+		6EE990BA28D9A3B7008C22B7 /* AWXCardViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE990B928D9A3B7008C22B7 /* AWXCardViewModel.h */; };
 		9184A98A3FB097B3E30DFD42 /* Pods_WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A5DE28F611F49B21B3B1DA1 /* Pods_WeChatPay.framework */; };
 		C556103B286032140036F63C /* UIColor+AWXTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = C5561039286032140036F63C /* UIColor+AWXTheme.h */; };
 		C556103C286032140036F63C /* UIColor+AWXTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = C556103A286032140036F63C /* UIColor+AWXTheme.m */; };
@@ -330,7 +330,6 @@
 		1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModelTest.m; sourceTree = "<group>"; };
 		184EADAF28D15C1600FD965D /* AWXCardViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewModel.m; sourceTree = "<group>"; };
 		187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentConsentRequestTest.m; sourceTree = "<group>"; };
-		18FA911328D8BC7A00F96D97 /* AWXCardViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXCardViewModel.h; sourceTree = "<group>"; };
 		3C2B648E27E98858002FAF3E /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C2B649027E98858002FAF3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3C2B649127E98858002FAF3E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -507,6 +506,7 @@
 		57D4A44E2785AF4500487E1C /* AWX3DSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWX3DSViewController.m; sourceTree = "<group>"; };
 		57E73717272AC043009905DC /* AWXSchemaProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXSchemaProvider.h; sourceTree = "<group>"; };
 		57E73718272AC043009905DC /* AWXSchemaProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXSchemaProvider.m; sourceTree = "<group>"; };
+		6EE990B928D9A3B7008C22B7 /* AWXCardViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXCardViewModel.h; sourceTree = "<group>"; };
 		766C109E04EF1051D97CC9A3 /* Pods_ApplePayTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApplePayTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79CC91FEFC20844097DA8051 /* Pods-ApplePayTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApplePayTests.debug.xcconfig"; path = "Target Support Files/Pods-ApplePayTests/Pods-ApplePayTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7A5DE28F611F49B21B3B1DA1 /* Pods_WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -853,7 +853,7 @@
 				57A3AD6D27589BEF00EFF0A1 /* AWX3DSService.m */,
 				57D4A44D2785AF4500487E1C /* AWX3DSViewController.h */,
 				57D4A44E2785AF4500487E1C /* AWX3DSViewController.m */,
-				18FA911328D8BC7A00F96D97 /* AWXCardViewModel.h */,
+				6EE990B928D9A3B7008C22B7 /* AWXCardViewModel.h */,
 				184EADAF28D15C1600FD965D /* AWXCardViewModel.m */,
 				5775CF7B26E5E28400C6AFE3 /* AWXCardViewController.h */,
 				5775CF6A26E5E28400C6AFE3 /* AWXCardViewController.m */,
@@ -1144,7 +1144,7 @@
 				5775CF8226E5E28400C6AFE3 /* AWXWebViewController.h in Headers */,
 				57A3AD6E27589BEF00EFF0A1 /* AWX3DSService.h in Headers */,
 				57D4A44F2785AF4500487E1C /* AWX3DSViewController.h in Headers */,
-				18FA911428D8BC7A00F96D97 /* AWXCardViewModel.h in Headers */,
+				6EE990BA28D9A3B7008C22B7 /* AWXCardViewModel.h in Headers */,
 				5775CF9F26E5F8CD00C6AFE3 /* AWXSecurityService.h in Headers */,
 				57A3AD6A2758731400EFF0A1 /* AWX3DSActionProvider.h in Headers */,
 				5775CF8426E5E28400C6AFE3 /* AWXCardProvider.h in Headers */,
@@ -1801,7 +1801,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57A3AD6B2758731400EFF0A1 /* AWX3DSActionProvider.m in Sources */,
-				184EADB028D15C1600FD965D /* AWXCardViewModel.m in Sources */,
+				6EE990B728D9A300008C22B7 /* AWXCardViewModel.m in Sources */,
 				5775CF9E26E5F8CD00C6AFE3 /* AWXSecurityService.m in Sources */,
 				5775CF8826E5E28500C6AFE3 /* AWXCardProvider.m in Sources */,
 				5775CF7D26E5E28400C6AFE3 /* AWXDCCViewController.m in Sources */,

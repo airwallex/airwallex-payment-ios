@@ -7,6 +7,7 @@
 //
 
 #import "AWXCardViewController.h"
+#import "AWXCardViewModel.h"
 #import "AWXAPIClient.h"
 #import "AWXCard.h"
 #import "AWXCardProvider.h"
@@ -48,7 +49,6 @@
 @property (strong, nonatomic) AWXActionButton *confirmButton;
 
 @property (strong, nonatomic, nullable) AWXCountry *country;
-@property (strong, nonatomic, nullable) AWXPlaceDetails *savedBilling;
 @property (nonatomic) BOOL saveCard;
 
 @end
@@ -134,14 +134,14 @@ typedef enum {
         [stackView addArrangedSubview:[self switchOfType:SaveCardSwitch]];
     }
 
-    if (self.viewModel.shouldRequestBillingInformation) {
+    if (self.viewModel.isBillingInformationRequired) {
         [stackView addArrangedSubview:self.billingStackView];
     }
 
     _confirmButton = [AWXActionButton new];
     _confirmButton.enabled = YES;
     [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
-    [_confirmButton addTarget:self action:@selector(savePressed:) forControlEvents:UIControlEventTouchUpInside];
+    [_confirmButton addTarget:self action:@selector(confirmPayment:) forControlEvents:UIControlEventTouchUpInside];
     [stackView addArrangedSubview:_confirmButton];
     [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
 
@@ -341,49 +341,64 @@ typedef enum {
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)savePressed:(id)sender {
+- (void)confirmPayment:(id)sender {
+    // TODO: simplify this further when `self.sameAsShipping` is moved to the view model.
+    // TODO: Can we move validation entirely into confirmPaymentWithProvider:shouldStoreCardDetails:?
+    if ([self validateBilling] && [self validateCard]) {
+        self.provider = [self.viewModel preparedProviderWithDelegate:self];
+        [self.viewModel confirmPaymentWithProvider:self.provider shouldStoreCardDetails:self.saveCard];
+    }
+}
+
+- (BOOL)validateBilling {
+    NSError *error;
+    
     if (self.sameAsShipping) {
-        self.savedBilling = [self.session.billing copy];
+        [self.viewModel validateSessionBillingWithError:&error];
     } else {
-        AWXPlaceDetails *billing = [AWXPlaceDetails new];
-        billing.firstName = self.firstNameField.text;
-        billing.lastName = self.lastNameField.text;
-        billing.email = self.emailField.text;
-        billing.phoneNumber = self.phoneNumberField.text;
+        AWXPlaceDetails *place = [AWXPlaceDetails new];
+        place.firstName = self.firstNameField.text;
+        place.lastName = self.lastNameField.text;
+        place.email = self.emailField.text;
+        place.phoneNumber = self.phoneNumberField.text;
         AWXAddress *address = [AWXAddress new];
         address.countryCode = self.country.countryCode;
         address.state = self.stateField.text;
         address.city = self.cityField.text;
         address.street = self.streetField.text;
         address.postcode = self.zipcodeField.text;
-        [self.viewModel saveBillingWithPlaceDetails:billing
-                                            Address:address
-                                  completionHandler:^(AWXPlaceDetails *_Nullable address, NSString *_Nullable error) {
-                                      if (error) {
-                                          UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
-                                          [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-                                          [self presentViewController:controller animated:YES completion:nil];
-                                      } else {
-                                          self.savedBilling = billing;
-                                      }
-                                  }];
+        
+        [self.viewModel validateBillingDetailsWithPlace:place andAddress:address error:&error];
     }
+    
+    if (error) {
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
+        
+        return NO;
+    }
+    
+    return YES;
+}
 
-    [self.viewModel saveCardWithName:self.nameField.text
-                              CardNo:self.cardNoField.text
-                          ExpiryText:self.expiresField.text
-                                 Cvc:self.cvcField.text
-                   completionHandler:^(AWXCard *_Nullable card, NSError *_Nullable error) {
-                       if (error) {
-                           UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
-                           [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-                           [self presentViewController:controller animated:YES completion:nil];
-                       } else {
-                           AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:self session:self.session];
-                           [provider confirmPaymentIntentWithCard:card billing:self.savedBilling saveCard:self.saveCard];
-                           self.provider = provider;
-                       }
-                   }];
+- (BOOL)validateCard {
+    NSError *error;
+    [self.viewModel validateCardWithName:self.nameField.text
+                                  number:self.cardNoField.text
+                                  expiry:self.expiresField.text
+                                     cvc:self.cvcField.text
+                                   error:&error];
+    
+    if (error) {
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
+        
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - AWXCountryListViewControllerDelegate

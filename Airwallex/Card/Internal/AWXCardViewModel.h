@@ -6,26 +6,41 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import "AWXCard.h"
-#import "AWXSession.h"
+#import <Foundation/Foundation.h>
+
+@class AWXCard;
+@class AWXSession;
+@class AWXAddress;
+@class AWXPlaceDetails;
+@class AWXCardProvider;
+
+@protocol AWXProviderDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXCardViewModel : NSObject
 
-- (instancetype)initWithSession:(AWXSession *)session;
+@property (nonatomic, readonly) BOOL isBillingInformationRequired;
 
-- (void)saveBillingWithPlaceDetails:(AWXPlaceDetails *)placeDetails
-                            Address:(AWXAddress *)address
-                  completionHandler:(void (^)(AWXPlaceDetails *_Nullable address, NSString *_Nullable error))completionHandler;
+- (instancetype)initWithSession:(AWXSession *_Nonnull)session;
 
-- (void)saveCardWithName:(NSString *)name
-                  CardNo:(NSString *)cardNo
-              ExpiryText:(NSString *)expiryText
-                     Cvc:(NSString *)cvc
-       completionHandler:(void (^)(AWXCard *_Nullable address, NSError *_Nullable error))completionHandler;
+#pragma mark Data validation
 
-- (BOOL)shouldRequestBillingInformation;
+- (void)validateSessionBillingWithError:(NSError *_Nullable*)error;
+- (void)validateBillingDetailsWithPlace:(AWXPlaceDetails *_Nonnull)placeDetails
+                             andAddress:(AWXAddress *_Nonnull)addressDetails
+                                  error:(NSError *_Nullable*)error;
+
+- (void)validateCardWithName:(NSString *)name
+                      number:(NSString *)number
+                      expiry:(NSString *)expiry
+                         cvc:(NSString *)cvc
+                       error:(NSError **)error;
+
+#pragma mark Payment
+
+- (AWXCardProvider *)preparedProviderWithDelegate:(id<AWXProviderDelegate> _Nullable)delegate;
+- (void)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider shouldStoreCardDetails:(BOOL)storeCard;
 
 @end
 

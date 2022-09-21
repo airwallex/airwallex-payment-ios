@@ -6,8 +6,9 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "AWXCardViewModel.h"
 #import "AWXViewController.h"
+
+@class AWXCardViewModel;
 
 NS_ASSUME_NONNULL_BEGIN
 

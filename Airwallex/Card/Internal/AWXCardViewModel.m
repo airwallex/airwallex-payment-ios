@@ -7,10 +7,15 @@
 //
 
 #import "AWXCardViewModel.h"
+#import "AWXSession.h"
+#import "AWXCard.h"
+#import "AWXCardProvider.h"
 
 @interface AWXCardViewModel ()
 
 @property (nonatomic, strong, nonnull) AWXSession *session;
+@property (nonatomic, strong, nullable) AWXPlaceDetails *validatedBilling;
+@property (nonatomic, strong, nullable) AWXCard *validatedCard;
 
 @end
 
@@ -24,35 +29,73 @@
     return self;
 }
 
-- (void)saveBillingWithPlaceDetails:(AWXPlaceDetails *)placeDetails Address:(AWXAddress *)address completionHandler:(void (^)(AWXPlaceDetails *_Nullable, NSString *_Nullable))completionHandler {
-    placeDetails.address = address;
-    NSString *error = [placeDetails validate];
-    if (error) {
-        completionHandler(NULL, error);
-    } else {
-        completionHandler(address, NULL);
+- (BOOL)isBillingInformationRequired {
+    return self.session.requiresBilling;
+}
+
+#pragma mark Data validation
+
+- (void)validateSessionBillingWithError:(NSError **)error {
+    [self validateBillingDetailsWithPlace:self.session.billing andAddress:self.session.billing.address error:error];
+}
+
+- (void)validateBillingDetailsWithPlace:(AWXPlaceDetails *)placeDetails
+                             andAddress:(AWXAddress *)addressDetails
+                                  error:(NSError **)error {
+    self.validatedBilling = nil;
+    
+    if (!self.isBillingInformationRequired) {
+        return;
+    }
+    
+    AWXPlaceDetails *place = placeDetails.copy;
+    AWXAddress *address = addressDetails.copy;
+    place.address = address;
+    
+    *error = [place validate];
+    if (error == nil) {
+        self.validatedBilling = place;
     }
 }
 
-- (void)saveCardWithName:(NSString *)name CardNo:(NSString *)cardNo ExpiryText:(NSString *)expiryText Cvc:(NSString *)cvc completionHandler:(void (^)(AWXCard *_Nullable, NSError *_Nullable))completionHandler {
+- (void)validateCardWithName:(NSString *)name
+                      number:(NSString *)number
+                      expiry:(NSString *)expiry
+                         cvc:(NSString *)cvc
+                       error:(NSError **)error {
+    self.validatedBilling = nil;
+    
+    NSArray *dates = [expiry componentsSeparatedByString:@"/"];
+    
     AWXCard *card = [AWXCard new];
     card.name = name;
-    card.number = [cardNo stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSArray *dates = [expiryText componentsSeparatedByString:@"/"];
+    card.number = [number stringByReplacingOccurrencesOfString:@" " withString:@""];
     card.expiryYear = [NSString stringWithFormat:@"20%@", dates.lastObject];
     card.expiryMonth = dates.firstObject;
     card.cvc = cvc;
-
-    NSString *error = [card validate];
-    if (error) {
-        completionHandler(NULL, error);
-    } else {
-        completionHandler(card, NULL);
+    
+    *error = [card validate];
+    if (error == nil) {
+        self.validatedCard = card;
     }
 }
 
-- (BOOL)shouldRequestBillingInformation {
-    return self.session.requiresBilling;
+#pragma mark Payment
+
+- (AWXCardProvider *)preparedProviderWithDelegate:(id<AWXProviderDelegate>)delegate {
+    return [[AWXCardProvider alloc] initWithDelegate:delegate session:self.session];
+}
+
+- (void)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider shouldStoreCardDetails:(BOOL)storeCard {
+    if (self.validatedCard == nil) {
+        return;
+    }
+    
+    if (self.validatedBilling == nil && self.isBillingInformationRequired) {
+        return;
+    }
+    
+    [provider confirmPaymentIntentWithCard:self.validatedCard billing:self.validatedBilling saveCard:storeCard];
 }
 
 @end
