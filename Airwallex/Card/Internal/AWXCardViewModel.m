@@ -13,9 +13,8 @@
 
 @interface AWXCardViewModel ()
 
+@property (nonatomic, readwrite) BOOL isReusingShippingAsBillingInformation;
 @property (nonatomic, strong, nonnull) AWXSession *session;
-@property (nonatomic, strong, nullable) AWXPlaceDetails *validatedBilling;
-@property (nonatomic, strong, nullable) AWXCard *validatedCard;
 
 @end
 
@@ -25,6 +24,7 @@
     self = [super init];
     if (self) {
         _session = session;
+        _isReusingShippingAsBillingInformation = session.billing != nil && session.isBillingInformationRequired;
     }
     return self;
 }
@@ -33,38 +33,20 @@
     return self.session.isBillingInformationRequired;
 }
 
-#pragma mark Data validation
-
-- (void)validateSessionBillingWithError:(NSError **)error {
-    [self validateBillingDetailsWithPlace:self.session.billing andAddress:self.session.billing.address error:error];
-}
-
-- (void)validateBillingDetailsWithPlace:(AWXPlaceDetails *)placeDetails
-                             andAddress:(AWXAddress *)addressDetails
-                                  error:(NSError **)error {
-    self.validatedBilling = nil;
-    
-    if (!self.isBillingInformationRequired) {
-        return;
-    }
-    
-    AWXPlaceDetails *place = placeDetails.copy;
-    AWXAddress *address = addressDetails.copy;
-    place.address = address;
-    
-    *error = [place validate];
-    if (error == nil) {
-        self.validatedBilling = place;
+- (void)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSError **)error {
+    if (reusesShippingAsBillingInformation && self.session.billing == nil) {
+        *error = NSLocalizedString(@"No shipping address configured.", nil);
+    } else {
+        self.isReusingShippingAsBillingInformation = reusesShippingAsBillingInformation;
     }
 }
 
-- (void)validateCardWithName:(NSString *)name
-                      number:(NSString *)number
-                      expiry:(NSString *)expiry
-                         cvc:(NSString *)cvc
-                       error:(NSError **)error {
-    self.validatedBilling = nil;
-    
+#pragma mark Data creation
+
+- (AWXCard *)makeCardWithName:(NSString *)name
+                       number:(NSString *)number
+                       expiry:(NSString *)expiry
+                          cvc:(NSString *)cvc {
     NSArray *dates = [expiry componentsSeparatedByString:@"/"];
     
     AWXCard *card = [AWXCard new];
@@ -74,10 +56,32 @@
     card.expiryMonth = dates.firstObject;
     card.cvc = cvc;
     
-    *error = [card validate];
-    if (error == nil) {
-        self.validatedCard = card;
+    return card;
+}
+
+#pragma mark Data validation
+
+- (AWXPlaceDetails *)validatedBillingDetails:(AWXPlaceDetails *)billing error:(NSError **)error {
+    if (!self.isBillingInformationRequired) {
+        return nil;
     }
+    
+    AWXPlaceDetails *validated;
+    if (self.isReusingShippingAsBillingInformation) {
+        validated = self.session.billing.copy;
+    } else {
+        validated = billing.copy;
+    }
+    
+    *error = [validated validate];
+    return (error != nil) ? nil : validated;
+}
+
+- (AWXCard *)validatedCardDetails:(AWXCard *)card error:(NSError **)error {
+    AWXCard *validated = card.copy;
+    
+    *error = [validated validate];
+    return (error != nil) ? nil : validated;
 }
 
 #pragma mark Payment
@@ -86,16 +90,22 @@
     return [[AWXCardProvider alloc] initWithDelegate:delegate session:self.session];
 }
 
-- (void)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider shouldStoreCardDetails:(BOOL)storeCard {
-    if (self.validatedCard == nil) {
+- (void)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider
+                           billing:(AWXPlaceDetails *)placeDetails
+                              card:(AWXCard *)card
+            shouldStoreCardDetails:(BOOL)storeCard
+                             error:(NSError **)error {
+    AWXPlaceDetails *validatedBilling = [self validatedBillingDetails:placeDetails error:error];
+    if (error) {
         return;
     }
     
-    if (self.validatedBilling == nil && self.isBillingInformationRequired) {
+    AWXCard *validatedCard = [self validatedCardDetails:card error:error];
+    if (error) {
         return;
     }
     
-    [provider confirmPaymentIntentWithCard:self.validatedCard billing:self.validatedBilling saveCard:storeCard];
+    [provider confirmPaymentIntentWithCard:validatedCard billing:validatedBilling saveCard:storeCard];
 }
 
 @end

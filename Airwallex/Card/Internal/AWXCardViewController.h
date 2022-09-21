@@ -19,11 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) AWXCardViewModel *viewModel;
 
-/**
- A boolean which can switch to billing form
- */
-@property (nonatomic) BOOL sameAsShipping;
-
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

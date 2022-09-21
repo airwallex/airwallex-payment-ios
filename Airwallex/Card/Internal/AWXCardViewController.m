@@ -164,8 +164,8 @@ typedef enum {
             [self.zipcodeField setText:address.postcode animated:NO];
         }
     }
-    self.sameAsShipping = self.session.billing != nil;
-    _addressSwitch.on = self.sameAsShipping;
+    [self setBillingInputNotRequired:self.viewModel.isReusingShippingAsBillingInformation];
+    _addressSwitch.on = self.viewModel.isReusingShippingAsBillingInformation;
     self.saveCard = false;
 }
 
@@ -299,38 +299,39 @@ typedef enum {
     self.confirmButton.enabled = YES;
 }
 
-- (void)setSameAsShipping:(BOOL)sameAsShipping {
-    _sameAsShipping = sameAsShipping;
-    _firstNameField.hidden = sameAsShipping;
-    _lastNameField.hidden = sameAsShipping;
-    _countryView.hidden = sameAsShipping;
-    _stateField.hidden = sameAsShipping;
-    _cityField.hidden = sameAsShipping;
-    _streetField.hidden = sameAsShipping;
-    _zipcodeField.hidden = sameAsShipping;
-    _emailField.hidden = sameAsShipping;
-    _phoneNumberField.hidden = sameAsShipping;
+- (void)setBillingInputNotRequired:(BOOL)isNotRequired {
+    self.firstNameField.hidden = isNotRequired;
+    self.lastNameField.hidden = isNotRequired;
+    self.countryView.hidden = isNotRequired;
+    self.stateField.hidden = isNotRequired;
+    self.cityField.hidden = isNotRequired;
+    self.streetField.hidden = isNotRequired;
+    self.zipcodeField.hidden = isNotRequired;
+    self.emailField.hidden = isNotRequired;
+    self.phoneNumberField.hidden = isNotRequired;
 }
 
 - (void)saveCardSwitchChanged:(id)sender {
     self.saveCard = [(UISwitch *)sender isOn];
 }
 
-- (void)addressSwitchChanged:(id)sender {
-    if (!self.session.billing) {
+- (void)addressSwitchChanged:(UISwitch *)sender {
+    NSError *error;
+    [self.viewModel setReusesShippingAsBillingInformation:sender.isOn error:&error];
+    if (error) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
-                                                                            message:NSLocalizedString(@"No shipping address configured.", nil)
+                                                                            message:error
                                                                      preferredStyle:UIAlertControllerStyleAlert];
         [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
                                                        style:UIAlertActionStyleCancel
                                                      handler:^(UIAlertAction *_Nonnull action) {
-                                                         self.addressSwitch.on = NO;
-                                                     }]];
+            sender.on = !sender.isOn;
+        }]];
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }
-
-    self.sameAsShipping = self.addressSwitch.isOn;
+    
+    [self setBillingInputNotRequired:self.viewModel.isReusingShippingAsBillingInformation];
 }
 
 - (void)selectCountries:(id)sender {
@@ -342,63 +343,45 @@ typedef enum {
 }
 
 - (void)confirmPayment:(id)sender {
-    // TODO: simplify this further when `self.sameAsShipping` is moved to the view model.
-    // TODO: Can we move validation entirely into confirmPaymentWithProvider:shouldStoreCardDetails:?
-    if ([self validateBilling] && [self validateCard]) {
-        self.provider = [self.viewModel preparedProviderWithDelegate:self];
-        [self.viewModel confirmPaymentWithProvider:self.provider shouldStoreCardDetails:self.saveCard];
-    }
-}
-
-- (BOOL)validateBilling {
     NSError *error;
     
-    if (self.sameAsShipping) {
-        [self.viewModel validateSessionBillingWithError:&error];
-    } else {
-        AWXPlaceDetails *place = [AWXPlaceDetails new];
-        place.firstName = self.firstNameField.text;
-        place.lastName = self.lastNameField.text;
-        place.email = self.emailField.text;
-        place.phoneNumber = self.phoneNumberField.text;
-        AWXAddress *address = [AWXAddress new];
-        address.countryCode = self.country.countryCode;
-        address.state = self.stateField.text;
-        address.city = self.cityField.text;
-        address.street = self.streetField.text;
-        address.postcode = self.zipcodeField.text;
-        
-        [self.viewModel validateBillingDetailsWithPlace:place andAddress:address error:&error];
-    }
+    self.provider = [self.viewModel preparedProviderWithDelegate:self];
+    [self.viewModel confirmPaymentWithProvider:self.provider
+                                       billing:[self makeBilling]
+                                          card:[self makeCard]
+                        shouldStoreCardDetails:self.saveCard
+                                         error:&error];
     
     if (error) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
         [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:controller animated:YES completion:nil];
-        
-        return NO;
     }
-    
-    return YES;
 }
 
-- (BOOL)validateCard {
-    NSError *error;
-    [self.viewModel validateCardWithName:self.nameField.text
-                                  number:self.cardNoField.text
-                                  expiry:self.expiresField.text
-                                     cvc:self.cvcField.text
-                                   error:&error];
+- (AWXPlaceDetails *)makeBilling {
+    AWXPlaceDetails *place = [AWXPlaceDetails new];
+    place.firstName = self.firstNameField.text;
+    place.lastName = self.lastNameField.text;
+    place.email = self.emailField.text;
+    place.phoneNumber = self.phoneNumberField.text;
+    AWXAddress *address = [AWXAddress new];
+    address.countryCode = self.country.countryCode;
+    address.state = self.stateField.text;
+    address.city = self.cityField.text;
+    address.street = self.streetField.text;
+    address.postcode = self.zipcodeField.text;
     
-    if (error) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
-        
-        return NO;
-    }
+    place.address = address;
     
-    return YES;
+    return place;
+}
+
+- (AWXCard *)makeCard {
+    return [self.viewModel makeCardWithName:self.nameField.text
+                                     number:self.cardNoField.text
+                                     expiry:self.expiresField.text
+                                        cvc:self.cvcField.text];
 }
 
 #pragma mark - AWXCountryListViewControllerDelegate

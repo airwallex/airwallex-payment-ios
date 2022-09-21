@@ -21,7 +21,6 @@
 
 - (void)handleFlow {
     AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
-    controller.sameAsShipping = YES;
     controller.session = self.session;
     controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];

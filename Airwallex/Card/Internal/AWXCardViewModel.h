@@ -20,27 +20,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXCardViewModel : NSObject
 
+@property (nonatomic, readonly) BOOL isReusingShippingAsBillingInformation;
 @property (nonatomic, readonly) BOOL isBillingInformationRequired;
 
 - (instancetype)initWithSession:(AWXSession *_Nonnull)session;
 
-#pragma mark Data validation
+- (void)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSError **)error;
 
-- (void)validateSessionBillingWithError:(NSError *_Nullable*)error;
-- (void)validateBillingDetailsWithPlace:(AWXPlaceDetails *_Nonnull)placeDetails
-                             andAddress:(AWXAddress *_Nonnull)addressDetails
-                                  error:(NSError *_Nullable*)error;
+#pragma mark Data creation
 
-- (void)validateCardWithName:(NSString *)name
-                      number:(NSString *)number
-                      expiry:(NSString *)expiry
-                         cvc:(NSString *)cvc
-                       error:(NSError **)error;
+- (AWXCard *)makeCardWithName:(NSString *)name
+                       number:(NSString *)number
+                       expiry:(NSString *)expiry
+                          cvc:(NSString *)cvc;
 
 #pragma mark Payment
 
 - (AWXCardProvider *)preparedProviderWithDelegate:(id<AWXProviderDelegate> _Nullable)delegate;
-- (void)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider shouldStoreCardDetails:(BOOL)storeCard;
+- (void)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider
+                           billing:(AWXPlaceDetails *)placeDetails
+                              card:(AWXCard *)card
+            shouldStoreCardDetails:(BOOL)storeCard
+                             error:(NSError **)error;
 
 @end
 
