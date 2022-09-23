@@ -43,7 +43,7 @@
     return self.session.billing;
 }
 
-- (void)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSError **)error {
+- (void)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString **)error {
     if (reusesShippingAsBillingInformation && self.session.billing == nil) {
         *error = NSLocalizedString(@"No shipping address configured.", nil);
     } else {
@@ -96,7 +96,7 @@
 
 #pragma mark Data validation
 
-- (AWXPlaceDetails *)validatedBillingDetails:(AWXPlaceDetails *)billing error:(NSError **)error {
+- (AWXPlaceDetails *)validatedBillingDetails:(AWXPlaceDetails *)billing error:(NSString **)error {
     if (!self.isBillingInformationRequired) {
         return nil;
     }
@@ -112,7 +112,7 @@
     return (*error != nil) ? nil : validated;
 }
 
-- (AWXCard *)validatedCardDetails:(AWXCard *)card error:(NSError **)error {
+- (AWXCard *)validatedCardDetails:(AWXCard *)card error:(NSString **)error {
     *error = [card validate];
     return (*error != nil) ? nil : card;
 }
@@ -138,7 +138,7 @@
                            billing:(AWXPlaceDetails *)placeDetails
                               card:(AWXCard *)card
             shouldStoreCardDetails:(BOOL)storeCard
-                             error:(NSError **)error {
+                             error:(NSString **)error {
     AWXPlaceDetails *validatedBilling = [self validatedBillingDetails:placeDetails error:error];
     if (*error) {
         return;

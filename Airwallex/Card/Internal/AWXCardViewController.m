@@ -312,7 +312,7 @@ typedef enum {
 }
 
 - (void)addressSwitchChanged:(UISwitch *)sender {
-    NSError *error;
+    NSString *error;
     [self.viewModel setReusesShippingAsBillingInformation:sender.isOn error:&error];
     if (error) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
@@ -339,14 +339,15 @@ typedef enum {
 }
 
 - (void)confirmPayment:(id)sender {
-    NSError *error;
+    NSString *error;
 
-    self.provider = [self.viewModel preparedProviderWithDelegate:self];
-    [self.viewModel confirmPaymentWithProvider:self.provider
+    AWXCardProvider *provider = [self.viewModel preparedProviderWithDelegate:self];
+    [self.viewModel confirmPaymentWithProvider:provider
                                        billing:[self makeBilling]
                                           card:[self makeCard]
                         shouldStoreCardDetails:self.saveCard
                                          error:&error];
+    self.provider = provider;
 
     if (error) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];

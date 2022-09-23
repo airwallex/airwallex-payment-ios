@@ -16,6 +16,11 @@ target 'CoreTests' do
   pod 'OCMock'
 end
 
+target 'CardTests' do
+  project './Airwallex/Airwallex.xcodeproj'
+  pod 'OCMock'
+end
+
 target 'ApplePayTests' do
   project './Airwallex/Airwallex.xcodeproj'
   pod 'OCMock'
