@@ -13,6 +13,9 @@
 @class AWXAddress;
 @class AWXPlaceDetails;
 @class AWXCardProvider;
+@class AWXConfirmPaymentNextAction;
+@class AWXCountry;
+@class AWXDefaultActionProvider;
 
 @protocol AWXProviderDelegate;
 
@@ -22,12 +25,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) BOOL isReusingShippingAsBillingInformation;
 @property (nonatomic, readonly) BOOL isBillingInformationRequired;
+@property (nonatomic, readonly) BOOL isCardSavingEnabled;
+@property (nonatomic, strong, readonly) AWXPlaceDetails *initialBilling;
+@property (nonatomic, strong) AWXCountry *selectedCountry;
 
 - (instancetype)initWithSession:(AWXSession *_Nonnull)session;
 
 - (void)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSError **)error;
 
 #pragma mark Data creation
+
+- (AWXPlaceDetails *)makeBillingWithFirstName:(NSString *)firstName
+                                     lastName:(NSString *)lastName
+                                        email:(NSString *)email
+                                  phoneNumber:(NSString *)phoneNumber
+                                        state:(NSString *)state
+                                         city:(NSString *)city
+                                       street:(NSString *)street
+                                     postcode:(NSString *)postcode;
 
 - (AWXCard *)makeCardWithName:(NSString *)name
                        number:(NSString *)number
@@ -37,11 +52,16 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Payment
 
 - (AWXCardProvider *)preparedProviderWithDelegate:(id<AWXProviderDelegate> _Nullable)delegate;
+- (AWXDefaultActionProvider *)actionProviderForNextAction:(AWXConfirmPaymentNextAction *)nextAction
+                                             withDelegate:(id<AWXProviderDelegate> _Nullable)delegate;
+
 - (void)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider
                            billing:(AWXPlaceDetails *)placeDetails
                               card:(AWXCard *)card
             shouldStoreCardDetails:(BOOL)storeCard
                              error:(NSError **)error;
+
+- (void)updatePaymentIntentId:(NSString *)paymentIntentId;
 
 @end
 

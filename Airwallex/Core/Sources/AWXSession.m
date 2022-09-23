@@ -24,7 +24,7 @@ static NSString *const recurring = @"recurring";
     if (self = [super init]) {
         self.isBillingInformationRequired = YES;
     }
-    
+
     return self;
 }
 
@@ -32,7 +32,7 @@ static NSString *const recurring = @"recurring";
     if (!self.isBillingInformationRequired) {
         return nil;
     }
-    
+
     return _billing;
 }
 
