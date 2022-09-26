@@ -160,7 +160,7 @@ typedef enum {
             [self.zipcodeField setText:address.postcode animated:NO];
         }
     }
-    [self setBillingInputNotRequired:self.viewModel.isReusingShippingAsBillingInformation];
+    [self setBillingInputHidden:self.viewModel.isReusingShippingAsBillingInformation];
     _addressSwitch.on = self.viewModel.isReusingShippingAsBillingInformation;
     self.saveCard = false;
 }
@@ -295,16 +295,16 @@ typedef enum {
     self.confirmButton.enabled = YES;
 }
 
-- (void)setBillingInputNotRequired:(BOOL)isNotRequired {
-    self.firstNameField.hidden = isNotRequired;
-    self.lastNameField.hidden = isNotRequired;
-    self.countryView.hidden = isNotRequired;
-    self.stateField.hidden = isNotRequired;
-    self.cityField.hidden = isNotRequired;
-    self.streetField.hidden = isNotRequired;
-    self.zipcodeField.hidden = isNotRequired;
-    self.emailField.hidden = isNotRequired;
-    self.phoneNumberField.hidden = isNotRequired;
+- (void)setBillingInputHidden:(BOOL)isHidden {
+    self.firstNameField.hidden = isHidden;
+    self.lastNameField.hidden = isHidden;
+    self.countryView.hidden = isHidden;
+    self.stateField.hidden = isHidden;
+    self.cityField.hidden = isHidden;
+    self.streetField.hidden = isHidden;
+    self.zipcodeField.hidden = isHidden;
+    self.emailField.hidden = isHidden;
+    self.phoneNumberField.hidden = isHidden;
 }
 
 - (void)saveCardSwitchChanged:(id)sender {
@@ -326,8 +326,8 @@ typedef enum {
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }
-
-    [self setBillingInputNotRequired:self.viewModel.isReusingShippingAsBillingInformation];
+    
+    [self setBillingInputHidden:self.viewModel.isReusingShippingAsBillingInformation];
 }
 
 - (void)selectCountries:(id)sender {
