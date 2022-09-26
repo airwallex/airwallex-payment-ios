@@ -35,7 +35,7 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Airwallex.xcodeproj",
+        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
         "identifier" : "5775CE8C26E5DDDF00C6AFE3",
         "name" : "CardTests"
       }

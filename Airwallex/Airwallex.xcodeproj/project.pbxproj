@@ -28,11 +28,6 @@
 		187AFA6928B522C000561EEB /* AWXPaymentConsentRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */; };
 		18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */; };
 		2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */; };
-		3C2B649227E98858002FAF3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649127E98858002FAF3E /* AppDelegate.m */; };
-		3C2B649827E98858002FAF3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B649727E98858002FAF3E /* ViewController.m */; };
-		3C2B649B27E98858002FAF3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C2B649927E98858002FAF3E /* Main.storyboard */; };
-		3C2B64A027E98859002FAF3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C2B649E27E98859002FAF3E /* LaunchScreen.storyboard */; };
-		3C2B64A327E98859002FAF3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B64A227E98859002FAF3E /* main.m */; };
 		3C324F8827FBE2D300CF7315 /* AWXConstants+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C324F8627FBE2D300CF7315 /* AWXConstants+Internal.h */; };
 		3C324F8927FBE2D300CF7315 /* AWXConstants+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C324F8727FBE2D300CF7315 /* AWXConstants+Internal.m */; };
 		3C324F9027FC09AD00CF7315 /* AWXSession+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */; };
@@ -79,7 +74,6 @@
 		572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */; };
 		5775CE6826E5D86100C6AFE3 /* WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */; };
 		5775CE8E26E5DDDF00C6AFE3 /* Card.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CE8526E5DDDE00C6AFE3 /* Card.framework */; };
-		5775CE9326E5DDDF00C6AFE3 /* CardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CE9226E5DDDF00C6AFE3 /* CardTests.m */; };
 		5775CE9526E5DDDF00C6AFE3 /* Card.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CE8726E5DDDE00C6AFE3 /* Card.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CEB426E5DF3300C6AFE3 /* Redirect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CEAB26E5DF3300C6AFE3 /* Redirect.framework */; };
 		5775CEBB26E5DF3300C6AFE3 /* Redirect.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEAD26E5DF3300C6AFE3 /* Redirect.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -210,34 +204,6 @@
 			remoteGlobalIDString = 085BD3C723CC62B4002E8F27;
 			remoteInfo = Airwallex;
 		};
-		1898B6D62873DF6000325C58 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C2B648D27E98858002FAF3E;
-			remoteInfo = TestHost;
-		};
-		1898B6D82873ED3400325C58 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C2B648D27E98858002FAF3E;
-			remoteInfo = TestHost;
-		};
-		18FA911728E0262C00F96D97 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C2B648D27E98858002FAF3E;
-			remoteInfo = TestHost;
-		};
-		3C2B64A727E98863002FAF3E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C2B648D27E98858002FAF3E;
-			remoteInfo = TestHost;
-		};
 		3C99E79027EAF1A20074156C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 085BD3BF23CC62B4002E8F27 /* Project object */;
@@ -342,15 +308,6 @@
 		184EADAF28D15C1600FD965D /* AWXCardViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewModel.m; sourceTree = "<group>"; };
 		187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentConsentRequestTest.m; sourceTree = "<group>"; };
 		18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewModelTests.m; sourceTree = "<group>"; };
-		3C2B648E27E98858002FAF3E /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C2B649027E98858002FAF3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		3C2B649127E98858002FAF3E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		3C2B649627E98858002FAF3E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		3C2B649727E98858002FAF3E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		3C2B649A27E98858002FAF3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3C2B649F27E98859002FAF3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		3C2B64A127E98859002FAF3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3C2B64A227E98859002FAF3E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3C324F8627FBE2D300CF7315 /* AWXConstants+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXConstants+Internal.h"; sourceTree = "<group>"; };
 		3C324F8727FBE2D300CF7315 /* AWXConstants+Internal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXConstants+Internal.m"; sourceTree = "<group>"; };
 		3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXSession+Internal.h"; sourceTree = "<group>"; };
@@ -407,7 +364,6 @@
 		5775CE8726E5DDDE00C6AFE3 /* Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Card.h; sourceTree = "<group>"; };
 		5775CE8826E5DDDE00C6AFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5775CE8D26E5DDDF00C6AFE3 /* CardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5775CE9226E5DDDF00C6AFE3 /* CardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardTests.m; sourceTree = "<group>"; };
 		5775CE9426E5DDDF00C6AFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5775CEAB26E5DF3300C6AFE3 /* Redirect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Redirect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5775CEAD26E5DF3300C6AFE3 /* Redirect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Redirect.h; sourceTree = "<group>"; };
@@ -555,13 +511,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3C2B648B27E98858002FAF3E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		3C99E78427EAF1A10074156C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -682,6 +631,7 @@
 			isa = PBXGroup;
 			children = (
 				3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */,
+				3C5A37F927F29DB000CFC2EF /* Shared */,
 				085BD3CA23CC62B4002E8F27 /* Core */,
 				085BD3D523CC62B4002E8F27 /* CoreTests */,
 				5775CE6026E5D86100C6AFE3 /* WeChatPay */,
@@ -690,7 +640,6 @@
 				5775CE9126E5DDDF00C6AFE3 /* CardTests */,
 				5775CEAC26E5DF3300C6AFE3 /* Redirect */,
 				5775CEB726E5DF3300C6AFE3 /* RedirectTests */,
-				3C2B648F27E98858002FAF3E /* TestHost */,
 				3C99E78827EAF1A20074156C /* ApplePay */,
 				3C99E79227EAF1A20074156C /* ApplePayTests */,
 				085BD3C923CC62B4002E8F27 /* Products */,
@@ -710,7 +659,6 @@
 				5775CE8D26E5DDDF00C6AFE3 /* CardTests.xctest */,
 				5775CEAB26E5DF3300C6AFE3 /* Redirect.framework */,
 				5775CEB326E5DF3300C6AFE3 /* RedirectTests.xctest */,
-				3C2B648E27E98858002FAF3E /* TestHost.app */,
 				3C99E78727EAF1A10074156C /* ApplePay.framework */,
 				3C99E78E27EAF1A20074156C /* ApplePayTests.xctest */,
 			);
@@ -759,22 +707,6 @@
 				08D26F532404B6C3008E65D3 /* AirwallexCore.bundle */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		3C2B648F27E98858002FAF3E /* TestHost */ = {
-			isa = PBXGroup;
-			children = (
-				3C5A37F927F29DB000CFC2EF /* Shared */,
-				3C2B649027E98858002FAF3E /* AppDelegate.h */,
-				3C2B649127E98858002FAF3E /* AppDelegate.m */,
-				3C2B649627E98858002FAF3E /* ViewController.h */,
-				3C2B649727E98858002FAF3E /* ViewController.m */,
-				3C2B649927E98858002FAF3E /* Main.storyboard */,
-				3C2B649E27E98859002FAF3E /* LaunchScreen.storyboard */,
-				3C2B64A127E98859002FAF3E /* Info.plist */,
-				3C2B64A227E98859002FAF3E /* main.m */,
-			);
-			path = TestHost;
 			sourceTree = "<group>";
 		};
 		3C579F6B27F4124B00840A3B /* Internal */ = {
@@ -968,7 +900,6 @@
 			isa = PBXGroup;
 			children = (
 				18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */,
-				5775CE9226E5DDDF00C6AFE3 /* CardTests.m */,
 				5775CE9426E5DDDF00C6AFE3 /* Info.plist */,
 			);
 			path = CardTests;
@@ -1218,29 +1149,11 @@
 			);
 			dependencies = (
 				085BD3D423CC62B4002E8F27 /* PBXTargetDependency */,
-				3C2B64A827E98863002FAF3E /* PBXTargetDependency */,
 			);
 			name = CoreTests;
 			productName = AirwallexTests;
 			productReference = 085BD3D123CC62B4002E8F27 /* CoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		3C2B648D27E98858002FAF3E /* TestHost */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3C2B64A427E98859002FAF3E /* Build configuration list for PBXNativeTarget "TestHost" */;
-			buildPhases = (
-				3C2B648A27E98858002FAF3E /* Sources */,
-				3C2B648B27E98858002FAF3E /* Frameworks */,
-				3C2B648C27E98858002FAF3E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = TestHost;
-			productName = TestHost;
-			productReference = 3C2B648E27E98858002FAF3E /* TestHost.app */;
-			productType = "com.apple.product-type.application";
 		};
 		3C99E78627EAF1A10074156C /* ApplePay */ = {
 			isa = PBXNativeTarget;
@@ -1275,7 +1188,6 @@
 			);
 			dependencies = (
 				3C99E79127EAF1A20074156C /* PBXTargetDependency */,
-				1898B6D72873DF6000325C58 /* PBXTargetDependency */,
 			);
 			name = ApplePayTests;
 			productName = ApplePayTests;
@@ -1353,7 +1265,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				18FA911828E0262C00F96D97 /* PBXTargetDependency */,
 				5775CE9026E5DDDF00C6AFE3 /* PBXTargetDependency */,
 			);
 			name = CardTests;
@@ -1392,7 +1303,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				1898B6D92873ED3400325C58 /* PBXTargetDependency */,
 				5775CEB626E5DF3300C6AFE3 /* PBXTargetDependency */,
 			);
 			name = RedirectTests;
@@ -1415,17 +1325,12 @@
 					};
 					085BD3D023CC62B4002E8F27 = {
 						CreatedOnToolsVersion = 11.1;
-						TestTargetID = 3C2B648D27E98858002FAF3E;
-					};
-					3C2B648D27E98858002FAF3E = {
-						CreatedOnToolsVersion = 13.3;
 					};
 					3C99E78627EAF1A10074156C = {
 						CreatedOnToolsVersion = 13.3;
 					};
 					3C99E78D27EAF1A20074156C = {
 						CreatedOnToolsVersion = 13.3;
-						TestTargetID = 3C2B648D27E98858002FAF3E;
 					};
 					5775CE5E26E5D86100C6AFE3 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -1444,7 +1349,6 @@
 					};
 					5775CEB226E5DF3300C6AFE3 = {
 						CreatedOnToolsVersion = 12.5.1;
-						TestTargetID = 3C2B648D27E98858002FAF3E;
 					};
 				};
 			};
@@ -1469,7 +1373,6 @@
 				5775CE8C26E5DDDF00C6AFE3 /* CardTests */,
 				5775CEAA26E5DF3300C6AFE3 /* Redirect */,
 				5775CEB226E5DF3300C6AFE3 /* RedirectTests */,
-				3C2B648D27E98858002FAF3E /* TestHost */,
 				3C99E78627EAF1A10074156C /* ApplePay */,
 				3C99E78D27EAF1A20074156C /* ApplePayTests */,
 			);
@@ -1493,15 +1396,6 @@
 				0829FD0C2431D3A500557DB2 /* PaymentMethod.json in Resources */,
 				0829FD002431D0DE00557DB2 /* Address.json in Resources */,
 				082442C52431AA5100D04A2C /* Card.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3C2B648C27E98858002FAF3E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3C2B64A027E98859002FAF3E /* LaunchScreen.storyboard in Resources */,
-				3C2B649B27E98858002FAF3E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1801,16 +1695,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3C2B648A27E98858002FAF3E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3C2B649827E98858002FAF3E /* ViewController.m in Sources */,
-				3C2B649227E98858002FAF3E /* AppDelegate.m in Sources */,
-				3C2B64A327E98859002FAF3E /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		3C99E78327EAF1A10074156C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1878,7 +1762,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5775CE9326E5DDDF00C6AFE3 /* CardTests.m in Sources */,
 				18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1909,26 +1792,6 @@
 			isa = PBXTargetDependency;
 			target = 085BD3C723CC62B4002E8F27 /* Core */;
 			targetProxy = 085BD3D323CC62B4002E8F27 /* PBXContainerItemProxy */;
-		};
-		1898B6D72873DF6000325C58 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C2B648D27E98858002FAF3E /* TestHost */;
-			targetProxy = 1898B6D62873DF6000325C58 /* PBXContainerItemProxy */;
-		};
-		1898B6D92873ED3400325C58 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C2B648D27E98858002FAF3E /* TestHost */;
-			targetProxy = 1898B6D82873ED3400325C58 /* PBXContainerItemProxy */;
-		};
-		18FA911828E0262C00F96D97 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C2B648D27E98858002FAF3E /* TestHost */;
-			targetProxy = 18FA911728E0262C00F96D97 /* PBXContainerItemProxy */;
-		};
-		3C2B64A827E98863002FAF3E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C2B648D27E98858002FAF3E /* TestHost */;
-			targetProxy = 3C2B64A727E98863002FAF3E /* PBXContainerItemProxy */;
 		};
 		3C99E79127EAF1A20074156C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1973,25 +1836,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		3C2B649927E98858002FAF3E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3C2B649A27E98858002FAF3E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		3C2B649E27E98859002FAF3E /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3C2B649F27E98859002FAF3E /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		085BD3DA23CC62B4002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -2031,7 +1875,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2173,7 +2016,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.CoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Debug;
 		};
@@ -2191,63 +2033,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.CoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
-			};
-			name = Release;
-		};
-		3C2B64A527E98859002FAF3E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TestHost/Info.plist;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.TestHost;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		3C2B64A627E98859002FAF3E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TestHost/Info.plist;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.TestHost;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -2316,7 +2101,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.ApplePayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Debug;
 		};
@@ -2332,7 +2116,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.ApplePayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Release;
 		};
@@ -2485,7 +2268,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.CardTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Debug;
 		};
@@ -2504,7 +2286,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.CardTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Release;
 		};
@@ -2566,7 +2347,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.RedirectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Debug;
 		};
@@ -2580,7 +2360,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.RedirectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Release;
 		};
@@ -2610,15 +2389,6 @@
 			buildConfigurations = (
 				085BD3E023CC62B4002E8F27 /* Debug */,
 				085BD3E123CC62B4002E8F27 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3C2B64A427E98859002FAF3E /* Build configuration list for PBXNativeTarget "TestHost" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C2B64A527E98859002FAF3E /* Debug */,
-				3C2B64A627E98859002FAF3E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

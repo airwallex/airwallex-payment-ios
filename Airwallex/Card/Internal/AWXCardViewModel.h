@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithSession:(AWXSession *_Nonnull)session;
 
-- (void)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString **)error;
+- (void)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString *_Nonnull *_Nonnull)error;
 
 #pragma mark Data creation
 
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
                            billing:(AWXPlaceDetails *)placeDetails
                               card:(AWXCard *)card
             shouldStoreCardDetails:(BOOL)storeCard
-                             error:(NSString **)error;
+                             error:(NSString *_Nonnull *_Nonnull)error;
 
 - (void)updatePaymentIntentId:(NSString *)paymentIntentId;
 

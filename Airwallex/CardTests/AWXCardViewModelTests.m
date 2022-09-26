@@ -6,14 +6,14 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import "AWX3DSActionProvider.h"
 #import "AWXCard.h"
 #import "AWXCardProvider.h"
 #import "AWXCardViewModel.h"
+#import "AWXCountry.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXPaymentIntentResponse.h"
-#import "AWXCountry.h"
 #import "AWXSession.h"
-#import "AWX3DSActionProvider.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 
@@ -29,7 +29,7 @@
     [viewModel setReusesShippingAsBillingInformation:true error:&error];
     XCTAssertEqualObjects(error, NSLocalizedString(@"No shipping address configured.", nil));
     XCTAssertFalse(viewModel.isReusingShippingAsBillingInformation);
-    
+
     [viewModel setReusesShippingAsBillingInformation:false error:&error];
     XCTAssertFalse(viewModel.isReusingShippingAsBillingInformation);
 }
@@ -60,7 +60,7 @@
     XCTAssertTrue(viewModel.isCardSavingEnabled);
 }
 
-- (void)testIsCardSavingEnabledWhenRecurringSession {;
+- (void)testIsCardSavingEnabledWhenRecurringSession {
     AWXCardViewModel *viewModel = [self mockRecurringViewModel];
     XCTAssertFalse(viewModel.isCardSavingEnabled);
 }
@@ -122,7 +122,7 @@
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"redirect_form", @"type", nil];
     AWXConfirmPaymentNextAction *nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:dict];
-    
+
     AWXDefaultActionProvider *actionProvider = [viewModel actionProviderForNextAction:nextAction withDelegate:nil];
     XCTAssertTrue([actionProvider isKindOfClass:[AWX3DSActionProvider class]]);
 }
@@ -188,7 +188,7 @@
                                             cvc:@"077"];
     id cardProviderMock = OCMClassMock([AWXCardProvider class]);
     OCMStub([cardProviderMock alloc]).andReturn(cardProviderMock);
-    
+
     [viewModel confirmPaymentWithProvider:cardProviderMock
                                   billing:billing
                                      card:card
