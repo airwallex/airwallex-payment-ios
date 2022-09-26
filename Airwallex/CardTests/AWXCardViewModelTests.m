@@ -26,12 +26,14 @@
 - (void)testSetReusesShippingAsBillingInformationWhenBillingIsNil {
     NSString *error;
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
-    [viewModel setReusesShippingAsBillingInformation:true error:&error];
+    BOOL isUpdated = [viewModel setReusesShippingAsBillingInformation:true error:&error];
     XCTAssertEqualObjects(error, NSLocalizedString(@"No shipping address configured.", nil));
     XCTAssertFalse(viewModel.isReusingShippingAsBillingInformation);
-
-    [viewModel setReusesShippingAsBillingInformation:false error:&error];
+    XCTAssertFalse(isUpdated);
+    
+    isUpdated = [viewModel setReusesShippingAsBillingInformation:false error:&error];
     XCTAssertFalse(viewModel.isReusingShippingAsBillingInformation);
+    XCTAssertTrue(isUpdated);
 }
 
 - (void)testSetReusesShippingAsBillingInformationWhenHasBilling {
@@ -39,8 +41,9 @@
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.billing = [AWXPlaceDetails new];
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session];
-    [viewModel setReusesShippingAsBillingInformation:true error:&error];
+    BOOL isUpdated = [viewModel setReusesShippingAsBillingInformation:true error:&error];
     XCTAssertTrue(viewModel.isReusingShippingAsBillingInformation);
+    XCTAssertTrue(isUpdated);
 }
 
 - (void)testIsBillingInformationRequired {
@@ -98,6 +101,49 @@
     XCTAssertEqual(billing.address.postcode, @"3000");
 }
 
+- (void)testMakeBillingWhenReusingSessionBilling {
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXAddress *address = [AWXAddress new];
+    address.countryCode = @"SES";
+    address.state = @"SESSION";
+    address.city = @"Session City";
+    address.street = @"Session St";
+    address.postcode = @"Session Code";
+
+    AWXPlaceDetails *billing = [AWXPlaceDetails new];
+    billing.firstName = @"James";
+    billing.lastName = @"Session";
+    billing.email = @"session@example.com";
+    billing.phoneNumber = @"1-800-Session";
+    billing.address = address;
+    
+    session.billing = billing;
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session];
+    [viewModel setReusesShippingAsBillingInformation:YES error:NULL];
+    
+    AWXCountry *country = [AWXCountry new];
+    country.countryCode = @"AU";
+    viewModel.selectedCountry = country;
+    AWXPlaceDetails *inputBilling = [viewModel makeBillingWithFirstName:@"John"
+                                                          lastName:@"Citizen"
+                                                             email:@"abc@test.com"
+                                                       phoneNumber:@"0451833485"
+                                                             state:@"VIC"
+                                                              city:@"Melbourne"
+                                                            street:@"Collins Street"
+                                                          postcode:@"3000"];
+    
+    XCTAssertEqual(inputBilling.firstName, session.billing.firstName);
+    XCTAssertEqual(inputBilling.lastName, session.billing.lastName);
+    XCTAssertEqual(inputBilling.email, session.billing.email);
+    XCTAssertEqual(inputBilling.phoneNumber, session.billing.phoneNumber);
+    XCTAssertEqual(inputBilling.address.countryCode, session.billing.address.countryCode);
+    XCTAssertEqual(inputBilling.address.state, session.billing.address.state);
+    XCTAssertEqual(inputBilling.address.city, session.billing.address.city);
+    XCTAssertEqual(inputBilling.address.street, session.billing.address.street);
+    XCTAssertEqual(inputBilling.address.postcode, session.billing.address.postcode);
+}
+
 - (void)testMakeCard {
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
     AWXCard *card = [viewModel makeCardWithName:@"John Citizen"
@@ -135,7 +181,7 @@
     XCTAssertEqual(provider.session.countryCode, @"AU");
 }
 
-- (void)testConfirmPaymentWithoutBillingDetails {
+- (void)testConfirmPaymentWithInvalidBillingDetails {
     NSString *error;
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
     [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate:nil]
@@ -144,6 +190,19 @@
                    shouldStoreCardDetails:true
                                     error:&error];
     XCTAssertEqualObjects(error, @"Invalid first name");
+}
+
+- (void)testConfirmPaymentWithoutRequiredBillingDetails {
+    NSString *error;
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.isBillingInformationRequired = YES;
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session];
+    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate:nil]
+                                  billing:nil
+                                     card:[AWXCard new]
+                   shouldStoreCardDetails:true
+                                    error:&error];
+    XCTAssertEqualObjects(error, @"No billing address provided.");
 }
 
 - (void)testConfirmPaymentWithoutCardDetails {
@@ -166,6 +225,26 @@
                    shouldStoreCardDetails:true
                                     error:&error];
     XCTAssertEqualObjects(error, @"Invalid card number");
+}
+
+- (void)testConfirmPaymentWithCardWithoutOptionalBilling {
+    NSString *error;
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.isBillingInformationRequired = NO;
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session];
+    AWXCard *card = [viewModel makeCardWithName:@"John Citizen"
+                                         number:@"535234234314"
+                                         expiry:@"08/25"
+                                            cvc:@"077"];
+    id cardProviderMock = OCMClassMock([AWXCardProvider class]);
+    OCMStub([cardProviderMock alloc]).andReturn(cardProviderMock);
+    
+    [viewModel confirmPaymentWithProvider:cardProviderMock
+                                  billing:nil
+                                     card:card
+                   shouldStoreCardDetails:true
+                                    error:&error];
+    OCMVerify(times(1), [cardProviderMock confirmPaymentIntentWithCard:[OCMArg any] billing:[OCMArg any] saveCard:true]);
 }
 
 - (void)testConfirmPaymentWithBillingAndCard {
