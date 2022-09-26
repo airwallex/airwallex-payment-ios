@@ -43,11 +43,17 @@
     return self.session.billing;
 }
 
-- (void)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString **)error {
+- (BOOL)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString **)error {
     if (reusesShippingAsBillingInformation && self.session.billing == nil) {
-        *error = NSLocalizedString(@"No shipping address configured.", nil);
+        if (error != NULL) {
+            *error = NSLocalizedString(@"No shipping address configured.", nil);
+        }
+        
+        return NO;
     } else {
         self.isReusingShippingAsBillingInformation = reusesShippingAsBillingInformation;
+        
+        return YES;
     }
 }
 

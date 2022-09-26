@@ -313,16 +313,16 @@ typedef enum {
 
 - (void)addressSwitchChanged:(UISwitch *)sender {
     NSString *error;
-    [self.viewModel setReusesShippingAsBillingInformation:sender.isOn error:&error];
-    if (error) {
+    BOOL updateSuccessful = [self.viewModel setReusesShippingAsBillingInformation:sender.isOn error:&error];
+    if (updateSuccessful == NO && error != nil) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
                                                                             message:error
                                                                      preferredStyle:UIAlertControllerStyleAlert];
         [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
                                                        style:UIAlertActionStyleCancel
                                                      handler:^(UIAlertAction *_Nonnull action) {
-                                                         sender.on = !sender.isOn;
-                                                     }]];
+            sender.on = !sender.isOn;
+        }]];
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }
