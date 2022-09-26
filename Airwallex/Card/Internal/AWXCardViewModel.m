@@ -156,7 +156,13 @@
             shouldStoreCardDetails:(BOOL)storeCard
                              error:(NSString **)error {
     AWXPlaceDetails *validatedBilling;
-    if (self.isBillingInformationRequired) {
+    if (self.isBillingInformationRequired && placeDetails == nil) {
+        if (error != NULL) {
+            *error = NSLocalizedString(@"No billing address provided.", nil);
+        }
+        
+        return NO;
+    } else if (self.isBillingInformationRequired) {
         NSString *billingValidationError;
         AWXPlaceDetails *validatedBilling = [self validatedBillingDetails:placeDetails error:&billingValidationError];
         if (validatedBilling == nil) {
