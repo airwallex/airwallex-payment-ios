@@ -340,19 +340,21 @@ typedef enum {
 
 - (void)confirmPayment:(id)sender {
     NSString *error;
-
     AWXCardProvider *provider = [self.viewModel preparedProviderWithDelegate:self];
-    [self.viewModel confirmPaymentWithProvider:provider
-                                       billing:[self makeBilling]
-                                          card:[self makeCard]
-                        shouldStoreCardDetails:self.saveCard
-                                         error:&error];
-    self.provider = provider;
-
-    if (error) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
+    BOOL isPaymentProcessing = [self.viewModel confirmPaymentWithProvider:provider
+                                                                  billing:[self makeBilling]
+                                                                     card:[self makeCard]
+                                                   shouldStoreCardDetails:self.saveCard
+                                                                    error:&error];
+    
+    if (isPaymentProcessing) {
+        self.provider = provider;
+    } else {
+        if (error) {
+            UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
+            [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [self presentViewController:controller animated:YES completion:nil];
+        }
     }
 }
 

@@ -67,6 +67,10 @@
                                          city:(NSString *)city
                                        street:(NSString *)street
                                      postcode:(NSString *)postcode {
+    if (self.isReusingShippingAsBillingInformation) {
+        return self.session.billing.copy;
+    }
+    
     AWXPlaceDetails *place = [AWXPlaceDetails new];
     place.firstName = firstName;
     place.lastName = lastName;
@@ -103,24 +107,30 @@
 #pragma mark Data validation
 
 - (AWXPlaceDetails *)validatedBillingDetails:(AWXPlaceDetails *)billing error:(NSString **)error {
-    if (!self.isBillingInformationRequired) {
+    AWXPlaceDetails *validated = billing.copy;
+    NSString *validationError = [validated validate];
+    if (validationError != nil) {
+        if (error != NULL) {
+            *error = validationError;
+        }
+        
         return nil;
-    }
-
-    AWXPlaceDetails *validated;
-    if (self.isReusingShippingAsBillingInformation) {
-        validated = self.session.billing.copy;
     } else {
-        validated = billing.copy;
+        return validated;
     }
-
-    *error = [validated validate];
-    return (*error != nil) ? nil : validated;
 }
 
 - (AWXCard *)validatedCardDetails:(AWXCard *)card error:(NSString **)error {
-    *error = [card validate];
-    return (*error != nil) ? nil : card;
+    NSString *validationError = [card validate];
+    if (validationError != nil) {
+        if (error != NULL) {
+            *error = validationError;
+        }
+        
+        return nil;
+    } else {
+        return card;
+    }
 }
 
 #pragma mark Payment
@@ -140,22 +150,37 @@
     return actionProvider;
 }
 
-- (void)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider
+- (BOOL)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider
                            billing:(AWXPlaceDetails *)placeDetails
                               card:(AWXCard *)card
             shouldStoreCardDetails:(BOOL)storeCard
                              error:(NSString **)error {
-    AWXPlaceDetails *validatedBilling = [self validatedBillingDetails:placeDetails error:error];
-    if (*error) {
-        return;
+    AWXPlaceDetails *validatedBilling;
+    if (self.isBillingInformationRequired) {
+        NSString *billingValidationError;
+        AWXPlaceDetails *validatedBilling = [self validatedBillingDetails:placeDetails error:&billingValidationError];
+        if (validatedBilling == nil) {
+            if (error != NULL && billingValidationError != nil) {
+                *error = billingValidationError;
+            }
+            
+            return NO;
+        }
     }
 
-    AWXCard *validatedCard = [self validatedCardDetails:card error:error];
-    if (*error) {
-        return;
+    NSString *cardValidationError;
+    AWXCard *validatedCard = [self validatedCardDetails:card error:&cardValidationError];
+    if (validatedCard == nil) {
+        if (error != NULL && cardValidationError != nil) {
+            *error = cardValidationError;
+        }
+        
+        return NO;
     }
 
     [provider confirmPaymentIntentWithCard:validatedCard billing:validatedBilling saveCard:storeCard];
+    
+    return YES;
 }
 
 - (void)updatePaymentIntentId:(NSString *)paymentIntentId {

@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (AWXDefaultActionProvider *)actionProviderForNextAction:(AWXConfirmPaymentNextAction *)nextAction
                                              withDelegate:(id<AWXProviderDelegate> _Nullable)delegate;
 
-- (void)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider
+- (BOOL)confirmPaymentWithProvider:(AWXCardProvider *_Nonnull)provider
                            billing:(AWXPlaceDetails *)placeDetails
                               card:(AWXCard *)card
             shouldStoreCardDetails:(BOOL)storeCard
