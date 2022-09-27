@@ -30,6 +30,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *lang;
 
 /**
+ Whether or not billing information is required for payments. When set to `NO`, any billing information will be ignored.
+ */
+@property (nonatomic) BOOL isBillingInformationRequired;
+
+/**
  The billing address.
  */
 @property (nonatomic, strong, nullable) AWXPlaceDetails *billing;

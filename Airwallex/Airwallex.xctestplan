@@ -32,6 +32,13 @@
         "identifier" : "5775CEB226E5DF3300C6AFE3",
         "name" : "RedirectTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
+        "identifier" : "5775CE8C26E5DDDF00C6AFE3",
+        "name" : "CardTests"
+      }
     }
   ],
   "version" : 1

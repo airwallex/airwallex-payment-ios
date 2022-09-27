@@ -10,6 +10,7 @@
 #import "AWXAPIClient.h"
 #import "AWXCard.h"
 #import "AWXCardProvider.h"
+#import "AWXCardViewModel.h"
 #import "AWXConstants.h"
 #import "AWXCountry.h"
 #import "AWXCountryListViewController.h"
@@ -47,8 +48,6 @@
 @property (strong, nonatomic) AWXFloatingLabelTextField *phoneNumberField;
 @property (strong, nonatomic) AWXActionButton *confirmButton;
 
-@property (strong, nonatomic, nullable) AWXCountry *country;
-@property (strong, nonatomic, nullable) AWXPlaceDetails *savedBilling;
 @property (nonatomic) BOOL saveCard;
 
 @end
@@ -130,9 +129,77 @@ typedef enum {
     [cvcStackView addArrangedSubview:_cvcField];
     [_expiresField.widthAnchor constraintEqualToAnchor:_cvcField.widthAnchor multiplier:1.7].active = YES;
 
-    if ([self.session isKindOfClass:[AWXOneOffSession class]] && self.session.customerId) {
+    if (self.viewModel.isCardSavingEnabled) {
         [stackView addArrangedSubview:[self switchOfType:SaveCardSwitch]];
     }
+
+    if (self.viewModel.isBillingInformationRequired) {
+        [stackView addArrangedSubview:self.billingStackView];
+    }
+
+    _confirmButton = [AWXActionButton new];
+    _confirmButton.enabled = YES;
+    [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
+    [_confirmButton addTarget:self action:@selector(confirmPayment:) forControlEvents:UIControlEventTouchUpInside];
+    [stackView addArrangedSubview:_confirmButton];
+    [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
+
+    AWXPlaceDetails *billing = self.viewModel.initialBilling;
+    if (billing) {
+        [self.firstNameField setText:billing.firstName animated:NO];
+        [self.lastNameField setText:billing.lastName animated:NO];
+        [self.emailField setText:billing.email animated:NO];
+        [self.phoneNumberField setText:billing.phoneNumber animated:NO];
+
+        AWXAddress *address = billing.address;
+        if (address) {
+            [self.countryView setText:self.viewModel.selectedCountry.countryName animated:NO];
+            [self.stateField setText:address.state animated:NO];
+            [self.cityField setText:address.city animated:NO];
+            [self.streetField setText:address.street animated:NO];
+            [self.zipcodeField setText:address.postcode animated:NO];
+        }
+    }
+    [self setBillingInputHidden:self.viewModel.isReusingShippingAsBillingInformation];
+    _addressSwitch.on = self.viewModel.isReusingShippingAsBillingInformation;
+    self.saveCard = false;
+}
+
+- (UIStackView *)switchOfType:(SwitchType)type {
+    UIStackView *container = [UIStackView new];
+    container.axis = UILayoutConstraintAxisHorizontal;
+    container.alignment = UIStackViewAlignmentFill;
+    container.distribution = UIStackViewDistributionFill;
+    container.spacing = 23;
+    container.translatesAutoresizingMaskIntoConstraints = NO;
+
+    UISwitch *switchButton = [UISwitch new];
+    UILabel *titleLabel = [UILabel new];
+    switch (type) {
+    case AddressSwitch:
+        titleLabel.text = NSLocalizedString(@"Same as shipping address", @"Same as shipping address");
+        self.addressSwitch = switchButton;
+        [switchButton addTarget:self action:@selector(addressSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        break;
+    case SaveCardSwitch:
+        titleLabel.text = NSLocalizedString(@"Save this card for future payments", @"Save this card for future payments");
+        [switchButton addTarget:self action:@selector(saveCardSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        break;
+    }
+    titleLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
+    titleLabel.font = [UIFont subhead1Font];
+    [container addArrangedSubview:titleLabel];
+    [container addArrangedSubview:switchButton];
+    return container;
+}
+
+- (UIStackView *)billingStackView {
+    UIStackView *stackView = [UIStackView new];
+    stackView.axis = UILayoutConstraintAxisVertical;
+    stackView.alignment = UIStackViewAlignmentFill;
+    stackView.distribution = UIStackViewDistributionEqualSpacing;
+    stackView.spacing = 16;
+    stackView.translatesAutoresizingMaskIntoConstraints = NO;
 
     UILabel *billingLabel = [UILabel new];
     billingLabel.text = NSLocalizedString(@"Billing info", @"Billing info");
@@ -201,63 +268,7 @@ typedef enum {
     _emailField.nextTextField = _phoneNumberField;
     [stackView addArrangedSubview:_phoneNumberField];
 
-    _confirmButton = [AWXActionButton new];
-    _confirmButton.enabled = YES;
-    [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
-    [_confirmButton addTarget:self action:@selector(savePressed:) forControlEvents:UIControlEventTouchUpInside];
-    [stackView addArrangedSubview:_confirmButton];
-    [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
-
-    if (self.session.billing) {
-        [self.firstNameField setText:self.session.billing.firstName animated:NO];
-        [self.lastNameField setText:self.session.billing.lastName animated:NO];
-        [self.emailField setText:self.session.billing.email animated:NO];
-        [self.phoneNumberField setText:self.session.billing.phoneNumber animated:NO];
-
-        AWXAddress *address = self.session.billing.address;
-        if (address) {
-            AWXCountry *matchedCountry = [AWXCountry countryWithCode:address.countryCode];
-            if (matchedCountry) {
-                self.country = matchedCountry;
-                [self.countryView setText:matchedCountry.countryName animated:NO];
-            }
-            [self.stateField setText:address.state animated:NO];
-            [self.cityField setText:address.city animated:NO];
-            [self.streetField setText:address.street animated:NO];
-            [self.zipcodeField setText:address.postcode animated:NO];
-        }
-    }
-    self.sameAsShipping = self.session.billing != nil;
-    _addressSwitch.on = self.sameAsShipping;
-    self.saveCard = false;
-}
-
-- (UIStackView *)switchOfType:(SwitchType)type {
-    UIStackView *container = [UIStackView new];
-    container.axis = UILayoutConstraintAxisHorizontal;
-    container.alignment = UIStackViewAlignmentFill;
-    container.distribution = UIStackViewDistributionFill;
-    container.spacing = 23;
-    container.translatesAutoresizingMaskIntoConstraints = NO;
-
-    UISwitch *switchButton = [UISwitch new];
-    UILabel *titleLabel = [UILabel new];
-    switch (type) {
-    case AddressSwitch:
-        titleLabel.text = NSLocalizedString(@"Same as shipping address", @"Same as shipping address");
-        self.addressSwitch = switchButton;
-        [switchButton addTarget:self action:@selector(addressSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-        break;
-    case SaveCardSwitch:
-        titleLabel.text = NSLocalizedString(@"Save this card for future payments", @"Save this card for future payments");
-        [switchButton addTarget:self action:@selector(saveCardSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-        break;
-    }
-    titleLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
-    titleLabel.font = [UIFont subhead1Font];
-    [container addArrangedSubview:titleLabel];
-    [container addArrangedSubview:switchButton];
-    return container;
+    return stackView;
 }
 
 - (UIScrollView *)activeScrollView {
@@ -284,101 +295,92 @@ typedef enum {
     self.confirmButton.enabled = YES;
 }
 
-- (void)setSameAsShipping:(BOOL)sameAsShipping {
-    _sameAsShipping = sameAsShipping;
-    _firstNameField.hidden = sameAsShipping;
-    _lastNameField.hidden = sameAsShipping;
-    _countryView.hidden = sameAsShipping;
-    _stateField.hidden = sameAsShipping;
-    _cityField.hidden = sameAsShipping;
-    _streetField.hidden = sameAsShipping;
-    _zipcodeField.hidden = sameAsShipping;
-    _emailField.hidden = sameAsShipping;
-    _phoneNumberField.hidden = sameAsShipping;
+- (void)setBillingInputHidden:(BOOL)isHidden {
+    self.firstNameField.hidden = isHidden;
+    self.lastNameField.hidden = isHidden;
+    self.countryView.hidden = isHidden;
+    self.stateField.hidden = isHidden;
+    self.cityField.hidden = isHidden;
+    self.streetField.hidden = isHidden;
+    self.zipcodeField.hidden = isHidden;
+    self.emailField.hidden = isHidden;
+    self.phoneNumberField.hidden = isHidden;
 }
 
 - (void)saveCardSwitchChanged:(id)sender {
     self.saveCard = [(UISwitch *)sender isOn];
 }
 
-- (void)addressSwitchChanged:(id)sender {
-    if (!self.session.billing) {
+- (void)addressSwitchChanged:(UISwitch *)sender {
+    NSString *error;
+    BOOL updateSuccessful = [self.viewModel setReusesShippingAsBillingInformation:sender.isOn error:&error];
+    if (updateSuccessful == NO && error != nil) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
-                                                                            message:NSLocalizedString(@"No shipping address configured.", nil)
+                                                                            message:error
                                                                      preferredStyle:UIAlertControllerStyleAlert];
         [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
                                                        style:UIAlertActionStyleCancel
                                                      handler:^(UIAlertAction *_Nonnull action) {
-                                                         self.addressSwitch.on = NO;
-                                                     }]];
+            sender.on = !sender.isOn;
+        }]];
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }
-
-    self.sameAsShipping = self.addressSwitch.isOn;
+    
+    [self setBillingInputHidden:self.viewModel.isReusingShippingAsBillingInformation];
 }
 
 - (void)selectCountries:(id)sender {
     AWXCountryListViewController *controller = [[AWXCountryListViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
-    controller.country = self.country;
+    controller.country = self.viewModel.selectedCountry;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)savePressed:(id)sender {
-    if (self.sameAsShipping) {
-        self.savedBilling = [self.session.billing copy];
+- (void)confirmPayment:(id)sender {
+    NSString *error;
+    AWXCardProvider *provider = [self.viewModel preparedProviderWithDelegate:self];
+    BOOL isPaymentProcessing = [self.viewModel confirmPaymentWithProvider:provider
+                                                                  billing:[self makeBilling]
+                                                                     card:[self makeCard]
+                                                   shouldStoreCardDetails:self.saveCard
+                                                                    error:&error];
+    
+    if (isPaymentProcessing) {
+        self.provider = provider;
     } else {
-        AWXPlaceDetails *billing = [AWXPlaceDetails new];
-        billing.firstName = self.firstNameField.text;
-        billing.lastName = self.lastNameField.text;
-        billing.email = self.emailField.text;
-        billing.phoneNumber = self.phoneNumberField.text;
-        AWXAddress *address = [AWXAddress new];
-        address.countryCode = self.country.countryCode;
-        address.state = self.stateField.text;
-        address.city = self.cityField.text;
-        address.street = self.streetField.text;
-        address.postcode = self.zipcodeField.text;
-        billing.address = address;
-        NSString *error = [billing validate];
         if (error) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:controller animated:YES completion:nil];
-            return;
         }
-
-        self.savedBilling = billing;
     }
+}
 
-    AWXCard *card = [AWXCard new];
-    card.name = self.nameField.text;
-    card.number = [self.cardNoField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSArray *dates = [self.expiresField.text componentsSeparatedByString:@"/"];
-    card.expiryYear = dates.lastObject;
-    card.expiryMonth = dates.firstObject;
-    card.cvc = self.cvcField.text;
+- (AWXPlaceDetails *)makeBilling {
+    return [self.viewModel makeBillingWithFirstName:self.firstNameField.text
+                                           lastName:self.lastNameField.text
+                                              email:self.emailField.text
+                                        phoneNumber:self.phoneNumberField.text
+                                              state:self.stateField.text
+                                               city:self.cityField.text
+                                             street:self.streetField.text
+                                           postcode:self.zipcodeField.text];
+}
 
-    NSString *error = [card validate];
-    if (error) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
-        return;
-    }
-
-    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:self session:self.session];
-    [provider confirmPaymentIntentWithCard:card billing:self.savedBilling saveCard:self.saveCard];
-    self.provider = provider;
+- (AWXCard *)makeCard {
+    return [self.viewModel makeCardWithName:self.nameField.text
+                                     number:self.cardNoField.text
+                                     expiry:self.expiresField.text
+                                        cvc:self.cvcField.text];
 }
 
 #pragma mark - AWXCountryListViewControllerDelegate
 
 - (void)countryListViewController:(AWXCountryListViewController *)controller didSelectCountry:(AWXCountry *)country {
     [controller dismissViewControllerAnimated:YES completion:nil];
-    self.country = country;
+    self.viewModel.selectedCountry = country;
     [self.countryView setText:country.countryName animated:NO];
 }
 
@@ -402,19 +404,18 @@ typedef enum {
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {
-    [self.session updateInitialPaymentIntentId:paymentIntentId];
+    [self.viewModel updatePaymentIntentId:paymentIntentId];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
-    Class class = ClassToHandleNextActionForType(nextAction);
-    if (class == nil) {
+    AWXDefaultActionProvider *actionProvider = [self.viewModel actionProviderForNextAction:nextAction withDelegate:self];
+    if (actionProvider == nil) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];
         [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }
 
-    AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:self session:self.session];
     [actionProvider handleNextAction:nextAction];
     self.provider = actionProvider;
 }

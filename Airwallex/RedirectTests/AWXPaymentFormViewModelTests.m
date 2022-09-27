@@ -10,11 +10,11 @@
 #import "AWXSession.h"
 #import <XCTest/XCTest.h>
 
-@interface AWXPaymentFormViewModelTest : XCTestCase
+@interface AWXPaymentFormViewModelTests : XCTestCase
 
 @end
 
-@implementation AWXPaymentFormViewModelTest
+@implementation AWXPaymentFormViewModelTests
 
 - (void)testPrefixWithCountryCodeAndCurrency {
     AWXPaymentIntent *intent = [self dummyPaymentIntent];

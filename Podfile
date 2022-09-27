@@ -8,10 +8,15 @@ workspace 'Airwallex.xcworkspace'
 
 target 'WeChatPay' do
   project './Airwallex/Airwallex.xcodeproj'
-  pod 'WechatOpenSDK', '1.8.7.1'
+  pod 'WechatOpenSDK', '1.9.7'
 end
 
 target 'CoreTests' do
+  project './Airwallex/Airwallex.xcodeproj'
+  pod 'OCMock'
+end
+
+target 'CardTests' do
   project './Airwallex/Airwallex.xcodeproj'
   pod 'OCMock'
 end
@@ -28,11 +33,5 @@ end
 target 'Examples' do
   project './Examples/Examples.xcodeproj'
   pod 'Airwallex', :path => './'
-  pod 'WechatOpenSDK', '1.8.7.1'
-end
-
-post_install do |installer|
-  installer.pods_project.build_configurations.each do |config|
-    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-  end
+  pod 'WechatOpenSDK', '1.9.7'
 end

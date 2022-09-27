@@ -20,6 +20,22 @@ static NSString *const recurring = @"recurring";
 
 @implementation AWXSession
 
+- (instancetype)init {
+    if (self = [super init]) {
+        self.isBillingInformationRequired = YES;
+    }
+
+    return self;
+}
+
+- (AWXPlaceDetails *)billing {
+    if (!self.isBillingInformationRequired) {
+        return nil;
+    }
+
+    return _billing;
+}
+
 - (NSString *)transactionMode {
     return oneoff;
 }
