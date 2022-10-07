@@ -35,7 +35,7 @@ Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松
 <!--te-->
 
 ## 要求
-Airwallex iOS SDK需要Xcode 11.0或更高版本，并且与面向iOS 11.0或更高版本的应用程序兼容。
+Airwallex iOS SDK 支持 iOS 11.0 及以上版本。
 
 ## 整合
 
@@ -43,12 +43,7 @@ Airwallex iOS SDK需要Xcode 11.0或更高版本，并且与面向iOS 11.0或更
 
 Airwallex可通过[CocoaPods](https://cocoapods.org/) 整合。
 
-如果尚未安装，请安装最新版本的[CocoaPods](https://cocoapods.org/).
-如果您还没有`Podfile`, 请运行以下命令来创建一个:
-```ruby
-pod init
-```
-将此行添加到您的`Podfile`中:
+将此行添加到您的`Podfile`中：
 ```ruby
 pod 'Airwallex'
 ```
@@ -63,14 +58,9 @@ pod 'Airwallex/Redirect'
 pod 'Airwallex/ApplePay'
 ```
 
-运行以下命令
+运行以下命令：
 ```ruby
 pod install
-```
-不要忘记从现在开始使用`.xcworkspace`文件而不是`.xcodeproj`文件来打开项目。
-以后如果要更新到最新版本的SDK，只需运行：
-```ruby
-pod update Airwallex
 ```
 
 ### Swift
@@ -286,19 +276,9 @@ UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:
 [UIView.appearance setTintColor:tintColor];
 ```
 
-## 例子
+## 示例
 
-要运行示例项目，应遵循以下步骤。
-
-- 准备
-
-1. 安装Xcode的[最新版本](https://itunes.apple.com/us/app/xcode/id497799835?mt=12).
-
-2. 安装[Bundle](https://bundler.io/)
-
-```ruby
-gem install bundler
-```
+示例应用支持最新版的 Xcode。要运行示例项目，应遵循以下步骤。
 
 - 克隆源代码
 
@@ -310,39 +290,19 @@ git clone git@github.com:airwallex/airwallex-payment-ios.git
 
 - 安装依赖项并打开项目
 
-1. 进入项目目录
-
-```
-cd airwallex-payment-ios
-```
-
-2. 安装依赖
-
-```
-bundle install
-```
+确保已经安装 Cocoapods，然后在项目目录下执行以下命令：
 
 ```
 pod install
 ```
 
-3. 使用Xcode打开`Airwallex.xcworkspace`或者运行以下脚本。 **确保始终通过work space打开项目**
+- 配置 API 密钥（可选）
 
-```
-open Airwallex.xcworkspace
-```
+在 `Examples/Keys` 目录下，编辑并更新 `Keys_sample.json` 文件，然后重命名为 `Keys.json`。
 
-- 构建配置
+- 编译启动 `Example` 应用
 
-有两种配置`Airwallex`和`Examples`。你可以在项目中切换你想要的配置。
-
-`Airwallex`将为开发人员生成框架
-
-`Examples`将构建和运行示例应用程序
-
-- 在iOS设备上运行该应用
-
-从左上方的面板中选择目标设备，然后按键盘上的“ Command + R”（或从顶部菜单栏中的“产品>运行”）在iOS设备上运行此项目。
+如果没有更新密钥文件，你也可以通过实例应用里的设置界面配置 API 密钥。请确保点击 `Generate customer` 按钮然后再执行 Checkout。
 
 ## 贡献
 

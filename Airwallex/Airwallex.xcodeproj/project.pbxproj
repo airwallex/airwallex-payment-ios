@@ -332,6 +332,12 @@
 		3C5A37F727ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXOneOffSessionRequestTest.m; sourceTree = "<group>"; };
 		3C5A37FA27F29DD200CFC2EF /* AWXProviderDelegateSpy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXProviderDelegateSpy.h; sourceTree = "<group>"; };
 		3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXProviderDelegateSpy.m; sourceTree = "<group>"; };
+		3C72E12728EC3EAA00F038E3 /* Airwallex.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Airwallex.xcconfig; sourceTree = "<group>"; };
+		3C72E12928EC4C2F00F038E3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		3C72E12A28EC4C2F00F038E3 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; name = "sonar-project.properties"; path = "../sonar-project.properties"; sourceTree = "<group>"; };
+		3C72E12B28EC4C2F00F038E3 /* Airwallex.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = Airwallex.podspec; path = ../Airwallex.podspec; sourceTree = "<group>"; };
+		3C72E12C28EC4C2F00F038E3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		3C72E12D28EC4C2F00F038E3 /* README_zh_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../README_zh_CN.md; sourceTree = "<group>"; };
 		3C99E73A27E9A0730074156C /* AWXApplePayOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXApplePayOptions.h; sourceTree = "<group>"; };
 		3C99E73B27E9A0730074156C /* AWXApplePayOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXApplePayOptions.m; sourceTree = "<group>"; };
 		3C99E73E27E9A3380074156C /* AWXDefaultProviderTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXDefaultProviderTest.m; sourceTree = "<group>"; };
@@ -350,11 +356,6 @@
 		3CE9BA2F2806E02F005B70C3 /* AWXPlaceDetailsPKContactTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPlaceDetailsPKContactTest.m; sourceTree = "<group>"; };
 		3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Airwallex.xctestplan; sourceTree = "<group>"; };
 		3DE792F8978574E90381E7D5 /* Pods-CardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardTests.debug.xcconfig"; path = "Target Support Files/Pods-CardTests/Pods-CardTests.debug.xcconfig"; sourceTree = "<group>"; };
-		570A139C25A82B270064B362 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
-		570A139D25A82B280064B362 /* README_zh_CN.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../../README_zh_CN.md; sourceTree = "<group>"; };
-		5714F5C32746430500E2C954 /* UPGRADE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = UPGRADE.md; path = ../../UPGRADE.md; sourceTree = "<group>"; };
-		5714F5C42746430500E2C954 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../../CHANGELOG.md; sourceTree = "<group>"; };
-		5714F5CD2746441D00E2C954 /* Airwallex.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Airwallex.podspec; path = ../../Airwallex.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXSessionTest.m; sourceTree = "<group>"; };
 		5775CE5F26E5D86100C6AFE3 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5775CE6226E5D86100C6AFE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -631,6 +632,7 @@
 			isa = PBXGroup;
 			children = (
 				3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */,
+				3C72E12828EC4BDD00F038E3 /* Configurations */,
 				3C5A37F927F29DB000CFC2EF /* Shared */,
 				085BD3CA23CC62B4002E8F27 /* Core */,
 				085BD3D523CC62B4002E8F27 /* CoreTests */,
@@ -668,11 +670,6 @@
 		085BD3CA23CC62B4002E8F27 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				5714F5CD2746441D00E2C954 /* Airwallex.podspec */,
-				570A139D25A82B280064B362 /* README_zh_CN.md */,
-				570A139C25A82B270064B362 /* README.md */,
-				5714F5C42746430500E2C954 /* CHANGELOG.md */,
-				5714F5C32746430500E2C954 /* UPGRADE.md */,
 				57FB500026CCD84300DBD7A2 /* Sources */,
 				085BD40723CC6C89002E8F27 /* Resources */,
 				085BD3CC23CC62B4002E8F27 /* Info.plist */,
@@ -833,6 +830,19 @@
 				3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		3C72E12828EC4BDD00F038E3 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3C72E12B28EC4C2F00F038E3 /* Airwallex.podspec */,
+				3C72E12928EC4C2F00F038E3 /* LICENSE */,
+				3C72E12D28EC4C2F00F038E3 /* README_zh_CN.md */,
+				3C72E12C28EC4C2F00F038E3 /* README.md */,
+				3C72E12A28EC4C2F00F038E3 /* sonar-project.properties */,
+				3C72E12728EC3EAA00F038E3 /* Airwallex.xcconfig */,
+			);
+			name = Configurations;
 			sourceTree = "<group>";
 		};
 		3C99E78827EAF1A20074156C /* ApplePay */ = {
@@ -1317,7 +1327,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1330;
-				LastUpgradeCheck = 1310;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = Airwallex;
 				TargetAttributes = {
 					085BD3C723CC62B4002E8F27 = {
@@ -1839,6 +1849,7 @@
 /* Begin XCBuildConfiguration section */
 		085BD3DA23CC62B4002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C72E12728EC3EAA00F038E3 /* Airwallex.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1890,7 +1901,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 5.1.1;
+				MARKETING_VERSION = "${AIRWALLEX_VERSION}";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1902,6 +1913,7 @@
 		};
 		085BD3DB23CC62B4002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C72E12728EC3EAA00F038E3 /* Airwallex.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1947,7 +1959,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 5.1.1;
+				MARKETING_VERSION = "${AIRWALLEX_VERSION}";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1971,6 +1983,7 @@
 				);
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.Core;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -2125,7 +2138,6 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2150,7 +2162,6 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2210,7 +2221,6 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2234,7 +2244,6 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2294,7 +2303,6 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2318,7 +2326,6 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

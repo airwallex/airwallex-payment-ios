@@ -36,7 +36,7 @@ Table of contents
 <!--te-->
 
 ## Requirements
-The Airwallex iOS SDK requires Xcode 11.0 or later and is compatible with apps targeting iOS 11.0 or above.
+The Airwallex iOS SDK supports iOS 11.0 and above.
 
 ## Integration
 
@@ -44,12 +44,7 @@ The Airwallex iOS SDK requires Xcode 11.0 or later and is compatible with apps t
 
 Airwallex for iOS is available through [CocoaPods](https://cocoapods.org/).
 
-If you haven't already, install the latest version of [CocoaPods](https://cocoapods.org/).
-If you don't have an existing `Podfile`, run the following command to create one:
-```ruby
-pod init
-```
-Add this line to your Podfile:
+Add this line to your `Podfile`:
 ```ruby
 pod 'Airwallex'
 ```
@@ -64,14 +59,9 @@ pod 'Airwallex/Redirect'
 pod 'Airwallex/ApplePay'
 ```
 
-Run the following command
+Run the following command:
 ```ruby
 pod install
-```
-Don’t forget to use the `.xcworkspace` file to open your project in Xcode, instead of the `.xcodeproj` file, from here on out.
-In the feature, to update to the latest version of the SDK, just run:
-```ruby
-pod update Airwallex
 ```
 
 ### Swift
@@ -290,17 +280,7 @@ UIColor *tintColor = [UIColor colorWithRed:97.0f/255.0f green:47.0f/255.0f blue:
 
 ## Examples
 
-To run the example project, you should follow these steps.
-
-- Preparing
-
-1. Install the [lastest version](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) of Xcode and iOS SDK from Mac Store.
-
-2. Install [Bundle](https://bundler.io/)
-
-```ruby
-gem install bundler
-```
+The Examples can be run on the latest Xcode. To run the example app, you should follow these steps.
 
 - Clone source code
 
@@ -312,39 +292,20 @@ git clone git@github.com:airwallex/airwallex-payment-ios.git
 
 - Install dependencies and open project
 
-1. Go into the project directory
-
-```
-cd airwallex-payment-ios
-```
-
-2. Install dependencies
-
-```
-bundle install
-```
+Make sure you have installed Cocoapods and then run the following command in the project directory:
 
 ```
 pod install
 ```
 
-3. Open `Airwallex.xcworkspace` from Xcode or run the following script to open it. **Be sure you always open the project from the work space.**
+- Update key file (Optional)
 
-```
-open Airwallex.xcworkspace
-```
+In the `Examples/Keys` folder, edit `Keys_sample.json` with proper keys and then rename it to `Keys.json`.
 
-- Build Configurations
+- Build and run `Examples` schema
 
-There are two schemes `Airwallex` and `Examples`. You can switch the schemes in project scheme settings.
-
-`Airwallex` will generate a framework for developer
-
-`Examples` will build and run an example application
-
-- Run the app on your iOS device
-
-Select your target device from the top left panel, then press "Command + R" on your keyboard (or "Product > Run" from the top menu bar) to run this project on your iOS device.
+If you didn't update the key file, you can use the in-app setting screen to update the keys.
+Make sure to tap `Generate customer` button first before continuing with checkouts.
 
 ## Contributing
 
