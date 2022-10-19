@@ -14,7 +14,7 @@ jobs:
     - name: Checkout project
       uses: actions/checkout@v3
       with:
-          fetch-depth: 0
+        fetch-depth: 0
     
     - name: Setup Xcode version
       uses: maxim-lobanov/setup-xcode@v1.4.1
@@ -60,5 +60,4 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      run: sonar-scanner
-          -Dsonar.qualitygate.wait=true
+      run: sonar-scanner -Dsonar.qualitygate.wait=true
