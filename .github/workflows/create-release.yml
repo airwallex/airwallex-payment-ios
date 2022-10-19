@@ -1,4 +1,4 @@
-name: Semantic Release
+name: Create Release
 
 on:
   workflow_dispatch:
@@ -17,13 +17,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          # Bypass protected branch setting by using a service account PAT
+          # see more at: https://github.com/community/community/discussions/13836
+          token: ${{ secrets.SERVICE_ACCOUNT_PAT }}
       
       - name: Work out the new version via Semantic Release
         if: ${{ inputs.version == '' }}
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v3
         id: semantic
         with:
           branch: ${{ github.ref_name }}
+          dry_run: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
