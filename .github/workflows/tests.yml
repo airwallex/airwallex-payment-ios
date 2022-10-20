@@ -22,7 +22,7 @@ jobs:
         xcode-version: latest-stable
 
     - name: Restore Cocoapods cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache
       with:
         path: Pods
@@ -31,8 +31,7 @@ jobs:
           ${{ runner.os }}-pods-
 
     - name: Cocoapods
-      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-      run: pod install --verbose --repo-update
+      run: pod install --verbose
       
       # Sonar coverage is broken up into two formats for Objective-C and Swift code. 
       # All Objective-C analysis requires the build-wrapper (https://docs.sonarqube.org/latest/analysis/languages/cfamily/). Without it, sonar-scanner
