@@ -36,7 +36,7 @@ jobs:
           echo "VERSION=${{ inputs.version || steps.semantic.outputs.new_release_version }}" >> $GITHUB_ENV
 
       - name: Restore Cocoapods cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
@@ -60,3 +60,4 @@ jobs:
           generateReleaseNotes: ${{ steps.semantic.outcome != 'success' }}
           commit: ${{ steps.commit.outputs.commit_hash }}
           tag: ${{ env.VERSION }}
+          token: ${{ secrets.SERVICE_ACCOUNT_PAT }}
