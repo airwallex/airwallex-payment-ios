@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param billing The billing info.
  */
 - (void)confirmPaymentIntentWithCard:(AWXCard *)card
-                             billing:(AWXPlaceDetails *)billing
+                             billing:(AWXPlaceDetails * _Nullable)billing
                             saveCard:(BOOL)saveCard;
 
 @end
