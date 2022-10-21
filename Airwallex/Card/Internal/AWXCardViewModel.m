@@ -164,7 +164,7 @@
         return NO;
     } else if (self.isBillingInformationRequired) {
         NSString *billingValidationError;
-        AWXPlaceDetails *validatedBilling = [self validatedBillingDetails:placeDetails error:&billingValidationError];
+        validatedBilling = [self validatedBillingDetails:placeDetails error:&billingValidationError];
         if (validatedBilling == nil) {
             if (error != NULL && billingValidationError != nil) {
                 *error = billingValidationError;

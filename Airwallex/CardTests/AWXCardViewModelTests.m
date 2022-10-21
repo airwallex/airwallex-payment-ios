@@ -244,7 +244,7 @@
                                      card:card
                    shouldStoreCardDetails:true
                                     error:&error];
-    OCMVerify(times(1), [cardProviderMock confirmPaymentIntentWithCard:[OCMArg any] billing:[OCMArg any] saveCard:true]);
+    OCMVerify(times(1), [cardProviderMock confirmPaymentIntentWithCard:[OCMArg any] billing:[OCMArg isNil] saveCard:true]);
 }
 
 - (void)testConfirmPaymentWithBillingAndCard {
@@ -267,13 +267,28 @@
                                             cvc:@"077"];
     id cardProviderMock = OCMClassMock([AWXCardProvider class]);
     OCMStub([cardProviderMock alloc]).andReturn(cardProviderMock);
-
+    
+    BOOL (^billingVerification) (id) = ^BOOL(id value) {
+        AWXPlaceDetails *validatedBilling = (AWXPlaceDetails *)value;
+        XCTAssertEqual(validatedBilling.lastName, billing.lastName);
+        XCTAssertEqual(validatedBilling.email, billing.email);
+        XCTAssertEqual(validatedBilling.address.postcode, billing.address.postcode);
+        
+        return true;
+    };
+    
+    OCMExpect([cardProviderMock confirmPaymentIntentWithCard:[OCMArg isNotNil]
+                                                     billing:[OCMArg checkWithBlock:billingVerification]
+                                                    saveCard:true]);
+    
     [viewModel confirmPaymentWithProvider:cardProviderMock
                                   billing:billing
                                      card:card
                    shouldStoreCardDetails:true
                                     error:&error];
-    OCMVerify(times(1), [cardProviderMock confirmPaymentIntentWithCard:[OCMArg any] billing:[OCMArg any] saveCard:true]);
+    
+    OCMVerify(times(1), [cardProviderMock confirmPaymentIntentWithCard:[OCMArg isNotNil] billing:[OCMArg isNotNil] saveCard:true]);
+    OCMVerifyAll(cardProviderMock);
 }
 
 - (AWXCardViewModel *)mockOneOffViewModel {
