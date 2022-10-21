@@ -223,7 +223,7 @@ After completing payment, WeChat will be redirected to the merchant's app and do
 The Airwallex iOS SDK allows merchants to provide Apple Pay as a payment method to their customers. 
 
 - Make sure Apple Pay is set up correctly in the app. For more information, refer to Apple's official [doc](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay).
-- Make sure Apple Pay is enabled on your Airallex account.
+- Make sure Apple Pay is enabled on your Airwallex account.
 - Include the Apple Pay module when installing the SDK.
 - Prepare the [Merchant Identifier](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay) and configure `applePayOptions` on the payment session object.
 
