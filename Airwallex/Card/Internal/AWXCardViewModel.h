@@ -31,18 +31,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithSession:(AWXSession *)session;
 
-- (BOOL)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString * _Nullable * _Nullable)error;
+- (BOOL)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString *_Nullable *_Nullable)error;
 
 #pragma mark Data creation
 
-- (AWXPlaceDetails * _Nullable)makeBillingWithFirstName:(NSString * _Nullable)firstName
-                                               lastName:(NSString * _Nullable)lastName
-                                                  email:(NSString * _Nullable)email
-                                            phoneNumber:(NSString * _Nullable)phoneNumber
-                                                  state:(NSString * _Nullable)state
-                                                   city:(NSString * _Nullable)city
-                                                 street:(NSString * _Nullable)street
-                                               postcode:(NSString * _Nullable)postcode;
+- (AWXPlaceDetails *_Nullable)makeBillingWithFirstName:(NSString *_Nullable)firstName
+                                              lastName:(NSString *_Nullable)lastName
+                                                 email:(NSString *_Nullable)email
+                                           phoneNumber:(NSString *_Nullable)phoneNumber
+                                                 state:(NSString *_Nullable)state
+                                                  city:(NSString *_Nullable)city
+                                                street:(NSString *_Nullable)street
+                                              postcode:(NSString *_Nullable)postcode;
 
 - (AWXCard *)makeCardWithName:(NSString *)name
                        number:(NSString *)number
@@ -56,10 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
                                              withDelegate:(id<AWXProviderDelegate> _Nullable)delegate;
 
 - (BOOL)confirmPaymentWithProvider:(AWXCardProvider *)provider
-                           billing:(AWXPlaceDetails * _Nullable)placeDetails
+                           billing:(AWXPlaceDetails *_Nullable)placeDetails
                               card:(AWXCard *)card
             shouldStoreCardDetails:(BOOL)storeCard
-                             error:(NSString * _Nullable * _Nullable)error;
+                             error:(NSString *_Nullable *_Nullable)error;
 
 - (void)updatePaymentIntentId:(NSString *)paymentIntentId;
 

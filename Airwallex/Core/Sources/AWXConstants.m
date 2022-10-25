@@ -96,7 +96,7 @@ Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type) {
     } else if (type.hasSchema) {
         return NSClassFromString(@"AWXSchemaProvider");
     } else {
-        return NSClassFromString(@"AWXDefaultProvider");
+        return Nil;
     }
 }
 

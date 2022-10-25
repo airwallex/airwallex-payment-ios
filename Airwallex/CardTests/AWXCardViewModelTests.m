@@ -30,7 +30,7 @@
     XCTAssertEqualObjects(error, NSLocalizedString(@"No shipping address configured.", nil));
     XCTAssertFalse(viewModel.isReusingShippingAsBillingInformation);
     XCTAssertFalse(isUpdated);
-    
+
     isUpdated = [viewModel setReusesShippingAsBillingInformation:false error:&error];
     XCTAssertFalse(viewModel.isReusingShippingAsBillingInformation);
     XCTAssertTrue(isUpdated);
@@ -116,23 +116,23 @@
     billing.email = @"session@example.com";
     billing.phoneNumber = @"1-800-Session";
     billing.address = address;
-    
+
     session.billing = billing;
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session];
     [viewModel setReusesShippingAsBillingInformation:YES error:NULL];
-    
+
     AWXCountry *country = [AWXCountry new];
     country.countryCode = @"AU";
     viewModel.selectedCountry = country;
     AWXPlaceDetails *inputBilling = [viewModel makeBillingWithFirstName:@"John"
-                                                          lastName:@"Citizen"
-                                                             email:@"abc@test.com"
-                                                       phoneNumber:@"0451833485"
-                                                             state:@"VIC"
-                                                              city:@"Melbourne"
-                                                            street:@"Collins Street"
-                                                          postcode:@"3000"];
-    
+                                                               lastName:@"Citizen"
+                                                                  email:@"abc@test.com"
+                                                            phoneNumber:@"0451833485"
+                                                                  state:@"VIC"
+                                                                   city:@"Melbourne"
+                                                                 street:@"Collins Street"
+                                                               postcode:@"3000"];
+
     XCTAssertEqual(inputBilling.firstName, session.billing.firstName);
     XCTAssertEqual(inputBilling.lastName, session.billing.lastName);
     XCTAssertEqual(inputBilling.email, session.billing.email);
@@ -238,7 +238,7 @@
                                             cvc:@"077"];
     id cardProviderMock = OCMClassMock([AWXCardProvider class]);
     OCMStub([cardProviderMock alloc]).andReturn(cardProviderMock);
-    
+
     [viewModel confirmPaymentWithProvider:cardProviderMock
                                   billing:nil
                                      card:card
@@ -267,26 +267,26 @@
                                             cvc:@"077"];
     id cardProviderMock = OCMClassMock([AWXCardProvider class]);
     OCMStub([cardProviderMock alloc]).andReturn(cardProviderMock);
-    
-    BOOL (^billingVerification) (id) = ^BOOL(id value) {
+
+    BOOL (^billingVerification)(id) = ^BOOL(id value) {
         AWXPlaceDetails *validatedBilling = (AWXPlaceDetails *)value;
         XCTAssertEqual(validatedBilling.lastName, billing.lastName);
         XCTAssertEqual(validatedBilling.email, billing.email);
         XCTAssertEqual(validatedBilling.address.postcode, billing.address.postcode);
-        
+
         return true;
     };
-    
+
     OCMExpect([cardProviderMock confirmPaymentIntentWithCard:[OCMArg isNotNil]
                                                      billing:[OCMArg checkWithBlock:billingVerification]
                                                     saveCard:true]);
-    
+
     [viewModel confirmPaymentWithProvider:cardProviderMock
                                   billing:billing
                                      card:card
                    shouldStoreCardDetails:true
                                     error:&error];
-    
+
     OCMVerify(times(1), [cardProviderMock confirmPaymentIntentWithCard:[OCMArg isNotNil] billing:[OCMArg isNotNil] saveCard:true]);
     OCMVerifyAll(cardProviderMock);
 }

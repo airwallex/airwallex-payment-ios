@@ -24,10 +24,14 @@
 
     OCMStub([sessionMock transactionMode]).andReturn(@"transactionMode");
 
-    AWXPaymentMethodType *validMethod = [AWXPaymentMethodType new];
-    validMethod.name = @"validMethod";
-    validMethod.displayName = @"Valid Method";
-    validMethod.transactionMode = @"transactionMode";
+    AWXPaymentMethodType *validMethod = [AWXPaymentMethodType decodeFromJSON:@{
+        @"name": @"validMethod",
+        @"display_name": @"Valid Method",
+        @"transaction_mode": @"transactionMode",
+        @"resources": @{
+            @"has_schema": @"true"
+        }
+    }];
 
     AWXPaymentMethodType *mismatchTransactionMode = [AWXPaymentMethodType new];
     mismatchTransactionMode.name = @"mismatchTransactionMode";
@@ -38,15 +42,15 @@
     unsupportedMethod.displayName = @"Google Pay";
     unsupportedMethod.transactionMode = @"transactionMode";
 
-    AWXPaymentMethodType *unsupportedMethod2 = [AWXPaymentMethodType new];
-    unsupportedMethod2.name = @"something";
-    unsupportedMethod2.transactionMode = @"transactionMode";
+    AWXPaymentMethodType *methodWithoutDisplayName = [AWXPaymentMethodType new];
+    methodWithoutDisplayName.name = @"card";
+    methodWithoutDisplayName.transactionMode = @"transactionMode";
 
     NSArray<AWXPaymentMethodType *> *methodTypes = @[
         validMethod,
         mismatchTransactionMode,
         unsupportedMethod,
-        unsupportedMethod2
+        methodWithoutDisplayName
     ];
 
     NSArray<AWXPaymentMethodType *> *filtered = [sessionMock filteredPaymentMethodTypes:methodTypes];

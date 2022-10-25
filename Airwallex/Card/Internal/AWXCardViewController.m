@@ -321,12 +321,12 @@ typedef enum {
         [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
                                                        style:UIAlertActionStyleCancel
                                                      handler:^(UIAlertAction *_Nonnull action) {
-            sender.on = !sender.isOn;
-        }]];
+                                                         sender.on = !sender.isOn;
+                                                     }]];
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }
-    
+
     [self setBillingInputHidden:self.viewModel.isReusingShippingAsBillingInformation];
 }
 
@@ -346,7 +346,7 @@ typedef enum {
                                                                      card:[self makeCard]
                                                    shouldStoreCardDetails:self.saveCard
                                                                     error:&error];
-    
+
     if (isPaymentProcessing) {
         self.provider = provider;
     } else {

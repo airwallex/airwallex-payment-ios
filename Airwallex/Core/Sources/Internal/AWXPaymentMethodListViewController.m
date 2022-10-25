@@ -265,7 +265,7 @@
 
         // This should not happen since we've filtered out the types that no providers support when we get the data.
         // For now, we'll leave it here but we should be able to remove it.
-        if (class == nil) {
+        if (class == Nil) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the payment method.", nil) preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:controller animated:YES completion:nil];
