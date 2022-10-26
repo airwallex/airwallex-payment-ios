@@ -28,12 +28,9 @@
 		187AFA6928B522C000561EEB /* AWXPaymentConsentRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */; };
 		18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */; };
 		2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */; };
-		3C324F8827FBE2D300CF7315 /* AWXConstants+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C324F8627FBE2D300CF7315 /* AWXConstants+Internal.h */; };
-		3C324F8927FBE2D300CF7315 /* AWXConstants+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C324F8727FBE2D300CF7315 /* AWXConstants+Internal.m */; };
 		3C324F9027FC09AD00CF7315 /* AWXSession+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */; };
 		3C324F9127FC09AD00CF7315 /* AWXSession+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C324F8F27FC09AD00CF7315 /* AWXSession+Internal.m */; };
 		3C324F9327FC0BF200CF7315 /* AWXSessionInternalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C324F9227FC0BF200CF7315 /* AWXSessionInternalTest.m */; };
-		3C324F9527FC108500CF7315 /* AWXConstantsInternalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C324F9427FC108500CF7315 /* AWXConstantsInternalTest.m */; };
 		3C455EB627E03B04009DB492 /* RLTMXProfilingConnections.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */; };
 		3C455EB727E03B04009DB492 /* RLTMXProfilingConnections.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C455EB827E03B04009DB492 /* RLTMXProfiling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */; };
@@ -308,12 +305,9 @@
 		184EADAF28D15C1600FD965D /* AWXCardViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewModel.m; sourceTree = "<group>"; };
 		187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentConsentRequestTest.m; sourceTree = "<group>"; };
 		18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewModelTests.m; sourceTree = "<group>"; };
-		3C324F8627FBE2D300CF7315 /* AWXConstants+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXConstants+Internal.h"; sourceTree = "<group>"; };
-		3C324F8727FBE2D300CF7315 /* AWXConstants+Internal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXConstants+Internal.m"; sourceTree = "<group>"; };
 		3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXSession+Internal.h"; sourceTree = "<group>"; };
 		3C324F8F27FC09AD00CF7315 /* AWXSession+Internal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXSession+Internal.m"; sourceTree = "<group>"; };
 		3C324F9227FC0BF200CF7315 /* AWXSessionInternalTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXSessionInternalTest.m; sourceTree = "<group>"; };
-		3C324F9427FC108500CF7315 /* AWXConstantsInternalTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXConstantsInternalTest.m; sourceTree = "<group>"; };
 		3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfilingConnections.xcframework; path = ../TrustDefender/RLTMXProfilingConnections.xcframework; sourceTree = "<group>"; };
 		3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfiling.xcframework; path = ../TrustDefender/RLTMXProfiling.xcframework; sourceTree = "<group>"; };
 		3C5A37D527EAFD9F00CFC2EF /* AWXApplePayProviderTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXApplePayProviderTest.m; sourceTree = "<group>"; };
@@ -684,7 +678,6 @@
 				0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */,
 				3C99E74627E9A6B70074156C /* AWXApplePayOptionsTest.m */,
 				3C99E74427E9A51C0074156C /* AWXConstantsTest.m */,
-				3C324F9427FC108500CF7315 /* AWXConstantsInternalTest.m */,
 				3C99E73E27E9A3380074156C /* AWXDefaultProviderTest.m */,
 				3C324F9227FC0BF200CF7315 /* AWXSessionInternalTest.m */,
 				082442C62431BD5100D04A2C /* AWXTestUtils.h */,
@@ -732,8 +725,6 @@
 				5775CEF726E5DF4F00C6AFE3 /* AWXAPIResponse.m */,
 				5775CEC426E5DF4D00C6AFE3 /* AWXCardValidator.h */,
 				5775CEC726E5DF4D00C6AFE3 /* AWXCardValidator.m */,
-				3C324F8627FBE2D300CF7315 /* AWXConstants+Internal.h */,
-				3C324F8727FBE2D300CF7315 /* AWXConstants+Internal.m */,
 				5775CEF426E5DF4F00C6AFE3 /* AWXCountry.h */,
 				5775CED126E5DF4D00C6AFE3 /* AWXCountry.m */,
 				5775CEEB26E5DF4E00C6AFE3 /* AWXCountryListViewController.h */,
@@ -1032,7 +1023,6 @@
 				5775CF4E26E5DF5000C6AFE3 /* AWXDevice.h in Headers */,
 				5775CF1226E5DF4F00C6AFE3 /* AWXPaymentIntent.h in Headers */,
 				5775CF2A26E5DF4F00C6AFE3 /* AWXPlaceDetails.h in Headers */,
-				3C324F8827FBE2D300CF7315 /* AWXConstants+Internal.h in Headers */,
 				5775CF2F26E5DF4F00C6AFE3 /* AWXSession.h in Headers */,
 				5775CF4A26E5DF5000C6AFE3 /* AWXCodable.h in Headers */,
 				5775CF6126E5DF5000C6AFE3 /* AWXShippingViewController.h in Headers */,
@@ -1672,7 +1662,6 @@
 				5775CF3226E5DF4F00C6AFE3 /* AWXPaymentIntentRequest.m in Sources */,
 				5775CF4226E5DF5000C6AFE3 /* AWXShippingViewController.m in Sources */,
 				5775CF2926E5DF4F00C6AFE3 /* AWXDevice.m in Sources */,
-				3C324F8927FBE2D300CF7315 /* AWXConstants+Internal.m in Sources */,
 				5775CF5626E5DF5000C6AFE3 /* AWXPaymentMethodRequest.m in Sources */,
 				5775CF2126E5DF4F00C6AFE3 /* AWXCountry.m in Sources */,
 				5775CF1826E5DF4F00C6AFE3 /* AWXPlaceDetails.m in Sources */,
@@ -1692,7 +1681,6 @@
 				3C99E73F27E9A3380074156C /* AWXDefaultProviderTest.m in Sources */,
 				187AFA6928B522C000561EEB /* AWXPaymentConsentRequestTest.m in Sources */,
 				082442CC2431C00E00D04A2C /* AWXCardTest.m in Sources */,
-				3C324F9527FC108500CF7315 /* AWXConstantsInternalTest.m in Sources */,
 				572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */,
 				0829FD082431D25800557DB2 /* AWXBillingTest.m in Sources */,
 				3C99E74727E9A6B70074156C /* AWXApplePayOptionsTest.m in Sources */,

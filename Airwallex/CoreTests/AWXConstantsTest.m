@@ -87,7 +87,7 @@
     resources.hasSchema = NO;
     type.resources = resources;
 
-    XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXDefaultProvider class]);
+    XCTAssertNil(ClassToHandleFlowForPaymentMethodType(type));
 }
 
 @end

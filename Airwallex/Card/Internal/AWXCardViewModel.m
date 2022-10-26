@@ -48,11 +48,11 @@
         if (error != NULL) {
             *error = NSLocalizedString(@"No shipping address configured.", nil);
         }
-        
+
         return NO;
     } else {
         self.isReusingShippingAsBillingInformation = reusesShippingAsBillingInformation;
-        
+
         return YES;
     }
 }
@@ -70,7 +70,7 @@
     if (self.isReusingShippingAsBillingInformation) {
         return self.session.billing.copy;
     }
-    
+
     AWXPlaceDetails *place = [AWXPlaceDetails new];
     place.firstName = firstName;
     place.lastName = lastName;
@@ -113,7 +113,7 @@
         if (error != NULL) {
             *error = validationError;
         }
-        
+
         return nil;
     } else {
         return validated;
@@ -126,7 +126,7 @@
         if (error != NULL) {
             *error = validationError;
         }
-        
+
         return nil;
     } else {
         return card;
@@ -160,7 +160,7 @@
         if (error != NULL) {
             *error = NSLocalizedString(@"No billing address provided.", nil);
         }
-        
+
         return NO;
     } else if (self.isBillingInformationRequired) {
         NSString *billingValidationError;
@@ -169,7 +169,7 @@
             if (error != NULL && billingValidationError != nil) {
                 *error = billingValidationError;
             }
-            
+
             return NO;
         }
     }
@@ -180,12 +180,12 @@
         if (error != NULL && cardValidationError != nil) {
             *error = cardValidationError;
         }
-        
+
         return NO;
     }
 
     [provider confirmPaymentIntentWithCard:validatedCard billing:validatedBilling saveCard:storeCard];
-    
+
     return YES;
 }
 

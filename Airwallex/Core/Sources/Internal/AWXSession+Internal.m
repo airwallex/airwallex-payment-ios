@@ -6,7 +6,6 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import "AWXConstants+Internal.h"
 #import "AWXDefaultProvider.h"
 #import "AWXPaymentMethod.h"
 #import "AWXSession+Internal.h"
@@ -17,11 +16,6 @@
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
         AWXPaymentMethodType *item = (AWXPaymentMethodType *)evaluatedObject;
 
-        // Filter out unsupported payment methods.
-        if ([AWXUnsupportedPaymentMethodTypes() containsObject:item.name]) {
-            return NO;
-        }
-
         // Filter out anything that doesn't even have a display name
         if (item.displayName == nil) {
             return NO;
@@ -31,7 +25,7 @@
 
         // If no provider is available or if the provider is not able to handle the particular session,
         // then we should filter this method out.
-        if (class == nil || ![class canHandleSession:self]) {
+        if (class == Nil || ![class canHandleSession:self]) {
             return NO;
         }
 
