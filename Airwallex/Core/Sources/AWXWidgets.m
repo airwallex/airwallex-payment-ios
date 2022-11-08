@@ -7,6 +7,7 @@
 //
 
 #import "AWXWidgets.h"
+#import "AWXCardImageView.h"
 #import "AWXCardValidator.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
@@ -587,33 +588,15 @@
 @property (strong, nonatomic) UIStackView *brandView;
 @property (strong, nonatomic) UIImageView *visaView;
 @property (strong, nonatomic) UIImageView *masterView;
+@property (strong, nonatomic) NSArray *displayedCardBrands;
+@property (strong, nonatomic) NSMutableArray<AWXCardImageView *> *cardImageViews;
 
 @end
 
 @implementation AWXFloatingCardTextField
 
 - (void)setupLayouts {
-    _brandView = [UIStackView new];
-    _brandView.axis = UILayoutConstraintAxisHorizontal;
-    _brandView.alignment = UIStackViewAlignmentFill;
-    _brandView.distribution = UIStackViewDistributionFill;
-    _brandView.spacing = 5;
-    _brandView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:_brandView];
-
-    _visaView = [UIImageView new];
-    _visaView.image = [UIImage imageNamed:@"visa" inBundle:[NSBundle resourceBundle]];
-    _visaView.contentMode = UIViewContentModeScaleAspectFit;
-    [_brandView addArrangedSubview:_visaView];
-    [_visaView.widthAnchor constraintEqualToConstant:35].active = YES;
-    [_visaView.heightAnchor constraintEqualToConstant:24].active = YES;
-
-    _masterView = [UIImageView new];
-    _masterView.image = [UIImage imageNamed:@"mastercard" inBundle:[NSBundle resourceBundle]];
-    _masterView.contentMode = UIViewContentModeScaleAspectFit;
-    [_brandView addArrangedSubview:_masterView];
-    [_masterView.widthAnchor constraintEqualToConstant:35].active = YES;
-    [_masterView.heightAnchor constraintEqualToConstant:24].active = YES;
+    [self setupBrandView];
 
     NSDictionary *views = @{@"borderView": self.borderView, @"floatingLabel": self.floatingLabel, @"textField": self.textField, @"brandView": self.brandView, @"errorLabel": self.errorLabel};
     NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"fieldHeight": @60.0};
@@ -629,6 +612,27 @@
     self.textTopConstraint = [NSLayoutConstraint constraintWithItem:self.textField attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:9];
     self.textTopConstraint.active = YES;
     [NSLayoutConstraint constraintWithItem:self.borderView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.textField attribute:NSLayoutAttributeBottom multiplier:1.0 constant:9].active = YES;
+}
+
+- (void)setupBrandView {
+    _brandView = [UIStackView new];
+    _brandView.axis = UILayoutConstraintAxisHorizontal;
+    _brandView.alignment = UIStackViewAlignmentFill;
+    _brandView.distribution = UIStackViewDistributionFill;
+    _brandView.spacing = 5;
+    _brandView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:_brandView];
+
+    self.displayedCardBrands = @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex)];
+    self.cardImageViews = [NSMutableArray new];
+    for (int i = 0; i < _displayedCardBrands.count; i++) {
+        AWXBrandType brand = [_displayedCardBrands[i] intValue];
+        AWXCardImageView *cardView = [[AWXCardImageView alloc] initWithCardBrand:brand];
+        [_cardImageViews addObject:cardView];
+        [_brandView addArrangedSubview:cardView];
+        [cardView.widthAnchor constraintEqualToConstant:35].active = YES;
+        [cardView.heightAnchor constraintEqualToConstant:24].active = YES;
+    }
 }
 
 - (NSAttributedString *)formatText:(NSString *)text {
@@ -671,13 +675,19 @@
 
 - (void)updateBrandWithNumber:(NSString *)number {
     AWXBrandType type = [self typeOfNumber:number];
-    self.brandView.alpha = (type == AWXBrandTypeVisa || type == AWXBrandTypeMastercard) ? 1 : 0.5;
-    if (self.brandView.alpha == 1) {
-        self.visaView.hidden = type != AWXBrandTypeVisa;
-        self.masterView.hidden = type != AWXBrandTypeMastercard;
-    } else {
-        self.visaView.hidden = NO;
-        self.masterView.hidden = NO;
+    BOOL shouldShowBrands = NO;
+    for (int i = 0; i < _displayedCardBrands.count; i++) {
+        if (type == [_displayedCardBrands[i] intValue]) {
+            shouldShowBrands = YES;
+        }
+    }
+    self.brandView.alpha = shouldShowBrands ? 1 : 0.5;
+    for (AWXCardImageView *cardView in _cardImageViews) {
+        if (shouldShowBrands) {
+            cardView.hidden = cardView.cardBrand != type;
+        } else {
+            cardView.hidden = NO;
+        }
     }
 }
 
