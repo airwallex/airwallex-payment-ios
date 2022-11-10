@@ -147,6 +147,22 @@
     }
 }
 
+- (NSString *)validationMessageFromCardNumber:(NSString *)cardNumber {
+    if (cardNumber.length > 0) {
+        if ([AWXCardValidator.sharedCardValidator isValidCardLength:cardNumber]) {
+            NSString *cardName = [AWXCardValidator.sharedCardValidator brandForCardNumber:cardNumber].name;
+            for (AWXCardScheme *cardScheme in _supportedCardSchemes) {
+                if ([cardScheme.name isEqualToString:cardName.lowercaseString]) {
+                    return NULL;
+                }
+            }
+            return NSLocalizedString(@"Card not supported for payment", nil);
+        }
+        return NSLocalizedString(@"Card number is invalid", nil);
+    }
+    return NSLocalizedString(@"Please enter your card number", nil);
+}
+
 #pragma mark Payment
 
 - (AWXCardProvider *)preparedProviderWithDelegate:(id<AWXProviderDelegate>)delegate {

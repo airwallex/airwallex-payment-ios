@@ -53,6 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)makeDisplayedCardBrands;
 
+- (NSString *)validationMessageFromCardNumber:(NSString *)cardNumber;
+
 #pragma mark Payment
 
 - (AWXCardProvider *)preparedProviderWithDelegate:(id<AWXProviderDelegate> _Nullable)delegate;

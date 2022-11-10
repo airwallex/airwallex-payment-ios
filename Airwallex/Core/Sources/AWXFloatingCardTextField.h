@@ -15,5 +15,6 @@
 
 @property (nonatomic, copy) NSArray *cardBrands;
 @property (nonatomic, strong) NSString *floatingText;
+@property (nonatomic, copy) NSString * (^validationMessageCallback)(NSString *);
 
 @end

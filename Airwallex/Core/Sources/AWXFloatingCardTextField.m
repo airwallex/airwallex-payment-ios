@@ -14,8 +14,6 @@
 @interface AWXFloatingCardTextField ()
 
 @property (strong, nonatomic) UIStackView *brandView;
-@property (strong, nonatomic) UIImageView *visaView;
-@property (strong, nonatomic) UIImageView *masterView;
 @property (strong, nonatomic) NSMutableArray<AWXCardImageView *> *cardImageViews;
 
 @end
@@ -25,6 +23,7 @@
 #pragma mark Override parent methods
 
 - (void)setupLayouts {
+    self.fieldType = AWXTextFieldTypeCardNumber;
     [self setupBrandView];
 
     NSDictionary *views = @{@"borderView": self.borderView, @"floatingLabel": self.floatingLabel, @"textField": self.textField, @"brandView": self.brandView, @"errorLabel": self.errorLabel};
@@ -98,6 +97,10 @@
 
     [self setText:text animated:YES];
     return NO;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.errorText = _validationMessageCallback(textField.text);
 }
 
 #pragma mark Private helper methods

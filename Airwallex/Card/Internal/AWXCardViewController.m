@@ -96,8 +96,11 @@ typedef enum {
 
     _cardNoField = [AWXFloatingCardTextField new];
     _cardNoField.cardBrands = _viewModel.makeDisplayedCardBrands;
+    __weak __typeof(self) weakSelf = self;
+    _cardNoField.validationMessageCallback = ^(NSString *cardNumber) {
+        return [weakSelf.viewModel validationMessageFromCardNumber:cardNumber];
+    };
     _cardNoField.isRequired = YES;
-    _cardNoField.fieldType = AWXTextFieldTypeCardNumber;
     _cardNoField.placeholder = @"1234 1234 1234 1234";
     _cardNoField.floatingText = NSLocalizedString(@"Card number", @"Card number");
     [stackView addArrangedSubview:_cardNoField];

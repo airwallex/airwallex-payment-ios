@@ -262,6 +262,14 @@
     return filtered.firstObject;
 }
 
+- (BOOL)isValidCardLength:(NSString *)cardNumber {
+    AWXBrand *brand = [self brandForCardNumber:cardNumber];
+    if (brand) {
+        return brand.length == cardNumber.length;
+    }
+    return NO;
+}
+
 + (NSArray<NSNumber *> *)cardNumberFormatForBrand:(AWXBrandType)type {
     switch (type) {
     case AWXBrandTypeAmex:
