@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AWXCardProvider : AWXDefaultProvider
 
-@property (nonatomic, nullable) AWXPaymentMethodType *paymentMethodType;
 /**
  Confirm the payment intent with card and billing.
 

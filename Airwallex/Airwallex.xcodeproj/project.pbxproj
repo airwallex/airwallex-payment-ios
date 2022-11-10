@@ -784,6 +784,8 @@
 				C556103A286032140036F63C /* UIColor+AWXTheme.m */,
 				C5AB0C5328603CF400B436C3 /* UIColor+ViewCompat.h */,
 				C5AB0C5428603CF400B436C3 /* UIColor+ViewCompat.m */,
+				1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */,
+				1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */,
 				1829B8BF291B2F5900D0D2CA /* AWXCardScheme.h */,
 				1829B8C0291B2F5900D0D2CA /* AWXCardScheme.m */,
 			);
@@ -991,8 +993,6 @@
 				5775CF1026E5DF4F00C6AFE3 /* AWXWidgets.m */,
 				1829B8C5291CDEB200D0D2CA /* AWXFloatingCardTextField.h */,
 				1829B8C6291CDEB200D0D2CA /* AWXFloatingCardTextField.m */,
-				1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */,
-				1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
