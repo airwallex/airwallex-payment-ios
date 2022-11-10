@@ -79,12 +79,12 @@
                            type:AWXBrandTypeUnknown],
 
         // American Express
-        [AWXBrand brandWithName:@"American Express"
+        [AWXBrand brandWithName:@"Amex"
                      rangeStart:@"34"
                        rangeEnd:@"34"
                          length:15
                            type:AWXBrandTypeAmex],
-        [AWXBrand brandWithName:@"American Express"
+        [AWXBrand brandWithName:@"Amex"
                      rangeStart:@"37"
                        rangeEnd:@"37"
                          length:15

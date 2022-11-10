@@ -302,7 +302,7 @@
 - (void)testValidationMessageFromCardNumber {
     AWXCardViewModel *viewModel = [self mockOneOffViewModelWithCardSchemes];
     XCTAssertNil([viewModel validationMessageFromCardNumber:@"5555555555554444"]);
-    XCTAssertEqualObjects([viewModel validationMessageFromCardNumber:@"55"], @"Card number is invalid");
+    XCTAssertEqualObjects([viewModel validationMessageFromCardNumber:@""], @"Card number is required");
     XCTAssertEqualObjects([viewModel validationMessageFromCardNumber:@"378282246310005"], @"Card not supported for payment");
     XCTAssertEqualObjects([viewModel validationMessageFromCardNumber:@"55"], @"Card number is invalid");
 }

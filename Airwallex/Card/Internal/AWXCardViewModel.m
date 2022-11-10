@@ -160,7 +160,7 @@
         }
         return NSLocalizedString(@"Card number is invalid", nil);
     }
-    return NSLocalizedString(@"Please enter your card number", nil);
+    return NSLocalizedString(@"Card number is required", nil);
 }
 
 #pragma mark Payment

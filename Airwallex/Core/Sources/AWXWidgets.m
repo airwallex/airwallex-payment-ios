@@ -373,13 +373,13 @@
                 isValidYear = year.integerValue > currentYear;
             }
             if (!(isValidYear && isValidMonth)) {
-                errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
+                errorMessage = NSLocalizedString(@"Card’s expiration date is invalid.", nil);
             }
         } else {
-            errorMessage = NSLocalizedString(@"Please enter a valid expiry date", nil);
+            errorMessage = NSLocalizedString(@"Card’s expiration date is invalid.", nil);
         }
     } else {
-        errorMessage = NSLocalizedString(@"Please enter your card expiry date", nil);
+        errorMessage = NSLocalizedString(@"Expiry date is required", nil);
     }
     self.errorText = errorMessage;
 }
@@ -424,7 +424,7 @@
         [self validateExpires:textField.text];
         break;
     case AWXTextFieldTypeCVC:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your card CVC/CVV", nil);
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Security code is required", nil);
         break;
     default:
         self.errorText = textField.text.length > 0 ? nil : self.defaultErrorMessage;
