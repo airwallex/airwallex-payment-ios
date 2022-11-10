@@ -17,6 +17,7 @@
 #import "AWXDefaultActionProvider.h"
 #import "AWXDefaultProvider.h"
 #import "AWXDevice.h"
+#import "AWXFloatingCardTextField.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodRequest.h"
@@ -94,9 +95,11 @@ typedef enum {
     [stackView addArrangedSubview:_titleLabel];
 
     _cardNoField = [AWXFloatingCardTextField new];
+    _cardNoField.cardBrands = _viewModel.makeDisplayedCardBrands;
     _cardNoField.isRequired = YES;
     _cardNoField.fieldType = AWXTextFieldTypeCardNumber;
-    _cardNoField.placeholder = NSLocalizedString(@"Card number", @"Card number");
+    _cardNoField.placeholder = @"1234 1234 1234 1234";
+    _cardNoField.floatingText = NSLocalizedString(@"Card number", @"Card number");
     [stackView addArrangedSubview:_cardNoField];
 
     _nameField = [AWXFloatingLabelTextField new];
@@ -123,7 +126,7 @@ typedef enum {
 
     _cvcField = [AWXFloatingLabelTextField new];
     _cvcField.fieldType = AWXTextFieldTypeCVC;
-    _cvcField.placeholder = NSLocalizedString(@"CVC / VCC", @"CVC / VCC");
+    _cvcField.placeholder = NSLocalizedString(@"CVC / CVV", @"CVC / CVV");
     _expiresField.nextTextField = _cvcField;
     _cvcField.isRequired = YES;
     [cvcStackView addArrangedSubview:_cvcField];

@@ -8,6 +8,7 @@
 
 #import "AWXConstants.h"
 #import "AWXAPIClient.h"
+#import "AWXCardValidator.h"
 #import "AWXPaymentIntentResponse.h"
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
@@ -34,6 +35,10 @@ NSString *const AWXThreeDSContinue = @"3ds_continue";
 NSString *const AWXDCC = @"dcc";
 
 NSString *const AWXApplePayKey = @"applepay";
+
+NSArray *AWXCardSupportedBrands(void) {
+    return @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex)];
+};
 
 NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void) {
     NSArray<PKPaymentNetwork> *shared = @[

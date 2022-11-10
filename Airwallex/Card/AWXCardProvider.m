@@ -19,10 +19,14 @@
 
 @implementation AWXCardProvider
 
++ (BOOL)canHandleSession:(AWXSession *)session paymentMethod:(AWXPaymentMethodType *)paymentMethod {
+    return paymentMethod.cardSchemes.count != 0;
+}
+
 - (void)handleFlow {
     AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
-    controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session];
+    controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:self.paymentMethodType.cardSchemes];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
     [self.delegate provider:self shouldPresentViewController:nav forceToDismiss:NO withAnimation:YES];
 }

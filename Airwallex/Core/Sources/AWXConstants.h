@@ -90,6 +90,8 @@ FOUNDATION_EXPORT NSString *const AWXDCC;
 FOUNDATION_EXPORT NSString *const AWXApplePayKey;
 FOUNDATION_EXPORT NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void);
 
+FOUNDATION_EXPORT NSArray *AWXCardSupportedBrands(void);
+
 FOUNDATION_EXPORT NSString *FormatAirwallexSDKMode(AirwallexSDKMode mode);
 FOUNDATION_EXPORT NSString *FormatNextTriggerByType(AirwallexNextTriggerByType type);
 FOUNDATION_EXPORT AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType);

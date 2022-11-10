@@ -25,7 +25,7 @@
 
         // If no provider is available or if the provider is not able to handle the particular session,
         // then we should filter this method out.
-        if (class == Nil || ![class canHandleSession:self]) {
+        if (class == Nil || ![class canHandleSession:self paymentMethod:item]) {
             return NO;
         }
 

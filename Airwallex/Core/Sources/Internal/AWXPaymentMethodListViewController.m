@@ -272,10 +272,7 @@
             return;
         }
 
-        AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-        paymentMethod.type = paymentMethodType.name;
-
-        AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self session:self.session paymentMethod:paymentMethod];
+        AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self session:self.session paymentMethodType:paymentMethodType];
         [provider handleFlow];
         self.provider = provider;
         return;

@@ -27,6 +27,12 @@
 		1803601F2873D73A003EA943 /* AWXPaymentFormViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */; };
 		1829B8BB291A538B00D0D2CA /* AWXCardImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */; };
 		1829B8BC291A538B00D0D2CA /* AWXCardImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */; };
+		1829B8BE291B2D3B00D0D2CA /* PaymentMethodType.json in Resources */ = {isa = PBXBuildFile; fileRef = 1829B8BD291B2D3B00D0D2CA /* PaymentMethodType.json */; };
+		1829B8C1291B2F5900D0D2CA /* AWXCardScheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 1829B8BF291B2F5900D0D2CA /* AWXCardScheme.h */; };
+		1829B8C2291B2F5900D0D2CA /* AWXCardScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C0291B2F5900D0D2CA /* AWXCardScheme.m */; };
+		1829B8C4291B3B7000D0D2CA /* AWXCardProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */; };
+		1829B8C7291CDEB200D0D2CA /* AWXFloatingCardTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 1829B8C5291CDEB200D0D2CA /* AWXFloatingCardTextField.h */; };
+		1829B8C8291CDEB200D0D2CA /* AWXFloatingCardTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C6291CDEB200D0D2CA /* AWXFloatingCardTextField.m */; };
 		187AFA6928B522C000561EEB /* AWXPaymentConsentRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */; };
 		18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */; };
 		2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */; };
@@ -306,6 +312,12 @@
 		1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModelTests.m; sourceTree = "<group>"; };
 		1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXCardImageView.h; sourceTree = "<group>"; };
 		1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardImageView.m; sourceTree = "<group>"; };
+		1829B8BD291B2D3B00D0D2CA /* PaymentMethodType.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PaymentMethodType.json; sourceTree = "<group>"; };
+		1829B8BF291B2F5900D0D2CA /* AWXCardScheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXCardScheme.h; sourceTree = "<group>"; };
+		1829B8C0291B2F5900D0D2CA /* AWXCardScheme.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardScheme.m; sourceTree = "<group>"; };
+		1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardProviderTests.m; sourceTree = "<group>"; };
+		1829B8C5291CDEB200D0D2CA /* AWXFloatingCardTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXFloatingCardTextField.h; sourceTree = "<group>"; };
+		1829B8C6291CDEB200D0D2CA /* AWXFloatingCardTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXFloatingCardTextField.m; sourceTree = "<group>"; };
 		184EADAF28D15C1600FD965D /* AWXCardViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewModel.m; sourceTree = "<group>"; };
 		187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentConsentRequestTest.m; sourceTree = "<group>"; };
 		18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewModelTests.m; sourceTree = "<group>"; };
@@ -590,6 +602,7 @@
 				0829FCFF2431D0DE00557DB2 /* Address.json */,
 				0829FD052431D22800557DB2 /* Billing.json */,
 				0829FD0B2431D3A500557DB2 /* PaymentMethod.json */,
+				1829B8BD291B2D3B00D0D2CA /* PaymentMethodType.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -771,6 +784,8 @@
 				C556103A286032140036F63C /* UIColor+AWXTheme.m */,
 				C5AB0C5328603CF400B436C3 /* UIColor+ViewCompat.h */,
 				C5AB0C5428603CF400B436C3 /* UIColor+ViewCompat.m */,
+				1829B8BF291B2F5900D0D2CA /* AWXCardScheme.h */,
+				1829B8C0291B2F5900D0D2CA /* AWXCardScheme.m */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -905,6 +920,7 @@
 			isa = PBXGroup;
 			children = (
 				18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */,
+				1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */,
 				5775CE9426E5DDDF00C6AFE3 /* Info.plist */,
 			);
 			path = CardTests;
@@ -973,6 +989,8 @@
 				5775CEED26E5DF4E00C6AFE3 /* AWXViewController.m */,
 				5775CEEA26E5DF4E00C6AFE3 /* AWXWidgets.h */,
 				5775CF1026E5DF4F00C6AFE3 /* AWXWidgets.m */,
+				1829B8C5291CDEB200D0D2CA /* AWXFloatingCardTextField.h */,
+				1829B8C6291CDEB200D0D2CA /* AWXFloatingCardTextField.m */,
 				1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */,
 				1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */,
 			);
@@ -1046,6 +1064,7 @@
 				1829B8BB291A538B00D0D2CA /* AWXCardImageView.h in Headers */,
 				5775CF5926E5DF5000C6AFE3 /* AWXPaymentMethod.h in Headers */,
 				3C324F9027FC09AD00CF7315 /* AWXSession+Internal.h in Headers */,
+				1829B8C7291CDEB200D0D2CA /* AWXFloatingCardTextField.h in Headers */,
 				5775CF5C26E5DF5000C6AFE3 /* AWXPaymentViewController.h in Headers */,
 				5775CF2826E5DF4F00C6AFE3 /* AWXAPIResponse.h in Headers */,
 				5775CF5B26E5DF5000C6AFE3 /* AWXPaymentIntentRequest.h in Headers */,
@@ -1059,6 +1078,7 @@
 				5775CF4426E5DF5000C6AFE3 /* AWXCountry.h in Headers */,
 				5775CF1626E5DF4F00C6AFE3 /* AWXPaymentIntentResponse.h in Headers */,
 				5775CF5D26E5DF5000C6AFE3 /* AWXPaymentMethodOptions.h in Headers */,
+				1829B8C1291B2F5900D0D2CA /* AWXCardScheme.h in Headers */,
 				5775CF3126E5DF4F00C6AFE3 /* AWXPaymentMethodCell.h in Headers */,
 				C5AB0C5528603CF400B436C3 /* UIColor+ViewCompat.h in Headers */,
 				5775CF5A26E5DF5000C6AFE3 /* AWXTrackManager.h in Headers */,
@@ -1400,6 +1420,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0829FD062431D22800557DB2 /* Billing.json in Resources */,
+				1829B8BE291B2D3B00D0D2CA /* PaymentMethodType.json in Resources */,
 				0829FD0C2431D3A500557DB2 /* PaymentMethod.json in Resources */,
 				0829FD002431D0DE00557DB2 /* Address.json in Resources */,
 				082442C52431AA5100D04A2C /* Card.json in Resources */,
@@ -1640,6 +1661,7 @@
 				5775CF5226E5DF5000C6AFE3 /* AWXAddress.m in Sources */,
 				5775CF4C26E5DF5000C6AFE3 /* AWXSession.m in Sources */,
 				5775CF4926E5DF5000C6AFE3 /* AWXDefaultProvider.m in Sources */,
+				1829B8C2291B2F5900D0D2CA /* AWXCardScheme.m in Sources */,
 				5775CF1F26E5DF4F00C6AFE3 /* AWXPaymentMethodOptions.m in Sources */,
 				5775CF3C26E5DF5000C6AFE3 /* AWXFormMapping.m in Sources */,
 				C5AB0C5628603CF400B436C3 /* UIColor+ViewCompat.m in Sources */,
@@ -1673,6 +1695,7 @@
 				5775CF5626E5DF5000C6AFE3 /* AWXPaymentMethodRequest.m in Sources */,
 				5775CF2126E5DF4F00C6AFE3 /* AWXCountry.m in Sources */,
 				5775CF1826E5DF4F00C6AFE3 /* AWXPlaceDetails.m in Sources */,
+				1829B8C8291CDEB200D0D2CA /* AWXFloatingCardTextField.m in Sources */,
 				5775CF1726E5DF4F00C6AFE3 /* AWXCardValidator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1769,6 +1792,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */,
+				1829B8C4291B3B7000D0D2CA /* AWXCardProviderTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

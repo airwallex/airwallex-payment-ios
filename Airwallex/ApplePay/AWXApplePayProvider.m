@@ -28,7 +28,7 @@
 
 @implementation AWXApplePayProvider
 
-+ (BOOL)canHandleSession:(AWXSession *)session {
++ (BOOL)canHandleSession:(AWXSession *)session paymentMethod:(AWXPaymentMethodType *)paymentMethod {
     if ([session isKindOfClass:[AWXOneOffSession class]]) {
         AWXOneOffSession *oneOffSession = (AWXOneOffSession *)session;
         if (oneOffSession.applePayOptions == nil) {

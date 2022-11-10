@@ -59,7 +59,7 @@
         return @"Invalid expires date";
     }
     if (self.cvc.length == 0) {
-        return @"Invalid CVC / VCC";
+        return @"Invalid CVC / CVV";
     }
     return nil;
 }

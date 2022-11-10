@@ -68,7 +68,7 @@
     _cvcField = [AWXFloatingLabelTextField autoLayoutView];
     _cvcField.delegate = self;
     _cvcField.fieldType = AWXTextFieldTypeCVC;
-    _cvcField.placeholder = NSLocalizedString(@"CVC / VCC", @"CVC / VCC");
+    _cvcField.placeholder = NSLocalizedString(@"CVC / CVV", @"CVC / CVV");
     _cvcField.isRequired = YES;
     [contentView addSubview:_cvcField];
     [_cvcField.widthAnchor constraintEqualToAnchor:contentView.widthAnchor multiplier:0.328].active = YES;
@@ -100,7 +100,7 @@
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[cvcField]" options:0 metrics:metrics views:views]];
 
     if (self.paymentConsent.paymentMethod.card != nil) {
-        _titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Enter CVC/VCC for\n%@", nil), [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4]];
+        _titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Enter CVC/CVV for\n%@", nil), [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4]];
         _cvcField.hidden = NO;
     } else {
         _titleLabel.text = self.paymentConsent.paymentMethod.type.capitalizedString;

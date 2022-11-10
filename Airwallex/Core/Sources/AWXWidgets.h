@@ -57,6 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setText:(NSString *)text animated:(BOOL)animated;
 
 - (void)setupLayouts;
+- (void)activateAnimated:(BOOL)animated;
+- (void)deactivateAnimated:(BOOL)animated;
 
 @end
 
@@ -69,13 +71,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)text;
 - (void)setText:(NSString *)text animated:(BOOL)animated;
-
-@end
-
-/**
- A customized view for card no
- */
-@interface AWXFloatingCardTextField : AWXFloatingLabelTextField
 
 @end
 

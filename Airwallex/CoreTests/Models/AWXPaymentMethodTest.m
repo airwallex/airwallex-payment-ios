@@ -25,4 +25,18 @@
     XCTAssertNotNil(paymentMethod.billing);
 }
 
+- (void)testPaymentMethodType {
+    AWXPaymentMethodType *paymentMethodType = [AWXPaymentMethodType decodeFromJSON:[AWXTestUtils jsonNamed:@"PaymentMethodType"]];
+    XCTAssertEqualObjects(paymentMethodType.name, @"card");
+    XCTAssertEqualObjects(paymentMethodType.displayName, @"Card");
+    XCTAssertEqualObjects(paymentMethodType.transactionMode, @"oneoff");
+    XCTAssertEqual(paymentMethodType.flows, [NSArray new]);
+    NSArray *currencies = @[@"CHF", @"MXN", @"*", @"NOK", @"EGP"];
+    XCTAssertEqualObjects(paymentMethodType.transactionCurrencies, currencies);
+    XCTAssertTrue(paymentMethodType.active);
+    XCTAssertFalse(paymentMethodType.hasSchema);
+    AWXCardScheme *amexScheme = paymentMethodType.cardSchemes[3];
+    XCTAssertEqualObjects(amexScheme.name, @"amex");
+}
+
 @end
