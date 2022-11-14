@@ -8,6 +8,8 @@
 
 #import "AWXPaymentMethodListViewController.h"
 #import "AWXAPIClient.h"
+#import "AWXCardImageView.h"
+#import "AWXCardValidator.h"
 #import "AWXConstants.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXDefaultProvider.h"
@@ -219,7 +221,8 @@
         cell.titleLabel.text = paymentMethodType.displayName;
     } else {
         AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
-        cell.logoImageView.image = [UIImage imageNamed:paymentConsent.paymentMethod.card.brand inBundle:[NSBundle resourceBundle]];
+        AWXBrand *cardBrand = [[AWXCardValidator sharedCardValidator] brandForCardName:paymentConsent.paymentMethod.card.brand];
+        cell.logoImageView.image = [[AWXCardImageView alloc] initWithCardBrand:cardBrand.type].image;
         cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", paymentConsent.paymentMethod.card.brand.capitalizedString, paymentConsent.paymentMethod.card.last4];
     }
 

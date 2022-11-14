@@ -22,7 +22,7 @@ typedef enum : NSUInteger {
 } AWXBrandType;
 
 /**
- `AWXBrand` manages the bank brand.
+ `AWXBrand` manages the card scheme brand.
  */
 @interface AWXBrand : NSObject
 
@@ -72,6 +72,7 @@ typedef enum : NSUInteger {
 
 + (instancetype)sharedCardValidator;
 - (nullable AWXBrand *)brandForCardNumber:(NSString *)cardNumber;
+- (nullable AWXBrand *)brandForCardName:(NSString *)name;
 - (BOOL)isValidCardLength:(NSString *)cardNumber;
 + (NSArray<NSNumber *> *)cardNumberFormatForBrand:(AWXBrandType)type;
 

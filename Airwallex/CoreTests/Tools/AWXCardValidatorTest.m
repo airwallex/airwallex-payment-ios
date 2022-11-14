@@ -15,7 +15,7 @@
 
 @implementation AWXCardValidatorTest
 
-- (void)testCardBrand {
+- (void)testBrandForCardNumber {
     XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"4242424242424242"].type == AWXBrandTypeVisa);
     XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"4012000300001003"].type == AWXBrandTypeVisa);
     XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"378282246310005"].type == AWXBrandTypeAmex);
@@ -25,10 +25,20 @@
     XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"6200000000000005"].type == AWXBrandTypeUnionPay);
 }
 
+- (void)testNameForCardNumber {
+    XCTAssertEqualObjects([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"378282246310005"].name, @"Amex");
+    XCTAssertEqualObjects([[AWXCardValidator sharedCardValidator] brandForCardNumber:@"348282246310005"].name, @"Amex");
+}
+
 - (void)testIsValidCardLength {
     XCTAssertTrue([[AWXCardValidator sharedCardValidator] isValidCardLength:@"4242424242424242"]);
     XCTAssertFalse([[AWXCardValidator sharedCardValidator] isValidCardLength:@"424242424242424"]);
     XCTAssertFalse([[AWXCardValidator sharedCardValidator] isValidCardLength:@"0000000000000000"]);
+}
+
+- (void)testBrandForCardName {
+    XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardName:@"american express"].type == AWXBrandTypeAmex);
+    XCTAssertTrue([[AWXCardValidator sharedCardValidator] brandForCardName:@"amex"].type == AWXBrandTypeAmex);
 }
 
 @end

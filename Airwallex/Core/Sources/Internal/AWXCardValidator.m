@@ -89,6 +89,16 @@
                        rangeEnd:@"37"
                          length:15
                            type:AWXBrandTypeAmex],
+        [AWXBrand brandWithName:@"American Express"
+                     rangeStart:@"34"
+                       rangeEnd:@"34"
+                         length:15
+                           type:AWXBrandTypeAmex],
+        [AWXBrand brandWithName:@"American Express"
+                     rangeStart:@"37"
+                       rangeEnd:@"37"
+                         length:15
+                           type:AWXBrandTypeAmex],
 
         // Diners Club
         [AWXBrand brandWithName:@"Diners Club"
@@ -258,6 +268,14 @@
     NSArray *filtered = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
                                          AWXBrand *brand = (AWXBrand *)evaluatedObject;
                                          return brand.type != AWXBrandTypeUnknown && [brand matchesNumber:cardNumber];
+                                     }]];
+    return filtered.firstObject;
+}
+
+- (AWXBrand *)brandForCardName:(NSString *)name {
+    NSArray *filtered = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
+                                         AWXBrand *brand = (AWXBrand *)evaluatedObject;
+                                         return [brand.name compare:name options:NSCaseInsensitiveSearch] == NSOrderedSame;
                                      }]];
     return filtered.firstObject;
 }
