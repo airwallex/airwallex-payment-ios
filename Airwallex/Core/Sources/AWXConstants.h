@@ -14,7 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define AIRWALLEX_VERSION (@"5.2.1")
+#define AIRWALLEX_VERSION (@"5.2.2")
 #define AIRWALLEX_API_VERSION (@"2021-11-25")
 
 typedef NS_ENUM(NSInteger, AirwallexSDKMode) {
