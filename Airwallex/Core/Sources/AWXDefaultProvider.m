@@ -29,19 +29,22 @@
 
 @implementation AWXDefaultProvider
 
-+ (BOOL)canHandleSession:(AWXSession *)session {
++ (BOOL)canHandleSession:(AWXSession *)session paymentMethod:(AWXPaymentMethodType *)paymentMethod {
     return YES;
 }
 
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session {
-    return [self initWithDelegate:delegate session:session paymentMethod:nil];
+    return [self initWithDelegate:delegate session:session paymentMethodType:nil];
 }
 
-- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethod:(nullable AWXPaymentMethod *)paymentMethod {
+- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *)paymentMethodType {
     self = [super init];
     if (self) {
         _delegate = delegate;
         _session = session;
+        _paymentMethodType = paymentMethodType;
+        AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
+        paymentMethod.type = paymentMethodType.name;
         _paymentMethod = paymentMethod;
     }
     return self;

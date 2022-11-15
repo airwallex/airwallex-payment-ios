@@ -94,6 +94,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) AWXSession *session;
 
 /**
+ Original payment method response
+ */
+@property (nonatomic, readonly) AWXPaymentMethodType *paymentMethodType;
+
+/**
  A payment method.
  */
 @property (nonatomic, readonly, nullable) AWXPaymentMethod *paymentMethod;
@@ -102,12 +107,12 @@ NS_ASSUME_NONNULL_BEGIN
  Indicating whether the provider can handle a particular session. Default implementation returns YES. Subclasses can override to
  do additional checks.
  */
-+ (BOOL)canHandleSession:(AWXSession *)session;
++ (BOOL)canHandleSession:(AWXSession *)session paymentMethod:(AWXPaymentMethodType *)paymentMethod;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session;
-- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethod:(nullable AWXPaymentMethod *)paymentMethod;
+- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *_Nullable)paymentMethodType;
 
 /**
  Start the payment flow.

@@ -83,6 +83,14 @@
     method.transactionCurrencies = json[@"transaction_currencies"];
     method.active = [json[@"active"] boolValue];
     method.resources = [AWXResources decodeFromJSON:json[@"resources"]];
+    NSMutableArray *cardSchemes = [NSMutableArray array];
+    NSArray *schemes = json[@"card_schemes"];
+    if (schemes && [schemes isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *item in schemes) {
+            [cardSchemes addObject:[AWXCardScheme decodeFromJSON:item]];
+        }
+    }
+    method.cardSchemes = cardSchemes;
     return method;
 }
 

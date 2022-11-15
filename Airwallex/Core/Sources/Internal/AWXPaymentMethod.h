@@ -7,6 +7,7 @@
 //
 
 #import "AWXCard.h"
+#import "AWXCardScheme.h"
 #import "AWXCodable.h"
 #import "AWXPlaceDetails.h"
 #import <Foundation/Foundation.h>
@@ -113,6 +114,11 @@ NS_ASSUME_NONNULL_BEGIN
  Whether it has schema
  */
 @property (nonatomic, readonly) BOOL hasSchema;
+
+/**
+ Supported card schemes
+ */
+@property (nonatomic, copy) NSArray<AWXCardScheme *> *cardSchemes;
 
 @end
 

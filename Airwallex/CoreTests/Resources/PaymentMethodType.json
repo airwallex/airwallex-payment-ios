@@ -1,0 +1,66 @@
+{
+  "name": "card",
+  "display_name": "Card",
+  "transaction_mode": "oneoff",
+  "flows": [],
+  "transaction_currencies": [
+    "CHF",
+    "MXN",
+    "*",
+    "NOK",
+    "EGP"
+  ],
+  "country_codes": [
+    "*"
+  ],
+  "active": true,
+  "card_schemes": [
+    {
+      "name": "mastercard",
+      "display_name": "Mastercard",
+      "resources": {
+        "logos": {
+          "png": "https://checkout.airwallex.com/static/media/mastercard.823272.png",
+          "svg": "https://checkout.airwallex.com/static/media/mastercard.262f85fc.svg"
+        }
+      }
+    },
+    {
+      "name": "unionpay",
+      "display_name": "Union Pay",
+      "resources": {
+        "logos": {
+          "png": "https://checkout.airwallex.com/static/media/unionpay.8394343.png",
+          "svg": "https://checkout.airwallex.com/static/media/unionPay.efebdbd9.svg"
+        }
+      }
+    },
+    {
+      "name": "visa",
+      "display_name": "Visa",
+      "resources": {
+        "logos": {
+          "png": "https://checkout.airwallex.com/static/media/visa.823439.png",
+          "svg": "https://checkout.airwallex.com/static/media/visa.745a6485.svg"
+        }
+      }
+    },
+    {
+      "name": "amex",
+      "display_name": "AMEX",
+      "resources": {
+        "logos": {
+          "png": "https://checkout.airwallex.com/static/media/amex.2210191546.png",
+          "svg": "https://checkout.airwallex.com/static/media/amex.f6c1eb25db0f19a0aada.svg"
+        }
+      }
+    }
+  ],
+  "resources": {
+    "has_schema": false,
+    "logos": {
+      "png": "https://checkout.airwallex.com/static/media/cardPlaceholder.abcb5ee7.png",
+      "svg": "https://checkout.airwallex.com/static/media/cardPlaceholder.abcb5ee7.svg"
+    }
+  }
+}

@@ -6,6 +6,7 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import "AWXCardScheme.h"
 #import <Foundation/Foundation.h>
 
 @class AWXCard;
@@ -28,8 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) BOOL isCardSavingEnabled;
 @property (nonatomic, strong, readonly) AWXPlaceDetails *initialBilling;
 @property (nonatomic, strong) AWXCountry *selectedCountry;
+@property (nonatomic, copy, readonly) NSArray<AWXCardScheme *> *supportedCardSchemes;
 
-- (instancetype)initWithSession:(AWXSession *)session;
+- (instancetype)initWithSession:(AWXSession *)session supportedCardSchemes:(NSArray<AWXCardScheme *> *_Nullable)cardSchemes;
 
 - (BOOL)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString *_Nullable *_Nullable)error;
 
@@ -48,6 +50,10 @@ NS_ASSUME_NONNULL_BEGIN
                        number:(NSString *)number
                        expiry:(NSString *)expiry
                           cvc:(NSString *)cvc;
+
+- (NSArray *)makeDisplayedCardBrands;
+
+- (NSString *)validationMessageFromCardNumber:(NSString *)cardNumber;
 
 #pragma mark Payment
 

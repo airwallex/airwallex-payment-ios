@@ -33,18 +33,18 @@
 
 - (void)testCanHandleSessionShouldReturnNOWithRecurringSession {
     AWXSession *session = [AWXRecurringSession new];
-    XCTAssertFalse([AWXApplePayProvider canHandleSession:session]);
+    XCTAssertFalse([self canHandleSession:session]);
 }
 
 - (void)testCanHandleSessionShouldReturnNOWithRecurringWithIntentSession {
     AWXSession *session = [AWXRecurringWithIntentSession new];
-    XCTAssertFalse([AWXApplePayProvider canHandleSession:session]);
+    XCTAssertFalse([self canHandleSession:session]);
 }
 
 - (void)testCanHandleSessionShouldReturnNOWithoutApplePayOptions {
     AWXSession *session = [AWXOneOffSession new];
     session.applePayOptions = nil;
-    XCTAssertFalse([AWXApplePayProvider canHandleSession:session]);
+    XCTAssertFalse([self canHandleSession:session]);
 }
 
 - (void)testCanHandleSessionShouldReturnNOWhenDeviceCheckFailed {
@@ -55,7 +55,7 @@
         .ignoringNonObjectArgs()
         .andReturn(NO);
 
-    XCTAssertFalse([AWXApplePayProvider canHandleSession:session]);
+    XCTAssertFalse([self canHandleSession:session]);
 }
 
 - (void)testCanHandleSessionShouldReturnYES {
@@ -66,7 +66,7 @@
         .ignoringNonObjectArgs()
         .andReturn(YES);
 
-    XCTAssertTrue([AWXApplePayProvider canHandleSession:session]);
+    XCTAssertTrue([self canHandleSession:session]);
 }
 
 - (void)testHandleFlowWithUnsupportedSession {
@@ -365,6 +365,11 @@
                             billingPayload:(nullable NSDictionary *)billingPayload
                                     result:(PKPaymentAuthorizationResult *__strong *)completionResult {
     [self prepareAuthorizationControllerMock:payloadOrError billingPayload:billingPayload result:completionResult endImmediately:NO];
+}
+
+- (BOOL)canHandleSession:(AWXSession *)session {
+    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
+    return [AWXApplePayProvider canHandleSession:session paymentMethod:paymentMethod];
 }
 
 @end

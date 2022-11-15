@@ -56,9 +56,10 @@ NSString *const kMockKey = @"MOCK";
 
 @implementation AWXDefaultProviderTest
 
-- (void)testCanHandleSessionDefaultImplementation {
+- (void)testCanHandleSessionAndPaymentMethodDefaultImplementation {
     AWXSession *session = [AWXSession new];
-    XCTAssertTrue([AWXDefaultProvider canHandleSession:session]);
+    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
+    XCTAssertTrue([AWXDefaultProvider canHandleSession:session paymentMethod:paymentMethod]);
 }
 
 - (void)testConfirmPaymentIntentWithoutCompletionBlock {

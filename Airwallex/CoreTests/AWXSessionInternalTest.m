@@ -66,7 +66,7 @@
     OCMStub([sessionMock transactionMode]).andReturn(@"transactionMode");
 
     id classMock = OCMClassMock([AWXDefaultProvider class]);
-    OCMStub([classMock canHandleSession:[OCMArg any]]).andReturn(NO);
+    OCMStub([classMock canHandleSession:[OCMArg any] paymentMethod:[OCMArg any]]).andReturn(NO);
 
     AWXPaymentMethodType *validMethod = [AWXPaymentMethodType new];
     validMethod.name = @"validMethod";

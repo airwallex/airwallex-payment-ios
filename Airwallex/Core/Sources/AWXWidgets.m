@@ -241,7 +241,9 @@
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
-    self.floatingLabel.text = placeholder;
+    if (self.fieldType != AWXTextFieldTypeCardNumber) {
+        self.floatingLabel.text = placeholder;
+    }
     self.textField.placeholder = placeholder;
 }
 
@@ -371,13 +373,13 @@
                 isValidYear = year.integerValue > currentYear;
             }
             if (!(isValidYear && isValidMonth)) {
-                errorMessage = NSLocalizedString(@"Invalid expiry date", nil);
+                errorMessage = NSLocalizedString(@"Card’s expiration date is invalid.", nil);
             }
         } else {
-            errorMessage = NSLocalizedString(@"Invalid expiry date", nil);
+            errorMessage = NSLocalizedString(@"Card’s expiration date is invalid.", nil);
         }
     } else {
-        errorMessage = NSLocalizedString(@"Invalid expiry date", nil);
+        errorMessage = NSLocalizedString(@"Expiry date is required", nil);
     }
     self.errorText = errorMessage;
 }
@@ -391,10 +393,10 @@
     case AWXTextFieldTypePhoneNumber:
         textField.text = [[textField.text componentsSeparatedByCharactersInSet:NSCharacterSet.whitespaceCharacterSet] componentsJoinedByString:@""];
     case AWXTextFieldTypeFirstName:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid first name", nil);
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your first name", nil);
         break;
     case AWXTextFieldTypeLastName:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid last name", nil);
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your last name", nil);
         break;
     case AWXTextFieldTypeEmail:
         if (textField.text.length > 0) {
@@ -404,28 +406,25 @@
         }
         break;
     case AWXTextFieldTypeCountry:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid country", nil);
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your country", nil);
         break;
     case AWXTextFieldTypeState:
         self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid state", nil);
         break;
     case AWXTextFieldTypeCity:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid city", nil);
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your state", nil);
         break;
     case AWXTextFieldTypeStreet:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid street", nil);
-        break;
-    case AWXTextFieldTypeCardNumber:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid card number", nil);
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your street", nil);
         break;
     case AWXTextFieldTypeNameOnCard:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid name on card", nil);
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your card name", nil);
         break;
     case AWXTextFieldTypeExpires:
         [self validateExpires:textField.text];
         break;
     case AWXTextFieldTypeCVC:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid card CVC", nil);
+        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Security code is required", nil);
         break;
     default:
         self.errorText = textField.text.length > 0 ? nil : self.defaultErrorMessage;
@@ -578,121 +577,6 @@
     } else {
         callback();
     }
-}
-
-@end
-
-@interface AWXFloatingCardTextField ()
-
-@property (strong, nonatomic) UIStackView *brandView;
-@property (strong, nonatomic) UIImageView *visaView;
-@property (strong, nonatomic) UIImageView *masterView;
-
-@end
-
-@implementation AWXFloatingCardTextField
-
-- (void)setupLayouts {
-    _brandView = [UIStackView new];
-    _brandView.axis = UILayoutConstraintAxisHorizontal;
-    _brandView.alignment = UIStackViewAlignmentFill;
-    _brandView.distribution = UIStackViewDistributionFill;
-    _brandView.spacing = 5;
-    _brandView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:_brandView];
-
-    _visaView = [UIImageView new];
-    _visaView.image = [UIImage imageNamed:@"visa" inBundle:[NSBundle resourceBundle]];
-    _visaView.contentMode = UIViewContentModeScaleAspectFit;
-    [_brandView addArrangedSubview:_visaView];
-    [_visaView.widthAnchor constraintEqualToConstant:35].active = YES;
-    [_visaView.heightAnchor constraintEqualToConstant:24].active = YES;
-
-    _masterView = [UIImageView new];
-    _masterView.image = [UIImage imageNamed:@"mastercard" inBundle:[NSBundle resourceBundle]];
-    _masterView.contentMode = UIViewContentModeScaleAspectFit;
-    [_brandView addArrangedSubview:_masterView];
-    [_masterView.widthAnchor constraintEqualToConstant:35].active = YES;
-    [_masterView.heightAnchor constraintEqualToConstant:24].active = YES;
-
-    NSDictionary *views = @{@"borderView": self.borderView, @"floatingLabel": self.floatingLabel, @"textField": self.textField, @"brandView": self.brandView, @"errorLabel": self.errorLabel};
-    NSDictionary *metrics = @{@"margin": @16.0, @"spacing": @6.0, @"fieldHeight": @60.0};
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[borderView]|" options:0 metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[errorLabel]-margin-|" options:0 metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[borderView(fieldHeight)]-spacing-[errorLabel]|" options:0 metrics:metrics views:views]];
-
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[floatingLabel]-spacing-[brandView]-margin-|" options:0 metrics:metrics views:views]];
-    [NSLayoutConstraint constraintWithItem:_brandView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.borderView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0].active = YES;
-    self.floatingTopConstraint = [NSLayoutConstraint constraintWithItem:self.floatingLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:30.0];
-    self.floatingTopConstraint.active = YES;
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[textField]-spacing-[brandView]-margin-|" options:0 metrics:metrics views:views]];
-    self.textTopConstraint = [NSLayoutConstraint constraintWithItem:self.textField attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.borderView attribute:NSLayoutAttributeTop multiplier:1.0 constant:9];
-    self.textTopConstraint.active = YES;
-    [NSLayoutConstraint constraintWithItem:self.borderView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.textField attribute:NSLayoutAttributeBottom multiplier:1.0 constant:9].active = YES;
-}
-
-- (NSAttributedString *)formatText:(NSString *)text {
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont bodyFont], NSForegroundColorAttributeName: [AWXTheme sharedTheme].primaryTextColor}];
-    AWXBrandType type = [self typeOfNumber:text];
-    NSArray *cardNumberFormat = [AWXCardValidator cardNumberFormatForBrand:type];
-    NSUInteger index = 0;
-    for (NSNumber *segmentLength in cardNumberFormat) {
-        NSUInteger segmentIndex = 0;
-        for (; index < attributedString.length && segmentIndex < [segmentLength unsignedIntegerValue]; index++, segmentIndex++) {
-            if (index + 1 != attributedString.length && segmentIndex + 1 == [segmentLength unsignedIntegerValue]) {
-                [attributedString addAttribute:NSKernAttributeName
-                                         value:@(5)
-                                         range:NSMakeRange(index, 1)];
-            } else {
-                [attributedString addAttribute:NSKernAttributeName
-                                         value:@(0)
-                                         range:NSMakeRange(index, 1)];
-            }
-        }
-    }
-    return attributedString;
-}
-
-- (void)setText:(NSString *)text animated:(BOOL)animated {
-    [super setText:text animated:animated];
-    [self updateBrandWithNumber:text];
-}
-
-- (AWXBrandType)typeOfNumber:(NSString *)number {
-    AWXBrandType type = AWXBrandTypeUnknown;
-    if (number.length != 0) {
-        AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:number];
-        if (brand) {
-            type = brand.type;
-        }
-    }
-    return type;
-}
-
-- (void)updateBrandWithNumber:(NSString *)number {
-    AWXBrandType type = [self typeOfNumber:number];
-    self.brandView.alpha = (type == AWXBrandTypeVisa || type == AWXBrandTypeMastercard) ? 1 : 0.5;
-    if (self.brandView.alpha == 1) {
-        self.visaView.hidden = type != AWXBrandTypeVisa;
-        self.masterView.hidden = type != AWXBrandTypeMastercard;
-    } else {
-        self.visaView.hidden = NO;
-        self.masterView.hidden = NO;
-    }
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    self.errorText = nil;
-    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    text.length > 0 ? [self activateAnimated:YES] : [self deactivateAnimated:YES];
-
-    AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:text];
-    if (brand && text.length > brand.length) {
-        return NO;
-    }
-
-    [self setText:text animated:YES];
-    return NO;
 }
 
 @end

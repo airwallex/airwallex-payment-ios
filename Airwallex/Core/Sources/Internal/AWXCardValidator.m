@@ -79,6 +79,16 @@
                            type:AWXBrandTypeUnknown],
 
         // American Express
+        [AWXBrand brandWithName:@"Amex"
+                     rangeStart:@"34"
+                       rangeEnd:@"34"
+                         length:15
+                           type:AWXBrandTypeAmex],
+        [AWXBrand brandWithName:@"Amex"
+                     rangeStart:@"37"
+                       rangeEnd:@"37"
+                         length:15
+                           type:AWXBrandTypeAmex],
         [AWXBrand brandWithName:@"American Express"
                      rangeStart:@"34"
                        rangeEnd:@"34"
@@ -260,6 +270,22 @@
                                          return brand.type != AWXBrandTypeUnknown && [brand matchesNumber:cardNumber];
                                      }]];
     return filtered.firstObject;
+}
+
+- (AWXBrand *)brandForCardName:(NSString *)name {
+    NSArray *filtered = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
+                                         AWXBrand *brand = (AWXBrand *)evaluatedObject;
+                                         return [brand.name compare:name options:NSCaseInsensitiveSearch] == NSOrderedSame;
+                                     }]];
+    return filtered.firstObject;
+}
+
+- (BOOL)isValidCardLength:(NSString *)cardNumber {
+    AWXBrand *brand = [self brandForCardNumber:cardNumber];
+    if (brand) {
+        return brand.length == cardNumber.length;
+    }
+    return NO;
 }
 
 + (NSArray<NSNumber *> *)cardNumberFormatForBrand:(AWXBrandType)type {

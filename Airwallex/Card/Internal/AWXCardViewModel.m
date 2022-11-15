@@ -9,6 +9,7 @@
 #import "AWXCardViewModel.h"
 #import "AWXCard.h"
 #import "AWXCardProvider.h"
+#import "AWXCardValidator.h"
 #import "AWXCountry.h"
 #import "AWXSession.h"
 
@@ -21,12 +22,13 @@
 
 @implementation AWXCardViewModel
 
-- (instancetype)initWithSession:(AWXSession *)session {
+- (instancetype)initWithSession:(AWXSession *)session supportedCardSchemes:(NSArray<AWXCardScheme *> *)cardSchemes {
     self = [super init];
     if (self) {
         _session = session;
         _isReusingShippingAsBillingInformation = session.billing != nil && session.isBillingInformationRequired;
         _selectedCountry = [AWXCountry countryWithCode:session.billing.address.countryCode];
+        _supportedCardSchemes = cardSchemes;
     }
     return self;
 }
@@ -104,6 +106,18 @@
     return card;
 }
 
+- (NSArray *)makeDisplayedCardBrands {
+    NSMutableArray *cardBrands = [NSMutableArray new];
+    for (id brand in AWXCardSupportedBrands()) {
+        for (AWXCardScheme *cardScheme in _supportedCardSchemes) {
+            if ([self cardBrandFromCardScheme:cardScheme] == [brand intValue]) {
+                [cardBrands addObject:brand];
+            }
+        }
+    }
+    return cardBrands;
+}
+
 #pragma mark Data validation
 
 - (AWXPlaceDetails *)validatedBillingDetails:(AWXPlaceDetails *)billing error:(NSString **)error {
@@ -131,6 +145,22 @@
     } else {
         return card;
     }
+}
+
+- (NSString *)validationMessageFromCardNumber:(NSString *)cardNumber {
+    if (cardNumber.length > 0) {
+        if ([AWXCardValidator.sharedCardValidator isValidCardLength:cardNumber]) {
+            NSString *cardName = [AWXCardValidator.sharedCardValidator brandForCardNumber:cardNumber].name;
+            for (AWXCardScheme *cardScheme in _supportedCardSchemes) {
+                if ([cardScheme.name isEqualToString:cardName.lowercaseString]) {
+                    return NULL;
+                }
+            }
+            return NSLocalizedString(@"Card not supported for payment", nil);
+        }
+        return NSLocalizedString(@"Card number is invalid", nil);
+    }
+    return NSLocalizedString(@"Card number is required", nil);
 }
 
 #pragma mark Payment
@@ -191,6 +221,21 @@
 
 - (void)updatePaymentIntentId:(NSString *)paymentIntentId {
     [self.session updateInitialPaymentIntentId:paymentIntentId];
+}
+
+#pragma mark Private helper
+
+- (AWXBrandType)cardBrandFromCardScheme:(AWXCardScheme *)cardScheme {
+    NSString *cardName = cardScheme.name;
+    if ([cardName isEqualToString:@"amex"]) {
+        return AWXBrandTypeAmex;
+    } else if ([cardName isEqualToString:@"mastercard"]) {
+        return AWXBrandTypeMastercard;
+    } else if ([cardName isEqualToString:@"visa"]) {
+        return AWXBrandTypeVisa;
+    } else {
+        return AWXBrandTypeUnknown;
+    }
 }
 
 @end
