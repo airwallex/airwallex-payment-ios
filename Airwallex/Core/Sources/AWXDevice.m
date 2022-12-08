@@ -13,13 +13,20 @@
 @implementation AWXDevice
 
 - (NSDictionary *)encodeToJSON {
+    NSMutableDictionary *device = [NSMutableDictionary new];
+    if (self.deviceId) {
+        device[@"device_id"] = self.deviceId;
+    }
+    device[@"mobile"] = [self mobilePayload];
+    return device;
+}
+
+- (NSDictionary *)mobilePayload {
     UIDevice *device = [UIDevice currentDevice];
     return @{
-        @"device_id": self.deviceId,
-        @"sdk_version_name": AIRWALLEX_VERSION,
-        @"platform_type": device.systemName,
-        @"device_model": @"mobile",
-        @"device_os": device.systemVersion
+        @"os_type": device.systemName,
+        @"device_model": device.model,
+        @"os_version": device.systemVersion
     };
 }
 

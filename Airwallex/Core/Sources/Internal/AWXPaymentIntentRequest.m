@@ -67,7 +67,7 @@
 
     parameters[@"save_payment_method"] = @(self.savePaymentMethod);
     if (self.device) {
-        parameters[@"device"] = [self.device encodeToJSON];
+        parameters[@"device_data"] = [self.device encodeToJSON];
     }
     parameters[@"integration_data"] = @{@"type": @"mobile_sdk",
                                         @"version": [NSString stringWithFormat:@"ios-%@-%@", @"release", AIRWALLEX_VERSION]};
@@ -104,7 +104,7 @@
         parameters[@"three_ds"] = @{@"acs_response": self.acsResponse, @"return_url": self.returnURL};
     }
     if (self.device) {
-        parameters[@"device"] = [self.device encodeToJSON];
+        parameters[@"device_data"] = [self.device encodeToJSON];
     }
     return parameters;
 }
