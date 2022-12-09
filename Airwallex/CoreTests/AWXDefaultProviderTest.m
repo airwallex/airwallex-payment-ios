@@ -92,7 +92,7 @@ NSString *const kMockKey = @"MOCK";
                                                        paymentConsent:[OCMArg any]
                                                                device:[OCMArg any]
                                                             returnURL:[OCMArg any]
-                                                          autoCapture:NO
+                                                          autoCapture:YES
                                                            completion:([OCMArg invokeBlockWithArgs:self.response, self.error, nil])]);
 }
 
@@ -172,7 +172,7 @@ NSString *const kMockKey = @"MOCK";
                                                        paymentConsent:[OCMArg any]
                                                                device:[OCMArg any]
                                                             returnURL:[OCMArg any]
-                                                          autoCapture:NO
+                                                          autoCapture:YES
                                                            completion:([OCMArg invokeBlockWithArgs:self.response, self.error, nil])]);
 }
 
@@ -215,7 +215,7 @@ NSString *const kMockKey = @"MOCK";
                                       paymentConsent:[OCMArg any]
                                               device:[OCMArg any]
                                            returnURL:[OCMArg any]
-                                         autoCapture:NO
+                                         autoCapture:YES
                                           completion:([OCMArg invokeBlockWithArgs:response, error, nil])]);
     OCMStub([providerMock verifyPaymentConsentWithPaymentMethod:[OCMArg any]
                                                  paymentConsent:[OCMArg any]
