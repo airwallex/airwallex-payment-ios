@@ -35,12 +35,12 @@
     session.billing = billing;
     session.returnURL = @"airwallex://";
     session.paymentIntent = self.paymentIntent;
+    session.autoCapture = YES;
     XCTAssertNotNil(session.customerPaymentConsents);
     XCTAssertNotNil(session.customerPaymentMethods);
     XCTAssertNil(session.customerId);
     XCTAssertNotNil(session.currency);
     XCTAssertNotNil(session.amount);
-    XCTAssertTrue(session.autoCapture);
 }
 
 - (void)testRecurringSession {
@@ -69,13 +69,13 @@
     session.paymentIntent = self.paymentIntent;
     session.nextTriggerByType = AirwallexNextTriggerByCustomerType;
     session.requiresCVC = YES;
+    session.autoCapture = YES;
     session.merchantTriggerReason = AirwallexMerchantTriggerReasonUnscheduled;
     XCTAssertNotNil(session.customerPaymentConsents);
     XCTAssertNotNil(session.customerPaymentMethods);
     XCTAssertNil(session.customerId);
     XCTAssertNotNil(session.currency);
     XCTAssertNotNil(session.amount);
-    XCTAssertTrue(session.autoCapture);
 }
 
 @end

@@ -148,17 +148,21 @@ static NSString *const recurring = @"recurring";
     return NO;
 }
 
+- (BOOL)autoCapture {
+    if ([self isKindOfClass:[AWXOneOffSession class]]) {
+        AWXOneOffSession *session = (AWXOneOffSession *)self;
+        return session.autoCapture;
+    }
+    if ([self isKindOfClass:[AWXRecurringWithIntentSession class]]) {
+        AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self;
+        return session.autoCapture;
+    }
+    return YES;
+}
+
 @end
 
 @implementation AWXOneOffSession
-
-- (instancetype)init {
-    if (self = [super init]) {
-        self.autoCapture = YES;
-    }
-
-    return self;
-}
 
 @end
 
@@ -171,14 +175,6 @@ static NSString *const recurring = @"recurring";
 @end
 
 @implementation AWXRecurringWithIntentSession
-
-- (instancetype)init {
-    if (self = [super init]) {
-        self.autoCapture = YES;
-    }
-
-    return self;
-}
 
 - (NSString *)transactionMode {
     return recurring;
