@@ -98,11 +98,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)requiresCVC;
 
-/**
- Return whether auto_capture is enabled.
- */
-- (BOOL)autoCapture;
-
 @end
 
 /**

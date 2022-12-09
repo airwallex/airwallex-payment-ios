@@ -50,7 +50,6 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCheckoutMode];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedNextTriggerBy];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedRequiresCVC];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedAutoCapture];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedApiKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedClientId];
@@ -58,6 +57,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCurrency];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCountryCode];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedReturnURL];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kCachedAutoCapture];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     [self syncKeys];
