@@ -107,9 +107,6 @@
     // Fetch all available payment method types
     self.nextPageNum = 0;
     [self loadAvailablePaymentMethodTypesWithPageNum:self.nextPageNum];
-
-    // Fetch all customer payment methods
-    [self loadAvailablePaymentConsents];
 }
 
 - (void)loadAvailablePaymentMethodTypesWithPageNum:(NSInteger)pageNum {
@@ -131,12 +128,16 @@
                  strongSelf.availablePaymentMethodTypes = [self.session filteredPaymentMethodTypes:result.items];
                  strongSelf.canLoadMore = result.hasMore;
                  strongSelf.nextPageNum = pageNum + 1;
+
+                 strongSelf.availablePaymentConsents = [[strongSelf filterAvailablePaymentConsentsWithSession:strongSelf.session] mutableCopy];
+
                  [strongSelf.tableView reloadData];
+                 [strongSelf presentSingleCardShortcutIfRequired];
              }
          }];
 }
 
-- (void)loadAvailablePaymentConsents {
+- (NSArray<AWXPaymentConsent *> *)filterAvailablePaymentConsentsWithSession:(AWXSession *)session {
     NSArray *customerPaymentMethods = self.session.customerPaymentMethods;
     NSArray *customerPaymentConsents = self.session.customerPaymentConsents;
 
@@ -154,8 +155,23 @@
                 }
             }
         }
-        self.availablePaymentConsents = availablePaymentConsents;
-        [self.tableView reloadData];
+        return availablePaymentConsents;
+    }
+    return @[];
+}
+
+- (void)presentSingleCardShortcutIfRequired {
+    BOOL hasPaymentConsents = self.availablePaymentConsents.count > 0;
+    BOOL hasSinglePaymentMethod = self.availablePaymentMethodTypes.count == 1;
+
+    if (!hasPaymentConsents && hasSinglePaymentMethod) {
+        // find the card payment method if it exists
+        for (AWXPaymentMethodType *type in self.availablePaymentMethodTypes) {
+            if ([type.name isEqualToString:AWXCardKey]) {
+                [self didSelectPaymentMethodType:type];
+                break;
+            }
+        }
     }
 }
 
@@ -205,35 +221,45 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 1) {
+    switch (section) {
+    case 0:
+        // payment consents section
+        return self.availablePaymentConsents.count;
+    case 1:
+        // payment methods section
         return self.availablePaymentMethodTypes.count;
+    default:
+        return 0;
     }
-    return self.availablePaymentConsents.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AWXPaymentMethodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AWXPaymentMethodCell" forIndexPath:indexPath];
 
-    if (indexPath.section == 1) {
-        AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
-        [cell.logoImageView setImageURL:paymentMethodType.resources.logoURL
-                            placeholder:nil];
-        cell.titleLabel.text = paymentMethodType.displayName;
-    } else {
+    switch (indexPath.section) {
+    case 0: {
         AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
         AWXBrand *cardBrand = [[AWXCardValidator sharedCardValidator] brandForCardName:paymentConsent.paymentMethod.card.brand];
         cell.logoImageView.image = [[AWXCardImageView alloc] initWithCardBrand:cardBrand.type].image;
         cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", paymentConsent.paymentMethod.card.brand.capitalizedString, paymentConsent.paymentMethod.card.last4];
+        break;
+    }
+    case 1: {
+        AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
+        [cell.logoImageView setImageURL:paymentMethodType.resources.logoURL
+                            placeholder:nil];
+        cell.titleLabel.text = paymentMethodType.displayName;
+        break;
+    }
+    default:
+        break;
     }
 
     return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return YES;
-    }
-    return NO;
+    return indexPath.section == 0 ? YES : NO;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -262,34 +288,34 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    if (indexPath.section == 1) {
-        AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
-        Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType);
-
-        // This should not happen since we've filtered out the types that no providers support when we get the data.
-        // For now, we'll leave it here but we should be able to remove it.
-        if (class == Nil) {
-            UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the payment method.", nil) preferredStyle:UIAlertControllerStyleAlert];
-            [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [self presentViewController:controller animated:YES completion:nil];
-            return;
+    switch (indexPath.section) {
+    case 0: {
+        // No cvc provided and go to enter cvc in payment detail page
+        AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
+        if (paymentConsent.requiresCVC) {
+            [self showPayment:paymentConsent];
+        } else {
+            AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
+            [provider confirmPaymentIntentWithPaymentMethod:paymentConsent.paymentMethod paymentConsent:paymentConsent device:nil];
+            self.provider = provider;
         }
-
-        AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self session:self.session paymentMethodType:paymentMethodType];
-        [provider handleFlow];
-        self.provider = provider;
-        return;
+        break;
     }
+    case 1: {
+        AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
 
-    // No cvc provided and go to enter cvc in payment detail page
-    AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
-    if (paymentConsent.requiresCVC) {
-        [self showPayment:paymentConsent];
-    } else {
-        AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
-        [provider confirmPaymentIntentWithPaymentMethod:paymentConsent.paymentMethod paymentConsent:paymentConsent device:nil];
-        self.provider = provider;
+        [self didSelectPaymentMethodType:paymentMethodType];
+        break;
     }
+    }
+}
+
+- (void)didSelectPaymentMethodType:(AWXPaymentMethodType *)paymentMethodType {
+    Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType);
+
+    AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self session:self.session paymentMethodType:paymentMethodType];
+    [provider handleFlow];
+    self.provider = provider;
 }
 
 #pragma mark - UIScrollViewDelegate
