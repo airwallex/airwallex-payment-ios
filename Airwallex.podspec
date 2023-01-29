@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Card' do |plugin|
     plugin.dependency 'Airwallex/Core'
-    plugin.source_files = 'Airwallex/Card/**/*.{h,m}'
+    plugin.source_files = 'Airwallex/Card/**/*.{h,m}', 'Airwallex/Security/*.{h,m}'
     plugin.public_header_files = 'Airwallex/Card/*.h'
     plugin.vendored_frameworks = 'TrustDefender/*.xcframework'
   end
@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'ApplePay' do |plugin|
     plugin.dependency 'Airwallex/Core'
-    plugin.source_files = 'Airwallex/ApplePay/**/*.{h,m}'
+    plugin.source_files = 'Airwallex/ApplePay/**/*.{h,m}', 'Airwallex/Security/*.{h,m}'
     plugin.public_header_files = 'Airwallex/ApplePay/*.h'
   end
 end

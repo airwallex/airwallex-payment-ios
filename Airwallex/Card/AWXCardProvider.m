@@ -10,11 +10,11 @@
 #import "AWXAPIClient.h"
 #import "AWXCardViewController.h"
 #import "AWXCardViewModel.h"
+#import "AWXDefaultProvider+Security.h"
 #import "AWXDevice.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
-#import "AWXSecurityService.h"
 #import "AWXSession.h"
 
 @implementation AWXCardProvider
@@ -78,15 +78,6 @@
 }
 
 #pragma mark - Internal Actions
-
-- (void)setDevice:(void (^)(AWXDevice *_Nonnull))completion {
-    [[AWXSecurityService sharedService] doProfile:self.session.paymentIntentId
-                                       completion:^(NSString *_Nullable sessionId) {
-                                           AWXDevice *device = [AWXDevice new];
-                                           device.deviceId = sessionId;
-                                           completion(device);
-                                       }];
-}
 
 - (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod
                  completion:(AWXRequestHandler)completion {
