@@ -43,5 +43,6 @@ Pod::Spec.new do |s|
     plugin.dependency 'Airwallex/Core'
     plugin.source_files = 'Airwallex/ApplePay/**/*.{h,m}', 'Airwallex/Security/*.{h,m}'
     plugin.public_header_files = 'Airwallex/ApplePay/*.h'
+    plugin.vendored_frameworks = 'TrustDefender/*.xcframework'
   end
 end

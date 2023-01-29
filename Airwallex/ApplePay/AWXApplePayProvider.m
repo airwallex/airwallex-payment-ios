@@ -95,7 +95,7 @@
     __weak __typeof(self) weakSelf = self;
     [self setDevice:^(AWXDevice *_Nonnull device) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf confirmWithPaymentMethod:method completion:completion];
+        [strongSelf confirmWithPaymentMethod:method device:device completion:completion];
     }];
 }
 
@@ -152,11 +152,12 @@
 }
 
 - (void)confirmWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
+                          device:(AWXDevice *)device
                       completion:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
     __weak __typeof(self) weakSelf = self;
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod
                                  paymentConsent:nil
-                                         device:nil
+                                         device:device
                                      completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
                                          AWXConfirmPaymentIntentResponse *confirmResponse = (AWXConfirmPaymentIntentResponse *)response;
 
