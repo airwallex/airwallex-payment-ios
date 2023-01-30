@@ -7,6 +7,7 @@
 //
 
 #import "AWXApplePayProvider.h"
+#import "AWXDefaultProvider+Security.h"
 #import "AWXOneOffSession+Request.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
@@ -27,9 +28,18 @@
 
 @interface AWXApplePayProviderTest : XCTestCase
 
+@property (nonatomic, strong) AWXDevice *device;
+
 @end
 
 @implementation AWXApplePayProviderTest
+
+- (void)setUp {
+    [super setUp];
+    AWXDevice *device = [AWXDevice new];
+    device.deviceId = @"abcd";
+    self.device = device;
+}
 
 - (void)testCanHandleSessionShouldReturnNOWithRecurringSession {
     AWXSession *session = [AWXRecurringSession new];
@@ -211,11 +221,13 @@
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
 
+    OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:_device, nil])]);
+
     NSError *error = [NSError errorWithDomain:@"domain" code:-1 userInfo:nil];
 
     OCMStub([providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg any]
                                                 paymentConsent:[OCMArg isNil]
-                                                        device:[OCMArg isNil]
+                                                        device:_device
                                                     completion:([OCMArg invokeBlockWithArgs:[NSNull null], error, nil])]);
 
     [provider handleFlow];
@@ -227,7 +239,7 @@
                                          return YES;
                                      }]
                                                             paymentConsent:[OCMArg isNil]
-                                                                    device:[OCMArg isNil]
+                                                                    device:_device
                                                                 completion:[OCMArg any]]);
 
     XCTAssertNotNil(result);
@@ -257,11 +269,13 @@
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
 
+    OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:_device, nil])]);
+
     AWXConfirmPaymentIntentResponse *response = [AWXConfirmPaymentIntentResponse new];
 
     OCMStub([providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg any]
                                                 paymentConsent:[OCMArg isNil]
-                                                        device:[OCMArg isNil]
+                                                        device:_device
                                                     completion:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
 
     [provider handleFlow];
@@ -274,7 +288,7 @@
                                          return YES;
                                      }]
                                                             paymentConsent:[OCMArg isNil]
-                                                                    device:[OCMArg isNil]
+                                                                    device:_device
                                                                 completion:[OCMArg any]]);
 
     XCTAssertNotNil(result);
