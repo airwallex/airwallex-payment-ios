@@ -143,8 +143,8 @@
 
         // JCB
         [AWXBrand brandWithName:@"JCB"
-                     rangeStart:@"35"
-                       rangeEnd:@"35"
+                     rangeStart:@"3528"
+                       rangeEnd:@"3589"
                          length:16
                            type:AWXBrandTypeJCB],
 
@@ -307,10 +307,7 @@
 }
 
 - (nullable AWXBrand *)brandForCardNumber:(NSString *)cardNumber {
-    NSArray *brandsfilteredByPrefix = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
-                                                       AWXBrand *brand = (AWXBrand *)evaluatedObject;
-                                                       return brand.type != AWXBrandTypeUnknown && [brand matchesPrefix:cardNumber];
-                                                   }]];
+    NSArray *brandsfilteredByPrefix = [self brandsForCardNumber:cardNumber];
 
     AWXBrand *brandWithSameLength = [brandsfilteredByPrefix filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
                                                                 AWXBrand *brand = (AWXBrand *)evaluatedObject;

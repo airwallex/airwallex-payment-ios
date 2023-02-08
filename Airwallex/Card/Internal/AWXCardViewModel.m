@@ -235,6 +235,8 @@
         return AWXBrandTypeVisa;
     } else if ([cardName isEqualToString:@"unionpay"]) {
         return AWXBrandTypeUnionPay;
+    } else if ([cardName isEqualToString:@"jcb"]) {
+        return AWXBrandTypeJCB;
     } else {
         return AWXBrandTypeUnknown;
     }
