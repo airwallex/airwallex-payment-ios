@@ -233,6 +233,8 @@
         return AWXBrandTypeMastercard;
     } else if ([cardName isEqualToString:@"visa"]) {
         return AWXBrandTypeVisa;
+    } else if ([cardName isEqualToString:@"unionpay"]) {
+        return AWXBrandTypeUnionPay;
     } else {
         return AWXBrandTypeUnknown;
     }
