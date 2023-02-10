@@ -28,4 +28,10 @@
     XCTAssertNotNil(card.fingerprint);
 }
 
+- (void)testValidation {
+    AWXCard *card = [AWXCard new];
+    card.number = @"12345";
+    XCTAssertEqualObjects([card validate], @"Invalid card number");
+}
+
 @end

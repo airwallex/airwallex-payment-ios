@@ -90,8 +90,7 @@
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     text.length > 0 ? [self activateAnimated:YES] : [self deactivateAnimated:YES];
 
-    AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:text];
-    if (brand && text.length > brand.length) {
+    if (text.length > [[AWXCardValidator sharedCardValidator] maxLengthForCardNumber:text]) {
         return NO;
     }
 

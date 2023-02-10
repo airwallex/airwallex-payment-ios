@@ -15,6 +15,7 @@
 #import "AWXDefaultActionProvider.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSession.h"
+#import "AWXUtils.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 
@@ -234,7 +235,7 @@
     session.isBillingInformationRequired = NO;
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
     AWXCard *card = [viewModel makeCardWithName:@"John Citizen"
-                                         number:@"535234234314"
+                                         number:@"5352342343140000"
                                          expiry:@"08/25"
                                             cvc:@"077"];
     id cardProviderMock = OCMClassMock([AWXCardProvider class]);
@@ -263,7 +264,7 @@
                                                             street:@"Collins Street"
                                                           postcode:@"3000"];
     AWXCard *card = [viewModel makeCardWithName:@"John Citizen"
-                                         number:@"535234234314"
+                                         number:@"5352342343140000"
                                          expiry:@"08/25"
                                             cvc:@"077"];
     id cardProviderMock = OCMClassMock([AWXCardProvider class]);
@@ -294,9 +295,11 @@
 
 - (void)testMakeDisplayedCardBrands {
     AWXCardViewModel *viewModel = [self mockOneOffViewModelWithCardSchemes];
-    XCTAssertEqual([viewModel makeDisplayedCardBrands].count, 2);
+    XCTAssertEqual([viewModel makeDisplayedCardBrands].count, 4);
     XCTAssertEqual([[viewModel makeDisplayedCardBrands][0] intValue], AWXBrandTypeVisa);
     XCTAssertEqual([[viewModel makeDisplayedCardBrands][1] intValue], AWXBrandTypeMastercard);
+    XCTAssertEqual([[viewModel makeDisplayedCardBrands][2] intValue], AWXBrandTypeUnionPay);
+    XCTAssertEqual([[viewModel makeDisplayedCardBrands][3] intValue], AWXBrandTypeJCB);
 }
 
 - (void)testValidationMessageFromCardNumber {
@@ -319,11 +322,16 @@
 
 - (AWXCardViewModel *)mockOneOffViewModelWithCardSchemes {
     AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXCardScheme *visaScheme = [AWXCardScheme new];
-    visaScheme.name = @"visa";
-    AWXCardScheme *mcScheme = [AWXCardScheme new];
-    mcScheme.name = @"mastercard";
-    return [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:@[visaScheme, mcScheme]];
+    NSArray *cardSchemes = [@[@"visa", @"mastercard", @"unionpay", @"jcb"] mapObjectsUsingBlock:^(NSString *_Nonnull name, NSUInteger idx) {
+        return [self cardSchemeWithName:name];
+    }];
+    return [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:cardSchemes];
+}
+
+- (AWXCardScheme *)cardSchemeWithName:(NSString *)name {
+    AWXCardScheme *card = [AWXCardScheme new];
+    card.name = name;
+    return card;
 }
 
 @end

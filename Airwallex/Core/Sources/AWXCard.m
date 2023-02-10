@@ -7,6 +7,7 @@
 //
 
 #import "AWXCard.h"
+#import "AWXCardValidator.h"
 
 @implementation AWXCard
 
@@ -49,7 +50,7 @@
 @implementation AWXCard (Utils)
 
 - (nullable NSString *)validate {
-    if (self.number.length == 0) {
+    if (![[AWXCardValidator sharedCardValidator] isValidCardLength:self.number]) {
         return @"Invalid card number";
     }
     if (self.name.length == 0) {

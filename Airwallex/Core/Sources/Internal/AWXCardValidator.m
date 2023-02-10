@@ -33,7 +33,7 @@
     return [[AWXBrand alloc] initWithName:name rangeStart:rangeStart rangeEnd:rangeEnd length:length type:type];
 }
 
-- (BOOL)matchesNumber:(NSString *)number {
+- (BOOL)matchesPrefix:(NSString *)number {
     BOOL withinLowRange = NO;
     BOOL withinHighRange = NO;
 
@@ -56,9 +56,13 @@
 
 @interface AWXCardValidator ()
 
+@property (nonatomic, copy, readonly) AWXBrand *defaultBrand;
+
 @end
 
 @implementation AWXCardValidator
+
+@synthesize defaultBrand;
 
 + (instancetype)sharedCardValidator {
     static AWXCardValidator *sharedCardValidator;
@@ -69,14 +73,22 @@
     return sharedCardValidator;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        defaultBrand = [AWXBrand brandWithName:@""
+                                    rangeStart:@""
+                                      rangeEnd:@""
+                                        length:16
+                                          type:AWXBrandTypeUnknown];
+    }
+    return self;
+}
+
 - (NSArray<AWXBrand *> *)brands {
     return @[
         // Unknown
-        [AWXBrand brandWithName:@""
-                     rangeStart:@""
-                       rangeEnd:@""
-                         length:16
-                           type:AWXBrandTypeUnknown],
+        defaultBrand,
 
         // American Express
         [AWXBrand brandWithName:@"Amex"
@@ -131,8 +143,8 @@
 
         // JCB
         [AWXBrand brandWithName:@"JCB"
-                     rangeStart:@"35"
-                       rangeEnd:@"35"
+                     rangeStart:@"3528"
+                       rangeEnd:@"3589"
                          length:16
                            type:AWXBrandTypeJCB],
 
@@ -155,6 +167,26 @@
 
         // UnionPay
         [AWXBrand brandWithName:@"UnionPay"
+                     rangeStart:@"62"
+                       rangeEnd:@"62"
+                         length:16
+                           type:AWXBrandTypeUnionPay],
+        [AWXBrand brandWithName:@"UnionPay"
+                     rangeStart:@"62"
+                       rangeEnd:@"62"
+                         length:17
+                           type:AWXBrandTypeUnionPay],
+        [AWXBrand brandWithName:@"UnionPay"
+                     rangeStart:@"62"
+                       rangeEnd:@"62"
+                         length:18
+                           type:AWXBrandTypeUnionPay],
+        [AWXBrand brandWithName:@"UnionPay"
+                     rangeStart:@"62"
+                       rangeEnd:@"62"
+                         length:19
+                           type:AWXBrandTypeUnionPay],
+        [AWXBrand brandWithName:@"Union Pay"
                      rangeStart:@"62"
                        rangeEnd:@"62"
                          length:16
@@ -264,12 +296,28 @@
     ];
 }
 
+- (NSInteger)maxLengthForCardNumber:(NSString *)cardNumber {
+    NSArray *brands = [self brandsForCardNumber:cardNumber];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"length" ascending:false];
+    AWXBrand *brandWithMaxLength = [brands sortedArrayUsingDescriptors:@[sortDescriptor]].firstObject;
+    if (brandWithMaxLength) {
+        return brandWithMaxLength.length;
+    }
+    return defaultBrand.length;
+}
+
 - (nullable AWXBrand *)brandForCardNumber:(NSString *)cardNumber {
-    NSArray *filtered = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
-                                         AWXBrand *brand = (AWXBrand *)evaluatedObject;
-                                         return brand.type != AWXBrandTypeUnknown && [brand matchesNumber:cardNumber];
-                                     }]];
-    return filtered.firstObject;
+    NSArray *brandsfilteredByPrefix = [self brandsForCardNumber:cardNumber];
+
+    AWXBrand *brandWithSameLength = [brandsfilteredByPrefix filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
+                                                                AWXBrand *brand = (AWXBrand *)evaluatedObject;
+                                                                return brand.length == cardNumber.length;
+                                                            }]]
+                                        .firstObject;
+    if (brandWithSameLength) {
+        return brandWithSameLength;
+    }
+    return brandsfilteredByPrefix.firstObject;
 }
 
 - (AWXBrand *)brandForCardName:(NSString *)name {
@@ -295,8 +343,17 @@
     case AWXBrandTypeDinersClub:
         return @[@4, @6, @4];
     default:
-        return @[@4, @4, @4, @4];
+        return @[@4, @4, @4];
     }
+}
+
+#pragma mark - Private methods
+
+- (NSArray<AWXBrand *> *)brandsForCardNumber:(NSString *)cardNumber {
+    return [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
+                            AWXBrand *brand = (AWXBrand *)evaluatedObject;
+                            return brand.type != AWXBrandTypeUnknown && [brand matchesPrefix:cardNumber];
+                        }]];
 }
 
 @end

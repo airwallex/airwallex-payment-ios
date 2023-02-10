@@ -31,6 +31,10 @@
         return @"amex";
     case AWXBrandTypeMastercard:
         return @"mastercard";
+    case AWXBrandTypeUnionPay:
+        return @"unionpay";
+    case AWXBrandTypeJCB:
+        return @"jcb";
     default:
         return NULL;
     }
