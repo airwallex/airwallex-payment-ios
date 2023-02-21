@@ -110,6 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIFont *)titleFont;
 + (UIFont *)headlineFont;
 + (UIFont *)bodyFont;
++ (UIFont *)body2Font;
 + (UIFont *)subhead1Font;
 + (UIFont *)subhead2Font;
 + (UIFont *)caption1Font;

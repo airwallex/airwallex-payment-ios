@@ -48,6 +48,9 @@
 @property (strong, nonatomic) AWXFloatingLabelTextField *emailField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *phoneNumberField;
 @property (strong, nonatomic) AWXActionButton *confirmButton;
+@property (strong, nonatomic) UIStackView *saveCardSwitchContainer;
+@property (strong, nonatomic) UIStackView *container;
+@property (strong, nonatomic) AWXWarningView *warningView;
 
 @property (nonatomic) BOOL saveCard;
 
@@ -145,7 +148,7 @@ typedef enum {
 
     _confirmButton = [AWXActionButton new];
     _confirmButton.enabled = YES;
-    [_confirmButton setTitle:NSLocalizedString(@"Confirm", @"Confirm") forState:UIControlStateNormal];
+    [_confirmButton setTitle:NSLocalizedString(@"Pay", @"Pay button title") forState:UIControlStateNormal];
     [_confirmButton addTarget:self action:@selector(confirmPayment:) forControlEvents:UIControlEventTouchUpInside];
     [stackView addArrangedSubview:_confirmButton];
     [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
@@ -169,6 +172,7 @@ typedef enum {
     [self setBillingInputHidden:self.viewModel.isReusingShippingAsBillingInformation];
     _addressSwitch.on = self.viewModel.isReusingShippingAsBillingInformation;
     self.saveCard = false;
+    self.container = stackView;
 }
 
 - (UIStackView *)switchOfType:(SwitchType)type {
@@ -190,6 +194,7 @@ typedef enum {
     case SaveCardSwitch:
         titleLabel.text = NSLocalizedString(@"Save this card for future payments", @"Save this card for future payments");
         [switchButton addTarget:self action:@selector(saveCardSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        self.saveCardSwitchContainer = container;
         break;
     }
     titleLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
@@ -315,6 +320,16 @@ typedef enum {
 
 - (void)saveCardSwitchChanged:(id)sender {
     self.saveCard = [(UISwitch *)sender isOn];
+    if (_saveCard && _cardNoField.cardBrand == AWXBrandTypeUnionPay) {
+        [_container.arrangedSubviews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
+            if (subview == _saveCardSwitchContainer) {
+                self.warningView = [[AWXWarningView alloc] initWithMessage:@"For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use."];
+                [_container insertArrangedSubview:_warningView atIndex:idx + 1];
+            }
+        }];
+    } else {
+        [_warningView removeFromSuperview];
+    }
 }
 
 - (void)addressSwitchChanged:(UISwitch *)sender {

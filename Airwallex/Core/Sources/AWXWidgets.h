@@ -105,6 +105,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ A common warning view with icon and text
+ */
+@interface AWXWarningView : UIStackView
+
+- (instancetype)initWithMessage:(NSString *)message;
+
+@end
+
 typedef enum {
     UIImageViewAlignmentMaskCenter = 0,
     UIImageViewAlignmentMaskLeft = 1,

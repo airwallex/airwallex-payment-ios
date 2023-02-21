@@ -278,6 +278,10 @@ static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
     return [UIFont systemFontOfSize:17 weight:UIFontWeightRegular];
 }
 
++ (UIFont *)body2Font {
+    return [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
+}
+
 + (UIFont *)subhead1Font {
     return [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
 }
