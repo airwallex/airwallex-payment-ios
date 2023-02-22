@@ -24,6 +24,6 @@ Can make it more explicit when we switch to Swift.
 
 @property (nonatomic, copy) NSString * (^validationMessageCallback)(NSString *);
 
-@property (nonatomic, readonly) AWXBrandType cardBrand;
+@property (nonatomic, copy) void (^brandUpdateCallback)(AWXBrandType);
 
 @end

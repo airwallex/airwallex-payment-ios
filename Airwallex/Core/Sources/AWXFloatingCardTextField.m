@@ -15,7 +15,6 @@
 
 @property (strong, nonatomic) UIStackView *brandView;
 @property (strong, nonatomic) NSMutableArray<AWXCardImageView *> *cardImageViews;
-@property (nonatomic) AWXBrandType cardBrand;
 
 @end
 
@@ -132,7 +131,7 @@
 
 - (void)updateBrandWithNumber:(NSString *)number {
     AWXBrandType type = [self typeOfNumber:number];
-    self.cardBrand = type;
+    _brandUpdateCallback(type);
     BOOL shouldShowBrands = NO;
     if ([_cardBrands containsObject:[NSNumber numberWithInteger:type]]) {
         shouldShowBrands = YES;

@@ -51,6 +51,7 @@
 @property (strong, nonatomic) UIStackView *saveCardSwitchContainer;
 @property (strong, nonatomic) UIStackView *container;
 @property (strong, nonatomic) AWXWarningView *warningView;
+@property (nonatomic) AWXBrandType currentBrand;
 
 @property (nonatomic) BOOL saveCard;
 
@@ -102,6 +103,14 @@ typedef enum {
     __weak __typeof(self) weakSelf = self;
     _cardNoField.validationMessageCallback = ^(NSString *cardNumber) {
         return [weakSelf.viewModel validationMessageFromCardNumber:cardNumber];
+    };
+    _cardNoField.brandUpdateCallback = ^(AWXBrandType brand) {
+        weakSelf.currentBrand = brand;
+        if (weakSelf.saveCard && brand == AWXBrandTypeUnionPay) {
+            [weakSelf addUnionPayWarningViewIfNecessary];
+        } else {
+            [weakSelf.warningView removeFromSuperview];
+        }
     };
     _cardNoField.isRequired = YES;
     _cardNoField.placeholder = @"1234 1234 1234 1234";
@@ -320,16 +329,22 @@ typedef enum {
 
 - (void)saveCardSwitchChanged:(id)sender {
     self.saveCard = [(UISwitch *)sender isOn];
-    if (_saveCard && _cardNoField.cardBrand == AWXBrandTypeUnionPay) {
-        [_container.arrangedSubviews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
-            if (subview == _saveCardSwitchContainer) {
-                self.warningView = [[AWXWarningView alloc] initWithMessage:@"For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use."];
-                [_container insertArrangedSubview:_warningView atIndex:idx + 1];
-            }
-        }];
+    if (_saveCard && _currentBrand == AWXBrandTypeUnionPay) {
+        [self addUnionPayWarningViewIfNecessary];
     } else {
         [_warningView removeFromSuperview];
     }
+}
+
+- (void)addUnionPayWarningViewIfNecessary {
+    [_container.arrangedSubviews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
+        if (subview == _saveCardSwitchContainer && _container.arrangedSubviews[idx + 1] != _warningView) {
+            if (!_warningView) {
+                self.warningView = [[AWXWarningView alloc] initWithMessage:@"For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use."];
+            }
+            [_container insertArrangedSubview:_warningView atIndex:idx + 1];
+        }
+    }];
 }
 
 - (void)addressSwitchChanged:(UISwitch *)sender {
