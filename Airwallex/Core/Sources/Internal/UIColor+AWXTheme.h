@@ -22,5 +22,7 @@
 + (UIColor *)airwallexUltraviolet40Color;
 + (UIColor *)airwallexUltraviolet70Color;
 + (UIColor *)airwallexRed50Color;
++ (UIColor *)airwallexOrange50Color;
++ (UIColor *)airwallexYellow10Color;
 
 @end

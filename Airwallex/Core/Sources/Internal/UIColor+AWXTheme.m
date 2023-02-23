@@ -59,4 +59,12 @@
     return [UIColor colorWithHex:0xFF4F42];
 }
 
++ (UIColor *)airwallexOrange50Color {
+    return [UIColor colorWithHex:0xFF8E3C];
+}
+
++ (UIColor *)airwallexYellow10Color {
+    return [UIColor colorWithHex:0xFFF8E0];
+}
+
 @end

@@ -131,6 +131,7 @@
 
 - (void)updateBrandWithNumber:(NSString *)number {
     AWXBrandType type = [self typeOfNumber:number];
+    _brandUpdateCallback(type);
     BOOL shouldShowBrands = NO;
     if ([_cardBrands containsObject:[NSNumber numberWithInteger:type]]) {
         shouldShowBrands = YES;

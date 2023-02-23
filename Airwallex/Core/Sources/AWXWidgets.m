@@ -10,6 +10,7 @@
 #import "AWXCardValidator.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
+#import "UIColor+AWXTheme.h"
 
 @interface AWXView ()
 
@@ -1029,6 +1030,41 @@
     UIGraphicsEndImageContext();
 
     [self setBackgroundImage:colorImage forState:state];
+}
+
+@end
+
+@implementation AWXWarningView
+
+- (instancetype)initWithMessage:(NSString *)message {
+    self = [super init];
+
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    [self setBackgroundColor:UIColor.airwallexYellow10Color];
+    [self setSpacing:16];
+    [self setAlignment:UIStackViewAlignmentCenter];
+    [self setLayoutMarginsRelativeArrangement:YES];
+    [self setDirectionalLayoutMargins:NSDirectionalEdgeInsetsMake(12, 16, 12, 16)];
+
+    UIImageView *iconImage = [UIImageView new];
+    [iconImage.widthAnchor constraintEqualToConstant:24].active = YES;
+    [iconImage.heightAnchor constraintEqualToConstant:24].active = YES;
+    if (@available(iOS 13.0, *)) {
+        iconImage.image = [UIImage systemImageNamed:@"exclamationmark.circle.fill"];
+        iconImage.tintColor = UIColor.airwallexOrange50Color;
+    } else {
+        iconImage.image = [UIImage imageNamed:@"warning" inBundle:[NSBundle resourceBundle]];
+    }
+
+    UILabel *warningLabel = [UILabel new];
+    [warningLabel setTextColor:UIColor.airwallexGray80Color];
+    [warningLabel setFont:UIFont.body2Font];
+    warningLabel.numberOfLines = 0;
+    warningLabel.text = message;
+
+    [self addArrangedSubview:iconImage];
+    [self addArrangedSubview:warningLabel];
+    return self;
 }
 
 @end

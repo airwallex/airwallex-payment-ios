@@ -6,6 +6,7 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import "AWXCardValidator.h"
 #import "AWXWidgets.h"
 
 /**
@@ -22,5 +23,7 @@ Can make it more explicit when we switch to Swift.
 @property (nonatomic, strong) NSString *floatingText;
 
 @property (nonatomic, copy) NSString * (^validationMessageCallback)(NSString *);
+
+@property (nonatomic, copy) void (^brandUpdateCallback)(AWXBrandType);
 
 @end
