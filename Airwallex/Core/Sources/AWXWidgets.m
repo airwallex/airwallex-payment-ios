@@ -1040,7 +1040,16 @@
     self = [super init];
 
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    [self setBackgroundColor:UIColor.airwallexYellow10Color];
+
+    // Apply corner radius
+    UIView *roundView = [[UIView alloc] initWithFrame:self.bounds];
+    roundView.backgroundColor = UIColor.airwallexYellow10Color;
+    roundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self insertSubview:roundView atIndex:0];
+    roundView.layer.cornerRadius = 6;
+    roundView.layer.masksToBounds = YES;
+    roundView.clipsToBounds = YES;
+
     [self setSpacing:16];
     [self setAlignment:UIStackViewAlignmentCenter];
     [self setLayoutMarginsRelativeArrangement:YES];
