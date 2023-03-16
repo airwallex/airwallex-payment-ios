@@ -8,6 +8,7 @@
 
 #import "AWXCardViewController.h"
 #import "AWXAPIClient.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXCard.h"
 #import "AWXCardProvider.h"
 #import "AWXCardViewModel.h"
@@ -66,6 +67,9 @@ typedef enum {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [[AWXAnalyticsLogger shared] logWithEventName:@"payment_method_list" extraInfo:@{@"eventType": @"page_view"}];
+
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     [self enableTapToEndEditing];
 

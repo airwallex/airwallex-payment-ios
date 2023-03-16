@@ -88,6 +88,9 @@
     AirwallexSDKMode mode = [AirwallexExamplesKeys shared].environment;
     [Airwallex setMode:mode];
 
+    // You can disable sending Analytics data
+    //    [Airwallex disableAnalytics];
+
     // Theme customization
     //    UIColor *tintColor = [UIColor systemPinkColor];
     //    [AWXTheme sharedTheme].tintColor = tintColor;

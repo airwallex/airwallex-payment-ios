@@ -21,6 +21,8 @@ static NSURL *_defaultBaseURL;
 
 static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 
+static BOOL _analyticsEnabled = YES;
+
 + (void)setDefaultBaseURL:(NSURL *)baseURL {
     _defaultBaseURL = [baseURL URLByAppendingPathComponent:@""];
 }
@@ -46,6 +48,14 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 
 + (AirwallexSDKMode)mode {
     return _mode;
+}
+
++ (void)disableAnalytics {
+    _analyticsEnabled = NO;
+}
+
++ (BOOL)analyticsEnabled {
+    return _analyticsEnabled;
 }
 
 @end
