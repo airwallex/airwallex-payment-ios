@@ -878,14 +878,14 @@
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/CommonDataProvider.swift",
       "kind": "StringLiteral",
-      "offset": 705,
+      "offset": 716,
       "length": 5,
       "value": "\"ios\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/CommonDataProvider.swift",
       "kind": "Dictionary",
-      "offset": 747,
+      "offset": 758,
       "length": 3,
       "value": "[]"
     },
