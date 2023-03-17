@@ -7,7 +7,9 @@
 //
 
 #import "AWXViewController.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXLogger.h"
+#import "AWXPageViewTrackable.h"
 #import "AWXPaymentIntent.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
@@ -23,13 +25,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    if ([self.class conformsToProtocol:@protocol(AWXPageViewTrackable)]) {
+        id<AWXPageViewTrackable> trackable = (id<AWXPageViewTrackable>)self;
+
+        if ([self respondsToSelector:@selector(additionalInfo)]) {
+            [[AWXAnalyticsLogger shared] logPageViewWithName:trackable.pageName additionalInfo:trackable.additionalInfo];
+        } else {
+            [[AWXAnalyticsLogger shared] logPageViewWithName:trackable.pageName];
+        }
+    }
+
     self.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     UIImage *backImage = [UIImage imageNamed:@"back" inBundle:[NSBundle resourceBundle]];
     self.navigationController.navigationBar.backIndicatorImage = backImage;
     self.navigationController.navigationBar.backIndicatorTransitionMaskImage = backImage;
 
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
-    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium];
     self.activityIndicator.hidesWhenStopped = YES;
     self.activityIndicator.hidden = YES;
     [self.view addSubview:self.activityIndicator];

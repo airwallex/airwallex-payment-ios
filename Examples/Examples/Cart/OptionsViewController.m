@@ -60,7 +60,7 @@
 - (void)setupViews {
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
 
-    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium];
     self.activityIndicator.hidesWhenStopped = YES;
     self.activityIndicator.hidden = YES;
     [self.view addSubview:self.activityIndicator];

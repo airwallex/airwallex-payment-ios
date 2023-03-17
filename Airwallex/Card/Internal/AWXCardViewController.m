@@ -65,10 +65,12 @@ typedef enum {
     SaveCardSwitch
 } SwitchType;
 
+- (NSString *)pageName {
+    return @"card_payment_view";
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [[AWXAnalyticsLogger shared] logWithEventName:@"payment_method_list" extraInfo:@{@"eventType": @"page_view"}];
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     [self enableTapToEndEditing];

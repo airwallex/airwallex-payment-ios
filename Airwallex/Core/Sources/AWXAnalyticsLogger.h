@@ -14,7 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
-- (void)logWithEventName:(NSString *)eventName extraInfo:(NSDictionary<NSString *, id> *)extraInfo;
+- (void)logPageViewWithName:(NSString *)pageName;
+
+- (void)logPageViewWithName:(NSString *)pageName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
 
 @end
 

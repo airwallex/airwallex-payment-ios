@@ -38,8 +38,14 @@
     return self;
 }
 
-- (void)logWithEventName:(NSString *)eventName extraInfo:(NSDictionary<NSString *, id> *)extraInfo {
-    [_tracker infoWithEventName:eventName extraInfo:extraInfo];
+- (void)logPageViewWithName:(NSString *)pageName {
+    [_tracker infoWithEventName:pageName extraInfo:@{@"eventType": @"page_view"}];
+}
+
+- (void)logPageViewWithName:(NSString *)pageName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
+    NSMutableDictionary<NSString *, id> *extraInfo = additionalInfo.mutableCopy;
+    extraInfo[@"eventType"] = @"page_view";
+    [_tracker infoWithEventName:pageName extraInfo:extraInfo];
 }
 
 #pragma mark - Private methods
