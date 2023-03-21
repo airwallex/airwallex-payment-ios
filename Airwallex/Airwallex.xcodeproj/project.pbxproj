@@ -56,6 +56,8 @@
 		18E0571329C9536E0099388A /* RLTMXProfilingConnections.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		18E0571529C95A6A0099388A /* AWXRedirectActionProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */; };
 		18E0571629C95FDB0099388A /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
+		18E0571929C9A7F20099388A /* AWXAPIErrorResponse+Update.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E0571729C9A7F20099388A /* AWXAPIErrorResponse+Update.h */; };
+		18E0571A29C9A7F20099388A /* AWXAPIErrorResponse+Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571829C9A7F20099388A /* AWXAPIErrorResponse+Update.m */; };
 		18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */; };
 		2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */; };
 		3C324F9027FC09AD00CF7315 /* AWXSession+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */; };
@@ -374,6 +376,8 @@
 		18D18C7B294225BC00E70DCD /* AWXPaymentIntentRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentIntentRequestTest.m; sourceTree = "<group>"; };
 		18E056EE29C848010099388A /* AirTracker.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = AirTracker.xcframework; sourceTree = "<group>"; };
 		18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXRedirectActionProviderTests.m; sourceTree = "<group>"; };
+		18E0571729C9A7F20099388A /* AWXAPIErrorResponse+Update.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXAPIErrorResponse+Update.h"; sourceTree = "<group>"; };
+		18E0571829C9A7F20099388A /* AWXAPIErrorResponse+Update.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXAPIErrorResponse+Update.m"; sourceTree = "<group>"; };
 		18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewModelTests.m; sourceTree = "<group>"; };
 		3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXSession+Internal.h"; sourceTree = "<group>"; };
 		3C324F8F27FC09AD00CF7315 /* AWXSession+Internal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXSession+Internal.m"; sourceTree = "<group>"; };
@@ -775,6 +779,8 @@
 		184169D029C4337F00B02D96 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				18E0571729C9A7F20099388A /* AWXAPIErrorResponse+Update.h */,
+				18E0571829C9A7F20099388A /* AWXAPIErrorResponse+Update.m */,
 				3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */,
 				3C324F8F27FC09AD00CF7315 /* AWXSession+Internal.m */,
 				184169D629C4347800B02D96 /* UIColor+AWXTheme.h */,
@@ -1139,6 +1145,7 @@
 				5775CF4626E5DF5000C6AFE3 /* AWXUIContext.h in Headers */,
 				5775CF1C26E5DF4F00C6AFE3 /* AWXUtils.h in Headers */,
 				5775CF4326E5DF5000C6AFE3 /* AWXViewController.h in Headers */,
+				18E0571929C9A7F20099388A /* AWXAPIErrorResponse+Update.h in Headers */,
 				5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */,
 				184169DE29C4381500B02D96 /* NSData+Base64.h in Headers */,
 				5775CF4526E5DF5000C6AFE3 /* AWXPaymentConsent.h in Headers */,
@@ -1779,6 +1786,7 @@
 				5775CF1A26E5DF4F00C6AFE3 /* AWXUIContext.m in Sources */,
 				184169D829C4347800B02D96 /* UIColor+ViewCompat.m in Sources */,
 				5775CF1926E5DF4F00C6AFE3 /* AWXTheme.m in Sources */,
+				18E0571A29C9A7F20099388A /* AWXAPIErrorResponse+Update.m in Sources */,
 				5775CF3526E5DF4F00C6AFE3 /* AWXTrackManager.m in Sources */,
 				5775CF4026E5DF5000C6AFE3 /* AWXPaymentMethod.m in Sources */,
 				5775CF4F26E5DF5000C6AFE3 /* AWXForm.m in Sources */,

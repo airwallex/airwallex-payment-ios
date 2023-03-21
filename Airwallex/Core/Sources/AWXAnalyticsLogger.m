@@ -8,6 +8,7 @@
 
 #import "AWXAnalyticsLogger.h"
 #import "AWXAPIClient.h"
+#import "AWXAPIResponse.h"
 #import "NSData+Base64.h"
 #import <AirTracker/AirTracker-Swift.h>
 
@@ -43,9 +44,35 @@
 }
 
 - (void)logPageViewWithName:(NSString *)pageName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
-    NSMutableDictionary<NSString *, id> *extraInfo = additionalInfo.mutableCopy;
+    NSMutableDictionary *extraInfo = additionalInfo.mutableCopy;
     extraInfo[@"eventType"] = @"page_view";
     [_tracker infoWithEventName:pageName extraInfo:extraInfo];
+}
+
+- (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *,id> *)additionalInfo {
+    [_tracker errorWithEventName:eventName extraInfo:additionalInfo];
+}
+
+- (void)logErrorWithName:(NSString *)eventName url:(NSURL *)url response:(AWXAPIErrorResponse *)errorResponse {
+    NSMutableDictionary *extraInfo = @{@"eventType": @"pa_api_request"}.mutableCopy;
+    if (url.absoluteString.length > 0) {
+        extraInfo[@"url"] = url.absoluteString;
+    }
+    if (errorResponse.code.length > 0) {
+        extraInfo[@"code"] = errorResponse.code;
+    }
+    if (errorResponse.message.length > 0) {
+        extraInfo[@"message"] = errorResponse.message;
+    }
+    [_tracker errorWithEventName:eventName extraInfo:extraInfo];
+}
+
+- (void)logError:(NSError *)error withEventName:(NSString *)eventName {
+    NSMutableDictionary *extraInfo = @{@"code": [@(error.code) stringValue]}.mutableCopy;
+    if (error.description.length > 0) {
+        extraInfo[@"message"] = error.description;
+    }
+    [_tracker errorWithEventName:eventName extraInfo:extraInfo];
 }
 
 #pragma mark - Private methods

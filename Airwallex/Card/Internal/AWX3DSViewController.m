@@ -7,6 +7,7 @@
 //
 
 #import "AWX3DSViewController.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXConstants.h"
 #import "AWXUtils.h"
 #import <WebKit/WebKit.h>
@@ -114,6 +115,8 @@
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+    [[AWXAnalyticsLogger shared] logError:error withEventName:@"webview_redirect"];
+    
     if (error.code == 102) {
         return;
     }
@@ -129,6 +132,8 @@
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    [[AWXAnalyticsLogger shared] logError:error withEventName:@"webview_redirect"];
+    
     if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
         self.webHandler(nil, error);
     } else {

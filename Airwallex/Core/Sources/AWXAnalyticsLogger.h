@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class AWXAPIErrorResponse;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXAnalyticsLogger : NSObject
@@ -17,6 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)logPageViewWithName:(NSString *)pageName;
 
 - (void)logPageViewWithName:(NSString *)pageName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
+
+- (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
+
+- (void)logErrorWithName:(NSString *)eventName url:(NSURL *)url response:(AWXAPIErrorResponse *)errorResponse;
+
+- (void)logError:(NSError *)error withEventName:(NSString *)eventName;
 
 @end
 

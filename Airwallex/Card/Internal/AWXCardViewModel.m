@@ -6,9 +6,9 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import "AWXCardViewModel.h"
 #import "AWXCard.h"
 #import "AWXCardValidator.h"
-#import "AWXCardViewModel.h"
 #import "AWXSession.h"
 
 @interface AWXCardViewModel ()

@@ -7,7 +7,9 @@
 //
 
 #import "AWXAPIClient.h"
+#import "AWXAPIErrorResponse+Update.h"
 #import "AWXAPIResponse.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXLogger.h"
 #import "AWXUtils.h"
 
@@ -109,6 +111,12 @@ static BOOL _analyticsEnabled = YES;
     return nil;
 }
 
+- (NSString *)eventName {
+    NSString *requestName = NSStringFromClass([self class]);
+    NSString *truncatedName = [[requestName stringByReplacingOccurrencesOfString:@"AWX" withString:@""] stringByReplacingOccurrencesOfString:@"Request" withString:@""];
+    return [[truncatedName stringByInsertingBetweenWordsWithString:@"_"] lowercaseString];
+}
+
 @end
 
 @implementation AWXResponse
@@ -193,6 +201,7 @@ static BOOL _analyticsEnabled = YES;
                                                                                  } else {
                                                                                      AWXAPIErrorResponse *errorResponse = [request.responseClass performSelector:@selector(parseError:) withObject:data];
                                                                                      if (errorResponse) {
+                                                                                         [[AWXAnalyticsLogger shared] logErrorWithName:[request eventName] url:urlRequest.URL response:[errorResponse updatedResponseWithStatusCode:result.statusCode Error:error]];
                                                                                          handler(nil, errorResponse.error);
                                                                                      } else {
                                                                                          handler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Couldn't parse response.", nil)}]);
