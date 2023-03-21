@@ -17,6 +17,7 @@
 @interface AWXRedirectActionProviderTests : XCTestCase
 
 @property (nonatomic, strong) id logger;
+@property (nonatomic, strong) id app;
 
 @end
 
@@ -28,18 +29,34 @@
     OCMStub([mockLogger shared]).andReturn(mockLogger);
 
     id mockApp = OCMClassMock([UIApplication class]);
-    OCMStub([mockApp openURL:[OCMArg any] options:[OCMArg any] completionHandler:([OCMArg invokeBlockWithArgs:@YES, nil])]);
+    self.app = mockApp;
     OCMStub([mockApp sharedApplication]).andReturn(mockApp);
 }
 
 - (void)testPageViewTracking {
+    OCMStub([_app openURL:[OCMArg any] options:[OCMArg any] completionHandler:([OCMArg invokeBlockWithArgs:@YES, nil])]);
+
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
     AWXRedirectActionProvider *provider = [[AWXRedirectActionProvider alloc] initWithDelegate:delegate session:[AWXOneOffSession new]];
-    NSDictionary *dict = @{@"url": @"http://abc.net"};
-    AWXConfirmPaymentNextAction *nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:dict];
+    AWXConfirmPaymentNextAction *nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:[self testDictionary]];
 
     [provider handleNextAction:nextAction];
-    OCMVerify(times(1), [_logger logPageViewWithName:@"payment_redirect" additionalInfo:dict]);
+    OCMVerify(times(1), [_logger logPageViewWithName:@"payment_redirect" additionalInfo:[self testDictionary]]);
+}
+
+- (void)testErrorLogging {
+    OCMStub([_app openURL:[OCMArg any] options:[OCMArg any] completionHandler:([OCMArg invokeBlockWithArgs:@NO, nil])]);
+
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    AWXRedirectActionProvider *provider = [[AWXRedirectActionProvider alloc] initWithDelegate:delegate session:[AWXOneOffSession new]];
+    AWXConfirmPaymentNextAction *nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:[self testDictionary]];
+
+    [provider handleNextAction:nextAction];
+    OCMVerify(times(1), [_logger logErrorWithName:@"payment_redirect" additionalInfo:[self testDictionary]]);
+}
+
+- (NSDictionary *)testDictionary {
+    return @{@"url": @"http://abc.net"};
 }
 
 @end

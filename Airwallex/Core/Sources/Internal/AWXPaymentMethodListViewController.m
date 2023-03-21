@@ -8,6 +8,7 @@
 
 #import "AWXPaymentMethodListViewController.h"
 #import "AWXAPIClient.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXCardImageView.h"
 #import "AWXCardValidator.h"
 #import "AWXConstants.h"
@@ -307,8 +308,11 @@
     }
     case 1: {
         AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
-
         [self didSelectPaymentMethodType:paymentMethodType];
+
+        if (paymentMethodType.name.length > 0) {
+            [[AWXAnalyticsLogger shared] logActionWithName:@"select_payment" additionalInfo:@{@"paymentMethod": paymentMethodType.name}];
+        }
         break;
     }
     }

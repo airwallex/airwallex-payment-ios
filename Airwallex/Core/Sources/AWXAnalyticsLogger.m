@@ -49,7 +49,7 @@
     [_tracker infoWithEventName:pageName extraInfo:extraInfo];
 }
 
-- (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *,id> *)additionalInfo {
+- (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
     [_tracker errorWithEventName:eventName extraInfo:additionalInfo];
 }
 
@@ -69,10 +69,20 @@
 
 - (void)logError:(NSError *)error withEventName:(NSString *)eventName {
     NSMutableDictionary *extraInfo = @{@"code": [@(error.code) stringValue]}.mutableCopy;
-    if (error.description.length > 0) {
-        extraInfo[@"message"] = error.description;
+    if (error.localizedDescription.length > 0) {
+        extraInfo[@"message"] = error.localizedDescription;
     }
     [_tracker errorWithEventName:eventName extraInfo:extraInfo];
+}
+
+- (void)logActionWithName:(NSString *)actionName {
+    [_tracker infoWithEventName:actionName extraInfo:@{@"eventType": @"action"}];
+}
+
+- (void)logActionWithName:(NSString *)actionName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
+    NSMutableDictionary *extraInfo = additionalInfo.mutableCopy;
+    extraInfo[@"eventType"] = @"action";
+    [_tracker infoWithEventName:actionName extraInfo:extraInfo];
 }
 
 #pragma mark - Private methods
@@ -89,7 +99,7 @@
         [data setObject:merchantAppVersion forKey:@"merchantAppVersion"];
     }
 
-    NSString *accountId = [self accountIdFromClientSecret:nil];
+    NSString *accountId = [self accountIdFromClientSecret:[AWXAPIClientConfiguration sharedConfiguration].clientSecret];
     if (accountId != nil) {
         [data setObject:accountId forKey:@"accountId"];
     }

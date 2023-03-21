@@ -12,7 +12,7 @@
 
 - (AWXAPIErrorResponse *)updatedResponseWithStatusCode:(NSInteger)statusCode Error:(NSError *)error {
     NSString *updatedCode = [@(statusCode) stringValue];
-    NSString *updatedMessage = error.description;
+    NSString *updatedMessage = error.localizedDescription;
     if (self.code.length > 0) {
         updatedCode = self.code;
     }

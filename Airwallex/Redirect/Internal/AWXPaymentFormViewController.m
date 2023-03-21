@@ -7,6 +7,7 @@
 //
 
 #import "AWXPaymentFormViewController.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXForm.h"
 #import "AWXFormMapping.h"
 #import "AWXPaymentFormViewModel.h"
@@ -206,7 +207,10 @@
     for (UIView *view in self.stackView.arrangedSubviews) {
         if ([view isKindOfClass:[AWXOptionView class]]) {
             AWXOptionView *option = (AWXOptionView *)view;
-            dictionary[@"bank_name"] = option.key;
+            if (option.key.length > 0) {
+                dictionary[@"bank_name"] = option.key;
+                [[AWXAnalyticsLogger shared] logActionWithName:@"select_bank" additionalInfo:@{@"bankName": option.key}];
+            }
         }
     }
     return dictionary;

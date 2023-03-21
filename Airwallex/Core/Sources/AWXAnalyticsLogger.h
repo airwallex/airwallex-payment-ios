@@ -26,6 +26,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)logError:(NSError *)error withEventName:(NSString *)eventName;
 
+- (void)logActionWithName:(NSString *)actionName;
+
+- (void)logActionWithName:(NSString *)actionName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
+
 @end
 
 NS_ASSUME_NONNULL_END

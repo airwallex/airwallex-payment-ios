@@ -6,8 +6,8 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
-#import "AWXAnalyticsLogger.h"
 #import "AWXWeChatPayActionProvider.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSession.h"
 #import "AWXWeChatPaySDKResponse.h"
@@ -54,11 +54,12 @@
                 if (request.description.length > 0) {
                     [[AWXAnalyticsLogger shared] logErrorWithName:@"wechat_redirect" additionalInfo:@{@"message": request.description}];
                 }
-                
+
                 [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to request WeChat service.", nil)}]];
                 return;
             }
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
+            [[AWXAnalyticsLogger shared] logPageViewWithName:@"wechat_redirect"];
         }];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "AWXDefaultProvider.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXDevice.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
@@ -123,6 +124,12 @@
             [self.delegate provider:self shouldHandleNextAction:response.nextAction];
         } else {
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
+
+            if (_paymentMethod.type.length > 0) {
+                [[AWXAnalyticsLogger shared] logActionWithName:@"payment_success" additionalInfo:@{@"paymentMethod": _paymentMethod.type}];
+            } else {
+                [[AWXAnalyticsLogger shared] logActionWithName:@"payment_success"];
+            }
         }
     } else {
         [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
