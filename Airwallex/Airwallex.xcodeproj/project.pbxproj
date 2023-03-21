@@ -49,8 +49,13 @@
 		18AC888329C4598A0028D66A /* AWXPageViewTrackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 18AC888229C4597E0028D66A /* AWXPageViewTrackable.h */; };
 		18D18C7A294222EC00E70DCD /* AWXDeviceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D18C79294222EC00E70DCD /* AWXDeviceTest.m */; };
 		18D18C7C294225BC00E70DCD /* AWXPaymentIntentRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D18C7B294225BC00E70DCD /* AWXPaymentIntentRequestTest.m */; };
-		18DF1AFE29C3FB22007BF959 /* AirTracker.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DF1AFC29C3FB0E007BF959 /* AirTracker.xcframework */; };
-		18DF1AFF29C3FB22007BF959 /* AirTracker.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18DF1AFC29C3FB0E007BF959 /* AirTracker.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18E056EF29C848020099388A /* AirTracker.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E056EE29C848010099388A /* AirTracker.xcframework */; };
+		18E0570F29C9536D0099388A /* RLTMXProfiling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */; };
+		18E0571029C9536D0099388A /* RLTMXProfiling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18E0571229C9536E0099388A /* RLTMXProfilingConnections.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */; };
+		18E0571329C9536E0099388A /* RLTMXProfilingConnections.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18E0571529C95A6A0099388A /* AWXRedirectActionProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */; };
+		18E0571629C95FDB0099388A /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
 		18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */; };
 		2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */; };
 		3C324F9027FC09AD00CF7315 /* AWXSession+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */; };
@@ -84,7 +89,7 @@
 		3C99E79527EAF1A20074156C /* ApplePay.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C99E78927EAF1A20074156C /* ApplePay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C99E7A427EAF2840074156C /* AWXApplePayProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C99E7A227EAF2840074156C /* AWXApplePayProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C99E7A527EAF2840074156C /* AWXApplePayProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C99E7A327EAF2840074156C /* AWXApplePayProvider.m */; };
-		3C99E7A627EAF4890074156C /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; platformFilter = ios; };
+		3C99E7A627EAF4890074156C /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; };
 		3C9ED16F27E97E800056615A /* AirwallexCore.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08D26F532404B6C3008E65D3 /* AirwallexCore.bundle */; };
 		3CE9BA272806D2A5005B70C3 /* PKContact+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE9BA252806D2A5005B70C3 /* PKContact+Request.h */; };
 		3CE9BA282806D2A5005B70C3 /* PKContact+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9BA262806D2A5005B70C3 /* PKContact+Request.m */; };
@@ -285,7 +290,18 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				18DF1AFF29C3FB22007BF959 /* AirTracker.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18E0571129C9536D0099388A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				18E0571329C9536E0099388A /* RLTMXProfilingConnections.xcframework in Embed Frameworks */,
+				18E0571029C9536D0099388A /* RLTMXProfiling.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,7 +372,8 @@
 		18AC888229C4597E0028D66A /* AWXPageViewTrackable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXPageViewTrackable.h; sourceTree = "<group>"; };
 		18D18C79294222EC00E70DCD /* AWXDeviceTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXDeviceTest.m; sourceTree = "<group>"; };
 		18D18C7B294225BC00E70DCD /* AWXPaymentIntentRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentIntentRequestTest.m; sourceTree = "<group>"; };
-		18DF1AFC29C3FB0E007BF959 /* AirTracker.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = AirTracker.xcframework; sourceTree = "<group>"; };
+		18E056EE29C848010099388A /* AirTracker.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = AirTracker.xcframework; sourceTree = "<group>"; };
+		18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXRedirectActionProviderTests.m; sourceTree = "<group>"; };
 		18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardViewModelTests.m; sourceTree = "<group>"; };
 		3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXSession+Internal.h"; sourceTree = "<group>"; };
 		3C324F8F27FC09AD00CF7315 /* AWXSession+Internal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXSession+Internal.m"; sourceTree = "<group>"; };
@@ -543,7 +560,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18DF1AFE29C3FB22007BF959 /* AirTracker.xcframework in Frameworks */,
+				18E056EF29C848020099388A /* AirTracker.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +578,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C99E7A627EAF4890074156C /* Core.framework in Frameworks */,
+				18E0570F29C9536D0099388A /* RLTMXProfiling.xcframework in Frameworks */,
+				18E0571229C9536E0099388A /* RLTMXProfilingConnections.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -999,6 +1018,7 @@
 			children = (
 				5775CEBA26E5DF3300C6AFE3 /* Info.plist */,
 				1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */,
+				18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */,
 			);
 			path = RedirectTests;
 			sourceTree = "<group>";
@@ -1061,7 +1081,7 @@
 			isa = PBXGroup;
 			children = (
 				3C5A37DB27ED404700CFC2EF /* PassKit.framework */,
-				18DF1AFC29C3FB0E007BF959 /* AirTracker.xcframework */,
+				18E056EE29C848010099388A /* AirTracker.xcframework */,
 				3C455EB427E03B04009DB492 /* RLTMXProfiling.xcframework */,
 				3C455EB327E03B04009DB492 /* RLTMXProfilingConnections.xcframework */,
 				766C109E04EF1051D97CC9A3 /* Pods_ApplePayTests.framework */,
@@ -1254,6 +1274,7 @@
 				3C99E78327EAF1A10074156C /* Sources */,
 				3C99E78427EAF1A10074156C /* Frameworks */,
 				3C99E78527EAF1A10074156C /* Resources */,
+				18E0571129C9536D0099388A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1390,6 +1411,7 @@
 				5775CEAF26E5DF3300C6AFE3 /* Sources */,
 				5775CEB026E5DF3300C6AFE3 /* Frameworks */,
 				5775CEB126E5DF3300C6AFE3 /* Resources */,
+				06968C455E42D039D69BBB6B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1551,6 +1573,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		06968C455E42D039D69BBB6B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RedirectTests/Pods-RedirectTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RedirectTests/Pods-RedirectTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RedirectTests/Pods-RedirectTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1523374D7701B55547EE2211 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1883,6 +1922,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18E0571629C95FDB0099388A /* AWXProviderDelegateSpy.m in Sources */,
+				18E0571529C95A6A0099388A /* AWXRedirectActionProviderTests.m in Sources */,
 				1803601F2873D73A003EA943 /* AWXPaymentFormViewModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1902,7 +1943,6 @@
 		};
 		3C99E7A927EAF4890074156C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = 085BD3C723CC62B4002E8F27 /* Core */;
 			targetProxy = 3C99E7A827EAF4890074156C /* PBXContainerItemProxy */;
 		};

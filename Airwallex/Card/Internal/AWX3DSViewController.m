@@ -22,6 +22,18 @@
 
 @implementation AWX3DSViewController
 
+- (NSString *)pageName {
+    return @"webview_redirect";
+}
+
+- (NSDictionary<NSString *, id> *)additionalInfo {
+    NSMutableDictionary *info = [NSMutableDictionary new];
+    if (_stage.length > 0) {
+        [info setObject:_stage forKey:@"stage"];
+    }
+    return info;
+}
+
 - (instancetype)initWithHTMLString:(NSString *)HTMLString stage:(NSString *)stage webHandler:(AWXWebHandler)webHandler {
     if (self = [super initWithNibName:nil bundle:nil]) {
         _HTMLString = HTMLString;

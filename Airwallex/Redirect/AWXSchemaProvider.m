@@ -124,7 +124,7 @@
 - (void)renderFields:(BOOL)forceToDismiss {
     AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
-    controller.viewModel = [[AWXPaymentFormViewModel alloc] initWithSession:self.session];
+    controller.viewModel = [[AWXPaymentFormViewModel alloc] initWithSession:self.session paymentMethod:self.updatedPaymentMethod formMapping:self.fieldsMapping];
     controller.paymentMethod = self.updatedPaymentMethod;
     controller.formMapping = self.fieldsMapping;
     controller.modalPresentationStyle = UIModalPresentationOverCurrentContext;
@@ -167,7 +167,7 @@
 - (void)renderBanks {
     AWXPaymentFormViewController *controller = [[AWXPaymentFormViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
-    controller.viewModel = [[AWXPaymentFormViewModel alloc] initWithSession:self.session];
+    controller.viewModel = [[AWXPaymentFormViewModel alloc] initWithSession:self.session paymentMethod:self.updatedPaymentMethod formMapping:self.banksMapping];
     controller.paymentMethod = self.updatedPaymentMethod;
     controller.formMapping = self.banksMapping;
     controller.modalPresentationStyle = UIModalPresentationOverFullScreen;

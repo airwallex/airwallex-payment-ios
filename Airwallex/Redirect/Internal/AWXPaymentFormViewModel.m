@@ -11,10 +11,19 @@
 
 @implementation AWXPaymentFormViewModel
 
-- (instancetype)initWithSession:(AWXSession *)session {
+- (instancetype)initWithSession:(AWXSession *)session paymentMethod:(AWXPaymentMethod *)paymentMethod formMapping:(AWXFormMapping *)formMapping {
     self = [super init];
     if (self) {
         _session = session;
+        _pageName = @"payment_info_sheet";
+        NSMutableDictionary *info = [NSMutableDictionary new];
+        if (paymentMethod.type.length > 0) {
+            [info setObject:paymentMethod.type forKey:@"paymentMethod"];
+        }
+        if (formMapping.title.length > 0) {
+            [info setObject:formMapping.title forKey:@"formTitle"];
+        }
+        _additionalInfo = info;
     }
     return self;
 }

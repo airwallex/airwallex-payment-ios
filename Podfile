@@ -28,6 +28,7 @@ end
 
 target 'RedirectTests' do
   project './Airwallex/Airwallex.xcodeproj'
+  pod 'OCMock'
 end
 
 target 'Examples' do

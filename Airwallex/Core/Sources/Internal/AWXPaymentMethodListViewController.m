@@ -47,6 +47,10 @@
 
 @implementation AWXPaymentMethodListViewController
 
+- (NSString *)pageName {
+    return @"payment_method_list";
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];

@@ -8,7 +8,6 @@
 
 #import "AWXCardViewController.h"
 #import "AWXAPIClient.h"
-#import "AWXAnalyticsLogger.h"
 #import "AWXCard.h"
 #import "AWXCardProvider.h"
 #import "AWXCardViewModel.h"
@@ -66,7 +65,11 @@ typedef enum {
 } SwitchType;
 
 - (NSString *)pageName {
-    return @"card_payment_view";
+    return _viewModel.pageName;
+}
+
+- (NSDictionary<NSString *, id> *)additionalInfo {
+    return _viewModel.additionalInfo;
 }
 
 - (void)viewDidLoad {

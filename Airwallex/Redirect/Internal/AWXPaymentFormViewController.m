@@ -30,6 +30,14 @@
 
 @implementation AWXPaymentFormViewController
 
+- (NSString *)pageName {
+    return _viewModel.pageName;
+}
+
+- (NSDictionary<NSString *, id> *)additionalInfo {
+    return _viewModel.additionalInfo;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupViews];
