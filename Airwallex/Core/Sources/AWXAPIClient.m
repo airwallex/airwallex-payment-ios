@@ -111,6 +111,12 @@ static BOOL _analyticsEnabled = YES;
     return nil;
 }
 
+/**
+ - Note:
+ This event name is automatically retreived from the request class name based on the assumption that the naming follows `AWX****Request` convention,
+ e.g. `AWXGetPaymentMethodsRequest` corresponds to the event name `get_payment_methods`.
+ If we change the naming rules for these request classes, this method also needs to be updated.
+*/
 - (NSString *)eventName {
     NSString *requestName = NSStringFromClass([self class]);
     NSString *truncatedName = [[requestName stringByReplacingOccurrencesOfString:@"AWX" withString:@""] stringByReplacingOccurrencesOfString:@"Request" withString:@""];
