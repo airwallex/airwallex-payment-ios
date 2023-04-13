@@ -6,13 +6,14 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import "AWXPageViewTrackable.h"
 #import "AWXViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^AWXWebHandler)(NSString *_Nullable payload, NSError *_Nullable error);
 
-@interface AWX3DSViewController : AWXViewController
+@interface AWX3DSViewController : AWXViewController<AWXPageViewTrackable>
 
 - (instancetype)initWithHTMLString:(NSString *)HTMLString stage:(NSString *)stage webHandler:(AWXWebHandler)webHandler;
 

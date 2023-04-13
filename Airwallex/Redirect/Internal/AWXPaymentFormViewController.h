@@ -6,6 +6,7 @@
 //  Copyright © 2021 Airwallex. All rights reserved.
 //
 
+#import "AWXPageViewTrackable.h"
 #import "AWXPaymentMethod.h"
 #import "AWXViewController.h"
 
@@ -30,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXPaymentFormViewController` handles payment form.
  */
-@interface AWXPaymentFormViewController : AWXViewController
+@interface AWXPaymentFormViewController : AWXViewController<AWXPageViewTrackable>
 
 @property (nonatomic, strong) AWXPaymentFormViewModel *viewModel;
 

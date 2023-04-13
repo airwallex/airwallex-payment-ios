@@ -6,6 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
+#import "AWXPageViewTrackable.h"
 #import "AWXViewController.h"
 
 @class AWXCardViewModel;
@@ -15,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXCardViewController` provides a form to create card
  */
-@interface AWXCardViewController : AWXViewController
+@interface AWXCardViewController : AWXViewController<AWXPageViewTrackable>
 
 @property (nonatomic, strong) AWXCardViewModel *viewModel;
 

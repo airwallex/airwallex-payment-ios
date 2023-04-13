@@ -6,16 +6,15 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
+#import "AWXPageViewTrackable.h"
 #import "AWXViewController.h"
-
-@class AWXPaymentMethodListViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWXPaymentMethodListViewController` provides a list of payment method.
  */
-@interface AWXPaymentMethodListViewController : AWXViewController
+@interface AWXPaymentMethodListViewController : AWXViewController<AWXPageViewTrackable>
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

@@ -6,17 +6,11 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import "AWXCardProvider.h"
 #import "AWXCardScheme.h"
-#import <Foundation/Foundation.h>
-
-@class AWXCard;
-@class AWXSession;
-@class AWXAddress;
-@class AWXPlaceDetails;
-@class AWXCardProvider;
-@class AWXConfirmPaymentNextAction;
-@class AWXCountry;
-@class AWXDefaultActionProvider;
+#import "AWXCountry.h"
+#import "AWXDefaultActionProvider.h"
+#import "AWXUtils.h"
 
 @protocol AWXProviderDelegate;
 
@@ -24,12 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXCardViewModel : NSObject
 
+@property (nonatomic, copy, readonly) NSString *pageName;
+@property (nonatomic, copy, readonly) NSDictionary<NSString *, id> *additionalInfo;
 @property (nonatomic, readonly) BOOL isReusingShippingAsBillingInformation;
 @property (nonatomic, readonly) BOOL isBillingInformationRequired;
 @property (nonatomic, readonly) BOOL isCardSavingEnabled;
 @property (nonatomic, strong, readonly) AWXPlaceDetails *initialBilling;
 @property (nonatomic, strong) AWXCountry *selectedCountry;
-@property (nonatomic, copy, readonly) NSArray<AWXCardScheme *> *supportedCardSchemes;
 
 - (instancetype)initWithSession:(AWXSession *)session supportedCardSchemes:(NSArray<AWXCardScheme *> *_Nullable)cardSchemes;
 

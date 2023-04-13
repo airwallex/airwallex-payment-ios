@@ -8,6 +8,7 @@
 
 #import "AWXPaymentMethodListViewController.h"
 #import "AWXAPIClient.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXCardImageView.h"
 #import "AWXCardValidator.h"
 #import "AWXConstants.h"
@@ -46,6 +47,10 @@
 @end
 
 @implementation AWXPaymentMethodListViewController
+
+- (NSString *)pageName {
+    return @"payment_method_list";
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -299,12 +304,19 @@
             [provider confirmPaymentIntentWithPaymentMethod:paymentConsent.paymentMethod paymentConsent:paymentConsent device:nil];
             self.provider = provider;
         }
+        
+        if (paymentConsent.paymentMethod.type.length > 0) {
+            [[AWXAnalyticsLogger shared] logActionWithName:@"select_payment" additionalInfo:@{@"paymentMethod": paymentConsent.paymentMethod.type}];
+        }
         break;
     }
     case 1: {
         AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
-
         [self didSelectPaymentMethodType:paymentMethodType];
+
+        if (paymentMethodType.name.length > 0) {
+            [[AWXAnalyticsLogger shared] logActionWithName:@"select_payment" additionalInfo:@{@"paymentMethod": paymentMethodType.name}];
+        }
         break;
     }
     }

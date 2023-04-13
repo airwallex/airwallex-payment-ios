@@ -7,6 +7,7 @@
 //
 
 #import "AWXApplePayProvider.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXDefaultProvider+Security.h"
 #import "AWXOneOffSession+Request.h"
 #import "AWXPaymentIntentResponse.h"
@@ -29,6 +30,7 @@
 @interface AWXApplePayProviderTest : XCTestCase
 
 @property (nonatomic, strong) AWXDevice *device;
+@property (nonatomic, strong) id logger;
 
 @end
 
@@ -39,6 +41,10 @@
     AWXDevice *device = [AWXDevice new];
     device.deviceId = @"abcd";
     self.device = device;
+
+    id mockLogger = OCMClassMock([AWXAnalyticsLogger class]);
+    self.logger = mockLogger;
+    OCMStub([mockLogger shared]).andReturn(mockLogger);
 }
 
 - (void)testCanHandleSessionShouldReturnNOWithRecurringSession {
@@ -279,6 +285,8 @@
                                                     completion:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
 
     [provider handleFlow];
+
+    OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet"]);
 
     OCMVerify(times(1), [providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(id obj) {
                                          AWXPaymentMethod *method = (AWXPaymentMethod *)obj;

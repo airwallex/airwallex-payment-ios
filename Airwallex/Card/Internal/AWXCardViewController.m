@@ -8,6 +8,7 @@
 
 #import "AWXCardViewController.h"
 #import "AWXAPIClient.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXCard.h"
 #import "AWXCardProvider.h"
 #import "AWXCardViewModel.h"
@@ -64,8 +65,17 @@ typedef enum {
     SaveCardSwitch
 } SwitchType;
 
+- (NSString *)pageName {
+    return _viewModel.pageName;
+}
+
+- (NSDictionary<NSString *, id> *)additionalInfo {
+    return _viewModel.additionalInfo;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     [self enableTapToEndEditing];
 
@@ -334,6 +344,10 @@ typedef enum {
     } else {
         [_warningView removeFromSuperview];
     }
+
+    if (_saveCard) {
+        [[AWXAnalyticsLogger shared] logActionWithName:@"save_card"];
+    }
 }
 
 - (void)addUnionPayWarningViewIfNecessary {
@@ -364,6 +378,7 @@ typedef enum {
     }
 
     [self setBillingInputHidden:self.viewModel.isReusingShippingAsBillingInformation];
+    [[AWXAnalyticsLogger shared] logActionWithName:@"toggle_billing_address"];
 }
 
 - (void)selectCountries:(id)sender {
@@ -375,6 +390,8 @@ typedef enum {
 }
 
 - (void)confirmPayment:(id)sender {
+    [[AWXAnalyticsLogger shared] logActionWithName:@"tap_pay_button"];
+
     NSString *error;
     AWXCardProvider *provider = [self.viewModel preparedProviderWithDelegate:self];
     BOOL isPaymentProcessing = [self.viewModel confirmPaymentWithProvider:provider
@@ -386,10 +403,12 @@ typedef enum {
     if (isPaymentProcessing) {
         self.provider = provider;
     } else {
-        if (error) {
+        if (error.length > 0) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:controller animated:YES completion:nil];
+
+            [[AWXAnalyticsLogger shared] logActionWithName:@"card_payment_validation" additionalInfo:@{@"message": error}];
         }
     }
 }

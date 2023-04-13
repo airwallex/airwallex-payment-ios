@@ -7,6 +7,7 @@
 //
 
 #import "AWX3DSViewController.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXConstants.h"
 #import "AWXUtils.h"
 #import <WebKit/WebKit.h>
@@ -21,6 +22,18 @@
 @end
 
 @implementation AWX3DSViewController
+
+- (NSString *)pageName {
+    return @"webview_redirect";
+}
+
+- (NSDictionary<NSString *, id> *)additionalInfo {
+    NSMutableDictionary *info = [NSMutableDictionary new];
+    if (_stage.length > 0) {
+        [info setObject:_stage forKey:@"stage"];
+    }
+    return info;
+}
 
 - (instancetype)initWithHTMLString:(NSString *)HTMLString stage:(NSString *)stage webHandler:(AWXWebHandler)webHandler {
     if (self = [super initWithNibName:nil bundle:nil]) {
@@ -102,6 +115,8 @@
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+    [[AWXAnalyticsLogger shared] logError:error withEventName:@"webview_redirect"];
+
     if (error.code == 102) {
         return;
     }
@@ -117,6 +132,8 @@
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    [[AWXAnalyticsLogger shared] logError:error withEventName:@"webview_redirect"];
+
     if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
         self.webHandler(nil, error);
     } else {

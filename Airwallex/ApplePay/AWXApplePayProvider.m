@@ -7,6 +7,7 @@
 //
 
 #import "AWXApplePayProvider.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXConstants.h"
 #import "AWXDefaultProvider+Security.h"
 #import "AWXOneOffSession+Request.h"
@@ -147,7 +148,10 @@
                                                  code:-1
                                              userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present PKPaymentAuthorizationController.", nil)}];
             [[strongSelf delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+            return;
         }
+
+        [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet"];
     }];
 }
 

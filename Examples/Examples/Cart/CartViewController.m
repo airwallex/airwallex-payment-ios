@@ -44,7 +44,7 @@
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
     self.titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
 
-    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium];
     self.activityIndicator.hidesWhenStopped = YES;
     self.activityIndicator.hidden = YES;
     [self.view addSubview:self.activityIndicator];
@@ -87,6 +87,9 @@
     // Or set base URL directly
     AirwallexSDKMode mode = [AirwallexExamplesKeys shared].environment;
     [Airwallex setMode:mode];
+
+    // You can disable sending Analytics data
+    //    [Airwallex disableAnalytics];
 
     // Theme customization
     //    UIColor *tintColor = [UIColor systemPinkColor];

@@ -310,6 +310,14 @@
     XCTAssertEqualObjects([viewModel validationMessageFromCardNumber:@"55"], @"Card number is invalid");
 }
 
+- (void)testPageViewTracking {
+    AWXCardViewModel *viewModel = [self mockOneOffViewModelWithCardSchemes];
+    NSDictionary *dict = @{@"supportedSchemes": @[@"visa", @"mastercard", @"unionpay", @"jcb"]};
+
+    XCTAssertEqualObjects(viewModel.pageName, @"card_payment_view");
+    XCTAssertEqualObjects(viewModel.additionalInfo, dict);
+}
+
 - (AWXCardViewModel *)mockOneOffViewModel {
     AWXOneOffSession *session = [AWXOneOffSession new];
     return [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];

@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSDictionary *)convertToDictionary;
 - (NSString *)stringByRemovingIllegalCharacters;
+- (NSString *)stringByInsertingBetweenWordsWithString:(NSString *)separator;
 
 @end
 

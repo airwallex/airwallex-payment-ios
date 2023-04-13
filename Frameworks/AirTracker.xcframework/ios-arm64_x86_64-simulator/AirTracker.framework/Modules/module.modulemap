@@ -1,0 +1,11 @@
+framework module AirTracker {
+  umbrella header "AirTracker.h"
+
+  export *
+  module * { export * }
+}
+
+module AirTracker.Swift {
+  header "AirTracker-Swift.h"
+  requires objc
+}

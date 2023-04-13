@@ -1,0 +1,37 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target x86_64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AirTracker
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+@_exported import AirTracker
+import Foundation
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+@_hasMissingDesignatedInitializers @objc public class Tracker : ObjectiveC.NSObject {
+  @objc public var extraCommonData: [Swift.String : Any] {
+    @objc get
+    @objc set
+  }
+  @objc convenience public init(config: AirTracker.Config)
+  @objc public func info(eventName: Swift.String, extraInfo: [Swift.String : Any])
+  @objc public func error(eventName: Swift.String, extraInfo: [Swift.String : Any])
+  @objc deinit
+}
+@objc public class Config : ObjectiveC.NSObject {
+  @objc public init(appName: Swift.String, appVersion: Swift.String?, environment: AirTracker.Environment)
+  @objc deinit
+}
+@objc public enum Environment : Swift.Int {
+  case staging
+  case demo
+  case prod
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension AirTracker.Environment : Swift.Equatable {}
+extension AirTracker.Environment : Swift.Hashable {}
+extension AirTracker.Environment : Swift.RawRepresentable {}

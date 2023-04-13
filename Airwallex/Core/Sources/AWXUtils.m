@@ -76,6 +76,21 @@ static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
     return [components componentsJoinedByString:@""];
 }
 
+- (NSString *)stringByInsertingBetweenWordsWithString:(NSString *)separator {
+    int index = 1;
+    NSMutableString *mutableInputString = self.mutableCopy;
+
+    while (index < mutableInputString.length) {
+        if ([[NSCharacterSet uppercaseLetterCharacterSet] characterIsMember:[mutableInputString characterAtIndex:index]]) {
+            [mutableInputString insertString:separator atIndex:index];
+            index++;
+        }
+        index++;
+    }
+
+    return mutableInputString;
+}
+
 @end
 
 @implementation NSLocale (Utils)

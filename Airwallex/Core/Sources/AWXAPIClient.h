@@ -44,6 +44,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (AirwallexSDKMode)mode;
 
+/**
+ Disable analytics.
+ */
++ (void)disableAnalytics;
+
+/**
+ Get whether analytics is enabled, by default it's turned on.
+ */
++ (BOOL)analyticsEnabled;
+
 @end
 
 /**

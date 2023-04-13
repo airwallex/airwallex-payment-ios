@@ -8,15 +8,14 @@
 
 #import "AWXCardViewModel.h"
 #import "AWXCard.h"
-#import "AWXCardProvider.h"
 #import "AWXCardValidator.h"
-#import "AWXCountry.h"
 #import "AWXSession.h"
 
 @interface AWXCardViewModel ()
 
 @property (nonatomic, readwrite) BOOL isReusingShippingAsBillingInformation;
 @property (nonatomic, strong, nonnull) AWXSession *session;
+@property (nonatomic, copy, readonly) NSArray<AWXCardScheme *> *supportedCardSchemes;
 
 @end
 
@@ -31,6 +30,17 @@
         _supportedCardSchemes = cardSchemes;
     }
     return self;
+}
+
+- (NSString *)pageName {
+    return @"card_payment_view";
+}
+
+- (NSDictionary<NSString *, id> *)additionalInfo {
+    NSArray<NSString *> *supportedSchemes = [_supportedCardSchemes mapObjectsUsingBlock:^(AWXCardScheme *_Nonnull cardScheme, NSUInteger idx) {
+        return cardScheme.name;
+    }];
+    return @{@"supportedSchemes": supportedSchemes};
 }
 
 - (BOOL)isBillingInformationRequired {

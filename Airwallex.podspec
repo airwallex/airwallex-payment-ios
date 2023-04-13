@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.authors                 = { 'Airwallex' => 'pa_mobile_sdk@airwallex.com' }
   s.source                  = { :git => "https://github.com/airwallex/airwallex-payment-ios.git", :tag => "#{s.version}" }
   s.platform                = :ios
-  s.ios.deployment_target   = '11.0'
+  s.ios.deployment_target   = '13.0'
   s.static_framework        = true
   s.default_subspecs        = 'Core', 'WeChatPay', 'Card', 'Redirect', 'ApplePay'
   
@@ -15,13 +15,14 @@ Pod::Spec.new do |s|
     plugin.dependency 'Airwallex/Core'
     plugin.source_files = 'Airwallex/Security/*.{h,m}'
     plugin.public_header_files = 'Airwallex/Security/*.h'
-    plugin.vendored_frameworks = 'TrustDefender/*.xcframework'
+    plugin.vendored_frameworks = 'Frameworks/RLTMXProfiling.xcframework', 'Frameworks/RLTMXProfilingConnections.xcframework'
   end
   
   s.subspec 'Core' do |plugin|
     plugin.source_files = 'Airwallex/Core/Sources/**/*.{h,m}'
     plugin.public_header_files = 'Airwallex/Core/Sources/*.h'
     plugin.resources = ['Airwallex/Core/Resources/AirwallexCore.bundle']
+    plugin.vendored_frameworks = 'Frameworks/AirTracker.xcframework'
   end
   
   s.subspec 'WeChatPay' do |plugin|

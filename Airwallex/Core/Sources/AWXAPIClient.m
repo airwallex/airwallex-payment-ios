@@ -7,7 +7,9 @@
 //
 
 #import "AWXAPIClient.h"
+#import "AWXAPIErrorResponse+Update.h"
 #import "AWXAPIResponse.h"
+#import "AWXAnalyticsLogger.h"
 #import "AWXLogger.h"
 #import "AWXUtils.h"
 
@@ -20,6 +22,8 @@ static NSString *const AWXAPIProductionBaseURL = @"https://api.airwallex.com/";
 static NSURL *_defaultBaseURL;
 
 static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
+
+static BOOL _analyticsEnabled = YES;
 
 + (void)setDefaultBaseURL:(NSURL *)baseURL {
     _defaultBaseURL = [baseURL URLByAppendingPathComponent:@""];
@@ -46,6 +50,14 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 
 + (AirwallexSDKMode)mode {
     return _mode;
+}
+
++ (void)disableAnalytics {
+    _analyticsEnabled = NO;
+}
+
++ (BOOL)analyticsEnabled {
+    return _analyticsEnabled;
 }
 
 @end
@@ -97,6 +109,18 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 - (Class)responseClass {
     [[AWXLogger sharedLogger] logEvent:NSLocalizedString(@"responseClass is not overridden, but is not required", nil)];
     return nil;
+}
+
+/**
+ - Note:
+ This event name is automatically retreived from the request class name based on the assumption that the naming follows `AWX****Request` convention,
+ e.g. `AWXGetPaymentMethodsRequest` corresponds to the event name `get_payment_methods`.
+ If we change the naming rules for these request classes, this method also needs to be updated.
+*/
+- (NSString *)eventName {
+    NSString *requestName = NSStringFromClass([self class]);
+    NSString *truncatedName = [[requestName stringByReplacingOccurrencesOfString:@"AWX" withString:@""] stringByReplacingOccurrencesOfString:@"Request" withString:@""];
+    return [[truncatedName stringByInsertingBetweenWordsWithString:@"_"] lowercaseString];
 }
 
 @end
@@ -183,6 +207,7 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
                                                                                  } else {
                                                                                      AWXAPIErrorResponse *errorResponse = [request.responseClass performSelector:@selector(parseError:) withObject:data];
                                                                                      if (errorResponse) {
+                                                                                         [[AWXAnalyticsLogger shared] logErrorWithName:[request eventName] url:urlRequest.URL response:[errorResponse updatedResponseWithStatusCode:result.statusCode Error:error]];
                                                                                          handler(nil, errorResponse.error);
                                                                                      } else {
                                                                                          handler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Couldn't parse response.", nil)}]);

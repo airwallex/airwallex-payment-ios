@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '11.0'
+platform :ios, '13.0'
 
 use_frameworks!
 inhibit_all_warnings!
@@ -28,6 +28,7 @@ end
 
 target 'RedirectTests' do
   project './Airwallex/Airwallex.xcodeproj'
+  pod 'OCMock'
 end
 
 target 'Examples' do
