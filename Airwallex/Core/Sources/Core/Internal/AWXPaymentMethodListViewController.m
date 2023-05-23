@@ -304,7 +304,7 @@
             [provider confirmPaymentIntentWithPaymentMethod:paymentConsent.paymentMethod paymentConsent:paymentConsent device:nil];
             self.provider = provider;
         }
-        
+
         if (paymentConsent.paymentMethod.type.length > 0) {
             [[AWXAnalyticsLogger shared] logActionWithName:@"select_payment" additionalInfo:@{@"paymentMethod": paymentConsent.paymentMethod.type}];
         }

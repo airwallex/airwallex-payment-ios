@@ -11,7 +11,7 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSession.h"
 #import "AWXWeChatPaySDKResponse.h"
-#import <WechatOpenSDK/WXApi.h>
+#import "WXApi.h"
 
 @implementation AWXWeChatPayActionProvider
 
