@@ -152,16 +152,20 @@
 }
 
 - (void)verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response {
-    AWXFormMapping *formMapping = [AWXFormMapping new];
-    formMapping.title = NSLocalizedString(@"Select your bank", @"Select your bank");
-    NSMutableArray *forms = [NSMutableArray array];
-    for (AWXBank *bank in response.items) {
-        [forms addObject:[AWXForm formWithKey:bank.name type:AWXFormTypeListCell title:bank.displayName logo:bank.resources.logoURL]];
-    }
-    formMapping.forms = forms;
-    self.banksMapping = formMapping;
+    if (response.items.count) {
+        AWXFormMapping *formMapping = [AWXFormMapping new];
+        formMapping.title = NSLocalizedString(@"Select your bank", @"Select your bank");
+        NSMutableArray *forms = [NSMutableArray array];
+        for (AWXBank *bank in response.items) {
+            [forms addObject:[AWXForm formWithKey:bank.name type:AWXFormTypeListCell title:bank.displayName logo:bank.resources.logoURL]];
+        }
+        formMapping.forms = forms;
+        self.banksMapping = formMapping;
 
-    [self renderBanks];
+        [self renderBanks];
+    } else {
+        [self renderFields:NO];
+    }
 }
 
 - (void)renderBanks {

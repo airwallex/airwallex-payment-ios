@@ -55,6 +55,7 @@
 		186277D529E797320002892A /* AWXDefaultProvider+Security.m in Sources */ = {isa = PBXBuildFile; fileRef = 189E3AE429865AE100F3037F /* AWXDefaultProvider+Security.m */; };
 		186277D729E7C0530002892A /* AirTracker.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186277D629E7C0530002892A /* AirTracker.xcframework */; };
 		186277D829E7C0530002892A /* AirTracker.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 186277D629E7C0530002892A /* AirTracker.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		186277DB2A381A240002892A /* AWXSchemaProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 186277DA2A381A240002892A /* AWXSchemaProviderTests.m */; };
 		187AFA6928B522C000561EEB /* AWXPaymentConsentRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */; };
 		189E3AF329875BEC00F3037F /* AWXSecurityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF9C26E5F8CC00C6AFE3 /* AWXSecurityService.m */; };
 		189E3AFA29875E2D00F3037F /* AWXSecurityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF9C26E5F8CC00C6AFE3 /* AWXSecurityService.m */; };
@@ -378,6 +379,7 @@
 		186277CA29E78F840002892A /* RLTMXProfilingConnections.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfilingConnections.xcframework; path = ../Frameworks/RLTMXProfilingConnections.xcframework; sourceTree = "<group>"; };
 		186277CB29E78F840002892A /* RLTMXProfiling.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfiling.xcframework; path = ../Frameworks/RLTMXProfiling.xcframework; sourceTree = "<group>"; };
 		186277D629E7C0530002892A /* AirTracker.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AirTracker.xcframework; path = ../Frameworks/AirTracker.xcframework; sourceTree = "<group>"; };
+		186277DA2A381A240002892A /* AWXSchemaProviderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXSchemaProviderTests.m; sourceTree = "<group>"; };
 		187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentConsentRequestTest.m; sourceTree = "<group>"; };
 		189E3AE329865AE100F3037F /* AWXDefaultProvider+Security.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXDefaultProvider+Security.h"; sourceTree = "<group>"; };
 		189E3AE429865AE100F3037F /* AWXDefaultProvider+Security.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXDefaultProvider+Security.m"; sourceTree = "<group>"; };
@@ -1037,6 +1039,7 @@
 				5775CEBA26E5DF3300C6AFE3 /* Info.plist */,
 				1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */,
 				18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */,
+				186277DA2A381A240002892A /* AWXSchemaProviderTests.m */,
 			);
 			path = RedirectTests;
 			sourceTree = "<group>";
@@ -1948,6 +1951,7 @@
 			files = (
 				18E0571629C95FDB0099388A /* AWXProviderDelegateSpy.m in Sources */,
 				18E0571529C95A6A0099388A /* AWXRedirectActionProviderTests.m in Sources */,
+				186277DB2A381A240002892A /* AWXSchemaProviderTests.m in Sources */,
 				1803601F2873D73A003EA943 /* AWXPaymentFormViewModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
