@@ -16,4 +16,9 @@
     return cardScheme;
 }
 
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
+}
+
 @end

@@ -44,6 +44,11 @@
     return method;
 }
 
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
+}
+
 - (void)appendAdditionalParams:(NSDictionary *)params {
     if (self.additionalParams) {
         NSMutableDictionary *dictionary = [self.additionalParams mutableCopy];
@@ -70,6 +75,11 @@
     return resources;
 }
 
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
+}
+
 @end
 
 @implementation AWXPaymentMethodType
@@ -94,6 +104,11 @@
     return method;
 }
 
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
+}
+
 - (BOOL)hasSchema {
     return self.resources.hasSchema;
 }
@@ -107,6 +122,11 @@
     candidate.displayName = json[@"display_name"];
     candidate.value = json[@"value"];
     return candidate;
+}
+
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
 }
 
 @end
@@ -131,6 +151,11 @@
     return field;
 }
 
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
+}
+
 @end
 
 @implementation AWXSchema
@@ -151,6 +176,11 @@
     return schema;
 }
 
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
+}
+
 @end
 
 @implementation AWXBank
@@ -161,6 +191,11 @@
     bank.displayName = json[@"display_name"];
     bank.resources = [AWXResources decodeFromJSON:json[@"resources"]];
     return bank;
+}
+
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
 }
 
 @end

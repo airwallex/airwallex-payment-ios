@@ -13,13 +13,14 @@
 
 @protocol AWXJSONDecodable<NSObject>
 
-+ (id)decodeFromJSON:(NSDictionary *)json;
++ (nullable instancetype)decodeFromJSON:(nonnull NSDictionary *)json;
++ (nullable instancetype)decodeFromJSONData:(nonnull NSData *)data;
 
 @end
 
 @protocol AWXJSONEncodable<NSObject>
 
-- (NSDictionary *)encodeToJSON;
+- (nonnull NSDictionary *)encodeToJSON;
 
 @end
 

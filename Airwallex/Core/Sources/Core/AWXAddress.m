@@ -10,6 +10,21 @@
 
 @implementation AWXAddress
 
+- (instancetype)initWithStreet:(NSString *)street
+                          city:(NSString *)city
+                         state:(NSString *)state
+                      postcode:(NSString *)postcode
+                   countryCode:(NSString *)countryCode {
+    if (self = [super init]) {
+        self.street = street;
+        self.city = city;
+        self.state = state;
+        self.postcode = postcode;
+        self.countryCode = countryCode;
+    }
+    return self;
+}
+
 - (NSDictionary *)encodeToJSON {
     return @{
         @"country_code": self.countryCode,
@@ -28,6 +43,11 @@
     address.state = json[@"state"];
     address.postcode = json[@"postcode"];
     return address;
+}
+
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone {

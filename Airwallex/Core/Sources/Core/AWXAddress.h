@@ -41,6 +41,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy, nullable) NSString *postcode;
 
+- (instancetype)initWithStreet:(nonnull NSString *)street
+                          city:(nonnull NSString *)city
+                         state:(nonnull NSString *)state
+                      postcode:(nonnull NSString *)postcode
+                   countryCode:(nonnull NSString *)countryCode;
+
 @end
 
 NS_ASSUME_NONNULL_END

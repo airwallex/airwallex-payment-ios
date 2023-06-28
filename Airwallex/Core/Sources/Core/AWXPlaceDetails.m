@@ -10,6 +10,23 @@
 
 @implementation AWXPlaceDetails
 
+- (instancetype)initWithFirstName:(nonnull NSString *)firstName
+                         lastName:(nonnull NSString *)lastName
+                            email:(nullable NSString *)email
+                      dateOfBirth:(nullable NSString *)dateOfBirth
+                      phoneNumber:(nullable NSString *)phoneNumber
+                          address:(nullable AWXAddress *)address {
+    if (self = [super init]) {
+        self.firstName = firstName;
+        self.lastName = lastName;
+        self.email = email;
+        self.dateOfBirth = dateOfBirth;
+        self.phoneNumber = phoneNumber;
+        self.address = address;
+    }
+    return self;
+}
+
 - (NSDictionary *)encodeToJSON {
     NSMutableDictionary *json = [@{
         @"first_name": self.firstName,
@@ -35,6 +52,11 @@
     billing.phoneNumber = json[@"phone_number"];
     billing.address = [AWXAddress decodeFromJSON:json[@"address"]];
     return billing;
+}
+
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone {

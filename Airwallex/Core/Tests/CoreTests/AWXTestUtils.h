@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXTestUtils : NSObject
 
++ (nullable NSData *)dataFromJsonFile:(NSString *)filename;
 + (NSDictionary *)jsonNamed:(NSString *)name;
 
 @end

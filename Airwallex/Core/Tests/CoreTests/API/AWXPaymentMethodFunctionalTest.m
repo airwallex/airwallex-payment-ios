@@ -51,7 +51,7 @@
     request.requestId = NSUUID.UUID.UUIDString;
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
     paymentMethod.type = AWXCardKey;
-    paymentMethod.billing = [AWXPlaceDetails decodeFromJSON:[AWXTestUtils jsonNamed:@"Billing"]];
+    paymentMethod.billing = [AWXPlaceDetails decodeFromJSONData:[AWXTestUtils dataFromJsonFile:@"Billing"]];
     paymentMethod.card = [AWXCard decodeFromJSON:@{
         @"number": @"4012000300001010",
         @"cvc": @"123",

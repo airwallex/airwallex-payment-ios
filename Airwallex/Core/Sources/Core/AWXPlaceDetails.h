@@ -47,6 +47,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy) AWXAddress *address;
 
+- (instancetype)initWithFirstName:(nonnull NSString *)firstName
+                         lastName:(nonnull NSString *)lastName
+                            email:(nullable NSString *)email
+                      dateOfBirth:(nullable NSString *)dateOfBirth
+                      phoneNumber:(nullable NSString *)phoneNumber
+                          address:(nullable AWXAddress *)address;
+
 @end
 
 @interface AWXPlaceDetails (Utils)

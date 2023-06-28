@@ -17,7 +17,9 @@
 @implementation AWXPaymentMethodTest
 
 - (void)testPaymentMethod {
-    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod decodeFromJSON:[AWXTestUtils jsonNamed:@"PaymentMethod"]];
+    NSData *data = [AWXTestUtils dataFromJsonFile:@"PaymentMethod"];
+    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod decodeFromJSONData:data];
+
     XCTAssertNotNil(paymentMethod);
     XCTAssertNotNil(paymentMethod.Id);
     XCTAssertNotNil(paymentMethod.type);
@@ -26,7 +28,9 @@
 }
 
 - (void)testPaymentMethodType {
-    AWXPaymentMethodType *paymentMethodType = [AWXPaymentMethodType decodeFromJSON:[AWXTestUtils jsonNamed:@"PaymentMethodType"]];
+    NSData *data = [AWXTestUtils dataFromJsonFile:@"PaymentMethodType"];
+    AWXPaymentMethodType *paymentMethodType = [AWXPaymentMethodType decodeFromJSONData:data];
+
     XCTAssertEqualObjects(paymentMethodType.name, @"card");
     XCTAssertEqualObjects(paymentMethodType.displayName, @"Card");
     XCTAssertEqualObjects(paymentMethodType.transactionMode, @"oneoff");

@@ -35,7 +35,7 @@ Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松
 <!--te-->
 
 ## 要求
-Airwallex iOS SDK 支持 iOS 11.0 及以上版本。
+Airwallex iOS SDK 支持 iOS 13.0 及以上版本。
 
 ## 整合
 
@@ -260,7 +260,7 @@ options.totalPriceLabel = @"COMPANY, INC.";
 - Visa
 - MasterCard
 - ChinaUnionPay
-- Maestro (iOS 12+)
+- Maestro
 
 用户在 Apple Pay 的过程中只能选择这几种支付系统的卡片进行付款。
 
