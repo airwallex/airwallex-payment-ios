@@ -1,0 +1,8 @@
+{
+  "api_key": "a2b06c2002b75bd37c1aa3a974c99688e4ca4e7f88cb917cad51663c5f7c9bab9c47fff0612cf755e0f3fdc9cd0b7876",
+  "client_id": "KyYQCONmSOW7HjAsIQ8WzQ",
+  "amount": "3",
+  "currency": "EUR",
+  "country_code": "GB",
+  "return_url": "airwallexcheckout://com.airwallex.paymentacceptance"
+}

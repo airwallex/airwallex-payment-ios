@@ -1,0 +1,15 @@
+{
+    "images": [
+        {
+            "idiom": "universal",
+            "filename": "glyph_chevron_right.svg"
+        }
+    ],
+    "info": {
+        "version": 1,
+        "author": "Bot"
+    },
+    "properties": {
+        "template-rendering-intent": "template"
+    }
+}

@@ -30,7 +30,8 @@
 }
 
 - (void)testOneOffSession {
-    AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSON:[AWXTestUtils jsonNamed:@"Billing"]];
+    NSData *data = [AWXTestUtils dataFromJsonFile:@"Billing"];
+    AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSONData:data];
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.billing = billing;
     session.returnURL = @"airwallex://";
@@ -44,7 +45,8 @@
 }
 
 - (void)testRecurringSession {
-    AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSON:[AWXTestUtils jsonNamed:@"Billing"]];
+    NSData *data = [AWXTestUtils dataFromJsonFile:@"Billing"];
+    AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSONData:data];
     AWXRecurringSession *session = [AWXRecurringSession new];
     session.billing = billing;
     session.returnURL = @"airwallex://";
@@ -62,7 +64,8 @@
 }
 
 - (void)testRecurringWithIntentSession {
-    AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSON:[AWXTestUtils jsonNamed:@"Billing"]];
+    NSData *data = [AWXTestUtils dataFromJsonFile:@"Billing"];
+    AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSONData:data];
     AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
     session.billing = billing;
     session.returnURL = @"airwallex://";

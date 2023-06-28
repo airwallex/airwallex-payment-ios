@@ -17,7 +17,9 @@
 @implementation AWXCardTest
 
 - (void)testCard {
-    AWXCard *card = [AWXCard decodeFromJSON:[AWXTestUtils jsonNamed:@"Card"]];
+    NSData *data = [AWXTestUtils dataFromJsonFile:@"Card"];
+    AWXCard *card = [AWXCard decodeFromJSONData:data];
+
     XCTAssertNotNil(card);
     XCTAssertNotNil(card.expiryYear);
     XCTAssertNotNil(card.expiryMonth);

@@ -17,7 +17,9 @@
 @implementation AWXAddressTest
 
 - (void)testAddress {
-    AWXAddress *address = [AWXAddress decodeFromJSON:[AWXTestUtils jsonNamed:@"Address"]];
+    NSData *data = [AWXTestUtils dataFromJsonFile:@"Address"];
+    AWXAddress *address = [AWXAddress decodeFromJSONData:data];
+
     XCTAssertNotNil(address);
     XCTAssertNotNil(address.countryCode);
     XCTAssertNotNil(address.state);

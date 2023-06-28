@@ -36,7 +36,7 @@ Table of contents
 <!--te-->
 
 ## Requirements
-The Airwallex iOS SDK supports iOS 11.0 and above.
+The Airwallex iOS SDK supports iOS 13.0 and above.
 
 ## Integration
 
@@ -66,7 +66,7 @@ pod install
 
 ### Swift
 
-Even though `Airwallex` is written in Objective-C, it can be used in Swift with no hassle. If you use [CocoaPods](https://cocoapods.org/),  add the following line to your [Podfile](https://guides.cocoapods.org/using/using-cocoapods.html):
+Even though `Airwallex` is written in Objective-C, it can be used in Swift. If you use [CocoaPods](https://cocoapods.org/),  add the following line to your [Podfile](https://guides.cocoapods.org/using/using-cocoapods.html):
 
 ```ruby
 use_frameworks!
@@ -262,7 +262,7 @@ Be aware that we currently support the following payment networks for Apple Pay:
 - Visa
 - MasterCard
 - ChinaUnionPay
-- Maestro (iOS 12+)
+- Maestro
 
 Customers will only be able to select the cards of the above payment networks during Apple Pay.
 
@@ -300,12 +300,14 @@ pod install
 
 - Update key file (Optional)
 
-In the `Examples/Keys` folder, edit `Keys_sample.json` with proper keys and then rename it to `Keys.json`.
+If using the Objective-C sample, in the `Examples/Keys` folder, edit `Keys_sample.json` with proper keys and then rename it to `Keys.json`.
 
-- Build and run `Examples` schema
+If using the Swift sample, edit `Keys.plist` and provide your keys. 
+
+- Build and run `Examples` or `ExamplesSwift` schema
 
 If you didn't update the key file, you can use the in-app setting screen to update the keys.
-Make sure to tap `Generate customer` button first before continuing with checkouts.
+Make sure to tap `Generate customer` button (Objective-C sample only - the Swift sample handles this automatically) first before continuing with checkout.
 
 ## Contributing
 

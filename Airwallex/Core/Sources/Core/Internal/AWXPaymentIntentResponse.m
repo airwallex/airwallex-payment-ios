@@ -69,6 +69,11 @@
     return response;
 }
 
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
+}
+
 @end
 
 @interface AWXPaymentAttempt ()
@@ -106,6 +111,11 @@
     return response;
 }
 
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
+}
+
 @end
 
 @interface AWXAuthenticationData ()
@@ -137,6 +147,11 @@
         authenticationData.version = dsData[@"version"];
     }
     return authenticationData;
+}
+
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
 }
 
 @end

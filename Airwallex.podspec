@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Core' do |plugin|
     plugin.source_files = 'Airwallex/Core/Sources/**/*.{h,m}'
-    plugin.public_header_files = 'Airwallex/Core/Sources/*.h'
+    plugin.public_header_files = 'Airwallex/Core/Sources/**/*.h'
     plugin.resources = ['Airwallex/Core/Sources/Resources/AirwallexCore.bundle']
     plugin.vendored_frameworks = 'Frameworks/AirTracker.xcframework'
   end

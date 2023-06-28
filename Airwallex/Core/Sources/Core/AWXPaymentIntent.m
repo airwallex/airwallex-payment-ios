@@ -12,7 +12,7 @@
 
 @implementation AWXPaymentIntent
 
-+ (id)decodeFromJSON:(NSDictionary *)json {
++ (instancetype)decodeFromJSON:(NSDictionary *)json {
     AWXPaymentIntent *intent = [AWXPaymentIntent new];
     intent.Id = json[@"id"];
     NSNumber *amount = json[@"amount"];
@@ -43,6 +43,11 @@
     }
     intent.paymentConsents = paymentConsents;
     return intent;
+}
+
++ (instancetype)decodeFromJSONData:(NSData *)data {
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    return [[self class] decodeFromJSON:json];
 }
 
 @end
