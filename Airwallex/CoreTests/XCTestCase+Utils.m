@@ -28,12 +28,12 @@
 }
 
 - (void)prepareEphemeralKeys:(void (^)(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error))completionHandler {
-    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://pci-api-demo.airwallex.com/"]];
+    [Airwallex setDefaultBaseURL:[NSURL URLWithString:@"https://api-staging.airwallex.com/"]];
 
     AWXTestAPIClient *client = [AWXTestAPIClient sharedClient];
-    client.paymentBaseURL = [NSURL URLWithString:@"https://pci-api-demo.airwallex.com/"];
-    client.apiKey = @"cac0021cd41faa9d9633bc686b8728f91a165fbae7a69ed6f7ffe3482190ae64daf7e9255742030456eac4b59db71902";
-    client.clientID = @"WZIU9G6yQpumYxP5tsTMLQ";
+    client.paymentBaseURL = [NSURL URLWithString:@"https://api-staging.airwallex.com/"];
+    client.apiKey = @"c502961dbb6460f3d0319007ef22a79cdd0b32f8a93642c7c0a458d6d0238ce359f8970ca3e238eae3d6f52bfc723a9c";
+    client.clientID = @"f2pyNO47QLGtE2ruB3w4pQ";
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get auth token"];
     [client createAuthenticationTokenWithCompletionHandler:^(NSError *_Nullable error) {
