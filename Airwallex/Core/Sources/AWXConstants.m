@@ -37,7 +37,7 @@ NSString *const AWXDCC = @"dcc";
 NSString *const AWXApplePayKey = @"applepay";
 
 NSArray *AWXCardSupportedBrands(void) {
-    return @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex), @(AWXBrandTypeUnionPay), @(AWXBrandTypeJCB)];
+    return @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex), @(AWXBrandTypeUnionPay), @(AWXBrandTypeJCB), @(AWXBrandTypeDinersClub), @(AWXBrandTypeDiscover)];
 };
 
 NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void) {

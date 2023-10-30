@@ -35,6 +35,10 @@
         return @"unionpay";
     case AWXBrandTypeJCB:
         return @"jcb";
+    case AWXBrandTypeDinersClub:
+        return @"diners";
+    case AWXBrandTypeDiscover:
+        return @"discover";
     default:
         return NULL;
     }

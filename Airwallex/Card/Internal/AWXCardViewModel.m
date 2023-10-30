@@ -247,6 +247,10 @@
         return AWXBrandTypeUnionPay;
     } else if ([cardName isEqualToString:@"jcb"]) {
         return AWXBrandTypeJCB;
+    } else if ([cardName isEqualToString:@"diners"]) {
+        return AWXBrandTypeDinersClub;
+    } else if ([cardName isEqualToString:@"discover"]) {
+        return AWXBrandTypeDiscover;
     } else {
         return AWXBrandTypeUnknown;
     }

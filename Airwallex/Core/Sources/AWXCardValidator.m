@@ -113,32 +113,77 @@
                            type:AWXBrandTypeAmex],
 
         // Diners Club
-        [AWXBrand brandWithName:@"Diners Club"
-                     rangeStart:@"30"
-                       rangeEnd:@"30"
+        [AWXBrand brandWithName:@"Diners"
+                     rangeStart:@"300"
+                       rangeEnd:@"305"
                          length:14
                            type:AWXBrandTypeDinersClub],
-        [AWXBrand brandWithName:@"Diners Club"
+        [AWXBrand brandWithName:@"Diners"
+                     rangeStart:@"300"
+                       rangeEnd:@"305"
+                         length:16
+                           type:AWXBrandTypeDinersClub],
+        [AWXBrand brandWithName:@"Diner"
+                     rangeStart:@"300"
+                       rangeEnd:@"305"
+                         length:19
+                           type:AWXBrandTypeDinersClub],
+        [AWXBrand brandWithName:@"Diners"
                      rangeStart:@"36"
                        rangeEnd:@"36"
                          length:14
                            type:AWXBrandTypeDinersClub],
-        [AWXBrand brandWithName:@"Diners Club"
+        [AWXBrand brandWithName:@"Diners"
+                     rangeStart:@"36"
+                       rangeEnd:@"36"
+                         length:16
+                           type:AWXBrandTypeDinersClub],
+        [AWXBrand brandWithName:@"Diners"
+                     rangeStart:@"36"
+                       rangeEnd:@"36"
+                         length:19
+                           type:AWXBrandTypeDinersClub],
+        [AWXBrand brandWithName:@"Diners"
                      rangeStart:@"38"
                        rangeEnd:@"39"
+                         length:14
+                           type:AWXBrandTypeDinersClub],
+        [AWXBrand brandWithName:@"Diners"
+                     rangeStart:@"38"
+                       rangeEnd:@"39"
+                         length:16
+                           type:AWXBrandTypeDinersClub],
+        [AWXBrand brandWithName:@"Diners"
+                     rangeStart:@"38"
+                       rangeEnd:@"39"
+                         length:19
+                           type:AWXBrandTypeDinersClub],
+        [AWXBrand brandWithName:@"Diners Club International"
+                     rangeStart:@"300"
+                       rangeEnd:@"305"
                          length:14
                            type:AWXBrandTypeDinersClub],
 
         // Discover
         [AWXBrand brandWithName:@"Discover"
-                     rangeStart:@"60"
-                       rangeEnd:@"60"
+                     rangeStart:@"6011"
+                       rangeEnd:@"6011"
                          length:16
                            type:AWXBrandTypeDiscover],
         [AWXBrand brandWithName:@"Discover"
-                     rangeStart:@"64"
+                     rangeStart:@"644"
                        rangeEnd:@"65"
                          length:16
+                           type:AWXBrandTypeDiscover],
+        [AWXBrand brandWithName:@"Discover"
+                     rangeStart:@"6011"
+                       rangeEnd:@"6011"
+                         length:19
+                           type:AWXBrandTypeDiscover],
+        [AWXBrand brandWithName:@"Discover"
+                     rangeStart:@"644"
+                       rangeEnd:@"65"
+                         length:19
                            type:AWXBrandTypeDiscover],
 
         // JCB
@@ -341,7 +386,7 @@
     case AWXBrandTypeAmex:
         return @[@4, @6, @5];
     case AWXBrandTypeDinersClub:
-        return @[@4, @6, @4];
+        return @[@4, @6, @9];
     default:
         return @[@4, @4, @4];
     }
