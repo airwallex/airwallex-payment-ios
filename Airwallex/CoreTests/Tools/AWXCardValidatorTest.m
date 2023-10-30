@@ -39,6 +39,8 @@
     XCTAssertEqualObjects([validator brandForCardNumber:@"348282246310005"].name, @"Amex");
     XCTAssertEqualObjects([validator brandForCardNumber:@"6228480088888888888"].name, @"UnionPay");
     XCTAssertEqualObjects([validator brandForCardNumber:@"3569599999097585"].name, @"JCB");
+    XCTAssertEqualObjects([validator brandForCardNumber:@"36438936438936"].name, @"Diners");
+    XCTAssertEqualObjects([validator brandForCardNumber:@"6011016011016011"].name, @"Discover");
 }
 
 - (void)testIsValidCardLength {
@@ -50,11 +52,14 @@
 - (void)testBrandForCardName {
     XCTAssertTrue([validator brandForCardName:@"american express"].type == AWXBrandTypeAmex);
     XCTAssertTrue([validator brandForCardName:@"amex"].type == AWXBrandTypeAmex);
+    XCTAssertTrue([validator brandForCardName:@"diners club international"].type == AWXBrandTypeDinersClub);
 }
 
 - (void)testMaxLengthForCardNumber {
     XCTAssertEqual([validator maxLengthForCardNumber:@"3569"], 16);
     XCTAssertEqual([validator maxLengthForCardNumber:@"622848"], 19);
+    XCTAssertEqual([validator maxLengthForCardNumber:@"6011"], 19);
+    XCTAssertEqual([validator maxLengthForCardNumber:@"3643"], 19);
 }
 
 @end

@@ -295,11 +295,14 @@
 
 - (void)testMakeDisplayedCardBrands {
     AWXCardViewModel *viewModel = [self mockOneOffViewModelWithCardSchemes];
-    XCTAssertEqual([viewModel makeDisplayedCardBrands].count, 4);
-    XCTAssertEqual([[viewModel makeDisplayedCardBrands][0] intValue], AWXBrandTypeVisa);
-    XCTAssertEqual([[viewModel makeDisplayedCardBrands][1] intValue], AWXBrandTypeMastercard);
-    XCTAssertEqual([[viewModel makeDisplayedCardBrands][2] intValue], AWXBrandTypeUnionPay);
-    XCTAssertEqual([[viewModel makeDisplayedCardBrands][3] intValue], AWXBrandTypeJCB);
+    NSArray *brands = [viewModel makeDisplayedCardBrands];
+    XCTAssertEqual(brands.count, 6);
+    XCTAssertEqual([brands[0] intValue], AWXBrandTypeVisa);
+    XCTAssertEqual([brands[1] intValue], AWXBrandTypeMastercard);
+    XCTAssertEqual([brands[2] intValue], AWXBrandTypeUnionPay);
+    XCTAssertEqual([brands[3] intValue], AWXBrandTypeJCB);
+    XCTAssertEqual([brands[4] intValue], AWXBrandTypeDinersClub);
+    XCTAssertEqual([brands[5] intValue], AWXBrandTypeDiscover);
 }
 
 - (void)testValidationMessageFromCardNumber {
@@ -312,7 +315,7 @@
 
 - (void)testPageViewTracking {
     AWXCardViewModel *viewModel = [self mockOneOffViewModelWithCardSchemes];
-    NSDictionary *dict = @{@"supportedSchemes": @[@"visa", @"mastercard", @"unionpay", @"jcb"]};
+    NSDictionary *dict = @{@"supportedSchemes": @[@"visa", @"mastercard", @"unionpay", @"jcb", @"diners", @"discover"]};
 
     XCTAssertEqualObjects(viewModel.pageName, @"card_payment_view");
     XCTAssertEqualObjects(viewModel.additionalInfo, dict);
@@ -330,7 +333,7 @@
 
 - (AWXCardViewModel *)mockOneOffViewModelWithCardSchemes {
     AWXOneOffSession *session = [AWXOneOffSession new];
-    NSArray *cardSchemes = [@[@"visa", @"mastercard", @"unionpay", @"jcb"] mapObjectsUsingBlock:^(NSString *_Nonnull name, NSUInteger idx) {
+    NSArray *cardSchemes = [@[@"visa", @"mastercard", @"unionpay", @"jcb", @"diners", @"discover"] mapObjectsUsingBlock:^(NSString *_Nonnull name, NSUInteger idx) {
         return [self cardSchemeWithName:name];
     }];
     return [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:cardSchemes];
