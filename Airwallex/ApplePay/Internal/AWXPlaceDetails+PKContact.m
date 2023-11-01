@@ -18,10 +18,13 @@
     nameComponents.familyName = self.lastName;
 
     CNMutablePostalAddress *address = [CNMutablePostalAddress new];
-    address.ISOCountryCode = self.address.countryCode;
     address.city = self.address.city;
     address.street = self.address.street;
 
+    if (self.address.countryCode) {
+        address.ISOCountryCode = self.address.countryCode;
+    }
+    
     if (self.address.state) {
         address.state = self.address.state;
     }

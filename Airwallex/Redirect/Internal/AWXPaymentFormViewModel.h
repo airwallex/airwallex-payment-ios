@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithSession:(AWXSession *)session paymentMethod:(AWXPaymentMethod *)paymentMethod formMapping:(AWXFormMapping *)formMapping;
 
-- (NSString *)phonePrefix;
+- (nullable NSString *)phonePrefix;
 
 @end
 

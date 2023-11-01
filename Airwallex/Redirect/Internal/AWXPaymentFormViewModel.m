@@ -28,19 +28,19 @@
     return self;
 }
 
-- (NSString *)phonePrefix {
+- (nullable NSString *)phonePrefix {
     return [self phonePrefixFromCountryCode] ?: [self phonePrefixFromCurrency];
 }
 
-- (NSString *)phonePrefixFromCountryCode {
+- (nullable NSString *)phonePrefixFromCountryCode {
     return [self loadConfigFile:@"CountryCodes"][_session.countryCode];
 }
 
-- (NSString *)phonePrefixFromCurrency {
+- (nullable NSString *)phonePrefixFromCurrency {
     return [self loadConfigFile:@"CurrencyCodes"][_session.currency];
 }
 
-- (NSDictionary *)loadConfigFile:(NSString *)filename {
+- (nullable NSDictionary *)loadConfigFile:(NSString *)filename {
     NSString *path = [[NSBundle resourceBundle] pathForResource:filename ofType:@"json"];
     if (path) {
         NSData *data = [NSData dataWithContentsOfFile:path];

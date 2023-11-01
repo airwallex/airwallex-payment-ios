@@ -43,10 +43,12 @@
     if (self) {
         _delegate = delegate;
         _session = session;
-        _paymentMethodType = paymentMethodType;
-        AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-        paymentMethod.type = paymentMethodType.name;
-        _paymentMethod = paymentMethod;
+        if (paymentMethodType) {
+            _paymentMethodType = paymentMethodType;
+            AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
+            paymentMethod.type = paymentMethodType.name;
+            _paymentMethod = paymentMethod;
+        }
     }
     return self;
 }

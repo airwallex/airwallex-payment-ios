@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Country code of the address. Use the two-character ISO Standard Country Codes.
  */
-@property (nonatomic, copy) NSString *countryCode;
+@property (nonatomic, copy, nullable) NSString *countryCode;
 
 /**
  City of the address.

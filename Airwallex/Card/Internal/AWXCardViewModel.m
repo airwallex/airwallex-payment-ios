@@ -157,7 +157,7 @@
     }
 }
 
-- (NSString *)validationMessageFromCardNumber:(NSString *)cardNumber {
+- (nullable NSString *)validationMessageFromCardNumber:(NSString *)cardNumber {
     if (cardNumber.length > 0) {
         if ([AWXCardValidator.sharedCardValidator isValidCardLength:cardNumber]) {
             NSString *cardName = [AWXCardValidator.sharedCardValidator brandForCardNumber:cardNumber].name;
@@ -182,9 +182,6 @@
 - (AWXDefaultActionProvider *)actionProviderForNextAction:(AWXConfirmPaymentNextAction *)nextAction
                                              withDelegate:(id<AWXProviderDelegate> _Nullable)delegate {
     Class class = ClassToHandleNextActionForType(nextAction);
-    if (class == nil) {
-        return nil;
-    }
 
     AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:delegate session:self.session];
     return actionProvider;
