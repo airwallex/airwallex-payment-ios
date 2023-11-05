@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) BOOL isBillingInformationRequired;
 @property (nonatomic, readonly) BOOL isCardSavingEnabled;
 @property (nonatomic, strong, readonly) AWXPlaceDetails *initialBilling;
-@property (nonatomic, strong) AWXCountry *selectedCountry;
+@property (nonatomic, strong, nullable) AWXCountry *selectedCountry;
 
 - (instancetype)initWithSession:(AWXSession *)session supportedCardSchemes:(NSArray<AWXCardScheme *> *_Nullable)cardSchemes;
 
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)makeDisplayedCardBrands;
 
-- (NSString *)validationMessageFromCardNumber:(NSString *)cardNumber;
+- (nullable NSString *)validationMessageFromCardNumber:(NSString *)cardNumber;
 
 #pragma mark Payment
 

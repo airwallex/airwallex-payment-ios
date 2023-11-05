@@ -22,7 +22,7 @@ Can make it more explicit when we switch to Swift.
 
 @property (nonatomic, strong) NSString *floatingText;
 
-@property (nonatomic, copy) NSString * (^validationMessageCallback)(NSString *);
+@property (nonatomic, copy, nullable) NSString * (^validationMessageCallback)(NSString *);
 
 @property (nonatomic, copy) void (^brandUpdateCallback)(AWXBrandType);
 

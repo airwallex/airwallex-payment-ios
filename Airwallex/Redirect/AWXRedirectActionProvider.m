@@ -17,17 +17,19 @@
     [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
 
     NSURL *url = [NSURL URLWithString:nextAction.url];
-    [[UIApplication sharedApplication] openURL:url
-                                       options:@{}
-                             completionHandler:^(BOOL success) {
-                                 if (url.absoluteString.length > 0) {
-                                     if (success) {
-                                         [[AWXAnalyticsLogger shared] logPageViewWithName:@"payment_redirect" additionalInfo:@{@"url": url.absoluteString}];
-                                     } else {
-                                         [[AWXAnalyticsLogger shared] logErrorWithName:@"payment_redirect" additionalInfo:@{@"url": url.absoluteString}];
+    if (url) {
+        [[UIApplication sharedApplication] openURL:url
+                                           options:@{}
+                                 completionHandler:^(BOOL success) {
+                                     if (url.absoluteString.length > 0) {
+                                         if (success) {
+                                             [[AWXAnalyticsLogger shared] logPageViewWithName:@"payment_redirect" additionalInfo:@{@"url": url.absoluteString}];
+                                         } else {
+                                             [[AWXAnalyticsLogger shared] logErrorWithName:@"payment_redirect" additionalInfo:@{@"url": url.absoluteString}];
+                                         }
                                      }
-                                 }
-                             }];
+                                 }];
+    }
 }
 
 @end

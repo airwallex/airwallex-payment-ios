@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSBundle (Utils)
 
 + (NSBundle *)sdkBundle;
-+ (NSBundle *)resourceBundle;
++ (nullable NSBundle *)resourceBundle;
 
 @end
 
