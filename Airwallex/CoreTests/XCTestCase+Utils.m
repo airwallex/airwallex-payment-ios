@@ -8,6 +8,7 @@
 
 #import "AWXAPIClient.h"
 #import "AWXTestAPIClient.h"
+#import "CoreTests-Swift.h"
 #import "XCTestCase+Utils.h"
 
 @implementation XCTestCase (Utils)
@@ -32,8 +33,8 @@
 
     AWXTestAPIClient *client = [AWXTestAPIClient sharedClient];
     client.paymentBaseURL = [NSURL URLWithString:@"https://api-staging.airwallex.com/"];
-    client.apiKey = @"c502961dbb6460f3d0319007ef22a79cdd0b32f8a93642c7c0a458d6d0238ce359f8970ca3e238eae3d6f52bfc723a9c";
-    client.clientID = @"f2pyNO47QLGtE2ruB3w4pQ";
+    client.apiKey = SecretRepository.apiKey;
+    client.clientID = SecretRepository.clientId;
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get auth token"];
     [client createAuthenticationTokenWithCompletionHandler:^(NSError *_Nullable error) {

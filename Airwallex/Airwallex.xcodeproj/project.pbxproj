@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -56,6 +56,7 @@
 		186277D729E7C0530002892A /* AirTracker.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186277D629E7C0530002892A /* AirTracker.xcframework */; };
 		186277D829E7C0530002892A /* AirTracker.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 186277D629E7C0530002892A /* AirTracker.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		186277DB2A381A240002892A /* AWXSchemaProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 186277DA2A381A240002892A /* AWXSchemaProviderTests.m */; };
+		186E02282B1717A500B67994 /* SecretRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E02272B1717A500B67994 /* SecretRepository.swift */; };
 		187AFA6928B522C000561EEB /* AWXPaymentConsentRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */; };
 		189E3AF329875BEC00F3037F /* AWXSecurityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF9C26E5F8CC00C6AFE3 /* AWXSecurityService.m */; };
 		189E3AFA29875E2D00F3037F /* AWXSecurityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF9C26E5F8CC00C6AFE3 /* AWXSecurityService.m */; };
@@ -380,6 +381,8 @@
 		186277CB29E78F840002892A /* RLTMXProfiling.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RLTMXProfiling.xcframework; path = ../Frameworks/RLTMXProfiling.xcframework; sourceTree = "<group>"; };
 		186277D629E7C0530002892A /* AirTracker.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AirTracker.xcframework; path = ../Frameworks/AirTracker.xcframework; sourceTree = "<group>"; };
 		186277DA2A381A240002892A /* AWXSchemaProviderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXSchemaProviderTests.m; sourceTree = "<group>"; };
+		186E02262B1717A400B67994 /* CoreTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoreTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		186E02272B1717A500B67994 /* SecretRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretRepository.swift; sourceTree = "<group>"; };
 		187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentConsentRequestTest.m; sourceTree = "<group>"; };
 		189E3AE329865AE100F3037F /* AWXDefaultProvider+Security.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXDefaultProvider+Security.h"; sourceTree = "<group>"; };
 		189E3AE429865AE100F3037F /* AWXDefaultProvider+Security.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXDefaultProvider+Security.m"; sourceTree = "<group>"; };
@@ -778,6 +781,8 @@
 				082442CA2431BFCB00D04A2C /* Models */,
 				082442C32431AA1B00D04A2C /* Resources */,
 				085BD3D823CC62B4002E8F27 /* Info.plist */,
+				186E02272B1717A500B67994 /* SecretRepository.swift */,
+				186E02262B1717A400B67994 /* CoreTests-Bridging-Header.h */,
 			);
 			path = CoreTests;
 			sourceTree = "<group>";
@@ -1462,6 +1467,7 @@
 					};
 					085BD3D023CC62B4002E8F27 = {
 						CreatedOnToolsVersion = 11.1;
+						LastSwiftMigration = 1500;
 					};
 					3C99E78627EAF1A10074156C = {
 						CreatedOnToolsVersion = 13.3;
@@ -1849,6 +1855,7 @@
 				572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */,
 				0829FD082431D25800557DB2 /* AWXBillingTest.m in Sources */,
 				3C99E74727E9A6B70074156C /* AWXApplePayOptionsTest.m in Sources */,
+				186E02282B1717A500B67994 /* SecretRepository.swift in Sources */,
 				0829FD132431E11E00557DB2 /* AWXPaymentMethodFunctionalTest.m in Sources */,
 				0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */,
 				0829FD152431F13A00557DB2 /* AWXPaymentIntentFunctionalTest.m in Sources */,
@@ -2207,6 +2214,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.CoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreTests/CoreTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2225,6 +2235,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.CoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreTests/CoreTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
