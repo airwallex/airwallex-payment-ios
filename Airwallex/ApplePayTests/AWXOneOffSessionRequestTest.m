@@ -30,6 +30,7 @@
     address.city = @"city";
 
     details.address = address;
+    PKContact *contact = [details convertToPaymentContact];
 
     session.billing = details;
 
@@ -53,7 +54,12 @@
     XCTAssertEqualObjects(request.countryCode, session.countryCode);
     XCTAssertEqualObjects(request.currencyCode, intent.currency);
     XCTAssertEqualObjects(request.supportedNetworks, AWXApplePaySupportedNetworks());
-    XCTAssertEqualObjects(request.billingContact, [session.billing convertToPaymentContact]);
+    XCTAssertEqualObjects(request.billingContact.name, contact.name);
+    XCTAssertEqualObjects(request.billingContact.phoneNumber, contact.phoneNumber);
+    XCTAssertEqualObjects(request.billingContact.emailAddress, contact.emailAddress);
+    XCTAssertEqualObjects(request.billingContact.postalAddress.street, contact.postalAddress.street);
+    XCTAssertEqualObjects(request.billingContact.postalAddress.ISOCountryCode, contact.postalAddress.ISOCountryCode);
+    XCTAssertEqualObjects(request.billingContact.postalAddress.city, contact.postalAddress.city);
     XCTAssertEqualObjects(request.requiredBillingContactFields, options.requiredBillingContactFields);
     XCTAssertEqualObjects(request.supportedCountries, options.supportedCountries);
 }
