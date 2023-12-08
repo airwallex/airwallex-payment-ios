@@ -114,13 +114,6 @@ typedef void (^AWXRequestHandler)(AWXResponse *_Nullable response, NSError *_Nul
 @interface AWXAPIClient : NSObject
 
 /**
- Convenience constructor for an api client.
-
- @return The shared api client.
- */
-+ (instancetype)sharedClient;
-
-/**
  The configuration required.
  */
 @property (nonatomic, copy, readonly) AWXAPIClientConfiguration *configuration;

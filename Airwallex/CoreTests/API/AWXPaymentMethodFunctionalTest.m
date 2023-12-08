@@ -36,7 +36,7 @@
 
     XCTAssertEqualObjects(request.flow, @"inapp");
 
-    AWXAPIClient *client = [AWXAPIClient sharedClient];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
          handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
@@ -62,7 +62,7 @@
     paymentMethod.customerId = @"cus_gSItdRkbwWQcyocadV93vQmdW0l";
     request.paymentMethod = paymentMethod;
 
-    AWXAPIClient *client = [AWXAPIClient sharedClient];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Create payment method"];
     [client send:request
          handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {

@@ -147,15 +147,6 @@ static BOOL _analyticsEnabled = YES;
 
 @implementation AWXAPIClient
 
-+ (instancetype)sharedClient {
-    static AWXAPIClient *sharedClient;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedClient = [self new];
-    });
-    return sharedClient;
-}
-
 - (instancetype)init {
     return [self initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
 }

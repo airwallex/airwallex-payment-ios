@@ -157,12 +157,14 @@
     request.device = device;
     request.returnURL = returnURL;
 
-    if ([paymentMethod.type isEqualToString:AWXCardKey]) {
+    if ([@[AWXCardKey, AWXApplePayKey] containsObject:paymentMethod.type]) {
         AWXCardOptions *cardOptions = [AWXCardOptions new];
         cardOptions.autoCapture = autoCapture;
-        AWXThreeDs *threeDs = [AWXThreeDs new];
-        threeDs.returnURL = AWXThreeDSReturnURL;
-        cardOptions.threeDs = threeDs;
+        if ([paymentMethod.type isEqualToString:AWXCardKey]) {
+            AWXThreeDs *threeDs = [AWXThreeDs new];
+            threeDs.returnURL = AWXThreeDSReturnURL;
+            cardOptions.threeDs = threeDs;
+        }
 
         AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
         options.cardOptions = cardOptions;
