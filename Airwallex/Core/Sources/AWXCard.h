@@ -79,6 +79,11 @@
  */
 @property (nonatomic, copy, nullable) NSString *avsCheck;
 
+/**
+ Type of the number. One of PAN, EXTERNAL_NETWORK_TOKEN, AIRWALLEX_NETWORK_TOKEN.
+ */
+@property (nonatomic, strong, nullable) NSString *numberType;
+
 @end
 
 @interface AWXCard (Utils)

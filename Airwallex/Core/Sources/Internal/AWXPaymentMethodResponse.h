@@ -7,6 +7,7 @@
 //
 
 #import "AWXAPIClient.h"
+#import "AWXPage.h"
 
 @class AWXPaymentMethod, AWXPaymentConsent, AWXPaymentMethodType, AWXSchema, AWXBank;
 
@@ -32,12 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXGetPaymentMethodTypesResponse` includes the list of payment methods.
  */
-@interface AWXGetPaymentMethodTypesResponse : AWXResponse
-
-/**
- Check whether there are more payment methods not loaded.
- */
-@property (nonatomic, readonly) BOOL hasMore;
+@interface AWXGetPaymentMethodTypesResponse : AWXResponse<AWXPage>
 
 /**
  Payment methods.

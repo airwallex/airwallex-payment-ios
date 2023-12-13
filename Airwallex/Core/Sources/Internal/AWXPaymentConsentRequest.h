@@ -108,4 +108,41 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/**
+ `AWXGetPaymentConsentsRequest` includes the request of payment consents.
+ */
+@interface AWXGetPaymentConsentsRequest : AWXRequest
+
+/**
+ Customer ID.
+ */
+@property (nonatomic, copy) NSString *customerId;
+
+/**
+ Consent status.
+ */
+@property (nonatomic, copy, nullable) NSString *status;
+
+/**
+ Next trigger By type.
+ */
+@property (nonatomic, copy, nullable) NSString *nextTriggeredBy;
+
+/**
+ Merchant trigger reason
+ */
+@property (nonatomic, copy, nullable) NSString *merchantTriggerReason;
+
+/**
+ Page number starting from 0.
+ */
+@property (nonatomic) NSInteger pageNum;
+
+/**
+ Number of payment methods to be listed per page.
+ */
+@property (nonatomic) NSInteger pageSize;
+
+@end
+
 NS_ASSUME_NONNULL_END

@@ -109,61 +109,40 @@
 }
 
 - (void)reloadListItems {
-    // Fetch all available payment method types
-    self.nextPageNum = 0;
-    [self loadAvailablePaymentMethodTypesWithPageNum:self.nextPageNum];
-}
-
-- (void)loadAvailablePaymentMethodTypesWithPageNum:(NSInteger)pageNum {
-    AWXGetPaymentMethodTypesRequest *request = [AWXGetPaymentMethodTypesRequest new];
-    request.pageNum = pageNum;
-    request.transactionCurrency = self.session.currency;
-    request.transactionMode = self.session.transactionMode;
-    request.countryCode = self.session.countryCode;
-    request.lang = self.session.lang;
-
+    // Fetch all available payment method types and consents
     __weak __typeof(self) weakSelf = self;
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             __strong __typeof(weakSelf) strongSelf = weakSelf;
+    [_viewModel fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:^(NSArray<AWXPaymentMethodType *> *_Nullable methods, NSArray<AWXPaymentConsent *> *_Nullable consents, NSError *_Nullable error) {
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
 
-             if (response && !error) {
-                 AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
-                 strongSelf.availablePaymentMethodTypes = [self.session filteredPaymentMethodTypes:result.items];
-                 strongSelf.canLoadMore = result.hasMore;
-                 strongSelf.nextPageNum = pageNum + 1;
+        strongSelf.availablePaymentMethodTypes = [self.session filteredPaymentMethodTypes:methods];
+        strongSelf.availablePaymentConsents = [consents mutableCopy];
 
-                 strongSelf.availablePaymentConsents = [[strongSelf filterAvailablePaymentConsentsWithSession:strongSelf.session] mutableCopy];
-
-                 [strongSelf.tableView reloadData];
-                 [strongSelf presentSingleCardShortcutIfRequired];
-             }
-         }];
+        [strongSelf.tableView reloadData];
+        [strongSelf presentSingleCardShortcutIfRequired];
+    }];
 }
 
-- (NSArray<AWXPaymentConsent *> *)filterAvailablePaymentConsentsWithSession:(AWXSession *)session {
-    NSArray *customerPaymentMethods = self.session.customerPaymentMethods;
-    NSArray *customerPaymentConsents = self.session.customerPaymentConsents;
-
-    if ([self.session isKindOfClass:[AWXOneOffSession class]] && customerPaymentConsents.count > 0 && customerPaymentMethods.count > 0) {
-        NSArray *paymentConsents = [customerPaymentConsents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"nextTriggeredBy == %@ AND status == 'VERIFIED'", FormatNextTriggerByType(AirwallexNextTriggerByCustomerType)]];
-        NSMutableArray *availablePaymentConsents = [@[] mutableCopy];
-        NSMutableArray *cardsFingerprint = [NSMutableArray new];
-        for (AWXPaymentConsent *consent in paymentConsents) {
-            AWXPaymentMethod *paymentMethod = [customerPaymentMethods filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Id == %@", consent.paymentMethod.Id]].firstObject;
-            if (paymentMethod != nil) {
-                if (![cardsFingerprint containsObject:paymentMethod.card.fingerprint]) {
-                    [cardsFingerprint addObject:paymentMethod.card.fingerprint];
-                    consent.paymentMethod = paymentMethod;
-                    [availablePaymentConsents addObject:consent];
-                }
-            }
-        }
-        return availablePaymentConsents;
-    }
-    return @[];
-}
+//- (NSArray<AWXPaymentConsent *> *)filterAvailablePaymentConsents:(NSArray<AWXPaymentConsent *> *)consents {
+//    AWXPaymentMethod *paymentMethod = [customerPaymentMethods filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Id == %@", consent.paymentMethod.Id]].firstObject;
+//
+//    if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
+//        NSArray *paymentConsents = [customerPaymentConsents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"nextTriggeredBy == %@ AND status == 'VERIFIED'", FormatNextTriggerByType(AirwallexNextTriggerByCustomerType)]];
+//        NSMutableArray *availablePaymentConsents = [@[] mutableCopy];
+//        NSMutableArray *cardsFingerprint = [NSMutableArray new];
+//        for (AWXPaymentConsent *consent in paymentConsents) {
+//            AWXPaymentMethod *paymentMethod = [customerPaymentMethods filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Id == %@", consent.paymentMethod.Id]].firstObject;
+//            if (paymentMethod != nil) {
+//                if (![cardsFingerprint containsObject:paymentMethod.card.fingerprint]) {
+//                    [cardsFingerprint addObject:paymentMethod.card.fingerprint];
+//                    consent.paymentMethod = paymentMethod;
+//                    [availablePaymentConsents addObject:consent];
+//                }
+//            }
+//        }
+//        return availablePaymentConsents;
+//    }
+//    return @[];
+//}
 
 - (void)presentSingleCardShortcutIfRequired {
     BOOL hasPaymentConsents = self.availablePaymentConsents.count > 0;
@@ -297,7 +276,7 @@
     case 0: {
         // No cvc provided and go to enter cvc in payment detail page
         AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
-        if (paymentConsent.requiresCVC) {
+        if ([paymentConsent.paymentMethod.card.numberType isEqualToString:@"PAN"]) {
             [self showPayment:paymentConsent];
         } else {
             AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
@@ -328,20 +307,6 @@
     AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self session:self.session paymentMethodType:paymentMethodType];
     [provider handleFlow];
     self.provider = provider;
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (!self.canLoadMore) {
-        return;
-    }
-
-    CGFloat currentOffset = scrollView.contentOffset.y;
-    CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-    if (maximumOffset - currentOffset <= 0) {
-        [self loadAvailablePaymentMethodTypesWithPageNum:self.nextPageNum];
-    }
 }
 
 #pragma mark - AWXProviderDelegate
