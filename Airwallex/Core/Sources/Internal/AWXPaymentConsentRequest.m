@@ -127,20 +127,21 @@
 }
 
 - (NSDictionary *)parameters {
-    NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
-    _parameters[@"customer_id"] = self.customerId;
-    _parameters[@"page_num"] = @(self.pageNum);
-    _parameters[@"page_size"] = @(self.pageSize);
-    if (self.merchantTriggerReason) {
-        _parameters[@"merchant_trigger_reason"] = self.merchantTriggerReason;
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"customer_id"] = self.customerId;
+    parameters[@"page_num"] = @(self.pageNum);
+    parameters[@"page_size"] = @(self.pageSize);
+    NSString *merchantTriggerReasonString = FormatMerchantTriggerReason(self.merchantTriggerReason);
+    if (merchantTriggerReasonString) {
+        parameters[@"merchant_trigger_reason"] = merchantTriggerReasonString;
     }
     if (self.nextTriggeredBy) {
-        _parameters[@"next_triggered_by"] = self.nextTriggeredBy;
+        parameters[@"next_triggered_by"] = self.nextTriggeredBy;
     }
     if (self.status) {
-        _parameters[@"status"] = self.status;
+        parameters[@"status"] = self.status;
     }
-    return _parameters;
+    return parameters;
 }
 
 - (Class)responseClass {

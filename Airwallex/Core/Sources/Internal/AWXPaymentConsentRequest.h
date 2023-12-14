@@ -131,7 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Merchant trigger reason
  */
-@property (nonatomic, copy, nullable) NSString *merchantTriggerReason;
+@property (nonatomic) AirwallexMerchantTriggerReason merchantTriggerReason;
 
 /**
  Page number starting from 0.

@@ -46,6 +46,7 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
 
         if (responseError) {
             completionHandler(@[], @[], responseError);
+            return;
         }
         dispatch_group_leave(group);
     }];
@@ -59,6 +60,7 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
 
                                                       if (responseError) {
                                                           completionHandler(@[], @[], responseError);
+                                                          return;
                                                       }
                                                       dispatch_group_leave(group);
                                                   }];
@@ -151,6 +153,7 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
             completion(^(NSArray *__autoreleasing *items, NSError *__autoreleasing *error) {
                 *error = responseError;
             });
+            return;
         }
 
         if (response.hasMore) {
