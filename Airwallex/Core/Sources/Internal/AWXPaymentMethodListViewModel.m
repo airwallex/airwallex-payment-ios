@@ -44,20 +44,20 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
         NSError *responseError;
         result(&paymentMethods, &responseError);
 
-        if (responseError != NULL) {
+        if (responseError) {
             completionHandler(@[], @[], responseError);
         }
         dispatch_group_leave(group);
     }];
 
-    if (_session.customerId != NULL) {
+    if (_session.customerId) {
         dispatch_group_enter(group);
         [self retrieveAvailablePaymentConsentsWithCustomerId:_session.customerId
                                                   completion:^(ItemsResult result) {
                                                       NSError *responseError;
                                                       result(&paymentConsents, &responseError);
 
-                                                      if (responseError != NULL) {
+                                                      if (responseError) {
                                                           completionHandler(@[], @[], responseError);
                                                       }
                                                       dispatch_group_leave(group);
@@ -65,8 +65,17 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
     }
 
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        completionHandler(paymentMethods, paymentConsents, nil);
+        completionHandler(paymentMethods, [self filteredPaymentConsentsWithConsents:paymentConsents methods:paymentMethods], nil);
     });
+}
+
+- (NSArray<AWXPaymentConsent *> *)filteredPaymentConsentsWithConsents:(NSArray<AWXPaymentConsent *> *)consents
+                                                              methods:(NSArray<AWXPaymentMethodType *> *)methods {
+    AWXPaymentMethodType *cardPaymentMethod = [methods filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", AWXCardKey]].firstObject;
+    if (cardPaymentMethod && [_session isKindOfClass:[AWXOneOffSession class]]) {
+        return [consents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"paymentMethod.type == %@", AWXCardKey]];
+    }
+    return @[];
 }
 
 - (void)retrieveAvailablePaymentMethodsWithCompletion:(void (^)(ItemsResult))completion {
@@ -81,6 +90,7 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
             request.countryCode = strongSelf.session.countryCode;
             request.lang = strongSelf.session.lang;
             request.pageNum = pageNum;
+            request.pageSize = 20;
             [strongSelf.client send:request
                             handler:^(AWXResponse *_Nullable response, NSError *_Nullable responseError) {
                                 AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
@@ -137,7 +147,7 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
 
         [items addObjectsFromArray:response.items];
 
-        if (responseError != NULL) {
+        if (responseError) {
             completion(^(NSArray *__autoreleasing *items, NSError *__autoreleasing *error) {
                 *error = responseError;
             });
@@ -146,8 +156,8 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
         if (response.hasMore) {
             [self LoadPagedItemsWithLoadPageBlock:loadPageBlock items:items pageNum:pageNum + 1 completion:completion];
         } else {
-            completion(^(NSArray *__autoreleasing *items, NSError *__autoreleasing *error) {
-                *items = response.items;
+            completion(^(NSArray *__autoreleasing *newItems, NSError *__autoreleasing *error) {
+                *newItems = items;
             });
         }
     });

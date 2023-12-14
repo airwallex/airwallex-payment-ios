@@ -110,39 +110,23 @@
 
 - (void)reloadListItems {
     // Fetch all available payment method types and consents
+    [self startAnimating];
+
     __weak __typeof(self) weakSelf = self;
     [_viewModel fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:^(NSArray<AWXPaymentMethodType *> *_Nullable methods, NSArray<AWXPaymentConsent *> *_Nullable consents, NSError *_Nullable error) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf stopAnimating];
+        if (error) {
+            [strongSelf showAlert:error.localizedDescription];
+        } else {
+            strongSelf.availablePaymentMethodTypes = [strongSelf.session filteredPaymentMethodTypes:methods];
+            strongSelf.availablePaymentConsents = [consents mutableCopy];
 
-        strongSelf.availablePaymentMethodTypes = [self.session filteredPaymentMethodTypes:methods];
-        strongSelf.availablePaymentConsents = [consents mutableCopy];
-
-        [strongSelf.tableView reloadData];
-        [strongSelf presentSingleCardShortcutIfRequired];
+            [strongSelf.tableView reloadData];
+            [strongSelf presentSingleCardShortcutIfRequired];
+        }
     }];
 }
-
-//- (NSArray<AWXPaymentConsent *> *)filterAvailablePaymentConsents:(NSArray<AWXPaymentConsent *> *)consents {
-//    AWXPaymentMethod *paymentMethod = [customerPaymentMethods filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Id == %@", consent.paymentMethod.Id]].firstObject;
-//
-//    if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
-//        NSArray *paymentConsents = [customerPaymentConsents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"nextTriggeredBy == %@ AND status == 'VERIFIED'", FormatNextTriggerByType(AirwallexNextTriggerByCustomerType)]];
-//        NSMutableArray *availablePaymentConsents = [@[] mutableCopy];
-//        NSMutableArray *cardsFingerprint = [NSMutableArray new];
-//        for (AWXPaymentConsent *consent in paymentConsents) {
-//            AWXPaymentMethod *paymentMethod = [customerPaymentMethods filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Id == %@", consent.paymentMethod.Id]].firstObject;
-//            if (paymentMethod != nil) {
-//                if (![cardsFingerprint containsObject:paymentMethod.card.fingerprint]) {
-//                    [cardsFingerprint addObject:paymentMethod.card.fingerprint];
-//                    consent.paymentMethod = paymentMethod;
-//                    [availablePaymentConsents addObject:consent];
-//                }
-//            }
-//        }
-//        return availablePaymentConsents;
-//    }
-//    return @[];
-//}
 
 - (void)presentSingleCardShortcutIfRequired {
     BOOL hasPaymentConsents = self.availablePaymentConsents.count > 0;
@@ -174,9 +158,7 @@
              [strongSelf stopAnimating];
 
              if (error) {
-                 UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-                 [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-                 [strongSelf presentViewController:controller animated:YES completion:nil];
+                 [strongSelf showAlert:error.localizedDescription];
                  return;
              }
 
@@ -331,9 +313,7 @@
 - (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     Class class = ClassToHandleNextActionForType(nextAction);
     if (class == nil) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
+        [self showAlert:NSLocalizedString(@"No provider matched the next action.", nil)];
         return;
     }
 
@@ -360,6 +340,12 @@
     controller.view.frame = CGRectInset(self.view.frame, 0, CGRectGetMaxY(self.view.bounds));
     [self.view addSubview:controller.view];
     [controller didMoveToParentViewController:self];
+}
+
+- (void)showAlert:(NSString *)message {
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 @end
