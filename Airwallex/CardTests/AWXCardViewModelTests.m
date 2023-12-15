@@ -321,6 +321,16 @@
     XCTAssertEqualObjects(viewModel.additionalInfo, dict);
 }
 
+- (void)testCtaTitleWhenOneOffSession {
+    AWXCardViewModel *viewModel = [self mockOneOffViewModel];
+    XCTAssertEqualObjects(viewModel.ctaTitle, @"Pay");
+}
+
+- (void)testCtaTitleWhenRecurringSession {
+    AWXCardViewModel *viewModel = [self mockRecurringViewModel];
+    XCTAssertEqualObjects(viewModel.ctaTitle, @"Confirm");
+}
+
 - (AWXCardViewModel *)mockOneOffViewModel {
     AWXOneOffSession *session = [AWXOneOffSession new];
     return [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];

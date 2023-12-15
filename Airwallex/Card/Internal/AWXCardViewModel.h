@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXCardViewModel : NSObject
 
+@property (nonatomic, copy, readonly) NSString *ctaTitle;
 @property (nonatomic, copy, readonly) NSString *pageName;
 @property (nonatomic, copy, readonly) NSDictionary<NSString *, id> *additionalInfo;
 @property (nonatomic, readonly) BOOL isReusingShippingAsBillingInformation;
