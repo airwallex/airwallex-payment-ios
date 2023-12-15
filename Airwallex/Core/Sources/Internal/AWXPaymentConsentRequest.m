@@ -115,3 +115,37 @@
 }
 
 @end
+
+@implementation AWXGetPaymentConsentsRequest
+
+- (NSString *)path {
+    return @"/api/v1/pa/payment_consents";
+}
+
+- (AWXHTTPMethod)method {
+    return AWXHTTPMethodGET;
+}
+
+- (NSDictionary *)parameters {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"customer_id"] = self.customerId;
+    parameters[@"page_num"] = @(self.pageNum);
+    parameters[@"page_size"] = @(self.pageSize);
+    NSString *merchantTriggerReasonString = FormatMerchantTriggerReason(self.merchantTriggerReason);
+    if (merchantTriggerReasonString) {
+        parameters[@"merchant_trigger_reason"] = merchantTriggerReasonString;
+    }
+    if (self.nextTriggeredBy) {
+        parameters[@"next_triggered_by"] = self.nextTriggeredBy;
+    }
+    if (self.status) {
+        parameters[@"status"] = self.status;
+    }
+    return parameters;
+}
+
+- (Class)responseClass {
+    return AWXGetPaymentConsentsResponse.class;
+}
+
+@end

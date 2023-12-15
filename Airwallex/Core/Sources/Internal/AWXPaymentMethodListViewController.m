@@ -109,60 +109,23 @@
 }
 
 - (void)reloadListItems {
-    // Fetch all available payment method types
-    self.nextPageNum = 0;
-    [self loadAvailablePaymentMethodTypesWithPageNum:self.nextPageNum];
-}
-
-- (void)loadAvailablePaymentMethodTypesWithPageNum:(NSInteger)pageNum {
-    AWXGetPaymentMethodTypesRequest *request = [AWXGetPaymentMethodTypesRequest new];
-    request.pageNum = pageNum;
-    request.transactionCurrency = self.session.currency;
-    request.transactionMode = self.session.transactionMode;
-    request.countryCode = self.session.countryCode;
-    request.lang = self.session.lang;
+    // Fetch all available payment method types and consents
+    [self startAnimating];
 
     __weak __typeof(self) weakSelf = self;
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             __strong __typeof(weakSelf) strongSelf = weakSelf;
+    [_viewModel fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:^(NSArray<AWXPaymentMethodType *> *_Nullable methods, NSArray<AWXPaymentConsent *> *_Nullable consents, NSError *_Nullable error) {
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf stopAnimating];
+        if (error) {
+            [strongSelf showAlert:error.localizedDescription];
+        } else {
+            strongSelf.availablePaymentMethodTypes = [strongSelf.session filteredPaymentMethodTypes:methods];
+            strongSelf.availablePaymentConsents = [consents mutableCopy];
 
-             if (response && !error) {
-                 AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
-                 strongSelf.availablePaymentMethodTypes = [self.session filteredPaymentMethodTypes:result.items];
-                 strongSelf.canLoadMore = result.hasMore;
-                 strongSelf.nextPageNum = pageNum + 1;
-
-                 strongSelf.availablePaymentConsents = [[strongSelf filterAvailablePaymentConsentsWithSession:strongSelf.session] mutableCopy];
-
-                 [strongSelf.tableView reloadData];
-                 [strongSelf presentSingleCardShortcutIfRequired];
-             }
-         }];
-}
-
-- (NSArray<AWXPaymentConsent *> *)filterAvailablePaymentConsentsWithSession:(AWXSession *)session {
-    NSArray *customerPaymentMethods = self.session.customerPaymentMethods;
-    NSArray *customerPaymentConsents = self.session.customerPaymentConsents;
-
-    if ([self.session isKindOfClass:[AWXOneOffSession class]] && customerPaymentConsents.count > 0 && customerPaymentMethods.count > 0) {
-        NSArray *paymentConsents = [customerPaymentConsents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"nextTriggeredBy == %@ AND status == 'VERIFIED'", FormatNextTriggerByType(AirwallexNextTriggerByCustomerType)]];
-        NSMutableArray *availablePaymentConsents = [@[] mutableCopy];
-        NSMutableArray *cardsFingerprint = [NSMutableArray new];
-        for (AWXPaymentConsent *consent in paymentConsents) {
-            AWXPaymentMethod *paymentMethod = [customerPaymentMethods filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"Id == %@", consent.paymentMethod.Id]].firstObject;
-            if (paymentMethod != nil) {
-                if (![cardsFingerprint containsObject:paymentMethod.card.fingerprint]) {
-                    [cardsFingerprint addObject:paymentMethod.card.fingerprint];
-                    consent.paymentMethod = paymentMethod;
-                    [availablePaymentConsents addObject:consent];
-                }
-            }
+            [strongSelf.tableView reloadData];
+            [strongSelf presentSingleCardShortcutIfRequired];
         }
-        return availablePaymentConsents;
-    }
-    return @[];
+    }];
 }
 
 - (void)presentSingleCardShortcutIfRequired {
@@ -195,9 +158,7 @@
              [strongSelf stopAnimating];
 
              if (error) {
-                 UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-                 [controller addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil]];
-                 [strongSelf presentViewController:controller animated:YES completion:nil];
+                 [strongSelf showAlert:error.localizedDescription];
                  return;
              }
 
@@ -297,7 +258,7 @@
     case 0: {
         // No cvc provided and go to enter cvc in payment detail page
         AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
-        if (paymentConsent.requiresCVC) {
+        if ([paymentConsent.paymentMethod.card.numberType isEqualToString:@"PAN"]) {
             [self showPayment:paymentConsent];
         } else {
             AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
@@ -330,20 +291,6 @@
     self.provider = provider;
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (!self.canLoadMore) {
-        return;
-    }
-
-    CGFloat currentOffset = scrollView.contentOffset.y;
-    CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-    if (maximumOffset - currentOffset <= 0) {
-        [self loadAvailablePaymentMethodTypesWithPageNum:self.nextPageNum];
-    }
-}
-
 #pragma mark - AWXProviderDelegate
 
 - (void)providerDidStartRequest:(AWXDefaultProvider *)provider {
@@ -366,9 +313,7 @@
 - (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     Class class = ClassToHandleNextActionForType(nextAction);
     if (class == nil) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
+        [self showAlert:NSLocalizedString(@"No provider matched the next action.", nil)];
         return;
     }
 
@@ -395,6 +340,12 @@
     controller.view.frame = CGRectInset(self.view.frame, 0, CGRectGetMaxY(self.view.bounds));
     [self.view addSubview:controller.view];
     [controller didMoveToParentViewController:self];
+}
+
+- (void)showAlert:(NSString *)message {
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 @end

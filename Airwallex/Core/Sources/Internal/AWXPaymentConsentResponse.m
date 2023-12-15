@@ -54,3 +54,30 @@
 }
 
 @end
+
+@interface AWXGetPaymentConsentsResponse ()
+
+@property (nonatomic, readwrite) BOOL hasMore;
+@property (nonatomic, copy, readwrite) NSArray<AWXPaymentConsent *> *items;
+
+@end
+
+@implementation AWXGetPaymentConsentsResponse
+
++ (AWXResponse *)parse:(NSData *)data {
+    NSError *error = nil;
+    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    AWXGetPaymentConsentsResponse *response = [AWXGetPaymentConsentsResponse new];
+    response.hasMore = [responseObject[@"has_more"] boolValue];
+    NSMutableArray *items = [NSMutableArray array];
+    NSArray *list = responseObject[@"items"];
+    if (list && [list isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *item in list) {
+            [items addObject:[AWXPaymentConsent decodeFromJSON:item]];
+        }
+    }
+    response.items = items;
+    return response;
+}
+
+@end

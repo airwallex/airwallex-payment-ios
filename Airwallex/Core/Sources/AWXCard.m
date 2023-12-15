@@ -42,6 +42,7 @@
     card.fingerprint = json[@"fingerprint"];
     card.cvcCheck = json[@"cvc_check"];
     card.avsCheck = json[@"avs_check"];
+    card.numberType = json[@"number_type"];
     return card;
 }
 

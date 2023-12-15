@@ -7,6 +7,7 @@
 //
 
 #import "AWXPageViewTrackable.h"
+#import "AWXPaymentMethodListViewModel.h"
 #import "AWXViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -15,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
  `AWXPaymentMethodListViewController` provides a list of payment method.
  */
 @interface AWXPaymentMethodListViewController : AWXViewController<AWXPageViewTrackable>
+
+@property (nonatomic, strong) AWXPaymentMethodListViewModel *viewModel;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
