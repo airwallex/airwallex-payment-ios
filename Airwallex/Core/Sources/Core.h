@@ -28,6 +28,7 @@ FOUNDATION_EXPORT const unsigned char CoreVersionString[];
 #import "AWXDevice.h"
 #import "AWXFloatingCardTextField.h"
 #import "AWXPaymentIntent.h"
+#import "AWXPaymentIntentResponse.h"
 #import "AWXPlaceDetails.h"
 #import "AWXSession.h"
 #import "AWXShippingViewController.h"
