@@ -32,6 +32,14 @@
     return self;
 }
 
+- (NSString *)ctaTitle {
+    if ([_session isKindOfClass:[AWXRecurringSession class]]) {
+        return NSLocalizedString(@"Confirm", @"Confirm button title");
+    } else {
+        return NSLocalizedString(@"Pay", @"Pay button title");
+    }
+}
+
 - (NSString *)pageName {
     return @"card_payment_view";
 }

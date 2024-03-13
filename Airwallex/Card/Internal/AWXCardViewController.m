@@ -167,7 +167,7 @@ typedef enum {
 
     _confirmButton = [AWXActionButton new];
     _confirmButton.enabled = YES;
-    [_confirmButton setTitle:NSLocalizedString(@"Pay", @"Pay button title") forState:UIControlStateNormal];
+    [_confirmButton setTitle:_viewModel.ctaTitle forState:UIControlStateNormal];
     [_confirmButton addTarget:self action:@selector(confirmPayment:) forControlEvents:UIControlEventTouchUpInside];
     [stackView addArrangedSubview:_confirmButton];
     [_confirmButton.heightAnchor constraintEqualToConstant:52].active = YES;
