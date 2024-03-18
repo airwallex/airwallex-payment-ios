@@ -96,29 +96,6 @@
                                              completion:completion];
 }
 
-- (void)confirmPaymentIntentWithPaymentMethodInternal:(AWXPaymentMethod *)paymentMethod
-                                       paymentConsent:(AWXPaymentConsent *)paymentConsent
-                                               device:(AWXDevice *)device
-                                           completion:(AWXRequestHandler)completion {
-    if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
-        NSString *returnURL = nil;
-        if (paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
-            returnURL = AWXThreeDSReturnURL;
-        }
-        AWXOneOffSession *session = (AWXOneOffSession *)self.session;
-        [self confirmPaymentIntentWithId:session.paymentIntent.Id
-                              customerId:session.paymentIntent.customerId
-                           paymentMethod:paymentMethod
-                          paymentConsent:paymentConsent
-                                  device:device
-                               returnURL:returnURL
-                             autoCapture:session.autoCapture
-                              completion:completion];
-    } else {
-        [self createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod device:device completion:completion];
-    }
-}
-
 - (void)completeWithResponse:(nullable AWXConfirmPaymentIntentResponse *)response
                        error:(nullable NSError *)error {
     [self.delegate providerDidEndRequest:self];
@@ -145,6 +122,29 @@
 }
 
 #pragma mark - Internal Actions
+
+- (void)confirmPaymentIntentWithPaymentMethodInternal:(AWXPaymentMethod *)paymentMethod
+                                       paymentConsent:(AWXPaymentConsent *)paymentConsent
+                                               device:(AWXDevice *)device
+                                           completion:(AWXRequestHandler)completion {
+    if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
+        NSString *returnURL = nil;
+        if (paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
+            returnURL = AWXThreeDSReturnURL;
+        }
+        AWXOneOffSession *session = (AWXOneOffSession *)self.session;
+        [self confirmPaymentIntentWithId:session.paymentIntent.Id
+                              customerId:session.paymentIntent.customerId
+                           paymentMethod:paymentMethod
+                          paymentConsent:paymentConsent
+                                  device:device
+                               returnURL:returnURL
+                             autoCapture:session.autoCapture
+                              completion:completion];
+    } else {
+        [self createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod device:device completion:completion];
+    }
+}
 
 - (void)confirmPaymentIntentWithId:(NSString *)paymentIntentId
                         customerId:(nullable NSString *)customerId

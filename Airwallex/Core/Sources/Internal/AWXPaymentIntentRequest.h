@@ -65,6 +65,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong, nullable) AWXDevice *device;
 
+/**
+ Payment consent ID
+ */
+@property (nonatomic, strong, nullable) NSString *paymentConsentId;
+
 @end
 
 /**

@@ -25,6 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
                              billing:(AWXPlaceDetails *_Nullable)billing
                             saveCard:(BOOL)saveCard;
 
+/**
+ Confirm the payment intent with payment consent ID.
+
+ @param paymentConsentId ID of the PaymentConsent.
+ */
+- (void)confirmPaymentIntentWithPaymentConsentId:(NSString *)paymentConsentId;
+
 @end
 
 NS_ASSUME_NONNULL_END
