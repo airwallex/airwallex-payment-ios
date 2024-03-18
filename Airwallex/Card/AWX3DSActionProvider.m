@@ -42,10 +42,20 @@
 }
 
 - (void)threeDSService:(nonnull AWX3DSService *)service shouldPresentViewController:(nonnull UIViewController *)controller {
+    if ([self.delegate respondsToSelector:@selector(hostViewController)]) {
+        [[self.delegate hostViewController] presentViewController:controller animated:YES completion:nil];
+    }
     [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
 }
 
 - (void)threeDSService:(AWX3DSService *)service shouldInsertViewController:(UIViewController *)controller {
+    if ([self.delegate respondsToSelector:@selector(hostViewController)]) {
+        UIViewController *hostViewController = [self.delegate hostViewController];
+        [hostViewController addChildViewController:controller];
+        controller.view.frame = CGRectInset(hostViewController.view.frame, 0, CGRectGetMaxY(hostViewController.view.bounds));
+        [hostViewController.view addSubview:controller.view];
+        [controller didMoveToParentViewController:hostViewController];
+    }
     [self.delegate provider:self shouldInsertViewController:controller];
 }
 

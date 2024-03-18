@@ -9,6 +9,7 @@
 #import "AWXDefaultProvider.h"
 #import "AWXAnalyticsLogger.h"
 #import "AWXDevice.h"
+#import "AWXNextActionHandler.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentIntentRequest.h"
@@ -123,7 +124,12 @@
     [self.delegate providerDidEndRequest:self];
     if (response && !error) {
         if (response.nextAction) {
-            [self.delegate provider:self shouldHandleNextAction:response.nextAction];
+            if ([self.delegate respondsToSelector:@selector(provider:shouldHandleNextAction:)]) {
+                [self.delegate provider:self shouldHandleNextAction:response.nextAction];
+            } else {
+                AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:self.delegate session:self.session];
+                [handler handleNextAction:response.nextAction];
+            }
         } else {
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
 
