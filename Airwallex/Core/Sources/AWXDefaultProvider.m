@@ -26,6 +26,7 @@
 @property (nonatomic, strong, readwrite, nullable) AWXPaymentMethod *paymentMethod;
 @property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
 @property (nonatomic, strong) NSString *paymentIntentId;
+@property (nonatomic, strong) AWXNextActionHandler *nextActionHandler;
 
 @end
 
@@ -106,6 +107,7 @@
             } else {
                 AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:self.delegate session:self.session];
                 [handler handleNextAction:response.nextAction];
+                self.nextActionHandler = handler;
             }
         } else {
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];

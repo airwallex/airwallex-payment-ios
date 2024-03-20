@@ -58,10 +58,6 @@
         }
     }
 
-    if (self.paymentConsentId) {
-        parameters[@"payment_consent_id"] = self.paymentConsentId;
-    }
-
     if (self.options) {
         parameters[@"payment_method_options"] = self.options.encodeToJSON;
     }

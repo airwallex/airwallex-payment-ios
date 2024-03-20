@@ -15,6 +15,8 @@
 
 @property (nonatomic, weak, readonly) id<AWXProviderDelegate> delegate;
 
+@property (nonatomic, strong) AWXDefaultActionProvider *provider;
+
 @end
 
 @implementation AWXNextActionHandler
@@ -38,6 +40,7 @@
         return;
     }
     [actionProvider handleNextAction:nextAction];
+    self.provider = actionProvider;
 }
 
 @end

@@ -12,6 +12,7 @@
 #import "AWXCardViewModel.h"
 #import "AWXDefaultProvider+Security.h"
 #import "AWXDevice.h"
+#import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodRequest.h"
@@ -82,11 +83,13 @@
                                           device:(AWXDevice *)device
                                       completion:(AWXRequestHandler)completion {
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
+    AWXPaymentConsent *consent = [AWXPaymentConsent new];
+    consent.Id = paymentConsentId;
     request.requestId = NSUUID.UUID.UUIDString;
     request.intentId = self.session.paymentIntentId;
     request.customerId = self.session.customerId;
     request.device = device;
-    request.paymentConsentId = paymentConsentId;
+    request.paymentConsent = consent;
     request.returnURL = AWXThreeDSReturnURL;
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
