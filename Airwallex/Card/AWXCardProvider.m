@@ -15,6 +15,7 @@
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentMethod.h"
+#import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
@@ -91,6 +92,19 @@
     request.device = device;
     request.paymentConsent = consent;
     request.returnURL = AWXThreeDSReturnURL;
+    
+    if ([self.session respondsToSelector:@selector(autoCapture)]) {
+        AWXCardOptions *cardOptions = [AWXCardOptions new];
+        cardOptions.autoCapture = [[self.session valueForKey:@"autoCapture"] boolValue];
+        // assume payment consent can only be card payment type, so set 3ds return url anyway
+        AWXThreeDs *threeDs = [AWXThreeDs new];
+        threeDs.returnURL = AWXThreeDSReturnURL;
+        cardOptions.threeDs = threeDs;
+
+        AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
+        options.cardOptions = cardOptions;
+        request.options = options;
+    }
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:completion];
