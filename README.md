@@ -74,6 +74,8 @@ use_frameworks!
 
 ### Basic Integration
 
+This is **recommended usage**, it builds a complete user flow on top of your app with our prebuilt UI to collect payment details, billing details, and confirming the payment.
+
 When your app starts, configure the SDK with `mode`.
 
 ```objective-c
@@ -138,7 +140,7 @@ session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
 ```
 
-- Handle the one-off payment or recurring flow
+- Present one-off payment or recurring flow
 
 Upon checkout, use `AWXUIContext` to present the payment flow where the user will be able to select the payment method.
 
@@ -161,6 +163,39 @@ After the user completes the payment successfully or with error, you need to han
     [controller dismissViewControllerAnimated:YES completion:^{
         // Status may be success/in progress/ failure / cancel
     }];
+}
+```
+
+### Low-level API Integration
+
+You can build your own entirely custom UI on top of our low-level APIs.
+
+#### Confirm card payment with card and billing details or payment consent ID
+
+You still need all the other steps in [Basic Integration](#basic-integration) section to set up configurations, intent and session, except the step **Present one-off payment or recurring flow** is replaced by:
+
+```objective-c
+AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:"The target to handle AWXProviderDelegate protocol" session:"The session created above"];
+// After initialization, you will need to store the provider in your view controller or class that is tied to your view's lifecycle
+self.provider = provider;
+
+// Confirm intent with card and billing
+[provider confirmPaymentIntentWithCard:"The AWXCard object collected by your custom UI" billing:"The AWXPlaceDetails object collected by your custom UI" saveCard:"Whether you want the card to be saved as payment consent for future payments"];
+
+// Or to confirm intent with a valid payment consent ID
+[provider confirmPaymentIntentWithPaymentConsentId:@"cst_xxxxxxxxxx"];
+``` 
+
+You also need to provide your host view controller which we use to present additional UI (e.g. 3DS page, alert) on top
+```objective-c
+#pragma mark - AWXProviderDelegate
+
+- (UIViewController *)hostViewController {
+    // Your host view controller
+}
+
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
+    // You can handle different payment statuses and perform UI action respectively here
 }
 ```
 
