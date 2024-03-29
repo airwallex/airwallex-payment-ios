@@ -38,6 +38,11 @@
 		1839054F29C01AE900FE8069 /* AWXAnalyticsLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 1839054D29C01AE900FE8069 /* AWXAnalyticsLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1839055029C01AE900FE8069 /* AWXAnalyticsLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 1839054E29C01AE900FE8069 /* AWXAnalyticsLogger.m */; };
 		1839055A29C02FFE00FE8069 /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839055929C02FFE00FE8069 /* Empty.swift */; };
+		183FB6432BB6A31800FFDF0E /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
+		183FB6442BB6A66000FFDF0E /* AWXDefaultProvider+Security.m in Sources */ = {isa = PBXBuildFile; fileRef = 189E3AE429865AE100F3037F /* AWXDefaultProvider+Security.m */; };
+		183FB6472BB6A74100FFDF0E /* AWXNextActionHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FB6462BB6A74100FFDF0E /* AWXNextActionHandlerTest.m */; };
+		183FB64A2BB6C46B00FFDF0E /* ConfirmPaymentIntent.json in Resources */ = {isa = PBXBuildFile; fileRef = 183FB6492BB6BECE00FFDF0E /* ConfirmPaymentIntent.json */; };
+		183FB64D2BB6C62400FFDF0E /* AWXProviderDelegateEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 183FB64C2BB6C62400FFDF0E /* AWXProviderDelegateEmpty.m */; };
 		184169D829C4347800B02D96 /* UIColor+ViewCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 184169D429C4347800B02D96 /* UIColor+ViewCompat.m */; };
 		184169D929C4347800B02D96 /* UIColor+AWXTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 184169D529C4347800B02D96 /* UIColor+AWXTheme.m */; };
 		184169DA29C4347800B02D96 /* UIColor+AWXTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 184169D629C4347800B02D96 /* UIColor+AWXTheme.h */; };
@@ -378,6 +383,10 @@
 		1839054D29C01AE900FE8069 /* AWXAnalyticsLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXAnalyticsLogger.h; sourceTree = "<group>"; };
 		1839054E29C01AE900FE8069 /* AWXAnalyticsLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXAnalyticsLogger.m; sourceTree = "<group>"; };
 		1839055929C02FFE00FE8069 /* Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Empty.swift; sourceTree = "<group>"; };
+		183FB6462BB6A74100FFDF0E /* AWXNextActionHandlerTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXNextActionHandlerTest.m; sourceTree = "<group>"; };
+		183FB6492BB6BECE00FFDF0E /* ConfirmPaymentIntent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ConfirmPaymentIntent.json; sourceTree = "<group>"; };
+		183FB64B2BB6C62400FFDF0E /* AWXProviderDelegateEmpty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXProviderDelegateEmpty.h; sourceTree = "<group>"; };
+		183FB64C2BB6C62400FFDF0E /* AWXProviderDelegateEmpty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXProviderDelegateEmpty.m; sourceTree = "<group>"; };
 		184169D429C4347800B02D96 /* UIColor+ViewCompat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ViewCompat.m"; sourceTree = "<group>"; };
 		184169D529C4347800B02D96 /* UIColor+AWXTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AWXTheme.m"; sourceTree = "<group>"; };
 		184169D629C4347800B02D96 /* UIColor+AWXTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AWXTheme.h"; sourceTree = "<group>"; };
@@ -691,6 +700,7 @@
 				0829FD0B2431D3A500557DB2 /* PaymentMethod.json */,
 				1829B8BD291B2D3B00D0D2CA /* PaymentMethodType.json */,
 				188F72AD2B2AB36E005CBE9A /* PaymentMethodTypes.json */,
+				183FB6492BB6BECE00FFDF0E /* ConfirmPaymentIntent.json */,
 				188F72AE2B2AC06D005CBE9A /* PaymentConsents.json */,
 			);
 			path = Resources;
@@ -788,9 +798,12 @@
 				3C99E74627E9A6B70074156C /* AWXApplePayOptionsTest.m */,
 				3C99E74427E9A51C0074156C /* AWXConstantsTest.m */,
 				3C99E73E27E9A3380074156C /* AWXDefaultProviderTest.m */,
+				183FB64B2BB6C62400FFDF0E /* AWXProviderDelegateEmpty.h */,
+				183FB64C2BB6C62400FFDF0E /* AWXProviderDelegateEmpty.m */,
 				188F72AB2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m */,
 				18D18C7B294225BC00E70DCD /* AWXPaymentIntentRequestTest.m */,
 				3C324F9227FC0BF200CF7315 /* AWXSessionInternalTest.m */,
+				183FB6462BB6A74100FFDF0E /* AWXNextActionHandlerTest.m */,
 				1862772029DFCC0E0002892A /* AWXUtilsTest.m */,
 				1862772229DFCE920002892A /* NSDataBase64Test.m */,
 				082442C62431BD5100D04A2C /* AWXTestUtils.h */,
@@ -1569,6 +1582,7 @@
 				0829FD0C2431D3A500557DB2 /* PaymentMethod.json in Resources */,
 				0829FD002431D0DE00557DB2 /* Address.json in Resources */,
 				082442C52431AA5100D04A2C /* Card.json in Resources */,
+				183FB64A2BB6C46B00FFDF0E /* ConfirmPaymentIntent.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1878,6 +1892,7 @@
 				1862772329DFCE920002892A /* NSDataBase64Test.m in Sources */,
 				18E0571C29CA8AD70099388A /* AWXAnalyticsLoggerTest.m in Sources */,
 				188F72AC2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m in Sources */,
+				183FB6472BB6A74100FFDF0E /* AWXNextActionHandlerTest.m in Sources */,
 				0829FD022431D10800557DB2 /* AWXAddressTest.m in Sources */,
 				3C324F9327FC0BF200CF7315 /* AWXSessionInternalTest.m in Sources */,
 				18D18C7C294225BC00E70DCD /* AWXPaymentIntentRequestTest.m in Sources */,
@@ -1887,6 +1902,7 @@
 				572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */,
 				0829FD082431D25800557DB2 /* AWXBillingTest.m in Sources */,
 				3C99E74727E9A6B70074156C /* AWXApplePayOptionsTest.m in Sources */,
+				183FB64D2BB6C62400FFDF0E /* AWXProviderDelegateEmpty.m in Sources */,
 				186E02282B1717A500B67994 /* SecretRepository.swift in Sources */,
 				0829FD132431E11E00557DB2 /* AWXPaymentMethodFunctionalTest.m in Sources */,
 				0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */,
@@ -1968,8 +1984,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				183FB6432BB6A31800FFDF0E /* AWXProviderDelegateSpy.m in Sources */,
 				18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */,
 				1829B8C4291B3B7000D0D2CA /* AWXCardProviderTests.m in Sources */,
+				183FB6442BB6A66000FFDF0E /* AWXDefaultProvider+Security.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

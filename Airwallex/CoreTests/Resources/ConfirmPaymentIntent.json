@@ -1,0 +1,133 @@
+{
+  "latest_payment_attempt": {
+    "id": "att_hkstwghgwguqxyqmp6p",
+    "amount": 1,
+    "currency": "USD",
+    "payment_method": {
+      "customer_id": "cus_hku0fk4",
+      "type": "card",
+      "card": {
+        "expiry_month": "08",
+        "expiry_year": "2025",
+        "name": "John",
+        "bin": "1234567",
+        "last4": "8900",
+        "brand": "visa",
+        "issuer_country_code": "GB",
+        "card_type": "DEBIT",
+        "fingerprint": "easdfadvsfvfsg",
+        "billing": {
+          "first_name": "Jason",
+          "last_name": "Wang",
+          "phone_number": "13800000000",
+          "date_of_birth": "",
+          "address": {
+            "country_code": "CN",
+            "state": "Shanghai",
+            "city": "Shanghai",
+            "street": "Pudong District",
+            "postcode": "100000"
+          }
+        },
+        "issuer_name": "NATIONAL WESTMINSTER BANK PLC",
+        "is_commercial": false,
+        "number_type": "PAN"
+      },
+      "id": "mtd_hkstb27fyr4s5q",
+      "status": "CREATED",
+      "created_at": "2024-03-29T09:20:06+0000",
+      "updated_at": "2024-03-29T09:20:06+0000"
+    },
+    "merchant_order_id": "F8CA7F6D-98914A47F8C0943",
+    "payment_intent_id": "int_hkstwghgqxxwstg1",
+    "status": "AUTHENTICATION_REDIRECTED",
+    "captured_amount": 0,
+    "refunded_amount": 0,
+    "created_at": "2024-03-29T09:20:06+0000",
+    "updated_at": "2024-03-29T09:20:07+0000",
+    "settle_via": "airwallex",
+    "authentication_data": {
+      "ds_data": {
+        "version": "2.2.0",
+        "xid": "fa20d290-5815-4026-b8ec-c9f8e7eb43c3",
+        "frictionless": "N",
+        "retry_count_for_auth_decline": 0
+      },
+      "fraud_data": {
+        "action": "CHALLENGE_VERIFY",
+        "score": "85"
+      },
+      "avs_result": "U",
+      "cvc_result": "U"
+    },
+    "expires_at": "2024-03-29T11:20:07+0000",
+    "payment_method_options": {
+      "card": {
+        "authorization_type": "final_auth"
+      }
+    }
+  },
+  "id": "int_hkstwghgwguqxxwstg1",
+  "request_id": "D2DFD431-051D-4461-AE49-08832749AE10",
+  "amount": 1,
+  "currency": "USD",
+  "merchant_order_id": "F8CA7F6D-9891-4427-8F9D-C4A47F8C0943",
+  "order": {
+    "type": "physical_goods",
+    "products": [
+      {
+        "type": "Free engraving",
+        "code": "123",
+        "name": "AirPods Pro",
+        "sku": "piece",
+        "quantity": 1,
+        "unit_price": 399,
+        "desc": "Buy AirPods Pro, per month with trade-in",
+        "url": "www.aircross.com"
+      },
+      {
+        "type": "White",
+        "code": "123",
+        "name": "HomePod",
+        "sku": "piece",
+        "quantity": 1,
+        "unit_price": 469,
+        "desc": "Buy HomePod, per month with trade-in",
+        "url": "www.aircross.com"
+      }
+    ],
+    "shipping": {
+      "first_name": "Jason",
+      "last_name": "Wang",
+      "phone_number": "13800000000",
+      "address": {
+        "country_code": "CN",
+        "state": "Shanghai",
+        "city": "Shanghai",
+        "street": "Pudong District",
+        "postcode": "100000"
+      }
+    }
+  },
+  "customer_id": "cus_hkstv5nj2k4u0fk4",
+  "descriptor": "Cathy Testing",
+  "metadata": {
+    "id": "1"
+  },
+  "status": "REQUIRES_CUSTOMER_ACTION",
+  "captured_amount": 0,
+  "created_at": "2024-03-29T09:19:16+0000",
+  "updated_at": "2024-03-29T09:20:07+0000",
+  "next_action": {
+    "type": "redirect_form",
+    "method": "POST",
+    "url": "https://pci-api-staging.airwallex.com/pa/card3ds/hk/three-ds-method/redirect/start?key=19866b00-7ff0-4b40163e16",
+    "data": {
+      "threeDSMethodData": "eyJ0aHJlZURTTWV0aG9kTm90aW",
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ"
+    },
+    "stage": "WAITING_DEVICE_DATA_COLLECTION"
+  },
+  "base_amount": 1,
+  "base_currency": "USD"
+}

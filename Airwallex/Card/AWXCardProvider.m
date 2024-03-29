@@ -92,7 +92,7 @@
     request.device = device;
     request.paymentConsent = consent;
     request.returnURL = AWXThreeDSReturnURL;
-    
+
     if ([self.session respondsToSelector:@selector(autoCapture)]) {
         AWXCardOptions *cardOptions = [AWXCardOptions new];
         cardOptions.autoCapture = [[self.session valueForKey:@"autoCapture"] boolValue];

@@ -8,12 +8,15 @@
 
 #import "AWXDefaultProvider.h"
 #import "AWXAnalyticsLogger.h"
+#import "AWXNextActionHandler.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodOptions.h"
+#import "AWXProviderDelegateEmpty.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSession.h"
+#import "AWXTestUtils.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 
@@ -240,6 +243,21 @@ NSString *const kMockKey = @"MOCK";
 
     [provider completeWithResponse:[AWXConfirmPaymentIntentResponse new] error:nil];
     OCMVerify(times(1), [_logger logActionWithName:@"payment_success"]);
+}
+
+- (void)testCompleteWithResponseWhenHasNextAction {
+    AWXProviderDelegateEmpty *spy = [AWXProviderDelegateEmpty new];
+    AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:spy session:[AWXOneOffSession new] paymentMethodType:[AWXPaymentMethodType new]];
+    id mockHandler = OCMClassMock([AWXNextActionHandler class]);
+    OCMStub([mockHandler initWithDelegate:[OCMArg any] session:[OCMArg any]]).andReturn(mockHandler);
+    OCMStub([mockHandler alloc]).andReturn(mockHandler);
+    
+    NSData *confirmResponseData = [NSJSONSerialization dataWithJSONObject:[AWXTestUtils jsonNamed:@"ConfirmPaymentIntent"] options:0 error:nil];
+    AWXResponse *response = [AWXConfirmPaymentIntentResponse parse:confirmResponseData];
+    AWXConfirmPaymentIntentResponse *confirmResponse = (AWXConfirmPaymentIntentResponse *)response;
+    [provider completeWithResponse:confirmResponse error:nil];
+    
+    OCMVerify(times(1), [mockHandler handleNextAction:[OCMArg any]]);
 }
 
 - (void)createProviderAndMockWithSession:(AWXSession *)session {
