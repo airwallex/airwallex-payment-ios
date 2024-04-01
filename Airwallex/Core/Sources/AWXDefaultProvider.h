@@ -42,14 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId;
 
 /**
- This method is called when the next action is requiredt.
-
- @param provider The provider handling payment.
- @param nextAction The next action.
- */
-- (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction;
-
-/**
  This method is called when payment is completed.
 
  @param provider The provider handling payment.
@@ -59,6 +51,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error;
 
 @optional
+/**
+ The view controller that any additional UI (e.g. 3DS view, error alert view) will be presented on.
+ */
+- (UIViewController *)hostViewController;
+
+/**
+ This method is called when the next action is required.
+
+ @param provider The provider handling payment.
+ @param nextAction The next action.
+ */
+- (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction;
+
 /**
  This method is called when new controller is required.
 

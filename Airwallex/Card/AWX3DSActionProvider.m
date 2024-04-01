@@ -42,11 +42,27 @@
 }
 
 - (void)threeDSService:(nonnull AWX3DSService *)service shouldPresentViewController:(nonnull UIViewController *)controller {
-    [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
+    if ([self.delegate respondsToSelector:@selector(hostViewController)]) {
+        [[self.delegate hostViewController] presentViewController:controller animated:YES completion:nil];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(provider:shouldPresentViewController:forceToDismiss:withAnimation:)]) {
+            [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
+        }
+    }
 }
 
 - (void)threeDSService:(AWX3DSService *)service shouldInsertViewController:(UIViewController *)controller {
-    [self.delegate provider:self shouldInsertViewController:controller];
+    if ([self.delegate respondsToSelector:@selector(hostViewController)]) {
+        UIViewController *hostViewController = [self.delegate hostViewController];
+        [hostViewController addChildViewController:controller];
+        controller.view.frame = CGRectInset(hostViewController.view.frame, 0, CGRectGetMaxY(hostViewController.view.bounds));
+        [hostViewController.view addSubview:controller.view];
+        [controller didMoveToParentViewController:hostViewController];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(provider:shouldInsertViewController:)]) {
+            [self.delegate provider:self shouldInsertViewController:controller];
+        }
+    }
 }
 
 - (void)threeDSService:(nonnull AWX3DSService *)service didFinishWithResponse:(nullable AWXConfirmPaymentIntentResponse *)response error:(nullable NSError *)error {

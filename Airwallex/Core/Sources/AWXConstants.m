@@ -10,6 +10,7 @@
 #import "AWXAPIClient.h"
 #import "AWXCardValidator.h"
 #import "AWXPaymentIntentResponse.h"
+#import "AWXPaymentMethod.h"
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 

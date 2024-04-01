@@ -8,11 +8,10 @@
 
 #import "AWXAPIClient.h"
 #import "AWXCodable.h"
-#import "AWXPaymentMethod.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class AWXConfirmPaymentNextAction, AWXPaymentAttempt;
+@class AWXConfirmPaymentNextAction, AWXPaymentAttempt, AWXPaymentMethod;
 
 /**
  `AWXConfirmPaymentIntentResponse` includes the result of payment flow.

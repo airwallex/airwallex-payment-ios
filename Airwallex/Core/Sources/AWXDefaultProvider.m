@@ -9,6 +9,7 @@
 #import "AWXDefaultProvider.h"
 #import "AWXAnalyticsLogger.h"
 #import "AWXDevice.h"
+#import "AWXNextActionHandler.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentIntentRequest.h"
@@ -25,6 +26,7 @@
 @property (nonatomic, strong, readwrite, nullable) AWXPaymentMethod *paymentMethod;
 @property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
 @property (nonatomic, strong) NSString *paymentIntentId;
+@property (nonatomic, strong) AWXNextActionHandler *nextActionHandler;
 
 @end
 
@@ -95,6 +97,34 @@
                                              completion:completion];
 }
 
+- (void)completeWithResponse:(nullable AWXConfirmPaymentIntentResponse *)response
+                       error:(nullable NSError *)error {
+    [self.delegate providerDidEndRequest:self];
+    if (response && !error) {
+        if (response.nextAction) {
+            if ([self.delegate respondsToSelector:@selector(provider:shouldHandleNextAction:)]) {
+                [self.delegate provider:self shouldHandleNextAction:response.nextAction];
+            } else {
+                AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:self.delegate session:self.session];
+                [handler handleNextAction:response.nextAction];
+                self.nextActionHandler = handler;
+            }
+        } else {
+            [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
+
+            if (_paymentMethod.type.length > 0) {
+                [[AWXAnalyticsLogger shared] logActionWithName:@"payment_success" additionalInfo:@{@"paymentMethod": _paymentMethod.type}];
+            } else {
+                [[AWXAnalyticsLogger shared] logActionWithName:@"payment_success"];
+            }
+        }
+    } else {
+        [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+    }
+}
+
+#pragma mark - Internal Actions
+
 - (void)confirmPaymentIntentWithPaymentMethodInternal:(AWXPaymentMethod *)paymentMethod
                                        paymentConsent:(AWXPaymentConsent *)paymentConsent
                                                device:(AWXDevice *)device
@@ -117,28 +147,6 @@
         [self createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod device:device completion:completion];
     }
 }
-
-- (void)completeWithResponse:(nullable AWXConfirmPaymentIntentResponse *)response
-                       error:(nullable NSError *)error {
-    [self.delegate providerDidEndRequest:self];
-    if (response && !error) {
-        if (response.nextAction) {
-            [self.delegate provider:self shouldHandleNextAction:response.nextAction];
-        } else {
-            [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
-
-            if (_paymentMethod.type.length > 0) {
-                [[AWXAnalyticsLogger shared] logActionWithName:@"payment_success" additionalInfo:@{@"paymentMethod": _paymentMethod.type}];
-            } else {
-                [[AWXAnalyticsLogger shared] logActionWithName:@"payment_success"];
-            }
-        }
-    } else {
-        [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-    }
-}
-
-#pragma mark - Internal Actions
 
 - (void)confirmPaymentIntentWithId:(NSString *)paymentIntentId
                         customerId:(nullable NSString *)customerId

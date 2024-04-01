@@ -73,6 +73,8 @@ use_frameworks!
 
 ### 基本整合
 
+这是**推荐用法**, 它通过我们已经为你构建好的UI创建出一个完整的用户流程，以便于收集支付详情、账单详情和确认支付。
+
 启动应用时，请先配置SDK的`mode`.
 
 ```objective-c
@@ -136,7 +138,7 @@ session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
 ```
 
-- 处理付款流程
+- 显示付款流程
 
 在结帐界面中，添加一个按钮，让客户输入或更改他们的付款方式。点击后，用`AWXUIContext`显示付款流程。
 
@@ -159,6 +161,39 @@ context.session = session;
     [controller dismissViewControllerAnimated:YES completion:^{
         // Status may be success/in progress/ failure / cancel
     }];
+}
+```
+
+### 低层API集成
+
+你可以基于我们的低层API来构建完全由你自定义的UI
+
+#### 用卡和账单详情或者consent ID来确认卡支付
+
+你仍然需要按照[基本整合](#基本整合)中的步骤来设置配置、intent和session, 除了**显示付款流程**的步骤由以下步骤代替:
+
+```objective-c
+AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:"The target to handle AWXPaymentResultDelegate protocol" session:"The session created above"];
+// After initialization, you will need to store the provider in your view controller or class that is tied to your view's lifecycle
+self.provider = provider;
+
+// Confirm intent with card and billing
+[provider confirmPaymentIntentWithCard:"The AWXCard object collected by your custom UI" billing:"The AWXPlaceDetails object collected by your custom UI" saveCard:"Whether you want the card to be saved as payment consent for future payments"];
+
+// Or to confirm intent with a valid payment consent ID
+[provider confirmPaymentIntentWithPaymentConsentId:@"cst_xxxxxxxxxx"];
+``` 
+
+你也需要提供你的顶栈控制器，我们会在此之上来展示额外的用户页（例如3DS校验页、警示页）
+```objective-c
+#pragma mark - AWXProviderDelegate
+
+- (UIViewController *)hostViewController {
+    // Your host view controller
+}
+
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
+    // You can handle different payment statuses and perform UI action respectively here
 }
 ```
 
