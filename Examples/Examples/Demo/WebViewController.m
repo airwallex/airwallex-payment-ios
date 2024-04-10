@@ -62,7 +62,8 @@
          [absoluteString hasPrefix:@"alipay://"] ||
          [absoluteString hasPrefix:@"alipayhk://"] ||
          [absoluteString hasPrefix:@"airwallexcheckout://"] ||
-         [absoluteString hasPrefix:@"alipays://"]) &&
+         [absoluteString hasPrefix:@"alipays://"] ||
+         [absoluteString hasPrefix:@"kakaotalk://"]) &&
         !([absoluteString hasPrefix:@"http://"] || [absoluteString hasPrefix:@"https://"])) {
         NSURL *url = [[NSURL alloc] initWithString:absoluteString];
         if (url) {
