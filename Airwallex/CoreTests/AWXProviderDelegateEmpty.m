@@ -10,19 +10,19 @@
 
 @implementation AWXProviderDelegateEmpty
 
-- (void)provider:(nonnull AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error { 
+- (void)provider:(nonnull AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
     // no op
 }
 
-- (void)provider:(nonnull AWXDefaultProvider *)provider didInitializePaymentIntentId:(nonnull NSString *)paymentIntentId { 
+- (void)provider:(nonnull AWXDefaultProvider *)provider didInitializePaymentIntentId:(nonnull NSString *)paymentIntentId {
     // no op
 }
 
-- (void)providerDidEndRequest:(nonnull AWXDefaultProvider *)provider { 
+- (void)providerDidEndRequest:(nonnull AWXDefaultProvider *)provider {
     // no op
 }
 
-- (void)providerDidStartRequest:(nonnull AWXDefaultProvider *)provider { 
+- (void)providerDidStartRequest:(nonnull AWXDefaultProvider *)provider {
     // no op
 }
 

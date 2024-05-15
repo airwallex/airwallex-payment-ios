@@ -251,12 +251,12 @@ NSString *const kMockKey = @"MOCK";
     id mockHandler = OCMClassMock([AWXNextActionHandler class]);
     OCMStub([mockHandler initWithDelegate:[OCMArg any] session:[OCMArg any]]).andReturn(mockHandler);
     OCMStub([mockHandler alloc]).andReturn(mockHandler);
-    
+
     NSData *confirmResponseData = [NSJSONSerialization dataWithJSONObject:[AWXTestUtils jsonNamed:@"ConfirmPaymentIntent"] options:0 error:nil];
     AWXResponse *response = [AWXConfirmPaymentIntentResponse parse:confirmResponseData];
     AWXConfirmPaymentIntentResponse *confirmResponse = (AWXConfirmPaymentIntentResponse *)response;
     [provider completeWithResponse:confirmResponse error:nil];
-    
+
     OCMVerify(times(1), [mockHandler handleNextAction:[OCMArg any]]);
 }
 
