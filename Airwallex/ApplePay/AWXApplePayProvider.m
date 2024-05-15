@@ -38,7 +38,6 @@
         _isApplePayInitiatedDirectly = true;
         [self handleFlow];
     } else {
-        // Make error message specific to apple pay
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: errorReason}];
