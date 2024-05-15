@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
  `AWXApplePayProvider` is a provider to handle payment method with Apple Pay.
  */
 @interface AWXApplePayProvider : AWXDefaultProvider
-- (void)makePayment;
+- (void)startPayment;
 @end
 
 NS_ASSUME_NONNULL_END

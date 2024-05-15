@@ -352,7 +352,7 @@
 
     // Step 4: Present payment flow
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:self session:session];
-    [provider makePayment];
+    [provider startPayment];
     _applePayProvider = provider;
 }
 

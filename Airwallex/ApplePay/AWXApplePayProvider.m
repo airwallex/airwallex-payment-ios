@@ -32,7 +32,7 @@
 @implementation AWXApplePayProvider
 
 #pragma mark - Initiate Apple pay flow
-- (void)makePayment {
+- (void)startPayment {
     NSString *errorReason = @"";
     if ([AWXApplePayProvider canHandleSession:self.session errorReason:&errorReason]) {
         _isApplePayInitiatedDirectly = true;
@@ -54,12 +54,20 @@
             }
             return NO;
         }
-        BOOL canMakePaymentUsingNetworksAndCapabilities = [PKPaymentAuthorizationController canMakePaymentsUsingNetworks:AWXApplePaySupportedNetworks()
-                                                                                                            capabilities:oneOffSession.applePayOptions.merchantCapabilities];
-        if (error && !canMakePaymentUsingNetworksAndCapabilities) {
-            *error = NSLocalizedString(@"Payment cannot be processed via Apple pay using the specified networks and capabilities.", nil);
+        BOOL canMakePayment = false;
+
+        if (@available(iOS 15.0, *)) {
+            // From iOS 15.0 onwards, user can add new card directly in the apple pay flow
+            canMakePayment = [PKPaymentAuthorizationController canMakePayments];
+        } else {
+            canMakePayment = [PKPaymentAuthorizationController canMakePaymentsUsingNetworks:AWXApplePaySupportedNetworks()
+                                                                               capabilities:oneOffSession.applePayOptions.merchantCapabilities];
         }
-        return canMakePaymentUsingNetworksAndCapabilities;
+
+        if (error && !canMakePayment) {
+            *error = NSLocalizedString(@"Payment not supported via Apple pay.", nil);
+        }
+        return canMakePayment;
     } else {
         if (error) {
             *error = NSLocalizedString(@"Unsupported session type.", nil);

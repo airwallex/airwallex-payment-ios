@@ -66,10 +66,7 @@
 - (void)testCanHandleSessionShouldReturnNOWhenDeviceCheckFailed {
     AWXSession *session = [AWXOneOffSession new];
     session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
-    id classMock = OCMClassMock([PKPaymentAuthorizationController class]);
-    OCMStub([classMock canMakePaymentsUsingNetworks:[OCMArg any] capabilities:0])
-        .ignoringNonObjectArgs()
-        .andReturn(NO);
+    [self mockPKCanMakePayments:NO];
 
     XCTAssertFalse([self canHandleSession:session]);
 }
@@ -77,10 +74,7 @@
 - (void)testCanHandleSessionShouldReturnYES {
     AWXSession *session = [AWXOneOffSession new];
     session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
-    id classMock = OCMClassMock([PKPaymentAuthorizationController class]);
-    OCMStub([classMock canMakePaymentsUsingNetworks:[OCMArg any] capabilities:0])
-        .ignoringNonObjectArgs()
-        .andReturn(YES);
+    [self mockPKCanMakePayments:YES];
 
     XCTAssertTrue([self canHandleSession:session]);
 }
@@ -310,30 +304,27 @@
     XCTAssertNil(delegate.lastStatusError);
 }
 
-- (void)testMakePaymentWithValidOneOffSessionCallsHandleFlow {
+- (void)testStartPaymentWithValidOneOffSessionCallsHandleFlow {
     AWXSession *session = [AWXOneOffSession new];
     session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
-    id classMock = OCMClassMock([PKPaymentAuthorizationController class]);
-    OCMStub([classMock canMakePaymentsUsingNetworks:[OCMArg any] capabilities:0])
-        .ignoringNonObjectArgs()
-        .andReturn(YES);
+    [self mockPKCanMakePayments:YES];
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
 
-    [provider makePayment];
+    [provider startPayment];
 
     OCMVerify(times(1), [providerSpy handleFlow]);
 }
 
-- (void)testMakePaymentWithRecurringSessionReturnsError {
+- (void)testStartPaymentWithRecurringSessionReturnsError {
     AWXSession *session = [AWXRecurringSession new];
     session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
 
-    [provider makePayment];
+    [provider startPayment];
 
     OCMVerify(never(), [providerSpy handleFlow]);
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
@@ -342,14 +333,14 @@
                                                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unsupported session type.", nil)}]);
 }
 
-- (void)testMakePaymentWithMissingApplePayOptionsReturnsError {
+- (void)testStartPaymentWithMissingApplePayOptionsReturnsError {
     AWXSession *session = [AWXOneOffSession new];
     session.applePayOptions = nil;
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
 
-    [provider makePayment];
+    [provider startPayment];
 
     OCMVerify(never(), [providerSpy handleFlow]);
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
@@ -358,24 +349,43 @@
                                                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing Apple Pay options in session.", nil)}]);
 }
 
-- (void)testMakePaymentWithUnsupportedCapabilitiesReturnsError {
+- (void)testStartPaymentWithUnsupportedCapabilitiesReturnsError {
     AWXSession *session = [AWXOneOffSession new];
     session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
-    id classMock = OCMClassMock([PKPaymentAuthorizationController class]);
-    OCMStub([classMock canMakePaymentsUsingNetworks:[OCMArg any] capabilities:0])
-        .ignoringNonObjectArgs()
-        .andReturn(NO);
+    [self mockPKCanMakePayments:NO];
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
 
-    [provider makePayment];
+    [provider startPayment];
 
     OCMVerify(never(), [providerSpy handleFlow]);
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
     XCTAssertEqualObjects(delegate.lastStatusError, [NSError errorWithDomain:AWXSDKErrorDomain
                                                                         code:-1
-                                                                    userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Payment cannot be processed via Apple pay using the specified networks and capabilities.", nil)}]);
+                                                                    userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Payment not supported via Apple pay.", nil)}]);
+}
+
+- (void)testStartPaymentWhenCancelledReturnsError {
+    AWXOneOffSession *session = [self makeSession];
+
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Expect completeWithStatus to be called"];
+    delegate.statusExpectation = expectation;
+
+    [self prepareAuthorizationControllerMock:nil billingPayload:nil result:nil endImmediately:YES];
+
+    AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
+    
+    [provider startPayment];
+
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+
+    XCTAssertEqual(delegate.providerDidCompleteWithStatusCount, 1);
+    XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusCancel);
+    XCTAssertEqualObjects(delegate.lastStatusError, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                                        code:-1
+                                                                    userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"User cancelled Apple Pay.", nil)}]);
 }
 
 - (AWXOneOffSession *)makeSession {
@@ -460,6 +470,19 @@
 - (BOOL)canHandleSession:(AWXSession *)session {
     AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
     return [AWXApplePayProvider canHandleSession:session paymentMethod:paymentMethod];
+}
+
+- (void)mockPKCanMakePayments:(BOOL)canMakePayment {
+    id classMock = OCMClassMock([PKPaymentAuthorizationController class]);
+    if (@available(iOS 15.0, *)) {
+        OCMStub([classMock canMakePayments])
+            .ignoringNonObjectArgs()
+            .andReturn(canMakePayment);
+    } else {
+        OCMStub([classMock canMakePaymentsUsingNetworks:[OCMArg any] capabilities:0])
+            .ignoringNonObjectArgs()
+            .andReturn(canMakePayment);
+    }
 }
 
 @end

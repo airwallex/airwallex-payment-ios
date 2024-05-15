@@ -210,7 +210,7 @@ AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:"T
 self.provider = provider;
 
 // Initiate the apple pay flow
- [provider makePayment];
+ [provider startPayment];
 
 ``` 
 
