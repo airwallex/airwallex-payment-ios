@@ -58,6 +58,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCountryCode];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedReturnURL];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kCachedAutoCapture];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCachedApplePayMethodOnly];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     [self syncKeys];
@@ -70,6 +71,7 @@
     self.nextTriggerByType = [userDefaults integerForKey:kCachedNextTriggerBy];
     self.requireCVC = [userDefaults boolForKey:kCachedRequiresCVC];
     self.autoCapture = [userDefaults boolForKey:kCachedAutoCapture];
+    self.applePayMethodOnly = [userDefaults boolForKey:kCachedApplePayMethodOnly];
     self.customerId = [userDefaults stringForKey:kCachedCustomerID];
 
     NSString *cachedApiKey = [userDefaults stringForKey:kCachedApiKey];
@@ -106,6 +108,11 @@
 - (void)setAutoCapture:(BOOL)autoCapture {
     _autoCapture = autoCapture;
     [[NSUserDefaults standardUserDefaults] setBool:autoCapture forKey:kCachedAutoCapture];
+}
+
+- (void)setApplePayMethodOnly:(BOOL)applePayMethodOnly {
+    _applePayMethodOnly = applePayMethodOnly;
+    [[NSUserDefaults standardUserDefaults] setBool:applePayMethodOnly forKey:kCachedApplePayMethodOnly];
 }
 
 - (void)setCustomerId:(nullable NSString *)customerId {
