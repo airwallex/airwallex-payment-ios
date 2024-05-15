@@ -310,6 +310,74 @@
     XCTAssertNil(delegate.lastStatusError);
 }
 
+- (void)testMakePaymentWithValidOneOffSessionCallsHandleFlow {
+    AWXSession *session = [AWXOneOffSession new];
+    session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
+    id classMock = OCMClassMock([PKPaymentAuthorizationController class]);
+    OCMStub([classMock canMakePaymentsUsingNetworks:[OCMArg any] capabilities:0])
+        .ignoringNonObjectArgs()
+        .andReturn(YES);
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
+    id providerSpy = OCMPartialMock(provider);
+    
+    [provider makePayment];
+    
+    OCMVerify(times(1), [providerSpy handleFlow]);
+}
+
+- (void)testMakePaymentWithRecurringSessionReturnsError {
+    AWXSession *session = [AWXRecurringSession new];
+    session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
+    id providerSpy = OCMPartialMock(provider);
+    
+    [provider makePayment];
+    
+    OCMVerify(never(), [providerSpy handleFlow]);
+    XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
+    XCTAssertEqualObjects(delegate.lastStatusError, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                                 code:-1
+                                                             userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unsupported session type.", nil)}]);
+}
+
+- (void)testMakePaymentWithMissingApplePayOptionsReturnsError {
+    AWXSession *session = [AWXOneOffSession new];
+    session.applePayOptions = nil;
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
+    id providerSpy = OCMPartialMock(provider);
+    
+    [provider makePayment];
+    
+    OCMVerify(never(), [providerSpy handleFlow]);
+    XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
+    XCTAssertEqualObjects(delegate.lastStatusError, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                                 code:-1
+                                                             userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing Apple Pay options in session.", nil)}]);
+}
+
+- (void)testMakePaymentWithUnsupportedCapabilitiesReturnsError {
+    AWXSession *session = [AWXOneOffSession new];
+    session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
+    id classMock = OCMClassMock([PKPaymentAuthorizationController class]);
+    OCMStub([classMock canMakePaymentsUsingNetworks:[OCMArg any] capabilities:0])
+        .ignoringNonObjectArgs()
+        .andReturn(NO);
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
+    id providerSpy = OCMPartialMock(provider);
+    
+    [provider makePayment];
+    
+    OCMVerify(never(), [providerSpy handleFlow]);
+    XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
+    XCTAssertEqualObjects(delegate.lastStatusError, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                                 code:-1
+                                                             userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Payment cannot be processed via Apple pay using the specified networks and capabilities.", nil)}]);
+}
+
 - (AWXOneOffSession *)makeSession {
     AWXOneOffSession *session = [AWXOneOffSession new];
 
