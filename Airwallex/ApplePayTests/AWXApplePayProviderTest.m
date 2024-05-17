@@ -376,7 +376,7 @@
     [self prepareAuthorizationControllerMock:nil billingPayload:nil result:nil endImmediately:YES];
 
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
-    
+
     [provider startPayment];
 
     [self waitForExpectationsWithTimeout:1 handler:nil];
@@ -390,9 +390,13 @@
 
 - (AWXOneOffSession *)makeSession {
     AWXOneOffSession *session = [AWXOneOffSession new];
-
+    session.countryCode = @"AU";
+    
     AWXPaymentIntent *intent = [AWXPaymentIntent new];
     session.paymentIntent = intent;
+    intent.Id = @"PaymentIntentId";
+    intent.currency = @"AUD";
+    intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
     intent.customerId = @"customerId";
 
     AWXPlaceDetails *billing = [AWXPlaceDetails new];
