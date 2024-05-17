@@ -57,9 +57,9 @@
     session.autoCapture = YES;
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
     id providerSpy = OCMPartialMock(provider);
-    
+
     OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:device, nil])]);
-    
+
     [provider confirmPaymentIntentWithPaymentConsentId:@"consentID"];
 
     OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {

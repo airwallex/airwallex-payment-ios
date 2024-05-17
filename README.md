@@ -199,6 +199,42 @@ You also need to provide your host view controller which we use to present addit
 }
 ```
 
+#### Make payment with apple pay provider
+
+You still need all the other steps in [Basic Integration](#basic-integration) section to set up configurations, intent and session, except the step **Present one-off payment or recurring flow** is replaced by:
+
+```objective-c
+AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:"The target to handle AWXProviderDelegate protocol" session:"The one off session created with apple pay options"];
+
+// After initialization, you will need to store the provider in your view controller or class that is tied to your view's lifecycle
+self.provider = provider;
+
+// Initiate the apple pay flow
+ [provider startPayment];
+
+``` 
+
+You also need to delegate methods to handle the result
+```objective-c
+#pragma mark - AWXProviderDelegate
+
+- (void)provider:(nonnull AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
+    switch (status) {
+    case AirwallexPaymentStatusSuccess:
+       // handle success
+        break;
+    case AirwallexPaymentStatusFailure:
+       // handle failure
+        break;
+    case AirwallexPaymentStatusCancel:
+       // handle payment cancelled by the user
+        break;
+    default:
+        break;
+    }
+}
+```
+
 ### Set Up WeChat Pay
 
 After completing payment, WeChat will be redirected to the merchant's app and do a callback using onResp(), then it can retrieve the payment intent status after the merchant server is notified, so please keep listening to the notification.

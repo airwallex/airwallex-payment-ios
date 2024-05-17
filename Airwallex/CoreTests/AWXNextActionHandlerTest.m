@@ -6,8 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-#import "AWXDefaultActionProvider.h"
 #import "AWXNextActionHandler.h"
+#import "AWXDefaultActionProvider.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSession.h"
 #import <OCMock/OCMock.h>
@@ -24,12 +24,12 @@
 
     OCMStub([mockProvider initWithDelegate:[OCMArg any] session:[OCMArg any]]).andReturn(mockProvider);
     OCMStub([mockProvider alloc]).andReturn(mockProvider);
-    
+
     AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
     AWXOneOffSession *session = [AWXOneOffSession new];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"next", @"type", nil];
     AWXConfirmPaymentNextAction *nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:dict];
-    
+
     AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:spy session:session];
     [handler handleNextAction:nextAction];
     OCMVerify(times(1), [mockProvider handleNextAction:nextAction]);
@@ -40,7 +40,7 @@
     AWXOneOffSession *session = [AWXOneOffSession new];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"redirect", @"type", nil];
     AWXConfirmPaymentNextAction *nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:dict];
-    
+
     AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:mockDelegate session:session];
     [handler handleNextAction:nextAction];
     OCMVerify(times(1), [mockDelegate provider:[OCMArg any] shouldPresentViewController:[OCMArg any] forceToDismiss:YES withAnimation:YES]);

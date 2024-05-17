@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet OptionButton *nextTriggerByBtn;
 @property (weak, nonatomic) IBOutlet UISwitch *cvcSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *autoCaptureSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *applePayOnlySwitch;
 @property (weak, nonatomic) IBOutlet UITextField *customerIdTextField;
 @property (weak, nonatomic) IBOutlet UIButton *clearCustomerIdButton;
 
@@ -190,6 +191,10 @@
     [AirwallexExamplesKeys shared].autoCapture = self.autoCaptureSwitch.isOn;
 }
 
+- (IBAction)applePayOnlySwitchPressed:(id)sender {
+    [AirwallexExamplesKeys shared].applePayMethodOnly = self.applePayOnlySwitch.isOn;
+}
+
 - (IBAction)generateCustomer:(id)sender {
     [self.activityIndicator startAnimating];
     __weak __typeof(self) weakSelf = self;
@@ -275,6 +280,9 @@
 
     BOOL autoCapture = [AirwallexExamplesKeys shared].autoCapture;
     self.autoCaptureSwitch.on = autoCapture;
+
+    BOOL applePayMethodOnly = [AirwallexExamplesKeys shared].applePayMethodOnly;
+    self.applePayOnlySwitch.on = applePayMethodOnly;
 
     self.customerIdTextField.enabled = NO;
     NSString *customerId = [AirwallexExamplesKeys shared].customerId;

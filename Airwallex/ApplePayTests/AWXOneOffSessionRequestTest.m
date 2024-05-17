@@ -36,6 +36,7 @@
 
     AWXPaymentIntent *intent = [AWXPaymentIntent new];
     session.paymentIntent = intent;
+    intent.Id = @"PaymentIntentId";
     intent.currency = @"AUD";
     intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
 
@@ -70,6 +71,7 @@
 
     AWXPaymentIntent *intent = [AWXPaymentIntent new];
     session.paymentIntent = intent;
+    intent.Id = @"PaymentIntentId";
     intent.currency = @"AUD";
     intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
 
@@ -110,6 +112,106 @@
 
     XCTAssertNil(request);
     XCTAssertNotNil(error);
+}
+
+- (void)testMakePaymentRequestWithMissingCountryCodeInSession {
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.applePayOptions = [self makeOptions:nil];
+
+    AWXPaymentIntent *intent = [AWXPaymentIntent new];
+    session.paymentIntent = intent;
+    intent.Id = @"PaymentIntentId";
+    intent.currency = @"AUD";
+    intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
+    
+    NSError *error;
+    PKPaymentRequest *request = [session makePaymentRequestOrError:&error];
+
+    XCTAssertNil(request);
+    XCTAssertEqualObjects(error, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                     code:-1
+                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing country code in session.", nil)}]);
+}
+
+- (void)testMakePaymentRequestWithMissingAmountInIntent {
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.countryCode = @"AU";
+    session.applePayOptions = [self makeOptions:nil];
+
+    AWXPaymentIntent *intent = [AWXPaymentIntent new];
+    session.paymentIntent = intent;
+    intent.Id = @"PaymentIntentId";
+    intent.currency = @"AUD";
+
+    NSError *error;
+    PKPaymentRequest *request = [session makePaymentRequestOrError:&error];
+
+    XCTAssertNil(request);
+    XCTAssertEqualObjects(error, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                     code:-1
+                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing amount in PaymentIntent.", nil)}]);
+}
+
+- (void)testMakePaymentRequestWithMissingIdInIntent {
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.countryCode = @"AU";
+    session.applePayOptions = [self makeOptions:nil];
+
+    AWXPaymentIntent *intent = [AWXPaymentIntent new];
+    session.paymentIntent = intent;
+    intent.currency = @"AUD";
+    intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
+
+    NSError *error;
+    PKPaymentRequest *request = [session makePaymentRequestOrError:&error];
+
+    XCTAssertNil(request);
+    XCTAssertEqualObjects(error, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                     code:-1
+                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing id in PaymentIntent.", nil)}]);
+}
+
+- (void)testMakePaymentRequestWithMissingCurrencyCodeInIntent {
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.countryCode = @"AU";
+    session.applePayOptions = [self makeOptions:nil];
+
+    AWXPaymentIntent *intent = [AWXPaymentIntent new];
+    intent.Id = @"PaymentIntentId";
+    intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
+    session.paymentIntent = intent;
+
+    intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
+
+    NSError *error;
+    PKPaymentRequest *request = [session makePaymentRequestOrError:&error];
+
+    XCTAssertNil(request);
+    XCTAssertEqualObjects(error, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                     code:-1
+                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Currency code should be three-letter ISO 4217 currency code.", nil)}]);
+}
+
+- (void)testMakePaymentRequestWithCurrencyCodeOfInvalidLengthInIntent {
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.countryCode = @"AU";
+    session.applePayOptions = [self makeOptions:nil];
+
+    AWXPaymentIntent *intent = [AWXPaymentIntent new];
+    intent.Id = @"PaymentIntentId";
+    intent.currency = @"AU";
+    intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
+    session.paymentIntent = intent;
+
+    intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
+
+    NSError *error;
+    PKPaymentRequest *request = [session makePaymentRequestOrError:&error];
+
+    XCTAssertNil(request);
+    XCTAssertEqualObjects(error, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                     code:-1
+                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Currency code should be three-letter ISO 4217 currency code.", nil)}]);
 }
 
 - (AWXApplePayOptions *)makeOptions:(nullable NSArray<PKPaymentSummaryItem *> *)items {

@@ -14,10 +14,11 @@
 #import "ShippingCell.h"
 #import "TotalCell.h"
 #import "UIViewController+Utils.h"
+#import <Airwallex/ApplePay.h>
 #import <Airwallex/Core.h>
 #import <SafariServices/SFSafariViewController.h>
 
-@interface CartViewController ()<UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate>
+@interface CartViewController ()<UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate, AWXProviderDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
@@ -26,6 +27,7 @@
 @property (strong, nonatomic) NSMutableArray *products;
 @property (strong, nonatomic) AWXPlaceDetails *shipping;
 @property (strong, nonatomic) AWXPaymentIntent *paymentIntent;
+@property (strong, nonatomic) AWXApplePayProvider *applePayProvider;
 
 @end
 
@@ -114,6 +116,11 @@
 
     self.checkoutButton.enabled = self.shipping != nil && amount.doubleValue > 0 && currency.length > 0 && countryCode.length > 0 && returnUrl.length > 0;
 
+    NSString *checkoutTitle = @"Checkout";
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kCachedApplePayMethodOnly]) {
+        checkoutTitle = @"Pay";
+    }
+    [self.checkoutButton setTitle:checkoutTitle forState:UIControlStateNormal];
     [self.tableView reloadData];
 }
 
@@ -258,7 +265,12 @@
         } else if (_customerSecret) {
             [AWXAPIClientConfiguration sharedConfiguration].clientSecret = _customerSecret;
         }
-        [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
+
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kCachedApplePayMethodOnly]) {
+            [strongSelf initiateApplePaymentFlowWithPaymentIntent:_paymentIntent];
+        } else {
+            [strongSelf showPaymentFlowWithPaymentIntent:_paymentIntent];
+        }
     });
 }
 
@@ -330,6 +342,18 @@
     context.delegate = self;
     context.session = session;
     [context presentPaymentFlowFrom:self];
+}
+
+#pragma mark - Initiate Apple Pay Flow
+- (void)initiateApplePaymentFlowWithPaymentIntent:(nullable AWXPaymentIntent *)paymentIntent {
+    self.paymentIntent = paymentIntent;
+    // Step 3: Create session
+    AWXSession *session = [self createSession:paymentIntent];
+
+    // Step 4: Present payment flow
+    AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:self session:session];
+    [provider startPayment];
+    _applePayProvider = provider;
 }
 
 #pragma mark - Show Payment Result
@@ -453,6 +477,36 @@
                                            break;
                                        }
                                    }];
+}
+
+#pragma mark - AWXProviderDelegate
+
+- (void)provider:(nonnull AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
+    switch (status) {
+    case AirwallexPaymentStatusSuccess:
+        [self showPaymentSuccess];
+        break;
+    case AirwallexPaymentStatusFailure:
+        [self showPaymentFailure:error];
+        break;
+    case AirwallexPaymentStatusCancel:
+        [self showPaymentCancel];
+        break;
+    default:
+        break;
+    }
+}
+
+- (void)provider:(nonnull AWXDefaultProvider *)provider didInitializePaymentIntentId:(nonnull NSString *)paymentIntentId {
+    NSLog(@"didInitializePaymentIntentId: %@", paymentIntentId);
+}
+
+- (void)providerDidEndRequest:(nonnull AWXDefaultProvider *)provider {
+    NSLog(@"providerDidEndRequest");
+}
+
+- (void)providerDidStartRequest:(nonnull AWXDefaultProvider *)provider {
+    NSLog(@"providerDidStartRequest");
 }
 
 @end
