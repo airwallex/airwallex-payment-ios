@@ -148,10 +148,7 @@
         } else {
             if (strongSelf.isApplePayInitiatedDirectly) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                                         code:-1
-                                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"User cancelled Apple Pay.", nil)}];
-                    [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:error];
+                    [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
                 });
             } else {
                 // The user most likely has cancelled the authorization.

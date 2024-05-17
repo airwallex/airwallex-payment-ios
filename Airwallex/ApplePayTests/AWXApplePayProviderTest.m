@@ -366,11 +366,11 @@
                                                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Payment not supported via Apple pay.", nil)}]);
 }
 
-- (void)testStartPaymentWhenCancelledReturnsError {
+- (void)testStartPaymentWhenCancelledReturnsCancelStatus {
     AWXOneOffSession *session = [self makeSession];
 
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Expect completeWithStatus to be called"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Expect completeWithStatus to be called with cancel status"];
     delegate.statusExpectation = expectation;
 
     [self prepareAuthorizationControllerMock:nil billingPayload:nil result:nil endImmediately:YES];
@@ -383,9 +383,7 @@
 
     XCTAssertEqual(delegate.providerDidCompleteWithStatusCount, 1);
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusCancel);
-    XCTAssertEqualObjects(delegate.lastStatusError, [NSError errorWithDomain:AWXSDKErrorDomain
-                                                                        code:-1
-                                                                    userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"User cancelled Apple Pay.", nil)}]);
+    XCTAssertNil(delegate.lastStatusError);
 }
 
 - (AWXOneOffSession *)makeSession {
