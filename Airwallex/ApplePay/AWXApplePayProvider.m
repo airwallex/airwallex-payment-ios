@@ -176,6 +176,7 @@
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: description}];
+        [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         return;
     }
@@ -190,6 +191,7 @@
             NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                                  code:-1
                                              userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present PKPaymentAuthorizationController.", nil)}];
+            [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
             [[strongSelf delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
             return;
         }
