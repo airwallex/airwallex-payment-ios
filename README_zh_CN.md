@@ -197,6 +197,42 @@ self.provider = provider;
 }
 ```
 
+#### 用Apple Pay provider来发起支付
+
+你仍然需要按照[基本整合](#基本整合)中的步骤来设置配置、intent和session, 除了**显示付款流程**的步骤由以下步骤代替:
+
+```objective-c
+AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:"The target to handle AWXProviderDelegate protocol" session:"The one off session created with apple pay options"];
+
+// After initialization, you will need to store the provider in your view controller or class that is tied to your view's lifecycle
+self.provider = provider;
+
+// Initiate the apple pay flow
+ [provider startPayment];
+
+``` 
+
+你需要实现以下delegate方法来处理支付结果
+```objective-c
+#pragma mark - AWXProviderDelegate
+
+- (void)provider:(nonnull AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
+    switch (status) {
+    case AirwallexPaymentStatusSuccess:
+       // handle success
+        break;
+    case AirwallexPaymentStatusFailure:
+       // handle failure
+        break;
+    case AirwallexPaymentStatusCancel:
+       // handle Apple Pay cancelled by the user
+        break;
+    default:
+        break;
+    }
+}
+```
+
 ### 设置微信支付
 
 付款完成后，微信将重定向到商家的应用程序，并使用onRes()进行回调，然后在通知商家服务器后可以检索payment intent状态，因此请保持监听通知。

@@ -123,7 +123,7 @@
     intent.Id = @"PaymentIntentId";
     intent.currency = @"AUD";
     intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
-    
+
     NSError *error;
     PKPaymentRequest *request = [session makePaymentRequestOrError:&error];
 

@@ -389,7 +389,7 @@
 - (AWXOneOffSession *)makeSession {
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.countryCode = @"AU";
-    
+
     AWXPaymentIntent *intent = [AWXPaymentIntent new];
     session.paymentIntent = intent;
     intent.Id = @"PaymentIntentId";
