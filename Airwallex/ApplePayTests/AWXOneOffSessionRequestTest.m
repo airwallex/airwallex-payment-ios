@@ -123,7 +123,7 @@
     intent.Id = @"PaymentIntentId";
     intent.currency = @"AUD";
     intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
-    
+
     NSError *error;
     PKPaymentRequest *request = [session makePaymentRequestOrError:&error];
 
@@ -189,7 +189,7 @@
     XCTAssertNil(request);
     XCTAssertEqualObjects(error, [NSError errorWithDomain:AWXSDKErrorDomain
                                                      code:-1
-                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Currency code should be three-letter ISO 4217 currency code.", nil)}]);
+                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"PaymentIntent currency should be three-letter ISO 4217 currency code.", nil)}]);
 }
 
 - (void)testMakePaymentRequestWithCurrencyCodeOfInvalidLengthInIntent {
@@ -211,7 +211,7 @@
     XCTAssertNil(request);
     XCTAssertEqualObjects(error, [NSError errorWithDomain:AWXSDKErrorDomain
                                                      code:-1
-                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Currency code should be three-letter ISO 4217 currency code.", nil)}]);
+                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"PaymentIntent currency should be three-letter ISO 4217 currency code.", nil)}]);
 }
 
 - (AWXApplePayOptions *)makeOptions:(nullable NSArray<PKPaymentSummaryItem *> *)items {

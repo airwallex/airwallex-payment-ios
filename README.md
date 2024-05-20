@@ -199,7 +199,7 @@ You also need to provide your host view controller which we use to present addit
 }
 ```
 
-#### Make payment with apple pay provider
+#### Launch payment with Apple Pay provider
 
 You still need all the other steps in [Basic Integration](#basic-integration) section to set up configurations, intent and session, except the step **Present one-off payment or recurring flow** is replaced by:
 
@@ -214,7 +214,7 @@ self.provider = provider;
 
 ``` 
 
-You also need to delegate methods to handle the result
+You need to implement the delegate method to handle the result
 ```objective-c
 #pragma mark - AWXProviderDelegate
 
@@ -227,7 +227,7 @@ You also need to delegate methods to handle the result
        // handle failure
         break;
     case AirwallexPaymentStatusCancel:
-       // handle payment cancelled by the user
+       // handle Apple Pay cancelled by the user
         break;
     default:
         break;

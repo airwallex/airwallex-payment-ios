@@ -37,7 +37,7 @@
         }
         return nil;
     }
-    
+
     request.countryCode = self.countryCode;
     request.currencyCode = self.currency;
     request.merchantCapabilities = options.merchantCapabilities;
@@ -83,7 +83,7 @@
     }
 
     if (!paymentIntent.currency || paymentIntent.currency.length != 3) {
-        return NSLocalizedString(@"Currency code should be three-letter ISO 4217 currency code.", nil);
+        return NSLocalizedString(@"PaymentIntent currency should be three-letter ISO 4217 currency code.", nil);
     }
 
     if (!paymentIntent.Id) {

@@ -25,61 +25,30 @@
 @property (nonatomic, strong, nullable) AWXConfirmPaymentIntentResponse *lastResponse;
 @property (nonatomic, strong, nullable) NSError *lastError;
 @property (nonatomic) BOOL shouldInvokeCompleteWithResponse;
-@property (nonatomic) BOOL isApplePayInitiatedDirectly;
+@property (nonatomic) BOOL isApplePayLaunchedDirectly;
 
 @end
 
 @implementation AWXApplePayProvider
 
-#pragma mark - Initiate Apple pay flow
+#pragma mark - Launch Apple Pay flow
 - (void)startPayment {
-    NSString *errorReason = @"";
-    if ([AWXApplePayProvider canHandleSession:self.session errorReason:&errorReason]) {
-        _isApplePayInitiatedDirectly = true;
+    NSString *errorMessage;
+    if ([AWXApplePayProvider canHandleSession:self.session errorMessage:&errorMessage]) {
+        _isApplePayLaunchedDirectly = true;
         [self handleFlow];
     } else {
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
-                                         userInfo:@{NSLocalizedDescriptionKey: errorReason}];
+                                         userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-    }
-}
-
-+ (BOOL)canHandleSession:(AWXSession *)session errorReason:(NSString *_Nullable *)error {
-    if ([session isKindOfClass:[AWXOneOffSession class]]) {
-        AWXOneOffSession *oneOffSession = (AWXOneOffSession *)session;
-        if (oneOffSession.applePayOptions == nil) {
-            if (error) {
-                *error = NSLocalizedString(@"Missing Apple Pay options in session.", nil);
-            }
-            return NO;
-        }
-        BOOL canMakePayment = false;
-
-        if (@available(iOS 15.0, *)) {
-            // From iOS 15.0 onwards, user can add new card directly in the apple pay flow
-            canMakePayment = [PKPaymentAuthorizationController canMakePayments];
-        } else {
-            canMakePayment = [PKPaymentAuthorizationController canMakePaymentsUsingNetworks:AWXApplePaySupportedNetworks()
-                                                                               capabilities:oneOffSession.applePayOptions.merchantCapabilities];
-        }
-
-        if (error && !canMakePayment) {
-            *error = NSLocalizedString(@"Payment not supported via Apple pay.", nil);
-        }
-        return canMakePayment;
-    } else {
-        if (error) {
-            *error = NSLocalizedString(@"Unsupported session type.", nil);
-        }
-        return NO;
     }
 }
 
 #pragma mark - AWXDefaultProvider parent methods
 
 + (BOOL)canHandleSession:(AWXSession *)session paymentMethod:(AWXPaymentMethodType *)paymentMethod {
-    return [self canHandleSession:session errorReason:nil];
+    return [self canHandleSession:session errorMessage:nil];
 }
 
 - (void)handleFlow {
@@ -146,7 +115,7 @@
                 [strongSelf completeWithResponse:strongSelf.lastResponse error:strongSelf.lastError];
             });
         } else {
-            if (strongSelf.isApplePayInitiatedDirectly) {
+            if (strongSelf.isApplePayLaunchedDirectly) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
                 });
@@ -159,6 +128,37 @@
 }
 
 #pragma mark - Private methods
+
++ (BOOL)canHandleSession:(AWXSession *)session errorMessage:(NSString *_Nullable *)error {
+    if ([session isKindOfClass:[AWXOneOffSession class]]) {
+        AWXOneOffSession *oneOffSession = (AWXOneOffSession *)session;
+        if (oneOffSession.applePayOptions == nil) {
+            if (error) {
+                *error = NSLocalizedString(@"Missing Apple Pay options in session.", nil);
+            }
+            return NO;
+        }
+        BOOL canMakePayment = false;
+
+        if (@available(iOS 15.0, *)) {
+            // From iOS 15.0 onwards, user can add new card directly in the apple pay flow
+            canMakePayment = [PKPaymentAuthorizationController canMakePayments];
+        } else {
+            canMakePayment = [PKPaymentAuthorizationController canMakePaymentsUsingNetworks:AWXApplePaySupportedNetworks()
+                                                                               capabilities:oneOffSession.applePayOptions.merchantCapabilities];
+        }
+
+        if (error && !canMakePayment) {
+            *error = NSLocalizedString(@"Payment not supported via Apple Pay.", nil);
+        }
+        return canMakePayment;
+    } else {
+        if (error) {
+            *error = NSLocalizedString(@"Unsupported session type.", nil);
+        }
+        return NO;
+    }
+}
 
 - (void)handleFlowForOneOffSession:(AWXOneOffSession *)session {
     NSError *error;
@@ -176,6 +176,7 @@
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: description}];
+        [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         return;
     }
@@ -190,6 +191,7 @@
             NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                                  code:-1
                                              userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present PKPaymentAuthorizationController.", nil)}];
+            [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
             [[strongSelf delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
             return;
         }

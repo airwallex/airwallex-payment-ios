@@ -131,6 +131,10 @@
     XCTAssertNotNil(delegate.lastStatusError);
 
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
+    NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
+                                         code:-1
+                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to initialize PKPaymentAuthorizationController.", nil)}];
+    OCMVerify(times(1), [_logger logError:error withEventName:@"apple_pay_sheet"]);
 }
 
 - (void)testHandleFlowWhenPaymentControllerFailedToPresent {
@@ -152,7 +156,12 @@
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
     XCTAssertNotNil(delegate.lastStatusError);
 
+    
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
+    NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
+                                         code:-1
+                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present PKPaymentAuthorizationController.", nil)}];
+    OCMVerify(times(1), [_logger logError:error withEventName:@"apple_pay_sheet"]);
 }
 
 - (void)testHandleFlowCancelled {
@@ -363,7 +372,7 @@
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
     XCTAssertEqualObjects(delegate.lastStatusError, [NSError errorWithDomain:AWXSDKErrorDomain
                                                                         code:-1
-                                                                    userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Payment not supported via Apple pay.", nil)}]);
+                                                                    userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Payment not supported via Apple Pay.", nil)}]);
 }
 
 - (void)testStartPaymentWhenCancelledReturnsCancelStatus {
@@ -389,7 +398,7 @@
 - (AWXOneOffSession *)makeSession {
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.countryCode = @"AU";
-    
+
     AWXPaymentIntent *intent = [AWXPaymentIntent new];
     session.paymentIntent = intent;
     intent.Id = @"PaymentIntentId";
