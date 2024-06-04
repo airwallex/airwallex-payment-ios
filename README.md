@@ -36,7 +36,7 @@ Table of contents
 <!--te-->
 
 ## Requirements
-The Airwallex iOS SDK supports iOS 11.0 and above.
+The Airwallex iOS SDK supports iOS 13.0 and above.
 
 ## Integration
 
