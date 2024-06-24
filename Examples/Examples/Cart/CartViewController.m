@@ -80,7 +80,6 @@
     APIClient *client = [APIClient sharedClient];
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientId;
-    [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
 }
 
 - (void)setupSDK {
@@ -159,8 +158,16 @@
         return;
     }
 
-    NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
-    [self createPaymentIntentWithCustomerId:customerId];
+    [self.activityIndicator startAnimating];
+    [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
+        if (error) {
+            [self showAlert:NSLocalizedString(@"Fail to request token.", nil) withTitle:nil];
+            [self.activityIndicator stopAnimating];
+        } else {
+            NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
+            [self createPaymentIntentWithCustomerId:customerId];
+        }
+    }];
 }
 
 #pragma mark - Create Payment Intent
@@ -216,8 +223,6 @@
     if (customerId) {
         parameters[@"customer_id"] = customerId;
     }
-
-    [self.activityIndicator startAnimating];
 
     AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
     if (checkoutMode != AirwallexCheckoutRecurringMode) {
