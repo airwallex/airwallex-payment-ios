@@ -123,6 +123,16 @@
     [self.tableView reloadData];
 }
 
+- (void)startAnimating {
+    [self.activityIndicator startAnimating];
+    self.view.userInteractionEnabled = false;
+}
+
+- (void)stopAnimating {
+    [self.activityIndicator stopAnimating];
+    self.view.userInteractionEnabled = YES;
+}
+
 #pragma mark - Menu
 
 - (IBAction)menuPressed:(UIBarButtonItem *)sender {
@@ -158,11 +168,11 @@
         return;
     }
 
-    [self.activityIndicator startAnimating];
+    [self startAnimating];
     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
         if (error) {
-            [self showAlert:NSLocalizedString(@"Fail to request token.", nil) withTitle:nil];
-            [self.activityIndicator stopAnimating];
+            [self showAlert:error.localizedDescription withTitle:NSLocalizedString(@"Fail to request token.", nil)];
+            [self stopAnimating];
         } else {
             NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
             [self createPaymentIntentWithCustomerId:customerId];
@@ -257,7 +267,7 @@
 
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         __strong __typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf.activityIndicator stopAnimating];
+        [strongSelf stopAnimating];
 
         if (_error) {
             [strongSelf showAlert:_error.localizedDescription withTitle:nil];
