@@ -125,7 +125,7 @@
 
 - (void)startAnimating {
     [self.activityIndicator startAnimating];
-    self.view.userInteractionEnabled = false;
+    self.view.userInteractionEnabled = NO;
 }
 
 - (void)stopAnimating {
