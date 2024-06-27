@@ -494,6 +494,10 @@
                                    }];
 }
 
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)Id {
+    NSLog(@"didGetPaymentConsentId: %@", Id);
+}
+
 #pragma mark - AWXProviderDelegate
 
 - (void)provider:(nonnull AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
@@ -510,6 +514,10 @@
     default:
         break;
     }
+}
+
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
+    NSLog(@"didGetPaymentConsentId: %@", Id);
 }
 
 - (void)provider:(nonnull AWXDefaultProvider *)provider didInitializePaymentIntentId:(nonnull NSString *)paymentIntentId {
