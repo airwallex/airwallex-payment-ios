@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param controller The controller handling payment result.
  @param Id The id of payment consent.
  */
-- (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(nullable NSString *)Id;
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)Id;
 
 @end
 
