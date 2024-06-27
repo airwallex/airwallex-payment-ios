@@ -177,6 +177,13 @@
     [delegate paymentViewController:self didCompleteWithStatus:status error:error];
 }
 
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
+    id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+    if([delegate respondsToSelector:@selector(paymentViewController:didCompleteWithPaymentConsentId:)]) {
+        [delegate paymentViewController:self didCompleteWithPaymentConsentId:Id];
+    }
+}
+
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {
     [self.session updateInitialPaymentIntentId:paymentIntentId];
 }
