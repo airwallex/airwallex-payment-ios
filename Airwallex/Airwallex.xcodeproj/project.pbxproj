@@ -717,7 +717,6 @@
 		0829FD0F2431DF7000557DB2 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				0829FD122431E11E00557DB2 /* AWXAPIClientTest.m */,
 				187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */,
 			);
 			path = API;
@@ -787,6 +786,7 @@
 				0829FD4F24358E5600557DB2 /* XCTestCase+Utils.h */,
 				0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */,
 				18E0571B29CA8AD70099388A /* AWXAnalyticsLoggerTest.m */,
+				0829FD122431E11E00557DB2 /* AWXAPIClientTest.m */,
 				3C99E74627E9A6B70074156C /* AWXApplePayOptionsTest.m */,
 				3C99E74427E9A51C0074156C /* AWXConstantsTest.m */,
 				3C99E73E27E9A3380074156C /* AWXDefaultProviderTest.m */,
