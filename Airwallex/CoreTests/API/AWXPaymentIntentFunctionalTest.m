@@ -24,17 +24,6 @@
 
 @implementation AWXPaymentIntentFunctionalTest
 
-- (void)setUp {
-    [super setUp];
-    __weak __typeof(self) weakSelf = self;
-    [self prepareEphemeralKeys:^(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error) {
-        XCTAssertNotNil(paymentIntent);
-        XCTAssertNil(error);
-        __strong __typeof(weakSelf) strongSelf = weakSelf;
-        strongSelf.paymentIntent = paymentIntent;
-    }];
-}
-
 - (void)testRetrievePaymentIntent {
     AWXRetrievePaymentIntentRequest *request = [AWXRetrievePaymentIntentRequest new];
     request.intentId = self.paymentIntent.Id;
