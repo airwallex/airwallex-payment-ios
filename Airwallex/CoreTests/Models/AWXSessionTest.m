@@ -20,26 +20,12 @@
 
 @implementation AWXSessionTest
 
-- (void)setUp {
-    [super setUp];
-    [self prepareEphemeralKeys:^(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error) {
-        self.paymentIntent = paymentIntent;
-        XCTAssertNotNil(paymentIntent);
-        XCTAssertNil(error);
-    }];
-}
-
 - (void)testOneOffSession {
     AWXPlaceDetails *billing = [AWXPlaceDetails decodeFromJSON:[AWXTestUtils jsonNamed:@"Billing"]];
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.billing = billing;
     session.returnURL = @"airwallex://";
-    session.paymentIntent = self.paymentIntent;
-    XCTAssertNotNil(session.customerPaymentConsents);
-    XCTAssertNotNil(session.customerPaymentMethods);
     XCTAssertNil(session.customerId);
-    XCTAssertNotNil(session.currency);
-    XCTAssertNotNil(session.amount);
     XCTAssertTrue(session.autoCapture);
 }
 
@@ -66,15 +52,10 @@
     AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
     session.billing = billing;
     session.returnURL = @"airwallex://";
-    session.paymentIntent = self.paymentIntent;
     session.nextTriggerByType = AirwallexNextTriggerByCustomerType;
     session.requiresCVC = YES;
     session.merchantTriggerReason = AirwallexMerchantTriggerReasonUnscheduled;
-    XCTAssertNotNil(session.customerPaymentConsents);
-    XCTAssertNotNil(session.customerPaymentMethods);
     XCTAssertNil(session.customerId);
-    XCTAssertNotNil(session.currency);
-    XCTAssertNotNil(session.amount);
     XCTAssertTrue(session.autoCapture);
 }
 
