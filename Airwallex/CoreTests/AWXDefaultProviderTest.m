@@ -258,7 +258,7 @@ NSString *const kMockKey = @"MOCK";
                                      paymentConsent:paymentConsent
                                              device:nil];
     [provider completeWithResponse:[AWXConfirmPaymentIntentResponse new] error:nil];
-    OCMVerify(times(1), [mockDelegateSpy provider:[OCMArg any] didCompleteWithPaymentConsentId:[OCMArg any]]);
+    OCMVerify(times(1), [mockDelegateSpy provider:provider didCompleteWithPaymentConsentId:@"consentId"]);
 }
 
 - (void)testCompleteWithResponseWhenHasNextAction {
