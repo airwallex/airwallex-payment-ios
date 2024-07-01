@@ -11,6 +11,7 @@
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXAPIErrorResponse+Update.h"
+#import "Core/AWXAnalyticsLogger.h"
 #import "AWXTestUtils.h"
 #import "XCTestCase+Utils.h"
 #import <XCTest/XCTest.h>
@@ -39,7 +40,7 @@
     id getPaymentMethodsResponseMock = OCMClassMock([AWXGetPaymentMethodTypesResponse class]);
     OCMStub([getPaymentMethodsResponseMock parse: mockData]).andReturn(getPaymentMethodsResponseMock);
     
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
          handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
@@ -67,10 +68,11 @@
     OCMStub([getPaymentMethodsResponseMock parse: mockData]).andReturn([AWXResponse new]);
     AWXAPIErrorResponse *errorResponseMock = [[AWXAPIErrorResponse alloc] initWithMessage:@"An error from Server" code:@"500"];
     OCMStub([getPaymentMethodsResponseMock parseError: [OCMArg any]]).andReturn(errorResponseMock);
-
     OCMStub([sessionMock dataTaskWithRequest:[OCMArg isKindOfClass:[NSMutableURLRequest class]] completionHandler:([OCMArg invokeBlockWithArgs:mockData, responseMock, [NSNull null], nil])]);
+    id loggerMock = OCMClassMock([AWXAnalyticsLogger class]);
+    OCMStub([loggerMock shared]).andReturn(nil);
     
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
          handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
@@ -96,10 +98,9 @@
     id getPaymentMethodsResponseMock = OCMClassMock([AWXGetPaymentMethodTypesResponse class]);
     OCMStub([getPaymentMethodsResponseMock parse: mockData]).andReturn([AWXResponse new]);
     OCMStub([getPaymentMethodsResponseMock parseError: [OCMArg any]]).andReturn(nil);
-
     OCMStub([sessionMock dataTaskWithRequest:[OCMArg isKindOfClass:[NSMutableURLRequest class]] completionHandler:([OCMArg invokeBlockWithArgs:mockData, responseMock, [NSNull null], nil])]);
     
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
          handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
@@ -128,7 +129,7 @@
                                          userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"An error.", nil)}];
     OCMStub([sessionMock dataTaskWithRequest:[OCMArg isKindOfClass:[NSMutableURLRequest class]] completionHandler:([OCMArg invokeBlockWithArgs:mockData, responseMock, mockError, nil])]);
     
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
          handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
