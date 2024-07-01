@@ -171,9 +171,9 @@ context.session = session;
 }
 ```
 
-### 底层API集成
+### 低层API集成
 
-你可以基于我们的底层API来构建完全由你自定义的UI
+你可以基于我们的低层API来构建完全由你自定义的UI
 
 #### 用卡和账单详情或者consent ID来确认卡支付
 
