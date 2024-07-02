@@ -81,6 +81,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)provider:(AWXDefaultProvider *)provider shouldInsertViewController:(nullable UIViewController *)controller;
 
+/**
+ This method is called when payment is completed and payment consent id is available.
+
+ @param provider The provider handling payment.
+ @param Id The id of paymentConsnet.
+ */
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *) Id;
+
 @end
 
 /**

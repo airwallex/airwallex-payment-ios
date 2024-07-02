@@ -166,6 +166,14 @@ After the user completes the payment successfully or with error, you need to han
 }
 ```
 
+If the payment consent is created during payment process, you can implement this optional function to get the id of this payment consent for any further usage.
+
+```objective-c
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)Id {
+    // To do anything with this id.
+}
+```
+
 ### Low-level API Integration
 
 You can build your own entirely custom UI on top of our low-level APIs.
@@ -196,6 +204,14 @@ You also need to provide your host view controller which we use to present addit
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
     // You can handle different payment statuses and perform UI action respectively here
+}
+```
+
+If the payment consent is created during payment process, you can implement this optional function to get the id of this payment consent for any further usage.
+
+```objective-c
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
+    // To do anything with this id.
 }
 ```
 

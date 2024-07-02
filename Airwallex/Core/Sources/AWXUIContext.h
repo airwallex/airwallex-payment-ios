@@ -29,6 +29,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error;
 
+@optional
+
+/**
+ This method is called when the user has completed the checkout.
+
+ @param controller The controller handling payment result.
+ @param Id The id of payment consent.
+ */
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)Id;
+
 @end
 
 /**
