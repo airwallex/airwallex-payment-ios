@@ -10,6 +10,7 @@
 #import "AWXAnalyticsLogger.h"
 #import "AWXDevice.h"
 #import "AWXNextActionHandler.h"
+#import "AWXPaymentConsent.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentIntentRequest.h"
@@ -110,6 +111,9 @@
                 self.nextActionHandler = handler;
             }
         } else {
+            if (self.paymentConsent.Id && [self.delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
+                [self.delegate provider:self didCompleteWithPaymentConsentId:self.paymentConsent.Id];
+            }
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
 
             if (_paymentMethod.type.length > 0) {

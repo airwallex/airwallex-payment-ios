@@ -164,6 +164,13 @@ context.session = session;
 }
 ```
 
+如果有需要，可以通过以下可选方法获取consent id，以便之后的支付使用。
+```objective-c
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)Id {
+    // To do anything with this id.
+}
+```
+
 ### 低层API集成
 
 你可以基于我们的低层API来构建完全由你自定义的UI
@@ -194,6 +201,14 @@ self.provider = provider;
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
     // You can handle different payment statuses and perform UI action respectively here
+}
+```
+
+如果有需要，可以通过以下可选方法获取consent id，以便之后的支付使用。
+
+```objective-c
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
+    // To do anything with this id.
 }
 ```
 
