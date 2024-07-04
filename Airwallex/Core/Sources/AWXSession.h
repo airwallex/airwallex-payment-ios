@@ -52,7 +52,7 @@ Whether AWXPaymentMethodListViewController should show stored card.
 /**
 Whether AWXPaymentMethodListViewController should show stored card.
  */
-@property (nonatomic, strong, nullable) NSArray<AWXPaymentMethodType *> *paymentMethodTypes;
+@property (nonatomic, strong, nullable) NSArray<NSString *> *paymentMethodTypes;
 
 /**
  Return URL.

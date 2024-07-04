@@ -41,7 +41,7 @@
     [self setupCartData];
     [self setupSDK];
     [self setupExamplesAPIClient];
-    }
+}
 
 - (void)setupViews {
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
@@ -105,16 +105,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
-        if (error) {
-            [self showAlert:error.localizedDescription withTitle:NSLocalizedString(@"Fail to request token.", nil)];
-        } else {
-            NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
-        }
-        [self stopAnimating];
-        [self reloadData];
-
-    }];
+    [self reloadData];
 }
 
 - (void)reloadData {
@@ -132,10 +123,6 @@
     [self.checkoutButton setTitle:checkoutTitle forState:UIControlStateNormal];
     [self.tableView reloadData];
     
-    NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
-    [[APIClient sharedClient] getPaymentMethodTypes:customerId completionHandler:^(AWXGetPaymentMethodTypesResponse * _Nullable response, NSError * _Nullable error) {
-        self.allPaymentMethodTypes = response.items;
-    }];
 }
 
 - (void)startAnimating {
@@ -331,12 +318,8 @@
         session.paymentIntent = paymentIntent;
         session.autoCapture = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedAutoCapture];
         
-        // you can configure the payment method list manually.(But only available ones will be displayed)
-//        for (AWXPaymentMethodType *type in self.allPaymentMethodTypes) {
-//            if ([type.name isEqualToString:AWXCardKey]) {
-//                session.paymentMethodTypes = @[type];
-//            }
-//        }
+//        // you can configure the payment method list manually.(But only available ones will be displayed)
+//        session.paymentMethodTypes = @[@"card"];
 //        session.hidePaymentConsents = YES;
         
         return session;
@@ -352,6 +335,11 @@
         session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
         session.requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
         session.merchantTriggerReason = AirwallexMerchantTriggerReasonUnscheduled;
+        
+//        // you can configure the payment method list manually.(But only available ones will be displayed)
+//        session.paymentMethodTypes = @[@"card"];
+//        session.hidePaymentConsents = YES;
+        
         return session;
     }
     case AirwallexCheckoutRecurringWithIntentMode: {
@@ -364,6 +352,11 @@
         session.requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
         session.autoCapture = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedAutoCapture];
         session.merchantTriggerReason = AirwallexMerchantTriggerReasonScheduled;
+        
+//        // you can configure the payment method list manually.(But only available ones will be displayed)
+//        session.paymentMethodTypes = @[@"card"];
+//        session.hidePaymentConsents = YES;
+        
         return session;
     }
     }

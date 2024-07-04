@@ -156,9 +156,9 @@
 - (void)filterPaymentMethodTypes {
     if (self.session.paymentMethodTypes && self.session.paymentMethodTypes.count > 0) {
         NSMutableArray *intersectionArray = [NSMutableArray array];
-        for (AWXPaymentMethodType *type in self.session.paymentMethodTypes) {
+        for (NSString *type in self.session.paymentMethodTypes) {
             for (AWXPaymentMethodType *availableType in self.availablePaymentMethodTypes) {
-                if ([type.name isEqual:availableType.name] && ![intersectionArray containsObject:availableType]) {
+                if ([type isEqual:availableType.name] && ![intersectionArray containsObject:availableType]) {
                     [intersectionArray addObject:availableType];
                 }
             }
