@@ -45,6 +45,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) AWXApplePayOptions *applePayOptions;
 
 /**
+Whether AWXPaymentMethodListViewController should show stored card.
+ */
+@property (nonatomic) BOOL hidePaymentConsents;
+
+/**
+Whether AWXPaymentMethodListViewController should show stored card.
+ */
+@property (nonatomic, strong, nullable) NSArray<AWXPaymentMethodType *> *paymentMethodTypes;
+
+/**
  Return URL.
  */
 @property (nonatomic, copy) NSString *returnURL;

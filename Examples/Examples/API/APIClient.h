@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class AWXPaymentIntent;
+@class AWXGetPaymentMethodTypesResponse;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,6 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)generateClientSecretWithCustomerId:(NSString *)Id
                          completionHandler:(void (^)(NSDictionary *_Nullable result, NSError *_Nullable error))completionHandler;
+
+- (void)getPaymentMethodTypes:(NSString *)Id
+                         completionHandler:(void (^)(AWXGetPaymentMethodTypesResponse *_Nullable response, NSError *_Nullable error))completionHandler;
 
 @end
 

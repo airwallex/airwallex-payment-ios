@@ -196,4 +196,45 @@
                                      }] resume];
 }
 
+- (void)getPaymentMethodTypes:(NSString *)Id
+            completionHandler:(void (^)(AWXGetPaymentMethodTypesResponse *_Nullable response, NSError *_Nullable error))completionHandler {
+    NSURL *requestURL = [NSURL URLWithString:@"/api/v1/pa/config/payment_method_types" relativeToURL:self.paymentBaseURL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
+    if (self.token) {
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
+    }
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request
+                                     completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
+                                         if (error) {
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                 completionHandler(nil, error);
+                                             });
+                                             return;
+                                         }
+
+                                         NSError *anError;
+                                         if (data) {
+                                             AWXGetPaymentMethodTypesResponse *response = (AWXGetPaymentMethodTypesResponse *)[AWXGetPaymentMethodTypesResponse parse:data];
+//                                             AWXGetPaymentMethodTypesResponse *json = [NSJSONSerialization JSONObjectWithData:data
+//                                                                                                  options:NSJSONReadingMutableContainers
+//                                                                                                    error:&anError];
+//                                             NSString *errorMessage = json[@"message"];
+//                                             if (errorMessage) {
+//                                                 anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
+//                                             }
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                 completionHandler(response, anError);
+                                             });
+                                             return;
+                                         }
+
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             completionHandler(nil, anError);
+                                         });
+                                     }] resume];
+}
+
 @end

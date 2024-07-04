@@ -18,6 +18,7 @@
 #import <Airwallex/Core.h>
 #import <SafariServices/SFSafariViewController.h>
 
+
 @interface CartViewController ()<UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate, AWXProviderDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
@@ -28,6 +29,7 @@
 @property (strong, nonatomic) AWXPlaceDetails *shipping;
 @property (strong, nonatomic) AWXPaymentIntent *paymentIntent;
 @property (strong, nonatomic) AWXApplePayProvider *applePayProvider;
+@property (strong, nonatomic) NSArray <AWXPaymentMethodType *> *allPaymentMethodTypes;
 
 @end
 
@@ -39,8 +41,7 @@
     [self setupCartData];
     [self setupSDK];
     [self setupExamplesAPIClient];
-    [self reloadData];
-}
+    }
 
 - (void)setupViews {
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
@@ -104,7 +105,16 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self reloadData];
+    [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
+        if (error) {
+            [self showAlert:error.localizedDescription withTitle:NSLocalizedString(@"Fail to request token.", nil)];
+        } else {
+            NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
+        }
+        [self stopAnimating];
+        [self reloadData];
+
+    }];
 }
 
 - (void)reloadData {
@@ -121,6 +131,11 @@
     }
     [self.checkoutButton setTitle:checkoutTitle forState:UIControlStateNormal];
     [self.tableView reloadData];
+    
+    NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
+    [[APIClient sharedClient] getPaymentMethodTypes:customerId completionHandler:^(AWXGetPaymentMethodTypesResponse * _Nullable response, NSError * _Nullable error) {
+        self.allPaymentMethodTypes = response.items;
+    }];
 }
 
 - (void)startAnimating {
@@ -315,6 +330,15 @@
         session.returnURL = [AirwallexExamplesKeys shared].returnUrl;
         session.paymentIntent = paymentIntent;
         session.autoCapture = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedAutoCapture];
+        
+        // you can configure the payment method list manually.(But only available ones will be displayed)
+//        for (AWXPaymentMethodType *type in self.allPaymentMethodTypes) {
+//            if ([type.name isEqualToString:AWXCardKey]) {
+//                session.paymentMethodTypes = @[type];
+//            }
+//        }
+//        session.hidePaymentConsents = YES;
+        
         return session;
     }
     case AirwallexCheckoutRecurringMode: {
