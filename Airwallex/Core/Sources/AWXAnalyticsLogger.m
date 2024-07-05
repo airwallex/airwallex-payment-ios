@@ -11,6 +11,7 @@
 #import "AWXAPIResponse.h"
 #import "NSData+Base64.h"
 #import <AirTracker/AirTracker-Swift.h>
+#import <sys/utsname.h>
 
 @interface AWXAnalyticsLogger ()
 
@@ -103,7 +104,14 @@
     if (accountId != nil) {
         [data setObject:accountId forKey:@"accountId"];
     }
-
+    
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString *machineVersion = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    if (machineVersion && machineVersion.length > 0) {
+        [data setObject:machineVersion forKey:@"machineVersion"];
+    }
+    
     return data;
 }
 
