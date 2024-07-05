@@ -154,11 +154,11 @@
 }
 
 - (void)filterPaymentMethodTypes {
-    if (self.session.paymentMethodTypes && self.session.paymentMethodTypes.count > 0) {
+    if (self.session.paymentMethods && self.session.paymentMethods.count > 0) {
         NSMutableArray *intersectionArray = [NSMutableArray array];
-        for (NSString *type in self.session.paymentMethodTypes) {
+        for (NSString *type in self.session.paymentMethods) {
             for (AWXPaymentMethodType *availableType in self.availablePaymentMethodTypes) {
-                if ([type isEqual:availableType.name] && ![intersectionArray containsObject:availableType]) {
+                if ([type.lowercaseString isEqual:availableType.name.lowercaseString] && ![intersectionArray containsObject:availableType]) {
                     [intersectionArray addObject:availableType];
                 }
             }

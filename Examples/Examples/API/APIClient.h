@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @class AWXPaymentIntent;
-@class AWXGetPaymentMethodTypesResponse;
 
 NS_ASSUME_NONNULL_BEGIN
 

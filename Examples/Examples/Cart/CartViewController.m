@@ -29,7 +29,6 @@
 @property (strong, nonatomic) AWXPlaceDetails *shipping;
 @property (strong, nonatomic) AWXPaymentIntent *paymentIntent;
 @property (strong, nonatomic) AWXApplePayProvider *applePayProvider;
-@property (strong, nonatomic) NSArray <AWXPaymentMethodType *> *allPaymentMethodTypes;
 
 @end
 
@@ -319,7 +318,7 @@
         session.autoCapture = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedAutoCapture];
         
 //        // you can configure the payment method list manually.(But only available ones will be displayed)
-//        session.paymentMethodTypes = @[@"card"];
+//        session.paymentMethods = @[@"card"];
 //        session.hidePaymentConsents = YES;
         
         return session;
@@ -337,7 +336,7 @@
         session.merchantTriggerReason = AirwallexMerchantTriggerReasonUnscheduled;
         
 //        // you can configure the payment method list manually.(But only available ones will be displayed)
-//        session.paymentMethodTypes = @[@"card"];
+//        session.paymentMethods = @[@"card"];
 //        session.hidePaymentConsents = YES;
         
         return session;
@@ -354,7 +353,7 @@
         session.merchantTriggerReason = AirwallexMerchantTriggerReasonScheduled;
         
 //        // you can configure the payment method list manually.(But only available ones will be displayed)
-//        session.paymentMethodTypes = @[@"card"];
+//        session.paymentMethods = @[@"card"];
 //        session.hidePaymentConsents = YES;
         
         return session;
