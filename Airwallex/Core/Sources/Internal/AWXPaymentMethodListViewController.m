@@ -308,7 +308,7 @@
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
     id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    if([delegate respondsToSelector:@selector(paymentViewController:didCompleteWithPaymentConsentId:)]) {
+    if ([delegate respondsToSelector:@selector(paymentViewController:didCompleteWithPaymentConsentId:)]) {
         [delegate paymentViewController:self didCompleteWithPaymentConsentId:Id];
     }
 }

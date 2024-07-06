@@ -461,7 +461,7 @@ typedef enum {
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
     UIViewController *presentingViewController = self.presentingViewController;
     id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    if([delegate respondsToSelector:@selector(paymentViewController:didCompleteWithPaymentConsentId:)]) {
+    if ([delegate respondsToSelector:@selector(paymentViewController:didCompleteWithPaymentConsentId:)]) {
         [delegate paymentViewController:presentingViewController didCompleteWithPaymentConsentId:Id];
     }
 }

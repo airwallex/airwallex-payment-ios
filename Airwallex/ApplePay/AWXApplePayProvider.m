@@ -22,10 +22,17 @@
 
 @interface AWXApplePayProvider ()<PKPaymentAuthorizationControllerDelegate>
 
+typedef enum {
+    NotStarted,
+    Pending,
+    Complete
+} PaymentState;
+
 @property (nonatomic, strong, nullable) AWXConfirmPaymentIntentResponse *lastResponse;
 @property (nonatomic, strong, nullable) NSError *lastError;
-@property (nonatomic) BOOL shouldInvokeCompleteWithResponse;
 @property (nonatomic) BOOL isApplePayLaunchedDirectly;
+@property (nonatomic) BOOL didDismissWhilePending;
+@property (nonatomic) PaymentState paymentState;
 
 @end
 
@@ -53,6 +60,7 @@
 
 - (void)handleFlow {
     if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
+        self.paymentState = NotStarted;
         [self handleFlowForOneOffSession:(AWXOneOffSession *)self.session];
     } else {
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
@@ -67,8 +75,6 @@
 - (void)paymentAuthorizationController:(PKPaymentAuthorizationController *)controller
                    didAuthorizePayment:(PKPayment *)payment
                                handler:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
-    self.shouldInvokeCompleteWithResponse = YES;
-
     AWXPaymentMethod *method = [AWXPaymentMethod new];
     method.type = AWXApplePayKey;
     method.customerId = self.session.customerId;
@@ -107,24 +113,34 @@
 }
 
 - (void)paymentAuthorizationControllerDidFinish:(nonnull PKPaymentAuthorizationController *)controller {
-    __weak __typeof(self) weakSelf = self;
-    [controller dismissWithCompletion:^{
-        __strong __typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf.shouldInvokeCompleteWithResponse) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [strongSelf completeWithResponse:strongSelf.lastResponse error:strongSelf.lastError];
-            });
-        } else {
-            if (strongSelf.isApplePayLaunchedDirectly) {
+    void (^dismissCompletionBlock)(void);
+    switch (self.paymentState) {
+    case NotStarted:
+        if (self.isApplePayLaunchedDirectly) {
+            dismissCompletionBlock = ^{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
                 });
-            } else {
-                // The user most likely has cancelled the authorization.
-                // Do nothing here to allow the user to select another payment method.
-            }
+            };
         }
-    }];
+        // The user most likely has cancelled the authorization.
+        // Do nothing here to allow the user to select another payment method if it's not direct Apple Pay integration.
+        [controller dismissWithCompletion:dismissCompletionBlock];
+        break;
+    case Pending:
+        // If UI disappears during the interaction with our API, we pass the state to the upper level so in progress UI can be handled before we get the confirmed or failed intent
+        [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
+        self.didDismissWhilePending = YES;
+        break;
+    case Complete:
+        dismissCompletionBlock = ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self completeWithResponse:self.lastResponse error:self.lastError];
+            });
+        };
+        [controller dismissWithCompletion:dismissCompletionBlock];
+        break;
+    }
 }
 
 #pragma mark - Private methods
@@ -138,7 +154,7 @@
             }
             return NO;
         }
-        BOOL canMakePayment = false;
+        BOOL canMakePayment = NO;
 
         if (@available(iOS 15.0, *)) {
             // From iOS 15.0 onwards, user can add new card directly in the apple pay flow
@@ -203,32 +219,37 @@
 - (void)confirmWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                           device:(AWXDevice *)device
                       completion:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
+    self.paymentState = Pending;
     __weak __typeof(self) weakSelf = self;
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod
                                  paymentConsent:nil
                                          device:device
                                      completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-                                         AWXConfirmPaymentIntentResponse *confirmResponse = (AWXConfirmPaymentIntentResponse *)response;
-
                                          __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                         AWXConfirmPaymentIntentResponse *confirmResponse = (AWXConfirmPaymentIntentResponse *)response;
                                          strongSelf.lastResponse = confirmResponse;
                                          strongSelf.lastError = error;
+                                         strongSelf.paymentState = Complete;
 
-                                         PKPaymentAuthorizationStatus status;
-                                         NSArray<NSError *> *errors;
-
-                                         if (confirmResponse && !error) {
-                                             status = PKPaymentAuthorizationStatusSuccess;
+                                         if (strongSelf.didDismissWhilePending) {
+                                             [strongSelf completeWithResponse:confirmResponse error:error];
                                          } else {
-                                             status = PKPaymentAuthorizationStatusFailure;
+                                             PKPaymentAuthorizationStatus status;
+                                             NSArray<NSError *> *errors;
 
-                                             if (error) {
-                                                 errors = @[error];
+                                             if (confirmResponse && !error) {
+                                                 status = PKPaymentAuthorizationStatusSuccess;
+                                             } else {
+                                                 status = PKPaymentAuthorizationStatusFailure;
+
+                                                 if (error) {
+                                                     errors = @[error];
+                                                 }
                                              }
-                                         }
 
-                                         PKPaymentAuthorizationResult *result = [[PKPaymentAuthorizationResult alloc] initWithStatus:status errors:errors];
-                                         completion(result);
+                                             PKPaymentAuthorizationResult *result = [[PKPaymentAuthorizationResult alloc] initWithStatus:status errors:errors];
+                                             completion(result);
+                                         }
                                      }];
 }
 

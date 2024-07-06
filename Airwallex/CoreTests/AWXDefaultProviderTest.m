@@ -9,10 +9,10 @@
 #import "AWXDefaultProvider.h"
 #import "AWXAnalyticsLogger.h"
 #import "AWXNextActionHandler.h"
+#import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentMethodOptions.h"
 #import "AWXProviderDelegateEmpty.h"
 #import "AWXProviderDelegateSpy.h"
@@ -253,7 +253,7 @@ NSString *const kMockKey = @"MOCK";
     AWXPaymentConsent *paymentConsent = [AWXPaymentConsent new];
     paymentConsent.Id = @"consentId";
     AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:mockDelegateSpy session:[AWXOneOffSession new] paymentMethodType:[AWXPaymentMethodType new]];
-    
+
     [provider confirmPaymentIntentWithPaymentMethod:paymentMethod
                                      paymentConsent:paymentConsent
                                              device:nil];

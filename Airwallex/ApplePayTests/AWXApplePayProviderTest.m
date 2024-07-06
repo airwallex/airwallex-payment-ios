@@ -156,7 +156,6 @@
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
     XCTAssertNotNil(delegate.lastStatusError);
 
-    
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
     NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                          code:-1
