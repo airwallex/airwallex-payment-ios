@@ -23,6 +23,7 @@
 @interface AWXApplePayProvider ()<PKPaymentAuthorizationControllerDelegate>
 
 typedef enum {
+    NotPresented,
     NotStarted,
     Pending,
     Complete
@@ -32,6 +33,7 @@ typedef enum {
 @property (nonatomic, strong, nullable) NSError *lastError;
 @property (nonatomic) BOOL isApplePayLaunchedDirectly;
 @property (nonatomic) BOOL didDismissWhilePending;
+@property (nonatomic) BOOL didHandlePresentationFail;
 @property (nonatomic) PaymentState paymentState;
 
 @end
@@ -60,7 +62,7 @@ typedef enum {
 
 - (void)handleFlow {
     if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
-        self.paymentState = NotStarted;
+        self.paymentState = NotPresented;
         [self handleFlowForOneOffSession:(AWXOneOffSession *)self.session];
     } else {
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
@@ -105,6 +107,7 @@ typedef enum {
 
     [method appendAdditionalParams:applePayParams];
 
+    self.paymentState = Pending;
     __weak __typeof(self) weakSelf = self;
     [self setDevice:^(AWXDevice *_Nonnull device) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
@@ -115,6 +118,9 @@ typedef enum {
 - (void)paymentAuthorizationControllerDidFinish:(nonnull PKPaymentAuthorizationController *)controller {
     void (^dismissCompletionBlock)(void);
     switch (self.paymentState) {
+    case NotPresented:
+        [self handlePresentationFail];
+        break;
     case NotStarted:
         if (self.isApplePayLaunchedDirectly) {
             dismissCompletionBlock = ^{
@@ -188,7 +194,7 @@ typedef enum {
     PKPaymentAuthorizationController *controller = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
 
     if (!controller) {
-        NSString *description = NSLocalizedString(@"Failed to initialize PKPaymentAuthorizationController.", nil);
+        NSString *description = NSLocalizedString(@"Failed to initialize Apple Pay Controller.", nil);
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: description}];
@@ -202,16 +208,12 @@ typedef enum {
     __weak __typeof(self) weakSelf = self;
     [controller presentWithCompletion:^(BOOL success) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
-
         if (!success) {
-            NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                                 code:-1
-                                             userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present PKPaymentAuthorizationController.", nil)}];
-            [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
-            [[strongSelf delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+            [strongSelf handlePresentationFail];
             return;
         }
 
+        strongSelf.paymentState = NotStarted;
         [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet"];
     }];
 }
@@ -219,7 +221,6 @@ typedef enum {
 - (void)confirmWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                           device:(AWXDevice *)device
                       completion:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
-    self.paymentState = Pending;
     __weak __typeof(self) weakSelf = self;
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod
                                  paymentConsent:nil
@@ -251,6 +252,17 @@ typedef enum {
                                              completion(result);
                                          }
                                      }];
+}
+
+- (void)handlePresentationFail {
+    if (!_didHandlePresentationFail) {
+        self.didHandlePresentationFail = YES;
+        NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
+                                             code:-1
+                                         userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)}];
+        [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
+        [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+    }
 }
 
 @end
