@@ -42,7 +42,9 @@
 @property (nonatomic, strong) NSArray *availablePaymentMethodTypes;
 @property (nonatomic, strong) NSMutableArray<AWXPaymentConsent *> *availablePaymentConsents;
 @property (nonatomic) BOOL canLoadMore;
+@property (nonatomic) BOOL showCardDirectly;
 @property (nonatomic) NSInteger nextPageNum;
+@property (nonatomic, strong) NSArray<AWXPaymentMethodType *> *filteredPaymentMethodTypes;
 
 @end
 
@@ -55,9 +57,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
-
+    
+    self.showCardDirectly = NO;
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
-
+    
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
     _tableView.dataSource = self;
@@ -67,13 +70,14 @@
     _tableView.separatorColor = [AWXTheme sharedTheme].lineColor;
     _tableView.separatorInset = UIEdgeInsetsMake(0, 24, 0, 24);
     _tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    _tableView.hidden = YES;
     [_tableView registerClass:[AWXPaymentMethodCell class] forCellReuseIdentifier:@"AWXPaymentMethodCell"];
     [self.view addSubview:_tableView];
-
+    
     NSDictionary *views = @{@"tableView": _tableView};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tableView]-|" options:0 metrics:nil views:views]];
-
+    
     [self reloadListItems];
 }
 
@@ -92,26 +96,26 @@
 - (UIView *)headerView {
     UITableViewHeaderFooterView *headerView = [UITableViewHeaderFooterView new];
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
-
+    
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = NSLocalizedString(@"Payment methods", @"Payment methods");
     titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     titleLabel.font = [UIFont titleFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [headerView addSubview:titleLabel];
-
+    
     NSDictionary *views = @{@"titleLabel": titleLabel};
     NSDictionary *metrics = @{@"margin": @16};
     [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[titleLabel]-margin-|" options:0 metrics:metrics views:views]];
     [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-margin-[titleLabel]-margin-|" options:0 metrics:metrics views:views]];
-
+    
     return headerView;
 }
 
 - (void)reloadListItems {
     // Fetch all available payment method types and consents
     [self startAnimating];
-
+    
     __weak __typeof(self) weakSelf = self;
     [_viewModel fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:^(NSArray<AWXPaymentMethodType *> *_Nullable methods, NSArray<AWXPaymentConsent *> *_Nullable consents, NSError *_Nullable error) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
@@ -121,25 +125,47 @@
         } else {
             strongSelf.availablePaymentMethodTypes = [strongSelf.session filteredPaymentMethodTypes:methods];
             strongSelf.availablePaymentConsents = [consents mutableCopy];
-
-            [strongSelf.tableView reloadData];
+            [strongSelf filterPaymentMethodTypes];
+            
             [strongSelf presentSingleCardShortcutIfRequired];
+            [strongSelf.tableView reloadData];
         }
     }];
 }
 
 - (void)presentSingleCardShortcutIfRequired {
-    BOOL hasPaymentConsents = self.availablePaymentConsents.count > 0;
-    BOOL hasSinglePaymentMethod = self.availablePaymentMethodTypes.count == 1;
-
-    if (!hasPaymentConsents && hasSinglePaymentMethod) {
+    BOOL hasPaymentConsents = self.availablePaymentConsents.count > 0 && !self.session.hidePaymentConsents;
+    BOOL hasSinglePaymentMethod = self.filteredPaymentMethodTypes.count == 1;
+    self.showCardDirectly = !hasPaymentConsents && hasSinglePaymentMethod;
+    
+    if (self.showCardDirectly) {
         // find the card payment method if it exists
-        for (AWXPaymentMethodType *type in self.availablePaymentMethodTypes) {
+        for (AWXPaymentMethodType *type in self.filteredPaymentMethodTypes) {
             if ([type.name isEqualToString:AWXCardKey]) {
                 [self didSelectPaymentMethodType:type];
                 break;
+            } else {
+                _tableView.hidden = NO;
             }
         }
+    } else {
+        _tableView.hidden = NO;
+    }
+}
+
+- (void)filterPaymentMethodTypes {
+    if (self.session.paymentMethods && self.session.paymentMethods.count > 0) {
+        NSMutableArray *intersectionArray = [NSMutableArray array];
+        for (NSString *type in self.session.paymentMethods) {
+            for (AWXPaymentMethodType *availableType in self.availablePaymentMethodTypes) {
+                if ([type.lowercaseString isEqual:availableType.name.lowercaseString] && ![intersectionArray containsObject:availableType]) {
+                    [intersectionArray addObject:availableType];
+                }
+            }
+        }
+        self.filteredPaymentMethodTypes = intersectionArray;
+    } else {
+        self.filteredPaymentMethodTypes = self.availablePaymentMethodTypes;
     }
 }
 
@@ -190,10 +216,10 @@
     switch (section) {
     case 0:
         // payment consents section
-        return self.availablePaymentConsents.count;
+            return self.session.hidePaymentConsents ? 0 : self.availablePaymentConsents.count;
     case 1:
         // payment methods section
-        return self.availablePaymentMethodTypes.count;
+        return self.filteredPaymentMethodTypes.count;
     default:
         return 0;
     }
@@ -211,7 +237,7 @@
         break;
     }
     case 1: {
-        AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
+        AWXPaymentMethodType *paymentMethodType = self.filteredPaymentMethodTypes[indexPath.row];
         [cell.logoImageView setImageURL:paymentMethodType.resources.logoURL
                             placeholder:nil];
         cell.titleLabel.text = paymentMethodType.displayName;
@@ -272,7 +298,7 @@
         break;
     }
     case 1: {
-        AWXPaymentMethodType *paymentMethodType = self.availablePaymentMethodTypes[indexPath.row];
+        AWXPaymentMethodType *paymentMethodType = self.filteredPaymentMethodTypes[indexPath.row];
         [self didSelectPaymentMethodType:paymentMethodType];
 
         if (paymentMethodType.name.length > 0) {
@@ -287,6 +313,7 @@
     Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType);
 
     AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self session:self.session paymentMethodType:paymentMethodType];
+    provider.showPaymentDirectly = self.showCardDirectly;
     [provider handleFlow];
     self.provider = provider;
 }
@@ -338,7 +365,11 @@
                                                              }
                                                          }];
     } else if (controller) {
-        [self presentViewController:controller animated:withAnimation completion:nil];
+        if ([controller isKindOfClass:NSClassFromString(@"AWXCardViewController")]) {
+            [self.navigationController pushViewController:controller animated:!self.showCardDirectly];
+        } else {
+            [self presentViewController:controller animated:withAnimation completion:nil];
+        }
     }
 }
 

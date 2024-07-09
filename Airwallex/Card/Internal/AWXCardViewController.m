@@ -325,6 +325,17 @@ typedef enum {
     self.confirmButton.enabled = YES;
 }
 
+- (void)close:(id)sender {
+    if (self.provider.showPaymentDirectly) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+            [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+        }];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)setBillingInputHidden:(BOOL)isHidden {
     self.firstNameField.hidden = isHidden;
     self.lastNameField.hidden = isHidden;

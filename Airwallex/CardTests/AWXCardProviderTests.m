@@ -15,6 +15,7 @@
 #import "AWXPaymentMethodOptions.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSession.h"
+#import "AWXCardViewController.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 
@@ -39,6 +40,22 @@
 - (void)testCanHandleSessionWhenCardSchemesIsEmpty {
     _paymentMethod.cardSchemes = [NSArray new];
     XCTAssertFalse([AWXCardProvider canHandleSession:_session paymentMethod:_paymentMethod]);
+}
+
+- (void)testHandleFlow {
+    id spy = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
+    session.autoCapture = YES;
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session paymentMethodType:paymentMethod];
+    [provider handleFlow];
+    OCMVerify(times(1), [spy provider:provider
+                            shouldPresentViewController:[OCMArg checkWithBlock:^BOOL(id obj) {
+                                XCTAssertTrue([obj isKindOfClass: AWXCardViewController.class]);
+                                return true;
+                            }]
+                                         forceToDismiss:NO
+                                          withAnimation:YES]);
 }
 
 - (void)testCanHandleSessionWhenCardSchemesIsNotEmpty {

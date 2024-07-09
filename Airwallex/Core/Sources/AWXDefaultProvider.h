@@ -117,6 +117,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) AWXPaymentMethod *paymentMethod;
 
 /**
+ whether should show this payment directly.
+ */
+@property (nonatomic) BOOL showPaymentDirectly;
+
+/**
  Indicating whether the provider can handle a particular session. Default implementation returns YES. Subclasses can override to
  do additional checks.
  */

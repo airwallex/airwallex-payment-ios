@@ -18,6 +18,7 @@
 #import <Airwallex/Core.h>
 #import <SafariServices/SFSafariViewController.h>
 
+
 @interface CartViewController ()<UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate, AWXProviderDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
@@ -39,7 +40,6 @@
     [self setupCartData];
     [self setupSDK];
     [self setupExamplesAPIClient];
-    [self reloadData];
 }
 
 - (void)setupViews {
@@ -121,6 +121,7 @@
     }
     [self.checkoutButton setTitle:checkoutTitle forState:UIControlStateNormal];
     [self.tableView reloadData];
+    
 }
 
 - (void)startAnimating {
@@ -315,6 +316,11 @@
         session.returnURL = [AirwallexExamplesKeys shared].returnUrl;
         session.paymentIntent = paymentIntent;
         session.autoCapture = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedAutoCapture];
+        
+//        // you can configure the payment method list manually.(But only available ones will be displayed)
+//        session.paymentMethods = @[@"card"];
+//        session.hidePaymentConsents = YES;
+        
         return session;
     }
     case AirwallexCheckoutRecurringMode: {
@@ -328,6 +334,11 @@
         session.nextTriggerByType = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedNextTriggerBy];
         session.requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
         session.merchantTriggerReason = AirwallexMerchantTriggerReasonUnscheduled;
+        
+//        // you can configure the payment method list manually.(But only available ones will be displayed)
+//        session.paymentMethods = @[@"card"];
+//        session.hidePaymentConsents = YES;
+        
         return session;
     }
     case AirwallexCheckoutRecurringWithIntentMode: {
@@ -340,6 +351,11 @@
         session.requiresCVC = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedRequiresCVC];
         session.autoCapture = [[NSUserDefaults standardUserDefaults] boolForKey:kCachedAutoCapture];
         session.merchantTriggerReason = AirwallexMerchantTriggerReasonScheduled;
+        
+//        // you can configure the payment method list manually.(But only available ones will be displayed)
+//        session.paymentMethods = @[@"card"];
+//        session.hidePaymentConsents = YES;
+        
         return session;
     }
     }
