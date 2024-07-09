@@ -387,7 +387,7 @@ pod install
 
 - Update key file (Optional)
 
-In the `Examples/Keys` folder, edit `Keys_sample.json` with proper keys and then rename it to `Keys.json`.
+In the `Examples/Keys` folder, edit `Keys.json` with proper keys.
 
 - Build and run `Examples` schema
 
