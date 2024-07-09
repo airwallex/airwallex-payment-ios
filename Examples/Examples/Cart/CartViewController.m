@@ -513,6 +513,7 @@
         break;
     case AirwallexPaymentStatusInProgress:
         NSLog(@"Payment in progress");
+        break;
     }
 }
 
