@@ -57,10 +57,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
-    
+
     self.showCardDirectly = NO;
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
-    
+
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
     _tableView.dataSource = self;
@@ -73,11 +73,11 @@
     _tableView.hidden = YES;
     [_tableView registerClass:[AWXPaymentMethodCell class] forCellReuseIdentifier:@"AWXPaymentMethodCell"];
     [self.view addSubview:_tableView];
-    
+
     NSDictionary *views = @{@"tableView": _tableView};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tableView]-|" options:0 metrics:nil views:views]];
-    
+
     [self reloadListItems];
 }
 
@@ -96,26 +96,26 @@
 - (UIView *)headerView {
     UITableViewHeaderFooterView *headerView = [UITableViewHeaderFooterView new];
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
-    
+
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = NSLocalizedString(@"Payment methods", @"Payment methods");
     titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     titleLabel.font = [UIFont titleFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [headerView addSubview:titleLabel];
-    
+
     NSDictionary *views = @{@"titleLabel": titleLabel};
     NSDictionary *metrics = @{@"margin": @16};
     [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[titleLabel]-margin-|" options:0 metrics:metrics views:views]];
     [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-margin-[titleLabel]-margin-|" options:0 metrics:metrics views:views]];
-    
+
     return headerView;
 }
 
 - (void)reloadListItems {
     // Fetch all available payment method types and consents
     [self startAnimating];
-    
+
     __weak __typeof(self) weakSelf = self;
     [_viewModel fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:^(NSArray<AWXPaymentMethodType *> *_Nullable methods, NSArray<AWXPaymentConsent *> *_Nullable consents, NSError *_Nullable error) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
@@ -126,7 +126,7 @@
             strongSelf.availablePaymentMethodTypes = [strongSelf.session filteredPaymentMethodTypes:methods];
             strongSelf.availablePaymentConsents = [consents mutableCopy];
             [strongSelf filterPaymentMethodTypes];
-            
+
             [strongSelf presentSingleCardShortcutIfRequired];
             [strongSelf.tableView reloadData];
         }
@@ -137,7 +137,7 @@
     BOOL hasPaymentConsents = self.availablePaymentConsents.count > 0 && !self.session.hidePaymentConsents;
     BOOL hasSinglePaymentMethod = self.filteredPaymentMethodTypes.count == 1;
     self.showCardDirectly = !hasPaymentConsents && hasSinglePaymentMethod;
-    
+
     if (self.showCardDirectly) {
         // find the card payment method if it exists
         for (AWXPaymentMethodType *type in self.filteredPaymentMethodTypes) {
@@ -216,7 +216,7 @@
     switch (section) {
     case 0:
         // payment consents section
-            return self.session.hidePaymentConsents ? 0 : self.availablePaymentConsents.count;
+        return self.session.hidePaymentConsents ? 0 : self.availablePaymentConsents.count;
     case 1:
         // payment methods section
         return self.filteredPaymentMethodTypes.count;

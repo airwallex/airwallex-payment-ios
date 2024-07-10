@@ -15,6 +15,7 @@
 @interface AWXAnalyticsLogger ()
 
 @property (nonatomic, strong, readonly) Tracker *tracker;
+@property (nonatomic, strong, readonly) AirwallexRisk *risk;
 
 @end
 

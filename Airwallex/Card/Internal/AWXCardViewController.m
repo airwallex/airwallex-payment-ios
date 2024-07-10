@@ -327,10 +327,11 @@ typedef enum {
 
 - (void)close:(id)sender {
     if (self.provider.showPaymentDirectly) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-            [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
-        }];
+        [self dismissViewControllerAnimated:YES
+                                 completion:^{
+                                     id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+                                     [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+                                 }];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
     }
