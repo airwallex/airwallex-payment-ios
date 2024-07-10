@@ -29,8 +29,9 @@
 #import "AWXUIContext.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
+#import "AirRisk/AirRisk-Swift.h"
 
-@interface AWXCardViewController ()<AWXCountryListViewControllerDelegate, AWXProviderDelegate>
+@interface AWXCardViewController ()<AWXCountryListViewControllerDelegate, AWXProviderDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -125,6 +126,7 @@ typedef enum {
     _cardNoField.isRequired = YES;
     _cardNoField.placeholder = @"1234 1234 1234 1234";
     _cardNoField.floatingText = NSLocalizedString(@"Card number", @"Card number");
+    _cardNoField.textField.delegate = self;
     [stackView addArrangedSubview:_cardNoField];
 
     _nameField = [AWXFloatingLabelTextField new];
@@ -132,6 +134,7 @@ typedef enum {
     _nameField.placeholder = NSLocalizedString(@"Name on card", @"Name on card");
     _cardNoField.nextTextField = _nameField;
     _nameField.isRequired = YES;
+    _nameField.textField.delegate = self;
     [stackView addArrangedSubview:_nameField];
 
     UIStackView *cvcStackView = [UIStackView new];
@@ -147,6 +150,7 @@ typedef enum {
     _expiresField.placeholder = NSLocalizedString(@"Expires MM / YY", @"Expires MM / YY");
     _nameField.nextTextField = _expiresField;
     _expiresField.isRequired = YES;
+    _expiresField.textField.delegate = self;
     [cvcStackView addArrangedSubview:_expiresField];
 
     _cvcField = [AWXFloatingLabelTextField new];
@@ -154,6 +158,7 @@ typedef enum {
     _cvcField.placeholder = NSLocalizedString(@"CVC / CVV", @"CVC / CVV");
     _expiresField.nextTextField = _cvcField;
     _cvcField.isRequired = YES;
+    _cvcField.textField.delegate = self;
     [cvcStackView addArrangedSubview:_cvcField];
     [_expiresField.widthAnchor constraintEqualToAnchor:_cvcField.widthAnchor multiplier:1.7].active = YES;
 
@@ -307,6 +312,7 @@ typedef enum {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [AirwallexRisk logWithEvent:@"show_create_card" screen:@"page_create_card"];
     [self registerKeyboard];
 }
 
@@ -403,6 +409,7 @@ typedef enum {
 
 - (void)confirmPayment:(id)sender {
     [[AWXAnalyticsLogger shared] logActionWithName:@"tap_pay_button"];
+    [AirwallexRisk logWithEvent:@"click_payment_button" screen:@"page_create_card"];
 
     NSString *error;
     AWXCardProvider *provider = [self.viewModel preparedProviderWithDelegate:self];
@@ -513,6 +520,20 @@ typedef enum {
     controller.view.frame = CGRectInset(self.view.frame, 0, CGRectGetMaxY(self.view.bounds));
     [self.view addSubview:controller.view];
     [controller didMoveToParentViewController:self];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField ==  self.cardNoField.textField) {
+        [AirwallexRisk logWithEvent:@"input_card_number" screen:@"page_create_card"];
+    } else if (textField ==  self.cvcField.textField) {
+        [AirwallexRisk logWithEvent:@"input_card_cvc" screen:@"page_create_card"];
+    } else if (textField ==  self.expiresField.textField) {
+        [AirwallexRisk logWithEvent:@"input_card_expiry" screen:@"page_create_card"];
+    } else if (textField ==  self.nameField.textField) {
+        [AirwallexRisk logWithEvent:@"input_card_holder_name" screen:@"page_create_card"];
+    }
+    
+    return YES;
 }
 
 @end

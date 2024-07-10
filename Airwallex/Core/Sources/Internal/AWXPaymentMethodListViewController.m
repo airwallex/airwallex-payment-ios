@@ -34,6 +34,7 @@
 #import "AWXTrackManager.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
+#import "AirRisk/AirRisk-Swift.h"
 
 @interface AWXPaymentMethodListViewController ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXProviderDelegate>
 
@@ -79,6 +80,11 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tableView]-|" options:0 metrics:nil views:views]];
 
     [self reloadListItems];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [AirwallexRisk logWithEvent:@"show_payment_method_list" screen:@"page_method_list"];
 }
 
 - (void)viewDidLayoutSubviews {
