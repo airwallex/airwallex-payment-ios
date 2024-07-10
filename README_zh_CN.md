@@ -384,7 +384,7 @@ pod install
 
 - 配置 API 密钥（可选）
 
-在 `Examples/Keys` 目录下，编辑并更新 `Keys_sample.json` 文件，然后重命名为 `Keys.json`。
+在 `Examples/Keys` 目录下，编辑并更新 `Keys.json` 文件。
 
 - 编译启动 `Example` 应用
 

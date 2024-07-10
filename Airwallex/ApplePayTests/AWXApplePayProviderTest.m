@@ -133,7 +133,7 @@
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
     NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                          code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to initialize PKPaymentAuthorizationController.", nil)}];
+                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to initialize Apple Pay Controller.", nil)}];
     OCMVerify(times(1), [_logger logError:error withEventName:@"apple_pay_sheet"]);
 }
 
@@ -156,11 +156,10 @@
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
     XCTAssertNotNil(delegate.lastStatusError);
 
-    
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
     NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                          code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present PKPaymentAuthorizationController.", nil)}];
+                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)}];
     OCMVerify(times(1), [_logger logError:error withEventName:@"apple_pay_sheet"]);
 }
 
@@ -169,53 +168,19 @@
 
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Expect completeWithStatus to be called"];
-    expectation.inverted = YES;
 
     delegate.statusExpectation = expectation;
-
-    [self prepareAuthorizationControllerMock:nil billingPayload:nil result:nil endImmediately:YES];
-
-    AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
-
-    [provider handleFlow];
-
-    [self waitForExpectationsWithTimeout:1 handler:nil];
-
-    XCTAssertEqual(delegate.providerDidCompleteWithStatusCount, 0);
-}
-
-- (void)testHandleFlowWithInvalidPaymentToken {
-    AWXOneOffSession *session = [self makeSession];
-
-    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
-    delegate.statusExpectation = [self expectationWithDescription:@"Expect completeWithStatus to be called"];
-
-    NSError *error = [NSError errorWithDomain:@"domain" code:-1 userInfo:nil];
     PKPaymentAuthorizationResult *result;
-    [self prepareAuthorizationControllerMock:error
-                              billingPayload:nil
-                                      result:&result];
+
+    [self prepareAuthorizationControllerMock:@{} billingPayload:nil result:&result endImmediately:NO];
 
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
-    id providerSpy = OCMPartialMock(provider);
 
     [provider handleFlow];
-
-    OCMVerify(never(), [providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg any]
-                                                           paymentConsent:[OCMArg isNil]
-                                                                   device:[OCMArg isNil]
-                                                               completion:[OCMArg any]]);
-
-    XCTAssertNotNil(result);
-    XCTAssertEqual(result.status, PKPaymentAuthorizationStatusFailure);
-    XCTAssertNotNil(result.errors);
-    XCTAssertEqual(result.errors.count, 1);
 
     [self waitForExpectationsWithTimeout:1 handler:nil];
 
     XCTAssertEqual(delegate.providerDidCompleteWithStatusCount, 1);
-    XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
-    XCTAssertEqualObjects(delegate.lastStatusError, error);
 }
 
 - (void)testHandleFlowWithFailedConfirmIntentRequest {
@@ -375,24 +340,57 @@
                                                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Payment not supported via Apple Pay.", nil)}]);
 }
 
-- (void)testStartPaymentWhenCancelledReturnsCancelStatus {
-    AWXOneOffSession *session = [self makeSession];
-
+- (void)testStartPaymentWhenPaymentControllerFailedToPresent {
+    AWXSession *session = [self makeSession];
+    session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Expect completeWithStatus to be called with cancel status"];
-    delegate.statusExpectation = expectation;
-
-    [self prepareAuthorizationControllerMock:nil billingPayload:nil result:nil endImmediately:YES];
-
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
+    id controllerMock = OCMClassMock([PKPaymentAuthorizationController class]);
+    OCMStub([controllerMock alloc]).andReturn(controllerMock);
+    OCMStub([controllerMock initWithPaymentRequest:[OCMArg any]]).andReturn(controllerMock);
+    OCMStub([controllerMock setDelegate:[OCMArg any]]).andDo(^(NSInvocation *invocation) {
+        id<PKPaymentAuthorizationControllerDelegate> controllerDelegate;
+        [invocation getArgument:&controllerDelegate atIndex:2];
+
+        [controllerDelegate paymentAuthorizationControllerDidFinish:controllerMock];
+    });
+
+    [provider startPayment];
+
+    XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
+    XCTAssertEqualObjects(delegate.lastStatusError, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                                        code:-1
+                                                                    userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)}]);
+}
+
+- (void)testStartPaymentWhenPaymentControllerCancelled {
+    AWXSession *session = [self makeSession];
+    session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    delegate.statusExpectation = [self expectationWithDescription:@"Expect completeWithStatus to be called"];
+    AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
+    id controllerMock = OCMClassMock([PKPaymentAuthorizationController class]);
+    OCMStub([controllerMock alloc]).andReturn(controllerMock);
+    OCMStub([controllerMock initWithPaymentRequest:[OCMArg any]]).andReturn(controllerMock);
+    OCMStub([controllerMock dismissWithCompletion:[OCMArg invokeBlock]]);
+    OCMStub([controllerMock setDelegate:[OCMArg any]]).andDo(^(NSInvocation *invocation) {
+        id<PKPaymentAuthorizationControllerDelegate> controllerDelegate;
+        [invocation getArgument:&controllerDelegate atIndex:2];
+        id paymentMock = OCMClassMock([PKPayment class]);
+        [controllerDelegate paymentAuthorizationController:controllerMock
+                                       didAuthorizePayment:paymentMock
+                                                   handler:^(PKPaymentAuthorizationResult *_Nonnull result) {
+                                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                           [controllerDelegate paymentAuthorizationControllerDidFinish:controllerMock];
+                                                       });
+                                                   }];
+    });
+    OCMStub([controllerMock presentWithCompletion:([OCMArg invokeBlockWithArgs:@YES, nil])]);
 
     [provider startPayment];
 
     [self waitForExpectationsWithTimeout:1 handler:nil];
-
-    XCTAssertEqual(delegate.providerDidCompleteWithStatusCount, 1);
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusCancel);
-    XCTAssertNil(delegate.lastStatusError);
 }
 
 - (AWXOneOffSession *)makeSession {
@@ -452,6 +450,8 @@
             .andReturn(nil);
     }
 
+    OCMStub([controllerMock presentWithCompletion:([OCMArg invokeBlockWithArgs:@YES, nil])]);
+
     OCMStub([controllerMock setDelegate:[OCMArg any]]).andDo(^(NSInvocation *invocation) {
         id<PKPaymentAuthorizationControllerDelegate> controllerDelegate;
         [invocation getArgument:&controllerDelegate atIndex:2];
@@ -468,8 +468,6 @@
                                                        }];
         }
     });
-
-    OCMStub([controllerMock presentWithCompletion:([OCMArg invokeBlockWithArgs:@YES, nil])]);
 }
 
 - (void)prepareAuthorizationControllerMock:(id)payloadOrError

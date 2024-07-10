@@ -7,15 +7,15 @@
 //
 
 #import "AWXAPIClient.h"
+#import "AWXAPIErrorResponse+Update.h"
 #import "AWXConstants.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
-#import "AWXAPIErrorResponse+Update.h"
-#import "Core/AWXAnalyticsLogger.h"
 #import "AWXTestUtils.h"
+#import "Core/AWXAnalyticsLogger.h"
 #import "XCTestCase+Utils.h"
-#import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
+#import <XCTest/XCTest.h>
 
 @interface AWXAPIClientTest : XCTestCase
 
@@ -38,8 +38,8 @@
     OCMStub([responseMock statusCode]).andReturn(200);
     OCMStub([sessionMock dataTaskWithRequest:[OCMArg isKindOfClass:[NSMutableURLRequest class]] completionHandler:([OCMArg invokeBlockWithArgs:mockData, responseMock, [NSNull null], nil])]);
     id getPaymentMethodsResponseMock = OCMClassMock([AWXGetPaymentMethodTypesResponse class]);
-    OCMStub([getPaymentMethodsResponseMock parse: mockData]).andReturn(getPaymentMethodsResponseMock);
-    
+    OCMStub([getPaymentMethodsResponseMock parse:mockData]).andReturn(getPaymentMethodsResponseMock);
+
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
@@ -65,13 +65,13 @@
     id responseMock = OCMClassMock([NSHTTPURLResponse class]);
     OCMStub([responseMock statusCode]).andReturn(500);
     id getPaymentMethodsResponseMock = OCMClassMock([AWXGetPaymentMethodTypesResponse class]);
-    OCMStub([getPaymentMethodsResponseMock parse: mockData]).andReturn([AWXResponse new]);
+    OCMStub([getPaymentMethodsResponseMock parse:mockData]).andReturn([AWXResponse new]);
     AWXAPIErrorResponse *errorResponseMock = [[AWXAPIErrorResponse alloc] initWithMessage:@"An error from Server" code:@"500"];
-    OCMStub([getPaymentMethodsResponseMock parseError: [OCMArg any]]).andReturn(errorResponseMock);
+    OCMStub([getPaymentMethodsResponseMock parseError:[OCMArg any]]).andReturn(errorResponseMock);
     OCMStub([sessionMock dataTaskWithRequest:[OCMArg isKindOfClass:[NSMutableURLRequest class]] completionHandler:([OCMArg invokeBlockWithArgs:mockData, responseMock, [NSNull null], nil])]);
     id loggerMock = OCMClassMock([AWXAnalyticsLogger class]);
     OCMStub([loggerMock shared]).andReturn(nil);
-    
+
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
@@ -96,10 +96,10 @@
     id responseMock = OCMClassMock([NSHTTPURLResponse class]);
     OCMStub([responseMock statusCode]).andReturn(500);
     id getPaymentMethodsResponseMock = OCMClassMock([AWXGetPaymentMethodTypesResponse class]);
-    OCMStub([getPaymentMethodsResponseMock parse: mockData]).andReturn([AWXResponse new]);
-    OCMStub([getPaymentMethodsResponseMock parseError: [OCMArg any]]).andReturn(nil);
+    OCMStub([getPaymentMethodsResponseMock parse:mockData]).andReturn([AWXResponse new]);
+    OCMStub([getPaymentMethodsResponseMock parseError:[OCMArg any]]).andReturn(nil);
     OCMStub([sessionMock dataTaskWithRequest:[OCMArg isKindOfClass:[NSMutableURLRequest class]] completionHandler:([OCMArg invokeBlockWithArgs:mockData, responseMock, [NSNull null], nil])]);
-    
+
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
@@ -109,7 +109,6 @@
          }];
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }
-
 
 - (void)testSendWithFailureWithNetworkError {
     AWXGetPaymentMethodTypesRequest *request = [AWXGetPaymentMethodTypesRequest new];
@@ -128,7 +127,7 @@
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"An error.", nil)}];
     OCMStub([sessionMock dataTaskWithRequest:[OCMArg isKindOfClass:[NSMutableURLRequest class]] completionHandler:([OCMArg invokeBlockWithArgs:mockData, responseMock, mockError, nil])]);
-    
+
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request

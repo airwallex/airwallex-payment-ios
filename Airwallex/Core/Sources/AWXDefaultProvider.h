@@ -87,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param provider The provider handling payment.
  @param Id The id of paymentConsnet.
  */
-- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *) Id;
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id;
 
 @end
 

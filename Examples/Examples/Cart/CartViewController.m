@@ -170,15 +170,15 @@
     }
 
     [self startAnimating];
-        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError * _Nullable error) {
-            if (error) {
-                [self showAlert:error.localizedDescription withTitle:NSLocalizedString(@"Fail to request token.", nil)];
-                [self stopAnimating];
-            } else {
-                NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
-                [self createPaymentIntentWithCustomerId:customerId];
-            }
-        }];
+    [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError *_Nullable error) {
+        if (error) {
+            [self showAlert:error.localizedDescription withTitle:NSLocalizedString(@"Fail to request token.", nil)];
+            [self stopAnimating];
+        } else {
+            NSString *customerId = [[NSUserDefaults standardUserDefaults] stringForKey:kCachedCustomerID];
+            [self createPaymentIntentWithCustomerId:customerId];
+        }
+    }];
 }
 
 #pragma mark - Create Payment Intent
@@ -269,7 +269,7 @@
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf stopAnimating];
-        
+
         if (_error) {
             [strongSelf showAlert:_error.localizedDescription withTitle:nil];
             return;
@@ -527,7 +527,8 @@
     case AirwallexPaymentStatusCancel:
         [self showPaymentCancel];
         break;
-    default:
+    case AirwallexPaymentStatusInProgress:
+        NSLog(@"Payment in progress");
         break;
     }
 }
