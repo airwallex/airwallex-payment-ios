@@ -51,7 +51,8 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
         dispatch_group_leave(group);
     }];
 
-    if (_session.customerId && !_session.hidePaymentConsents && [_session isKindOfClass:AWXOneOffSession.class]) {
+    AWXOneOffSession *oneOffSession = (AWXOneOffSession *)_session;
+    if (_session.customerId && [_session isKindOfClass:AWXOneOffSession.class] && oneOffSession && !oneOffSession.hidePaymentConsents) {
         dispatch_group_enter(group);
         [self retrieveAvailablePaymentConsentsWithCustomerId:_session.customerId
                                                   completion:^(ItemsResult result) {

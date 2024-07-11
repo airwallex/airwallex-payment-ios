@@ -111,6 +111,8 @@ session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.paymentIntent = "Payment intent";
 session.autoCapture = "Whether the card payment will be captured automatically (Default YES)";
+session.hidePaymentConsents = "Whether the stored cards should be hidden on the list (Default NO)"
+session.paymentMethods = "An array of payment method type names" (Optional)
 ```
 
 If you want to make a recurring payment, create a recurring session.
@@ -125,6 +127,7 @@ session.customerId = "Customer id";
 session.nextTriggerByType = "customer or merchant";
 session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
+session.paymentMethods = "An array of payment method type names" (Optional)
 ```
 
 If you want to make a recurring with payment intent, create a recurring with intent session.
@@ -138,6 +141,7 @@ session.autoCapture = "Whether the card payment will be captured automatically (
 session.nextTriggerByType = "customer or merchant";
 session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
+session.paymentMethods = "An array of payment method type names" (Optional)
 ```
 
 - Present one-off payment or recurring flow

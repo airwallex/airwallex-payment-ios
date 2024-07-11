@@ -335,7 +335,6 @@
 
         //        // you can configure the payment method list manually.(But only available ones will be displayed)
         //        session.paymentMethods = @[@"card"];
-        //        session.hidePaymentConsents = YES;
 
         return session;
     }
@@ -352,7 +351,6 @@
 
         //        // you can configure the payment method list manually.(But only available ones will be displayed)
         //        session.paymentMethods = @[@"card"];
-        //        session.hidePaymentConsents = YES;
 
         return session;
     }

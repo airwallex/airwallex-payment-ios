@@ -140,7 +140,7 @@
 }
 
 - (void)presentSingleCardShortcutIfRequired {
-    BOOL hasPaymentConsents = self.availablePaymentConsents.count > 0 && !self.session.hidePaymentConsents;
+    BOOL hasPaymentConsents = self.availablePaymentConsents.count > 0;
     BOOL hasSinglePaymentMethod = self.filteredPaymentMethodTypes.count == 1;
     self.showCardDirectly = !hasPaymentConsents && hasSinglePaymentMethod;
 
@@ -222,7 +222,7 @@
     switch (section) {
     case 0:
         // payment consents section
-        return self.session.hidePaymentConsents ? 0 : self.availablePaymentConsents.count;
+        return self.availablePaymentConsents.count;
     case 1:
         // payment methods section
         return self.filteredPaymentMethodTypes.count;
