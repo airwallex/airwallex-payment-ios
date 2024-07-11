@@ -98,6 +98,11 @@ typedef enum : NSUInteger {
 @property (nonatomic, copy, nullable) NSString *clientSecret;
 
 /**
+ The account ID from client secret.
+ */
+@property (nonatomic, strong, nullable, readonly) NSString *accountID;
+
+/**
  Convenience constructor for a configuration.
 
  @return The shared configuration.

@@ -87,12 +87,12 @@ static BOOL _analyticsEnabled = YES;
 
 - (void)setClientSecret:(NSString *)clientSecret {
     _clientSecret = [clientSecret copy];
-    NSString *accountId = [self accountIdFromClientSecret: [AWXAPIClientConfiguration sharedConfiguration].clientSecret];
+    NSString *accountId = [AWXAPIClientConfiguration sharedConfiguration].accountID;
     [AirwallexRisk setWithAccountID: accountId];
 }
 
-- (NSString *)accountIdFromClientSecret:(NSString *)clientSecret {
-    NSArray<NSString *> *splitedClientSecret = [clientSecret componentsSeparatedByString:@"."];
+- (NSString *)accountID {
+    NSArray<NSString *> *splitedClientSecret = [self.clientSecret componentsSeparatedByString:@"."];
     NSString *encodedSecret;
     if (splitedClientSecret.count > 1) {
         encodedSecret = splitedClientSecret[1];
