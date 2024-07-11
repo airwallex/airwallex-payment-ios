@@ -138,4 +138,24 @@
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 
+- (void)testSetMode {
+    [Airwallex setMode:AirwallexSDKStagingMode];
+    XCTAssertTrue(Airwallex.mode == AirwallexSDKStagingMode);
+}
+
+- (void)testSetClientSecret {
+    [[AWXAPIClientConfiguration sharedConfiguration] setClientSecret:@""];
+    XCTAssertTrue([[AWXAPIClientConfiguration sharedConfiguration].clientSecret isEqualToString:@""]);
+}
+
+- (void)testAccountIDNil {
+    [[AWXAPIClientConfiguration sharedConfiguration] setClientSecret:@""];
+    XCTAssertNil([AWXAPIClientConfiguration sharedConfiguration].accountID);
+}
+
+- (void)testAccountID {
+    [[AWXAPIClientConfiguration sharedConfiguration] setClientSecret:@"asdf.{\"account_id\":\"account_id\"}"];
+    XCTAssertNil([AWXAPIClientConfiguration sharedConfiguration].accountID);
+}
+
 @end

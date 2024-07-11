@@ -12,6 +12,8 @@
 #import "AWXAnalyticsLogger.h"
 #import "AWXLogger.h"
 #import "AWXUtils.h"
+#import "AirRisk/AirRisk-Swift.h"
+#import "NSData+Base64.h"
 
 static NSString *const AWXAPIDemoBaseURL = @"https://api-demo.airwallex.com/";
 static NSString *const AWXAPIStagingBaseURL = @"https://api-staging.airwallex.com/";
@@ -46,6 +48,7 @@ static BOOL _analyticsEnabled = YES;
 
 + (void)setMode:(AirwallexSDKMode)mode {
     _mode = mode;
+    [AirwallexRisk startWithAccountID:nil with:[[AirwallexRiskConfiguration alloc] initWithIsProduction:mode == AirwallexSDKProductionMode tenant:TenantPa]];
 }
 
 + (AirwallexSDKMode)mode {
@@ -79,6 +82,26 @@ static BOOL _analyticsEnabled = YES;
     copy.baseURL = [self.baseURL copyWithZone:zone];
     copy.clientSecret = [self.clientSecret copyWithZone:zone];
     return copy;
+}
+
+- (void)setClientSecret:(NSString *)clientSecret {
+    _clientSecret = [clientSecret copy];
+    [AirwallexRisk setWithAccountID:self.accountID];
+}
+
+- (NSString *)accountID {
+    NSArray<NSString *> *splitedClientSecret = [self.clientSecret componentsSeparatedByString:@"."];
+    NSString *encodedSecret;
+    if (splitedClientSecret.count > 1) {
+        encodedSecret = splitedClientSecret[1];
+    }
+    NSData *decodedData = [NSData initWithBase64NoPaddingString:encodedSecret];
+    NSString *accountId;
+    if (decodedData != nil) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:decodedData options:0 error:nil];
+        accountId = [dict objectForKey:@"account_id"];
+    }
+    return accountId;
 }
 
 @end

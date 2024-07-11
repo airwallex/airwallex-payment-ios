@@ -7,6 +7,7 @@
 //
 
 #import "AWXCardProvider.h"
+#import "AWXCardViewController.h"
 #import "AWXDefaultProvider+Security.h"
 #import "AWXDevice.h"
 #import "AWXPaymentConsent.h"
@@ -15,7 +16,6 @@
 #import "AWXPaymentMethodOptions.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSession.h"
-#import "AWXCardViewController.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 
@@ -51,7 +51,7 @@
     [provider handleFlow];
     OCMVerify(times(1), [spy provider:provider
                             shouldPresentViewController:[OCMArg checkWithBlock:^BOOL(id obj) {
-                                XCTAssertTrue([obj isKindOfClass: AWXCardViewController.class]);
+                                XCTAssertTrue([obj isKindOfClass:AWXCardViewController.class]);
                                 return true;
                             }]
                                          forceToDismiss:NO
