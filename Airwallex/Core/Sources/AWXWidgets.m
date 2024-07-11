@@ -331,6 +331,13 @@
     return NO;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(floatingLabelTextField:textFieldShouldBeginEditing:)]) {
+        return [self.delegate floatingLabelTextField:self textFieldShouldBeginEditing:textField];
+    }
+    return YES;
+}
+
 - (void)textFieldDidChange:(UITextField *)textField {
     if (self.delegate && [self.delegate respondsToSelector:@selector(floatingLabelTextField:textDidChange:)]) {
         [self.delegate floatingLabelTextField:self textDidChange:textField.text];
