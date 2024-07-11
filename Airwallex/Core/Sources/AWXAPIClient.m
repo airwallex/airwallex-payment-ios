@@ -12,8 +12,8 @@
 #import "AWXAnalyticsLogger.h"
 #import "AWXLogger.h"
 #import "AWXUtils.h"
-#import "NSData+Base64.h"
 #import "AirRisk/AirRisk-Swift.h"
+#import "NSData+Base64.h"
 
 static NSString *const AWXAPIDemoBaseURL = @"https://api-demo.airwallex.com/";
 static NSString *const AWXAPIStagingBaseURL = @"https://api-staging.airwallex.com/";
@@ -48,8 +48,7 @@ static BOOL _analyticsEnabled = YES;
 
 + (void)setMode:(AirwallexSDKMode)mode {
     _mode = mode;
-    [AirwallexRisk startWithAccountID:@"" with:[[AirwallexRiskConfiguration alloc] initWithIsProduction:mode == AirwallexSDKProductionMode tenant:TenantPa]];
-
+    [AirwallexRisk startWithAccountID:nil with:[[AirwallexRiskConfiguration alloc] initWithIsProduction:mode == AirwallexSDKProductionMode tenant:TenantPa]];
 }
 
 + (AirwallexSDKMode)mode {
@@ -87,12 +86,11 @@ static BOOL _analyticsEnabled = YES;
 
 - (void)setClientSecret:(NSString *)clientSecret {
     _clientSecret = [clientSecret copy];
-    NSString *accountId = [self accountIdFromClientSecret: [AWXAPIClientConfiguration sharedConfiguration].clientSecret];
-    [AirwallexRisk setWithAccountID: accountId];
+    [AirwallexRisk setWithAccountID:self.accountID];
 }
 
-- (NSString *)accountIdFromClientSecret:(NSString *)clientSecret {
-    NSArray<NSString *> *splitedClientSecret = [clientSecret componentsSeparatedByString:@"."];
+- (NSString *)accountID {
+    NSArray<NSString *> *splitedClientSecret = [self.clientSecret componentsSeparatedByString:@"."];
     NSString *encodedSecret;
     if (splitedClientSecret.count > 1) {
         encodedSecret = splitedClientSecret[1];

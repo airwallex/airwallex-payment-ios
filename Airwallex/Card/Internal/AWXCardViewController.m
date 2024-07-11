@@ -523,16 +523,16 @@ typedef enum {
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    if (textField ==  self.cardNoField.textField) {
+    if (textField == self.cardNoField.textField) {
         [AirwallexRisk logWithEvent:@"input_card_number" screen:@"page_create_card"];
-    } else if (textField ==  self.cvcField.textField) {
+    } else if (textField == self.cvcField.textField) {
         [AirwallexRisk logWithEvent:@"input_card_cvc" screen:@"page_create_card"];
-    } else if (textField ==  self.expiresField.textField) {
+    } else if (textField == self.expiresField.textField) {
         [AirwallexRisk logWithEvent:@"input_card_expiry" screen:@"page_create_card"];
-    } else if (textField ==  self.nameField.textField) {
+    } else if (textField == self.nameField.textField) {
         [AirwallexRisk logWithEvent:@"input_card_holder_name" screen:@"page_create_card"];
     }
-    
+
     return YES;
 }
 

@@ -26,6 +26,7 @@
     id mockConfig = OCMClassMock([AWXAPIClientConfiguration class]);
     OCMStub([mockConfig clientSecret]).andReturn(clientSecret);
     OCMStub([mockConfig sharedConfiguration]).andReturn(mockConfig);
+    OCMStub([mockConfig accountID]).andReturn(@"5a1d6022-2fbb-4a5e-a428-d3ae8a26a123");
 
     id mockTracker = OCMClassMock([Tracker class]);
     self.tracker = mockTracker;

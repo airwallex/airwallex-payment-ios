@@ -15,7 +15,6 @@
 @interface AWXAnalyticsLogger ()
 
 @property (nonatomic, strong, readonly) Tracker *tracker;
-@property (nonatomic, strong, readonly) AirwallexRisk *risk;
 
 @end
 
@@ -100,27 +99,12 @@
         [data setObject:merchantAppVersion forKey:@"merchantAppVersion"];
     }
 
-    NSString *accountId = [self accountIdFromClientSecret:[AWXAPIClientConfiguration sharedConfiguration].clientSecret];
+    NSString *accountId = [AWXAPIClientConfiguration sharedConfiguration].accountID;
     if (accountId != nil) {
         [data setObject:accountId forKey:@"accountId"];
     }
 
     return data;
-}
-
-- (NSString *)accountIdFromClientSecret:(NSString *)clientSecret {
-    NSArray<NSString *> *splitedClientSecret = [clientSecret componentsSeparatedByString:@"."];
-    NSString *encodedSecret;
-    if (splitedClientSecret.count > 1) {
-        encodedSecret = splitedClientSecret[1];
-    }
-    NSData *decodedData = [NSData initWithBase64NoPaddingString:encodedSecret];
-    NSString *accountId;
-    if (decodedData != nil) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:decodedData options:0 error:nil];
-        accountId = [dict objectForKey:@"account_id"];
-    }
-    return accountId;
 }
 
 - (Environment)trackerEnvironment {
