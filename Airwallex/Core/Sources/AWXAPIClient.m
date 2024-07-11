@@ -48,7 +48,6 @@ static BOOL _analyticsEnabled = YES;
 
 + (void)setMode:(AirwallexSDKMode)mode {
     _mode = mode;
-    [AirwallexRisk startWithAccountID:nil with:[[AirwallexRiskConfiguration alloc] initWithIsProduction:mode == AirwallexSDKProductionMode tenant:TenantPa]];
 }
 
 + (AirwallexSDKMode)mode {
@@ -73,6 +72,7 @@ static BOOL _analyticsEnabled = YES;
     dispatch_once(&onceToken, ^{
         sharedConfiguration = [self new];
         sharedConfiguration.baseURL = Airwallex.defaultBaseURL;
+        [AirwallexRisk startWithAccountID:nil with:[[AirwallexRiskConfiguration alloc] initWithIsProduction:Airwallex.mode == AirwallexSDKProductionMode tenant:TenantPa]];
     });
     return sharedConfiguration;
 }
