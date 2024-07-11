@@ -29,7 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class AWXFloatingLabelTextField;
 @protocol AWXFloatingLabelTextFieldDelegate<NSObject>
 
+@optional
 - (void)floatingLabelTextField:(AWXFloatingLabelTextField *)textField textDidChange:(NSString *)text;
+- (BOOL)floatingLabelTextField:(AWXFloatingLabelTextField *)floatingLabelTextField textFieldShouldBeginEditing:(UITextField *)textField;
 
 @end
 

@@ -31,7 +31,7 @@
 #import "AWXWidgets.h"
 #import "AirRisk/AirRisk-Swift.h"
 
-@interface AWXCardViewController ()<AWXCountryListViewControllerDelegate, AWXProviderDelegate, UITextFieldDelegate>
+@interface AWXCardViewController ()<AWXCountryListViewControllerDelegate, AWXProviderDelegate, AWXFloatingLabelTextFieldDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -126,7 +126,7 @@ typedef enum {
     _cardNoField.isRequired = YES;
     _cardNoField.placeholder = @"1234 1234 1234 1234";
     _cardNoField.floatingText = NSLocalizedString(@"Card number", @"Card number");
-    _cardNoField.textField.delegate = self;
+    _cardNoField.delegate = self;
     [stackView addArrangedSubview:_cardNoField];
 
     _nameField = [AWXFloatingLabelTextField new];
@@ -134,7 +134,7 @@ typedef enum {
     _nameField.placeholder = NSLocalizedString(@"Name on card", @"Name on card");
     _cardNoField.nextTextField = _nameField;
     _nameField.isRequired = YES;
-    _nameField.textField.delegate = self;
+    _nameField.delegate = self;
     [stackView addArrangedSubview:_nameField];
 
     UIStackView *cvcStackView = [UIStackView new];
@@ -150,7 +150,7 @@ typedef enum {
     _expiresField.placeholder = NSLocalizedString(@"Expires MM / YY", @"Expires MM / YY");
     _nameField.nextTextField = _expiresField;
     _expiresField.isRequired = YES;
-    _expiresField.textField.delegate = self;
+    _expiresField.delegate = self;
     [cvcStackView addArrangedSubview:_expiresField];
 
     _cvcField = [AWXFloatingLabelTextField new];
@@ -158,7 +158,7 @@ typedef enum {
     _cvcField.placeholder = NSLocalizedString(@"CVC / CVV", @"CVC / CVV");
     _expiresField.nextTextField = _cvcField;
     _cvcField.isRequired = YES;
-    _cvcField.textField.delegate = self;
+    _cvcField.delegate = self;
     [cvcStackView addArrangedSubview:_cvcField];
     [_expiresField.widthAnchor constraintEqualToAnchor:_cvcField.widthAnchor multiplier:1.7].active = YES;
 
@@ -522,7 +522,7 @@ typedef enum {
     [controller didMoveToParentViewController:self];
 }
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+- (BOOL)floatingLabelTextField:(AWXFloatingLabelTextField *)floatingLabelTextField textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == self.cardNoField.textField) {
         [AirwallexRisk logWithEvent:@"input_card_number" screen:@"page_create_card"];
     } else if (textField == self.cvcField.textField) {
