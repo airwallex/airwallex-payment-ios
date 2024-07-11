@@ -23,7 +23,6 @@ static NSString *const recurring = @"recurring";
 - (instancetype)init {
     if (self = [super init]) {
         self.isBillingInformationRequired = YES;
-        self.hidePaymentConsents = NO;
     }
 
     return self;

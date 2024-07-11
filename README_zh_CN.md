@@ -109,6 +109,8 @@ session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.paymentIntent = "Payment intent";
 session.autoCapture = "Whether the card payment will be captured automatically (Default YES)";
+session.hidePaymentConsents = "Whether the stored cards should be hidden on the list (Default NO)"
+session.paymentMethods = "An array of payment method type names" (Optional)
 ```
 
 如果你想完成订阅，请创建订阅session.
@@ -123,6 +125,7 @@ session.customerId = "Customer id";
 session.nextTriggerByType = "customer or merchant";
 session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
+session.paymentMethods = "An array of payment method type names" (Optional)
 ```
 
 如果你想完成特定payment intent的订阅，请使用payment intent创建session。
@@ -136,6 +139,7 @@ session.autoCapture = "Whether the card payment will be captured automatically (
 session.nextTriggerByType = "customer or merchant";
 session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
+session.paymentMethods = "An array of payment method type names" (Optional)
 ```
 
 - 显示付款流程
