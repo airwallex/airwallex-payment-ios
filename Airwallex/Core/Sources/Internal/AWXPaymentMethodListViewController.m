@@ -35,6 +35,7 @@
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
 #import "AirRisk/AirRisk-Swift.h"
+#import "NSObject+Logging.h"
 
 @interface AWXPaymentMethodListViewController ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXProviderDelegate>
 
@@ -123,12 +124,15 @@
     [self startAnimating];
 
     __weak __typeof(self) weakSelf = self;
+    [self log:@"Start loading payment methods and consents. Intent Id:%@", self.session.paymentIntentId];
     [_viewModel fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:^(NSArray<AWXPaymentMethodType *> *_Nullable methods, NSArray<AWXPaymentConsent *> *_Nullable consents, NSError *_Nullable error) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf stopAnimating];
         if (error) {
+            [strongSelf log:@"%@ Intent Id:%@", error.localizedDescription, self.session.paymentIntentId];
             [strongSelf showAlert:error.localizedDescription];
         } else {
+            [strongSelf log:@"Finish loading payment methods and consents. Intent Id:%@", self.session.paymentIntentId];
             strongSelf.availablePaymentMethodTypes = [strongSelf.session filteredPaymentMethodTypes:methods];
             strongSelf.availablePaymentConsents = [consents mutableCopy];
             [strongSelf filterPaymentMethodTypes];
@@ -161,6 +165,7 @@
 
 - (void)filterPaymentMethodTypes {
     if (self.session.paymentMethods && self.session.paymentMethods.count > 0) {
+        [self log:@"Payment list filtered. Your input: %@", [self.session.paymentMethods componentsJoinedByString:@"  "]];
         NSMutableArray *intersectionArray = [NSMutableArray array];
         for (NSString *type in self.session.paymentMethods) {
             for (AWXPaymentMethodType *availableType in self.availablePaymentMethodTypes) {
@@ -191,9 +196,11 @@
 
              if (error) {
                  [strongSelf showAlert:error.localizedDescription];
+                 [strongSelf log:@"removing consent failed. ID: %@", paymentConsent.Id];
                  return;
              }
 
+             [strongSelf log:@"remove consent successfully. ID: %@", paymentConsent.Id];
              [strongSelf.availablePaymentConsents removeObjectAtIndex:index];
              [strongSelf.tableView reloadData];
          }];

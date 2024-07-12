@@ -19,6 +19,7 @@
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
+#import "NSObject+Logging.h"
 
 @interface AWXDefaultProvider ()
 
@@ -253,6 +254,7 @@
                                                    completion:(AWXRequestHandler)completion {
     if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
         __weak __typeof(self) weakSelf = self;
+        [self log:@"One off payment flow."];
         [self createPaymentConsentWithPaymentMethod:paymentMethod
                                          customerId:self.session.customerId
                                            currency:self.session.currency
@@ -276,6 +278,7 @@
                                                                          completion:completion];
                                          }];
     } else if ([self.session isKindOfClass:[AWXRecurringSession class]]) {
+        [self log:@"Recurring payment flow."];
         AWXRecurringSession *session = (AWXRecurringSession *)self.session;
         __weak __typeof(self) weakSelf = self;
         [self createPaymentConsentWithPaymentMethod:paymentMethod
@@ -303,6 +306,7 @@
                                              }
                                          }];
     } else if ([self.session isKindOfClass:[AWXRecurringWithIntentSession class]]) {
+        [self log:@"Recurring with Intent payment flow."];
         AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self.session;
         __weak __typeof(self) weakSelf = self;
         [self createPaymentConsentWithPaymentMethod:paymentMethod

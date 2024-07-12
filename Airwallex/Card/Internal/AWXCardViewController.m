@@ -30,6 +30,7 @@
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
 #import "AirRisk/AirRisk-Swift.h"
+#import "NSObject+Logging.h"
 
 @interface AWXCardViewController ()<AWXCountryListViewControllerDelegate, AWXProviderDelegate, AWXFloatingLabelTextFieldDelegate>
 
@@ -410,6 +411,7 @@ typedef enum {
 - (void)confirmPayment:(id)sender {
     [[AWXAnalyticsLogger shared] logActionWithName:@"tap_pay_button"];
     [AirwallexRisk logWithEvent:@"click_payment_button" screen:@"page_create_card"];
+    [self log:@"Start payment. Intent ID: %@", self.session.paymentIntentId];
 
     NSString *error;
     AWXCardProvider *provider = [self.viewModel preparedProviderWithDelegate:self];
@@ -428,6 +430,7 @@ typedef enum {
             [self presentViewController:controller animated:YES completion:nil];
 
             [[AWXAnalyticsLogger shared] logActionWithName:@"card_payment_validation" additionalInfo:@{@"message": error}];
+            [self log:@"Payment failed. Intent ID: %@. Reason: %@.", self.session.paymentIntentId, error];
         }
     }
 }

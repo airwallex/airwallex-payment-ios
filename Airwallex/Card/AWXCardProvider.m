@@ -19,6 +19,7 @@
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
+#import "NSObject+Logging.h"
 
 @implementation AWXCardProvider
 
@@ -37,6 +38,8 @@
 - (void)confirmPaymentIntentWithCard:(AWXCard *)card
                              billing:(AWXPlaceDetails *)billing
                             saveCard:(BOOL)saveCard {
+    [self log:@"Start payment confirm. Type: Card. Intent Id:%@", self.session.paymentIntentId];
+
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
     paymentMethod.type = AWXCardKey;
     paymentMethod.billing = billing;

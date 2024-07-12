@@ -88,7 +88,7 @@
     AirwallexSDKMode mode = [AirwallexExamplesKeys shared].environment;
     [Airwallex setMode:mode];
 
-    // You can disable sending Analytics data
+    // You can disable sending Analytics data or printing local logs
     //    [Airwallex disableAnalytics];
 
     // Theme customization

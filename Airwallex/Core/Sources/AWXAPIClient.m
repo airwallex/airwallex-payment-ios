@@ -14,6 +14,7 @@
 #import "AWXUtils.h"
 #import "AirRisk/AirRisk-Swift.h"
 #import "NSData+Base64.h"
+#import "NSObject+logging.h"
 
 static NSString *const AWXAPIDemoBaseURL = @"https://api-demo.airwallex.com/";
 static NSString *const AWXAPIStagingBaseURL = @"https://api-staging.airwallex.com/";
@@ -178,6 +179,7 @@ static BOOL _analyticsEnabled = YES;
     self = [super init];
     if (self) {
         _configuration = configuration;
+        [self log:@"Current connected domain:%@", Airwallex.defaultBaseURL];
     }
     return self;
 }
@@ -200,6 +202,8 @@ static BOOL _analyticsEnabled = YES;
     }
     if (self.configuration.clientSecret) {
         [urlRequest setValue:self.configuration.clientSecret forHTTPHeaderField:@"client-secret"];
+    } else {
+        [self log:@"Client secret is not set!"];
     }
     [urlRequest setValue:@"Airwallex-iOS-SDK" forHTTPHeaderField:@"User-Agent"];
     if (request.parameters && [NSJSONSerialization isValidJSONObject:request.parameters] && request.method == AWXHTTPMethodPOST) {
