@@ -15,6 +15,7 @@
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
+#import "NSObject+Logging.h"
 
 @interface AWXSchemaProvider ()<AWXPaymentFormViewControllerDelegate>
 
@@ -33,6 +34,8 @@
     request.lang = self.session.lang;
 
     [self.delegate providerDidStartRequest:self];
+    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
+
     __weak __typeof(self) weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request
@@ -42,7 +45,9 @@
                  [strongSelf verifyPaymentMethodType:(AWXGetPaymentMethodTypeResponse *)response];
              } else {
                  [strongSelf.delegate providerDidEndRequest:strongSelf];
+                 [strongSelf log:@"Delegate: %@, providerDidEndRequest:", strongSelf.delegate.class];
                  [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
              }
          }];
 }
@@ -51,7 +56,9 @@
     AWXSchema *schema = [response.schemas filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"transactionMode == %@", self.session.transactionMode]].firstObject;
     if (!schema || schema.fields.count == 0) {
         [self.delegate providerDidEndRequest:self];
+        [self log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
         [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid schema.", nil)}]];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, @"Invalid schema."];
         return;
     }
 
@@ -78,6 +85,7 @@
     }
 
     [self.delegate providerDidEndRequest:self];
+    [self log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
     [self renderFields:NO];
 }
 
@@ -143,10 +151,13 @@
          handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
              __strong __typeof(weakSelf) strongSelf = weakSelf;
              [strongSelf.delegate providerDidEndRequest:strongSelf];
+             [strongSelf log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
+
              if (response && !error) {
                  [strongSelf verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response];
              } else {
                  [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
              }
          }];
 }

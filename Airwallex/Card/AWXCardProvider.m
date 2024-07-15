@@ -47,6 +47,8 @@
     paymentMethod.customerId = self.session.customerId;
 
     [self.delegate providerDidStartRequest:self];
+    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
+
     if ([self.session isKindOfClass:[AWXOneOffSession class]] && !saveCard) {
         [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
     } else {
@@ -61,7 +63,9 @@
                                [strongSelf createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod];
                            } else {
                                [strongSelf.delegate providerDidEndRequest:strongSelf];
+                               [strongSelf log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
                                [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+                               [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
                            }
                        }];
     }
@@ -69,6 +73,8 @@
 
 - (void)confirmPaymentIntentWithPaymentConsentId:(NSString *)paymentConsentId {
     [self.delegate providerDidStartRequest:self];
+    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
+
     __weak __typeof(self) weakSelf = self;
     [self setDevice:^(AWXDevice *_Nonnull device) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;

@@ -20,6 +20,7 @@
 #import "AWXDevice.h"
 #import "AWXFloatingCardTextField.h"
 #import "AWXPaymentIntent.h"
+#import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
@@ -338,6 +339,7 @@ typedef enum {
                                  completion:^{
                                      id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
                                      [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+                                     [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %lu", delegate.class, (unsigned long)AirwallexPaymentStatusCancel];
                                  }];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
@@ -464,19 +466,25 @@ typedef enum {
 #pragma mark - AWXProviderDelegate
 
 - (void)providerDidStartRequest:(AWXDefaultProvider *)provider {
+    [self log:@"providerDidStartRequest:"];
+
     [self startAnimating];
 }
 
 - (void)providerDidEndRequest:(AWXDefaultProvider *)provider {
+    [self log:@"providerDidEndRequest:"];
     [self stopAnimating];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
+    [self log:@"provider:didCompleteWithStatus:error: %lu  %@", (unsigned long)status, error.description];
+
     UIViewController *presentingViewController = self.presentingViewController;
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
                                  [delegate paymentViewController:presentingViewController didCompleteWithStatus:status error:error];
+                                 [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, presentingViewController.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
                              }];
 }
 
@@ -489,10 +497,12 @@ typedef enum {
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {
+    [self log:@"provider:didInitializePaymentIntentId:  %@", paymentIntentId];
     [self.viewModel updatePaymentIntentId:paymentIntentId];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
+    [self log:@"provider:shouldHandleNextAction:  type:%@, stage: %@", nextAction.type, nextAction.stage];
     AWXDefaultActionProvider *actionProvider = [self.viewModel actionProviderForNextAction:nextAction withDelegate:self];
     if (actionProvider == nil) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];

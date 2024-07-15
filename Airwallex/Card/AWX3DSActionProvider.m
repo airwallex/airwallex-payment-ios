@@ -12,6 +12,7 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSecurityService.h"
 #import "AWXSession.h"
+#import "NSObject+logging.h"
 
 @interface AWX3DSActionProvider ()<AWX3DSServiceDelegate>
 
@@ -23,6 +24,7 @@
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     [self.delegate providerDidStartRequest:self];
+    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
     __weak __typeof(self) weakSelf = self;
     [[AWXSecurityService sharedService] doProfile:self.session.paymentIntentId
                                        completion:^(NSString *_Nullable sessionId) {

@@ -334,16 +334,20 @@
 #pragma mark - AWXProviderDelegate
 
 - (void)providerDidStartRequest:(AWXDefaultProvider *)provider {
+    [self log:@"providerDidStartRequest:"];
     [self startAnimating];
 }
 
 - (void)providerDidEndRequest:(AWXDefaultProvider *)provider {
+    [self log:@"providerDidEndRequest:"];
     [self stopAnimating];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
+    [self log:@"provider:didCompleteWithStatus:error:  %lu  %@", (unsigned long)status, error.localizedDescription];
     id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
     [delegate paymentViewController:self didCompleteWithStatus:status error:error];
+    [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, self.class, (unsigned long)status, error.localizedDescription];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
@@ -355,6 +359,7 @@
 
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {
     [self.session updateInitialPaymentIntentId:paymentIntentId];
+    [self log:@"provider:didInitializePaymentIntentId:  %@", paymentIntentId];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {

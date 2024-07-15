@@ -187,6 +187,7 @@ static BOOL _analyticsEnabled = YES;
 - (void)send:(AWXRequest *)request handler:(AWXRequestHandler)handler {
     NSString *method = @"POST";
     NSURL *url = [NSURL URLWithString:request.path relativeToURL:self.configuration.baseURL];
+    [self log:@"ULR request: %@   Class:%@", url.absoluteURL, request.class];
 
     if (request.method == AWXHTTPMethodGET) {
         method = @"GET";

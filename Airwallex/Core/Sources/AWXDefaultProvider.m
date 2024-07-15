@@ -64,6 +64,8 @@
 - (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                                        device:(nullable AWXDevice *)device {
     [self.delegate providerDidStartRequest:self];
+    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
+
     __weak __typeof(self) weakSelf = self;
     [self createPaymentConsentAndConfirmIntentWithPaymentMethod:[self paymentMethodWithMetaData:paymentMethod]
                                                          device:device
@@ -93,6 +95,8 @@
     self.paymentConsent = paymentConsent;
 
     [self.delegate providerDidStartRequest:self];
+    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
+
     [self confirmPaymentIntentWithPaymentMethodInternal:[self paymentMethodWithMetaData:paymentMethod]
                                          paymentConsent:paymentConsent
                                                  device:device
@@ -102,10 +106,13 @@
 - (void)completeWithResponse:(nullable AWXConfirmPaymentIntentResponse *)response
                        error:(nullable NSError *)error {
     [self.delegate providerDidEndRequest:self];
+    [self log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
+
     if (response && !error) {
         if (response.nextAction) {
             if ([self.delegate respondsToSelector:@selector(provider:shouldHandleNextAction:)]) {
                 [self.delegate provider:self shouldHandleNextAction:response.nextAction];
+                [self log:@"Delegate: %@, provider:shouldHandleNextAction:  type:%@, stage: %@", self.delegate.class, response.nextAction.type, response.nextAction.stage];
             } else {
                 AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:self.delegate session:self.session];
                 [handler handleNextAction:response.nextAction];
@@ -113,9 +120,11 @@
             }
         } else {
             if (self.paymentConsent.Id && [self.delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
+                [self log:@"Delegate: %@, provider:didCompleteWithPaymentConsentId: ID length: %lu", self.delegate.class, (unsigned long)self.paymentIntentId.length];
                 [self.delegate provider:self didCompleteWithPaymentConsentId:self.paymentConsent.Id];
             }
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
+            [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, (unsigned long)AirwallexPaymentStatusSuccess];
 
             if (_paymentMethod.type.length > 0) {
                 [[AWXAnalyticsLogger shared] logActionWithName:@"payment_success" additionalInfo:@{@"paymentMethod": _paymentMethod.type}];
@@ -125,6 +134,7 @@
         }
     } else {
         [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
     }
 }
 
@@ -242,6 +252,8 @@
                  AWXVerifyPaymentConsentResponse *result = (AWXVerifyPaymentConsentResponse *)response;
                  strongSelf.paymentIntentId = result.initialPaymentIntentId;
                  [strongSelf.delegate provider:strongSelf didInitializePaymentIntentId:result.initialPaymentIntentId];
+                 [strongSelf log:@"Delegate: %@, provider:didInitializePaymentIntentId: %@", self.delegate.class, result.initialPaymentIntentId];
+
                  completion(response, error);
              } else {
                  completion(nil, error);
