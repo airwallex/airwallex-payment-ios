@@ -65,7 +65,7 @@
                                [strongSelf.delegate providerDidEndRequest:strongSelf];
                                [strongSelf log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
                                [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-                               [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
+                               [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
                            }
                        }];
     }

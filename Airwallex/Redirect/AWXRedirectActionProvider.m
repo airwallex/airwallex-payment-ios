@@ -16,7 +16,7 @@
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES withAnimation:YES];
     [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
-    [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, (unsigned long)AirwallexPaymentStatusInProgress];
+    [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusInProgress];
 
     NSURL *url = [NSURL URLWithString:nextAction.url];
     if (url) {

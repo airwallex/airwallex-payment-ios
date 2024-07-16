@@ -344,10 +344,10 @@
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
-    [self log:@"provider:didCompleteWithStatus:error:  %lu  %@", (unsigned long)status, error.localizedDescription];
+    [self log:@"provider:didCompleteWithStatus:error:  %lu  %@", status, error.localizedDescription];
     id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
     [delegate paymentViewController:self didCompleteWithStatus:status error:error];
-    [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, self.class, (unsigned long)status, error.localizedDescription];
+    [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, self.class, status, error.localizedDescription];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {

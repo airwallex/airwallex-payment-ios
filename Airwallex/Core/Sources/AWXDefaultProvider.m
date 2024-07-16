@@ -120,11 +120,11 @@
             }
         } else {
             if (self.paymentConsent.Id && [self.delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
-                [self log:@"Delegate: %@, provider:didCompleteWithPaymentConsentId: ID length: %lu", self.delegate.class, (unsigned long)self.paymentIntentId.length];
+                [self log:@"Delegate: %@, provider:didCompleteWithPaymentConsentId: ID length: %lu", self.delegate.class, self.paymentIntentId.length];
                 [self.delegate provider:self didCompleteWithPaymentConsentId:self.paymentConsent.Id];
             }
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
-            [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, (unsigned long)AirwallexPaymentStatusSuccess];
+            [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusSuccess];
 
             if (_paymentMethod.type.length > 0) {
                 [[AWXAnalyticsLogger shared] logActionWithName:@"payment_success" additionalInfo:@{@"paymentMethod": _paymentMethod.type}];
@@ -134,7 +134,7 @@
         }
     } else {
         [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }
 }
 

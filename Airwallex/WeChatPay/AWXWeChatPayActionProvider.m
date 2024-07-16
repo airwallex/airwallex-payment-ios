@@ -36,7 +36,7 @@
                                                  [strongSelf.delegate providerDidEndRequest:strongSelf];
                                                  [strongSelf log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
                                                  [strongSelf.delegate provider:strongSelf didCompleteWithStatus:error != nil ? AirwallexPaymentStatusFailure : AirwallexPaymentStatusSuccess error:error];
-                                                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, (unsigned long)(error != nil ? AirwallexPaymentStatusFailure : AirwallexPaymentStatusSuccess), error.localizedDescription];
+                                                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, (error != nil ? AirwallexPaymentStatusFailure : AirwallexPaymentStatusSuccess), error.localizedDescription];
                                              });
                                          }] resume];
         return;
@@ -60,11 +60,11 @@
                 }
 
                 [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to request WeChat service.", nil)}]];
-                [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, @"Failed to request WeChat service."];
+                [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, @"Failed to request WeChat service."];
                 return;
             }
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
-            [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, (unsigned long)AirwallexPaymentStatusInProgress];
+            [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusInProgress];
             [[AWXAnalyticsLogger shared] logPageViewWithName:@"wechat_redirect"];
         }];
 }

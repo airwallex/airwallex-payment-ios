@@ -14,6 +14,8 @@
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodOptions.h"
+#import "AWXPaymentMethodRequest.h"
+#import "AWXPaymentMethodResponse.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSession.h"
 #import <OCMock/OCMock.h>
@@ -23,6 +25,13 @@
 
 @property (nonatomic, strong) AWXSession *session;
 @property (nonatomic, strong) AWXPaymentMethodType *paymentMethod;
+
+@end
+
+@interface AWXCardProvider ()
+
+- (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod
+                 completion:(AWXRequestHandler)completion;
 
 @end
 
@@ -87,6 +96,78 @@
                                     return YES;
                                 }]
                              handler:[OCMArg any]]);
+}
+
+- (void)testConfirmPaymentIntentWithCardNoSave {
+    [self mockAPIClient];
+
+    id spy = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.autoCapture = YES;
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
+    id providerSpy = OCMPartialMock(provider);
+
+    AWXCard *card = [AWXCard new];
+    AWXPlaceDetails *billing = [AWXPlaceDetails new];
+
+    [providerSpy confirmPaymentIntentWithCard:card billing:billing saveCard:NO];
+
+    OCMVerify(times(2), [spy providerDidStartRequest:provider]);
+}
+
+- (void)testConfirmPaymentIntentWithCard {
+    AWXDevice *device = [AWXDevice new];
+
+    id apiClientMock = OCMClassMock([AWXAPIClient class]);
+    OCMStub([apiClientMock initWithConfiguration:[OCMArg any]]).andReturn(apiClientMock);
+    OCMStub([apiClientMock alloc]).andReturn(apiClientMock);
+
+    AWXCreatePaymentMethodResponse *response = [AWXCreatePaymentMethodResponse new];
+
+    //    NSError *error = [NSError errorWithDomain:@"" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"error."}];
+    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXCreatePaymentMethodRequest class]] handler:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
+
+    id spy = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.autoCapture = YES;
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
+    id providerSpy = OCMPartialMock(provider);
+    OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:device, nil])]);
+
+    AWXCard *card = [AWXCard new];
+    AWXPlaceDetails *billing = [AWXPlaceDetails new];
+
+    [provider confirmPaymentIntentWithCard:card billing:billing saveCard:YES];
+
+    OCMVerify(times(1), [providerSpy createPaymentConsentAndConfirmIntentWithPaymentMethod:[OCMArg any] device:device]);
+}
+
+- (void)testConfirmPaymentIntentWithCardWithError {
+    AWXDevice *device = [AWXDevice new];
+
+    id apiClientMock = OCMClassMock([AWXAPIClient class]);
+    OCMStub([apiClientMock initWithConfiguration:[OCMArg any]]).andReturn(apiClientMock);
+    OCMStub([apiClientMock alloc]).andReturn(apiClientMock);
+
+    AWXCreatePaymentMethodResponse *response = [AWXCreatePaymentMethodResponse new];
+
+    NSError *error = [NSError errorWithDomain:@"" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"error."}];
+    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXCreatePaymentMethodRequest class]] handler:([OCMArg invokeBlockWithArgs:response, error, nil])]);
+
+    id spy = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.autoCapture = YES;
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
+    id providerSpy = OCMPartialMock(provider);
+    OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:device, nil])]);
+
+    AWXCard *card = [AWXCard new];
+    AWXPlaceDetails *billing = [AWXPlaceDetails new];
+
+    [provider confirmPaymentIntentWithCard:card billing:billing saveCard:YES];
+
+    OCMVerify(times(1), [spy providerDidEndRequest:provider]);
+    OCMVerify(times(1), [spy provider:provider didCompleteWithStatus:AirwallexPaymentStatusFailure error:error]);
 }
 
 - (AWXAPIClient *)mockAPIClient {

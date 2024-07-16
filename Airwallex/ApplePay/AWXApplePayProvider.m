@@ -53,7 +53,7 @@ typedef enum {
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }
 }
 
@@ -72,7 +72,7 @@ typedef enum {
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unsupported session type.", nil)}];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }
 }
 
@@ -130,7 +130,7 @@ typedef enum {
             dismissCompletionBlock = ^{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
-                    [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, (unsigned long)AirwallexPaymentStatusCancel];
+                    [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusCancel];
                 });
             };
         }
@@ -142,7 +142,7 @@ typedef enum {
     case Pending:
         // If UI disappears during the interaction with our API, we pass the state to the upper level so in progress UI can be handled before we get the confirmed or failed intent
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
-        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, (unsigned long)AirwallexPaymentStatusInProgress];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusInProgress];
         [self log:@"Apple pay is being processing."];
         self.didDismissWhilePending = YES;
         break;
@@ -197,7 +197,7 @@ typedef enum {
 
     if (!request) {
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
     }
 
@@ -211,7 +211,7 @@ typedef enum {
         [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
         [self log:@"%@", description];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
     }
 
@@ -278,7 +278,7 @@ typedef enum {
         [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
         [self log:@"Failed to present Apple Pay Controller."];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }
 }
 

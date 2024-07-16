@@ -339,7 +339,7 @@ typedef enum {
                                  completion:^{
                                      id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
                                      [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
-                                     [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %lu", delegate.class, (unsigned long)AirwallexPaymentStatusCancel];
+                                     [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %lu", delegate.class, AirwallexPaymentStatusCancel];
                                  }];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
@@ -477,14 +477,14 @@ typedef enum {
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
-    [self log:@"provider:didCompleteWithStatus:error: %lu  %@", (unsigned long)status, error.description];
+    [self log:@"provider:didCompleteWithStatus:error: %lu  %@", status, error.description];
 
     UIViewController *presentingViewController = self.presentingViewController;
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
                                  [delegate paymentViewController:presentingViewController didCompleteWithStatus:status error:error];
-                                 [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, presentingViewController.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
+                                 [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, presentingViewController.class, AirwallexPaymentStatusFailure, error.localizedDescription];
                              }];
 }
 

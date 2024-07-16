@@ -47,7 +47,7 @@
                  [strongSelf.delegate providerDidEndRequest:strongSelf];
                  [strongSelf log:@"Delegate: %@, providerDidEndRequest:", strongSelf.delegate.class];
                  [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
+                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
              }
          }];
 }
@@ -58,7 +58,7 @@
         [self.delegate providerDidEndRequest:self];
         [self log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
         [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid schema.", nil)}]];
-        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, @"Invalid schema."];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, @"Invalid schema."];
         return;
     }
 
@@ -157,7 +157,7 @@
                  [strongSelf verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response];
              } else {
                  [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, (unsigned long)AirwallexPaymentStatusFailure, error.localizedDescription];
+                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
              }
          }];
 }
