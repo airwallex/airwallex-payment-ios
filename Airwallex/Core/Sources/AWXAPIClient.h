@@ -50,9 +50,29 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)disableAnalytics;
 
 /**
+ enable analytics.
+ */
++ (void)enableAnalytics;
+
+/**
  Get whether analytics is enabled, by default it's turned on.
  */
 + (BOOL)analyticsEnabled;
+
+/**
+ Enable local log file.
+ */
++ (void)enableLocalLogFile;
+
+/**
+ Disable local log file.
+ */
++ (void)disableLocalLogFile;
+
+/**
+ Get whether local Log file is enabled, by default it's turned off.
+ */
++ (BOOL)isLocalLogFileEnabled;
 
 @end
 

@@ -28,6 +28,8 @@ static AirwallexSDKMode _mode = AirwallexSDKProductionMode;
 
 static BOOL _analyticsEnabled = YES;
 
+static BOOL _localLogFileEnabled = NO;
+
 + (void)setDefaultBaseURL:(NSURL *)baseURL {
     _defaultBaseURL = [baseURL URLByAppendingPathComponent:@""];
 }
@@ -59,8 +61,24 @@ static BOOL _analyticsEnabled = YES;
     _analyticsEnabled = NO;
 }
 
++ (void)enableAnalytics {
+    _analyticsEnabled = YES;
+}
+
 + (BOOL)analyticsEnabled {
     return _analyticsEnabled;
+}
+
++ (void)enableLocalLogFile {
+    _localLogFileEnabled = YES;
+}
+
++ (void)disableLocalLogFile {
+    _localLogFileEnabled = NO;
+}
+
++ (BOOL)isLocalLogFileEnabled {
+    return _localLogFileEnabled;
 }
 
 @end
