@@ -8,6 +8,7 @@
 
 #import "AWXAPIClient.h"
 #import "NSObject+Logging.h"
+#import <os/log.h>
 
 @implementation NSObject (Logging)
 
@@ -26,7 +27,8 @@
 
     NSString *className = NSStringFromClass([self class]);
 
-    NSLog(@"----Airwallex SDK----%@----%@----\n %@", [formatter stringFromDate:now], className, formattedMessage);
+    os_log_t customLog = os_log_create("com.airwallex.payment.sdk", "general");
+    os_log(customLog, "----Airwallex SDK----%@----%@----\n %@", [formatter stringFromDate:now], className, formattedMessage);
 
     if ([Airwallex isLocalLogFileEnabled]) {
         NSString *log = [NSString stringWithFormat:@"----Airwallex SDK----%@----%@----\n %@\n", [formatter stringFromDate:now], className, formattedMessage];
