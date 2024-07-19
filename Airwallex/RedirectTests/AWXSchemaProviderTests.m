@@ -36,6 +36,42 @@
     OCMVerify(times(1), [_delegate provider:provider shouldPresentViewController:[OCMArg isKindOfClass:[AWXPaymentFormViewController class]] forceToDismiss:NO withAnimation:NO]);
 }
 
+- (void)testHandleFlowWhenFailed {
+    AWXSchemaProvider *provider = [self createProvider:NO];
+
+    id apiClientMock = OCMClassMock([AWXAPIClient class]);
+    OCMStub([apiClientMock initWithConfiguration:[OCMArg any]]).andReturn(apiClientMock);
+    OCMStub([apiClientMock alloc]).andReturn(apiClientMock);
+
+    AWXGetPaymentMethodTypeResponse *response = [AWXGetPaymentMethodTypeResponse new];
+
+    NSError *error = [NSError errorWithDomain:@"" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"error."}];
+    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypeRequest class]] handler:([OCMArg invokeBlockWithArgs:response, error, nil])]);
+
+    [provider handleFlow];
+
+    OCMVerify(times(1), [_delegate providerDidEndRequest:provider]);
+    OCMVerify(times(1), [_delegate provider:provider didCompleteWithStatus:AirwallexPaymentStatusFailure error:error]);
+}
+
+- (void)testHandleFlowWhenSchemasIsEmpty {
+    AWXSchemaProvider *provider = [self createProvider:NO];
+
+    id apiClientMock = OCMClassMock([AWXAPIClient class]);
+    OCMStub([apiClientMock initWithConfiguration:[OCMArg any]]).andReturn(apiClientMock);
+    OCMStub([apiClientMock alloc]).andReturn(apiClientMock);
+
+    AWXGetPaymentMethodTypeResponse *response = [AWXGetPaymentMethodTypeResponse new];
+    response.schemas = @[];
+
+    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypeRequest class]] handler:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
+
+    [provider handleFlow];
+
+    OCMVerify(times(1), [_delegate providerDidEndRequest:provider]);
+    OCMVerify(times(1), [_delegate provider:provider didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid schema.", nil)}]]);
+}
+
 - (void)testHandleFlowWhenBankListNotEmpty {
     AWXSchemaProvider *provider = [self createProvider:YES];
     [provider handleFlow];
@@ -47,6 +83,21 @@
                             }]
                                          forceToDismiss:NO
                                           withAnimation:NO]);
+}
+
+- (void)testHandleFlowWhenBankListEmptyUIFieldsNotEmpty {
+    AWXSchemaProvider *provider = [self createProvider:YES];
+    [provider handleFlow];
+    AWXField *textField = [AWXField new];
+    textField.uiType = @"text";
+    AWXSchema *schema = [AWXSchema new];
+    schema.transactionMode = @"oneoff";
+    schema.fields = @[textField];
+
+    AWXGetPaymentMethodTypeResponse *response = [AWXGetPaymentMethodTypeResponse new];
+    response.schemas = @[schema];
+
+    OCMVerify(times(1), [_delegate providerDidEndRequest:provider]);
 }
 
 - (AWXSchemaProvider *)createProvider:(BOOL)hasBanks {

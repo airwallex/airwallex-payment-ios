@@ -35,6 +35,7 @@
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
 #import "AirRisk/AirRisk-Swift.h"
+#import "NSObject+Logging.h"
 
 @interface AWXPaymentMethodListViewController ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXProviderDelegate>
 
@@ -123,12 +124,15 @@
     [self startAnimating];
 
     __weak __typeof(self) weakSelf = self;
+    [self log:@"Start loading payment methods and consents. Intent Id:%@", self.session.paymentIntentId];
     [_viewModel fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:^(NSArray<AWXPaymentMethodType *> *_Nullable methods, NSArray<AWXPaymentConsent *> *_Nullable consents, NSError *_Nullable error) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf stopAnimating];
         if (error) {
+            [strongSelf log:@"%@ Intent Id:%@", error.localizedDescription, self.session.paymentIntentId];
             [strongSelf showAlert:error.localizedDescription];
         } else {
+            [strongSelf log:@"Finish loading payment methods and consents. Intent Id:%@", self.session.paymentIntentId];
             strongSelf.availablePaymentMethodTypes = [strongSelf.session filteredPaymentMethodTypes:methods];
             strongSelf.availablePaymentConsents = [consents mutableCopy];
             [strongSelf filterPaymentMethodTypes];
@@ -161,6 +165,7 @@
 
 - (void)filterPaymentMethodTypes {
     if (self.session.paymentMethods && self.session.paymentMethods.count > 0) {
+        [self log:@"Payment list filtered. Your input: %@", [self.session.paymentMethods componentsJoinedByString:@"  "]];
         NSMutableArray *intersectionArray = [NSMutableArray array];
         for (NSString *type in self.session.paymentMethods) {
             for (AWXPaymentMethodType *availableType in self.availablePaymentMethodTypes) {
@@ -191,9 +196,11 @@
 
              if (error) {
                  [strongSelf showAlert:error.localizedDescription];
+                 [strongSelf log:@"removing consent failed. ID: %@", paymentConsent.Id];
                  return;
              }
 
+             [strongSelf log:@"remove consent successfully. ID: %@", paymentConsent.Id];
              [strongSelf.availablePaymentConsents removeObjectAtIndex:index];
              [strongSelf.tableView reloadData];
          }];
@@ -327,16 +334,20 @@
 #pragma mark - AWXProviderDelegate
 
 - (void)providerDidStartRequest:(AWXDefaultProvider *)provider {
+    [self log:@"providerDidStartRequest:"];
     [self startAnimating];
 }
 
 - (void)providerDidEndRequest:(AWXDefaultProvider *)provider {
+    [self log:@"providerDidEndRequest:"];
     [self stopAnimating];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
+    [self log:@"provider:didCompleteWithStatus:error:  %lu  %@", status, error.localizedDescription];
     id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
     [delegate paymentViewController:self didCompleteWithStatus:status error:error];
+    [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, self.class, status, error.localizedDescription];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
@@ -348,6 +359,7 @@
 
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {
     [self.session updateInitialPaymentIntentId:paymentIntentId];
+    [self log:@"provider:didInitializePaymentIntentId:  %@", paymentIntentId];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {

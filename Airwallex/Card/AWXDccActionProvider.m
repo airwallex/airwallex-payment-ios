@@ -15,6 +15,7 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSecurityService.h"
 #import "AWXSession.h"
+#import "NSObject+Logging.h"
 
 @interface AWXDccActionProvider ()<AWXDCCViewControllerDelegate>
 
@@ -36,6 +37,8 @@
 - (void)confirmThreeDSWithUseDCC:(BOOL)useDCC {
     __weak __typeof(self) weakSelf = self;
     [self.delegate providerDidStartRequest:self];
+    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
+
     [[AWXSecurityService sharedService] doProfile:self.session.paymentIntentId
                                        completion:^(NSString *_Nullable sessionId) {
                                            __strong __typeof(weakSelf) strongSelf = weakSelf;

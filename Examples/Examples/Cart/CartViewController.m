@@ -88,8 +88,11 @@
     AirwallexSDKMode mode = [AirwallexExamplesKeys shared].environment;
     [Airwallex setMode:mode];
 
-    // You can disable sending Analytics data
+    // You can disable sending Analytics data or printing local logs
     //    [Airwallex disableAnalytics];
+
+    // you can enable local log file
+    //    [Airwallex enableLocalLogFile];
 
     // Theme customization
     //    UIColor *tintColor = [UIColor systemPinkColor];

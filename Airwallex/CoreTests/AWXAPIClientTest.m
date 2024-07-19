@@ -158,4 +158,24 @@
     XCTAssertNil([AWXAPIClientConfiguration sharedConfiguration].accountID);
 }
 
+- (void)testDisableAnalytics {
+    [Airwallex disableAnalytics];
+    XCTAssertFalse([Airwallex analyticsEnabled]);
+}
+
+- (void)testEnableAnalytics {
+    [Airwallex enableAnalytics];
+    XCTAssertTrue([Airwallex analyticsEnabled]);
+}
+
+- (void)testEnableLocalLogFile {
+    [Airwallex enableLocalLogFile];
+    XCTAssertTrue([Airwallex isLocalLogFileEnabled]);
+}
+
+- (void)testDisableLocalLogFile {
+    [Airwallex disableLocalLogFile];
+    XCTAssertFalse([Airwallex isLocalLogFileEnabled]);
+}
+
 @end

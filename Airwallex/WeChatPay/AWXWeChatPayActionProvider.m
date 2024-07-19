@@ -11,6 +11,7 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSession.h"
 #import "AWXWeChatPaySDKResponse.h"
+#import "NSObject+Logging.h"
 #import <WechatOpenSDK/WXApi.h>
 
 @implementation AWXWeChatPayActionProvider
@@ -24,6 +25,7 @@
     NSURL *url = [NSURL URLWithString:response.prepayId];
     if (url.scheme && url.host) {
         [self.delegate providerDidStartRequest:self];
+        [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
 
         __weak __typeof(self) weakSelf = self;
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -32,7 +34,9 @@
                                              __strong __typeof(weakSelf) strongSelf = weakSelf;
                                              dispatch_async(dispatch_get_main_queue(), ^{
                                                  [strongSelf.delegate providerDidEndRequest:strongSelf];
+                                                 [strongSelf log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
                                                  [strongSelf.delegate provider:strongSelf didCompleteWithStatus:error != nil ? AirwallexPaymentStatusFailure : AirwallexPaymentStatusSuccess error:error];
+                                                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, (error != nil ? AirwallexPaymentStatusFailure : AirwallexPaymentStatusSuccess), error.localizedDescription];
                                              });
                                          }] resume];
         return;
@@ -55,10 +59,12 @@
                     [[AWXAnalyticsLogger shared] logErrorWithName:@"wechat_redirect" additionalInfo:@{@"message": request.description}];
                 }
 
-                [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to request WeChat service.", nil)}]];
+                [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to request WeChat service.", nil)}]];
+                [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, @"Failed to request WeChat service."];
                 return;
             }
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
+            [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusInProgress];
             [[AWXAnalyticsLogger shared] logPageViewWithName:@"wechat_redirect"];
         }];
 }

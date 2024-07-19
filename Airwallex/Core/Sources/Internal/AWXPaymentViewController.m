@@ -23,6 +23,7 @@
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
+#import "NSObject+Logging.h"
 
 @interface AWXPaymentViewController ()<AWXFloatingLabelTextFieldDelegate, AWXProviderDelegate>
 
@@ -165,10 +166,12 @@
 #pragma mark - AWXViewModelDelegate
 
 - (void)providerDidStartRequest:(AWXDefaultProvider *)provider {
+    [self log:@"providerDidStartRequest:"];
     [self startAnimating];
 }
 
 - (void)providerDidEndRequest:(AWXDefaultProvider *)provider {
+    [self log:@"providerDidEndRequest:"];
     [self stopAnimating];
 }
 
@@ -186,9 +189,11 @@
 
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {
     [self.session updateInitialPaymentIntentId:paymentIntentId];
+    [self log:@"provider:didInitializePaymentIntentId:  %@", paymentIntentId];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
+    [self log:@"provider:shouldHandleNextAction:  type:%@, stage: %@", nextAction.type, nextAction.stage];
     Class class = ClassToHandleNextActionForType(nextAction);
     if (class == nil) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];

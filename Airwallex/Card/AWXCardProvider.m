@@ -19,6 +19,7 @@
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
+#import "NSObject+Logging.h"
 
 @implementation AWXCardProvider
 
@@ -37,6 +38,8 @@
 - (void)confirmPaymentIntentWithCard:(AWXCard *)card
                              billing:(AWXPlaceDetails *)billing
                             saveCard:(BOOL)saveCard {
+    [self log:@"Start payment confirm. Type: Card. Intent Id:%@", self.session.paymentIntentId];
+
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
     paymentMethod.type = AWXCardKey;
     paymentMethod.billing = billing;
@@ -44,6 +47,8 @@
     paymentMethod.customerId = self.session.customerId;
 
     [self.delegate providerDidStartRequest:self];
+    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
+
     if ([self.session isKindOfClass:[AWXOneOffSession class]] && !saveCard) {
         [self confirmPaymentIntentWithPaymentMethod:paymentMethod];
     } else {
@@ -58,7 +63,9 @@
                                [strongSelf createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod];
                            } else {
                                [strongSelf.delegate providerDidEndRequest:strongSelf];
+                               [strongSelf log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
                                [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+                               [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
                            }
                        }];
     }
@@ -66,6 +73,8 @@
 
 - (void)confirmPaymentIntentWithPaymentConsentId:(NSString *)paymentConsentId {
     [self.delegate providerDidStartRequest:self];
+    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
+
     __weak __typeof(self) weakSelf = self;
     [self setDevice:^(AWXDevice *_Nonnull device) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;

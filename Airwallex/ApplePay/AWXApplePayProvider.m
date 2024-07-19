@@ -17,6 +17,7 @@
 #import "AWXPaymentMethod.h"
 #import "AWXSession.h"
 #import "AirRisk/AirRisk-Swift.h"
+#import "NSObject+logging.h"
 #import "PKContact+Request.h"
 #import "PKPaymentToken+Request.h"
 #import <PassKit/PassKit.h>
@@ -52,6 +53,7 @@ typedef enum {
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }
 }
 
@@ -70,6 +72,7 @@ typedef enum {
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unsupported session type.", nil)}];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }
 }
 
@@ -127,9 +130,11 @@ typedef enum {
             dismissCompletionBlock = ^{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+                    [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusCancel];
                 });
             };
         }
+        [self log:@"Apple pay failed."];
         // The user most likely has cancelled the authorization.
         // Do nothing here to allow the user to select another payment method if it's not direct Apple Pay integration.
         [controller dismissWithCompletion:dismissCompletionBlock];
@@ -137,11 +142,14 @@ typedef enum {
     case Pending:
         // If UI disappears during the interaction with our API, we pass the state to the upper level so in progress UI can be handled before we get the confirmed or failed intent
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusInProgress];
+        [self log:@"Apple pay is being processing."];
         self.didDismissWhilePending = YES;
         break;
     case Complete:
         dismissCompletionBlock = ^{
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self log:@"Apple pay finished. LastResponse:%@, lastError:%@", self.lastResponse.status, self.lastError];
                 [self completeWithResponse:self.lastResponse error:self.lastError];
             });
         };
@@ -189,6 +197,7 @@ typedef enum {
 
     if (!request) {
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
     }
 
@@ -200,7 +209,9 @@ typedef enum {
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: description}];
         [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
+        [self log:@"%@", description];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
     }
 
@@ -218,6 +229,7 @@ typedef enum {
 
         strongSelf.paymentState = NotStarted;
         [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet"];
+        [self log:@"Show apple pay"];
     }];
 }
 
@@ -264,7 +276,9 @@ typedef enum {
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)}];
         [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
+        [self log:@"Failed to present Apple Pay Controller."];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }
 }
 
