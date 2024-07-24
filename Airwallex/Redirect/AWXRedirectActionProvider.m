@@ -15,8 +15,6 @@
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES withAnimation:YES];
-    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
-    [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusInProgress];
 
     NSURL *url = [NSURL URLWithString:nextAction.url];
     if (url) {
@@ -25,9 +23,17 @@
                                  completionHandler:^(BOOL success) {
                                      if (url.absoluteString.length > 0) {
                                          if (success) {
+                                             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusInProgress error:nil];
+                                             [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusInProgress];
                                              [[AWXAnalyticsLogger shared] logPageViewWithName:@"payment_redirect" additionalInfo:@{@"url": url.absoluteString}];
                                          } else {
-                                             [[AWXAnalyticsLogger shared] logErrorWithName:@"payment_redirect" additionalInfo:@{@"url": url.absoluteString}];
+                                             NSDictionary *info = @{NSLocalizedDescriptionKey: NSLocalizedString(@"Redirect to app failed.", nil), NSURLErrorKey: url.absoluteString};
+                                             NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
+                                                                                  code:-1
+                                                                              userInfo:info];
+                                             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+                                             [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.description];
+                                             [[AWXAnalyticsLogger shared] logErrorWithName:@"payment_redirect" additionalInfo:info];
                                          }
                                      }
                                  }];
