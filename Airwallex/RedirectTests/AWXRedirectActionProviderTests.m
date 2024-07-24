@@ -52,7 +52,8 @@
     AWXConfirmPaymentNextAction *nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:[self testDictionary]];
 
     [provider handleNextAction:nextAction];
-    OCMVerify(times(1), [_logger logErrorWithName:@"payment_redirect" additionalInfo:[self testDictionary]]);
+    NSDictionary *dict = @{NSLocalizedDescriptionKey: NSLocalizedString(@"Redirect to app failed.", nil), NSURLErrorKey: @"http://abc.net"};
+    OCMVerify(times(1), [_logger logErrorWithName:@"payment_redirect" additionalInfo:dict]);
 }
 
 - (NSDictionary *)testDictionary {
