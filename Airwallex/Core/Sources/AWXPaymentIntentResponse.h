@@ -50,6 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXConfirmPaymentNextAction` includes the parameters for next action.
  */
+
+NS_SWIFT_NAME(AWXConfirmPaymentNextActionOC)
 @interface AWXConfirmPaymentNextAction : NSObject<AWXJSONDecodable>
 
 /**

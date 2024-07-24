@@ -12,6 +12,7 @@
 /**
  `AWXCard` includes the information of a card.
  */
+NS_SWIFT_NAME(AWXCardOC)
 @interface AWXCard : NSObject<AWXJSONEncodable, AWXJSONDecodable>
 
 /**

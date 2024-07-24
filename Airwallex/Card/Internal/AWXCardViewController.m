@@ -484,15 +484,14 @@ typedef enum {
                              completion:^{
                                  id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
                                  [delegate paymentViewController:presentingViewController didCompleteWithStatus:status error:error];
-                                 [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, presentingViewController.class, AirwallexPaymentStatusFailure, error.localizedDescription];
+                                 [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, presentingViewController.class, status, error.localizedDescription];
                              }];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
-    UIViewController *presentingViewController = self.presentingViewController;
     id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
     if ([delegate respondsToSelector:@selector(paymentViewController:didCompleteWithPaymentConsentId:)]) {
-        [delegate paymentViewController:presentingViewController didCompleteWithPaymentConsentId:Id];
+        [delegate paymentViewController:self didCompleteWithPaymentConsentId:Id];
     }
 }
 

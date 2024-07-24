@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXPlaceDetails` includes the information of a billing address.
  */
+NS_SWIFT_NAME(AWXPlaceDetailsOC)
 @interface AWXPlaceDetails : NSObject<AWXJSONEncodable, AWXJSONDecodable, NSCopying>
 
 /**
