@@ -252,8 +252,8 @@
 		C86642892C4F567400549016 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642882C4F567400549016 /* UIColor+Utils.swift */; };
 		C866428B2C4F615500549016 /* UIFont+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866428A2C4F615500549016 /* UIFont+Utils.swift */; };
 		C866428D2C4F7CD900549016 /* AWXPaymentMethodType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C866428C2C4F7CD900549016 /* AWXPaymentMethodType.swift */; };
-		C86642932C50D94400549016 /* AWXCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642922C50D94400549016 /* AWXCardViewController.swift */; };
 		C86642952C50F28D00549016 /* NSObject+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642942C50F28C00549016 /* NSObject+Utils.swift */; };
+		C866429A2C52459600549016 /* AWXCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642992C52459600549016 /* AWXCardViewController.swift */; };
 		C8F387592C4A41640059B835 /* AWXAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F387582C4A41640059B835 /* AWXAPIClient.swift */; };
 		C8F3875C2C4A42C60059B835 /* AWXConfirmPaymentIntentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F3875B2C4A42C60059B835 /* AWXConfirmPaymentIntentResponse.swift */; };
 		C8F3875E2C4A4F880059B835 /* AWXConfirmPaymentNextAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F3875D2C4A4F880059B835 /* AWXConfirmPaymentNextAction.swift */; };
@@ -634,8 +634,9 @@
 		C86642882C4F567400549016 /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
 		C866428A2C4F615500549016 /* UIFont+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Utils.swift"; sourceTree = "<group>"; };
 		C866428C2C4F7CD900549016 /* AWXPaymentMethodType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentMethodType.swift; sourceTree = "<group>"; };
-		C86642922C50D94400549016 /* AWXCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXCardViewController.swift; sourceTree = "<group>"; };
 		C86642942C50F28C00549016 /* NSObject+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Utils.swift"; sourceTree = "<group>"; };
+		C86642982C51F5EC00549016 /* Airwallex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Airwallex.h; sourceTree = "<group>"; };
+		C86642992C52459600549016 /* AWXCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXCardViewController.swift; sourceTree = "<group>"; };
 		C8F387582C4A41640059B835 /* AWXAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXAPIClient.swift; sourceTree = "<group>"; };
 		C8F3875B2C4A42C60059B835 /* AWXConfirmPaymentIntentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXConfirmPaymentIntentResponse.swift; sourceTree = "<group>"; };
 		C8F3875D2C4A4F880059B835 /* AWXConfirmPaymentNextAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXConfirmPaymentNextAction.swift; sourceTree = "<group>"; };
@@ -798,6 +799,7 @@
 		085BD3BE23CC62B4002E8F27 = {
 			isa = PBXGroup;
 			children = (
+				C86642982C51F5EC00549016 /* Airwallex.h */,
 				3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */,
 				189E3ADB2986512F00F3037F /* Security */,
 				3C72E12828EC4BDD00F038E3 /* Configurations */,
@@ -1009,7 +1011,7 @@
 				184EADAF28D15C1600FD965D /* AWXCardViewModel.m */,
 				5775CF7B26E5E28400C6AFE3 /* AWXCardViewController.h */,
 				5775CF6A26E5E28400C6AFE3 /* AWXCardViewController.m */,
-				C86642922C50D94400549016 /* AWXCardViewController.swift */,
+				C86642992C52459600549016 /* AWXCardViewController.swift */,
 				5775CF7126E5E28400C6AFE3 /* AWXDccResponse.h */,
 				5775CF7726E5E28400C6AFE3 /* AWXDccResponse.m */,
 				5775CF7826E5E28400C6AFE3 /* AWXDCCViewController.h */,
@@ -2097,9 +2099,9 @@
 				5775CF8B26E5E28500C6AFE3 /* AWXDccActionProvider.m in Sources */,
 				5775CF8726E5E28500C6AFE3 /* AWXWebViewController.m in Sources */,
 				57D4A4502785AF4500487E1C /* AWX3DSViewController.m in Sources */,
-				C86642932C50D94400549016 /* AWXCardViewController.swift in Sources */,
 				57A3AD6F27589BEF00EFF0A1 /* AWX3DSService.m in Sources */,
 				5775CF8926E5E28500C6AFE3 /* AWXDccResponse.m in Sources */,
+				C866429A2C52459600549016 /* AWXCardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2234,7 +2236,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					AirwallexSDK,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -2295,7 +2296,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = AirwallexSDK;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2329,6 +2330,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					AirwallexSDK,
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Core/Info.plist;
@@ -2514,6 +2516,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					AirwallexSDK,
+				);
 				INFOPLIST_FILE = WeChatPay/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2538,6 +2545,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					AirwallexSDK,
+				);
 				INFOPLIST_FILE = WeChatPay/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (

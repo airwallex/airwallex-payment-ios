@@ -231,20 +231,6 @@ public class AWXCardViewController: UIViewController {
 
     public var saveCard: Bool = false
     
-    @available(*, unavailable)
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        fatalError("init(nibName:bundle:) is not available. Use init(data:) instead.")
-    }
-    
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public init(session: AWXSession, paymentMethodType: AWXPaymentMethodType? = nil) {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -282,7 +268,10 @@ public class AWXCardViewController: UIViewController {
     }
     
     func setupViews() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close", in: Bundle.resource()), style: .plain, target: self, action: #selector(close))
+        
         enableTapToEndEditing()
+        view.backgroundColor = .white
         
         view.addSubview(scrollView)
         scrollView.addSubview(container)

@@ -21,6 +21,11 @@
 #import "AWXSession.h"
 #import "NSObject+Logging.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
+#ifdef AirwallexSDK
+#import "Card/Card-Swift.h"
+#else
+#import "Airwallex/Airwallex-Swift.h"
+#endif
 
 @implementation AWXCardProvider
 
@@ -29,11 +34,43 @@
 }
 
 - (void)handleFlow {
-    AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
+    AWXCardViewControllerSwift *controller = [[AWXCardViewControllerSwift alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
-    controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:self.paymentMethodType.cardSchemes];
+    NSMutableArray<AWXCardScheme *> *supportedCardSchemes;
+    if (self.paymentMethodType) {
+        supportedCardSchemes = [NSMutableArray arrayWithArray:self.paymentMethodType.cardSchemes];
+    }
+    if (self.cardSchemes) {
+        supportedCardSchemes = [NSMutableArray array];
+        for (NSNumber *type in self.cardSchemes) {
+            [supportedCardSchemes addObject:[self getSchemeFrom:type.intValue]];
+        }
+    }
+    controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:supportedCardSchemes];
     controller.provider = self;
     [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
+}
+
+- (AWXCardScheme *)getSchemeFrom:(int)type {
+    AWXCardScheme *scheme = [AWXCardScheme new];
+    if (type == AWXBrandTypeAmex) {
+        scheme.name = @"amex";
+    } else if (type == AWXBrandTypeMastercard) {
+        scheme.name = @"mastercard";
+    } else if (type == AWXBrandTypeVisa) {
+        scheme.name = @"visa";
+    } else if (type == AWXBrandTypeUnionPay) {
+        scheme.name = @"unionpay";
+    } else if (type == AWXBrandTypeJCB) {
+        scheme.name = @"jcb";
+    } else if (type == AWXBrandTypeDinersClub) {
+        scheme.name = @"diners";
+    } else if (type == AWXBrandTypeDiscover) {
+        scheme.name = @"discover";
+    } else {
+        scheme.name = @"";
+    }
+    return scheme;
 }
 
 - (void)confirmPaymentIntentWithCard:(AWXCard *)card

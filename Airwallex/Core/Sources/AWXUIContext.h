@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) UIViewController *hostViewController;
 
 /**
- Cureent session to handle.
+ Current session to handle.
  */
 @property (nonatomic, strong) AWXSession *session;
 
@@ -69,14 +69,34 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedContext;
 
 /**
- Present the payment flow.
+ Present the payment flow from method list.
  */
-- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController;
+- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController __attribute__((deprecated("Use newMethod - (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController instead")));
 
 /**
- Push the payment flow.
+ Present the payment flow from method list.
  */
-- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController;
+- (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController;
+
+/**
+ Present the payment flow from card info collection view.
+ */
+- (void)presentCardPaymentFlowFrom:(UIViewController *)hostViewController;
+
+/**
+ Push the payment flow from method list.
+ */
+- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController __attribute__((deprecated("Use newMethod - (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController instead")));
+
+/**
+ Push the payment flow from method list.
+ */
+- (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController;
+
+/**
+ Push the payment flow from card info collection view.
+ */
+- (void)pushCardPaymentFlowFrom:(UIViewController *)hostViewController;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

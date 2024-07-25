@@ -36,10 +36,14 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
 <<<<<<< HEAD
+<<<<<<< HEAD
   Airwallex: e6672b92efb2fec2deb7bdf7a461cf030b6501af
 =======
   Airwallex: 63838de2f637fac69059b498837f8a0d4a944550
 >>>>>>> 57fe989 (feat: write swift version of AWXCardViewController.)
+=======
+  Airwallex: aef955591c773eb8c4dcd92545cf6041f5131474
+>>>>>>> fe2924f (feat: show card directly flow)
   OCMock: 9491e4bec59e0b267d52a9184ff5605995e74be8
   WechatOpenSDK: 2f0ae448c7525cb5c27db5f7aa0f568de0988fa4
 
