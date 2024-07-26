@@ -12,33 +12,33 @@ import Foundation
  `AWXConfirmPaymentNextAction` includes the parameters for next action.
  */
 @objcMembers
-@objc(AWXConfirmPaymentNextActionSwift)
+@objc
 public class AWXConfirmPaymentNextAction: NSObject, Codable {
     
     /**
      Next action type.
      */
-    private(set) var type: String?
+    public private(set)var type: String?
     
     /**
      URL.
      */
-    private(set) var url: String?
+    public private(set)var url: String?
     
     /**
      Method.
      */
-    private(set) var method: String?
+    public private(set)var method: String?
     
     /**
      Stage.
      */
-    private(set) var stage: String?
+    public private(set)var stage: String?
     
     /**
      Payload of next action.
      */
-    var payload: Dictionary<String, String>? {
+    public var payload: Dictionary<String, String>? {
         data ?? dccData
     }
     
@@ -52,6 +52,18 @@ public class AWXConfirmPaymentNextAction: NSObject, Codable {
         case stage
         case data
         case dccData = "dcc_data"
+    }
+    
+    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXConfirmPaymentNextAction {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(AWXConfirmPaymentNextAction.self, from: jsonData)
+            
+            return result
+        } catch {
+            return AWXConfirmPaymentNextAction()
+        }
     }
     
 }

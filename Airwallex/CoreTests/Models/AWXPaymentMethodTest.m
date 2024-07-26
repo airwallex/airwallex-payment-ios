@@ -26,11 +26,13 @@
 }
 
 - (void)testPaymentMethodType {
+    NSDictionary *dic = [AWXTestUtils jsonNamed:@"PaymentMethodType"];
+
     AWXPaymentMethodType *paymentMethodType = [AWXPaymentMethodType decodeFromJSON:[AWXTestUtils jsonNamed:@"PaymentMethodType"]];
     XCTAssertEqualObjects(paymentMethodType.name, @"card");
     XCTAssertEqualObjects(paymentMethodType.displayName, @"Card");
     XCTAssertEqualObjects(paymentMethodType.transactionMode, @"oneoff");
-    XCTAssertEqual(paymentMethodType.flows, [NSArray new]);
+    XCTAssertEqualObjects(paymentMethodType.flows, [NSArray new]);
     NSArray *currencies = @[@"CHF", @"MXN", @"*", @"NOK", @"EGP"];
     XCTAssertEqualObjects(paymentMethodType.transactionCurrencies, currencies);
     XCTAssertTrue(paymentMethodType.active);

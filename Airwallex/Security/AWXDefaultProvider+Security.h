@@ -7,7 +7,8 @@
 //
 
 #import "AWXDefaultProvider.h"
-#import "AWXDevice.h"
+
+@class AWXDevice;
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -9,12 +9,14 @@
 #import "AWXPaymentIntentRequest.h"
 #import "AWXAPIClient.h"
 #import "AWXConstants.h"
-#import "AWXDevice.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
-#import "AWXPaymentMethodOptions.h"
 #import <UIKit/UIKit.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @implementation AWXConfirmPaymentIntentRequest
 
@@ -67,7 +69,7 @@
 
     parameters[@"save_payment_method"] = @(self.savePaymentMethod);
     if (self.device) {
-        parameters[@"device_data"] = [self.device encodeToJSON];
+        parameters[@"device_data"] = self.device.encodeToJSON;
     }
     parameters[@"integration_data"] = @{@"type": @"mobile_sdk",
                                         @"version": [NSString stringWithFormat:@"ios-%@-%@", @"release", AIRWALLEX_VERSION]};

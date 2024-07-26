@@ -7,7 +7,6 @@
 //
 
 #import "AWXPaymentMethodListViewModel.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentMethodRequest.h"
@@ -15,6 +14,11 @@
 #import "AWXTestUtils.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXPaymentMethodListViewModelTest : XCTestCase
 

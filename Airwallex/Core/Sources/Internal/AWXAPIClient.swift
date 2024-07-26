@@ -12,9 +12,8 @@ import Foundation
 @objc(AWXAPIClientSwift)
 public class AWXAPIClient: NSObject {
     
-    public static func confirmPaymentIntentWithIntentId(_ PaymentIntentId: String,
-                                                        configuration: AWXConfirmPaymentIntentConfiguration,
-                                                        completion: @escaping (Bool, AWXConfirmPaymentIntentResponse?, Error?) -> Void) {
+    public static func confirmPaymentIntentWithConfiguration(_ configuration: AWXConfirmPaymentIntentConfiguration,
+                                                        completion: @escaping (AWXConfirmPaymentIntentResponse?, Error?) -> Void) {
         
         if [AWXCardKey, AWXApplePayKey].contains(configuration.paymentMethod?.type) {
             let cardOptions = AWXCardOptions()
@@ -33,9 +32,9 @@ public class AWXAPIClient: NSObject {
         AWXNetWorkManager.shared.post(urlString: configuration.path, parameters: configuration.parameters) { (result: Result<AWXConfirmPaymentIntentResponse, Error>) in
             switch result {
             case .success(let response):
-                completion(true, response, nil)
+                completion(response, nil)
             case .failure(let error):
-                completion(false, nil, error)
+                completion(nil, error)
             }
         }
     }

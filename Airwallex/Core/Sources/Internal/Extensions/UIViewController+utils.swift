@@ -13,17 +13,17 @@ public extension UIViewController {
     
     static var activityIndicator: UIActivityIndicatorView?
     
-    func enableTapToEndEditing() {
+    @objc func enableTapToEndEditing() {
         let ges = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         ges.cancelsTouchesInView = false
         view.addGestureRecognizer(ges)
     }
     
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         view.endEditing(true)
     }
 
-    func close() {
+    @objc func close() {
         if let nav = navigationController {
             nav.popViewController(animated: true)
         } else {
@@ -31,7 +31,7 @@ public extension UIViewController {
         }
     }
     
-    func startAnimating() {
+    @objc func startAnimating() {
         if Self.activityIndicator == nil {
             let activityIndicator = UIActivityIndicatorView(style: .large)
             activityIndicator.center = self.view.center
@@ -47,7 +47,7 @@ public extension UIViewController {
         }
     }
     
-    func stopAnimating() {
+    @objc func stopAnimating() {
         if let activityIndicator = Self.activityIndicator {
             activityIndicator.stopAnimating()
             activityIndicator.removeFromSuperview()

@@ -9,6 +9,11 @@
 #import "AWXDefaultProvider+Security.h"
 #import "AWXSecurityService.h"
 #import "AWXSession.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @implementation AWXDefaultProvider (Security)
 

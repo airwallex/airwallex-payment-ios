@@ -12,7 +12,7 @@ import Foundation
  `AWXPlaceDetails` includes the information of a billing address.
  */
 @objcMembers
-@objc(AWXPlaceDetailsSwift)
+@objc
 public class AWXPlaceDetails: NSObject, Codable {
     
     /**
@@ -45,15 +45,23 @@ public class AWXPlaceDetails: NSObject, Codable {
      */
     public var address: AWXAddress?
     
+    enum CodingKeys: String, CodingKey {
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case email
+        case dateOfBirth = "date_of_birth"
+        case phoneNumber = "phone_number"
+        case address
+    }
 }
 
 @objc extension AWXPlaceDetails {
     
     public func validate() -> String? {
-        if firstName?.count == 0 {
+        if firstName == nil || firstName?.count == 0 {
             return "Invalid first name"
         }
-        if lastName?.count == 0 {
+        if firstName == nil ||  lastName?.count == 0 {
             return "Invalid last name"
         }
         if let email = email, email.count > 0 {
@@ -66,15 +74,29 @@ public class AWXPlaceDetails: NSObject, Codable {
         if address == nil {
             return "Invalid shipping address"
         }
-        if address?.countryCode?.count == 0 {
+        if address?.countryCode == nil || address?.countryCode?.count == 0 {
             return "Invalid country/region";
         }
-        if address?.city?.count == 0 {
+        if address?.city == nil || address?.city?.count == 0 {
             return "Invalid your city";
         }
-        if address?.street?.count == 0 {
+        if address?.street == nil || address?.street?.count == 0 {
             return "Invalid street";
         }
         return nil;
     }
+
+    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXPlaceDetails {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(AWXPlaceDetails.self, from: jsonData)
+            
+            return result
+        } catch {
+            return AWXPlaceDetails()
+        }
+    }
+
 }
+

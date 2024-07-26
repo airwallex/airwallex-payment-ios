@@ -7,8 +7,12 @@
 //
 
 #import "AWXPaymentIntentRequest.h"
-#import "AWXDevice.h"
 #import <XCTest/XCTest.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXPaymentIntentRequestTest : XCTestCase
 

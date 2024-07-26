@@ -12,33 +12,33 @@ import Foundation
  `AWXAddress` includes the information of an address.
  */
 @objcMembers
-@objc(AWXAddressSwift)
+@objc
 public class AWXAddress: NSObject, Codable {
     
     /**
      Country code of the address. Use the two-character ISO Standard Country Codes.
      */
-    var countryCode: String?
+    public var countryCode: String?
     
     /**
      City of the address.
      */
-    var city: String?
+    public var city: String?
     
     /**
      Street of the address.
      */
-    var street: String?
+    public var street: String?
     
     /**
      State or province of the address, optional.
      */
-    var state: String?
+    public var state: String?
     
     /**
      Postcode of the address, optional.
      */
-    var postcode: String?
+    public var postcode: String?
     
     enum CodingKeys: String, CodingKey {
         case countryCode = "country_code"
@@ -47,4 +47,17 @@ public class AWXAddress: NSObject, Codable {
         case state
         case postcode
     }
+    
+    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXAddress {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(AWXAddress.self, from: jsonData)
+            
+            return result
+        } catch {
+            return AWXAddress()
+        }
+    }
+    
 }

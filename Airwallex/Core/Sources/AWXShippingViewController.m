@@ -8,12 +8,14 @@
 
 #import "AWXShippingViewController.h"
 #import "AWXConstants.h"
-#import "AWXCountry.h"
-#import "AWXCountryListViewController.h"
-#import "AWXPlaceDetails.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXShippingViewController ()<AWXCountryListViewControllerDelegate>
 
@@ -198,7 +200,7 @@
 - (IBAction)selectCountries:(id)sender {
     AWXCountryListViewController *controller = [[AWXCountryListViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
-    controller.country = self.country;
+    controller.currentCountry = self.country;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
 }

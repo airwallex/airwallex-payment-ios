@@ -54,7 +54,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The hostViewController will present or push the payment flow.
  */
-@property (nonatomic, weak) UIViewController *hostViewController;
+@property (nonatomic, weak) UIViewController *hostVC;
+
+@property (nonatomic, weak) UIViewController *currentVC;
+@property (nonatomic) BOOL isPush;
 
 /**
  Current session to handle.
@@ -79,11 +82,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController;
 
 /**
- Present the payment flow from card info collection view.
- */
-- (void)presentCardPaymentFlowFrom:(UIViewController *)hostViewController;
-
-/**
  Push the payment flow from method list.
  */
 - (void)pushPaymentFlowFrom:(UIViewController *)hostViewController __attribute__((deprecated("Use newMethod - (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController instead")));
@@ -92,15 +90,6 @@ NS_ASSUME_NONNULL_BEGIN
  Push the payment flow from method list.
  */
 - (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController;
-
-/**
- Push the payment flow from card info collection view.
- */
-- (void)pushCardPaymentFlowFrom:(UIViewController *)hostViewController;
-
-+ (instancetype)new NS_UNAVAILABLE;
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
 
 @end
 

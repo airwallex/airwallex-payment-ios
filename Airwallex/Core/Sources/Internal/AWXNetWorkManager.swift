@@ -106,7 +106,6 @@ public class AWXNetWorkManager: NSObject {
                 return
             }
             
-            let decoder = JSONDecoder()
             if let decodedData = T.from(data) {
                 DispatchQueue.main.async {
                     completion(.success(decodedData))

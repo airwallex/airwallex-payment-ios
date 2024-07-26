@@ -8,11 +8,15 @@
 
 #import "AWX3DSActionProvider.h"
 #import "AWX3DSService.h"
-#import "AWXDevice.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSecurityService.h"
 #import "AWXSession.h"
 #import "NSObject+logging.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWX3DSActionProvider ()<AWX3DSServiceDelegate>
 

@@ -27,9 +27,14 @@
     AWXPaymentMethodType *validMethod = [AWXPaymentMethodType decodeFromJSON:@{
         @"name": @"validMethod",
         @"display_name": @"Valid Method",
+        @"transaction_currencies": @[],
+        @"country_codes": @[],
+        @"flows": @[],
+        @"card_schemes": @[],
+        @"active": @YES,
         @"transaction_mode": @"transactionMode",
         @"resources": @{
-            @"has_schema": @"true"
+            @"has_schema": @YES
         }
     }];
 

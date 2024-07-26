@@ -12,7 +12,7 @@ import Foundation
  `AWXAuthenticationData` includes the parameters for 3ds authentication.
  */
 @objcMembers
-@objc(AWXAuthenticationDataSwift)
+@objc
 public class AWXAuthenticationData: NSObject, Codable {
     var fraudData: AWXAuthenticationDataFraudData?
     var dsData: AWXAuthenticationDataDsData?

@@ -8,18 +8,20 @@
 
 #import "AWXDefaultProvider.h"
 #import "AWXAnalyticsLogger.h"
-#import "AWXDevice.h"
 #import "AWXNextActionHandler.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
-#import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
 #import "NSObject+Logging.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXDefaultProvider ()
 
@@ -172,13 +174,13 @@
                        autoCapture:(BOOL)autoCapture
                         completion:(AWXRequestHandler)completion {
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    request.requestId = NSUUID.UUID.UUIDString;
-    request.intentId = paymentIntentId;
-    request.customerId = customerId;
-    request.paymentMethod = paymentMethod;
-    request.paymentConsent = paymentConsent;
-    request.device = device;
-    request.returnURL = returnURL;
+    AWXConfirmPaymentIntentConfiguration *configuration = [AWXConfirmPaymentIntentConfiguration new];
+    configuration.intentId = paymentIntentId;
+    configuration.customerId = customerId;
+    configuration.paymentMethod = paymentMethod;
+    configuration.paymentConsent = paymentConsent;
+    configuration.device = device;
+    configuration.returnURL = returnURL;
 
     if ([@[AWXCardKey, AWXApplePayKey] containsObject:paymentMethod.type]) {
         AWXCardOptions *cardOptions = [AWXCardOptions new];
@@ -191,11 +193,11 @@
 
         AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
         options.cardOptions = cardOptions;
-        request.options = options;
+        configuration.options = options;
     }
 
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:completion];
+    [AWXAPIClientSwift confirmPaymentIntentWithConfiguration:configuration completion:completion];
+    //    [client send:request handler:completion];
 }
 
 - (void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod

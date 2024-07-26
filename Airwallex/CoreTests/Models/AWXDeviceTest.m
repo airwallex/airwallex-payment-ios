@@ -6,8 +6,12 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import "AWXDevice.h"
 #import <XCTest/XCTest.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXDeviceTest : XCTestCase
 
@@ -19,7 +23,7 @@
     AWXDevice *device = [AWXDevice new];
     device.deviceId = @"abcd";
     NSDictionary *encodedDevice = [device encodeToJSON];
-    XCTAssertEqual(encodedDevice[@"device_id"], @"abcd");
+    XCTAssertEqualObjects(encodedDevice[@"device_id"], @"abcd");
     XCTAssertNotNil(encodedDevice[@"mobile"]);
 }
 

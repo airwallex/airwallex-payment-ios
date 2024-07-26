@@ -12,7 +12,7 @@ import Foundation
  `AWXThreeDs` includes the information of 3ds.
  */
 @objcMembers
-@objc(AWXThreeDsSwift)
+@objc
 public class AWXThreeDs: NSObject, Codable {
     
     /**

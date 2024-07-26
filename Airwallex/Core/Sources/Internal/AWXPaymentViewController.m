@@ -11,19 +11,21 @@
 #import "AWXConstants.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXDefaultProvider.h"
-#import "AWXDevice.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
-#import "AWXPaymentMethodOptions.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
 #import "NSObject+Logging.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXPaymentViewController ()<AWXFloatingLabelTextFieldDelegate, AWXProviderDelegate>
 

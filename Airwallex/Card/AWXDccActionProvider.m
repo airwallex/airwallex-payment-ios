@@ -10,12 +10,16 @@
 #import "AWXAPIClient.h"
 #import "AWXDCCViewController.h"
 #import "AWXDccResponse.h"
-#import "AWXDevice.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSecurityService.h"
 #import "AWXSession.h"
 #import "NSObject+Logging.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXDccActionProvider ()<AWXDCCViewControllerDelegate>
 

@@ -11,5 +11,6 @@
 
 #import "Card.h"
 #import "Core.h"
+#import "WeChatPay.h"
 
 #endif /* Airwallex_h */

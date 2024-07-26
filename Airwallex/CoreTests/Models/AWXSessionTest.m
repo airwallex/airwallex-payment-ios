@@ -7,10 +7,14 @@
 //
 
 #import "AWXSession.h"
-#import "AWXPlaceDetails.h"
 #import "AWXTestUtils.h"
 #import "XCTestCase+Utils.h"
 #import <XCTest/XCTest.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXSessionTest : XCTestCase
 

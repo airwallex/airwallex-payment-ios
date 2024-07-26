@@ -7,19 +7,21 @@
 //
 
 #import "AWXCardProvider.h"
-#import "AWXCardViewController.h"
 #import "AWXDefaultProvider+Security.h"
-#import "AWXDevice.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentMethod.h"
-#import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSession.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
+#ifdef AirwallexSDK
+#import <Card/Card-Swift.h>
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXCardProviderTests : XCTestCase
 

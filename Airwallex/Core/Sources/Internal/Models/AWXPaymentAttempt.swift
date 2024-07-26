@@ -12,43 +12,51 @@ import Foundation
  `AWXPaymentAttempt` includes the information of payment attempt.
  */
 @objcMembers
-@objc(AWXPaymentAttemptSwift)
+@objc
 public class AWXPaymentAttempt: NSObject, Codable {
     
     /**
      Attempt id.
      */
-    private(set) var Id: String?
+    public private(set) var Id: String?
     
     /**
      Payment amount.
      */
-    private(set) var amount: Decimal?
+    public private(set) var amount: Double?
+    public var objcAmount: NSNumber? {
+        return amount as? NSNumber
+    }
     
     /**
      Payment method.
      */
-    private(set) var paymentMethod: AWXPaymentMethod?
+    public private(set) var paymentMethod: AWXPaymentMethod?
 
     /**
      The status of payment attempt
      */
-    private(set) var status: String?
+    public private(set) var status: String?
     
     /**
      Captured amount.
      */
-    private(set) var capturedAmount: Decimal?
+    public private(set) var capturedAmount: Double?
+    public var objcCapturedAmount: NSNumber? {
+        return capturedAmount as? NSNumber
+    }
 
     /**
      Refunded amount.
      */
-    private(set) var refundedAmount: Decimal?
-    
+    public private(set) var refundedAmount: Double?
+    public var objcRefundedAmount: NSNumber? {
+        return refundedAmount as? NSNumber
+    }
     /**
      3DS authentication data.
      */
-    private(set) var authenticationData: AWXAuthenticationData?
+    public private(set) var authenticationData: AWXAuthenticationData?
     
     enum CodingKeys: String, CodingKey {
         case Id = "id"

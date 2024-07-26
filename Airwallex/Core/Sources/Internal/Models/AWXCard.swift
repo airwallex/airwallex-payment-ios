@@ -12,7 +12,7 @@ import Foundation
  `AWXCard` includes the information of a card.
  */
 @objcMembers
-@objc(AWXCardSwift)
+@objc
 public class AWXCard: NSObject, Codable {
     
     /**
@@ -123,23 +123,40 @@ public class AWXCard: NSObject, Codable {
             number = "••••\(last4)"
         }
     }
+    
+    public override init() {
+        super.init()
+    }
 
 }
 
 @objc extension AWXCard {
+    
     public func validate() -> String? {
-        if let number = number, !AWXCardValidator.shared().isValidCardLength(number) {
+        if number == nil || !AWXCardValidator.shared().isValidCardLength(number ?? "") {
             return "Invalid card number"
         }
-        if name?.count == 0 {
+        if name == nil || name?.count == 0 {
             return "Invalid name on card"
         }
-        if expiryYear?.count == 0 || expiryMonth?.count == 0 {
+        if expiryYear == nil || expiryMonth == nil || expiryYear?.count == 0 || expiryMonth?.count == 0 {
             return "Invalid expires date"
         }
-        if cvc?.count == 0 {
+        if cvc == nil || cvc?.count == 0 {
             return "Invalid CVC / CVV"
         }
         return nil
+    }
+    
+    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXCard {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(AWXCard.self, from: jsonData)
+            
+            return result
+        } catch {
+            return AWXCard()
+        }
     }
 }

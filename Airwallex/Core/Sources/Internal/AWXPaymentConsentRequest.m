@@ -8,11 +8,13 @@
 
 #import "AWXPaymentConsentRequest.h"
 #import "AWXConstants.h"
-#import "AWXDevice.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentMethod.h"
-#import "AWXPaymentMethodOptions.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @implementation AWXCreatePaymentConsentRequest
 
@@ -73,7 +75,7 @@
     if (self.returnURL) {
         parameters[@"return_url"] = self.returnURL;
     }
-    NSDictionary *params = self.options.encodeToJSON;
+    NSDictionary *params = [self.options encodeToJSON];
     id value = [params valueForKey:self.options.type];
     if (value) {
         if (self.options.card) {

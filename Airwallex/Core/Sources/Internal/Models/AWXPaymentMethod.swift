@@ -12,7 +12,7 @@ import Foundation
  `AWXPaymentMethod` includes the information of a payment method.
  */
 @objcMembers
-@objc(AWXPaymentMethodSwift)
+@objc
 public class AWXPaymentMethod: NSObject, Codable {
     
     /**
@@ -47,7 +47,7 @@ public class AWXPaymentMethod: NSObject, Codable {
     
     enum CodingKeys: String, CodingKey {
         case type
-        case Id
+        case Id = "id"
         case billing
         case card
         case additionalParams
@@ -87,6 +87,22 @@ public class AWXPaymentMethod: NSObject, Codable {
         } else {
             additionalParams = params
         }
+    }
+    
+    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXPaymentMethod {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(AWXPaymentMethod.self, from: jsonData)
+            
+            return result
+        } catch {
+            return AWXPaymentMethod()
+        }
+    }
+    
+    public func encodeToJSON() -> [String: Any] {
+        return toDictionary() ?? [String: Any]()
     }
     
 }

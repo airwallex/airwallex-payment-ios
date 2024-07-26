@@ -12,7 +12,7 @@ import Foundation
  `AWXCardOptions` includes the options of card.
  */
 @objcMembers
-@objc(AWXCardOptionsSwift)
+@objc
 public class AWXCardOptions: NSObject, Codable {
     
     /**

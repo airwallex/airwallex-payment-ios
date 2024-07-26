@@ -8,14 +8,9 @@
 
 #import "AWXCardProvider.h"
 #import "AWXAPIClient.h"
-#import "AWXCardViewController.h"
-#import "AWXCardViewModel.h"
 #import "AWXDefaultProvider+Security.h"
-#import "AWXDevice.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentMethod.h"
-#import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
@@ -23,6 +18,7 @@
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
 #ifdef AirwallexSDK
 #import "Card/Card-Swift.h"
+#import <Core/Core-Swift.h>
 #else
 #import "Airwallex/Airwallex-Swift.h"
 #endif
@@ -34,7 +30,7 @@
 }
 
 - (void)handleFlow {
-    AWXCardViewControllerSwift *controller = [[AWXCardViewControllerSwift alloc] initWithNibName:nil bundle:nil];
+    AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
     NSMutableArray<AWXCardScheme *> *supportedCardSchemes;
     if (self.paymentMethodType) {
@@ -74,7 +70,7 @@
 }
 
 - (void)confirmPaymentIntentWithCard:(AWXCard *)card
-                             billing:(AWXPlaceDetails *)billing
+                             billing:(AWXPlaceDetails *_Nullable)billing
                             saveCard:(BOOL)saveCard {
     [self log:@"Start payment confirm. Type: Card. Intent Id:%@", self.session.paymentIntentId];
 

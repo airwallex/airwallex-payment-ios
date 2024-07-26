@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   s.subspec 'WeChatPay' do |plugin|
     plugin.dependency 'Airwallex/Core'
     plugin.dependency 'WechatOpenSDK', '1.9.7'
-    plugin.source_files = 'Airwallex/WeChatPay/**/*.{h,m}'
+    plugin.source_files = 'Airwallex/WeChatPay/**/*.{swift,h,m}'
     plugin.public_header_files = 'Airwallex/WeChatPay/**/*.h'
     plugin.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
     plugin.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
@@ -43,13 +43,13 @@ Pod::Spec.new do |s|
   
   s.subspec 'Redirect' do |plugin|
     plugin.dependency 'Airwallex/Core'
-    plugin.source_files = 'Airwallex/Redirect/**/*.{h,m}'
+    plugin.source_files = 'Airwallex/Redirect/**/*.{swift,h,m}'
     plugin.public_header_files = 'Airwallex/Redirect/*.h'
   end
   
   s.subspec 'ApplePay' do |plugin|
     plugin.dependency 'Airwallex/Security'
-    plugin.source_files = 'Airwallex/ApplePay/**/*.{h,m}'
+    plugin.source_files = 'Airwallex/ApplePay/**/*.{swift,h,m}'
     plugin.public_header_files = 'Airwallex/ApplePay/*.h'
   end
 end

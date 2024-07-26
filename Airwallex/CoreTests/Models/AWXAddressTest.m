@@ -6,9 +6,13 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "AWXAddress.h"
 #import "AWXTestUtils.h"
 #import <XCTest/XCTest.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXAddressTest : XCTestCase
 

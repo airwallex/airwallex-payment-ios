@@ -11,7 +11,7 @@ import AirRisk
 
 
 @objcMembers
-@objc(AWXCardViewControllerSwift)
+@objc
 public class AWXCardViewController: UIViewController {
     
     public var viewModel: AWXCardViewModel?
@@ -47,7 +47,7 @@ public class AWXCardViewController: UIViewController {
         let tf = AWXFloatingCardTextField()
         tf.cardBrands = viewModel?.makeDisplayedCardBrands()
         tf.validationMessageCallback = { [weak self] cardNumber in
-            self?.viewModel?.validationMessage(fromCardNumber: cardNumber ?? "")
+            self?.viewModel?.validationMessageFromCardNumber(cardNumber ?? "")
         }
         tf.brandUpdateCallback = { [weak self] brand in
             guard let self = self else { return }
@@ -257,16 +257,6 @@ public class AWXCardViewController: UIViewController {
         confirmButton.isEnabled = true
     }
     
-    func goBack() {
-        if provider?.showPaymentDirectly == true {
-            dismiss(animated: true) {
-                let delegate = AWXUIContext.shared().delegate
-                delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
-                self.logMessage("Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(AirwallexPaymentStatus.cancel)")
-            }
-        }
-    }
-    
     func setupViews() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close", in: Bundle.resource()), style: .plain, target: self, action: #selector(close))
         
@@ -294,12 +284,16 @@ public class AWXCardViewController: UIViewController {
         
         expiresField.widthAnchor.constraint(equalTo: cvcField.widthAnchor, multiplier: 1.7).isActive = true
 
+        saveCardSwitchContainer.addArrangedSubview(saveCardLabel)
+        saveCardSwitchContainer.addArrangedSubview(saveCardSwitch)
         if viewModel?.isCardSavingEnabled == true {
-            container.insertSubview(saveCardSwitchContainer, belowSubview: cvcStackView)
+            container.addArrangedSubview(saveCardSwitchContainer)
         }
         if viewModel?.isBillingInformationRequired == true {
             container.addArrangedSubview(billingStackView)
             billingStackView.addArrangedSubview(addressSwitchContainer)
+            addressSwitchContainer.addArrangedSubview(addressLabel)
+            addressSwitchContainer.addArrangedSubview(addressSwitch)
             billingStackView.addArrangedSubview(firstNameField)
             billingStackView.addArrangedSubview(lastNameField)
             billingStackView.addArrangedSubview(countryView)
@@ -327,18 +321,18 @@ public class AWXCardViewController: UIViewController {
         expiresField.next = cvcField
         
         if let billing = viewModel?.initialBilling {
-            firstNameField.setText(billing.firstName, animated: false)
-            lastNameField.setText(billing.lastName, animated: false)
+            firstNameField.setText(billing.firstName ?? "", animated: false)
+            lastNameField.setText(billing.lastName ?? "", animated: false)
             emailField.setText(billing.email ?? "", animated: false)
             phoneNumberField.setText(billing.phoneNumber ?? "", animated: false)
             
             let address = billing.address
             if address != nil {
                 countryView.setText(viewModel?.selectedCountry?.countryName ?? "", animated: false)
-                stateField.setText(address.state ?? "", animated: false)
-                cityField.setText(address.city, animated: false)
-                streetField.setText(address.street, animated: false)
-                zipCodeField.setText(address.postcode ?? "", animated: false)
+                stateField.setText(address?.state ?? "", animated: false)
+                cityField.setText(address?.city ?? "", animated: false)
+                streetField.setText(address?.street ?? "", animated: false)
+                zipCodeField.setText(address?.postcode ?? "", animated: false)
             }
         }
         setBillingInputHidden(isHidden: viewModel?.isReusingShippingAsBillingInformation == true)
@@ -369,10 +363,10 @@ public class AWXCardViewController: UIViewController {
     }
     
     func addressSwitchChanged(_ sender: UISwitch) {
-        var error: NSString?
-        let updateSuccessful = viewModel?.setReusesShippingAsBillingInformation(sender.isOn, error: &error)
-        if updateSuccessful == true, let error = error {
-            let alert = UIAlertController(title: nil, message: error as String, preferredStyle: .alert)
+        do {
+            try viewModel?.setReusesShippingAsBillingInformation(sender.isOn)
+        } catch {
+            let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: "Close"), style: .cancel){ _ in sender.isOn = !sender.isOn })
             present(alert, animated: true)
             return
@@ -396,7 +390,7 @@ public class AWXCardViewController: UIViewController {
     func selectCountries() {
         let controller = AWXCountryListViewController.init(nibName: nil, bundle: nil)
         controller.delegate = self
-        controller.country = viewModel?.selectedCountry
+        controller.currentCountry = viewModel?.selectedCountry
         present(controller, animated: true)
     }
     
@@ -404,34 +398,31 @@ public class AWXCardViewController: UIViewController {
         AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button")
         AirwallexRisk.log(event: "click_payment_button", screen: "page_create_card")
         logMessage("Start payment. Intent ID: \(session?.paymentIntentId() ?? "")")
-        if let provider = viewModel?.preparedProvider(with: self) {
-
-            var error: NSString?
-            let isPaymentProcessing = viewModel?.confirmPayment(with: provider, billing: makeBilling(), card: makeCard(), shouldStoreCardDetails: saveCard, error: &error)
+        if let provider = viewModel?.preparedProviderWithDelegate(self) {
             
-            if isPaymentProcessing == true {
+            do {
+                try viewModel?.confirmPayment(provider: provider, billing: makeBilling(), card: makeCard(), shouldStoreCardDetails: saveCard)
+                
                 self.provider = provider
-            } else {
-                if let error = error, error.length > 0 {
-                    let alert = UIAlertController(title: nil, message: error as String, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: "Close"), style: .cancel, handler: nil))
-                    present(alert, animated: true)
-                    
-                    AWXAnalyticsLogger.shared().logAction(withName: "card_payment_validation", additionalInfo: ["message": error])
-                    logMessage("Payment failed. Intent ID: \(session?.paymentIntentId() ?? ""). Reason: \(error).")
-                }
+            } catch {
+                let alert = UIAlertController(title: nil, message: error.localizedDescription as String, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: "Close"), style: .cancel, handler: nil))
+                present(alert, animated: true)
+                
+                AWXAnalyticsLogger.shared().logAction(withName: "card_payment_validation", additionalInfo: ["message": error])
+                logMessage("Payment failed. Intent ID: \(session?.paymentIntentId() ?? ""). Reason: \(error).")
             }
         }
     }
     
-    func makeBilling() -> AWXPlaceDetailsOC {
-        let address =  viewModel?.makeBilling(withFirstName: firstNameField.text(), lastName: lastNameField.text(), email: emailField.text(), phoneNumber: phoneNumberField.text(), state: stateField.text(), city: cityField.text(), street: streetField.text(), postcode: zipCodeField.text())
-        return address ?? AWXPlaceDetailsOC()
+    func makeBilling() -> AWXPlaceDetails {
+        let address =  viewModel?.makeBilling(FirstName: firstNameField.text(), lastName: lastNameField.text(), email: emailField.text(), phoneNumber: phoneNumberField.text(), state: stateField.text(), city: cityField.text(), street: streetField.text(), postcode: zipCodeField.text())
+        return address ?? AWXPlaceDetails()
     }
     
-    func makeCard() -> AWXCardOC {
-        let card = viewModel?.makeCard(withName: nameField.text(), number: cardNoField.text(), expiry: expiresField.text(), cvc: cvcField.text())
-        return card ?? AWXCardOC()
+    func makeCard() -> AWXCard {
+        let card = viewModel?.makeCard(name: nameField.text(), number: cardNoField.text(), expiry: expiresField.text(), cvc: cvcField.text())
+        return card ?? AWXCard()
     }
     
 }
@@ -529,9 +520,9 @@ extension AWXCardViewController: AWXProviderDelegate {
         viewModel?.updatePaymentIntentId(paymentIntentId)
     }
     
-    public func provider(_ provider: AWXDefaultProvider, shouldHandle nextAction: AWXConfirmPaymentNextActionOC) {
+    public func provider(_ provider: AWXDefaultProvider, shouldHandle nextAction: AWXConfirmPaymentNextAction) {
         logMessage("provider:shouldHandleNextAction:  type:\(nextAction.type), stage: \(nextAction.stage ?? "")")
-        let actionProvider = viewModel?.actionProvider(for: nextAction, with: self)
+        let actionProvider = viewModel?.actionProviderForNextAction( nextAction, delegate: self)
         if actionProvider == nil {
             let alert = UIAlertController(title: nil, message: NSLocalizedString("No provider matched the next action.", comment: ""), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: "Close"), style: .cancel, handler: nil))

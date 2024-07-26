@@ -43,9 +43,6 @@ public class AWXConfirmPaymentIntentConfiguration: NSObject {
                 parameters["payment_method_reference"] = ["id":Id,
                                                           "cvc": paymentMethod?.card?.cvc ?? ""]
             } else {
-                let encoder = JSONEncoder()
-                
-                
                 parameters["payment_method"] = paymentMethod?.toDictionary()
             }
         }

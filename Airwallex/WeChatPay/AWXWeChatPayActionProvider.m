@@ -13,6 +13,11 @@
 #import "AWXWeChatPaySDKResponse.h"
 #import "NSObject+Logging.h"
 #import <WechatOpenSDK/WXApi.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @implementation AWXWeChatPayActionProvider
 

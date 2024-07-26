@@ -8,7 +8,12 @@
 
 #import "AWXOneOffSession+Request.h"
 #import "AWXPaymentIntent+Summary.h"
-#import "AWXPlaceDetails+PKContact.h"
+#ifdef AirwallexSDK
+#import <ApplePay/ApplePay-Swift.h>
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @implementation AWXOneOffSession (Request)
 
