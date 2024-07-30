@@ -20,7 +20,7 @@ enum HTTPMethod: String {
 public class AWXNetWorkManager: NSObject {
     
     public static let shared = AWXNetWorkManager()
-    private let session = URLSession.shared
+    public var session = URLSession.shared
     private var baseURL: String {
         switch Airwallex.mode() {
         case .demoMode:
@@ -70,7 +70,7 @@ public class AWXNetWorkManager: NSObject {
                 return
             }
             request = URLRequest(url: url)
-            request.httpBody = try? JSONSerialization.data(withJSONObject: parameters ?? [], options: [])
+            request.httpBody = try? JSONSerialization.data(withJSONObject: parameters ?? [:], options: [])
         } else {
             guard let url = URL(string: baseURL + urlString) else {
                 DispatchQueue.main.async {

@@ -22,14 +22,6 @@ public extension UIViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-
-    @objc func close() {
-        if let nav = navigationController {
-            nav.popViewController(animated: true)
-        } else {
-            dismiss(animated: true)
-        }
-    }
     
     @objc func startAnimating() {
         if Self.activityIndicator == nil {

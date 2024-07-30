@@ -173,7 +173,6 @@
                          returnURL:(NSString *)returnURL
                        autoCapture:(BOOL)autoCapture
                         completion:(AWXRequestHandler)completion {
-    AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
     AWXConfirmPaymentIntentConfiguration *configuration = [AWXConfirmPaymentIntentConfiguration new];
     configuration.intentId = paymentIntentId;
     configuration.customerId = customerId;
@@ -197,7 +196,6 @@
     }
 
     [AWXAPIClientSwift confirmPaymentIntentWithConfiguration:configuration completion:completion];
-    //    [client send:request handler:completion];
 }
 
 - (void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod

@@ -360,7 +360,8 @@
                                                              }
                                                          }];
     } else if (controller) {
-        [self presentViewController:controller animated:withAnimation completion:nil];
+        [self.navigationController pushViewController:controller animated:YES];
+        //        [self presentViewController:controller animated:withAnimation completion:nil];
     }
 }
 

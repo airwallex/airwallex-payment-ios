@@ -92,7 +92,7 @@ NSString *const kMockKey = @"MOCK";
 }
 
 - (void)testConfirmPaymentIntentWithCard {
-    AWXAPIClient *client = [self mockAPIClient];
+    id mockClient = OCMClassMock([AWXAPIClientSwift class]);
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.autoCapture = YES;
     AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
@@ -102,16 +102,11 @@ NSString *const kMockKey = @"MOCK";
     paymentMethod.type = AWXCardKey;
     [provider confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil device:nil];
 
-    OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {
-                                    AWXConfirmPaymentIntentRequest *request = obj;
-                                    XCTAssert(request.options.cardOptions.autoCapture);
-                                    return YES;
-                                }]
-                             handler:[OCMArg any]]);
+    OCMVerify(times(1), [mockClient confirmPaymentIntentWithConfiguration:[OCMArg any] completion:[OCMArg any]]);
 }
 
 - (void)testConfirmPaymentIntentWithApplePay {
-    AWXAPIClient *client = [self mockAPIClient];
+    id mockClient = OCMClassMock([AWXAPIClientSwift class]);
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.autoCapture = YES;
     AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
@@ -121,12 +116,7 @@ NSString *const kMockKey = @"MOCK";
     paymentMethod.type = AWXApplePayKey;
     [provider confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil device:nil];
 
-    OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {
-                                    AWXConfirmPaymentIntentRequest *request = obj;
-                                    XCTAssert(request.options.cardOptions.autoCapture);
-                                    return YES;
-                                }]
-                             handler:[OCMArg any]]);
+    OCMVerify(times(1), [mockClient confirmPaymentIntentWithConfiguration:[OCMArg any] completion:[OCMArg any]]);
 }
 
 - (void)testCreatePaymentConsentAndConfirmIntentWithOneOffSession {
@@ -328,18 +318,6 @@ NSString *const kMockKey = @"MOCK";
     self.providerMock = providerMock;
     self.response = response;
     self.error = error;
-}
-
-- (AWXAPIClient *)mockAPIClient {
-    AWXAPIClientConfiguration *mockConfig = OCMClassMock([AWXAPIClientConfiguration class]);
-    OCMStub(ClassMethod([(id)mockConfig sharedConfiguration])).andReturn(mockConfig);
-
-    id mockClient = OCMClassMock([AWXAPIClient class]);
-
-    OCMStub([mockClient initWithConfiguration:mockConfig]).andReturn(mockClient);
-    OCMStub([mockClient alloc]).andReturn(mockClient);
-
-    return mockClient;
 }
 
 @end

@@ -43,6 +43,14 @@ public class AWXCountryListViewController: UIViewController {
         setupViews()
     }
     
+    func close() {
+        if let nav = navigationController {
+            nav.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
+    }
+    
 }
 
 

@@ -35,6 +35,14 @@ public class AWXCardViewController: UIViewController {
         return sv
     }()
     
+    public lazy var titleStack: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.alignment = .fill
+        sv.distribution = .fill
+        sv.spacing = 16.0
+        return sv
+    }()
     public lazy var titleLabel: UILabel = {
         let lb = UILabel()
         lb.text = NSLocalizedString("Card", comment: "Card")
@@ -226,6 +234,12 @@ public class AWXCardViewController: UIViewController {
     public lazy var warningView: AWXWarningView = {
         AWXWarningView.init(message: "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.")
     }()
+    public lazy var closeButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "close", in: Bundle.resource()), for: .normal)
+        btn.addTarget(self, action: #selector(close), for: .touchUpInside)
+        return btn
+    }()
     public var currentBrand: AWXBrandType?
     public var paymentMethodType: AWXPaymentMethodType?
 
@@ -258,7 +272,8 @@ public class AWXCardViewController: UIViewController {
     }
     
     func setupViews() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close", in: Bundle.resource()), style: .plain, target: self, action: #selector(close))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "close", in: Bundle.resource()), style: .plain, target: self, action: #selector(goBack))
+        closeButton.isHidden = navigationController != nil
         
         enableTapToEndEditing()
         view.backgroundColor = .white
@@ -275,7 +290,9 @@ public class AWXCardViewController: UIViewController {
         scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[stackView(==scrollView)]|", metrics: metrics, views: views))
         scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[stackView]|", metrics: metrics, views: views))
         
-        container.addArrangedSubview(titleLabel)
+        container.addArrangedSubview(titleStack)
+        titleStack.addArrangedSubview(titleLabel)
+        titleStack.addArrangedSubview(closeButton)
         container.addArrangedSubview(cardNoField)
         container.addArrangedSubview(nameField)
         container.addArrangedSubview(cvcStackView)
@@ -423,6 +440,18 @@ public class AWXCardViewController: UIViewController {
     func makeCard() -> AWXCard {
         let card = viewModel?.makeCard(name: nameField.text(), number: cardNoField.text(), expiry: expiresField.text(), cvc: cvcField.text())
         return card ?? AWXCard()
+    }
+    
+    func goBack() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func close() {
+        dismiss(animated: true) {
+            let delegate = AWXUIContext.shared().delegate
+            delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+            self.logMessage("Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(self.presentationController?.description ?? "")")
+        }
     }
     
 }

@@ -44,7 +44,9 @@ public extension UIColor {
     class var airwallexError: UIColor {
         .airwallexRed50Color
     }
-    static var airwallexTint: UIColor = .colorWithDynamicLightColor(.airwallexGray70Color, darkColor: .airwallexUltraviolet40Color)
+    class var airwallexTint: UIColor {
+        .colorWithDynamicLightColor(.airwallexGray70Color, darkColor: .airwallexUltraviolet40Color)
+    }
     class var airwallexShadow: UIColor {
         .black.withAlphaComponent(0.08)
     }
