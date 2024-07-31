@@ -8,9 +8,7 @@
 
 import Foundation
 
-/**
- `AWXCountry` includes the information of a country.
- */
+/// `AWXCountry` includes the information of a country.
 @objcMembers
 @objc
 public class AWXCountry: NSObject, Codable {
@@ -27,7 +25,7 @@ public class AWXCountry: NSObject, Codable {
     /**
      Return all of the supported countries.
      */
-    
+
     public static func allCountries() -> [AWXCountry] {
         let locale = Locale.current
         let isoCountryCodes = Locale.isoRegionCodes
@@ -43,11 +41,10 @@ public class AWXCountry: NSObject, Codable {
         countries.sort {
             $0.countryName.localizedCompare($1.countryName) == .orderedAscending
         }
-        
+
         return countries
     }
-    
-    
+
     /**
      Get a matched country object.
 

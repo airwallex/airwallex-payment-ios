@@ -7,6 +7,7 @@
 //
 
 #import "AWXCardProvider.h"
+#import "AWXCardValidator.h"
 #import "AWXDefaultProvider+Security.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentMethod.h"
@@ -34,6 +35,7 @@
 
 - (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod
                  completion:(AWXRequestHandler)completion;
+- (AWXCardScheme *)getSchemeFrom:(int)type;
 
 @end
 
@@ -67,6 +69,49 @@
                             }]
                                          forceToDismiss:NO
                                           withAnimation:YES]);
+}
+
+- (void)testHandleFlowWithCardSchemes {
+    id spy = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
+    session.autoCapture = YES;
+
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session paymentMethodType:paymentMethod];
+
+    provider.cardSchemes = @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard)];
+
+    [provider handleFlow];
+
+    OCMVerify(times(1), [spy provider:provider
+                            shouldPresentViewController:[OCMArg any]
+                                         forceToDismiss:NO
+                                          withAnimation:YES]);
+}
+
+- (void)testGetSchemeFrom {
+    AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.autoCapture = YES;
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
+    id providerSpy = OCMPartialMock(provider);
+
+    // Define a dictionary to map card types to their expected scheme names
+    NSDictionary<NSNumber *, NSString *> *expectedSchemes = @{
+        @(AWXBrandTypeAmex): @"amex",
+        @(AWXBrandTypeMastercard): @"mastercard",
+        @(AWXBrandTypeVisa): @"visa",
+        @(AWXBrandTypeUnionPay): @"unionpay",
+        @(AWXBrandTypeJCB): @"jcb",
+        @(AWXBrandTypeDinersClub): @"diners",
+        @(AWXBrandTypeDiscover): @"discover",
+        @(999): @"" // For unknown card type
+    };
+
+    [expectedSchemes enumerateKeysAndObjectsUsingBlock:^(NSNumber *type, NSString *expectedName, BOOL *stop) {
+        AWXCardScheme *scheme = [provider getSchemeFrom:type.intValue];
+        XCTAssertEqualObjects(scheme.name, expectedName, @"Expected scheme.name for type %@ is %@, but got %@", type, expectedName, scheme.name);
+    }];
 }
 
 - (void)testCanHandleSessionWhenCardSchemesIsNotEmpty {

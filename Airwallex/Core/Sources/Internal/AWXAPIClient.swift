@@ -11,10 +11,10 @@ import Foundation
 @objcMembers
 @objc(AWXAPIClientSwift)
 public class AWXAPIClient: NSObject {
-    
-    public static func confirmPaymentIntentWithConfiguration(_ configuration: AWXConfirmPaymentIntentConfiguration,
-                                                        completion: @escaping (AWXConfirmPaymentIntentResponse?, Error?) -> Void) {
-        
+    public static func confirmPaymentIntentWithConfiguration(
+        _ configuration: AWXConfirmPaymentIntentConfiguration,
+        completion: @escaping (AWXConfirmPaymentIntentResponse?, Error?) -> Void
+    ) {
         if [AWXCardKey, AWXApplePayKey].contains(configuration.paymentMethod?.type) {
             let cardOptions = AWXCardOptions()
             cardOptions.autoCapture = configuration.autoCapture
@@ -23,20 +23,21 @@ public class AWXAPIClient: NSObject {
                 threeDs.returnURL = AWXThreeDSReturnURL
                 cardOptions.threeDs = threeDs
             }
-            
+
             let options = AWXPaymentMethodOptions()
             options.cardOptions = cardOptions
             configuration.options = options
         }
-        
-        AWXNetWorkManager.shared.post(urlString: configuration.path, parameters: configuration.parameters) { (result: Result<AWXConfirmPaymentIntentResponse, Error>) in
+
+        AWXNetWorkManager.shared.post(
+            urlString: configuration.path, parameters: configuration.parameters
+        ) { (result: Result<AWXConfirmPaymentIntentResponse, Error>) in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 completion(response, nil)
-            case .failure(let error):
+            case let .failure(error):
                 completion(nil, error)
             }
         }
     }
-    
 }

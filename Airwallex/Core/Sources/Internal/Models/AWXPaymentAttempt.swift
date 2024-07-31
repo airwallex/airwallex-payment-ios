@@ -8,18 +8,15 @@
 
 import Foundation
 
-/**
- `AWXPaymentAttempt` includes the information of payment attempt.
- */
+/// `AWXPaymentAttempt` includes the information of payment attempt.
 @objcMembers
 @objc
 public class AWXPaymentAttempt: NSObject, Codable {
-    
     /**
      Attempt id.
      */
     public private(set) var Id: String?
-    
+
     /**
      Payment amount.
      */
@@ -27,7 +24,7 @@ public class AWXPaymentAttempt: NSObject, Codable {
     public var objcAmount: NSNumber? {
         return amount as? NSNumber
     }
-    
+
     /**
      Payment method.
      */
@@ -37,7 +34,7 @@ public class AWXPaymentAttempt: NSObject, Codable {
      The status of payment attempt
      */
     public private(set) var status: String?
-    
+
     /**
      Captured amount.
      */
@@ -53,11 +50,12 @@ public class AWXPaymentAttempt: NSObject, Codable {
     public var objcRefundedAmount: NSNumber? {
         return refundedAmount as? NSNumber
     }
+
     /**
      3DS authentication data.
      */
     public private(set) var authenticationData: AWXAuthenticationData?
-    
+
     enum CodingKeys: String, CodingKey {
         case Id = "id"
         case amount
@@ -66,5 +64,29 @@ public class AWXPaymentAttempt: NSObject, Codable {
         case capturedAmount = "captured_amount"
         case refundedAmount = "refunded_amount"
         case authenticationData = "authentication_data"
+    }
+
+    public func setAmount(_ amount: NSNumber?) {
+        if let amount = amount?.doubleValue {
+            self.amount = amount
+        } else {
+            self.amount = nil
+        }
+    }
+
+    public func setCapturedAmount(_ amount: NSNumber?) {
+        if let amount = amount?.doubleValue {
+            capturedAmount = amount
+        } else {
+            capturedAmount = nil
+        }
+    }
+
+    public func setRefundedAmount(_ amount: NSNumber?) {
+        if let amount = amount?.doubleValue {
+            refundedAmount = amount
+        } else {
+            refundedAmount = nil
+        }
     }
 }

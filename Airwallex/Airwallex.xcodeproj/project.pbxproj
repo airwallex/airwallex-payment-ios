@@ -238,6 +238,11 @@
 		C86642AE2C58D06300549016 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642AD2C58D06300549016 /* MockURLProtocol.swift */; };
 		C86642B02C58D10700549016 /* AWXNetWorkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642AF2C58D10700549016 /* AWXNetWorkManagerTests.swift */; };
 		C86642B22C58F02A00549016 /* UIColorUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642B12C58F02A00549016 /* UIColorUtilsTests.swift */; };
+		C86642BC2C59D3C200549016 /* UIFontUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642BB2C59D3C200549016 /* UIFontUtilsTests.swift */; };
+		C86642BE2C59D6DD00549016 /* UIViewControllerUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642BD2C59D6DD00549016 /* UIViewControllerUtilsTests.swift */; };
+		C86642C02C5A081300549016 /* AWXAuthenticationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642BF2C5A081300549016 /* AWXAuthenticationDataTests.swift */; };
+		C86642C22C5A0A9E00549016 /* AWXPaymentMethodOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642C12C5A0A9E00549016 /* AWXPaymentMethodOptionsTests.swift */; };
+		C86642C42C5A0BBF00549016 /* AWXPaymentAttemptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642C32C5A0BBF00549016 /* AWXPaymentAttemptTests.swift */; };
 		C8F387592C4A41640059B835 /* AWXAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F387582C4A41640059B835 /* AWXAPIClient.swift */; };
 		C8F3875C2C4A42C60059B835 /* AWXConfirmPaymentIntentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F3875B2C4A42C60059B835 /* AWXConfirmPaymentIntentResponse.swift */; };
 		C8F3875E2C4A4F880059B835 /* AWXConfirmPaymentNextAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F3875D2C4A4F880059B835 /* AWXConfirmPaymentNextAction.swift */; };
@@ -605,6 +610,11 @@
 		C86642AD2C58D06300549016 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		C86642AF2C58D10700549016 /* AWXNetWorkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXNetWorkManagerTests.swift; sourceTree = "<group>"; };
 		C86642B12C58F02A00549016 /* UIColorUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorUtilsTests.swift; sourceTree = "<group>"; };
+		C86642BB2C59D3C200549016 /* UIFontUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontUtilsTests.swift; sourceTree = "<group>"; };
+		C86642BD2C59D6DD00549016 /* UIViewControllerUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerUtilsTests.swift; sourceTree = "<group>"; };
+		C86642BF2C5A081300549016 /* AWXAuthenticationDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXAuthenticationDataTests.swift; sourceTree = "<group>"; };
+		C86642C12C5A0A9E00549016 /* AWXPaymentMethodOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentMethodOptionsTests.swift; sourceTree = "<group>"; };
+		C86642C32C5A0BBF00549016 /* AWXPaymentAttemptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentAttemptTests.swift; sourceTree = "<group>"; };
 		C8F387582C4A41640059B835 /* AWXAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXAPIClient.swift; sourceTree = "<group>"; };
 		C8F3875B2C4A42C60059B835 /* AWXConfirmPaymentIntentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXConfirmPaymentIntentResponse.swift; sourceTree = "<group>"; };
 		C8F3875D2C4A4F880059B835 /* AWXConfirmPaymentNextAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXConfirmPaymentNextAction.swift; sourceTree = "<group>"; };
@@ -821,6 +831,11 @@
 				C86642AD2C58D06300549016 /* MockURLProtocol.swift */,
 				C86642AF2C58D10700549016 /* AWXNetWorkManagerTests.swift */,
 				C86642B12C58F02A00549016 /* UIColorUtilsTests.swift */,
+				C86642BB2C59D3C200549016 /* UIFontUtilsTests.swift */,
+				C86642BD2C59D6DD00549016 /* UIViewControllerUtilsTests.swift */,
+				C86642BF2C5A081300549016 /* AWXAuthenticationDataTests.swift */,
+				C86642C12C5A0A9E00549016 /* AWXPaymentMethodOptionsTests.swift */,
+				C86642C32C5A0BBF00549016 /* AWXPaymentAttemptTests.swift */,
 				0829FD4F24358E5600557DB2 /* XCTestCase+Utils.h */,
 				0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */,
 				18E0571B29CA8AD70099388A /* AWXAnalyticsLoggerTest.m */,
@@ -1948,6 +1963,7 @@
 			files = (
 				3C5A380027F2DDB500CFC2EF /* AWXProviderDelegateSpy.m in Sources */,
 				0829FD1A2432019E00557DB2 /* AWXCardValidatorTest.m in Sources */,
+				C86642BC2C59D3C200549016 /* UIFontUtilsTests.swift in Sources */,
 				C86642AE2C58D06300549016 /* MockURLProtocol.swift in Sources */,
 				1862772329DFCE920002892A /* NSDataBase64Test.m in Sources */,
 				18E0571C29CA8AD70099388A /* AWXAnalyticsLoggerTest.m in Sources */,
@@ -1961,14 +1977,18 @@
 				082442CC2431C00E00D04A2C /* AWXCardTest.m in Sources */,
 				C86642B22C58F02A00549016 /* UIColorUtilsTests.swift in Sources */,
 				C86642B02C58D10700549016 /* AWXNetWorkManagerTests.swift in Sources */,
+				C86642BE2C59D6DD00549016 /* UIViewControllerUtilsTests.swift in Sources */,
 				572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */,
 				0829FD082431D25800557DB2 /* AWXBillingTest.m in Sources */,
 				3C99E74727E9A6B70074156C /* AWXApplePayOptionsTest.m in Sources */,
+				C86642C02C5A081300549016 /* AWXAuthenticationDataTests.swift in Sources */,
 				183FB64D2BB6C62400FFDF0E /* AWXProviderDelegateEmpty.m in Sources */,
 				186E02282B1717A500B67994 /* SecretRepository.swift in Sources */,
+				C86642C42C5A0BBF00549016 /* AWXPaymentAttemptTests.swift in Sources */,
 				0829FD132431E11E00557DB2 /* AWXAPIClientTest.m in Sources */,
 				0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */,
 				3C99E74527E9A51C0074156C /* AWXConstantsTest.m in Sources */,
+				C86642C22C5A0A9E00549016 /* AWXPaymentMethodOptionsTests.swift in Sources */,
 				082442C82431BD5100D04A2C /* AWXTestUtils.m in Sources */,
 				1862772129DFCC0E0002892A /* AWXUtilsTest.m in Sources */,
 				18D18C7A294222EC00E70DCD /* AWXDeviceTest.m in Sources */,

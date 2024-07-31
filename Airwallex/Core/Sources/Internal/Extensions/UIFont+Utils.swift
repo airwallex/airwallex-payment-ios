@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 @objc
 public extension UIFont {
     class var airwallexTitle: UIFont {

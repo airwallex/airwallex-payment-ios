@@ -7,10 +7,10 @@
 //
 
 import XCTest
+
 @testable import Core
 
 class UIColorUtilsTests: XCTestCase {
-
     func testColorWithHex() {
         // Testing fixed known color values
 
@@ -32,14 +32,20 @@ class UIColorUtilsTests: XCTestCase {
             let lightColor = UIColor.white
             let darkColor = UIColor.black
             let dynamicColor = UIColor.colorWithDynamicLightColor(lightColor, darkColor: darkColor)
-            
+
             // Simulate light mode
             let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
-            XCTAssertEqual(dynamicColor.resolvedColor(with: lightModeTrait), lightColor, "Expected light color to be white in light mode")
-            
+            XCTAssertEqual(
+                dynamicColor.resolvedColor(with: lightModeTrait), lightColor,
+                "Expected light color to be white in light mode"
+            )
+
             // Simulate dark mode
             let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
-            XCTAssertEqual(dynamicColor.resolvedColor(with: darkModeTrait), darkColor, "Expected dark color to be black in dark mode")
+            XCTAssertEqual(
+                dynamicColor.resolvedColor(with: darkModeTrait), darkColor,
+                "Expected dark color to be black in dark mode"
+            )
         }
     }
 
@@ -65,109 +71,138 @@ class UIColorUtilsTests: XCTestCase {
             let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
 
             XCTAssertEqual(UIColor.airwallexToolbar.resolvedColor(with: lightModeTrait), .white)
-            XCTAssertEqual(UIColor.airwallexToolbar.resolvedColor(with: darkModeTrait), UIColor.airwallexGray100Color)
+            XCTAssertEqual(
+                UIColor.airwallexToolbar.resolvedColor(with: darkModeTrait), UIColor.airwallexGray100Color
+            )
         } else {
             XCTAssertEqual(UIColor.airwallexToolbar, .white)
         }
-       }
-       
-       func testAirwallexPrimaryBackgroundColor() {
-           if #available(iOS 13.0, *) {
-               let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
-               let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
+    }
 
-               XCTAssertEqual(UIColor.airwallexPrimaryBackground.resolvedColor(with: lightModeTrait), .white)
-               XCTAssertEqual(UIColor.airwallexPrimaryBackground.resolvedColor(with: darkModeTrait), UIColor.airwallexGray100Color)
-           } else {
-               XCTAssertEqual(UIColor.airwallexPrimaryBackground, .white)
-           }
-       }
-       
-       func testAirwallexSurfaceBackgroundColor() {
-           if #available(iOS 13.0, *) {
-               let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
-               let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
-               
-               XCTAssertEqual(UIColor.airwallexSurfaceBackground.resolvedColor(with: lightModeTrait), .white)
-               XCTAssertEqual(UIColor.airwallexSurfaceBackground.resolvedColor(with: darkModeTrait), UIColor.airwallexGray90Color)
-           } else {
-               XCTAssertEqual(UIColor.airwallexSurfaceBackground, .white)
-           }
-       }
-       
-       func testAirwallexPrimaryTextColor() {
-           if #available(iOS 13.0, *) {
-               let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
-               let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
-               
-               XCTAssertEqual(UIColor.airwallexPrimaryText.resolvedColor(with: lightModeTrait), UIColor.airwallexGray100Color)
-               XCTAssertEqual(UIColor.airwallexPrimaryText.resolvedColor(with: darkModeTrait), .white)
-           } else {
-               XCTAssertEqual(UIColor.airwallexPrimaryText, UIColor.airwallexGray100Color)
-           }
-       }
-       
-       func testAirwallexSecondaryTextColor() {
-           XCTAssertEqual(UIColor.airwallexSecondaryText, UIColor.airwallexGray50Color)
-       }
-       
-       func testAirwallexDisabledButtonColor() {
-           if #available(iOS 13.0, *) {
-               let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
-               let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
-               
-               XCTAssertEqual(UIColor.airwallexDisabledButton.resolvedColor(with: lightModeTrait), UIColor.airwallexGray30Color)
-               XCTAssertEqual(UIColor.airwallexDisabledButton.resolvedColor(with: darkModeTrait), UIColor.airwallexGray80Color)
-           } else {
-               XCTAssertEqual(UIColor.airwallexDisabledButton, UIColor.airwallexGray30Color)
-           }
-       }
-       
-       func testAirwallexPrimaryButtonTextColor() {
-           if #available(iOS 13.0, *) {
-               let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
-               let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
-               
-               XCTAssertEqual(UIColor.airwallexPrimaryButtonText.resolvedColor(with: lightModeTrait), .white)
-               XCTAssertEqual(UIColor.airwallexPrimaryButtonText.resolvedColor(with: darkModeTrait), UIColor.airwallexGray100Color)
-           } else {
-               XCTAssertEqual(UIColor.airwallexPrimaryButtonText, .white)
-           }
-       }
-       
-       func testAirwallexLineColor() {
-           if #available(iOS 13.0, *) {
-               let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
-               let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
-               
-               XCTAssertEqual(UIColor.airwallexLine.resolvedColor(with: lightModeTrait), UIColor.airwallexGray30Color)
-               XCTAssertEqual(UIColor.airwallexLine.resolvedColor(with: darkModeTrait), UIColor.airwallexGray80Color)
-           } else {
-               XCTAssertEqual(UIColor.airwallexLine, UIColor.airwallexGray30Color)
-           }
-       }
-       
-       func testAirwallexGlyphColor() {
-           XCTAssertEqual(UIColor.airwallexGlyph, UIColor.airwallexGray70Color)
-       }
-       
-       func testAirwallexErrorColor() {
-           XCTAssertEqual(UIColor.airwallexError, UIColor.airwallexRed50Color)
-       }
-       
+    func testAirwallexPrimaryBackgroundColor() {
+        if #available(iOS 13.0, *) {
+            let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
+            let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
+
+            XCTAssertEqual(UIColor.airwallexPrimaryBackground.resolvedColor(with: lightModeTrait), .white)
+            XCTAssertEqual(
+                UIColor.airwallexPrimaryBackground.resolvedColor(with: darkModeTrait),
+                UIColor.airwallexGray100Color
+            )
+        } else {
+            XCTAssertEqual(UIColor.airwallexPrimaryBackground, .white)
+        }
+    }
+
+    func testAirwallexSurfaceBackgroundColor() {
+        if #available(iOS 13.0, *) {
+            let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
+            let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
+
+            XCTAssertEqual(UIColor.airwallexSurfaceBackground.resolvedColor(with: lightModeTrait), .white)
+            XCTAssertEqual(
+                UIColor.airwallexSurfaceBackground.resolvedColor(with: darkModeTrait),
+                UIColor.airwallexGray90Color
+            )
+        } else {
+            XCTAssertEqual(UIColor.airwallexSurfaceBackground, .white)
+        }
+    }
+
+    func testAirwallexPrimaryTextColor() {
+        if #available(iOS 13.0, *) {
+            let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
+            let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
+
+            XCTAssertEqual(
+                UIColor.airwallexPrimaryText.resolvedColor(with: lightModeTrait),
+                UIColor.airwallexGray100Color
+            )
+            XCTAssertEqual(UIColor.airwallexPrimaryText.resolvedColor(with: darkModeTrait), .white)
+        } else {
+            XCTAssertEqual(UIColor.airwallexPrimaryText, UIColor.airwallexGray100Color)
+        }
+    }
+
+    func testAirwallexSecondaryTextColor() {
+        XCTAssertEqual(UIColor.airwallexSecondaryText, UIColor.airwallexGray50Color)
+    }
+
+    func testAirwallexDisabledButtonColor() {
+        if #available(iOS 13.0, *) {
+            let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
+            let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
+
+            XCTAssertEqual(
+                UIColor.airwallexDisabledButton.resolvedColor(with: lightModeTrait),
+                UIColor.airwallexGray30Color
+            )
+            XCTAssertEqual(
+                UIColor.airwallexDisabledButton.resolvedColor(with: darkModeTrait),
+                UIColor.airwallexGray80Color
+            )
+        } else {
+            XCTAssertEqual(UIColor.airwallexDisabledButton, UIColor.airwallexGray30Color)
+        }
+    }
+
+    func testAirwallexPrimaryButtonTextColor() {
+        if #available(iOS 13.0, *) {
+            let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
+            let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
+
+            XCTAssertEqual(UIColor.airwallexPrimaryButtonText.resolvedColor(with: lightModeTrait), .white)
+            XCTAssertEqual(
+                UIColor.airwallexPrimaryButtonText.resolvedColor(with: darkModeTrait),
+                UIColor.airwallexGray100Color
+            )
+        } else {
+            XCTAssertEqual(UIColor.airwallexPrimaryButtonText, .white)
+        }
+    }
+
+    func testAirwallexLineColor() {
+        if #available(iOS 13.0, *) {
+            let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
+            let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
+
+            XCTAssertEqual(
+                UIColor.airwallexLine.resolvedColor(with: lightModeTrait), UIColor.airwallexGray30Color
+            )
+            XCTAssertEqual(
+                UIColor.airwallexLine.resolvedColor(with: darkModeTrait), UIColor.airwallexGray80Color
+            )
+        } else {
+            XCTAssertEqual(UIColor.airwallexLine, UIColor.airwallexGray30Color)
+        }
+    }
+
+    func testAirwallexGlyphColor() {
+        XCTAssertEqual(UIColor.airwallexGlyph, UIColor.airwallexGray70Color)
+    }
+
+    func testAirwallexErrorColor() {
+        XCTAssertEqual(UIColor.airwallexError, UIColor.airwallexRed50Color)
+    }
+
     func testAirwallexTintColor() {
-           if #available(iOS 13.0, *) {
-               let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
-               let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
-               
-               XCTAssertEqual(UIColor.airwallexTint.resolvedColor(with: lightModeTrait), UIColor.airwallexGray70Color)
-               XCTAssertEqual(UIColor.airwallexTint.resolvedColor(with: darkModeTrait), UIColor.airwallexUltraviolet40Color)
-           } else {
-               XCTAssertEqual(UIColor.airwallexTint, UIColor.airwallexGray70Color)
-           }
-       }
-       
-       func testAirwallexShadowColor() {
-           XCTAssertEqual(UIColor.airwallexShadow, UIColor.black.withAlphaComponent(0.08))
-       }
+        if #available(iOS 13.0, *) {
+            let lightModeTrait = UITraitCollection(userInterfaceStyle: .light)
+            let darkModeTrait = UITraitCollection(userInterfaceStyle: .dark)
+
+            XCTAssertEqual(
+                UIColor.airwallexTint.resolvedColor(with: lightModeTrait), UIColor.airwallexGray70Color
+            )
+            XCTAssertEqual(
+                UIColor.airwallexTint.resolvedColor(with: darkModeTrait),
+                UIColor.airwallexUltraviolet40Color
+            )
+        } else {
+            XCTAssertEqual(UIColor.airwallexTint, UIColor.airwallexGray70Color)
+        }
+    }
+
+    func testAirwallexShadowColor() {
+        XCTAssertEqual(UIColor.airwallexShadow, UIColor.black.withAlphaComponent(0.08))
+    }
 }

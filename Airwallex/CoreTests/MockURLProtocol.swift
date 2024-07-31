@@ -13,7 +13,7 @@ class MockURLProtocol: URLProtocol {
     static var httpBody: Data?
 
     override class func canInit(with request: URLRequest) -> Bool {
-        if request.httpMethod == "POST"{
+        if request.httpMethod == "POST" {
             if let body = request.httpBody {
                 httpBody = body
             } else if let bodyStream = request.httpBodyStream {
@@ -37,7 +37,7 @@ class MockURLProtocol: URLProtocol {
         guard let handler = MockURLProtocol.requestHandler else {
             fatalError("Handler is unavailable.")
         }
-        
+
         do {
             let (response, data) = try handler(request)
             client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
@@ -59,7 +59,7 @@ private extension InputStream {
         defer { close() }
 
         var data = Data()
-        let bufferSize: Int = 2048
+        let bufferSize = 2048
         let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
         defer { buffer.deallocate() }
 

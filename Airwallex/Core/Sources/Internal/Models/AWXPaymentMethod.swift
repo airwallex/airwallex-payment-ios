@@ -8,43 +8,40 @@
 
 import Foundation
 
-/**
- `AWXPaymentMethod` includes the information of a payment method.
- */
+/// `AWXPaymentMethod` includes the information of a payment method.
 @objcMembers
 @objc
 public class AWXPaymentMethod: NSObject, Codable {
-    
     /**
      Type of the payment method. One of card, wechatpay, applepay.
      */
     public var type: String?
-    
+
     /**
      Unique identifier for the payment method.
      */
     public var Id: String?
-    
+
     /**
      Billing object.
      */
     public var billing: AWXPlaceDetails?
-    
+
     /**
      Card object.
      */
     public var card: AWXCard?
-    
+
     /**
      Additional params  for wechat, redirect or applepay type.
      */
-    public var additionalParams: Dictionary<String, String>?
-    
+    public var additionalParams: [String: String]?
+
     /**
      The customer this payment method belongs to.
      */
     public var customerId: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case type
         case Id = "id"
@@ -53,19 +50,20 @@ public class AWXPaymentMethod: NSObject, Codable {
         case additionalParams
         case customerId = "customer_id"
     }
-    
+
     struct DynamicCodingKeys: CodingKey {
         var stringValue: String
         var intValue: Int?
         init?(stringValue: String) {
             self.stringValue = stringValue
-            self.intValue = nil
+            intValue = nil
         }
-        init?(intValue: Int) {
+
+        init?(intValue _: Int) {
             return nil
         }
     }
-    
+
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type, forKey: .type)
@@ -78,31 +76,29 @@ public class AWXPaymentMethod: NSObject, Codable {
         }
     }
 }
-    
-@objc extension AWXPaymentMethod {
-    
-    public func appendAdditionalParams(_ params:Dictionary<String, String>) {
+
+@objc public extension AWXPaymentMethod {
+    func appendAdditionalParams(_ params: [String: String]) {
         if let _ = additionalParams {
-            additionalParams?.merge(params){ (_, new) in new }
+            additionalParams?.merge(params) { _, new in new }
         } else {
             additionalParams = params
         }
     }
-    
-    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXPaymentMethod {
+
+    static func decodeFromJSON(_ dic: [String: Any]) -> AWXPaymentMethod {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
             let decoder = JSONDecoder()
             let result = try decoder.decode(AWXPaymentMethod.self, from: jsonData)
-            
+
             return result
         } catch {
             return AWXPaymentMethod()
         }
     }
-    
-    public func encodeToJSON() -> [String: Any] {
+
+    func encodeToJSON() -> [String: Any] {
         return toDictionary() ?? [String: Any]()
     }
-    
 }

@@ -8,14 +8,13 @@
 
 import Foundation
 
-@objc extension AWXPlaceDetails {
-    
-    public func convertToPaymentContact() -> PKContact {
+@objc public extension AWXPlaceDetails {
+    func convertToPaymentContact() -> PKContact {
         let contact = PKContact()
         var nameComponents = PersonNameComponents()
         nameComponents.givenName = firstName
         nameComponents.familyName = lastName
-        
+
         let addr = CNMutablePostalAddress()
         if let city = address?.city {
             addr.city = city
@@ -32,7 +31,7 @@ import Foundation
         if let postcode = address?.postcode {
             addr.postalCode = postcode
         }
-        
+
         contact.name = nameComponents
         if let email = email {
             contact.emailAddress = email
@@ -41,8 +40,7 @@ import Foundation
             contact.phoneNumber = CNPhoneNumber(stringValue: phoneNumber)
         }
         contact.postalAddress = addr
-        
+
         return contact
     }
-    
 }

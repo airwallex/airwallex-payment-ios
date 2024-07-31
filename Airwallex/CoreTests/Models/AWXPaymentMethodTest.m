@@ -28,7 +28,7 @@
 - (void)testPaymentMethodType {
     NSDictionary *dic = [AWXTestUtils jsonNamed:@"PaymentMethodType"];
 
-    AWXPaymentMethodType *paymentMethodType = [AWXPaymentMethodType decodeFromJSON:[AWXTestUtils jsonNamed:@"PaymentMethodType"]];
+    AWXPaymentMethodType *paymentMethodType = [AWXPaymentMethodType decodeFromJSON:dic];
     XCTAssertEqualObjects(paymentMethodType.name, @"card");
     XCTAssertEqualObjects(paymentMethodType.displayName, @"Card");
     XCTAssertEqualObjects(paymentMethodType.transactionMode, @"oneoff");
@@ -39,6 +39,27 @@
     XCTAssertFalse(paymentMethodType.hasSchema);
     AWXCardScheme *amexScheme = paymentMethodType.cardSchemes[3];
     XCTAssertEqualObjects(amexScheme.name, @"amex");
+}
+
+- (void)testPaymentMethodTypeEmpty {
+    NSDictionary *dic = @{@"name": @1};
+
+    AWXPaymentMethodType *paymentMethodType = [AWXPaymentMethodType decodeFromJSON:dic];
+    XCTAssertNil(paymentMethodType.name);
+}
+
+- (void)testAWXCardScheme {
+    NSDictionary *dic = @{@"name": @"abc"};
+
+    AWXCardScheme *scheme = [AWXCardScheme decodeFromJSON:dic];
+    XCTAssertEqualObjects(scheme.name, @"abc");
+}
+
+- (void)testAWXCardSchemeNameEmpty {
+    NSDictionary *dic = @{@"name": @1};
+
+    AWXCardScheme *scheme = [AWXCardScheme decodeFromJSON:dic];
+    XCTAssertEqualObjects(scheme.name, @"");
 }
 
 @end

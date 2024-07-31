@@ -8,23 +8,20 @@
 
 import Foundation
 
-/**
- `AWXPaymentConsent` includes the info of payment consent.
- */
+/// `AWXPaymentConsent` includes the info of payment consent.
 @objcMembers
 @objc
 public class AWXPaymentConsent: NSObject, Codable {
-    
     /**
      Consent ID.
      */
     public var Id: String?
-    
+
     /**
      Request ID.
      */
     public var requestId: String?
-    
+
     /**
      Customer ID.
      */
@@ -69,7 +66,7 @@ public class AWXPaymentConsent: NSObject, Codable {
      Client secret.
      */
     public var clientSecret: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case Id = "id"
         case requestId = "request_id"
@@ -83,13 +80,13 @@ public class AWXPaymentConsent: NSObject, Codable {
         case updatedAt = "updated_at"
         case clientSecret = "client_secret"
     }
-    
-    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXPaymentConsent {
+
+    public static func decodeFromJSON(_ dic: [String: Any]) -> AWXPaymentConsent {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
             let decoder = JSONDecoder()
             let result = try decoder.decode(AWXPaymentConsent.self, from: jsonData)
-            
+
             return result
         } catch {
             return AWXPaymentConsent()

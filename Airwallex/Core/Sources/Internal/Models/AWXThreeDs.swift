@@ -8,36 +8,32 @@
 
 import Foundation
 
-/**
- `AWXThreeDs` includes the information of 3ds.
- */
+/// `AWXThreeDs` includes the information of 3ds.
 @objcMembers
 @objc
 public class AWXThreeDs: NSObject, Codable {
-    
     /**
      Three domain request.
      */
     public var paRes: String?
-    
+
     /**
      Return url.
      */
     public var returnURL: String?
-    
+
     /**
      Attempt ID.
      */
     public var attemptId: String?
-    
+
     /**
      Device data collection response.
      */
     public var deviceDataCollectionRes: String?
-    
+
     /**
      3DS transaction ID.
      */
     public var dsTransactionId: String?
-    
 }

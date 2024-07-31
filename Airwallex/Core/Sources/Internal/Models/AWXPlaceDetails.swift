@@ -8,43 +8,40 @@
 
 import Foundation
 
-/**
- `AWXPlaceDetails` includes the information of a billing address.
- */
+/// `AWXPlaceDetails` includes the information of a billing address.
 @objcMembers
 @objc
 public class AWXPlaceDetails: NSObject, Codable {
-    
     /**
      First name of the customer.
      */
     public var firstName: String?
-    
+
     /**
      Last name of the customer.
      */
     public var lastName: String?
-    
+
     /**
      Email address of the customer, optional.
      */
     public var email: String?
-    
+
     /**
      Date of birth of the customer in the format: YYYY-MM-DD, optional.
      */
     public var dateOfBirth: String?
-    
+
     /**
      Phone number of the customer, optional.
      */
     public var phoneNumber: String?
-    
+
     /**
      Address object.
      */
     public var address: AWXAddress?
-    
+
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
         case lastName = "last_name"
@@ -55,13 +52,12 @@ public class AWXPlaceDetails: NSObject, Codable {
     }
 }
 
-@objc extension AWXPlaceDetails {
-    
-    public func validate() -> String? {
+@objc public extension AWXPlaceDetails {
+    func validate() -> String? {
         if firstName == nil || firstName?.count == 0 {
             return "Invalid first name"
         }
-        if firstName == nil ||  lastName?.count == 0 {
+        if firstName == nil || lastName?.count == 0 {
             return "Invalid last name"
         }
         if let email = email, email.count > 0 {
@@ -75,28 +71,26 @@ public class AWXPlaceDetails: NSObject, Codable {
             return "Invalid shipping address"
         }
         if address?.countryCode == nil || address?.countryCode?.count == 0 {
-            return "Invalid country/region";
+            return "Invalid country/region"
         }
         if address?.city == nil || address?.city?.count == 0 {
-            return "Invalid your city";
+            return "Invalid your city"
         }
         if address?.street == nil || address?.street?.count == 0 {
-            return "Invalid street";
+            return "Invalid street"
         }
-        return nil;
+        return nil
     }
 
-    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXPlaceDetails {
+    static func decodeFromJSON(_ dic: [String: Any]) -> AWXPlaceDetails {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
             let decoder = JSONDecoder()
             let result = try decoder.decode(AWXPlaceDetails.self, from: jsonData)
-            
+
             return result
         } catch {
             return AWXPlaceDetails()
         }
     }
-
 }
-

@@ -17,42 +17,51 @@ public extension UIColor {
     class var airwallexToolbar: UIColor {
         .airwallexPrimaryBackground
     }
+
     class var airwallexPrimaryBackground: UIColor {
         colorWithDynamicLightColor(.white, darkColor: .airwallexGray100Color)
     }
+
     class var airwallexSurfaceBackground: UIColor {
         colorWithDynamicLightColor(.white, darkColor: .airwallexGray90Color)
     }
+
     class var airwallexPrimaryText: UIColor {
         colorWithDynamicLightColor(.airwallexGray100Color, darkColor: .white)
     }
+
     class var airwallexSecondaryText: UIColor {
         .airwallexGray50Color
     }
+
     class var airwallexDisabledButton: UIColor {
         .airwallexLine
     }
+
     class var airwallexPrimaryButtonText: UIColor {
         .colorWithDynamicLightColor(.white, darkColor: .airwallexGray100Color)
     }
+
     class var airwallexLine: UIColor {
         colorWithDynamicLightColor(.airwallexGray30Color, darkColor: .airwallexGray80Color)
     }
+
     class var airwallexGlyph: UIColor {
         .airwallexGray70Color
     }
+
     class var airwallexError: UIColor {
         .airwallexRed50Color
     }
+
     class var airwallexTint: UIColor {
         .colorWithDynamicLightColor(.airwallexGray70Color, darkColor: .airwallexUltraviolet40Color)
     }
+
     class var airwallexShadow: UIColor {
         .black.withAlphaComponent(0.08)
     }
-    
-    
-    
+
     class var airwallexGray10Color: UIColor {
         UIColor.colorWithHex(0xF6F7F8)
     }
@@ -101,18 +110,18 @@ public extension UIColor {
         UIColor.colorWithHex(0xFFF8E0)
     }
 
-    
-    
-    
-    class func colorWithHex(_ hex:Int) -> UIColor {
-        var red, green, blue, alpha: CGFloat
-        red = CGFloat((hex >> 16) & 0xff) / CGFloat(0xFF)
-        green = CGFloat((hex >> 8) & 0xff) / CGFloat(0xFF)
-        blue = CGFloat((hex >> 0) & 0xff) / CGFloat(0xFF)
-        alpha = hex > 0xFFFFFF ? CGFloat((hex >> 24) & 0xff) / CGFloat(0xFF) : 1.0
+    class func colorWithHex(_ hex: Int) -> UIColor {
+        var red: CGFloat
+        var green: CGFloat
+        var blue: CGFloat
+        var alpha: CGFloat
+        red = CGFloat((hex >> 16) & 0xFF) / CGFloat(0xFF)
+        green = CGFloat((hex >> 8) & 0xFF) / CGFloat(0xFF)
+        blue = CGFloat((hex >> 0) & 0xFF) / CGFloat(0xFF)
+        alpha = hex > 0xFFFFFF ? CGFloat((hex >> 24) & 0xFF) / CGFloat(0xFF) : 1.0
         return .init(red: red, green: green, blue: blue, alpha: alpha)
     }
-    
+
     class func colorWithDynamicLightColor(_ lightColor: UIColor, darkColor: UIColor) -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { traitCollection in

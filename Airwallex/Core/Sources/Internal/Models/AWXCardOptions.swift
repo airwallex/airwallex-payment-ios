@@ -8,13 +8,10 @@
 
 import Foundation
 
-/**
- `AWXCardOptions` includes the options of card.
- */
+/// `AWXCardOptions` includes the options of card.
 @objcMembers
 @objc
 public class AWXCardOptions: NSObject, Codable {
-    
     /**
      Should capture automatically when confirm. Default to false. The payment intent will be captured automatically if it is true, and authorized only if it is false.
      */
@@ -24,5 +21,4 @@ public class AWXCardOptions: NSObject, Codable {
      ThreeDs object.
      */
     public var threeDs: AWXThreeDs?
-    
 }

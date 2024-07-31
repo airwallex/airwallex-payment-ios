@@ -7,6 +7,7 @@
 //
 
 #import "AWXDefaultProvider.h"
+#import "AWXAPIResponse.h"
 #import "AWXAnalyticsLogger.h"
 #import "AWXNextActionHandler.h"
 #import "AWXPaymentIntentRequest.h"
@@ -318,6 +319,108 @@ NSString *const kMockKey = @"MOCK";
     self.providerMock = providerMock;
     self.response = response;
     self.error = error;
+}
+
+- (void)testObjcAmountFromValidAmount {
+    // Given
+    AWXConfirmPaymentIntentResponse *response = [AWXConfirmPaymentIntentResponse new];
+    [response setAmount:@123.45];
+
+    // When
+    NSNumber *amount = response.objcAmount;
+
+    // Then
+    XCTAssertEqualObjects(amount, @123.45);
+}
+
+- (void)testObjcAmountFromNilAmount {
+    // Given
+    AWXConfirmPaymentIntentResponse *response = [AWXConfirmPaymentIntentResponse new];
+    [response setAmount:nil];
+
+    // When
+    NSNumber *amount = response.objcAmount;
+
+    // Then
+    XCTAssertNil(amount);
+}
+
+- (void)testDecodeFromJSONSuccess {
+    // Given
+    NSDictionary *json = @{
+        @"currency": @"USD",
+        @"amount": @100.0,
+        @"status": @"success",
+        @"next_action": [NSNull null], // Assuming a nullable type here
+        @"latest_payment_attempt": [NSNull null] // Assuming a nullable type here
+    };
+
+    // When
+    AWXConfirmPaymentIntentResponse *response = [AWXConfirmPaymentIntentResponse decodeFromJSON:json];
+
+    // Then
+    XCTAssertNotNil(response);
+    XCTAssertEqualObjects(response.currency, @"USD");
+    XCTAssertEqualObjects(response.objcAmount, @100.0);
+    XCTAssertEqualObjects(response.status, @"success");
+    XCTAssertNil(response.nextAction);
+    XCTAssertNil(response.latestPaymentAttempt);
+}
+
+- (void)testDecodeFromJSONFailure {
+    // Given
+    NSDictionary *invalidJSON = @{};
+
+    // When
+    AWXConfirmPaymentIntentResponse *response = [AWXConfirmPaymentIntentResponse decodeFromJSON:invalidJSON];
+
+    // Then
+    XCTAssertNotNil(response); // Ensure that even if decoding fails, we return an initialized object
+    XCTAssertNil(response.currency);
+    XCTAssertNil(response.objcAmount);
+    XCTAssertNil(response.status);
+    XCTAssertNil(response.nextAction);
+    XCTAssertNil(response.latestPaymentAttempt);
+}
+
+- (void)testParseErrorFromValidJSON {
+    // Given
+    NSString *jsonString = @"{\"message\":\"An error occurred\",\"code\":\"1234\"}";
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+
+    // When
+    AWXAPIErrorResponse *errorResponse = [AWXConfirmPaymentIntentResponse parseError:jsonData];
+
+    // Then
+    XCTAssertNotNil(errorResponse);
+    XCTAssertEqualObjects(errorResponse.message, @"An error occurred");
+    XCTAssertEqualObjects(errorResponse.code, @"1234");
+}
+
+- (void)testParseErrorFromInvalidJSON {
+    // Given
+    NSString *invalidJsonString = @"{";
+    NSData *jsonData = [invalidJsonString dataUsingEncoding:NSUTF8StringEncoding];
+
+    // When
+    AWXAPIErrorResponse *errorResponse = [AWXConfirmPaymentIntentResponse parseError:jsonData];
+
+    // Then
+    XCTAssertNil(errorResponse);
+}
+
+- (void)testParseErrorFromValidJSONWithoutMessageAndCode {
+    // Given
+    NSString *jsonString = @"{}";
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+
+    // When
+    AWXAPIErrorResponse *errorResponse = [AWXConfirmPaymentIntentResponse parseError:jsonData];
+
+    // Then
+    XCTAssertNotNil(errorResponse);
+    XCTAssertEqualObjects(errorResponse.message, @"");
+    XCTAssertEqualObjects(errorResponse.code, @"");
 }
 
 @end

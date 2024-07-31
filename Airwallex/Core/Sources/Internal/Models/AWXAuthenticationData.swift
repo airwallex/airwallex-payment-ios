@@ -8,23 +8,21 @@
 
 import Foundation
 
-/**
- `AWXAuthenticationData` includes the parameters for 3ds authentication.
- */
+/// `AWXAuthenticationData` includes the parameters for 3ds authentication.
 @objcMembers
 @objc
 public class AWXAuthenticationData: NSObject, Codable {
     var fraudData: AWXAuthenticationDataFraudData?
     var dsData: AWXAuthenticationDataDsData?
-    
+
     enum CodingKeys: String, CodingKey {
         case fraudData = "fraud_data"
         case dsData = "ds_data"
     }
 }
 
-@objc extension AWXAuthenticationData {
-    public func isThreeDSVersion2() -> Bool {
+@objc public extension AWXAuthenticationData {
+    func isThreeDSVersion2() -> Bool {
         if let version = dsData?.version, version.hasPrefix("2.") {
             return true
         }

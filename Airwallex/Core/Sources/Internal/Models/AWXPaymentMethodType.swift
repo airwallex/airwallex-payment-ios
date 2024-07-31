@@ -8,13 +8,10 @@
 
 import Foundation
 
-/**
- `AWXPaymentMethodType` includes the information of a payment method.
- */
+/// `AWXPaymentMethodType` includes the information of a payment method.
 @objcMembers
 @objc
 public class AWXPaymentMethodType: NSObject, Codable {
-    
     /**
      name of the payment method.
      */
@@ -61,7 +58,7 @@ public class AWXPaymentMethodType: NSObject, Codable {
      Supported card schemes
      */
     public var cardSchemes: [AWXCardScheme]?
-    
+
     enum CodingKeys: String, CodingKey {
         case name
         case displayName = "display_name"
@@ -73,12 +70,12 @@ public class AWXPaymentMethodType: NSObject, Codable {
         case cardSchemes = "card_schemes"
     }
 
-    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXPaymentMethodType {
+    public static func decodeFromJSON(_ dic: [String: Any]) -> AWXPaymentMethodType {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .fragmentsAllowed)
             let decoder = JSONDecoder()
             let result = try decoder.decode(AWXPaymentMethodType.self, from: jsonData)
-            
+
             return result
         } catch {
             return AWXPaymentMethodType()
@@ -86,39 +83,36 @@ public class AWXPaymentMethodType: NSObject, Codable {
     }
 }
 
-/**
- `AWXResources` includes the resources of payment method.
- */
+/// `AWXResources` includes the resources of payment method.
 @objcMembers
 @objc
 public class AWXResources: NSObject, Codable {
-   
     /**
      Logo url
      */
     public var logoURL: URL? {
         URL(string: logos?.png ?? "")
     }
-    
+
     var logos: AWXLogos?
 
     /**
      has_schema
      */
     public var hasSchema: Bool = false
-    
-    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXResources {
+
+    public static func decodeFromJSON(_ dic: [String: Any]) -> AWXResources {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
             let decoder = JSONDecoder()
             let result = try decoder.decode(AWXResources.self, from: jsonData)
-            
+
             return result
         } catch {
             return AWXResources()
         }
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case hasSchema = "has_schema"
         case logos
@@ -131,21 +125,18 @@ public class AWXLogos: NSObject, Codable {
     public var png: String?
     public var svg: String?
 }
-   
 
 @objcMembers
 @objc
 public class AWXCardScheme: NSObject, Codable {
-    
     public var name: String = ""
-    
-    
-    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXCardScheme {
+
+    public static func decodeFromJSON(_ dic: [String: Any]) -> AWXCardScheme {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
             let decoder = JSONDecoder()
             let scheme = try decoder.decode(AWXCardScheme.self, from: jsonData)
-            
+
             return scheme
         } catch {
             return AWXCardScheme()

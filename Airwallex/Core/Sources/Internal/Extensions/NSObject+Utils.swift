@@ -11,7 +11,6 @@ import os
 
 @objc
 public extension NSObject {
-    
     func logMessage(_ message: String) {
         if !Airwallex.analyticsEnabled() {
             return
@@ -21,16 +20,17 @@ public extension NSObject {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         let className = String(describing: type(of: self))
         let customLog = OSLog(subsystem: "com.airwallex.payment.sdk", category: "general")
-        let formattedMessage = "----Airwallex SDK----\(formatter.string(from: now))----\(className)----\n \(message)"
-        os_log("%{public}@", log: customLog,type: .default, formattedMessage)
+        let formattedMessage =
+            "----Airwallex SDK----\(formatter.string(from: now))----\(className)----\n \(message)"
+        os_log("%{public}@", log: customLog, type: .default, formattedMessage)
         if Airwallex.isLocalLogFileEnabled() {
             logIntoLocalFile(formattedMessage)
         }
     }
-    
+
     func logIntoLocalFile(_ msg: String) {
         let logDateKey = "AirwallexSDK_last_log_date"
-        
+
         let fileManager = FileManager.default
         if let documentsUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             let logFileUrl = documentsUrl.appendingPathComponent("AirwallexSDK.log")
@@ -38,7 +38,9 @@ public extension NSObject {
                 let now = Date()
                 let todayDate = now.timeIntervalSince1970
                 let lastDate = UserDefaults.standard.double(forKey: logDateKey) as TimeInterval
-                if fileManager.fileExists(atPath: logFileUrl.path), todayDate - lastDate < 60.0 * 60.0 * 24.0 * 7.0 {
+                if fileManager.fileExists(atPath: logFileUrl.path),
+                   todayDate - lastDate < 60.0 * 60.0 * 24.0 * 7.0
+                {
                     let fileHandle = FileHandle(forWritingAtPath: logFileUrl.path)
                     fileHandle?.seekToEndOfFile()
                     fileHandle?.write(data)

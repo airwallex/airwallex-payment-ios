@@ -8,13 +8,10 @@
 
 import Foundation
 
-/**
- `AWXCard` includes the information of a card.
- */
+/// `AWXCard` includes the information of a card.
 @objcMembers
 @objc
 public class AWXCard: NSObject, Codable {
-    
     /**
      Card number.
      */
@@ -84,8 +81,8 @@ public class AWXCard: NSObject, Codable {
      Type of the number. One of PAN, EXTERNAL_NETWORK_TOKEN, AIRWALLEX_NETWORK_TOKEN.
      */
     public var numberType: String?
-    
-    enum CodingKeys:String, CodingKey {
+
+    enum CodingKeys: String, CodingKey {
         case number
         case expiryMonth = "expiry_month"
         case expiryYear = "expiry_year"
@@ -101,38 +98,36 @@ public class AWXCard: NSObject, Codable {
         case avsCheck = "avs_check"
         case numberType = "number_type"
     }
-    
-    required public init(from decoder: any Decoder) throws {
+
+    public required init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.number = try container.decodeIfPresent(String.self, forKey: .number)
-        self.expiryMonth = try container.decodeIfPresent(String.self, forKey: .expiryMonth)
-        self.expiryYear = try container.decodeIfPresent(String.self, forKey: .expiryYear)
-        self.name = try container.decodeIfPresent(String.self, forKey: .name)
-        self.cvc = try container.decodeIfPresent(String.self, forKey: .cvc)
-        self.bin = try container.decodeIfPresent(String.self, forKey: .bin)
-        self.last4 = try container.decodeIfPresent(String.self, forKey: .last4)
-        self.brand = try container.decodeIfPresent(String.self, forKey: .brand)
-        self.country = try container.decodeIfPresent(String.self, forKey: .country)
-        self.funding = try container.decodeIfPresent(String.self, forKey: .funding)
-        self.fingerprint = try container.decodeIfPresent(String.self, forKey: .fingerprint)
-        self.cvcCheck = try container.decodeIfPresent(String.self, forKey: .cvcCheck)
-        self.avsCheck = try container.decodeIfPresent(String.self, forKey: .avsCheck)
-        self.numberType = try container.decodeIfPresent(String.self, forKey: .numberType)
-        
+        number = try container.decodeIfPresent(String.self, forKey: .number)
+        expiryMonth = try container.decodeIfPresent(String.self, forKey: .expiryMonth)
+        expiryYear = try container.decodeIfPresent(String.self, forKey: .expiryYear)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        cvc = try container.decodeIfPresent(String.self, forKey: .cvc)
+        bin = try container.decodeIfPresent(String.self, forKey: .bin)
+        last4 = try container.decodeIfPresent(String.self, forKey: .last4)
+        brand = try container.decodeIfPresent(String.self, forKey: .brand)
+        country = try container.decodeIfPresent(String.self, forKey: .country)
+        funding = try container.decodeIfPresent(String.self, forKey: .funding)
+        fingerprint = try container.decodeIfPresent(String.self, forKey: .fingerprint)
+        cvcCheck = try container.decodeIfPresent(String.self, forKey: .cvcCheck)
+        avsCheck = try container.decodeIfPresent(String.self, forKey: .avsCheck)
+        numberType = try container.decodeIfPresent(String.self, forKey: .numberType)
+
         if number == nil, let last4 = last4 {
             number = "••••\(last4)"
         }
     }
-    
-    public override init() {
+
+    override public init() {
         super.init()
     }
-
 }
 
-@objc extension AWXCard {
-    
-    public func validate() -> String? {
+@objc public extension AWXCard {
+    func validate() -> String? {
         if number == nil || !AWXCardValidator.shared().isValidCardLength(number ?? "") {
             return "Invalid card number"
         }
@@ -147,13 +142,13 @@ public class AWXCard: NSObject, Codable {
         }
         return nil
     }
-    
-    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXCard {
+
+    static func decodeFromJSON(_ dic: [String: Any]) -> AWXCard {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
             let decoder = JSONDecoder()
             let result = try decoder.decode(AWXCard.self, from: jsonData)
-            
+
             return result
         } catch {
             return AWXCard()

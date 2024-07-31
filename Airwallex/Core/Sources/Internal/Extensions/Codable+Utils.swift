@@ -13,7 +13,9 @@ public extension Encodable {
         let encoder = JSONEncoder()
         do {
             let jsonData = try encoder.encode(self)
-            if let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as? [String: Any] {
+            if let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments)
+                as? [String: Any]
+            {
                 return jsonObject
             }
         } catch {

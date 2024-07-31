@@ -8,18 +8,15 @@
 
 import UIKit
 
-/**
- `AWXConfirmPaymentIntentResponse` includes the result of payment flow.
- */
+/// `AWXConfirmPaymentIntentResponse` includes the result of payment flow.
 @objcMembers
 @objc
 public class AWXConfirmPaymentIntentResponse: AWXResponse, Codable {
-    
     /**
      Currency.
      */
     public private(set) var currency: String?
-    
+
     /**
      Payment amount.
      */
@@ -27,22 +24,22 @@ public class AWXConfirmPaymentIntentResponse: AWXResponse, Codable {
     public var objcAmount: NSNumber? {
         return amount as? NSNumber
     }
-    
+
     /**
      Payment status.
      */
     public private(set) var status: String?
-    
+
     /**
      Next action.
      */
     public private(set) var nextAction: AWXConfirmPaymentNextAction?
-    
+
     /**
      The latest payment attempt object.
      */
     public private(set) var latestPaymentAttempt: AWXPaymentAttempt?
-    
+
     enum CodingKeys: String, CodingKey {
         case currency
         case amount
@@ -50,32 +47,40 @@ public class AWXConfirmPaymentIntentResponse: AWXResponse, Codable {
         case nextAction = "next_action"
         case latestPaymentAttempt = "latest_payment_attempt"
     }
-    
-    public static func decodeFromJSON(_ dic: Dictionary<String, Any>) -> AWXConfirmPaymentIntentResponse {
+
+    public static func decodeFromJSON(_ dic: [String: Any]) -> AWXConfirmPaymentIntentResponse {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
             let decoder = JSONDecoder()
             let result = try decoder.decode(AWXConfirmPaymentIntentResponse.self, from: jsonData)
-            
+
             return result
         } catch {
             print(error.localizedDescription)
             return AWXConfirmPaymentIntentResponse()
         }
     }
-    
-    public override static func parseError(_ data: Data) -> AWXAPIErrorResponse?
-    {
+
+    override public static func parseError(_ data: Data) -> AWXAPIErrorResponse? {
         do {
-              if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                  let message = json["message"] as? String ?? ""
-                  let code = json["code"] as? String ?? ""
-                  return AWXAPIErrorResponse(message: message, code: code)
-              }
-          } catch {
-              return nil
-          }
-          return nil
+            if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                as? [String: Any]
+            {
+                let message = json["message"] as? String ?? ""
+                let code = json["code"] as? String ?? ""
+                return AWXAPIErrorResponse(message: message, code: code)
+            }
+        } catch {
+            return nil
+        }
+        return nil
     }
-    
+
+    public func setAmount(_ amount: NSNumber?) {
+        if let amount = amount?.doubleValue {
+            self.amount = amount
+        } else {
+            self.amount = nil
+        }
+    }
 }

@@ -9,19 +9,18 @@
 import Foundation
 
 enum HTTPMethod: String {
-    case GET = "GET"
-    case POST = "POST"
-    case PUT = "PUT"
-    case DELETE = "DELETE"
+    case GET
+    case POST
+    case PUT
+    case DELETE
 }
 
 @objcMembers
 @objc
 public class AWXNetWorkManager: NSObject {
-    
     public static let shared = AWXNetWorkManager()
     public var session = URLSession.shared
-    private var baseURL: String {
+    public var baseURL: String {
         switch Airwallex.mode() {
         case .demoMode:
             "https://api-demo.airwallex.com/"
@@ -33,31 +32,39 @@ public class AWXNetWorkManager: NSObject {
             ""
         }
     }
-    private let headers = ["Content-Type": "application/json",
-                           "x-api-version": AIRWALLEX_API_VERSION,
-                           "User-Agent": "Airwallex-iOS-SDK"]
-    
-    
-    private override init() {}
-    func performRequest<T: Codable>(urlString: String,
-                                    method: HTTPMethod = .GET,
-                                    parameters: [String: Any]? = nil,
-                                    completion: @escaping (Result<T, Error>) -> Void) {
-        
+
+    private let headers = [
+        "Content-Type": "application/json",
+        "x-api-version": AIRWALLEX_API_VERSION,
+        "User-Agent": "Airwallex-iOS-SDK",
+    ]
+
+    override private init() {}
+    func performRequest<T: Codable>(
+        urlString: String,
+        method: HTTPMethod = .GET,
+        parameters: [String: Any]? = nil,
+        completion: @escaping (Result<T, Error>) -> Void
+    ) {
         var urlComponents = URLComponents(string: baseURL + urlString)
         var queryItems = [URLQueryItem]()
-        
+
         var request: URLRequest
         if method == .GET {
             if let parameters = parameters as? [String: String] {
-                parameters.forEach { key, value in
+                for (key, value) in parameters {
                     queryItems.append(URLQueryItem(name: key, value: value))
                 }
             }
             urlComponents?.queryItems = queryItems
             guard let url = urlComponents?.url else {
                 DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: AWXSDKErrorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey:"badURL.Please check your URL."])))
+                    completion(
+                        .failure(
+                            NSError(
+                                domain: AWXSDKErrorDomain, code: -1,
+                                userInfo: [NSLocalizedDescriptionKey: "badURL.Please check your URL."]
+                            )))
                 }
                 return
             }
@@ -65,7 +72,12 @@ public class AWXNetWorkManager: NSObject {
         } else if method == .POST {
             guard let url = URL(string: baseURL + urlString) else {
                 DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: AWXSDKErrorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey:"badURL.Please check your URL."])))
+                    completion(
+                        .failure(
+                            NSError(
+                                domain: AWXSDKErrorDomain, code: -1,
+                                userInfo: [NSLocalizedDescriptionKey: "badURL.Please check your URL."]
+                            )))
                 }
                 return
             }
@@ -74,61 +86,83 @@ public class AWXNetWorkManager: NSObject {
         } else {
             guard let url = URL(string: baseURL + urlString) else {
                 DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: AWXSDKErrorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey:"badURL.Please check your URL."])))
+                    completion(
+                        .failure(
+                            NSError(
+                                domain: AWXSDKErrorDomain, code: -1,
+                                userInfo: [NSLocalizedDescriptionKey: "badURL.Please check your URL."]
+                            )))
                 }
                 return
             }
             request = URLRequest(url: url)
         }
-        
+
         request.httpMethod = method.rawValue
-        
-        headers.forEach { key, value in
+
+        for (key, value) in headers {
             request.setValue(value, forHTTPHeaderField: key)
         }
-        
-        if let clientSecret =  AWXAPIClientConfiguration.shared().clientSecret {
+
+        if let clientSecret = AWXAPIClientConfiguration.shared().clientSecret {
             request.setValue(clientSecret, forHTTPHeaderField: "client-secret")
         }
-        
-        let task = session.dataTask(with: request) { data, response, error in
+
+        let task = session.dataTask(with: request) { data, _, error in
             if let error = error {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
                 return
             }
-            
+
             guard let data = data else {
                 DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: AWXSDKErrorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey:"No data."])))
+                    completion(
+                        .failure(
+                            NSError(
+                                domain: AWXSDKErrorDomain, code: -1,
+                                userInfo: [NSLocalizedDescriptionKey: "No data."]
+                            )))
                 }
                 return
             }
-            
+
             if let decodedData = T.from(data) {
                 DispatchQueue.main.async {
                     completion(.success(decodedData))
                 }
             } else {
                 DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: AWXSDKErrorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey:"Fail to decode data."])))
+                    completion(
+                        .failure(
+                            NSError(
+                                domain: AWXSDKErrorDomain, code: -1,
+                                userInfo: [NSLocalizedDescriptionKey: "Fail to decode data."]
+                            )))
                 }
             }
         }
         task.resume()
     }
-    
-    public func get<T: Codable>(urlString: String,
-                                         parameters: [String: String]? = nil,
-                                         completion: @escaping (Result<T, Error>) -> Void) {
-        performRequest(urlString: urlString, method: .GET, parameters: parameters, completion: completion)
+
+    public func get<T: Codable>(
+        urlString: String,
+        parameters: [String: String]? = nil,
+        completion: @escaping (Result<T, Error>) -> Void
+    ) {
+        performRequest(
+            urlString: urlString, method: .GET, parameters: parameters, completion: completion
+        )
     }
-    
-    public func post<T: Codable>(urlString: String,
-                                         parameters: [String: Any]? = nil,
-                                         completion: @escaping (Result<T, Error>) -> Void) {
-        performRequest(urlString: urlString, method: .POST, parameters: parameters, completion: completion)
+
+    public func post<T: Codable>(
+        urlString: String,
+        parameters: [String: Any]? = nil,
+        completion: @escaping (Result<T, Error>) -> Void
+    ) {
+        performRequest(
+            urlString: urlString, method: .POST, parameters: parameters, completion: completion
+        )
     }
-    
 }
