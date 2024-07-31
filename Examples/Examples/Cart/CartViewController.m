@@ -374,7 +374,8 @@
     context.session = session;
     [context presentEntirePaymentFlowFrom:self];
     // can also show card page directly.
-    //    [context presentCardPaymentFlowFrom:self];
+    //    NSArray *cardSchemes = @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex), @(AWXBrandTypeUnionPay), @(AWXBrandTypeJCB)];
+    //    [context presentCardPaymentFlowFrom:self cardSchemes:cardSchemes];
 }
 
 #pragma mark - Initiate Apple Pay Flow

@@ -12,11 +12,11 @@ import Foundation
     /**
      Present the payment flow from card info collection view.
      */
-    func presentCardPaymentFlowFrom(_ hostViewController: UIViewController) {
+    func presentCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [Any] = AWXCardSupportedBrands()) {
         hostVC = hostViewController
         isPush = false
         let provider = AWXCardProvider(delegate: self, session: session)
-        if let cardSchemes = AWXCardSupportedBrands() as? [NSNumber] {
+        if let cardSchemes = cardSchemes as? [NSNumber] {
             provider.cardSchemes = cardSchemes
         }
         provider.handleFlow()
@@ -25,7 +25,7 @@ import Foundation
     /**
      Push the payment flow from card info collection view.
      */
-    func pushCardPaymentFlowFrom(_ hostViewController: UIViewController) {
+    func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [Any] = AWXCardSupportedBrands()) {
         assert(hostViewController != nil, "hostViewController must not be nil.")
         hostVC = hostViewController
         let navi: UINavigationController?
@@ -42,7 +42,7 @@ import Foundation
         isPush = true
 
         let provider = AWXCardProvider(delegate: self, session: session)
-        if let cardSchemes = AWXCardSupportedBrands() as? [NSNumber] {
+        if let cardSchemes = cardSchemes as? [NSNumber] {
             provider.cardSchemes = cardSchemes
         }
         provider.handleFlow()
