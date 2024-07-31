@@ -8,6 +8,7 @@
 
 #import "AWXSecurityService.h"
 #import "AWXConstants.h"
+#import "AirwallexRisk/AirwallexRisk-Swift.h"
 #import <RLTMXProfiling/TMXProfiling.h>
 #import <RLTMXProfilingConnections/TMXProfilingConnections.h>
 
@@ -48,11 +49,9 @@
 - (void)doProfile:(NSString *)intentId
        completion:(void (^)(NSString *_Nullable))completion {
 #if TARGET_OS_SIMULATOR
-    completion([UIDevice currentDevice].identifierForVendor.UUIDString);
+    completion([[Risk sessionID] UUIDString]);
 #else
-    double timestamp = [[NSDate date] timeIntervalSince1970] * 1000;
-    NSString *fraudSessionId = [NSString stringWithFormat:@"%@%.0f", intentId, timestamp];
-    [self.profiling profileDeviceUsing:@{RLTMXSessionID: fraudSessionId}
+    [self.profiling profileDeviceUsing:@{RLTMXSessionID: [[Risk sessionID] UUIDString]}
                          callbackBlock:^(NSDictionary *result) {
                              RLTMXStatusCode statusCode = [[result valueForKey:RLTMXProfileStatus] integerValue];
                              dispatch_async(dispatch_get_main_queue(), ^{

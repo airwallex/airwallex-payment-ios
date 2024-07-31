@@ -23,8 +23,8 @@
 		1803601B2873C878003EA943 /* AWXPaymentFormViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1803601A2873C878003EA943 /* AWXPaymentFormViewModel.h */; };
 		1803601D2873CAE2003EA943 /* AWXPaymentFormViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601C2873CAE2003EA943 /* AWXPaymentFormViewModel.m */; };
 		1803601F2873D73A003EA943 /* AWXPaymentFormViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */; };
-		182390C82C3E606900301085 /* AirRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182390C72C3E606900301085 /* AirRisk.xcframework */; };
-		182390C92C3E607700301085 /* AirRisk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 182390C72C3E606900301085 /* AirRisk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1803AC8E2C59DB4300BC9FBF /* AirwallexRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; };
+		1803AC8F2C59DB5000BC9FBF /* AirwallexRisk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1829B8BB291A538B00D0D2CA /* AWXCardImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */; };
 		1829B8BC291A538B00D0D2CA /* AWXCardImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */; };
 		1829B8BE291B2D3B00D0D2CA /* PaymentMethodType.json in Resources */ = {isa = PBXBuildFile; fileRef = 1829B8BD291B2D3B00D0D2CA /* PaymentMethodType.json */; };
@@ -325,7 +325,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				182390C92C3E607700301085 /* AirRisk.xcframework in Embed Frameworks */,
+				1803AC8F2C59DB5000BC9FBF /* AirwallexRisk.xcframework in Embed Frameworks */,
 				186277D829E7C0530002892A /* AirTracker.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -370,7 +370,7 @@
 		1803601A2873C878003EA943 /* AWXPaymentFormViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXPaymentFormViewModel.h; sourceTree = "<group>"; };
 		1803601C2873CAE2003EA943 /* AWXPaymentFormViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModel.m; sourceTree = "<group>"; };
 		1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModelTests.m; sourceTree = "<group>"; };
-		182390C72C3E606900301085 /* AirRisk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AirRisk.xcframework; path = ../Frameworks/AirRisk.xcframework; sourceTree = "<group>"; };
+		1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AirwallexRisk.xcframework; path = ../Frameworks/AirwallexRisk.xcframework; sourceTree = "<group>"; };
 		1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXCardImageView.h; sourceTree = "<group>"; };
 		1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardImageView.m; sourceTree = "<group>"; };
 		1829B8BD291B2D3B00D0D2CA /* PaymentMethodType.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PaymentMethodType.json; sourceTree = "<group>"; };
@@ -606,8 +606,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1803AC8E2C59DB4300BC9FBF /* AirwallexRisk.xcframework in Frameworks */,
 				186277D729E7C0530002892A /* AirTracker.xcframework in Frameworks */,
-				182390C82C3E606900301085 /* AirRisk.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1147,9 +1147,9 @@
 			isa = PBXGroup;
 			children = (
 				186277D629E7C0530002892A /* AirTracker.xcframework */,
+				1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */,
 				186277CB29E78F840002892A /* RLTMXProfiling.xcframework */,
 				186277CA29E78F840002892A /* RLTMXProfilingConnections.xcframework */,
-				182390C72C3E606900301085 /* AirRisk.xcframework */,
 				3C5A37DB27ED404700CFC2EF /* PassKit.framework */,
 				18E0571D29CAABB60099388A /* AirTracker.xcframework */,
 				766C109E04EF1051D97CC9A3 /* Pods_ApplePayTests.framework */,

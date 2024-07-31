@@ -16,7 +16,7 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 #import "AWXSession.h"
-#import "AirRisk/AirRisk-Swift.h"
+#import "AirwallexRisk/AirwallexRisk-Swift.h"
 #import "NSObject+logging.h"
 #import "PKContact+Request.h"
 #import "PKPaymentToken+Request.h"
@@ -217,7 +217,7 @@ typedef enum {
 
     controller.delegate = self;
 
-    [AirwallexRisk logWithEvent:@"show_apple_pay" screen:@"page_apple_pay"];
+    [Risk logWithEvent:@"show_apple_pay" screen:@"page_apple_pay"];
 
     __weak __typeof(self) weakSelf = self;
     [controller presentWithCompletion:^(BOOL success) {
