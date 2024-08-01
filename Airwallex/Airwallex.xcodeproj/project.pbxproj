@@ -29,6 +29,7 @@
 		180D6F902C5B650B00980400 /* AirwallexRisk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		180D6F912C5B651500980400 /* AirwallexRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; };
 		180D6F922C5B651B00980400 /* AirwallexRisk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		180D6F952C5B902A00980400 /* AirwallexRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; };
 		1829B8BB291A538B00D0D2CA /* AWXCardImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */; };
 		1829B8BC291A538B00D0D2CA /* AWXCardImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */; };
 		1829B8BE291B2D3B00D0D2CA /* PaymentMethodType.json in Resources */ = {isa = PBXBuildFile; fileRef = 1829B8BD291B2D3B00D0D2CA /* PaymentMethodType.json */; };
@@ -621,6 +622,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				180D6F952C5B902A00980400 /* AirwallexRisk.xcframework in Frameworks */,
 				085BD3D223CC62B4002E8F27 /* Core.framework in Frameworks */,
 				2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */,
 			);
