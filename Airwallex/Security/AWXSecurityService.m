@@ -8,7 +8,6 @@
 
 #import "AWXSecurityService.h"
 #import "AWXConstants.h"
-#import <AirwallexRisk/AirwallexRisk-Swift.h>
 #import <RLTMXProfiling/TMXProfiling.h>
 #import <RLTMXProfilingConnections/TMXProfilingConnections.h>
 
@@ -46,12 +45,12 @@
     return self;
 }
 
-- (void)doProfile:(NSString *)intentId
+- (void)doProfile:(NSString *)sessionId
        completion:(void (^)(NSString *_Nullable))completion {
 #if TARGET_OS_SIMULATOR
-    completion([[Risk sessionID] UUIDString]);
+    completion(sessionId);
 #else
-    [self.profiling profileDeviceUsing:@{RLTMXSessionID: [[Risk sessionID] UUIDString]}
+    [self.profiling profileDeviceUsing:@{RLTMXSessionID: sessionId}
                          callbackBlock:^(NSDictionary *result) {
                              RLTMXStatusCode statusCode = [[result valueForKey:RLTMXProfileStatus] integerValue];
                              dispatch_async(dispatch_get_main_queue(), ^{

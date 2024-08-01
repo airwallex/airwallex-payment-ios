@@ -314,7 +314,7 @@ typedef enum {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [Risk logWithEvent:@"show_create_card" screen:@"page_create_card"];
+    [AWXRisk logWithEvent:@"show_create_card" screen:@"page_create_card"];
     [self registerKeyboard];
 }
 
@@ -412,7 +412,7 @@ typedef enum {
 
 - (void)confirmPayment:(id)sender {
     [[AWXAnalyticsLogger shared] logActionWithName:@"tap_pay_button"];
-    [Risk logWithEvent:@"click_payment_button" screen:@"page_create_card"];
+    [AWXRisk logWithEvent:@"click_payment_button" screen:@"page_create_card"];
     [self log:@"Start payment. Intent ID: %@", self.session.paymentIntentId];
 
     NSString *error;
@@ -537,13 +537,13 @@ typedef enum {
 
 - (BOOL)floatingLabelTextField:(AWXFloatingLabelTextField *)floatingLabelTextField textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == self.cardNoField.textField) {
-        [Risk logWithEvent:@"input_card_number" screen:@"page_create_card"];
+        [AWXRisk logWithEvent:@"input_card_number" screen:@"page_create_card"];
     } else if (textField == self.cvcField.textField) {
-        [Risk logWithEvent:@"input_card_cvc" screen:@"page_create_card"];
+        [AWXRisk logWithEvent:@"input_card_cvc" screen:@"page_create_card"];
     } else if (textField == self.expiresField.textField) {
-        [Risk logWithEvent:@"input_card_expiry" screen:@"page_create_card"];
+        [AWXRisk logWithEvent:@"input_card_expiry" screen:@"page_create_card"];
     } else if (textField == self.nameField.textField) {
-        [Risk logWithEvent:@"input_card_holder_name" screen:@"page_create_card"];
+        [AWXRisk logWithEvent:@"input_card_holder_name" screen:@"page_create_card"];
     }
 
     return YES;

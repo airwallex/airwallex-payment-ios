@@ -331,8 +331,8 @@ typedef SWIFT_ENUM(NSInteger, AirwallexRiskEnvironment, open) {
 
 
 
-SWIFT_CLASS("_TtC13AirwallexRisk4Risk")
-@interface Risk : NSObject
+SWIFT_CLASS_NAMED("Risk")
+@interface AWXRisk : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -340,7 +340,7 @@ SWIFT_CLASS("_TtC13AirwallexRisk4Risk")
 @class NSString;
 @class NSUUID;
 
-@interface Risk (SWIFT_EXTENSION(AirwallexRisk))
+@interface AWXRisk (SWIFT_EXTENSION(AirwallexRisk))
 /// Starts the shared <code>Risk</code> SDK instance.
 /// remark:
 /// Must be called once, as early as possible in the apps lifecycle.

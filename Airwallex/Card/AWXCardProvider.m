@@ -20,6 +20,7 @@
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
 #import "NSObject+Logging.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 
 @implementation AWXCardProvider
 
@@ -143,6 +144,10 @@
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:completion];
+}
+
+- (void)setDevice:(void (^)(AWXDevice *_Nonnull))completion {
+    [self setDeviceWithSessionId:[[AWXRisk sessionID] UUIDString] completion:completion];
 }
 
 @end

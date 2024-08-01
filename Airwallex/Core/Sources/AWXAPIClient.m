@@ -91,7 +91,7 @@ static BOOL _localLogFileEnabled = NO;
     dispatch_once(&onceToken, ^{
         sharedConfiguration = [self new];
         sharedConfiguration.baseURL = Airwallex.defaultBaseURL;
-        [Risk startWithAccountID:nil with:[[AirwallexRiskConfiguration alloc] initWithEnvironment:[self riskEnvironmentForMode:Airwallex.mode] tenant:TenantPa bufferTimeInterval:5]];
+        [AWXRisk startWithAccountID:nil with:[[AirwallexRiskConfiguration alloc] initWithEnvironment:[self riskEnvironmentForMode:Airwallex.mode] tenant:TenantPa bufferTimeInterval:5]];
     });
     return sharedConfiguration;
 }
@@ -116,7 +116,7 @@ static BOOL _localLogFileEnabled = NO;
 
 - (void)setClientSecret:(NSString *)clientSecret {
     _clientSecret = [clientSecret copy];
-    [Risk setWithAccountID:self.accountID];
+    [AWXRisk setWithAccountID:self.accountID];
 }
 
 - (NSString *)accountID {

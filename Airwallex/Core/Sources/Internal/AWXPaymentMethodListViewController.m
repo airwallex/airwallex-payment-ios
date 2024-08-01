@@ -85,7 +85,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [Risk logWithEvent:@"show_payment_method_list" screen:@"page_method_list"];
+    [AWXRisk logWithEvent:@"show_payment_method_list" screen:@"page_method_list"];
 }
 
 - (void)viewDidLayoutSubviews {

@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Request device id.
  */
-- (void)doProfile:(NSString *)intentId
+- (void)doProfile:(NSString *)sessionId
        completion:(void (^)(NSString *_Nullable))completion;
 
 + (instancetype)new NS_UNAVAILABLE;

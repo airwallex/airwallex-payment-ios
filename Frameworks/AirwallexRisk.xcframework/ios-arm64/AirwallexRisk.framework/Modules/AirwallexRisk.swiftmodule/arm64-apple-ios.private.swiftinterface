@@ -52,7 +52,7 @@ extension AirwallexRisk.Risk {
     @objc get
   }
 }
-@_hasMissingDesignatedInitializers @objc public class Risk : ObjectiveC.NSObject {
+@_hasMissingDesignatedInitializers @objc(AWXRisk) public class Risk : ObjectiveC.NSObject {
   @objc deinit
 }
 extension AirwallexRisk.AirwallexRiskEnvironment : Swift.Equatable {}
