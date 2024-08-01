@@ -34,8 +34,8 @@
 #import "AWXTrackManager.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
-#import "AirwallexRisk/AirwallexRisk-Swift.h"
 #import "NSObject+Logging.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 
 @interface AWXPaymentMethodListViewController ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXProviderDelegate>
 

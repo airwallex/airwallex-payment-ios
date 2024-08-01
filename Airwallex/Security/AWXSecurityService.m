@@ -8,7 +8,7 @@
 
 #import "AWXSecurityService.h"
 #import "AWXConstants.h"
-#import "AirwallexRisk/AirwallexRisk-Swift.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 #import <RLTMXProfiling/TMXProfiling.h>
 #import <RLTMXProfilingConnections/TMXProfilingConnections.h>
 

@@ -12,9 +12,9 @@
 #import "AWXAnalyticsLogger.h"
 #import "AWXLogger.h"
 #import "AWXUtils.h"
-#import "AirwallexRisk/AirwallexRisk-Swift.h"
 #import "NSData+Base64.h"
 #import "NSObject+logging.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 
 static NSString *const AWXAPIDemoBaseURL = @"https://api-demo.airwallex.com/";
 static NSString *const AWXAPIStagingBaseURL = @"https://api-staging.airwallex.com/";

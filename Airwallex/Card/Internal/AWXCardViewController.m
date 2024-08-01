@@ -30,8 +30,8 @@
 #import "AWXUIContext.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
-#import "AirwallexRisk/AirwallexRisk-Swift.h"
 #import "NSObject+Logging.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 
 @interface AWXCardViewController ()<AWXCountryListViewControllerDelegate, AWXProviderDelegate, AWXFloatingLabelTextFieldDelegate>
 

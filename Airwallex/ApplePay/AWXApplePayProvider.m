@@ -16,10 +16,10 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 #import "AWXSession.h"
-#import "AirwallexRisk/AirwallexRisk-Swift.h"
 #import "NSObject+logging.h"
 #import "PKContact+Request.h"
 #import "PKPaymentToken+Request.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 #import <PassKit/PassKit.h>
 
 @interface AWXApplePayProvider ()<PKPaymentAuthorizationControllerDelegate>
