@@ -34,8 +34,8 @@
 #import "AWXTrackManager.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
-#import "AirRisk/AirRisk-Swift.h"
 #import "NSObject+Logging.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 
 @interface AWXPaymentMethodListViewController ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXProviderDelegate>
 
@@ -85,7 +85,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [AirwallexRisk logWithEvent:@"show_payment_method_list" screen:@"page_method_list"];
+    [AWXRisk logWithEvent:@"show_payment_method_list" screen:@"page_method_list"];
 }
 
 - (void)viewDidLayoutSubviews {

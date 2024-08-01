@@ -1,0 +1,63 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name AirwallexRisk
+import Foundation
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc public class AirwallexRiskConfiguration : ObjectiveC.NSObject {
+  @objc convenience public init(isProduction: Swift.Bool = true, tenant: AirwallexRisk.Tenant = .scale)
+  @objc public init(environment: AirwallexRisk.AirwallexRiskEnvironment = .production, tenant: AirwallexRisk.Tenant = .scale, bufferTimeInterval: Foundation.TimeInterval = 20)
+  @objc deinit
+}
+@objc public enum AirwallexRiskEnvironment : Swift.Int {
+  case production
+  case demo
+  case staging
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum Tenant : Swift.Int, Swift.Codable {
+  case `internal`
+  case pa
+  case scale
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public struct Header {
+  public let field: Swift.String
+  public let value: Swift.String
+}
+extension Foundation.URLRequest {
+  public mutating func setAirwallexHeader()
+}
+extension AirwallexRisk.Risk {
+  @objc public static func start(accountID: Swift.String?, with configuration: AirwallexRisk.AirwallexRiskConfiguration = .init())
+  @objc public static func set(accountID: Swift.String?)
+  @objc public static func set(userID: Swift.String?)
+  @objc public static func log(event: Swift.String, screen: Swift.String? = nil)
+  public static var header: AirwallexRisk.Header? {
+    get
+  }
+  @objc public static var sessionID: Foundation.UUID? {
+    @objc get
+  }
+}
+@_hasMissingDesignatedInitializers @objc(AWXRisk) public class Risk : ObjectiveC.NSObject {
+  @objc deinit
+}
+extension AirwallexRisk.AirwallexRiskEnvironment : Swift.Equatable {}
+extension AirwallexRisk.AirwallexRiskEnvironment : Swift.Hashable {}
+extension AirwallexRisk.AirwallexRiskEnvironment : Swift.RawRepresentable {}
+extension AirwallexRisk.Tenant : Swift.Equatable {}
+extension AirwallexRisk.Tenant : Swift.Hashable {}
+extension AirwallexRisk.Tenant : Swift.RawRepresentable {}

@@ -12,8 +12,9 @@
 
 @implementation AWXDefaultProvider (Security)
 
-- (void)setDevice:(void (^)(AWXDevice *_Nonnull))completion {
-    [[AWXSecurityService sharedService] doProfile:self.session.paymentIntentId
+- (void)setDeviceWithSessionId:(NSString *)sessionId
+                    completion:(void (^)(AWXDevice *_Nonnull))completion {
+    [[AWXSecurityService sharedService] doProfile:sessionId
                                        completion:^(NSString *_Nullable sessionId) {
                                            AWXDevice *device = [AWXDevice new];
                                            device.deviceId = sessionId;

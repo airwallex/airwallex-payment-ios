@@ -16,10 +16,10 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 #import "AWXSession.h"
-#import "AirRisk/AirRisk-Swift.h"
 #import "NSObject+logging.h"
 #import "PKContact+Request.h"
 #import "PKPaymentToken+Request.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 #import <PassKit/PassKit.h>
 
 @interface AWXApplePayProvider ()<PKPaymentAuthorizationControllerDelegate>
@@ -113,10 +113,11 @@ typedef enum {
 
     self.paymentState = Pending;
     __weak __typeof(self) weakSelf = self;
-    [self setDevice:^(AWXDevice *_Nonnull device) {
-        __strong __typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf confirmWithPaymentMethod:method device:device completion:completion];
-    }];
+    [self setDeviceWithSessionId:[[AWXRisk sessionID] UUIDString]
+                      completion:^(AWXDevice *_Nonnull device) {
+                          __strong __typeof(weakSelf) strongSelf = weakSelf;
+                          [strongSelf confirmWithPaymentMethod:method device:device completion:completion];
+                      }];
 }
 
 - (void)paymentAuthorizationControllerDidFinish:(nonnull PKPaymentAuthorizationController *)controller {
@@ -217,7 +218,7 @@ typedef enum {
 
     controller.delegate = self;
 
-    [AirwallexRisk logWithEvent:@"show_apple_pay" screen:@"page_apple_pay"];
+    [AWXRisk logWithEvent:@"show_apple_pay" screen:@"page_apple_pay"];
 
     __weak __typeof(self) weakSelf = self;
     [controller presentWithCompletion:^(BOOL success) {

@@ -12,9 +12,9 @@
 #import "AWXAnalyticsLogger.h"
 #import "AWXLogger.h"
 #import "AWXUtils.h"
-#import "AirRisk/AirRisk-Swift.h"
 #import "NSData+Base64.h"
 #import "NSObject+logging.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 
 static NSString *const AWXAPIDemoBaseURL = @"https://api-demo.airwallex.com/";
 static NSString *const AWXAPIStagingBaseURL = @"https://api-staging.airwallex.com/";
@@ -91,9 +91,20 @@ static BOOL _localLogFileEnabled = NO;
     dispatch_once(&onceToken, ^{
         sharedConfiguration = [self new];
         sharedConfiguration.baseURL = Airwallex.defaultBaseURL;
-        [AirwallexRisk startWithAccountID:nil with:[[AirwallexRiskConfiguration alloc] initWithIsProduction:Airwallex.mode == AirwallexSDKProductionMode tenant:TenantPa]];
+        [AWXRisk startWithAccountID:nil with:[[AirwallexRiskConfiguration alloc] initWithEnvironment:[self riskEnvironmentForMode:Airwallex.mode] tenant:TenantPa bufferTimeInterval:5]];
     });
     return sharedConfiguration;
+}
+
++ (AirwallexRiskEnvironment)riskEnvironmentForMode:(AirwallexSDKMode)mode {
+    switch (mode) {
+    case AirwallexSDKProductionMode:
+        return AirwallexRiskEnvironmentProduction;
+    case AirwallexSDKStagingMode:
+        return AirwallexRiskEnvironmentStaging;
+    case AirwallexSDKDemoMode:
+        return AirwallexRiskEnvironmentDemo;
+    }
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -105,7 +116,7 @@ static BOOL _localLogFileEnabled = NO;
 
 - (void)setClientSecret:(NSString *)clientSecret {
     _clientSecret = [clientSecret copy];
-    [AirwallexRisk setWithAccountID:self.accountID];
+    [AWXRisk setWithAccountID:self.accountID];
 }
 
 - (NSString *)accountID {

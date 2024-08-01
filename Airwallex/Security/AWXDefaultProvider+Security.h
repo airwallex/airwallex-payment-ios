@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXDefaultProvider (Security)
 
-- (void)setDevice:(void (^)(AWXDevice *_Nonnull))completion;
+- (void)setDeviceWithSessionId:(NSString *)sessionId
+                    completion:(void (^)(AWXDevice *_Nonnull))completion;
 
 @end
 

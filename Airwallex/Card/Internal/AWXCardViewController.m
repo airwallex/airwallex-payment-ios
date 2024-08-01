@@ -30,8 +30,8 @@
 #import "AWXUIContext.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
-#import "AirRisk/AirRisk-Swift.h"
 #import "NSObject+Logging.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 
 @interface AWXCardViewController ()<AWXCountryListViewControllerDelegate, AWXProviderDelegate, AWXFloatingLabelTextFieldDelegate>
 
@@ -314,7 +314,7 @@ typedef enum {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [AirwallexRisk logWithEvent:@"show_create_card" screen:@"page_create_card"];
+    [AWXRisk logWithEvent:@"show_create_card" screen:@"page_create_card"];
     [self registerKeyboard];
 }
 
@@ -412,7 +412,7 @@ typedef enum {
 
 - (void)confirmPayment:(id)sender {
     [[AWXAnalyticsLogger shared] logActionWithName:@"tap_pay_button"];
-    [AirwallexRisk logWithEvent:@"click_payment_button" screen:@"page_create_card"];
+    [AWXRisk logWithEvent:@"click_payment_button" screen:@"page_create_card"];
     [self log:@"Start payment. Intent ID: %@", self.session.paymentIntentId];
 
     NSString *error;
@@ -537,13 +537,13 @@ typedef enum {
 
 - (BOOL)floatingLabelTextField:(AWXFloatingLabelTextField *)floatingLabelTextField textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == self.cardNoField.textField) {
-        [AirwallexRisk logWithEvent:@"input_card_number" screen:@"page_create_card"];
+        [AWXRisk logWithEvent:@"input_card_number" screen:@"page_create_card"];
     } else if (textField == self.cvcField.textField) {
-        [AirwallexRisk logWithEvent:@"input_card_cvc" screen:@"page_create_card"];
+        [AWXRisk logWithEvent:@"input_card_cvc" screen:@"page_create_card"];
     } else if (textField == self.expiresField.textField) {
-        [AirwallexRisk logWithEvent:@"input_card_expiry" screen:@"page_create_card"];
+        [AWXRisk logWithEvent:@"input_card_expiry" screen:@"page_create_card"];
     } else if (textField == self.nameField.textField) {
-        [AirwallexRisk logWithEvent:@"input_card_holder_name" screen:@"page_create_card"];
+        [AWXRisk logWithEvent:@"input_card_holder_name" screen:@"page_create_card"];
     }
 
     return YES;

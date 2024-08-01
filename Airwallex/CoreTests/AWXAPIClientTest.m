@@ -14,8 +14,15 @@
 #import "AWXTestUtils.h"
 #import "Core/AWXAnalyticsLogger.h"
 #import "XCTestCase+Utils.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
+
+@interface AWXAPIClientConfiguration (Risk)
+
++ (AirwallexRiskEnvironment)riskEnvironmentForMode:(AirwallexSDKMode)mode;
+
+@end
 
 @interface AWXAPIClientTest : XCTestCase
 
@@ -176,6 +183,12 @@
 - (void)testDisableLocalLogFile {
     [Airwallex disableLocalLogFile];
     XCTAssertFalse([Airwallex isLocalLogFileEnabled]);
+}
+
+- (void)testRiskEnvironment {
+    XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKProductionMode], AirwallexRiskEnvironmentProduction);
+    XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKDemoMode], AirwallexRiskEnvironmentDemo);
+    XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKStagingMode], AirwallexRiskEnvironmentStaging);
 }
 
 @end

@@ -195,7 +195,7 @@
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
 
-    OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:_device, nil])]);
+    OCMStub([providerSpy setDeviceWithSessionId:[OCMArg any] completion:([OCMArg invokeBlockWithArgs:_device, nil])]);
 
     NSError *error = [NSError errorWithDomain:@"domain" code:-1 userInfo:nil];
 
@@ -243,7 +243,7 @@
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
 
-    OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:_device, nil])]);
+    OCMStub([providerSpy setDeviceWithSessionId:[OCMArg any] completion:([OCMArg invokeBlockWithArgs:_device, nil])]);
 
     AWXConfirmPaymentIntentResponse *response = [AWXConfirmPaymentIntentResponse new];
 
