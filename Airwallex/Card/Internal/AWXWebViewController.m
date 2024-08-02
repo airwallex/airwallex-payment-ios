@@ -10,6 +10,11 @@
 #import "AWXAPIClient.h"
 #import "AWXUtils.h"
 #import <WebKit/WebKit.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXWebViewController ()<WKNavigationDelegate>
 
@@ -55,7 +60,7 @@
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  if (self.webHandler) {
-                                     self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"User cancelled.", nil)}]);
+                                     self.webHandler(nil, [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"User cancelled.", nil)]);
                                  }
                              }];
 }

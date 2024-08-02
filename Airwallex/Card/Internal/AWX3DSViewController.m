@@ -11,6 +11,11 @@
 #import "AWXConstants.h"
 #import "AWXUtils.h"
 #import <WebKit/WebKit.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWX3DSViewController ()<WKNavigationDelegate, WKUIDelegate>
 
@@ -74,7 +79,7 @@
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  if (self.webHandler) {
-                                     self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"User cancelled.", nil)}]);
+                                     self.webHandler(nil, [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"User cancelled.", nil)]);
                                  }
                              }];
 }
@@ -103,11 +108,11 @@
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
     if (response.statusCode == 400) {
         if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
-            self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unknown issue.", nil)}]);
+            self.webHandler(nil, [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Unknown issue.", nil)]);
         } else {
             [self dismissViewControllerAnimated:YES
                                      completion:^{
-                                         self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unknown issue.", nil)}]);
+                                         self.webHandler(nil, [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Unknown issue.", nil)]);
                                      }];
         }
     }

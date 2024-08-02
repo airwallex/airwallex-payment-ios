@@ -11,7 +11,6 @@
 		082442C82431BD5100D04A2C /* AWXTestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 082442C72431BD5100D04A2C /* AWXTestUtils.m */; };
 		082442CC2431C00E00D04A2C /* AWXCardTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 082442CB2431C00E00D04A2C /* AWXCardTest.m */; };
 		0829FD002431D0DE00557DB2 /* Address.json in Resources */ = {isa = PBXBuildFile; fileRef = 0829FCFF2431D0DE00557DB2 /* Address.json */; };
-		0829FD022431D10800557DB2 /* AWXAddressTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD012431D10800557DB2 /* AWXAddressTest.m */; };
 		0829FD062431D22800557DB2 /* Billing.json in Resources */ = {isa = PBXBuildFile; fileRef = 0829FD052431D22800557DB2 /* Billing.json */; };
 		0829FD082431D25800557DB2 /* AWXBillingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD072431D25800557DB2 /* AWXBillingTest.m */; };
 		0829FD0C2431D3A500557DB2 /* PaymentMethod.json in Resources */ = {isa = PBXBuildFile; fileRef = 0829FD0B2431D3A500557DB2 /* PaymentMethod.json */; };
@@ -243,6 +242,7 @@
 		C86642C02C5A081300549016 /* AWXAuthenticationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642BF2C5A081300549016 /* AWXAuthenticationDataTests.swift */; };
 		C86642C22C5A0A9E00549016 /* AWXPaymentMethodOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642C12C5A0A9E00549016 /* AWXPaymentMethodOptionsTests.swift */; };
 		C86642C42C5A0BBF00549016 /* AWXPaymentAttemptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86642C32C5A0BBF00549016 /* AWXPaymentAttemptTests.swift */; };
+		C8EE54A32C5CC4EF0080AA95 /* NSError+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EE54A22C5CC4EF0080AA95 /* NSError+Utils.swift */; };
 		C8F387592C4A41640059B835 /* AWXAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F387582C4A41640059B835 /* AWXAPIClient.swift */; };
 		C8F3875C2C4A42C60059B835 /* AWXConfirmPaymentIntentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F3875B2C4A42C60059B835 /* AWXConfirmPaymentIntentResponse.swift */; };
 		C8F3875E2C4A4F880059B835 /* AWXConfirmPaymentNextAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F3875D2C4A4F880059B835 /* AWXConfirmPaymentNextAction.swift */; };
@@ -371,7 +371,6 @@
 		082442C72431BD5100D04A2C /* AWXTestUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXTestUtils.m; sourceTree = "<group>"; };
 		082442CB2431C00E00D04A2C /* AWXCardTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardTest.m; sourceTree = "<group>"; };
 		0829FCFF2431D0DE00557DB2 /* Address.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Address.json; sourceTree = "<group>"; };
-		0829FD012431D10800557DB2 /* AWXAddressTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXAddressTest.m; sourceTree = "<group>"; };
 		0829FD052431D22800557DB2 /* Billing.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Billing.json; sourceTree = "<group>"; };
 		0829FD072431D25800557DB2 /* AWXBillingTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXBillingTest.m; sourceTree = "<group>"; };
 		0829FD0B2431D3A500557DB2 /* PaymentMethod.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PaymentMethod.json; sourceTree = "<group>"; };
@@ -615,6 +614,7 @@
 		C86642BF2C5A081300549016 /* AWXAuthenticationDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXAuthenticationDataTests.swift; sourceTree = "<group>"; };
 		C86642C12C5A0A9E00549016 /* AWXPaymentMethodOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentMethodOptionsTests.swift; sourceTree = "<group>"; };
 		C86642C32C5A0BBF00549016 /* AWXPaymentAttemptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentAttemptTests.swift; sourceTree = "<group>"; };
+		C8EE54A22C5CC4EF0080AA95 /* NSError+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Utils.swift"; sourceTree = "<group>"; };
 		C8F387582C4A41640059B835 /* AWXAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXAPIClient.swift; sourceTree = "<group>"; };
 		C8F3875B2C4A42C60059B835 /* AWXConfirmPaymentIntentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXConfirmPaymentIntentResponse.swift; sourceTree = "<group>"; };
 		C8F3875D2C4A4F880059B835 /* AWXConfirmPaymentNextAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXConfirmPaymentNextAction.swift; sourceTree = "<group>"; };
@@ -749,7 +749,6 @@
 			isa = PBXGroup;
 			children = (
 				082442CB2431C00E00D04A2C /* AWXCardTest.m */,
-				0829FD012431D10800557DB2 /* AWXAddressTest.m */,
 				0829FD072431D25800557DB2 /* AWXBillingTest.m */,
 				0829FD0D2431D3C200557DB2 /* AWXPaymentMethodTest.m */,
 				572D1BED26DF4D06001EBDAA /* AWXSessionTest.m */,
@@ -880,6 +879,7 @@
 				C86642882C4F567400549016 /* UIColor+Utils.swift */,
 				C866428A2C4F615500549016 /* UIFont+Utils.swift */,
 				C86642942C50F28C00549016 /* NSObject+Utils.swift */,
+				C8EE54A22C5CC4EF0080AA95 /* NSError+Utils.swift */,
 				18E0571729C9A7F20099388A /* AWXAPIErrorResponse+Update.h */,
 				18E0571829C9A7F20099388A /* AWXAPIErrorResponse+Update.m */,
 				3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */,
@@ -1942,6 +1942,7 @@
 				1839055029C01AE900FE8069 /* AWXAnalyticsLogger.m in Sources */,
 				5775CF4726E5DF5000C6AFE3 /* AWXAPIResponse.m in Sources */,
 				5775CF2426E5DF4F00C6AFE3 /* AWXPaymentIntentResponse.m in Sources */,
+				C8EE54A32C5CC4EF0080AA95 /* NSError+Utils.swift in Sources */,
 				5775CF4126E5DF5000C6AFE3 /* AWXLogger.m in Sources */,
 				5775CF3226E5DF4F00C6AFE3 /* AWXPaymentIntentRequest.m in Sources */,
 				C8F3875E2C4A4F880059B835 /* AWXConfirmPaymentNextAction.swift in Sources */,
@@ -1969,7 +1970,6 @@
 				18E0571C29CA8AD70099388A /* AWXAnalyticsLoggerTest.m in Sources */,
 				188F72AC2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m in Sources */,
 				183FB6472BB6A74100FFDF0E /* AWXNextActionHandlerTest.m in Sources */,
-				0829FD022431D10800557DB2 /* AWXAddressTest.m in Sources */,
 				3C324F9327FC0BF200CF7315 /* AWXSessionInternalTest.m in Sources */,
 				18D18C7C294225BC00E70DCD /* AWXPaymentIntentRequestTest.m in Sources */,
 				3C99E73F27E9A3380074156C /* AWXDefaultProviderTest.m in Sources */,

@@ -7,11 +7,16 @@
 //
 
 #import "AWXDefaultActionProvider.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @implementation AWXDefaultActionProvider
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
-    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unknown next action type.", nil)}]];
+    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Unknown next action type.", nil)]];
 }
 
 @end

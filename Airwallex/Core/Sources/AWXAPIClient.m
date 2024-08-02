@@ -15,6 +15,11 @@
 #import "NSData+Base64.h"
 #import "NSObject+logging.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 static NSString *const AWXAPIDemoBaseURL = @"https://api-demo.airwallex.com/";
 static NSString *const AWXAPIStagingBaseURL = @"https://api-staging.airwallex.com/";
@@ -258,7 +263,7 @@ static BOOL _localLogFileEnabled = NO;
                                                                                          [[AWXAnalyticsLogger shared] logErrorWithName:[request eventName] url:urlRequest.URL response:[errorResponse updatedResponseWithStatusCode:result.statusCode Error:error]];
                                                                                          handler(nil, errorResponse.error);
                                                                                      } else {
-                                                                                         handler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Couldn't parse response.", nil)}]);
+                                                                                         handler(nil, [NSError errorForAirwallexSDKWith:result.statusCode localizedDescription:NSLocalizedString(@"Couldn't parse response.", nil)]);
                                                                                      }
                                                                                  }
                                                                              });

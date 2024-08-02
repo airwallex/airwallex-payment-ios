@@ -44,16 +44,4 @@ public class AWXAddress: NSObject, Codable {
         case state
         case postcode
     }
-
-    public static func decodeFromJSON(_ dic: [String: Any]) -> AWXAddress {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
-            let decoder = JSONDecoder()
-            let result = try decoder.decode(AWXAddress.self, from: jsonData)
-
-            return result
-        } catch {
-            return AWXAddress()
-        }
-    }
 }

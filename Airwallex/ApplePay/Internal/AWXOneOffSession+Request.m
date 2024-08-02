@@ -21,9 +21,7 @@
     AWXApplePayOptions *options = self.applePayOptions;
     if (!options) {
         if (error) {
-            *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing Apple Pay options in session.", nil)}];
+            *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Missing Apple Pay options in session.", nil)];
         }
         return nil;
     }
@@ -36,9 +34,7 @@
 
     if (!self.countryCode) {
         if (error) {
-            *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing country code in session.", nil)}];
+            *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Missing country code in session.", nil)];
         }
         return nil;
     }
@@ -50,9 +46,7 @@
 
     if (!self.paymentIntent) {
         if (error) {
-            *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"paymentIntent cannot be nil.", nil)}];
+            *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"paymentIntent cannot be nil.", nil)];
         }
         return nil;
     }
@@ -60,9 +54,7 @@
     NSString *paymentIntentValidationError = [self validatePaymentIntentDataInSession:self.paymentIntent];
     if (paymentIntentValidationError) {
         if (error) {
-            *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: paymentIntentValidationError}];
+            *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:paymentIntentValidationError];
         }
         return nil;
     }

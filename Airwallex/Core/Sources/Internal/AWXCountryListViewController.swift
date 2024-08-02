@@ -19,14 +19,14 @@ import Foundation
 public class AWXCountryListViewController: UIViewController {
     public weak var delegate: AWXCountryListViewControllerDelegate?
 
-    public lazy var searchBar: UISearchBar = {
+    lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
         sb.delegate = self
         sb.translatesAutoresizingMaskIntoConstraints = false
         return sb
     }()
 
-    public lazy var table: UITableView = {
+    lazy var table: UITableView = {
         let tv = UITableView()
         tv.dataSource = self
         tv.delegate = self
@@ -35,8 +35,8 @@ public class AWXCountryListViewController: UIViewController {
         return tv
     }()
 
-    public var countries = AWXCountry.allCountries()
-    public var matchedCountries = AWXCountry.allCountries()
+    var countries = AWXCountry.allCountries()
+    var matchedCountries = AWXCountry.allCountries()
     public var currentCountry: AWXCountry?
 
     override public func viewDidLoad() {

@@ -320,10 +320,7 @@
 
 - (void)testPageViewTracking {
     AWXCardViewModel *viewModel = [self mockOneOffViewModelWithCardSchemes];
-    NSDictionary *dict = @{@"supportedSchemes": @[@"visa", @"mastercard", @"unionpay", @"jcb", @"diners", @"discover"]};
-
     XCTAssertEqualObjects(viewModel.pageName, @"card_payment_view");
-    XCTAssertEqualObjects(viewModel.additionalInfo, dict);
 }
 
 - (void)testCtaTitleWhenOneOffSession {

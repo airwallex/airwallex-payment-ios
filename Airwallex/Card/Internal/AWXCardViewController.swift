@@ -16,13 +16,13 @@ public class AWXCardViewController: UIViewController {
     public var provider: AWXDefaultProvider?
     public var session: AWXSession?
 
-    private(set) lazy var scrollView: UIScrollView = {
+    lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
         sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }()
 
-    public lazy var container: UIStackView = {
+    lazy var container: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
         sv.alignment = .fill
@@ -34,7 +34,7 @@ public class AWXCardViewController: UIViewController {
         return sv
     }()
 
-    public lazy var titleStack: UIStackView = {
+    lazy var titleStack: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
         sv.alignment = .fill
@@ -43,7 +43,7 @@ public class AWXCardViewController: UIViewController {
         return sv
     }()
 
-    public lazy var titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let lb = UILabel()
         lb.text = NSLocalizedString("Card", comment: "Card")
         lb.textColor = UIColor.airwallexPrimaryText
@@ -52,7 +52,7 @@ public class AWXCardViewController: UIViewController {
         return lb
     }()
 
-    public lazy var cardNoField: AWXFloatingCardTextField = {
+    lazy var cardNoField: AWXFloatingCardTextField = {
         let tf = AWXFloatingCardTextField()
         tf.cardBrands = viewModel?.makeDisplayedCardBrands()
         tf.validationMessageCallback = { [weak self] cardNumber in
@@ -74,7 +74,7 @@ public class AWXCardViewController: UIViewController {
         return tf
     }()
 
-    public lazy var nameField: AWXFloatingLabelTextField = {
+    lazy var nameField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .nameOnCard
         tf.placeholder = NSLocalizedString("Name on card", comment: "Name on card")
@@ -83,7 +83,7 @@ public class AWXCardViewController: UIViewController {
         return tf
     }()
 
-    public lazy var cvcStackView: UIStackView = {
+    lazy var cvcStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
         sv.alignment = .fill
@@ -93,7 +93,7 @@ public class AWXCardViewController: UIViewController {
         return sv
     }()
 
-    public lazy var expiresField: AWXFloatingLabelTextField = {
+    lazy var expiresField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .expires
         tf.placeholder = NSLocalizedString("Expires MM / YY", comment: "Expires MM / YY")
@@ -102,7 +102,7 @@ public class AWXCardViewController: UIViewController {
         return tf
     }()
 
-    public lazy var cvcField: AWXFloatingLabelTextField = {
+    lazy var cvcField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .CVC
         tf.placeholder = NSLocalizedString("CVC / CVV", comment: "CVC / CVV")
@@ -111,7 +111,7 @@ public class AWXCardViewController: UIViewController {
         return tf
     }()
 
-    public lazy var billingStackView: UIStackView = {
+    lazy var billingStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
         sv.alignment = .fill
@@ -121,7 +121,7 @@ public class AWXCardViewController: UIViewController {
         return sv
     }()
 
-    public lazy var billingLabel: UILabel = {
+    lazy var billingLabel: UILabel = {
         let lb = UILabel()
         lb.text = NSLocalizedString("Billing info", comment: "Billing info")
         lb.textColor = UIColor.airwallexPrimaryText
@@ -129,7 +129,7 @@ public class AWXCardViewController: UIViewController {
         return lb
     }()
 
-    public lazy var firstNameField: AWXFloatingLabelTextField = {
+    lazy var firstNameField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .firstName
         tf.placeholder = NSLocalizedString("First name", comment: "First Name")
@@ -137,7 +137,7 @@ public class AWXCardViewController: UIViewController {
         return tf
     }()
 
-    public lazy var lastNameField: AWXFloatingLabelTextField = {
+    lazy var lastNameField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .lastName
         tf.placeholder = NSLocalizedString("Last name", comment: "Last Name")
@@ -145,7 +145,7 @@ public class AWXCardViewController: UIViewController {
         return tf
     }()
 
-    public lazy var countryView: AWXFloatingLabelView = {
+    lazy var countryView: AWXFloatingLabelView = {
         let lv = AWXFloatingLabelView()
         lv.placeholder = NSLocalizedString("Country / Region", comment: "Country / Region")
         lv.addGestureRecognizer(
@@ -153,7 +153,7 @@ public class AWXCardViewController: UIViewController {
         return lv
     }()
 
-    public lazy var stateField: AWXFloatingLabelTextField = {
+    lazy var stateField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .state
         tf.placeholder = NSLocalizedString("State", comment: "State")
@@ -161,7 +161,7 @@ public class AWXCardViewController: UIViewController {
         return tf
     }()
 
-    public lazy var cityField: AWXFloatingLabelTextField = {
+    lazy var cityField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .city
         tf.placeholder = NSLocalizedString("City", comment: "City")
@@ -169,7 +169,7 @@ public class AWXCardViewController: UIViewController {
         return tf
     }()
 
-    public lazy var streetField: AWXFloatingLabelTextField = {
+    lazy var streetField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .street
         tf.placeholder = NSLocalizedString("Street", comment: "Street")
@@ -177,21 +177,21 @@ public class AWXCardViewController: UIViewController {
         return tf
     }()
 
-    public lazy var zipCodeField: AWXFloatingLabelTextField = {
+    lazy var zipCodeField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .zipcode
         tf.placeholder = NSLocalizedString("Zip code (optional)", comment: "Zip code (optional)")
         return tf
     }()
 
-    public lazy var emailField: AWXFloatingLabelTextField = {
+    lazy var emailField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .email
         tf.placeholder = NSLocalizedString("Email (optional)", comment: "Email (optional)")
         return tf
     }()
 
-    public lazy var phoneNumberField: AWXFloatingLabelTextField = {
+    lazy var phoneNumberField: AWXFloatingLabelTextField = {
         let tf = AWXFloatingLabelTextField()
         tf.fieldType = .phoneNumber
         tf.placeholder = NSLocalizedString(
@@ -200,7 +200,7 @@ public class AWXCardViewController: UIViewController {
         return tf
     }()
 
-    public lazy var confirmButton: AWXActionButton = {
+    lazy var confirmButton: AWXActionButton = {
         let btn = AWXActionButton()
         btn.isEnabled = true
         btn.setTitle(viewModel?.ctaTitle ?? "", for: .normal)
@@ -209,7 +209,7 @@ public class AWXCardViewController: UIViewController {
         return btn
     }()
 
-    public lazy var saveCardSwitchContainer: UIStackView = {
+    lazy var saveCardSwitchContainer: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
         sv.alignment = .fill
@@ -219,13 +219,13 @@ public class AWXCardViewController: UIViewController {
         return sv
     }()
 
-    public lazy var saveCardSwitch: UISwitch = {
+    lazy var saveCardSwitch: UISwitch = {
         let sw = UISwitch()
         sw.addTarget(self, action: #selector(saveCardSwitchChanged(_:)), for: .valueChanged)
         return sw
     }()
 
-    public lazy var saveCardLabel: UILabel = {
+    lazy var saveCardLabel: UILabel = {
         let lb = UILabel()
         lb.text = NSLocalizedString(
             "Save this card for future payments", comment: "Save this card for future payments"
@@ -235,7 +235,7 @@ public class AWXCardViewController: UIViewController {
         return lb
     }()
 
-    public lazy var addressSwitchContainer: UIStackView = {
+    lazy var addressSwitchContainer: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
         sv.alignment = .fill
@@ -245,13 +245,13 @@ public class AWXCardViewController: UIViewController {
         return sv
     }()
 
-    public lazy var addressSwitch: UISwitch = {
+    lazy var addressSwitch: UISwitch = {
         let sw = UISwitch()
         sw.addTarget(self, action: #selector(addressSwitchChanged(_:)), for: .valueChanged)
         return sw
     }()
 
-    public lazy var addressLabel: UILabel = {
+    lazy var addressLabel: UILabel = {
         let lb = UILabel()
         lb.text = NSLocalizedString("Same as shipping address", comment: "Same as shipping address")
         lb.textColor = UIColor.airwallexSecondaryText
@@ -259,22 +259,22 @@ public class AWXCardViewController: UIViewController {
         return lb
     }()
 
-    public lazy var warningView: AWXWarningView = .init(
+    lazy var warningView: AWXWarningView = .init(
         message:
-        "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use."
+        NSLocalizedString("For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.", comment: "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.")
     )
 
-    public lazy var closeButton: UIButton = {
+    lazy var closeButton: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "close", in: Bundle.resource()), for: .normal)
         btn.addTarget(self, action: #selector(close), for: .touchUpInside)
         return btn
     }()
 
-    public var currentBrand: AWXBrandType?
-    public var paymentMethodType: AWXPaymentMethodType?
+    var currentBrand: AWXBrandType?
+    var paymentMethodType: AWXPaymentMethodType?
 
-    public var saveCard: Bool = false
+    var saveCard: Bool = false
 
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -323,29 +323,25 @@ public class AWXCardViewController: UIViewController {
             "margin": 16.0,
             "padding": 33.0,
         ]
-        view.addConstraints(
-            NSLayoutConstraint.constraints(
-                withVisualFormat: "H:|[scrollView]|", metrics: metrics, views: views
-            ))
-        view.addConstraints(
-            NSLayoutConstraint.constraints(
-                withVisualFormat: "V:|[scrollView]|", metrics: metrics, views: views
-            ))
-        scrollView.addConstraints(
-            NSLayoutConstraint.constraints(
-                withVisualFormat: "H:|[stackView(==scrollView)]|", metrics: metrics, views: views
-            ))
-        scrollView.addConstraints(
-            NSLayoutConstraint.constraints(
-                withVisualFormat: "V:|[stackView]|", metrics: metrics, views: views
-            ))
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+
+            container.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            container.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            container.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            container.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+        ])
 
         container.addArrangedSubview(titleStack)
         titleStack.addArrangedSubview(titleLabel)
         titleStack.addArrangedSubview(closeButton)
-        container.addArrangedSubview(cardNoField)
-        container.addArrangedSubview(nameField)
-        container.addArrangedSubview(cvcStackView)
+        for item in [cardNoField, nameField, cvcStackView] {
+            container.addSubview(item)
+        }
         cvcStackView.addArrangedSubview(expiresField)
         cvcStackView.addArrangedSubview(cvcField)
 
@@ -362,16 +358,9 @@ public class AWXCardViewController: UIViewController {
             billingStackView.addArrangedSubview(addressSwitchContainer)
             addressSwitchContainer.addArrangedSubview(addressLabel)
             addressSwitchContainer.addArrangedSubview(addressSwitch)
-            billingStackView.addArrangedSubview(firstNameField)
-            billingStackView.addArrangedSubview(lastNameField)
-            billingStackView.addArrangedSubview(countryView)
-            billingStackView.addArrangedSubview(stateField)
-            billingStackView.addArrangedSubview(cityField)
-            billingStackView.addArrangedSubview(streetField)
-            billingStackView.addArrangedSubview(zipCodeField)
-            billingStackView.addArrangedSubview(emailField)
-            billingStackView.addArrangedSubview(phoneNumberField)
-
+            for item in [firstNameField, lastNameField, countryView, stateField, cityField, streetField, zipCodeField, emailField, phoneNumberField] {
+                billingStackView.addArrangedSubview(item)
+            }
             firstNameField.next = lastNameField
 
             phoneNumberField.next = stateField
@@ -448,15 +437,17 @@ public class AWXCardViewController: UIViewController {
     }
 
     func setBillingInputHidden(isHidden: Bool) {
-        firstNameField.isHidden = isHidden
-        lastNameField.isHidden = isHidden
-        countryView.isHidden = isHidden
-        stateField.isHidden = isHidden
-        cityField.isHidden = isHidden
-        streetField.isHidden = isHidden
-        zipCodeField.isHidden = isHidden
-        emailField.isHidden = isHidden
-        phoneNumberField.isHidden = isHidden
+        [firstNameField,
+         lastNameField,
+         countryView,
+         stateField,
+         cityField,
+         streetField,
+         zipCodeField,
+         emailField,
+         phoneNumberField].forEach {
+            $0.isHidden = isHidden
+        }
     }
 
     func selectCountries() {

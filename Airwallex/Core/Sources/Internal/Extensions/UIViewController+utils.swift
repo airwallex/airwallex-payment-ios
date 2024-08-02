@@ -8,10 +8,10 @@
 
 import Foundation
 
+private let activityIndicatorTag = 96483
+
 @objc
 public extension UIViewController {
-    static var activityIndicator: UIActivityIndicatorView?
-
     func enableTapToEndEditing() {
         let ges = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         ges.cancelsTouchesInView = false
@@ -23,26 +23,22 @@ public extension UIViewController {
     }
 
     func startAnimating() {
-        if Self.activityIndicator == nil {
+        if view.viewWithTag(activityIndicatorTag) == nil {
             let activityIndicator = UIActivityIndicatorView(style: .large)
             activityIndicator.center = view.center
             activityIndicator.hidesWhenStopped = true
+            activityIndicator.tag = activityIndicatorTag
 
-            Self.activityIndicator = activityIndicator
             view.addSubview(activityIndicator)
-        }
-
-        if let activityIndicator = Self.activityIndicator {
             view.bringSubviewToFront(activityIndicator)
             activityIndicator.startAnimating()
         }
     }
 
     func stopAnimating() {
-        if let activityIndicator = Self.activityIndicator {
+        if let activityIndicator = view.viewWithTag(activityIndicatorTag) as? UIActivityIndicatorView {
             activityIndicator.stopAnimating()
             activityIndicator.removeFromSuperview()
-            Self.activityIndicator = nil
         }
     }
 }

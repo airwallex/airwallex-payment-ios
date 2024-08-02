@@ -45,7 +45,7 @@ class UIViewControllerUtilsTests: XCTestCase {
         viewController.startAnimating()
 
         // Assert
-        guard let activityIndicator = UIViewController.activityIndicator else {
+        guard let activityIndicator = viewController.view.viewWithTag(96483) as? UIActivityIndicatorView else {
             XCTFail("Activity indicator should be created")
             return
         }
@@ -63,13 +63,8 @@ class UIViewControllerUtilsTests: XCTestCase {
         viewController.stopAnimating()
 
         // Assert
-        guard let activityIndicator = UIViewController.activityIndicator else {
-            XCTAssertNil(UIViewController.activityIndicator)
-            return
-        }
-
-        XCTAssertFalse(activityIndicator.isAnimating)
-        XCTAssertFalse(viewController.view.subviews.contains(activityIndicator))
+        let activityIndicator = viewController.view.viewWithTag(96483) as? UIActivityIndicatorView
+        XCTAssertNil(activityIndicator)
     }
 
     func testDismissKeyboard() {

@@ -38,6 +38,7 @@ SPEC CHECKSUMS:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   Airwallex: e6672b92efb2fec2deb7bdf7a461cf030b6501af
 =======
   Airwallex: 63838de2f637fac69059b498837f8a0d4a944550
@@ -48,6 +49,9 @@ SPEC CHECKSUMS:
 =======
   Airwallex: 91e516fb745346afecb987b6a7abf817c21f7dc2
 >>>>>>> 25f9f61 (feat: update country list view to swift)
+=======
+  Airwallex: 8156dbc7f7dbd33bf3c7747de3f0206af58ae0a6
+>>>>>>> 642acb1 (chore: extension NSError to make our errors more consistent)
   OCMock: 9491e4bec59e0b267d52a9184ff5605995e74be8
   WechatOpenSDK: 2f0ae448c7525cb5c27db5f7aa0f568de0988fa4
 

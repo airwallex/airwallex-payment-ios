@@ -20,9 +20,6 @@ public class AWXCardViewModel: NSObject {
     }
 
     public let pageName: String = "card_payment_view"
-    public var additionalInfo: [String: Any] {
-        ["supportedSchemes": supportedCardSchemes.map { $0.name }]
-    }
 
     public var isReusingShippingAsBillingInformation: Bool = false
     public var isBillingInformationRequired: Bool {
@@ -55,14 +52,7 @@ public class AWXCardViewModel: NSObject {
         throws
     {
         if reusesShippingAsBillingInformation && session?.billing == nil {
-            throw NSError(
-                domain: "MyDomain", code: 1,
-                userInfo: [
-                    NSLocalizedDescriptionKey: NSLocalizedString(
-                        "No shipping address configured.", comment: ""
-                    ),
-                ]
-            )
+            throw NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("No shipping address configured.", comment: ""))
         } else {
             isReusingShippingAsBillingInformation = reusesShippingAsBillingInformation
         }
@@ -185,41 +175,25 @@ public class AWXCardViewModel: NSObject {
     ) throws {
         var validatedBilling: AWXPlaceDetails?
         if isBillingInformationRequired, placeDetails == nil {
-            throw NSError(
-                domain: "MyDomain", code: 1,
-                userInfo: [
-                    NSLocalizedDescriptionKey: NSLocalizedString("No billing address provided.", comment: ""),
-                ]
-            )
+            throw NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("No billing address provided.", comment: ""))
         } else if isBillingInformationRequired, let placeDetails = placeDetails {
             var billingValidationError: String?
             validatedBilling = validatedBillingDetails(placeDetails, error: &billingValidationError)
             if validatedBilling == nil {
-                throw NSError(
-                    domain: "MyDomain", code: 1,
-                    userInfo: [NSLocalizedDescriptionKey: billingValidationError ?? ""]
-                )
+                throw NSError.errorForAirwallexSDK(with: -1, localizedDescription: billingValidationError ?? "")
             }
         }
 
         var cardValidationError: String?
         let validatedCard = validatedCardDetails(card, error: &cardValidationError)
         if validatedCard == nil {
-            throw NSError(
-                domain: "MyDomain", code: 1,
-                userInfo: [NSLocalizedDescriptionKey: cardValidationError ?? ""]
-            )
+            throw NSError.errorForAirwallexSDK(with: -1, localizedDescription: cardValidationError ?? "")
         }
 
         if let vCard = validatedCard {
             provider.confirmPaymentIntent(with: vCard, billing: validatedBilling, saveCard: storeCard)
         } else {
-            throw NSError(
-                domain: "MyDomain", code: 1,
-                userInfo: [
-                    NSLocalizedDescriptionKey: NSLocalizedString("Invalid card or billing.", comment: ""),
-                ]
-            )
+            throw NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("Invalid card or billing.", comment: ""))
         }
     }
 
