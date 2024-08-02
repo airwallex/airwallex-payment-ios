@@ -66,14 +66,14 @@ public class AWXPaymentMethod: NSObject, Codable {
 
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(type, forKey: .type)
-        try container.encode(billing, forKey: .billing)
-        try container.encode(card, forKey: .card)
-        try container.encode(customerId, forKey: .customerId)
         var dynamicContainer = encoder.container(keyedBy: DynamicCodingKeys.self)
         if let type = type, let key = DynamicCodingKeys(stringValue: type) {
             try dynamicContainer.encode(additionalParams, forKey: key)
         }
+        try container.encode(type, forKey: .type)
+        try container.encode(billing, forKey: .billing)
+        try container.encode(card, forKey: .card)
+        try container.encode(customerId, forKey: .customerId)
     }
 }
 

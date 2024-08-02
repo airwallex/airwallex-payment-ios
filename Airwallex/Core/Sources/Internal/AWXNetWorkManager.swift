@@ -128,6 +128,16 @@ public class AWXNetWorkManager: NSObject {
                 return
             }
 
+            if let error = T.parseError(data) {
+                DispatchQueue.main.async {
+                    completion(.failure(NSError(
+                        domain: AWXSDKErrorDomain, code: -1,
+                        userInfo: [NSLocalizedDescriptionKey: error.message]
+                    )))
+                }
+                return
+            }
+
             if let decodedData = T.from(data) {
                 DispatchQueue.main.async {
                     completion(.success(decodedData))
