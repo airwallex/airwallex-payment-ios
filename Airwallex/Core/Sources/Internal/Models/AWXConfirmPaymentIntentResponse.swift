@@ -61,9 +61,13 @@ public class AWXConfirmPaymentIntentResponse: AWXResponse, Codable {
         }
     }
 
+    override public class func parse(_ data: Data) -> AWXResponse {
+        return AWXConfirmPaymentIntentResponse.from(data) ?? AWXResponse()
+    }
+
     override public static func parseError(_ data: Data) -> AWXAPIErrorResponse? {
         do {
-            if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+            if let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
                 as? [String: Any]
             {
                 let message = json["message"] as? String ?? ""

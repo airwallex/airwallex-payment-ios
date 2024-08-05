@@ -255,6 +255,7 @@ static BOOL _localLogFileEnabled = NO;
                                                                          if (data && request.responseClass != nil) {
                                                                              dispatch_async(dispatch_get_main_queue(), ^{
                                                                                  if (result.statusCode >= 200 && result.statusCode < 300 && [request.responseClass respondsToSelector:@selector(parse:)]) {
+                                                                                     NSLog(@"%@", request.responseClass);
                                                                                      id response = [request.responseClass performSelector:@selector(parse:) withObject:data];
                                                                                      handler(response, error);
                                                                                  } else {

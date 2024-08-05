@@ -7,7 +7,6 @@
 //
 
 #import "AWXUIContext.h"
-#import "AWXCardProvider.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPaymentMethod.h"

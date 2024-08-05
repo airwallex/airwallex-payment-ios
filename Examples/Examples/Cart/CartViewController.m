@@ -373,7 +373,7 @@
     context.delegate = self;
     context.session = session;
     [context presentEntirePaymentFlowFrom:self];
-    // can also show card page directly.
+    // You can also show card page directly.
     //    NSArray *cardSchemes = @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex), @(AWXBrandTypeUnionPay), @(AWXBrandTypeJCB)];
     //    [context presentCardPaymentFlowFrom:self cardSchemes:cardSchemes];
 }

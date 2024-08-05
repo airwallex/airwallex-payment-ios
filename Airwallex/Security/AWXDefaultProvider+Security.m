@@ -21,8 +21,7 @@
                     completion:(void (^)(AWXDevice *_Nonnull))completion {
     [[AWXSecurityService sharedService] doProfile:sessionId
                                        completion:^(NSString *_Nullable sessionId) {
-                                           AWXDevice *device = [AWXDevice new];
-                                           device.deviceId = sessionId;
+                                           AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:sessionId];
                                            completion(device);
                                        }];
 }

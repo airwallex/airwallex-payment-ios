@@ -16,7 +16,7 @@
 @implementation AWXDefaultActionProvider
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
-    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Unknown next action type.", nil)]];
+    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorForAirwallexSDKWith:NSLocalizedString(@"Unknown next action type.", nil)]];
 }
 
 @end

@@ -10,7 +10,12 @@ import Foundation
 
 @objc
 public extension NSError {
-    static func errorForAirwallexSDK(with code: Int, localizedDescription: String) -> NSError {
+    // for OC convenient usage.
+    static func errorForAirwallexSDK(with localizedDescription: String) -> NSError {
+        return errorForAirwallexSDK(with: -1, localizedDescription: localizedDescription)
+    }
+
+    static func errorForAirwallexSDK(with code: Int = -1, localizedDescription: String) -> NSError {
         return NSError(domain: AWXSDKErrorDomain, code: code, userInfo: [
             NSLocalizedDescriptionKey: localizedDescription,
         ])

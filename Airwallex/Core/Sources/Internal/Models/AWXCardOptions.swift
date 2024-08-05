@@ -21,4 +21,9 @@ public class AWXCardOptions: NSObject, Codable {
      ThreeDs object.
      */
     public var threeDs: AWXThreeDs?
+
+    enum CodingKeys: String, CodingKey {
+        case autoCapture = "auto_capture"
+        case threeDs = "three_ds"
+    }
 }

@@ -20,7 +20,7 @@ public class AWXPaymentMethod: NSObject, Codable {
     /**
      Unique identifier for the payment method.
      */
-    public var Id: String?
+    public private(set) var Id: String?
 
     /**
      Billing object.

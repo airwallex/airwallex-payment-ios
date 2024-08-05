@@ -39,7 +39,6 @@ public class AWXNetWorkManager: NSObject {
         "User-Agent": "Airwallex-iOS-SDK",
     ]
 
-    override private init() {}
     func performRequest<T: Codable>(
         urlString: String,
         method: HTTPMethod = .GET,
@@ -61,7 +60,7 @@ public class AWXNetWorkManager: NSObject {
                 DispatchQueue.main.async {
                     completion(
                         .failure(
-                            NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("badURL.Please check your URL.", comment: "badURL.Please check your URL."))))
+                            NSError.errorForAirwallexSDK(with: NSLocalizedString("badURL.Please check your URL.", comment: "badURL.Please check your URL."))))
                 }
                 return
             }
@@ -71,7 +70,7 @@ public class AWXNetWorkManager: NSObject {
                 DispatchQueue.main.async {
                     completion(
                         .failure(
-                            NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("badURL.Please check your URL.", comment: "badURL.Please check your URL."))))
+                            NSError.errorForAirwallexSDK(with: NSLocalizedString("badURL.Please check your URL.", comment: "badURL.Please check your URL."))))
                 }
                 return
             }
@@ -82,7 +81,7 @@ public class AWXNetWorkManager: NSObject {
                 DispatchQueue.main.async {
                     completion(
                         .failure(
-                            NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("badURL.Please check your URL.", comment: "badURL.Please check your URL."))))
+                            NSError.errorForAirwallexSDK(with: NSLocalizedString("badURL.Please check your URL.", comment: "badURL.Please check your URL."))))
                 }
                 return
             }
@@ -111,7 +110,7 @@ public class AWXNetWorkManager: NSObject {
                 DispatchQueue.main.async {
                     completion(
                         .failure(
-                            NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("No data.", comment: "No data."))))
+                            NSError.errorForAirwallexSDK(with: NSLocalizedString("No data.", comment: "No data."))))
                 }
                 return
             }
@@ -133,7 +132,7 @@ public class AWXNetWorkManager: NSObject {
                 DispatchQueue.main.async {
                     completion(
                         .failure(
-                            NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("Fail to decode data.", comment: "Fail to decode data."))))
+                            NSError.errorForAirwallexSDK(with: NSLocalizedString("Fail to decode data.", comment: "Fail to decode data."))))
                 }
             }
         }

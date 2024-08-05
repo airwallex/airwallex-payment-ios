@@ -32,7 +32,7 @@
                                              [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusInProgress];
                                              [[AWXAnalyticsLogger shared] logPageViewWithName:@"payment_redirect" additionalInfo:@{@"url": url.absoluteString}];
                                          } else {
-                                             NSError *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:[NSString stringWithFormat:NSLocalizedString(@"Redirect to app failed. %@", nil), url.absoluteString]];
+                                             NSError *error = [NSError errorForAirwallexSDKWith:[NSString stringWithFormat:NSLocalizedString(@"Redirect to app failed. %@", nil), url.absoluteString]];
                                              [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
                                              [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.description];
                                              NSDictionary *info = @{NSLocalizedDescriptionKey: NSLocalizedString(@"Redirect to app failed.", nil), NSURLErrorKey: url.absoluteString};

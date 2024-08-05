@@ -225,7 +225,7 @@ NSString *const kMockKey = @"MOCK";
 - (void)testActionLoggingWithPaymentMethod {
     AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
     AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
-    paymentMethod.name = @"card";
+    [paymentMethod setValue:@"card" forKey:@"name"];
     AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:spy session:[AWXOneOffSession new] paymentMethodType:paymentMethod];
 
     [provider completeWithResponse:[AWXConfirmPaymentIntentResponse new] error:nil];

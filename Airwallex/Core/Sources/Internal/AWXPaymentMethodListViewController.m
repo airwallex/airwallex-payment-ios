@@ -10,7 +10,6 @@
 #import "AWXAPIClient.h"
 #import "AWXAnalyticsLogger.h"
 #import "AWXCardImageView.h"
-#import "AWXCardValidator.h"
 #import "AWXConstants.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXDefaultProvider.h"
@@ -222,7 +221,7 @@
     switch (indexPath.section) {
     case 0: {
         AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
-        AWXBrand *cardBrand = [[AWXCardValidator sharedCardValidator] brandForCardName:paymentConsent.paymentMethod.card.brand];
+        AWXBrand *cardBrand = [[AWXCardValidator shared] brandForCardName:paymentConsent.paymentMethod.card.brand];
         cell.logoImageView.image = [[AWXCardImageView alloc] initWithCardBrand:cardBrand.type].image;
         cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", paymentConsent.paymentMethod.card.brand.capitalizedString, paymentConsent.paymentMethod.card.last4];
         break;

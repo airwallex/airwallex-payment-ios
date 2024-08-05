@@ -13,11 +13,11 @@ import XCTest
 class AWXPaymentMethodOptionsTests: XCTestCase {
     func testDecodeFromJSON() {
         let json: [String: Any] = [
-            "cardOptions": [
-                "autoCapture": true,
-                "threeDs": [
+            "card": [
+                "auto_capture": true,
+                "three_ds": [
                     "paRes": "somePaRes",
-                    "returnURL": "https://example.com/return",
+                    "return_url": "https://example.com/return",
                     "attemptId": "attempt123",
                     "deviceDataCollectionRes": "deviceData",
                     "dsTransactionId": "dsTransaction123",
@@ -40,11 +40,11 @@ class AWXPaymentMethodOptionsTests: XCTestCase {
 
     func testEncodeToJSON() {
         let threeDs = AWXThreeDs()
-        threeDs.paRes = "somePaRes"
         threeDs.returnURL = "https://example.com/return"
-        threeDs.attemptId = "attempt123"
-        threeDs.deviceDataCollectionRes = "deviceData"
-        threeDs.dsTransactionId = "dsTransaction123"
+        threeDs.setValue("somePaRes", forKey: "paRes")
+        threeDs.setValue("attempt123", forKey: "attemptId")
+        threeDs.setValue("deviceData", forKey: "deviceDataCollectionRes")
+        threeDs.setValue("dsTransaction123", forKey: "dsTransactionId")
 
         let cardOptions = AWXCardOptions()
         cardOptions.autoCapture = true
@@ -56,11 +56,11 @@ class AWXPaymentMethodOptionsTests: XCTestCase {
         let json = paymentOptions.encodeToJSON()
 
         let expectedJson: [String: Any] = [
-            "cardOptions": [
-                "autoCapture": true,
-                "threeDs": [
+            "card": [
+                "auto_capture": true,
+                "three_ds": [
                     "paRes": "somePaRes",
-                    "returnURL": "https://example.com/return",
+                    "return_url": "https://example.com/return",
                     "attemptId": "attempt123",
                     "deviceDataCollectionRes": "deviceData",
                     "dsTransactionId": "dsTransaction123",

@@ -40,47 +40,47 @@ public class AWXCard: NSObject, Codable {
     /**
      Bank identify number of this card.
      */
-    public var bin: String?
+    public private(set) var bin: String?
 
     /**
      Last four digits of the card number.
      */
-    public var last4: String?
+    public private(set) var last4: String?
 
     /**
      Brand of the card.
      */
-    public var brand: String?
+    public private(set) var brand: String?
 
     /**
      Country code of the card.
      */
-    public var country: String?
+    public private(set) var country: String?
 
     /**
      Funding type of the card.
      */
-    public var funding: String?
+    public private(set) var funding: String?
 
     /**
      Fingerprint of the card.
      */
-    public var fingerprint: String?
+    public private(set) var fingerprint: String?
 
     /**
      Whether CVC pass the check.
      */
-    public var cvcCheck: String?
+    public private(set) var cvcCheck: String?
 
     /**
      Whether address pass the check.
      */
-    public var avsCheck: String?
+    public private(set) var avsCheck: String?
 
     /**
      Type of the number. One of PAN, EXTERNAL_NETWORK_TOKEN, AIRWALLEX_NETWORK_TOKEN.
      */
-    public var numberType: String?
+    public private(set) var numberType: String?
 
     enum CodingKeys: String, CodingKey {
         case number
@@ -128,7 +128,7 @@ public class AWXCard: NSObject, Codable {
 
 @objc public extension AWXCard {
     func validate() -> String? {
-        if number == nil || !AWXCardValidator.shared().isValidCardLength(number ?? "") {
+        if number == nil || !AWXCardValidator.shared.isValidCardLength(number ?? "") {
             return "Invalid card number"
         }
         if name == nil || name?.count == 0 {

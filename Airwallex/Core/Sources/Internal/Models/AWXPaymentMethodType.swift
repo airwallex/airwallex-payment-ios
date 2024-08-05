@@ -15,37 +15,37 @@ public class AWXPaymentMethodType: NSObject, Codable {
     /**
      name of the payment method.
      */
-    public var name: String?
+    public private(set) var name: String?
 
     /**
      display name of the payment method.
      */
-    public var displayName: String?
+    public private(set) var displayName: String?
 
     /**
      transaction_mode of the payment method. One of oneoff, recurring.
      */
-    public var transactionMode: String?
+    public private(set) var transactionMode: String?
 
     /**
      flows of the payment method.
      */
-    public var flows: [String]?
+    public private(set) var flows: [String]?
 
     /**
      transaction_currencies of the payment method.  "*", "AUD", "CHF", "HKD", "SGD", "JPY", "EUR", "GBP", "USD", "CAD", "NZD", "CNY"
      */
-    public var transactionCurrencies: [String]?
+    public private(set) var transactionCurrencies: [String]?
 
     /**
      Whether payment method is active.
      */
-    public var active: Bool = false
+    public private(set) var active: Bool = false
 
     /**
      Resources
      */
-    public var resources: AWXResources?
+    public private(set) var resources: AWXResources?
 
     /**
      Whether it has schema
@@ -57,7 +57,7 @@ public class AWXPaymentMethodType: NSObject, Codable {
     /**
      Supported card schemes
      */
-    public var cardSchemes: [AWXCardScheme]?
+    public private(set) var cardSchemes: [AWXCardScheme]?
 
     enum CodingKeys: String, CodingKey {
         case name

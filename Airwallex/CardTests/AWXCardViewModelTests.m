@@ -8,7 +8,6 @@
 
 #import "AWX3DSActionProvider.h"
 #import "AWXCardProvider.h"
-#import "AWXCardValidator.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSession.h"
@@ -85,8 +84,7 @@
 
 - (void)testMakeBilling {
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
-    AWXCountry *country = [AWXCountry new];
-    country.countryCode = @"AU";
+    AWXCountry *country = [[AWXCountry alloc] initWithCountryCode:@"AU" countryName:@"AU"];
     viewModel.selectedCountry = country;
     AWXPlaceDetails *billing = [viewModel makeBillingWithFirstName:@"John"
                                                           lastName:@"Citizen"
@@ -127,8 +125,7 @@
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     [viewModel setReusesShippingAsBillingInformation:YES error:NULL];
 
-    AWXCountry *country = [AWXCountry new];
-    country.countryCode = @"AU";
+    AWXCountry *country = [[AWXCountry alloc] initWithCountryCode:@"AU" countryName:@"AU"];
     viewModel.selectedCountry = country;
     AWXPlaceDetails *inputBilling = [viewModel makeBillingWithFirstName:@"John"
                                                                lastName:@"Citizen"
@@ -183,7 +180,7 @@
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.countryCode = @"AU";
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
-    AWXCardProvider *provider = [viewModel preparedProviderWithDelegate:nil];
+    AWXCardProvider *provider = [viewModel preparedProviderWithDelegate];
     XCTAssertEqual(provider.session.countryCode, @"AU");
 }
 
@@ -191,7 +188,7 @@
     NSError *error;
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
 
-    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate:nil]
+    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate]
                                   billing:[AWXPlaceDetails new]
                                      card:[AWXCard new]
                    shouldStoreCardDetails:true
@@ -204,7 +201,7 @@
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.isBillingInformationRequired = YES;
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
-    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate:nil]
+    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate]
                                   billing:nil
                                      card:[AWXCard new]
                    shouldStoreCardDetails:true
@@ -215,8 +212,7 @@
 - (void)testConfirmPaymentWithoutCardDetails {
     NSError *error;
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
-    AWXCountry *country = [AWXCountry new];
-    country.countryCode = @"AU";
+    AWXCountry *country = [[AWXCountry alloc] initWithCountryCode:@"AU" countryName:@"AU"];
     viewModel.selectedCountry = country;
     AWXPlaceDetails *billing = [viewModel makeBillingWithFirstName:@"John"
                                                           lastName:@"Citizen"
@@ -226,7 +222,7 @@
                                                               city:@"Melbourne"
                                                             street:@"Collins Street"
                                                           postcode:@"3000"];
-    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate:nil]
+    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate]
                                   billing:billing
                                      card:[AWXCard new]
                    shouldStoreCardDetails:true
@@ -257,8 +253,7 @@
 - (void)testConfirmPaymentWithBillingAndCard {
     NSError *error;
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
-    AWXCountry *country = [AWXCountry new];
-    country.countryCode = @"AU";
+    AWXCountry *country = [[AWXCountry alloc] initWithCountryCode:@"AU" countryName:@"AU"];
     viewModel.selectedCountry = country;
     AWXPlaceDetails *billing = [viewModel makeBillingWithFirstName:@"John"
                                                           lastName:@"Citizen"
@@ -296,18 +291,6 @@
 
     OCMVerify(times(1), [cardProviderMock confirmPaymentIntentWithCard:[OCMArg isNotNil] billing:[OCMArg isNotNil] saveCard:true]);
     OCMVerifyAll(cardProviderMock);
-}
-
-- (void)testMakeDisplayedCardBrands {
-    AWXCardViewModel *viewModel = [self mockOneOffViewModelWithCardSchemes];
-    NSArray *brands = [viewModel makeDisplayedCardBrands];
-    XCTAssertEqual(brands.count, 6);
-    XCTAssertEqual([brands[0] intValue], AWXBrandTypeVisa);
-    XCTAssertEqual([brands[1] intValue], AWXBrandTypeMastercard);
-    XCTAssertEqual([brands[2] intValue], AWXBrandTypeUnionPay);
-    XCTAssertEqual([brands[3] intValue], AWXBrandTypeJCB);
-    XCTAssertEqual([brands[4] intValue], AWXBrandTypeDinersClub);
-    XCTAssertEqual([brands[5] intValue], AWXBrandTypeDiscover);
 }
 
 - (void)testValidationMessageFromCardNumber {

@@ -7,7 +7,6 @@
 //
 
 #import "AWXCardProvider.h"
-#import "AWXCardValidator.h"
 #import "AWXDefaultProvider+Security.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentMethod.h"
@@ -51,7 +50,7 @@
 }
 
 - (void)testCanHandleSessionWhenCardSchemesIsEmpty {
-    _paymentMethod.cardSchemes = [NSArray new];
+    [_paymentMethod setValue:[NSArray new] forKey:@"cardSchemes"];
     XCTAssertFalse([AWXCardProvider canHandleSession:_session paymentMethod:_paymentMethod]);
 }
 
@@ -117,12 +116,12 @@
 - (void)testCanHandleSessionWhenCardSchemesIsNotEmpty {
     AWXCardScheme *amexScheme = [AWXCardScheme new];
     amexScheme.name = @"amex";
-    _paymentMethod.cardSchemes = @[amexScheme];
+    [_paymentMethod setValue:@[amexScheme] forKey:@"cardSchemes"];
     XCTAssertTrue([AWXCardProvider canHandleSession:_session paymentMethod:_paymentMethod]);
 }
 
 - (void)testConfirmPaymentIntentWithPaymentConsentId {
-    AWXDevice *device = [AWXDevice new];
+    AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:nil];
     AWXAPIClient *client = [self mockAPIClient];
 
     AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
@@ -163,7 +162,7 @@
 }
 
 - (void)testConfirmPaymentIntentWithCard {
-    AWXDevice *device = [AWXDevice new];
+    AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:nil];
 
     id apiClientMock = OCMClassMock([AWXAPIClient class]);
     OCMStub([apiClientMock initWithConfiguration:[OCMArg any]]).andReturn(apiClientMock);
@@ -190,7 +189,7 @@
 }
 
 - (void)testConfirmPaymentIntentWithCardWithError {
-    AWXDevice *device = [AWXDevice new];
+    AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:nil];
 
     id apiClientMock = OCMClassMock([AWXAPIClient class]);
     OCMStub([apiClientMock initWithConfiguration:[OCMArg any]]).andReturn(apiClientMock);

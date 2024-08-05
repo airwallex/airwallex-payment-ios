@@ -39,17 +39,18 @@
     }];
 
     AWXPaymentMethodType *mismatchTransactionMode = [AWXPaymentMethodType new];
-    mismatchTransactionMode.name = @"mismatchTransactionMode";
-    mismatchTransactionMode.transactionMode = @"anotherTransactionMode";
+    [mismatchTransactionMode setValue:@"mismatchTransactionMode" forKey:@"name"];
+    [mismatchTransactionMode setValue:@"anotherTransactionMode" forKey:@"transactionMode"];
 
     AWXPaymentMethodType *unsupportedMethod = [AWXPaymentMethodType new];
-    unsupportedMethod.name = @"googlepay";
-    unsupportedMethod.displayName = @"Google Pay";
-    unsupportedMethod.transactionMode = @"transactionMode";
+
+    [unsupportedMethod setValue:@"googlepay" forKey:@"name"];
+    [unsupportedMethod setValue:@"Google Pay" forKey:@"displayName"];
+    [unsupportedMethod setValue:@"transactionMode" forKey:@"transactionMode"];
 
     AWXPaymentMethodType *methodWithoutDisplayName = [AWXPaymentMethodType new];
-    methodWithoutDisplayName.name = @"card";
-    methodWithoutDisplayName.transactionMode = @"transactionMode";
+    [methodWithoutDisplayName setValue:@"card" forKey:@"name"];
+    [methodWithoutDisplayName setValue:@"transactionMode" forKey:@"transactionMode"];
 
     NSArray<AWXPaymentMethodType *> *methodTypes = @[
         validMethod,
@@ -74,8 +75,8 @@
     OCMStub([classMock canHandleSession:[OCMArg any] paymentMethod:[OCMArg any]]).andReturn(NO);
 
     AWXPaymentMethodType *validMethod = [AWXPaymentMethodType new];
-    validMethod.name = @"validMethod";
-    validMethod.transactionMode = @"transactionMode";
+    [validMethod setValue:@"validMethod" forKey:@"name"];
+    [validMethod setValue:@"transactionMode" forKey:@"transactionMode"];
 
     NSArray<AWXPaymentMethodType *> *methodTypes = @[
         validMethod

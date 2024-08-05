@@ -18,7 +18,6 @@ FOUNDATION_EXPORT const unsigned char CoreVersionString[];
 #import "AWXAPIResponse.h"
 #import "AWXAnalyticsLogger.h"
 #import "AWXApplePayOptions.h"
-#import "AWXCardValidator.h"
 #import "AWXCodable.h"
 #import "AWXConstants.h"
 #import "AWXDefaultActionProvider.h"

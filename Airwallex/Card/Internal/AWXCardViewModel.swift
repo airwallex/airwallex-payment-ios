@@ -8,9 +8,21 @@
 
 import Foundation
 
+@objc public protocol AWXCardviewModelDelegate {
+    @objc optional func startLoading()
+    @objc optional func stopLoading()
+    @objc func shouldDismiss(completeStatus status: AirwallexPaymentStatus, error: (any Error)?)
+    @objc optional func didCompleteWithPaymentConsentId(_ Id: String)
+    @objc optional func shouldShowError(_ error: String)
+    @objc func shouldPresent(_ controller: UIViewController?, forceToDismiss: Bool, withAnimation: Bool)
+    @objc func shouldInsert(_ controller: UIViewController?)
+}
+
 @objcMembers
 @objc
 public class AWXCardViewModel: NSObject {
+    public weak var delegate: AWXCardviewModelDelegate?
+
     public var ctaTitle: String {
         if session is AWXRecurringSession {
             return NSLocalizedString("Confirm", comment: "Confirm button title")
@@ -35,9 +47,10 @@ public class AWXCardViewModel: NSObject {
     }
 
     public var selectedCountry: AWXCountry?
+    public var provider: AWXDefaultProvider?
 
-    var session: AWXSession?
-    var supportedCardSchemes: [AWXCardScheme] = []
+    public var session: AWXSession?
+    public var supportedCardSchemes: [AWXCardScheme] = []
 
     public init(session: AWXSession, supportedCardSchemes: [AWXCardScheme]) {
         super.init()
@@ -52,7 +65,7 @@ public class AWXCardViewModel: NSObject {
         throws
     {
         if reusesShippingAsBillingInformation && session?.billing == nil {
-            throw NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("No shipping address configured.", comment: ""))
+            throw NSError.errorForAirwallexSDK(with: NSLocalizedString("No shipping address configured.", comment: ""))
         } else {
             isReusingShippingAsBillingInformation = reusesShippingAsBillingInformation
         }
@@ -106,14 +119,13 @@ public class AWXCardViewModel: NSObject {
         return card
     }
 
-    public func makeDisplayedCardBrands() -> [Any] {
-        var cardBrands = [Any]()
-        for brand in AWXCardSupportedBrands() {
-            if let brandInt = brand as? Int {
-                for cardScheme in supportedCardSchemes {
-                    if cardBrandFromCardScheme(cardScheme).rawValue == brandInt {
-                        cardBrands.append(brand)
-                    }
+    public func makeDisplayedCardBrands() -> [Int] {
+        var cardBrands = [Int]()
+        for brand in AWXBrandType.allCases {
+            for cardScheme in supportedCardSchemes {
+                if cardBrandFromCardScheme(cardScheme).rawValue == brand.rawValue {
+                    cardBrands.append(brand.rawValue)
+                    break
                 }
             }
         }
@@ -142,8 +154,8 @@ public class AWXCardViewModel: NSObject {
 
     public func validationMessageFromCardNumber(_ cardNumber: String) -> String? {
         if !cardNumber.isEmpty {
-            if AWXCardValidator.shared().isValidCardLength(cardNumber) {
-                let cardName = AWXCardValidator.shared().brand(forCardNumber: cardNumber)?.name ?? ""
+            if AWXCardValidator.shared.isValidCardLength(cardNumber) {
+                let cardName = AWXCardValidator.shared.brandForCardNumber(cardNumber)?.name ?? ""
                 for cardScheme in supportedCardSchemes {
                     if cardScheme.name == cardName.lowercased() {
                         return nil
@@ -156,8 +168,10 @@ public class AWXCardViewModel: NSObject {
         return NSLocalizedString("Card number is required", comment: "")
     }
 
-    public func preparedProviderWithDelegate(_ delegate: AWXProviderDelegate) -> AWXCardProvider {
-        AWXCardProvider(delegate: delegate, session: session ?? AWXSession())
+    public func preparedProviderWithDelegate() -> AWXCardProvider {
+        let provider = AWXCardProvider(delegate: self, session: session ?? AWXSession())
+        self.provider = provider
+        return provider
     }
 
     public func actionProviderForNextAction(
@@ -175,25 +189,25 @@ public class AWXCardViewModel: NSObject {
     ) throws {
         var validatedBilling: AWXPlaceDetails?
         if isBillingInformationRequired, placeDetails == nil {
-            throw NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("No billing address provided.", comment: ""))
+            throw NSError.errorForAirwallexSDK(with: NSLocalizedString("No billing address provided.", comment: ""))
         } else if isBillingInformationRequired, let placeDetails = placeDetails {
             var billingValidationError: String?
             validatedBilling = validatedBillingDetails(placeDetails, error: &billingValidationError)
             if validatedBilling == nil {
-                throw NSError.errorForAirwallexSDK(with: -1, localizedDescription: billingValidationError ?? "")
+                throw NSError.errorForAirwallexSDK(with: billingValidationError ?? "")
             }
         }
 
         var cardValidationError: String?
         let validatedCard = validatedCardDetails(card, error: &cardValidationError)
         if validatedCard == nil {
-            throw NSError.errorForAirwallexSDK(with: -1, localizedDescription: cardValidationError ?? "")
+            throw NSError.errorForAirwallexSDK(with: cardValidationError ?? "")
         }
 
         if let vCard = validatedCard {
             provider.confirmPaymentIntent(with: vCard, billing: validatedBilling, saveCard: storeCard)
         } else {
-            throw NSError.errorForAirwallexSDK(with: -1, localizedDescription: NSLocalizedString("Invalid card or billing.", comment: ""))
+            throw NSError.errorForAirwallexSDK(with: NSLocalizedString("Invalid card or billing.", comment: ""))
         }
     }
 
@@ -201,24 +215,82 @@ public class AWXCardViewModel: NSObject {
         session?.updateInitialPaymentIntentId(paymentIntentId)
     }
 
-    func cardBrandFromCardScheme(_ cardScheme: AWXCardScheme) -> AWXBrandType {
+    private func cardBrandFromCardScheme(_ cardScheme: AWXCardScheme) -> AWXBrandType {
         switch cardScheme.name {
         case "amex":
-            return AWXBrandTypeAmex
+            return AWXBrandType.amex
         case "mastercard":
-            return AWXBrandTypeMastercard
+            return AWXBrandType.mastercard
         case "visa":
-            return AWXBrandTypeVisa
+            return AWXBrandType.visa
         case "unionpay":
-            return AWXBrandTypeUnionPay
+            return AWXBrandType.unionPay
         case "jcb":
-            return AWXBrandTypeJCB
+            return AWXBrandType.JCB
         case "diners":
-            return AWXBrandTypeDinersClub
+            return AWXBrandType.dinersClub
         case "discover":
-            return AWXBrandTypeDiscover
+            return AWXBrandType.discover
         default:
-            return AWXBrandTypeUnknown
+            return AWXBrandType.unknown
         }
+    }
+}
+
+extension AWXCardViewModel: AWXProviderDelegate {
+    public func providerDidStartRequest(_: AWXDefaultProvider) {
+        logMessage("providerDidStartRequest:")
+        delegate?.startLoading?()
+    }
+
+    public func providerDidEndRequest(_: AWXDefaultProvider) {
+        logMessage("providerDidEndRequest:")
+        delegate?.stopLoading?()
+    }
+
+    public func provider(
+        _: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus,
+        error: (any Error)?
+    ) {
+        logMessage(
+            "provider:didCompleteWithStatus:error: \(status)  \(error?.localizedDescription ?? "")")
+
+        delegate?.shouldDismiss(completeStatus: status, error: error)
+    }
+
+    public func provider(_: AWXDefaultProvider, didCompleteWithPaymentConsentId Id: String) {
+        delegate?.didCompleteWithPaymentConsentId?(Id)
+    }
+
+    public func provider(
+        _: AWXDefaultProvider, didInitializePaymentIntentId paymentIntentId: String
+    ) {
+        logMessage("provider:didInitializePaymentIntentId:  \(paymentIntentId)")
+        updatePaymentIntentId(paymentIntentId)
+    }
+
+    public func provider(
+        _: AWXDefaultProvider, shouldHandle nextAction: AWXConfirmPaymentNextAction
+    ) {
+        logMessage(
+            "provider:shouldHandleNextAction:  type:\(nextAction.type), stage: \(nextAction.stage ?? "")")
+        let actionProvider = actionProviderForNextAction(nextAction, delegate: self)
+        if actionProvider == nil {
+            delegate?.shouldShowError?(NSLocalizedString("No provider matched the next action.", comment: ""))
+            return
+        }
+        actionProvider.handle(nextAction)
+        provider = actionProvider
+    }
+
+    public func provider(
+        _: AWXDefaultProvider, shouldPresent controller: UIViewController?,
+        forceToDismiss: Bool, withAnimation: Bool
+    ) {
+        delegate?.shouldPresent(controller, forceToDismiss: forceToDismiss, withAnimation: withAnimation)
+    }
+
+    public func provider(_: AWXDefaultProvider, shouldInsert controller: UIViewController?) {
+        delegate?.shouldInsert(controller)
     }
 }

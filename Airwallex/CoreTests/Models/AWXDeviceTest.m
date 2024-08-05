@@ -6,6 +6,7 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 #ifdef AirwallexSDK
 #import <Core/Core-Swift.h>
@@ -20,8 +21,7 @@
 @implementation AWXDeviceTest
 
 - (void)testEncoding {
-    AWXDevice *device = [AWXDevice new];
-    device.deviceId = @"abcd";
+    AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:@"abcd"];
     NSDictionary *encodedDevice = [device encodeToJSON];
     XCTAssertEqualObjects(encodedDevice[@"device_id"], @"abcd");
     XCTAssertNotNil(encodedDevice[@"mobile"]);

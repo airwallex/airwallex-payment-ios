@@ -60,7 +60,7 @@
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  if (self.webHandler) {
-                                     self.webHandler(nil, [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"User cancelled.", nil)]);
+                                     self.webHandler(nil, [NSError errorForAirwallexSDKWith:NSLocalizedString(@"User cancelled.", nil)]);
                                  }
                              }];
 }

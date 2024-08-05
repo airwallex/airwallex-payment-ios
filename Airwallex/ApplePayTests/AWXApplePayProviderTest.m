@@ -38,8 +38,7 @@
 
 - (void)setUp {
     [super setUp];
-    AWXDevice *device = [AWXDevice new];
-    device.deviceId = @"abcd";
+    AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:@"abcd"];
     self.device = device;
 
     id mockLogger = OCMClassMock([AWXAnalyticsLogger class]);

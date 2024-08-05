@@ -79,7 +79,7 @@
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  if (self.webHandler) {
-                                     self.webHandler(nil, [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"User cancelled.", nil)]);
+                                     self.webHandler(nil, [NSError errorForAirwallexSDKWith:NSLocalizedString(@"User cancelled.", nil)]);
                                  }
                              }];
 }
@@ -108,11 +108,11 @@
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
     if (response.statusCode == 400) {
         if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
-            self.webHandler(nil, [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Unknown issue.", nil)]);
+            self.webHandler(nil, [NSError errorForAirwallexSDKWith:NSLocalizedString(@"Unknown issue.", nil)]);
         } else {
             [self dismissViewControllerAnimated:YES
                                      completion:^{
-                                         self.webHandler(nil, [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Unknown issue.", nil)]);
+                                         self.webHandler(nil, [NSError errorForAirwallexSDKWith:NSLocalizedString(@"Unknown issue.", nil)]);
                                      }];
         }
     }

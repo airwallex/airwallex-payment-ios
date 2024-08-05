@@ -54,7 +54,7 @@ typedef enum {
         _isApplePayLaunchedDirectly = true;
         [self handleFlow];
     } else {
-        NSError *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:errorMessage];
+        NSError *error = [NSError errorForAirwallexSDKWith:errorMessage];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }
@@ -71,7 +71,7 @@ typedef enum {
         self.paymentState = NotPresented;
         [self handleFlowForOneOffSession:(AWXOneOffSession *)self.session];
     } else {
-        NSError *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Unsupported session type.", nil)];
+        NSError *error = [NSError errorForAirwallexSDKWith:NSLocalizedString(@"Unsupported session type.", nil)];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }
@@ -207,7 +207,7 @@ typedef enum {
 
     if (!controller) {
         NSString *description = NSLocalizedString(@"Failed to initialize Apple Pay Controller.", nil);
-        NSError *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:description];
+        NSError *error = [NSError errorForAirwallexSDKWith:description];
         [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
         [self log:@"%@", description];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
@@ -272,7 +272,7 @@ typedef enum {
 - (void)handlePresentationFail {
     if (!_didHandlePresentationFail) {
         self.didHandlePresentationFail = YES;
-        NSError *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)];
+        NSError *error = [NSError errorForAirwallexSDKWith:NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)];
         [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
         [self log:@"Failed to present Apple Pay Controller."];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];

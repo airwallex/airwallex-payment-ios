@@ -10,6 +10,11 @@
 #import "AWXCardImageView.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXFloatingCardTextField ()
 
@@ -90,7 +95,7 @@
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     text.length > 0 ? [self activateAnimated:YES] : [self deactivateAnimated:YES];
 
-    if (text.length > [[AWXCardValidator sharedCardValidator] maxLengthForCardNumber:text]) {
+    if (text.length > [[AWXCardValidator shared] maxLengthForCardNumber:text]) {
         return NO;
     }
 
@@ -121,7 +126,7 @@
 - (AWXBrandType)typeOfNumber:(NSString *)number {
     AWXBrandType type = AWXBrandTypeUnknown;
     if (number.length != 0) {
-        AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:number];
+        AWXBrand *brand = [[AWXCardValidator shared] brandForCardNumber:number];
         if (brand) {
             type = brand.type;
         }

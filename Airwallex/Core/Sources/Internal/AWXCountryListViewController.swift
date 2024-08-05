@@ -19,14 +19,14 @@ import Foundation
 public class AWXCountryListViewController: UIViewController {
     public weak var delegate: AWXCountryListViewControllerDelegate?
 
-    lazy var searchBar: UISearchBar = {
+    private lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
         sb.delegate = self
         sb.translatesAutoresizingMaskIntoConstraints = false
         return sb
     }()
 
-    lazy var table: UITableView = {
+    private lazy var table: UITableView = {
         let tv = UITableView()
         tv.dataSource = self
         tv.delegate = self

@@ -34,8 +34,7 @@
                                        completion:^(NSString *_Nullable sessionId) {
                                            __strong __typeof(weakSelf) strongSelf = weakSelf;
 
-                                           AWXDevice *device = [AWXDevice new];
-                                           device.deviceId = sessionId;
+                                           AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:sessionId];
 
                                            AWX3DSService *service = [AWX3DSService new];
                                            service.customerId = strongSelf.session.customerId;

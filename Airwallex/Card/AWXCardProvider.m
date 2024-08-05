@@ -31,7 +31,6 @@
 
 - (void)handleFlow {
     AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
-    controller.session = self.session;
     NSMutableArray<AWXCardScheme *> *supportedCardSchemes;
     if (self.paymentMethodType) {
         supportedCardSchemes = [NSMutableArray arrayWithArray:self.paymentMethodType.cardSchemes];
@@ -43,7 +42,7 @@
         }
     }
     controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:supportedCardSchemes];
-    controller.provider = self;
+    controller.viewModel.provider = self;
     [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
 }
 

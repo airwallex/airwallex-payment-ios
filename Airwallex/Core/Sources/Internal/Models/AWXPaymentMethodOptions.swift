@@ -17,6 +17,10 @@ public class AWXPaymentMethodOptions: NSObject, Codable {
      */
     public var cardOptions: AWXCardOptions?
 
+    enum CodingKeys: String, CodingKey {
+        case cardOptions = "card"
+    }
+
     public static func decodeFromJSON(_ dic: [String: Any]) -> AWXPaymentMethodOptions {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])

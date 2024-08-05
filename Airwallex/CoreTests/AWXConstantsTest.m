@@ -9,6 +9,7 @@
 #import "AWXConstants.h"
 #import "AWXDefaultProvider.h"
 #import "AWXPaymentMethod.h"
+#import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 
 #pragma mark - Sample providers for test purposes
@@ -58,34 +59,35 @@
 
 - (void)testClassToHandleFlowForPaymentMethodTypeApplePay {
     AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    type.name = @"applepay";
+    id mockType = OCMPartialMock(type);
+    OCMStub([mockType name]).andReturn(@"applepay");
 
-    XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXApplePayProvider class]);
+    XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(mockType), [AWXApplePayProvider class]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeCard {
     AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    type.name = @"card";
+    [type setValue:@"card" forKey:@"name"];
 
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXCardProvider class]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeSchema {
     AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    type.name = @"wechatpay";
+    [type setValue:@"wechatpay" forKey:@"name"];
     AWXResources *resources = [AWXResources new];
     resources.hasSchema = YES;
-    type.resources = resources;
+    [type setValue:resources forKey:@"resources"];
 
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXSchemaProvider class]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeDefault {
     AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    type.name = @"somethingelse";
+    [type setValue:@"somethingelse" forKey:@"name"];
     AWXResources *resources = [AWXResources new];
     resources.hasSchema = NO;
-    type.resources = resources;
+    [type setValue:resources forKey:@"resources"];
 
     XCTAssertNil(ClassToHandleFlowForPaymentMethodType(type));
 }

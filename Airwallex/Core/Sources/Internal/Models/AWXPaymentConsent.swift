@@ -20,52 +20,52 @@ public class AWXPaymentConsent: NSObject, Codable {
     /**
      Request ID.
      */
-    public var requestId: String?
+    public private(set) var requestId: String?
 
     /**
      Customer ID.
      */
-    public var customerId: String?
+    public private(set) var customerId: String?
 
     /**
      Consent status.
      */
-    public var status: String?
+    public private(set) var status: String?
 
     /**
      Payment method.
      */
-    public var paymentMethod: AWXPaymentMethod?
+    public private(set) var paymentMethod: AWXPaymentMethod?
 
     /**
      Next trigger By type.
      */
-    public var nextTriggeredBy: String?
+    public private(set) var nextTriggeredBy: String?
 
     /**
      Merchant trigger reason
      */
-    public var merchantTriggerReason: String?
+    public private(set) var merchantTriggerReason: String?
 
     /**
      Whether it requires CVC.
      */
-    public var requiresCVC: Bool = false
+    public private(set) var requiresCVC: Bool = false
 
     /**
      Created at date.
      */
-    public var createdAt: String?
+    public private(set) var createdAt: String?
 
     /**
      Updated at date.
      */
-    public var updatedAt: String?
+    public private(set) var updatedAt: String?
 
     /**
      Client secret.
      */
-    public var clientSecret: String?
+    public private(set) var clientSecret: String?
 
     enum CodingKeys: String, CodingKey {
         case Id = "id"

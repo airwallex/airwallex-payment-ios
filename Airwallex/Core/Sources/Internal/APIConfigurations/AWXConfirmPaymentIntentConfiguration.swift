@@ -21,7 +21,6 @@ public class AWXConfirmPaymentIntentConfiguration: NSObject {
     public var savePaymentMethod: Bool = false
     public var autoCapture: Bool = false
     public var device: AWXDevice?
-    public var session: AWXSession?
 
     public var path: String {
         "api/v1/pa/payment_intents/\(intentId)/confirm"

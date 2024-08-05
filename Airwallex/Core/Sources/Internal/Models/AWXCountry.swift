@@ -15,26 +15,28 @@ public class AWXCountry: NSObject, Codable {
     /**
      Country code.
      */
-    public var countryCode: String = ""
+    public let countryCode: String
 
     /**
      Country name.
      */
-    public var countryName: String = ""
+    public let countryName: String
+
+    public init(countryCode: String, countryName: String) {
+        self.countryCode = countryCode
+        self.countryName = countryName
+    }
 
     /**
      Return all of the supported countries.
      */
-
     public static func allCountries() -> [AWXCountry] {
         let locale = Locale.current
         let isoCountryCodes = Locale.isoRegionCodes
         var countries = [AWXCountry]()
         for isoCountryCode in isoCountryCodes {
             if let name = locale.localizedString(forCurrencyCode: isoCountryCode) {
-                let country = AWXCountry()
-                country.countryCode = isoCountryCode
-                country.countryName = name
+                let country = AWXCountry(countryCode: isoCountryCode, countryName: name)
                 countries.append(country)
             }
         }

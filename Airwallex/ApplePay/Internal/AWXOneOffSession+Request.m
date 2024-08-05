@@ -21,7 +21,7 @@
     AWXApplePayOptions *options = self.applePayOptions;
     if (!options) {
         if (error) {
-            *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Missing Apple Pay options in session.", nil)];
+            *error = [NSError errorForAirwallexSDKWith:NSLocalizedString(@"Missing Apple Pay options in session.", nil)];
         }
         return nil;
     }
@@ -34,7 +34,7 @@
 
     if (!self.countryCode) {
         if (error) {
-            *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Missing country code in session.", nil)];
+            *error = [NSError errorForAirwallexSDKWith:NSLocalizedString(@"Missing country code in session.", nil)];
         }
         return nil;
     }
@@ -46,7 +46,7 @@
 
     if (!self.paymentIntent) {
         if (error) {
-            *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"paymentIntent cannot be nil.", nil)];
+            *error = [NSError errorForAirwallexSDKWith:NSLocalizedString(@"paymentIntent cannot be nil.", nil)];
         }
         return nil;
     }
@@ -54,7 +54,7 @@
     NSString *paymentIntentValidationError = [self validatePaymentIntentDataInSession:self.paymentIntent];
     if (paymentIntentValidationError) {
         if (error) {
-            *error = [NSError errorForAirwallexSDKWith:-1 localizedDescription:paymentIntentValidationError];
+            *error = [NSError errorForAirwallexSDKWith:paymentIntentValidationError];
         }
         return nil;
     }

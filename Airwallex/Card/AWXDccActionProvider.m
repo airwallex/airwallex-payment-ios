@@ -53,8 +53,7 @@
                                            request.type = AWXDCC;
                                            request.useDCC = useDCC;
 
-                                           AWXDevice *device = [AWXDevice new];
-                                           device.deviceId = sessionId;
+                                           AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:sessionId];
                                            request.device = device;
 
                                            AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];

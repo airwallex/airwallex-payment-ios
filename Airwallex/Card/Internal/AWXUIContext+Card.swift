@@ -12,32 +12,29 @@ import Foundation
     /**
      Present the payment flow from card info collection view.
      */
-    func presentCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [Any] = AWXCardSupportedBrands()) {
+
+    func presentCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [Int]) {
         hostVC = hostViewController
         isPush = false
         let provider = AWXCardProvider(delegate: self, session: session)
-        if let cardSchemes = cardSchemes as? [NSNumber] {
-            provider.cardSchemes = cardSchemes
-        }
+        provider.cardSchemes = cardSchemes as [NSNumber]
+        provider.handleFlow()
+    }
+
+    @nonobjc func presentCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [AWXBrandType] = AWXBrandType.allCases) {
+        hostVC = hostViewController
+        isPush = false
+        let provider = AWXCardProvider(delegate: self, session: session)
+        provider.cardSchemes = cardSchemes.map { $0.rawValue as NSNumber }
         provider.handleFlow()
     }
 
     /**
      Push the payment flow from card info collection view.
      */
-    func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [Any] = AWXCardSupportedBrands()) {
-        assert(hostViewController != nil, "hostViewController must not be nil.")
-        hostVC = hostViewController
-        let navi: UINavigationController?
-        if let controller = hostViewController as? UINavigationController {
-            navi = controller
-        } else {
-            navi = hostViewController.navigationController
-        }
-        assert(
-            navi != nil,
-            "The hostViewController is not a navigation controller, or is not contained in a navigation controller."
-        )
+    @available(*, unavailable)
+
+    func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [Any]) {
         hostVC = hostViewController
         isPush = true
 
@@ -45,6 +42,15 @@ import Foundation
         if let cardSchemes = cardSchemes as? [NSNumber] {
             provider.cardSchemes = cardSchemes
         }
+        provider.handleFlow()
+    }
+
+    @nonobjc func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [AWXBrandType] = AWXBrandType.allCases) {
+        hostVC = hostViewController
+        isPush = true
+
+        let provider = AWXCardProvider(delegate: self, session: session)
+        provider.cardSchemes = cardSchemes.map { $0.rawValue as NSNumber }
         provider.handleFlow()
     }
 }
@@ -91,8 +97,10 @@ import Foundation
         _: AWXDefaultProvider, shouldHandle _: AWXConfirmPaymentNextAction
     ) {
         guard let currentVC = currentVC as? AWXCardViewController else { return }
-        let actionProvider = AWX3DSActionProvider(delegate: currentVC, session: session)
-        currentVC.provider = actionProvider
+        if let vm = currentVC.viewModel {
+            let actionProvider = AWX3DSActionProvider(delegate: vm, session: session)
+            vm.provider = actionProvider
+        }
     }
 
     public func provider(

@@ -62,7 +62,7 @@
     if (!schema || schema.fields.count == 0) {
         [self.delegate providerDidEndRequest:self];
         [self log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
-        [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorForAirwallexSDKWith:-1 localizedDescription:NSLocalizedString(@"Invalid schema.", nil)]];
+        [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorForAirwallexSDKWith:NSLocalizedString(@"Invalid schema.", nil)]];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, @"Invalid schema."];
         return;
     }

@@ -12,7 +12,7 @@ import Foundation
 @objcMembers
 @objc
 public class AWXDevice: NSObject, Codable {
-    public var deviceId: String?
+    public let deviceId: String?
     public var mobile: AWXMoblie
 
     enum CodingKeys: String, CodingKey {
@@ -20,9 +20,9 @@ public class AWXDevice: NSObject, Codable {
         case mobile
     }
 
-    override public init() {
+    public init(deviceId: String?) {
         mobile = AWXMoblie()
-        super.init()
+        self.deviceId = deviceId
     }
 
     public static func decodeFromJSON(_ dic: [String: Any]) -> AWXDevice {
@@ -33,7 +33,7 @@ public class AWXDevice: NSObject, Codable {
 
             return result
         } catch {
-            return AWXDevice()
+            return AWXDevice(deviceId: nil)
         }
     }
 
