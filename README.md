@@ -36,7 +36,7 @@ Table of contents
 <!--te-->
 
 ## Requirements
-The Airwallex iOS SDK supports iOS 13.0 and above.
+The Airwallex iOS SDK supports iOS 13.0 and above. You need to upgrade to XCode 15.4 or above, otherwise please refer to our previous release [5.4.3](https://github.com/airwallex/airwallex-payment-ios/releases/tag/5.4.3).
 
 ## Integration
 
