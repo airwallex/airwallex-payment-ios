@@ -13,9 +13,9 @@ import XCTest
 class AWXPaymentAttemptTests: XCTestCase {
     // Test if the initialization of AWXPaymentAttempt assigns values correctly.
     func testInitialization() {
-        let paymentMethod = AWXPaymentMethod()
-        let authenticationData = AWXAuthenticationData()
-        let attempt = AWXPaymentAttempt()
+        let paymentMethod = AWXPaymentMethod(type: nil, id: nil, billing: nil, card: nil, additionalParams: nil, customerId: nil)
+        let authenticationData = AWXAuthenticationData(fraudData: nil, dsData: nil)
+        let attempt = AWXPaymentAttempt(id: "123", amount: nil, paymentMethod: paymentMethod, status: "succeeded", capturedAmount: nil, refundedAmount: nil, authenticationData: authenticationData)
 
         let mirror = Mirror(reflecting: attempt)
         if let amount = mirror.descendant("amount") as? Double {
@@ -30,15 +30,11 @@ class AWXPaymentAttemptTests: XCTestCase {
             XCTAssertNil(refundedAmount)
         }
 
-        attempt.setValue("123", forKey: "Id")
         attempt.setAmount(100.0)
-        attempt.setValue(paymentMethod, forKey: "paymentMethod")
-        attempt.setValue("succeeded", forKey: "status")
         attempt.setCapturedAmount(90.0)
         attempt.setRefundedAmount(10.0)
-        attempt.setValue(authenticationData, forKey: "authenticationData")
 
-        XCTAssertEqual(attempt.Id, "123")
+        XCTAssertEqual(attempt.id, "123")
         XCTAssertEqual(attempt.objcAmount, 100.0)
         XCTAssertEqual(attempt.paymentMethod, paymentMethod)
         XCTAssertEqual(attempt.status, "succeeded")
@@ -61,10 +57,9 @@ class AWXPaymentAttemptTests: XCTestCase {
         }
         """.data(using: .utf8)!
 
-        let decoder = JSONDecoder()
         do {
-            let attempt = try decoder.decode(AWXPaymentAttempt.self, from: json)
-            XCTAssertEqual(attempt.Id, "123")
+            let attempt = try JSONDecoder().decode(AWXPaymentAttempt.self, from: json)
+            XCTAssertEqual(attempt.id, "123")
             XCTAssertEqual(attempt.amount, 100.0)
             XCTAssertNotNil(attempt.paymentMethod)
             XCTAssertEqual(attempt.status, "succeeded")

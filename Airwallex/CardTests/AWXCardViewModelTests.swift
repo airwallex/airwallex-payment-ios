@@ -25,11 +25,11 @@ class AWXCardViewModelTests: XCTestCase {
 
         let brands = viewModel.makeDisplayedCardBrands()
         XCTAssertEqual(brands.count, 6)
-        XCTAssertEqual(brands[0], AWXBrandType.visa.rawValue)
-        XCTAssertEqual(brands[1], AWXBrandType.mastercard.rawValue)
-        XCTAssertEqual(brands[2], AWXBrandType.discover.rawValue)
-        XCTAssertEqual(brands[3], AWXBrandType.JCB.rawValue)
-        XCTAssertEqual(brands[4], AWXBrandType.dinersClub.rawValue)
-        XCTAssertEqual(brands[5], AWXBrandType.unionPay.rawValue)
+        XCTAssertEqual(brands[0], AWXCardBrand.mastercard)
+        XCTAssertEqual(brands[1], AWXCardBrand.visa)
+        XCTAssertEqual(brands[2], AWXCardBrand.unionPay)
+        XCTAssertEqual(brands[3], AWXCardBrand.JCB)
+        XCTAssertEqual(brands[4], AWXCardBrand.dinersClub)
+        XCTAssertEqual(brands[5], AWXCardBrand.discover)
     }
 }

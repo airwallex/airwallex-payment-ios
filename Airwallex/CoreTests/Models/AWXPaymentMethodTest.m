@@ -19,7 +19,7 @@
 - (void)testPaymentMethod {
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod decodeFromJSON:[AWXTestUtils jsonNamed:@"PaymentMethod"]];
     XCTAssertNotNil(paymentMethod);
-    XCTAssertNotNil(paymentMethod.Id);
+    XCTAssertNotNil(paymentMethod.id);
     XCTAssertNotNil(paymentMethod.type);
     XCTAssertNotNil(paymentMethod.card);
     XCTAssertNotNil(paymentMethod.billing);

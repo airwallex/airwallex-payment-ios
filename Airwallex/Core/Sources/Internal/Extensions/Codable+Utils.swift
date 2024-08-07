@@ -27,9 +27,8 @@ public extension Encodable {
 
 public extension Decodable {
     static func from(_ data: Data) -> Self? {
-        let decoder = JSONDecoder()
         do {
-            let object = try decoder.decode(Self.self, from: data)
+            let object = try JSONDecoder().decode(Self.self, from: data)
             return object
         } catch {
             print("Fail to Decode: \(error)")
@@ -38,9 +37,8 @@ public extension Decodable {
     }
 
     static func parseError(_ data: Data) -> AWXAPIErrorResponse? {
-        let decoder = JSONDecoder()
         do {
-            let object = try decoder.decode(AWXAPIErrorResponse.self, from: data)
+            let object = try JSONDecoder().decode(AWXAPIErrorResponse.self, from: data)
             return object
         } catch {
             print("Fail to Decode: \(error)")
@@ -73,3 +71,5 @@ extension AWXAPIErrorResponse: Codable {
         self.init(message: message, code: code)
     }
 }
+
+extension AWXCardBrand: Codable {}

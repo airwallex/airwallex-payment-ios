@@ -102,7 +102,7 @@
 
 - (AWXSchemaProvider *)createProvider:(BOOL)hasBanks {
     AWXSession *session = [AWXSession new];
-    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
+    AWXPaymentMethodType *paymentMethod = [[AWXPaymentMethodType alloc] initWithName:nil displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
     AWXSchemaProvider *provider = [[AWXSchemaProvider alloc] initWithDelegate:_delegate session:session paymentMethodType:paymentMethod];
 
     id apiClientMock = OCMClassMock([AWXAPIClient class]);

@@ -9,9 +9,8 @@
 import Foundation
 
 @objc public protocol AWXCountryListViewControllerDelegate {
-    @objc optional func countryListViewController(
-        _ controller: AWXCountryListViewController, didSelect country: AWXCountry
-    )
+    @objc optional func countryListViewController(_ controller: AWXCountryListViewController,
+                                                  didSelect country: AWXCountry)
 }
 
 @objcMembers
@@ -35,26 +34,18 @@ public class AWXCountryListViewController: UIViewController {
         return tv
     }()
 
-    var countries = AWXCountry.allCountries()
-    var matchedCountries = AWXCountry.allCountries()
+    private let allCountries = AWXCountry.allCountries()
+    private var matchedCountries = AWXCountry.allCountries()
     public var currentCountry: AWXCountry?
 
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
     }
-
-    func close() {
-        if let nav = navigationController {
-            nav.popViewController(animated: true)
-        } else {
-            dismiss(animated: true)
-        }
-    }
 }
 
-private extension AWXCountryListViewController {
-    func setupViews() {
+extension AWXCountryListViewController {
+    private func setupViews() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: NSLocalizedString("Close", comment: "Close"), style: .plain, target: self,
             action: #selector(close)
@@ -63,15 +54,24 @@ private extension AWXCountryListViewController {
         view.addSubview(searchBar)
         view.addSubview(table)
 
-        let views = ["searchBar": searchBar, "tableView": table]
-        view.addConstraints(
-            NSLayoutConstraint.constraints(
-                withVisualFormat: "H:|[searchBar]|", metrics: nil, views: views
-            ))
-        view.addConstraints(
-            NSLayoutConstraint.constraints(
-                withVisualFormat: "V:|-[searchBar][tableView]-|", metrics: nil, views: views
-            ))
+        NSLayoutConstraint.activate([
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+
+            table.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            table.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            table.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            table.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+    }
+
+    @objc private func close() {
+        if let navigationController {
+            navigationController.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
     }
 }
 
@@ -86,7 +86,7 @@ extension AWXCountryListViewController: UITableViewDataSource, UITableViewDelega
         let cell = tableView.dequeueReusableCell(withIdentifier: "CountryCell", for: indexPath)
         let country = matchedCountries[indexPath.row]
         cell.textLabel?.text = country.countryName
-        if let currentCountry = currentCountry, currentCountry.countryName == country.countryName {
+        if let currentCountry, currentCountry.countryName == country.countryName {
             let imageView = UIImageView(image: UIImage(named: "tick", in: Bundle.resource()))
             cell.accessoryView = imageView
         } else {
@@ -97,7 +97,7 @@ extension AWXCountryListViewController: UITableViewDataSource, UITableViewDelega
 
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         currentCountry = matchedCountries[indexPath.row]
-        if let currentCountry = currentCountry {
+        if let currentCountry {
             delegate?.countryListViewController?(self, didSelect: currentCountry)
         }
     }
@@ -106,11 +106,11 @@ extension AWXCountryListViewController: UITableViewDataSource, UITableViewDelega
 extension AWXCountryListViewController: UISearchBarDelegate {
     public func searchBar(_: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
-            matchedCountries = countries.filter {
+            matchedCountries = allCountries.filter {
                 $0.countryName.contains(searchText)
             }
         } else {
-            matchedCountries = countries
+            matchedCountries = allCountries
         }
         table.reloadData()
     }

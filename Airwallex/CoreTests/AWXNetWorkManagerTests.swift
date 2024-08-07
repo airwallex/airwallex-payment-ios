@@ -19,7 +19,6 @@ class AWXNetWorkManagerTests: XCTestCase {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [MockURLProtocol.self]
         mockSession = URLSession(configuration: configuration)
-        AWXNetWorkManager.shared.session = mockSession
     }
 
     override func tearDown() {
@@ -45,7 +44,7 @@ class AWXNetWorkManagerTests: XCTestCase {
 
         let expectation = self.expectation(description: "GET request should succeed")
 
-        AWXNetWorkManager.shared.get(urlString: "dummyendpoint", parameters: nil) {
+        AWXNetWorkManager(session: mockSession).get(path: "dummyendpoint", parameters: nil, eventName: "test") {
             (result: Result<TestResponse, Error>) in
             switch result {
             case let .success(response):
@@ -79,7 +78,7 @@ class AWXNetWorkManagerTests: XCTestCase {
 
         let parameters = ["key1": "value1", "key2": "value2"]
 
-        AWXNetWorkManager.shared.get(urlString: "dummyendpoint", parameters: parameters) {
+        AWXNetWorkManager(session: mockSession).get(path: "dummyendpoint", parameters: parameters, eventName: "test") {
             (result: Result<TestResponse, Error>) in
             switch result {
             case let .success(response):
@@ -107,7 +106,7 @@ class AWXNetWorkManagerTests: XCTestCase {
 
         let expectation = self.expectation(description: "GET request should fail with network error")
 
-        AWXNetWorkManager.shared.get(urlString: "dummyendpoint", parameters: nil) {
+        AWXNetWorkManager(session: mockSession).get(path: "dummyendpoint", parameters: nil, eventName: "test") {
             (result: Result<TestResponse, Error>) in
             switch result {
             case .success:
@@ -139,7 +138,7 @@ class AWXNetWorkManagerTests: XCTestCase {
 
         let expectation = self.expectation(description: "GET request should fail to decode data")
 
-        AWXNetWorkManager.shared.get(urlString: "dummyendpoint", parameters: nil) {
+        AWXNetWorkManager(session: mockSession).get(path: "dummyendpoint", parameters: nil, eventName: "test") {
             (result: Result<TestResponse, Error>) in
             switch result {
             case .success:
@@ -180,7 +179,7 @@ class AWXNetWorkManagerTests: XCTestCase {
 
         let expectation = self.expectation(description: "POST request should succeed")
 
-        AWXNetWorkManager.shared.post(urlString: "dummyendpoint", parameters: postData) {
+        AWXNetWorkManager(session: mockSession).post(path: "dummyendpoint", payload: postData, eventName: "test") {
             (result: Result<TestResponse, Error>) in
             switch result {
             case let .success(response):
@@ -196,11 +195,11 @@ class AWXNetWorkManagerTests: XCTestCase {
 
     func test_baseUrl() {
         Airwallex.setMode(.demoMode)
-        XCTAssertEqual(AWXNetWorkManager.shared.baseURL, "https://api-demo.airwallex.com/")
+        XCTAssertEqual(AWXNetWorkManager().baseURL, "https://api-demo.airwallex.com/")
         Airwallex.setMode(.productionMode)
-        XCTAssertEqual(AWXNetWorkManager.shared.baseURL, "https://api.airwallex.com/")
+        XCTAssertEqual(AWXNetWorkManager().baseURL, "https://api.airwallex.com/")
         Airwallex.setMode(.stagingMode)
-        XCTAssertEqual(AWXNetWorkManager.shared.baseURL, "https://api-staging.airwallex.com/")
+        XCTAssertEqual(AWXNetWorkManager().baseURL, "https://api-staging.airwallex.com/")
     }
 }
 

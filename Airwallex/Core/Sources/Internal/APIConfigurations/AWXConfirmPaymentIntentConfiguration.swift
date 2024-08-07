@@ -10,7 +10,7 @@ import Foundation
 
 @objcMembers
 @objc
-public class AWXConfirmPaymentIntentConfiguration: NSObject {
+public class AWXConfirmPaymentIntentConfiguration: NSObject, Encodable {
     public var intentId: String = ""
     public let requestId: String = UUID().uuidString
     public var customerId: String?
@@ -26,43 +26,42 @@ public class AWXConfirmPaymentIntentConfiguration: NSObject {
         "api/v1/pa/payment_intents/\(intentId)/confirm"
     }
 
-    public var parameters: [String: Any] {
-        var parameters = [String: Any]()
-        parameters["request_id"] = requestId
-        if let customerId = customerId {
-            parameters["customer_id"] = customerId
+    private enum CodingKeys: String, CodingKey {
+        case requestId = "request_id"
+        case customerId = "customer_id"
+        case paymentConsentReference = "payment_consent_reference"
+        case paymentMethodReference = "payment_method_reference"
+        case paymentMethod = "payment_method"
+        case options = "payment_method_options"
+        case returnURL = "return_url"
+        case savePaymentMethod = "save_payment_method"
+        case deviceData = "device_data"
+        case integrationData = "integration_data"
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(requestId, forKey: .requestId)
+        try container.encodeIfPresent(customerId, forKey: .customerId)
+
+        if let paymentConsent = paymentConsent, let id = paymentConsent.id {
+            try container.encode(["id": id, "cvc": paymentMethod?.card?.cvc ?? ""], forKey: .paymentConsentReference)
+        } else if let id = paymentMethod?.id {
+            try container.encode(["id": id, "cvc": paymentMethod?.card?.cvc ?? ""], forKey: .paymentMethodReference)
+        } else {
+            try container.encode(paymentMethod, forKey: .paymentMethod)
         }
 
-        if let paymentConsent = paymentConsent, let Id = paymentConsent.Id {
-            let consentParams = [
-                "id": Id,
-                "cvc": paymentMethod?.card?.cvc ?? "",
-            ]
-            parameters["payment_consent_reference"] = consentParams
-        } else {
-            if let Id = paymentMethod?.Id {
-                parameters["payment_method_reference"] = [
-                    "id": Id,
-                    "cvc": paymentMethod?.card?.cvc ?? "",
-                ]
-            } else {
-                parameters["payment_method"] = paymentMethod?.toDictionary()
-            }
-        }
-        if let options = options {
-            parameters["payment_method_options"] = options.toDictionary()
-        }
-        if let returnURL = returnURL {
-            parameters["return_url"] = returnURL
-        }
-        parameters["save_payment_method"] = savePaymentMethod
-        if let device = device {
-            parameters["device_data"] = device.toDictionary()
-        }
-        parameters["integration_data"] = [
+        try container.encode(options, forKey: .options)
+        try container.encode(returnURL, forKey: .returnURL)
+        try container.encode(savePaymentMethod, forKey: .savePaymentMethod)
+        try container.encode(device, forKey: .deviceData)
+
+        let integrationData = [
             "type": "mobile_sdk",
             "version": "ios-release-\(AIRWALLEX_VERSION)",
         ]
-        return parameters
+        try container.encode(integrationData, forKey: .integrationData)
     }
 }

@@ -11,14 +11,8 @@ import Foundation
 @objcMembers
 @objc
 public class AWXCardValidator: NSObject {
-    public private(set) var defaultBrand: AWXBrand
-
+    private let defaultBrand = AWXBrand(name: "", rangeStart: "", rangeEnd: "", length: 16, type: .unknown)
     public static let shared = AWXCardValidator()
-
-    override public init() {
-        defaultBrand = AWXBrand(name: "", rangeStart: "", rangeEnd: "", length: 16, type: .unknown)
-        super.init()
-    }
 
     public var brands: [AWXBrand] {
         [
@@ -277,39 +271,25 @@ public class AWXCardValidator: NSObject {
     }
 
     public func maxLengthForCardNumber(_ cardNumber: String) -> Int {
-        let brands = brandsForCardNumber(cardNumber)
-        let sortedBrands = brands.sorted { $0.length > $1.length }
-        if let brandWithMaxLength = sortedBrands.first {
-            return brandWithMaxLength.length
-        }
-        return defaultBrand.length
+        let sortedBrands = brandsForCardNumber(cardNumber).sorted { $0.length > $1.length }
+        return sortedBrands.first?.length ?? defaultBrand.length
     }
 
     public func brandForCardNumber(_ cardNumber: String) -> AWXBrand? {
         let brandsFilteredByPrefix = brandsForCardNumber(cardNumber)
-
         let brandWithSameLength = brandsFilteredByPrefix.first { $0.length == cardNumber.count }
-
-        if let matchedBrand = brandWithSameLength {
-            return matchedBrand
-        }
-        return brandsFilteredByPrefix.first
+        return brandWithSameLength ?? brandsFilteredByPrefix.first
     }
 
     public func brandForCardName(_ name: String) -> AWXBrand? {
-        let filtered = brands.filter { $0.name.compare(name, options: .caseInsensitive) == .orderedSame
-        }
-        return filtered.first
+        return brands.filter { $0.name.compare(name, options: .caseInsensitive) == .orderedSame }.first
     }
 
     public func isValidCardLength(_ cardNumber: String) -> Bool {
-        if let brand = brandForCardNumber(cardNumber) {
-            return brand.length == cardNumber.count
-        }
-        return false
+        return brandForCardNumber(cardNumber)?.length == cardNumber.count
     }
 
-    public static func cardNumberFormatForBrand(_ type: AWXBrandType) -> [Int] {
+    public static func cardNumberFormatForBrand(_ type: AWXCardBrand) -> [Int] {
         switch type {
         case .amex:
             return [4, 6, 5]

@@ -15,22 +15,22 @@ public class AWXPaymentMethod: NSObject, Codable {
     /**
      Type of the payment method. One of card, wechatpay, applepay.
      */
-    public var type: String?
+    public let type: String?
 
     /**
      Unique identifier for the payment method.
      */
-    public private(set) var Id: String?
+    public let id: String?
 
     /**
      Billing object.
      */
-    public var billing: AWXPlaceDetails?
+    public let billing: AWXPlaceDetails?
 
     /**
      Card object.
      */
-    public var card: AWXCard?
+    public let card: AWXCard?
 
     /**
      Additional params  for wechat, redirect or applepay type.
@@ -40,11 +40,11 @@ public class AWXPaymentMethod: NSObject, Codable {
     /**
      The customer this payment method belongs to.
      */
-    public var customerId: String?
+    public let customerId: String?
 
     enum CodingKeys: String, CodingKey {
         case type
-        case Id = "id"
+        case id
         case billing
         case card
         case additionalParams
@@ -67,7 +67,7 @@ public class AWXPaymentMethod: NSObject, Codable {
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         var dynamicContainer = encoder.container(keyedBy: DynamicCodingKeys.self)
-        if let type = type, let key = DynamicCodingKeys(stringValue: type) {
+        if let type, let key = DynamicCodingKeys(stringValue: type) {
             try dynamicContainer.encode(additionalParams, forKey: key)
         }
         try container.encode(type, forKey: .type)
@@ -75,26 +75,34 @@ public class AWXPaymentMethod: NSObject, Codable {
         try container.encode(card, forKey: .card)
         try container.encode(customerId, forKey: .customerId)
     }
+
+    public init(type: String?, id: String?, billing: AWXPlaceDetails?, card: AWXCard?, additionalParams: [String: String]?, customerId: String?) {
+        self.type = type
+        self.id = id
+        self.billing = billing
+        self.card = card
+        self.additionalParams = additionalParams
+        self.customerId = customerId
+    }
 }
 
 @objc public extension AWXPaymentMethod {
     func appendAdditionalParams(_ params: [String: String]) {
-        if let _ = additionalParams {
-            additionalParams?.merge(params) { _, new in new }
-        } else {
+        if additionalParams == nil {
             additionalParams = params
+        } else {
+            additionalParams?.merge(params) { _, new in new }
         }
     }
 
     static func decodeFromJSON(_ dic: [String: Any]) -> AWXPaymentMethod {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
-            let decoder = JSONDecoder()
-            let result = try decoder.decode(AWXPaymentMethod.self, from: jsonData)
+            let result = try JSONDecoder().decode(AWXPaymentMethod.self, from: jsonData)
 
             return result
         } catch {
-            return AWXPaymentMethod()
+            return AWXPaymentMethod(type: nil, id: nil, billing: nil, card: nil, additionalParams: nil, customerId: nil)
         }
     }
 

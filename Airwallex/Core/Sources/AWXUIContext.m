@@ -14,11 +14,11 @@
 #import "AWXPaymentViewController.h"
 #import "AWXShippingViewController.h"
 #import "AWXUtils.h"
-#import "NSObject+logging.h"
+#import "NSObject+Logging.h"
 #ifdef AirwallexSDK
-#import "Core/Core-Swift.h"
+#import <Core/Core-Swift.h>
 #else
-#import "Airwallex/Airwallex-Swift.h"
+#import <Airwallex/Airwallex-Swift.h>
 #endif
 
 @implementation AWXUIContext
@@ -44,7 +44,6 @@
 
 - (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController {
     NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
-    self.hostVC = hostViewController;
     AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
     controller.viewModel = [[AWXPaymentMethodListViewModel alloc] initWithSession:_session APIClient:[[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]]];
     controller.session = self.session;

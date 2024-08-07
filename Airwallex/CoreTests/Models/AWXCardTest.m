@@ -7,6 +7,7 @@
 //
 
 #import "AWXTestUtils.h"
+#import "Coretests-Swift.h"
 #import <XCTest/XCTest.h>
 #ifdef AirwallexSDK
 #import <Core/Core-Swift.h>
@@ -33,9 +34,8 @@
 }
 
 - (void)testValidation {
-    AWXCard *card = [AWXCard new];
-    card.number = @"12345";
-    XCTAssertEqualObjects([card validate], @"Invalid card number");
+    AWXCard *card = [[AWXCard alloc] initWithNumber:@"12345" expiryMonth:nil expiryYear:nil name:nil cvc:nil bin:nil last4:nil brand:nil country:nil funding:nil fingerprint:nil cvcCheck:nil avsCheck:nil numberType:nil];
+    XCTAssertEqualObjects([card validateAndReturnError], @"Invalid card number");
 }
 
 @end

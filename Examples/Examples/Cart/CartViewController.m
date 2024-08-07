@@ -61,19 +61,7 @@
                                                 price:[NSDecimalNumber decimalNumberWithString:@"469"]];
     self.products = [@[product0, product1] mutableCopy];
 
-    NSDictionary *shipping = @{
-        @"first_name": @"Jason",
-        @"last_name": @"Wang",
-        @"phone_number": @"13800000000",
-        @"address": @{
-            @"country_code": @"CN",
-            @"state": @"Shanghai",
-            @"city": @"Shanghai",
-            @"street": @"Pudong District",
-            @"postcode": @"100000"
-        }
-    };
-    self.shipping = [AWXPlaceDetails decodeFromJSON:shipping];
+    self.shipping = [[AWXPlaceDetails alloc] initWithFirstName:@"Jason" lastName:@"Wang" email:nil dateOfBirth:nil phoneNumber:@"13800000000" address:[[AWXAddress alloc] initWithCountryCode:@"CN" city:@"Shanghai" street:@"Pudong District" state:@"Shanghai" postcode:@"100000"]];
 }
 
 - (void)setupExamplesAPIClient {
@@ -374,7 +362,7 @@
     context.session = session;
     [context presentEntirePaymentFlowFrom:self];
     // You can also show card page directly.
-    //    NSArray *cardSchemes = @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex), @(AWXBrandTypeUnionPay), @(AWXBrandTypeJCB)];
+    //    NSArray *cardSchemes = @[AWXCardBrandVisa, AWXCardBrandMastercard, AWXCardBrandAmex, AWXCardBrandUnionPay, AWXCardBrandJCB];
     //    [context presentCardPaymentFlowFrom:self cardSchemes:cardSchemes];
 }
 

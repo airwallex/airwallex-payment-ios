@@ -8,49 +8,47 @@
 
 import Foundation
 
+private var associatedHostVCKey: UInt8 = 0
+private var associatedIsFlowFromPushKey: UInt8 = 1
+
 @objc public extension AWXUIContext {
+    private var hostVC: UIViewController? {
+        get {
+            return objc_getAssociatedObject(self, &associatedHostVCKey) as? UIViewController
+        }
+        set {
+            objc_setAssociatedObject(self, &associatedHostVCKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+    private var isFlowFromPush: Bool {
+        get {
+            return objc_getAssociatedObject(self, &associatedIsFlowFromPushKey) as? Bool ?? false
+        }
+        set {
+            objc_setAssociatedObject(self, &associatedIsFlowFromPushKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
     /**
      Present the payment flow from card info collection view.
      */
-
-    func presentCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [Int]) {
+    func presentCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [AWXCardBrand] = AWXAllCardBrand()) {
+        isFlowFromPush = false
         hostVC = hostViewController
-        isPush = false
         let provider = AWXCardProvider(delegate: self, session: session)
-        provider.cardSchemes = cardSchemes as [NSNumber]
-        provider.handleFlow()
-    }
-
-    @nonobjc func presentCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [AWXBrandType] = AWXBrandType.allCases) {
-        hostVC = hostViewController
-        isPush = false
-        let provider = AWXCardProvider(delegate: self, session: session)
-        provider.cardSchemes = cardSchemes.map { $0.rawValue as NSNumber }
+        provider.cardSchemes = cardSchemes
         provider.handleFlow()
     }
 
     /**
      Push the payment flow from card info collection view.
      */
-    @available(*, unavailable)
-
-    func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [Any]) {
+    func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [AWXCardBrand] = AWXAllCardBrand()) {
+        isFlowFromPush = true
         hostVC = hostViewController
-        isPush = true
-
         let provider = AWXCardProvider(delegate: self, session: session)
-        if let cardSchemes = cardSchemes as? [NSNumber] {
-            provider.cardSchemes = cardSchemes
-        }
-        provider.handleFlow()
-    }
-
-    @nonobjc func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [AWXBrandType] = AWXBrandType.allCases) {
-        hostVC = hostViewController
-        isPush = true
-
-        let provider = AWXCardProvider(delegate: self, session: session)
-        provider.cardSchemes = cardSchemes.map { $0.rawValue as NSNumber }
+        provider.cardSchemes = cardSchemes
         provider.handleFlow()
     }
 }
@@ -58,12 +56,10 @@ import Foundation
 @objc extension AWXUIContext: AWXProviderDelegate {
     public func providerDidStartRequest(_: AWXDefaultProvider) {
         logMessage("providerDidStartRequest:")
-        currentVC?.startAnimating()
     }
 
     public func providerDidEndRequest(_: AWXDefaultProvider) {
         logMessage("providerDidEndRequest:")
-        currentVC?.stopAnimating()
     }
 
     public func provider(
@@ -72,18 +68,6 @@ import Foundation
     ) {
         logMessage(
             "provider:didCompleteWithStatus:error:  \(status)  \(error?.localizedDescription ?? "")")
-        delegate?.paymentViewController(
-            currentVC ?? UIViewController(), didCompleteWith: status, error: error
-        )
-        logMessage(
-            "Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error:  \(status)  \(error?.localizedDescription ?? "")"
-        )
-    }
-
-    public func provider(_: AWXDefaultProvider, didCompleteWithPaymentConsentId Id: String) {
-        delegate?.paymentViewController?(
-            currentVC ?? UIViewController(), didCompleteWithPaymentConsentId: Id
-        )
     }
 
     public func provider(
@@ -91,16 +75,6 @@ import Foundation
     ) {
         session.updateInitialPaymentIntentId(paymentIntentId)
         logMessage("provider:didInitializePaymentIntentId:  \(paymentIntentId)")
-    }
-
-    public func provider(
-        _: AWXDefaultProvider, shouldHandle _: AWXConfirmPaymentNextAction
-    ) {
-        guard let currentVC = currentVC as? AWXCardViewController else { return }
-        if let vm = currentVC.viewModel {
-            let actionProvider = AWX3DSActionProvider(delegate: vm, session: session)
-            vm.provider = actionProvider
-        }
     }
 
     public func provider(
@@ -117,7 +91,7 @@ import Foundation
                 }
             )
         } else if let vc = controller {
-            if isPush {
+            if isFlowFromPush {
                 let navi = hostVC as? UINavigationController ?? hostVC?.navigationController
                 navi?.pushViewController(vc, animated: withAnimation)
             } else {

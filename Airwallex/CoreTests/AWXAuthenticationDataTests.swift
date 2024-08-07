@@ -13,11 +13,9 @@ import XCTest
 class AWXAuthenticationDataTests: XCTestCase {
     func testIsThreeDSVersion2ReturnsTrue() {
         // Given
-        let dsData = AWXAuthenticationDataDsData()
-        dsData.version = "2.1.0"
+        let dsData = AWXAuthenticationDataDsData(version: "2.1.0")
 
-        let authenticationData = AWXAuthenticationData()
-        authenticationData.dsData = dsData
+        let authenticationData = AWXAuthenticationData(fraudData: nil, dsData: dsData)
 
         // When
         let isThreeDSVersion2 = authenticationData.isThreeDSVersion2()
@@ -28,11 +26,9 @@ class AWXAuthenticationDataTests: XCTestCase {
 
     func testIsThreeDSVersion2ReturnsFalseForVersion1() {
         // Given
-        let dsData = AWXAuthenticationDataDsData()
-        dsData.version = "1.0.0"
+        let dsData = AWXAuthenticationDataDsData(version: "1.0.0")
 
-        let authenticationData = AWXAuthenticationData()
-        authenticationData.dsData = dsData
+        let authenticationData = AWXAuthenticationData(fraudData: nil, dsData: dsData)
 
         // When
         let isThreeDSVersion2 = authenticationData.isThreeDSVersion2()
@@ -43,8 +39,7 @@ class AWXAuthenticationDataTests: XCTestCase {
 
     func testIsThreeDSVersion2ReturnsFalseForNilVersion() {
         // Given
-        let authenticationData = AWXAuthenticationData()
-        authenticationData.dsData = nil
+        let authenticationData = AWXAuthenticationData(fraudData: nil, dsData: nil)
 
         // When
         let isThreeDSVersion2 = authenticationData.isThreeDSVersion2()

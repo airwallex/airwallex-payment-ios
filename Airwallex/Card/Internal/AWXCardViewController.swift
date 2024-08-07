@@ -11,9 +11,16 @@ import UIKit
 
 @objcMembers
 @objc
-public class AWXCardViewController: UIViewController {
+public class AWXCardViewController: AWXViewController, AWXPageViewTrackable {
+    public var pageName: String {
+        viewModel?.pageName ?? ""
+    }
+
+    public var additionalInfo: [String: Any]? {
+        viewModel?.additionalInfo ?? [:]
+    }
+
     public var viewModel: AWXCardViewModel?
-    private var session: AWXSession? { viewModel?.session }
 
     private lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -59,8 +66,8 @@ public class AWXCardViewController: UIViewController {
         }
         tf.brandUpdateCallback = { [weak self] brand in
             guard let self = self else { return }
-            self.currentBrand = AWXBrandType(rawValue: brand)
-            if self.saveCard && brand == AWXBrandType.unionPay.rawValue {
+            self.currentBrand = brand
+            if self.saveCard && brand == AWXCardBrand.unionPay {
                 self.addUnionPayWarningViewIfNecessary()
             } else {
                 self.warningView.removeFromSuperview()
@@ -266,11 +273,11 @@ public class AWXCardViewController: UIViewController {
     private lazy var closeButton: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "close", in: Bundle.resource()), for: .normal)
-        btn.addTarget(self, action: #selector(close), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         return btn
     }()
 
-    private var currentBrand: AWXBrandType?
+    private var currentBrand: AWXCardBrand?
     private var paymentMethodType: AWXPaymentMethodType?
 
     private var saveCard: Bool = false
@@ -290,6 +297,10 @@ public class AWXCardViewController: UIViewController {
     override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unregisterKeyboard()
+    }
+
+    override public func activeScrollView() -> UIScrollView {
+        scrollView
     }
 
     private func startIndicator() {
@@ -375,13 +386,12 @@ public class AWXCardViewController: UIViewController {
             emailField.setText(billing.email ?? "", animated: false)
             phoneNumberField.setText(billing.phoneNumber ?? "", animated: false)
 
-            let address = billing.address
-            if address != nil {
+            if let address = billing.address {
                 countryView.setText(viewModel?.selectedCountry?.countryName ?? "", animated: false)
-                stateField.setText(address?.state ?? "", animated: false)
-                cityField.setText(address?.city ?? "", animated: false)
-                streetField.setText(address?.street ?? "", animated: false)
-                zipCodeField.setText(address?.postcode ?? "", animated: false)
+                stateField.setText(address.state ?? "", animated: false)
+                cityField.setText(address.city ?? "", animated: false)
+                streetField.setText(address.street ?? "", animated: false)
+                zipCodeField.setText(address.postcode ?? "", animated: false)
             }
         }
         setBillingInputHidden(isHidden: viewModel?.isReusingShippingAsBillingInformation == true)
@@ -397,9 +407,9 @@ public class AWXCardViewController: UIViewController {
         }
     }
 
-    func saveCardSwitchChanged(_ sender: UISwitch) {
+    @objc private func saveCardSwitchChanged(_ sender: UISwitch) {
         saveCard = sender.isOn
-        if saveCard, currentBrand == AWXBrandType.unionPay {
+        if saveCard, currentBrand == AWXCardBrand.unionPay {
             addUnionPayWarningViewIfNecessary()
         } else {
             warningView.removeFromSuperview()
@@ -410,7 +420,7 @@ public class AWXCardViewController: UIViewController {
         }
     }
 
-    func addressSwitchChanged(_ sender: UISwitch) {
+    @objc private func addressSwitchChanged(_ sender: UISwitch) {
         do {
             try viewModel?.setReusesShippingAsBillingInformation(sender.isOn)
         } catch {
@@ -442,21 +452,21 @@ public class AWXCardViewController: UIViewController {
         }
     }
 
-    func selectCountries() {
+    @objc private func selectCountries() {
         let controller = AWXCountryListViewController(nibName: nil, bundle: nil)
         controller.delegate = self
         controller.currentCountry = viewModel?.selectedCountry
         present(controller, animated: true)
     }
 
-    func confirmPayment() {
+    @objc private func confirmPayment() {
         AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button")
         Risk.log(event: "click_payment_button", screen: "page_create_card")
-        logMessage("Start payment. Intent ID: \(session?.paymentIntentId() ?? "")")
-        if let provider = viewModel?.preparedProviderWithDelegate() {
+        logMessage("Start payment. Intent ID: \(viewModel?.session?.paymentIntentId() ?? "")")
+        if let provider = viewModel?.preparedProviderWithDelegate(), let card = makeCard() {
             do {
                 try viewModel?.confirmPayment(
-                    provider: provider, billing: makeBilling(), card: makeCard(),
+                    provider: provider, billing: makeBilling(), card: card,
                     shouldStoreCardDetails: saveCard
                 )
             } catch {
@@ -473,7 +483,7 @@ public class AWXCardViewController: UIViewController {
                     withName: "card_payment_validation", additionalInfo: ["message": error]
                 )
                 logMessage(
-                    "Payment failed. Intent ID: \(session?.paymentIntentId() ?? ""). Reason: \(error).")
+                    "Payment failed. Intent ID: \(viewModel?.session?.paymentIntentId() ?? ""). Reason: \(error).")
             }
         }
     }
@@ -484,22 +494,21 @@ public class AWXCardViewController: UIViewController {
             phoneNumber: phoneNumberField.text(), state: stateField.text(), city: cityField.text(),
             street: streetField.text(), postcode: zipCodeField.text()
         )
-        return address ?? AWXPlaceDetails()
+        return address ?? AWXPlaceDetails(firstName: nil, lastName: nil, email: nil, dateOfBirth: nil, phoneNumber: nil, address: nil)
     }
 
-    private func makeCard() -> AWXCard {
-        let card = viewModel?.makeCard(
+    private func makeCard() -> AWXCard? {
+        return viewModel?.makeCard(
             name: nameField.text(), number: cardNoField.text(), expiry: expiresField.text(),
             cvc: cvcField.text()
         )
-        return card ?? AWXCard()
     }
 
-    func goBack() {
+    @objc private func goBack() {
         navigationController?.popViewController(animated: true)
     }
 
-    func close() {
+    @objc private func closeTapped() {
         dismiss(animated: true) {
             let delegate = AWXUIContext.shared().delegate
             delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
@@ -541,41 +550,6 @@ extension AWXCardViewController: AWXCountryListViewControllerDelegate {
     }
 }
 
-extension AWXCardViewController {
-    func registerKeyboard() {
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(keyboardWillChangeFrame(_:)),
-            name: UIResponder.keyboardWillChangeFrameNotification, object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(keyboardWillBeHidden(_:)),
-            name: UIResponder.keyboardWillHideNotification, object: nil
-        )
-    }
-
-    func unregisterKeyboard() {
-        NotificationCenter.default.removeObserver(
-            self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil
-        )
-        NotificationCenter.default.removeObserver(
-            self, name: UIResponder.keyboardWillHideNotification, object: nil
-        )
-    }
-
-    func keyboardWillChangeFrame(_ notification: Notification) {
-        if let rect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            let keyboardHeight = CGRectGetHeight(rect)
-            scrollView.contentInset.bottom = keyboardHeight
-            scrollView.verticalScrollIndicatorInsets.bottom = keyboardHeight
-        }
-    }
-
-    func keyboardWillBeHidden(_: Notification) {
-        scrollView.contentInset = .zero
-        scrollView.verticalScrollIndicatorInsets = .zero
-    }
-}
-
 extension AWXCardViewController: AWXCardviewModelDelegate {
     public func startLoading() {
         logMessage("startLoading:")
@@ -602,30 +576,24 @@ extension AWXCardViewController: AWXCardviewModelDelegate {
         }
     }
 
-    public func didCompleteWithPaymentConsentId(_ Id: String) {
-        let delegate = AWXUIContext.shared().delegate
-        if delegate?.responds(
-            to: #selector(
-                AWXPaymentResultDelegate.paymentViewController(_:didCompleteWithPaymentConsentId:))) == true
-        {
-            delegate?.paymentViewController?(self, didCompleteWithPaymentConsentId: Id)
-        }
+    public func didCompleteWithPaymentConsentId(_ id: String) {
+        AWXUIContext.shared().delegate?.paymentViewController?(self, didCompleteWithPaymentConsentId: id)
     }
 
     public func shouldPresent(_ controller: UIViewController?, forceToDismiss: Bool, withAnimation: Bool) {
         if forceToDismiss {
             presentedViewController?.dismiss(animated: true) {
-                if let controller = controller {
+                if let controller {
                     self.present(controller, animated: withAnimation)
                 }
             }
-        } else if let controller = controller {
+        } else if let controller {
             present(controller, animated: withAnimation)
         }
     }
 
     public func shouldInsert(_ controller: UIViewController?) {
-        if let controller = controller {
+        if let controller {
             addChild(controller)
             view.addSubview(controller.view)
             controller.didMove(toParent: self)

@@ -11,7 +11,7 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSecurityService.h"
 #import "AWXSession.h"
-#import "NSObject+logging.h"
+#import "NSObject+Logging.h"
 #ifdef AirwallexSDK
 #import <Core/Core-Swift.h>
 #else

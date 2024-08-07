@@ -13,7 +13,7 @@ import Foundation
 @objc
 public class AWXDevice: NSObject, Codable {
     public let deviceId: String?
-    public var mobile: AWXMoblie
+    public var mobile: AWXMobile
 
     enum CodingKeys: String, CodingKey {
         case deviceId = "device_id"
@@ -21,20 +21,8 @@ public class AWXDevice: NSObject, Codable {
     }
 
     public init(deviceId: String?) {
-        mobile = AWXMoblie()
+        mobile = AWXMobile()
         self.deviceId = deviceId
-    }
-
-    public static func decodeFromJSON(_ dic: [String: Any]) -> AWXDevice {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
-            let decoder = JSONDecoder()
-            let result = try decoder.decode(AWXDevice.self, from: jsonData)
-
-            return result
-        } catch {
-            return AWXDevice(deviceId: nil)
-        }
     }
 
     public func encodeToJSON() -> [String: Any] {
@@ -45,7 +33,7 @@ public class AWXDevice: NSObject, Codable {
 /// `AWXDevice` includes the information of 3ds.
 @objcMembers
 @objc
-public class AWXMoblie: NSObject, Codable {
+public class AWXMobile: NSObject, Codable {
     public var osType: String
     public var deviceModel: String
     public var osVersion: String

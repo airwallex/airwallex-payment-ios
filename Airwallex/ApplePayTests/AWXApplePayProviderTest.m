@@ -244,7 +244,7 @@
 
     OCMStub([providerSpy setDeviceWithSessionId:[OCMArg any] completion:([OCMArg invokeBlockWithArgs:_device, nil])]);
 
-    AWXConfirmPaymentIntentResponse *response = [AWXConfirmPaymentIntentResponse new];
+    AWXConfirmPaymentIntentResponse *response = [[AWXConfirmPaymentIntentResponse alloc] initWithCurrency:nil amount:nil status:nil nextAction:nil latestPaymentAttempt:nil];
 
     OCMStub([providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg any]
                                                 paymentConsent:[OCMArg isNil]
@@ -403,16 +403,9 @@
     intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
     intent.customerId = @"customerId";
 
-    AWXPlaceDetails *billing = [AWXPlaceDetails new];
-    billing.firstName = @"firstName";
-    billing.lastName = @"lastName";
+    AWXAddress *address = [[AWXAddress alloc] initWithCountryCode:@"AU" city:@"City" street:@"Street" state:nil postcode:nil];
 
-    AWXAddress *address = [AWXAddress new];
-    address.countryCode = @"AU";
-    address.city = @"City";
-    address.street = @"Street";
-
-    billing.address = address;
+    AWXPlaceDetails *billing = [[AWXPlaceDetails alloc] initWithFirstName:@"firstName" lastName:@"lastName" email:nil dateOfBirth:nil phoneNumber:nil address:address];
 
     session.billing = billing;
     session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
@@ -476,7 +469,7 @@
 }
 
 - (BOOL)canHandleSession:(AWXSession *)session {
-    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
+    AWXPaymentMethodType *paymentMethod = [[AWXPaymentMethodType alloc] initWithName:nil displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
     return [AWXApplePayProvider canHandleSession:session paymentMethod:paymentMethod];
 }
 

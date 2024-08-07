@@ -51,8 +51,7 @@
         _session = session;
         if (paymentMethodType) {
             _paymentMethodType = paymentMethodType;
-            AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-            paymentMethod.type = paymentMethodType.name;
+            AWXPaymentMethod *paymentMethod = [[AWXPaymentMethod alloc] initWithType:paymentMethodType.name id:nil billing:nil card:nil additionalParams:nil customerId:nil];
             _paymentMethod = paymentMethod;
         }
     }
@@ -121,9 +120,9 @@
                 self.nextActionHandler = handler;
             }
         } else {
-            if (self.paymentConsent.Id && [self.delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
+            if (self.paymentConsent.id && [self.delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
                 [self log:@"Delegate: %@, provider:didCompleteWithPaymentConsentId: ID length: %lu", self.delegate.class, self.paymentIntentId.length];
-                [self.delegate provider:self didCompleteWithPaymentConsentId:self.paymentConsent.Id];
+                [self.delegate provider:self didCompleteWithPaymentConsentId:self.paymentConsent.id];
             }
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
             [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusSuccess];
@@ -182,16 +181,14 @@
     configuration.returnURL = returnURL;
 
     if ([@[AWXCardKey, AWXApplePayKey] containsObject:paymentMethod.type]) {
-        AWXCardOptions *cardOptions = [AWXCardOptions new];
-        cardOptions.autoCapture = autoCapture;
+        AWXCardOptions *cardOptions;
         if ([paymentMethod.type isEqualToString:AWXCardKey]) {
-            AWXThreeDs *threeDs = [AWXThreeDs new];
-            threeDs.returnURL = AWXThreeDSReturnURL;
-            cardOptions.threeDs = threeDs;
+            AWXThreeDs *threeDs = [[AWXThreeDs alloc] initWithPaRes:nil returnURL:AWXThreeDSReturnURL attemptId:nil deviceDataCollectionRes:nil dsTransactionId:nil];
+            cardOptions = [[AWXCardOptions alloc] initWithAutoCapture:autoCapture threeDs:threeDs];
+        } else {
+            cardOptions = [[AWXCardOptions alloc] initWithAutoCapture:autoCapture threeDs:nil];
         }
-
-        AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
-        options.cardOptions = cardOptions;
+        AWXPaymentMethodOptions *options = [[AWXPaymentMethodOptions alloc] initWithCardOptions:cardOptions];
         configuration.options = options;
     }
 

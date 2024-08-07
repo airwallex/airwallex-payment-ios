@@ -49,7 +49,7 @@
 
 - (NSAttributedString *)formatText:(NSString *)text {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont bodyFont], NSForegroundColorAttributeName: [AWXTheme sharedTheme].primaryTextColor}];
-    AWXBrandType type = [self typeOfNumber:text];
+    AWXCardBrand type = [self typeOfNumber:text];
     NSArray *cardNumberFormat = [AWXCardValidator cardNumberFormatForBrand:type];
     NSUInteger index = 0;
     for (NSNumber *segmentLength in cardNumberFormat) {
@@ -80,7 +80,7 @@
     if (!_cardImageViews) {
         self.cardImageViews = [NSMutableArray new];
         for (id cardBrand in _cardBrands) {
-            AWXBrandType brand = [cardBrand intValue];
+            AWXCardBrand brand = cardBrand;
             AWXCardImageView *cardView = [[AWXCardImageView alloc] initWithCardBrand:brand];
             [_cardImageViews addObject:cardView];
             [_brandView addArrangedSubview:cardView];
@@ -123,8 +123,8 @@
     [self addSubview:_brandView];
 }
 
-- (AWXBrandType)typeOfNumber:(NSString *)number {
-    AWXBrandType type = AWXBrandTypeUnknown;
+- (AWXCardBrand)typeOfNumber:(NSString *)number {
+    AWXCardBrand type = AWXCardBrandUnknown;
     if (number.length != 0) {
         AWXBrand *brand = [[AWXCardValidator shared] brandForCardNumber:number];
         if (brand) {
@@ -135,10 +135,10 @@
 }
 
 - (void)updateBrandWithNumber:(NSString *)number {
-    AWXBrandType type = [self typeOfNumber:number];
+    AWXCardBrand type = [self typeOfNumber:number];
     _brandUpdateCallback(type);
     BOOL shouldShowBrands = NO;
-    if ([_cardBrands containsObject:[NSNumber numberWithInteger:type]]) {
+    if ([_cardBrands containsObject:type]) {
         shouldShowBrands = YES;
     }
     self.brandView.alpha = shouldShowBrands ? 1 : 0.5;

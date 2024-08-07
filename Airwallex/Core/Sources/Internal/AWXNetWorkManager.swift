@@ -18,8 +18,12 @@ enum HTTPMethod: String {
 @objcMembers
 @objc
 public class AWXNetWorkManager: NSObject {
-    public static let shared = AWXNetWorkManager()
-    public var session = URLSession.shared
+    init(session: URLSession = URLSession.shared) {
+        self.session = session
+        super.init()
+    }
+
+    public let session: URLSession
     public var baseURL: String {
         switch Airwallex.mode() {
         case .demoMode:
@@ -28,8 +32,6 @@ public class AWXNetWorkManager: NSObject {
             "https://api.airwallex.com/"
         case .stagingMode:
             "https://api-staging.airwallex.com/"
-        @unknown default:
-            ""
         }
     }
 
@@ -39,18 +41,19 @@ public class AWXNetWorkManager: NSObject {
         "User-Agent": "Airwallex-iOS-SDK",
     ]
 
-    func performRequest<T: Codable>(
-        urlString: String,
+    private func performRequest<T: Decodable>(
+        path: String,
         method: HTTPMethod = .GET,
-        parameters: [String: Any]? = nil,
+        parameters: [String: String]? = nil,
+        payload: Data? = nil,
+        eventName: String,
         completion: @escaping (Result<T, Error>) -> Void
     ) {
-        var urlComponents = URLComponents(string: baseURL + urlString)
-        var queryItems = [URLQueryItem]()
-
         var request: URLRequest
         if method == .GET {
-            if let parameters = parameters as? [String: String] {
+            var urlComponents = URLComponents(string: baseURL + path)
+            var queryItems = [URLQueryItem]()
+            if let parameters {
                 for (key, value) in parameters {
                     queryItems.append(URLQueryItem(name: key, value: value))
                 }
@@ -60,28 +63,28 @@ public class AWXNetWorkManager: NSObject {
                 DispatchQueue.main.async {
                     completion(
                         .failure(
-                            NSError.errorForAirwallexSDK(with: NSLocalizedString("badURL.Please check your URL.", comment: "badURL.Please check your URL."))))
+                            NSError.errorForAirwallexSDK(with: NSLocalizedString("Invalid URL format.", comment: "Invalid URL format."))))
                 }
                 return
             }
             request = URLRequest(url: url)
         } else if method == .POST {
-            guard let url = URL(string: baseURL + urlString) else {
+            guard let url = URL(string: baseURL + path) else {
                 DispatchQueue.main.async {
                     completion(
                         .failure(
-                            NSError.errorForAirwallexSDK(with: NSLocalizedString("badURL.Please check your URL.", comment: "badURL.Please check your URL."))))
+                            NSError.errorForAirwallexSDK(with: NSLocalizedString("Invalid URL format.", comment: "Invalid URL format."))))
                 }
                 return
             }
             request = URLRequest(url: url)
-            request.httpBody = try? JSONSerialization.data(withJSONObject: parameters ?? [:], options: [])
+            request.httpBody = payload
         } else {
-            guard let url = URL(string: baseURL + urlString) else {
+            guard let url = URL(string: baseURL + path) else {
                 DispatchQueue.main.async {
                     completion(
                         .failure(
-                            NSError.errorForAirwallexSDK(with: NSLocalizedString("badURL.Please check your URL.", comment: "badURL.Please check your URL."))))
+                            NSError.errorForAirwallexSDK(with: NSLocalizedString("Invalid URL format.", comment: "Invalid URL format."))))
                 }
                 return
             }
@@ -96,66 +99,99 @@ public class AWXNetWorkManager: NSObject {
 
         if let clientSecret = AWXAPIClientConfiguration.shared().clientSecret {
             request.setValue(clientSecret, forHTTPHeaderField: "client-secret")
+        } else {
+            logMessage("Client secret is not set!")
         }
 
-        let task = session.dataTask(with: request) { data, _, error in
-            if let error = error {
+        logMessage("ULR request: \(request.url?.absoluteString ?? "")")
+        let task = session.dataTask(with: request) { [weak self] data, response, error in
+            guard let url = request.url else {
+                let message = NSLocalizedString("No URL.", comment: "No URL.")
+                self?.logMessage(message)
+                DispatchQueue.main.async {
+                    completion(.failure(NSError.errorForAirwallexSDK(with: message)))
+                }
+                return
+            }
+
+            if let error {
+                AWXAnalyticsLogger.shared().logError(withName: eventName, url: url, response: AWXAPIErrorResponse(message: error.localizedDescription, code: "\((response as? HTTPURLResponse)?.statusCode ?? -1) "))
+                self?.logMessage(error.localizedDescription)
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
                 return
             }
 
-            guard let data = data else {
+            guard let data else {
+                let message = NSLocalizedString("No data.", comment: "No data.")
+                self?.logMessage(message)
                 DispatchQueue.main.async {
                     completion(
                         .failure(
-                            NSError.errorForAirwallexSDK(with: NSLocalizedString("No data.", comment: "No data."))))
+                            NSError.errorForAirwallexSDK(with: message)))
                 }
                 return
             }
 
-            if let error = T.parseError(data) {
-                DispatchQueue.main.async {
-                    completion(
-                        .failure(
-                            NSError.errorForAirwallexSDK(with: Int(error.code) ?? -1, localizedDescription: error.message)))
-                }
-                return
-            }
-
-            if let decodedData = T.from(data) {
-                DispatchQueue.main.async {
-                    completion(.success(decodedData))
+            if let httpCode = (response as? HTTPURLResponse)?.statusCode, httpCode >= 200, httpCode < 300 {
+                if let decodedData = T.from(data) {
+                    DispatchQueue.main.async {
+                        completion(.success(decodedData))
+                    }
+                } else {
+                    let message = NSLocalizedString("Fail to decode data.", comment: "Fail to decode data.")
+                    self?.logMessage(message)
+                    DispatchQueue.main.async {
+                        completion(
+                            .failure(
+                                NSError.errorForAirwallexSDK(with: message)))
+                    }
                 }
             } else {
-                DispatchQueue.main.async {
-                    completion(
-                        .failure(
-                            NSError.errorForAirwallexSDK(with: NSLocalizedString("Fail to decode data.", comment: "Fail to decode data."))))
+                if let apiError = T.parseError(data) {
+                    AWXAnalyticsLogger.shared().logError(withName: eventName, url: url, response: apiError)
+                    self?.logMessage(apiError.message)
+                    DispatchQueue.main.async {
+                        completion(
+                            .failure(
+                                NSError.errorForAirwallexSDK(with: Int(apiError.code) ?? -1, localizedDescription: apiError.message)))
+                    }
+                    return
+                } else {
+                    let message = NSLocalizedString("Fail to decode error data.", comment: "Fail to decode error data.")
+                    self?.logMessage(message)
+                    DispatchQueue.main.async {
+                        completion(
+                            .failure(
+                                NSError.errorForAirwallexSDK(with: message)))
+                    }
                 }
             }
         }
         task.resume()
     }
 
-    public func get<T: Codable>(
-        urlString: String,
+    public func get<T: Decodable>(
+        path: String,
         parameters: [String: String]? = nil,
+        eventName: String,
         completion: @escaping (Result<T, Error>) -> Void
     ) {
         performRequest(
-            urlString: urlString, method: .GET, parameters: parameters, completion: completion
+            path: path, method: .GET, parameters: parameters, eventName: eventName, completion: completion
         )
     }
 
-    public func post<T: Codable>(
-        urlString: String,
-        parameters: [String: Any]? = nil,
+    public func post<T: Decodable>(
+        path: String,
+        payload: Encodable,
+        eventName: String,
         completion: @escaping (Result<T, Error>) -> Void
     ) {
+        let data = try? JSONEncoder().encode(payload)
         performRequest(
-            urlString: urlString, method: .POST, parameters: parameters, completion: completion
+            path: path, method: .POST, payload: data, eventName: eventName, completion: completion
         )
     }
 }

@@ -16,21 +16,19 @@ public class AWXAPIClient: NSObject {
         completion: @escaping (AWXConfirmPaymentIntentResponse?, Error?) -> Void
     ) {
         if [AWXCardKey, AWXApplePayKey].contains(configuration.paymentMethod?.type) {
-            let cardOptions = AWXCardOptions()
-            cardOptions.autoCapture = configuration.autoCapture
+            let cardOptions: AWXCardOptions
             if configuration.paymentMethod?.type == AWXCardKey {
-                let threeDs = AWXThreeDs()
-                threeDs.returnURL = AWXThreeDSReturnURL
-                cardOptions.threeDs = threeDs
+                let threeDs = AWXThreeDs(paRes: nil, returnURL: AWXThreeDSReturnURL, attemptId: nil, deviceDataCollectionRes: nil, dsTransactionId: nil)
+                cardOptions = AWXCardOptions(autoCapture: configuration.autoCapture, threeDs: threeDs)
+            } else {
+                cardOptions = AWXCardOptions(autoCapture: configuration.autoCapture, threeDs: nil)
             }
-
-            let options = AWXPaymentMethodOptions()
-            options.cardOptions = cardOptions
+            let options = AWXPaymentMethodOptions(cardOptions: cardOptions)
             configuration.options = options
         }
 
-        AWXNetWorkManager.shared.post(
-            urlString: configuration.path, parameters: configuration.parameters
+        AWXNetWorkManager().post(
+            path: configuration.path, payload: configuration, eventName: "confirm_payment_intent"
         ) { (result: Result<AWXConfirmPaymentIntentResponse, Error>) in
             switch result {
             case let .success(response):

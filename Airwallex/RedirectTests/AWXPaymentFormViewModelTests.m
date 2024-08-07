@@ -59,8 +59,7 @@
 }
 
 - (void)testPageViewTracking {
-    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-    paymentMethod.type = @"card";
+    AWXPaymentMethod *paymentMethod = [[AWXPaymentMethod alloc] initWithType:@"card" id:nil billing:nil card:nil additionalParams:nil customerId:nil];
     AWXFormMapping *formMapping = [AWXFormMapping new];
     formMapping.title = @"bank list";
     AWXPaymentFormViewModel *viewModel = [[AWXPaymentFormViewModel alloc] initWithSession:[AWXOneOffSession new] paymentMethod:paymentMethod formMapping:formMapping];
@@ -76,7 +75,8 @@
 }
 
 - (AWXPaymentFormViewModel *)viewModelWithSession:(AWXSession *)session {
-    return [[AWXPaymentFormViewModel alloc] initWithSession:session paymentMethod:[AWXPaymentMethod new] formMapping:[AWXFormMapping new]];
+    AWXPaymentMethod *paymentMethod = [[AWXPaymentMethod alloc] initWithType:nil id:nil billing:nil card:nil additionalParams:nil customerId:nil];
+    return [[AWXPaymentFormViewModel alloc] initWithSession:session paymentMethod:paymentMethod formMapping:[AWXFormMapping new]];
 }
 
 @end

@@ -41,6 +41,15 @@ NSString *const AWXDCC = @"dcc";
 
 NSString *const AWXApplePayKey = @"applepay";
 
+AWXCardBrand const AWXCardBrandUnknown = (AWXCardBrand) @"unknown";
+AWXCardBrand const AWXCardBrandVisa = (AWXCardBrand) @"visa";
+AWXCardBrand const AWXCardBrandAmex = (AWXCardBrand) @"amex";
+AWXCardBrand const AWXCardBrandMastercard = (AWXCardBrand) @"mastercard";
+AWXCardBrand const AWXCardBrandDiscover = (AWXCardBrand) @"discover";
+AWXCardBrand const AWXCardBrandJCB = (AWXCardBrand) @"jcb";
+AWXCardBrand const AWXCardBrandDinersClub = (AWXCardBrand) @"diners";
+AWXCardBrand const AWXCardBrandUnionPay = (AWXCardBrand) @"unionpay";
+
 NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void) {
     NSArray<PKPaymentNetwork> *shared = @[
         PKPaymentNetworkVisa,
@@ -52,6 +61,18 @@ NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void) {
     } else {
         return shared;
     }
+}
+
+NSArray<AWXCardBrand> *AWXAllCardBrand(void) {
+    return @[
+        AWXCardBrandAmex,
+        AWXCardBrandMastercard,
+        AWXCardBrandVisa,
+        AWXCardBrandUnionPay,
+        AWXCardBrandJCB,
+        AWXCardBrandDinersClub,
+        AWXCardBrandDiscover
+    ];
 }
 
 NSString *FormatAirwallexSDKMode(AirwallexSDKMode mode) {

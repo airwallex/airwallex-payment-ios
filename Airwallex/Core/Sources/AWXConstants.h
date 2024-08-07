@@ -17,7 +17,17 @@ NS_ASSUME_NONNULL_BEGIN
 #define AIRWALLEX_VERSION (@"5.5.1")
 #define AIRWALLEX_API_VERSION (@"2021-11-25")
 
-typedef NS_ENUM(NSInteger, AirwallexSDKMode) {
+typedef NSString *AWXCardBrand NS_TYPED_ENUM;
+extern AWXCardBrand const AWXCardBrandUnknown;
+extern AWXCardBrand const AWXCardBrandVisa;
+extern AWXCardBrand const AWXCardBrandAmex;
+extern AWXCardBrand const AWXCardBrandMastercard;
+extern AWXCardBrand const AWXCardBrandDiscover;
+extern AWXCardBrand const AWXCardBrandJCB;
+extern AWXCardBrand const AWXCardBrandDinersClub;
+extern AWXCardBrand const AWXCardBrandUnionPay;
+
+typedef NS_CLOSED_ENUM(NSInteger, AirwallexSDKMode) {
     AirwallexSDKDemoMode,
     AirwallexSDKStagingMode,
     AirwallexSDKProductionMode
@@ -89,6 +99,7 @@ FOUNDATION_EXPORT NSString *const AWXDCC;
 
 FOUNDATION_EXPORT NSString *const AWXApplePayKey;
 FOUNDATION_EXPORT NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void);
+FOUNDATION_EXPORT NSArray<AWXCardBrand> *AWXAllCardBrand(void);
 
 FOUNDATION_EXPORT NSString *FormatAirwallexSDKMode(AirwallexSDKMode mode);
 FOUNDATION_EXPORT NSString *FormatNextTriggerByType(AirwallexNextTriggerByType type);

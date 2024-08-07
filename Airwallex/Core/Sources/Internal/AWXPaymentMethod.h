@@ -9,9 +9,9 @@
 #import "AWXCodable.h"
 #import <Foundation/Foundation.h>
 #ifdef AirwallexSDK
-#import "Core/Core-Swift.h"
+#import <Core/Core-Swift.h>
 #else
-#import "Airwallex/Airwallex-Swift.h"
+#import <Airwallex/Airwallex-Swift.h>
 #endif
 
 NS_ASSUME_NONNULL_BEGIN

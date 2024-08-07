@@ -15,22 +15,22 @@ public class AWXCard: NSObject, Codable {
     /**
      Card number.
      */
-    public var number: String?
+    public private(set) var number: String?
 
     /**
      Two digit number representing the card’s expiration month. Example: 12.
      */
-    public var expiryMonth: String?
+    public let expiryMonth: String?
 
     /**
      Four digit number representing the card’s expiration year. Example: 2030.
      */
-    public var expiryYear: String?
+    public let expiryYear: String?
 
     /**
      Card holder name.
      */
-    public var name: String?
+    public let name: String?
 
     /**
      Card cvc.
@@ -40,47 +40,47 @@ public class AWXCard: NSObject, Codable {
     /**
      Bank identify number of this card.
      */
-    public private(set) var bin: String?
+    public let bin: String?
 
     /**
      Last four digits of the card number.
      */
-    public private(set) var last4: String?
+    public let last4: String?
 
     /**
      Brand of the card.
      */
-    public private(set) var brand: String?
+    public let brand: String?
 
     /**
      Country code of the card.
      */
-    public private(set) var country: String?
+    public let country: String?
 
     /**
      Funding type of the card.
      */
-    public private(set) var funding: String?
+    public let funding: String?
 
     /**
      Fingerprint of the card.
      */
-    public private(set) var fingerprint: String?
+    public let fingerprint: String?
 
     /**
      Whether CVC pass the check.
      */
-    public private(set) var cvcCheck: String?
+    public let cvcCheck: String?
 
     /**
      Whether address pass the check.
      */
-    public private(set) var avsCheck: String?
+    public let avsCheck: String?
 
     /**
      Type of the number. One of PAN, EXTERNAL_NETWORK_TOKEN, AIRWALLEX_NETWORK_TOKEN.
      */
-    public private(set) var numberType: String?
+    public let numberType: String?
 
     enum CodingKeys: String, CodingKey {
         case number
@@ -97,6 +97,23 @@ public class AWXCard: NSObject, Codable {
         case cvcCheck = "cvc_check"
         case avsCheck = "avs_check"
         case numberType = "number_type"
+    }
+
+    public init(number: String? = nil, expiryMonth: String?, expiryYear: String?, name: String?, cvc: String?, bin: String?, last4: String?, brand: String?, country: String?, funding: String?, fingerprint: String?, cvcCheck: String?, avsCheck: String?, numberType: String?) {
+        self.number = number
+        self.expiryMonth = expiryMonth
+        self.expiryYear = expiryYear
+        self.name = name
+        self.cvc = cvc
+        self.bin = bin
+        self.last4 = last4
+        self.brand = brand
+        self.country = country
+        self.funding = funding
+        self.fingerprint = fingerprint
+        self.cvcCheck = cvcCheck
+        self.avsCheck = avsCheck
+        self.numberType = numberType
     }
 
     public required init(from decoder: any Decoder) throws {
@@ -120,14 +137,10 @@ public class AWXCard: NSObject, Codable {
             number = "••••\(last4)"
         }
     }
-
-    override public init() {
-        super.init()
-    }
 }
 
 @objc public extension AWXCard {
-    func validate() -> String? {
+    func validateAndReturnError() -> String? {
         if number == nil || !AWXCardValidator.shared.isValidCardLength(number ?? "") {
             return "Invalid card number"
         }
@@ -141,17 +154,5 @@ public class AWXCard: NSObject, Codable {
             return "Invalid CVC / CVV"
         }
         return nil
-    }
-
-    static func decodeFromJSON(_ dic: [String: Any]) -> AWXCard {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
-            let decoder = JSONDecoder()
-            let result = try decoder.decode(AWXCard.self, from: jsonData)
-
-            return result
-        } catch {
-            return AWXCard()
-        }
     }
 }

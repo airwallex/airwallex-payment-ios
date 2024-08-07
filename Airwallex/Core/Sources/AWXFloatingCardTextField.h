@@ -14,7 +14,7 @@
 @interface AWXFloatingCardTextField : AWXFloatingLabelTextField
 
 /**
-Supported card schemes, meant to be NSArray<AWXBrandType>, but OC can't support primitive types for NSArray in declaration.
+Supported card schemes, meant to be NSArray<AWXCardBrand>, but OC can't support primitive types for NSArray in declaration.
 Can make it more explicit when we switch to Swift.
 */
 @property (nonatomic, copy) NSArray *cardBrands;
@@ -23,6 +23,6 @@ Can make it more explicit when we switch to Swift.
 
 @property (nonatomic, copy, nullable) NSString * (^validationMessageCallback)(NSString *);
 
-@property (nonatomic, copy) void (^brandUpdateCallback)(NSInteger);
+@property (nonatomic, copy) void (^brandUpdateCallback)(AWXCardBrand);
 
 @end

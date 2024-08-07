@@ -39,19 +39,9 @@ class AWXPaymentMethodOptionsTests: XCTestCase {
     }
 
     func testEncodeToJSON() {
-        let threeDs = AWXThreeDs()
-        threeDs.returnURL = "https://example.com/return"
-        threeDs.setValue("somePaRes", forKey: "paRes")
-        threeDs.setValue("attempt123", forKey: "attemptId")
-        threeDs.setValue("deviceData", forKey: "deviceDataCollectionRes")
-        threeDs.setValue("dsTransaction123", forKey: "dsTransactionId")
-
-        let cardOptions = AWXCardOptions()
-        cardOptions.autoCapture = true
-        cardOptions.threeDs = threeDs
-
-        let paymentOptions = AWXPaymentMethodOptions()
-        paymentOptions.cardOptions = cardOptions
+        let threeDs = AWXThreeDs(paRes: "somePaRes", returnURL: "https://example.com/return", attemptId: "attempt123", deviceDataCollectionRes: "deviceData", dsTransactionId: "dsTransaction123")
+        let cardOptions = AWXCardOptions(autoCapture: true, threeDs: threeDs)
+        let paymentOptions = AWXPaymentMethodOptions(cardOptions: cardOptions)
 
         let json = paymentOptions.encodeToJSON()
 

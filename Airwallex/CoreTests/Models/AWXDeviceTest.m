@@ -6,6 +6,7 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import "CoreTests-Swift.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 #ifdef AirwallexSDK

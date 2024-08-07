@@ -45,6 +45,7 @@
 @property (nonatomic, strong) NSArray *availablePaymentMethodTypes;
 @property (nonatomic, strong) NSMutableArray<AWXPaymentConsent *> *availablePaymentConsents;
 @property (nonatomic) BOOL canLoadMore;
+@property (nonatomic) BOOL showCardDirectly;
 @property (nonatomic) NSInteger nextPageNum;
 @property (nonatomic, strong) NSArray<AWXPaymentMethodType *> *filteredPaymentMethodTypes;
 
@@ -71,6 +72,7 @@
     _tableView.separatorColor = [AWXTheme sharedTheme].lineColor;
     _tableView.separatorInset = UIEdgeInsetsMake(0, 24, 0, 24);
     _tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    _tableView.hidden = YES;
     [_tableView registerClass:[AWXPaymentMethodCell class] forCellReuseIdentifier:@"AWXPaymentMethodCell"];
     [self.view addSubview:_tableView];
 
@@ -135,9 +137,30 @@
             strongSelf.availablePaymentConsents = [consents mutableCopy];
             [strongSelf filterPaymentMethodTypes];
 
+            [strongSelf presentSingleCardShortcutIfRequired];
             [strongSelf.tableView reloadData];
         }
     }];
+}
+
+- (void)presentSingleCardShortcutIfRequired {
+    BOOL hasPaymentConsents = self.availablePaymentConsents.count > 0;
+    BOOL hasSinglePaymentMethod = self.filteredPaymentMethodTypes.count == 1;
+    self.showCardDirectly = !hasPaymentConsents && hasSinglePaymentMethod;
+
+    if (self.showCardDirectly) {
+        // find the card payment method if it exists
+        for (AWXPaymentMethodType *type in self.filteredPaymentMethodTypes) {
+            if ([type.name isEqualToString:AWXCardKey]) {
+                [self didSelectPaymentMethodType:type];
+                break;
+            } else {
+                _tableView.hidden = NO;
+            }
+        }
+    } else {
+        _tableView.hidden = NO;
+    }
 }
 
 - (void)filterPaymentMethodTypes {
@@ -162,7 +185,7 @@
 
     AWXDisablePaymentConsentRequest *request = [AWXDisablePaymentConsentRequest new];
     request.requestId = NSUUID.UUID.UUIDString;
-    request.Id = paymentConsent.Id;
+    request.Id = paymentConsent.id;
 
     __weak __typeof(self) weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
@@ -173,11 +196,11 @@
 
              if (error) {
                  [strongSelf showAlert:error.localizedDescription];
-                 [strongSelf log:@"removing consent failed. ID: %@", paymentConsent.Id];
+                 [strongSelf log:@"removing consent failed. ID: %@", paymentConsent.id];
                  return;
              }
 
-             [strongSelf log:@"remove consent successfully. ID: %@", paymentConsent.Id];
+             [strongSelf log:@"remove consent successfully. ID: %@", paymentConsent.id];
              [strongSelf.availablePaymentConsents removeObjectAtIndex:index];
              [strongSelf.tableView reloadData];
          }];
@@ -303,6 +326,7 @@
     Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType);
 
     AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self session:self.session paymentMethodType:paymentMethodType];
+    provider.showPaymentDirectly = self.showCardDirectly;
     [provider handleFlow];
     self.provider = provider;
 }
@@ -360,7 +384,6 @@
                                                          }];
     } else if (controller) {
         [self.navigationController pushViewController:controller animated:YES];
-        //        [self presentViewController:controller animated:withAnimation completion:nil];
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "AWXTestUtils.h"
+#import "CoreTests-Swift.h"
 #import <XCTest/XCTest.h>
 #ifdef AirwallexSDK
 #import <Core/Core-Swift.h>

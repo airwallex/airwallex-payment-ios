@@ -16,7 +16,7 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 #import "AWXSession.h"
-#import "NSObject+logging.h"
+#import "NSObject+Logging.h"
 #import "PKContact+Request.h"
 #import "PKPaymentToken+Request.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
@@ -82,9 +82,7 @@ typedef enum {
 - (void)paymentAuthorizationController:(PKPaymentAuthorizationController *)controller
                    didAuthorizePayment:(PKPayment *)payment
                                handler:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
-    AWXPaymentMethod *method = [AWXPaymentMethod new];
-    method.type = AWXApplePayKey;
-    method.customerId = self.session.customerId;
+    AWXPaymentMethod *method = [[AWXPaymentMethod alloc] initWithType:AWXApplePayKey id:nil billing:nil card:nil additionalParams:nil customerId:self.session.customerId];
 
     NSError *error;
     NSDictionary *billingPayload;

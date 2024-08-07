@@ -11,37 +11,13 @@
 
 @implementation AWXCardImageView
 
-- (instancetype)initWithCardBrand:(AWXBrandType)brand {
-    NSString *imageName = [self imageNameForCardBrand:brand];
-    if (imageName) {
-        self = [super initWithImage:[UIImage imageNamed:imageName inBundle:[NSBundle resourceBundle]]];
-        if (self) {
-            self.cardBrand = brand;
-            self.contentMode = UIViewContentModeScaleAspectFit;
-        }
+- (instancetype)initWithCardBrand:(AWXCardBrand)brand {
+    self = [super initWithImage:[UIImage imageNamed:brand inBundle:[NSBundle resourceBundle]]];
+    if (self) {
+        self.cardBrand = brand;
+        self.contentMode = UIViewContentModeScaleAspectFit;
     }
     return self;
-}
-
-- (NSString *)imageNameForCardBrand:(AWXBrandType)brand {
-    switch (brand) {
-    case AWXBrandTypeVisa:
-        return @"visa";
-    case AWXBrandTypeAmex:
-        return @"amex";
-    case AWXBrandTypeMastercard:
-        return @"mastercard";
-    case AWXBrandTypeUnionPay:
-        return @"unionpay";
-    case AWXBrandTypeJCB:
-        return @"jcb";
-    case AWXBrandTypeDinersClub:
-        return @"diners";
-    case AWXBrandTypeDiscover:
-        return @"discover";
-    default:
-        return NULL;
-    }
 }
 
 @end

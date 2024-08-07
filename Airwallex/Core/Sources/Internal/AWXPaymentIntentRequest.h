@@ -16,58 +16,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- `AWXConfirmPaymentIntentRequest` includes all of the parameters needed to confirm payment intent.
- */
-@interface AWXConfirmPaymentIntentRequest : AWXRequest
-
-/**
- Return url (only be valid for recurring)
- */
-@property (nonatomic, copy, nullable) NSString *returnURL;
-
-/**
- Intent ID.
- */
-@property (nonatomic, copy) NSString *intentId;
-
-/**
- Request ID.
- */
-@property (nonatomic, copy) NSString *requestId;
-
-/**
- Customer ID.
- */
-@property (nonatomic, copy, nullable) NSString *customerId;
-
-/**
- Save payment method.
- */
-@property (nonatomic) BOOL savePaymentMethod;
-
-/**
- Payment method object.
- */
-@property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
-
-/**
- PaymentConsent method object.
- */
-@property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
-
-/**
- Options object.
- */
-@property (nonatomic, strong, nullable) AWXPaymentMethodOptions *options;
-
-/**
- Device object.
- */
-@property (nonatomic, strong, nullable) AWXDevice *device;
-
-@end
-
-/**
  `AWXConfirmThreeDSRequest` includes all of the parameters needed to confirm 3ds.
  */
 @interface AWXConfirmThreeDSRequest : AWXRequest

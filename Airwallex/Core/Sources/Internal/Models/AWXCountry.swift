@@ -35,7 +35,7 @@ public class AWXCountry: NSObject, Codable {
         let isoCountryCodes = Locale.isoRegionCodes
         var countries = [AWXCountry]()
         for isoCountryCode in isoCountryCodes {
-            if let name = locale.localizedString(forCurrencyCode: isoCountryCode) {
+            if let name = locale.localizedString(forRegionCode: isoCountryCode) {
                 let country = AWXCountry(countryCode: isoCountryCode, countryName: name)
                 countries.append(country)
             }

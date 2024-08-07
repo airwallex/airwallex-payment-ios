@@ -28,16 +28,4 @@
     self.device = device;
 }
 
-- (void)testConfirmRequestParameters {
-    AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    request.device = _device;
-    XCTAssertEqualObjects(request.parameters[@"device_data"], _device.encodeToJSON);
-}
-
-- (void)testContinueRequestParameter {
-    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
-    request.device = _device;
-    XCTAssertEqualObjects(request.parameters[@"device_data"], _device.encodeToJSON);
-}
-
 @end

@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  card schemes
  */
-@property (nonatomic, copy) NSArray<NSNumber *> *cardSchemes;
+@property (nonatomic, copy) NSArray<AWXCardBrand> *cardSchemes;
 
 /**
  Confirm the payment intent with card and billing.

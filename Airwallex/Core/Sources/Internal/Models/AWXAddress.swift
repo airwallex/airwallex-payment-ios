@@ -15,27 +15,27 @@ public class AWXAddress: NSObject, Codable {
     /**
      Country code of the address. Use the two-character ISO Standard Country Codes.
      */
-    public var countryCode: String?
+    public let countryCode: String?
 
     /**
      City of the address.
      */
-    public var city: String?
+    public let city: String?
 
     /**
      Street of the address.
      */
-    public var street: String?
+    public let street: String?
 
     /**
      State or province of the address, optional.
      */
-    public var state: String?
+    public let state: String?
 
     /**
      Postcode of the address, optional.
      */
-    public var postcode: String?
+    public let postcode: String?
 
     enum CodingKeys: String, CodingKey {
         case countryCode = "country_code"
@@ -43,5 +43,13 @@ public class AWXAddress: NSObject, Codable {
         case street
         case state
         case postcode
+    }
+
+    public init(countryCode: String?, city: String?, street: String?, state: String?, postcode: String?) {
+        self.countryCode = countryCode
+        self.city = city
+        self.street = street
+        self.state = state
+        self.postcode = postcode
     }
 }

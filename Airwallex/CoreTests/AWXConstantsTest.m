@@ -58,36 +58,29 @@
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeApplePay {
-    AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    id mockType = OCMPartialMock(type);
-    OCMStub([mockType name]).andReturn(@"applepay");
+    AWXPaymentMethodType *type = [[AWXPaymentMethodType alloc] initWithName:@"applepay" displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
-    XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(mockType), [AWXApplePayProvider class]);
+    XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXApplePayProvider class]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeCard {
-    AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    [type setValue:@"card" forKey:@"name"];
+    AWXPaymentMethodType *type = [[AWXPaymentMethodType alloc] initWithName:@"card" displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXCardProvider class]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeSchema {
-    AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    [type setValue:@"wechatpay" forKey:@"name"];
-    AWXResources *resources = [AWXResources new];
+    AWXResources *resources = [[AWXResources alloc] initWithLogos:nil hasSchema:NO];
     resources.hasSchema = YES;
-    [type setValue:resources forKey:@"resources"];
+    AWXPaymentMethodType *type = [[AWXPaymentMethodType alloc] initWithName:@"wechatpay" displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:resources cardSchemes:nil];
 
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXSchemaProvider class]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeDefault {
-    AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    [type setValue:@"somethingelse" forKey:@"name"];
-    AWXResources *resources = [AWXResources new];
+    AWXResources *resources = [[AWXResources alloc] initWithLogos:nil hasSchema:NO];
     resources.hasSchema = NO;
-    [type setValue:resources forKey:@"resources"];
+    AWXPaymentMethodType *type = [[AWXPaymentMethodType alloc] initWithName:@"somethingelse" displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:resources cardSchemes:nil];
 
     XCTAssertNil(ClassToHandleFlowForPaymentMethodType(type));
 }

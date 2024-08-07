@@ -15,27 +15,27 @@ public class AWXThreeDs: NSObject, Codable {
     /**
      Three domain request.
      */
-    public private(set) var paRes: String?
+    public let paRes: String?
 
     /**
      Return url.
      */
-    public var returnURL: String?
+    public let returnURL: String?
 
     /**
      Attempt ID.
      */
-    public private(set) var attemptId: String?
+    public let attemptId: String?
 
     /**
      Device data collection response.
      */
-    public private(set) var deviceDataCollectionRes: String?
+    public let deviceDataCollectionRes: String?
 
     /**
      3DS transaction ID.
      */
-    public private(set) var dsTransactionId: String?
+    public let dsTransactionId: String?
 
     enum CodingKeys: String, CodingKey {
         case paRes
@@ -43,5 +43,13 @@ public class AWXThreeDs: NSObject, Codable {
         case attemptId
         case deviceDataCollectionRes
         case dsTransactionId
+    }
+
+    public init(paRes: String?, returnURL: String?, attemptId: String?, deviceDataCollectionRes: String?, dsTransactionId: String?) {
+        self.paRes = paRes
+        self.returnURL = returnURL
+        self.attemptId = attemptId
+        self.deviceDataCollectionRes = deviceDataCollectionRes
+        self.dsTransactionId = dsTransactionId
     }
 }

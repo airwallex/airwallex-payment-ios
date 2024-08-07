@@ -6,6 +6,7 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
+#import "AWXConstants.h"
 #import <XCTest/XCTest.h>
 #ifdef AirwallexSDK
 #import <Core/Core-Swift.h>
@@ -28,13 +29,13 @@
 }
 
 - (void)testBrandForCardNumber {
-    XCTAssertTrue([validator brandForCardNumber:@"4242424242424242"].type == AWXBrandTypeVisa);
-    XCTAssertTrue([validator brandForCardNumber:@"4012000300001003"].type == AWXBrandTypeVisa);
-    XCTAssertTrue([validator brandForCardNumber:@"378282246310005"].type == AWXBrandTypeAmex);
-    XCTAssertTrue([validator brandForCardNumber:@"6011111111111117"].type == AWXBrandTypeDiscover);
-    XCTAssertTrue([validator brandForCardNumber:@"3056930009020004"].type == AWXBrandTypeDinersClub);
-    XCTAssertTrue([validator brandForCardNumber:@"3566002020360505"].type == AWXBrandTypeJCB);
-    XCTAssertTrue([validator brandForCardNumber:@"6200000000000005"].type == AWXBrandTypeUnionPay);
+    XCTAssertTrue([validator brandForCardNumber:@"4242424242424242"].type == AWXCardBrandVisa);
+    XCTAssertTrue([validator brandForCardNumber:@"4012000300001003"].type == AWXCardBrandVisa);
+    XCTAssertTrue([validator brandForCardNumber:@"378282246310005"].type == AWXCardBrandAmex);
+    XCTAssertTrue([validator brandForCardNumber:@"6011111111111117"].type == AWXCardBrandDiscover);
+    XCTAssertTrue([validator brandForCardNumber:@"3056930009020004"].type == AWXCardBrandDinersClub);
+    XCTAssertTrue([validator brandForCardNumber:@"3566002020360505"].type == AWXCardBrandJCB);
+    XCTAssertTrue([validator brandForCardNumber:@"6200000000000005"].type == AWXCardBrandUnionPay);
 }
 
 - (void)testNameForCardNumber {
@@ -54,9 +55,9 @@
 }
 
 - (void)testBrandForCardName {
-    XCTAssertTrue([validator brandForCardName:@"american express"].type == AWXBrandTypeAmex);
-    XCTAssertTrue([validator brandForCardName:@"amex"].type == AWXBrandTypeAmex);
-    XCTAssertTrue([validator brandForCardName:@"diners club international"].type == AWXBrandTypeDinersClub);
+    XCTAssertTrue([validator brandForCardName:@"american express"].type == AWXCardBrandAmex);
+    XCTAssertTrue([validator brandForCardName:@"amex"].type == AWXCardBrandAmex);
+    XCTAssertTrue([validator brandForCardName:@"diners club international"].type == AWXCardBrandDinersClub);
 }
 
 - (void)testMaxLengthForCardNumber {

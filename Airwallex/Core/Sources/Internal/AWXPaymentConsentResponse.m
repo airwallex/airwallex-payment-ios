@@ -9,9 +9,9 @@
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentIntentResponse.h"
 #ifdef AirwallexSDK
-#import "Core/Core-Swift.h"
+#import <Core/Core-Swift.h>
 #else
-#import "Airwallex/Airwallex-Swift.h"
+#import <Airwallex/Airwallex-Swift.h>
 #endif
 
 @interface AWXCreatePaymentConsentResponse ()

@@ -15,15 +15,20 @@ public class AWXCardOptions: NSObject, Codable {
     /**
      Should capture automatically when confirm. Default to false. The payment intent will be captured automatically if it is true, and authorized only if it is false.
      */
-    public var autoCapture: Bool = false
+    public let autoCapture: Bool
 
     /**
      ThreeDs object.
      */
-    public var threeDs: AWXThreeDs?
+    public let threeDs: AWXThreeDs?
 
     enum CodingKeys: String, CodingKey {
         case autoCapture = "auto_capture"
         case threeDs = "three_ds"
+    }
+
+    public init(autoCapture: Bool, threeDs: AWXThreeDs?) {
+        self.autoCapture = autoCapture
+        self.threeDs = threeDs
     }
 }

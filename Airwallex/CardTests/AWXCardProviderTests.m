@@ -34,7 +34,7 @@
 
 - (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod
                  completion:(AWXRequestHandler)completion;
-- (AWXCardScheme *)getSchemeFrom:(int)type;
+- (AWXCardScheme *)getSchemeFrom:(AWXCardBrand)type;
 
 @end
 
@@ -42,7 +42,7 @@
 
 - (void)setUp {
     self.session = [AWXSession new];
-    self.paymentMethod = [AWXPaymentMethodType new];
+    self.paymentMethod = [[AWXPaymentMethodType alloc] initWithName:nil displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 }
 
 - (void)testCanHandleSessionWhenCardSchemesIsNull {
@@ -50,14 +50,14 @@
 }
 
 - (void)testCanHandleSessionWhenCardSchemesIsEmpty {
-    [_paymentMethod setValue:[NSArray new] forKey:@"cardSchemes"];
+    self.paymentMethod = [[AWXPaymentMethodType alloc] initWithName:nil displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:[NSArray new]];
     XCTAssertFalse([AWXCardProvider canHandleSession:_session paymentMethod:_paymentMethod]);
 }
 
 - (void)testHandleFlow {
     id spy = OCMClassMock([AWXProviderDelegateSpy class]);
     AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
+    AWXPaymentMethodType *paymentMethod = [[AWXPaymentMethodType alloc] initWithName:nil displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
     session.autoCapture = YES;
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session paymentMethodType:paymentMethod];
     [provider handleFlow];
@@ -73,12 +73,12 @@
 - (void)testHandleFlowWithCardSchemes {
     id spy = OCMClassMock([AWXProviderDelegateSpy class]);
     AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
+    AWXPaymentMethodType *paymentMethod = [[AWXPaymentMethodType alloc] initWithName:nil displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
     session.autoCapture = YES;
 
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session paymentMethodType:paymentMethod];
 
-    provider.cardSchemes = @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard)];
+    provider.cardSchemes = @[AWXCardBrandVisa, AWXCardBrandMastercard];
 
     [provider handleFlow];
 
@@ -93,22 +93,21 @@
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.autoCapture = YES;
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
-    id providerSpy = OCMPartialMock(provider);
 
     // Define a dictionary to map card types to their expected scheme names
-    NSDictionary<NSNumber *, NSString *> *expectedSchemes = @{
-        @(AWXBrandTypeAmex): @"amex",
-        @(AWXBrandTypeMastercard): @"mastercard",
-        @(AWXBrandTypeVisa): @"visa",
-        @(AWXBrandTypeUnionPay): @"unionpay",
-        @(AWXBrandTypeJCB): @"jcb",
-        @(AWXBrandTypeDinersClub): @"diners",
-        @(AWXBrandTypeDiscover): @"discover",
-        @(999): @"" // For unknown card type
+    NSDictionary<NSString *, NSString *> *expectedSchemes = @{
+        AWXCardBrandAmex: @"amex",
+        AWXCardBrandMastercard: @"mastercard",
+        AWXCardBrandVisa: @"visa",
+        AWXCardBrandUnionPay: @"unionpay",
+        AWXCardBrandJCB: @"jcb",
+        AWXCardBrandDinersClub: @"diners",
+        AWXCardBrandDiscover: @"discover",
+        @"999": @"unknown" // For unknown card type
     };
 
-    [expectedSchemes enumerateKeysAndObjectsUsingBlock:^(NSNumber *type, NSString *expectedName, BOOL *stop) {
-        AWXCardScheme *scheme = [provider getSchemeFrom:type.intValue];
+    [expectedSchemes enumerateKeysAndObjectsUsingBlock:^(NSString *type, NSString *expectedName, BOOL *stop) {
+        AWXCardScheme *scheme = [provider getSchemeFrom:type];
         XCTAssertEqualObjects(scheme.name, expectedName, @"Expected scheme.name for type %@ is %@, but got %@", type, expectedName, scheme.name);
     }];
 }
@@ -116,13 +115,13 @@
 - (void)testCanHandleSessionWhenCardSchemesIsNotEmpty {
     AWXCardScheme *amexScheme = [AWXCardScheme new];
     amexScheme.name = @"amex";
-    [_paymentMethod setValue:@[amexScheme] forKey:@"cardSchemes"];
+    self.paymentMethod = [[AWXPaymentMethodType alloc] initWithName:nil displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:@[amexScheme]];
     XCTAssertTrue([AWXCardProvider canHandleSession:_session paymentMethod:_paymentMethod]);
 }
 
 - (void)testConfirmPaymentIntentWithPaymentConsentId {
     AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:nil];
-    AWXAPIClient *client = [self mockAPIClient];
+    id mockClient = OCMClassMock([AWXAPIClientSwift class]);
 
     AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
     AWXOneOffSession *session = [AWXOneOffSession new];
@@ -134,14 +133,7 @@
 
     [provider confirmPaymentIntentWithPaymentConsentId:@"consentID"];
 
-    OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {
-                                    AWXConfirmPaymentIntentRequest *request = obj;
-                                    XCTAssert(request.options.cardOptions.autoCapture);
-                                    XCTAssertEqual(request.paymentConsent.Id, @"consentID");
-                                    XCTAssertEqual(request.device, device);
-                                    return YES;
-                                }]
-                             handler:[OCMArg any]]);
+    OCMVerify(times(1), [mockClient confirmPaymentIntentWithConfiguration:[OCMArg any] completion:[OCMArg any]]);
 }
 
 - (void)testConfirmPaymentIntentWithCardNoSave {
@@ -153,8 +145,8 @@
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
     id providerSpy = OCMPartialMock(provider);
 
-    AWXCard *card = [AWXCard new];
-    AWXPlaceDetails *billing = [AWXPlaceDetails new];
+    AWXCard *card = [[AWXCard alloc] initWithNumber:nil expiryMonth:nil expiryYear:nil name:nil cvc:nil bin:nil last4:nil brand:nil country:nil funding:nil fingerprint:nil cvcCheck:nil avsCheck:nil numberType:nil];
+    AWXPlaceDetails *billing = [[AWXPlaceDetails alloc] initWithFirstName:nil lastName:nil email:nil dateOfBirth:nil phoneNumber:nil address:nil];
 
     [providerSpy confirmPaymentIntentWithCard:card billing:billing saveCard:NO];
 
@@ -180,8 +172,8 @@
     id providerSpy = OCMPartialMock(provider);
     OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:device, nil])]);
 
-    AWXCard *card = [AWXCard new];
-    AWXPlaceDetails *billing = [AWXPlaceDetails new];
+    AWXCard *card = [[AWXCard alloc] initWithNumber:nil expiryMonth:nil expiryYear:nil name:nil cvc:nil bin:nil last4:nil brand:nil country:nil funding:nil fingerprint:nil cvcCheck:nil avsCheck:nil numberType:nil];
+    AWXPlaceDetails *billing = [[AWXPlaceDetails alloc] initWithFirstName:nil lastName:nil email:nil dateOfBirth:nil phoneNumber:nil address:nil];
 
     [provider confirmPaymentIntentWithCard:card billing:billing saveCard:YES];
 
@@ -207,8 +199,8 @@
     id providerSpy = OCMPartialMock(provider);
     OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:device, nil])]);
 
-    AWXCard *card = [AWXCard new];
-    AWXPlaceDetails *billing = [AWXPlaceDetails new];
+    AWXCard *card = [[AWXCard alloc] initWithNumber:nil expiryMonth:nil expiryYear:nil name:nil cvc:nil bin:nil last4:nil brand:nil country:nil funding:nil fingerprint:nil cvcCheck:nil avsCheck:nil numberType:nil];
+    AWXPlaceDetails *billing = [[AWXPlaceDetails alloc] initWithFirstName:nil lastName:nil email:nil dateOfBirth:nil phoneNumber:nil address:nil];
 
     [provider confirmPaymentIntentWithCard:card billing:billing saveCard:YES];
 

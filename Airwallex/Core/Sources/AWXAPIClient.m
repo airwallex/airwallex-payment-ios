@@ -13,7 +13,7 @@
 #import "AWXLogger.h"
 #import "AWXUtils.h"
 #import "NSData+Base64.h"
-#import "NSObject+logging.h"
+#import "NSObject+Logging.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
 #ifdef AirwallexSDK
 #import <Core/Core-Swift.h>

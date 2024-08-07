@@ -38,8 +38,8 @@
         parameters[@"merchant_trigger_reason"] = merchantTriggerReasonString;
     }
     NSMutableDictionary *paymentParams = @{}.mutableCopy;
-    if (self.paymentMethod.Id) {
-        paymentParams[@"id"] = self.paymentMethod.Id;
+    if (self.paymentMethod.id) {
+        paymentParams[@"id"] = self.paymentMethod.id;
     }
     if (self.paymentMethod.type) {
         paymentParams[@"type"] = self.paymentMethod.type;
@@ -62,7 +62,7 @@
 @implementation AWXVerifyPaymentConsentRequest
 
 - (NSString *)path {
-    return [NSString stringWithFormat:@"/api/v1/pa/payment_consents/%@/verify", self.consent.Id];
+    return [NSString stringWithFormat:@"/api/v1/pa/payment_consents/%@/verify", self.consent.id];
 }
 
 - (AWXHTTPMethod)method {
