@@ -15,10 +15,14 @@ public class AWXPaymentMethodOptions: NSObject, Codable {
     /**
      The options for card.
      */
-    public var cardOptions: AWXCardOptions?
+    public let cardOptions: AWXCardOptions?
 
     enum CodingKeys: String, CodingKey {
         case cardOptions = "card"
+    }
+
+    public init(cardOptions: AWXCardOptions?) {
+        self.cardOptions = cardOptions
     }
 
     public static func decodeFromJSON(_ dic: [String: Any]) -> AWXPaymentMethodOptions {
@@ -29,7 +33,7 @@ public class AWXPaymentMethodOptions: NSObject, Codable {
 
             return result
         } catch {
-            return AWXPaymentMethodOptions()
+            return AWXPaymentMethodOptions(cardOptions: nil)
         }
     }
 

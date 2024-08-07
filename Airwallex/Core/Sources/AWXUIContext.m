@@ -58,6 +58,7 @@
 
 - (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController {
     NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
+    self.hostVC = hostViewController;
     UINavigationController *navigationController;
     if ([hostViewController isKindOfClass:[UINavigationController class]]) {
         navigationController = (UINavigationController *)hostViewController;

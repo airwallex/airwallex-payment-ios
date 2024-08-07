@@ -26,16 +26,9 @@
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.countryCode = @"AU";
 
-    AWXPlaceDetails *details = [AWXPlaceDetails new];
-    details.firstName = @"firstName";
-    details.lastName = @"lastName";
+    AWXAddress *address = [[AWXAddress alloc] initWithCountryCode:@"AU" city:@"city" street:@"street" state:nil postcode:nil];
+    AWXPlaceDetails *details = [[AWXPlaceDetails alloc] initWithFirstName:@"firstName" lastName:@"lastName" email:nil dateOfBirth:nil phoneNumber:nil address:address];
 
-    AWXAddress *address = [AWXAddress new];
-    address.street = @"street";
-    address.countryCode = @"AU";
-    address.city = @"city";
-
-    details.address = address;
     PKContact *contact = [details convertToPaymentContact];
 
     session.billing = details;

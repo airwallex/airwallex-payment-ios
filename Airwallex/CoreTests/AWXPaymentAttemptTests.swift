@@ -13,9 +13,9 @@ import XCTest
 class AWXPaymentAttemptTests: XCTestCase {
     // Test if the initialization of AWXPaymentAttempt assigns values correctly.
     func testInitialization() {
-        let paymentMethod = AWXPaymentMethod()
-        let authenticationData = AWXAuthenticationData()
-        let attempt = AWXPaymentAttempt()
+        let paymentMethod = AWXPaymentMethod(type: nil, Id: nil, billing: nil, card: nil, additionalParams: nil, customerId: nil)
+        let authenticationData = AWXAuthenticationData(fraudData: nil, dsData: nil)
+        let attempt = AWXPaymentAttempt(Id: "123", amount: nil, paymentMethod: paymentMethod, status: "succeeded", capturedAmount: nil, refundedAmount: nil, authenticationData: authenticationData)
 
         let mirror = Mirror(reflecting: attempt)
         if let amount = mirror.descendant("amount") as? Double {
@@ -30,13 +30,9 @@ class AWXPaymentAttemptTests: XCTestCase {
             XCTAssertNil(refundedAmount)
         }
 
-        attempt.setValue("123", forKey: "Id")
         attempt.setAmount(100.0)
-        attempt.setValue(paymentMethod, forKey: "paymentMethod")
-        attempt.setValue("succeeded", forKey: "status")
         attempt.setCapturedAmount(90.0)
         attempt.setRefundedAmount(10.0)
-        attempt.setValue(authenticationData, forKey: "authenticationData")
 
         XCTAssertEqual(attempt.Id, "123")
         XCTAssertEqual(attempt.objcAmount, 100.0)
@@ -78,7 +74,7 @@ class AWXPaymentAttemptTests: XCTestCase {
 
     // Test NSNumber properties
     func testNSNumberConversion() {
-        let attempt = AWXPaymentAttempt()
+        let attempt = AWXPaymentAttempt(Id: nil, amount: nil, paymentMethod: nil, status: nil, capturedAmount: nil, refundedAmount: nil, authenticationData: nil)
         attempt.setAmount(100.0)
         attempt.setCapturedAmount(90.0)
         attempt.setRefundedAmount(10.0)

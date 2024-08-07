@@ -51,8 +51,7 @@
         _session = session;
         if (paymentMethodType) {
             _paymentMethodType = paymentMethodType;
-            AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-            paymentMethod.type = paymentMethodType.name;
+            AWXPaymentMethod *paymentMethod = [[AWXPaymentMethod alloc] initWithType:paymentMethodType.name Id:nil billing:nil card:nil additionalParams:nil customerId:nil];
             _paymentMethod = paymentMethod;
         }
     }
@@ -182,16 +181,14 @@
     configuration.returnURL = returnURL;
 
     if ([@[AWXCardKey, AWXApplePayKey] containsObject:paymentMethod.type]) {
-        AWXCardOptions *cardOptions = [AWXCardOptions new];
-        cardOptions.autoCapture = autoCapture;
+        AWXCardOptions *cardOptions;
         if ([paymentMethod.type isEqualToString:AWXCardKey]) {
-            AWXThreeDs *threeDs = [AWXThreeDs new];
-            threeDs.returnURL = AWXThreeDSReturnURL;
-            cardOptions.threeDs = threeDs;
+            AWXThreeDs *threeDs = [[AWXThreeDs alloc] initWithPaRes:nil returnURL:AWXThreeDSReturnURL attemptId:nil deviceDataCollectionRes:nil dsTransactionId:nil];
+            cardOptions = [[AWXCardOptions alloc] initWithAutoCapture:autoCapture threeDs:threeDs];
+        } else {
+            cardOptions = [[AWXCardOptions alloc] initWithAutoCapture:autoCapture threeDs:nil];
         }
-
-        AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
-        options.cardOptions = cardOptions;
+        AWXPaymentMethodOptions *options = [[AWXPaymentMethodOptions alloc] initWithCardOptions:cardOptions];
         configuration.options = options;
     }
 

@@ -484,7 +484,7 @@ public class AWXCardViewController: UIViewController {
             phoneNumber: phoneNumberField.text(), state: stateField.text(), city: cityField.text(),
             street: streetField.text(), postcode: zipCodeField.text()
         )
-        return address ?? AWXPlaceDetails()
+        return address ?? AWXPlaceDetails(firstName: nil, lastName: nil, email: nil, dateOfBirth: nil, phoneNumber: nil, address: nil)
     }
 
     private func makeCard() -> AWXCard {
@@ -492,7 +492,7 @@ public class AWXCardViewController: UIViewController {
             name: nameField.text(), number: cardNoField.text(), expiry: expiresField.text(),
             cvc: cvcField.text()
         )
-        return card ?? AWXCard()
+        return card ?? AWXCard(number: nil, expiryMonth: nil, expiryYear: nil, name: nil, cvc: nil, bin: nil, last4: nil, brand: nil, country: nil, funding: nil, fingerprint: nil, cvcCheck: nil, avsCheck: nil, numberType: nil)
     }
 
     func goBack() {

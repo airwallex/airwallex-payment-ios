@@ -73,11 +73,7 @@
                             saveCard:(BOOL)saveCard {
     [self log:@"Start payment confirm. Type: Card. Intent Id:%@", self.session.paymentIntentId];
 
-    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-    paymentMethod.type = AWXCardKey;
-    paymentMethod.billing = billing;
-    paymentMethod.card = card;
-    paymentMethod.customerId = self.session.customerId;
+    AWXPaymentMethod *paymentMethod = [[AWXPaymentMethod alloc] initWithType:AWXCardKey Id:nil billing:billing card:card additionalParams:nil customerId:self.session.customerId];
 
     [self.delegate providerDidStartRequest:self];
     [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
@@ -126,8 +122,7 @@
                                           device:(AWXDevice *)device
                                       completion:(AWXRequestHandler)completion {
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    AWXPaymentConsent *consent = [AWXPaymentConsent new];
-    consent.Id = paymentConsentId;
+    AWXPaymentConsent *consent = [[AWXPaymentConsent alloc] initWithId:paymentConsentId requestId:nil customerId:nil status:nil paymentMethod:nil nextTriggeredBy:nil merchantTriggerReason:nil createdAt:nil updatedAt:nil clientSecret:nil];
     request.requestId = NSUUID.UUID.UUIDString;
     request.intentId = self.session.paymentIntentId;
     request.customerId = self.session.customerId;
@@ -136,15 +131,11 @@
     request.returnURL = AWXThreeDSReturnURL;
 
     if ([self.session respondsToSelector:@selector(autoCapture)]) {
-        AWXCardOptions *cardOptions = [AWXCardOptions new];
-        cardOptions.autoCapture = [[self.session valueForKey:@"autoCapture"] boolValue];
         // assume payment consent can only be card payment type, so set 3ds return url anyway
-        AWXThreeDs *threeDs = [AWXThreeDs new];
-        threeDs.returnURL = AWXThreeDSReturnURL;
-        cardOptions.threeDs = threeDs;
+        AWXThreeDs *threeDs = [[AWXThreeDs alloc] initWithPaRes:nil returnURL:AWXThreeDSReturnURL attemptId:nil deviceDataCollectionRes:nil dsTransactionId:nil];
+        AWXCardOptions *cardOptions = [[AWXCardOptions alloc] initWithAutoCapture:[[self.session valueForKey:@"autoCapture"] boolValue] threeDs:threeDs];
 
-        AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
-        options.cardOptions = cardOptions;
+        AWXPaymentMethodOptions *options = [[AWXPaymentMethodOptions alloc] initWithCardOptions:cardOptions];
         request.options = options;
     }
 

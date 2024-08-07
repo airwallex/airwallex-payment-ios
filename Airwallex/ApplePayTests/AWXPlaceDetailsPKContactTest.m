@@ -22,21 +22,8 @@
 @implementation AWXPlaceDetailsPKContactTest
 
 - (void)testConvertToPaymentContact {
-    AWXPlaceDetails *details = [AWXPlaceDetails new];
-    details.firstName = @"firstName";
-    details.lastName = @"lastName";
-
-    details.email = nil;
-    details.phoneNumber = nil;
-
-    AWXAddress *address = [AWXAddress new];
-    address.countryCode = @"AU";
-    address.city = @"Melbourne";
-    address.street = @"Name St.";
-    address.state = @"VIC";
-    address.postcode = @"3000";
-
-    details.address = address;
+    AWXAddress *address = [[AWXAddress alloc] initWithCountryCode:@"AU" city:@"Melbourne" street:@"Name St." state:@"VIC" postcode:@"3000"];
+    AWXPlaceDetails *details = [[AWXPlaceDetails alloc] initWithFirstName:@"firstName" lastName:@"lastName" email:nil dateOfBirth:nil phoneNumber:nil address:address];
 
     PKContact *contact = [details convertToPaymentContact];
 

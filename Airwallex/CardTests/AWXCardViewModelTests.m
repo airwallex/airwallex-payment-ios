@@ -44,7 +44,7 @@
 - (void)testSetReusesShippingAsBillingInformationWhenHasBilling {
     NSError *error;
     AWXOneOffSession *session = [AWXOneOffSession new];
-    session.billing = [AWXPlaceDetails new];
+    session.billing = [[AWXPlaceDetails alloc] initWithFirstName:nil lastName:nil email:nil dateOfBirth:nil phoneNumber:nil address:nil];
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     BOOL isUpdated = [viewModel setReusesShippingAsBillingInformation:true error:&error];
     XCTAssertTrue(viewModel.isReusingShippingAsBillingInformation);
@@ -75,8 +75,7 @@
 
 - (void)testInitialBilling {
     AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXPlaceDetails *billing = [AWXPlaceDetails new];
-    billing.firstName = @"John";
+    AWXPlaceDetails *billing = [[AWXPlaceDetails alloc] initWithFirstName:@"John" lastName:nil email:nil dateOfBirth:nil phoneNumber:nil address:nil];
     session.billing = billing;
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     XCTAssertEqual(viewModel.initialBilling.firstName, @"John");
@@ -107,19 +106,19 @@
 
 - (void)testMakeBillingWhenReusingSessionBilling {
     AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXAddress *address = [AWXAddress new];
-    address.countryCode = @"SES";
-    address.state = @"SESSION";
-    address.city = @"Session City";
-    address.street = @"Session St";
-    address.postcode = @"Session Code";
 
-    AWXPlaceDetails *billing = [AWXPlaceDetails new];
-    billing.firstName = @"James";
-    billing.lastName = @"Session";
-    billing.email = @"session@example.com";
-    billing.phoneNumber = @"1-800-Session";
-    billing.address = address;
+    AWXAddress *address = [[AWXAddress alloc] initWithCountryCode:@"SES"
+                                                             city:@"Session City"
+                                                           street:@"Session St"
+                                                            state:@"SESSION"
+                                                         postcode:@"Session Code"];
+
+    AWXPlaceDetails *billing = [[AWXPlaceDetails alloc] initWithFirstName:@"James"
+                                                                 lastName:@"Session"
+                                                                    email:@"session@example.com"
+                                                              dateOfBirth:nil
+                                                              phoneNumber:@"1-800-Session"
+                                                                  address:address];
 
     session.billing = billing;
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
@@ -189,8 +188,8 @@
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
 
     [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate]
-                                  billing:[AWXPlaceDetails new]
-                                     card:[AWXCard new]
+                                  billing:[[AWXPlaceDetails alloc] initWithFirstName:nil lastName:nil email:nil dateOfBirth:nil phoneNumber:nil address:nil]
+                                     card:[[AWXCard alloc] initWithNumber:nil expiryMonth:nil expiryYear:nil name:nil cvc:nil bin:nil last4:nil brand:nil country:nil funding:nil fingerprint:nil cvcCheck:nil avsCheck:nil numberType:nil]
                    shouldStoreCardDetails:true
                                     error:&error];
     XCTAssertEqualObjects(error.localizedDescription, @"Invalid first name");
@@ -203,7 +202,7 @@
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate]
                                   billing:nil
-                                     card:[AWXCard new]
+                                     card:[[AWXCard alloc] initWithNumber:nil expiryMonth:nil expiryYear:nil name:nil cvc:nil bin:nil last4:nil brand:nil country:nil funding:nil fingerprint:nil cvcCheck:nil avsCheck:nil numberType:nil]
                    shouldStoreCardDetails:true
                                     error:&error];
     XCTAssertEqualObjects(error.localizedDescription, @"No billing address provided.");
@@ -224,7 +223,7 @@
                                                           postcode:@"3000"];
     [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate]
                                   billing:billing
-                                     card:[AWXCard new]
+                                     card:[[AWXCard alloc] initWithNumber:nil expiryMonth:nil expiryYear:nil name:nil cvc:nil bin:nil last4:nil brand:nil country:nil funding:nil fingerprint:nil cvcCheck:nil avsCheck:nil numberType:nil]
                    shouldStoreCardDetails:true
                                     error:&error];
     XCTAssertEqualObjects(error.localizedDescription, @"Invalid card number");

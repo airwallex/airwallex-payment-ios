@@ -38,19 +38,11 @@
         }
     }];
 
-    AWXPaymentMethodType *mismatchTransactionMode = [AWXPaymentMethodType new];
-    [mismatchTransactionMode setValue:@"mismatchTransactionMode" forKey:@"name"];
-    [mismatchTransactionMode setValue:@"anotherTransactionMode" forKey:@"transactionMode"];
+    AWXPaymentMethodType *mismatchTransactionMode = [[AWXPaymentMethodType alloc] initWithName:@"mismatchTransactionMode" displayName:nil transactionMode:@"anotherTransactionMode" flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
-    AWXPaymentMethodType *unsupportedMethod = [AWXPaymentMethodType new];
+    AWXPaymentMethodType *unsupportedMethod = [[AWXPaymentMethodType alloc] initWithName:@"googlepay" displayName:@"Google Pay" transactionMode:@"transactionMode" flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
-    [unsupportedMethod setValue:@"googlepay" forKey:@"name"];
-    [unsupportedMethod setValue:@"Google Pay" forKey:@"displayName"];
-    [unsupportedMethod setValue:@"transactionMode" forKey:@"transactionMode"];
-
-    AWXPaymentMethodType *methodWithoutDisplayName = [AWXPaymentMethodType new];
-    [methodWithoutDisplayName setValue:@"card" forKey:@"name"];
-    [methodWithoutDisplayName setValue:@"transactionMode" forKey:@"transactionMode"];
+    AWXPaymentMethodType *methodWithoutDisplayName = [[AWXPaymentMethodType alloc] initWithName:@"card" displayName:nil transactionMode:@"transactionMode" flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
     NSArray<AWXPaymentMethodType *> *methodTypes = @[
         validMethod,
@@ -74,9 +66,7 @@
     id classMock = OCMClassMock([AWXDefaultProvider class]);
     OCMStub([classMock canHandleSession:[OCMArg any] paymentMethod:[OCMArg any]]).andReturn(NO);
 
-    AWXPaymentMethodType *validMethod = [AWXPaymentMethodType new];
-    [validMethod setValue:@"validMethod" forKey:@"name"];
-    [validMethod setValue:@"transactionMode" forKey:@"transactionMode"];
+    AWXPaymentMethodType *validMethod = [[AWXPaymentMethodType alloc] initWithName:@"validMethod" displayName:nil transactionMode:@"transactionMode" flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
     NSArray<AWXPaymentMethodType *> *methodTypes = @[
         validMethod

@@ -15,22 +15,22 @@ public class AWXConfirmPaymentNextAction: NSObject, Codable {
     /**
      Next action type.
      */
-    public private(set) var type: String?
+    public let type: String?
 
     /**
      URL.
      */
-    public private(set) var url: String?
+    public let url: String?
 
     /**
      Method.
      */
-    public private(set) var method: String?
+    public let method: String?
 
     /**
      Stage.
      */
-    public private(set) var stage: String?
+    public let stage: String?
 
     /**
      Payload of next action.
@@ -39,8 +39,8 @@ public class AWXConfirmPaymentNextAction: NSObject, Codable {
         data ?? dccData
     }
 
-    private var data: [String: String]?
-    private var dccData: [String: String]?
+    private let data: [String: String]?
+    private let dccData: [String: String]?
 
     enum CodingKeys: String, CodingKey {
         case type
@@ -51,6 +51,15 @@ public class AWXConfirmPaymentNextAction: NSObject, Codable {
         case dccData = "dcc_data"
     }
 
+    init(type: String?, url: String?, method: String?, stage: String?, data: [String: String]?, dccData: [String: String]?) {
+        self.type = type
+        self.url = url
+        self.method = method
+        self.stage = stage
+        self.data = data
+        self.dccData = dccData
+    }
+
     public static func decodeFromJSON(_ dic: [String: Any]) -> AWXConfirmPaymentNextAction {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
@@ -59,7 +68,7 @@ public class AWXConfirmPaymentNextAction: NSObject, Codable {
 
             return result
         } catch {
-            return AWXConfirmPaymentNextAction()
+            return AWXConfirmPaymentNextAction(type: nil, url: nil, method: nil, stage: nil, data: nil, dccData: nil)
         }
     }
 }

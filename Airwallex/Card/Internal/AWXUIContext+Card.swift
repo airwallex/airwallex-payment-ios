@@ -32,23 +32,17 @@ import Foundation
     /**
      Push the payment flow from card info collection view.
      */
-    @available(*, unavailable)
-
-    func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [Any]) {
+    func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [Int]) {
         hostVC = hostViewController
         isPush = true
-
         let provider = AWXCardProvider(delegate: self, session: session)
-        if let cardSchemes = cardSchemes as? [NSNumber] {
-            provider.cardSchemes = cardSchemes
-        }
+        provider.cardSchemes = cardSchemes as [NSNumber]
         provider.handleFlow()
     }
 
     @nonobjc func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [AWXBrandType] = AWXBrandType.allCases) {
         hostVC = hostViewController
         isPush = true
-
         let provider = AWXCardProvider(delegate: self, session: session)
         provider.cardSchemes = cardSchemes.map { $0.rawValue as NSNumber }
         provider.handleFlow()

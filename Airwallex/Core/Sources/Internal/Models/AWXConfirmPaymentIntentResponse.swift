@@ -15,7 +15,7 @@ public class AWXConfirmPaymentIntentResponse: AWXResponse, Codable {
     /**
      Currency.
      */
-    public private(set) var currency: String?
+    public let currency: String?
 
     /**
      Payment amount.
@@ -28,17 +28,17 @@ public class AWXConfirmPaymentIntentResponse: AWXResponse, Codable {
     /**
      Payment status.
      */
-    public private(set) var status: String?
+    public let status: String?
 
     /**
      Next action.
      */
-    public private(set) var nextAction: AWXConfirmPaymentNextAction?
+    public let nextAction: AWXConfirmPaymentNextAction?
 
     /**
      The latest payment attempt object.
      */
-    public private(set) var latestPaymentAttempt: AWXPaymentAttempt?
+    public let latestPaymentAttempt: AWXPaymentAttempt?
 
     enum CodingKeys: String, CodingKey {
         case currency
@@ -46,6 +46,14 @@ public class AWXConfirmPaymentIntentResponse: AWXResponse, Codable {
         case status
         case nextAction = "next_action"
         case latestPaymentAttempt = "latest_payment_attempt"
+    }
+
+    public init(currency: String?, amount: NSNumber?, status: String?, nextAction: AWXConfirmPaymentNextAction?, latestPaymentAttempt: AWXPaymentAttempt?) {
+        self.currency = currency
+        self.amount = amount?.doubleValue
+        self.status = status
+        self.nextAction = nextAction
+        self.latestPaymentAttempt = latestPaymentAttempt
     }
 
     public static func decodeFromJSON(_ dic: [String: Any]) -> AWXConfirmPaymentIntentResponse {
@@ -57,7 +65,7 @@ public class AWXConfirmPaymentIntentResponse: AWXResponse, Codable {
             return result
         } catch {
             print(error.localizedDescription)
-            return AWXConfirmPaymentIntentResponse()
+            return AWXConfirmPaymentIntentResponse(currency: nil, amount: nil, status: nil, nextAction: nil, latestPaymentAttempt: nil)
         }
     }
 

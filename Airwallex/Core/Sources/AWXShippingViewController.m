@@ -171,18 +171,9 @@
 }
 
 - (IBAction)savePressed:(id)sender {
-    AWXPlaceDetails *shipping = [AWXPlaceDetails new];
-    shipping.lastName = self.lastNameField.text;
-    shipping.firstName = self.firstNameField.text;
-    AWXAddress *address = [AWXAddress new];
-    address.countryCode = self.country.countryCode;
-    address.state = self.stateField.text;
-    address.city = self.cityField.text;
-    address.street = self.streetField.text;
-    address.postcode = self.zipcodeField.text;
-    shipping.address = address;
-    shipping.email = self.emailField.text;
-    shipping.phoneNumber = self.phoneNumberField.text;
+    AWXAddress *address = [[AWXAddress alloc] initWithCountryCode:self.country.countryCode city:self.cityField.text street:self.streetField.text state:self.stateField.text postcode:self.zipcodeField.text];
+
+    AWXPlaceDetails *shipping = [[AWXPlaceDetails alloc] initWithFirstName:self.firstNameField.text lastName:self.lastNameField.text email:self.emailField.text dateOfBirth:nil phoneNumber:self.phoneNumberField.text address:address];
     NSString *error = [shipping validate];
     if (error) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];

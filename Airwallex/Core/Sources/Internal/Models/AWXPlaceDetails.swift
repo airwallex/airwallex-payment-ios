@@ -15,32 +15,32 @@ public class AWXPlaceDetails: NSObject, Codable {
     /**
      First name of the customer.
      */
-    public var firstName: String?
+    public let firstName: String?
 
     /**
      Last name of the customer.
      */
-    public var lastName: String?
+    public let lastName: String?
 
     /**
      Email address of the customer, optional.
      */
-    public var email: String?
+    public let email: String?
 
     /**
      Date of birth of the customer in the format: YYYY-MM-DD, optional.
      */
-    public var dateOfBirth: String?
+    public let dateOfBirth: String?
 
     /**
      Phone number of the customer, optional.
      */
-    public var phoneNumber: String?
+    public let phoneNumber: String?
 
     /**
      Address object.
      */
-    public var address: AWXAddress?
+    public let address: AWXAddress?
 
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
@@ -49,6 +49,15 @@ public class AWXPlaceDetails: NSObject, Codable {
         case dateOfBirth = "date_of_birth"
         case phoneNumber = "phone_number"
         case address
+    }
+
+    public init(firstName: String?, lastName: String?, email: String?, dateOfBirth: String?, phoneNumber: String?, address: AWXAddress?) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+        self.dateOfBirth = dateOfBirth
+        self.phoneNumber = phoneNumber
+        self.address = address
     }
 }
 
@@ -90,7 +99,7 @@ public class AWXPlaceDetails: NSObject, Codable {
 
             return result
         } catch {
-            return AWXPlaceDetails()
+            return AWXPlaceDetails(firstName: nil, lastName: nil, email: nil, dateOfBirth: nil, phoneNumber: nil, address: nil)
         }
     }
 }

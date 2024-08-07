@@ -12,12 +12,17 @@ import Foundation
 @objcMembers
 @objc
 public class AWXAuthenticationData: NSObject, Codable {
-    var fraudData: AWXAuthenticationDataFraudData?
-    var dsData: AWXAuthenticationDataDsData?
+    public let fraudData: AWXAuthenticationDataFraudData?
+    public let dsData: AWXAuthenticationDataDsData?
 
     enum CodingKeys: String, CodingKey {
         case fraudData = "fraud_data"
         case dsData = "ds_data"
+    }
+
+    init(fraudData: AWXAuthenticationDataFraudData?, dsData: AWXAuthenticationDataDsData?) {
+        self.fraudData = fraudData
+        self.dsData = dsData
     }
 }
 
@@ -33,12 +38,21 @@ public class AWXAuthenticationData: NSObject, Codable {
 @objcMembers
 @objc(AWXAuthenticationDataFraudDataSwift)
 public class AWXAuthenticationDataFraudData: NSObject, Codable {
-    var action: String?
-    var score: String?
+    public let action: String?
+    public let score: String?
+
+    init(action: String?, score: String?) {
+        self.action = action
+        self.score = score
+    }
 }
 
 @objcMembers
 @objc(AWXAuthenticationDataDsDataSwift)
 public class AWXAuthenticationDataDsData: NSObject, Codable {
-    var version: String?
+    public let version: String?
+
+    init(version: String?) {
+        self.version = version
+    }
 }

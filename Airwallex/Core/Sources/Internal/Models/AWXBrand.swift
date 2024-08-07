@@ -17,27 +17,27 @@ public class AWXBrand: NSObject, Codable {
     /**
      The brand name.
      */
-    public var name: String
+    public let name: String
 
     /**
      The start of  card No.
      */
-    public var rangeStart: String
+    public let rangeStart: String
 
     /**
      The end of  card No.
      */
-    public var rangeEnd: String
+    public let rangeEnd: String
 
     /**
      The length of  card No.
      */
-    public var length: Int
+    public let length: Int
 
     /**
      The brand type.
      */
-    public var type: AWXBrandType
+    public let type: AWXBrandType
 
     init(name: String, rangeStart: String, rangeEnd: String, length: Int, type: AWXBrandType) {
         self.name = name

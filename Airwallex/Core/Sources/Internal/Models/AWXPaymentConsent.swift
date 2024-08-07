@@ -15,57 +15,57 @@ public class AWXPaymentConsent: NSObject, Codable {
     /**
      Consent ID.
      */
-    public var Id: String?
+    public let Id: String?
 
     /**
      Request ID.
      */
-    public private(set) var requestId: String?
+    public let requestId: String?
 
     /**
      Customer ID.
      */
-    public private(set) var customerId: String?
+    public let customerId: String?
 
     /**
      Consent status.
      */
-    public private(set) var status: String?
+    public let status: String?
 
     /**
      Payment method.
      */
-    public private(set) var paymentMethod: AWXPaymentMethod?
+    public let paymentMethod: AWXPaymentMethod?
 
     /**
      Next trigger By type.
      */
-    public private(set) var nextTriggeredBy: String?
+    public let nextTriggeredBy: String?
 
     /**
      Merchant trigger reason
      */
-    public private(set) var merchantTriggerReason: String?
+    public let merchantTriggerReason: String?
 
     /**
      Whether it requires CVC.
      */
-    public private(set) var requiresCVC: Bool = false
+    public let requiresCVC: Bool = false
 
     /**
      Created at date.
      */
-    public private(set) var createdAt: String?
+    public let createdAt: String?
 
     /**
      Updated at date.
      */
-    public private(set) var updatedAt: String?
+    public let updatedAt: String?
 
     /**
      Client secret.
      */
-    public private(set) var clientSecret: String?
+    public let clientSecret: String?
 
     enum CodingKeys: String, CodingKey {
         case Id = "id"
@@ -81,6 +81,19 @@ public class AWXPaymentConsent: NSObject, Codable {
         case clientSecret = "client_secret"
     }
 
+    public init(Id: String?, requestId: String?, customerId: String?, status: String?, paymentMethod: AWXPaymentMethod?, nextTriggeredBy: String?, merchantTriggerReason: String?, createdAt: String?, updatedAt: String?, clientSecret: String?) {
+        self.Id = Id
+        self.requestId = requestId
+        self.customerId = customerId
+        self.status = status
+        self.paymentMethod = paymentMethod
+        self.nextTriggeredBy = nextTriggeredBy
+        self.merchantTriggerReason = merchantTriggerReason
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.clientSecret = clientSecret
+    }
+
     public static func decodeFromJSON(_ dic: [String: Any]) -> AWXPaymentConsent {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
@@ -89,7 +102,7 @@ public class AWXPaymentConsent: NSObject, Codable {
 
             return result
         } catch {
-            return AWXPaymentConsent()
+            return AWXPaymentConsent(Id: nil, requestId: nil, customerId: nil, status: nil, paymentMethod: nil, nextTriggeredBy: nil, merchantTriggerReason: nil, createdAt: nil, updatedAt: nil, clientSecret: nil)
         }
     }
 }

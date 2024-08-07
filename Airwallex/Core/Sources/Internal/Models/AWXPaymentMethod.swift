@@ -15,22 +15,22 @@ public class AWXPaymentMethod: NSObject, Codable {
     /**
      Type of the payment method. One of card, wechatpay, applepay.
      */
-    public var type: String?
+    public let type: String?
 
     /**
      Unique identifier for the payment method.
      */
-    public private(set) var Id: String?
+    public let Id: String?
 
     /**
      Billing object.
      */
-    public var billing: AWXPlaceDetails?
+    public let billing: AWXPlaceDetails?
 
     /**
      Card object.
      */
-    public var card: AWXCard?
+    public let card: AWXCard?
 
     /**
      Additional params  for wechat, redirect or applepay type.
@@ -40,7 +40,7 @@ public class AWXPaymentMethod: NSObject, Codable {
     /**
      The customer this payment method belongs to.
      */
-    public var customerId: String?
+    public let customerId: String?
 
     enum CodingKeys: String, CodingKey {
         case type
@@ -75,6 +75,15 @@ public class AWXPaymentMethod: NSObject, Codable {
         try container.encode(card, forKey: .card)
         try container.encode(customerId, forKey: .customerId)
     }
+
+    public init(type: String?, Id: String?, billing: AWXPlaceDetails?, card: AWXCard?, additionalParams: [String: String]?, customerId: String?) {
+        self.type = type
+        self.Id = Id
+        self.billing = billing
+        self.card = card
+        self.additionalParams = additionalParams
+        self.customerId = customerId
+    }
 }
 
 @objc public extension AWXPaymentMethod {
@@ -94,7 +103,7 @@ public class AWXPaymentMethod: NSObject, Codable {
 
             return result
         } catch {
-            return AWXPaymentMethod()
+            return AWXPaymentMethod(type: nil, Id: nil, billing: nil, card: nil, additionalParams: nil, customerId: nil)
         }
     }
 

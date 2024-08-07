@@ -43,7 +43,7 @@ public class AWXCardViewModel: NSObject {
     }
 
     public var initialBilling: AWXPlaceDetails {
-        session?.billing ?? AWXPlaceDetails()
+        session?.billing ?? AWXPlaceDetails(firstName: nil, lastName: nil, email: nil, dateOfBirth: nil, phoneNumber: nil, address: nil)
     }
 
     public var selectedCountry: AWXCountry?
@@ -85,20 +85,8 @@ public class AWXCardViewModel: NSObject {
             return billing
         }
 
-        let place = AWXPlaceDetails()
-        place.firstName = firstName
-        place.lastName = lastName
-        place.email = email
-        place.phoneNumber = phoneNumber
-
-        let address = AWXAddress()
-        address.countryCode = selectedCountry?.countryCode ?? ""
-        address.state = state
-        address.city = city
-        address.street = street
-        address.postcode = postcode
-
-        place.address = address
+        let address = AWXAddress(countryCode: selectedCountry?.countryCode ?? "", city: city, street: street, state: state, postcode: postcode)
+        let place = AWXPlaceDetails(firstName: firstName, lastName: lastName, email: email, dateOfBirth: nil, phoneNumber: phoneNumber, address: address)
         return place
     }
 
@@ -109,13 +97,7 @@ public class AWXCardViewModel: NSObject {
         cvc: String
     ) -> AWXCard {
         let dates = expiry.split(separator: "/")
-        let card = AWXCard()
-        card.name = name
-        card.number = number.replacingOccurrences(of: " ", with: "")
-        card.expiryYear = "20\(dates.last ?? "")"
-        card.expiryMonth = "\(dates.first ?? "")"
-        card.cvc = cvc
-
+        let card = AWXCard(number: number.replacingOccurrences(of: " ", with: ""), expiryMonth: "\(dates.first ?? "")", expiryYear: "20\(dates.last ?? "")", name: name, cvc: cvc, bin: nil, last4: nil, brand: nil, country: nil, funding: nil, fingerprint: nil, cvcCheck: nil, avsCheck: nil, numberType: nil)
         return card
     }
 

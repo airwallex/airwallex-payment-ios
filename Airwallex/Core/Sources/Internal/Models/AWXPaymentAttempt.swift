@@ -15,7 +15,7 @@ public class AWXPaymentAttempt: NSObject, Codable {
     /**
      Attempt id.
      */
-    public private(set) var Id: String?
+    public let Id: String?
 
     /**
      Payment amount.
@@ -28,12 +28,12 @@ public class AWXPaymentAttempt: NSObject, Codable {
     /**
      Payment method.
      */
-    public private(set) var paymentMethod: AWXPaymentMethod?
+    public let paymentMethod: AWXPaymentMethod?
 
     /**
      The status of payment attempt
      */
-    public private(set) var status: String?
+    public let status: String?
 
     /**
      Captured amount.
@@ -54,7 +54,7 @@ public class AWXPaymentAttempt: NSObject, Codable {
     /**
      3DS authentication data.
      */
-    public private(set) var authenticationData: AWXAuthenticationData?
+    public let authenticationData: AWXAuthenticationData?
 
     enum CodingKeys: String, CodingKey {
         case Id = "id"
@@ -64,6 +64,16 @@ public class AWXPaymentAttempt: NSObject, Codable {
         case capturedAmount = "captured_amount"
         case refundedAmount = "refunded_amount"
         case authenticationData = "authentication_data"
+    }
+
+    init(Id: String?, amount: Double? = nil, paymentMethod: AWXPaymentMethod?, status: String?, capturedAmount: Double? = nil, refundedAmount: Double? = nil, authenticationData: AWXAuthenticationData?) {
+        self.Id = Id
+        self.amount = amount
+        self.paymentMethod = paymentMethod
+        self.status = status
+        self.capturedAmount = capturedAmount
+        self.refundedAmount = refundedAmount
+        self.authenticationData = authenticationData
     }
 
     public func setAmount(_ amount: NSNumber?) {

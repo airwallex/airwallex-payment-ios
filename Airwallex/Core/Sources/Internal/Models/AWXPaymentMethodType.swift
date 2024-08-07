@@ -15,37 +15,37 @@ public class AWXPaymentMethodType: NSObject, Codable {
     /**
      name of the payment method.
      */
-    public private(set) var name: String?
+    public let name: String?
 
     /**
      display name of the payment method.
      */
-    public private(set) var displayName: String?
+    public let displayName: String?
 
     /**
      transaction_mode of the payment method. One of oneoff, recurring.
      */
-    public private(set) var transactionMode: String?
+    public let transactionMode: String?
 
     /**
      flows of the payment method.
      */
-    public private(set) var flows: [String]?
+    public let flows: [String]?
 
     /**
      transaction_currencies of the payment method.  "*", "AUD", "CHF", "HKD", "SGD", "JPY", "EUR", "GBP", "USD", "CAD", "NZD", "CNY"
      */
-    public private(set) var transactionCurrencies: [String]?
+    public let transactionCurrencies: [String]?
 
     /**
      Whether payment method is active.
      */
-    public private(set) var active: Bool = false
+    public let active: Bool
 
     /**
      Resources
      */
-    public private(set) var resources: AWXResources?
+    public let resources: AWXResources?
 
     /**
      Whether it has schema
@@ -57,7 +57,7 @@ public class AWXPaymentMethodType: NSObject, Codable {
     /**
      Supported card schemes
      */
-    public private(set) var cardSchemes: [AWXCardScheme]?
+    public let cardSchemes: [AWXCardScheme]?
 
     enum CodingKeys: String, CodingKey {
         case name
@@ -70,6 +70,17 @@ public class AWXPaymentMethodType: NSObject, Codable {
         case cardSchemes = "card_schemes"
     }
 
+    public init(name: String?, displayName: String?, transactionMode: String?, flows: [String]?, transactionCurrencies: [String]?, active: Bool, resources: AWXResources?, cardSchemes: [AWXCardScheme]?) {
+        self.name = name
+        self.displayName = displayName
+        self.transactionMode = transactionMode
+        self.flows = flows
+        self.transactionCurrencies = transactionCurrencies
+        self.active = active
+        self.resources = resources
+        self.cardSchemes = cardSchemes
+    }
+
     public static func decodeFromJSON(_ dic: [String: Any]) -> AWXPaymentMethodType {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .fragmentsAllowed)
@@ -78,7 +89,7 @@ public class AWXPaymentMethodType: NSObject, Codable {
 
             return result
         } catch {
-            return AWXPaymentMethodType()
+            return AWXPaymentMethodType(name: nil, displayName: nil, transactionMode: nil, flows: nil, transactionCurrencies: nil, active: false, resources: nil, cardSchemes: nil)
         }
     }
 }
