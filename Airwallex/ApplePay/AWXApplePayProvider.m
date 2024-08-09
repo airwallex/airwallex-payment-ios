@@ -15,6 +15,7 @@
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
+#import "AWXSecurityService.h"
 #import "AWXSession.h"
 #import "NSObject+logging.h"
 #import "PKContact+Request.h"
@@ -41,6 +42,16 @@ typedef enum {
 @end
 
 @implementation AWXApplePayProvider
+
+- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session {
+    return [self initWithDelegate:delegate session:session paymentMethodType:nil];
+}
+
+- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *)paymentMethodType {
+    self = [super initWithDelegate:delegate session:session paymentMethodType:paymentMethodType];
+    [AWXSecurityService sharedService];
+    return self;
+}
 
 #pragma mark - Launch Apple Pay flow
 - (void)startPayment {
