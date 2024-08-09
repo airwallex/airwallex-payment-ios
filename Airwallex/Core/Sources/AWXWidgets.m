@@ -7,7 +7,6 @@
 //
 
 #import "AWXWidgets.h"
-#import "AWXCardValidator.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "UIColor+AWXTheme.h"

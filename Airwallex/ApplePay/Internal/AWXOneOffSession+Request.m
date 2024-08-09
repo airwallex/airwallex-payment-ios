@@ -8,7 +8,12 @@
 
 #import "AWXOneOffSession+Request.h"
 #import "AWXPaymentIntent+Summary.h"
-#import "AWXPlaceDetails+PKContact.h"
+#ifdef AirwallexSDK
+#import <ApplePay/ApplePay-Swift.h>
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @implementation AWXOneOffSession (Request)
 
@@ -16,9 +21,7 @@
     AWXApplePayOptions *options = self.applePayOptions;
     if (!options) {
         if (error) {
-            *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing Apple Pay options in session.", nil)}];
+            *error = [NSError errorForAirwallexSDKWith:NSLocalizedString(@"Missing Apple Pay options in session.", nil)];
         }
         return nil;
     }
@@ -31,9 +34,7 @@
 
     if (!self.countryCode) {
         if (error) {
-            *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing country code in session.", nil)}];
+            *error = [NSError errorForAirwallexSDKWith:NSLocalizedString(@"Missing country code in session.", nil)];
         }
         return nil;
     }
@@ -45,9 +46,7 @@
 
     if (!self.paymentIntent) {
         if (error) {
-            *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"paymentIntent cannot be nil.", nil)}];
+            *error = [NSError errorForAirwallexSDKWith:NSLocalizedString(@"paymentIntent cannot be nil.", nil)];
         }
         return nil;
     }
@@ -55,9 +54,7 @@
     NSString *paymentIntentValidationError = [self validatePaymentIntentDataInSession:self.paymentIntent];
     if (paymentIntentValidationError) {
         if (error) {
-            *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: paymentIntentValidationError}];
+            *error = [NSError errorForAirwallexSDKWith:paymentIntentValidationError];
         }
         return nil;
     }

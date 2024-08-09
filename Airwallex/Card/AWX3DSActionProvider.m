@@ -8,11 +8,15 @@
 
 #import "AWX3DSActionProvider.h"
 #import "AWX3DSService.h"
-#import "AWXDevice.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSecurityService.h"
 #import "AWXSession.h"
 #import "NSObject+logging.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWX3DSActionProvider ()<AWX3DSServiceDelegate>
 
@@ -30,8 +34,7 @@
                                        completion:^(NSString *_Nullable sessionId) {
                                            __strong __typeof(weakSelf) strongSelf = weakSelf;
 
-                                           AWXDevice *device = [AWXDevice new];
-                                           device.deviceId = sessionId;
+                                           AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:sessionId];
 
                                            AWX3DSService *service = [AWX3DSService new];
                                            service.customerId = strongSelf.session.customerId;

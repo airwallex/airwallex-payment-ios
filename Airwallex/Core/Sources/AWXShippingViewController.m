@@ -8,12 +8,14 @@
 
 #import "AWXShippingViewController.h"
 #import "AWXConstants.h"
-#import "AWXCountry.h"
-#import "AWXCountryListViewController.h"
-#import "AWXPlaceDetails.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXShippingViewController ()<AWXCountryListViewControllerDelegate>
 
@@ -169,18 +171,9 @@
 }
 
 - (IBAction)savePressed:(id)sender {
-    AWXPlaceDetails *shipping = [AWXPlaceDetails new];
-    shipping.lastName = self.lastNameField.text;
-    shipping.firstName = self.firstNameField.text;
-    AWXAddress *address = [AWXAddress new];
-    address.countryCode = self.country.countryCode;
-    address.state = self.stateField.text;
-    address.city = self.cityField.text;
-    address.street = self.streetField.text;
-    address.postcode = self.zipcodeField.text;
-    shipping.address = address;
-    shipping.email = self.emailField.text;
-    shipping.phoneNumber = self.phoneNumberField.text;
+    AWXAddress *address = [[AWXAddress alloc] initWithCountryCode:self.country.countryCode city:self.cityField.text street:self.streetField.text state:self.stateField.text postcode:self.zipcodeField.text];
+
+    AWXPlaceDetails *shipping = [[AWXPlaceDetails alloc] initWithFirstName:self.firstNameField.text lastName:self.lastNameField.text email:self.emailField.text dateOfBirth:nil phoneNumber:self.phoneNumberField.text address:address];
     NSString *error = [shipping validate];
     if (error) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
@@ -198,7 +191,7 @@
 - (IBAction)selectCountries:(id)sender {
     AWXCountryListViewController *controller = [[AWXCountryListViewController alloc] initWithNibName:nil bundle:nil];
     controller.delegate = self;
-    controller.country = self.country;
+    controller.currentCountry = self.country;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
 }

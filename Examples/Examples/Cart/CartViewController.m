@@ -14,6 +14,7 @@
 #import "ShippingCell.h"
 #import "TotalCell.h"
 #import "UIViewController+Utils.h"
+#import <Airwallex/Airwallex-Swift.h>
 #import <Airwallex/ApplePay.h>
 #import <Airwallex/Core.h>
 #import <SafariServices/SFSafariViewController.h>
@@ -371,7 +372,10 @@
     AWXUIContext *context = [AWXUIContext sharedContext];
     context.delegate = self;
     context.session = session;
-    [context presentPaymentFlowFrom:self];
+    [context presentEntirePaymentFlowFrom:self];
+    // You can also show card page directly.
+    //    NSArray *cardSchemes = @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex), @(AWXBrandTypeUnionPay), @(AWXBrandTypeJCB)];
+    //    [context presentCardPaymentFlowFrom:self cardSchemes:cardSchemes];
 }
 
 #pragma mark - Initiate Apple Pay Flow

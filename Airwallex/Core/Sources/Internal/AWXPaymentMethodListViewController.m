@@ -10,14 +10,11 @@
 #import "AWXAPIClient.h"
 #import "AWXAnalyticsLogger.h"
 #import "AWXCardImageView.h"
-#import "AWXCardValidator.h"
 #import "AWXConstants.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXDefaultProvider.h"
-#import "AWXDevice.h"
 #import "AWXForm.h"
 #import "AWXFormMapping.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentIntent.h"
@@ -25,7 +22,6 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodCell.h"
-#import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXPaymentViewController.h"
@@ -36,6 +32,11 @@
 #import "AWXWidgets.h"
 #import "NSObject+Logging.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXPaymentMethodListViewController ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, AWXProviderDelegate>
 
@@ -44,7 +45,6 @@
 @property (nonatomic, strong) NSArray *availablePaymentMethodTypes;
 @property (nonatomic, strong) NSMutableArray<AWXPaymentConsent *> *availablePaymentConsents;
 @property (nonatomic) BOOL canLoadMore;
-@property (nonatomic) BOOL showCardDirectly;
 @property (nonatomic) NSInteger nextPageNum;
 @property (nonatomic, strong) NSArray<AWXPaymentMethodType *> *filteredPaymentMethodTypes;
 
@@ -60,7 +60,6 @@
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
 
-    self.showCardDirectly = NO;
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
 
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -72,7 +71,6 @@
     _tableView.separatorColor = [AWXTheme sharedTheme].lineColor;
     _tableView.separatorInset = UIEdgeInsetsMake(0, 24, 0, 24);
     _tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    _tableView.hidden = YES;
     [_tableView registerClass:[AWXPaymentMethodCell class] forCellReuseIdentifier:@"AWXPaymentMethodCell"];
     [self.view addSubview:_tableView];
 
@@ -137,30 +135,9 @@
             strongSelf.availablePaymentConsents = [consents mutableCopy];
             [strongSelf filterPaymentMethodTypes];
 
-            [strongSelf presentSingleCardShortcutIfRequired];
             [strongSelf.tableView reloadData];
         }
     }];
-}
-
-- (void)presentSingleCardShortcutIfRequired {
-    BOOL hasPaymentConsents = self.availablePaymentConsents.count > 0;
-    BOOL hasSinglePaymentMethod = self.filteredPaymentMethodTypes.count == 1;
-    self.showCardDirectly = !hasPaymentConsents && hasSinglePaymentMethod;
-
-    if (self.showCardDirectly) {
-        // find the card payment method if it exists
-        for (AWXPaymentMethodType *type in self.filteredPaymentMethodTypes) {
-            if ([type.name isEqualToString:AWXCardKey]) {
-                [self didSelectPaymentMethodType:type];
-                break;
-            } else {
-                _tableView.hidden = NO;
-            }
-        }
-    } else {
-        _tableView.hidden = NO;
-    }
 }
 
 - (void)filterPaymentMethodTypes {
@@ -244,7 +221,7 @@
     switch (indexPath.section) {
     case 0: {
         AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
-        AWXBrand *cardBrand = [[AWXCardValidator sharedCardValidator] brandForCardName:paymentConsent.paymentMethod.card.brand];
+        AWXBrand *cardBrand = [[AWXCardValidator shared] brandForCardName:paymentConsent.paymentMethod.card.brand];
         cell.logoImageView.image = [[AWXCardImageView alloc] initWithCardBrand:cardBrand.type].image;
         cell.titleLabel.text = [NSString stringWithFormat:@"%@ •••• %@", paymentConsent.paymentMethod.card.brand.capitalizedString, paymentConsent.paymentMethod.card.last4];
         break;
@@ -326,7 +303,6 @@
     Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType);
 
     AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self session:self.session paymentMethodType:paymentMethodType];
-    provider.showPaymentDirectly = self.showCardDirectly;
     [provider handleFlow];
     self.provider = provider;
 }
@@ -383,11 +359,8 @@
                                                              }
                                                          }];
     } else if (controller) {
-        if ([controller isKindOfClass:NSClassFromString(@"AWXCardViewController")]) {
-            [self.navigationController pushViewController:controller animated:!self.showCardDirectly];
-        } else {
-            [self presentViewController:controller animated:withAnimation completion:nil];
-        }
+        [self.navigationController pushViewController:controller animated:YES];
+        //        [self presentViewController:controller animated:withAnimation completion:nil];
     }
 }
 

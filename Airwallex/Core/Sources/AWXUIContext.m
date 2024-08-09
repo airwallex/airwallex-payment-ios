@@ -7,12 +7,19 @@
 //
 
 #import "AWXUIContext.h"
+#import "AWXDefaultActionProvider.h"
 #import "AWXPaymentIntent.h"
+#import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodListViewController.h"
 #import "AWXPaymentViewController.h"
-#import "AWXPlaceDetails.h"
 #import "AWXShippingViewController.h"
 #import "AWXUtils.h"
+#import "NSObject+logging.h"
+#ifdef AirwallexSDK
+#import "Core/Core-Swift.h"
+#else
+#import "Airwallex/Airwallex-Swift.h"
+#endif
 
 @implementation AWXUIContext
 
@@ -32,8 +39,12 @@
 }
 
 - (void)presentPaymentFlowFrom:(UIViewController *)hostViewController {
-    NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
+    [self presentEntirePaymentFlowFrom:hostViewController];
+}
 
+- (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController {
+    NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
+    self.hostVC = hostViewController;
     AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
     controller.viewModel = [[AWXPaymentMethodListViewModel alloc] initWithSession:_session APIClient:[[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]]];
     controller.session = self.session;
@@ -42,7 +53,12 @@
 }
 
 - (void)pushPaymentFlowFrom:(UIViewController *)hostViewController {
+    [self pushEntirePaymentFlowFrom:hostViewController];
+}
+
+- (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController {
     NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
+    self.hostVC = hostViewController;
     UINavigationController *navigationController;
     if ([hostViewController isKindOfClass:[UINavigationController class]]) {
         navigationController = (UINavigationController *)hostViewController;

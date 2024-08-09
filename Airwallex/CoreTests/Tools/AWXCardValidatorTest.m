@@ -6,8 +6,12 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "AWXCardValidator.h"
 #import <XCTest/XCTest.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXCardValidatorTest : XCTestCase
 
@@ -20,7 +24,7 @@
 @synthesize validator;
 
 - (void)setUp {
-    self.validator = [AWXCardValidator sharedCardValidator];
+    self.validator = [AWXCardValidator shared];
 }
 
 - (void)testBrandForCardNumber {

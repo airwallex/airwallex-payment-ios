@@ -16,6 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXCardProvider : AWXDefaultProvider
 
 /**
+ card schemes
+ */
+@property (nonatomic, copy) NSArray<NSNumber *> *cardSchemes;
+
+/**
  Confirm the payment intent with card and billing.
 
  @param card The card info.

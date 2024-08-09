@@ -9,10 +9,11 @@
 #import "AWXApplePayOptions.h"
 #import "AWXConstants.h"
 #import "AWXPaymentIntent.h"
-#import "AWXPlaceDetails.h"
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class AWXPlaceDetails;
 
 /**
  `AWXSession` is the base session.

@@ -27,24 +27,22 @@
     AWXPaymentMethodType *validMethod = [AWXPaymentMethodType decodeFromJSON:@{
         @"name": @"validMethod",
         @"display_name": @"Valid Method",
+        @"transaction_currencies": @[],
+        @"country_codes": @[],
+        @"flows": @[],
+        @"card_schemes": @[],
+        @"active": @YES,
         @"transaction_mode": @"transactionMode",
         @"resources": @{
-            @"has_schema": @"true"
+            @"has_schema": @YES
         }
     }];
 
-    AWXPaymentMethodType *mismatchTransactionMode = [AWXPaymentMethodType new];
-    mismatchTransactionMode.name = @"mismatchTransactionMode";
-    mismatchTransactionMode.transactionMode = @"anotherTransactionMode";
+    AWXPaymentMethodType *mismatchTransactionMode = [[AWXPaymentMethodType alloc] initWithName:@"mismatchTransactionMode" displayName:nil transactionMode:@"anotherTransactionMode" flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
-    AWXPaymentMethodType *unsupportedMethod = [AWXPaymentMethodType new];
-    unsupportedMethod.name = @"googlepay";
-    unsupportedMethod.displayName = @"Google Pay";
-    unsupportedMethod.transactionMode = @"transactionMode";
+    AWXPaymentMethodType *unsupportedMethod = [[AWXPaymentMethodType alloc] initWithName:@"googlepay" displayName:@"Google Pay" transactionMode:@"transactionMode" flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
-    AWXPaymentMethodType *methodWithoutDisplayName = [AWXPaymentMethodType new];
-    methodWithoutDisplayName.name = @"card";
-    methodWithoutDisplayName.transactionMode = @"transactionMode";
+    AWXPaymentMethodType *methodWithoutDisplayName = [[AWXPaymentMethodType alloc] initWithName:@"card" displayName:nil transactionMode:@"transactionMode" flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
     NSArray<AWXPaymentMethodType *> *methodTypes = @[
         validMethod,
@@ -68,9 +66,7 @@
     id classMock = OCMClassMock([AWXDefaultProvider class]);
     OCMStub([classMock canHandleSession:[OCMArg any] paymentMethod:[OCMArg any]]).andReturn(NO);
 
-    AWXPaymentMethodType *validMethod = [AWXPaymentMethodType new];
-    validMethod.name = @"validMethod";
-    validMethod.transactionMode = @"transactionMode";
+    AWXPaymentMethodType *validMethod = [[AWXPaymentMethodType alloc] initWithName:@"validMethod" displayName:nil transactionMode:@"transactionMode" flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
     NSArray<AWXPaymentMethodType *> *methodTypes = @[
         validMethod

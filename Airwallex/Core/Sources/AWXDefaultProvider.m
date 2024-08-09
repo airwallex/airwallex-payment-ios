@@ -8,18 +8,20 @@
 
 #import "AWXDefaultProvider.h"
 #import "AWXAnalyticsLogger.h"
-#import "AWXDevice.h"
 #import "AWXNextActionHandler.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
-#import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
 #import "NSObject+Logging.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXDefaultProvider ()
 
@@ -49,8 +51,7 @@
         _session = session;
         if (paymentMethodType) {
             _paymentMethodType = paymentMethodType;
-            AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-            paymentMethod.type = paymentMethodType.name;
+            AWXPaymentMethod *paymentMethod = [[AWXPaymentMethod alloc] initWithType:paymentMethodType.name Id:nil billing:nil card:nil additionalParams:nil customerId:nil];
             _paymentMethod = paymentMethod;
         }
     }
@@ -171,31 +172,27 @@
                          returnURL:(NSString *)returnURL
                        autoCapture:(BOOL)autoCapture
                         completion:(AWXRequestHandler)completion {
-    AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    request.requestId = NSUUID.UUID.UUIDString;
-    request.intentId = paymentIntentId;
-    request.customerId = customerId;
-    request.paymentMethod = paymentMethod;
-    request.paymentConsent = paymentConsent;
-    request.device = device;
-    request.returnURL = returnURL;
+    AWXConfirmPaymentIntentConfiguration *configuration = [AWXConfirmPaymentIntentConfiguration new];
+    configuration.intentId = paymentIntentId;
+    configuration.customerId = customerId;
+    configuration.paymentMethod = paymentMethod;
+    configuration.paymentConsent = paymentConsent;
+    configuration.device = device;
+    configuration.returnURL = returnURL;
 
     if ([@[AWXCardKey, AWXApplePayKey] containsObject:paymentMethod.type]) {
-        AWXCardOptions *cardOptions = [AWXCardOptions new];
-        cardOptions.autoCapture = autoCapture;
+        AWXCardOptions *cardOptions;
         if ([paymentMethod.type isEqualToString:AWXCardKey]) {
-            AWXThreeDs *threeDs = [AWXThreeDs new];
-            threeDs.returnURL = AWXThreeDSReturnURL;
-            cardOptions.threeDs = threeDs;
+            AWXThreeDs *threeDs = [[AWXThreeDs alloc] initWithPaRes:nil returnURL:AWXThreeDSReturnURL attemptId:nil deviceDataCollectionRes:nil dsTransactionId:nil];
+            cardOptions = [[AWXCardOptions alloc] initWithAutoCapture:autoCapture threeDs:threeDs];
+        } else {
+            cardOptions = [[AWXCardOptions alloc] initWithAutoCapture:autoCapture threeDs:nil];
         }
-
-        AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
-        options.cardOptions = cardOptions;
-        request.options = options;
+        AWXPaymentMethodOptions *options = [[AWXPaymentMethodOptions alloc] initWithCardOptions:cardOptions];
+        configuration.options = options;
     }
 
-    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:completion];
+    [AWXAPIClientSwift confirmPaymentIntentWithConfiguration:configuration completion:completion];
 }
 
 - (void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod

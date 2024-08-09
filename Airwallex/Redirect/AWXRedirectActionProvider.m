@@ -10,6 +10,11 @@
 #import "AWXAnalyticsLogger.h"
 #import "AWXPaymentIntentResponse.h"
 #import "NSObject+Logging.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @implementation AWXRedirectActionProvider
 
@@ -27,12 +32,11 @@
                                              [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusInProgress];
                                              [[AWXAnalyticsLogger shared] logPageViewWithName:@"payment_redirect" additionalInfo:@{@"url": url.absoluteString}];
                                          } else {
-                                             NSDictionary *info = @{NSLocalizedDescriptionKey: NSLocalizedString(@"Redirect to app failed.", nil), NSURLErrorKey: url.absoluteString};
-                                             NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                                                                  code:-1
-                                                                              userInfo:info];
+                                             NSError *error = [NSError errorForAirwallexSDKWith:[NSString stringWithFormat:NSLocalizedString(@"Redirect to app failed. %@", nil), url.absoluteString]];
                                              [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
                                              [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.description];
+                                             NSDictionary *info = @{NSLocalizedDescriptionKey: NSLocalizedString(@"Redirect to app failed.", nil), NSURLErrorKey: url.absoluteString};
+
                                              [[AWXAnalyticsLogger shared] logErrorWithName:@"payment_redirect" additionalInfo:info];
                                          }
                                      }

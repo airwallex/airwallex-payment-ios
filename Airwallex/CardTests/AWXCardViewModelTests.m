@@ -7,17 +7,19 @@
 //
 
 #import "AWX3DSActionProvider.h"
-#import "AWXCard.h"
 #import "AWXCardProvider.h"
-#import "AWXCardValidator.h"
-#import "AWXCardViewModel.h"
-#import "AWXCountry.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSession.h"
 #import "AWXUtils.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
+#ifdef AirwallexSDK
+#import <Card/Card-Swift.h>
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXCardViewModelTests : XCTestCase
 
@@ -26,10 +28,11 @@
 @implementation AWXCardViewModelTests
 
 - (void)testSetReusesShippingAsBillingInformationWhenBillingIsNil {
-    NSString *error;
+    NSError *error;
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
     BOOL isUpdated = [viewModel setReusesShippingAsBillingInformation:true error:&error];
-    XCTAssertEqualObjects(error, NSLocalizedString(@"No shipping address configured.", nil));
+
+    XCTAssertEqualObjects(error.localizedDescription, NSLocalizedString(@"No shipping address configured.", nil));
     XCTAssertFalse(viewModel.isReusingShippingAsBillingInformation);
     XCTAssertFalse(isUpdated);
 
@@ -39,10 +42,10 @@
 }
 
 - (void)testSetReusesShippingAsBillingInformationWhenHasBilling {
-    NSString *error;
+    NSError *error;
     AWXOneOffSession *session = [AWXOneOffSession new];
-    session.billing = [AWXPlaceDetails new];
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
+    session.billing = [[AWXPlaceDetails alloc] initWithFirstName:nil lastName:nil email:nil dateOfBirth:nil phoneNumber:nil address:nil];
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     BOOL isUpdated = [viewModel setReusesShippingAsBillingInformation:true error:&error];
     XCTAssertTrue(viewModel.isReusingShippingAsBillingInformation);
     XCTAssertTrue(isUpdated);
@@ -51,7 +54,7 @@
 - (void)testIsBillingInformationRequired {
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.isBillingInformationRequired = false;
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     XCTAssertFalse(viewModel.isBillingInformationRequired);
 }
 
@@ -61,7 +64,7 @@
     session.paymentIntent = intent;
     intent.customerId = @"customerId";
     session.paymentIntent = intent;
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     XCTAssertTrue(viewModel.isCardSavingEnabled);
 }
 
@@ -72,17 +75,15 @@
 
 - (void)testInitialBilling {
     AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXPlaceDetails *billing = [AWXPlaceDetails new];
-    billing.firstName = @"John";
+    AWXPlaceDetails *billing = [[AWXPlaceDetails alloc] initWithFirstName:@"John" lastName:nil email:nil dateOfBirth:nil phoneNumber:nil address:nil];
     session.billing = billing;
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     XCTAssertEqual(viewModel.initialBilling.firstName, @"John");
 }
 
 - (void)testMakeBilling {
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
-    AWXCountry *country = [AWXCountry new];
-    country.countryCode = @"AU";
+    AWXCountry *country = [[AWXCountry alloc] initWithCountryCode:@"AU" countryName:@"AU"];
     viewModel.selectedCountry = country;
     AWXPlaceDetails *billing = [viewModel makeBillingWithFirstName:@"John"
                                                           lastName:@"Citizen"
@@ -105,26 +106,25 @@
 
 - (void)testMakeBillingWhenReusingSessionBilling {
     AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXAddress *address = [AWXAddress new];
-    address.countryCode = @"SES";
-    address.state = @"SESSION";
-    address.city = @"Session City";
-    address.street = @"Session St";
-    address.postcode = @"Session Code";
 
-    AWXPlaceDetails *billing = [AWXPlaceDetails new];
-    billing.firstName = @"James";
-    billing.lastName = @"Session";
-    billing.email = @"session@example.com";
-    billing.phoneNumber = @"1-800-Session";
-    billing.address = address;
+    AWXAddress *address = [[AWXAddress alloc] initWithCountryCode:@"SES"
+                                                             city:@"Session City"
+                                                           street:@"Session St"
+                                                            state:@"SESSION"
+                                                         postcode:@"Session Code"];
+
+    AWXPlaceDetails *billing = [[AWXPlaceDetails alloc] initWithFirstName:@"James"
+                                                                 lastName:@"Session"
+                                                                    email:@"session@example.com"
+                                                              dateOfBirth:nil
+                                                              phoneNumber:@"1-800-Session"
+                                                                  address:address];
 
     session.billing = billing;
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     [viewModel setReusesShippingAsBillingInformation:YES error:NULL];
 
-    AWXCountry *country = [AWXCountry new];
-    country.countryCode = @"AU";
+    AWXCountry *country = [[AWXCountry alloc] initWithCountryCode:@"AU" countryName:@"AU"];
     viewModel.selectedCountry = country;
     AWXPlaceDetails *inputBilling = [viewModel makeBillingWithFirstName:@"John"
                                                                lastName:@"Citizen"
@@ -161,7 +161,7 @@
 
 - (void)testUpdatePaymentIntentId {
     AWXRecurringSession *session = [AWXRecurringSession new];
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     [viewModel updatePaymentIntentId:@"id"];
     XCTAssertEqual(session.paymentIntentId, @"id");
 }
@@ -171,47 +171,47 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"redirect_form", @"type", nil];
     AWXConfirmPaymentNextAction *nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:dict];
 
-    AWXDefaultActionProvider *actionProvider = [viewModel actionProviderForNextAction:nextAction withDelegate:nil];
+    AWXDefaultActionProvider *actionProvider = [viewModel actionProviderForNextAction:nextAction delegate:nil];
     XCTAssertTrue([actionProvider isKindOfClass:[AWX3DSActionProvider class]]);
 }
 
 - (void)testPreparedProviderWithDelegate {
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.countryCode = @"AU";
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
-    AWXCardProvider *provider = [viewModel preparedProviderWithDelegate:nil];
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
+    AWXCardProvider *provider = [viewModel preparedProviderWithDelegate];
     XCTAssertEqual(provider.session.countryCode, @"AU");
 }
 
 - (void)testConfirmPaymentWithInvalidBillingDetails {
-    NSString *error;
+    NSError *error;
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
-    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate:nil]
-                                  billing:[AWXPlaceDetails new]
-                                     card:[AWXCard new]
+
+    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate]
+                                  billing:[[AWXPlaceDetails alloc] initWithFirstName:nil lastName:nil email:nil dateOfBirth:nil phoneNumber:nil address:nil]
+                                     card:[[AWXCard alloc] initWithNumber:nil expiryMonth:nil expiryYear:nil name:nil cvc:nil bin:nil last4:nil brand:nil country:nil funding:nil fingerprint:nil cvcCheck:nil avsCheck:nil numberType:nil]
                    shouldStoreCardDetails:true
                                     error:&error];
-    XCTAssertEqualObjects(error, @"Invalid first name");
+    XCTAssertEqualObjects(error.localizedDescription, @"Invalid first name");
 }
 
 - (void)testConfirmPaymentWithoutRequiredBillingDetails {
-    NSString *error;
+    NSError *error;
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.isBillingInformationRequired = YES;
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
-    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate:nil]
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
+    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate]
                                   billing:nil
-                                     card:[AWXCard new]
+                                     card:[[AWXCard alloc] initWithNumber:nil expiryMonth:nil expiryYear:nil name:nil cvc:nil bin:nil last4:nil brand:nil country:nil funding:nil fingerprint:nil cvcCheck:nil avsCheck:nil numberType:nil]
                    shouldStoreCardDetails:true
                                     error:&error];
-    XCTAssertEqualObjects(error, @"No billing address provided.");
+    XCTAssertEqualObjects(error.localizedDescription, @"No billing address provided.");
 }
 
 - (void)testConfirmPaymentWithoutCardDetails {
-    NSString *error;
+    NSError *error;
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
-    AWXCountry *country = [AWXCountry new];
-    country.countryCode = @"AU";
+    AWXCountry *country = [[AWXCountry alloc] initWithCountryCode:@"AU" countryName:@"AU"];
     viewModel.selectedCountry = country;
     AWXPlaceDetails *billing = [viewModel makeBillingWithFirstName:@"John"
                                                           lastName:@"Citizen"
@@ -221,19 +221,19 @@
                                                               city:@"Melbourne"
                                                             street:@"Collins Street"
                                                           postcode:@"3000"];
-    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate:nil]
+    [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate]
                                   billing:billing
-                                     card:[AWXCard new]
+                                     card:[[AWXCard alloc] initWithNumber:nil expiryMonth:nil expiryYear:nil name:nil cvc:nil bin:nil last4:nil brand:nil country:nil funding:nil fingerprint:nil cvcCheck:nil avsCheck:nil numberType:nil]
                    shouldStoreCardDetails:true
                                     error:&error];
-    XCTAssertEqualObjects(error, @"Invalid card number");
+    XCTAssertEqualObjects(error.localizedDescription, @"Invalid card number");
 }
 
 - (void)testConfirmPaymentWithCardWithoutOptionalBilling {
-    NSString *error;
+    NSError *error;
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.isBillingInformationRequired = NO;
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
+    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
     AWXCard *card = [viewModel makeCardWithName:@"John Citizen"
                                          number:@"5352342343140000"
                                          expiry:@"08/25"
@@ -250,10 +250,9 @@
 }
 
 - (void)testConfirmPaymentWithBillingAndCard {
-    NSString *error;
+    NSError *error;
     AWXCardViewModel *viewModel = [self mockOneOffViewModel];
-    AWXCountry *country = [AWXCountry new];
-    country.countryCode = @"AU";
+    AWXCountry *country = [[AWXCountry alloc] initWithCountryCode:@"AU" countryName:@"AU"];
     viewModel.selectedCountry = country;
     AWXPlaceDetails *billing = [viewModel makeBillingWithFirstName:@"John"
                                                           lastName:@"Citizen"
@@ -293,18 +292,6 @@
     OCMVerifyAll(cardProviderMock);
 }
 
-- (void)testMakeDisplayedCardBrands {
-    AWXCardViewModel *viewModel = [self mockOneOffViewModelWithCardSchemes];
-    NSArray *brands = [viewModel makeDisplayedCardBrands];
-    XCTAssertEqual(brands.count, 6);
-    XCTAssertEqual([brands[0] intValue], AWXBrandTypeVisa);
-    XCTAssertEqual([brands[1] intValue], AWXBrandTypeMastercard);
-    XCTAssertEqual([brands[2] intValue], AWXBrandTypeUnionPay);
-    XCTAssertEqual([brands[3] intValue], AWXBrandTypeJCB);
-    XCTAssertEqual([brands[4] intValue], AWXBrandTypeDinersClub);
-    XCTAssertEqual([brands[5] intValue], AWXBrandTypeDiscover);
-}
-
 - (void)testValidationMessageFromCardNumber {
     AWXCardViewModel *viewModel = [self mockOneOffViewModelWithCardSchemes];
     XCTAssertNil([viewModel validationMessageFromCardNumber:@"5555555555554444"]);
@@ -315,10 +302,7 @@
 
 - (void)testPageViewTracking {
     AWXCardViewModel *viewModel = [self mockOneOffViewModelWithCardSchemes];
-    NSDictionary *dict = @{@"supportedSchemes": @[@"visa", @"mastercard", @"unionpay", @"jcb", @"diners", @"discover"]};
-
     XCTAssertEqualObjects(viewModel.pageName, @"card_payment_view");
-    XCTAssertEqualObjects(viewModel.additionalInfo, dict);
 }
 
 - (void)testCtaTitleWhenOneOffSession {
@@ -333,12 +317,12 @@
 
 - (AWXCardViewModel *)mockOneOffViewModel {
     AWXOneOffSession *session = [AWXOneOffSession new];
-    return [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
+    return [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
 }
 
 - (AWXCardViewModel *)mockRecurringViewModel {
     AWXRecurringSession *session = [AWXRecurringSession new];
-    return [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL];
+    return [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:[NSArray array]];
 }
 
 - (AWXCardViewModel *)mockOneOffViewModelWithCardSchemes {

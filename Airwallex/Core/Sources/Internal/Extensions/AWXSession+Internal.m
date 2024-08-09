@@ -17,6 +17,7 @@
         AWXPaymentMethodType *item = (AWXPaymentMethodType *)evaluatedObject;
 
         // Filter out anything that doesn't even have a display name
+        NSLog(@"%@", item.displayName);
         if (item.displayName == nil) {
             return NO;
         }

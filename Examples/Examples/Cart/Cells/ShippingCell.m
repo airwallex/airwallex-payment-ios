@@ -8,6 +8,11 @@
 
 #import "ShippingCell.h"
 #import "AWXTheme.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @implementation ShippingCell
 

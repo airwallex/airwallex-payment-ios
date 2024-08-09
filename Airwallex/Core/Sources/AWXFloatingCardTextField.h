@@ -6,7 +6,6 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import "AWXCardValidator.h"
 #import "AWXWidgets.h"
 
 /**
@@ -24,6 +23,6 @@ Can make it more explicit when we switch to Swift.
 
 @property (nonatomic, copy, nullable) NSString * (^validationMessageCallback)(NSString *);
 
-@property (nonatomic, copy) void (^brandUpdateCallback)(AWXBrandType);
+@property (nonatomic, copy) void (^brandUpdateCallback)(NSInteger);
 
 @end

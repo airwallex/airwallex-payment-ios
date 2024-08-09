@@ -9,6 +9,7 @@
 #import "AWXConstants.h"
 #import "AWXDefaultProvider.h"
 #import "AWXPaymentMethod.h"
+#import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 
 #pragma mark - Sample providers for test purposes
@@ -57,35 +58,29 @@
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeApplePay {
-    AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    type.name = @"applepay";
+    AWXPaymentMethodType *type = [[AWXPaymentMethodType alloc] initWithName:@"applepay" displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXApplePayProvider class]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeCard {
-    AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    type.name = @"card";
+    AWXPaymentMethodType *type = [[AWXPaymentMethodType alloc] initWithName:@"card" displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:nil cardSchemes:nil];
 
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXCardProvider class]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeSchema {
-    AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    type.name = @"wechatpay";
     AWXResources *resources = [AWXResources new];
     resources.hasSchema = YES;
-    type.resources = resources;
+    AWXPaymentMethodType *type = [[AWXPaymentMethodType alloc] initWithName:@"wechatpay" displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:resources cardSchemes:nil];
 
     XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXSchemaProvider class]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeDefault {
-    AWXPaymentMethodType *type = [AWXPaymentMethodType new];
-    type.name = @"somethingelse";
     AWXResources *resources = [AWXResources new];
     resources.hasSchema = NO;
-    type.resources = resources;
+    AWXPaymentMethodType *type = [[AWXPaymentMethodType alloc] initWithName:@"somethingelse" displayName:nil transactionMode:nil flows:nil transactionCurrencies:nil active:NO resources:resources cardSchemes:nil];
 
     XCTAssertNil(ClassToHandleFlowForPaymentMethodType(type));
 }

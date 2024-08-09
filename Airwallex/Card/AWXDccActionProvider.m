@@ -10,12 +10,16 @@
 #import "AWXAPIClient.h"
 #import "AWXDCCViewController.h"
 #import "AWXDccResponse.h"
-#import "AWXDevice.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSecurityService.h"
 #import "AWXSession.h"
 #import "NSObject+Logging.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXDccActionProvider ()<AWXDCCViewControllerDelegate>
 
@@ -49,8 +53,7 @@
                                            request.type = AWXDCC;
                                            request.useDCC = useDCC;
 
-                                           AWXDevice *device = [AWXDevice new];
-                                           device.deviceId = sessionId;
+                                           AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:sessionId];
                                            request.device = device;
 
                                            AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];

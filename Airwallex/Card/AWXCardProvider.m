@@ -8,20 +8,21 @@
 
 #import "AWXCardProvider.h"
 #import "AWXAPIClient.h"
-#import "AWXCardViewController.h"
-#import "AWXCardViewModel.h"
 #import "AWXDefaultProvider+Security.h"
-#import "AWXDevice.h"
-#import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentMethod.h"
-#import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSecurityService.h"
 #import "AWXSession.h"
 #import "NSObject+Logging.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
+#ifdef AirwallexSDK
+#import "Card/Card-Swift.h"
+#import <Core/Core-Swift.h>
+#else
+#import "Airwallex/Airwallex-Swift.h"
+#endif
 
 @implementation AWXCardProvider
 
@@ -41,22 +42,49 @@
 
 - (void)handleFlow {
     AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
-    controller.session = self.session;
-    controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:self.paymentMethodType.cardSchemes];
-    controller.provider = self;
+    NSMutableArray<AWXCardScheme *> *supportedCardSchemes;
+    if (self.paymentMethodType) {
+        supportedCardSchemes = [NSMutableArray arrayWithArray:self.paymentMethodType.cardSchemes];
+    }
+    if (self.cardSchemes) {
+        supportedCardSchemes = [NSMutableArray array];
+        for (NSNumber *type in self.cardSchemes) {
+            [supportedCardSchemes addObject:[self getSchemeFrom:type.intValue]];
+        }
+    }
+    controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:supportedCardSchemes];
+    controller.viewModel.provider = self;
     [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
 }
 
+- (AWXCardScheme *)getSchemeFrom:(int)type {
+    AWXCardScheme *scheme = [AWXCardScheme new];
+    if (type == AWXBrandTypeAmex) {
+        scheme.name = @"amex";
+    } else if (type == AWXBrandTypeMastercard) {
+        scheme.name = @"mastercard";
+    } else if (type == AWXBrandTypeVisa) {
+        scheme.name = @"visa";
+    } else if (type == AWXBrandTypeUnionPay) {
+        scheme.name = @"unionpay";
+    } else if (type == AWXBrandTypeJCB) {
+        scheme.name = @"jcb";
+    } else if (type == AWXBrandTypeDinersClub) {
+        scheme.name = @"diners";
+    } else if (type == AWXBrandTypeDiscover) {
+        scheme.name = @"discover";
+    } else {
+        scheme.name = @"";
+    }
+    return scheme;
+}
+
 - (void)confirmPaymentIntentWithCard:(AWXCard *)card
-                             billing:(AWXPlaceDetails *)billing
+                             billing:(AWXPlaceDetails *_Nullable)billing
                             saveCard:(BOOL)saveCard {
     [self log:@"Start payment confirm. Type: Card. Intent Id:%@", self.session.paymentIntentId];
 
-    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
-    paymentMethod.type = AWXCardKey;
-    paymentMethod.billing = billing;
-    paymentMethod.card = card;
-    paymentMethod.customerId = self.session.customerId;
+    AWXPaymentMethod *paymentMethod = [[AWXPaymentMethod alloc] initWithType:AWXCardKey Id:nil billing:billing card:card additionalParams:nil customerId:self.session.customerId];
 
     [self.delegate providerDidStartRequest:self];
     [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
@@ -105,8 +133,7 @@
                                           device:(AWXDevice *)device
                                       completion:(AWXRequestHandler)completion {
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    AWXPaymentConsent *consent = [AWXPaymentConsent new];
-    consent.Id = paymentConsentId;
+    AWXPaymentConsent *consent = [[AWXPaymentConsent alloc] initWithId:paymentConsentId requestId:nil customerId:nil status:nil paymentMethod:nil nextTriggeredBy:nil merchantTriggerReason:nil createdAt:nil updatedAt:nil clientSecret:nil];
     request.requestId = NSUUID.UUID.UUIDString;
     request.intentId = self.session.paymentIntentId;
     request.customerId = self.session.customerId;
@@ -115,15 +142,11 @@
     request.returnURL = AWXThreeDSReturnURL;
 
     if ([self.session respondsToSelector:@selector(autoCapture)]) {
-        AWXCardOptions *cardOptions = [AWXCardOptions new];
-        cardOptions.autoCapture = [[self.session valueForKey:@"autoCapture"] boolValue];
         // assume payment consent can only be card payment type, so set 3ds return url anyway
-        AWXThreeDs *threeDs = [AWXThreeDs new];
-        threeDs.returnURL = AWXThreeDSReturnURL;
-        cardOptions.threeDs = threeDs;
+        AWXThreeDs *threeDs = [[AWXThreeDs alloc] initWithPaRes:nil returnURL:AWXThreeDSReturnURL attemptId:nil deviceDataCollectionRes:nil dsTransactionId:nil];
+        AWXCardOptions *cardOptions = [[AWXCardOptions alloc] initWithAutoCapture:[[self.session valueForKey:@"autoCapture"] boolValue] threeDs:threeDs];
 
-        AWXPaymentMethodOptions *options = [AWXPaymentMethodOptions new];
-        options.cardOptions = cardOptions;
+        AWXPaymentMethodOptions *options = [[AWXPaymentMethodOptions alloc] initWithCardOptions:cardOptions];
         request.options = options;
     }
 

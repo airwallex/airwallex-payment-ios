@@ -54,10 +54,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The hostViewController will present or push the payment flow.
  */
-@property (nonatomic, weak) UIViewController *hostViewController;
+@property (nonatomic, weak) UIViewController *hostVC;
+
+@property (nonatomic, weak) UIViewController *currentVC;
+@property (nonatomic) BOOL isPush;
 
 /**
- Cureent session to handle.
+ Current session to handle.
  */
 @property (nonatomic, strong) AWXSession *session;
 
@@ -69,18 +72,24 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedContext;
 
 /**
- Present the payment flow.
+ Present the payment flow from method list.
  */
-- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController;
+- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController __attribute__((deprecated("Use newMethod - (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController instead")));
 
 /**
- Push the payment flow.
+ Present the payment flow from method list.
  */
-- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController;
+- (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController;
 
-+ (instancetype)new NS_UNAVAILABLE;
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
+/**
+ Push the payment flow from method list.
+ */
+- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController __attribute__((deprecated("Use newMethod - (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController instead")));
+
+/**
+ Push the payment flow from method list.
+ */
+- (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController;
 
 @end
 

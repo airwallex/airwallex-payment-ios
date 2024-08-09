@@ -7,8 +7,12 @@
 //
 
 #import "AWXPaymentIntentRequest.h"
-#import "AWXDevice.h"
 #import <XCTest/XCTest.h>
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXPaymentIntentRequestTest : XCTestCase
 
@@ -20,8 +24,7 @@
 
 - (void)setUp {
     [super setUp];
-    AWXDevice *device = [AWXDevice new];
-    device.deviceId = @"abcd";
+    AWXDevice *device = [[AWXDevice alloc] initWithDeviceId:@"abcd"];
     self.device = device;
 }
 
