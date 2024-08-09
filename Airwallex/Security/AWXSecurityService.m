@@ -8,6 +8,7 @@
 
 #import "AWXSecurityService.h"
 #import "AWXConstants.h"
+#import "NSObject+logging.h"
 #import <RLTMXProfiling/TMXProfiling.h>
 #import <RLTMXProfilingConnections/TMXProfilingConnections.h>
 
@@ -53,15 +54,10 @@
     [self.profiling profileDeviceUsing:@{RLTMXSessionID: sessionId}
                          callbackBlock:^(NSDictionary *result) {
                              RLTMXStatusCode statusCode = [[result valueForKey:RLTMXProfileStatus] integerValue];
-                             dispatch_async(dispatch_get_main_queue(), ^{
-                                 if (statusCode == RLTMXStatusCodeOk) {
-                                     NSString *sessionId = result[RLTMXSessionID];
-                                     completion(sessionId ?: @"");
-                                     return;
-                                 }
-                                 completion(@"");
-                             });
+                             NSString *signifydSessionID = result[RLTMXSessionID];
+                             [self log:@"Session id: %@, Session status: %lu", signifydSessionID, statusCode];
                          }];
+    completion(sessionId);
 #endif
 }
 
