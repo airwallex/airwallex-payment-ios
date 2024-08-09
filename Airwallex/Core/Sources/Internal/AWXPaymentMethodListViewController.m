@@ -58,7 +58,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
+    if (self.isPush) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    } else {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
+    }
 
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
 
@@ -192,8 +196,21 @@
 }
 
 - (void)close:(id)sender {
-    id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+    [self dismissViewControllerAnimated:YES
+                             completion:^{
+                                 id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+                                 [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+                             }];
+}
+
+- (void)goBack:(id)sender {
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+        [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+    }];
+    [self.navigationController popViewControllerAnimated:YES];
+    [CATransaction commit];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate

@@ -18,6 +18,7 @@ import Foundation
         isPush = false
         let provider = AWXCardProvider(delegate: self, session: session)
         provider.cardSchemes = cardSchemes as [NSNumber]
+        provider.isShowCardFlowDirectly = true
         provider.handleFlow()
     }
 
@@ -26,6 +27,7 @@ import Foundation
         isPush = false
         let provider = AWXCardProvider(delegate: self, session: session)
         provider.cardSchemes = cardSchemes.map { $0.rawValue as NSNumber }
+        provider.isShowCardFlowDirectly = true
         provider.handleFlow()
     }
 
@@ -37,6 +39,7 @@ import Foundation
         isPush = true
         let provider = AWXCardProvider(delegate: self, session: session)
         provider.cardSchemes = cardSchemes as [NSNumber]
+        provider.isShowCardFlowDirectly = true
         provider.handleFlow()
     }
 
@@ -45,6 +48,7 @@ import Foundation
         isPush = true
         let provider = AWXCardProvider(delegate: self, session: session)
         provider.cardSchemes = cardSchemes.map { $0.rawValue as NSNumber }
+        provider.isShowCardFlowDirectly = true
         provider.handleFlow()
     }
 }

@@ -304,7 +304,7 @@ public class AWXCardViewController: UIViewController {
 
     private func setupViews() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "close", in: Bundle.resource()), style: .plain, target: self,
+            image: UIImage(named: "back", in: Bundle.resource()), style: .plain, target: self,
             action: #selector(goBack)
         )
         closeButton.isHidden = navigationController != nil
@@ -496,16 +496,29 @@ public class AWXCardViewController: UIViewController {
     }
 
     func goBack() {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock { [weak self] in
+            if let self = self, let show = self.viewModel?.isShowCardFlowDirectly, show {
+                let delegate = AWXUIContext.shared().delegate
+                delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+                self.logMessage(
+                    "Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(self.presentationController?.description ?? "")"
+                )
+            }
+        }
         navigationController?.popViewController(animated: true)
+        CATransaction.commit()
     }
 
     func close() {
-        dismiss(animated: true) {
-            let delegate = AWXUIContext.shared().delegate
-            delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
-            self.logMessage(
-                "Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(self.presentationController?.description ?? "")"
-            )
+        dismiss(animated: true) { [weak self] in
+            if let self = self, let show = self.viewModel?.isShowCardFlowDirectly, show {
+                let delegate = AWXUIContext.shared().delegate
+                delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+                self.logMessage(
+                    "Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(self.presentationController?.description ?? "")"
+                )
+            }
         }
     }
 }

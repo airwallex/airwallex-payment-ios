@@ -33,7 +33,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *regionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet OptionButton *modeButton;
-@property (weak, nonatomic) IBOutlet OptionButton *checkoutBtn;
 @property (weak, nonatomic) IBOutlet OptionButton *nextTriggerByBtn;
 @property (weak, nonatomic) IBOutlet UISwitch *cvcSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *autoCaptureSwitch;
@@ -41,7 +40,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *customerIdTextField;
 @property (weak, nonatomic) IBOutlet UIButton *clearCustomerIdButton;
 
-@property (nonatomic, strong) NSArray *checkoutModesList;
 @property (nonatomic, strong) NSArray *nextTriggerByList;
 
 @end
@@ -52,7 +50,6 @@
     [super viewDidLoad];
     [self setupViews];
 
-    self.checkoutModesList = @[@"Payment", @"Recurring", @"Recurring with intent"];
     self.nextTriggerByList = @[@"Customer", @"Merchant"];
 
     [self resetTextFields];
@@ -165,15 +162,6 @@
     [self presentViewController:controller animated:YES completion:nil];
 }
 
-- (IBAction)checkoutModeTapped:(id)sender {
-    [self showSelectViewWithArray:self.checkoutModesList
-                           sender:sender
-                       completion:^(NSInteger selectIndex) {
-                           [AirwallexExamplesKeys shared].checkoutMode = selectIndex;
-                           [self.checkoutBtn setTitle:self.checkoutModesList[selectIndex] forState:UIControlStateNormal];
-                       }];
-}
-
 - (IBAction)nextTriggerByTapped:(id)sender {
     [self showSelectViewWithArray:self.nextTriggerByList
                            sender:sender
@@ -269,9 +257,6 @@
 - (void)resetTextFields {
     [self.modeButton setTitle:FormatAirwallexSDKMode([AirwallexExamplesKeys shared].environment).capitalizedString forState:UIControlStateNormal];
 
-    NSInteger checkoutMode = [AirwallexExamplesKeys shared].checkoutMode;
-    [self.checkoutBtn setTitle:self.checkoutModesList[checkoutMode] forState:UIControlStateNormal];
-
     NSInteger nextTriggerBy = [AirwallexExamplesKeys shared].nextTriggerByType;
     [self.nextTriggerByBtn setTitle:self.nextTriggerByList[nextTriggerBy] forState:UIControlStateNormal];
 
@@ -355,7 +340,6 @@
     NSLog(@"SDK mode (SDK): %@", FormatAirwallexSDKMode(Airwallex.mode));
 
     NSLog(@"Customer ID (SDK): %@", [AirwallexExamplesKeys shared].customerId);
-    NSLog(@"Checkout mode (SDK): %@", self.checkoutModesList[[AirwallexExamplesKeys shared].checkoutMode]);
     NSLog(@"Next trigger by type (SDK): %@", self.nextTriggerByList[[AirwallexExamplesKeys shared].nextTriggerByType]);
     NSLog(@"Requires CVC (SDK): %@", [AirwallexExamplesKeys shared].requireCVC ? @"Yes" : @"No");
     NSLog(@"Auto Capture (SDK): %@", [AirwallexExamplesKeys shared].autoCapture ? @"Enabled" : @"Disabled");

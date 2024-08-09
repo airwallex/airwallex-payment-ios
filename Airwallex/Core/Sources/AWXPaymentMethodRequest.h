@@ -7,7 +7,8 @@
 //
 
 #import "AWXAPIClient.h"
-#import "AWXPaymentMethod.h"
+
+@class AWXPaymentMethod;
 
 NS_ASSUME_NONNULL_BEGIN
 

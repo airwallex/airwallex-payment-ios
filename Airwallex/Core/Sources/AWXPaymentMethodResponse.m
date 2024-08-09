@@ -7,6 +7,7 @@
 //
 
 #import "AWXPaymentMethodResponse.h"
+#import "AWXPage.h"
 #import "AWXPaymentMethod.h"
 #ifdef AirwallexSDK
 #import <Core/Core-Swift.h>

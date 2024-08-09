@@ -9,6 +9,11 @@
 #import "AWXDefaultProvider.h"
 #import "AWXPaymentMethod.h"
 #import "AWXSession+Internal.h"
+#ifdef AirwallexSDK
+#import "Core/Core-Swift.h"
+#else
+#import "Airwallex/Airwallex-Swift.h"
+#endif
 
 @implementation AWXSession (Internal)
 

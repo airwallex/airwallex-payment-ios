@@ -43,6 +43,7 @@
     }
     controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:supportedCardSchemes];
     controller.viewModel.provider = self;
+    controller.viewModel.isShowCardFlowDirectly = self.isShowCardFlowDirectly;
     [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
 }
 

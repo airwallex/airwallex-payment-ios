@@ -21,6 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray<NSNumber *> *cardSchemes;
 
 /**
+ if show card view directly
+ */
+@property (nonatomic) BOOL isShowCardFlowDirectly;
+
+/**
  Confirm the payment intent with card and billing.
 
  @param card The card info.
