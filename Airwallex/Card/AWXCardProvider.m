@@ -18,6 +18,7 @@
 #import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
+#import "AWXSecurityService.h"
 #import "AWXSession.h"
 #import "NSObject+Logging.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
@@ -26,6 +27,16 @@
 
 + (BOOL)canHandleSession:(AWXSession *)session paymentMethod:(AWXPaymentMethodType *)paymentMethod {
     return paymentMethod.cardSchemes.count != 0;
+}
+
+- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session {
+    return [self initWithDelegate:delegate session:session paymentMethodType:nil];
+}
+
+- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *)paymentMethodType {
+    self = [super initWithDelegate:delegate session:session paymentMethodType:paymentMethodType];
+    [AWXSecurityService sharedService];
+    return self;
 }
 
 - (void)handleFlow {
