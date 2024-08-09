@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXPaymentMethodListViewController : AWXViewController<AWXPageViewTrackable>
 
 @property (nonatomic, strong) AWXPaymentMethodListViewModel *viewModel;
+@property (nonatomic) BOOL isPush;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

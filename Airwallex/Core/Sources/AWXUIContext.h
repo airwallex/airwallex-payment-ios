@@ -57,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) UIViewController *hostVC;
 
 @property (nonatomic, weak) UIViewController *currentVC;
+
 @property (nonatomic) BOOL isPush;
 
 /**
