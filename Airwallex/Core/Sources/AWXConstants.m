@@ -44,8 +44,7 @@ NSString *const AWXApplePayKey = @"applepay";
 NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void) {
     NSArray<PKPaymentNetwork> *shared = @[
         PKPaymentNetworkVisa,
-        PKPaymentNetworkMasterCard,
-        PKPaymentNetworkChinaUnionPay
+        PKPaymentNetworkMasterCard
     ];
     if (@available(iOS 12.0, *)) {
         return [shared arrayByAddingObject:PKPaymentNetworkMaestro];

@@ -8,11 +8,8 @@
 
 #import "AWXCodable.h"
 #import <Foundation/Foundation.h>
-#ifdef AirwallexSDK
-#import "Core/Core-Swift.h"
-#else
-#import "Airwallex/Airwallex-Swift.h"
-#endif
+
+@class AWXResources;
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -7,8 +7,8 @@
 //
 
 #import "AWXAPIClient.h"
-#import "AWXPage.h"
 
+@protocol AWXPage;
 @class AWXPaymentConsent, AWXConfirmPaymentNextAction, AWXPaymentMethod;
 
 NS_ASSUME_NONNULL_BEGIN

@@ -22,6 +22,7 @@ import Foundation
 @objc
 public class AWXCardViewModel: NSObject {
     public weak var delegate: AWXCardviewModelDelegate?
+    public var isShowCardFlowDirectly = false
 
     public var ctaTitle: String {
         if session is AWXRecurringSession {

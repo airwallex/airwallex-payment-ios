@@ -10,6 +10,8 @@
 #import "AWXPaymentMethod.h"
 #import "AWXViewController.h"
 
+@class AWXPaymentMethod;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class AWXPaymentFormViewController, AWXPaymentFormViewModel;
