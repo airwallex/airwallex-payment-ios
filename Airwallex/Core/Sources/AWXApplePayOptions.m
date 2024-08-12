@@ -17,6 +17,7 @@
         _merchantIdentifier = merchantIdentifier;
         _merchantCapabilities = PKMerchantCapability3DS | PKMerchantCapabilityEMV | PKMerchantCapabilityDebit | PKMerchantCapabilityCredit;
         _requiredBillingContactFields = [NSSet new];
+        _supportedNetworks = AWXApplePaySupportedNetworks();
     }
     return self;
 }

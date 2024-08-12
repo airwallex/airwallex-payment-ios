@@ -72,7 +72,7 @@
 
     request.requiredBillingContactFields = options.requiredBillingContactFields;
     request.supportedCountries = options.supportedCountries;
-    request.supportedNetworks = AWXApplePaySupportedNetworks();
+    request.supportedNetworks = options.supportedNetworks;
 
     return request;
 }

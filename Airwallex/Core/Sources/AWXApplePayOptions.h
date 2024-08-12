@@ -22,6 +22,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *merchantIdentifier;
 
 /**
+ The payment networks supported by the merchant, for example @[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard].
+ This property constrains payment cards that may fund the payment. Default value includes Visa, Mastercard, UnionPay, Amex, Discover and JCB.
+ */
+@property (nonatomic, copy) NSArray<PKPaymentNetwork> *supportedNetworks;
+
+/**
  An additional array of payment summary item objects that summarize the amount of the payment. Default value is nil.
 
  The SDK will automatically construct a PKPaymentSummaryItem with the total amount from the session object and
