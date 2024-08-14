@@ -7,7 +7,13 @@
 //
 
 #import "AWXPaymentMethodRequest.h"
+#import "AWXPaymentMethod.h"
 #import "AWXPaymentMethodResponse.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @implementation AWXGetPaymentMethodsRequest
 
@@ -52,61 +58,6 @@
 
 - (Class)responseClass {
     return AWXGetPaymentMethodsResponse.class;
-}
-
-@end
-
-@implementation AWXGetPaymentMethodTypesRequest
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.active = YES;
-        self.pageNum = 0;
-        self.pageSize = 10;
-        self.resources = YES;
-        self.flow = @"inapp";
-    }
-    return self;
-}
-
-- (NSString *)path {
-    return @"/api/v1/pa/config/payment_method_types";
-}
-
-- (AWXHTTPMethod)method {
-    return AWXHTTPMethodGET;
-}
-
-- (nullable NSDictionary *)parameters {
-    NSMutableDictionary *_parameters = [NSMutableDictionary dictionary];
-
-    _parameters[@"active"] = [NSNumber numberWithBool:self.active];
-    _parameters[@"page_num"] = @(self.pageNum);
-    _parameters[@"page_size"] = @(self.pageSize);
-    if (self.transactionCurrency) {
-        _parameters[@"transaction_currency"] = self.transactionCurrency;
-    }
-    if (self.transactionMode) {
-        _parameters[@"transaction_mode"] = self.transactionMode;
-    }
-    if (self.countryCode) {
-        _parameters[@"country_code"] = self.countryCode;
-    }
-    if (self.resources) {
-        _parameters[@"__resources"] = @(self.resources);
-    }
-    if (self.lang) {
-        _parameters[@"lang"] = self.lang;
-    }
-    if (self.flow) {
-        _parameters[@"flow"] = self.flow;
-    }
-    return _parameters;
-}
-
-- (Class)responseClass {
-    return AWXGetPaymentMethodTypesResponse.class;
 }
 
 @end

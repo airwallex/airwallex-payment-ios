@@ -44,7 +44,7 @@
 
 - (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController {
     NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
-    AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
+    AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithIsFlowFromPushing:NO];
     controller.viewModel = [[AWXPaymentMethodListViewModel alloc] initWithSession:_session APIClient:[[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]]];
     controller.session = self.session;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
@@ -65,7 +65,7 @@
     }
     NSCAssert(navigationController != nil, @"The hostViewController is not a navigation controller, or is not contained in a navigation controller.");
 
-    AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
+    AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithIsFlowFromPushing:YES];
     controller.viewModel = [[AWXPaymentMethodListViewModel alloc] initWithSession:_session APIClient:[[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]]];
     controller.session = self.session;
     [navigationController pushViewController:controller animated:YES];

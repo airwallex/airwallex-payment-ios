@@ -7,7 +7,6 @@
 //
 
 #import "AWXAPIClient.h"
-#import "AWXPage.h"
 
 @class AWXPaymentConsent, AWXConfirmPaymentNextAction, AWXPaymentMethod;
 
@@ -47,12 +46,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface AWXGetPaymentConsentsResponse : AWXResponse<AWXPage>
+@interface AWXGetPaymentConsentsResponse : AWXResponse
 
 /**
  Payment consents.
  */
 @property (nonatomic, readonly) NSArray<AWXPaymentConsent *> *items;
+
+@property (nonatomic, readonly) BOOL hasMore;
 
 @end
 

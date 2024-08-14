@@ -36,8 +36,9 @@ private var associatedIsFlowFromPushKey: UInt8 = 1
     func presentCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [AWXCardBrand] = AWXAllCardBrand()) {
         isFlowFromPush = false
         hostVC = hostViewController
-        let provider = AWXCardProvider(delegate: self, session: session)
+        let provider = AWXCardProvider(delegate: self, session: session, paymentMethodType: nil, isFlowFromPushing: false)
         provider.cardSchemes = cardSchemes
+        provider.showPaymentDirectly = true
         provider.handleFlow()
     }
 
@@ -47,8 +48,9 @@ private var associatedIsFlowFromPushKey: UInt8 = 1
     func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [AWXCardBrand] = AWXAllCardBrand()) {
         isFlowFromPush = true
         hostVC = hostViewController
-        let provider = AWXCardProvider(delegate: self, session: session)
+        let provider = AWXCardProvider(delegate: self, session: session, paymentMethodType: nil, isFlowFromPushing: true)
         provider.cardSchemes = cardSchemes
+        provider.showPaymentDirectly = true
         provider.handleFlow()
     }
 }

@@ -37,6 +37,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)confirmPaymentIntentWithPaymentConsentId:(NSString *)paymentConsentId;
 
+/**
+ Confirm the payment intent with payment consent. Use this if the payment requires CVC
+
+ @param PaymentConsent.
+ */
+- (void)pushPayment:(AWXPaymentConsent *)paymentConsent;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,6 +14,8 @@
 #import <Airwallex/Airwallex-Swift.h>
 #endif
 
+@class AWXResources;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**

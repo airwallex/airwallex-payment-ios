@@ -7,7 +7,8 @@
 //
 
 #import "AWXAPIClient.h"
-#import "AWXPaymentMethod.h"
+
+@class AWXPaymentMethod;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -50,57 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
  The end time of created_at in ISO8601 format
  */
 @property (nonatomic, copy, nullable) NSString *toCreatedAt;
-
-@end
-
-/**
- `AWXGetPaymentMethodTypesRequest` includes all of the parameters needed to get payment method types.
- */
-@interface AWXGetPaymentMethodTypesRequest : AWXRequest
-
-/**
- active .
- */
-@property (nonatomic) BOOL active;
-/**
- Page number starting from 0.
- */
-@property (nonatomic) NSInteger pageNum;
-
-/**
- Number of payment methods to be listed per page.
- */
-@property (nonatomic) NSInteger pageSize;
-
-/**
- A currency code.
- */
-@property (nonatomic, copy, nullable) NSString *transactionCurrency;
-
-/**
- Transaction code.
- */
-@property (nonatomic, copy, nullable) NSString *transactionMode;
-
-/**
- Country code.
- */
-@property (nonatomic, copy, nullable) NSString *countryCode;
-
-/**
- Whether it requres resources
- */
-@property (nonatomic) BOOL resources;
-
-/**
- Lang
- */
-@property (nonatomic, copy, nullable) NSString *lang;
-
-/**
- Filter payment methods for a specific flow. Defaults to inapp.
- */
-@property (nonatomic, copy, nullable) NSString *flow;
 
 @end
 

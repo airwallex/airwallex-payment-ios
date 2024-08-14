@@ -21,6 +21,7 @@ public class AWXCardViewController: AWXViewController, AWXPageViewTrackable {
     }
 
     public var viewModel: AWXCardViewModel?
+    private let isFlowFromPushing: Bool
 
     private lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -225,6 +226,16 @@ public class AWXCardViewController: AWXViewController, AWXPageViewTrackable {
         return sv
     }()
 
+    public init(isFlowFromPushing: Bool = false) {
+        self.isFlowFromPushing = isFlowFromPushing
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private lazy var saveCardSwitch: UISwitch = {
         let sw = UISwitch()
         sw.addTarget(self, action: #selector(saveCardSwitchChanged(_:)), for: .valueChanged)
@@ -314,11 +325,18 @@ public class AWXCardViewController: AWXViewController, AWXPageViewTrackable {
     }
 
     private func setupViews() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "close", in: Bundle.resource()), style: .plain, target: self,
-            action: #selector(goBack)
-        )
-        closeButton.isHidden = navigationController != nil
+        if isFlowFromPushing || (navigationController != nil && viewModel?.isShowCardFlowDirectly != true) {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: UIImage(named: "back", in: Bundle.resource()), style: .plain, target: self,
+                action: #selector(goBack)
+            )
+            closeButton.isHidden = true
+        } else {
+            if viewModel?.isShowCardFlowDirectly == true {
+                navigationController?.setNavigationBarHidden(true, animated: false)
+            }
+            closeButton.isHidden = false
+        }
 
         enableTapToEndEditing()
         view.backgroundColor = .white
@@ -506,15 +524,24 @@ public class AWXCardViewController: AWXViewController, AWXPageViewTrackable {
 
     @objc private func goBack() {
         navigationController?.popViewController(animated: true)
+        if viewModel?.isShowCardFlowDirectly == true {
+            let delegate = AWXUIContext.shared().delegate
+            delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+            logMessage(
+                "Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(presentationController?.description ?? "")"
+            )
+        }
     }
 
     @objc private func closeTapped() {
-        dismiss(animated: true) {
-            let delegate = AWXUIContext.shared().delegate
-            delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
-            self.logMessage(
-                "Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(self.presentationController?.description ?? "")"
-            )
+        dismiss(animated: true) { [weak self] in
+            if let self, self.viewModel?.isShowCardFlowDirectly == true {
+                let delegate = AWXUIContext.shared().delegate
+                delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+                self.logMessage(
+                    "Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(self.presentationController?.description ?? "")"
+                )
+            }
         }
     }
 }
@@ -567,12 +594,26 @@ extension AWXCardViewController: AWXCardviewModelDelegate {
         logMessage(
             "shouldDismiss completeStatus:error: \(status)  \(error?.localizedDescription ?? "")")
 
-        dismiss(animated: true) {
+        if isFlowFromPushing, let navigationController {
+            var controllers = navigationController.viewControllers
+            controllers.removeLast()
+            if viewModel?.isShowCardFlowDirectly == false {
+                controllers.removeLast()
+            }
+            navigationController.setViewControllers(controllers, animated: true)
             let delegate = AWXUIContext.shared().delegate
             delegate?.paymentViewController(self, didCompleteWith: status, error: error)
-            self.logMessage(
-                "Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(self.presentationController?.description ?? "")  \(status)  \(error?.localizedDescription ?? "")"
+            logMessage(
+                "Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(presentationController?.description ?? "")  \(status)  \(error?.localizedDescription ?? "")"
             )
+        } else {
+            dismiss(animated: true) {
+                let delegate = AWXUIContext.shared().delegate
+                delegate?.paymentViewController(self, didCompleteWith: status, error: error)
+                self.logMessage(
+                    "Delegate: \(delegate?.description ?? ""), paymentViewController:didCompleteWithStatus:error: \(self.presentationController?.description ?? "")  \(status)  \(error?.localizedDescription ?? "")"
+                )
+            }
         }
     }
 

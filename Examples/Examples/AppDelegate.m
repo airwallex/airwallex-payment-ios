@@ -50,7 +50,11 @@
 #pragma mark - UI
 
 - (void)loadCartView {
+#ifdef SwiftExamples
+    UIViewController *controller = [UIStoryboard storyboardWithName:@"SwiftMain" bundle:nil].instantiateInitialViewController;
+#else
     UIViewController *controller = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
+#endif
     [self perform:controller];
 }
 

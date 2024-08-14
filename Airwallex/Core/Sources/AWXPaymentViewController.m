@@ -35,10 +35,21 @@
 @property (strong, nonatomic) AWXFloatingLabelTextField *cvcField;
 @property (strong, nonatomic) AWXActionButton *confirmButton;
 @property (strong, nonatomic) NSLayoutConstraint *bottomConstraint;
+@property (nonatomic) BOOL isShownDirectly;
+@property (nonatomic) BOOL isFlowFromPushing;
 
 @end
 
 @implementation AWXPaymentViewController
+
+- (instancetype)initWithShownDirectly:(BOOL)shownDirectly isFlowFromPushing:(BOOL)isFlowFromPushing {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        self.isShownDirectly = shownDirectly;
+        self.isFlowFromPushing = isFlowFromPushing;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -178,8 +189,27 @@
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
-    id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    [delegate paymentViewController:self didCompleteWithStatus:status error:error];
+    if (self.isFlowFromPushing) {
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+            [delegate paymentViewController:self didCompleteWithStatus:status error:error];
+        }];
+
+        NSMutableArray *controllers = [self.navigationController.viewControllers mutableCopy];
+        [controllers removeLastObject];
+        if (!self.isShownDirectly) {
+            [controllers removeLastObject];
+        }
+        [self.navigationController setViewControllers:controllers animated:YES];
+        [CATransaction commit];
+    } else {
+        [self dismissViewControllerAnimated:YES
+                                 completion:^{
+                                     id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+                                     [delegate paymentViewController:self didCompleteWithStatus:status error:error];
+                                 }];
+    }
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
@@ -188,7 +218,6 @@
         [delegate paymentViewController:self didCompleteWithPaymentConsentId:Id];
     }
 }
-
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {
     [self.session updateInitialPaymentIntentId:paymentIntentId];
     [self log:@"provider:didInitializePaymentIntentId:  %@", paymentIntentId];

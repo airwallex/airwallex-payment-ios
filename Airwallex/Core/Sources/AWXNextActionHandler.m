@@ -36,7 +36,7 @@
     if (actionProvider == nil) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];
         [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-        if ([self.delegate respondsToSelector:@selector(hostVC)]) {
+        if ([self.delegate respondsToSelector:@selector(hostViewController)]) {
             [[self.delegate hostViewController] presentViewController:controller animated:YES completion:nil];
         } else {
             if ([self.delegate respondsToSelector:@selector(provider:shouldPresentViewController:forceToDismiss:withAnimation:)]) {

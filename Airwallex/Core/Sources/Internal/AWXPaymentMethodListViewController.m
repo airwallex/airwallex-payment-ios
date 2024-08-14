@@ -48,6 +48,7 @@
 @property (nonatomic) BOOL showCardDirectly;
 @property (nonatomic) NSInteger nextPageNum;
 @property (nonatomic, strong) NSArray<AWXPaymentMethodType *> *filteredPaymentMethodTypes;
+@property (nonatomic) BOOL isFlowFromPushing;
 
 @end
 
@@ -57,10 +58,23 @@
     return @"payment_method_list";
 }
 
+- (instancetype)initWithIsFlowFromPushing:(BOOL)isFlowFromPushing {
+    self = [super init];
+    if (self) {
+        self.isFlowFromPushing = isFlowFromPushing;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
+    if (self.isFlowFromPushing) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    } else {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
+    }
 
+    self.showCardDirectly = NO;
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
 
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -207,7 +221,7 @@
 }
 
 - (void)showPayment:(AWXPaymentConsent *)paymentConsent {
-    AWXPaymentViewController *controller = [[AWXPaymentViewController alloc] initWithNibName:nil bundle:nil];
+    AWXPaymentViewController *controller = [[AWXPaymentViewController alloc] initWithShownDirectly:NO isFlowFromPushing:self.isFlowFromPushing];
     controller.delegate = [AWXUIContext sharedContext].delegate;
     controller.session = self.session;
     controller.paymentConsent = paymentConsent;
@@ -215,8 +229,21 @@
 }
 
 - (void)close:(id)sender {
-    id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+    [self dismissViewControllerAnimated:YES
+                             completion:^{
+                                 id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+                                 [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+                             }];
+}
+
+- (void)goBack:(id)sender {
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+        [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+    }];
+    [self.navigationController popViewControllerAnimated:YES];
+    [CATransaction commit];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -325,7 +352,7 @@
 - (void)didSelectPaymentMethodType:(AWXPaymentMethodType *)paymentMethodType {
     Class class = ClassToHandleFlowForPaymentMethodType(paymentMethodType);
 
-    AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self session:self.session paymentMethodType:paymentMethodType];
+    AWXDefaultProvider *provider = [[class alloc] initWithDelegate:self session:self.session paymentMethodType:paymentMethodType isFlowFromPushing:self.isFlowFromPushing];
     provider.showPaymentDirectly = self.showCardDirectly;
     [provider handleFlow];
     self.provider = provider;
@@ -383,7 +410,12 @@
                                                              }
                                                          }];
     } else if (controller) {
-        [self.navigationController pushViewController:controller animated:YES];
+        NSMutableArray *viewControllers = [self.navigationController.viewControllers mutableCopy];
+        if (self.showCardDirectly) {
+            [viewControllers removeObject:self];
+        }
+        [viewControllers addObject:controller];
+        [self.navigationController setViewControllers:viewControllers animated:!self.showCardDirectly];
     }
 }
 

@@ -136,6 +136,7 @@ typedef void (^AWXRequestHandler)(AWXResponse *_Nullable response, NSError *_Nul
 /**
  `AWXAPIClient` is a http request client.
  */
+NS_SWIFT_NAME(AWXAPIClientOC)
 @interface AWXAPIClient : NSObject
 
 /**

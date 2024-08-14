@@ -35,4 +35,12 @@ target 'Examples' do
   project './Examples/Examples.xcodeproj'
   pod 'Airwallex', :path => './'
   pod 'WechatOpenSDK', '1.9.7'
+  pod 'SDWebImage'
+end
+
+target 'SwiftExamples' do
+  project './Examples/Examples.xcodeproj'
+  pod 'Airwallex', :path => './'
+  pod 'WechatOpenSDK', '1.9.7'
+  pod 'SDWebImage'
 end

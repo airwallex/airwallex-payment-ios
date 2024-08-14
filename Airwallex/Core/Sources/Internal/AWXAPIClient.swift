@@ -38,4 +38,18 @@ public class AWXAPIClient: NSObject {
             }
         }
     }
+
+    public static func getAvailablePaymentMethodsWithConfiguration(
+        _ configuration: AWXGetPaymentMethodTypesConfiguration,
+        completion: @escaping (AWXGetPaymentMethodTypesResponse?, Error?) -> Void
+    ) {
+        AWXNetWorkManager().get(path: configuration.path, parameters: configuration.parameters, eventName: "get_available_payment_methods") { (result: Result<AWXGetPaymentMethodTypesResponse, Error>) in
+            switch result {
+            case let .success(response):
+                completion(response, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
 }

@@ -74,15 +74,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation;
 
 /**
- This method is called when new controller is required.
-
- @param provider The provider handling payment.
- @param controller The view controller will be pushed.
- @param forceToDismiss Whether the presenting view controller needs be dismissed forcibly.
- */
-- (void)provider:(AWXDefaultProvider *)provider shouldPushViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation;
-
-/**
  This method is called when new controller is required. (as child view controller)
 
  @param provider The provider handling payment.
@@ -131,11 +122,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL showPaymentDirectly;
 
 /**
+<<<<<<< HEAD
+=======
  Whether the flow is from navigation pushing or not
  */
-@property (nonatomic, readonly) BOOL isFlowFromPushing;
+@property (nonatomic) BOOL isFlowFromPushing;
 
 /**
+>>>>>>> fcdb3a0 (feat: rewrite Sample app)
  Indicating whether the provider can handle a particular session. Default implementation returns YES. Subclasses can override to
  do additional checks.
  */
@@ -145,7 +139,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session;
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *_Nullable)paymentMethodType;
-- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *_Nullable)paymentMethodType isFlowFromPushing:(BOOL)isFlowFromPushing;
 
 /**
  Start the payment flow.

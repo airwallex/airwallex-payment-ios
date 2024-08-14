@@ -41,33 +41,6 @@
 
 @end
 
-@interface AWXGetPaymentMethodTypesResponse ()
-
-@property (nonatomic, readwrite) BOOL hasMore;
-@property (nonatomic, copy, readwrite) NSArray<AWXPaymentMethodType *> *items;
-
-@end
-
-@implementation AWXGetPaymentMethodTypesResponse
-
-+ (AWXResponse *)parse:(NSData *)data {
-    NSError *error = nil;
-    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    AWXGetPaymentMethodTypesResponse *response = [AWXGetPaymentMethodTypesResponse new];
-    response.hasMore = [responseObject[@"has_more"] boolValue];
-    NSMutableArray *items = [NSMutableArray array];
-    NSArray *list = responseObject[@"items"];
-    if (list && [list isKindOfClass:[NSArray class]]) {
-        for (NSDictionary *item in list) {
-            [items addObject:[AWXPaymentMethodType decodeFromJSON:item]];
-        }
-    }
-    response.items = items;
-    return response;
-}
-
-@end
-
 @interface AWXGetPaymentMethodTypeResponse ()
 
 @end

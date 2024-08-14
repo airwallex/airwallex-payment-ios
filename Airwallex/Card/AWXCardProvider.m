@@ -30,7 +30,7 @@
 }
 
 - (void)handleFlow {
-    AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
+    AWXCardViewController *controller = [[AWXCardViewController alloc] initWithIsFlowFromPushing:self.isFlowFromPushing];
     NSMutableArray<AWXCardScheme *> *supportedCardSchemes;
     if (self.paymentMethodType) {
         supportedCardSchemes = [NSMutableArray arrayWithArray:self.paymentMethodType.cardSchemes];
@@ -43,6 +43,7 @@
     }
     controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:supportedCardSchemes];
     controller.viewModel.provider = self;
+    controller.viewModel.isShowCardFlowDirectly = self.showPaymentDirectly;
     [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
 }
 
@@ -154,6 +155,14 @@
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request handler:completion];
+}
+
+- (void)pushPayment:(AWXPaymentConsent *)paymentConsent {
+    AWXPaymentViewController *controller = [[AWXPaymentViewController alloc] initWithShownDirectly:YES isFlowFromPushing:YES];
+    controller.delegate = [AWXUIContext sharedContext].delegate;
+    controller.session = self.session;
+    controller.paymentConsent = paymentConsent;
+    [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
 }
 
 - (void)setDevice:(void (^)(AWXDevice *_Nonnull))completion {

@@ -16,6 +16,11 @@
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
+#ifdef AirwallexSDK
+#import <Core/Core-Swift.h>
+#else
+#import <Airwallex/Airwallex-Swift.h>
+#endif
 
 @interface AWXPaymentFormViewController ()
 

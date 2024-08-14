@@ -7,16 +7,23 @@
 //
 
 #import "AWXPaymentMethodListViewModel.h"
-#import "AWXPage.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
+#ifdef AirwallexSDK
+#import "Core/Core-Swift.h"
+#else
+#import "Airwallex/Airwallex-Swift.h"
+#endif
 
 @interface AWXPaymentMethodListViewModel ()
 
-typedef void (^PageResult)(id<AWXPage> __autoreleasing *page, NSError *__autoreleasing *error);
-typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autoreleasing *error);
+typedef void (^PageResultPaymentTypes)(id __autoreleasing *page, NSError *__autoreleasing *error);
+typedef void (^ItemsResultPaymentTypes)(NSArray *__autoreleasing *items, NSError *__autoreleasing *error);
+
+typedef void (^PageResultPaymentConsents)(id __autoreleasing *page, NSError *__autoreleasing *error);
+typedef void (^ItemsResultPaymentConsents)(NSArray *__autoreleasing *items, NSError *__autoreleasing *error);
 
 @property (nonatomic, strong, nonnull) AWXSession *session;
 @property (nonatomic, strong, nonnull) AWXAPIClient *client;
@@ -40,7 +47,7 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
     __block NSArray<AWXPaymentConsent *> *paymentConsents;
 
     dispatch_group_enter(group);
-    [self retrieveAvailablePaymentMethodsWithCompletion:^(ItemsResult result) {
+    [self retrieveAvailablePaymentMethodsWithCompletion:^(ItemsResultPaymentTypes result) {
         NSError *responseError;
         result(&paymentMethods, &responseError);
 
@@ -55,7 +62,7 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
     if (_session.customerId && [_session isKindOfClass:AWXOneOffSession.class] && oneOffSession && !oneOffSession.hidePaymentConsents) {
         dispatch_group_enter(group);
         [self retrieveAvailablePaymentConsentsWithCustomerId:_session.customerId
-                                                  completion:^(ItemsResult result) {
+                                                  completion:^(ItemsResultPaymentConsents result) {
                                                       NSError *responseError;
                                                       result(&paymentConsents, &responseError);
 
@@ -81,40 +88,40 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
     return @[];
 }
 
-- (void)retrieveAvailablePaymentMethodsWithCompletion:(void (^)(ItemsResult))completion {
+- (void)retrieveAvailablePaymentMethodsWithCompletion:(void (^)(ItemsResultPaymentTypes))completion {
     __weak __typeof(self) weakSelf = self;
     [self
-        LoadPagedItemsWithLoadPageBlock:^(NSInteger pageNum, void (^pageCompletion)(PageResult)) {
+        LoadPagedPaymentMethodTypesWithLoadPageBlock:^(NSInteger pageNum, void (^pageCompletion)(PageResultPaymentTypes)) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
 
-            AWXGetPaymentMethodTypesRequest *request = [AWXGetPaymentMethodTypesRequest new];
-            request.transactionCurrency = strongSelf.session.currency;
-            request.transactionMode = strongSelf.session.transactionMode;
-            request.countryCode = strongSelf.session.countryCode;
-            request.lang = strongSelf.session.lang;
-            request.pageNum = pageNum;
-            request.pageSize = 20;
-            [strongSelf.client send:request
-                            handler:^(AWXResponse *_Nullable response, NSError *_Nullable responseError) {
-                                AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
-                                pageCompletion(^(id<AWXPage> __autoreleasing *page, NSError *__autoreleasing *error) {
-                                    *page = result;
-                                    *error = responseError;
-                                });
-                            }];
+            AWXGetPaymentMethodTypesConfiguration *config = [AWXGetPaymentMethodTypesConfiguration new];
+            config.transactionCurrency = strongSelf.session.currency;
+            config.transactionMode = strongSelf.session.transactionMode;
+            config.countryCode = strongSelf.session.countryCode;
+            config.lang = strongSelf.session.lang;
+            config.pageNum = pageNum;
+            config.pageSize = 20;
+            [AWXAPIClientSwift getAvailablePaymentMethodsWithConfiguration:config
+                                                                completion:^(AWXGetPaymentMethodTypesResponse *_Nullable response, NSError *_Nullable responseError) {
+                                                                    AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
+                                                                    pageCompletion(^(id __autoreleasing *page, NSError *__autoreleasing *error) {
+                                                                        *page = result;
+                                                                        *error = responseError;
+                                                                    });
+                                                                }];
         }
         items:[NSMutableArray new]
         pageNum:0
-        completion:^(ItemsResult result) {
+        completion:^(ItemsResultPaymentTypes result) {
             completion(result);
         }];
 }
 
 - (void)retrieveAvailablePaymentConsentsWithCustomerId:(nonnull NSString *)customerId
-                                            completion:(void (^)(ItemsResult))completion {
+                                            completion:(void (^)(ItemsResultPaymentConsents))completion {
     __weak __typeof(self) weakSelf = self;
     [self
-        LoadPagedItemsWithLoadPageBlock:^(NSInteger pageNum, void (^pageCompletion)(PageResult)) {
+        LoadPagedPaymentConsentsWithLoadPageBlock:^(NSInteger pageNum, void (^pageCompletion)(PageResultPaymentConsents)) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
 
             AWXGetPaymentConsentsRequest *request = [AWXGetPaymentConsentsRequest new];
@@ -126,7 +133,7 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
             [strongSelf.client send:request
                             handler:^(AWXResponse *_Nullable response, NSError *_Nullable responseError) {
                                 AWXGetPaymentConsentsResponse *result = (AWXGetPaymentConsentsResponse *)response;
-                                pageCompletion(^(id<AWXPage> __autoreleasing *page, NSError *__autoreleasing *error) {
+                                pageCompletion(^(id __autoreleasing *page, NSError *__autoreleasing *error) {
                                     *page = result;
                                     *error = responseError;
                                 });
@@ -134,17 +141,17 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
         }
         items:[NSMutableArray new]
         pageNum:0
-        completion:^(ItemsResult result) {
+        completion:^(ItemsResultPaymentConsents result) {
             completion(result);
         }];
 }
 
-- (void)LoadPagedItemsWithLoadPageBlock:(void (^)(NSInteger pageNum, void (^)(PageResult)))loadPageBlock
-                                  items:(NSMutableArray *)items
-                                pageNum:(NSInteger)pageNum
-                             completion:(void (^)(ItemsResult))completion {
-    loadPageBlock(pageNum, ^void(PageResult result) {
-        id<AWXPage> response;
+- (void)LoadPagedPaymentMethodTypesWithLoadPageBlock:(void (^)(NSInteger pageNum, void (^)(PageResultPaymentTypes)))loadPageBlock
+                                               items:(NSMutableArray *)items
+                                             pageNum:(NSInteger)pageNum
+                                          completion:(void (^)(ItemsResultPaymentTypes))completion {
+    loadPageBlock(pageNum, ^void(PageResultPaymentTypes result) {
+        AWXGetPaymentMethodTypesResponse *response;
         NSError *responseError;
         result(&response, &responseError);
 
@@ -158,7 +165,35 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
         }
 
         if (response.hasMore) {
-            [self LoadPagedItemsWithLoadPageBlock:loadPageBlock items:items pageNum:pageNum + 1 completion:completion];
+            //            [self LoadPagedPaymentMethodTypesWithLoadPageBlock:loadPageBlock items:items pageNum:pageNum + 1 completion:completion];
+        } else {
+            completion(^(NSArray *__autoreleasing *newItems, NSError *__autoreleasing *error) {
+                *newItems = items;
+            });
+        }
+    });
+}
+
+- (void)LoadPagedPaymentConsentsWithLoadPageBlock:(void (^)(NSInteger pageNum, void (^)(PageResultPaymentConsents)))loadPageBlock
+                                            items:(NSMutableArray *)items
+                                          pageNum:(NSInteger)pageNum
+                                       completion:(void (^)(ItemsResultPaymentConsents))completion {
+    loadPageBlock(pageNum, ^void(PageResultPaymentConsents result) {
+        AWXGetPaymentConsentsResponse *response;
+        NSError *responseError;
+        result(&response, &responseError);
+
+        [items addObjectsFromArray:response.items];
+
+        if (responseError) {
+            completion(^(NSArray *__autoreleasing *items, NSError *__autoreleasing *error) {
+                *error = responseError;
+            });
+            return;
+        }
+
+        if (response.hasMore) {
+            [self LoadPagedPaymentMethodTypesWithLoadPageBlock:loadPageBlock items:items pageNum:pageNum + 1 completion:completion];
         } else {
             completion(^(NSArray *__autoreleasing *newItems, NSError *__autoreleasing *error) {
                 *newItems = items;

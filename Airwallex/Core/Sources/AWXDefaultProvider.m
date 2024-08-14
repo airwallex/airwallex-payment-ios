@@ -23,7 +23,9 @@
 #import <Airwallex/Airwallex-Swift.h>
 #endif
 
-@interface AWXDefaultProvider ()
+@interface AWXDefaultProvider () {
+    BOOL _isFlowFromPushing;
+}
 
 @property (nonatomic, weak, readwrite) id<AWXProviderDelegate> delegate;
 @property (nonatomic, strong, readwrite) AWXSession *session;
@@ -45,10 +47,19 @@
 }
 
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *)paymentMethodType {
+    return [self initWithDelegate:delegate session:session paymentMethodType:paymentMethodType isFlowFromPushing:NO];
+}
+
+- (BOOL)isFlowFromPushing {
+    return _isFlowFromPushing;
+}
+
+- (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *)paymentMethodType isFlowFromPushing:(BOOL)isFlowFromPushing {
     self = [super init];
     if (self) {
         _delegate = delegate;
         _session = session;
+        _isFlowFromPushing = isFlowFromPushing;
         if (paymentMethodType) {
             _paymentMethodType = paymentMethodType;
             AWXPaymentMethod *paymentMethod = [[AWXPaymentMethod alloc] initWithType:paymentMethodType.name id:nil billing:nil card:nil additionalParams:nil customerId:nil];
