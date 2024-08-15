@@ -10,7 +10,6 @@
 #import "AWX3DSService.h"
 #import "AWXDevice.h"
 #import "AWXPaymentIntentResponse.h"
-#import "AWXSecurityService.h"
 #import "AWXSession.h"
 #import "NSObject+logging.h"
 
@@ -25,22 +24,14 @@
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     [self.delegate providerDidStartRequest:self];
     [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
-    __weak __typeof(self) weakSelf = self;
-    [[AWXSecurityService sharedService] doProfile:self.session.paymentIntentId
-                                       completion:^(NSString *_Nullable sessionId) {
-                                           __strong __typeof(weakSelf) strongSelf = weakSelf;
 
-                                           AWXDevice *device = [AWXDevice new];
-                                           device.deviceId = sessionId;
-
-                                           AWX3DSService *service = [AWX3DSService new];
-                                           service.customerId = strongSelf.session.customerId;
-                                           service.intentId = strongSelf.session.paymentIntentId;
-                                           service.device = device;
-                                           service.delegate = strongSelf;
-                                           [service present3DSFlowWithNextAction:nextAction];
-                                           strongSelf.service = service;
-                                       }];
+    AWX3DSService *service = [AWX3DSService new];
+    service.customerId = self.session.customerId;
+    service.intentId = self.session.paymentIntentId;
+    service.device = [AWXDevice deviceWithRiskSessionId];
+    service.delegate = self;
+    [service present3DSFlowWithNextAction:nextAction];
+    self.service = service;
 }
 
 - (void)threeDSService:(nonnull AWX3DSService *)service shouldPresentViewController:(nonnull UIViewController *)controller {

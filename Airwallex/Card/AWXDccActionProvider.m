@@ -13,7 +13,6 @@
 #import "AWXDevice.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
-#import "AWXSecurityService.h"
 #import "AWXSession.h"
 #import "NSObject+Logging.h"
 
@@ -35,32 +34,25 @@
 }
 
 - (void)confirmThreeDSWithUseDCC:(BOOL)useDCC {
-    __weak __typeof(self) weakSelf = self;
     [self.delegate providerDidStartRequest:self];
     [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
 
-    [[AWXSecurityService sharedService] doProfile:self.session.paymentIntentId
-                                       completion:^(NSString *_Nullable sessionId) {
-                                           __strong __typeof(weakSelf) strongSelf = weakSelf;
+    AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
+    request.requestId = NSUUID.UUID.UUIDString;
+    request.intentId = self.session.paymentIntentId;
+    request.type = AWXDCC;
+    request.useDCC = useDCC;
 
-                                           AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
-                                           request.requestId = NSUUID.UUID.UUIDString;
-                                           request.intentId = strongSelf.session.paymentIntentId;
-                                           request.type = AWXDCC;
-                                           request.useDCC = useDCC;
+    request.device = [AWXDevice deviceWithRiskSessionId];
 
-                                           AWXDevice *device = [AWXDevice new];
-                                           device.deviceId = sessionId;
-                                           request.device = device;
+    AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
 
-                                           AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-                                           __weak __typeof(self) weakSelf = self;
-                                           [client send:request
-                                                handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-                                                    __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                                    [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
-                                                }];
-                                       }];
+    __weak __typeof(self) weakSelf = self;
+    [client send:request
+         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+             __strong __typeof(weakSelf) strongSelf = weakSelf;
+             [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
+         }];
 }
 
 #pragma mark - AWXDCCViewControllerDelegate

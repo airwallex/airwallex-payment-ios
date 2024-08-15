@@ -21,6 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy) NSString *deviceId;
 
+/**
+ Return an instance with AirwallexRisk session id as device id
+ */
++ (instancetype)deviceWithRiskSessionId;
+
 @end
 
 NS_ASSUME_NONNULL_END

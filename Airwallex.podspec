@@ -11,13 +11,6 @@ Pod::Spec.new do |s|
   s.static_framework        = true
   s.default_subspecs        = 'Core', 'WeChatPay', 'Card', 'Redirect', 'ApplePay'
   
-  s.subspec 'Security' do |plugin|
-    plugin.dependency 'Airwallex/Core'
-    plugin.source_files = 'Airwallex/Security/*.{h,m}'
-    plugin.public_header_files = 'Airwallex/Security/*.h'
-    plugin.vendored_frameworks = 'Frameworks/RLTMXProfiling.xcframework', 'Frameworks/RLTMXProfilingConnections.xcframework'
-  end
-  
   s.subspec 'Core' do |plugin|
     plugin.source_files = 'Airwallex/Core/Sources/**/*.{swift,h,m}'
     plugin.public_header_files = 'Airwallex/Core/Sources/*.h'
@@ -35,7 +28,7 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'Card' do |plugin|
-    plugin.dependency 'Airwallex/Security'
+    plugin.dependency 'Airwallex/Core'
     plugin.source_files = 'Airwallex/Card/**/*.{h,m}'
     plugin.public_header_files = 'Airwallex/Card/*.h'
   end
@@ -47,7 +40,7 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'ApplePay' do |plugin|
-    plugin.dependency 'Airwallex/Security'
+    plugin.dependency 'Airwallex/Core'
     plugin.source_files = 'Airwallex/ApplePay/**/*.{h,m}'
     plugin.public_header_files = 'Airwallex/ApplePay/*.h'
   end

@@ -9,13 +9,12 @@
 #import "AWXApplePayProvider.h"
 #import "AWXAnalyticsLogger.h"
 #import "AWXConstants.h"
-#import "AWXDefaultProvider+Security.h"
+#import "AWXDevice.h"
 #import "AWXOneOffSession+Request.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
-#import "AWXSecurityService.h"
 #import "AWXSession.h"
 #import "NSObject+logging.h"
 #import "PKContact+Request.h"
@@ -49,7 +48,6 @@ typedef enum {
 
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *)paymentMethodType {
     self = [super initWithDelegate:delegate session:session paymentMethodType:paymentMethodType];
-    [AWXSecurityService sharedService];
     return self;
 }
 
@@ -123,12 +121,7 @@ typedef enum {
     [method appendAdditionalParams:applePayParams];
 
     self.paymentState = Pending;
-    __weak __typeof(self) weakSelf = self;
-    [self setDeviceWithSessionId:[[AWXRisk sessionID] UUIDString]
-                      completion:^(AWXDevice *_Nonnull device) {
-                          __strong __typeof(weakSelf) strongSelf = weakSelf;
-                          [strongSelf confirmWithPaymentMethod:method device:device completion:completion];
-                      }];
+    [self confirmWithPaymentMethod:method device:[AWXDevice deviceWithRiskSessionId] completion:completion];
 }
 
 - (void)paymentAuthorizationControllerDidFinish:(nonnull PKPaymentAuthorizationController *)controller {
