@@ -43,7 +43,9 @@ typedef enum {
 @implementation AWXApplePayProvider
 
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session {
-    return [self initWithDelegate:delegate session:session paymentMethodType:nil];
+    AWXPaymentMethodType *paymentMethodType = [AWXPaymentMethodType new];
+    paymentMethodType.name = AWXApplePayKey;
+    return [self initWithDelegate:delegate session:session paymentMethodType:paymentMethodType];
 }
 
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *)paymentMethodType {
