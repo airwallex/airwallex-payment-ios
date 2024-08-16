@@ -8,7 +8,6 @@
 
 #import "AWXCardProvider.h"
 #import "AWXCardViewController.h"
-#import "AWXDefaultProvider+Security.h"
 #import "AWXDevice.h"
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
@@ -23,6 +22,7 @@
 
 @interface AWXCardProviderTests : XCTestCase
 
+@property (nonatomic, strong) AWXDevice *device;
 @property (nonatomic, strong) AWXSession *session;
 @property (nonatomic, strong) AWXPaymentMethodType *paymentMethod;
 
@@ -38,6 +38,11 @@
 @implementation AWXCardProviderTests
 
 - (void)setUp {
+    AWXDevice *device = [AWXDevice new];
+    device.deviceId = @"abcd";
+    id mockDevice = OCMClassMock([AWXDevice class]);
+    OCMStub([mockDevice deviceWithRiskSessionId]).andReturn(device);
+    self.device = device;
     self.session = [AWXSession new];
     self.paymentMethod = [AWXPaymentMethodType new];
 }
@@ -75,16 +80,12 @@
 }
 
 - (void)testConfirmPaymentIntentWithPaymentConsentId {
-    AWXDevice *device = [AWXDevice new];
     AWXAPIClient *client = [self mockAPIClient];
 
     AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.autoCapture = YES;
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
-    id providerSpy = OCMPartialMock(provider);
-
-    OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:device, nil])]);
 
     [provider confirmPaymentIntentWithPaymentConsentId:@"consentID"];
 
@@ -92,7 +93,7 @@
                                     AWXConfirmPaymentIntentRequest *request = obj;
                                     XCTAssert(request.options.cardOptions.autoCapture);
                                     XCTAssertEqual(request.paymentConsent.Id, @"consentID");
-                                    XCTAssertEqual(request.device, device);
+                                    XCTAssertEqual(request.device, self.device);
                                     return YES;
                                 }]
                              handler:[OCMArg any]]);
@@ -116,8 +117,6 @@
 }
 
 - (void)testConfirmPaymentIntentWithCard {
-    AWXDevice *device = [AWXDevice new];
-
     id apiClientMock = OCMClassMock([AWXAPIClient class]);
     OCMStub([apiClientMock initWithConfiguration:[OCMArg any]]).andReturn(apiClientMock);
     OCMStub([apiClientMock alloc]).andReturn(apiClientMock);
@@ -132,19 +131,16 @@
     session.autoCapture = YES;
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
     id providerSpy = OCMPartialMock(provider);
-    OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:device, nil])]);
 
     AWXCard *card = [AWXCard new];
     AWXPlaceDetails *billing = [AWXPlaceDetails new];
 
     [provider confirmPaymentIntentWithCard:card billing:billing saveCard:YES];
 
-    OCMVerify(times(1), [providerSpy createPaymentConsentAndConfirmIntentWithPaymentMethod:[OCMArg any] device:device]);
+    OCMVerify(times(1), [providerSpy createPaymentConsentAndConfirmIntentWithPaymentMethod:[OCMArg any] device:_device]);
 }
 
 - (void)testConfirmPaymentIntentWithCardWithError {
-    AWXDevice *device = [AWXDevice new];
-
     id apiClientMock = OCMClassMock([AWXAPIClient class]);
     OCMStub([apiClientMock initWithConfiguration:[OCMArg any]]).andReturn(apiClientMock);
     OCMStub([apiClientMock alloc]).andReturn(apiClientMock);
@@ -158,8 +154,6 @@
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.autoCapture = YES;
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
-    id providerSpy = OCMPartialMock(provider);
-    OCMStub([providerSpy setDevice:([OCMArg invokeBlockWithArgs:device, nil])]);
 
     AWXCard *card = [AWXCard new];
     AWXPlaceDetails *billing = [AWXPlaceDetails new];
