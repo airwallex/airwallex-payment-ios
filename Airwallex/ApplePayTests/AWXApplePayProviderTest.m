@@ -8,7 +8,7 @@
 
 #import "AWXApplePayProvider.h"
 #import "AWXAnalyticsLogger.h"
-#import "AWXDefaultProvider+Security.h"
+#import "AWXDevice.h"
 #import "AWXOneOffSession+Request.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
@@ -40,6 +40,8 @@
     [super setUp];
     AWXDevice *device = [AWXDevice new];
     device.deviceId = @"abcd";
+    id mockDevice = OCMClassMock([AWXDevice class]);
+    OCMStub([mockDevice deviceWithRiskSessionId]).andReturn(device);
     self.device = device;
 
     id mockLogger = OCMClassMock([AWXAnalyticsLogger class]);
@@ -195,8 +197,6 @@
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
 
-    OCMStub([providerSpy setDeviceWithSessionId:[OCMArg any] completion:([OCMArg invokeBlockWithArgs:_device, nil])]);
-
     NSError *error = [NSError errorWithDomain:@"domain" code:-1 userInfo:nil];
 
     OCMStub([providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg any]
@@ -242,8 +242,6 @@
 
     AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
     id providerSpy = OCMPartialMock(provider);
-
-    OCMStub([providerSpy setDeviceWithSessionId:[OCMArg any] completion:([OCMArg invokeBlockWithArgs:_device, nil])]);
 
     AWXConfirmPaymentIntentResponse *response = [AWXConfirmPaymentIntentResponse new];
 

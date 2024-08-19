@@ -45,7 +45,10 @@ NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void) {
     NSArray<PKPaymentNetwork> *shared = @[
         PKPaymentNetworkVisa,
         PKPaymentNetworkMasterCard,
-        PKPaymentNetworkChinaUnionPay
+        PKPaymentNetworkChinaUnionPay,
+        PKPaymentNetworkAmex,
+        PKPaymentNetworkDiscover,
+        PKPaymentNetworkJCB
     ];
     if (@available(iOS 12.0, *)) {
         return [shared arrayByAddingObject:PKPaymentNetworkMaestro];

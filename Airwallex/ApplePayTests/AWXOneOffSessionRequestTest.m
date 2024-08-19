@@ -54,7 +54,7 @@
     XCTAssertEqual(request.merchantCapabilities, options.merchantCapabilities);
     XCTAssertEqualObjects(request.countryCode, session.countryCode);
     XCTAssertEqualObjects(request.currencyCode, intent.currency);
-    XCTAssertEqualObjects(request.supportedNetworks, AWXApplePaySupportedNetworks());
+    XCTAssertEqualObjects(request.supportedNetworks, options.supportedNetworks);
     XCTAssertEqualObjects(request.billingContact.name, contact.name);
     XCTAssertEqualObjects(request.billingContact.phoneNumber, contact.phoneNumber);
     XCTAssertEqualObjects(request.billingContact.emailAddress, contact.emailAddress);
@@ -233,6 +233,8 @@
     method.amount = [[NSDecimalNumber alloc] initWithInt:10];
 
     options.requiredBillingContactFields = [NSSet setWithObject:PKContactFieldPhoneNumber];
+
+    options.supportedNetworks = @[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard];
 
     return options;
 }

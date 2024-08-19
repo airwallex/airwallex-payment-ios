@@ -7,6 +7,7 @@
 //
 
 #import "AWXApplePayOptions.h"
+#import "AWXConstants.h"
 #import <XCTest/XCTest.h>
 
 @interface AWXApplePayOptionsTest : XCTestCase
@@ -24,6 +25,7 @@
     XCTAssertNil(options.totalPriceLabel);
     XCTAssertNil(options.supportedCountries);
     XCTAssertNil(options.additionalPaymentSummaryItems);
+    XCTAssertEqualObjects(options.supportedNetworks, AWXApplePaySupportedNetworks());
 }
 
 @end

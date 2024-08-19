@@ -8,9 +8,16 @@
 
 #import "AWXDevice.h"
 #import "AWXConstants.h"
+#import <AirwallexRisk/AirwallexRisk-Swift.h>
 #import <UIKit/UIKit.h>
 
 @implementation AWXDevice
+
++ (instancetype)deviceWithRiskSessionId {
+    AWXDevice *device = [AWXDevice new];
+    device.deviceId = [[AWXRisk sessionID] UUIDString];
+    return device;
+}
 
 - (NSDictionary *)encodeToJSON {
     NSMutableDictionary *device = [NSMutableDictionary new];

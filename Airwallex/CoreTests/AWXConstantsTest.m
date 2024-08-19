@@ -54,6 +54,9 @@
     if (@available(iOS 12.0, *)) {
         XCTAssertTrue([AWXApplePaySupportedNetworks() containsObject:PKPaymentNetworkMaestro]);
     }
+    XCTAssertTrue([AWXApplePaySupportedNetworks() containsObject:PKPaymentNetworkJCB]);
+    XCTAssertTrue([AWXApplePaySupportedNetworks() containsObject:PKPaymentNetworkAmex]);
+    XCTAssertTrue([AWXApplePaySupportedNetworks() containsObject:PKPaymentNetworkDiscover]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeApplePay {
