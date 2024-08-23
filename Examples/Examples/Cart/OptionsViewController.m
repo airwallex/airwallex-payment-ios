@@ -19,8 +19,6 @@
 
 @property (strong, nonatomic, nonnull) IBOutletCollection(UITextField) NSArray<UITextField *> *textFields;
 
-@property (strong, nonatomic, nonnull) IBOutletCollection(UIButton) NSArray<UIButton *> *optionButtons;
-
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *apiKeyTextField;
@@ -36,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet OptionButton *checkoutBtn;
 @property (weak, nonatomic) IBOutlet OptionButton *nextTriggerByBtn;
 @property (weak, nonatomic) IBOutlet UISwitch *cvcSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *threeDSSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *autoCaptureSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *applePayOnlySwitch;
 @property (weak, nonatomic) IBOutlet UITextField *customerIdTextField;
@@ -187,6 +186,10 @@
     [AirwallexExamplesKeys shared].requireCVC = self.cvcSwitch.isOn;
 }
 
+- (IBAction)threeDSSwitchPressed:(id)sender {
+    [AirwallexExamplesKeys shared].force3DS = self.threeDSSwitch.isOn;
+}
+
 - (IBAction)autoCaptureSwitchPressed:(id)sender {
     [AirwallexExamplesKeys shared].autoCapture = self.autoCaptureSwitch.isOn;
 }
@@ -278,6 +281,9 @@
     BOOL requiresCVC = [AirwallexExamplesKeys shared].requireCVC;
     self.cvcSwitch.on = requiresCVC;
 
+    BOOL force3DS = [AirwallexExamplesKeys shared].force3DS;
+    self.threeDSSwitch.on = force3DS;
+
     BOOL autoCapture = [AirwallexExamplesKeys shared].autoCapture;
     self.autoCaptureSwitch.on = autoCapture;
 
@@ -350,6 +356,7 @@
     NSLog(@"Currency (Example): %@", [AirwallexExamplesKeys shared].currency);
     NSLog(@"Country Code (Example): %@", [AirwallexExamplesKeys shared].countryCode);
     NSLog(@"Return URL (Example): %@", [AirwallexExamplesKeys shared].returnUrl);
+    NSLog(@"Force 3DS (Example): %@", [AirwallexExamplesKeys shared].force3DS ? @"Yes" : @"No");
 
     NSLog(@"Payment Base URL (SDK): %@", [Airwallex defaultBaseURL].absoluteString);
     NSLog(@"SDK mode (SDK): %@", FormatAirwallexSDKMode(Airwallex.mode));

@@ -15,6 +15,7 @@ static NSString *const kCachedEnvironment = @"kCachedEnvironment";
 static NSString *const kCachedCheckoutMode = @"kCachedCheckoutMode";
 static NSString *const kCachedNextTriggerBy = @"kCachedNextTriggerBy";
 static NSString *const kCachedRequiresCVC = @"kCachedRequiresCVC";
+static NSString *const kCachedForce3DS = @"kCachedForce3DS";
 static NSString *const kCachedAutoCapture = @"kCachedAutoCapture";
 static NSString *const kCachedApplePayMethodOnly = @"kCachedApplePayMethodOnly";
 static NSString *const kCachedCustomerID = @"kCachedCustomerID";
@@ -37,6 +38,7 @@ typedef NS_ENUM(NSInteger, AirwallexCheckoutMode) {
 @property (nonatomic) AirwallexCheckoutMode checkoutMode;
 @property (nonatomic) AirwallexNextTriggerByType nextTriggerByType;
 @property (nonatomic) BOOL requireCVC;
+@property (nonatomic) BOOL force3DS;
 @property (nonatomic) BOOL autoCapture;
 @property (nonatomic) BOOL applePayMethodOnly;
 @property (nonatomic, strong, nullable) NSString *customerId;

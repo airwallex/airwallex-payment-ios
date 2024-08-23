@@ -235,6 +235,9 @@
     if (customerId) {
         parameters[@"customer_id"] = customerId;
     }
+    if ([AirwallexExamplesKeys shared].force3DS) {
+        parameters[@"payment_method_options"] = @{@"card": @{@"three_ds_action": @"FORCE_3DS"}};
+    }
 
     AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
     if (checkoutMode != AirwallexCheckoutRecurringMode) {

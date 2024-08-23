@@ -52,11 +52,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<AWXPaymentResultDelegate> delegate;
 
 /**
- The hostViewController will present or push the payment flow.
- */
-@property (nonatomic, weak) UIViewController *hostViewController;
-
-/**
  Cureent session to handle.
  */
 @property (nonatomic, strong) AWXSession *session;
