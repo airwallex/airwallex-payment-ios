@@ -354,6 +354,9 @@ Be aware that we currently support the following payment networks for Apple Pay:
 - MasterCard
 - ChinaUnionPay
 - Maestro (iOS 12+)
+- Amex
+- Discover
+- JCB
 
 Customers will only be able to select the cards of the above payment networks during Apple Pay.
 

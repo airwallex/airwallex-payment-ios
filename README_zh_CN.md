@@ -351,6 +351,9 @@ options.totalPriceLabel = @"COMPANY, INC.";
 - MasterCard
 - ChinaUnionPay
 - Maestro (iOS 12+)
+- Amex
+- Discover
+- JCB
 
 用户在 Apple Pay 的过程中只能选择这几种支付系统的卡片进行付款。
 
