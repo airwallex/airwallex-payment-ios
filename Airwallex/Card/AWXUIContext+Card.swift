@@ -16,6 +16,22 @@ public extension AWXUIContext {
             session: session,
             supportedCardSchemes: cardSchemes.map { let cardScheme = AWXCardScheme(); cardScheme.name = $0.rawValue; return cardScheme }
         )
-        hostViewController.present(controller, animated: true)
+        
+        let navigationController = UINavigationController(rootViewController: controller)
+        hostViewController.present(navigationController, animated: true)
+    }
+    
+    @objc func pushCardPaymentFlowFrom(_ hostViewController: UIViewController, cardSchemes: [AWXCardBrand]) {
+        let navigationController = hostViewController as? UINavigationController ?? hostViewController.navigationController
+        guard let navigationController else { fatalError("The hostViewController is not a navigation controller, or is not contained in a navigation controller.") }
+        
+        let controller = AWXCardViewController(nibName: nil, bundle: nil)
+        controller.session = session
+        controller.viewModel = AWXCardViewModel(
+            session: session,
+            supportedCardSchemes: cardSchemes.map { let cardScheme = AWXCardScheme(); cardScheme.name = $0.rawValue; return cardScheme }
+        )
+        
+        navigationController.pushViewController(controller, animated: true)
     }
 }

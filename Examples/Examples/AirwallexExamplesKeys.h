@@ -18,6 +18,7 @@ static NSString *const kCachedRequiresCVC = @"kCachedRequiresCVC";
 static NSString *const kCachedForce3DS = @"kCachedForce3DS";
 static NSString *const kCachedAutoCapture = @"kCachedAutoCapture";
 static NSString *const kCachedApplePayMethodOnly = @"kCachedApplePayMethodOnly";
+static NSString *const kCachedCardMethodOnly = @"kCachedCardMethodOnly";
 static NSString *const kCachedCustomerID = @"kCachedCustomerID";
 static NSString *const kCachedApiKey = @"kCachedApiKey";
 static NSString *const kCachedClientId = @"kCachedClientId";
@@ -41,6 +42,7 @@ typedef NS_ENUM(NSInteger, AirwallexCheckoutMode) {
 @property (nonatomic) BOOL force3DS;
 @property (nonatomic) BOOL autoCapture;
 @property (nonatomic) BOOL applePayMethodOnly;
+@property (nonatomic) BOOL cardMethodOnly;
 @property (nonatomic, strong, nullable) NSString *customerId;
 @property (nonatomic, strong) NSString *apiKey;
 @property (nonatomic, strong) NSString *clientId;

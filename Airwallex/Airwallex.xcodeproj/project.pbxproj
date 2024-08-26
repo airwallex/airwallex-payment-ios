@@ -364,6 +364,7 @@
 		1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModelTests.m; sourceTree = "<group>"; };
 		1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AirwallexRisk.xcframework; path = ../Frameworks/AirwallexRisk.xcframework; sourceTree = "<group>"; };
 		1820C9642C78552C006B18C4 /* AWXUIContext+Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXUIContext+Card.swift"; sourceTree = "<group>"; };
+		1820C9682C7C22B3006B18C4 /* Airwallex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Airwallex.h; sourceTree = "<group>"; };
 		1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXCardImageView.h; sourceTree = "<group>"; };
 		1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardImageView.m; sourceTree = "<group>"; };
 		1829B8BD291B2D3B00D0D2CA /* PaymentMethodType.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PaymentMethodType.json; sourceTree = "<group>"; };
@@ -728,6 +729,7 @@
 		085BD3BE23CC62B4002E8F27 = {
 			isa = PBXGroup;
 			children = (
+				1820C9682C7C22B3006B18C4 /* Airwallex.h */,
 				3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */,
 				3C72E12828EC4BDD00F038E3 /* Configurations */,
 				3C5A37F927F29DB000CFC2EF /* Shared */,

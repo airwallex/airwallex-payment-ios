@@ -122,6 +122,11 @@
     [[NSUserDefaults standardUserDefaults] setBool:applePayMethodOnly forKey:kCachedApplePayMethodOnly];
 }
 
+- (void)setCardMethodOnly:(BOOL)cardMethodOnly {
+    _cardMethodOnly = cardMethodOnly;
+    [[NSUserDefaults standardUserDefaults] setBool:cardMethodOnly forKey:kCachedCardMethodOnly];
+}
+
 - (void)setCustomerId:(nullable NSString *)customerId {
     _customerId = customerId;
     if (customerId) {

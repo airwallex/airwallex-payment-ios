@@ -14,6 +14,7 @@
 #import "ShippingCell.h"
 #import "TotalCell.h"
 #import "UIViewController+Utils.h"
+#import <Airwallex-Swift.h>
 #import <Airwallex/ApplePay.h>
 #import <Airwallex/Core.h>
 #import <SafariServices/SFSafariViewController.h>
@@ -120,6 +121,8 @@
     NSString *checkoutTitle = @"Checkout";
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kCachedApplePayMethodOnly]) {
         checkoutTitle = @"Pay";
+    } else if ([[NSUserDefaults standardUserDefaults] boolForKey:kCachedCardMethodOnly]) {
+        checkoutTitle = @"Pay by card";
     }
     [self.checkoutButton setTitle:checkoutTitle forState:UIControlStateNormal];
     [self.tableView reloadData];
@@ -374,7 +377,11 @@
     AWXUIContext *context = [AWXUIContext sharedContext];
     context.delegate = self;
     context.session = session;
-    [context presentPaymentFlowFrom:self];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kCachedCardMethodOnly]) {
+        [context presentCardPaymentFlowFrom:self cardSchemes:@[AWXCardBrandMastercard]];
+    } else {
+        [context presentPaymentFlowFrom:self];
+    }
 }
 
 #pragma mark - Initiate Apple Pay Flow
