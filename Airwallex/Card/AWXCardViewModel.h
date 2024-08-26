@@ -8,10 +8,10 @@
 
 #import "AWXCardProvider.h"
 #import "AWXCardScheme.h"
-#import "AWXCountry.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXUtils.h"
 
+@class AWXCountry;
 @protocol AWXProviderDelegate;
 
 NS_ASSUME_NONNULL_BEGIN

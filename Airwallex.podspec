@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Card' do |plugin|
     plugin.dependency 'Airwallex/Core'
-    plugin.source_files = 'Airwallex/Card/**/*.{h,m}'
+    plugin.source_files = 'Airwallex/Card/**/*.{swift,h,m}'
     plugin.public_header_files = 'Airwallex/Card/*.h'
   end
   

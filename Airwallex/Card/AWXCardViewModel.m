@@ -9,6 +9,7 @@
 #import "AWXCardViewModel.h"
 #import "AWXCard.h"
 #import "AWXCardValidator.h"
+#import "AWXCountry.h"
 #import "AWXSession.h"
 
 @interface AWXCardViewModel ()
