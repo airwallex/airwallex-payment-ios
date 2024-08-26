@@ -372,6 +372,7 @@
     self.paymentIntent = paymentIntent;
     // Step 3: Create session
     AWXSession *session = [self createSession:paymentIntent];
+    session.paymentMethods = @[@"card"];
 
     // Step 4: Present payment flow
     AWXUIContext *context = [AWXUIContext sharedContext];

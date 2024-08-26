@@ -22,13 +22,14 @@
 
 @implementation AWXCardViewModel
 
-- (instancetype)initWithSession:(AWXSession *)session supportedCardSchemes:(NSArray<AWXCardScheme *> *)cardSchemes {
+- (instancetype)initWithSession:(AWXSession *)session supportedCardSchemes:(NSArray<AWXCardScheme *> *)cardSchemes launchDirectly:(BOOL)launchDirectly {
     self = [super init];
     if (self) {
         _session = session;
         _isReusingShippingAsBillingInformation = session.billing != nil && session.isBillingInformationRequired;
         _selectedCountry = [AWXCountry countryWithCode:session.billing.address.countryCode];
         _supportedCardSchemes = cardSchemes;
+        _isLaunchedDirectly = launchDirectly;
     }
     return self;
 }

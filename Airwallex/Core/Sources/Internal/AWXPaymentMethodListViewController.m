@@ -43,9 +43,7 @@
 
 @property (nonatomic, strong) NSArray *availablePaymentMethodTypes;
 @property (nonatomic, strong) NSMutableArray<AWXPaymentConsent *> *availablePaymentConsents;
-@property (nonatomic) BOOL canLoadMore;
 @property (nonatomic) BOOL showCardDirectly;
-@property (nonatomic) NSInteger nextPageNum;
 @property (nonatomic, strong) NSArray<AWXPaymentMethodType *> *filteredPaymentMethodTypes;
 
 @end

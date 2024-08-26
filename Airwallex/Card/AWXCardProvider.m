@@ -38,8 +38,7 @@
 - (void)handleFlow {
     AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
-    controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:self.paymentMethodType.cardSchemes];
-    controller.provider = self;
+    controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:self.paymentMethodType.cardSchemes launchDirectly:self.showPaymentDirectly];
     [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
 }
 

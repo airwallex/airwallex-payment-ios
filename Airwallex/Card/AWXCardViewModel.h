@@ -27,7 +27,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) AWXPlaceDetails *initialBilling;
 @property (nonatomic, strong, nullable) AWXCountry *selectedCountry;
 
-- (instancetype)initWithSession:(AWXSession *)session supportedCardSchemes:(NSArray<AWXCardScheme *> *_Nullable)cardSchemes;
+/**
+ Whether card payment is launched directly via public API or payment methods list has been skipped.
+ */
+@property (nonatomic, readonly) BOOL isLaunchedDirectly;
+
+- (instancetype)initWithSession:(AWXSession *)session supportedCardSchemes:(NSArray<AWXCardScheme *> *_Nullable)cardSchemes launchDirectly:(BOOL)launchDirectly;
 
 - (BOOL)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString *_Nullable *_Nullable)error;
 

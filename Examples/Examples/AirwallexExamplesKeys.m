@@ -60,6 +60,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedReturnURL];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kCachedAutoCapture];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCachedApplePayMethodOnly];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCachedCardMethodOnly];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     [self syncKeys];
@@ -74,6 +75,7 @@
     self.force3DS = [userDefaults boolForKey:kCachedForce3DS];
     self.autoCapture = [userDefaults boolForKey:kCachedAutoCapture];
     self.applePayMethodOnly = [userDefaults boolForKey:kCachedApplePayMethodOnly];
+    self.cardMethodOnly = [userDefaults boolForKey:kCachedCardMethodOnly];
     self.customerId = [userDefaults stringForKey:kCachedCustomerID];
 
     NSString *cachedApiKey = [userDefaults stringForKey:kCachedApiKey];
