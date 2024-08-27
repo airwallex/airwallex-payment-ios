@@ -64,7 +64,7 @@
 		188F72AC2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F72AB2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m */; };
 		188F72AF2B2AC80D005CBE9A /* PaymentMethodTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = 188F72AD2B2AB36E005CBE9A /* PaymentMethodTypes.json */; };
 		188F72B02B2AC80F005CBE9A /* PaymentConsents.json in Resources */ = {isa = PBXBuildFile; fileRef = 188F72AE2B2AC06D005CBE9A /* PaymentConsents.json */; };
-		18AC888329C4598A0028D66A /* AWXPageViewTrackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 18AC888229C4597E0028D66A /* AWXPageViewTrackable.h */; };
+		18AC888329C4598A0028D66A /* AWXPageViewTrackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 18AC888229C4597E0028D66A /* AWXPageViewTrackable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18B9DE1B2B2832290011213F /* AWXPaymentMethodListViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B9DE192B2832290011213F /* AWXPaymentMethodListViewModel.h */; };
 		18B9DE1C2B2832290011213F /* AWXPaymentMethodListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B9DE1A2B2832290011213F /* AWXPaymentMethodListViewModel.m */; };
 		18B9DE1E2B2847320011213F /* AWXPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B9DE1D2B2847210011213F /* AWXPage.h */; };
@@ -208,7 +208,7 @@
 		5775CF8926E5E28500C6AFE3 /* AWXDccResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF7726E5E28400C6AFE3 /* AWXDccResponse.m */; };
 		5775CF8A26E5E28500C6AFE3 /* AWXDCCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7826E5E28400C6AFE3 /* AWXDCCViewController.h */; };
 		5775CF8B26E5E28500C6AFE3 /* AWXDccActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF7926E5E28400C6AFE3 /* AWXDccActionProvider.m */; };
-		5775CF8D26E5E28500C6AFE3 /* AWXCardViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7B26E5E28400C6AFE3 /* AWXCardViewController.h */; };
+		5775CF8D26E5E28500C6AFE3 /* AWXCardViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7B26E5E28400C6AFE3 /* AWXCardViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF9426E5E28D00C6AFE3 /* AWXPaymentFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF8E26E5E28C00C6AFE3 /* AWXPaymentFormViewController.h */; };
 		5775CF9626E5E28D00C6AFE3 /* AWXPaymentFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF9026E5E28C00C6AFE3 /* AWXPaymentFormViewController.m */; };
 		5775CF9826E5E28D00C6AFE3 /* AWXRedirectActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF9226E5E28D00C6AFE3 /* AWXRedirectActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -225,7 +225,7 @@
 		57E73719272AC043009905DC /* AWXSchemaProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 57E73717272AC043009905DC /* AWXSchemaProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57E7371A272AC043009905DC /* AWXSchemaProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E73718272AC043009905DC /* AWXSchemaProvider.m */; };
 		6EE990B728D9A300008C22B7 /* AWXCardViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 184EADAF28D15C1600FD965D /* AWXCardViewModel.m */; };
-		6EE990BA28D9A3B7008C22B7 /* AWXCardViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE990B928D9A3B7008C22B7 /* AWXCardViewModel.h */; };
+		6EE990BA28D9A3B7008C22B7 /* AWXCardViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE990B928D9A3B7008C22B7 /* AWXCardViewModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9184A98A3FB097B3E30DFD42 /* Pods_WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A5DE28F611F49B21B3B1DA1 /* Pods_WeChatPay.framework */; };
 		C844DC7D2C3CE37F0099614C /* NSObject+Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */; };
 		C844DC7E2C3CE37F0099614C /* NSObject+Logging.h in Headers */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; settings = {ATTRIBUTES = (Public, ); }; };

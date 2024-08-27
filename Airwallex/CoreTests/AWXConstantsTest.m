@@ -93,4 +93,14 @@
     XCTAssertNil(ClassToHandleFlowForPaymentMethodType(type));
 }
 
+- (void)testCardBrands {
+    XCTAssertEqualObjects(AWXCardBrandVisa, @"visa");
+    XCTAssertEqualObjects(AWXCardBrandAmex, @"amex");
+    XCTAssertEqualObjects(AWXCardBrandMastercard, @"mastercard");
+    XCTAssertEqualObjects(AWXCardBrandDiscover, @"discover");
+    XCTAssertEqualObjects(AWXCardBrandJCB, @"jcb");
+    XCTAssertEqualObjects(AWXCardBrandDinersClub, @"diners");
+    XCTAssertEqualObjects(AWXCardBrandUnionPay, @"unionpay");
+}
+
 @end
