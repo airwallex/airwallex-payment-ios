@@ -50,6 +50,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCheckoutMode];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedNextTriggerBy];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedRequiresCVC];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedForce3DS];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedCustomerID];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedApiKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedClientId];
@@ -59,6 +60,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedReturnURL];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kCachedAutoCapture];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCachedApplePayMethodOnly];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCachedCardMethodOnly];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     [self syncKeys];
@@ -70,8 +72,10 @@
     self.checkoutMode = [userDefaults integerForKey:kCachedCheckoutMode];
     self.nextTriggerByType = [userDefaults integerForKey:kCachedNextTriggerBy];
     self.requireCVC = [userDefaults boolForKey:kCachedRequiresCVC];
+    self.force3DS = [userDefaults boolForKey:kCachedForce3DS];
     self.autoCapture = [userDefaults boolForKey:kCachedAutoCapture];
     self.applePayMethodOnly = [userDefaults boolForKey:kCachedApplePayMethodOnly];
+    self.cardMethodOnly = [userDefaults boolForKey:kCachedCardMethodOnly];
     self.customerId = [userDefaults stringForKey:kCachedCustomerID];
 
     NSString *cachedApiKey = [userDefaults stringForKey:kCachedApiKey];
@@ -105,6 +109,11 @@
     [[NSUserDefaults standardUserDefaults] setBool:requireCVC forKey:kCachedRequiresCVC];
 }
 
+- (void)setForce3DS:(BOOL)force3DS {
+    _force3DS = force3DS;
+    [[NSUserDefaults standardUserDefaults] setBool:force3DS forKey:kCachedForce3DS];
+}
+
 - (void)setAutoCapture:(BOOL)autoCapture {
     _autoCapture = autoCapture;
     [[NSUserDefaults standardUserDefaults] setBool:autoCapture forKey:kCachedAutoCapture];
@@ -113,6 +122,11 @@
 - (void)setApplePayMethodOnly:(BOOL)applePayMethodOnly {
     _applePayMethodOnly = applePayMethodOnly;
     [[NSUserDefaults standardUserDefaults] setBool:applePayMethodOnly forKey:kCachedApplePayMethodOnly];
+}
+
+- (void)setCardMethodOnly:(BOOL)cardMethodOnly {
+    _cardMethodOnly = cardMethodOnly;
+    [[NSUserDefaults standardUserDefaults] setBool:cardMethodOnly forKey:kCachedCardMethodOnly];
 }
 
 - (void)setCustomerId:(nullable NSString *)customerId {

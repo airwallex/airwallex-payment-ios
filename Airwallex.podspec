@@ -9,6 +9,7 @@ Pod::Spec.new do |s|
   s.platform                = :ios
   s.ios.deployment_target   = '13.0'
   s.static_framework        = true
+  s.source_files            = 'Airwallex/Airwallex.h'
   s.default_subspecs        = 'Core', 'WeChatPay', 'Card', 'Redirect', 'ApplePay'
   
   s.subspec 'Core' do |plugin|
@@ -29,7 +30,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Card' do |plugin|
     plugin.dependency 'Airwallex/Core'
-    plugin.source_files = 'Airwallex/Card/**/*.{h,m}'
+    plugin.source_files = 'Airwallex/Card/**/*.{swift,h,m}'
     plugin.public_header_files = 'Airwallex/Card/*.h'
   end
   

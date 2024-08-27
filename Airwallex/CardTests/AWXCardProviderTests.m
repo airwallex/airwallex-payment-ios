@@ -56,16 +56,32 @@
     XCTAssertFalse([AWXCardProvider canHandleSession:_session paymentMethod:_paymentMethod]);
 }
 
-- (void)testHandleFlow {
+- (void)testHandleFlowWhenLaunchDirectly {
     id spy = OCMClassMock([AWXProviderDelegateSpy class]);
     AWXOneOffSession *session = [AWXOneOffSession new];
     AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
     session.autoCapture = YES;
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session paymentMethodType:paymentMethod];
+    provider.showPaymentDirectly = YES;
     [provider handleFlow];
     OCMVerify(times(1), [spy provider:provider
                             shouldPresentViewController:[OCMArg checkWithBlock:^BOOL(id obj) {
                                 XCTAssertTrue([obj isKindOfClass:AWXCardViewController.class]);
+                                return true;
+                            }]
+                                         forceToDismiss:NO
+                                          withAnimation:YES]);
+}
+
+- (void)testHandleFlowWhenNotLaunchDirectly {
+    id spy = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session paymentMethodType:paymentMethod];
+    [provider handleFlow];
+    OCMVerify(times(1), [spy provider:provider
+                            shouldPresentViewController:[OCMArg checkWithBlock:^BOOL(id obj) {
+                                XCTAssertTrue([obj isKindOfClass:UINavigationController.class]);
                                 return true;
                             }]
                                          forceToDismiss:NO

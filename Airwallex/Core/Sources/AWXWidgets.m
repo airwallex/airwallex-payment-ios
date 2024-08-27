@@ -213,8 +213,6 @@
     case AWXTextFieldTypeCVC:
         self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
         break;
-    default:
-        break;
     }
 }
 

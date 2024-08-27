@@ -37,6 +37,14 @@ NSString *const AWXDCC = @"dcc";
 
 NSString *const AWXApplePayKey = @"applepay";
 
+AWXCardBrand const AWXCardBrandVisa = @"visa";
+AWXCardBrand const AWXCardBrandAmex = @"amex";
+AWXCardBrand const AWXCardBrandMastercard = @"mastercard";
+AWXCardBrand const AWXCardBrandDiscover = @"discover";
+AWXCardBrand const AWXCardBrandJCB = @"jcb";
+AWXCardBrand const AWXCardBrandDinersClub = @"diners";
+AWXCardBrand const AWXCardBrandUnionPay = @"unionpay";
+
 NSArray *AWXCardSupportedBrands(void) {
     return @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex), @(AWXBrandTypeUnionPay), @(AWXBrandTypeJCB), @(AWXBrandTypeDinersClub), @(AWXBrandTypeDiscover)];
 };

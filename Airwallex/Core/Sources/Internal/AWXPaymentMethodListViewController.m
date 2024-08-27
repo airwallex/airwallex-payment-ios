@@ -43,9 +43,7 @@
 
 @property (nonatomic, strong) NSArray *availablePaymentMethodTypes;
 @property (nonatomic, strong) NSMutableArray<AWXPaymentConsent *> *availablePaymentConsents;
-@property (nonatomic) BOOL canLoadMore;
 @property (nonatomic) BOOL showCardDirectly;
-@property (nonatomic) NSInteger nextPageNum;
 @property (nonatomic, strong) NSArray<AWXPaymentMethodType *> *filteredPaymentMethodTypes;
 
 @end
@@ -383,8 +381,8 @@
                                                              }
                                                          }];
     } else if (controller) {
-        if ([controller isKindOfClass:NSClassFromString(@"AWXCardViewController")]) {
-            [self.navigationController pushViewController:controller animated:!self.showCardDirectly];
+        if ([controller isKindOfClass:NSClassFromString(@"AWXCardViewController")] && self.showCardDirectly) {
+            [self.navigationController pushViewController:controller animated:NO];
         } else {
             [self presentViewController:controller animated:withAnimation completion:nil];
         }
