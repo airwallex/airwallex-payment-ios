@@ -39,7 +39,12 @@
     AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
     controller.session = self.session;
     controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:self.paymentMethodType.cardSchemes launchDirectly:self.showPaymentDirectly];
-    [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
+    if (self.showPaymentDirectly) {
+        [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
+    } else {
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
+        [self.delegate provider:self shouldPresentViewController:navController forceToDismiss:NO withAnimation:YES];
+    }
 }
 
 - (void)confirmPaymentIntentWithCard:(AWXCard *)card

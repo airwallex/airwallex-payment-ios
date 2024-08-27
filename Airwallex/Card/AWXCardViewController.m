@@ -339,7 +339,7 @@ typedef enum {
         [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
         [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %lu", delegate.class, AirwallexPaymentStatusCancel];
     } else {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -476,13 +476,18 @@ typedef enum {
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
     [self log:@"provider:didCompleteWithStatus:error: %lu  %@", status, error.description];
 
-    UIViewController *presentingViewController = self.presentingViewController;
-    [self dismissViewControllerAnimated:YES
-                             completion:^{
-                                 id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-                                 [delegate paymentViewController:presentingViewController didCompleteWithStatus:status error:error];
-                                 [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, presentingViewController.class, AirwallexPaymentStatusFailure, error.localizedDescription];
-                             }];
+    id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+    if (_viewModel.isLaunchedDirectly) {
+        [delegate paymentViewController:self didCompleteWithStatus:status error:error];
+        [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, self.class, status, error.localizedDescription];
+    } else {
+        UIViewController *presentingViewController = self.presentingViewController;
+        [self dismissViewControllerAnimated:YES
+                                 completion:^{
+                                     [delegate paymentViewController:presentingViewController didCompleteWithStatus:status error:error];
+                                     [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, presentingViewController.class, status, error.localizedDescription];
+                                 }];
+    }
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {

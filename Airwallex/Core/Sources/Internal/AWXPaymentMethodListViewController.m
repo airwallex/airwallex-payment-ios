@@ -381,8 +381,8 @@
                                                              }
                                                          }];
     } else if (controller) {
-        if ([controller isKindOfClass:NSClassFromString(@"AWXCardViewController")]) {
-            [self.navigationController pushViewController:controller animated:!self.showCardDirectly];
+        if ([controller isKindOfClass:NSClassFromString(@"AWXCardViewController")] && self.showCardDirectly) {
+            [self.navigationController pushViewController:controller animated:NO];
         } else {
             [self presentViewController:controller animated:withAnimation completion:nil];
         }
