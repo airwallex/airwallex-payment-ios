@@ -32,12 +32,12 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 /**
- This method is called when the user has completed the checkout.
+ This method is called when the user has completed the checkout and payment consent id is produced.
 
  @param controller The controller handling payment result.
- @param Id The id of payment consent.
+ @param paymentConsentId The id of payment consent.
  */
-- (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)Id;
+- (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)paymentConsentId;
 
 @end
 

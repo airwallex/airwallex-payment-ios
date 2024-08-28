@@ -9,7 +9,6 @@
 #import "AWXUIContext.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPaymentMethodListViewController.h"
-#import "AWXPaymentViewController.h"
 #import "AWXPlaceDetails.h"
 #import "AWXShippingViewController.h"
 #import "AWXUtils.h"
