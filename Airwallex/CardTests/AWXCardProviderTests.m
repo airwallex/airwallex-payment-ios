@@ -159,12 +159,14 @@
 
 - (void)testPaymentResultDelegate {
     id mockViewController = OCMClassMock([UIViewController class]);
+    OCMStub([mockViewController dismissViewControllerAnimated:YES completion:[OCMArg invokeBlockWithArgs:nil]]);
     id mockDelegate = OCMClassMock([AWXProviderDelegateSpy class]);
     AWXOneOffSession *session = [AWXOneOffSession new];
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:mockDelegate session:session];
 
     [provider paymentViewController:mockViewController didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
     OCMVerify(times(1), [mockViewController dismissViewControllerAnimated:YES completion:[OCMArg any]]);
+    OCMVerify(times(1), [mockDelegate provider:provider didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil]);
 
     [provider paymentViewController:mockViewController didCompleteWithPaymentConsentId:@"consentID"];
     OCMVerify(times(1), [mockDelegate provider:provider didCompleteWithPaymentConsentId:@"consentID"]);
