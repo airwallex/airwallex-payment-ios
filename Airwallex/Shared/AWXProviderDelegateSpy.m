@@ -44,4 +44,8 @@
     // no op
 }
 
+- (UIViewController *)hostViewController {
+    return _hostVC;
+}
+
 @end

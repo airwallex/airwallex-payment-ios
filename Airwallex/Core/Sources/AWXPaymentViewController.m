@@ -163,7 +163,7 @@
     [self checkPaymentEnabled:text];
 }
 
-#pragma mark - AWXViewModelDelegate
+#pragma mark - AWXProviderDelegate
 
 - (void)providerDidStartRequest:(AWXDefaultProvider *)provider {
     [self log:@"providerDidStartRequest:"];
@@ -176,15 +176,11 @@
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
-    id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    [delegate paymentViewController:self didCompleteWithStatus:status error:error];
+    [_delegate paymentViewController:self didCompleteWithStatus:status error:error];
 }
 
-- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
-    id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-    if ([delegate respondsToSelector:@selector(paymentViewController:didCompleteWithPaymentConsentId:)]) {
-        [delegate paymentViewController:self didCompleteWithPaymentConsentId:Id];
-    }
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(nonnull NSString *)paymentConsentId {
+    [_delegate paymentViewController:self didCompleteWithPaymentConsentId:paymentConsentId];
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {

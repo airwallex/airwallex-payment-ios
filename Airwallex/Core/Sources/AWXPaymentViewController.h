@@ -6,10 +6,9 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
+#import "AWXDefaultProvider.h"
 #import "AWXUIContext.h"
 #import "AWXViewController.h"
-
-@class AWXPaymentIntent, AWXPaymentMethod, AWXPaymentConsent;
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -380,7 +380,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kCachedCardMethodOnly]) {
         [context presentCardPaymentFlowFrom:self];
     } else {
-        [context presentPaymentFlowFrom:self];
+        [context presentEntirePaymentFlowFrom:self];
     }
 }
 

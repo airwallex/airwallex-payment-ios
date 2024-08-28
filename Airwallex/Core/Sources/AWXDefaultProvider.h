@@ -8,9 +8,10 @@
 
 #import "AWXAPIClient.h"
 #import "AWXConstants.h"
+#import "AWXSession.h"
 #import <UIKit/UIKit.h>
 
-@class AWXDefaultProvider, AWXConfirmPaymentNextAction, AWXSession, AWXDevice, AWXPaymentMethod, AWXPaymentConsent, AWXConfirmPaymentIntentResponse, AWXCard, AWXPlaceDetails;
+@class AWXDefaultProvider, AWXDevice, AWXConfirmPaymentIntentResponse;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -82,12 +83,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)provider:(AWXDefaultProvider *)provider shouldInsertViewController:(nullable UIViewController *)controller;
 
 /**
- This method is called when payment is completed and payment consent id is available.
+ This method is called when payment is completed and payment consent id is produced.
 
  @param provider The provider handling payment.
- @param Id The id of paymentConsnet.
+ @param paymentConsentId The id of payment consent.
  */
-- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id;
+- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)paymentConsentId;
 
 @end
 

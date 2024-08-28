@@ -9,6 +9,9 @@
 import UIKit
 
 public extension AWXUIContext {
+    /**
+     Present the card payment flow.
+     */
     @objc func presentCardPaymentFlowFrom(
         _ hostViewController: UIViewController,
         cardSchemes: [AWXCardBrand]
@@ -26,6 +29,9 @@ public extension AWXUIContext {
         hostViewController.present(navigationController, animated: true)
     }
     
+    /**
+     Push the card payment flow.
+     */
     @objc func pushCardPaymentFlowFrom(
         _ hostViewController: UIViewController,
         cardSchemes: [AWXCardBrand]

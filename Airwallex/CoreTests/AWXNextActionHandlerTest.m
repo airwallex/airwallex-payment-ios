@@ -36,14 +36,16 @@
 }
 
 - (void)testHandleNextActionWhenNoActionProvider {
-    id mockDelegate = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    id mockViewController = OCMClassMock([UIViewController class]);
+    delegate.hostVC = mockViewController;
     AWXOneOffSession *session = [AWXOneOffSession new];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"redirect", @"type", nil];
     AWXConfirmPaymentNextAction *nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:dict];
 
-    AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:mockDelegate session:session];
+    AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:delegate session:session];
     [handler handleNextAction:nextAction];
-    OCMVerify(times(1), [mockDelegate provider:[OCMArg any] shouldPresentViewController:[OCMArg any] forceToDismiss:YES withAnimation:YES]);
+    OCMVerify(times(1), [mockViewController presentViewController:[OCMArg isKindOfClass:[UIAlertController class]] animated:YES completion:nil]);
 }
 
 @end
