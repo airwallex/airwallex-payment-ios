@@ -64,14 +64,18 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedContext;
 
 /**
- Present the payment flow.
+ Present the entire payment flow from payment methods list.
  */
-- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController;
+- (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController;
+
+- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController __attribute__((deprecated("Use 'presentEntirePaymentFlowFrom' instead")));
 
 /**
- Push the payment flow.
+ Push the entire payment flow from payment methods list.
  */
-- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController;
+- (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController;
+
+- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController __attribute__((deprecated("Use 'pushEntirePaymentFlowFrom' instead")));
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

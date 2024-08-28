@@ -28,6 +28,7 @@ Table of contents
       * [CocoaPods](#cocoapods)
 	  * [Swift](#swift)
       * [Basic Integration](#basic-integration)
+      * [Low-level API Integration](#low-level-api-integration)
       * [Set Up WeChat Pay](#set-up-wechat-pay)
       * [Set Up Apple Pay](#set-up-apple-pay)
       * [Theme Color](#theme-color)
@@ -152,7 +153,7 @@ Upon checkout, use `AWXUIContext` to present the payment flow where the user wil
 AWXUIContext *context = [AWXUIContext sharedContext];
 context.delegate = "The target to handle AWXPaymentResultDelegate protocol";
 context.session = "The session created above";
-[context presentPaymentFlowFrom:self];
+[context presentEntirePaymentFlowFrom:self];
 ```
 
 - Handle the payment result
@@ -182,7 +183,7 @@ If the payment consent is created during payment process, you can implement this
 
 You can build your own entirely custom UI on top of our low-level APIs.
 
-#### Confirm card payment with card and billing details or payment consent ID
+#### Confirm card payment with card and billing details or payment consent
 
 You still need all the other steps in [Basic Integration](#basic-integration) section to set up configurations, intent and session, except the step **Present one-off payment or recurring flow** is replaced by:
 
@@ -194,7 +195,10 @@ self.provider = provider;
 // Confirm intent with card and billing
 [provider confirmPaymentIntentWithCard:"The AWXCard object collected by your custom UI" billing:"The AWXPlaceDetails object collected by your custom UI" saveCard:"Whether you want the card to be saved as payment consent for future payments"];
 
-// Or to confirm intent with a valid payment consent ID
+// Confirm intent with a payment consent object (AWXPaymentConsent)
+[provider confirmPaymentIntentWithPaymentConsent:paymentConsent];
+
+// Confirm intent with a valid payment consent ID only when the saved card is **network token**
 [provider confirmPaymentIntentWithPaymentConsentId:@"cst_xxxxxxxxxx"];
 ``` 
 

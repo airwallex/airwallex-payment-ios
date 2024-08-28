@@ -34,7 +34,9 @@ public extension AWXCardProvider {
     @objc private func close() {
         if let hostVC = delegate?.hostViewController?(), let navController = hostVC.presentedViewController as? UINavigationController {
             if navController.viewControllers.contains(where: { $0 is AWXPaymentViewController }) {
-                navController.dismiss(animated: true) { self.delegate?.provider(self, didCompleteWith: .cancel, error: nil) }
+                navController.dismiss(animated: true) {
+                    self.delegate?.provider(self, didCompleteWith: .cancel, error: nil)
+                }
             }
         }
     }
