@@ -9,7 +9,6 @@
 #import "AWXSession.h"
 #import "AWXPlaceDetails.h"
 #import "AWXTestUtils.h"
-#import "XCTestCase+Utils.h"
 #import <XCTest/XCTest.h>
 
 @interface AWXSessionTest : XCTestCase

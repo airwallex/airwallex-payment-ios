@@ -17,6 +17,7 @@
 #import "AWXPaymentMethodResponse.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSession.h"
+#import "Card/Card-Swift.h"
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 
@@ -113,6 +114,60 @@
                                     return YES;
                                 }]
                              handler:[OCMArg any]]);
+}
+
+- (void)testConfirmPaymentIntentWithPanPaymentConsent {
+    id mockViewController = OCMClassMock([UIViewController class]);
+    AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
+    spy.hostVC = mockViewController;
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
+
+    AWXPaymentConsent *consent = [AWXPaymentConsent new];
+    AWXPaymentMethod *method = [AWXPaymentMethod new];
+    AWXCard *card = [AWXCard new];
+    card.numberType = @"PAN";
+    method.card = card;
+    consent.Id = @"consentID";
+    consent.paymentMethod = method;
+
+    [provider confirmPaymentIntentWithPaymentConsent:consent];
+    OCMVerify(times(1), [mockViewController presentViewController:[OCMArg isKindOfClass:[UINavigationController class]]
+                                                         animated:YES
+                                                       completion:nil]);
+}
+
+- (void)testConfirmPaymentIntentWithNonPanPaymentConsent {
+    AWXAPIClient *client = [self mockAPIClient];
+    AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
+    spy.hostVC = [UIViewController new];
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
+
+    AWXPaymentConsent *consent = [AWXPaymentConsent new];
+    consent.Id = @"consentID";
+
+    [provider confirmPaymentIntentWithPaymentConsent:consent];
+    OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {
+                                    AWXConfirmPaymentIntentRequest *request = obj;
+                                    XCTAssertEqual(request.paymentConsent.Id, @"consentID");
+                                    XCTAssertEqual(request.device, self.device);
+                                    return YES;
+                                }]
+                             handler:[OCMArg any]]);
+}
+
+- (void)testPaymentResultDelegate {
+    id mockViewController = OCMClassMock([UIViewController class]);
+    id mockDelegate = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:mockDelegate session:session];
+
+    [provider paymentViewController:mockViewController didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
+    OCMVerify(times(1), [mockViewController dismissViewControllerAnimated:YES completion:[OCMArg any]]);
+
+    [provider paymentViewController:mockViewController didCompleteWithPaymentConsentId:@"consentID"];
+    OCMVerify(times(1), [mockDelegate provider:provider didCompleteWithPaymentConsentId:@"consentID"]);
 }
 
 - (void)testConfirmPaymentIntentWithCardNoSave {
