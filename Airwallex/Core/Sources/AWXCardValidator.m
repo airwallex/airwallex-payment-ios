@@ -392,6 +392,15 @@
     }
 }
 
++ (NSInteger)cvcLengthForBrand:(AWXBrandType)type {
+    switch (type) {
+    case AWXBrandTypeAmex:
+        return 4;
+    default:
+        return 3;
+    }
+}
+
 #pragma mark - Private methods
 
 - (NSArray<AWXBrand *> *)brandsForCardNumber:(NSString *)cardNumber {

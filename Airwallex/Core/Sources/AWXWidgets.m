@@ -319,7 +319,7 @@
             text = [string substringToIndex:string.length - 1];
         }
     } else if (self.fieldType == AWXTextFieldTypeCVC) {
-        text = [text substringToIndex:MIN(text.length, 4)];
+        text = [text substringToIndex:MIN(text.length, _maxLength)];
     }
     text.length > 0 ? [self activateAnimated:YES] : [self deactivateAnimated:YES];
     [self setText:text animated:YES];

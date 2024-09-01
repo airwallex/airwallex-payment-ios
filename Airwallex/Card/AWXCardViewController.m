@@ -55,7 +55,6 @@
 @property (strong, nonatomic) UIStackView *saveCardSwitchContainer;
 @property (strong, nonatomic) UIStackView *container;
 @property (strong, nonatomic) AWXWarningView *warningView;
-@property (nonatomic) AWXBrandType currentBrand;
 
 @property (nonatomic) BOOL saveCard;
 
@@ -118,7 +117,8 @@ typedef enum {
         return [weakSelf.viewModel validationMessageFromCardNumber:cardNumber];
     };
     _cardNoField.brandUpdateCallback = ^(AWXBrandType brand) {
-        weakSelf.currentBrand = brand;
+        weakSelf.viewModel.currentBrand = brand;
+        weakSelf.cvcField.maxLength = weakSelf.viewModel.cvcLength;
         if (weakSelf.saveCard && brand == AWXBrandTypeUnionPay) {
             [weakSelf addUnionPayWarningViewIfNecessary];
         } else {
@@ -357,7 +357,7 @@ typedef enum {
 
 - (void)saveCardSwitchChanged:(id)sender {
     self.saveCard = [(UISwitch *)sender isOn];
-    if (_saveCard && _currentBrand == AWXBrandTypeUnionPay) {
+    if (_saveCard && _viewModel.currentBrand == AWXBrandTypeUnionPay) {
         [self addUnionPayWarningViewIfNecessary];
     } else {
         [_warningView removeFromSuperview];
@@ -536,6 +536,8 @@ typedef enum {
     [self.view addSubview:controller.view];
     [controller didMoveToParentViewController:self];
 }
+
+#pragma mark - AWXFloatingLabelTextFieldDelegate
 
 - (BOOL)floatingLabelTextField:(AWXFloatingLabelTextField *)floatingLabelTextField textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == self.cardNoField.textField) {

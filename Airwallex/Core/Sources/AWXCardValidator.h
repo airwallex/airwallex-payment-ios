@@ -76,6 +76,7 @@ typedef enum : NSUInteger {
 - (nullable AWXBrand *)brandForCardName:(NSString *)name;
 - (BOOL)isValidCardLength:(NSString *)cardNumber;
 + (NSArray<NSNumber *> *)cardNumberFormatForBrand:(AWXBrandType)type;
++ (NSInteger)cvcLengthForBrand:(AWXBrandType)type;
 
 @end
 

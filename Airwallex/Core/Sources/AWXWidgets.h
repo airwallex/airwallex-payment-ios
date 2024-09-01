@@ -54,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSString *prefixText;
 @property (nonatomic) AWXTextFieldType fieldType;
 @property (nonatomic, weak) AWXFloatingLabelTextField *nextTextField;
+@property (nonatomic) NSInteger maxLength;
 
 - (NSString *)text;
 - (void)setText:(NSString *)text animated:(BOOL)animated;
