@@ -8,13 +8,13 @@
 
 #import "CartViewController.h"
 #import "APIClient.h"
-#import "Airwallex-Swift.h"
 #import "AirwallexExamplesKeys.h"
 #import "OptionsViewController.h"
 #import "ProductCell.h"
 #import "ShippingCell.h"
 #import "TotalCell.h"
 #import "UIViewController+Utils.h"
+#import <Airwallex/Airwallex-Swift.h>
 #import <Airwallex/ApplePay.h>
 #import <Airwallex/Core.h>
 #import <SafariServices/SFSafariViewController.h>

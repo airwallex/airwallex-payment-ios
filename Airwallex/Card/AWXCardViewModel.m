@@ -29,6 +29,7 @@
         _selectedCountry = [AWXCountry countryWithCode:session.billing.address.countryCode];
         _supportedCardSchemes = cardSchemes;
         _isLaunchedDirectly = launchDirectly;
+        _cvcLength = [AWXCardValidator cvcLengthForBrand:AWXBrandTypeUnknown];
     }
     return self;
 }
@@ -184,6 +185,16 @@
         return NSLocalizedString(@"Card number is invalid", nil);
     }
     return NSLocalizedString(@"Card number is required", nil);
+}
+
+- (nullable NSString *)validationMessageFromCvc:(NSString *)cvc {
+    if (cvc.length > 0) {
+        if (cvc.length == _cvcLength) {
+            return NULL;
+        }
+        return NSLocalizedString(@"Security code is invalid", nil);
+    }
+    return NSLocalizedString(@"Security code is required", nil);
 }
 
 #pragma mark Payment

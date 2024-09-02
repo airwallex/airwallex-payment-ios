@@ -19,6 +19,7 @@
 #import "AWXDefaultProvider.h"
 #import "AWXDevice.h"
 #import "AWXFloatingCardTextField.h"
+#import "AWXFloatingCvcTextField.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
@@ -40,7 +41,7 @@
 @property (strong, nonatomic) AWXFloatingCardTextField *cardNoField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *nameField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *expiresField;
-@property (strong, nonatomic) AWXFloatingLabelTextField *cvcField;
+@property (strong, nonatomic) AWXFloatingCvcTextField *cvcField;
 @property (strong, nonatomic) UISwitch *addressSwitch;
 @property (strong, nonatomic) AWXFloatingLabelTextField *firstNameField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *lastNameField;
@@ -155,8 +156,11 @@ typedef enum {
     _expiresField.delegate = self;
     [cvcStackView addArrangedSubview:_expiresField];
 
-    _cvcField = [AWXFloatingLabelTextField new];
-    _cvcField.fieldType = AWXTextFieldTypeCVC;
+    _cvcField = [AWXFloatingCvcTextField new];
+    _cvcField.validationMessageCallback = ^(NSString *cvc) {
+        return [weakSelf.viewModel validationMessageFromCvc:cvc];
+    };
+    _cvcField.maxLength = _viewModel.cvcLength;
     _cvcField.placeholder = NSLocalizedString(@"CVC / CVV", @"CVC / CVV");
     _expiresField.nextTextField = _cvcField;
     _cvcField.isRequired = YES;
