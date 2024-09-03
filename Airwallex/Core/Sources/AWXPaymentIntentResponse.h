@@ -63,6 +63,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) NSString *url;
 
 /**
+ Fallback Url
+ */
+@property (nonatomic, readonly, nullable) NSString *fallbackUrl;
+
+/**
  Method.
  */
 @property (nonatomic, readonly, nullable) NSString *method;
