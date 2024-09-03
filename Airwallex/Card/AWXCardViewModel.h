@@ -8,10 +8,11 @@
 
 #import "AWXCardProvider.h"
 #import "AWXCardScheme.h"
-#import "AWXCountry.h"
+#import "AWXCardValidator.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXUtils.h"
 
+@class AWXCountry;
 @protocol AWXProviderDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -26,8 +27,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) BOOL isCardSavingEnabled;
 @property (nonatomic, strong, readonly) AWXPlaceDetails *initialBilling;
 @property (nonatomic, strong, nullable) AWXCountry *selectedCountry;
+@property (nonatomic) AWXBrandType currentBrand;
+@property (nonatomic) NSInteger cvcLength;
 
-- (instancetype)initWithSession:(AWXSession *)session supportedCardSchemes:(NSArray<AWXCardScheme *> *_Nullable)cardSchemes;
+/**
+ Whether card payment is launched directly via public API or payment methods list has been skipped.
+ */
+@property (nonatomic, readonly) BOOL isLaunchedDirectly;
+
+- (instancetype)initWithSession:(AWXSession *)session supportedCardSchemes:(NSArray<AWXCardScheme *> *_Nullable)cardSchemes launchDirectly:(BOOL)launchDirectly;
 
 - (BOOL)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString *_Nullable *_Nullable)error;
 
@@ -50,6 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)makeDisplayedCardBrands;
 
 - (nullable NSString *)validationMessageFromCardNumber:(NSString *)cardNumber;
+
+- (nullable NSString *)validationMessageFromCvc:(NSString *)cvc;
 
 #pragma mark Payment
 

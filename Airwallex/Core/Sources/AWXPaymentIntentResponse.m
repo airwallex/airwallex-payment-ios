@@ -46,6 +46,7 @@
 
 @property (nonatomic, copy, readwrite) NSString *type;
 @property (nonatomic, copy, readwrite) NSString *url;
+@property (nonatomic, copy, readwrite) NSString *fallbackUrl;
 @property (nonatomic, copy, readwrite) NSString *method;
 @property (nonatomic, copy, readwrite) NSString *stage;
 @property (nonatomic, copy, readwrite) NSDictionary *payload;
@@ -58,6 +59,7 @@
     AWXConfirmPaymentNextAction *response = [[AWXConfirmPaymentNextAction alloc] init];
     response.type = json[@"type"];
     response.url = json[@"url"];
+    response.fallbackUrl = json[@"fallback_url"];
     response.method = json[@"method"];
     response.stage = json[@"stage"];
     NSDictionary *data = json[@"data"];

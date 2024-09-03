@@ -18,7 +18,6 @@
 		0829FD0E2431D3C200557DB2 /* AWXPaymentMethodTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD0D2431D3C200557DB2 /* AWXPaymentMethodTest.m */; };
 		0829FD132431E11E00557DB2 /* AWXAPIClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD122431E11E00557DB2 /* AWXAPIClientTest.m */; };
 		0829FD1A2432019E00557DB2 /* AWXCardValidatorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD192432019E00557DB2 /* AWXCardValidatorTest.m */; };
-		0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */; };
 		085BD3D223CC62B4002E8F27 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; };
 		1803601B2873C878003EA943 /* AWXPaymentFormViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1803601A2873C878003EA943 /* AWXPaymentFormViewModel.h */; };
 		1803601D2873CAE2003EA943 /* AWXPaymentFormViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601C2873CAE2003EA943 /* AWXPaymentFormViewModel.m */; };
@@ -30,6 +29,10 @@
 		180D6F912C5B651500980400 /* AirwallexRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; };
 		180D6F922C5B651B00980400 /* AirwallexRisk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		180D6F952C5B902A00980400 /* AirwallexRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; };
+		1820C9652C78552D006B18C4 /* AWXUIContext+Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820C9642C78552C006B18C4 /* AWXUIContext+Card.swift */; };
+		1820C96A2C7DDADC006B18C4 /* AWXCardProvider+PaymentConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1820C9692C7DDADC006B18C4 /* AWXCardProvider+PaymentConsent.swift */; };
+		1820C9702C85A1C0006B18C4 /* AWXFloatingCvcTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 1820C96E2C85A1C0006B18C4 /* AWXFloatingCvcTextField.h */; };
+		1820C9712C85A1C0006B18C4 /* AWXFloatingCvcTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1820C96F2C85A1C0006B18C4 /* AWXFloatingCvcTextField.m */; };
 		1829B8BB291A538B00D0D2CA /* AWXCardImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */; };
 		1829B8BC291A538B00D0D2CA /* AWXCardImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */; };
 		1829B8BE291B2D3B00D0D2CA /* PaymentMethodType.json in Resources */ = {isa = PBXBuildFile; fileRef = 1829B8BD291B2D3B00D0D2CA /* PaymentMethodType.json */; };
@@ -58,12 +61,11 @@
 		186277D729E7C0530002892A /* AirTracker.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186277D629E7C0530002892A /* AirTracker.xcframework */; };
 		186277D829E7C0530002892A /* AirTracker.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 186277D629E7C0530002892A /* AirTracker.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		186277DB2A381A240002892A /* AWXSchemaProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 186277DA2A381A240002892A /* AWXSchemaProviderTests.m */; };
-		186E02282B1717A500B67994 /* SecretRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E02272B1717A500B67994 /* SecretRepository.swift */; };
 		187AFA6928B522C000561EEB /* AWXPaymentConsentRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */; };
 		188F72AC2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F72AB2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m */; };
 		188F72AF2B2AC80D005CBE9A /* PaymentMethodTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = 188F72AD2B2AB36E005CBE9A /* PaymentMethodTypes.json */; };
 		188F72B02B2AC80F005CBE9A /* PaymentConsents.json in Resources */ = {isa = PBXBuildFile; fileRef = 188F72AE2B2AC06D005CBE9A /* PaymentConsents.json */; };
-		18AC888329C4598A0028D66A /* AWXPageViewTrackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 18AC888229C4597E0028D66A /* AWXPageViewTrackable.h */; };
+		18AC888329C4598A0028D66A /* AWXPageViewTrackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 18AC888229C4597E0028D66A /* AWXPageViewTrackable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18B9DE1B2B2832290011213F /* AWXPaymentMethodListViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B9DE192B2832290011213F /* AWXPaymentMethodListViewModel.h */; };
 		18B9DE1C2B2832290011213F /* AWXPaymentMethodListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B9DE1A2B2832290011213F /* AWXPaymentMethodListViewModel.m */; };
 		18B9DE1E2B2847320011213F /* AWXPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B9DE1D2B2847210011213F /* AWXPage.h */; };
@@ -165,7 +167,7 @@
 		5775CF4226E5DF5000C6AFE3 /* AWXShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEF226E5DF4F00C6AFE3 /* AWXShippingViewController.m */; };
 		5775CF4326E5DF5000C6AFE3 /* AWXViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF326E5DF4F00C6AFE3 /* AWXViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF4426E5DF5000C6AFE3 /* AWXCountry.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF426E5DF4F00C6AFE3 /* AWXCountry.h */; };
-		5775CF4526E5DF5000C6AFE3 /* AWXPaymentConsent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF526E5DF4F00C6AFE3 /* AWXPaymentConsent.h */; };
+		5775CF4526E5DF5000C6AFE3 /* AWXPaymentConsent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF526E5DF4F00C6AFE3 /* AWXPaymentConsent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF4626E5DF5000C6AFE3 /* AWXUIContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF626E5DF4F00C6AFE3 /* AWXUIContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF4726E5DF5000C6AFE3 /* AWXAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEF726E5DF4F00C6AFE3 /* AWXAPIResponse.m */; };
 		5775CF4826E5DF5000C6AFE3 /* AWXConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CEF826E5DF4F00C6AFE3 /* AWXConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -183,10 +185,10 @@
 		5775CF5626E5DF5000C6AFE3 /* AWXPaymentMethodRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0626E5DF4F00C6AFE3 /* AWXPaymentMethodRequest.m */; };
 		5775CF5726E5DF5000C6AFE3 /* AWXPaymentMethodResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0726E5DF4F00C6AFE3 /* AWXPaymentMethodResponse.h */; };
 		5775CF5826E5DF5000C6AFE3 /* AWXAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF0826E5DF4F00C6AFE3 /* AWXAPIClient.m */; };
-		5775CF5926E5DF5000C6AFE3 /* AWXPaymentMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0926E5DF4F00C6AFE3 /* AWXPaymentMethod.h */; };
+		5775CF5926E5DF5000C6AFE3 /* AWXPaymentMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0926E5DF4F00C6AFE3 /* AWXPaymentMethod.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF5A26E5DF5000C6AFE3 /* AWXTrackManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0A26E5DF4F00C6AFE3 /* AWXTrackManager.h */; };
 		5775CF5B26E5DF5000C6AFE3 /* AWXPaymentIntentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0B26E5DF4F00C6AFE3 /* AWXPaymentIntentRequest.h */; };
-		5775CF5C26E5DF5000C6AFE3 /* AWXPaymentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0C26E5DF4F00C6AFE3 /* AWXPaymentViewController.h */; };
+		5775CF5C26E5DF5000C6AFE3 /* AWXPaymentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0C26E5DF4F00C6AFE3 /* AWXPaymentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF5D26E5DF5000C6AFE3 /* AWXPaymentMethodOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0D26E5DF4F00C6AFE3 /* AWXPaymentMethodOptions.h */; };
 		5775CF5E26E5DF5000C6AFE3 /* AWXTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0E26E5DF4F00C6AFE3 /* AWXTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF5F26E5DF5000C6AFE3 /* AWXAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF0F26E5DF4F00C6AFE3 /* AWXAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -207,7 +209,7 @@
 		5775CF8926E5E28500C6AFE3 /* AWXDccResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF7726E5E28400C6AFE3 /* AWXDccResponse.m */; };
 		5775CF8A26E5E28500C6AFE3 /* AWXDCCViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7826E5E28400C6AFE3 /* AWXDCCViewController.h */; };
 		5775CF8B26E5E28500C6AFE3 /* AWXDccActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF7926E5E28400C6AFE3 /* AWXDccActionProvider.m */; };
-		5775CF8D26E5E28500C6AFE3 /* AWXCardViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7B26E5E28400C6AFE3 /* AWXCardViewController.h */; };
+		5775CF8D26E5E28500C6AFE3 /* AWXCardViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF7B26E5E28400C6AFE3 /* AWXCardViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5775CF9426E5E28D00C6AFE3 /* AWXPaymentFormViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF8E26E5E28C00C6AFE3 /* AWXPaymentFormViewController.h */; };
 		5775CF9626E5E28D00C6AFE3 /* AWXPaymentFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5775CF9026E5E28C00C6AFE3 /* AWXPaymentFormViewController.m */; };
 		5775CF9826E5E28D00C6AFE3 /* AWXRedirectActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF9226E5E28D00C6AFE3 /* AWXRedirectActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -224,7 +226,7 @@
 		57E73719272AC043009905DC /* AWXSchemaProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 57E73717272AC043009905DC /* AWXSchemaProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57E7371A272AC043009905DC /* AWXSchemaProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E73718272AC043009905DC /* AWXSchemaProvider.m */; };
 		6EE990B728D9A300008C22B7 /* AWXCardViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 184EADAF28D15C1600FD965D /* AWXCardViewModel.m */; };
-		6EE990BA28D9A3B7008C22B7 /* AWXCardViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE990B928D9A3B7008C22B7 /* AWXCardViewModel.h */; };
+		6EE990BA28D9A3B7008C22B7 /* AWXCardViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE990B928D9A3B7008C22B7 /* AWXCardViewModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9184A98A3FB097B3E30DFD42 /* Pods_WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A5DE28F611F49B21B3B1DA1 /* Pods_WeChatPay.framework */; };
 		C844DC7D2C3CE37F0099614C /* NSObject+Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */; };
 		C844DC7E2C3CE37F0099614C /* NSObject+Logging.h in Headers */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -350,8 +352,6 @@
 		0829FD0D2431D3C200557DB2 /* AWXPaymentMethodTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentMethodTest.m; sourceTree = "<group>"; };
 		0829FD122431E11E00557DB2 /* AWXAPIClientTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXAPIClientTest.m; sourceTree = "<group>"; };
 		0829FD192432019E00557DB2 /* AWXCardValidatorTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardValidatorTest.m; sourceTree = "<group>"; };
-		0829FD4F24358E5600557DB2 /* XCTestCase+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Utils.h"; sourceTree = "<group>"; };
-		0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Utils.m"; sourceTree = "<group>"; };
 		085BD3C823CC62B4002E8F27 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3CC23CC62B4002E8F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085BD3D123CC62B4002E8F27 /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -362,6 +362,11 @@
 		1803601C2873CAE2003EA943 /* AWXPaymentFormViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModel.m; sourceTree = "<group>"; };
 		1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentFormViewModelTests.m; sourceTree = "<group>"; };
 		1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AirwallexRisk.xcframework; path = ../Frameworks/AirwallexRisk.xcframework; sourceTree = "<group>"; };
+		1820C9642C78552C006B18C4 /* AWXUIContext+Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXUIContext+Card.swift"; sourceTree = "<group>"; };
+		1820C9682C7C22B3006B18C4 /* Airwallex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Airwallex.h; sourceTree = "<group>"; };
+		1820C9692C7DDADC006B18C4 /* AWXCardProvider+PaymentConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCardProvider+PaymentConsent.swift"; sourceTree = "<group>"; };
+		1820C96E2C85A1C0006B18C4 /* AWXFloatingCvcTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXFloatingCvcTextField.h; sourceTree = "<group>"; };
+		1820C96F2C85A1C0006B18C4 /* AWXFloatingCvcTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXFloatingCvcTextField.m; sourceTree = "<group>"; };
 		1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXCardImageView.h; sourceTree = "<group>"; };
 		1829B8BA291A538B00D0D2CA /* AWXCardImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardImageView.m; sourceTree = "<group>"; };
 		1829B8BD291B2D3B00D0D2CA /* PaymentMethodType.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PaymentMethodType.json; sourceTree = "<group>"; };
@@ -390,8 +395,6 @@
 		1862772229DFCE920002892A /* NSDataBase64Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDataBase64Test.m; sourceTree = "<group>"; };
 		186277D629E7C0530002892A /* AirTracker.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AirTracker.xcframework; path = ../Frameworks/AirTracker.xcframework; sourceTree = "<group>"; };
 		186277DA2A381A240002892A /* AWXSchemaProviderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXSchemaProviderTests.m; sourceTree = "<group>"; };
-		186E02262B1717A400B67994 /* CoreTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoreTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		186E02272B1717A500B67994 /* SecretRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretRepository.swift; sourceTree = "<group>"; };
 		187AFA6828B522C000561EEB /* AWXPaymentConsentRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentConsentRequestTest.m; sourceTree = "<group>"; };
 		188F72AB2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentMethodListViewModelTest.m; sourceTree = "<group>"; };
 		188F72AD2B2AB36E005CBE9A /* PaymentMethodTypes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PaymentMethodTypes.json; sourceTree = "<group>"; };
@@ -726,6 +729,7 @@
 		085BD3BE23CC62B4002E8F27 = {
 			isa = PBXGroup;
 			children = (
+				1820C9682C7C22B3006B18C4 /* Airwallex.h */,
 				3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */,
 				3C72E12828EC4BDD00F038E3 /* Configurations */,
 				3C5A37F927F29DB000CFC2EF /* Shared */,
@@ -775,8 +779,6 @@
 		085BD3D523CC62B4002E8F27 /* CoreTests */ = {
 			isa = PBXGroup;
 			children = (
-				0829FD4F24358E5600557DB2 /* XCTestCase+Utils.h */,
-				0829FD5024358E5600557DB2 /* XCTestCase+Utils.m */,
 				18E0571B29CA8AD70099388A /* AWXAnalyticsLoggerTest.m */,
 				0829FD122431E11E00557DB2 /* AWXAPIClientTest.m */,
 				3C99E74627E9A6B70074156C /* AWXApplePayOptionsTest.m */,
@@ -797,8 +799,6 @@
 				082442CA2431BFCB00D04A2C /* Models */,
 				082442C32431AA1B00D04A2C /* Resources */,
 				085BD3D823CC62B4002E8F27 /* Info.plist */,
-				186E02272B1717A500B67994 /* SecretRepository.swift */,
-				186E02262B1717A400B67994 /* CoreTests-Bridging-Header.h */,
 			);
 			path = CoreTests;
 			sourceTree = "<group>";
@@ -863,16 +863,12 @@
 				5775CED726E5DF4E00C6AFE3 /* AWXLogger.h */,
 				5775CEF126E5DF4F00C6AFE3 /* AWXLogger.m */,
 				18B9DE1D2B2847210011213F /* AWXPage.h */,
-				5775CEF526E5DF4F00C6AFE3 /* AWXPaymentConsent.h */,
-				5775CEEE26E5DF4E00C6AFE3 /* AWXPaymentConsent.m */,
 				5775CED626E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.h */,
 				5775CED526E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.m */,
 				5775CEE926E5DF4E00C6AFE3 /* AWXPaymentConsentResponse.h */,
 				5775CEFB26E5DF4F00C6AFE3 /* AWXPaymentConsentResponse.m */,
 				5775CF0B26E5DF4F00C6AFE3 /* AWXPaymentIntentRequest.h */,
 				5775CEE226E5DF4E00C6AFE3 /* AWXPaymentIntentRequest.m */,
-				5775CF0926E5DF4F00C6AFE3 /* AWXPaymentMethod.h */,
-				5775CEF026E5DF4E00C6AFE3 /* AWXPaymentMethod.m */,
 				5775CEE126E5DF4E00C6AFE3 /* AWXPaymentMethodCell.h */,
 				5775CECE26E5DF4D00C6AFE3 /* AWXPaymentMethodCell.m */,
 				18B9DE192B2832290011213F /* AWXPaymentMethodListViewModel.h */,
@@ -885,8 +881,6 @@
 				5775CF0626E5DF4F00C6AFE3 /* AWXPaymentMethodRequest.m */,
 				5775CF0726E5DF4F00C6AFE3 /* AWXPaymentMethodResponse.h */,
 				5775CF0526E5DF4F00C6AFE3 /* AWXPaymentMethodResponse.m */,
-				5775CF0C26E5DF4F00C6AFE3 /* AWXPaymentViewController.h */,
-				5775CECD26E5DF4D00C6AFE3 /* AWXPaymentViewController.m */,
 				5775CF0A26E5DF4F00C6AFE3 /* AWXTrackManager.h */,
 				5775CEE526E5DF4E00C6AFE3 /* AWXTrackManager.m */,
 				1829B8B9291A538B00D0D2CA /* AWXCardImageView.h */,
@@ -912,10 +906,6 @@
 				57A3AD6D27589BEF00EFF0A1 /* AWX3DSService.m */,
 				57D4A44D2785AF4500487E1C /* AWX3DSViewController.h */,
 				57D4A44E2785AF4500487E1C /* AWX3DSViewController.m */,
-				6EE990B928D9A3B7008C22B7 /* AWXCardViewModel.h */,
-				184EADAF28D15C1600FD965D /* AWXCardViewModel.m */,
-				5775CF7B26E5E28400C6AFE3 /* AWXCardViewController.h */,
-				5775CF6A26E5E28400C6AFE3 /* AWXCardViewController.m */,
 				5775CF7126E5E28400C6AFE3 /* AWXDccResponse.h */,
 				5775CF7726E5E28400C6AFE3 /* AWXDccResponse.m */,
 				5775CF7826E5E28400C6AFE3 /* AWXDCCViewController.h */,
@@ -1012,10 +1002,16 @@
 				57A3AD692758731400EFF0A1 /* AWX3DSActionProvider.m */,
 				5775CF7226E5E28400C6AFE3 /* AWXCardProvider.h */,
 				5775CF7626E5E28400C6AFE3 /* AWXCardProvider.m */,
+				6EE990B928D9A3B7008C22B7 /* AWXCardViewModel.h */,
+				184EADAF28D15C1600FD965D /* AWXCardViewModel.m */,
+				5775CF7B26E5E28400C6AFE3 /* AWXCardViewController.h */,
+				5775CF6A26E5E28400C6AFE3 /* AWXCardViewController.m */,
 				5775CF7326E5E28400C6AFE3 /* AWXDccActionProvider.h */,
 				5775CF7926E5E28400C6AFE3 /* AWXDccActionProvider.m */,
 				5775CE8726E5DDDE00C6AFE3 /* Card.h */,
 				5775CE8826E5DDDE00C6AFE3 /* Info.plist */,
+				1820C9642C78552C006B18C4 /* AWXUIContext+Card.swift */,
+				1820C9692C7DDADC006B18C4 /* AWXCardProvider+PaymentConsent.swift */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -1061,8 +1057,12 @@
 				1839055929C02FFE00FE8069 /* Empty.swift */,
 				3C579F6C27F4148800840A3B /* Internal */,
 				5775CEDE26E5DF4E00C6AFE3 /* Core.h */,
+				5775CEF526E5DF4F00C6AFE3 /* AWXPaymentConsent.h */,
+				5775CEEE26E5DF4E00C6AFE3 /* AWXPaymentConsent.m */,
 				5775CEC626E5DF4D00C6AFE3 /* AWXPaymentIntentResponse.h */,
 				5775CED426E5DF4E00C6AFE3 /* AWXPaymentIntentResponse.m */,
+				5775CF0C26E5DF4F00C6AFE3 /* AWXPaymentViewController.h */,
+				5775CECD26E5DF4D00C6AFE3 /* AWXPaymentViewController.m */,
 				183214732BA187A800FC97B9 /* AWXNextActionHandler.h */,
 				183214742BA187A800FC97B9 /* AWXNextActionHandler.m */,
 				18AC888229C4597E0028D66A /* AWXPageViewTrackable.h */,
@@ -1091,6 +1091,8 @@
 				5775CED926E5DF4E00C6AFE3 /* AWXDevice.m */,
 				5775CEC226E5DF4D00C6AFE3 /* AWXPaymentIntent.h */,
 				5775CEC526E5DF4D00C6AFE3 /* AWXPaymentIntent.m */,
+				5775CF0926E5DF4F00C6AFE3 /* AWXPaymentMethod.h */,
+				5775CEF026E5DF4E00C6AFE3 /* AWXPaymentMethod.m */,
 				5775CEDA26E5DF4E00C6AFE3 /* AWXPlaceDetails.h */,
 				5775CEC826E5DF4D00C6AFE3 /* AWXPlaceDetails.m */,
 				5775CEDF26E5DF4E00C6AFE3 /* AWXSession.h */,
@@ -1109,6 +1111,8 @@
 				5775CF1026E5DF4F00C6AFE3 /* AWXWidgets.m */,
 				1829B8C5291CDEB200D0D2CA /* AWXFloatingCardTextField.h */,
 				1829B8C6291CDEB200D0D2CA /* AWXFloatingCardTextField.m */,
+				1820C96E2C85A1C0006B18C4 /* AWXFloatingCvcTextField.h */,
+				1820C96F2C85A1C0006B18C4 /* AWXFloatingCvcTextField.m */,
 				C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */,
 				C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */,
 			);
@@ -1208,6 +1212,7 @@
 				5775CF5D26E5DF5000C6AFE3 /* AWXPaymentMethodOptions.h in Headers */,
 				184169DB29C4347800B02D96 /* UIColor+ViewCompat.h in Headers */,
 				5775CF3126E5DF4F00C6AFE3 /* AWXPaymentMethodCell.h in Headers */,
+				1820C9702C85A1C0006B18C4 /* AWXFloatingCvcTextField.h in Headers */,
 				5775CF5A26E5DF5000C6AFE3 /* AWXTrackManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1498,9 +1503,11 @@
 					};
 					5775CE8426E5DDDE00C6AFE3 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1540;
 					};
 					5775CE8C26E5DDDF00C6AFE3 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1540;
 					};
 					5775CEAA26E5DF3300C6AFE3 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -1833,6 +1840,7 @@
 				5775CF3526E5DF4F00C6AFE3 /* AWXTrackManager.m in Sources */,
 				5775CF4026E5DF5000C6AFE3 /* AWXPaymentMethod.m in Sources */,
 				5775CF4F26E5DF5000C6AFE3 /* AWXForm.m in Sources */,
+				1820C9712C85A1C0006B18C4 /* AWXFloatingCvcTextField.m in Sources */,
 				5775CF2D26E5DF4F00C6AFE3 /* AWXUtils.m in Sources */,
 				1839055A29C02FFE00FE8069 /* Empty.swift in Sources */,
 				5775CF6026E5DF5000C6AFE3 /* AWXWidgets.m in Sources */,
@@ -1878,9 +1886,7 @@
 				0829FD082431D25800557DB2 /* AWXBillingTest.m in Sources */,
 				3C99E74727E9A6B70074156C /* AWXApplePayOptionsTest.m in Sources */,
 				183FB64D2BB6C62400FFDF0E /* AWXProviderDelegateEmpty.m in Sources */,
-				186E02282B1717A500B67994 /* SecretRepository.swift in Sources */,
 				0829FD132431E11E00557DB2 /* AWXAPIClientTest.m in Sources */,
-				0829FD5124358E5600557DB2 /* XCTestCase+Utils.m in Sources */,
 				3C99E74527E9A51C0074156C /* AWXConstantsTest.m in Sources */,
 				082442C82431BD5100D04A2C /* AWXTestUtils.m in Sources */,
 				1862772129DFCC0E0002892A /* AWXUtilsTest.m in Sources */,
@@ -1941,8 +1947,10 @@
 				57A3AD6B2758731400EFF0A1 /* AWX3DSActionProvider.m in Sources */,
 				6EE990B728D9A300008C22B7 /* AWXCardViewModel.m in Sources */,
 				5775CF8826E5E28500C6AFE3 /* AWXCardProvider.m in Sources */,
+				1820C96A2C7DDADC006B18C4 /* AWXCardProvider+PaymentConsent.swift in Sources */,
 				5775CF7D26E5E28400C6AFE3 /* AWXDCCViewController.m in Sources */,
 				5775CF7C26E5E28400C6AFE3 /* AWXCardViewController.m in Sources */,
+				1820C9652C78552D006B18C4 /* AWXUIContext+Card.swift in Sources */,
 				5775CF8B26E5E28500C6AFE3 /* AWXDccActionProvider.m in Sources */,
 				5775CF8726E5E28500C6AFE3 /* AWXWebViewController.m in Sources */,
 				57D4A4502785AF4500487E1C /* AWX3DSViewController.m in Sources */,
@@ -2430,6 +2438,7 @@
 		5775CE9626E5DDDF00C6AFE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2446,6 +2455,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2453,6 +2464,7 @@
 		5775CE9726E5DDDF00C6AFE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2469,6 +2481,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -2477,6 +2490,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3DE792F8978574E90381E7D5 /* Pods-CardTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K294E2HD3N;
 				INFOPLIST_FILE = CardTests/Info.plist;
@@ -2487,6 +2502,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.CardTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CardTests/CardTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2495,6 +2513,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0432D8FDBAD45A57D8DAC7F6 /* Pods-CardTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K294E2HD3N;
 				INFOPLIST_FILE = CardTests/Info.plist;
@@ -2505,6 +2525,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.CardTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CardTests/CardTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

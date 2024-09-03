@@ -19,6 +19,7 @@
 #import "AWXDefaultProvider.h"
 #import "AWXDevice.h"
 #import "AWXFloatingCardTextField.h"
+#import "AWXFloatingCvcTextField.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
@@ -40,7 +41,7 @@
 @property (strong, nonatomic) AWXFloatingCardTextField *cardNoField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *nameField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *expiresField;
-@property (strong, nonatomic) AWXFloatingLabelTextField *cvcField;
+@property (strong, nonatomic) AWXFloatingCvcTextField *cvcField;
 @property (strong, nonatomic) UISwitch *addressSwitch;
 @property (strong, nonatomic) AWXFloatingLabelTextField *firstNameField;
 @property (strong, nonatomic) AWXFloatingLabelTextField *lastNameField;
@@ -55,7 +56,6 @@
 @property (strong, nonatomic) UIStackView *saveCardSwitchContainer;
 @property (strong, nonatomic) UIStackView *container;
 @property (strong, nonatomic) AWXWarningView *warningView;
-@property (nonatomic) AWXBrandType currentBrand;
 
 @property (nonatomic) BOOL saveCard;
 
@@ -118,7 +118,8 @@ typedef enum {
         return [weakSelf.viewModel validationMessageFromCardNumber:cardNumber];
     };
     _cardNoField.brandUpdateCallback = ^(AWXBrandType brand) {
-        weakSelf.currentBrand = brand;
+        weakSelf.viewModel.currentBrand = brand;
+        weakSelf.cvcField.maxLength = weakSelf.viewModel.cvcLength;
         if (weakSelf.saveCard && brand == AWXBrandTypeUnionPay) {
             [weakSelf addUnionPayWarningViewIfNecessary];
         } else {
@@ -155,8 +156,11 @@ typedef enum {
     _expiresField.delegate = self;
     [cvcStackView addArrangedSubview:_expiresField];
 
-    _cvcField = [AWXFloatingLabelTextField new];
-    _cvcField.fieldType = AWXTextFieldTypeCVC;
+    _cvcField = [AWXFloatingCvcTextField new];
+    _cvcField.validationMessageCallback = ^(NSString *cvc) {
+        return [weakSelf.viewModel validationMessageFromCvc:cvc];
+    };
+    _cvcField.maxLength = _viewModel.cvcLength;
     _cvcField.placeholder = NSLocalizedString(@"CVC / CVV", @"CVC / CVV");
     _expiresField.nextTextField = _cvcField;
     _cvcField.isRequired = YES;
@@ -334,15 +338,12 @@ typedef enum {
 }
 
 - (void)close:(id)sender {
-    if (self.provider.showPaymentDirectly) {
-        [self dismissViewControllerAnimated:YES
-                                 completion:^{
-                                     id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-                                     [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
-                                     [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %lu", delegate.class, AirwallexPaymentStatusCancel];
-                                 }];
+    if (_viewModel.isLaunchedDirectly) {
+        id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+        [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+        [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %lu", delegate.class, AirwallexPaymentStatusCancel];
     } else {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -360,7 +361,7 @@ typedef enum {
 
 - (void)saveCardSwitchChanged:(id)sender {
     self.saveCard = [(UISwitch *)sender isOn];
-    if (_saveCard && _currentBrand == AWXBrandTypeUnionPay) {
+    if (_saveCard && _viewModel.currentBrand == AWXBrandTypeUnionPay) {
         [self addUnionPayWarningViewIfNecessary];
     } else {
         [_warningView removeFromSuperview];
@@ -479,13 +480,18 @@ typedef enum {
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
     [self log:@"provider:didCompleteWithStatus:error: %lu  %@", status, error.description];
 
-    UIViewController *presentingViewController = self.presentingViewController;
-    [self dismissViewControllerAnimated:YES
-                             completion:^{
-                                 id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-                                 [delegate paymentViewController:presentingViewController didCompleteWithStatus:status error:error];
-                                 [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, presentingViewController.class, AirwallexPaymentStatusFailure, error.localizedDescription];
-                             }];
+    id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+    if (_viewModel.isLaunchedDirectly) {
+        [delegate paymentViewController:self didCompleteWithStatus:status error:error];
+        [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, self.class, status, error.localizedDescription];
+    } else {
+        UIViewController *presentingViewController = self.presentingViewController;
+        [self dismissViewControllerAnimated:YES
+                                 completion:^{
+                                     [delegate paymentViewController:presentingViewController didCompleteWithStatus:status error:error];
+                                     [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %@  %lu  %@", delegate.class, presentingViewController.class, status, error.localizedDescription];
+                                 }];
+    }
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(NSString *)Id {
@@ -534,6 +540,8 @@ typedef enum {
     [self.view addSubview:controller.view];
     [controller didMoveToParentViewController:self];
 }
+
+#pragma mark - AWXFloatingLabelTextFieldDelegate
 
 - (BOOL)floatingLabelTextField:(AWXFloatingLabelTextField *)floatingLabelTextField textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == self.cardNoField.textField) {

@@ -9,6 +9,8 @@
 #import "AWXCardValidator.h"
 #import "AWXWidgets.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  A customized view for card number
  */
@@ -27,3 +29,5 @@ Can make it more explicit when we switch to Swift.
 @property (nonatomic, copy) void (^brandUpdateCallback)(AWXBrandType);
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -23,10 +23,11 @@ Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松
 
 <!--ts-->
    * [要求](#要求)
-   * [整合](#整合)
+   * [集成](#集成)
       * [CocoaPods](#cocoapods)
 	  * [Swift](#swift)
-      * [基本整合](#基本整合)
+      * [基础集成](#基础集成)
+      * [低层API集成](#低层API集成)
       * [设置微信支付](#设置微信支付)
       * [设置 Apple Pay](#设置-Apple-Pay)
       * [主题色](#主题色)
@@ -37,11 +38,11 @@ Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松
 ## 要求
 Airwallex iOS SDK 支持 iOS 11.0 及以上版本。
 
-## 整合
+## 集成
 
 ### CocoaPods
 
-Airwallex可通过[CocoaPods](https://cocoapods.org/) 整合。
+Airwallex可通过[CocoaPods](https://cocoapods.org/) 集成。
 
 将此行添加到您的`Podfile`中：
 ```ruby
@@ -71,7 +72,7 @@ pod install
 use_frameworks!
 ```
 
-### 基本整合
+### 基础集成
 
 这是**推荐用法**, 它通过我们已经为你构建好的UI创建出一个完整的用户流程，以便于收集支付详情、账单详情和确认支付。
 
@@ -150,7 +151,7 @@ session.paymentMethods = "An array of payment method type names" (Optional)
 AWXUIContext *context = [AWXUIContext sharedContext];
 context.delegate = ”The target to handle AWXPaymentResultDelegate protocol”;
 context.session = session;
-[context presentPaymentFlowFrom:self];
+[context presentEntirePaymentFlowFrom:self];
 ```
 
 - 处理付款结果
@@ -179,9 +180,9 @@ context.session = session;
 
 你可以基于我们的低层API来构建完全由你自定义的UI
 
-#### 用卡和账单详情或者consent ID来确认卡支付
+#### 用卡和账单详情或者payment consent来确认卡支付
 
-你仍然需要按照[基本整合](#基本整合)中的步骤来设置配置、intent和session, 除了**显示付款流程**的步骤由以下步骤代替:
+你仍然需要按照[基础集成](#基础集成)中的步骤来设置配置、intent和session, 除了**显示付款流程**的步骤由以下步骤代替:
 
 ```objective-c
 AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:"The target to handle AWXPaymentResultDelegate protocol" session:"The session created above"];
@@ -191,7 +192,10 @@ self.provider = provider;
 // Confirm intent with card and billing
 [provider confirmPaymentIntentWithCard:"The AWXCard object collected by your custom UI" billing:"The AWXPlaceDetails object collected by your custom UI" saveCard:"Whether you want the card to be saved as payment consent for future payments"];
 
-// Or to confirm intent with a valid payment consent ID
+// Confirm intent with a payment consent object (AWXPaymentConsent)
+[provider confirmPaymentIntentWithPaymentConsent:paymentConsent];
+
+// Confirm intent with a valid payment consent ID only when the saved card is **network token**
 [provider confirmPaymentIntentWithPaymentConsentId:@"cst_xxxxxxxxxx"];
 ``` 
 
@@ -218,7 +222,7 @@ self.provider = provider;
 
 #### 用Apple Pay provider来发起支付
 
-你仍然需要按照[基本整合](#基本整合)中的步骤来设置配置、intent和session, 除了**显示付款流程**的步骤由以下步骤代替:
+你仍然需要按照[基础集成](#基础集成)中的步骤来设置配置、intent和session, 除了**显示付款流程**的步骤由以下步骤代替:
 
 ```objective-c
 AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:"The target to handle AWXProviderDelegate protocol" session:"The one off session created with apple pay options"];

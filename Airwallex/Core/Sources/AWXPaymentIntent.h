@@ -7,9 +7,9 @@
 //
 
 #import "AWXCodable.h"
+#import "AWXPaymentConsent.h"
+#import "AWXPaymentMethod.h"
 #import <Foundation/Foundation.h>
-
-@class AWXPaymentMethod, AWXPaymentConsent;
 
 NS_ASSUME_NONNULL_BEGIN
 

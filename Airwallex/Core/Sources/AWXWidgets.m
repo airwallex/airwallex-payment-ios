@@ -74,6 +74,7 @@
         _errorLabel = [UILabel new];
         _errorLabel.font = [UIFont caption1Font];
         _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        _errorLabel.numberOfLines = 0;
         [self addSubview:_errorLabel];
 
         [self setupLayouts];
@@ -213,8 +214,6 @@
     case AWXTextFieldTypeCVC:
         self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
         break;
-    default:
-        break;
     }
 }
 
@@ -306,7 +305,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    if (!(self.fieldType == AWXTextFieldTypeExpires || self.fieldType == AWXTextFieldTypeCVC)) {
+    if (!(self.fieldType == AWXTextFieldTypeExpires)) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(floatingLabelTextField:textDidChange:)]) {
             [self.delegate floatingLabelTextField:self textDidChange:text];
         }
@@ -320,8 +319,6 @@
             NSString *string = [textField.text stringByRemovingIllegalCharacters];
             text = [string substringToIndex:string.length - 1];
         }
-    } else if (self.fieldType == AWXTextFieldTypeCVC) {
-        text = [text substringToIndex:MIN(text.length, 4)];
     }
     text.length > 0 ? [self activateAnimated:YES] : [self deactivateAnimated:YES];
     [self setText:text animated:YES];
@@ -381,10 +378,10 @@
                 isValidYear = year.integerValue > currentYear;
             }
             if (!(isValidYear && isValidMonth)) {
-                errorMessage = NSLocalizedString(@"Card’s expiration date is invalid.", nil);
+                errorMessage = NSLocalizedString(@"Card’s expiration date is invalid", nil);
             }
         } else {
-            errorMessage = NSLocalizedString(@"Card’s expiration date is invalid.", nil);
+            errorMessage = NSLocalizedString(@"Card’s expiration date is invalid", nil);
         }
     } else {
         errorMessage = NSLocalizedString(@"Expiry date is required", nil);
@@ -430,9 +427,6 @@
         break;
     case AWXTextFieldTypeExpires:
         [self validateExpires:textField.text];
-        break;
-    case AWXTextFieldTypeCVC:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Security code is required", nil);
         break;
     default:
         self.errorText = textField.text.length > 0 ? nil : self.defaultErrorMessage;

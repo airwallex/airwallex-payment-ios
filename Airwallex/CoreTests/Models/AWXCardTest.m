@@ -28,10 +28,20 @@
     XCTAssertNotNil(card.fingerprint);
 }
 
-- (void)testValidation {
+- (void)testValidationWhenInvalidCardNumber {
     AWXCard *card = [AWXCard new];
     card.number = @"12345";
     XCTAssertEqualObjects([card validate], @"Invalid card number");
+}
+
+- (void)testValidationWhenInvalidCvc {
+    AWXCard *card = [AWXCard new];
+    card.number = @"378282246310005";
+    card.name = @"name";
+    card.expiryYear = @"25";
+    card.expiryMonth = @"8";
+    card.cvc = @"123";
+    XCTAssertEqualObjects([card validate], @"Invalid CVC / CVV");
 }
 
 @end

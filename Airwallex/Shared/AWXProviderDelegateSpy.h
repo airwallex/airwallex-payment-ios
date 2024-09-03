@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) AirwallexPaymentStatus lastStatus;
 @property (nonatomic, strong, nullable) NSError *lastStatusError;
 @property (nonatomic, strong, nullable) XCTestExpectation *statusExpectation;
+@property (nonatomic, strong, nullable) UIViewController *hostVC;
 
 @end
 

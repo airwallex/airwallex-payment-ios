@@ -141,7 +141,7 @@ typedef enum {
                 });
             };
         }
-        [self log:@"Apple pay failed."];
+        [self log:@"Apple pay hasn't started."];
         // The user most likely has cancelled the authorization.
         // Do nothing here to allow the user to select another payment method if it's not direct Apple Pay integration.
         [controller dismissWithCompletion:dismissCompletionBlock];
@@ -216,7 +216,6 @@ typedef enum {
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: description}];
         [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
-        [self log:@"%@", description];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
@@ -283,7 +282,6 @@ typedef enum {
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)}];
         [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
-        [self log:@"Failed to present Apple Pay Controller."];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }

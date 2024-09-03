@@ -9,7 +9,6 @@
 #import "AWXUIContext.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPaymentMethodListViewController.h"
-#import "AWXPaymentViewController.h"
 #import "AWXPlaceDetails.h"
 #import "AWXShippingViewController.h"
 #import "AWXUtils.h"
@@ -31,17 +30,22 @@
     }
 }
 
-- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController {
+- (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController {
     NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
 
     AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
     controller.viewModel = [[AWXPaymentMethodListViewModel alloc] initWithSession:_session APIClient:[[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]]];
     controller.session = self.session;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     [hostViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController {
+- (void)presentPaymentFlowFrom:(UIViewController *)hostViewController {
+    [self presentEntirePaymentFlowFrom:hostViewController];
+}
+
+- (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController {
     NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
     UINavigationController *navigationController;
     if ([hostViewController isKindOfClass:[UINavigationController class]]) {
@@ -55,6 +59,13 @@
     controller.viewModel = [[AWXPaymentMethodListViewModel alloc] initWithSession:_session APIClient:[[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]]];
     controller.session = self.session;
     [navigationController pushViewController:controller animated:YES];
+}
+
+- (void)pushPaymentFlowFrom:(UIViewController *)hostViewController {
+    [self pushEntirePaymentFlowFrom:hostViewController];
+}
+
+- (void)presentEntirePaymentFlowFrom {
 }
 
 @end

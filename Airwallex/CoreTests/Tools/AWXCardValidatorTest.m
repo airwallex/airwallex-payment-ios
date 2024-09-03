@@ -62,4 +62,10 @@
     XCTAssertEqual([validator maxLengthForCardNumber:@"3643"], 19);
 }
 
+- (void)testCvcLengthForBrand {
+    XCTAssertEqual([AWXCardValidator cvcLengthForBrand:AWXBrandTypeAmex], 4);
+    XCTAssertEqual([AWXCardValidator cvcLengthForBrand:AWXBrandTypeMastercard], 3);
+    XCTAssertEqual([AWXCardValidator cvcLengthForBrand:AWXBrandTypeUnknown], 3);
+}
+
 @end
