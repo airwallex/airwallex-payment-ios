@@ -14,7 +14,7 @@
 #import "ShippingCell.h"
 #import "TotalCell.h"
 #import "UIViewController+Utils.h"
-#import <Airwallex-Swift.h>
+#import <Airwallex/Airwallex-Swift.h>
 #import <Airwallex/ApplePay.h>
 #import <Airwallex/Core.h>
 #import <SafariServices/SFSafariViewController.h>

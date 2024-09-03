@@ -331,6 +331,19 @@
     XCTAssertEqualObjects(viewModel.ctaTitle, @"Confirm");
 }
 
+- (void)testSetCurrentBrand {
+    AWXCardViewModel *viewModel = [self mockOneOffViewModel];
+    viewModel.currentBrand = AWXBrandTypeAmex;
+    XCTAssertEqual(viewModel.cvcLength, 4);
+}
+
+- (void)testValidationMessageFromCvc {
+    AWXCardViewModel *viewModel = [self mockOneOffViewModel];
+    XCTAssertNil([viewModel validationMessageFromCvc:@"123"]);
+    XCTAssertEqualObjects([viewModel validationMessageFromCvc:@"12"], @"Security code is invalid");
+    XCTAssertEqualObjects([viewModel validationMessageFromCvc:@""], @"Security code is required");
+}
+
 - (AWXCardViewModel *)mockOneOffViewModel {
     AWXOneOffSession *session = [AWXOneOffSession new];
     return [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL launchDirectly:NO];

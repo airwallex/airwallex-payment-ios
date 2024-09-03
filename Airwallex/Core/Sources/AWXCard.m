@@ -51,7 +51,8 @@
 @implementation AWXCard (Utils)
 
 - (nullable NSString *)validate {
-    if (![[AWXCardValidator sharedCardValidator] isValidCardLength:self.number]) {
+    AWXBrand *brand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:self.number];
+    if (!brand || brand.length != self.number.length) {
         return @"Invalid card number";
     }
     if (self.name.length == 0) {
@@ -60,7 +61,7 @@
     if (self.expiryYear.length == 0 || self.expiryMonth.length == 0) {
         return @"Invalid expires date";
     }
-    if (self.cvc.length == 0) {
+    if (self.cvc.length != [AWXCardValidator cvcLengthForBrand:brand.type]) {
         return @"Invalid CVC / CVV";
     }
     return nil;

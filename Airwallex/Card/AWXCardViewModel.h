@@ -8,6 +8,7 @@
 
 #import "AWXCardProvider.h"
 #import "AWXCardScheme.h"
+#import "AWXCardValidator.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXUtils.h"
 
@@ -26,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) BOOL isCardSavingEnabled;
 @property (nonatomic, strong, readonly) AWXPlaceDetails *initialBilling;
 @property (nonatomic, strong, nullable) AWXCountry *selectedCountry;
+@property (nonatomic) AWXBrandType currentBrand;
+@property (nonatomic) NSInteger cvcLength;
 
 /**
  Whether card payment is launched directly via public API or payment methods list has been skipped.
@@ -55,6 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)makeDisplayedCardBrands;
 
 - (nullable NSString *)validationMessageFromCardNumber:(NSString *)cardNumber;
+
+- (nullable NSString *)validationMessageFromCvc:(NSString *)cvc;
 
 #pragma mark Payment
 

@@ -8,7 +8,6 @@
 
 #import "AWXCardViewModel.h"
 #import "AWXCard.h"
-#import "AWXCardValidator.h"
 #import "AWXCountry.h"
 #import "AWXSession.h"
 
@@ -30,6 +29,7 @@
         _selectedCountry = [AWXCountry countryWithCode:session.billing.address.countryCode];
         _supportedCardSchemes = cardSchemes;
         _isLaunchedDirectly = launchDirectly;
+        _cvcLength = [AWXCardValidator cvcLengthForBrand:AWXBrandTypeUnknown];
     }
     return self;
 }
@@ -77,6 +77,10 @@
 
         return YES;
     }
+}
+
+- (void)setCurrentBrand:(AWXBrandType)currentBrand {
+    self.cvcLength = [AWXCardValidator cvcLengthForBrand:currentBrand];
 }
 
 #pragma mark Data creation
@@ -181,6 +185,16 @@
         return NSLocalizedString(@"Card number is invalid", nil);
     }
     return NSLocalizedString(@"Card number is required", nil);
+}
+
+- (nullable NSString *)validationMessageFromCvc:(NSString *)cvc {
+    if (cvc.length > 0) {
+        if (cvc.length == _cvcLength) {
+            return NULL;
+        }
+        return NSLocalizedString(@"Security code is invalid", nil);
+    }
+    return NSLocalizedString(@"Security code is required", nil);
 }
 
 #pragma mark Payment
