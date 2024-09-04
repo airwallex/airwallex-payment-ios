@@ -40,7 +40,7 @@
     case AWXBrandTypeDiscover:
         return @"discover";
     default:
-        return NULL;
+        return nil;
     }
 }
 

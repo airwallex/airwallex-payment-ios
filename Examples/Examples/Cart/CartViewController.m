@@ -305,7 +305,7 @@
     case AirwallexCheckoutOneOffMode: {
         AWXOneOffSession *session = [AWXOneOffSession new];
 
-        AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchant.com.airwallex.paymentacceptance"];
+        AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:[self applePayMerchantId]];
 
         options.additionalPaymentSummaryItems = @[
             [PKPaymentSummaryItem summaryItemWithLabel:@"goods"
@@ -363,6 +363,17 @@
 
         return session;
     }
+    }
+}
+
+- (NSString *)applePayMerchantId {
+    switch ([AirwallexExamplesKeys shared].environment) {
+    case AirwallexSDKStagingMode:
+        return nil;
+    case AirwallexSDKDemoMode:
+        return @"merchant.demo.com.airwallex.paymentacceptance";
+    case AirwallexSDKProductionMode:
+        return @"merchant.com.airwallex.paymentacceptance";
     }
 }
 
