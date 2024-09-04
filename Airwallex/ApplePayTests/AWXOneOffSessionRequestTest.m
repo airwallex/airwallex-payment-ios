@@ -214,6 +214,19 @@
                                                  userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"PaymentIntent currency should be three-letter ISO 4217 currency code.", nil)}]);
 }
 
+- (void)testMakePaymentRequestWithoutMerchantIdentifierInApplePayOptions {
+    AWXApplePayOptions *options = [AWXApplePayOptions new];
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    session.applePayOptions = options;
+    NSError *error;
+    PKPaymentRequest *request = [session makePaymentRequestOrError:&error];
+
+    XCTAssertNil(request);
+    XCTAssertEqualObjects(error, [NSError errorWithDomain:AWXSDKErrorDomain
+                                                     code:-1
+                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing merchant identifier in apple pay options.", nil)}]);
+}
+
 - (AWXApplePayOptions *)makeOptions:(nullable NSArray<PKPaymentSummaryItem *> *)items {
     AWXApplePayOptions *options = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
 

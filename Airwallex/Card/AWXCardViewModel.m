@@ -177,7 +177,7 @@
             NSString *cardName = [AWXCardValidator.sharedCardValidator brandForCardNumber:cardNumber].name;
             for (AWXCardScheme *cardScheme in _supportedCardSchemes) {
                 if ([cardScheme.name isEqualToString:cardName.lowercaseString]) {
-                    return NULL;
+                    return nil;
                 }
             }
             return NSLocalizedString(@"Card not supported for payment", nil);
@@ -190,7 +190,7 @@
 - (nullable NSString *)validationMessageFromCvc:(NSString *)cvc {
     if (cvc.length > 0) {
         if (cvc.length == _cvcLength) {
-            return NULL;
+            return nil;
         }
         return NSLocalizedString(@"Security code is invalid", nil);
     }

@@ -23,6 +23,15 @@
         return nil;
     }
 
+    if (!options.merchantIdentifier) {
+        if (error) {
+            *error = [NSError errorWithDomain:AWXSDKErrorDomain
+                                         code:-1
+                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing merchant identifier in apple pay options.", nil)}];
+        }
+        return nil;
+    }
+
     PKPaymentRequest *request = [PKPaymentRequest new];
 
     if (self.billing) {
