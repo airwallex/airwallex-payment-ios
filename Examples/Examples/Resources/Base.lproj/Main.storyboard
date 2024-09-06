@@ -13,7 +13,7 @@
         <!--Cart-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="Cart" customClass="CartViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Cart" customClass="CartViewController" customModule="Examples" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -251,7 +251,7 @@
                                     <color key="titleColor" systemColor="labelColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="checkoutPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DWG-Gc-Ifp"/>
+                                    <action selector="checkoutPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6NV-gF-bS8"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -275,9 +275,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="checkoutButton" destination="Uad-jD-BvN" id="JaR-Ml-Ux1"/>
-                        <outlet property="tableView" destination="eCS-DG-9uu" id="txh-yI-DFo"/>
-                        <outlet property="titleLabel" destination="emf-Qn-Zl3" id="jGU-ej-fF2"/>
+                        <outlet property="checkoutButton" destination="Uad-jD-BvN" id="GjN-d1-cZM"/>
+                        <outlet property="tableView" destination="eCS-DG-9uu" id="fqS-0I-sWf"/>
+                        <outlet property="titleLabel" destination="emf-Qn-Zl3" id="mEz-To-q4t"/>
                         <segue destination="VhN-Ut-ggN" kind="show" identifier="showWeChatDemo" id="SiD-Sj-pmk"/>
                         <segue destination="7Ab-n5-deV" kind="show" identifier="showH5Demo" id="b6a-Zb-aFA"/>
                         <segue destination="3dc-1g-4U7" kind="show" identifier="showSettings" id="hc8-sX-8J3"/>

@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APIClient : NSObject
+@interface MockAPIClient : NSObject
 
 @property (nonatomic, readonly) NSURL *paymentBaseURL;
 @property (nonatomic, strong) NSString *apiKey;

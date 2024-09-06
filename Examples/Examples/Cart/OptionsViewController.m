@@ -7,8 +7,8 @@
 //
 
 #import "OptionsViewController.h"
-#import "APIClient.h"
 #import "AirwallexExamplesKeys.h"
+#import "MockAPIClient.h"
 #import "OptionButton.h"
 #import "UIViewController+Utils.h"
 #import <Airwallex/Core.h>
@@ -135,7 +135,7 @@
                                                  handler:^(UIAlertAction *_Nonnull action) {
                                                      [Airwallex setMode:AirwallexSDKDemoMode];
                                                      [AirwallexExamplesKeys shared].environment = AirwallexSDKDemoMode;
-                                                     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+                                                     [[MockAPIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
 
                                                      [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
                                                  }]];
@@ -144,7 +144,7 @@
                                                  handler:^(UIAlertAction *_Nonnull action) {
                                                      [Airwallex setMode:AirwallexSDKStagingMode];
                                                      [AirwallexExamplesKeys shared].environment = AirwallexSDKStagingMode;
-                                                     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+                                                     [[MockAPIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
 
                                                      [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
                                                  }]];
@@ -153,7 +153,7 @@
                                                  handler:^(UIAlertAction *_Nonnull action) {
                                                      [Airwallex setMode:AirwallexSDKProductionMode];
                                                      [AirwallexExamplesKeys shared].environment = AirwallexSDKProductionMode;
-                                                     [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+                                                     [[MockAPIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
 
                                                      [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
                                                  }]];
@@ -206,28 +206,28 @@
 - (IBAction)generateCustomer:(id)sender {
     [self.activityIndicator startAnimating];
     __weak __typeof(self) weakSelf = self;
-    [[APIClient sharedClient] createCustomerWithParameters:@{@"request_id": NSUUID.UUID.UUIDString,
-                                                             @"merchant_customer_id": NSUUID.UUID.UUIDString,
-                                                             @"first_name": @"Jason",
-                                                             @"last_name": @"Wang",
-                                                             @"email": @"john.doe@airwallex.com",
-                                                             @"phone_number": @"13800000000",
-                                                             @"additional_info": @{@"registered_via_social_media": @NO,
-                                                                                   @"registration_date": @"2019-09-18",
-                                                                                   @"first_successful_order_date": @"2019-09-18"},
-                                                             @"metadata": @{@"id": @1}}
-                                         completionHandler:^(NSDictionary *_Nullable result, NSError *_Nullable error) {
-                                             __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                             [strongSelf.activityIndicator stopAnimating];
-                                             if (error) {
-                                                 [strongSelf showAlert:error.localizedDescription withTitle:nil];
-                                                 return;
-                                             }
+    [[MockAPIClient sharedClient] createCustomerWithParameters:@{@"request_id": NSUUID.UUID.UUIDString,
+                                                                 @"merchant_customer_id": NSUUID.UUID.UUIDString,
+                                                                 @"first_name": @"Jason",
+                                                                 @"last_name": @"Wang",
+                                                                 @"email": @"john.doe@airwallex.com",
+                                                                 @"phone_number": @"13800000000",
+                                                                 @"additional_info": @{@"registered_via_social_media": @NO,
+                                                                                       @"registration_date": @"2019-09-18",
+                                                                                       @"first_successful_order_date": @"2019-09-18"},
+                                                                 @"metadata": @{@"id": @1}}
+                                             completionHandler:^(NSDictionary *_Nullable result, NSError *_Nullable error) {
+                                                 __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                                 [strongSelf.activityIndicator stopAnimating];
+                                                 if (error) {
+                                                     [strongSelf showAlert:error.localizedDescription withTitle:nil];
+                                                     return;
+                                                 }
 
-                                             NSString *customerId = result[@"id"];
-                                             strongSelf.customerIdTextField.text = customerId;
-                                             [AirwallexExamplesKeys shared].customerId = customerId;
-                                         }];
+                                                 NSString *customerId = result[@"id"];
+                                                 strongSelf.customerIdTextField.text = customerId;
+                                                 [AirwallexExamplesKeys shared].customerId = customerId;
+                                             }];
 }
 
 - (IBAction)clearCustomerBtnTapped:(id)sender {
@@ -264,10 +264,10 @@
 }
 
 - (void)resetExamplesAPIClient {
-    APIClient *client = [APIClient sharedClient];
+    MockAPIClient *client = [MockAPIClient sharedClient];
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientId;
-    [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+    [[MockAPIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
 }
 
 - (void)resetSDK {
@@ -314,15 +314,15 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField == self.apiKeyTextField) {
-        [APIClient sharedClient].apiKey = textField.text;
+        [MockAPIClient sharedClient].apiKey = textField.text;
         [AirwallexExamplesKeys shared].apiKey = textField.text;
         [AirwallexExamplesKeys shared].customerId = nil;
-        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+        [[MockAPIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
     } else if (textField == self.clientIDTextField) {
-        [APIClient sharedClient].clientID = textField.text;
+        [MockAPIClient sharedClient].clientID = textField.text;
         [AirwallexExamplesKeys shared].clientId = textField.text;
         [AirwallexExamplesKeys shared].customerId = nil;
-        [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
+        [[MockAPIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
     } else if (textField == self.amountTextField) {
         NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:textField.text];
         if (amount == NSDecimalNumber.notANumber) {
@@ -357,9 +357,9 @@
 }
 
 - (void)dealloc {
-    NSLog(@"Payment Base URL (Example): %@", [APIClient sharedClient].paymentBaseURL.absoluteString);
-    NSLog(@"API Key (Example): %@", [APIClient sharedClient].apiKey);
-    NSLog(@"Client ID (Example): %@", [APIClient sharedClient].clientID);
+    NSLog(@"Payment Base URL (Example): %@", [MockAPIClient sharedClient].paymentBaseURL.absoluteString);
+    NSLog(@"API Key (Example): %@", [MockAPIClient sharedClient].apiKey);
+    NSLog(@"Client ID (Example): %@", [MockAPIClient sharedClient].clientID);
     NSLog(@"Amount (Example): %@", [AirwallexExamplesKeys shared].amount);
     NSLog(@"Currency (Example): %@", [AirwallexExamplesKeys shared].currency);
     NSLog(@"Country Code (Example): %@", [AirwallexExamplesKeys shared].countryCode);

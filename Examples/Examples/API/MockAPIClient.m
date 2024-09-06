@@ -6,13 +6,13 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "APIClient.h"
+#import "MockAPIClient.h"
 #import <Airwallex/Core.h>
 
-@implementation APIClient
+@implementation MockAPIClient
 
 + (instancetype)sharedClient {
-    static APIClient *sharedClient;
+    static MockAPIClient *sharedClient;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedClient = [self new];
