@@ -23,6 +23,7 @@
 		085BD40123CC64B9002E8F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
 		088F3E8323CEB7FF005AE40F /* MockAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* MockAPIClient.m */; };
 		08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
+		182F1CE02C8F09F2000B993D /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F1CDF2C8F09F1000B993D /* String+Extensions.swift */; };
 		1859F1972C89A6290017FA4D /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F1962C89A6290017FA4D /* APIClient.swift */; };
 		1859F1992C89AAB50017FA4D /* PaymentIntentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F1982C89AAB50017FA4D /* PaymentIntentRequest.swift */; };
 		1859F19B2C89B0C40017FA4D /* PurchaseOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F19A2C89B0C40017FA4D /* PurchaseOrder.swift */; };
@@ -70,6 +71,7 @@
 		08A3E99D24246C30003FDAAF /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		08A3E99E24246C30003FDAAF /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		08B55E372421D8C60054E254 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		182F1CDF2C8F09F1000B993D /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		1859F1962C89A6290017FA4D /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		1859F1982C89AAB50017FA4D /* PaymentIntentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentIntentRequest.swift; sourceTree = "<group>"; };
 		1859F19A2C89B0C40017FA4D /* PurchaseOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseOrder.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				00E501B9264CD2EF00027311 /* Demo */,
 				088F3E8023CEB7E6005AE40F /* API */,
 				082D307F23CEEC0700C9D587 /* Cart */,
+				182F1CE12C8F0A02000B993D /* Extensions */,
 				088ADB902407B329001ADC71 /* Resources */,
 				085BD3FF23CC64B9002E8F27 /* Info.plist */,
 				085BD40023CC64B9002E8F27 /* main.m */,
@@ -210,6 +213,14 @@
 				1859F19A2C89B0C40017FA4D /* PurchaseOrder.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		182F1CE12C8F0A02000B993D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				182F1CDF2C8F09F1000B993D /* String+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		242E8629232F042B71464DAF /* Pods */ = {
@@ -424,6 +435,7 @@
 				57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */,
 				00D7B95A265F45AF00F2CBB6 /* WechatPayViewController.m in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
+				182F1CE02C8F09F2000B993D /* String+Extensions.swift in Sources */,
 				18ADC99E2C8B03E400A775BB /* CartViewController+TableView.swift in Sources */,
 				1859F19D2C8A9EE90017FA4D /* NSError+Extensions.swift in Sources */,
 				1859F19B2C89B0C40017FA4D /* PurchaseOrder.swift in Sources */,

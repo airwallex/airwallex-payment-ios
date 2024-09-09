@@ -35,6 +35,13 @@ class CartViewController: UIViewController {
         }
     }
     
+    private var apiKey: String? {
+        AirwallexExamplesKeys.shared().apiKey.nilIfEmpty
+    }
+    private var clientID: String? {
+        AirwallexExamplesKeys.shared().clientId.nilIfEmpty
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -194,7 +201,7 @@ class CartViewController: UIViewController {
             
             startAnimating()
             // get client secret for recurring session
-            apiClient?.generateClientSecret(customerID: customerID, apiKey: nil, clientID: nil, completion: { [weak self] result in
+            apiClient?.generateClientSecret(customerID: customerID, apiKey: apiKey, clientID: clientID, completion: { [weak self] result in
                 guard let self else { return }
                 DispatchQueue.main.async {
                     self.stopAnimating()
@@ -316,7 +323,9 @@ class CartViewController: UIViewController {
             metadata: ["id": 1],
             returnUrl: AirwallexExamplesKeys.shared().returnUrl,
             customerID: customerID,
-            paymentMethodOptions: AirwallexExamplesKeys.shared().force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil
+            paymentMethodOptions: AirwallexExamplesKeys.shared().force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,
+            apiKey: apiKey,
+            clientID: clientID
         )
     }
     

@@ -18,6 +18,8 @@ class PaymentIntentRequest: Encodable {
     let returnUrl: String
     let customerID: String?
     let paymentMethodOptions: Dictionary<String, Dictionary<String, String>>?
+    let apiKey: String?
+    let clientID: String?
     
     enum CodingKeys: String, CodingKey {
         case requestID = "request_id"
@@ -29,9 +31,11 @@ class PaymentIntentRequest: Encodable {
         case returnUrl = "return_url"
         case customerID = "customer_id"
         case paymentMethodOptions = "payment_method_options"
+        case apiKey
+        case clientID = "clientId"
     }
     
-    init(amount: Decimal, currency: String, order: PurchaseOrder, metadata: Dictionary<String, Int>, returnUrl: String, customerID: String?, paymentMethodOptions: Dictionary<String, Dictionary<String, String>>?) {
+    init(amount: Decimal, currency: String, order: PurchaseOrder, metadata: Dictionary<String, Int>, returnUrl: String, customerID: String?, paymentMethodOptions: Dictionary<String, Dictionary<String, String>>?, apiKey: String?, clientID: String?) {
         self.amount = amount
         self.currency = currency
         self.order = order
@@ -39,5 +43,7 @@ class PaymentIntentRequest: Encodable {
         self.returnUrl = returnUrl
         self.customerID = customerID
         self.paymentMethodOptions = paymentMethodOptions
+        self.apiKey = apiKey
+        self.clientID = clientID
     }
 }

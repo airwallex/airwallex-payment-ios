@@ -215,6 +215,8 @@
                                                     @"registration_date": @"2019-09-18",
                                                     @"first_successful_order_date": @"2019-09-18"}
                                          metadata:@{@"id": @1}
+                                           apiKey:[AirwallexExamplesKeys shared].apiKey
+                                         clientID:[AirwallexExamplesKeys shared].clientId
                                        completion:^(Customer *_Nullable customer, NSError *_Nullable error) {
                                            __strong __typeof(weakSelf) strongSelf = weakSelf;
                                            dispatch_async(dispatch_get_main_queue(), ^{

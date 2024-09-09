@@ -24,6 +24,8 @@ protocol APIClient {
         phoneNumber: String?,
         additionalInfo: Dictionary<String, Any>?,
         metadata: Dictionary<String, Int>,
+        apiKey: String?,
+        clientID: String?,
         completion: @escaping (Customer?, Error?) -> Void
     )
 }
@@ -49,8 +51,8 @@ class DemoStoreAPIClient: APIClient, CustomerFetchable {
         post(path: "/api/v1/pa/customers/create", encodable: request, completion: completion)
     }
     
-    func createCustomer(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: Dictionary<String, Any>?, metadata: Dictionary<String, Int>, completion: @escaping (Customer?, Error?) -> Void) {
-        createCustomer(request: CustomerRequest(firstName: firstName, lastName: lastName, email: email, phoneNumber: phoneNumber, additionalInfo: additionalInfo, metadata: metadata)) { result in
+    func createCustomer(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: Dictionary<String, Any>?, metadata: Dictionary<String, Int>, apiKey: String?, clientID: String?, completion: @escaping (Customer?, Error?) -> Void) {
+        createCustomer(request: CustomerRequest(firstName: firstName, lastName: lastName, email: email, phoneNumber: phoneNumber, additionalInfo: additionalInfo, metadata: metadata, apiKey: apiKey, clientID: clientID)) { result in
             switch (result) {
             case .success(let customer):
                 completion(customer, nil)

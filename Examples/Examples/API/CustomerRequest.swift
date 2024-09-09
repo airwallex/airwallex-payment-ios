@@ -17,6 +17,8 @@ class CustomerRequest: Encodable {
     let phoneNumber: String?
     let additionalInfo: Dictionary<String, Any>?
     let metadata: Dictionary<String, Int>
+    let apiKey: String?
+    let clientID: String?
     
     enum CodingKeys: String, CodingKey {
         case requestID = "request_id"
@@ -27,15 +29,19 @@ class CustomerRequest: Encodable {
         case phoneNumber = "phone_number"
         case additionalInfo = "additional_info"
         case metadata
+        case apiKey
+        case clientID = "clientId"
     }
     
-    init(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: Dictionary<String, Any>?, metadata: Dictionary<String, Int>) {
+    init(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: Dictionary<String, Any>?, metadata: Dictionary<String, Int>, apiKey: String?, clientID: String?) {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
         self.phoneNumber = phoneNumber
         self.additionalInfo = additionalInfo
         self.metadata = metadata
+        self.apiKey = apiKey
+        self.clientID = clientID
     }
     
     func encode(to encoder: any Encoder) throws {
@@ -57,6 +63,8 @@ class CustomerRequest: Encodable {
             }
         }
         try container.encode(metadata, forKey: .metadata)
+        try container.encodeIfPresent(apiKey, forKey: .apiKey)
+        try container.encodeIfPresent(clientID, forKey: .clientID)
     }
     
     private struct StringCodingKey: CodingKey {
