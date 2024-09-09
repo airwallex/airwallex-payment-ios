@@ -24,7 +24,7 @@ class CartViewController: UIViewController {
         AirwallexCheckoutMode(rawValue: UserDefaults.standard.integer(forKey: kCachedCheckoutMode))
     }
     
-    var applePayMerchantId: String {
+    private var applePayMerchantId: String {
         switch AirwallexExamplesKeys.shared().environment {
         case .stagingMode:
             ""
@@ -143,7 +143,9 @@ class CartViewController: UIViewController {
             self.performSegue(withIdentifier: "showH5Demo", sender: nil)
         }))
         controller.addAction(UIAlertAction(title:"Settings", style:.default, handler: { _ in
-            self.performSegue(withIdentifier: "showSettings", sender: nil)
+            let optionsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "options") as! OptionsViewController
+            optionsVC.customerFetcher = DemoStoreAPIClient()
+            self.navigationController?.pushViewController(optionsVC, animated: true)
         }))
         controller.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
@@ -154,46 +156,60 @@ class CartViewController: UIViewController {
     }
     
     @IBAction private func checkoutPressed(_ sender: UIButton) {
-        startAnimating()
+        guard let checkoutMode else {
+            showAlert("Checkout Mode is not set", withTitle: nil)
+            return
+        }
         
         let customerID = UserDefaults.standard.string(forKey: kCachedCustomerID)
-        if (checkoutMode == .oneOffMode || checkoutMode == .recurringWithIntentMode) {
+        
+        switch (checkoutMode) {
+        case .oneOffMode, .recurringWithIntentMode:
+            startAnimating()
             // get intent from your server for one-off or recurringWithIntent session, can ignore customer ID if guest checkout
             apiClient?.createPaymentIntent(request: createPaymentIntentRequest(customerID: customerID), completion: { [weak self] result in
+                guard let self else { return }
                 DispatchQueue.main.async {
-                    self?.stopAnimating()
+                    self.stopAnimating()
                     switch result {
                     case .success(let paymentIntent):
                         // Step 2: Set client secret from payment intent
                         AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
                         
                         // Step 3: Create AWXSession
-                        guard let session = self?.createSession(paymentIntent: paymentIntent) else { return }
+                       let session = self.createSession(paymentIntent: paymentIntent, mode: checkoutMode)
                         
                         // Step 4: Present payment flow
-                        self?.presentPaymentFlow(session: session)
+                        self.presentPaymentFlow(session: session)
                     case .failure(let error):
-                        self?.showAlert(error.localizedDescription, withTitle: nil)
+                        self.showAlert(error.localizedDescription, withTitle: nil)
                     }
                 }
             })
-        } else {
+        case .recurringMode:
+            guard let customerID else {
+                showAlert("Customer ID is not set", withTitle: nil)
+                return
+            }
+            
+            startAnimating()
             // get client secret for recurring session
-            apiClient?.generateClientSecret(customerID: customerID!, apiKey: nil, clientID: nil, completion: { [weak self] result in
+            apiClient?.generateClientSecret(customerID: customerID, apiKey: nil, clientID: nil, completion: { [weak self] result in
+                guard let self else { return }
                 DispatchQueue.main.async {
-                    self?.stopAnimating()
+                    self.stopAnimating()
                     switch result {
                     case .success(let clientSecret):
                         // Step 2: Set client secret
                         AWXAPIClientConfiguration.shared().clientSecret = clientSecret
                         
                         // Step 3: Create AWXSession
-                        guard let session = self?.createSession() else { return }
+                        let session = self.createSession(mode: .recurringMode)
                         
                         // Step 4: Present recurring flow
-                        self?.presentPaymentFlow(session: session)
+                        self.presentPaymentFlow(session: session)
                     case .failure(let error):
-                        self?.showAlert(error.localizedDescription, withTitle: nil)
+                        self.showAlert(error.localizedDescription, withTitle: nil)
                     }
                 }
             })
@@ -201,12 +217,15 @@ class CartViewController: UIViewController {
     }
     
     private func presentPaymentFlow(session: AWXSession) {
+        // Apple Pay low-level API integration
         if (UserDefaults.standard.bool(forKey: kCachedApplePayMethodOnly)) {
             let applePayProvider = AWXApplePayProvider(delegate: self, session: session)
             applePayProvider.startPayment()
             self.applePayProvider = applePayProvider
+            return
         }
         
+        // Basic integration
         let context = AWXUIContext.shared()
         context.delegate = self
         context.session = session
@@ -217,12 +236,8 @@ class CartViewController: UIViewController {
         }
     }
     
-    private func createSession(paymentIntent: AWXPaymentIntent? = nil) -> AWXSession? {
-        guard let checkoutMode else {
-            showAlert("Checkout Mode is not set", withTitle: nil)
-            return nil
-        }
-        switch checkoutMode {
+    private func createSession(paymentIntent: AWXPaymentIntent? = nil, mode: AirwallexCheckoutMode) -> AWXSession {
+        switch mode {
         case .oneOffMode:
             let session = AWXOneOffSession()
             
@@ -327,6 +342,7 @@ extension CartViewController: AWXPaymentResultDelegate {
     }
 }
 
+// ApplePayProvider delegate methods, no need to conform to if using AWXUIContext
 extension CartViewController: AWXProviderDelegate {
     func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         handlePaymentResult(status: status, error: error)

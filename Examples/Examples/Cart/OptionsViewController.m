@@ -8,6 +8,7 @@
 
 #import "OptionsViewController.h"
 #import "AirwallexExamplesKeys.h"
+#import "Examples-Swift.h"
 #import "MockAPIClient.h"
 #import "OptionButton.h"
 #import "UIViewController+Utils.h"
@@ -206,28 +207,28 @@
 - (IBAction)generateCustomer:(id)sender {
     [self.activityIndicator startAnimating];
     __weak __typeof(self) weakSelf = self;
-    [[MockAPIClient sharedClient] createCustomerWithParameters:@{@"request_id": NSUUID.UUID.UUIDString,
-                                                                 @"merchant_customer_id": NSUUID.UUID.UUIDString,
-                                                                 @"first_name": @"Jason",
-                                                                 @"last_name": @"Wang",
-                                                                 @"email": @"john.doe@airwallex.com",
-                                                                 @"phone_number": @"13800000000",
-                                                                 @"additional_info": @{@"registered_via_social_media": @NO,
-                                                                                       @"registration_date": @"2019-09-18",
-                                                                                       @"first_successful_order_date": @"2019-09-18"},
-                                                                 @"metadata": @{@"id": @1}}
-                                             completionHandler:^(NSDictionary *_Nullable result, NSError *_Nullable error) {
-                                                 __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                                 [strongSelf.activityIndicator stopAnimating];
-                                                 if (error) {
-                                                     [strongSelf showAlert:error.localizedDescription withTitle:nil];
-                                                     return;
-                                                 }
+    [_customerFetcher createCustomerWithFirstName:@"Jason"
+                                         lastName:@"Wang"
+                                            email:@"john.doe@airwallex.com"
+                                      phoneNumber:@"13800000000"
+                                   additionalInfo:@{@"registered_via_social_media": @NO,
+                                                    @"registration_date": @"2019-09-18",
+                                                    @"first_successful_order_date": @"2019-09-18"}
+                                         metadata:@{@"id": @1}
+                                       completion:^(Customer *_Nullable customer, NSError *_Nullable error) {
+                                           __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               [strongSelf.activityIndicator stopAnimating];
+                                               if (error) {
+                                                   [strongSelf showAlert:error.localizedDescription withTitle:nil];
+                                                   return;
+                                               }
 
-                                                 NSString *customerId = result[@"id"];
-                                                 strongSelf.customerIdTextField.text = customerId;
-                                                 [AirwallexExamplesKeys shared].customerId = customerId;
-                                             }];
+                                               NSString *customerId = customer.id;
+                                               strongSelf.customerIdTextField.text = customerId;
+                                               [AirwallexExamplesKeys shared].customerId = customerId;
+                                           });
+                                       }];
 }
 
 - (IBAction)clearCustomerBtnTapped:(id)sender {

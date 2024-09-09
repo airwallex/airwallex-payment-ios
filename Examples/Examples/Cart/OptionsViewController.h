@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class OptionsViewController;
+@protocol CustomerFetchable;
 
 @interface OptionsViewController : UIViewController
+
+@property (strong, nonatomic) id<CustomerFetchable> customerFetcher;
 
 @end

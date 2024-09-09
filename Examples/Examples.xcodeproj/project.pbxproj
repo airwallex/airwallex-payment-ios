@@ -23,7 +23,6 @@
 		085BD40123CC64B9002E8F27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD40023CC64B9002E8F27 /* main.m */; };
 		088F3E8323CEB7FF005AE40F /* MockAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 088F3E8223CEB7FF005AE40F /* MockAPIClient.m */; };
 		08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3E99E24246C30003FDAAF /* OptionsViewController.m */; };
-		1839055D29C0347900FE8069 /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839055C29C0347900FE8069 /* Empty.swift */; };
 		1859F1972C89A6290017FA4D /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F1962C89A6290017FA4D /* APIClient.swift */; };
 		1859F1992C89AAB50017FA4D /* PaymentIntentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F1982C89AAB50017FA4D /* PaymentIntentRequest.swift */; };
 		1859F19B2C89B0C40017FA4D /* PurchaseOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F19A2C89B0C40017FA4D /* PurchaseOrder.swift */; };
@@ -71,7 +70,6 @@
 		08A3E99D24246C30003FDAAF /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		08A3E99E24246C30003FDAAF /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		08B55E372421D8C60054E254 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1839055C29C0347900FE8069 /* Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Empty.swift; sourceTree = "<group>"; };
 		1859F1962C89A6290017FA4D /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		1859F1982C89AAB50017FA4D /* PaymentIntentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentIntentRequest.swift; sourceTree = "<group>"; };
 		1859F19A2C89B0C40017FA4D /* PurchaseOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseOrder.swift; sourceTree = "<group>"; };
@@ -183,7 +181,6 @@
 				088ADB902407B329001ADC71 /* Resources */,
 				085BD3FF23CC64B9002E8F27 /* Info.plist */,
 				085BD40023CC64B9002E8F27 /* main.m */,
-				1839055C29C0347900FE8069 /* Empty.swift */,
 				18ADC99C2C8ACCA000A775BB /* Examples-Bridging-Header.h */,
 			);
 			path = Examples;
@@ -429,7 +426,6 @@
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				18ADC99E2C8B03E400A775BB /* CartViewController+TableView.swift in Sources */,
 				1859F19D2C8A9EE90017FA4D /* NSError+Extensions.swift in Sources */,
-				1839055D29C0347900FE8069 /* Empty.swift in Sources */,
 				1859F19B2C89B0C40017FA4D /* PurchaseOrder.swift in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
 				00E501C2264D06BE00027311 /* SuccessViewController.m in Sources */,

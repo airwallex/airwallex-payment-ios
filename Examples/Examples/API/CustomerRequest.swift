@@ -19,17 +19,17 @@ class CustomerRequest: Encodable {
     let metadata: Dictionary<String, Int>
     
     enum CodingKeys: String, CodingKey {
-        case requestID
+        case requestID = "request_id"
         case merchantCustomerID = "merchant_customer_id"
-        case firstName
-        case lastName
+        case firstName = "first_name"
+        case lastName = "last_name"
         case email
-        case phoneNumber
-        case additionalInfo
+        case phoneNumber = "phone_number"
+        case additionalInfo = "additional_info"
         case metadata
     }
     
-    init(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: Dictionary<String, Encodable>?, metadata: Dictionary<String, Int>) {
+    init(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: Dictionary<String, Any>?, metadata: Dictionary<String, Int>) {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
@@ -46,9 +46,29 @@ class CustomerRequest: Encodable {
         try container.encodeIfPresent(lastName, forKey: .lastName)
         try container.encodeIfPresent(email, forKey: .email)
         try container.encodeIfPresent(phoneNumber, forKey: .phoneNumber)
-        if let additionalInfo, let jsonData = try? JSONSerialization.data(withJSONObject: additionalInfo) {
-            try container.encode(jsonData, forKey: .additionalInfo)
+        if let additionalInfo {
+            var nestedContainer = container.nestedContainer(keyedBy: StringCodingKey.self, forKey: .additionalInfo)
+            try additionalInfo.forEach { key, value in
+                if let stringValue = value as? String {
+                    try nestedContainer.encode(stringValue, forKey: .init(stringValue: key))
+                } else if let boolValue = value as? Bool {
+                    try nestedContainer.encode(boolValue, forKey: .init(stringValue: key))
+                }
+            }
         }
         try container.encode(metadata, forKey: .metadata)
+    }
+    
+    private struct StringCodingKey: CodingKey {
+        var stringValue: String
+        var intValue: Int? { return nil }
+
+        init(stringValue: String) {
+            self.stringValue = stringValue
+        }
+
+        init?(intValue: Int) {
+            return nil
+        }
     }
 }

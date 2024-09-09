@@ -11,12 +11,25 @@ import Airwallex
 protocol APIClient {
     func createPaymentIntent(request: PaymentIntentRequest, completion: @escaping (Result<AWXPaymentIntent, Error>) -> Void)
     
-    func createCustomer(request: CustomerRequest, completion: @escaping (Result<Customer, Error>) -> Void)
-    
     func generateClientSecret(customerID: String, apiKey: String?, clientID: String?, completion: @escaping (Result<String, Error>) -> Void)
+    
+    func createCustomer(request: CustomerRequest, completion: @escaping (Result<Customer, Error>) -> Void)
 }
 
-class DemoStoreAPIClient: APIClient {
+@objc protocol CustomerFetchable {
+    func createCustomer(
+        firstName: String?,
+        lastName: String?,
+        email: String?,
+        phoneNumber: String?,
+        additionalInfo: Dictionary<String, Any>?,
+        metadata: Dictionary<String, Int>,
+        completion: @escaping (Customer?, Error?) -> Void
+    )
+}
+
+
+class DemoStoreAPIClient: APIClient, CustomerFetchable {
     private var demoStoreBaseUrl: String? {
         switch Airwallex.mode() {
         case .demoMode:
@@ -34,6 +47,17 @@ class DemoStoreAPIClient: APIClient {
     
     func createCustomer(request: CustomerRequest, completion: @escaping (Result<Customer, Error>) -> Void) {
         post(path: "/api/v1/pa/customers/create", encodable: request, completion: completion)
+    }
+    
+    func createCustomer(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: Dictionary<String, Any>?, metadata: Dictionary<String, Int>, completion: @escaping (Customer?, Error?) -> Void) {
+        createCustomer(request: CustomerRequest(firstName: firstName, lastName: lastName, email: email, phoneNumber: phoneNumber, additionalInfo: additionalInfo, metadata: metadata)) { result in
+            switch (result) {
+            case .success(let customer):
+                completion(customer, nil)
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
     }
     
     func generateClientSecret(customerID: String, apiKey: String?, clientID: String?, completion: @escaping (Result<String, any Error>) -> Void) {
@@ -68,7 +92,7 @@ class DemoStoreAPIClient: APIClient {
                     return
                 }
                 
-                if let errorMessage = (responseDict as? [String: String])?["message"] {
+                if let errorMessage = responseDict?["message"] as? String {
                     completion(.failure(NSError.airwallexError(localizedMessage: errorMessage)))
                     return
                 }
@@ -107,7 +131,7 @@ class DemoStoreAPIClient: APIClient {
                     return
                 }
                 
-                if let errorMessage = (responseDict as? [String: String])?["message"] {
+                if let errorMessage = responseDict?["message"] as? String {
                     completion(.failure(NSError.airwallexError(localizedMessage: errorMessage)))
                 } else {
                     if let model = T.decode(fromJSON: responseDict) as? T {

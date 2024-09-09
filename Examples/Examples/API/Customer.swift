@@ -9,7 +9,7 @@
 import Airwallex
 
 class Customer: NSObject, AWXJSONDecodable {
-    let id: String
+    @objc let id: String
     
     static func decode(fromJSON json: [AnyHashable : Any]) -> Any? {
         if let id = json["id"] as? String {
