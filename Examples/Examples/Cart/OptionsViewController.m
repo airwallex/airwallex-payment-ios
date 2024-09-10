@@ -136,7 +136,6 @@
                                                  handler:^(UIAlertAction *_Nonnull action) {
                                                      [Airwallex setMode:AirwallexSDKDemoMode];
                                                      [AirwallexExamplesKeys shared].environment = AirwallexSDKDemoMode;
-                                                     [[MockAPIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
 
                                                      [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
                                                  }]];
@@ -145,16 +144,6 @@
                                                  handler:^(UIAlertAction *_Nonnull action) {
                                                      [Airwallex setMode:AirwallexSDKStagingMode];
                                                      [AirwallexExamplesKeys shared].environment = AirwallexSDKStagingMode;
-                                                     [[MockAPIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
-
-                                                     [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
-                                                 }]];
-    [controller addAction:[UIAlertAction actionWithTitle:@"Production"
-                                                   style:UIAlertActionStyleDefault
-                                                 handler:^(UIAlertAction *_Nonnull action) {
-                                                     [Airwallex setMode:AirwallexSDKProductionMode];
-                                                     [AirwallexExamplesKeys shared].environment = AirwallexSDKProductionMode;
-                                                     [[MockAPIClient sharedClient] createAuthenticationTokenWithCompletionHandler:nil];
 
                                                      [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];
                                                  }]];

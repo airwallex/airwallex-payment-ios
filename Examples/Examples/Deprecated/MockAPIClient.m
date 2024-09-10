@@ -28,7 +28,7 @@
     if (self.paymentBaseURL == nil || self.clientID == nil || self.apiKey == nil) {
         if (completionHandler) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler([NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing Payment base url, client id and api key."}]);
+                completionHandler([NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing Payment base url, client id or api key."}]);
             });
         }
         return;

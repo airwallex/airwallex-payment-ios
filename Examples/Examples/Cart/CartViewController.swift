@@ -17,7 +17,7 @@ class CartViewController: UIViewController {
     
     var products: [Product] = .init()
     var shipping: AWXPlaceDetails?
-    private var apiClient: APIClient?
+    var apiClient: APIClient!
     private var applePayProvider: AWXApplePayProvider?
     
     private var checkoutMode: AirwallexCheckoutMode? {
@@ -47,7 +47,6 @@ class CartViewController: UIViewController {
         setupViews()
         setupCartData()
         setupSDK()
-        setupExampleAPIClient()
     }
     
     private func setupViews() {
@@ -78,10 +77,6 @@ class CartViewController: UIViewController {
             ]
         ]
         self.shipping = AWXPlaceDetails.decode(fromJSON: shipping) as? AWXPlaceDetails
-    }
-
-    private func setupExampleAPIClient() {
-        apiClient = DemoStoreAPIClient()
     }
 
     private func setupSDK() {
@@ -150,9 +145,9 @@ class CartViewController: UIViewController {
             self.performSegue(withIdentifier: "showH5Demo", sender: nil)
         }))
         controller.addAction(UIAlertAction(title:"Settings", style:.default, handler: { _ in
-            let optionsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "options") as! OptionsViewController
-            optionsVC.customerFetcher = DemoStoreAPIClient()
-            self.navigationController?.pushViewController(optionsVC, animated: true)
+            if let optionsVC = UIStoryboard(name: "Main", bundle: nil).createOptionsViewController() {
+                self.navigationController?.pushViewController(optionsVC, animated: true)
+            }
         }))
         controller.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
@@ -174,7 +169,7 @@ class CartViewController: UIViewController {
         case .oneOffMode, .recurringWithIntentMode:
             startAnimating()
             // get intent from your server for one-off or recurringWithIntent session, can ignore customer ID if guest checkout
-            apiClient?.createPaymentIntent(request: createPaymentIntentRequest(customerID: customerID), completion: { [weak self] result in
+            apiClient.createPaymentIntent(request: createPaymentIntentRequest(customerID: customerID), completion: { [weak self] result in
                 guard let self else { return }
                 DispatchQueue.main.async {
                     self.stopAnimating()
@@ -201,7 +196,7 @@ class CartViewController: UIViewController {
             
             startAnimating()
             // get client secret for recurring session
-            apiClient?.generateClientSecret(customerID: customerID, apiKey: apiKey, clientID: clientID, completion: { [weak self] result in
+            apiClient.generateClientSecret(customerID: customerID, apiKey: apiKey, clientID: clientID, completion: { [weak self] result in
                 guard let self else { return }
                 DispatchQueue.main.async {
                     self.stopAnimating()

@@ -39,6 +39,7 @@ class DemoStoreAPIClient: APIClient, CustomerFetchable {
         case .stagingMode:
             "https://staging-pacheckoutdemo.airwallex.com"
         case .productionMode:
+            // Our demo does not support production. Please validate it by connecting your own backend.
             nil
         }
     }
