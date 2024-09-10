@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CartViewController : UIViewController
+@interface AWXCartViewController : UIViewController
 
 @end

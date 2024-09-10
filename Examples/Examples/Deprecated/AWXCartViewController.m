@@ -6,10 +6,9 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "CartViewController.h"
-#import "APIClient.h"
+#import "AWXCartViewController.h"
 #import "AirwallexExamplesKeys.h"
-#import "OptionsViewController.h"
+#import "MockAPIClient.h"
 #import "ProductCell.h"
 #import "ShippingCell.h"
 #import "TotalCell.h"
@@ -19,7 +18,7 @@
 #import <Airwallex/Core.h>
 #import <SafariServices/SFSafariViewController.h>
 
-@interface CartViewController ()<UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate, AWXProviderDelegate>
+@interface AWXCartViewController ()<UITableViewDelegate, UITableViewDataSource, AWXShippingViewControllerDelegate, AWXPaymentResultDelegate, AWXProviderDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
@@ -32,7 +31,7 @@
 
 @end
 
-@implementation CartViewController
+@implementation AWXCartViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,7 +76,7 @@
 }
 
 - (void)setupExamplesAPIClient {
-    APIClient *client = [APIClient sharedClient];
+    MockAPIClient *client = [MockAPIClient sharedClient];
     client.apiKey = [AirwallexExamplesKeys shared].apiKey;
     client.clientID = [AirwallexExamplesKeys shared].clientId;
 }
@@ -174,7 +173,7 @@
     }
 
     [self startAnimating];
-    [[APIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError *_Nullable error) {
+    [[MockAPIClient sharedClient] createAuthenticationTokenWithCompletionHandler:^(NSError *_Nullable error) {
         if (error) {
             [self showAlert:error.localizedDescription withTitle:NSLocalizedString(@"Fail to request token.", nil)];
             [self stopAnimating];
@@ -245,32 +244,32 @@
     AirwallexCheckoutMode checkoutMode = [[NSUserDefaults standardUserDefaults] integerForKey:kCachedCheckoutMode];
     if (checkoutMode != AirwallexCheckoutRecurringMode) {
         dispatch_group_enter(group);
-        [[APIClient sharedClient] createPaymentIntentWithParameters:parameters
-                                                  completionHandler:^(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error) {
-                                                      if (error) {
-                                                          _error = error;
-                                                          dispatch_group_leave(group);
-                                                          return;
-                                                      }
+        [[MockAPIClient sharedClient] createPaymentIntentWithParameters:parameters
+                                                      completionHandler:^(AWXPaymentIntent *_Nullable paymentIntent, NSError *_Nullable error) {
+                                                          if (error) {
+                                                              _error = error;
+                                                              dispatch_group_leave(group);
+                                                              return;
+                                                          }
 
-                                                      _paymentIntent = paymentIntent;
-                                                      dispatch_group_leave(group);
-                                                  }];
+                                                          _paymentIntent = paymentIntent;
+                                                          dispatch_group_leave(group);
+                                                      }];
     }
 
     if (customerId && checkoutMode == AirwallexCheckoutRecurringMode) {
         dispatch_group_enter(group);
-        [[APIClient sharedClient] generateClientSecretWithCustomerId:customerId
-                                                   completionHandler:^(NSDictionary *_Nullable result, NSError *_Nullable error) {
-                                                       if (error) {
-                                                           _error = error;
-                                                           dispatch_group_leave(group);
-                                                           return;
-                                                       }
+        [[MockAPIClient sharedClient] generateClientSecretWithCustomerId:customerId
+                                                       completionHandler:^(NSDictionary *_Nullable result, NSError *_Nullable error) {
+                                                           if (error) {
+                                                               _error = error;
+                                                               dispatch_group_leave(group);
+                                                               return;
+                                                           }
 
-                                                       _customerSecret = result[@"client_secret"];
-                                                       dispatch_group_leave(group);
-                                                   }];
+                                                           _customerSecret = result[@"client_secret"];
+                                                           dispatch_group_leave(group);
+                                                       }];
     }
 
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
