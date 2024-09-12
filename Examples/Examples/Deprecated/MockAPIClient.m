@@ -6,13 +6,13 @@
 //  Copyright © 2020 Airwallex. All rights reserved.
 //
 
-#import "APIClient.h"
+#import "MockAPIClient.h"
 #import <Airwallex/Core.h>
 
-@implementation APIClient
+@implementation MockAPIClient
 
 + (instancetype)sharedClient {
-    static APIClient *sharedClient;
+    static MockAPIClient *sharedClient;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedClient = [self new];
@@ -28,7 +28,7 @@
     if (self.paymentBaseURL == nil || self.clientID == nil || self.apiKey == nil) {
         if (completionHandler) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler([NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing Payment base url, client id and api key."}]);
+                completionHandler([NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Missing Payment base url, client id or api key."}]);
             });
         }
         return;

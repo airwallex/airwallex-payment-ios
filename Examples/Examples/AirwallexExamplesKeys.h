@@ -27,7 +27,7 @@ static NSString *const kCachedCurrency = @"kCachedCurrency";
 static NSString *const kCachedCountryCode = @"kCachedCountryCode";
 static NSString *const kCachedReturnURL = @"kCachedReturnURL";
 
-typedef NS_ENUM(NSInteger, AirwallexCheckoutMode) {
+typedef NS_CLOSED_ENUM(NSInteger, AirwallexCheckoutMode) {
     AirwallexCheckoutOneOffMode,
     AirwallexCheckoutRecurringMode,
     AirwallexCheckoutRecurringWithIntentMode

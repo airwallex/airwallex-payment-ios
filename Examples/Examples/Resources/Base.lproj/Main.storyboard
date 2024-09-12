@@ -13,7 +13,7 @@
         <!--Cart-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="Cart" customClass="CartViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Cart" customClass="CartViewController" customModule="Examples" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -251,7 +251,7 @@
                                     <color key="titleColor" systemColor="labelColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="checkoutPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DWG-Gc-Ifp"/>
+                                    <action selector="checkoutPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6NV-gF-bS8"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -275,12 +275,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="checkoutButton" destination="Uad-jD-BvN" id="JaR-Ml-Ux1"/>
-                        <outlet property="tableView" destination="eCS-DG-9uu" id="txh-yI-DFo"/>
-                        <outlet property="titleLabel" destination="emf-Qn-Zl3" id="jGU-ej-fF2"/>
+                        <outlet property="checkoutButton" destination="Uad-jD-BvN" id="GjN-d1-cZM"/>
+                        <outlet property="tableView" destination="eCS-DG-9uu" id="fqS-0I-sWf"/>
+                        <outlet property="titleLabel" destination="emf-Qn-Zl3" id="mEz-To-q4t"/>
                         <segue destination="VhN-Ut-ggN" kind="show" identifier="showWeChatDemo" id="SiD-Sj-pmk"/>
                         <segue destination="7Ab-n5-deV" kind="show" identifier="showH5Demo" id="b6a-Zb-aFA"/>
-                        <segue destination="3dc-1g-4U7" kind="show" identifier="showSettings" id="hc8-sX-8J3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -573,13 +572,13 @@
         <!--Settings-->
         <scene sceneID="XgQ-3K-n2r">
             <objects>
-                <viewController id="3dc-1g-4U7" customClass="OptionsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="options" id="3dc-1g-4U7" customClass="OptionsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8AO-7M-Nu3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyV-gZ-kEV">
-                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iM6-7j-oWC">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="1228.6666666666667"/>
@@ -620,7 +619,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next trigger by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdW-GS-XKJ">
-                                                        <rect key="frame" x="0.0" y="174.33333333333331" width="361" height="20.333333333333343"/>
+                                                        <rect key="frame" x="0.0" y="174.33333333333334" width="361" height="20.333333333333343"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" name="Black Text Color"/>
                                                         <nil key="highlightedColor"/>
@@ -687,7 +686,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hch-lF-vIa">
-                                                        <rect key="frame" x="0.0" y="400.66666666666663" width="361" height="31"/>
+                                                        <rect key="frame" x="0.0" y="400.66666666666669" width="361" height="31"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apple Pay Only" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4O4-Bs-d1x" userLabel="Apple Pay Method Only">
                                                                 <rect key="frame" x="0.0" y="0.0" width="312" height="31"/>
@@ -986,7 +985,7 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="separatorColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

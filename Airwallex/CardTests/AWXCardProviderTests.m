@@ -17,7 +17,7 @@
 #import "AWXPaymentMethodResponse.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSession.h"
-#import "Card/Card-Swift.h"
+#import <Card/Card-Swift.h>
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 

@@ -97,7 +97,7 @@ AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType) {
 NSString *FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason) {
     switch (reason) {
     case AirwallexMerchantTriggerReasonUndefined:
-        return NULL;
+        return nil;
     case AirwallexMerchantTriggerReasonUnscheduled:
         return @"unscheduled";
     case AirwallexMerchantTriggerReasonScheduled:

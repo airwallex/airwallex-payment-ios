@@ -12,8 +12,8 @@ public extension AWXUIContext {
     /**
      Present the card payment flow.
      */
-    @objc func presentCardPaymentFlowFrom(
-        _ hostViewController: UIViewController,
+    @objc func presentCardPaymentFlow(
+        from hostViewController: UIViewController,
         cardSchemes: [AWXCardBrand]
     ) {
         let controller = AWXCardViewController(nibName: nil, bundle: nil)
@@ -32,8 +32,8 @@ public extension AWXUIContext {
     /**
      Push the card payment flow.
      */
-    @objc func pushCardPaymentFlowFrom(
-        _ hostViewController: UIViewController,
+    @objc func pushCardPaymentFlow(
+        from hostViewController: UIViewController,
         cardSchemes: [AWXCardBrand]
     ) {
         let navigationController = hostViewController as? UINavigationController ?? hostViewController.navigationController
@@ -52,11 +52,11 @@ public extension AWXUIContext {
         navigationController.pushViewController(controller, animated: true)
     }
     
-    @objc func presentCardPaymentFlowFrom(_ hostViewController: UIViewController) {
-        presentCardPaymentFlowFrom(hostViewController, cardSchemes: [.visa, .mastercard, .amex, .discover, .dinersClub, .JCB, .unionPay])
+    @objc func presentCardPaymentFlow(from hostViewController: UIViewController) {
+        presentCardPaymentFlow(from: hostViewController, cardSchemes: [.visa, .mastercard, .amex, .discover, .dinersClub, .JCB, .unionPay])
     }
     
-    @objc func pushCardPaymentFlowFrom(_ hostViewController: UIViewController) {
-        pushCardPaymentFlowFrom(hostViewController, cardSchemes: [.visa, .mastercard, .amex, .discover, .dinersClub, .JCB, .unionPay])
+    @objc func pushCardPaymentFlow(from hostViewController: UIViewController) {
+        pushCardPaymentFlow(from: hostViewController, cardSchemes: [.visa, .mastercard, .amex, .discover, .dinersClub, .JCB, .unionPay])
     }
 }

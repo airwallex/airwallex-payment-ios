@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "AWXTheme.h"
 #import "AirwallexExamplesKeys.h"
+#import "Examples-Swift.h"
 #import <WechatOpenSDK/WXApi.h>
 
 @interface AppDelegate ()<WXApiDelegate>
@@ -50,7 +51,7 @@
 #pragma mark - UI
 
 - (void)loadCartView {
-    UIViewController *controller = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
+    UIViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] createCartViewController];
     [self perform:controller];
 }
 
