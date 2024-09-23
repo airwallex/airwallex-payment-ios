@@ -9,7 +9,7 @@
 import UIKit
 
 public extension AWXCardProvider {
-    @objc func confirmPaymentIntentWithPaymentConsent(_ paymentConsent: AWXPaymentConsent) {
+    @objc func confirmPaymentIntent(with paymentConsent: AWXPaymentConsent) {
         guard let hostViewController = delegate?.hostViewController?() else {
             fatalError("hostViewController of AWXProviderDelegate is not provided")
         }
