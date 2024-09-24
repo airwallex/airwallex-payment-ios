@@ -26,6 +26,11 @@ extern AWXCardBrand const AWXCardBrandJCB;
 extern AWXCardBrand const AWXCardBrandDinersClub;
 extern AWXCardBrand const AWXCardBrandUnionPay;
 
+typedef NSString *AWXPaymentMethodFlow NS_TYPED_EXTENSIBLE_ENUM;
+extern AWXPaymentMethodFlow const AWXPaymentMethodFlowApp;
+extern AWXPaymentMethodFlow const AWXPaymentMethodFlowWeb;
+extern AWXPaymentMethodFlow const AWXPaymentMethodFlowQrcode;
+
 typedef NS_CLOSED_ENUM(NSInteger, AirwallexSDKMode) {
     AirwallexSDKDemoMode,
     AirwallexSDKStagingMode,

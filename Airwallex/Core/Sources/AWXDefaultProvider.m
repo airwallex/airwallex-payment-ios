@@ -67,7 +67,7 @@
     [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
 
     __weak __typeof(self) weakSelf = self;
-    [self createPaymentConsentAndConfirmIntentWithPaymentMethod:[self paymentMethodWithMetaData:paymentMethod]
+    [self createPaymentConsentAndConfirmIntentWithPaymentMethod:[self paymentMethodWithMetaData:paymentMethod flow:AWXPaymentMethodFlowApp]
                                                          device:device
                                                      completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
                                                          __strong __typeof(weakSelf) strongSelf = weakSelf;
@@ -78,28 +78,32 @@
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
                                        device:(nullable AWXDevice *)device {
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:paymentConsent device:device flow:AWXPaymentMethodFlowApp];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
+                               paymentConsent:(AWXPaymentConsent *)paymentConsent
+                                       device:(AWXDevice *)device
+                                         flow:(AWXPaymentMethodFlow)flow {
     __weak __typeof(self) weakSelf = self;
-    [self confirmPaymentIntentWithPaymentMethod:paymentMethod
-                                 paymentConsent:paymentConsent
-                                         device:device
-                                     completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-                                         __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                         [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
-                                     }];
+    [self confirmPaymentIntentWithPaymentMethodInternal:paymentMethod
+                                         paymentConsent:paymentConsent
+                                                 device:device
+                                                   flow:flow
+                                             completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+                                                 __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                                 [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
+                                             }];
 }
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
                                        device:(nullable AWXDevice *)device
                                    completion:(AWXRequestHandler)completion {
-    self.paymentConsent = paymentConsent;
-
-    [self.delegate providerDidStartRequest:self];
-    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
-
-    [self confirmPaymentIntentWithPaymentMethodInternal:[self paymentMethodWithMetaData:paymentMethod]
+    [self confirmPaymentIntentWithPaymentMethodInternal:paymentMethod
                                          paymentConsent:paymentConsent
                                                  device:device
+                                                   flow:AWXPaymentMethodFlowApp
                                              completion:completion];
 }
 
@@ -139,6 +143,22 @@
 }
 
 #pragma mark - Internal Actions
+
+- (void)confirmPaymentIntentWithPaymentMethodInternal:(AWXPaymentMethod *)paymentMethod
+                                       paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
+                                               device:(nullable AWXDevice *)device
+                                                 flow:(AWXPaymentMethodFlow)flow
+                                           completion:(AWXRequestHandler)completion {
+    self.paymentConsent = paymentConsent;
+
+    [self.delegate providerDidStartRequest:self];
+    [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
+
+    [self confirmPaymentIntentWithPaymentMethodInternal:[self paymentMethodWithMetaData:paymentMethod flow:flow]
+                                         paymentConsent:paymentConsent
+                                                 device:device
+                                             completion:completion];
+}
 
 - (void)confirmPaymentIntentWithPaymentMethodInternal:(AWXPaymentMethod *)paymentMethod
                                        paymentConsent:(AWXPaymentConsent *)paymentConsent
@@ -355,9 +375,9 @@
     }
 }
 
-- (AWXPaymentMethod *)paymentMethodWithMetaData:(AWXPaymentMethod *)paymentMethod {
+- (AWXPaymentMethod *)paymentMethodWithMetaData:(AWXPaymentMethod *)paymentMethod flow:(AWXPaymentMethodFlow)flow {
     if (![paymentMethod.type isEqualToString:AWXCardKey]) {
-        NSDictionary *metaData = @{@"flow": @"inapp", @"os_type": @"ios"};
+        NSDictionary *metaData = @{@"flow": flow, @"os_type": @"ios"};
         if (paymentMethod.additionalParams) {
             NSMutableDictionary *params = paymentMethod.additionalParams.mutableCopy;
             [params addEntriesFromDictionary:metaData];

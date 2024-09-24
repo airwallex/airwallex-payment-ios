@@ -33,7 +33,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  Airwallex: fe172d849441683852d6be50f04f3cf90fa6dbac
+  Airwallex: 17e50bc00b9a494ff67f6a191e5e2661fab6c5b9
   OCMock: 9491e4bec59e0b267d52a9184ff5605995e74be8
   WechatOpenSDK: 2f0ae448c7525cb5c27db5f7aa0f568de0988fa4
 

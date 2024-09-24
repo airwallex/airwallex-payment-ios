@@ -60,6 +60,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCachedReturnURL];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kCachedAutoCapture];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCachedApplePayMethodOnly];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCachedRedirectPayOnly];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kCachedCardMethodOnly];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -75,6 +76,7 @@
     self.force3DS = [userDefaults boolForKey:kCachedForce3DS];
     self.autoCapture = [userDefaults boolForKey:kCachedAutoCapture];
     self.applePayMethodOnly = [userDefaults boolForKey:kCachedApplePayMethodOnly];
+    self.redirectPayOnly = [userDefaults boolForKey:kCachedRedirectPayOnly];
     self.cardMethodOnly = [userDefaults boolForKey:kCachedCardMethodOnly];
     self.customerId = [userDefaults stringForKey:kCachedCustomerID];
 
@@ -122,6 +124,11 @@
 - (void)setApplePayMethodOnly:(BOOL)applePayMethodOnly {
     _applePayMethodOnly = applePayMethodOnly;
     [[NSUserDefaults standardUserDefaults] setBool:applePayMethodOnly forKey:kCachedApplePayMethodOnly];
+}
+
+- (void)setRedirectPayOnly:(BOOL)redirectPayOnly {
+    _redirectPayOnly = redirectPayOnly;
+    [[NSUserDefaults standardUserDefaults] setBool:redirectPayOnly forKey:kCachedRedirectPayOnly];
 }
 
 - (void)setCardMethodOnly:(BOOL)cardMethodOnly {

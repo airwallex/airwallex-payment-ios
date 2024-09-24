@@ -9,10 +9,14 @@
 import Foundation
 
 public extension AWXRedirectActionProvider {
-    @objc func confirmPaymentIntent(with paymentMethodName: String, additionalInfo: Dictionary<String, String>? = nil) {
+    @objc func confirmPaymentIntent(
+        with paymentMethodName: String,
+        additionalInfo: Dictionary<String, String>? = nil,
+        flow: AWXPaymentMethodFlow = .app
+    ) {
         let paymentMethod = AWXPaymentMethod()
         paymentMethod.type = paymentMethodName
         paymentMethod.additionalParams = additionalInfo
-        confirmPaymentIntent(with: paymentMethod, paymentConsent: nil, device: nil)
+        confirmPaymentIntent(with: paymentMethod, paymentConsent: nil, device: nil, flow: flow)
     }
 }

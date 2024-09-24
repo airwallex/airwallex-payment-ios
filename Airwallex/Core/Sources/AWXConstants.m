@@ -45,6 +45,10 @@ AWXCardBrand const AWXCardBrandJCB = @"jcb";
 AWXCardBrand const AWXCardBrandDinersClub = @"diners";
 AWXCardBrand const AWXCardBrandUnionPay = @"unionpay";
 
+AWXPaymentMethodFlow const AWXPaymentMethodFlowApp = @"inapp";
+AWXPaymentMethodFlow const AWXPaymentMethodFlowWeb = @"mweb";
+AWXPaymentMethodFlow const AWXPaymentMethodFlowQrcode = @"webqr";
+
 NSArray *AWXCardSupportedBrands(void) {
     return @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex), @(AWXBrandTypeUnionPay), @(AWXBrandTypeJCB), @(AWXBrandTypeDinersClub), @(AWXBrandTypeDiscover)];
 };
