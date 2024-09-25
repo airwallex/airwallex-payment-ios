@@ -9,7 +9,8 @@
 import Foundation
 
 public extension AWXRedirectActionProvider {
-    @objc func confirmPaymentIntent(
+    @objc(confirmPaymentIntentWithPaymentMethodName:additionalInfo:flow:)
+    func confirmPaymentIntent(
         with paymentMethodName: String,
         additionalInfo: Dictionary<String, String>? = nil,
         flow: AWXPaymentMethodFlow = .app

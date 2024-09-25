@@ -97,7 +97,7 @@
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
     AWXRedirectActionProvider *provider = [[AWXRedirectActionProvider alloc] initWithDelegate:delegate session:[AWXOneOffSession new]];
 
-    [provider confirmPaymentIntentWith:@"paypal" additionalInfo:@{@"name": @"John"} flow:AWXPaymentMethodFlowWeb];
+    [provider confirmPaymentIntentWithPaymentMethodName:@"paypal" additionalInfo:@{@"name": @"John"} flow:AWXPaymentMethodFlowWeb];
     NSDictionary *dict = @{@"name": @"John", @"flow": @"mweb", @"os_type": @"ios"};
     OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {
                                     AWXConfirmPaymentIntentRequest *request = obj;

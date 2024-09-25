@@ -197,7 +197,7 @@ self.provider = provider;
 [provider confirmPaymentIntentWithCard:"The AWXCard object collected by your custom UI" billing:"The AWXPlaceDetails object collected by your custom UI" saveCard:"Whether you want the card to be saved as payment consent for future payments"];
 
 // Confirm intent with a payment consent object (AWXPaymentConsent)
-[provider confirmPaymentIntentWith:paymentConsent];
+[provider confirmPaymentIntentWithPaymentConsent:paymentConsent];
 
 // Confirm intent with a valid payment consent ID only when the saved card is **network token**
 [provider confirmPaymentIntentWithPaymentConsentId:@"cst_xxxxxxxxxx"];
@@ -238,7 +238,7 @@ self.provider = provider;
 // Initiate the apple pay flow
  [provider startPayment];
 // Confirm intent with a valid payment method name that supports redirect pay
-// [provider confirmPaymentIntentWith:@"payment method name"];
+// [provider confirmPaymentIntentWithPaymentMethodName:@"payment method name"];
 
 ``` 
 
