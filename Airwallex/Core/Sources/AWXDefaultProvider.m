@@ -82,8 +82,8 @@
 }
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                               paymentConsent:(AWXPaymentConsent *)paymentConsent
-                                       device:(AWXDevice *)device
+                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
+                                       device:(nullable AWXDevice *)device
                                          flow:(AWXPaymentMethodFlow)flow {
     __weak __typeof(self) weakSelf = self;
     [self confirmPaymentIntentWithPaymentMethodInternal:paymentMethod

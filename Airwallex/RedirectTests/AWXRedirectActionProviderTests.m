@@ -7,11 +7,13 @@
 //
 
 #import "AWXAnalyticsLogger.h"
+#import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXRedirectActionProvider.h"
 #import "AWXSession.h"
 #import <OCMock/OCMock.h>
+#import <Redirect/Redirect-Swift.h>
 #import <XCTest/XCTest.h>
 
 @interface AWXRedirectActionProviderTests : XCTestCase
@@ -89,8 +91,37 @@
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
 }
 
+- (void)testConfirmPaymentIntent {
+    AWXAPIClient *client = [self mockAPIClient];
+
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    AWXRedirectActionProvider *provider = [[AWXRedirectActionProvider alloc] initWithDelegate:delegate session:[AWXOneOffSession new]];
+
+    [provider confirmPaymentIntentWith:@"paypal" additionalInfo:@{@"name": @"John"} flow:AWXPaymentMethodFlowWeb];
+    NSDictionary *dict = @{@"name": @"John", @"flow": @"mweb", @"os_type": @"ios"};
+    OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {
+                                    AWXConfirmPaymentIntentRequest *request = obj;
+                                    XCTAssertEqualObjects(request.paymentMethod.type, @"paypal");
+                                    XCTAssertEqualObjects(request.paymentMethod.additionalParams, dict);
+                                    return YES;
+                                }]
+                             handler:[OCMArg any]]);
+}
+
 - (NSDictionary *)testDictionary {
     return @{@"url": @"http://abc.net"};
+}
+
+- (AWXAPIClient *)mockAPIClient {
+    AWXAPIClientConfiguration *mockConfig = OCMClassMock([AWXAPIClientConfiguration class]);
+    OCMStub(ClassMethod([(id)mockConfig sharedConfiguration])).andReturn(mockConfig);
+
+    id mockClient = OCMClassMock([AWXAPIClient class]);
+
+    OCMStub([mockClient initWithConfiguration:mockConfig]).andReturn(mockClient);
+    OCMStub([mockClient alloc]).andReturn(mockClient);
+
+    return mockClient;
 }
 
 @end

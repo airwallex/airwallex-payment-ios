@@ -84,8 +84,7 @@ NSString *const kMockKey = @"MOCK";
     OCMVerify(times(1), [self.providerMock confirmPaymentIntentWithPaymentMethod:[OCMArg any]
                                                                   paymentConsent:[OCMArg any]
                                                                           device:[OCMArg any]
-                                                                      completion:[OCMArg any]]);
-    OCMVerify(times(1), [self.providerMock completeWithResponse:self.response error:self.error]);
+                                                                            flow:AWXPaymentMethodFlowApp]);
 }
 
 - (void)testConfirmPaymentIntentWithCard {
@@ -291,6 +290,7 @@ NSString *const kMockKey = @"MOCK";
                                                  paymentConsent:[OCMArg any]
                                                          device:[OCMArg any]
                                                      completion:([OCMArg invokeBlockWithArgs:response, error, nil])]);
+
     if (hasError) {
         OCMStub([providerMock createPaymentConsentWithPaymentMethod:[OCMArg any]
                                                          customerId:[OCMArg any]

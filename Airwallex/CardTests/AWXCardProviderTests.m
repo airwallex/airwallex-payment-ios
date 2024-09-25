@@ -131,7 +131,7 @@
     consent.Id = @"consentID";
     consent.paymentMethod = method;
 
-    [provider confirmPaymentIntentWithPaymentConsent:consent];
+    [provider confirmPaymentIntentWith:consent];
     OCMVerify(times(1), [mockViewController presentViewController:[OCMArg isKindOfClass:[UINavigationController class]]
                                                          animated:YES
                                                        completion:nil]);
@@ -147,7 +147,7 @@
     AWXPaymentConsent *consent = [AWXPaymentConsent new];
     consent.Id = @"consentID";
 
-    [provider confirmPaymentIntentWithPaymentConsent:consent];
+    [provider confirmPaymentIntentWith:consent];
     OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {
                                     AWXConfirmPaymentIntentRequest *request = obj;
                                     XCTAssertEqual(request.paymentConsent.Id, @"consentID");
