@@ -1,18 +1,18 @@
 PODS:
-  - Airwallex (5.5.4):
-    - Airwallex/ApplePay (= 5.5.4)
-    - Airwallex/Card (= 5.5.4)
-    - Airwallex/Core (= 5.5.4)
-    - Airwallex/Redirect (= 5.5.4)
-    - Airwallex/WeChatPay (= 5.5.4)
-  - Airwallex/ApplePay (5.5.4):
+  - Airwallex (5.5.5):
+    - Airwallex/ApplePay (= 5.5.5)
+    - Airwallex/Card (= 5.5.5)
+    - Airwallex/Core (= 5.5.5)
+    - Airwallex/Redirect (= 5.5.5)
+    - Airwallex/WeChatPay (= 5.5.5)
+  - Airwallex/ApplePay (5.5.5):
     - Airwallex/Core
-  - Airwallex/Card (5.5.4):
+  - Airwallex/Card (5.5.5):
     - Airwallex/Core
-  - Airwallex/Core (5.5.4)
-  - Airwallex/Redirect (5.5.4):
+  - Airwallex/Core (5.5.5)
+  - Airwallex/Redirect (5.5.5):
     - Airwallex/Core
-  - Airwallex/WeChatPay (5.5.4):
+  - Airwallex/WeChatPay (5.5.5):
     - Airwallex/Core
     - WechatOpenSDK (= 1.9.7)
   - OCMock (3.9.1)
@@ -33,7 +33,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  Airwallex: 17e50bc00b9a494ff67f6a191e5e2661fab6c5b9
+  Airwallex: b85d2cecea378bccda2b6666f015f0320f431305
   OCMock: 9491e4bec59e0b267d52a9184ff5605995e74be8
   WechatOpenSDK: 2f0ae448c7525cb5c27db5f7aa0f568de0988fa4
 
