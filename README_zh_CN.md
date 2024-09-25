@@ -9,7 +9,7 @@
 
 Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松，快速和安全地完成付款。它提供了简单的功能，可以将敏感的信用卡数据直接发送到Airwallex，还提供了功能详细的界面，用于收集用户付款明细。
 
-<p align="center">
+<p align="left">
 <img src="https://github.com/user-attachments/assets/e1c3f540-6cbb-4711-b392-24bbbdb7b779" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/9ed00d30-fd45-4882-b6d0-e2171c64e0fb" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/0645ba1a-8cf1-4811-ba6f-c0b0f9589b98" width="200" hspace="10">
