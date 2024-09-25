@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *threeDSSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *autoCaptureSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *applePayOnlySwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *redirectPayOnlySwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *cardOnlySwitch;
 @property (weak, nonatomic) IBOutlet UITextField *customerIdTextField;
 @property (weak, nonatomic) IBOutlet UIButton *clearCustomerIdButton;
@@ -189,6 +190,10 @@
     [AirwallexExamplesKeys shared].applePayMethodOnly = self.applePayOnlySwitch.isOn;
 }
 
+- (IBAction)redirectPayOnlySwitchPressed:(id)sender {
+    [AirwallexExamplesKeys shared].redirectPayOnly = self.redirectPayOnlySwitch.isOn;
+}
+
 - (IBAction)cardOnlySwitchPressed:(id)sender {
     [AirwallexExamplesKeys shared].cardMethodOnly = self.cardOnlySwitch.isOn;
 }
@@ -286,6 +291,9 @@
 
     BOOL applePayMethodOnly = [AirwallexExamplesKeys shared].applePayMethodOnly;
     self.applePayOnlySwitch.on = applePayMethodOnly;
+
+    BOOL redirectPayOnly = [AirwallexExamplesKeys shared].redirectPayOnly;
+    self.redirectPayOnlySwitch.on = redirectPayOnly;
 
     BOOL cardMethodOnly = [AirwallexExamplesKeys shared].cardMethodOnly;
     self.cardOnlySwitch.on = cardMethodOnly;

@@ -108,9 +108,9 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     AWXField *flowField = [hiddenFields filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name == %@", @"flow"]].firstObject;
     if (flowField) {
-        BOOL isInApp = [flowField.candidates filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"value == %@", @"inapp"]].count > 0;
+        BOOL isInApp = [flowField.candidates filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"value == %@", AWXPaymentMethodFlowApp]].count > 0;
         if (isInApp) {
-            params[@"flow"] = @"inapp";
+            params[@"flow"] = AWXPaymentMethodFlowApp;
         } else {
             AWXCandidate *first = flowField.candidates.firstObject;
             if (first) {

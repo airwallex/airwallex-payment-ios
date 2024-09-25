@@ -14,7 +14,9 @@
 @implementation AWXRedirectActionProvider
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
-    [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES withAnimation:YES];
+    if ([self.delegate respondsToSelector:@selector(provider:shouldPresentViewController:forceToDismiss:withAnimation:)]) {
+        [self.delegate provider:self shouldPresentViewController:nil forceToDismiss:YES withAnimation:YES];
+    }
 
     NSURL *url = [NSURL URLWithString:nextAction.url];
     if (url) {

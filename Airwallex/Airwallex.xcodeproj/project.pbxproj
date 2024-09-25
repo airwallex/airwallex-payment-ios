@@ -41,6 +41,7 @@
 		1829B8C4291B3B7000D0D2CA /* AWXCardProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */; };
 		1829B8C7291CDEB200D0D2CA /* AWXFloatingCardTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 1829B8C5291CDEB200D0D2CA /* AWXFloatingCardTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1829B8C8291CDEB200D0D2CA /* AWXFloatingCardTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C6291CDEB200D0D2CA /* AWXFloatingCardTextField.m */; };
+		182F1CF32CA16C23000B993D /* AWXRedirectActionProvider+PaymentIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F1CF22CA16C23000B993D /* AWXRedirectActionProvider+PaymentIntent.swift */; };
 		183214752BA187A800FC97B9 /* AWXNextActionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 183214732BA187A800FC97B9 /* AWXNextActionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		183214762BA187A800FC97B9 /* AWXNextActionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 183214742BA187A800FC97B9 /* AWXNextActionHandler.m */; };
 		1839054F29C01AE900FE8069 /* AWXAnalyticsLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 1839054D29C01AE900FE8069 /* AWXAnalyticsLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -375,6 +376,7 @@
 		1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCardProviderTests.m; sourceTree = "<group>"; };
 		1829B8C5291CDEB200D0D2CA /* AWXFloatingCardTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXFloatingCardTextField.h; sourceTree = "<group>"; };
 		1829B8C6291CDEB200D0D2CA /* AWXFloatingCardTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXFloatingCardTextField.m; sourceTree = "<group>"; };
+		182F1CF22CA16C23000B993D /* AWXRedirectActionProvider+PaymentIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXRedirectActionProvider+PaymentIntent.swift"; sourceTree = "<group>"; };
 		183214732BA187A800FC97B9 /* AWXNextActionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXNextActionHandler.h; sourceTree = "<group>"; };
 		183214742BA187A800FC97B9 /* AWXNextActionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXNextActionHandler.m; sourceTree = "<group>"; };
 		1839054D29C01AE900FE8069 /* AWXAnalyticsLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXAnalyticsLogger.h; sourceTree = "<group>"; };
@@ -1034,6 +1036,7 @@
 				57E73718272AC043009905DC /* AWXSchemaProvider.m */,
 				5775CF9226E5E28D00C6AFE3 /* AWXRedirectActionProvider.h */,
 				5775CF9326E5E28D00C6AFE3 /* AWXRedirectActionProvider.m */,
+				182F1CF22CA16C23000B993D /* AWXRedirectActionProvider+PaymentIntent.swift */,
 				5775CEAD26E5DF3300C6AFE3 /* Redirect.h */,
 				5775CEAE26E5DF3300C6AFE3 /* Info.plist */,
 			);
@@ -1511,6 +1514,7 @@
 					};
 					5775CEAA26E5DF3300C6AFE3 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1540;
 					};
 					5775CEB226E5DF3300C6AFE3 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -1977,6 +1981,7 @@
 				57E7371A272AC043009905DC /* AWXSchemaProvider.m in Sources */,
 				1803601D2873CAE2003EA943 /* AWXPaymentFormViewModel.m in Sources */,
 				5775CF9626E5E28D00C6AFE3 /* AWXPaymentFormViewController.m in Sources */,
+				182F1CF32CA16C23000B993D /* AWXRedirectActionProvider+PaymentIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2534,6 +2539,7 @@
 		5775CEBD26E5DF3300C6AFE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2550,6 +2556,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2557,6 +2565,7 @@
 		5775CEBE26E5DF3300C6AFE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2573,6 +2582,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -2581,6 +2591,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FC522BD223B734E323755856 /* Pods-RedirectTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K294E2HD3N;
 				INFOPLIST_FILE = RedirectTests/Info.plist;
@@ -2594,6 +2605,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F9330DB1F34C6DD83245F7CF /* Pods-RedirectTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K294E2HD3N;
 				INFOPLIST_FILE = RedirectTests/Info.plist;

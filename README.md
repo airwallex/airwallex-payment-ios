@@ -16,6 +16,7 @@ The Airwallex iOS SDK is a framework for integrating easy, fast and secure payme
 <img src="https://github.com/user-attachments/assets/0645ba1a-8cf1-4811-ba6f-c0b0f9589b98" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/121f98d8-9944-4254-80b6-9f39d945c4c8" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/9812c275-cb88-4835-a5e4-77bfa3b05319" width="200" hspace="10">
+</p>
 
 Get started with our integration guide and example project.
 
@@ -223,18 +224,21 @@ If the payment consent is created during payment process, you can implement this
 }
 ```
 
-#### Launch payment with Apple Pay provider
+#### Launch payment with Apple Pay provider or Redirect provider
 
 You still need all the other steps in [Basic Integration](#basic-integration) section to set up configurations, intent and session, except the step **Present one-off payment or recurring flow** is replaced by:
 
 ```objective-c
 AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:"The target to handle AWXProviderDelegate protocol" session:"The one off session created with apple pay options"];
+// AWXRedirectActionProvider *provider = [[AWXRedirectActionProvider alloc] initWithDelegate:"The target to handle AWXProviderDelegate protocol" session:"The one off session created"];
 
 // After initialization, you will need to store the provider in your view controller or class that is tied to your view's lifecycle
 self.provider = provider;
 
 // Initiate the apple pay flow
  [provider startPayment];
+// Confirm intent with a valid payment method name that supports redirect pay
+// [provider confirmPaymentIntentWithPaymentMethodName:@"payment method name"];
 
 ``` 
 

@@ -35,7 +35,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Redirect' do |plugin|
     plugin.dependency 'Airwallex/Core'
-    plugin.source_files = 'Airwallex/Redirect/**/*.{h,m}'
+    plugin.source_files = 'Airwallex/Redirect/**/*.{swift,h,m}'
     plugin.public_header_files = 'Airwallex/Redirect/*.h'
   end
   

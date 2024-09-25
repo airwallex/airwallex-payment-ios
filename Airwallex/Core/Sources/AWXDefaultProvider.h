@@ -159,6 +159,19 @@ NS_ASSUME_NONNULL_BEGIN
                                        device:(nullable AWXDevice *)device;
 
 /**
+ Confirm the payment intent with payment method and consent.
+
+ @param paymentMethod The payment method info.
+ @param paymentConsent The payment consent info.
+ @param device The current device info.
+ @param flow The payment method flow.
+ */
+- (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
+                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
+                                       device:(nullable AWXDevice *)device
+                                         flow:(AWXPaymentMethodFlow)flow;
+
+/**
  Confirm the payment intent with payment method and consent as well as a custom completion block.
 
  @param paymentMethod The payment method info.

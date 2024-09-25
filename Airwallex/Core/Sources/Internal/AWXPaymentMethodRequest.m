@@ -65,7 +65,7 @@
         self.pageNum = 0;
         self.pageSize = 10;
         self.resources = YES;
-        self.flow = @"inapp";
+        self.flow = AWXPaymentMethodFlowApp;
     }
     return self;
 }
@@ -116,7 +116,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.flow = @"inapp";
+        self.flow = AWXPaymentMethodFlowApp;
     }
     return self;
 }

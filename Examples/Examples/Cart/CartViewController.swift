@@ -19,6 +19,7 @@ class CartViewController: UIViewController {
     var shipping: AWXPlaceDetails?
     var apiClient: APIClient!
     private var applePayProvider: AWXApplePayProvider?
+    private var redirectProvider: AWXRedirectActionProvider?
     
     private var checkoutMode: AirwallexCheckoutMode? {
         AirwallexCheckoutMode(rawValue: UserDefaults.standard.integer(forKey: kCachedCheckoutMode))
@@ -117,6 +118,8 @@ class CartViewController: UIViewController {
 
         let checkoutTitle = if (UserDefaults.standard.bool(forKey: kCachedApplePayMethodOnly)) {
             "Pay"
+        } else if (UserDefaults.standard.bool(forKey: kCachedRedirectPayOnly)) {
+            "Pay by redirection"
         } else if (UserDefaults.standard.bool(forKey: kCachedCardMethodOnly)) {
             "Pay by card"
         } else {
@@ -224,6 +227,13 @@ class CartViewController: UIViewController {
             let applePayProvider = AWXApplePayProvider(delegate: self, session: session)
             applePayProvider.startPayment()
             self.applePayProvider = applePayProvider
+            return
+        }
+        // Redirect Pay low-level API integration
+        if (UserDefaults.standard.bool(forKey: kCachedRedirectPayOnly)) {
+            let redirectProvider = AWXRedirectActionProvider(delegate: self, session: session)
+            redirectProvider.confirmPaymentIntent(with: "paypal", additionalInfo: ["shopper_name": "Hector", "country_code": "CN"])
+            self.redirectProvider = redirectProvider
             return
         }
         
