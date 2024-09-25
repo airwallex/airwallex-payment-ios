@@ -10,10 +10,11 @@
 Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松，快速和安全地完成付款。它提供了简单的功能，可以将敏感的信用卡数据直接发送到Airwallex，还提供了功能详细的界面，用于收集用户付款明细。
 
 <p align="center">
-<img src="./Screenshots/shipping.png" width="200" alt="AWXShippingViewController" hspace="10">
-<img src="./Screenshots/card.png" width="200" alt="AWXCardViewController" hspace="10">
-<img src="./Screenshots/payment method list.png" width="200" alt="AWXPaymentMethodListViewController" hspace="10">
-<img src="./Screenshots/payment.png" width="200" alt="AWXPaymentViewController" hspace="10">
+<img src="https://github.com/user-attachments/assets/e1c3f540-6cbb-4711-b392-24bbbdb7b779" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/9ed00d30-fd45-4882-b6d0-e2171c64e0fb" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/0645ba1a-8cf1-4811-ba6f-c0b0f9589b98" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/121f98d8-9944-4254-80b6-9f39d945c4c8" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/9812c275-cb88-4835-a5e4-77bfa3b05319" width="200" hspace="10">
 </p>
 
 开始使用我们的集成指南和示例项目。
@@ -36,7 +37,7 @@ Airwallex iOS SDK是一个框架，通过它可以在您的应用程序中轻松
 <!--te-->
 
 ## 要求
-Airwallex iOS SDK 支持 iOS 11.0 及以上版本。
+Airwallex iOS SDK 支持 iOS 13.0 及以上版本。并且需要 XCode 15.4 及以上版本编译运行，如果是老版本Xcode请参照之前发布的版本 [5.4.3](https://github.com/airwallex/airwallex-payment-ios/releases/tag/5.4.3)。
 
 ## 集成
 
@@ -193,7 +194,7 @@ self.provider = provider;
 [provider confirmPaymentIntentWithCard:"The AWXCard object collected by your custom UI" billing:"The AWXPlaceDetails object collected by your custom UI" saveCard:"Whether you want the card to be saved as payment consent for future payments"];
 
 // Confirm intent with a payment consent object (AWXPaymentConsent)
-[provider confirmPaymentIntentWithPaymentConsent:paymentConsent];
+[provider confirmPaymentIntentWith:paymentConsent];
 
 // Confirm intent with a valid payment consent ID only when the saved card is **network token**
 [provider confirmPaymentIntentWithPaymentConsentId:@"cst_xxxxxxxxxx"];
@@ -220,18 +221,21 @@ self.provider = provider;
 }
 ```
 
-#### 用Apple Pay provider来发起支付
+#### 用Apple Pay provider或Redirect provider来发起支付
 
 你仍然需要按照[基础集成](#基础集成)中的步骤来设置配置、intent和session, 除了**显示付款流程**的步骤由以下步骤代替:
 
 ```objective-c
 AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:"The target to handle AWXProviderDelegate protocol" session:"The one off session created with apple pay options"];
+// AWXRedirectActionProvider *provider = [[AWXRedirectActionProvider alloc] initWithDelegate:"The target to handle AWXProviderDelegate protocol" session:"The one off session created"];
 
 // After initialization, you will need to store the provider in your view controller or class that is tied to your view's lifecycle
 self.provider = provider;
 
 // Initiate the apple pay flow
  [provider startPayment];
+// Confirm intent with a valid payment method name that supports redirect pay
+// [provider confirmPaymentIntentWith:@"payment method name"];
 
 ``` 
 
