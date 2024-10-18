@@ -367,7 +367,7 @@
             NSString *month = array.firstObject;
             NSString *year = array.lastObject;
             BOOL isValidMonth = month.integerValue > 0 && month.integerValue <= 12;
-            NSCalendar *calendar = [NSCalendar currentCalendar];
+            NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
             NSDate *date = [NSDate date];
             NSInteger currentYear = [calendar component:NSCalendarUnitYear fromDate:date] % 100;
             NSInteger currentMonth = [calendar component:NSCalendarUnitMonth fromDate:date];
