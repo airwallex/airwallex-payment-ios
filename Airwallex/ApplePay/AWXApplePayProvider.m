@@ -234,7 +234,7 @@ typedef enum {
         }
 
         strongSelf.paymentState = NotStarted;
-        [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet"];
+        [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet" additionalInfo:@{@"intentId": session.paymentIntent.Id}];
         [self log:@"Show apple pay"];
     }];
 }
