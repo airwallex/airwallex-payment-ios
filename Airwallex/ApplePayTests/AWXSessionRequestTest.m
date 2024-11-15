@@ -6,17 +6,17 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import "AWXOneOffSession+Request.h"
 #import "AWXPlaceDetails+PKContact.h"
+#import "AWXSession+Request.h"
 #import <XCTest/XCTest.h>
 
-@interface AWXOneOffSessionRequestTest : XCTestCase
+@interface AWXSessionRequestTest : XCTestCase
 
 @end
 
-@implementation AWXOneOffSessionRequestTest
+@implementation AWXSessionRequestTest
 
-- (void)testMakePaymentRequest {
+- (void)testMakePaymentRequestWithOneOffSession {
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.countryCode = @"AU";
 
@@ -63,6 +63,41 @@
     XCTAssertEqualObjects(request.billingContact.postalAddress.city, contact.postalAddress.city);
     XCTAssertEqualObjects(request.requiredBillingContactFields, options.requiredBillingContactFields);
     XCTAssertEqualObjects(request.supportedCountries, options.supportedCountries);
+}
+
+- (void)testMakePaymentRequestWithRecurringSession {
+    AWXRecurringSession *session = [AWXRecurringSession new];
+    session.countryCode = @"AU";
+    session.currency = @"AUD";
+    session.amount = [NSDecimalNumber one];
+
+    AWXApplePayOptions *options = [self makeOptions:nil];
+    session.applePayOptions = options;
+
+    PKPaymentRequest *request = [session makePaymentRequestOrError:nil];
+
+    XCTAssertEqualObjects(request.paymentSummaryItems[0].amount, session.amount);
+    XCTAssertEqualObjects(request.countryCode, session.countryCode);
+}
+
+- (void)testMakePaymentRequestWithRecurringWithIntentSession {
+    AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
+    session.countryCode = @"AU";
+
+    AWXPaymentIntent *intent = [AWXPaymentIntent new];
+    session.paymentIntent = intent;
+    intent.Id = @"PaymentIntentId";
+    intent.currency = @"AUD";
+    intent.amount = [[NSDecimalNumber alloc] initWithInt:50];
+
+    AWXApplePayOptions *options = [self makeOptions:nil];
+    session.applePayOptions = options;
+
+    PKPaymentRequest *request = [session makePaymentRequestOrError:nil];
+
+    XCTAssertEqualObjects(request.paymentSummaryItems[0].amount, intent.amount);
+    XCTAssertEqualObjects(request.countryCode, session.countryCode);
+    XCTAssertEqualObjects(request.currencyCode, intent.currency);
 }
 
 - (void)testMakePaymentRequestWithCustomPaymentSummaryItems {

@@ -94,7 +94,7 @@
 		3C5A37F227ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F127ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m */; };
 		3C5A37F427ED53F400CFC2EF /* PKPaymentTokenRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F327ED53F400CFC2EF /* PKPaymentTokenRequestTest.m */; };
 		3C5A37F627ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */; };
-		3C5A37F827ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F727ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m */; };
+		3C5A37F827ED677C00CFC2EF /* AWXSessionRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F727ED677C00CFC2EF /* AWXSessionRequestTest.m */; };
 		3C5A37FF27F2DDB400CFC2EF /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
 		3C5A380027F2DDB500CFC2EF /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
 		3C99E73C27E9A0730074156C /* AWXApplePayOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C99E73A27E9A0730074156C /* AWXApplePayOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -429,7 +429,7 @@
 		3C5A37F127ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKPaymentMethodRequestTest.m; sourceTree = "<group>"; };
 		3C5A37F327ED53F400CFC2EF /* PKPaymentTokenRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKPaymentTokenRequestTest.m; sourceTree = "<group>"; };
 		3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentIntentSummaryTest.m; sourceTree = "<group>"; };
-		3C5A37F727ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXOneOffSessionRequestTest.m; sourceTree = "<group>"; };
+		3C5A37F727ED677C00CFC2EF /* AWXSessionRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXSessionRequestTest.m; sourceTree = "<group>"; };
 		3C5A37FA27F29DD200CFC2EF /* AWXProviderDelegateSpy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXProviderDelegateSpy.h; sourceTree = "<group>"; };
 		3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXProviderDelegateSpy.m; sourceTree = "<group>"; };
 		3C72E12728EC3EAA00F038E3 /* Airwallex.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Airwallex.xcconfig; sourceTree = "<group>"; };
@@ -969,7 +969,7 @@
 				3C5A37F127ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m */,
 				3C5A37F327ED53F400CFC2EF /* PKPaymentTokenRequestTest.m */,
 				3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */,
-				3C5A37F727ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m */,
+				3C5A37F727ED677C00CFC2EF /* AWXSessionRequestTest.m */,
 				3CE9BA292806D923005B70C3 /* PKContactRequestTest.m */,
 				3CE9BA2F2806E02F005B70C3 /* AWXPlaceDetailsPKContactTest.m */,
 			);
@@ -1918,7 +1918,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C5A37F427ED53F400CFC2EF /* PKPaymentTokenRequestTest.m in Sources */,
-				3C5A37F827ED677C00CFC2EF /* AWXOneOffSessionRequestTest.m in Sources */,
+				3C5A37F827ED677C00CFC2EF /* AWXSessionRequestTest.m in Sources */,
 				3C5A37F227ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m in Sources */,
 				3CE9BA302806E02F005B70C3 /* AWXPlaceDetailsPKContactTest.m in Sources */,
 				3CE9BA2A2806D923005B70C3 /* PKContactRequestTest.m in Sources */,

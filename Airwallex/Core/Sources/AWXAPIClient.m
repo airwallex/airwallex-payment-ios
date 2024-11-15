@@ -216,12 +216,12 @@ static BOOL _localLogFileEnabled = NO;
 - (void)send:(AWXRequest *)request handler:(AWXRequestHandler)handler {
     NSString *method = @"POST";
     NSURL *url = [NSURL URLWithString:request.path relativeToURL:self.configuration.baseURL];
-    [self log:@"URL request: %@   Class:%@", url.absoluteURL, request.class];
 
     if (request.method == AWXHTTPMethodGET) {
         method = @"GET";
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", url.absoluteString, request.parameters ? [request.parameters queryURLEncoding] : @""]];
     }
+    [self log:@"URL request: %@   Class:%@", url.absoluteString, request.class];
 
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     urlRequest.HTTPMethod = method;
