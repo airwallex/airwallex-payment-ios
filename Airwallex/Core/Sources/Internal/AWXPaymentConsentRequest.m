@@ -42,6 +42,7 @@
     if (self.paymentMethod.type) {
         paymentParams[@"type"] = self.paymentMethod.type;
     }
+    paymentParams[self.paymentMethod.type] = self.paymentMethod.additionalParams;
     if (paymentParams.allKeys) {
         [parameters addEntriesFromDictionary:@{
             @"payment_method": paymentParams
@@ -84,6 +85,8 @@
                 cardParams[@"cvc"] = self.options.card.cvc;
             }
             value = cardParams.copy;
+        } else if ([self.options.type isEqualToString:AWXApplePayKey]) {
+            value = @{@"amount": self.amount.stringValue, @"currency": self.currency};
         }
     }
 

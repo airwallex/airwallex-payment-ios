@@ -1,16 +1,16 @@
 //
-//  AWXOneOffSession+Request.m
+//  AWXSession+Request.m
 //  ApplePay
 //
 //  Created by Jin Wang on 25/3/2022.
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import "AWXOneOffSession+Request.h"
 #import "AWXPaymentIntent+Summary.h"
 #import "AWXPlaceDetails+PKContact.h"
+#import "AWXSession+Request.h"
 
-@implementation AWXOneOffSession (Request)
+@implementation AWXSession (Request)
 
 - (nullable PKPaymentRequest *)makePaymentRequestOrError:(NSError *_Nullable *)error {
     AWXApplePayOptions *options = self.applePayOptions;
@@ -38,11 +38,12 @@
         request.billingContact = [self.billing convertToPaymentContact];
     }
 
-    if (!self.countryCode) {
+    NSString *validationError = [self validateData];
+    if (validationError) {
         if (error) {
             *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                          code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing country code in session.", nil)}];
+                                     userInfo:@{NSLocalizedDescriptionKey: validationError}];
         }
         return nil;
     }
@@ -52,26 +53,7 @@
     request.merchantCapabilities = options.merchantCapabilities;
     request.merchantIdentifier = options.merchantIdentifier;
 
-    if (!self.paymentIntent) {
-        if (error) {
-            *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"paymentIntent cannot be nil.", nil)}];
-        }
-        return nil;
-    }
-
-    NSString *paymentIntentValidationError = [self validatePaymentIntentDataInSession:self.paymentIntent];
-    if (paymentIntentValidationError) {
-        if (error) {
-            *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: paymentIntentValidationError}];
-        }
-        return nil;
-    }
-
-    PKPaymentSummaryItem *totalPriceItem = [self.paymentIntent paymentSummaryItemWithTotalPriceLabel:options.totalPriceLabel];
+    PKPaymentSummaryItem *totalPriceItem = [self paymentSummaryItemWithTotalPriceLabel:options.totalPriceLabel];
 
     if (options.additionalPaymentSummaryItems) {
         request.paymentSummaryItems = [options.additionalPaymentSummaryItems arrayByAddingObject:totalPriceItem];
@@ -86,7 +68,34 @@
     return request;
 }
 
-- (nullable NSString *)validatePaymentIntentDataInSession:(AWXPaymentIntent *)paymentIntent {
+- (nullable NSString *)validateData {
+    if (!self.countryCode) {
+        return NSLocalizedString(@"Missing country code in session.", nil);
+    }
+    if ([self isKindOfClass:[AWXOneOffSession class]]) {
+        AWXOneOffSession *session = (AWXOneOffSession *)self;
+        return [self validatePaymentIntentData:session.paymentIntent];
+    }
+    if ([self isKindOfClass:[AWXRecurringSession class]]) {
+        AWXRecurringSession *session = (AWXRecurringSession *)self;
+        if (!session.amount) {
+            return NSLocalizedString(@"Missing amount in RecurringSession.", nil);
+        }
+        if (!session.currency || session.currency.length != 3) {
+            return NSLocalizedString(@"RecurringSession currency should be three-letter ISO 4217 currency code.", nil);
+        }
+    }
+    if ([self isKindOfClass:[AWXRecurringWithIntentSession class]]) {
+        AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self;
+        return [self validatePaymentIntentData:session.paymentIntent];
+    }
+    return nil;
+}
+
+- (nullable NSString *)validatePaymentIntentData:(nullable AWXPaymentIntent *)paymentIntent {
+    if (!paymentIntent) {
+        return NSLocalizedString(@"PaymentIntent cannot be nil.", nil);
+    }
     if (!paymentIntent.amount) {
         return NSLocalizedString(@"Missing amount in PaymentIntent.", nil);
     }
@@ -101,4 +110,18 @@
 
     return nil;
 }
+
+- (PKPaymentSummaryItem *)paymentSummaryItemWithTotalPriceLabel:(nullable NSString *)label {
+    PKPaymentSummaryItem *item = [PKPaymentSummaryItem new];
+    item.type = PKPaymentSummaryItemTypeFinal;
+    item.amount = self.amount;
+    if (label) {
+        item.label = label;
+    } else {
+        item.label = @"";
+    }
+
+    return item;
+}
+
 @end

@@ -75,6 +75,100 @@
                                                      }];
 }
 
+- (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
+                                                       device:(nullable AWXDevice *)device
+                                                   completion:(AWXRequestHandler)completion {
+    if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
+        __weak __typeof(self) weakSelf = self;
+        [self log:@"One off payment flow."];
+        [self createPaymentConsentWithPaymentMethod:paymentMethod
+                                         customerId:self.session.customerId
+                                           currency:self.session.currency
+                                  nextTriggerByType:AirwallexNextTriggerByCustomerType
+                                        requiresCVC:true
+                              merchantTriggerReason:AirwallexMerchantTriggerReasonUndefined
+                                         completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+                                             __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                             NSString *returnURL;
+                                             if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
+                                                 returnURL = AWXThreeDSReturnURL;
+                                             }
+                                             AWXOneOffSession *session = (AWXOneOffSession *)strongSelf.session;
+                                             [strongSelf confirmPaymentIntentWithId:session.paymentIntent.Id
+                                                                         customerId:session.paymentIntent.customerId
+                                                                      paymentMethod:paymentMethod
+                                                                     paymentConsent:strongSelf.paymentConsent
+                                                                             device:device
+                                                                          returnURL:returnURL
+                                                                        autoCapture:session.autoCapture
+                                                                         completion:completion];
+                                         }];
+    } else if ([self.session isKindOfClass:[AWXRecurringSession class]]) {
+        [self log:@"Recurring payment flow."];
+        AWXRecurringSession *session = (AWXRecurringSession *)self.session;
+        __weak __typeof(self) weakSelf = self;
+        [self createPaymentConsentWithPaymentMethod:paymentMethod
+                                         customerId:session.customerId
+                                           currency:session.currency
+                                  nextTriggerByType:session.nextTriggerByType
+                                        requiresCVC:session.requiresCVC
+                              merchantTriggerReason:session.merchantTriggerReason
+                                         completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+                                             __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                             if (response && !error) {
+                                                 NSString *returnURL = session.returnURL;
+                                                 if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
+                                                     returnURL = AWXThreeDSReturnURL;
+                                                 }
+                                                 AWXRecurringSession *session = (AWXRecurringSession *)strongSelf.session;
+                                                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod
+                                                                                    paymentConsent:strongSelf.paymentConsent
+                                                                                          currency:session.currency
+                                                                                            amount:session.amount
+                                                                                         returnURL:returnURL
+                                                                                        completion:completion];
+                                             } else {
+                                                 completion(nil, error);
+                                             }
+                                         }];
+    } else if ([self.session isKindOfClass:[AWXRecurringWithIntentSession class]]) {
+        [self log:@"Recurring with Intent payment flow."];
+        AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self.session;
+        __weak __typeof(self) weakSelf = self;
+        [self createPaymentConsentWithPaymentMethod:paymentMethod
+                                         customerId:session.paymentIntent.customerId
+                                           currency:session.paymentIntent.currency
+                                  nextTriggerByType:session.nextTriggerByType
+                                        requiresCVC:session.requiresCVC
+                              merchantTriggerReason:session.merchantTriggerReason
+                                         completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+                                             __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                             AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self.session;
+                                             if ([paymentMethod.type isEqualToString:AWXCardKey] || [paymentMethod.type isEqualToString:AWXApplePayKey]) {
+                                                 [strongSelf confirmPaymentIntentWithId:session.paymentIntent.Id
+                                                                             customerId:session.paymentIntent.customerId
+                                                                          paymentMethod:paymentMethod
+                                                                         paymentConsent:strongSelf.paymentConsent
+                                                                                 device:device
+                                                                              returnURL:AWXThreeDSReturnURL
+                                                                            autoCapture:session.autoCapture
+                                                                             completion:completion];
+                                             } else {
+                                                 NSString *returnURL = session.returnURL;
+                                                 if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
+                                                     returnURL = AWXThreeDSReturnURL;
+                                                 }
+                                                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod
+                                                                                    paymentConsent:strongSelf.paymentConsent
+                                                                                          currency:session.paymentIntent.currency
+                                                                                            amount:session.paymentIntent.amount
+                                                                                         returnURL:returnURL
+                                                                                        completion:completion];
+                                             }
+                                         }];
+    }
+}
+
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
                                        device:(nullable AWXDevice *)device {
@@ -279,100 +373,6 @@
                  completion(nil, error);
              }
          }];
-}
-
-- (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                                                       device:(nullable AWXDevice *)device
-                                                   completion:(AWXRequestHandler)completion {
-    if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
-        __weak __typeof(self) weakSelf = self;
-        [self log:@"One off payment flow."];
-        [self createPaymentConsentWithPaymentMethod:paymentMethod
-                                         customerId:self.session.customerId
-                                           currency:self.session.currency
-                                  nextTriggerByType:AirwallexNextTriggerByCustomerType
-                                        requiresCVC:true
-                              merchantTriggerReason:AirwallexMerchantTriggerReasonUndefined
-                                         completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-                                             __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                             NSString *returnURL;
-                                             if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
-                                                 returnURL = AWXThreeDSReturnURL;
-                                             }
-                                             AWXOneOffSession *session = (AWXOneOffSession *)strongSelf.session;
-                                             [strongSelf confirmPaymentIntentWithId:session.paymentIntent.Id
-                                                                         customerId:session.paymentIntent.customerId
-                                                                      paymentMethod:paymentMethod
-                                                                     paymentConsent:strongSelf.paymentConsent
-                                                                             device:device
-                                                                          returnURL:returnURL
-                                                                        autoCapture:session.autoCapture
-                                                                         completion:completion];
-                                         }];
-    } else if ([self.session isKindOfClass:[AWXRecurringSession class]]) {
-        [self log:@"Recurring payment flow."];
-        AWXRecurringSession *session = (AWXRecurringSession *)self.session;
-        __weak __typeof(self) weakSelf = self;
-        [self createPaymentConsentWithPaymentMethod:paymentMethod
-                                         customerId:session.customerId
-                                           currency:session.currency
-                                  nextTriggerByType:session.nextTriggerByType
-                                        requiresCVC:session.requiresCVC
-                              merchantTriggerReason:session.merchantTriggerReason
-                                         completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-                                             __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                             if (response && !error) {
-                                                 NSString *returnURL = session.returnURL;
-                                                 if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
-                                                     returnURL = AWXThreeDSReturnURL;
-                                                 }
-                                                 AWXRecurringSession *session = (AWXRecurringSession *)strongSelf.session;
-                                                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod
-                                                                                    paymentConsent:strongSelf.paymentConsent
-                                                                                          currency:session.currency
-                                                                                            amount:session.amount
-                                                                                         returnURL:returnURL
-                                                                                        completion:completion];
-                                             } else {
-                                                 completion(nil, error);
-                                             }
-                                         }];
-    } else if ([self.session isKindOfClass:[AWXRecurringWithIntentSession class]]) {
-        [self log:@"Recurring with Intent payment flow."];
-        AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self.session;
-        __weak __typeof(self) weakSelf = self;
-        [self createPaymentConsentWithPaymentMethod:paymentMethod
-                                         customerId:session.paymentIntent.customerId
-                                           currency:session.paymentIntent.currency
-                                  nextTriggerByType:session.nextTriggerByType
-                                        requiresCVC:session.requiresCVC
-                              merchantTriggerReason:session.merchantTriggerReason
-                                         completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-                                             __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                             AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self.session;
-                                             if ([paymentMethod.type isEqualToString:AWXCardKey]) {
-                                                 [strongSelf confirmPaymentIntentWithId:session.paymentIntent.Id
-                                                                             customerId:session.paymentIntent.customerId
-                                                                          paymentMethod:paymentMethod
-                                                                         paymentConsent:strongSelf.paymentConsent
-                                                                                 device:device
-                                                                              returnURL:AWXThreeDSReturnURL
-                                                                            autoCapture:session.autoCapture
-                                                                             completion:completion];
-                                             } else {
-                                                 NSString *returnURL = session.returnURL;
-                                                 if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
-                                                     returnURL = AWXThreeDSReturnURL;
-                                                 }
-                                                 [strongSelf verifyPaymentConsentWithPaymentMethod:paymentMethod
-                                                                                    paymentConsent:strongSelf.paymentConsent
-                                                                                          currency:session.paymentIntent.currency
-                                                                                            amount:session.paymentIntent.amount
-                                                                                         returnURL:returnURL
-                                                                                        completion:completion];
-                                             }
-                                         }];
-    }
 }
 
 - (AWXPaymentMethod *)paymentMethodWithMetaData:(AWXPaymentMethod *)paymentMethod flow:(AWXPaymentMethodFlow)flow {

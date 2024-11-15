@@ -89,8 +89,8 @@
 		3C5A37E827ED451600CFC2EF /* PKPaymentToken+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37E627ED451600CFC2EF /* PKPaymentToken+Request.m */; };
 		3C5A37EB27ED491100CFC2EF /* AWXPaymentIntent+Summary.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E927ED491100CFC2EF /* AWXPaymentIntent+Summary.h */; };
 		3C5A37EC27ED491100CFC2EF /* AWXPaymentIntent+Summary.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37EA27ED491100CFC2EF /* AWXPaymentIntent+Summary.m */; };
-		3C5A37EF27ED4A0500CFC2EF /* AWXOneOffSession+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37ED27ED4A0500CFC2EF /* AWXOneOffSession+Request.h */; };
-		3C5A37F027ED4A0500CFC2EF /* AWXOneOffSession+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37EE27ED4A0500CFC2EF /* AWXOneOffSession+Request.m */; };
+		3C5A37EF27ED4A0500CFC2EF /* AWXSession+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37ED27ED4A0500CFC2EF /* AWXSession+Request.h */; };
+		3C5A37F027ED4A0500CFC2EF /* AWXSession+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37EE27ED4A0500CFC2EF /* AWXSession+Request.m */; };
 		3C5A37F227ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F127ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m */; };
 		3C5A37F427ED53F400CFC2EF /* PKPaymentTokenRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F327ED53F400CFC2EF /* PKPaymentTokenRequestTest.m */; };
 		3C5A37F627ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */; };
@@ -424,8 +424,8 @@
 		3C5A37E627ED451600CFC2EF /* PKPaymentToken+Request.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PKPaymentToken+Request.m"; sourceTree = "<group>"; };
 		3C5A37E927ED491100CFC2EF /* AWXPaymentIntent+Summary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXPaymentIntent+Summary.h"; sourceTree = "<group>"; };
 		3C5A37EA27ED491100CFC2EF /* AWXPaymentIntent+Summary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXPaymentIntent+Summary.m"; sourceTree = "<group>"; };
-		3C5A37ED27ED4A0500CFC2EF /* AWXOneOffSession+Request.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXOneOffSession+Request.h"; sourceTree = "<group>"; };
-		3C5A37EE27ED4A0500CFC2EF /* AWXOneOffSession+Request.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXOneOffSession+Request.m"; sourceTree = "<group>"; };
+		3C5A37ED27ED4A0500CFC2EF /* AWXSession+Request.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXSession+Request.h"; sourceTree = "<group>"; };
+		3C5A37EE27ED4A0500CFC2EF /* AWXSession+Request.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXSession+Request.m"; sourceTree = "<group>"; };
 		3C5A37F127ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKPaymentMethodRequestTest.m; sourceTree = "<group>"; };
 		3C5A37F327ED53F400CFC2EF /* PKPaymentTokenRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKPaymentTokenRequestTest.m; sourceTree = "<group>"; };
 		3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXPaymentIntentSummaryTest.m; sourceTree = "<group>"; };
@@ -839,8 +839,8 @@
 				3C5A37E627ED451600CFC2EF /* PKPaymentToken+Request.m */,
 				3C5A37E927ED491100CFC2EF /* AWXPaymentIntent+Summary.h */,
 				3C5A37EA27ED491100CFC2EF /* AWXPaymentIntent+Summary.m */,
-				3C5A37ED27ED4A0500CFC2EF /* AWXOneOffSession+Request.h */,
-				3C5A37EE27ED4A0500CFC2EF /* AWXOneOffSession+Request.m */,
+				3C5A37ED27ED4A0500CFC2EF /* AWXSession+Request.h */,
+				3C5A37EE27ED4A0500CFC2EF /* AWXSession+Request.m */,
 				3CE9BA252806D2A5005B70C3 /* PKContact+Request.h */,
 				3CE9BA262806D2A5005B70C3 /* PKContact+Request.m */,
 				3CE9BA2B2806DE74005B70C3 /* AWXPlaceDetails+PKContact.h */,
@@ -1228,7 +1228,7 @@
 				3C5A37E727ED451600CFC2EF /* PKPaymentToken+Request.h in Headers */,
 				3C5A37EB27ED491100CFC2EF /* AWXPaymentIntent+Summary.h in Headers */,
 				3C5A37E327ED443E00CFC2EF /* PKPaymentMethod+Request.h in Headers */,
-				3C5A37EF27ED4A0500CFC2EF /* AWXOneOffSession+Request.h in Headers */,
+				3C5A37EF27ED4A0500CFC2EF /* AWXSession+Request.h in Headers */,
 				3C99E7A427EAF2840074156C /* AWXApplePayProvider.h in Headers */,
 				3CE9BA2D2806DE74005B70C3 /* AWXPlaceDetails+PKContact.h in Headers */,
 				3C99E79527EAF1A20074156C /* ApplePay.h in Headers */,
@@ -1906,7 +1906,7 @@
 				3C99E7A527EAF2840074156C /* AWXApplePayProvider.m in Sources */,
 				3C5A37E827ED451600CFC2EF /* PKPaymentToken+Request.m in Sources */,
 				3C5A37EC27ED491100CFC2EF /* AWXPaymentIntent+Summary.m in Sources */,
-				3C5A37F027ED4A0500CFC2EF /* AWXOneOffSession+Request.m in Sources */,
+				3C5A37F027ED4A0500CFC2EF /* AWXSession+Request.m in Sources */,
 				3CE9BA2E2806DE74005B70C3 /* AWXPlaceDetails+PKContact.m in Sources */,
 				3C5A37E427ED443E00CFC2EF /* PKPaymentMethod+Request.m in Sources */,
 				3CE9BA282806D2A5005B70C3 /* PKContact+Request.m in Sources */,

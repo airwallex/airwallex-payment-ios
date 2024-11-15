@@ -256,6 +256,7 @@ class CartViewController: UIViewController {
             let options = AWXApplePayOptions(merchantIdentifier: applePayMerchantId)
             options.additionalPaymentSummaryItems = [.init(label: "goods", amount: 2), .init(label: "tax", amount: 1)]
             options.totalPriceLabel = "COMPANY, INC."
+            options.requiredBillingContactFields = [.postalAddress]
             
             session.applePayOptions = options
             session.countryCode = AirwallexExamplesKeys.shared().countryCode
@@ -279,6 +280,7 @@ class CartViewController: UIViewController {
             session.nextTriggerByType = AirwallexNextTriggerByType(rawValue: UInt(UserDefaults.standard.integer(forKey: kCachedNextTriggerBy)))!
             session.setRequiresCVC(UserDefaults.standard.bool(forKey: kCachedRequiresCVC))
             session.merchantTriggerReason = .unscheduled
+            session.applePayOptions = AWXApplePayOptions(merchantIdentifier: applePayMerchantId)
             return session
         case .recurringWithIntentMode:
             let session = AWXRecurringWithIntentSession()
@@ -290,6 +292,7 @@ class CartViewController: UIViewController {
             session.setRequiresCVC(UserDefaults.standard.bool(forKey: kCachedRequiresCVC))
             session.autoCapture = UserDefaults.standard.bool(forKey: kCachedAutoCapture)
             session.merchantTriggerReason = .scheduled
+            session.applePayOptions = AWXApplePayOptions(merchantIdentifier: applePayMerchantId)
             return session
         }
     }
