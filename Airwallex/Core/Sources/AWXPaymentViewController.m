@@ -180,7 +180,9 @@
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(nonnull NSString *)paymentConsentId {
-    [_delegate paymentViewController:self didCompleteWithPaymentConsentId:paymentConsentId];
+    if ([_delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
+        [_delegate paymentViewController:self didCompleteWithPaymentConsentId:paymentConsentId];
+    }
 }
 
 - (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {

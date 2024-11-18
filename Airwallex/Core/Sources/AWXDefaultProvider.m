@@ -124,7 +124,7 @@
             }
         } else {
             if (self.paymentConsent.Id && [self.delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
-                [self log:@"Delegate: %@, provider:didCompleteWithPaymentConsentId: ID length: %lu", self.delegate.class, self.paymentIntentId.length];
+                [self log:@"Delegate: %@, provider:didCompleteWithPaymentConsentId: ID length: %lu", self.delegate.class, self.paymentConsent.Id.length];
                 [self.delegate provider:self didCompleteWithPaymentConsentId:self.paymentConsent.Id];
             }
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
