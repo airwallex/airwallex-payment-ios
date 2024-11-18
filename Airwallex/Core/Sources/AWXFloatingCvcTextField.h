@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy, nullable) NSString * (^validationMessageCallback)(NSString *);
 
+@property (nonatomic, copy, nullable) void (^textDidChangeCallback)(NSString *);
+
 @end
 
 NS_ASSUME_NONNULL_END
