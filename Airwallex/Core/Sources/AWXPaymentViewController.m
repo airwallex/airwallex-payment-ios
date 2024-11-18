@@ -8,10 +8,12 @@
 
 #import "AWXPaymentViewController.h"
 #import "AWXAPIClient.h"
+#import "AWXCardValidator.h"
 #import "AWXConstants.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXDefaultProvider.h"
 #import "AWXDevice.h"
+#import "AWXFloatingCvcTextField.h"
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
@@ -30,9 +32,10 @@
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *totalLabel;
-@property (strong, nonatomic) AWXFloatingLabelTextField *cvcField;
+@property (strong, nonatomic) AWXFloatingCvcTextField *cvcField;
 @property (strong, nonatomic) AWXActionButton *confirmButton;
 @property (strong, nonatomic) NSLayoutConstraint *bottomConstraint;
+@property (nonatomic) NSInteger requiredCvcLength;
 
 @end
 
@@ -66,11 +69,14 @@
     _totalLabel.font = [UIFont subhead1Font];
     [contentView addSubview:_totalLabel];
 
-    _cvcField = [AWXFloatingLabelTextField autoLayoutView];
-    _cvcField.delegate = self;
-    _cvcField.fieldType = AWXTextFieldTypeCVC;
+    _requiredCvcLength = [AWXCardValidator cvcLengthForBrand:[[AWXCardValidator sharedCardValidator] brandForCardName:self.paymentConsent.paymentMethod.card.brand].type];
+    _cvcField = [AWXFloatingCvcTextField autoLayoutView];
     _cvcField.placeholder = NSLocalizedString(@"CVC / CVV", @"CVC / CVV");
-    _cvcField.isRequired = YES;
+    _cvcField.maxLength = _requiredCvcLength;
+    __weak __typeof(self) weakSelf = self;
+    _cvcField.textDidChangeCallback = ^(NSString *cvc) {
+        [weakSelf checkPaymentEnabled:cvc];
+    };
     [contentView addSubview:_cvcField];
     [_cvcField.widthAnchor constraintEqualToAnchor:contentView.widthAnchor multiplier:0.328].active = YES;
 
@@ -146,7 +152,7 @@
         return;
     }
 
-    _confirmButton.enabled = text.length > 0;
+    _confirmButton.enabled = text.length == _requiredCvcLength;
 }
 
 - (void)payPressed:(id)sender {
@@ -155,12 +161,6 @@
     AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
     [provider confirmPaymentIntentWithPaymentMethod:self.paymentConsent.paymentMethod paymentConsent:self.paymentConsent device:nil];
     self.provider = provider;
-}
-
-#pragma mark - AWXFloatingLabelTextFieldDelegate
-
-- (void)floatingLabelTextField:(AWXFloatingLabelTextField *)textField textDidChange:(NSString *)text {
-    [self checkPaymentEnabled:text];
 }
 
 #pragma mark - AWXProviderDelegate

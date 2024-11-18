@@ -25,11 +25,16 @@
     text.length > 0 ? [self activateAnimated:YES] : [self deactivateAnimated:YES];
 
     [self setText:text animated:YES];
+    if (_textDidChangeCallback) {
+        _textDidChangeCallback(text);
+    }
     return NO;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.errorText = _validationMessageCallback(textField.text);
+    if (_validationMessageCallback) {
+        self.errorText = _validationMessageCallback(textField.text);
+    }
 }
 
 @end
