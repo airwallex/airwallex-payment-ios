@@ -293,11 +293,11 @@
 			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */;
 			buildPhases = (
 				27213DDF7CB718263CED259E /* [CP] Check Pods Manifest.lock */,
+				182F1CEB2C90429D000B993D /* Enable Production Testing */,
 				085BD3E723CC64B6002E8F27 /* Sources */,
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
 				A4745D2CDD6CDDF13E8B9743 /* [CP] Copy Pods Resources */,
-				182F1CEB2C90429D000B993D /* Enable Production Testing */,
 				C52EE7B32865394100F966DD /* Run clang-format */,
 				41C47B490BFA12D89960C8B5 /* [CP] Embed Pods Frameworks */,
 			);
