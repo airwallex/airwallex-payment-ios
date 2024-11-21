@@ -332,8 +332,6 @@ AWXOneOffSession *session = [AWXOneOffSession new];
 session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"Merchant Identifier"];
 ```
 
-> 请注意，Apple Pay 目前仅支持 `AWXOneOffSession` 一次性支付。我们将在以后添加对订阅支付的支持。
-
 #### 自定义 Apple Pay
 
 你也可以自定义 Apple Pay 选项来限制支付场景和提供额外的信息。请参考 `AWXApplePayOptions.h` 头文件以获取更多信息。
