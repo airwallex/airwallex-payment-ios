@@ -347,7 +347,7 @@ class CartViewController: UIViewController {
         case .success:
             self.showAlert("Your payment has been charged", withTitle: "Payment successful")
         case .inProgress:
-            self.showAlert("You should check payment status from time to time from backend", withTitle: "Payment in progress")
+            print("Payment in progress, you should check payment status from time to time from backend and show result to the payer")
         case .failure:
             self.showAlert(error?.localizedDescription ?? "There was an error while processing your payment. Please try again.", withTitle: "Payment failed")
         case .cancel:

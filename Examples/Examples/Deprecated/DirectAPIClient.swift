@@ -9,6 +9,12 @@
 import Foundation
 
 class DirectAPIClient: APIClient {
+    init() {
+        let client = MockAPIClient.shared()
+        client.apiKey = AirwallexExamplesKeys.shared().apiKey;
+        client.clientID = AirwallexExamplesKeys.shared().clientId;
+    }
+    
     func createPaymentIntent(request: PaymentIntentRequest, completion: @escaping (Result<AWXPaymentIntent, Error>) -> Void) {
         MockAPIClient.shared().createAuthenticationToken { error in
             if let error {
