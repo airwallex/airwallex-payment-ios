@@ -336,8 +336,6 @@ AWXOneOffSession *session = [AWXOneOffSession new];
 session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"Merchant Identifier"];
 ```
 
-> Please note that Apple Pay only supports `AWXOneOffSession` at the moment. We'll add support for recurring payment sessions in the future.
-
 #### Customize Apple Pay
 
 You can customize the Apple Pay options to restrict it as well as provide extra context. For more information, please refer to the `AWXApplePayOptions.h` header file.
