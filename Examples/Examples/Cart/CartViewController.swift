@@ -36,6 +36,14 @@ class CartViewController: UIViewController {
         }
     }
     
+    lazy var applePayOptions: AWXApplePayOptions = {
+        let options = AWXApplePayOptions(merchantIdentifier: applePayMerchantId)
+        options.additionalPaymentSummaryItems = [.init(label: "goods", amount: 2), .init(label: "tax", amount: 1)]
+        options.totalPriceLabel = "COMPANY, INC."
+        options.requiredBillingContactFields = [.postalAddress]
+        return options
+    }()
+    
     private var apiKey: String? {
         AirwallexExamplesKeys.shared().apiKey.nilIfEmpty
     }
@@ -253,11 +261,7 @@ class CartViewController: UIViewController {
         case .oneOffMode:
             let session = AWXOneOffSession()
             
-            let options = AWXApplePayOptions(merchantIdentifier: applePayMerchantId)
-            options.additionalPaymentSummaryItems = [.init(label: "goods", amount: 2), .init(label: "tax", amount: 1)]
-            options.totalPriceLabel = "COMPANY, INC."
-            
-            session.applePayOptions = options
+            session.applePayOptions = applePayOptions
             session.countryCode = AirwallexExamplesKeys.shared().countryCode
             session.billing = shipping
             session.returnURL = AirwallexExamplesKeys.shared().returnUrl
@@ -270,6 +274,8 @@ class CartViewController: UIViewController {
             return session
         case .recurringMode:
             let session = AWXRecurringSession()
+            
+            session.applePayOptions = applePayOptions
             session.countryCode = AirwallexExamplesKeys.shared().countryCode
             session.billing = shipping
             session.returnURL = AirwallexExamplesKeys.shared().returnUrl
@@ -282,6 +288,8 @@ class CartViewController: UIViewController {
             return session
         case .recurringWithIntentMode:
             let session = AWXRecurringWithIntentSession()
+            
+            session.applePayOptions = applePayOptions
             session.countryCode = AirwallexExamplesKeys.shared().countryCode
             session.billing = shipping
             session.returnURL = AirwallexExamplesKeys.shared().returnUrl
@@ -339,7 +347,7 @@ class CartViewController: UIViewController {
         case .success:
             self.showAlert("Your payment has been charged", withTitle: "Payment successful")
         case .inProgress:
-            print("Payment in progress")
+            print("Payment in progress, you should check payment status from time to time from backend and show result to the payer")
         case .failure:
             self.showAlert(error?.localizedDescription ?? "There was an error while processing your payment. Please try again.", withTitle: "Payment failed")
         case .cancel:

@@ -10,11 +10,11 @@
 #import "AWXAnalyticsLogger.h"
 #import "AWXConstants.h"
 #import "AWXDevice.h"
-#import "AWXOneOffSession+Request.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
+#import "AWXSession+Request.h"
 #import "AWXSession.h"
 #import "NSObject+logging.h"
 #import "PKContact+Request.h"
@@ -75,16 +75,8 @@ typedef enum {
 }
 
 - (void)handleFlow {
-    if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
-        self.paymentState = NotPresented;
-        [self handleFlowForOneOffSession:(AWXOneOffSession *)self.session];
-    } else {
-        NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                             code:-1
-                                         userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unsupported session type.", nil)}];
-        [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-        [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
-    }
+    self.paymentState = NotPresented;
+    [self handleFlowForSession:self.session];
 }
 
 #pragma mark - PKPaymentAuthorizationControllerDelegate
@@ -123,7 +115,11 @@ typedef enum {
     [method appendAdditionalParams:applePayParams];
 
     self.paymentState = Pending;
-    [self confirmWithPaymentMethod:method device:[AWXDevice deviceWithRiskSessionId] completion:completion];
+    if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
+        [self confirmWithPaymentMethod:method completion:completion];
+    } else {
+        [self createPaymentConsentAndConfirmIntentWithPaymentMethod:method completion:completion];
+    }
 }
 
 - (void)paymentAuthorizationControllerDidFinish:(nonnull PKPaymentAuthorizationController *)controller {
@@ -168,37 +164,29 @@ typedef enum {
 #pragma mark - Private methods
 
 + (BOOL)canHandleSession:(AWXSession *)session errorMessage:(NSString *_Nullable *)error {
-    if ([session isKindOfClass:[AWXOneOffSession class]]) {
-        AWXOneOffSession *oneOffSession = (AWXOneOffSession *)session;
-        if (oneOffSession.applePayOptions == nil) {
-            if (error) {
-                *error = NSLocalizedString(@"Missing Apple Pay options in session.", nil);
-            }
-            return NO;
-        }
-        BOOL canMakePayment = NO;
-
-        if (@available(iOS 15.0, *)) {
-            // From iOS 15.0 onwards, user can add new card directly in the apple pay flow
-            canMakePayment = [PKPaymentAuthorizationController canMakePayments];
-        } else {
-            canMakePayment = [PKPaymentAuthorizationController canMakePaymentsUsingNetworks:AWXApplePaySupportedNetworks()
-                                                                               capabilities:oneOffSession.applePayOptions.merchantCapabilities];
-        }
-
-        if (error && !canMakePayment) {
-            *error = NSLocalizedString(@"Payment not supported via Apple Pay.", nil);
-        }
-        return canMakePayment;
-    } else {
+    if (session.applePayOptions == nil) {
         if (error) {
-            *error = NSLocalizedString(@"Unsupported session type.", nil);
+            *error = NSLocalizedString(@"Missing Apple Pay options in session.", nil);
         }
         return NO;
     }
+    BOOL canMakePayment = NO;
+
+    if (@available(iOS 15.0, *)) {
+        // From iOS 15.0 onwards, user can add new card directly in the apple pay flow
+        canMakePayment = [PKPaymentAuthorizationController canMakePayments];
+    } else {
+        canMakePayment = [PKPaymentAuthorizationController canMakePaymentsUsingNetworks:AWXApplePaySupportedNetworks()
+                                                                           capabilities:session.applePayOptions.merchantCapabilities];
+    }
+
+    if (error && !canMakePayment) {
+        *error = NSLocalizedString(@"Payment not supported via Apple Pay.", nil);
+    }
+    return canMakePayment;
 }
 
-- (void)handleFlowForOneOffSession:(AWXOneOffSession *)session {
+- (void)handleFlowForSession:(AWXSession *)session {
     NSError *error;
     PKPaymentRequest *request = [session makePaymentRequestOrError:&error];
 
@@ -234,45 +222,66 @@ typedef enum {
         }
 
         strongSelf.paymentState = NotStarted;
-        [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet" additionalInfo:@{@"intentId": session.paymentIntent.Id}];
+        if (session.paymentIntentId) {
+            [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet" additionalInfo:@{@"intentId": session.paymentIntentId}];
+        } else {
+            [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet"];
+        }
         [self log:@"Show apple pay"];
     }];
 }
 
 - (void)confirmWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                          device:(AWXDevice *)device
                       completion:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
     __weak __typeof(self) weakSelf = self;
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod
                                  paymentConsent:nil
-                                         device:device
+                                         device:[AWXDevice deviceWithRiskSessionId]
                                      completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
                                          __strong __typeof(weakSelf) strongSelf = weakSelf;
                                          AWXConfirmPaymentIntentResponse *confirmResponse = (AWXConfirmPaymentIntentResponse *)response;
-                                         strongSelf.lastResponse = confirmResponse;
-                                         strongSelf.lastError = error;
-                                         strongSelf.paymentState = Complete;
-
-                                         if (strongSelf.didDismissWhilePending) {
-                                             [strongSelf completeWithResponse:confirmResponse error:error];
-                                         } else {
-                                             PKPaymentAuthorizationStatus status;
-                                             NSArray<NSError *> *errors;
-
-                                             if (confirmResponse && !error) {
-                                                 status = PKPaymentAuthorizationStatusSuccess;
-                                             } else {
-                                                 status = PKPaymentAuthorizationStatusFailure;
-
-                                                 if (error) {
-                                                     errors = @[error];
-                                                 }
-                                             }
-
-                                             PKPaymentAuthorizationResult *result = [[PKPaymentAuthorizationResult alloc] initWithStatus:status errors:errors];
-                                             completion(result);
-                                         }
+                                         [strongSelf completeWithResponse:confirmResponse error:error completion:completion];
                                      }];
+}
+
+- (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
+                                                   completion:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
+    __weak __typeof(self) weakSelf = self;
+    [self createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod
+                                                         device:[AWXDevice deviceWithRiskSessionId]
+                                                     completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+                                                         __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                                         AWXConfirmPaymentIntentResponse *confirmResponse = (AWXConfirmPaymentIntentResponse *)response;
+                                                         [strongSelf completeWithResponse:confirmResponse error:error completion:completion];
+                                                     }];
+}
+
+- (void)completeWithResponse:(AWXConfirmPaymentIntentResponse *)response
+                       error:(NSError *)error
+                  completion:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
+    self.lastResponse = response;
+    self.lastError = error;
+    self.paymentState = Complete;
+
+    if (self.didDismissWhilePending) {
+        [self completeWithResponse:response error:error];
+    } else {
+        PKPaymentAuthorizationStatus status;
+        NSArray<NSError *> *errors;
+
+        if (response && !error) {
+            status = PKPaymentAuthorizationStatusSuccess;
+        } else {
+            status = PKPaymentAuthorizationStatusFailure;
+
+            if (error) {
+                errors = @[error];
+            }
+        }
+
+        PKPaymentAuthorizationResult *result = [[PKPaymentAuthorizationResult alloc] initWithStatus:status errors:errors];
+        completion(result);
+    }
 }
 
 - (void)handlePresentationFail {

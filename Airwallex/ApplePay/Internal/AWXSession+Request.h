@@ -1,5 +1,5 @@
 //
-//  AWXOneOffSession+Request.h
+//  AWXSession+Request.h
 //  ApplePay
 //
 //  Created by Jin Wang on 25/3/2022.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AWXOneOffSession (Request)
+@interface AWXSession (Request)
 
 - (nullable PKPaymentRequest *)makePaymentRequestOrError:(NSError *_Nullable *)error;
 

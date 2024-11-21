@@ -8,6 +8,7 @@
 
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
+#import "AWXPaymentMethod.h"
 #import <XCTest/XCTest.h>
 
 @interface AWXPaymentConsentRequestTest : XCTestCase
@@ -18,8 +19,17 @@
 
 - (void)testCreatePaymentConsentRequestParameters {
     AWXCreatePaymentConsentRequest *request = [AWXCreatePaymentConsentRequest new];
+
+    AWXPaymentMethod *method = [AWXPaymentMethod new];
+    method.type = @"applepay";
+    NSDictionary *dict = @{@"data": @"test", @"signature": @"abc"};
+    method.additionalParams = dict;
+
+    request.paymentMethod = method;
     request.merchantTriggerReason = AirwallexMerchantTriggerReasonScheduled;
     XCTAssertEqualObjects(request.parameters[@"merchant_trigger_reason"], @"scheduled");
+    NSDictionary *methodDict = @{@"applepay": dict, @"type": @"applepay"};
+    XCTAssertEqualObjects(request.parameters[@"payment_method"], methodDict);
 }
 
 - (void)testGetPaymentConsentsRequest {
@@ -34,6 +44,21 @@
     XCTAssertEqualObjects(request.parameters[@"status"], status);
     XCTAssertEqualObjects(request.parameters[@"next_triggered_by"], @"customer");
     XCTAssertEqual(request.responseClass, AWXGetPaymentConsentsResponse.class);
+}
+
+- (void)testVerifyPaymentConsentRequestParameters {
+    AWXVerifyPaymentConsentRequest *request = [AWXVerifyPaymentConsentRequest new];
+
+    AWXPaymentMethod *method = [AWXPaymentMethod new];
+    method.type = @"applepay";
+    NSDictionary *dict = @{@"data": @"test", @"signature": @"abc"};
+    method.additionalParams = dict;
+
+    request.amount = [NSDecimalNumber one];
+    request.currency = @"AUD";
+    request.options = method;
+    NSDictionary *methodDict = @{@"applepay": @{@"amount": @"1", @"currency": @"AUD"}};
+    XCTAssertEqualObjects(request.parameters[@"verification_options"], methodDict);
 }
 
 @end
