@@ -7,6 +7,7 @@
 //
 
 #import "AWXPaymentConsentRequest.h"
+#import "AWXDevice.h"
 #import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentMethod.h"
 #import <XCTest/XCTest.h>
@@ -59,6 +60,11 @@
     request.options = method;
     NSDictionary *methodDict = @{@"applepay": @{@"amount": @"1", @"currency": @"AUD"}};
     XCTAssertEqualObjects(request.parameters[@"verification_options"], methodDict);
+    
+    AWXDevice *device = [AWXDevice new];
+    device.deviceId = @"abcd";
+    request.device = device;
+    XCTAssertEqualObjects(request.parameters[@"device_data"], device.encodeToJSON);
 }
 
 @end

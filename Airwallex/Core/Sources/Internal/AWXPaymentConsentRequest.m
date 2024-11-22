@@ -94,6 +94,10 @@
         self.options.type: value
     };
     parameters[@"verification_options"] = options;
+
+    if (self.device) {
+        parameters[@"device_data"] = [self.device encodeToJSON];
+    }
     return parameters;
 }
 

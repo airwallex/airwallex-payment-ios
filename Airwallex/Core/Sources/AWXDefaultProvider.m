@@ -341,6 +341,7 @@
     request.currency = currency;
     request.amount = amount;
     request.returnURL = returnURL;
+    request.device = [AWXDevice deviceWithRiskSessionId];
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self) weakSelf = self;
