@@ -58,17 +58,15 @@
 }
 
 - (void)handleFlow {
-    [self confirmPaymentIntentWithPaymentMethod:_paymentMethod paymentConsent:nil device:nil];
+    [self confirmPaymentIntentWithPaymentMethod:_paymentMethod paymentConsent:nil];
 }
 
-- (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                                                       device:(nullable AWXDevice *)device {
+- (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod {
     [self.delegate providerDidStartRequest:self];
     [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
 
     __weak __typeof(self) weakSelf = self;
     [self createPaymentConsentAndConfirmIntentWithPaymentMethod:[self paymentMethodWithMetaData:paymentMethod flow:AWXPaymentMethodFlowApp]
-                                                         device:device
                                                      completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
                                                          __strong __typeof(weakSelf) strongSelf = weakSelf;
                                                          [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
@@ -76,7 +74,6 @@
 }
 
 - (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                                                       device:(nullable AWXDevice *)device
                                                    completion:(AWXRequestHandler)completion {
     if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
         __weak __typeof(self) weakSelf = self;
@@ -98,7 +95,6 @@
                                                                          customerId:session.paymentIntent.customerId
                                                                       paymentMethod:paymentMethod
                                                                      paymentConsent:strongSelf.paymentConsent
-                                                                             device:device
                                                                           returnURL:returnURL
                                                                         autoCapture:session.autoCapture
                                                                          completion:completion];
@@ -149,7 +145,6 @@
                                                                              customerId:session.paymentIntent.customerId
                                                                           paymentMethod:paymentMethod
                                                                          paymentConsent:strongSelf.paymentConsent
-                                                                                 device:device
                                                                               returnURL:AWXThreeDSReturnURL
                                                                             autoCapture:session.autoCapture
                                                                              completion:completion];
@@ -170,19 +165,16 @@
 }
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
-                                       device:(nullable AWXDevice *)device {
-    [self confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:paymentConsent device:device flow:AWXPaymentMethodFlowApp];
+                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent {
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:paymentConsent flow:AWXPaymentMethodFlowApp];
 }
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
-                                       device:(nullable AWXDevice *)device
                                          flow:(AWXPaymentMethodFlow)flow {
     __weak __typeof(self) weakSelf = self;
     [self confirmPaymentIntentWithPaymentMethodInternal:paymentMethod
                                          paymentConsent:paymentConsent
-                                                 device:device
                                                    flow:flow
                                              completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
                                                  __strong __typeof(weakSelf) strongSelf = weakSelf;
@@ -192,11 +184,9 @@
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
-                                       device:(nullable AWXDevice *)device
                                    completion:(AWXRequestHandler)completion {
     [self confirmPaymentIntentWithPaymentMethodInternal:paymentMethod
                                          paymentConsent:paymentConsent
-                                                 device:device
                                                    flow:AWXPaymentMethodFlowApp
                                              completion:completion];
 }
@@ -240,7 +230,6 @@
 
 - (void)confirmPaymentIntentWithPaymentMethodInternal:(AWXPaymentMethod *)paymentMethod
                                        paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
-                                               device:(nullable AWXDevice *)device
                                                  flow:(AWXPaymentMethodFlow)flow
                                            completion:(AWXRequestHandler)completion {
     self.paymentConsent = paymentConsent;
@@ -250,13 +239,11 @@
 
     [self confirmPaymentIntentWithPaymentMethodInternal:[self paymentMethodWithMetaData:paymentMethod flow:flow]
                                          paymentConsent:paymentConsent
-                                                 device:device
                                              completion:completion];
 }
 
 - (void)confirmPaymentIntentWithPaymentMethodInternal:(AWXPaymentMethod *)paymentMethod
                                        paymentConsent:(AWXPaymentConsent *)paymentConsent
-                                               device:(AWXDevice *)device
                                            completion:(AWXRequestHandler)completion {
     if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
         NSString *returnURL = nil;
@@ -268,12 +255,11 @@
                               customerId:session.paymentIntent.customerId
                            paymentMethod:paymentMethod
                           paymentConsent:paymentConsent
-                                  device:device
                                returnURL:returnURL
                              autoCapture:session.autoCapture
                               completion:completion];
     } else {
-        [self createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod device:device completion:completion];
+        [self createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod completion:completion];
     }
 }
 
@@ -281,7 +267,6 @@
                         customerId:(nullable NSString *)customerId
                      paymentMethod:(AWXPaymentMethod *)paymentMethod
                     paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
-                            device:(AWXDevice *)device
                          returnURL:(NSString *)returnURL
                        autoCapture:(BOOL)autoCapture
                         completion:(AWXRequestHandler)completion {
@@ -291,7 +276,7 @@
     request.customerId = customerId;
     request.paymentMethod = paymentMethod;
     request.paymentConsent = paymentConsent;
-    request.device = device;
+    request.device = [AWXDevice deviceWithRiskSessionId];
     request.returnURL = returnURL;
 
     if ([@[AWXCardKey, AWXApplePayKey] containsObject:paymentMethod.type]) {

@@ -18,6 +18,6 @@ public extension AWXRedirectActionProvider {
         let paymentMethod = AWXPaymentMethod()
         paymentMethod.type = paymentMethodName
         paymentMethod.additionalParams = additionalInfo
-        confirmPaymentIntent(with: paymentMethod, paymentConsent: nil, device: nil, flow: flow)
+        confirmPaymentIntent(with: paymentMethod, paymentConsent: nil, flow: flow)
     }
 }

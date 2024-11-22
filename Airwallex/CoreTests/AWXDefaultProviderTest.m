@@ -35,7 +35,6 @@
                         customerId:(nullable NSString *)customerId
                      paymentMethod:(AWXPaymentMethod *)paymentMethod
                     paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
-                            device:(AWXDevice *)device
                          returnURL:(NSString *)returnURL
                        autoCapture:(BOOL)autoCapture
                         completion:(AWXRequestHandler)completion;
@@ -79,11 +78,10 @@ NSString *const kMockKey = @"MOCK";
 - (void)testConfirmPaymentIntentWithoutCompletionBlock {
     [self createProviderAndMockWithSession:[AWXSession new]];
 
-    [self.provider confirmPaymentIntentWithPaymentMethod:[AWXPaymentMethod new] paymentConsent:nil device:nil];
+    [self.provider confirmPaymentIntentWithPaymentMethod:[AWXPaymentMethod new] paymentConsent:nil];
 
     OCMVerify(times(1), [self.providerMock confirmPaymentIntentWithPaymentMethod:[OCMArg any]
                                                                   paymentConsent:[OCMArg any]
-                                                                          device:[OCMArg any]
                                                                             flow:AWXPaymentMethodFlowApp]);
 }
 
@@ -96,7 +94,7 @@ NSString *const kMockKey = @"MOCK";
 
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
     paymentMethod.type = AWXCardKey;
-    [provider confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil device:nil];
+    [provider confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil];
 
     OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {
                                     AWXConfirmPaymentIntentRequest *request = obj;
@@ -115,7 +113,7 @@ NSString *const kMockKey = @"MOCK";
 
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
     paymentMethod.type = AWXApplePayKey;
-    [provider confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil device:nil];
+    [provider confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil];
 
     OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {
                                     AWXConfirmPaymentIntentRequest *request = obj;
@@ -127,8 +125,7 @@ NSString *const kMockKey = @"MOCK";
 
 - (void)testCreatePaymentConsentAndConfirmIntentWithOneOffSession {
     [self createProviderAndMockWithSession:[AWXOneOffSession new]];
-    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:[AWXPaymentMethod new]
-                                                                  device:nil];
+    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:[AWXPaymentMethod new]];
 
     OCMVerify(times(1), [self.providerMock createPaymentConsentWithPaymentMethod:[OCMArg any]
                                                                       customerId:[OCMArg any]
@@ -141,7 +138,6 @@ NSString *const kMockKey = @"MOCK";
                                                            customerId:[OCMArg any]
                                                         paymentMethod:[OCMArg any]
                                                        paymentConsent:[OCMArg any]
-                                                               device:[OCMArg any]
                                                             returnURL:[OCMArg any]
                                                           autoCapture:YES
                                                            completion:([OCMArg invokeBlockWithArgs:self.response, self.error, nil])]);
@@ -151,8 +147,7 @@ NSString *const kMockKey = @"MOCK";
     AWXRecurringSession *session = [AWXRecurringSession new];
     session.requiresCVC = YES;
     [self createProviderAndMockWithSession:session hasError:NO];
-    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:[AWXPaymentMethod new]
-                                                                  device:nil];
+    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:[AWXPaymentMethod new]];
     OCMVerify(times(1), [self.providerMock createPaymentConsentWithPaymentMethod:[OCMArg any]
                                                                       customerId:[OCMArg any]
                                                                         currency:[OCMArg any]
@@ -172,8 +167,7 @@ NSString *const kMockKey = @"MOCK";
     AWXRecurringSession *session = [AWXRecurringSession new];
     session.requiresCVC = YES;
     [self createProviderAndMockWithSession:session];
-    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:[AWXPaymentMethod new]
-                                                                  device:nil];
+    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:[AWXPaymentMethod new]];
     OCMVerify(times(1), [self.providerMock completeWithResponse:nil error:self.error]);
 }
 
@@ -183,8 +177,7 @@ NSString *const kMockKey = @"MOCK";
     paymentMethod.additionalParams = [NSDictionary dictionary];
     session.requiresCVC = YES;
     [self createProviderAndMockWithSession:session];
-    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod
-                                                                  device:nil];
+    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod];
 
     OCMVerify(times(1), [self.providerMock createPaymentConsentWithPaymentMethod:[OCMArg any]
                                                                       customerId:[OCMArg any]
@@ -207,8 +200,7 @@ NSString *const kMockKey = @"MOCK";
     [self createProviderAndMockWithSession:session];
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
     paymentMethod.type = AWXCardKey;
-    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod
-                                                                  device:nil];
+    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod];
 
     OCMVerify(times(1), [self.providerMock createPaymentConsentWithPaymentMethod:[OCMArg any]
                                                                       customerId:[OCMArg any]
@@ -221,7 +213,6 @@ NSString *const kMockKey = @"MOCK";
                                                            customerId:[OCMArg any]
                                                         paymentMethod:[OCMArg any]
                                                        paymentConsent:[OCMArg any]
-                                                               device:[OCMArg any]
                                                             returnURL:[OCMArg any]
                                                           autoCapture:YES
                                                            completion:([OCMArg invokeBlockWithArgs:self.response, self.error, nil])]);
@@ -254,8 +245,7 @@ NSString *const kMockKey = @"MOCK";
     AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:mockDelegateSpy session:[AWXOneOffSession new] paymentMethodType:[AWXPaymentMethodType new]];
 
     [provider confirmPaymentIntentWithPaymentMethod:paymentMethod
-                                     paymentConsent:paymentConsent
-                                             device:nil];
+                                     paymentConsent:paymentConsent];
     [provider completeWithResponse:[AWXConfirmPaymentIntentResponse new] error:nil];
     OCMVerify(times(1), [mockDelegateSpy provider:provider didCompleteWithPaymentConsentId:@"consentId"]);
 }
@@ -288,7 +278,6 @@ NSString *const kMockKey = @"MOCK";
     NSError *error = [NSError errorWithDomain:@"Domain" code:-1 userInfo:nil];
     OCMStub([providerMock confirmPaymentIntentWithPaymentMethod:[OCMArg any]
                                                  paymentConsent:[OCMArg any]
-                                                         device:[OCMArg any]
                                                      completion:([OCMArg invokeBlockWithArgs:response, error, nil])]);
 
     if (hasError) {
@@ -313,7 +302,6 @@ NSString *const kMockKey = @"MOCK";
                                           customerId:[OCMArg any]
                                        paymentMethod:[OCMArg any]
                                       paymentConsent:[OCMArg any]
-                                              device:[OCMArg any]
                                            returnURL:[OCMArg any]
                                          autoCapture:YES
                                           completion:([OCMArg invokeBlockWithArgs:response, error, nil])]);

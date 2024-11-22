@@ -78,9 +78,7 @@
     }
 
     if (!hasUIFields) {
-        [self confirmPaymentIntentWithPaymentMethod:self.updatedPaymentMethod
-                                     paymentConsent:nil
-                                             device:nil];
+        [self confirmPaymentIntentWithPaymentMethod:self.updatedPaymentMethod paymentConsent:nil];
         return;
     }
 
@@ -204,9 +202,7 @@
 
 - (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController didConfirmPaymentMethod:(nonnull AWXPaymentMethod *)paymentMethod {
     self.updatedPaymentMethod = paymentMethod;
-    [self confirmPaymentIntentWithPaymentMethod:paymentMethod
-                                 paymentConsent:nil
-                                         device:nil];
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil];
 }
 
 @end

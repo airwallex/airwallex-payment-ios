@@ -89,7 +89,6 @@
 
     __weak __typeof(self) weakSelf = self;
     [self confirmPaymentIntentWithPaymentConsentId:paymentConsentId
-                                            device:[AWXDevice deviceWithRiskSessionId]
                                         completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
                                             __strong __typeof(weakSelf) strongSelf = weakSelf;
                                             [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
@@ -99,7 +98,6 @@
 #pragma mark - Internal Actions
 
 - (void)confirmPaymentIntentWithPaymentConsentId:(NSString *)paymentConsentId
-                                          device:(AWXDevice *)device
                                       completion:(AWXRequestHandler)completion {
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
     AWXPaymentConsent *consent = [AWXPaymentConsent new];
@@ -107,7 +105,7 @@
     request.requestId = NSUUID.UUID.UUIDString;
     request.intentId = self.session.paymentIntentId;
     request.customerId = self.session.customerId;
-    request.device = device;
+    request.device = [AWXDevice deviceWithRiskSessionId];
     request.paymentConsent = consent;
     request.returnURL = AWXThreeDSReturnURL;
 
@@ -129,11 +127,7 @@
 }
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod {
-    [self confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil device:[AWXDevice deviceWithRiskSessionId]];
-}
-
-- (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod {
-    [self createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod device:[AWXDevice deviceWithRiskSessionId]];
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil];
 }
 
 - (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod

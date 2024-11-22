@@ -183,7 +183,6 @@
 
     OCMStub([providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg any]
                                                 paymentConsent:[OCMArg isNil]
-                                                        device:_device
                                                     completion:([OCMArg invokeBlockWithArgs:[NSNull null], error, nil])]);
 
     [provider handleFlow];
@@ -195,7 +194,6 @@
                                          return YES;
                                      }]
                                                             paymentConsent:[OCMArg isNil]
-                                                                    device:_device
                                                                 completion:[OCMArg any]]);
 
     XCTAssertNotNil(result);
@@ -229,7 +227,6 @@
 
     OCMStub([providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg any]
                                                 paymentConsent:[OCMArg isNil]
-                                                        device:_device
                                                     completion:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
 
     [provider handleFlow];
@@ -244,7 +241,6 @@
                                          return YES;
                                      }]
                                                             paymentConsent:[OCMArg isNil]
-                                                                    device:_device
                                                                 completion:[OCMArg any]]);
 
     XCTAssertNotNil(result);
@@ -281,7 +277,6 @@
     AWXConfirmPaymentIntentResponse *response = [AWXConfirmPaymentIntentResponse new];
 
     OCMStub([providerSpy createPaymentConsentAndConfirmIntentWithPaymentMethod:[OCMArg any]
-                                                                        device:_device
                                                                     completion:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
 
     [provider handleFlow];
@@ -295,7 +290,6 @@
                                          XCTAssertEqualObjects(method.additionalParams, additionalPayload);
                                          return YES;
                                      }]
-                                                                                    device:_device
                                                                                 completion:[OCMArg any]]);
 
     XCTAssertNotNil(result);
