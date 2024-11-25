@@ -299,7 +299,7 @@
             [self showPayment:paymentConsent];
         } else {
             AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
-            [provider confirmPaymentIntentWithPaymentMethod:paymentConsent.paymentMethod paymentConsent:paymentConsent device:nil];
+            [provider confirmPaymentIntentWithPaymentMethod:paymentConsent.paymentMethod paymentConsent:paymentConsent];
             self.provider = provider;
         }
 

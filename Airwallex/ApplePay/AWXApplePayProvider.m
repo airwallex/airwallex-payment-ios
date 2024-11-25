@@ -118,7 +118,7 @@ typedef enum {
     if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
         [self confirmWithPaymentMethod:method completion:completion];
     } else {
-        [self createPaymentConsentAndConfirmIntentWithPaymentMethod:method completion:completion];
+        [self createApplePaymentConsentAndConfirmIntentWithPaymentMethod:method completion:completion];
     }
 }
 
@@ -236,7 +236,6 @@ typedef enum {
     __weak __typeof(self) weakSelf = self;
     [self confirmPaymentIntentWithPaymentMethod:paymentMethod
                                  paymentConsent:nil
-                                         device:[AWXDevice deviceWithRiskSessionId]
                                      completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
                                          __strong __typeof(weakSelf) strongSelf = weakSelf;
                                          AWXConfirmPaymentIntentResponse *confirmResponse = (AWXConfirmPaymentIntentResponse *)response;
@@ -244,11 +243,10 @@ typedef enum {
                                      }];
 }
 
-- (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                                                   completion:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
+- (void)createApplePaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
+                                                        completion:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
     __weak __typeof(self) weakSelf = self;
     [self createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod
-                                                         device:[AWXDevice deviceWithRiskSessionId]
                                                      completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
                                                          __strong __typeof(weakSelf) strongSelf = weakSelf;
                                                          AWXConfirmPaymentIntentResponse *confirmResponse = (AWXConfirmPaymentIntentResponse *)response;

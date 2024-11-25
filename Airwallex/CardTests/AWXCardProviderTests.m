@@ -210,7 +210,7 @@
 
     [provider confirmPaymentIntentWithCard:card billing:billing saveCard:YES];
 
-    OCMVerify(times(1), [providerSpy createPaymentConsentAndConfirmIntentWithPaymentMethod:[OCMArg any] device:_device]);
+    OCMVerify(times(1), [providerSpy createPaymentConsentAndConfirmIntentWithPaymentMethod:[OCMArg any]]);
 }
 
 - (void)testConfirmPaymentIntentWithCardWithError {
