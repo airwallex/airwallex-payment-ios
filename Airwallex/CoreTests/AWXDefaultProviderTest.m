@@ -8,6 +8,7 @@
 
 #import "AWXDefaultProvider.h"
 #import "AWXAnalyticsLogger.h"
+#import "AWXDevice.h"
 #import "AWXNextActionHandler.h"
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
@@ -263,6 +264,34 @@ NSString *const kMockKey = @"MOCK";
     [provider completeWithResponse:confirmResponse error:nil];
 
     OCMVerify(times(1), [mockHandler handleNextAction:[OCMArg any]]);
+}
+
+- (void)testHandleFlow {
+    [self createProviderAndMockWithSession:[AWXSession new]];
+    [self.provider handleFlow];
+    OCMVerify(times(1), [self.providerMock confirmPaymentIntentWithPaymentMethod:[OCMArg any]
+                                                                  paymentConsent:[OCMArg any]]);
+}
+
+- (void)testVerifyPaymentConsentWithPaymentMethod {
+    AWXAPIClient *client = [self mockAPIClient];
+    AWXPaymentConsent *paymentConsent = [AWXPaymentConsent new];
+    paymentConsent.Id = @"consentId";
+    AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
+    AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:spy session:[AWXOneOffSession new]];
+
+    [provider verifyPaymentConsentWithPaymentMethod:[AWXPaymentMethod new]
+                                     paymentConsent:paymentConsent
+                                           currency:@"USD"
+                                             amount:[[NSDecimalNumber alloc] initWithString:@"99.99"]
+                                          returnURL:@"https://www.airwallex.com"
+                                         completion:nil];
+
+    id request = [OCMArg checkWithBlock:^BOOL(AWXConfirmPaymentIntentRequest *obj) {
+        XCTAssert([obj.device.deviceId isEqualToString:[AWXDevice deviceWithRiskSessionId].deviceId]);
+        return YES;
+    }];
+    OCMVerify(times(1), [client send:request handler:[OCMArg any]]);
 }
 
 - (void)createProviderAndMockWithSession:(AWXSession *)session {

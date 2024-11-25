@@ -60,7 +60,7 @@
     request.options = method;
     NSDictionary *methodDict = @{@"applepay": @{@"amount": @"1", @"currency": @"AUD"}};
     XCTAssertEqualObjects(request.parameters[@"verification_options"], methodDict);
-    
+
     AWXDevice *device = [AWXDevice new];
     device.deviceId = @"abcd";
     request.device = device;
