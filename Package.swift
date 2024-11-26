@@ -12,10 +12,10 @@ let package = Package(
             name: "AirwallexCore",
             targets: ["AirwallexCore"]
         ),
-//        .library(
-//            name: "AirwallexApplePay",
-//            targets: ["AirwallexApplePay"]
-//        )
+        .library(
+            name: "AirwallexApplePay",
+            targets: ["AirwallexApplePay"]
+        )
     ],
     targets: [
         .binaryTarget(
@@ -37,14 +37,14 @@ let package = Package(
                 .headerSearchPath("Internal/Extensions")
             ]
         ),
-//        .target(
-//            name: "AirwallexApplePay",
-//            dependencies: [ "AirwallexCore" ],
-//            path: "Airwallex/ApplePay",
-//            publicHeadersPath: "",
-//            cSettings: [
-//                .headerSearchPath("Internal")
-//            ]
-//        )
+        .target(
+            name: "AirwallexApplePay",
+            dependencies: [ "AirwallexCore" ],
+            path: "Airwallex/ApplePay",
+            publicHeadersPath: "",
+            cSettings: [
+                .headerSearchPath("Internal")
+            ]
+        )
     ]
 )
