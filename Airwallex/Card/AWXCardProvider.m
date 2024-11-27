@@ -205,11 +205,12 @@
 // MARK: AWXPaymentResultDelegate
 
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(NSError *)error {
-    [controller dismissViewControllerAnimated:YES completion:^{
-        if ([self.delegate respondsToSelector:@selector(provider:didCompleteWithStatus:error:)]) {
-            [self.delegate provider:self didCompleteWithStatus:status error:error];
-        }
-    }];
+    [controller dismissViewControllerAnimated:YES
+                                   completion:^{
+                                       if ([self.delegate respondsToSelector:@selector(provider:didCompleteWithStatus:error:)]) {
+                                           [self.delegate provider:self didCompleteWithStatus:status error:error];
+                                       }
+                                   }];
 }
 
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)paymentConsentId {

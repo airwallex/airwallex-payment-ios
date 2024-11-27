@@ -10,13 +10,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Airwallex",
-            targets: [
-                "AirwallexCore",
-                "AirwallexApplePay",
-                "AirwallexCard",
-                "AirwallexRedirect",
-                "AirwallexWeChatpay"
-            ]
+            targets: [ "AirwallexCore", "AirwallexApplePay", "AirwallexCard", "AirwallexRedirect", "AirwallexWeChatpay" ]
         ),
         .library(
             name: "AirwallexCore",
@@ -39,9 +33,6 @@ let package = Package(
             targets: ["AirwallexWeChatpay"]
         )
     ],
-    dependencies: [
-        .package(url: "https://github.com/weiping-awx/airwallex-wechatpay-ios", branch: "main")
-    ],
     targets: [
         .binaryTarget(
             name: "AirwallexRisk",
@@ -50,6 +41,10 @@ let package = Package(
         .binaryTarget(
             name: "AirTracker",
             path: "Frameworks/AirTracker.xcframework"
+        ),
+        .binaryTarget(
+            name: "WechatOpenSDK",
+            path: "Frameworks/WechatOpenSDK.xcframework"
         ),
         .target(
             name: "AirwallexCore",
@@ -93,7 +88,7 @@ let package = Package(
             name: "AirwallexWeChatpay",
             dependencies: [
                 "AirwallexCore",
-                .product(name: "AirwallexWechatPayInternal", package: "airwallex-wechatpay-ios")
+                "WechatOpenSDK"
             ],
             path: "Airwallex/WeChatPay",
             publicHeadersPath: "",
