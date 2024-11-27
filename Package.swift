@@ -1,4 +1,4 @@
-// swift-tools-version: 5.4
+// swift-tools-version: 5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -8,6 +8,16 @@ let package = Package(
     platforms: [ .iOS(.v13) ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
+        .library(
+            name: "Airwallex",
+            targets: [
+                "AirwallexCore",
+                "AirwallexApplePay",
+                "AirwallexCard",
+                "AirwallexRedirect",
+                "AirwallexWeChatpay"
+            ]
+        ),
         .library(
             name: "AirwallexCore",
             targets: ["AirwallexCore"]
@@ -23,7 +33,14 @@ let package = Package(
         .library(
             name: "AirwallexRedirect",
             targets: ["AirwallexRedirect"]
+        ),
+        .library(
+            name: "AirwallexWeChatpay",
+            targets: ["AirwallexWeChatpay"]
         )
+    ],
+    dependencies: [
+        .package(url: "https://github.com/weiping-awx/airwallex-wechatpay-ios", branch: "main")
     ],
     targets: [
         .binaryTarget(
@@ -67,6 +84,18 @@ let package = Package(
             name: "AirwallexRedirect",
             dependencies: [ "AirwallexCore" ],
             path: "Airwallex/Redirect",
+            publicHeadersPath: "",
+            cSettings: [
+                .headerSearchPath("Internal")
+            ]
+        ),
+        .target(
+            name: "AirwallexWeChatpay",
+            dependencies: [
+                "AirwallexCore",
+                .product(name: "AirwallexWechatPayInternal", package: "airwallex-wechatpay-ios")
+            ],
+            path: "Airwallex/WeChatPay",
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")

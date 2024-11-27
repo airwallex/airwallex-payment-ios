@@ -14,14 +14,13 @@ PODS:
     - Airwallex/Core
   - Airwallex/WeChatPay (5.6.0):
     - Airwallex/Core
-    - WechatOpenSDK (= 1.9.7)
+    - WechatOpenSDK (= 2.0.4)
   - OCMock (3.9.1)
-  - WechatOpenSDK (1.9.7)
+  - WechatOpenSDK (2.0.4)
 
 DEPENDENCIES:
   - Airwallex (from `./`)
   - OCMock
-  - WechatOpenSDK (= 1.9.7)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -33,10 +32,10 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  Airwallex: 4be054628292c0b40774feb27b322acf6af2dc42
+  Airwallex: 391f0dd0f377d7cfad548da40a139cb7176a3c22
   OCMock: 9491e4bec59e0b267d52a9184ff5605995e74be8
-  WechatOpenSDK: 2f0ae448c7525cb5c27db5f7aa0f568de0988fa4
+  WechatOpenSDK: 290989072e87b79d52225a01bb4e5e58f6f88593
 
-PODFILE CHECKSUM: ff350d7a1155755e8af0451fd0079e5e382805c7
+PODFILE CHECKSUM: 37eaf99a516ce38431fb6d59180397fc8d6d513d
 
 COCOAPODS: 1.16.2

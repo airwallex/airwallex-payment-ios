@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'WeChatPay' do |plugin|
     plugin.dependency 'Airwallex/Core'
-    plugin.dependency 'WechatOpenSDK', '1.9.7'
+    plugin.dependency 'WechatOpenSDK', '2.0.4'
     plugin.source_files = 'Airwallex/WeChatPay/**/*.{h,m}'
     plugin.public_header_files = 'Airwallex/WeChatPay/*.h'
     plugin.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }

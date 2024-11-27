@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "airwallex-wechatpay-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/weiping-awx/airwallex-wechatpay-ios",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0dea34d6b109cb2a0d426564c6d108b373c4b53e"
+      }
+    }
+  ],
+  "version" : 2
+}
