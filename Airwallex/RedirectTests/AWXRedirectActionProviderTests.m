@@ -13,7 +13,6 @@
 #import "AWXRedirectActionProvider.h"
 #import "AWXSession.h"
 #import <OCMock/OCMock.h>
-#import <Redirect/Redirect-Swift.h>
 #import <XCTest/XCTest.h>
 
 @interface AWXRedirectActionProviderTests : XCTestCase

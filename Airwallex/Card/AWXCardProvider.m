@@ -22,10 +22,6 @@
 #import "AWXUIContext.h"
 #import "NSObject+Logging.h"
 
-@interface AWXCardProvider ()<AWXPaymentResultDelegate>
-
-@end
-
 @implementation AWXCardProvider
 
 + (BOOL)canHandleSession:(AWXSession *)session paymentMethod:(AWXPaymentMethodType *)paymentMethod {
@@ -209,9 +205,11 @@
 // MARK: AWXPaymentResultDelegate
 
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(NSError *)error {
-    if ([self.delegate respondsToSelector:@selector(provider:didCompleteWithStatus:error:)]) {
-        [self.delegate provider:self didCompleteWithStatus:status error:error];
-    }
+    [controller dismissViewControllerAnimated:YES completion:^{
+        if ([self.delegate respondsToSelector:@selector(provider:didCompleteWithStatus:error:)]) {
+            [self.delegate provider:self didCompleteWithStatus:status error:error];
+        }
+    }];
 }
 
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)paymentConsentId {

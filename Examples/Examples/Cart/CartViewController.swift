@@ -240,7 +240,7 @@ class CartViewController: UIViewController {
         // Redirect Pay low-level API integration
         if (UserDefaults.standard.bool(forKey: kCachedRedirectPayOnly)) {
             let redirectProvider = AWXRedirectActionProvider(delegate: self, session: session)
-            redirectProvider.confirmPaymentIntent(with: "paypal", additionalInfo: ["shopper_name": "Hector", "country_code": "CN"])
+            redirectProvider.confirmPaymentIntent(withPaymentMethodName: "paypal", additionalInfo: ["shopper_name": "Hector", "country_code": "CN"])
             self.redirectProvider = redirectProvider
             return
         }

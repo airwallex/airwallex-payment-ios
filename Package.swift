@@ -19,6 +19,10 @@ let package = Package(
         .library(
             name: "AirwallexCard",
             targets: ["AirwallexCard"]
+        ),
+        .library(
+            name: "AirwallexRedirect",
+            targets: ["AirwallexRedirect"]
         )
     ],
     targets: [
@@ -54,6 +58,15 @@ let package = Package(
             name: "AirwallexCard",
             dependencies: [ "AirwallexCore" ],
             path: "Airwallex/Card",
+            publicHeadersPath: "",
+            cSettings: [
+                .headerSearchPath("Internal")
+            ]
+        ),
+        .target(
+            name: "AirwallexRedirect",
+            dependencies: [ "AirwallexCore" ],
+            path: "Airwallex/Redirect",
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")
