@@ -15,6 +15,10 @@ let package = Package(
         .library(
             name: "AirwallexApplePay",
             targets: ["AirwallexApplePay"]
+        ),
+        .library(
+            name: "AirwallexCard",
+            targets: ["AirwallexCard"]
         )
     ],
     targets: [
@@ -41,6 +45,15 @@ let package = Package(
             name: "AirwallexApplePay",
             dependencies: [ "AirwallexCore" ],
             path: "Airwallex/ApplePay",
+            publicHeadersPath: "",
+            cSettings: [
+                .headerSearchPath("Internal")
+            ]
+        ),
+        .target(
+            name: "AirwallexCard",
+            dependencies: [ "AirwallexCore" ],
+            path: "Airwallex/Card",
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")

@@ -32,6 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)confirmPaymentIntentWithPaymentConsentId:(NSString *)paymentConsentId;
 
+/// Confirm the payment intent with payment consent
+/// @param paymentConsent AWXPaymentConsent Object
+- (void)confirmPaymentIntentWithPaymentConsent:(AWXPaymentConsent *)paymentConsent;
+
 @end
 
 NS_ASSUME_NONNULL_END
