@@ -431,7 +431,7 @@
 		3C72E12728EC3EAA00F038E3 /* Airwallex.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Airwallex.xcconfig; sourceTree = "<group>"; };
 		3C72E12928EC4C2F00F038E3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		3C72E12A28EC4C2F00F038E3 /* sonar-project.properties */ = {isa = PBXFileReference; lastKnownFileType = text; name = "sonar-project.properties"; path = "../sonar-project.properties"; sourceTree = "<group>"; };
-		3C72E12B28EC4C2F00F038E3 /* Airwallex.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = Airwallex.podspec; path = ../Airwallex.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		3C72E12B28EC4C2F00F038E3 /* Airwallex.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = Airwallex.podspec; path = ../Airwallex.podspec; sourceTree = "<group>"; };
 		3C72E12C28EC4C2F00F038E3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		3C72E12D28EC4C2F00F038E3 /* README_zh_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README_zh_CN.md; path = ../README_zh_CN.md; sourceTree = "<group>"; };
 		3C99E73A27E9A0730074156C /* AWXApplePayOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXApplePayOptions.h; sourceTree = "<group>"; };

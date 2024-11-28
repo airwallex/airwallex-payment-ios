@@ -49,12 +49,14 @@ let package = Package(
         .target(
             name: "AirwallexCore",
             dependencies: [ "AirwallexRisk", "AirTracker" ],
-            path: "Airwallex/Core/Sources",
-            exclude: [ "Empty.swift" ],
-            resources: [ .process("../Resources/AirwallexCore.bundle/")],
+            path: "Airwallex/Core",
+            exclude: [ "Sources/Empty.swift" ],
+            sources: [ "Sources" ],
+            resources: [ .process("Resources/AirwallexCore.bundle/")],
+            publicHeadersPath: "Sources/include",
             cSettings: [
-                .headerSearchPath("Internal"),
-                .headerSearchPath("Internal/Extensions")
+                .headerSearchPath("Sources/Internal"),
+                .headerSearchPath("Sources/Internal/Extensions")
             ]
         ),
         .target(
@@ -94,6 +96,9 @@ let package = Package(
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")
+            ],
+            linkerSettings: [
+                .unsafeFlags(["-ObjC", "-all_load"])
             ]
         )
     ]

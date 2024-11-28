@@ -65,16 +65,22 @@ Run the following command:
 pod install
 ```
 ### Swift Package Manager
-Airwallex for iOS is available through 
-1. Follow Apple's Adding Package Dependencies to Your App guide on how to add a Swift Package dependency.
-2. Use https://github.com/airwallex/airwallex-payment-ios as the repository URL.
-3. Specify the version to be at least 5.7.0[TBD].
+Airwallex for iOS is available via Swift Package Manager. To integrate it into your project, follow these steps:
+1. Add the Package Dependency
+Follow Apple's guide on how to add a package dependency in Xcode.
+2. Repository URL
+Use the following URL for the Airwallex package:
+https://github.com/airwallex/airwallex-payment-ios
+3. Version Requirement
+Ensure you specify version 6.0.0 or later.
 
-You can add `Airwallex` to include all components, or you can select individual modules to add to your integration
-- add `AirwallexApplePay` for Apple Pay
-- add `AirwallexCard` for Card Pay
-- add "AirwallexRedirect" to support payment by schema
-- add "AirwallexWeChatpay" to have native wechat pay experience
+#### Components Available for Integration
+You can add `Airwallex` to include all components, or selectively add the following components to your project, depending on your payment needs:
+
+AirwallexApplePay: For integrating Apple Pay.
+AirwallexCard: For Card Pay services.
+AirwallexRedirect: To support payments via schema redirection.
+AirwallexWeChatpay: For a native WeChat Pay experience.
 
 ### Swift
 
