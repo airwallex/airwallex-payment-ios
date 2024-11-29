@@ -107,6 +107,22 @@
                              handler:[OCMArg any]]);
 }
 
+- (void)testConfirmPaymentIntentWithPaymentMethodNameWithDefaultFlow {
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    AWXRedirectActionProvider *provider = [[AWXRedirectActionProvider alloc] initWithDelegate:delegate session:[AWXOneOffSession new]];
+    NSString *expectedPaymentMethodName = @"TestMethodName";
+    NSDictionary<NSString *, NSString *> *expectedAdditionalInfo = @{@"key1": @"value1"};
+    AWXPaymentMethodFlow expectedFlow = AWXPaymentMethodFlowApp;
+    id paymentClassMock = OCMPartialMock(provider);
+    OCMExpect([paymentClassMock confirmPaymentIntentWithPaymentMethodName:expectedPaymentMethodName
+                                                           additionalInfo:expectedAdditionalInfo
+                                                                     flow:expectedFlow]);
+
+    [provider confirmPaymentIntentWithPaymentMethodName:expectedPaymentMethodName
+                                         additionalInfo:expectedAdditionalInfo];
+    OCMVerifyAll(paymentClassMock);
+}
+
 - (NSDictionary *)testDictionary {
     return @{@"url": @"http://abc.net"};
 }
