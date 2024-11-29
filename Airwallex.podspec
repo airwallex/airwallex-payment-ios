@@ -13,8 +13,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Core' do |plugin|
     plugin.source_files = 'Airwallex/Core/Sources/**/*.{swift,h,m}'
-    plugin.exclude_files = 'Airwallex/Core/Sources/include/**/*.h'
-    plugin.public_header_files = 'Airwallex/Core/Sources/include/*.h'
+    plugin.public_header_files = 'Airwallex/Core/Sources/*.h'
     plugin.resources = ['Airwallex/Core/Resources/AirwallexCore.bundle']
     plugin.vendored_frameworks = 'Frameworks/AirTracker.xcframework', 'Frameworks/AirwallexRisk.xcframework'
   end
@@ -24,7 +23,7 @@ Pod::Spec.new do |s|
     plugin.source_files = 'Airwallex/WeChatPay/**/*.{h,m}'
     plugin.public_header_files = 'Airwallex/WeChatPay/*.h'
     plugin.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
--   plugin.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+    plugin.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
     plugin.vendored_frameworks = 'Frameworks/WechatOpenSDK.xcframework'
   end
   

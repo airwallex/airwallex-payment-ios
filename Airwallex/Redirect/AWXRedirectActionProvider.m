@@ -55,7 +55,7 @@
     AWXPaymentMethod *paymentMethod = [[AWXPaymentMethod alloc] init];
     paymentMethod.type = paymentMethodName;
     paymentMethod.additionalParams = additionalInfo;
-    [self confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil device:nil flow:flow];
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil flow:flow];
 }
 
 #pragma mark - Private methods
