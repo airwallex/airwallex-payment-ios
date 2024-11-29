@@ -12,14 +12,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXUIContext (Card)
 
 /// Present the card payment flow.
-- (void)presentCardPaymentFlowFrom:(UIViewController *)hostViewController cardSchemes:(NSArray<AWXCardBrand> *)cardSchemes;
+- (void)presentCardPaymentFlowFrom:(UIViewController *)hostViewController cardSchemes:(NSArray<AWXCardBrand> *)cardSchemes NS_SWIFT_NAME(presentCardPaymentFlow(from:cardScheme:));
 
 /// Push the card payment flow.
-- (void)pushCardPaymentFlowFrom:(UIViewController *)hostViewController cardSchemes:(NSArray<AWXCardBrand> *)cardSchemes;
+- (void)pushCardPaymentFlowFrom:(UIViewController *)hostViewController cardSchemes:(NSArray<AWXCardBrand> *)cardSchemes NS_SWIFT_NAME(pushCardPaymentFlow(from:cardScheme:));
 
-- (void)presentCardPaymentFlowFrom:(UIViewController *)hostViewController;
+- (void)presentCardPaymentFlowFrom:(UIViewController *)hostViewController NS_SWIFT_NAME(presentCardPaymentFlow(from:));
 
-- (void)pushCardPaymentFlowFrom:(UIViewController *)hostViewController;
+- (void)pushCardPaymentFlowFrom:(UIViewController *)hostViewController NS_SWIFT_NAME(pushCardPaymentFlowFrom(from:));
 
 @end
 

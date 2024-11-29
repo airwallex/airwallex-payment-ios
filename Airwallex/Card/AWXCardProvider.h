@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Confirm the payment intent with payment consent
 /// @param paymentConsent AWXPaymentConsent Object
-- (void)confirmPaymentIntentWithPaymentConsent:(AWXPaymentConsent *)paymentConsent;
+- (void)confirmPaymentIntentWithPaymentConsent:(AWXPaymentConsent *)paymentConsent NS_SWIFT_NAME(confirmPaymentIntent(with:));
 
 @end
 
