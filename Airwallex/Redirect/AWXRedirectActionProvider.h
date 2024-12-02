@@ -16,11 +16,21 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXRedirectActionProvider : AWXDefaultActionProvider
 
 - (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName
-                                   additionalInfo:(NSDictionary<NSString *, NSString *> *_Nullable)additionalInfo NS_SWIFT_NAME(confirmPaymentIntent(with:additionalInfo:));
+    NS_SWIFT_NAME(confirmPaymentIntent(with:));
 
 - (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName
                                    additionalInfo:(NSDictionary<NSString *, NSString *> *_Nullable)additionalInfo
-                                             flow:(AWXPaymentMethodFlow)flow NS_SWIFT_NAME(confirmPaymentIntent(with:additionalInfo:flow:));
+    NS_SWIFT_NAME(confirmPaymentIntent(with:additionalInfo:));
+
+- (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName
+                                             flow:(AWXPaymentMethodFlow)flow
+    NS_SWIFT_NAME(confirmPaymentIntent(with:flow:));
+
+- (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName
+                                   additionalInfo:(NSDictionary<NSString *, NSString *> *_Nullable)additionalInfo
+                                             flow:(AWXPaymentMethodFlow)flow
+    NS_SWIFT_NAME(confirmPaymentIntent(with:additionalInfo:flow:));
+
 @end
 
 NS_ASSUME_NONNULL_END

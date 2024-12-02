@@ -107,20 +107,57 @@
                              handler:[OCMArg any]]);
 }
 
-- (void)testConfirmPaymentIntentWithPaymentMethodNameWithDefaultFlow {
+- (void)testConfirmPaymentIntentWithPaymentMethodNameVariations {
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
     AWXRedirectActionProvider *provider = [[AWXRedirectActionProvider alloc] initWithDelegate:delegate session:[AWXOneOffSession new]];
     NSString *expectedPaymentMethodName = @"TestMethodName";
-    NSDictionary<NSString *, NSString *> *expectedAdditionalInfo = @{@"key1": @"value1"};
-    AWXPaymentMethodFlow expectedFlow = AWXPaymentMethodFlowApp;
     id paymentClassMock = OCMPartialMock(provider);
-    OCMExpect([paymentClassMock confirmPaymentIntentWithPaymentMethodName:expectedPaymentMethodName
-                                                           additionalInfo:expectedAdditionalInfo
-                                                                     flow:expectedFlow]);
+    OCMStub([paymentClassMock confirmPaymentIntentWithPaymentMethod:[OCMArg any] paymentConsent:[OCMArg any] flow:[OCMArg any]]);
 
-    [provider confirmPaymentIntentWithPaymentMethodName:expectedPaymentMethodName
-                                         additionalInfo:expectedAdditionalInfo];
-    OCMVerifyAll(paymentClassMock);
+    // no additional info & default flow
+    [paymentClassMock confirmPaymentIntentWithPaymentMethodName:expectedPaymentMethodName];
+    OCMVerify([paymentClassMock confirmPaymentIntentWithPaymentMethod:[OCMArg any] paymentConsent:nil flow:AWXPaymentMethodFlowApp]);
+
+    // web flow
+    AWXPaymentMethodFlow expectedFlow = AWXPaymentMethodFlowWeb;
+    [paymentClassMock stopMocking];
+    paymentClassMock = OCMPartialMock(provider);
+    OCMStub([paymentClassMock confirmPaymentIntentWithPaymentMethod:[OCMArg any] paymentConsent:[OCMArg any] flow:[OCMArg any]]);
+    [paymentClassMock confirmPaymentIntentWithPaymentMethodName:expectedPaymentMethodName flow:expectedFlow];
+    OCMVerify([paymentClassMock confirmPaymentIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(AWXPaymentMethod *obj) {
+                                    XCTAssert([obj.type isEqualToString:expectedPaymentMethodName]);
+                                    XCTAssertNil(obj.additionalParams);
+                                    return YES;
+                                }]
+                                                       paymentConsent:nil
+                                                                 flow:AWXPaymentMethodFlowWeb]);
+
+    // additional info
+    [paymentClassMock stopMocking];
+    paymentClassMock = OCMPartialMock(provider);
+    OCMStub([paymentClassMock confirmPaymentIntentWithPaymentMethod:[OCMArg any] paymentConsent:[OCMArg any] flow:[OCMArg any]]);
+    NSDictionary<NSString *, NSString *> *expectedAdditionalInfo = @{@"key1": @"value1"};
+    [paymentClassMock confirmPaymentIntentWithPaymentMethodName:expectedPaymentMethodName additionalInfo:expectedAdditionalInfo];
+    OCMVerify([paymentClassMock confirmPaymentIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(AWXPaymentMethod *obj) {
+                                    XCTAssert([obj.type isEqualToString:expectedPaymentMethodName]);
+                                    XCTAssertEqualObjects(obj.additionalParams, expectedAdditionalInfo);
+                                    return YES;
+                                }]
+                                                       paymentConsent:nil
+                                                                 flow:AWXPaymentMethodFlowApp]);
+
+    // flow & additional info
+    [paymentClassMock stopMocking];
+    paymentClassMock = OCMPartialMock(provider);
+    OCMStub([paymentClassMock confirmPaymentIntentWithPaymentMethod:[OCMArg any] paymentConsent:[OCMArg any] flow:[OCMArg any]]);
+    [paymentClassMock confirmPaymentIntentWithPaymentMethodName:expectedPaymentMethodName additionalInfo:expectedAdditionalInfo flow:expectedFlow];
+    OCMVerify([paymentClassMock confirmPaymentIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(AWXPaymentMethod *obj) {
+                                    XCTAssert([obj.type isEqualToString:expectedPaymentMethodName]);
+                                    XCTAssertEqualObjects(obj.additionalParams, expectedAdditionalInfo);
+                                    return YES;
+                                }]
+                                                       paymentConsent:nil
+                                                                 flow:expectedFlow]);
 }
 
 - (NSDictionary *)testDictionary {

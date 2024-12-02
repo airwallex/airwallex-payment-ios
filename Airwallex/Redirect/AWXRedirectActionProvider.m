@@ -45,8 +45,16 @@
     }
 }
 
+- (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName {
+    [self confirmPaymentIntentWithPaymentMethodName:paymentMethodName additionalInfo:nil flow:AWXPaymentMethodFlowApp];
+}
+
 - (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName additionalInfo:(NSDictionary<NSString *, NSString *> *)additionalInfo {
     [self confirmPaymentIntentWithPaymentMethodName:paymentMethodName additionalInfo:additionalInfo flow:AWXPaymentMethodFlowApp];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName flow:(AWXPaymentMethodFlow)flow {
+    [self confirmPaymentIntentWithPaymentMethodName:paymentMethodName additionalInfo:nil flow:flow];
 }
 
 - (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName
