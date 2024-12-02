@@ -78,8 +78,8 @@ Ensure you specify version 5.7.0 or later.
 You can add `Airwallex` to include all components, or selectively add the following components to your project, depending on your payment needs:
 
 - `AirwallexApplePay`: For integrating Apple Pay.    
-- `AirwallexCard`: For Card Pay services.
-- `AirwallexRedirect`: To support payments via schema redirection.
+- `AirwallexCard`: For card payments.
+- `AirwallexRedirect`: To support payments via url/deeplink redirectio.
 - `AirwallexWeChatpay`: For a native WeChat Pay experience.
 
 ### Swift
