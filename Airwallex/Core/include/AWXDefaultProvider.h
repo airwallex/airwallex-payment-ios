@@ -1,1 +1,1 @@
-/Users/weiping.li/awx/airwallex-payment-ios/Airwallex/Core/Sources/AWXDefaultProvider.h
+../Sources/AWXDefaultProvider.h

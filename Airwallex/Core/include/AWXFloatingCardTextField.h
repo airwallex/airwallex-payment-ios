@@ -1,1 +1,1 @@
-/Users/weiping.li/awx/airwallex-payment-ios/Airwallex/Core/Sources/AWXFloatingCardTextField.h
+../Sources/AWXFloatingCardTextField.h

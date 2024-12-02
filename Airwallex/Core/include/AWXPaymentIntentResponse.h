@@ -1,1 +1,1 @@
-/Users/weiping.li/awx/airwallex-payment-ios/Airwallex/Core/Sources/AWXPaymentIntentResponse.h
+../Sources/AWXPaymentIntentResponse.h

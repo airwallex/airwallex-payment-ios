@@ -1,1 +1,1 @@
-/Users/weiping.li/awx/airwallex-payment-ios/Airwallex/Core/Sources/AWXCardValidator.h
+../Sources/AWXCardValidator.h
