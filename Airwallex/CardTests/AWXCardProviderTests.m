@@ -15,9 +15,9 @@
 #import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
+#import "AWXPaymentViewController.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSession.h"
-#import <Card/Card-Swift.h>
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 
@@ -170,6 +170,33 @@
 
     [provider paymentViewController:mockViewController didCompleteWithPaymentConsentId:@"consentID"];
     OCMVerify(times(1), [mockDelegate provider:provider didCompleteWithPaymentConsentId:@"consentID"]);
+}
+
+- (void)testClose {
+    id mockDelegate = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXOneOffSession *session = [AWXOneOffSession new];
+    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:mockDelegate session:session];
+    AWXPaymentViewController *paymentVC = [[AWXPaymentViewController alloc] initWithNibName:nil bundle:nil];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:paymentVC];
+
+    // Set up the mock to return a hostViewController
+    id hostVCMock = OCMClassMock([UIViewController class]);
+    OCMStub([mockDelegate hostViewController]).andReturn(hostVCMock);
+    OCMStub([hostVCMock presentedViewController]).andReturn(navController);
+
+    // Set expectations for delegate method calls
+    OCMExpect([mockDelegate provider:provider didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil]);
+
+    // Call the method
+    [provider performSelector:@selector(close)];
+
+    // Verify the results with a small delay to allow for animation completion block
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Dismissal"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        OCMVerifyAll(mockDelegate);
+        [expectation fulfill];
+    });
+    [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
 - (void)testConfirmPaymentIntentWithCardNoSave {

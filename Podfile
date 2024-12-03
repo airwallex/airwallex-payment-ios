@@ -8,7 +8,6 @@ workspace 'Airwallex.xcworkspace'
 
 target 'WeChatPay' do
   project './Airwallex/Airwallex.xcodeproj'
-  pod 'WechatOpenSDK', '1.9.7'
 end
 
 target 'CoreTests' do
@@ -34,5 +33,4 @@ end
 target 'Examples' do
   project './Examples/Examples.xcodeproj'
   pod 'Airwallex', :path => './'
-  pod 'WechatOpenSDK', '1.9.7'
 end

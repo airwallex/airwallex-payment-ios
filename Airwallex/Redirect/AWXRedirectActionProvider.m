@@ -45,6 +45,27 @@
     }
 }
 
+- (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName {
+    [self confirmPaymentIntentWithPaymentMethodName:paymentMethodName additionalInfo:nil flow:AWXPaymentMethodFlowApp];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName additionalInfo:(NSDictionary<NSString *, NSString *> *)additionalInfo {
+    [self confirmPaymentIntentWithPaymentMethodName:paymentMethodName additionalInfo:additionalInfo flow:AWXPaymentMethodFlowApp];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName flow:(AWXPaymentMethodFlow)flow {
+    [self confirmPaymentIntentWithPaymentMethodName:paymentMethodName additionalInfo:nil flow:flow];
+}
+
+- (void)confirmPaymentIntentWithPaymentMethodName:(NSString *)paymentMethodName
+                                   additionalInfo:(NSDictionary<NSString *, NSString *> *_Nullable)additionalInfo
+                                             flow:(AWXPaymentMethodFlow)flow {
+    AWXPaymentMethod *paymentMethod = [[AWXPaymentMethod alloc] init];
+    paymentMethod.type = paymentMethodName;
+    paymentMethod.additionalParams = additionalInfo;
+    [self confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil flow:flow];
+}
+
 #pragma mark - Private methods
 
 - (void)handleRedirectionSuccess:(NSURL *)url {

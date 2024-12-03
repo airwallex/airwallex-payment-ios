@@ -16,7 +16,7 @@
 #import "AWXPaymentMethod.h"
 #import "AWXSession+Request.h"
 #import "AWXSession.h"
-#import "NSObject+logging.h"
+#import "NSObject+Logging.h"
 #import "PKContact+Request.h"
 #import "PKPaymentToken+Request.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
