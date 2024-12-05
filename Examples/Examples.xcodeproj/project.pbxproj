@@ -300,6 +300,7 @@
 				A4745D2CDD6CDDF13E8B9743 /* [CP] Copy Pods Resources */,
 				C52EE7B32865394100F966DD /* Run clang-format */,
 				41C47B490BFA12D89960C8B5 /* [CP] Embed Pods Frameworks */,
+				D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */,
 			);
 			buildRules = (
 			);
@@ -451,7 +452,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which clang-format >/dev/null; then\n  find \"${PROJECT_DIR}/../Airwallex\" -type f -name \"*.[mh]\" | xargs clang-format -i -style=file\n  find \"${PROJECT_DIR}/../Examples\" -type f -name \"*.[mh]\" | xargs clang-format -i -style=file\nelse\n  echo \"warning: clang-format not found. Install using Homebrew to automatically format Objective-C code.\"\nfi\n";
+			shellScript = "if [ -n \"$CI\" ]; then\n    echo \"Skip - clang-format for CI.\"\n    exit 0\nfi\n\nif test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which clang-format >/dev/null; then\n  find \"${PROJECT_DIR}/../Airwallex\" -type f -name \"*.[mh]\" | xargs clang-format -i -style=file\n  find \"${PROJECT_DIR}/../Examples\" -type f -name \"*.[mh]\" | xargs clang-format -i -style=file\nelse\n  echo \"warning: clang-format not found. Install using Homebrew to automatically format Objective-C code.\"\nfi\n";
+		};
+		D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"",
+			);
+			inputPaths = (
+			);
+			name = "Generate SPM public headers";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PROJECT_DIR}/../scripts/generate_spm_public_headers.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
