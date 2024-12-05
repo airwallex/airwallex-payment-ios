@@ -1,23 +1,28 @@
 //
-//  Test.swift
-//  AirWallexPaymentSDK
+//  AirwallexCoreTests.swift
+//  AirwallexPaymentSDK
 //
 //  Created by Weiping Li on 2024/12/5.
 //
 
-import Testing
+import XCTest
 import AirwallexCore
-import UIKit
-import Foundation
 
-struct AirwallexCoreTests {
-
-    @Test func testPackageBundle() async throws {
+final class AirwallexCoreTests: XCTestCase {
+    
+    override func setUpWithError() throws {
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+    }
+    
+    override func tearDownWithError() throws {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    }
+    
+    func testExample() throws {
         let bundle = Bundle.resource()
-        #expect(bundle != nil)
+        XCTAssertNotNil(bundle)
         
         let image = UIImage(named: "close", in: bundle)
-        #expect(image != nil)
+        XCTAssertNotNil(image)
     }
-
 }
