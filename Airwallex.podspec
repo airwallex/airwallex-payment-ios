@@ -25,6 +25,10 @@ Pod::Spec.new do |s|
     plugin.source_files = 'Airwallex/WeChatPay/**/*.{h,m}'
     plugin.public_header_files = 'Airwallex/WeChatPay/*.h'
     plugin.vendored_frameworks = 'Frameworks/WechatOpenSDK.xcframework'
+    plugin.libraries = 'z', 'sqlite3.0', 'c++'
+    plugin.pod_target_xcconfig = {
+        'OTHER_LDFLAGS' => '-ObjC -all_load'
+      }
   end
   
   s.subspec 'Card' do |plugin|
