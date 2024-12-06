@@ -43,7 +43,7 @@ static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
         if (resourceBundle != nil)
             break;
     }
-    return resourceBundle;
+    return resourceBundle ? resourceBundle : self.sdkBundle;
 }
 
 @end
