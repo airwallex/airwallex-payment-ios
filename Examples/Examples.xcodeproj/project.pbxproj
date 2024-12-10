@@ -13,7 +13,6 @@
 		00E501C2264D06BE00027311 /* SuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E501C1264D06BE00027311 /* SuccessViewController.m */; };
 		082D308223CEEC3300C9D587 /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308123CEEC3300C9D587 /* ProductCell.m */; };
 		082D308523CEECE400C9D587 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
-		082D308823CEEDC100C9D587 /* AWXCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* AWXCartViewController.m */; };
 		084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084F15E6247646FA00DAAD76 /* ShippingCell.m */; };
 		085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
 		085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
@@ -58,8 +57,6 @@
 		082D308123CEEC3300C9D587 /* ProductCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProductCell.m; sourceTree = "<group>"; };
 		082D308323CEECE400C9D587 /* TotalCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TotalCell.h; sourceTree = "<group>"; };
 		082D308423CEECE400C9D587 /* TotalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TotalCell.m; sourceTree = "<group>"; };
-		082D308623CEEDC100C9D587 /* AWXCartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXCartViewController.h; sourceTree = "<group>"; };
-		082D308723CEEDC100C9D587 /* AWXCartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCartViewController.m; sourceTree = "<group>"; };
 		084F15E5247646FA00DAAD76 /* ShippingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShippingCell.h; sourceTree = "<group>"; };
 		084F15E6247646FA00DAAD76 /* ShippingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShippingCell.m; sourceTree = "<group>"; };
 		085BA64E23F0FB8A00FD33FA /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
@@ -235,8 +232,6 @@
 		182F1CE82C904131000B993D /* Deprecated */ = {
 			isa = PBXGroup;
 			children = (
-				082D308623CEEDC100C9D587 /* AWXCartViewController.h */,
-				082D308723CEEDC100C9D587 /* AWXCartViewController.m */,
 				088F3E8123CEB7FF005AE40F /* MockAPIClient.h */,
 				088F3E8223CEB7FF005AE40F /* MockAPIClient.m */,
 				182F1CE42C903747000B993D /* DirectAPIClient.swift */,
@@ -485,7 +480,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				082D308823CEEDC100C9D587 /* AWXCartViewController.m in Sources */,
 				00E501BF264D06B400027311 /* WebViewController.m in Sources */,
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,
 				1859F1992C89AAB50017FA4D /* PaymentIntentRequest.swift in Sources */,
