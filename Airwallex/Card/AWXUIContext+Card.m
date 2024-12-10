@@ -1,6 +1,6 @@
 //
 //  AWXUIContext+Card.m
-//  AirWallexPaymentSDK
+//  AirwallexPaymentSDK
 //
 //  Created by Weiping Li on 2024/11/27.
 //

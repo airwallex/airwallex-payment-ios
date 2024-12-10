@@ -6,51 +6,51 @@
 	<dict>
 		<key>Headers/AirwallexRisk-Swift.h</key>
 		<data>
-		/HS+fGblaUEUdDB3oGXf6o/39Wg=
+		8JGNX5IOe/nHAGGFnQfRiiubggE=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		C2sstsfUn5jI2tXbZOKPeUL52+I=
+		+Uk9A15Zr5KXsp3+ojOOxEEOk/U=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		FSPnLbho3G+LL9smI3XgVOqBIQ4=
+		gcwBsH4BgyFY4sVtNt+/xOKS3vY=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		istxib1pOKsJ4fe1FvqRXPRs7bo=
+		gTJdwnZn2/GIs6GeSO/eYaDAvks=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		0e5BOdAA7+o833NsNuBZM7d72ps=
+		o9AORIVD9WWc99xQYz2wHTMjMuM=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		istxib1pOKsJ4fe1FvqRXPRs7bo=
+		gTJdwnZn2/GIs6GeSO/eYaDAvks=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		wJdYdYj3HMwS0uF34Tjh5E91Sws=
+		FZzgJxs20tlBzTz13ISHQDw19pc=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		FSPnLbho3G+LL9smI3XgVOqBIQ4=
+		gcwBsH4BgyFY4sVtNt+/xOKS3vY=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		B/Lj5+7IDFhaH9T1jAQrH2vhj+o=
+		a+KzetU7QGeySMmRN79bMtKsDvc=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		5qsI7Y3QE2bF7J3QiaHE/5Nr8vk=
+		Wwwwypd+8cmx2uJh+G4ZzhhXnaI=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		B/Lj5+7IDFhaH9T1jAQrH2vhj+o=
+		a+KzetU7QGeySMmRN79bMtKsDvc=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		HO1tcJDvVNpWgjzxDU6ESnn7xss=
+		PeTfARwTJVp3VnyIIcD1ciPdMe4=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -59,77 +59,77 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3W9LhV7IxmXzPDiLz1hSYKPykco0lRcnHbhq3i8P1ok=
+			YDhN1XwE6AkCrWHFzJx6/TIB3P0hzf4X3mBOHKbnRH0=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KnRdWE4y6t4QM5zi5JDptPdHFgJy1Tku+7GLkZS2aNM=
+			Qnesa0n4URGWAopawg9bGx36dUwkYV00BoCJ8LFzlyg=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			5k2HWyVqlWqSobttc4oG/lKrrfLDtqI6LzMWc69t8E8=
+			zYTsPjTJdEVxLFGCjkrIa4Msfsq54g83Qw4qMewZaDw=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uBN5MnAxFwQNVOKRMqqHgdwLUEvuYpsacOgeZocPyak=
+			kDWwLkHiPoWT+5IleIa2wfgoMppNaY5uFZ/TzPRd5qI=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			5k2HWyVqlWqSobttc4oG/lKrrfLDtqI6LzMWc69t8E8=
+			zYTsPjTJdEVxLFGCjkrIa4Msfsq54g83Qw4qMewZaDw=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2c0L5THRwXajFDU7QuM1/fQ9YFufs8brgVmdcXiSylw=
+			ip/RvZHipS8qQaiVEGMiERp7T2orgC4ambYa/IsIm+8=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KnRdWE4y6t4QM5zi5JDptPdHFgJy1Tku+7GLkZS2aNM=
+			Qnesa0n4URGWAopawg9bGx36dUwkYV00BoCJ8LFzlyg=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CWgztxSRtAnJHcCcetdRCnFokNNZTXbG+jzLl/+LhS0=
+			GJT4q7VC9TQlLtQxqqaUDRR3QCvOfT+JrBEWzZi8tqo=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xKWv1WKSJDq6oPFpNUOtiZvCNXkpbYyeLvHqAdGdoqg=
+			Xd3OnAfwr0aflzEdCRCj5mjQiYlv4+lTODxGdJnx2Zg=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CWgztxSRtAnJHcCcetdRCnFokNNZTXbG+jzLl/+LhS0=
+			GJT4q7VC9TQlLtQxqqaUDRR3QCvOfT+JrBEWzZi8tqo=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hnCrIpDFD5D3sgeQza7Qq6oYVppfP9KxrmjeaqJgDZw=
+			JGiPIlDDFSpvzqR45tPugUYFtmhkKprZkro1tquN9y4=
 			</data>
 		</dict>
 	</dict>

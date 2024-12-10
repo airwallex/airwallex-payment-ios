@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "AirWallexPaymentSDK",
+    name: "AirwallexPaymentSDK",
     platforms: [ .iOS(.v13) ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -52,7 +52,7 @@ let package = Package(
             path: "Airwallex/Core",
             exclude: [ "Sources/Empty.swift" ],
             sources: [ "Sources" ],
-            resources: [ .process("Resources/AirwallexCore.bundle/")],
+            resources: [ .process("Resources")],
             publicHeadersPath: "include",
             cSettings: [
                 .headerSearchPath("Sources/Internal"),
@@ -98,8 +98,15 @@ let package = Package(
                 .headerSearchPath("Internal")
             ],
             linkerSettings: [
-                .unsafeFlags(["-ObjC", "-all_load"])
+                .linkedLibrary("z"),        // Links libz (zlib)
+                .linkedLibrary("sqlite3"),  // Links libsqlite3
+                .linkedLibrary("c++"),       // Links libc++
+                .unsafeFlags(["-ObjC", "-all_load"]),
             ]
-        )
+        ),
+        .testTarget(
+            name: "AirwallexCoreTests",
+            dependencies: [ "AirwallexCore" ]
+        ),
     ]
 )
