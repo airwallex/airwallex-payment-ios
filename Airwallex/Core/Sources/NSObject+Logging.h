@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)log:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2);
 
++ (void)logMesage:(NSString *)message;
+
 @end
 
 NS_ASSUME_NONNULL_END

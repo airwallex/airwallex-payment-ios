@@ -8,28 +8,30 @@
 
 import Foundation
 
-
-//- (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController {
-//    NSCAssert(hostViewController != nil, @"hostViewController must not be nil.");
-//
-//    AWXPaymentMethodListViewController *controller = [[AWXPaymentMethodListViewController alloc] initWithNibName:nil bundle:nil];
-//    controller.viewModel = [[AWXPaymentMethodListViewModel alloc] initWithSession:_session APIClient:[[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]]];
-//    controller.session = self.session;
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-//    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-//    [hostViewController presentViewController:navigationController animated:YES completion:nil];
-//}
-
 public extension AWXUIContext {
-    func presentPaymentViewController(from hostingVC: UIViewController) {
-        let paymentVC = PaymentMethodsViewController()
-//        let viewModel = AWXPaymentMethodListViewModel(
-//            session: session,
-//            apiClient: AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
-//        )
-        paymentVC.session = self.session
+    @MainActor func presentPaymentViewController(from hostingVC: UIViewController) {
+        //          wpdebug
+//        do {
+//            presentEntirePaymentFlow(from: hostingVC)
+//            return
+//        }
+        
+        let viewModel = AWXPaymentMethodListViewModel(
+            session: session,
+            apiClient: AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
+        )
+        let provider = PaymentMethodProvider(provider: viewModel)
+        let paymentVC = PaymentMethodsViewController(methodProvider: provider)
         let nav = UINavigationController(rootViewController: paymentVC)
         nav.modalPresentationStyle = .fullScreen
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = UIColor.awxBackgroundHighlight // Set your desired color
+        appearance.shadowColor = UIColor.awxBorderDecorative
+        
+        nav.navigationBar.standardAppearance = appearance
+        nav.navigationBar.scrollEdgeAppearance = appearance
+        nav.navigationBar.compactAppearance = appearance
         hostingVC.present(nav, animated: true)
     }
 }

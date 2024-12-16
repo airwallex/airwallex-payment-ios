@@ -27,12 +27,14 @@
 
     NSString *className = NSStringFromClass([self class]);
 
-    os_log_t customLog = os_log_create("com.airwallex.payment.sdk", "general");
-    os_log(customLog, "----Airwallex SDK----%@----%@----\n %@", [formatter stringFromDate:now], className, formattedMessage);
+    NSString *finalMessage = [NSString stringWithFormat:@"----Airwallex SDK----%@----%@----\n %@", [formatter stringFromDate:now], className, formattedMessage];
+    [NSObject logMesage:finalMessage];
+}
 
++ (void)logMesage:(NSString *)message {
+    os_log(os_log_create("com.airwallex.payment.sdk", "general"), "%@", message);
     if ([Airwallex isLocalLogFileEnabled]) {
-        NSString *log = [NSString stringWithFormat:@"----Airwallex SDK----%@----%@----\n %@\n", [formatter stringFromDate:now], className, formattedMessage];
-        [self logIntoLocalFile:log];
+        [self logIntoLocalFile:message];
     }
 }
 
