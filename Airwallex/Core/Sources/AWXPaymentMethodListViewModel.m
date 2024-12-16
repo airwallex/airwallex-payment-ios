@@ -18,7 +18,7 @@
 typedef void (^PageResult)(id<AWXPage> __autoreleasing *page, NSError *__autoreleasing *error);
 typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autoreleasing *error);
 
-@property (nonatomic, strong, nonnull) AWXSession *session;
+@property (nonatomic, strong, readwrite) AWXSession *session;
 @property (nonatomic, strong, nonnull) AWXAPIClient *client;
 
 @end
