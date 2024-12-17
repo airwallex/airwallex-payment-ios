@@ -605,6 +605,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D84E997C2D094298006B3421 /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
+		D84E9AA62D102083006B3421 /* Utils */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utils; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1187,6 +1188,7 @@
 				D84E997A2D0845AA006B3421 /* AWXUIContext+extension.swift */,
 				D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */,
 				D84E9A262D0C3652006B3421 /* PaymentUISessionHandler.swift */,
+				D84E9AA62D102083006B3421 /* Utils */,
 				D84E997C2D094298006B3421 /* View */,
 			);
 			path = Sources;

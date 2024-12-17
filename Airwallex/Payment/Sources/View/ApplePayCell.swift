@@ -10,7 +10,7 @@ import UIKit
 import PassKit
 
 protocol ApplePayViewConfiguring {
-    var sessionController: PaymentUISessionHandler { get }
+    var onPaymentButtonTapped: () -> Void { get }
 }
 
 class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -60,6 +60,6 @@ class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     }
     
     @objc func onPaymentButtonTapped() {
-        viewModel?.sessionController.startPayment()
+        viewModel?.onPaymentButtonTapped()
     }
 }

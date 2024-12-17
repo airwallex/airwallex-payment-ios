@@ -8,5 +8,5 @@
 
 
 struct ApplePayViewModel: ApplePayViewConfiguring {
-    var sessionController: PaymentUISessionHandler
+    var onPaymentButtonTapped: () -> Void
 }

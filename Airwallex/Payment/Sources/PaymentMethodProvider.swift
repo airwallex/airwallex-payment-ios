@@ -34,35 +34,51 @@ final class PaymentMethodProvider {
     
     func fetchPaymentMethods() async throws {
         let (methods, consents) = try await provider.fetchAvailablePaymentMethodsAndConsents()
+        // even if there is no paymmentMethods defined in session, we still need to
+        // make sure the payment methods and consents are unique
         let availableMethods = session.filteredPaymentMethodTypes(methods)
+        var filteredConsents = [AWXPaymentConsent]()
+        var methodDict = Dictionary(
+            uniqueKeysWithValues: zip(
+                availableMethods.map { $0.name.lowercased() },
+                availableMethods
+            )
+        )
+        // filter methods
+        var set = Set<String>()
+        var filteredMethods = [AWXPaymentMethodType]()
         if let predefinedMethods = session.paymentMethods, !predefinedMethods.isEmpty {
-            var tempMethods = [AWXPaymentMethodType]()
-            var tempConsents = [AWXPaymentConsent]()
-            for predefined in predefinedMethods {
-                for available in availableMethods {
-                    if predefined.lowercased() == available.name.lowercased() && !tempMethods.contains(available) {
-                        tempMethods.append(available)
-                        break
-                     }
-                }
-                for available in consents {
-                    guard let type = available.paymentMethod?.type.lowercased() else { continue }
-                    if predefined.lowercased() == type {
-                        tempConsents.append(available)
-                        break
-                    }
+            for predefined in predefinedMethods.map({ $0.lowercased() }) {
+                if let method = methodDict[predefined], !set.contains(predefined) {
+                    filteredMethods.append(method)
+                    set.insert(predefined)
                 }
             }
-            self.methods = tempMethods
-            self.consents = consents
         } else {
-            self.methods = methods
-            self.consents = consents
+            for method in availableMethods {
+                if set.contains(method.name) { continue }
+                set.insert(method.name)
+                filteredMethods.append(method)
+            }
         }
+        //  filter consents
+        set.removeAll()
+        for consent in consents {
+            if set.contains(consent.id) { continue}
+            filteredConsents.append(consent)
+            set.insert(consent.id)
+        }
+        
+        self.methods = filteredMethods
+        self.consents = filteredConsents
     }
     
     func method(named name: String) -> AWXPaymentMethodType? {
-        methods.first { $0.name == name }
+        methods.first { $0.name.lowercased() == name.lowercased() }
+    }
+    
+    func consent(identifier: String) -> AWXPaymentConsent? {
+        consents.first { $0.id == identifier }
     }
 }
 
