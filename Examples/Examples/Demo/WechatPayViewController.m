@@ -7,8 +7,8 @@
 //
 
 #import "WechatPayViewController.h"
+#import "WXApi.h"
 #import <Airwallex/Core.h>
-#import <WechatOpenSDK/WXApi.h>
 
 @interface WechatPayViewController ()
 

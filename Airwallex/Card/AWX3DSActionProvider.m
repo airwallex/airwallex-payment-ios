@@ -11,7 +11,7 @@
 #import "AWXDevice.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXSession.h"
-#import "NSObject+logging.h"
+#import "NSObject+Logging.h"
 
 @interface AWX3DSActionProvider ()<AWX3DSServiceDelegate>
 

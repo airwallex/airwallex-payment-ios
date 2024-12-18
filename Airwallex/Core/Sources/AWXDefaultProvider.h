@@ -11,7 +11,7 @@
 #import "AWXSession.h"
 #import <UIKit/UIKit.h>
 
-@class AWXDefaultProvider, AWXDevice, AWXConfirmPaymentIntentResponse;
+@class AWXDefaultProvider, AWXConfirmPaymentIntentResponse;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -142,20 +142,16 @@ NS_ASSUME_NONNULL_BEGIN
  Create a new payment consent and confirm the payment intent with payment method.
 
  @param paymentMethod The payment method info.
- @param device The current device info.
  */
-- (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                                                       device:(nullable AWXDevice *)device;
+- (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod;
 
 /**
  Create a new payment consent and confirm the payment intent with payment method as well as a custom completion block.
 
  @param paymentMethod The payment method info.
- @param device The current device info.
  @param completion The completion block to be called with the response and error.
  */
 - (void)createPaymentConsentAndConfirmIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                                                       device:(nullable AWXDevice *)device
                                                    completion:(AWXRequestHandler)completion;
 
 /**
@@ -163,23 +159,19 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param paymentMethod The payment method info.
  @param paymentConsent The payment consent info.
- @param device The current device info.
  */
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
-                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
-                                       device:(nullable AWXDevice *)device;
+                               paymentConsent:(nullable AWXPaymentConsent *)paymentConsent;
 
 /**
  Confirm the payment intent with payment method and consent.
 
  @param paymentMethod The payment method info.
  @param paymentConsent The payment consent info.
- @param device The current device info.
  @param flow The payment method flow.
  */
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
-                                       device:(nullable AWXDevice *)device
                                          flow:(AWXPaymentMethodFlow)flow;
 
 /**
@@ -187,12 +179,10 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param paymentMethod The payment method info.
  @param paymentConsent The payment consent info.
- @param device The current device info.
  @param completion The completion block to be called with the response and error.
  */
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
                                paymentConsent:(nullable AWXPaymentConsent *)paymentConsent
-                                       device:(nullable AWXDevice *)device
                                    completion:(AWXRequestHandler)completion;
 
 /**

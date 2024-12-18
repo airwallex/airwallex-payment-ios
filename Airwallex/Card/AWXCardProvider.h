@@ -7,13 +7,14 @@
 //
 
 #import "AWXDefaultProvider.h"
+#import "AWXUIContext.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  `AWXCardProvider` is a provider to handle payment method with card.
  */
-@interface AWXCardProvider : AWXDefaultProvider
+@interface AWXCardProvider : AWXDefaultProvider<AWXPaymentResultDelegate>
 
 /**
  Confirm the payment intent with card and billing.
@@ -31,6 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
  @param paymentConsentId ID of the PaymentConsent.
  */
 - (void)confirmPaymentIntentWithPaymentConsentId:(NSString *)paymentConsentId;
+
+/// Confirm the payment intent with payment consent
+/// @param paymentConsent AWXPaymentConsent Object
+- (void)confirmPaymentIntentWithPaymentConsent:(AWXPaymentConsent *)paymentConsent NS_SWIFT_NAME(confirmPaymentIntent(with:));
 
 @end
 

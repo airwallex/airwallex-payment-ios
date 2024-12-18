@@ -33,7 +33,17 @@ static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
 }
 
 + (NSBundle *)resourceBundle {
-    return [NSBundle bundleWithPath:[self.sdkBundle pathForResource:@"AirwallexCore" ofType:@"bundle"]];
+    NSArray *resourceName = @[@"AirwallexCore", @"AirwallexPaymentSDK_AirwallexCore"];
+    NSBundle *resourceBundle = nil;
+    for (NSString *name in resourceName) {
+        NSString *path = [self.sdkBundle pathForResource:name ofType:@"bundle"];
+        if (path == nil)
+            continue;
+        resourceBundle = [NSBundle bundleWithPath:path];
+        if (resourceBundle != nil)
+            break;
+    }
+    return resourceBundle ? resourceBundle : self.sdkBundle;
 }
 
 @end

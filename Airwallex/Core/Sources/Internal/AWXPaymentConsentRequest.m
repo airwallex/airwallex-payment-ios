@@ -94,6 +94,12 @@
         self.options.type: value
     };
     parameters[@"verification_options"] = options;
+
+    if (self.device) {
+        parameters[@"device_data"] = [self.device encodeToJSON];
+    }
+    parameters[@"integration_data"] = @{@"type": @"mobile_sdk",
+                                        @"version": [NSString stringWithFormat:@"ios-%@-%@", @"release", AIRWALLEX_VERSION]};
     return parameters;
 }
 

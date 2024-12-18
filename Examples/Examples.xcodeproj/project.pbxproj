@@ -41,6 +41,7 @@
 		8C8B48417A8089F01476F8CD /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */; };
 		C52EE6AD2864177B000571A1 /* OptionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C52EE6AC2864177B000571A1 /* OptionButton.m */; };
 		C5AB0C592860454200B436C3 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB0C582860454200B436C3 /* Product.m */; };
+		D8193D5C2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8193D5B2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,7 @@
 		C52EE6AC2864177B000571A1 /* OptionButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionButton.m; sourceTree = "<group>"; };
 		C5AB0C572860454200B436C3 /* Product.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
 		C5AB0C582860454200B436C3 /* Product.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
+		D8193D5B2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 				085BD3FF23CC64B9002E8F27 /* Info.plist */,
 				085BD40023CC64B9002E8F27 /* main.m */,
 				18ADC99C2C8ACCA000A775BB /* Examples-Bridging-Header.h */,
+				D8193D5B2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				A4745D2CDD6CDDF13E8B9743 /* [CP] Copy Pods Resources */,
 				C52EE7B32865394100F966DD /* Run clang-format */,
 				41C47B490BFA12D89960C8B5 /* [CP] Embed Pods Frameworks */,
+				D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */,
 			);
 			buildRules = (
 			);
@@ -348,6 +352,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8193D5C2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy in Resources */,
 				57DCD642269428C800705D5C /* Keys in Resources */,
 				085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */,
 				085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */,
@@ -451,7 +456,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which clang-format >/dev/null; then\n  find \"${PROJECT_DIR}/../Airwallex\" -type f -name \"*.[mh]\" | xargs clang-format -i -style=file\n  find \"${PROJECT_DIR}/../Examples\" -type f -name \"*.[mh]\" | xargs clang-format -i -style=file\nelse\n  echo \"warning: clang-format not found. Install using Homebrew to automatically format Objective-C code.\"\nfi\n";
+			shellScript = "if [ -n \"$CI\" ]; then\n    echo \"Skip - clang-format for CI.\"\n    exit 0\nfi\n\nif test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which clang-format >/dev/null; then\n  find \"${PROJECT_DIR}/../Airwallex\" -type f -name \"*.[mh]\" | xargs clang-format -i -style=file\n  find \"${PROJECT_DIR}/../Examples\" -type f -name \"*.[mh]\" | xargs clang-format -i -style=file\nelse\n  echo \"warning: clang-format not found. Install using Homebrew to automatically format Objective-C code.\"\nfi\n";
+		};
+		D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"",
+			);
+			inputPaths = (
+			);
+			name = "Generate SPM public headers";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PROJECT_DIR}/../scripts/generate_spm_public_headers.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -88,6 +88,10 @@ NS_ASSUME_NONNULL_BEGIN
  Payment consent object.
  */
 @property (nonatomic, strong, nullable) AWXPaymentConsent *consent;
+/**
+ Device object.
+ */
+@property (nonatomic, strong, nullable) AWXDevice *device;
 
 @end
 
