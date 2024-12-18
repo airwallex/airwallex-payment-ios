@@ -20,6 +20,7 @@ class PaymentMethodsViewController: AWXViewController {
     enum Section: Int, Hashable, CaseIterable {
         case applePay
         case methodList
+        case cardConsent
         @MainActor func items(methodProvider: PaymentMethodProvider) -> [String] {
             switch self {
             case .applePay:
@@ -36,6 +37,8 @@ class PaymentMethodsViewController: AWXViewController {
                     }
                 }
                 return methods
+            case .cardConsent:
+                return methodProvider.consents.map { $0.id }
             }
         }
     }
@@ -104,8 +107,30 @@ class PaymentMethodsViewController: AWXViewController {
                     section.contentInsets = .init(top: 24, leading: 16, bottom: 24, trailing: 16)
                     section.interGroupSpacing = 8
                     return section
+                case .cardConsent:
+                    let itemSize = NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .fractionalHeight(1)
+                    )
+                    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                    
+                    let groupSize = NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(56)
+                    )
+                    let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+                    let section = NSCollectionLayoutSection(group: group)
+                    section.contentInsets = .init(top: .spacing_16, leading: .spacing_16, bottom: .spacing_16, trailing: .spacing_16)
+                    
+                    let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(32))
+                    let header = NSCollectionLayoutBoundarySupplementaryItem(
+                        layoutSize: headerSize,
+                        elementKind: Self.sectionHeaderElementKind,
+                        alignment: .top
+                    )
+                    section.boundarySupplementaryItems = [header]
+                    return section
                 }
-                
             },
             configuration: configuration
         )
@@ -204,6 +229,15 @@ class PaymentMethodsViewController: AWXViewController {
             forSupplementaryViewOfKind: Self.sectionFooterElementKind,
             withReuseIdentifier: PaymentMethodListSeparator.reuseIdentifier
         )
+        collectionView.register(
+            CardPaymentSectionHeader.self,
+            forSupplementaryViewOfKind: Self.sectionHeaderElementKind,
+            withReuseIdentifier: CardPaymentSectionHeader.reuseIdentifier
+        )
+        collectionView.register(
+            PaymentConsentCell.self,
+            forCellWithReuseIdentifier: PaymentConsentCell.reuseIdentifier
+        )
     }
     
     private func configDataSource() {
@@ -247,6 +281,31 @@ class PaymentMethodsViewController: AWXViewController {
                 )
                 cell.setup(viewModel)
                 return cell
+            case .cardConsent:
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: PaymentConsentCell.reuseIdentifier,
+                    for: indexPath
+                ) as! PaymentConsentCell
+                guard let consent = methodProvider.consent(identifier: itemIdentifier),
+                      let card = consent.paymentMethod?.card,
+                      let brand = card.brand else {
+                    assert(false, "invalid card consent")
+                    return cell
+                }
+                
+                var image: UIImage? = nil
+                if let cardBrand = AWXCardValidator.shared().brand(forCardName: brand) {
+                    image = UIImage.image(for: cardBrand.type)
+                }
+                let viewModel = PaymentConsentCellViewModel(
+                    image: image,
+                    text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
+                    buttonAction: { [weak self] in
+                        self?.showTODO()
+                    }
+                )
+                cell.setup(viewModel)
+                return cell
             }
         }
         
@@ -261,7 +320,28 @@ class PaymentMethodsViewController: AWXViewController {
             guard let section = Section(rawValue: indexPath.section) else { fatalError("section not found") }
             switch section {
             case .applePay:
-                return collectionView.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: PaymentMethodListSeparator.reuseIdentifier, for: indexPath)
+                return collectionView.dequeueReusableSupplementaryView(
+                    ofKind: elementKind,
+                    withReuseIdentifier: PaymentMethodListSeparator.reuseIdentifier,
+                    for: indexPath
+                )
+            case .cardConsent:
+                let view = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: elementKind,
+                    withReuseIdentifier: CardPaymentSectionHeader.reuseIdentifier,
+                    for: indexPath
+                ) as! CardPaymentSectionHeader
+                
+                let viewModel = CardPaymentSectionHeaderViewModel(
+                    title: NSLocalizedString("Choose a card", comment: ""),
+                    actionTitle: NSLocalizedString("Add new", bundle: .payment, comment: ""),
+                    buttonAction: { [weak self] in
+                        guard let self else { return }
+                        showTODO()
+                    }
+                )
+                view.setup(viewModel)
+                return view
             default:
                 return nil
             }
@@ -271,6 +351,13 @@ class PaymentMethodsViewController: AWXViewController {
     @objc
     public func foo() {
         AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+    }
+    
+    func showTODO() {
+        // TODO: Add new card
+        let alert = UIAlertController(title: "TODO", message: "Add new card", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "DONE", style: .default))
+        self.present(alert, animated: true)
     }
 }
 
@@ -285,22 +372,40 @@ extension PaymentMethodsViewController: AWXPageViewTrackable {
 extension PaymentMethodsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard Section(rawValue: indexPath.section) == .methodList,
-              let item = dataSource.itemIdentifier(for: indexPath),
-              let methodType = methodProvider.method(named: item) else {
+        guard let section = Section(rawValue: indexPath.section),
+              let item = dataSource.itemIdentifier(for: indexPath) else {
             return
         }
         
-        selectedMethod = item
-        
-        var snapshot = dataSource.snapshot()
-        let identifiers = snapshot.itemIdentifiers(inSection: .methodList)
-        snapshot.reloadItems(identifiers)
-        dataSource.apply(snapshot)
-
-        // TODO: update UI or start payment
-        
-        
-        AWXAnalyticsLogger().logAction(withName: "select_payment", additionalInfo: [ "paymentMethod": methodType.name ])
+        switch section {
+        case .methodList:
+            guard let methodType = methodProvider.method(named: item) else {
+                assert(false, "payment method type not found")
+                return
+            }
+            selectedMethod = item
+            var snapshot = dataSource.snapshot()
+            let identifiers = snapshot.itemIdentifiers(inSection: .methodList)
+            snapshot.reloadItems(identifiers)
+            dataSource.apply(snapshot)
+        case .cardConsent:
+            guard let consent = methodProvider.consent(identifier: item) else { return  }
+            if consent.paymentMethod?.card?.numberType == "PAN" {
+                let vc = AWXPaymentViewController(nibName: nil, bundle: nil)
+                vc.delegate = AWXUIContext.shared().delegate
+                vc.session = methodProvider.session
+                vc.paymentConsent = consent
+                navigationController?.pushViewController(vc, animated: true)
+            } else {
+                paymentUISession = PaymentUISessionHandler(
+                    session: methodProvider.session,
+                    paymentConsent: consent,
+                    viewController: self
+                )
+                paymentUISession?.startPayment()
+            }
+        default:
+            break
+        }
     }
 }

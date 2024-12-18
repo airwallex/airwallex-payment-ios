@@ -13,6 +13,7 @@ extension UIColor {
     static var awxBackgroundPrimary: UIColor { UIColor(dynamicLightColor: awxWhite, darkColor: awxGray100) }
     static var awxBackgroundSecondary: UIColor { UIColor(dynamicLightColor: awxGray10, darkColor: awxGray90) }
     static var awxBackgroundHighlight: UIColor { UIColor(dynamicLightColor: awxPurple5, darkColor: awxPurple90) }
+    static var awxBackgroundInteractive: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
     
     // border
     static var awxBorderDecorative: UIColor { UIColor(dynamicLightColor: awxGray20, darkColor: awxGray80) }
@@ -20,6 +21,7 @@ extension UIColor {
     
     // Icon
     static var awxIconPrimary: UIColor { UIColor(dynamicLightColor: awxGray80, darkColor: awxGray30) }
+    static var awxIconLink: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
     
     // text
     static var awxTextLink: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }

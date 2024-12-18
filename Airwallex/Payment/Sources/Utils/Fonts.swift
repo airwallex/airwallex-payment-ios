@@ -16,6 +16,9 @@
 //Heavy/Black: [800] (both can map to higher numeric values)
 
 extension UIFont {
+    
+    static var awxHeadline400: UIFont { UIFont.boldSystemFont(ofSize: 14)}
+    
     static var awxBody: UIFont { UIFont.systemFont(ofSize: 14) }
     static var awxBodyBold: UIFont { UIFont.boldSystemFont(ofSize: 14) }
     

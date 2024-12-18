@@ -25,7 +25,10 @@ extension CGFloat {
 }
 
 extension CGFloat {
+    /// 2.0
     static let radius_s: CGFloat = 2
+    /// 4.0
     static let radius_m: CGFloat = 4
+    /// 6.0
     static let radius_l: CGFloat = 6
 }

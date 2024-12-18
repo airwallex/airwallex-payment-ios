@@ -63,10 +63,11 @@ final class PaymentMethodProvider {
         }
         //  filter consents
         set.removeAll()
-        for consent in consents {
-            if set.contains(consent.id) { continue}
-            filteredConsents.append(consent)
+        filteredConsents = consents.filter { consent in
+            guard consent.paymentMethod?.card?.brand != nil,
+                  !set.contains(consent.id) else { return false }
             set.insert(consent.id)
+            return true
         }
         
         self.methods = filteredMethods

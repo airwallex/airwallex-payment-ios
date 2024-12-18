@@ -19,6 +19,8 @@ class PaymentUISessionHandler: NSObject, SwiftLoggable {
     /// how to avoid force unwrap here
     weak var viewController: AWXViewController!
     
+    private var paymentConsent: AWXPaymentConsent?
+    
     init?(session: AWXSession,
          methodType: AWXPaymentMethodType,
          viewController: AWXViewController) {
@@ -32,8 +34,23 @@ class PaymentUISessionHandler: NSObject, SwiftLoggable {
         actionProvider = actionProviderClass.init(delegate: self, session: session, paymentMethodType: methodType)
     }
     
+    init(session: AWXSession,
+         paymentConsent: AWXPaymentConsent,
+         viewController: AWXViewController) {
+        self.session = session
+        self.viewController = viewController
+        self.paymentConsent = paymentConsent
+        
+        super.init()
+        actionProvider = AWXDefaultProvider(delegate: self, session: session)
+    }
+    
     func startPayment() {
-        actionProvider.handleFlow()
+        if let paymentMethod = paymentConsent?.paymentMethod {
+            actionProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: paymentConsent)
+        } else {
+            actionProvider.handleFlow()
+        }
     }
 }
 
