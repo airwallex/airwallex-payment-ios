@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target   = '13.0'
   s.static_framework        = true
   s.default_subspecs        = 'Core', 'WeChatPay', 'Card', 'Redirect', 'ApplePay'
+  s.swift_versions          = '5.0'
   
   s.subspec 'Core' do |plugin|
     plugin.source_files = 'Airwallex/Core/Sources/**/*.{swift,h,m}'
@@ -22,6 +23,7 @@ Pod::Spec.new do |s|
     plugin.dependency 'Airwallex/Core'
     plugin.source_files = 'Airwallex/WeChatPay/**/*.{h,m}'
     plugin.public_header_files = 'Airwallex/WeChatPay/*.h'
+    plugin.frameworks =  'Security', 'UIKit', 'CoreGraphics', 'WebKit'
     plugin.vendored_frameworks = 'Frameworks/WechatOpenSDK.xcframework'
   end
   
