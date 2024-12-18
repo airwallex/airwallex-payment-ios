@@ -252,13 +252,8 @@ class CartViewController: UIViewController {
         if (UserDefaults.standard.bool(forKey: kCachedCardMethodOnly)) {
             context.presentCardPaymentFlow(from: self, cardSchemes: [.visa, .mastercard])
         } else {
-            // wpdebug
-            do {
-                context.presentPaymentViewController(from: self)
-                return
-            }
-            
-            context.presentEntirePaymentFlow(from: self)
+//            context.presentEntirePaymentFlow(from: self)
+            context.presentPaymentViewController(from: self)
         }
     }
     

@@ -20,12 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  One of one-off / recurring / recurring with intent session.
  */
-@property (nonatomic, strong) AWXSession *session;
+@property (nonatomic, strong, nullable) AWXSession *session;
 
 /**
  Provider to handle session
  */
-@property (nonatomic, strong) AWXDefaultProvider *provider;
+@property (nonatomic, strong, nullable) AWXDefaultProvider *provider;
 
 /**
  Show loading activity.

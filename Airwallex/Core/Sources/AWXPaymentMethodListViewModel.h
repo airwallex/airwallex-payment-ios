@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^PaymentMethodsAndConsentsCompletionHandler)(NSArray<AWXPaymentMethodType *> *methods, NSArray<AWXPaymentConsent *> *consents, NSError *_Nullable error);
 
+@property (nonatomic, readonly) AWXSession *session;
+
 - (instancetype)initWithSession:(AWXSession *)session APIClient:(AWXAPIClient *)client;
 
 - (void)fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:(PaymentMethodsAndConsentsCompletionHandler)completionHandler;

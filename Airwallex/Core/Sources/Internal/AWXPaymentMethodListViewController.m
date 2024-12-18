@@ -372,7 +372,7 @@
     self.provider = actionProvider;
 }
 
-- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation {
+- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation {
     if (forceToDismiss) {
         [self.presentedViewController dismissViewControllerAnimated:YES
                                                          completion:^{
