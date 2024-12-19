@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LabelHeader: UICollectionReusableView, ViewReusable {
+class LabelHeader: UICollectionReusableView, UICollectionSupplementaryViewReusable {
     lazy var label: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false

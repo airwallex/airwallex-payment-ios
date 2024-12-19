@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 @MainActor
 final class PaymentMethodProvider {
@@ -16,6 +17,13 @@ final class PaymentMethodProvider {
     }
     var session: AWXSession {
         provider.session
+    }
+    
+    let publisher = PassthroughSubject<Void, Never>()
+    var selectedMethod: AWXPaymentMethodType? {
+        didSet {
+            publisher.send()
+        }
     }
     
     private(set) var methods = [AWXPaymentMethodType]()
@@ -72,6 +80,7 @@ final class PaymentMethodProvider {
         
         self.methods = filteredMethods
         self.consents = filteredConsents
+        publisher.send()
     }
     
     func method(named name: String) -> AWXPaymentMethodType? {
@@ -80,6 +89,30 @@ final class PaymentMethodProvider {
     
     func consent(identifier: String) -> AWXPaymentConsent? {
         consents.first { $0.id == identifier }
+    }
+    
+    func disable(consent: AWXPaymentConsent) async throws {
+        try await requestDisable(consent)
+        if let index = consents.firstIndex(where: { $0.id == consent.id }) {
+            consents.remove(at: index)
+            publisher.send()
+        }
+    }
+    
+    private func requestDisable(_ consent: AWXPaymentConsent) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            let request = AWXDisablePaymentConsentRequest()
+            request.requestId = NSUUID().uuidString
+            request.id = consent.id
+            let client = AWXAPIClient(configuration: .shared())
+            client.send(request) { response, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
+        }
     }
 }
 

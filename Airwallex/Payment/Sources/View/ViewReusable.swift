@@ -18,6 +18,10 @@ extension ViewReusable {
     }
 }
 
+protocol UICollectionSupplementaryViewReusable: UICollectionReusableView, ViewReusable {}
+
+protocol UICollectionViewCellReusable: UICollectionViewCell, ViewReusable {}
+
 protocol ViewConfigurable {
     associatedtype ViewModel
     var viewModel: ViewModel? { get }

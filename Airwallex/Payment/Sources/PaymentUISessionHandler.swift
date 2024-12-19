@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaymentUISessionHandler: NSObject, SwiftLoggable {
+class PaymentUISessionHandler: NSObject {
     
     var showCardDirectly = false
     
@@ -144,3 +144,5 @@ extension SwiftLoggable {
         NSObject.logMesage("----Airwallex SDK----\(file)----\(functionName)----\(line)---\n \(message))")
     }
 }
+
+extension NSObject: SwiftLoggable {}
