@@ -34,10 +34,7 @@ final class PaymentMethodProvider {
     }
     
     var isApplePayAvailable: Bool {
-        guard let applePay = methods.first(where: { $0.name == AWXApplePayKey }) else {
-            return false
-        }
-        return true
+        return methods.contains { $0.name == AWXApplePayKey }
     }
     
     func fetchPaymentMethods() async throws {
@@ -87,7 +84,7 @@ final class PaymentMethodProvider {
         methods.first { $0.name.lowercased() == name.lowercased() }
     }
     
-    func consent(identifier: String) -> AWXPaymentConsent? {
+    func consent(for identifier: String) -> AWXPaymentConsent? {
         consents.first { $0.id == identifier }
     }
     

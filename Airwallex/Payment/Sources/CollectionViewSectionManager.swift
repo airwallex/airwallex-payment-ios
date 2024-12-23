@@ -93,20 +93,17 @@ class CollectionViewSectionManager<SectionType: Hashable & Sendable, ItemType: H
     func reloadData() {
         guard let sectionDataSource else { return }
         sections = sectionDataSource.sections()
-        for section in sections {
-            if sectionControllers[section] != nil { continue }
-            var sectionController = sectionDataSource.sectionController(for: section)
-            sectionController.bind(context: context)
-            sectionController.registerReusableViews(to: collectionView)
-            sectionControllers[section] = sectionController
-            
-        }
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
         snapshot.appendSections(sections)
         for section in sections {
-            let controller = sectionControllers[section]
-            controller?.reload()
-            let items = controller?.items ?? []
+            if sectionControllers[section] != nil { continue }
+            var controller = sectionDataSource.sectionController(for: section)
+            controller.bind(context: context)
+            controller.registerReusableViews(to: collectionView)
+            sectionControllers[section] = controller
+            
+            controller.reload()
+            let items = controller.items
             snapshot.appendItems(items, toSection: section)
         }
         diffableDataSource.apply(snapshot)

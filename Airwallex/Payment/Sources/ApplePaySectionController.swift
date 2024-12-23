@@ -13,9 +13,9 @@ class ApplePaySectionController: SectionController {
     var context: CollectionViewContext<PaymentSectionType, String>!
 
     let section = PaymentSectionType.applePay
-    private(set) var session: AWXSession
-    private(set) var methodType: AWXPaymentMethodType
-    private var paymentSessionHandler: PaymentUISessionHandler?
+    let session: AWXSession
+    let methodType: AWXPaymentMethodType
+    let paymentSessionHandler: PaymentUISessionHandler?
     private(set) var items: [String]
     
     init(session: AWXSession, methodType: AWXPaymentMethodType, viewController: AWXViewController) {
