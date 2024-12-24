@@ -49,11 +49,11 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             XCTAssertEqualObjects(response, getPaymentMethodsResponseMock);
-             XCTAssertNil(error);
-             [expectation fulfill];
-         }];
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            XCTAssertEqualObjects(response, getPaymentMethodsResponseMock);
+            XCTAssertNil(error);
+            [expectation fulfill];
+        }];
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 
@@ -81,10 +81,10 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             XCTAssertEqualObjects(error.localizedDescription, errorResponseMock.message);
-             [expectation fulfill];
-         }];
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            XCTAssertEqualObjects(error.localizedDescription, errorResponseMock.message);
+            [expectation fulfill];
+        }];
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 
@@ -109,10 +109,10 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             XCTAssertEqualObjects(error.localizedDescription, @"Couldn't parse response.");
-             [expectation fulfill];
-         }];
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            XCTAssertEqualObjects(error.localizedDescription, @"Couldn't parse response.");
+            [expectation fulfill];
+        }];
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 
@@ -137,10 +137,10 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration new]];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Get payment method list"];
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             XCTAssertEqual(error.localizedDescription, mockError.localizedDescription);
-             [expectation fulfill];
-         }];
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            XCTAssertEqual(error.localizedDescription, mockError.localizedDescription);
+            [expectation fulfill];
+        }];
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 

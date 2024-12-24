@@ -213,7 +213,7 @@ static BOOL _localLogFileEnabled = NO;
     return self;
 }
 
-- (void)send:(AWXRequest *)request handler:(AWXRequestHandler)handler {
+- (void)send:(AWXRequest *)request withCompletionHandler:(AWXRequestHandler)handler {
     NSString *method = @"POST";
     NSURL *url = [NSURL URLWithString:request.path relativeToURL:self.configuration.baseURL];
 

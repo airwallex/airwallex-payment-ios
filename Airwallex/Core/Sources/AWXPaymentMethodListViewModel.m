@@ -95,13 +95,13 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
             request.pageNum = pageNum;
             request.pageSize = 20;
             [strongSelf.client send:request
-                            handler:^(AWXResponse *_Nullable response, NSError *_Nullable responseError) {
-                                AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
-                                pageCompletion(^(id<AWXPage> __autoreleasing *page, NSError *__autoreleasing *error) {
-                                    *page = result;
-                                    *error = responseError;
-                                });
-                            }];
+                withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable responseError) {
+                    AWXGetPaymentMethodTypesResponse *result = (AWXGetPaymentMethodTypesResponse *)response;
+                    pageCompletion(^(id<AWXPage> __autoreleasing *page, NSError *__autoreleasing *error) {
+                        *page = result;
+                        *error = responseError;
+                    });
+                }];
         }
         items:[NSMutableArray new]
         pageNum:0
@@ -124,13 +124,13 @@ typedef void (^ItemsResult)(NSArray *__autoreleasing *items, NSError *__autorele
             request.pageNum = pageNum;
             request.pageSize = 20;
             [strongSelf.client send:request
-                            handler:^(AWXResponse *_Nullable response, NSError *_Nullable responseError) {
-                                AWXGetPaymentConsentsResponse *result = (AWXGetPaymentConsentsResponse *)response;
-                                pageCompletion(^(id<AWXPage> __autoreleasing *page, NSError *__autoreleasing *error) {
-                                    *page = result;
-                                    *error = responseError;
-                                });
-                            }];
+                withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable responseError) {
+                    AWXGetPaymentConsentsResponse *result = (AWXGetPaymentConsentsResponse *)response;
+                    pageCompletion(^(id<AWXPage> __autoreleasing *page, NSError *__autoreleasing *error) {
+                        *page = result;
+                        *error = responseError;
+                    });
+                }];
         }
         items:[NSMutableArray new]
         pageNum:0

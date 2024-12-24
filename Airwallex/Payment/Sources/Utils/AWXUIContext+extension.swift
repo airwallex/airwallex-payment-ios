@@ -13,9 +13,9 @@ fileprivate var foo = true
 
 public extension AWXUIContext {
     @MainActor func presentPaymentViewController(from hostingVC: UIViewController) {
+        foo.toggle()
         //          wpdebug
         if foo {
-            foo.toggle()
             presentEntirePaymentFlow(from: hostingVC)
             return
         }
@@ -37,6 +37,5 @@ public extension AWXUIContext {
         nav.navigationBar.scrollEdgeAppearance = appearance
         nav.navigationBar.compactAppearance = appearance
         hostingVC.present(nav, animated: true)
-        foo.toggle()
     }
 }

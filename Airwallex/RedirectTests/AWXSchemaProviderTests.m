@@ -46,7 +46,7 @@
     AWXGetPaymentMethodTypeResponse *response = [AWXGetPaymentMethodTypeResponse new];
 
     NSError *error = [NSError errorWithDomain:@"" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"error."}];
-    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypeRequest class]] handler:([OCMArg invokeBlockWithArgs:response, error, nil])]);
+    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypeRequest class]] withCompletionHandler:([OCMArg invokeBlockWithArgs:response, error, nil])]);
 
     [provider handleFlow];
 
@@ -64,7 +64,7 @@
     AWXGetPaymentMethodTypeResponse *response = [AWXGetPaymentMethodTypeResponse new];
     response.schemas = @[];
 
-    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypeRequest class]] handler:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
+    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypeRequest class]] withCompletionHandler:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
 
     [provider handleFlow];
 
@@ -120,7 +120,7 @@
 
     AWXGetPaymentMethodTypeResponse *response = [AWXGetPaymentMethodTypeResponse new];
     response.schemas = @[schema];
-    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypeRequest class]] handler:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
+    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypeRequest class]] withCompletionHandler:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
 
     AWXResponse *banksResponse;
     if (hasBanks) {
@@ -132,7 +132,7 @@
     } else {
         banksResponse = [AWXGetAvailableBanksResponse new];
     }
-    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXGetAvailableBanksRequest class]] handler:([OCMArg invokeBlockWithArgs:banksResponse, [NSNull null], nil])]);
+    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXGetAvailableBanksRequest class]] withCompletionHandler:([OCMArg invokeBlockWithArgs:banksResponse, [NSNull null], nil])]);
     return provider;
 }
 

@@ -12,9 +12,6 @@ import Combine
 @MainActor
 final class PaymentMethodProvider {
     private let provider: AWXPaymentMethodListViewModel
-    enum Foo: String {
-        case one
-    }
     var session: AWXSession {
         provider.session
     }
@@ -89,26 +86,14 @@ final class PaymentMethodProvider {
     }
     
     func disable(consent: AWXPaymentConsent) async throws {
-        try await requestDisable(consent)
+        let request = AWXDisablePaymentConsentRequest()
+        request.requestId = NSUUID().uuidString
+        request.id = consent.id
+        let client = AWXAPIClient(configuration: .shared())
+        try await client.send(request)
         if let index = consents.firstIndex(where: { $0.id == consent.id }) {
             consents.remove(at: index)
             publisher.send()
-        }
-    }
-    
-    private func requestDisable(_ consent: AWXPaymentConsent) async throws {
-        return try await withCheckedThrowingContinuation { continuation in
-            let request = AWXDisablePaymentConsentRequest()
-            request.requestId = NSUUID().uuidString
-            request.id = consent.id
-            let client = AWXAPIClient(configuration: .shared())
-            client.send(request) { response, error in
-                if let error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume()
-                }
-            }
         }
     }
 }
