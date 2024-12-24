@@ -7,9 +7,6 @@
 //
 
 import UIKit
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
 import Combine
 
 class PaymentMethodsViewController: AWXViewController {
