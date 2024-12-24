@@ -34,6 +34,10 @@ final class PaymentMethodProvider {
         return methods.contains { $0.name == AWXApplePayKey }
     }
     
+    var applePayMethodType: AWXPaymentMethodType? {
+        methods.first { $0.name == AWXApplePayKey }
+    }
+    
     func fetchPaymentMethods() async throws {
         let (methods, consents) = try await provider.fetchAvailablePaymentMethodsAndConsents()
         // even if there is no paymmentMethods defined in session, we still need to

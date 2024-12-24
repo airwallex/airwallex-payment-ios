@@ -121,7 +121,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
         case .applePay:
             let controller = ApplePaySectionController(
                 session: methodProvider.session,
-                methodType: methodProvider.method(named: AWXApplePayKey)!,
+                methodType: methodProvider.applePayMethodType!,
                 viewController: self
             )
             return controller.anySectionController()
