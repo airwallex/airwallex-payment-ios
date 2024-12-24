@@ -53,11 +53,7 @@ class CollectionViewSectionManager<SectionType: Hashable & Sendable, ItemType: H
         
         if let boundaryItems {
             for item in boundaryItems {
-                collectionView.register(
-                    item.reusableView,
-                    forSupplementaryViewOfKind: item.elementKind,
-                    withReuseIdentifier: item.reusableView.reuseIdentifier
-                )
+                collectionView.register(item.reusableView, forSupplementaryViewOfKind: item.elementKind)
             }
         }
         

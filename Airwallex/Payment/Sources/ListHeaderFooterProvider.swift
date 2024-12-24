@@ -11,5 +11,5 @@ import Foundation
 struct BoundarySupplementaryItemProvider {
     let elementKind: String
     let layout: NSCollectionLayoutBoundarySupplementaryItem
-    let reusableView: UICollectionSupplementaryViewReusable.Type
+    let reusableView: (UICollectionReusableView & ViewReusable).Type
 }

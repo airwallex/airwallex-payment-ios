@@ -110,15 +110,8 @@ class CardPaymentConsentSectionController: SectionController {
     }
     
     func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.register(
-            CardPaymentSectionHeader.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: CardPaymentSectionHeader.reuseIdentifier
-        )
-        collectionView.register(
-            PaymentConsentCell.self,
-            forCellWithReuseIdentifier: PaymentConsentCell.reuseIdentifier
-        )
+        collectionView.registerReusableCell(PaymentConsentCell.self)
+        collectionView.registerSectionHeader(CardPaymentSectionHeader.self)
     }
     
     private var paymentSessionHandler: PaymentUISessionHandler?

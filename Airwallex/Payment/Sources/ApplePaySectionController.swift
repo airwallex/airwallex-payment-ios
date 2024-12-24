@@ -30,10 +30,7 @@ class ApplePaySectionController: SectionController {
     }
     
     func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.register(
-            ApplePayCell.self,
-            forCellWithReuseIdentifier: ApplePayCell.reuseIdentifier
-        )
+        collectionView.registerReusableCell(ApplePayCell.self)
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {

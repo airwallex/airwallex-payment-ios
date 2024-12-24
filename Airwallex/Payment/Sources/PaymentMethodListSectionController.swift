@@ -30,15 +30,8 @@ class PaymentMethodListSectionController: SectionController {
     }
     
     func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.register(
-            PaymentMethodCell.self,
-            forCellWithReuseIdentifier: PaymentMethodCell.reuseIdentifier
-        )
-        collectionView.register(
-            PaymentMethodListSeparator.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: PaymentMethodListSeparator.reuseIdentifier
-        )
+        collectionView.registerReusableCell(PaymentMethodCell.self)
+        collectionView.registerSectionHeader(PaymentMethodListSeparator.self)
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
