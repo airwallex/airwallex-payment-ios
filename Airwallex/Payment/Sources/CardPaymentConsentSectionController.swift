@@ -12,7 +12,7 @@ class CardPaymentConsentSectionController: SectionController {
     
     private(set)var context: CollectionViewContext<PaymentSectionType, String>!
     
-    var section: PaymentSectionType
+    let section: PaymentSectionType
     
     var items: [String] {
         consents.map { $0.id }

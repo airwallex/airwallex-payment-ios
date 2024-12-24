@@ -10,7 +10,7 @@ import Foundation
 
 class ApplePaySectionController: SectionController {
     
-    var context: CollectionViewContext<PaymentSectionType, String>!
+    private(set) var context: CollectionViewContext<PaymentSectionType, String>!
 
     let section = PaymentSectionType.applePay
     let session: AWXSession

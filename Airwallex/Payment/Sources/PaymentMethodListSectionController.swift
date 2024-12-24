@@ -17,10 +17,10 @@ class PaymentMethodListSectionController: SectionController {
         methodTypes.map { $0.name }
     }
     
-    private(set) var session: AWXSession
+    let session: AWXSession
     private var paymentSessionHandler: PaymentUISessionHandler?
     private var selectedMethod: AWXPaymentMethodType?
-    private var methodTypes: [AWXPaymentMethodType]
+    let methodTypes: [AWXPaymentMethodType]
     
     init(section: PaymentSectionType, methodTypes: [AWXPaymentMethodType], session: AWXSession) {
         self.section = section
