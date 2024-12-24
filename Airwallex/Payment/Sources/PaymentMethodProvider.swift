@@ -87,7 +87,7 @@ final class PaymentMethodProvider {
     
     func disable(consent: AWXPaymentConsent) async throws {
         let request = AWXDisablePaymentConsentRequest()
-        request.requestId = NSUUID().uuidString
+        request.requestId = UUID().uuidString
         request.id = consent.id
         let client = AWXAPIClient(configuration: .shared())
         try await client.send(request)
