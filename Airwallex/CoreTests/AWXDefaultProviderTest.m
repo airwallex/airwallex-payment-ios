@@ -102,7 +102,7 @@ NSString *const kMockKey = @"MOCK";
                                     XCTAssert(request.options.cardOptions.autoCapture);
                                     return YES;
                                 }]
-                             handler:[OCMArg any]]);
+                            withCompletionHandler:[OCMArg any]]);
 }
 
 - (void)testConfirmPaymentIntentWithApplePay {
@@ -121,7 +121,7 @@ NSString *const kMockKey = @"MOCK";
                                     XCTAssert(request.options.cardOptions.autoCapture);
                                     return YES;
                                 }]
-                             handler:[OCMArg any]]);
+                            withCompletionHandler:[OCMArg any]]);
 }
 
 - (void)testCreatePaymentConsentAndConfirmIntentWithOneOffSession {
@@ -291,7 +291,7 @@ NSString *const kMockKey = @"MOCK";
         XCTAssert([obj.device.deviceId isEqualToString:[AWXDevice deviceWithRiskSessionId].deviceId]);
         return YES;
     }];
-    OCMVerify(times(1), [client send:request handler:[OCMArg any]]);
+    OCMVerify(times(1), [client send:request withCompletionHandler:[OCMArg any]]);
 }
 
 - (void)createProviderAndMockWithSession:(AWXSession *)session {

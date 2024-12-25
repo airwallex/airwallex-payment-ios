@@ -31,8 +31,8 @@
     AWXResponse *methodsResponse = [AWXGetPaymentMethodTypesResponse parse:methodsData];
     AWXResponse *consentsResponse = [AWXGetPaymentConsentsResponse parse:consentsData];
 
-    OCMStub([_mockClient send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypesRequest class]] handler:([OCMArg invokeBlockWithArgs:methodsResponse, [NSNull null], nil])]);
-    OCMStub([_mockClient send:[OCMArg isKindOfClass:[AWXGetPaymentConsentsRequest class]] handler:([OCMArg invokeBlockWithArgs:consentsResponse, [NSNull null], nil])]);
+    OCMStub([_mockClient send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypesRequest class]] withCompletionHandler:([OCMArg invokeBlockWithArgs:methodsResponse, [NSNull null], nil])]);
+    OCMStub([_mockClient send:[OCMArg isKindOfClass:[AWXGetPaymentConsentsRequest class]] withCompletionHandler:([OCMArg invokeBlockWithArgs:consentsResponse, [NSNull null], nil])]);
 
     [viewModel fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:^(NSArray<AWXPaymentMethodType *> *_Nonnull methods, NSArray<AWXPaymentConsent *> *_Nonnull consents, NSError *_Nullable error) {
         XCTAssertEqual(methods.count, 5);
@@ -46,7 +46,7 @@
 - (void)testFetchAvailablePaymentMethodsAndConsentsWhenMethodsError {
     AWXPaymentMethodListViewModel *viewModel = [self mockViewModel];
     NSError *error = [[NSError alloc] initWithDomain:@"airwallex" code:100 userInfo:@{@"message": @"something"}];
-    OCMStub([_mockClient send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypesRequest class]] handler:([OCMArg invokeBlockWithArgs:[NSNull null], error, nil])]);
+    OCMStub([_mockClient send:[OCMArg isKindOfClass:[AWXGetPaymentMethodTypesRequest class]] withCompletionHandler:([OCMArg invokeBlockWithArgs:[NSNull null], error, nil])]);
 
     [viewModel fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:^(NSArray<AWXPaymentMethodType *> *_Nonnull methods, NSArray<AWXPaymentConsent *> *_Nonnull consents, NSError *_Nullable responseError) {
         XCTAssertEqual(responseError, error);
@@ -56,7 +56,7 @@
 - (void)testFetchAvailablePaymentMethodsAndConsentsWhenConsentsError {
     AWXPaymentMethodListViewModel *viewModel = [self mockViewModel];
     NSError *error = [[NSError alloc] initWithDomain:@"airwallex" code:100 userInfo:@{@"message": @"something"}];
-    OCMStub([_mockClient send:[OCMArg isKindOfClass:[AWXGetPaymentConsentsRequest class]] handler:([OCMArg invokeBlockWithArgs:[NSNull null], error, nil])]);
+    OCMStub([_mockClient send:[OCMArg isKindOfClass:[AWXGetPaymentConsentsRequest class]] withCompletionHandler:([OCMArg invokeBlockWithArgs:[NSNull null], error, nil])]);
 
     [viewModel fetchAvailablePaymentMethodsAndConsentsWithCompletionHandler:^(NSArray<AWXPaymentMethodType *> *_Nonnull methods, NSArray<AWXPaymentConsent *> *_Nonnull consents, NSError *_Nullable responseError) {
         XCTAssertEqual(responseError, error);

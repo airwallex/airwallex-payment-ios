@@ -113,7 +113,7 @@
                                     XCTAssertEqual(request.device, self.device);
                                     return YES;
                                 }]
-                             handler:[OCMArg any]]);
+                            withCompletionHandler:[OCMArg any]]);
 }
 
 - (void)testConfirmPaymentIntentWithPanPaymentConsent {
@@ -154,7 +154,7 @@
                                     XCTAssertEqual(request.device, self.device);
                                     return YES;
                                 }]
-                             handler:[OCMArg any]]);
+                            withCompletionHandler:[OCMArg any]]);
 }
 
 - (void)testPaymentResultDelegate {
@@ -224,7 +224,7 @@
     AWXCreatePaymentMethodResponse *response = [AWXCreatePaymentMethodResponse new];
 
     //    NSError *error = [NSError errorWithDomain:@"" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"error."}];
-    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXCreatePaymentMethodRequest class]] handler:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
+    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXCreatePaymentMethodRequest class]] withCompletionHandler:([OCMArg invokeBlockWithArgs:response, [NSNull null], nil])]);
 
     id spy = OCMClassMock([AWXProviderDelegateSpy class]);
     AWXOneOffSession *session = [AWXOneOffSession new];
@@ -248,7 +248,7 @@
     AWXCreatePaymentMethodResponse *response = [AWXCreatePaymentMethodResponse new];
 
     NSError *error = [NSError errorWithDomain:@"" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"error."}];
-    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXCreatePaymentMethodRequest class]] handler:([OCMArg invokeBlockWithArgs:response, error, nil])]);
+    OCMStub([apiClientMock send:[OCMArg isKindOfClass:[AWXCreatePaymentMethodRequest class]] withCompletionHandler:([OCMArg invokeBlockWithArgs:response, error, nil])]);
 
     id spy = OCMClassMock([AWXProviderDelegateSpy class]);
     AWXOneOffSession *session = [AWXOneOffSession new];

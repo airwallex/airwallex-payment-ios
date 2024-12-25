@@ -104,7 +104,7 @@
                                     XCTAssertEqualObjects(request.paymentMethod.additionalParams, dict);
                                     return YES;
                                 }]
-                             handler:[OCMArg any]]);
+                            withCompletionHandler:[OCMArg any]]);
 }
 
 - (void)testConfirmPaymentIntentWithPaymentMethodNameVariations {
