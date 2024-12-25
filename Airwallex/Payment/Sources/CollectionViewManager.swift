@@ -1,5 +1,5 @@
 //
-//  CollectionViewSectionManager.swift
+//  CollectionViewManager.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/18.
@@ -16,7 +16,7 @@ protocol CollectionViewSectionProvider: AnyObject {
 }
 
 @MainActor
-class CollectionViewSectionManager<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable, SectionProvider: CollectionViewSectionProvider>: NSObject, UICollectionViewDelegate where SectionProvider.SectionType == SectionType, SectionProvider.ItemType == ItemType {
+class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable, SectionProvider: CollectionViewSectionProvider>: NSObject, UICollectionViewDelegate where SectionProvider.SectionType == SectionType, SectionProvider.ItemType == ItemType {
     
     private weak var sectionDataSource: SectionProvider?
     private var sections = [SectionType]()
@@ -83,7 +83,11 @@ class CollectionViewSectionManager<SectionType: Hashable & Sendable, ItemType: H
             
             return sectionController.supplementaryView(for: collectionView, ofKind: elementKind, at: indexPath)
         }
-        self.context = CollectionViewContext(viewController: viewController, dataSource: diffableDataSource)
+        self.context = CollectionViewContext(
+            viewController: viewController,
+            dataSource: diffableDataSource,
+            reloadData: reloadData
+        )
     }
     
     func reloadData() {
@@ -105,7 +109,7 @@ class CollectionViewSectionManager<SectionType: Hashable & Sendable, ItemType: H
             snapshot.appendItems(items, toSection: section)
         }
         diffableDataSource.apply(snapshot)
-     }
+    }
     
     func sectionController(for section: SectionType) -> AnySectionController<SectionType, ItemType>? {
         sectionControllers[section]
@@ -122,10 +126,14 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     
     weak var viewController: AWXViewController?
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>
+    var reloadData: () -> Void
     
-    init(viewController: AWXViewController, dataSource: UICollectionViewDiffableDataSource<Section, Item>) {
+    init(viewController: AWXViewController, 
+         dataSource: UICollectionViewDiffableDataSource<Section, Item>,
+         reloadData: @escaping () -> Void) {
         self.viewController = viewController
         self.dataSource = dataSource
+        self.reloadData = reloadData
     }
     
     func currentSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {

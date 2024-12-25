@@ -27,12 +27,10 @@ class PaymentMethodsViewController: AWXViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    private var sectionProvider: SectionProvider<String, String, any SectionController, SectionProviderDataSource>
-    lazy var sectionProvider: CollectionViewSectionManager = {
-        let provider = CollectionViewSectionManager(
+    lazy var sectionProvider: CollectionViewManager = {
+        let provider = CollectionViewManager(
             viewController: self,
-            sectionProvider: self,
-            listConfiguration: UICollectionViewCompositionalLayoutConfiguration()
+            sectionProvider: self
         )
         return provider
     }()
@@ -59,6 +57,16 @@ class PaymentMethodsViewController: AWXViewController {
         token = methodProvider.publisher.sink {[weak self] _ in
             self?.sectionProvider.reloadData()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        registerKeyboard()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        unregisterKeyboard()
     }
     
     private func setupUI() {
@@ -90,6 +98,10 @@ class PaymentMethodsViewController: AWXViewController {
     @objc public func onCloseButtonTapped() {
         AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
     }
+    
+    override func activeScrollView() -> UIScrollView {
+        return sectionProvider.collectionView
+    }
 }
 
 
@@ -108,10 +120,11 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
         }
         // horizontal list
         sections.append(.methodList)
-        if !methodProvider.consents.isEmpty {
-            sections.append(.cardPaymentConsent)
-        } else {
-            // TODO: add new card
+        
+        if let selectedMethodType = methodProvider.selectedMethod {
+            if selectedMethodType.name == "card" {
+                sections.append(.cardPaymentNew)
+            }
         }
         return sections
     }
@@ -139,6 +152,12 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
                 methodProvider: methodProvider
             )
             return controller.anySectionController()
+        case .cardPaymentNew:
+            let controller = NewCardPaymentSectionController(
+                section: section,
+                methodType: methodProvider.selectedMethod!
+            ).anySectionController()
+            return controller
         default:
             fatalError("unexpected section")
         }

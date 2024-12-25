@@ -12,12 +12,15 @@ extension UIColor {
     // background
     static var awxBackgroundPrimary: UIColor { UIColor(dynamicLightColor: awxWhite, darkColor: awxGray100) }
     static var awxBackgroundSecondary: UIColor { UIColor(dynamicLightColor: awxGray10, darkColor: awxGray90) }
+    static var awxBackgroundField: UIColor { UIColor(dynamicLightColor: awxGray5, darkColor: awxGray90) }
     static var awxBackgroundHighlight: UIColor { UIColor(dynamicLightColor: awxPurple5, darkColor: awxPurple90) }
     static var awxBackgroundInteractive: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
     
     // border
     static var awxBorderDecorative: UIColor { UIColor(dynamicLightColor: awxGray20, darkColor: awxGray80) }
+    static var awxBorderPerceivable: UIColor { UIColor(dynamicLightColor: awxGray50, darkColor: awxGray60) }
     static var awxBorderInterative: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
+    static var awxBorderError: UIColor { UIColor(dynamicLightColor: awxRed50, darkColor: awxRed60) }
     
     // Icon
     static var awxIconPrimary: UIColor { UIColor(dynamicLightColor: awxGray80, darkColor: awxGray30) }
@@ -27,12 +30,15 @@ extension UIColor {
     static var awxTextLink: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
     static var awxTextPrimary: UIColor { UIColor(dynamicLightColor: awxGray100, darkColor: awxGray10) }
     static var awxTextSecondary: UIColor { UIColor(dynamicLightColor: awxGray60, darkColor: awxGray50) }
+    static var awxTextPlaceholder: UIColor { UIColor(dynamicLightColor: awxGray50, darkColor: awxGray60) }
+    static var awxTextError: UIColor { UIColor(dynamicLightColor: awxRed60, darkColor: awxRed40) }
 }
 
 fileprivate extension UIColor {
     
     static var awxWhite: UIColor { UIColor.white }
     
+    static var awxGray5: UIColor { UIColor(hex: 0xFAFAFB) }
     static var awxGray10: UIColor { UIColor(hex: 0xF5F6F7) }
     static var awxGray20: UIColor { UIColor(hex: 0xE8EAED) }
     static var awxGray30: UIColor { UIColor(hex: 0xD0D4D9) }
@@ -46,4 +52,8 @@ fileprivate extension UIColor {
     static var awxPurple40: UIColor { UIColor(hex: 0xABA8FF) }
     static var awxPurple70: UIColor { UIColor(hex: 0x612FFF) }
     static var awxPurple90: UIColor { UIColor(hex: 0x320094) }
+    
+    static var awxRed40: UIColor { UIColor(hex: 0xFC796D) }
+    static var awxRed50: UIColor { UIColor(hex: 0xFF4F42) }
+    static var awxRed60: UIColor { UIColor(hex: 0xD91807) }
 }
