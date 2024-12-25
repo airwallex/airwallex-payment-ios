@@ -99,21 +99,21 @@
 
     __weak __typeof(self) weakSelf = self;
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             __strong __typeof(weakSelf) strongSelf = weakSelf;
-             if (error) {
-                 [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
-                 return;
-             }
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
+                return;
+            }
 
-             AWXConfirmPaymentIntentResponse *result = (AWXConfirmPaymentIntentResponse *)response;
-             if (result.nextAction == nil) {
-                 [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:result error:nil];
-                 return;
-             }
+            AWXConfirmPaymentIntentResponse *result = (AWXConfirmPaymentIntentResponse *)response;
+            if (result.nextAction == nil) {
+                [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:result error:nil];
+                return;
+            }
 
-             [strongSelf present3DSFlowWithNextAction:result.nextAction];
-         }];
+            [strongSelf present3DSFlowWithNextAction:result.nextAction];
+        }];
 }
 
 @end

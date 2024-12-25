@@ -185,7 +185,7 @@
     }
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:completion];
+    [client send:request withCompletionHandler:completion];
 }
 
 - (void)confirmPaymentIntentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod {
@@ -199,7 +199,7 @@
     request.paymentMethod = paymentMethod;
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:completion];
+    [client send:request withCompletionHandler:completion];
 }
 
 // MARK: AWXPaymentResultDelegate

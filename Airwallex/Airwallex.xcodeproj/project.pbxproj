@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -585,7 +585,14 @@
 		C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Logging.h"; sourceTree = "<group>"; };
 		C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Logging.m"; sourceTree = "<group>"; };
 		CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D84E997A2D0845AA006B3421 /* AWXUIContext+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXUIContext+extension.swift"; sourceTree = "<group>"; };
+		D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodProvider.swift; sourceTree = "<group>"; };
+		D84E9A262D0C3652006B3421 /* PaymentUISessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentUISessionHandler.swift; sourceTree = "<group>"; };
+		D888268E2D12D68B00115198 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
+		D888269F2D12D9E000115198 /* CollectionViewSectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionManager.swift; sourceTree = "<group>"; };
+		D88826B02D13E64500115198 /* ApplePaySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySectionController.swift; sourceTree = "<group>"; };
+		D88826C12D13FCAA00115198 /* PaymentMethodListSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodListSectionController.swift; sourceTree = "<group>"; };
+		D88826C22D13FCD700115198 /* CardPaymentConsentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentConsentSectionController.swift; sourceTree = "<group>"; };
+		D888291A2D15443E00115198 /* ListHeaderFooterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeaderFooterProvider.swift; sourceTree = "<group>"; };
 		D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXUIContext+Card.h"; sourceTree = "<group>"; };
 		D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXUIContext+Card.m"; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
@@ -600,6 +607,11 @@
 		FC522BD223B734E323755856 /* Pods-RedirectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.debug.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FC9DFB3C3391C7ABDA4375D4 /* Pods_RedirectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RedirectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D84E997C2D094298006B3421 /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
+		D84E9AA62D102083006B3421 /* Utils */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utils; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		085BD3C523CC62B4002E8F27 /* Frameworks */ = {
@@ -821,12 +833,6 @@
 			children = (
 				18E0571729C9A7F20099388A /* AWXAPIErrorResponse+Update.h */,
 				18E0571829C9A7F20099388A /* AWXAPIErrorResponse+Update.m */,
-				3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */,
-				3C324F8F27FC09AD00CF7315 /* AWXSession+Internal.m */,
-				184169D629C4347800B02D96 /* UIColor+AWXTheme.h */,
-				184169D529C4347800B02D96 /* UIColor+AWXTheme.m */,
-				184169D729C4347800B02D96 /* UIColor+ViewCompat.h */,
-				184169D429C4347800B02D96 /* UIColor+ViewCompat.m */,
 				184169DC29C4381500B02D96 /* NSData+Base64.h */,
 				184169DD29C4381500B02D96 /* NSData+Base64.m */,
 			);
@@ -1044,6 +1050,12 @@
 				3C579F6C27F4148800840A3B /* Internal */,
 				5775CEDE26E5DF4E00C6AFE3 /* Core.h */,
 				5775CEE626E5DF4E00C6AFE3 /* AWXForm.h */,
+				3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */,
+				184169D629C4347800B02D96 /* UIColor+AWXTheme.h */,
+				184169D529C4347800B02D96 /* UIColor+AWXTheme.m */,
+				184169D729C4347800B02D96 /* UIColor+ViewCompat.h */,
+				184169D429C4347800B02D96 /* UIColor+ViewCompat.m */,
+				3C324F8F27FC09AD00CF7315 /* AWXSession+Internal.m */,
 				18B9DE192B2832290011213F /* AWXPaymentMethodListViewModel.h */,
 				18B9DE1A2B2832290011213F /* AWXPaymentMethodListViewModel.m */,
 				5775CEFF26E5DF4F00C6AFE3 /* AWXForm.m */,
@@ -1178,7 +1190,16 @@
 			isa = PBXGroup;
 			children = (
 				D8DA089E2D08299F00B30AA2 /* PaymentMethodsViewController.swift */,
-				D84E997A2D0845AA006B3421 /* AWXUIContext+extension.swift */,
+				D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */,
+				D84E9A262D0C3652006B3421 /* PaymentUISessionHandler.swift */,
+				D888268E2D12D68B00115198 /* SectionController.swift */,
+				D888269F2D12D9E000115198 /* CollectionViewSectionManager.swift */,
+				D88826B02D13E64500115198 /* ApplePaySectionController.swift */,
+				D888291A2D15443E00115198 /* ListHeaderFooterProvider.swift */,
+				D88826C12D13FCAA00115198 /* PaymentMethodListSectionController.swift */,
+				D88826C22D13FCD700115198 /* CardPaymentConsentSectionController.swift */,
+				D84E9AA62D102083006B3421 /* Utils */,
+				D84E997C2D094298006B3421 /* View */,
 			);
 			path = Sources;
 			sourceTree = "<group>";

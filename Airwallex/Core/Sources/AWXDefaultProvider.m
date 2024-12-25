@@ -294,7 +294,7 @@
     }
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
-    [client send:request handler:completion];
+    [client send:request withCompletionHandler:completion];
 }
 
 - (void)createPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
@@ -316,16 +316,16 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self) weakSelf = self;
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             __strong __typeof(weakSelf) strongSelf = weakSelf;
-             if (response && !error) {
-                 AWXCreatePaymentConsentResponse *result = (AWXCreatePaymentConsentResponse *)response;
-                 strongSelf.paymentConsent = result.consent;
-                 completion(response, error);
-             } else {
-                 completion(nil, error);
-             }
-         }];
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            if (response && !error) {
+                AWXCreatePaymentConsentResponse *result = (AWXCreatePaymentConsentResponse *)response;
+                strongSelf.paymentConsent = result.consent;
+                completion(response, error);
+            } else {
+                completion(nil, error);
+            }
+        }];
 }
 
 - (void)verifyPaymentConsentWithPaymentMethod:(AWXPaymentMethod *)paymentMethod
@@ -346,19 +346,19 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     __weak __typeof(self) weakSelf = self;
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             __strong __typeof(weakSelf) strongSelf = weakSelf;
-             if (response && !error) {
-                 AWXVerifyPaymentConsentResponse *result = (AWXVerifyPaymentConsentResponse *)response;
-                 strongSelf.paymentIntentId = result.initialPaymentIntentId;
-                 [strongSelf.delegate provider:strongSelf didInitializePaymentIntentId:result.initialPaymentIntentId];
-                 [strongSelf log:@"Delegate: %@, provider:didInitializePaymentIntentId: %@", self.delegate.class, result.initialPaymentIntentId];
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            if (response && !error) {
+                AWXVerifyPaymentConsentResponse *result = (AWXVerifyPaymentConsentResponse *)response;
+                strongSelf.paymentIntentId = result.initialPaymentIntentId;
+                [strongSelf.delegate provider:strongSelf didInitializePaymentIntentId:result.initialPaymentIntentId];
+                [strongSelf log:@"Delegate: %@, provider:didInitializePaymentIntentId: %@", self.delegate.class, result.initialPaymentIntentId];
 
-                 completion(response, error);
-             } else {
-                 completion(nil, error);
-             }
-         }];
+                completion(response, error);
+            } else {
+                completion(nil, error);
+            }
+        }];
 }
 
 - (AWXPaymentMethod *)paymentMethodWithMetaData:(AWXPaymentMethod *)paymentMethod flow:(AWXPaymentMethodFlow)flow {

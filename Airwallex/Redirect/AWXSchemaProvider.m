@@ -39,17 +39,17 @@
     __weak __typeof(self) weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             __strong __typeof(weakSelf) strongSelf = weakSelf;
-             if (response && !error) {
-                 [strongSelf verifyPaymentMethodType:(AWXGetPaymentMethodTypeResponse *)response];
-             } else {
-                 [strongSelf.delegate providerDidEndRequest:strongSelf];
-                 [strongSelf log:@"Delegate: %@, providerDidEndRequest:", strongSelf.delegate.class];
-                 [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
-             }
-         }];
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            if (response && !error) {
+                [strongSelf verifyPaymentMethodType:(AWXGetPaymentMethodTypeResponse *)response];
+            } else {
+                [strongSelf.delegate providerDidEndRequest:strongSelf];
+                [strongSelf log:@"Delegate: %@, providerDidEndRequest:", strongSelf.delegate.class];
+                [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+                [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
+            }
+        }];
 }
 
 - (void)verifyPaymentMethodType:(AWXGetPaymentMethodTypeResponse *)response {
@@ -146,18 +146,18 @@
     __weak __typeof(self) weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             __strong __typeof(weakSelf) strongSelf = weakSelf;
-             [strongSelf.delegate providerDidEndRequest:strongSelf];
-             [strongSelf log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf.delegate providerDidEndRequest:strongSelf];
+            [strongSelf log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
 
-             if (response && !error) {
-                 [strongSelf verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response];
-             } else {
-                 [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
-                 [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
-             }
-         }];
+            if (response && !error) {
+                [strongSelf verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response];
+            } else {
+                [strongSelf.delegate provider:strongSelf didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
+                [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
+            }
+        }];
 }
 
 - (void)verifyAvailableBankList:(AWXGetAvailableBanksResponse *)response {

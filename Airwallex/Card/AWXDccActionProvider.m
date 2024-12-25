@@ -49,10 +49,10 @@
 
     __weak __typeof(self) weakSelf = self;
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             __strong __typeof(weakSelf) strongSelf = weakSelf;
-             [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
-         }];
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
+        }];
 }
 
 #pragma mark - AWXDCCViewControllerDelegate
