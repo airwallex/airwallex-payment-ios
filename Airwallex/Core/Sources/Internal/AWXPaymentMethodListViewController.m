@@ -188,20 +188,20 @@
     __weak __typeof(self) weakSelf = self;
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request
-         handler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-             __strong __typeof(weakSelf) strongSelf = weakSelf;
-             [strongSelf stopAnimating];
+        withCompletionHandler:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf stopAnimating];
 
-             if (error) {
-                 [strongSelf showAlert:error.localizedDescription];
-                 [strongSelf log:@"removing consent failed. ID: %@", paymentConsent.Id];
-                 return;
-             }
+            if (error) {
+                [strongSelf showAlert:error.localizedDescription];
+                [strongSelf log:@"removing consent failed. ID: %@", paymentConsent.Id];
+                return;
+            }
 
-             [strongSelf log:@"remove consent successfully. ID: %@", paymentConsent.Id];
-             [strongSelf.availablePaymentConsents removeObjectAtIndex:index];
-             [strongSelf.tableView reloadData];
-         }];
+            [strongSelf log:@"remove consent successfully. ID: %@", paymentConsent.Id];
+            [strongSelf.availablePaymentConsents removeObjectAtIndex:index];
+            [strongSelf.tableView reloadData];
+        }];
 }
 
 - (void)showPayment:(AWXPaymentConsent *)paymentConsent {
@@ -372,7 +372,7 @@
     self.provider = actionProvider;
 }
 
-- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(nullable UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation {
+- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation {
     if (forceToDismiss) {
         [self.presentedViewController dismissViewControllerAnimated:YES
                                                          completion:^{

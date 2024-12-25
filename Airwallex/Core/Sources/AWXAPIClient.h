@@ -157,7 +157,7 @@ typedef void (^AWXRequestHandler)(AWXResponse *_Nullable response, NSError *_Nul
  @param request A request object.
  @param handler A handler which includes response.
  */
-- (void)send:(AWXRequest *)request handler:(AWXRequestHandler)handler;
+- (void)send:(AWXRequest *)request withCompletionHandler:(AWXRequestHandler)handler;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
