@@ -596,6 +596,8 @@
 		D88C3CDF2D1C128F00E77FFD /* ExpireDataTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpireDataTextFieldViewModel.swift; sourceTree = "<group>"; };
 		D88C3CE12D1C15CD00E77FFD /* CVCTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCTextFieldViewModel.swift; sourceTree = "<group>"; };
 		D88C3CE22D1D3DF600E77FFD /* InformativeUserInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformativeUserInputViewModel.swift; sourceTree = "<group>"; };
+		D88C3CE32D1D436F00E77FFD /* CheckoutButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutButtonCell.swift; sourceTree = "<group>"; };
+		D88C3CE52D1D50E800E77FFD /* AWXCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXCard.swift; sourceTree = "<group>"; };
 		D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXUIContext+Card.h"; sourceTree = "<group>"; };
 		D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXUIContext+Card.m"; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
@@ -1250,6 +1252,7 @@
 				D8F303132D1ABAAE00D29B49 /* ApplePayViewModel.swift */,
 				D8F303172D1ABAAE00D29B49 /* LabelHeader.swift */,
 				D8F3031A2D1ABAAE00D29B49 /* PaymentConsentCell.swift */,
+				D88C3CE32D1D436F00E77FFD /* CheckoutButtonCell.swift */,
 				D8F3031B2D1ABAAE00D29B49 /* PaymentConsentCellViewModel.swift */,
 				D8F3031C2D1ABAAE00D29B49 /* PaymentMethodCell.swift */,
 				D8F3031D2D1ABAAE00D29B49 /* PaymentMethodCellViewModel.swift */,
@@ -1266,6 +1269,7 @@
 				D8F303242D1ABAB100D29B49 /* AWXUIContext+extension.swift */,
 				D8F303252D1ABAB100D29B49 /* Bundle.swift */,
 				D8F3032E2D1ABDB600D29B49 /* AWXBrandType.swift */,
+				D88C3CE52D1D50E800E77FFD /* AWXCard.swift */,
 				D8F303262D1ABAB100D29B49 /* Colors.swift */,
 				D8F303272D1ABAB100D29B49 /* Fonts.swift */,
 				D8F303282D1ABAB100D29B49 /* Spacing.swift */,

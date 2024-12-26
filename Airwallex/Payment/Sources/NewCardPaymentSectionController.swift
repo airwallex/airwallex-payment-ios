@@ -8,13 +8,21 @@
 
 import Foundation
 import Combine
+import AirwallexRisk
 
 class NewCardPaymentSectionController: SectionController {
+    
+    enum Item: String {
+        case cardInfo
+        case checkoutButton
+    }
     private(set) var context: CollectionViewContext<PaymentSectionType, String>!
     
-    var section: PaymentSectionType
+    let section: PaymentSectionType
     
-    var items: [String] = ["card_info"]
+    var items: [String] {
+        [ Item.cardInfo.rawValue, Item.checkoutButton.rawValue ]
+    }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
         self.context = context
@@ -22,10 +30,14 @@ class NewCardPaymentSectionController: SectionController {
     
     private var methodType: AWXPaymentMethodType
     
+    private var paymentSessionHandler: PaymentUISessionHandler?
+    private var session: AWXSession
     init(section: PaymentSectionType,
-         methodType: AWXPaymentMethodType) {
+         methodType: AWXPaymentMethodType,
+         session: AWXSession) {
         self.section = section
         self.methodType = methodType
+        self.session = session
     }
     
     private lazy var cardInfoViewModel: PaymentCardInfoCellViewModel = {
@@ -34,7 +46,7 @@ class NewCardPaymentSectionController: SectionController {
             callbackForLayoutUpdate: { [weak self] in
                 guard let self, let context = self.context else { return }
             
-                guard let indexPath = context.dataSource.indexPath(for: "card_info") else { return }
+                guard let indexPath = context.dataSource.indexPath(for: Item.cardInfo.rawValue) else { return }
                 let invalidationContext = UICollectionViewLayoutInvalidationContext()
                 invalidationContext.invalidateItems(at: [indexPath])
                 context.layout.invalidateLayout(with: invalidationContext)
@@ -45,22 +57,23 @@ class NewCardPaymentSectionController: SectionController {
     }()
     
     func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PaymentCardInfoCell.reuseIdentifier, for: indexPath) as! PaymentCardInfoCell
-        cell.setup(cardInfoViewModel)
-        return cell
+        guard let item = Item(rawValue: item) else { fatalError("Invalid item") }
+        switch item {
+        case .cardInfo:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PaymentCardInfoCell.reuseIdentifier, for: indexPath) as! PaymentCardInfoCell
+            cell.setup(cardInfoViewModel)
+            return cell
+        case .checkoutButton:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CheckoutButtonCell.reuseIdentifier, for: indexPath) as! CheckoutButtonCell
+            cell.setup(CheckoutButtonCellViewModel(checkoutAction: checkout))
+            return cell
+        }
     }
     
     func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.register(
-            CardPaymentSectionHeader.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: CardPaymentSectionHeader.reuseIdentifier
-        )
-        
-        collectionView.register(
-            PaymentCardInfoCell.self,
-            forCellWithReuseIdentifier: PaymentCardInfoCell.reuseIdentifier
-        )
+        collectionView.registerSectionHeader(CardPaymentSectionHeader.self)
+        collectionView.registerReusableCell(PaymentCardInfoCell.self)
+        collectionView.registerReusableCell(CheckoutButtonCell.self)
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -77,6 +90,7 @@ class NewCardPaymentSectionController: SectionController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: .spacing_16, leading: .spacing_16, bottom: .spacing_16, trailing: .spacing_16)
+        section.interGroupSpacing = .spacing_16
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(32))
         let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -105,4 +119,28 @@ class NewCardPaymentSectionController: SectionController {
         return view
     }
     
+    private func checkout() {
+        // TODO: checkout with new card
+        AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button")
+        Risk.log(event: "click_payment_button", screen: "page_create_card")
+        addlog("Start payment. Intent ID: \(session.paymentIntentId())")
+        do {
+            let card = try cardInfoViewModel.createAndValidateCard()
+            let handler = PaymentUISessionHandler(
+                session: session,
+                methodType: methodType,
+                viewController: context.viewController!
+            )
+            handler?.startPayment(card: card)
+            self.paymentSessionHandler = handler
+        } catch {
+            guard let message = error as? String else { return }
+            showAlert(message)
+            AWXAnalyticsLogger.shared().logAction(withName: "card_payment_validation", additionalInfo: ["message": message])
+            addlog("Payment failed. Intent ID: \(session.paymentIntentId()). Reason: \(message)")
+        }
+    }
+    
 }
+
+

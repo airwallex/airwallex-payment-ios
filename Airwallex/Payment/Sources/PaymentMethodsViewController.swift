@@ -156,7 +156,8 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
         case .cardPaymentNew:
             let controller = NewCardPaymentSectionController(
                 section: section,
-                methodType: methodProvider.selectedMethod!
+                methodType: methodProvider.selectedMethod!,
+                session: methodProvider.session
             ).anySectionController()
             return controller
         default:

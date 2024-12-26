@@ -32,6 +32,7 @@ extension UIColor {
     static var awxTextSecondary: UIColor { UIColor(dynamicLightColor: awxGray60, darkColor: awxGray50) }
     static var awxTextPlaceholder: UIColor { UIColor(dynamicLightColor: awxGray50, darkColor: awxGray60) }
     static var awxTextError: UIColor { UIColor(dynamicLightColor: awxRed60, darkColor: awxRed40) }
+    static var awxTextInverse: UIColor { UIColor(dynamicLightColor: awxWhite, darkColor: awxGray100) }
 }
 
 fileprivate extension UIColor {

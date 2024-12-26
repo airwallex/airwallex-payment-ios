@@ -38,4 +38,20 @@ class PaymentCardInfoCellViewModel: PaymentCardInfoCellConfiguring {
         
         return nil
     }
+    
+    func createAndValidateCard() throws -> AWXCard {
+        let card = AWXCard(
+            name: nameOnCardConfigurer.text ?? "",
+            cardNumber: cardNumberConfigurer.text ?? "",
+            expiry: expireDataConfigurer.text ?? "",
+            cvc: cvcConfigurer.text ?? ""
+        )
+        
+        if let errorMessage = card.validate() {
+            throw errorMessage
+        }
+        return card
+    }
 }
+
+extension String: Error {}

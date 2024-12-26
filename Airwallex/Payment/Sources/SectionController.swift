@@ -57,7 +57,9 @@ extension SectionController {
     }
     
     func showAlert(_ message: String) {
-        
+        let alert = UIAlertController(title: "TODO", message: "Not Implemented yet", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Close", bundle: .payment, comment: ""), style: .cancel))
+        context.viewController?.present(alert, animated: true)
     }
 }
 
