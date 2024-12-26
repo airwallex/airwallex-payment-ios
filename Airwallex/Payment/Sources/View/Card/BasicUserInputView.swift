@@ -74,11 +74,19 @@ class BasicUserInputView: UIView, ViewConfigurable {
     }
     
     override var canBecomeFirstResponder: Bool {
-        return textField.canBecomeFirstResponder
+        textField.canBecomeFirstResponder
     }
     
     override func becomeFirstResponder() -> Bool {
         textField.becomeFirstResponder()
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        textField.resignFirstResponder()
+    }
+    
+    override var canResignFirstResponder: Bool {
+        textField.canResignFirstResponder
     }
     
     required init?(coder: NSCoder) {

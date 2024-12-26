@@ -13,6 +13,8 @@ protocol PaymentCardInfoCellConfiguring {
     var cardNumberConfigurer: CardNumberInputViewConfiguring { get }
     var expireDataConfigurer: ErrorHintableTextFieldConfiguring { get }
     var cvcConfigurer: ErrorHintableTextFieldConfiguring { get }
+    var nameOnCardConfigurer: InformativeUserInputViewConfiguring { get }
+    
     var errorHintForCardFields: String? { get }
     var callbackForLayoutUpdate: () -> Void { get }
 }
@@ -71,7 +73,6 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
     private let nameInputView: InformativeUserInputView = {
         let view = InformativeUserInputView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.topLabel.text = NSLocalizedString("Name on card", comment: "")
         return view
     }()
     private let stack: UIStackView = {
@@ -90,6 +91,8 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
         expiresTextField.setup(viewModel.expireDataConfigurer)
         cvcTextField.setup(viewModel.cvcConfigurer)
         hintLabel.text = viewModel.errorHintForCardFields
+        
+        nameInputView.setup(viewModel.nameOnCardConfigurer)
     }
     
     override init(frame: CGRect) {
@@ -170,7 +173,7 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
         
         cardNumberView.nextInputView = expiresTextField
         expiresTextField.nextInputView = cvcTextField
-        cvcTextField.nextInputView = nameInputView.textField
+        cvcTextField.nextInputView = nameInputView
         
         let constraints = [
             titleLabel.topAnchor.constraint(equalTo: container.topAnchor),

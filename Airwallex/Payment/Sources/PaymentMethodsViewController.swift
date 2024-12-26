@@ -167,7 +167,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
     func listBoundaryItemProviders() -> [BoundarySupplementaryItemProvider]? {
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(25)
+            heightDimension: .estimated(65)
         )
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,

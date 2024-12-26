@@ -595,6 +595,7 @@
 		D888291A2D15443E00115198 /* ListHeaderFooterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeaderFooterProvider.swift; sourceTree = "<group>"; };
 		D88C3CDF2D1C128F00E77FFD /* ExpireDataTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpireDataTextFieldViewModel.swift; sourceTree = "<group>"; };
 		D88C3CE12D1C15CD00E77FFD /* CVCTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCTextFieldViewModel.swift; sourceTree = "<group>"; };
+		D88C3CE22D1D3DF600E77FFD /* InformativeUserInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformativeUserInputViewModel.swift; sourceTree = "<group>"; };
 		D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXUIContext+Card.h"; sourceTree = "<group>"; };
 		D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXUIContext+Card.m"; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
@@ -1286,6 +1287,7 @@
 				D8F303352D1BF15600D29B49 /* BasicUserInputView.swift */,
 				D88C3CDF2D1C128F00E77FFD /* ExpireDataTextFieldViewModel.swift */,
 				D8F3031F2D1ABAAE00D29B49 /* InformativeUserInputView.swift */,
+				D88C3CE22D1D3DF600E77FFD /* InformativeUserInputViewModel.swift */,
 				D8F303152D1ABAAE00D29B49 /* CardPaymentSectionHeader.swift */,
 				D8F303162D1ABAAE00D29B49 /* CardPaymentSectionHeaderViewModel.swift */,
 			);

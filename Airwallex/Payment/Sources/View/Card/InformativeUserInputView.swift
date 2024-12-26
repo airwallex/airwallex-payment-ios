@@ -9,15 +9,12 @@
 import Foundation
 import Combine
 
-protocol UserInputViewConfiguring {
-    var inputType: String { get }
-    var text: String { get }
-    var isValid: Bool { get }
-    var errorHint: String { get }
+protocol InformativeUserInputViewConfiguring: ErrorHintableTextFieldConfiguring {
+    var title: String? { get }
 }
 
 class InformativeUserInputView: UIView, ViewConfigurable {
-    let topLabel: UILabel = {
+    private let topLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .awxTextSecondary
@@ -25,35 +22,21 @@ class InformativeUserInputView: UIView, ViewConfigurable {
         return view
     }()
     
-    let boxView: UIView = {
-        let view = UIView()
+    private let textField: BasicUserInputView = {
+        let view = BasicUserInputView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderWidth = 1
-        view.layer.cornerRadius = .radius_l
-        view.layer.borderColor = UIColor.awxBorderDecorative.cgColor
-        view.backgroundColor = .awxBackgroundField
         return view
     }()
     
-    let textField: UITextField = {
-        let view = UITextField()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .awxTextPrimary
-        view.font = .awxBody
-        view.enablesReturnKeyAutomatically = true
-        return view
-    }()
-    
-    let hintLabel: UILabel = {
+    private let hintLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .awxTextError
         view.font = .awxHint
-        view.isHidden = true
         return view
     }()
     
-    let stack: UIStackView = {
+    private let stack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
@@ -69,44 +52,42 @@ class InformativeUserInputView: UIView, ViewConfigurable {
     }
     
     override var canBecomeFirstResponder: Bool {
-        return true
+        textField.canBecomeFirstResponder
     }
     
     override func becomeFirstResponder() -> Bool {
         textField.becomeFirstResponder()
     }
     
+    override func resignFirstResponder() -> Bool {
+        textField.resignFirstResponder()
+    }
+    
+    override var canResignFirstResponder: Bool {
+        textField.canResignFirstResponder
+    }
+    
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var viewModel: (any UserInputViewConfiguring)?
+    var viewModel: (any InformativeUserInputViewConfiguring)?
     
-    func setup(_ viewModel: UserInputViewConfiguring) {
+    func setup(_ viewModel: InformativeUserInputViewConfiguring) {
         self.viewModel = viewModel
-        topLabel.text = viewModel.inputType
-        textField.text = viewModel.text
+        topLabel.text = viewModel.title
+        textField.setup(viewModel)
         hintLabel.text = viewModel.errorHint
-        hintLabel.isHidden = viewModel.isValid
-        boxView.layer.borderColor = viewModel.isValid ? UIColor.awxBorderDecorative.cgColor : UIColor.awxBorderError.cgColor
     }
     
     private func setupViews() {
         addSubview(stack)
         stack.addArrangedSubview(topLabel)
-        stack.addArrangedSubview(boxView)
+        stack.addArrangedSubview(textField)
         stack.addArrangedSubview(hintLabel)
         
-        boxView.addSubview(textField)
-        textField.delegate = self
-        
         let constraints = [
-            
-            textField.topAnchor.constraint(equalTo: boxView.topAnchor, constant: .spacing_8),
-            textField.leadingAnchor.constraint(equalTo: boxView.leadingAnchor, constant: .spacing_16),
-            textField.trailingAnchor.constraint(equalTo: boxView.trailingAnchor, constant: -.spacing_16),
-            textField.bottomAnchor.constraint(equalTo: boxView.bottomAnchor, constant: -.spacing_8),
-            
             stack.topAnchor.constraint(equalTo: topAnchor),
             stack.leadingAnchor.constraint(equalTo: leadingAnchor),
             stack.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -114,24 +95,5 @@ class InformativeUserInputView: UIView, ViewConfigurable {
         ]
         
         NSLayoutConstraint.activate(constraints)
-    }
-}
-
-extension InformativeUserInputView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let nextInputView  {
-            nextInputView.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
-        }
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        self.boxView.layer.borderColor = (self.viewModel?.isValid ?? true) ? UIColor.awxBorderDecorative.cgColor : UIColor.awxBorderError.cgColor
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.boxView.layer.borderColor = UIColor.awxBorderPerceivable.cgColor
     }
 }
