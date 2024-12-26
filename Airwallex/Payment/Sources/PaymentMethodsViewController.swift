@@ -85,6 +85,7 @@ class PaymentMethodsViewController: AWXViewController {
         
         let collectionView = sectionProvider.collectionView!
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.keyboardDismissMode = .interactive
         view.addSubview(collectionView)
         let constraints = [
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),

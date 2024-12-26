@@ -13,7 +13,9 @@ class CardNumberTextFieldViewModel: CardNumberInputViewConfiguring {
     
     let textFieldType: AWXTextFieldType? = .cardNumber
     
-    var text: String? = nil
+    var text: String? {
+        attributedText?.string
+    }
     
     var attributedText: NSAttributedString?
 

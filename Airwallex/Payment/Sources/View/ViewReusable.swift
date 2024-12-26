@@ -18,7 +18,7 @@ extension ViewReusable {
     }
 }
 
-protocol ViewConfigurable {
+protocol ViewConfigurable: UIView {
     associatedtype ViewModel
     var viewModel: ViewModel? { get }
     func setup(_ viewModel: ViewModel)

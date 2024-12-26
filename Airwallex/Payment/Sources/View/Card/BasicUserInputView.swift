@@ -6,6 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import Combine
+
 protocol BasicUserInputViewConfiguring: AnyObject {
     var text: String? { get }
     var attributedText: NSAttributedString? { get }
@@ -19,14 +21,14 @@ protocol BasicUserInputViewConfiguring: AnyObject {
 
 class BasicUserInputView: UIView, ViewConfigurable {
     
-    let textField: UITextField = {
-        let view = UITextField()
+    let textField: ContentInsetableTextField = {
+        let view = ContentInsetableTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .awxTextPrimary
         view.font = .awxBody
-        view.enablesReturnKeyAutomatically = true
         view.setContentHuggingPriority(.defaultLow - 50, for: .horizontal)
         view.setContentCompressionResistancePriority(.defaultHigh - 50, for: .horizontal)
+        view.textInsets = UIEdgeInsets(top: .spacing_12, left: .spacing_16, bottom: .spacing_12, right: .spacing_16)
         return view
     }()
     
@@ -38,7 +40,15 @@ class BasicUserInputView: UIView, ViewConfigurable {
         return stack
     }()
     
-    weak var nextInputView: UIResponder?
+    weak var nextInputView: UIResponder? {
+        didSet {
+            if nextInputView != nil {
+                textField.returnKeyType = .next
+            } else {
+                textField.returnKeyType = .default
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,10 +64,10 @@ class BasicUserInputView: UIView, ViewConfigurable {
         textField.delegate = self
         
         let constraints = [
-            stack.topAnchor.constraint(equalTo: topAnchor, constant: .spacing_12),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacing_16),
+            stack.topAnchor.constraint(equalTo: topAnchor),
+            stack.leadingAnchor.constraint(equalTo: leadingAnchor),
             stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacing_16),
-            stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacing_12),
+            stack.bottomAnchor.constraint(equalTo: bottomAnchor),
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -89,15 +99,17 @@ class BasicUserInputView: UIView, ViewConfigurable {
         }
         textField.placeholder = viewModel.placeholder
         
-        updateBorderColor()
+        updateBorderAppearance()
     }
     
-    func updateBorderColor() {
+    func updateBorderAppearance() {
         guard let viewModel else { return }
         if textField.isFirstResponder {
-            layer.borderColor = UIColor.awxBorderPerceivable.cgColor
+            layer.borderColor = UIColor.awxBorderInterative.cgColor
+            layer.borderWidth = 2
         } else {
             layer.borderColor = viewModel.isValid ? UIColor.awxBorderDecorative.cgColor : UIColor.awxBorderError.cgColor
+            layer.borderWidth = 1
         }
     }
 }
@@ -114,11 +126,11 @@ extension BasicUserInputView: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         viewModel?.updateForEndEditing()
-        updateBorderColor()
+        updateBorderAppearance()
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        updateBorderColor()
+        updateBorderAppearance()
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
@@ -129,5 +141,55 @@ extension BasicUserInputView: UITextFieldDelegate {
             setup(viewModel)
         }
         return false
+    }
+}
+
+extension BasicUserInputView {
+    
+    var textDidBeginEditingPublisher: AnyPublisher<UITextField, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification, object: textField)
+            .compactMap { $0.object as? UITextField }
+            .eraseToAnyPublisher()
+    }
+    
+    var textDidEndEditingPublisher: AnyPublisher<UITextField, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidEndEditingNotification, object: textField)
+            .compactMap { $0.object as? UITextField }
+            .eraseToAnyPublisher()
+    }
+    
+    var textDidChangePublisher: AnyPublisher<UITextField, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: textField)
+            .compactMap { $0.object as? UITextField }
+            .eraseToAnyPublisher()
+    }
+}
+
+
+class ContentInsetableTextField: UITextField {
+    
+    init(textInsets: UIEdgeInsets = .zero) {
+        self.textInsets = textInsets
+        super.init(frame: .zero)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    var textInsets: UIEdgeInsets
+    
+    // Rect for text already in the field
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: textInsets)
+    }
+    
+    // Rect for text when editing
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: textInsets)
+    }
+    
+    // Optionally adjust the placeholder's rectangle
+    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: textInsets)
     }
 }

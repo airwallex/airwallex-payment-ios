@@ -9,10 +9,9 @@
 import UIKit
 import Combine
 
-protocol CardNumberInputViewConfiguring: BasicUserInputViewConfiguring {
+protocol CardNumberInputViewConfiguring: ErrorHintableTextFieldConfiguring {
     var supportedBrands: [AWXBrandType] { get }
     var currentBrand: AWXBrandType { get }
-    var errorHint: String? { get }
 }
 
 class CardNumberInputView: UIView, ViewConfigurable {
@@ -41,7 +40,14 @@ class CardNumberInputView: UIView, ViewConfigurable {
         return stack
     }()
     
-    weak var nextInputView: UIResponder?
+    weak var nextInputView: UIResponder? {
+        get {
+            userInputTextField.nextInputView
+        }
+        set {
+            userInputTextField.nextInputView = newValue
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

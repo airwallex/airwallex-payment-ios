@@ -85,6 +85,8 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
         }
         self.context = CollectionViewContext(
             viewController: viewController,
+            collectionView: collectionView,
+            layout: layout,
             dataSource: diffableDataSource,
             reloadData: reloadData
         )
@@ -123,15 +125,20 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
 }
 
 class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable> {
-    
     weak var viewController: AWXViewController?
+    weak var collectionView: UICollectionView!
+    weak var layout: UICollectionViewCompositionalLayout!
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>
     var reloadData: () -> Void
     
-    init(viewController: AWXViewController, 
+    init(viewController: AWXViewController,
+         collectionView: UICollectionView,
+         layout: UICollectionViewCompositionalLayout,
          dataSource: UICollectionViewDiffableDataSource<Section, Item>,
          reloadData: @escaping () -> Void) {
         self.viewController = viewController
+        self.collectionView = collectionView
+        self.layout = layout
         self.dataSource = dataSource
         self.reloadData = reloadData
     }

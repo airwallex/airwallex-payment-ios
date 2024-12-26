@@ -629,7 +629,6 @@
 		D8F3032C2D1ABB0200D29B49 /* CardNumberTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberTextFieldViewModel.swift; sourceTree = "<group>"; };
 		D8F3032D2D1ABBA600D29B49 /* PaymentCardinfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardinfoCellViewModel.swift; sourceTree = "<group>"; };
 		D8F3032E2D1ABDB600D29B49 /* AWXBrandType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXBrandType.swift; sourceTree = "<group>"; };
-		D8F303342D1BA8EE00D29B49 /* CVCInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCInputView.swift; sourceTree = "<group>"; };
 		D8F303352D1BF15600D29B49 /* BasicUserInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicUserInputView.swift; sourceTree = "<group>"; };
 		F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1287,7 +1286,6 @@
 				D8F303352D1BF15600D29B49 /* BasicUserInputView.swift */,
 				D88C3CDF2D1C128F00E77FFD /* ExpireDataTextFieldViewModel.swift */,
 				D8F3031F2D1ABAAE00D29B49 /* InformativeUserInputView.swift */,
-				D8F303342D1BA8EE00D29B49 /* CVCInputView.swift */,
 				D8F303152D1ABAAE00D29B49 /* CardPaymentSectionHeader.swift */,
 				D8F303162D1ABAAE00D29B49 /* CardPaymentSectionHeaderViewModel.swift */,
 			);

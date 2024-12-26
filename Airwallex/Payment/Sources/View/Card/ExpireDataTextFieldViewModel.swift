@@ -16,7 +16,9 @@ class ExpireDataTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     
     var textFieldType: AWXTextFieldType? = .expires
     
-    var text: String? = nil
+    var text: String? {
+        attributedText?.string
+    }
     
     var attributedText: NSAttributedString? = nil
     
@@ -28,15 +30,18 @@ class ExpireDataTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     
     func update(for userInput: String) {
         errorHint = nil
-        var expirationMonth = userInput.prefix(2)
-        var expirationYear = userInput.dropFirst(2)
-        if !expirationYear.isEmpty {
-            expirationYear = expirationYear.prefix(2)
+        var userInput = userInput.filterIllegalCharacters(in: .decimalDigits.inverted)
+        if let text, userInput.count == text.count - 1, text.hasPrefix(userInput), text.last == "/", userInput.count >= 1 {
+            // when user deleting "/", we also delete the character before "/"
+            userInput = String(userInput.dropLast())
         }
+        var expirationMonth = userInput.prefix(2)
+        var expirationYear = userInput.dropFirst(2).prefix(2)
         if expirationMonth.count == 1 && expirationMonth != "0" && expirationMonth != "1" {
             expirationMonth = "0" + expirationMonth
         }
-        text = expirationMonth + "/" + expirationYear
+        
+        attributedText = formatedString(month: String(expirationMonth), year: String(expirationYear))
     }
     
     func updateForEndEditing() {
@@ -47,8 +52,10 @@ class ExpireDataTextFieldViewModel: ErrorHintableTextFieldConfiguring {
         let components = text.components(separatedBy: "/")
         
         guard components.count == 2,
-              let month = components.first as? Int,
-              let year = components.last as? Int,
+              let monthString = components.first,
+              let month = Int(monthString),
+              let yearString = components.last,
+              let year = Int(yearString),
               month > 0 && month <= 12 else {
             errorHint = NSLocalizedString("Card’s expiration date is invalid", bundle: .payment, comment: "")
             return
@@ -64,5 +71,30 @@ class ExpireDataTextFieldViewModel: ErrorHintableTextFieldConfiguring {
             return
         }
         errorHint = nil
+    }
+}
+
+private extension ExpireDataTextFieldViewModel {
+    func formatedString(month: String?, year: String?) -> NSAttributedString? {
+        guard let month, !month.isEmpty else { return nil }
+        guard let year, !year.isEmpty else {
+            return NSMutableAttributedString(
+                string: month,
+                attributes: [.font: UIFont.awxBody, .foregroundColor: UIColor.awxTextPrimary]
+            )
+        }
+        let attributedString = NSMutableAttributedString(
+            string: "\(month)/\(year)",
+            attributes: [
+                .font: UIFont.awxBody,
+                .foregroundColor: UIColor.awxTextPrimary,
+            ]
+        )
+        attributedString.addAttribute(
+            .kern,
+            value: 5,
+            range: NSRange(location: month.count - 1, length: 2)
+        )
+        return attributedString
     }
 }

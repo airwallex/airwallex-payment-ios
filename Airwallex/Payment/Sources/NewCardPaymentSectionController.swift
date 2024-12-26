@@ -28,10 +28,25 @@ class NewCardPaymentSectionController: SectionController {
         self.methodType = methodType
     }
     
+    private lazy var cardInfoViewModel: PaymentCardInfoCellViewModel = {
+        let viewModel = PaymentCardInfoCellViewModel(
+            cardSchemes: methodType.cardSchemes,
+            callbackForLayoutUpdate: { [weak self] in
+                guard let self, let context = self.context else { return }
+            
+                guard let indexPath = context.dataSource.indexPath(for: "card_info") else { return }
+                let invalidationContext = UICollectionViewLayoutInvalidationContext()
+                invalidationContext.invalidateItems(at: [indexPath])
+                context.layout.invalidateLayout(with: invalidationContext)
+                context.collectionView.performBatchUpdates(nil)
+            }
+        )
+        return viewModel
+    }()
+    
     func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PaymentCardInfoCell.reuseIdentifier, for: indexPath) as! PaymentCardInfoCell
-        let viewModel = PaymentCardInfoCellViewModel(cardSchemes: methodType.cardSchemes)
-        cell.setup(viewModel)
+        cell.setup(cardInfoViewModel)
         return cell
     }
     
