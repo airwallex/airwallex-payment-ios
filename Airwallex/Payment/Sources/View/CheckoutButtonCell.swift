@@ -53,7 +53,6 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     func setup(_ viewModel: any CheckoutButtonCellConfiguring) {
         self.viewModel = viewModel
     }
-        
     
     @objc func onButtonTapped() {
         viewModel?.checkoutAction()

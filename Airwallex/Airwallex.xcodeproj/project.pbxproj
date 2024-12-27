@@ -600,6 +600,8 @@
 		D88C3CE52D1D50E800E77FFD /* AWXCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXCard.swift; sourceTree = "<group>"; };
 		D88C3CE62D1E4D7A00E77FFD /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		D88C3CE72D1E743500E77FFD /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		D88C3CE82D1E99D200E77FFD /* CardSavingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSavingCell.swift; sourceTree = "<group>"; };
+		D88C3CE92D1EA2B100E77FFD /* CardSavingCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSavingCellViewModel.swift; sourceTree = "<group>"; };
 		D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXUIContext+Card.h"; sourceTree = "<group>"; };
 		D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXUIContext+Card.m"; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
@@ -1289,6 +1291,8 @@
 				D8F3032C2D1ABB0200D29B49 /* CardNumberTextFieldViewModel.swift */,
 				D88C3CE12D1C15CD00E77FFD /* CardCVCTextFieldViewModel.swift */,
 				D88C3CDF2D1C128F00E77FFD /* CardExpireTextFieldViewModel.swift */,
+				D88C3CE82D1E99D200E77FFD /* CardSavingCell.swift */,
+				D88C3CE92D1EA2B100E77FFD /* CardSavingCellViewModel.swift */,
 				D8F303352D1BF15600D29B49 /* BaseTextField.swift */,
 				D8F3031F2D1ABAAE00D29B49 /* InfoCollectorTextField.swift */,
 				D88C3CE22D1D3DF600E77FFD /* InfoCollectorTextFieldViewModel.swift */,

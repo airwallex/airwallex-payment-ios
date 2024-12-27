@@ -15,13 +15,22 @@ class NewCardPaymentSectionController: SectionController {
     enum Item: String {
         case cardInfo
         case checkoutButton
+        // display this item only when session is AWXOneOffSession && has customerId
+        case saveCardToggle
     }
     private(set) var context: CollectionViewContext<PaymentSectionType, String>!
     
     let section: PaymentSectionType
     
     var items: [String] {
-        [ Item.cardInfo.rawValue, Item.checkoutButton.rawValue ]
+        var items = [ Item.cardInfo.rawValue ]
+        
+        if supportCardSaving {
+            items.append(Item.saveCardToggle.rawValue)
+        }
+        
+        items.append(Item.checkoutButton.rawValue)
+        return items
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
@@ -36,6 +45,7 @@ class NewCardPaymentSectionController: SectionController {
     }
     private let methodProvider: PaymentMethodProvider
     private let switchToConsentPaymentAction: () -> Void
+    private var shouldSaveCard = true
     
     init(section: PaymentSectionType,
          methodType: AWXPaymentMethodType,
@@ -69,6 +79,16 @@ class NewCardPaymentSectionController: SectionController {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CheckoutButtonCell.reuseIdentifier, for: indexPath) as! CheckoutButtonCell
             cell.setup(CheckoutButtonCellViewModel(checkoutAction: checkout))
             return cell
+        case .saveCardToggle:
+            let cell: CardSavingCell = collectionView.dequeueReusableCell(withReuseIdentifier: CardSavingCell.reuseIdentifier, for: indexPath) as! CardSavingCell
+            let viewModel = CardSavingCellViewModel(
+                shouldSaveCard: shouldSaveCard,
+                toggleSelection: { [weak self] in
+                    self?.shouldSaveCard.toggle()
+                }
+            )
+            cell.setup(viewModel)
+            return cell
         }
     }
     
@@ -76,6 +96,7 @@ class NewCardPaymentSectionController: SectionController {
         collectionView.registerSectionHeader(CardPaymentSectionHeader.self)
         collectionView.registerReusableCell(CardInfoCollectorCell.self)
         collectionView.registerReusableCell(CheckoutButtonCell.self)
+        collectionView.registerReusableCell(CardSavingCell.self)
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -124,7 +145,20 @@ class NewCardPaymentSectionController: SectionController {
         return view
     }
     
-    private func checkout() {
+}
+
+private extension NewCardPaymentSectionController {
+    
+    var supportCardSaving: Bool {
+        guard let session = session as? AWXOneOffSession,
+           let customerId = session.customerId(),
+           !customerId.isEmpty else {
+            return false
+        }
+        return true
+    }
+    
+    func checkout() {
         // TODO: checkout with billing info
         AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button")
         Risk.log(event: "click_payment_button", screen: "page_create_card")
@@ -136,7 +170,7 @@ class NewCardPaymentSectionController: SectionController {
                 methodType: methodType,
                 viewController: context.viewController!
             )
-            handler?.startPayment(card: card)
+            handler?.startPayment(card: card, saveCard: shouldSaveCard)
             self.paymentSessionHandler = handler
         } catch {
             guard let message = error as? String else { return }
@@ -145,7 +179,4 @@ class NewCardPaymentSectionController: SectionController {
             debugLog("Payment failed. Intent ID: \(session.paymentIntentId()). Reason: \(message)")
         }
     }
-    
 }
-
-

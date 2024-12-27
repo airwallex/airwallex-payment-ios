@@ -53,10 +53,9 @@ class PaymentUISessionHandler: NSObject {
         }
     }
     
-    func startPayment(card: AWXCard) {
+    func startPayment(card: AWXCard, saveCard: Bool = false) {
         guard let actionProvider = actionProvider as? AWXCardProvider else { return }
-        // TODO: add a switch for saveCard?
-        actionProvider.confirmPaymentIntent(with: card, billing: nil, saveCard: true)
+        actionProvider.confirmPaymentIntent(with: card, billing: nil, saveCard: saveCard)
     }
 }
 

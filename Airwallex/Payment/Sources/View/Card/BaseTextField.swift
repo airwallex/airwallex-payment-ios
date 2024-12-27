@@ -132,7 +132,18 @@ class BaseTextField: UIView, ViewConfigurable {
         } else {
             textField.text = nil
         }
-        textField.placeholder = viewModel.placeholder
+        
+        if let placeholder = viewModel.placeholder, !placeholder.isEmpty {
+            textField.attributedPlaceholder = NSAttributedString(
+                string: placeholder,
+                attributes: [
+                    .foregroundColor: UIColor.awxTextPlaceholder,
+                    .font: UIFont.awxBody
+                ]
+            )
+        } else {
+            textField.attributedPlaceholder = nil
+        }
         
         updateBorderAppearance()
     }

@@ -25,7 +25,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxBody
-        view.textColor = .awxTextSecondary
+        view.textColor = .awxTextPrimary
         view.text = NSLocalizedString("Card Information", comment: "")
         return view
     }()

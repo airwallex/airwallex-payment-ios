@@ -18,7 +18,7 @@ class InfoCollectorTextField: BaseTextField {
     private let topLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .awxTextSecondary
+        view.textColor = .awxTextPrimary
         view.font = .awxBody
         return view
     }()
