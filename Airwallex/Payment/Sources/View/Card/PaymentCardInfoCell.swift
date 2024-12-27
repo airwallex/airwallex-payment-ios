@@ -10,10 +10,10 @@ import UIKit
 import Combine
 
 protocol PaymentCardInfoCellConfiguring {
-    var cardNumberConfigurer: CardNumberInputViewConfiguring { get }
+    var cardNumberConfigurer: CardNumberTextFieldConfiguring { get }
     var expireDataConfigurer: ErrorHintableTextFieldConfiguring { get }
     var cvcConfigurer: ErrorHintableTextFieldConfiguring { get }
-    var nameOnCardConfigurer: InformativeUserInputViewConfiguring { get }
+    var nameOnCardConfigurer: StandardInformationTextFieldConfiguring { get }
     
     var errorHintForCardFields: String? { get }
     var callbackForLayoutUpdate: () -> Void { get }
@@ -36,29 +36,30 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
         return view
     }()
     
-    private let cardNumberView: CardNumberInputView = {
-        let view = CardNumberInputView()
+    private let numberTextField: CardNumberTextField = {
+        let view = CardNumberTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.userInputTextField.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        view.box.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         return view
     }()
     
-    private let expiresTextField: BasicUserInputView = {
-        let view = BasicUserInputView()
+    private let expiresTextField: BaseTextField = {
+        let view = BaseTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.maskedCorners = .layerMinXMaxYCorner
+        view.box.layer.maskedCorners = .layerMinXMaxYCorner
         return view
     }()
     
-    private let cvcTextField: BasicUserInputView = {
-        let view = BasicUserInputView()
+    private let cvcTextField: BaseTextField = {
+        let view = BaseTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.maskedCorners = .layerMaxXMaxYCorner
+        view.box.layer.maskedCorners = .layerMaxXMaxYCorner
         
         let image = UIImage(named: "cvc", in: .resource(), compatibleWith: nil)
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.stack.addArrangedSubview(imageView)
+        view.horizontalStack.addArrangedSubview(imageView)
+        view.horizontalStack.addSpacer(.spacing_8)
         return view
     }()
     
@@ -70,12 +71,13 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
         return view
     }()
     
-    private let nameInputView: InformativeUserInputView = {
-        let view = InformativeUserInputView()
+    private let nameTextField: StandardInformationTextField = {
+        let view = StandardInformationTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private let stack: UIStackView = {
+    
+    private let vStack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.spacing = .spacing_16
@@ -87,12 +89,12 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
     
     func setup(_ viewModel: PaymentCardInfoCellConfiguring) {
         self.viewModel = viewModel
-        cardNumberView.setup(viewModel.cardNumberConfigurer)
+        numberTextField.setup(viewModel.cardNumberConfigurer)
         expiresTextField.setup(viewModel.expireDataConfigurer)
         cvcTextField.setup(viewModel.cvcConfigurer)
         hintLabel.text = viewModel.errorHintForCardFields
         
-        nameInputView.setup(viewModel.nameOnCardConfigurer)
+        nameTextField.setup(viewModel.nameOnCardConfigurer)
     }
     
     override init(frame: CGRect) {
@@ -106,16 +108,17 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
     }
     
     private var cancellables = Set<AnyCancellable>()
-    
-    private var lastEditingField: UIView?
+}
+
+private extension PaymentCardInfoCell {
     
     func setupObservation() {
         
-        let adjustLayering = { [weak self] view in
+        let updateLayering = { [weak self] view in
             guard let self else { return }
-            let arr: [any ViewConfigurable] = [ self.cardNumberView, self.expiresTextField, self.cvcTextField ]
+            let arr: [any ViewConfigurable] = [ self.numberTextField, self.expiresTextField, self.cvcTextField ]
             for view in arr {
-                guard let viewModel = view.viewModel as? any BasicUserInputViewConfiguring else {
+                guard let viewModel = view.viewModel as? any BaseTextFieldConfiguring else {
                     return
                 }
                 if !viewModel.isValid {
@@ -124,70 +127,71 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
             }
             self.container.bringSubviewToFront(view)
         }
-        cardNumberView.userInputTextField.textDidBeginEditingPublisher
+        numberTextField.textDidBeginEditingPublisher
             .sink { [weak self] _ in
                 guard let self else { return }
-                adjustLayering(self.cardNumberView)
+                updateLayering(self.numberTextField)
             }
             .store(in: &cancellables)
         
         expiresTextField.textDidBeginEditingPublisher
             .sink { [weak self] _ in
                 guard let self else { return }
-                adjustLayering(self.expiresTextField)
+                updateLayering(self.expiresTextField)
             }
             .store(in: &cancellables)
         
         cvcTextField.textDidBeginEditingPublisher
             .sink { [weak self] _ in
                 guard let self else { return }
-                adjustLayering(self.cvcTextField)
+                updateLayering(self.cvcTextField)
             }
             .store(in: &cancellables)
         
-        Publishers.Merge3(
-            cardNumberView.userInputTextField.textDidEndEditingPublisher,
+        Publishers.Merge4(
+            numberTextField.textDidEndEditingPublisher,
             expiresTextField.textDidEndEditingPublisher,
-            cvcTextField.textDidEndEditingPublisher
+            cvcTextField.textDidEndEditingPublisher,
+            nameTextField.textDidEndEditingPublisher
         )
         .sink { [weak self] _ in
             guard let self, let viewModel = self.viewModel else { return }
-            self.setup(viewModel)
+            self.hintLabel.text = viewModel.errorHintForCardFields
             viewModel.callbackForLayoutUpdate()
         }
         .store(in: &cancellables)
     }
     
     func setupViews() {
-        contentView.addSubview(stack)
-        stack.addArrangedSubview(container)
+        contentView.addSubview(vStack)
+        vStack.addArrangedSubview(container)
         do {
             container.addSubview(titleLabel)
-            container.addSubview(cardNumberView)
+            container.addSubview(numberTextField)
             container.addSubview(expiresTextField)
             container.addSubview(cvcTextField)
             container.addSubview(hintLabel)
         }
         
-        stack.addArrangedSubview(nameInputView)
+        vStack.addArrangedSubview(nameTextField)
         
-        cardNumberView.nextInputView = expiresTextField
-        expiresTextField.nextInputView = cvcTextField
-        cvcTextField.nextInputView = nameInputView
+        numberTextField.nextField = expiresTextField
+        expiresTextField.nextField = cvcTextField
+        cvcTextField.nextField = nameTextField
         
         let constraints = [
             titleLabel.topAnchor.constraint(equalTo: container.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            cardNumberView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacing_4),
-            cardNumberView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            cardNumberView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            numberTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacing_4),
+            numberTextField.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            numberTextField.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             
-            expiresTextField.topAnchor.constraint(equalTo: cardNumberView.bottomAnchor, constant: -1),
+            expiresTextField.topAnchor.constraint(equalTo: numberTextField.bottomAnchor, constant: -1),
             expiresTextField.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             expiresTextField.trailingAnchor.constraint(equalTo: container.centerXAnchor),
             
-            cvcTextField.topAnchor.constraint(equalTo: cardNumberView.bottomAnchor, constant: -1),
+            cvcTextField.topAnchor.constraint(equalTo: numberTextField.bottomAnchor, constant: -1),
             cvcTextField.leadingAnchor.constraint(equalTo: container.centerXAnchor, constant: -1),
             cvcTextField.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             cvcTextField.bottomAnchor.constraint(equalTo: expiresTextField.bottomAnchor),
@@ -197,10 +201,10 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
             hintLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             hintLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor),
             
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            vStack.topAnchor.constraint(equalTo: contentView.topAnchor),
+            vStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            vStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            vStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ]
         
         NSLayoutConstraint.activate(constraints)

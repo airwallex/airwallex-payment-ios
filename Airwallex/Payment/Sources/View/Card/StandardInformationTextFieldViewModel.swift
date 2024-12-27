@@ -1,12 +1,13 @@
 //
-//  InformativeUserInputViewModel.swift
+//  StandardInformationTextFieldViewModel.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/26.
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-class InformativeUserInputViewModel: InformativeUserInputViewConfiguring {
+
+class StandardInformationTextFieldViewModel: StandardInformationTextFieldConfiguring {
     var title: String?
     
     var errorHint: String?
@@ -21,7 +22,7 @@ class InformativeUserInputViewModel: InformativeUserInputViewConfiguring {
     
     var placeholder: String?
     
-    func update(for userInput: String) {
+    func handleTextDidUpdate(to userInput: String) {
         guard !userInput.isEmpty else {
             text = nil
             return
@@ -29,8 +30,7 @@ class InformativeUserInputViewModel: InformativeUserInputViewConfiguring {
         text = userInput
     }
     
-    func updateForEndEditing() {
-        // do nothing
+    func handleDidEndEditing() {
         do {
             try validateUserInput(text)
             errorHint = nil
@@ -57,7 +57,7 @@ class InformativeUserInputViewModel: InformativeUserInputViewConfiguring {
     }
 }
 
-extension InformativeUserInputViewModel {
+extension StandardInformationTextFieldViewModel {
     func validateUserInput(_ text: String?) throws {
         let defaultErrorMessage = NSLocalizedString("Invalid \(title ?? "input")", bundle: .payment, comment: "")
         guard let textFieldType else {

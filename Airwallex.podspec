@@ -22,7 +22,6 @@ Pod::Spec.new do |s|
     plugin.dependency 'Airwallex/Card'
     plugin.dependency 'Airwallex/Redirect'
     plugin.dependency 'Airwallex/ApplePay'
-    plugin.vendored_frameworks = 'Frameworks/AirwallexRisk.xcframework'
   end
   
   s.subspec 'Core' do |plugin|

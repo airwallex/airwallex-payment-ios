@@ -45,7 +45,7 @@ class NewCardPaymentSectionController: SectionController {
         let viewModel = PaymentCardInfoCellViewModel(
             cardSchemes: methodType.cardSchemes,
             callbackForLayoutUpdate: { [weak self] in
-                self?.context.invalidateLayout(for: [Item.cardInfo.rawValue])
+                self?.context.invalidateLayout(for: [Item.cardInfo.rawValue], animated: false)
             }
         )
         return viewModel

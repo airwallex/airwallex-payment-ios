@@ -151,13 +151,22 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         dataSource.apply(snapshot)
     }
     
-    func invalidateLayout(for items: [Item]) {
+    func invalidateLayout(for items: [Item], animated: Bool = true) {
         var indexPaths = [IndexPath]()
         for item in items {
             guard let indexPath = dataSource.indexPath(for: item) else { continue }
             indexPaths.append(indexPath)
         }
-        invalidateLayout(for: items)
+        invalidateLayout(at: indexPaths, animated: animated)
+    }
+    
+    func invalidateLayout(at indexPaths: [IndexPath], animated: Bool = true) {
+        let invalidationContext = UICollectionViewLayoutInvalidationContext()
+        invalidationContext.invalidateItems(at: indexPaths)
+        layout.invalidateLayout(with: invalidationContext)
+        if animated {
+            collectionView.performBatchUpdates(nil)
+        }
     }
     
     func reload(sections: [Section], animatingDifferences: Bool = true) {

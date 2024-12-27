@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CardNumberTextFieldViewModel: CardNumberInputViewConfiguring {
+class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
     var placeholder: String? = "1234 1234 1234 1234"
     
     let textFieldType: AWXTextFieldType? = .cardNumber
@@ -29,8 +29,7 @@ class CardNumberTextFieldViewModel: CardNumberInputViewConfiguring {
     
     var errorHint: String? = nil
     
-    func update(for userInput: String) {
-        errorHint = nil
+    func handleTextDidUpdate(to userInput: String) {
         // check max length
         let userInput = userInput.filterIllegalCharacters(in: .decimalDigits.inverted)
         guard userInput.count <= AWXCardValidator.shared().maxLength(forCardNumber: userInput) else { return}
@@ -44,7 +43,7 @@ class CardNumberTextFieldViewModel: CardNumberInputViewConfiguring {
         currentBrand = cardBrandType
     }
     
-    func updateForEndEditing() {
+    func handleDidEndEditing() {
         let cardNumber = attributedText?.string ?? ""
         guard !cardNumber.isEmpty else {
             errorHint = NSLocalizedString("Card number is required", bundle: .payment, comment: "")

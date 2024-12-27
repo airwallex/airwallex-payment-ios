@@ -1,5 +1,5 @@
 //
-//  ExpireDataTextFieldViewModel.swift
+//  ExpireDateTextFieldViewModel.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/25.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol ErrorHintableTextFieldConfiguring: BasicUserInputViewConfiguring {
+protocol ErrorHintableTextFieldConfiguring: BaseTextFieldConfiguring {
     var errorHint: String? { get }
 }
 
-class ExpireDataTextFieldViewModel: ErrorHintableTextFieldConfiguring {
+class ExpireDateTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     var placeholder: String? = "MM / YY"
     
     var textFieldType: AWXTextFieldType? = .expires
@@ -28,8 +28,7 @@ class ExpireDataTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     
     var errorHint: String? = nil
     
-    func update(for userInput: String) {
-        errorHint = nil
+    func handleTextDidUpdate(to userInput: String) {
         var userInput = userInput.filterIllegalCharacters(in: .decimalDigits.inverted)
         if let text, userInput.count == text.count - 1, text.hasPrefix(userInput), text.last == "/", userInput.count >= 1 {
             // when user deleting "/", we also delete the character before "/"
@@ -44,7 +43,7 @@ class ExpireDataTextFieldViewModel: ErrorHintableTextFieldConfiguring {
         attributedText = formatedString(month: String(expirationMonth), year: String(expirationYear))
     }
     
-    func updateForEndEditing() {
+    func handleDidEndEditing() {
         guard let text = text, !text.isEmpty else {
             errorHint = NSLocalizedString("Expiry date is required", bundle: .payment, comment: "")
             return
@@ -74,7 +73,7 @@ class ExpireDataTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     }
 }
 
-private extension ExpireDataTextFieldViewModel {
+private extension ExpireDateTextFieldViewModel {
     func formatedString(month: String?, year: String?) -> NSAttributedString? {
         guard let month, !month.isEmpty else { return nil }
         guard let year, !year.isEmpty else {

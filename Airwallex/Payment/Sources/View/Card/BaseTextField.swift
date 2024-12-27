@@ -1,5 +1,5 @@
 //
-//  BasicUserInputView.swift
+//  BaseTextField.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/25.
@@ -8,18 +8,18 @@
 
 import Combine
 
-protocol BasicUserInputViewConfiguring: AnyObject {
+protocol BaseTextFieldConfiguring: AnyObject {
     var text: String? { get }
     var attributedText: NSAttributedString? { get }
     var isValid: Bool { get }
     var textFieldType: AWXTextFieldType? { get }
     var placeholder: String? { get }
     
-    func update(for userInput: String)
-    func updateForEndEditing()
+    func handleTextDidUpdate(to userInput: String)
+    func handleDidEndEditing()
 }
 
-class BasicUserInputView: UIView, ViewConfigurable {
+class BaseTextField: UIView, ViewConfigurable {
     
     let textField: ContentInsetableTextField = {
         let view = ContentInsetableTextField()
@@ -32,7 +32,26 @@ class BasicUserInputView: UIView, ViewConfigurable {
         return view
     }()
     
-    let stack: UIStackView = {
+    
+    let verticalStack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.spacing = .spacing_4
+        stack.axis = .vertical
+        return stack
+    }()
+    
+    let box: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = .radius_l
+        view.layer.borderColor = UIColor.awxBorderDecorative.cgColor
+        view.backgroundColor = .awxBackgroundField
+        return view
+    }()
+
+    let horizontalStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.spacing = .spacing_8
@@ -40,9 +59,9 @@ class BasicUserInputView: UIView, ViewConfigurable {
         return stack
     }()
     
-    weak var nextInputView: UIResponder? {
+    weak var nextField: UIResponder? {
         didSet {
-            if nextInputView != nil {
+            if nextField != nil {
                 textField.returnKeyType = .next
             } else {
                 textField.returnKeyType = .default
@@ -52,25 +71,29 @@ class BasicUserInputView: UIView, ViewConfigurable {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //  border
-        layer.borderWidth = 1
-        layer.cornerRadius = .radius_l
-        layer.borderColor = UIColor.awxBorderDecorative.cgColor
-        backgroundColor = .awxBackgroundField
-        
-        addSubview(stack)
-        stack.addArrangedSubview(textField)
+    
+        addSubview(verticalStack)
+        verticalStack.addArrangedSubview(box)
+        box.addSubview(horizontalStack)
+        horizontalStack.addArrangedSubview(textField)
         
         textField.delegate = self
         
         let constraints = [
-            stack.topAnchor.constraint(equalTo: topAnchor),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacing_16),
-            stack.bottomAnchor.constraint(equalTo: bottomAnchor),
+            verticalStack.topAnchor.constraint(equalTo: topAnchor),
+            verticalStack.leadingAnchor.constraint(equalTo: leadingAnchor),
+            verticalStack.trailingAnchor.constraint(equalTo: trailingAnchor),
+            verticalStack.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            horizontalStack.topAnchor.constraint(equalTo: box.topAnchor),
+            horizontalStack.leadingAnchor.constraint(equalTo: box.leadingAnchor),
+            horizontalStack.trailingAnchor.constraint(equalTo: box.trailingAnchor),
+            horizontalStack.bottomAnchor.constraint(equalTo: box.bottomAnchor),
         ]
         
         NSLayoutConstraint.activate(constraints)
+        
+        updateBorderAppearance()
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -93,9 +116,9 @@ class BasicUserInputView: UIView, ViewConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var viewModel: (any BasicUserInputViewConfiguring)?
+    var viewModel: (any BaseTextFieldConfiguring)?
     
-    func setup(_ viewModel: BasicUserInputViewConfiguring) {
+    func setup(_ viewModel: any BaseTextFieldConfiguring) {
         self.viewModel = viewModel
         textField.update(for: viewModel.textFieldType ?? .default)
         if let attributedText = viewModel.attributedText {
@@ -113,46 +136,48 @@ class BasicUserInputView: UIView, ViewConfigurable {
     func updateBorderAppearance() {
         guard let viewModel else { return }
         if textField.isFirstResponder {
-            layer.borderColor = UIColor.awxBorderInterative.cgColor
-            layer.borderWidth = 2
+            box.layer.borderColor = UIColor.awxBorderInterative.cgColor
+            box.layer.borderWidth = 2
         } else {
-            layer.borderColor = viewModel.isValid ? UIColor.awxBorderDecorative.cgColor : UIColor.awxBorderError.cgColor
-            layer.borderWidth = 1
+            box.layer.borderColor = viewModel.isValid ? UIColor.awxBorderDecorative.cgColor : UIColor.awxBorderError.cgColor
+            box.layer.borderWidth = 1
         }
     }
 }
 
-extension BasicUserInputView: UITextFieldDelegate {
+extension BaseTextField: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let nextInputView  {
-            nextInputView.becomeFirstResponder()
+        if let nextField  {
+            nextField.becomeFirstResponder()
         } else {
-            textField.resignFirstResponder()
+            resignFirstResponder()
         }
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        viewModel?.updateForEndEditing()
-        updateBorderAppearance()
+        guard let viewModel else { return }
+        viewModel.handleDidEndEditing()
+        setup(viewModel)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         updateBorderAppearance()
     }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         if let range = Range(range, in: currentText) {
             let text = currentText.replacingCharacters(in: range, with: string)
             guard let viewModel else { return false }
-            viewModel.update(for: text)
+            viewModel.handleTextDidUpdate(to: text)
             setup(viewModel)
         }
         return false
     }
 }
 
-extension BasicUserInputView {
+extension BaseTextField {
     
     var textDidBeginEditingPublisher: AnyPublisher<UITextField, Never> {
         NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification, object: textField)

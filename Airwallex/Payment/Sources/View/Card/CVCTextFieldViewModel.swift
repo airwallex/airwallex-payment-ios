@@ -27,12 +27,11 @@ class CVCTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     
     var placeholder: String? = "CVC"
     
-    func update(for userInput: String) {
-        errorHint = nil
+    func handleTextDidUpdate(to userInput: String) {
         text = String(userInput.filterIllegalCharacters(in: .decimalDigits.inverted).prefix(maxLength))
     }
     
-    func updateForEndEditing() {
+    func handleDidEndEditing() {
         guard let text else {
             errorHint = NSLocalizedString("Security code is required", bundle: .payment, comment: "")
             return
@@ -44,13 +43,3 @@ class CVCTextFieldViewModel: ErrorHintableTextFieldConfiguring {
         errorHint = nil
     }
 }
-
-//- (nullable NSString *)validationMessageFromCvc:(NSString *)cvc {
-//    if (cvc.length > 0) {
-//        if (cvc.length == _cvcLength) {
-//            return nil;
-//        }
-//        return NSLocalizedString(@"Security code is invalid", nil);
-//    }
-//    return NSLocalizedString(@"Security code is required", nil);
-//}

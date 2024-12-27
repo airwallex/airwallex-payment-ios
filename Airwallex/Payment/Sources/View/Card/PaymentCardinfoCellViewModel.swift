@@ -7,11 +7,11 @@
 //
 
 class PaymentCardInfoCellViewModel: PaymentCardInfoCellConfiguring {
-    var nameOnCardConfigurer: any InformativeUserInputViewConfiguring
+    var nameOnCardConfigurer: any StandardInformationTextFieldConfiguring
     
     var callbackForLayoutUpdate: () -> Void
     
-    var cardNumberConfigurer: any CardNumberInputViewConfiguring
+    var cardNumberConfigurer: any CardNumberTextFieldConfiguring
     var expireDataConfigurer: any ErrorHintableTextFieldConfiguring
     var cvcConfigurer: any ErrorHintableTextFieldConfiguring
     
@@ -20,9 +20,9 @@ class PaymentCardInfoCellViewModel: PaymentCardInfoCellConfiguring {
         cardNumberConfigurer = CardNumberTextFieldViewModel(
             supportedCardSchemes: cardSchemes
         )
-        expireDataConfigurer = ExpireDataTextFieldViewModel()
+        expireDataConfigurer = ExpireDateTextFieldViewModel()
         cvcConfigurer = CVCTextFieldViewModel()
-        nameOnCardConfigurer = InformativeUserInputViewModel(
+        nameOnCardConfigurer = StandardInformationTextFieldViewModel(
             title: NSLocalizedString("Name on card", bundle: .payment, comment: "")
         )
     }
