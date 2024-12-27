@@ -125,11 +125,11 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
 }
 
 class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable> {
-    weak var viewController: AWXViewController?
-    weak var collectionView: UICollectionView!
-    weak var layout: UICollectionViewCompositionalLayout!
-    var dataSource: UICollectionViewDiffableDataSource<Section, Item>
-    var reloadData: () -> Void
+    private(set) weak var viewController: AWXViewController?
+    private weak var collectionView: UICollectionView!
+    private weak var layout: UICollectionViewCompositionalLayout!
+    private(set) var dataSource: UICollectionViewDiffableDataSource<Section, Item>
+    private var _reloadData: () -> Void
     
     init(viewController: AWXViewController,
          collectionView: UICollectionView,
@@ -140,7 +140,7 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         self.collectionView = collectionView
         self.layout = layout
         self.dataSource = dataSource
-        self.reloadData = reloadData
+        self._reloadData = reloadData
     }
     
     func currentSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
@@ -149,5 +149,36 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     
     func applySnapshot(_ snapshot: NSDiffableDataSourceSnapshot<Section, Item>) {
         dataSource.apply(snapshot)
+    }
+    
+    func invalidateLayout(for items: [Item]) {
+        var indexPaths = [IndexPath]()
+        for item in items {
+            guard let indexPath = dataSource.indexPath(for: item) else { continue }
+            indexPaths.append(indexPath)
+        }
+        invalidateLayout(for: items)
+    }
+    
+    func reload(sections: [Section], animatingDifferences: Bool = true) {
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadSections(sections)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
+    func reload(items: [Item], animatingDifferences: Bool = true) {
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadItems(items)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
+    func delete(items: [Item], animatingDifferences: Bool = true) {
+        var snapshot = dataSource.snapshot()
+        snapshot.deleteItems(items)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
+    func reloadData() {
+        _reloadData()
     }
 }

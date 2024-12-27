@@ -44,7 +44,14 @@ class InformativeUserInputView: UIView, ViewConfigurable {
         return stack
     }()
     
-    weak var nextInputView: UIResponder?
+    weak var nextInputView: UIResponder? {
+        get {
+            textField.nextInputView
+        }
+        set {
+            textField.nextInputView = newValue
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,5 +102,35 @@ class InformativeUserInputView: UIView, ViewConfigurable {
         ]
         
         NSLayoutConstraint.activate(constraints)
+    }
+}
+
+extension InformativeUserInputView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let nextInputView  {
+            nextInputView.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        viewModel?.updateForEndEditing()
+        self.textField.updateBorderAppearance()
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.textField.updateBorderAppearance()
+    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        if let range = Range(range, in: currentText) {
+            let text = currentText.replacingCharacters(in: range, with: string)
+            guard let viewModel else { return false }
+            viewModel.update(for: text)
+            setup(viewModel)
+        }
+        return false
     }
 }

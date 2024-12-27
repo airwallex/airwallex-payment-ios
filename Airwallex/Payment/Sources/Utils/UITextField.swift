@@ -44,13 +44,10 @@ extension UITextField {
         case .zipcode:
             textContentType = .postalCode
         case .cardNumber:
-//            textContentType = .creditCardNumber
             keyboardType = .asciiCapableNumberPad
         case .expires:
             if #available(iOS 17.0, *) {
                 textContentType = .creditCardExpiration
-            } else {
-                // Fallback on earlier versions
             }
             keyboardType = .asciiCapableNumberPad
         case .CVC:
@@ -59,12 +56,5 @@ extension UITextField {
             }
             keyboardType = .numberPad
         }
-    }
-}
-
-extension AWXTextFieldType {
-    
-    func foo() {
-        
     }
 }

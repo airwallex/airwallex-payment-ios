@@ -53,5 +53,3 @@ class PaymentCardInfoCellViewModel: PaymentCardInfoCellConfiguring {
         return card
     }
 }
-
-extension String: Error {}

@@ -81,7 +81,6 @@ class PaymentMethodsViewController: AWXViewController {
             target: self,
             action: #selector(onCloseButtonTapped)
         )
-        navigationItem.title = "DEMO CHECKOUT"
         
         let collectionView = sectionProvider.collectionView!
         collectionView.translatesAutoresizingMaskIntoConstraints = false

@@ -13,3 +13,5 @@ extension String {
         return components.joined()
     }
 }
+
+extension String: Error {}

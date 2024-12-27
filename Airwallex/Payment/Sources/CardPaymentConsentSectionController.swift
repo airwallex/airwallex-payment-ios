@@ -18,7 +18,7 @@ class CardPaymentConsentSectionController: SectionController {
         consents.map { $0.id }
     }
     
-    let consents: [AWXPaymentConsent]
+    private(set) var consents: [AWXPaymentConsent]
     
     let session: AWXSession
     
@@ -69,14 +69,7 @@ class CardPaymentConsentSectionController: SectionController {
             actionTitle: NSLocalizedString("Add new", bundle: .payment, comment: ""),
             buttonAction: { [weak self] in
                 guard let self else { return }
-                // wpdebug
-                do {
-                    var snapshot = self.context.currentSnapshot()
-                    snapshot.reloadSections([self.section])
-                    context.dataSource.apply(snapshot)
-                    return
-                }
-                
+                // TODO:
                 showTODO()
             }
         )
@@ -153,13 +146,13 @@ class CardPaymentConsentSectionController: SectionController {
                 Task {
                     do {
                         try await self.methodProvider.disable(consent: consent)
-                        var snapshot = self.context.dataSource.snapshot()
-                        snapshot.deleteItems([consent.id])
-                        
-                        self.addlog("remove consent successfully. ID: \(consent.id)")
+                        guard let index = self.consents.firstIndex(of: consent) else { return }
+                        self.consents.remove(at: index)
+                        self.context.delete(items: [ consent.id ])
+                        self.debugLog("remove consent successfully. ID: \(consent.id)")
                     } catch {
                         self.showAlert(error.localizedDescription)
-                        self.addlog("removing consent failed. ID: \(consent.id)")
+                        self.debugLog("removing consent failed. ID: \(consent.id)")
                     }
                     self.context.viewController?.stopAnimating()
                     

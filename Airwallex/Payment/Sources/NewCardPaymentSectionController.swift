@@ -35,6 +35,7 @@ class NewCardPaymentSectionController: SectionController {
     init(section: PaymentSectionType,
          methodType: AWXPaymentMethodType,
          session: AWXSession) {
+        assert(methodType.name == "card", "invalid method name")
         self.section = section
         self.methodType = methodType
         self.session = session
@@ -44,13 +45,7 @@ class NewCardPaymentSectionController: SectionController {
         let viewModel = PaymentCardInfoCellViewModel(
             cardSchemes: methodType.cardSchemes,
             callbackForLayoutUpdate: { [weak self] in
-                guard let self, let context = self.context else { return }
-            
-                guard let indexPath = context.dataSource.indexPath(for: Item.cardInfo.rawValue) else { return }
-                let invalidationContext = UICollectionViewLayoutInvalidationContext()
-                invalidationContext.invalidateItems(at: [indexPath])
-                context.layout.invalidateLayout(with: invalidationContext)
-                context.collectionView.performBatchUpdates(nil)
+                self?.context.invalidateLayout(for: [Item.cardInfo.rawValue])
             }
         )
         return viewModel
@@ -120,10 +115,10 @@ class NewCardPaymentSectionController: SectionController {
     }
     
     private func checkout() {
-        // TODO: checkout with new card
+        // TODO: checkout with billing info
         AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button")
         Risk.log(event: "click_payment_button", screen: "page_create_card")
-        addlog("Start payment. Intent ID: \(session.paymentIntentId())")
+        debugLog("Start payment. Intent ID: \(session.paymentIntentId())")
         do {
             let card = try cardInfoViewModel.createAndValidateCard()
             let handler = PaymentUISessionHandler(
@@ -137,7 +132,7 @@ class NewCardPaymentSectionController: SectionController {
             guard let message = error as? String else { return }
             showAlert(message)
             AWXAnalyticsLogger.shared().logAction(withName: "card_payment_validation", additionalInfo: ["message": message])
-            addlog("Payment failed. Intent ID: \(session.paymentIntentId()). Reason: \(message)")
+            debugLog("Payment failed. Intent ID: \(session.paymentIntentId()). Reason: \(message)")
         }
     }
     

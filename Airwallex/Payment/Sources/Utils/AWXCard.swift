@@ -7,23 +7,6 @@
 //
 
 extension AWXCard {
-    /*
-    - (AWXCard *)makeCardWithName:(NSString *)name
-                           number:(NSString *)number
-                           expiry:(NSString *)expiry
-                              cvc:(NSString *)cvc {
-        NSArray *dates = [expiry componentsSeparatedByString:@"/"];
-
-        AWXCard *card = [AWXCard new];
-        card.name = name;
-        card.number = [number stringByReplacingOccurrencesOfString:@" " withString:@""];
-        card.expiryYear = [NSString stringWithFormat:@"20%@", dates.lastObject];
-        card.expiryMonth = dates.firstObject;
-        card.cvc = cvc;
-
-        return card;
-    }
-     */
     // convert this into an init method in swift
     convenience init(name: String, cardNumber: String, expiry: String, cvc: String) {
         self.init()
