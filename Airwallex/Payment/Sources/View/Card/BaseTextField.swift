@@ -8,6 +8,10 @@
 
 import Combine
 
+protocol ErrorHintableTextFieldConfiguring: BaseTextFieldConfiguring {
+    var errorHint: String? { get }
+}
+
 protocol BaseTextFieldConfiguring: AnyObject {
     var text: String? { get }
     var attributedText: NSAttributedString? { get }

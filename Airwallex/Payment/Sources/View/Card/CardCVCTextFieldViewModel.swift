@@ -1,5 +1,5 @@
 //
-//  CVCTextFieldViewModel.swift
+//  CardCVCTextFieldViewModel.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CVCTextFieldViewModel: ErrorHintableTextFieldConfiguring {
+class CardCVCTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     
     var maxLength: Int = 3
     

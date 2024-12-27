@@ -9,11 +9,11 @@
 import Foundation
 import Combine
 
-protocol StandardInformationTextFieldConfiguring: ErrorHintableTextFieldConfiguring {
+protocol InfoCollectorTextFieldConfiguring: ErrorHintableTextFieldConfiguring {
     var title: String? { get }
 }
 
-class StandardInformationTextField: BaseTextField {
+class InfoCollectorTextField: BaseTextField {
     
     private let topLabel: UILabel = {
         let view = UILabel()
@@ -42,7 +42,7 @@ class StandardInformationTextField: BaseTextField {
     
     override func setup(_ viewModel: any BaseTextFieldConfiguring) {
         super.setup(viewModel)
-        guard let viewModel = viewModel as? StandardInformationTextFieldConfiguring else {
+        guard let viewModel = viewModel as? InfoCollectorTextFieldConfiguring else {
             assert(false, "invalid view model")
             return
         }

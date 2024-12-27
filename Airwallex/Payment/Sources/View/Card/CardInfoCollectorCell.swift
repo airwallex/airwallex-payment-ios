@@ -9,17 +9,17 @@
 import UIKit
 import Combine
 
-protocol PaymentCardInfoCellConfiguring {
+protocol CardInfoCollectorCellConfiguring {
     var cardNumberConfigurer: CardNumberTextFieldConfiguring { get }
     var expireDataConfigurer: ErrorHintableTextFieldConfiguring { get }
     var cvcConfigurer: ErrorHintableTextFieldConfiguring { get }
-    var nameOnCardConfigurer: StandardInformationTextFieldConfiguring { get }
+    var nameOnCardConfigurer: InfoCollectorTextFieldConfiguring { get }
     
     var errorHintForCardFields: String? { get }
     var callbackForLayoutUpdate: () -> Void { get }
 }
 
-class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
+class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let titleLabel: UILabel = {
         let view = UILabel()
@@ -71,8 +71,8 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
         return view
     }()
     
-    private let nameTextField: StandardInformationTextField = {
-        let view = StandardInformationTextField()
+    private let nameTextField: InfoCollectorTextField = {
+        let view = InfoCollectorTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -85,9 +85,9 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
         return view
     }()
     
-    private(set) var viewModel: PaymentCardInfoCellConfiguring?
+    private(set) var viewModel: CardInfoCollectorCellConfiguring?
     
-    func setup(_ viewModel: PaymentCardInfoCellConfiguring) {
+    func setup(_ viewModel: CardInfoCollectorCellConfiguring) {
         self.viewModel = viewModel
         numberTextField.setup(viewModel.cardNumberConfigurer)
         expiresTextField.setup(viewModel.expireDataConfigurer)
@@ -110,7 +110,7 @@ class PaymentCardInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
     private var cancellables = Set<AnyCancellable>()
 }
 
-private extension PaymentCardInfoCell {
+private extension CardInfoCollectorCell {
     
     func setupObservation() {
         

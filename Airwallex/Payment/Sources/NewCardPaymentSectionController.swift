@@ -48,8 +48,8 @@ class NewCardPaymentSectionController: SectionController {
         self.switchToConsentPaymentAction = switchToConsentPaymentAction
     }
     
-    private lazy var cardInfoViewModel: PaymentCardInfoCellViewModel = {
-        let viewModel = PaymentCardInfoCellViewModel(
+    private lazy var cardInfoViewModel: CardInfoCollectorCellViewModel = {
+        let viewModel = CardInfoCollectorCellViewModel(
             cardSchemes: methodType.cardSchemes,
             callbackForLayoutUpdate: { [weak self] in
                 self?.context.invalidateLayout(for: [Item.cardInfo.rawValue], animated: false)
@@ -62,7 +62,7 @@ class NewCardPaymentSectionController: SectionController {
         guard let item = Item(rawValue: item) else { fatalError("Invalid item") }
         switch item {
         case .cardInfo:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PaymentCardInfoCell.reuseIdentifier, for: indexPath) as! PaymentCardInfoCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardInfoCollectorCell.reuseIdentifier, for: indexPath) as! CardInfoCollectorCell
             cell.setup(cardInfoViewModel)
             return cell
         case .checkoutButton:
@@ -74,7 +74,7 @@ class NewCardPaymentSectionController: SectionController {
     
     func registerReusableViews(to collectionView: UICollectionView) {
         collectionView.registerSectionHeader(CardPaymentSectionHeader.self)
-        collectionView.registerReusableCell(PaymentCardInfoCell.self)
+        collectionView.registerReusableCell(CardInfoCollectorCell.self)
         collectionView.registerReusableCell(CheckoutButtonCell.self)
     }
     

@@ -43,9 +43,9 @@ class CardPaymentConsentSectionController: SectionController {
     
     func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: PaymentConsentCell.reuseIdentifier,
+            withReuseIdentifier: CardConsentCell.reuseIdentifier,
             for: indexPath
-        ) as! PaymentConsentCell
+        ) as! CardConsentCell
         let consent = consents[indexPath.item]
         guard let card = consent.paymentMethod?.card,
               let brand = card.brand else {
@@ -57,7 +57,7 @@ class CardPaymentConsentSectionController: SectionController {
         if let cardBrand = AWXCardValidator.shared().brand(forCardName: brand) {
             image = UIImage.image(for: cardBrand.type)
         }
-        let viewModel = PaymentConsentCellViewModel(
+        let viewModel = CardConsentCellViewModel(
             image: image,
             text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
             buttonAction: { [weak self] in
@@ -108,7 +108,7 @@ class CardPaymentConsentSectionController: SectionController {
     }
     
     func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.registerReusableCell(PaymentConsentCell.self)
+        collectionView.registerReusableCell(CardConsentCell.self)
         collectionView.registerSectionHeader(CardPaymentSectionHeader.self)
     }
     

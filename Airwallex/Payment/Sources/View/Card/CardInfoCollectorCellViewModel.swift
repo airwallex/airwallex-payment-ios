@@ -6,8 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-class PaymentCardInfoCellViewModel: PaymentCardInfoCellConfiguring {
-    var nameOnCardConfigurer: any StandardInformationTextFieldConfiguring
+class CardInfoCollectorCellViewModel: CardInfoCollectorCellConfiguring {
+    var nameOnCardConfigurer: any InfoCollectorTextFieldConfiguring
     
     var callbackForLayoutUpdate: () -> Void
     
@@ -20,9 +20,9 @@ class PaymentCardInfoCellViewModel: PaymentCardInfoCellConfiguring {
         cardNumberConfigurer = CardNumberTextFieldViewModel(
             supportedCardSchemes: cardSchemes
         )
-        expireDataConfigurer = ExpireDateTextFieldViewModel()
-        cvcConfigurer = CVCTextFieldViewModel()
-        nameOnCardConfigurer = StandardInformationTextFieldViewModel(
+        expireDataConfigurer = CardExpireTextFieldViewModel()
+        cvcConfigurer = CardCVCTextFieldViewModel()
+        nameOnCardConfigurer = InfoCollectorTextFieldViewModel(
             title: NSLocalizedString("Name on card", bundle: .payment, comment: "")
         )
     }

@@ -1,5 +1,5 @@
 //
-//  ExpireDateTextFieldViewModel.swift
+//  CardExpireTextFieldViewModel.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/25.
@@ -7,11 +7,7 @@
 
 import Foundation
 
-protocol ErrorHintableTextFieldConfiguring: BaseTextFieldConfiguring {
-    var errorHint: String? { get }
-}
-
-class ExpireDateTextFieldViewModel: ErrorHintableTextFieldConfiguring {
+class CardExpireTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     var placeholder: String? = "MM / YY"
     
     var textFieldType: AWXTextFieldType? = .expires
@@ -73,7 +69,7 @@ class ExpireDateTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     }
 }
 
-private extension ExpireDateTextFieldViewModel {
+private extension CardExpireTextFieldViewModel {
     func formatedString(month: String?, year: String?) -> NSAttributedString? {
         guard let month, !month.isEmpty else { return nil }
         guard let year, !year.isEmpty else {

@@ -1,5 +1,5 @@
 //
-//  StandardInformationTextFieldViewModel.swift
+//  InfoCollectorTextFieldViewModel.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/26.
@@ -7,7 +7,7 @@
 //
 
 
-class StandardInformationTextFieldViewModel: StandardInformationTextFieldConfiguring {
+class InfoCollectorTextFieldViewModel: InfoCollectorTextFieldConfiguring {
     var title: String?
     
     var errorHint: String?
@@ -57,7 +57,7 @@ class StandardInformationTextFieldViewModel: StandardInformationTextFieldConfigu
     }
 }
 
-extension StandardInformationTextFieldViewModel {
+extension InfoCollectorTextFieldViewModel {
     func validateUserInput(_ text: String?) throws {
         let defaultErrorMessage = NSLocalizedString("Invalid \(title ?? "input")", bundle: .payment, comment: "")
         guard let textFieldType else {
