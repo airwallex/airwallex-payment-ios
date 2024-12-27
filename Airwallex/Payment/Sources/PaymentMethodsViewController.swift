@@ -37,6 +37,8 @@ class PaymentMethodsViewController: AWXViewController {
     
     private var token: AnyCancellable?
     
+    private var preferConsentPayment = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -123,7 +125,11 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
         
         if let selectedMethodType = methodProvider.selectedMethod {
             if selectedMethodType.name == "card" {
-                sections.append(.cardPaymentNew)
+                if preferConsentPayment && !methodProvider.consents.isEmpty {
+                    sections.append(.cardPaymentConsent)
+                } else {
+                    sections.append(.cardPaymentNew)
+                }
             }
         }
         return sections
@@ -149,14 +155,24 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
             let controller = CardPaymentConsentSectionController(
                 session: methodProvider.session,
                 section: section,
-                methodProvider: methodProvider
+                methodProvider: methodProvider,
+                addNewCardAction: { [weak self] in
+                    guard let self else { return }
+                    self.preferConsentPayment = false
+                    self.sectionProvider.reloadData()
+                }
             )
             return controller.anySectionController()
         case .cardPaymentNew:
             let controller = NewCardPaymentSectionController(
                 section: section,
                 methodType: methodProvider.selectedMethod!,
-                session: methodProvider.session
+                methodProvider: methodProvider,
+                switchToConsentPaymentAction: { [weak self] in
+                    guard let self else { return }
+                    self.preferConsentPayment = true
+                    self.sectionProvider.reloadData()
+                }
             ).anySectionController()
             return controller
         default:

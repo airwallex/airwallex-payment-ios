@@ -24,11 +24,17 @@ class CardPaymentConsentSectionController: SectionController {
     
     let methodProvider: PaymentMethodProvider
     
-    init(session: AWXSession, section: PaymentSectionType, methodProvider: PaymentMethodProvider) {
+    private let addNewCardAction: () -> Void
+    
+    init(session: AWXSession,
+         section: PaymentSectionType,
+         methodProvider: PaymentMethodProvider,
+         addNewCardAction: @escaping () -> Void) {
         self.session = session
         self.section = section
         self.consents = methodProvider.consents
         self.methodProvider = methodProvider
+        self.addNewCardAction = addNewCardAction
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
@@ -69,8 +75,7 @@ class CardPaymentConsentSectionController: SectionController {
             actionTitle: NSLocalizedString("Add new", bundle: .payment, comment: ""),
             buttonAction: { [weak self] in
                 guard let self else { return }
-                // TODO:
-                showTODO()
+                self.addNewCardAction()
             }
         )
         header.setup(viewModel)

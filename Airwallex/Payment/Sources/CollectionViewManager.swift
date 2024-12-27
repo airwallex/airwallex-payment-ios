@@ -92,7 +92,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
         )
     }
     
-    func reloadData() {
+    func reloadData(animatingDifferences: Bool = true) {
         guard let sectionDataSource else { return }
         sections = sectionDataSource.sections()
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
@@ -110,7 +110,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
             let items = controller?.items ?? []
             snapshot.appendItems(items, toSection: section)
         }
-        diffableDataSource.apply(snapshot)
+        diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
     func sectionController(for section: SectionType) -> AnySectionController<SectionType, ItemType>? {
@@ -129,13 +129,13 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     private weak var collectionView: UICollectionView!
     private weak var layout: UICollectionViewCompositionalLayout!
     private(set) var dataSource: UICollectionViewDiffableDataSource<Section, Item>
-    private var _reloadData: () -> Void
+    private var _reloadData: (Bool) -> Void
     
     init(viewController: AWXViewController,
          collectionView: UICollectionView,
          layout: UICollectionViewCompositionalLayout,
          dataSource: UICollectionViewDiffableDataSource<Section, Item>,
-         reloadData: @escaping () -> Void) {
+         reloadData: @escaping (Bool) -> Void) {
         self.viewController = viewController
         self.collectionView = collectionView
         self.layout = layout
@@ -187,7 +187,7 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
-    func reloadData() {
-        _reloadData()
+    func reloadData(animatingDifferences: Bool = true) {
+        _reloadData(animatingDifferences)
     }
 }

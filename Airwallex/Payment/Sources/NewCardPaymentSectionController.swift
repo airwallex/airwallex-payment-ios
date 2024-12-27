@@ -31,14 +31,21 @@ class NewCardPaymentSectionController: SectionController {
     private var methodType: AWXPaymentMethodType
     
     private var paymentSessionHandler: PaymentUISessionHandler?
-    private var session: AWXSession
+    private var session: AWXSession {
+        methodProvider.session
+    }
+    private let methodProvider: PaymentMethodProvider
+    private let switchToConsentPaymentAction: () -> Void
+    
     init(section: PaymentSectionType,
          methodType: AWXPaymentMethodType,
-         session: AWXSession) {
-        assert(methodType.name == "card", "invalid method name")
+         methodProvider: PaymentMethodProvider,
+         switchToConsentPaymentAction: @escaping () -> Void) {
+        assert(methodType.name == "card", "invalid method")
         self.section = section
         self.methodType = methodType
-        self.session = session
+        self.methodProvider = methodProvider
+        self.switchToConsentPaymentAction = switchToConsentPaymentAction
     }
     
     private lazy var cardInfoViewModel: PaymentCardInfoCellViewModel = {
@@ -87,13 +94,15 @@ class NewCardPaymentSectionController: SectionController {
         section.contentInsets = .init(top: .spacing_16, leading: .spacing_16, bottom: .spacing_16, trailing: .spacing_16)
         section.interGroupSpacing = .spacing_16
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(32))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-        section.boundarySupplementaryItems = [header]
+        if !methodProvider.consents.isEmpty {
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(32))
+            let header = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            section.boundarySupplementaryItems = [header]
+        }
         return section
     }
     
@@ -102,7 +111,8 @@ class NewCardPaymentSectionController: SectionController {
             title: NSLocalizedString("Add new", comment: ""),
             actionTitle: "Keep using saved cards",
             buttonAction: { [weak self] in
-                self?.showTODO()
+                guard let self else { return }
+                self.switchToConsentPaymentAction()
             }
         )
         let view = collectionView.dequeueReusableSupplementaryView(
