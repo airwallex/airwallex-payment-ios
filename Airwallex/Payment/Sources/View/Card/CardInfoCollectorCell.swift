@@ -16,7 +16,7 @@ protocol CardInfoCollectorCellConfiguring {
     var nameOnCardConfigurer: InfoCollectorTextFieldConfiguring { get }
     
     var errorHintForCardFields: String? { get }
-    var callbackForLayoutUpdate: () -> Void { get }
+    var triggerLayoutUpdate: () -> Void { get }
 }
 
 class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -113,40 +113,30 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
 private extension CardInfoCollectorCell {
     
     func setupObservation() {
-        
-        let updateLayering = { [weak self] view in
+        let updateLayering = { [weak self] in
             guard let self else { return }
-            let arr: [any ViewConfigurable] = [ self.numberTextField, self.expiresTextField, self.cvcTextField ]
+            let arr = [ self.numberTextField, self.expiresTextField, self.cvcTextField ]
+            
             for view in arr {
-                guard let viewModel = view.viewModel as? any BaseTextFieldConfiguring else {
-                    return
-                }
+                guard let viewModel = view.viewModel else { continue }
                 if !viewModel.isValid {
                     self.container.bringSubviewToFront(view)
                 }
             }
-            self.container.bringSubviewToFront(view)
+            if let editingField = arr.first(where: { $0.isFirstResponder }) {
+                self.container.bringSubviewToFront(editingField)
+            }
         }
-        numberTextField.textDidBeginEditingPublisher
-            .sink { [weak self] _ in
-                guard let self else { return }
-                updateLayering(self.numberTextField)
-            }
-            .store(in: &cancellables)
         
-        expiresTextField.textDidBeginEditingPublisher
-            .sink { [weak self] _ in
-                guard let self else { return }
-                updateLayering(self.expiresTextField)
-            }
-            .store(in: &cancellables)
-        
-        cvcTextField.textDidBeginEditingPublisher
-            .sink { [weak self] _ in
-                guard let self else { return }
-                updateLayering(self.cvcTextField)
-            }
-            .store(in: &cancellables)
+        Publishers.Merge3(
+            numberTextField.textDidBeginEditingPublisher,
+            expiresTextField.textDidBeginEditingPublisher,
+            cvcTextField.textDidBeginEditingPublisher
+        )
+        .sink { _ in
+            updateLayering()
+        }
+        .store(in: &cancellables)
         
         Publishers.Merge4(
             numberTextField.textDidEndEditingPublisher,
@@ -154,10 +144,13 @@ private extension CardInfoCollectorCell {
             cvcTextField.textDidEndEditingPublisher,
             nameTextField.textDidEndEditingPublisher
         )
-        .sink { [weak self] _ in
+        .sink { [weak self] textField in
             guard let self, let viewModel = self.viewModel else { return }
             self.hintLabel.text = viewModel.errorHintForCardFields
-            viewModel.callbackForLayoutUpdate()
+            if textField !== nameTextField {
+                updateLayering()
+            }
+            viewModel.triggerLayoutUpdate()
         }
         .store(in: &cancellables)
     }

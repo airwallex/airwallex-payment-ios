@@ -9,14 +9,14 @@
 class CardInfoCollectorCellViewModel: CardInfoCollectorCellConfiguring {
     var nameOnCardConfigurer: any InfoCollectorTextFieldConfiguring
     
-    var callbackForLayoutUpdate: () -> Void
+    var triggerLayoutUpdate: () -> Void
     
     var cardNumberConfigurer: any CardNumberTextFieldConfiguring
     var expireDataConfigurer: any ErrorHintableTextFieldConfiguring
     var cvcConfigurer: any ErrorHintableTextFieldConfiguring
     
     init(cardSchemes: [AWXCardScheme], callbackForLayoutUpdate: @escaping () -> Void) {
-        self.callbackForLayoutUpdate = callbackForLayoutUpdate
+        self.triggerLayoutUpdate = callbackForLayoutUpdate
         cardNumberConfigurer = CardNumberTextFieldViewModel(
             supportedCardSchemes: cardSchemes
         )

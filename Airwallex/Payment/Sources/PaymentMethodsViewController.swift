@@ -35,7 +35,7 @@ class PaymentMethodsViewController: AWXViewController {
         return provider
     }()
     
-    private var token: AnyCancellable?
+    private var cancellable: AnyCancellable?
     
     private var preferConsentPayment = true
     
@@ -56,7 +56,7 @@ class PaymentMethodsViewController: AWXViewController {
             }
         }
         
-        token = methodProvider.publisher.sink {[weak self] _ in
+        cancellable = methodProvider.publisher.sink {[weak self] _ in
             self?.sectionProvider.reloadData()
         }
     }

@@ -116,6 +116,10 @@ class BaseTextField: UIView, ViewConfigurable {
         textField.canResignFirstResponder
     }
     
+    override var isFirstResponder: Bool {
+        textField.isFirstResponder
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -194,21 +198,21 @@ extension BaseTextField: UITextFieldDelegate {
 
 extension BaseTextField {
     
-    var textDidBeginEditingPublisher: AnyPublisher<UITextField, Never> {
+    var textDidBeginEditingPublisher: AnyPublisher<BaseTextField, Never> {
         NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification, object: textField)
-            .compactMap { $0.object as? UITextField }
+            .compactMap { _ in self }
             .eraseToAnyPublisher()
     }
     
-    var textDidEndEditingPublisher: AnyPublisher<UITextField, Never> {
+    var textDidEndEditingPublisher: AnyPublisher<BaseTextField, Never> {
         NotificationCenter.default.publisher(for: UITextField.textDidEndEditingNotification, object: textField)
-            .compactMap { $0.object as? UITextField }
+            .compactMap { _ in self }
             .eraseToAnyPublisher()
     }
     
-    var textDidChangePublisher: AnyPublisher<UITextField, Never> {
+    var textDidChangePublisher: AnyPublisher<BaseTextField, Never> {
         NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: textField)
-            .compactMap { $0.object as? UITextField }
+            .compactMap { _ in self }
             .eraseToAnyPublisher()
     }
 }
