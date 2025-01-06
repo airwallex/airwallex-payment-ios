@@ -65,6 +65,9 @@ class CardNumberTextField: BaseTextField {
         setupTimer()
     }
     
+    deinit {
+        invalidateTimer()
+    }
 }
 
 private extension CardNumberTextField {
