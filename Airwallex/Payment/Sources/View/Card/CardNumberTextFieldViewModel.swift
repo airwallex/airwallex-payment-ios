@@ -24,7 +24,7 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
     var currentBrand: AWXBrandType = .unknown
     
     var isValid: Bool {
-        errorHint == nil ? true : false
+        errorHint == nil
     }
     
     var errorHint: String? = nil
