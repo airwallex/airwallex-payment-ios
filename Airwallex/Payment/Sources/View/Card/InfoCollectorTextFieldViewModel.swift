@@ -22,12 +22,13 @@ class InfoCollectorTextFieldViewModel: InfoCollectorTextFieldConfiguring {
     
     var placeholder: String?
     
-    func handleTextDidUpdate(to userInput: String) {
+    func handleTextDidUpdate(to userInput: String) -> Bool {
         guard !userInput.isEmpty else {
             text = nil
-            return
+            return false
         }
         text = userInput
+        return false
     }
     
     func handleDidEndEditing() {

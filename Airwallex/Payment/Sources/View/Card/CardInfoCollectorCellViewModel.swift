@@ -13,7 +13,12 @@ class CardInfoCollectorCellViewModel: CardInfoCollectorCellConfiguring {
     
     var cardNumberConfigurer: any CardNumberTextFieldConfiguring
     var expireDataConfigurer: any ErrorHintableTextFieldConfiguring
-    var cvcConfigurer: any ErrorHintableTextFieldConfiguring
+    lazy var cvcConfigurer: any ErrorHintableTextFieldConfiguring = {
+        CardCVCTextFieldViewModel(maxLengthGetter: { [weak self] in
+            guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
+            return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
+        })
+    }()
     
     init(cardSchemes: [AWXCardScheme], callbackForLayoutUpdate: @escaping () -> Void) {
         self.triggerLayoutUpdate = callbackForLayoutUpdate
@@ -21,7 +26,6 @@ class CardInfoCollectorCellViewModel: CardInfoCollectorCellConfiguring {
             supportedCardSchemes: cardSchemes
         )
         expireDataConfigurer = CardExpireTextFieldViewModel()
-        cvcConfigurer = CardCVCTextFieldViewModel()
         nameOnCardConfigurer = InfoCollectorTextFieldViewModel(
             title: NSLocalizedString("Name on card", bundle: .payment, comment: "")
         )

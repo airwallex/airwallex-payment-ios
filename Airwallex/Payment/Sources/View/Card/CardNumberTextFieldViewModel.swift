@@ -29,10 +29,11 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
     
     var errorHint: String? = nil
     
-    func handleTextDidUpdate(to userInput: String) {
+    func handleTextDidUpdate(to userInput: String) -> Bool {
         // check max length
-        let userInput = userInput.filterIllegalCharacters(in: .decimalDigits.inverted)
-        guard userInput.count <= AWXCardValidator.shared().maxLength(forCardNumber: userInput) else { return}
+        var userInput = userInput.filterIllegalCharacters(in: .decimalDigits.inverted)
+        let maxLength = AWXCardValidator.shared().maxLength(forCardNumber: userInput)
+        userInput = String(userInput.prefix(maxLength))
         
         var cardBrandType: AWXBrandType = .unknown
         if !userInput.isEmpty, let brand = AWXCardValidator.shared().brand(forCardNumber: userInput) {
@@ -41,6 +42,7 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
         
         attributedText = formatText(userInput, brand: cardBrandType)
         currentBrand = cardBrandType
+        return userInput.count == maxLength && isValid
     }
     
     func handleDidEndEditing() {

@@ -19,7 +19,7 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private lazy var button: UIButton = {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.setTitle(NSLocalizedString("Pay", comment: "card checkout button"), for: .normal)
+        view.setTitle(NSLocalizedString("Pay", comment: "checkout button"), for: .normal)
         view.addTarget(self, action: #selector(onButtonTapped), for: .touchUpInside)
         
         view.setTitleColor(.awxTextInverse, for: .normal)
@@ -39,7 +39,7 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
             button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            button.heightAnchor.constraint(equalToConstant: 52),
+            button.heightAnchor.constraint(equalToConstant: 52).priority(.required - 1),
         ]
         NSLayoutConstraint.activate(constraints)
     }

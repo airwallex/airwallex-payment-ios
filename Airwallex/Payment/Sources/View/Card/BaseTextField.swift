@@ -19,7 +19,11 @@ protocol BaseTextFieldConfiguring: AnyObject {
     var textFieldType: AWXTextFieldType? { get }
     var placeholder: String? { get }
     
-    func handleTextDidUpdate(to userInput: String)
+    /// will be called in UITextField's `textField(_:shouldChangeCharactersIn:replacementString:) -> Bool` delegate to decide whether
+    /// we should let user continue input in `nextField`
+    /// - Parameter userInput: user input
+    /// - Returns: true means we have a valid input and we should make `nextFiled`  the first responder
+    func handleTextDidUpdate(to userInput: String) -> Bool
     func handleDidEndEditing()
 }
 
@@ -177,7 +181,9 @@ extension BaseTextField: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let viewModel else { return }
         viewModel.handleDidEndEditing()
-        setup(viewModel)
+        textField.updateWithoutDelegate { tf in
+            setup(viewModel)
+        }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -189,8 +195,11 @@ extension BaseTextField: UITextFieldDelegate {
         if let range = Range(range, in: currentText) {
             let text = currentText.replacingCharacters(in: range, with: string)
             guard let viewModel else { return false }
-            viewModel.handleTextDidUpdate(to: text)
+            let moveToNextField = viewModel.handleTextDidUpdate(to: text)
             setup(viewModel)
+            if textField.isFirstResponder && moveToNextField {
+                nextField?.becomeFirstResponder()
+            }
         }
         return false
     }

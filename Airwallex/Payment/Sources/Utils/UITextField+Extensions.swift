@@ -57,4 +57,11 @@ extension UITextField {
             keyboardType = .numberPad
         }
     }
+    
+    func updateWithoutDelegate(_ updates: (UITextField) -> Void) {
+        let tmp = delegate
+        delegate = nil
+        updates(self)
+        delegate = tmp
+    }
 }

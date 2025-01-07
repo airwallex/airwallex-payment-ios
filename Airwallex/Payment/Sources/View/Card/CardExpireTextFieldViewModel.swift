@@ -24,7 +24,7 @@ class CardExpireTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     
     var errorHint: String? = nil
     
-    func handleTextDidUpdate(to userInput: String) {
+    func handleTextDidUpdate(to userInput: String) -> Bool {
         var userInput = userInput.filterIllegalCharacters(in: .decimalDigits.inverted)
         if let text, userInput.count == text.count - 1, text.hasPrefix(userInput), text.last == "/", userInput.count >= 1 {
             // when user deleting "/", we also delete the character before "/"
@@ -37,6 +37,7 @@ class CardExpireTextFieldViewModel: ErrorHintableTextFieldConfiguring {
         }
         
         attributedText = formatedString(month: String(expirationMonth), year: String(expirationYear))
+        return (expirationMonth.count + expirationYear.count == 4) && isValid
     }
     
     func handleDidEndEditing() {

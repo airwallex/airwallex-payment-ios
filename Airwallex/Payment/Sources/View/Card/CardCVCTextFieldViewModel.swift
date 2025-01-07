@@ -10,9 +10,8 @@ import Foundation
 
 class CardCVCTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     
-    var maxLength: Int = 3
+    var maxLengthGetter: () -> Int
     
-    // ErrorHintableTextFieldConfiguring
     var errorHint: String? = nil
     
     var text: String? = nil
@@ -27,8 +26,13 @@ class CardCVCTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     
     var placeholder: String? = "CVC"
     
-    func handleTextDidUpdate(to userInput: String) {
-        text = String(userInput.filterIllegalCharacters(in: .decimalDigits.inverted).prefix(maxLength))
+    init(maxLengthGetter: @escaping () -> Int) {
+        self.maxLengthGetter = maxLengthGetter
+    }
+    
+    func handleTextDidUpdate(to userInput: String) -> Bool {
+        text = String(userInput.filterIllegalCharacters(in: .decimalDigits.inverted).prefix(maxLengthGetter()))
+        return text?.count == maxLengthGetter()
     }
     
     func handleDidEndEditing() {
@@ -36,7 +40,7 @@ class CardCVCTextFieldViewModel: ErrorHintableTextFieldConfiguring {
             errorHint = NSLocalizedString("Security code is required", bundle: .payment, comment: "")
             return
         }
-        guard text.count == maxLength else {
+        guard text.count == maxLengthGetter() else {
             errorHint = NSLocalizedString("Security code is invalid", bundle: .payment, comment: "")
             return
         }
