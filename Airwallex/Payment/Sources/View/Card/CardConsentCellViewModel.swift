@@ -7,9 +7,16 @@
 //
 
 struct CardConsentCellViewModel: CardConsentCellConfiguring {
+    
     var image: UIImage?
     
     var text: String
+
+    var highlightable: Bool
     
+    var actionTitle: String?
+    
+    var actionIcon: UIImage?
+
     var buttonAction: () -> Void
 }

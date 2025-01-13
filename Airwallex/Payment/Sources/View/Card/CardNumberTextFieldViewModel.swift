@@ -9,6 +9,8 @@
 import Foundation
 
 class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
+    var isEnabled: Bool = true
+    
     var placeholder: String? = "1234 1234 1234 1234"
     
     let textFieldType: AWXTextFieldType? = .cardNumber
@@ -47,28 +49,22 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
     
     func handleDidEndEditing() {
         let cardNumber = attributedText?.string ?? ""
-        guard !cardNumber.isEmpty else {
-            errorHint = NSLocalizedString("Card number is required", bundle: .payment, comment: "")
-            return
+        do {
+            try AWXCardValidator.validate(number: cardNumber, supportedSchemes: supportedCardSchemes)
+            errorHint = nil
+        } catch {
+            guard let error = error as? String else { return }
+            errorHint = error
         }
-        guard AWXCardValidator.shared().isValidCardLength(cardNumber) else {
-            errorHint = NSLocalizedString("Card number is invalid", bundle: .payment, comment: "")
-            return
-        }
-        let cardName = AWXCardValidator.shared().brand(forCardNumber: cardNumber)?.name ?? ""
-        guard supportedCardSchemes.contains(where: { $0.name.lowercased() == cardName.lowercased() }) else {
-            errorHint = NSLocalizedString("Card not supported for payment", bundle: .payment, comment: "")
-            return
-        }
-        errorHint = nil
     }
     
-    let supportedCardSchemes: [AWXCardScheme]
+    let supportedCardSchemes: [AWXCardScheme]?
     
-    init(supportedCardSchemes: [AWXCardScheme]) {
+    init(supportedCardSchemes: [AWXCardScheme]?) {
         self.supportedCardSchemes = supportedCardSchemes
     }
 }
+
 extension CardNumberTextFieldViewModel {
     
     func formatText(_ text: String, brand: AWXBrandType) -> NSAttributedString? {

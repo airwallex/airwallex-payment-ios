@@ -11,8 +11,8 @@ import Combine
 
 protocol CardInfoCollectorCellConfiguring {
     var cardNumberConfigurer: CardNumberTextFieldConfiguring { get }
-    var expireDataConfigurer: ErrorHintableTextFieldConfiguring { get }
-    var cvcConfigurer: ErrorHintableTextFieldConfiguring { get }
+    var expireDataConfigurer: BaseTextFieldConfiguring { get }
+    var cvcConfigurer: BaseTextFieldConfiguring { get }
     var nameOnCardConfigurer: InfoCollectorTextFieldConfiguring { get }
     
     var errorHintForCardFields: String? { get }

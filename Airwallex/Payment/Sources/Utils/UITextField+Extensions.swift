@@ -31,8 +31,10 @@ extension UITextField {
             autocapitalizationType = .none
             autocorrectionType = .no
             textContentType = .emailAddress
+            keyboardType = .emailAddress
         case .phoneNumber:
             textContentType = .telephoneNumber
+            keyboardType = .phonePad
         case .country:
             textContentType = .countryName
         case .state:
@@ -43,6 +45,7 @@ extension UITextField {
             textContentType = .fullStreetAddress
         case .zipcode:
             textContentType = .postalCode
+            keyboardType = .asciiCapableNumberPad
         case .cardNumber:
             keyboardType = .asciiCapableNumberPad
         case .expires:
@@ -54,7 +57,9 @@ extension UITextField {
             if #available(iOS 17.0, *) {
                 textContentType = .creditCardSecurityCode
             }
-            keyboardType = .numberPad
+            keyboardType = .asciiCapableNumberPad
+        @unknown default:
+            fatalError()
         }
     }
     

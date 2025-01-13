@@ -17,8 +17,6 @@
     
     var items: [ItemIdentifierType] { get }
     
-    func reload()
-    
     func bind(context: CollectionViewContext<SectionIdentifierType, ItemIdentifierType>)
     
     func registerReusableViews(to collectionView: UICollectionView)
@@ -31,10 +29,15 @@
     func supplementaryView(for collectionView: UICollectionView, ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    
+    func prepareItemsForReload()
 }
 
 extension SectionController {
-    func reload() {}
+    
+    func prepareItemsForReload() {
+        // do nothing by default
+    }
     
     func supplementaryView(for collectionView: UICollectionView, ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         // provide supplementary view in you concrete SectionController
@@ -42,11 +45,11 @@ extension SectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // do nothing
+        // do nothing by default
     }
     
     func showTODO() {
-        // TODO: Add new card
+        // TODO: WPDEBUG
         let alert = UIAlertController(title: "TODO", message: "Not Implemented yet", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "DONE", style: .default))
         context.viewController?.present(alert, animated: true)
@@ -74,7 +77,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
     private let _section: () -> SectionType
     private let _context: () -> CollectionViewContext<SectionType, ItemType>
     private let _bindContext: (CollectionViewContext<SectionType, ItemType>) -> Void
-    private let _reload: () -> Void
+    private let _prepareItemsForReload: () -> Void
     
     var context: CollectionViewContext<SectionType, ItemType>! { _context() }
     var section: SectionType { _section() }
@@ -90,7 +93,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
         self._items = { sectionController.items }
         self._section = { sectionController.section }
         self._context = { sectionController.context }
-        self._reload = { sectionController.reload() }
+        self._prepareItemsForReload = { sectionController.prepareItemsForReload() }
     }
     
     func bind(context: CollectionViewContext<SectionType, ItemType>) {
@@ -117,7 +120,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
         _didSelectHandler(collectionView, indexPath)
     }
     
-    func reload() {
-        _reload()
+    func prepareItemsForReload() {
+        _prepareItemsForReload()
     }
 }
