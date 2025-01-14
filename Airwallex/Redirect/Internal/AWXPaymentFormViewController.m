@@ -131,8 +131,13 @@
             [stackView addArrangedSubview:textField];
             lastTextField = textField;
         } else if (form.type == AWXFormTypeListCell) {
-            AWXOptionView *optionView = [[AWXOptionView alloc] initWithKey:form.key formLabel:form.title logoURL:form.logo];
-            [optionView addTarget:self action:@selector(optionPressed:) forControlEvents:UIControlEventTouchUpInside];
+            __weak typeof(self) weakSelf = self;
+            AWXOptionView *optionView = [[AWXOptionView alloc] initWithKey:form.key
+                                                                 formLabel:form.title
+                                                                   logoURL:form.logo
+                                                          selectionHandler:^(AWXOptionView *_Nonnull option) {
+                                                              [weakSelf optionPressed:option];
+                                                          }];
             [stackView addArrangedSubview:optionView];
         } else if (form.type == AWXFormTypeButton) {
             AWXActionButton *button = [AWXActionButton new];
@@ -165,8 +170,9 @@
     [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-24-[titleLabel]-24-[stackView]-bottom-|" options:NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing metrics:metrics views:views]];
 }
 
-- (void)optionPressed:(UIButton *)sender {
-    [self.paymentMethod appendAdditionalParams:self.options];
+- (void)optionPressed:(AWXOptionView *)sender {
+    [[AWXAnalyticsLogger shared] logActionWithName:@"select_bank" additionalInfo:@{@"bankName": sender.key}];
+    [self.paymentMethod appendAdditionalParams:@{@"bank_name": sender.key}];
     if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didUpdatePaymentMethod:)]) {
         [self.delegate paymentFormViewController:self didUpdatePaymentMethod:self.paymentMethod];
     }
@@ -200,20 +206,6 @@
             [self.delegate paymentFormViewController:self didConfirmPaymentMethod:self.paymentMethod];
         }];
     }
-}
-
-- (NSDictionary *)options {
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    for (UIView *view in self.stackView.arrangedSubviews) {
-        if ([view isKindOfClass:[AWXOptionView class]]) {
-            AWXOptionView *option = (AWXOptionView *)view;
-            if (option.key.length > 0) {
-                dictionary[@"bank_name"] = option.key;
-                [[AWXAnalyticsLogger shared] logActionWithName:@"select_bank" additionalInfo:@{@"bankName": option.key}];
-            }
-        }
-    }
-    return dictionary;
 }
 
 - (NSDictionary *)fields {
