@@ -96,8 +96,10 @@ private extension CardNumberTextField {
     func setupTimer() {
         invalidateTimer()
         guard let viewModel = viewModel as? CardNumberTextFieldConfiguring, viewModel.currentBrand == .unknown, window != nil else { return }
-        let brands = viewModel.supportedBrands[(logoStack.arrangedSubviews.count-1)...]
-        guard brands.count > 1 else { return }
+        let animatingBrands = viewModel.supportedBrands[(logoStack.arrangedSubviews.count-1)...]
+        //  animatingBrands.count > 1 means there are more brands than logo stack's arranged subview,
+        //  we need to display them 1 by 1 at the last position of the logo stack
+        guard animatingBrands.count > 1 else { return }
             
         timer = Timer.scheduledTimer(
             withTimeInterval: 3,
@@ -109,8 +111,8 @@ private extension CardNumberTextField {
                     return
                 }
                 self.counter += 1
-                let index = self.counter % brands.count
-                let brand = brands[brands.startIndex + index]
+                let index = self.counter % animatingBrands.count
+                let brand = animatingBrands[animatingBrands.startIndex + index]
                 
                 let transition = CATransition()
                 transition.type = .fade
