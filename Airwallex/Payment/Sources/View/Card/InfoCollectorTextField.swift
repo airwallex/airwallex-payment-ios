@@ -11,6 +11,7 @@ import Combine
 
 protocol InfoCollectorTextFieldConfiguring: BaseTextFieldConfiguring {
     var title: String? { get }
+    var hideHintLabel: Bool { get }
 }
 
 class InfoCollectorTextField: BaseTextField {
@@ -50,7 +51,7 @@ class InfoCollectorTextField: BaseTextField {
         hintLabel.text = viewModel.errorHint
         
         topLabel.isHidden = viewModel.title == nil || viewModel.title?.isEmpty == true
-        hintLabel.isHidden = viewModel.isValid || viewModel.errorHint == nil || viewModel.errorHint?.isEmpty == true
+        hintLabel.isHidden = viewModel.hideHintLabel || viewModel.isValid || viewModel.errorHint == nil || viewModel.errorHint?.isEmpty == true
     }
     
     private func setupViews() {

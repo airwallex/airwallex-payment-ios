@@ -38,6 +38,13 @@ class PaymentMethodsViewController: AWXViewController {
         return manager
     }()
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addTarget(self, action: #selector(onPullToRefresh), for: .valueChanged)
+        return view
+    }()
+    
     private var cancellable: AnyCancellable?
     
     private var preferConsentPayment = true
@@ -50,16 +57,14 @@ class PaymentMethodsViewController: AWXViewController {
         Task {
             do {
                 try await methodProvider.fetchPaymentMethods()
-                
-                collectionViewManager.reloadData()
                 stopAnimating()
             } catch {
-                
+                showAlertMessage(error.localizedDescription)
             }
         }
         
         cancellable = methodProvider.publisher.sink {[weak self] _ in
-            self?.collectionViewManager.reloadData()
+            self?.collectionViewManager.performUpdates(animatingDifferences: true)
         }
     }
     
@@ -90,6 +95,9 @@ class PaymentMethodsViewController: AWXViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.keyboardDismissMode = .interactive
         collectionView.backgroundColor = .awxBackgroundPrimary
+        
+        collectionView.refreshControl = refreshControl
+        
         view.addSubview(collectionView)
         let constraints = [
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -102,6 +110,24 @@ class PaymentMethodsViewController: AWXViewController {
     
     @objc public func onCloseButtonTapped() {
         AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+    }
+    
+    @objc private func onPullToRefresh() {
+        refreshControl.endRefreshing()
+        Task {
+            startAnimating()
+            do {
+                try await methodProvider.fetchPaymentMethods()
+            } catch {
+                showAlertMessage(error.localizedDescription)
+            }
+            stopAnimating()
+        }
+    }
+    private func showAlertMessage(_ message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Close", bundle: .payment, comment: ""), style: .cancel))
+        self.present(alert, animated: true)
     }
     
     override func activeScrollView() -> UIScrollView {
@@ -160,7 +186,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
                 addNewCardAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = false
-                    self.collectionViewManager.reloadData()
+                    self.collectionViewManager.performUpdates()
                 }
             )
             return controller.anySectionController()
@@ -171,7 +197,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
                 switchToConsentPaymentAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = true
-                    self.collectionViewManager.reloadData()
+                    self.collectionViewManager.performUpdates()
                 }
             ).anySectionController()
             return controller

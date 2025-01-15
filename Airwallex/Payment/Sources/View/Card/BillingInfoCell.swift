@@ -14,7 +14,7 @@ protocol BillingInfoCellConfiguring {
     var shouldReuseShippingAddress: Bool { get }
     var firstNameConfigurer: BaseTextFieldConfiguring { get }
     var lastNameConfigurer: BaseTextFieldConfiguring { get }
-    var countryConfigurer: CountrySelectionViewConfiguring { get }
+    var countryConfigurer: OptionSelectionViewConfiguring { get }
     var streetConfigurer: BaseTextFieldConfiguring { get }
     var stateConfigurer: BaseTextFieldConfiguring { get }
     var cityConfigurer: BaseTextFieldConfiguring { get }
@@ -67,8 +67,8 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return button
     }()
     
-    private lazy var countrySelectionView: CountrySelectionView = {
-        let view = CountrySelectionView()
+    private lazy var countrySelectionView: OptionSelectionView = {
+        let view = OptionSelectionView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = [ .layerMinXMinYCorner, .layerMaxXMinYCorner ]
         return view
@@ -198,14 +198,20 @@ private extension BillingInfoCell {
         stack.addArrangedSubview(streetTextField)
         
         let stateCitySpacer = stack.addSpacer(40, priority: .defaultLow)
-        stack.addSubview(stateTextField)
-        stack.addSubview(cityTextField)
+        do {
+            // horizontal stack for state and city
+            stack.addSubview(stateTextField)
+            stack.addSubview(cityTextField)
+        }
         
         stack.addArrangedSubview(zipCodeTextField)
         
         let nameSpacer = stack.addSpacer(40, priority: .defaultLow)
-        stack.addSubview(firstNameTextField)
-        stack.addSubview(lastNameTextField)
+        do {
+            // horizontal stack for first name and last name
+            stack.addSubview(firstNameTextField)
+            stack.addSubview(lastNameTextField)
+        }
         
         stack.addArrangedSubview(phoneTextField)
         stack.addArrangedSubview(emailTextField)
@@ -247,6 +253,10 @@ private extension BillingInfoCell {
         streetTextField.nextField = stateTextField
         stateTextField.nextField = cityTextField
         cityTextField.nextField = zipCodeTextField
+        zipCodeTextField.nextField = firstNameTextField
+        firstNameTextField.nextField = lastNameTextField
+        lastNameTextField.nextField = phoneTextField
+        phoneTextField.nextField = emailTextField
     }
     
     func setupObservation() {

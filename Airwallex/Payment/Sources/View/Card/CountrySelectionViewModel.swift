@@ -6,7 +6,43 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-class CountrySelectionViewModel: CountrySelectionViewConfiguring {
+class CountrySelectionViewModel: OptionSelectionViewConfiguring {
+
+    var country: AWXCountry? {
+        didSet {
+            handleDidEndEditing()
+        }
+    }
+    
+    init(isEnabled: Bool = true,
+         country: AWXCountry? = nil,
+         handleUserInteraction: @escaping () -> Void) {
+        self.isEnabled = isEnabled
+        self.country = country
+        self.handleUserInteraction = handleUserInteraction
+        // don't give a error hint before user editing
+        self.errorHint = nil
+    }
+    
+    //  OptionSelectionViewConfiguring
+    
+    var title: String? = nil
+    
+    var hideHintLabel = true
+    
+    var icon: UIImage? {
+        guard let country else { return nil }
+        return UIImage(named: country.countryCode, in: Bundle.resource())
+    }
+    
+    var indicator: UIImage? {
+        UIImage(named: "down", in: Bundle.resource())?
+            .withTintColor(
+                isEnabled ? .awxIconSecondary : .awxIconDisabled,
+                renderingMode: .alwaysOriginal
+            )
+    }
+    
     var text: String? {
         country?.countryName
     }
@@ -21,7 +57,7 @@ class CountrySelectionViewModel: CountrySelectionViewConfiguring {
     
     var textFieldType: AWXTextFieldType? = .country
     
-    var placeholder: String? = NSLocalizedString("Country", bundle: .payment, comment: "country selection view placeholder")
+    var placeholder: String? = NSLocalizedString("Select..", bundle: .payment, comment: "country selection view placeholder")
     
     func handleTextDidUpdate(to userInput: String) -> Bool {
         assert(false, "should never triggered")
@@ -34,21 +70,6 @@ class CountrySelectionViewModel: CountrySelectionViewConfiguring {
     
     var isEnabled: Bool
     
-    var country: AWXCountry? {
-        didSet {
-            handleDidEndEditing()
-        }
-    }
-    
     var handleUserInteraction: () -> Void
     
-    init(isEnabled: Bool = true,
-         country: AWXCountry? = nil,
-         handleUserInteraction: @escaping () -> Void) {
-        self.isEnabled = isEnabled
-        self.country = country
-        self.handleUserInteraction = handleUserInteraction
-        // don't give a error hint before user editing
-        self.errorHint = nil
-    }
 }

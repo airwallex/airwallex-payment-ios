@@ -173,6 +173,11 @@
 - (void)optionPressed:(AWXOptionView *)sender {
     [[AWXAnalyticsLogger shared] logActionWithName:@"select_bank" additionalInfo:@{@"bankName": sender.key}];
     [self.paymentMethod appendAdditionalParams:@{@"bank_name": sender.key}];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didSelectOption:)]) {
+        [self.delegate paymentFormViewController:self didSelectOption:sender.key];
+    }
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(paymentFormViewController:didUpdatePaymentMethod:)]) {
         [self.delegate paymentFormViewController:self didUpdatePaymentMethod:self.paymentMethod];
     }

@@ -45,8 +45,10 @@ class PaymentUISessionHandler: NSObject {
         actionProvider = AWXDefaultProvider(delegate: self, session: session)
     }
     
-    func startPayment() {
-        if let paymentMethod = paymentConsent?.paymentMethod {
+    func startPayment(_ paymentMethod: AWXPaymentMethod? = nil) {
+        if let paymentMethod {
+            actionProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
+        } else if let paymentMethod = paymentConsent?.paymentMethod {
             actionProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: paymentConsent)
         } else {
             actionProvider.handleFlow()

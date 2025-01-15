@@ -30,12 +30,12 @@
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     
-    func prepareItemsForReload()
+    func prepareItemUpdates()
 }
 
 extension SectionController {
     
-    func prepareItemsForReload() {
+    func prepareItemUpdates() {
         // do nothing by default
     }
     
@@ -77,7 +77,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
     private let _section: () -> SectionType
     private let _context: () -> CollectionViewContext<SectionType, ItemType>
     private let _bindContext: (CollectionViewContext<SectionType, ItemType>) -> Void
-    private let _prepareItemsForReload: () -> Void
+    private let _prepareItemUpdates: () -> Void
     
     var context: CollectionViewContext<SectionType, ItemType>! { _context() }
     var section: SectionType { _section() }
@@ -93,7 +93,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
         self._items = { sectionController.items }
         self._section = { sectionController.section }
         self._context = { sectionController.context }
-        self._prepareItemsForReload = { sectionController.prepareItemsForReload() }
+        self._prepareItemUpdates = { sectionController.prepareItemUpdates() }
     }
     
     func bind(context: CollectionViewContext<SectionType, ItemType>) {
@@ -120,7 +120,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
         _didSelectHandler(collectionView, indexPath)
     }
     
-    func prepareItemsForReload() {
-        _prepareItemsForReload()
+    func prepareItemUpdates() {
+        _prepareItemUpdates()
     }
 }

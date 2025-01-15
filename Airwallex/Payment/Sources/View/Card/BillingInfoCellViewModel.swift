@@ -23,7 +23,7 @@ class BillingInfoCellViewModel: BillingInfoCellConfiguring {
     
     var toggleReuseSelection: () -> Void
     
-    var countryConfigurer: any CountrySelectionViewConfiguring
+    var countryConfigurer: any OptionSelectionViewConfiguring
     
     var streetConfigurer: any BaseTextFieldConfiguring
     
@@ -136,7 +136,7 @@ class BillingInfoCellViewModel: BillingInfoCellConfiguring {
         place.phoneNumber = phoneConfigurer.text
         
         let address = AWXAddress()
-        address.countryCode = countryConfigurer.country?.countryCode
+        address.countryCode = selectedCountry?.countryCode
         address.state = stateConfigurer.text ?? ""
         address.city = cityConfigurer.text ?? ""
         address.street = streetConfigurer.text ?? ""
@@ -160,6 +160,15 @@ class BillingInfoCellViewModel: BillingInfoCellConfiguring {
         for configurer in fieldConfigurers {
             //  force configurer to check valid status if user left this field untouched
             configurer.handleDidEndEditing()
+        }
+    }
+    
+    var selectedCountry: AWXCountry? {
+        get {
+            (countryConfigurer as? CountrySelectionViewModel)?.country
+        }
+        set {
+            (countryConfigurer as? CountrySelectionViewModel)?.country = newValue
         }
     }
 }

@@ -6,14 +6,15 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-protocol CountrySelectionViewConfiguring: BaseTextFieldConfiguring {
+protocol OptionSelectionViewConfiguring: InfoCollectorTextFieldConfiguring {
+    var icon: UIImage? { get }
     
-    var country: AWXCountry? { get set }
+    var indicator: UIImage? { get }
     
     var handleUserInteraction: () -> Void { get }
 }
 
-class CountrySelectionView: BaseTextField {
+class OptionSelectionView: InfoCollectorTextField {
     
     private let iconWrapper: UIView = {
         let view = UIView()
@@ -59,20 +60,17 @@ class CountrySelectionView: BaseTextField {
     
     override func setup(_ viewModel: any BaseTextFieldConfiguring) {
         super.setup(viewModel)
-        guard let viewModel = viewModel as? CountrySelectionViewConfiguring else {
+        guard let viewModel = viewModel as? OptionSelectionViewConfiguring else {
             assert(false, "invalid view model")
             return
         }
-        iconWrapper.isHidden = viewModel.country == nil
-        if let country = viewModel.country {
-            icon.image = UIImage(named: country.countryCode, in: Bundle.resource())
-        }
-        indicator.image = UIImage(named: "down", in: Bundle.resource())?
-            .withTintColor(viewModel.isEnabled ? .awxIconSecondary : .awxIconDisabled, renderingMode: .alwaysOriginal)
+        iconWrapper.isHidden = viewModel.icon == nil
+        icon.image = viewModel.icon
+        indicator.image = viewModel.indicator
     }
 }
 
-private extension CountrySelectionView {
+private extension OptionSelectionView {
     
     func setupViews() {
         iconWrapper.addSubview(icon)
@@ -101,7 +99,7 @@ private extension CountrySelectionView {
     }
     
     @objc func onUserTapped() {
-        guard let viewModel = viewModel as? CountrySelectionViewConfiguring else {
+        guard let viewModel = viewModel as? OptionSelectionViewConfiguring else {
             assert(false, "invalid view model")
             return
         }

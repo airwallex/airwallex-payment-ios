@@ -194,7 +194,7 @@ private extension NewCardPaymentSectionController {
     func checkout() {
         AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button")
         Risk.log(event: "click_payment_button", screen: "page_create_card")
-        debugLog("Start payment. Intent ID: \(session.paymentIntentId())")
+        debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         do {
             let card = cardInfoViewModel.cardFromCollectedInfo()
             try validator.validate(card: card)
@@ -229,14 +229,14 @@ private extension NewCardPaymentSectionController {
             guard let message = error as? String else { return }
             showAlert(message)
             AWXAnalyticsLogger.shared().logAction(withName: "card_payment_validation", additionalInfo: ["message": message])
-            debugLog("Payment failed. Intent ID: \(session.paymentIntentId()). Reason: \(message)")
+            debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
         }
     }
     
     func triggerCountrySelection() {
         let controller = AWXCountryListViewController(nibName: nil, bundle: nil)
         controller.delegate = self
-        controller.country = billingInfoViewModel.countryConfigurer.country
+        controller.country = billingInfoViewModel.selectedCountry
         let nav = UINavigationController(rootViewController: controller)
         context.viewController?.present(nav, animated: true)
     }
@@ -265,7 +265,7 @@ private extension NewCardPaymentSectionController {
 extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate {
     func countryListViewController(_ controller: AWXCountryListViewController, didSelect country: AWXCountry) {
         controller.dismiss(animated: true)
-        billingInfoViewModel.countryConfigurer.country = country
+        billingInfoViewModel.selectedCountry = country
         context.reload(items: [ Item.billingInfo.rawValue ])
     }
 }

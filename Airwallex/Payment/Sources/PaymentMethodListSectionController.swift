@@ -56,7 +56,7 @@ class PaymentMethodListSectionController: SectionController {
         let viewModel = PaymentMethodCellViewModel(
             name: methodType.displayName,
             imageURL: methodType.resources.logoURL,
-            isSelected: item == self.selectedMethod
+            isSelected: item == selectedMethod
         )
         cell.setup(viewModel)
         return cell
@@ -104,14 +104,18 @@ class PaymentMethodListSectionController: SectionController {
             assert(false, "invalid index")
             return
         }
-        guard selected.name != selectedMethod else { return }
+        guard selected.name != selectedMethod else {
+            debugLog("select same method")
+            return
+        }
         var itemsToReload = [ selected.name, selectedMethod ]
         selectedMethod = selected.name
-        context.reload(items: itemsToReload)
         methodProvider.selectedMethod = selected
+        context.reload(items: itemsToReload)
     }
     
-    func prepareItemsForReload() {
+    func prepareItemUpdates() {
         methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
+        selectedMethod = methodProvider.selectedMethod?.name ?? ""
     }
 }

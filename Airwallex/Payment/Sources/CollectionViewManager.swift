@@ -57,7 +57,6 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
             }
         }
         
-       
         diffableDataSource = UICollectionViewDiffableDataSource<SectionType, ItemType>(
             collectionView: collectionView,
             cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
@@ -88,12 +87,12 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
             collectionView: collectionView,
             layout: layout,
             dataSource: diffableDataSource,
-            reloadSectionData: reloadSectionData,
-            reloadData: reloadData
+            reloadSectionData: performUpdates,
+            reloadData: performUpdates
         )
     }
     
-    func reloadData(fullReload: Bool = false, animatingDifferences: Bool = false) {
+    func performUpdates(forceReload: Bool = false, animatingDifferences: Bool = false) {
         guard let sectionDataSource else { return }
         sections = sectionDataSource.sections()
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
@@ -106,26 +105,27 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                 sectionController.registerReusableViews(to: collectionView)
                 sectionControllers[section] = sectionController
                 controller = sectionController
+            } else {
+                controller?.prepareItemUpdates()
             }
-            controller?.prepareItemsForReload()
             let items = controller?.items ?? []
             snapshot.appendItems(items, toSection: section)
         }
-        if fullReload {
+        if forceReload {
             snapshot.reloadSections(sections)
         }
         diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
-    func reloadSectionData(_ section: SectionType, fullReload: Bool = false, animatingDifferences: Bool = false) {
+    func performUpdates(section: SectionType, forceReload: Bool = false, animatingDifferences: Bool = false) {
         guard let controller = sectionController(for: section) else { return }
         var snapshot = diffableDataSource.snapshot()
-        controller.prepareItemsForReload()
+        controller.prepareItemUpdates()
         let items = snapshot.itemIdentifiers(inSection: section)
         snapshot.deleteItems(items)
         let newItems = controller.items
         snapshot.appendItems(newItems, toSection: section)
-        if fullReload {
+        if forceReload {
             snapshot.reloadSections([section])
         }
         diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
@@ -142,13 +142,13 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     }
 }
 
-class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable> {
+class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable>: SwiftLoggable {
     private(set) weak var viewController: AWXViewController?
     private weak var collectionView: UICollectionView!
     private weak var layout: UICollectionViewCompositionalLayout!
     private(set) var dataSource: UICollectionViewDiffableDataSource<Section, Item>
-    private var _reloadData: (Bool, Bool) -> Void
-    private var _reloadSectionData: (Section, Bool, Bool) -> Void
+    private var _performUpdates: (Bool, Bool) -> Void
+    private var _performUpdatesForSection: (Section, Bool, Bool) -> Void
     
     init(viewController: AWXViewController,
          collectionView: UICollectionView,
@@ -160,8 +160,8 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         self.collectionView = collectionView
         self.layout = layout
         self.dataSource = dataSource
-        self._reloadData = reloadData
-        self._reloadSectionData = reloadSectionData
+        self._performUpdates = reloadData
+        self._performUpdatesForSection = reloadSectionData
     }
     
     func currentSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
@@ -196,28 +196,37 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     
     func reload(sections: [Section], animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
+        let existingSections = Set(snapshot.sectionIdentifiers)
+        assert(existingSections.isSuperset(of: sections), "reload sections not existing")
+        let sections = Array(existingSections.intersection(sections))
         snapshot.reloadSections(sections)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
     func reload(items: [Item], animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
+        let existingItems = Set(snapshot.itemIdentifiers)
+        assert(existingItems.isSuperset(of: items), "reload items not existing")
+        let items = Array(existingItems.intersection(items))
         snapshot.reloadItems(items)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
     func delete(items: [Item], animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
+        let existingItems = Set(snapshot.itemIdentifiers)
+        assert(existingItems.isSuperset(of: items), "delete items not existing")
+        let items = Array(existingItems.intersection(items))
         snapshot.deleteItems(items)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
-    func reloadData(fullReload: Bool = false, animatingDifferences: Bool = false) {
-        _reloadData(fullReload, animatingDifferences)
+    func performUpdates(forceReload: Bool = false, animatingDifferences: Bool = false) {
+        _performUpdates(forceReload, animatingDifferences)
     }
     
-    func reloadSectionData(_ section: Section, fullReload: Bool = false, animatingDifferences: Bool = false) {
-        _reloadSectionData(section, fullReload, animatingDifferences)
+    func performUpdates(_ section: Section, forceReload: Bool = false, animatingDifferences: Bool = false) {
+        _performUpdatesForSection(section, forceReload, animatingDifferences)
     }
     
     func scroll(to item: Item, position: UICollectionView.ScrollPosition, animated: Bool = false) {

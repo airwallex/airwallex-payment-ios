@@ -115,7 +115,7 @@ class CardPaymentConsentSectionController: SectionController {
                         guard let self else { return }
                         self.selectedConsent = nil
                         self.cvcConfigurer = nil
-                        self.context.reloadSectionData(section, fullReload: true, animatingDifferences: false)
+                        self.context.performUpdates(section, forceReload: true, animatingDifferences: false)
                     }
                 )
             } else {
@@ -247,14 +247,14 @@ class CardPaymentConsentSectionController: SectionController {
                     self?.context.invalidateLayout(for: [consent.id], animated: false)
                 }
             )
-            context.reloadSectionData(section, fullReload: true)
+            context.performUpdates(section, forceReload: true)
         } else {
             //  CVC not required, checkout directly
             checkout(consent: consent)
         }
     }
     
-    func prepareItemsForReload() {
+    func prepareItemUpdates() {
         consents = methodProvider.consents
     }
 }

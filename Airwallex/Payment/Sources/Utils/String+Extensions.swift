@@ -9,8 +9,7 @@ import Foundation
 
 extension String {
     func filterIllegalCharacters(in set: CharacterSet) -> String {
-        let components = components(separatedBy: set)
-        return components.joined()
+        unicodeScalars.filter { !set.contains($0) }.reduce("", { $0 + String($1)})
     }
     
     static func flagEmoji(countryCode: String) -> String {

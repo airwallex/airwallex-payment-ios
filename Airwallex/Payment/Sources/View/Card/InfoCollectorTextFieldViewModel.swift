@@ -42,8 +42,9 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
         self.triggerLayoutUpdate = triggerLayoutUpdate
     }
     // MARK: InfoCollectorTextFieldConfiguring
+    var hideHintLabel = false
     
-    var isEnabled: Bool = true
+    var isEnabled = true
     
     var title: String?
     
