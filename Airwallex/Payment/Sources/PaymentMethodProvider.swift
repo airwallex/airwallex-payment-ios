@@ -78,6 +78,7 @@ final class PaymentMethodProvider {
         
         self.methods = filteredMethods
         self.consents = filteredConsents
+        self.selectedMethod = filteredMethods.first { $0.name != AWXApplePayKey }
         publisher.send()
     }
     

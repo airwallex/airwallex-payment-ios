@@ -1,5 +1,5 @@
 //
-//  CollectionViewSectionManager.swift
+//  CollectionViewManager.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/18.
@@ -16,7 +16,7 @@ protocol CollectionViewSectionProvider: AnyObject {
 }
 
 @MainActor
-class CollectionViewSectionManager<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable, SectionProvider: CollectionViewSectionProvider>: NSObject, UICollectionViewDelegate where SectionProvider.SectionType == SectionType, SectionProvider.ItemType == ItemType {
+class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable, SectionProvider: CollectionViewSectionProvider>: NSObject, UICollectionViewDelegate where SectionProvider.SectionType == SectionType, SectionProvider.ItemType == ItemType {
     
     private weak var sectionDataSource: SectionProvider?
     private var sections = [SectionType]()
@@ -83,10 +83,16 @@ class CollectionViewSectionManager<SectionType: Hashable & Sendable, ItemType: H
             
             return sectionController.supplementaryView(for: collectionView, ofKind: elementKind, at: indexPath)
         }
-        self.context = CollectionViewContext(viewController: viewController, dataSource: diffableDataSource)
+        self.context = CollectionViewContext(
+            viewController: viewController,
+            collectionView: collectionView,
+            layout: layout,
+            dataSource: diffableDataSource,
+            reloadData: reloadData
+        )
     }
     
-    func reloadData() {
+    func reloadData(animatingDifferences: Bool = true) {
         guard let sectionDataSource else { return }
         sections = sectionDataSource.sections()
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
@@ -104,8 +110,8 @@ class CollectionViewSectionManager<SectionType: Hashable & Sendable, ItemType: H
             let items = controller?.items ?? []
             snapshot.appendItems(items, toSection: section)
         }
-        diffableDataSource.apply(snapshot)
-     }
+        diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
     
     func sectionController(for section: SectionType) -> AnySectionController<SectionType, ItemType>? {
         sectionControllers[section]
@@ -119,13 +125,22 @@ class CollectionViewSectionManager<SectionType: Hashable & Sendable, ItemType: H
 }
 
 class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable> {
+    private(set) weak var viewController: AWXViewController?
+    private weak var collectionView: UICollectionView!
+    private weak var layout: UICollectionViewCompositionalLayout!
+    private(set) var dataSource: UICollectionViewDiffableDataSource<Section, Item>
+    private var _reloadData: (Bool) -> Void
     
-    weak var viewController: AWXViewController?
-    var dataSource: UICollectionViewDiffableDataSource<Section, Item>
-    
-    init(viewController: AWXViewController, dataSource: UICollectionViewDiffableDataSource<Section, Item>) {
+    init(viewController: AWXViewController,
+         collectionView: UICollectionView,
+         layout: UICollectionViewCompositionalLayout,
+         dataSource: UICollectionViewDiffableDataSource<Section, Item>,
+         reloadData: @escaping (Bool) -> Void) {
         self.viewController = viewController
+        self.collectionView = collectionView
+        self.layout = layout
         self.dataSource = dataSource
+        self._reloadData = reloadData
     }
     
     func currentSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
@@ -134,5 +149,45 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     
     func applySnapshot(_ snapshot: NSDiffableDataSourceSnapshot<Section, Item>) {
         dataSource.apply(snapshot)
+    }
+    
+    func invalidateLayout(for items: [Item], animated: Bool = true) {
+        var indexPaths = [IndexPath]()
+        for item in items {
+            guard let indexPath = dataSource.indexPath(for: item) else { continue }
+            indexPaths.append(indexPath)
+        }
+        invalidateLayout(at: indexPaths, animated: animated)
+    }
+    
+    func invalidateLayout(at indexPaths: [IndexPath], animated: Bool = true) {
+        let invalidationContext = UICollectionViewLayoutInvalidationContext()
+        invalidationContext.invalidateItems(at: indexPaths)
+        layout.invalidateLayout(with: invalidationContext)
+        if animated {
+            collectionView.performBatchUpdates(nil)
+        }
+    }
+    
+    func reload(sections: [Section], animatingDifferences: Bool = true) {
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadSections(sections)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
+    func reload(items: [Item], animatingDifferences: Bool = true) {
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadItems(items)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
+    func delete(items: [Item], animatingDifferences: Bool = true) {
+        var snapshot = dataSource.snapshot()
+        snapshot.deleteItems(items)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
+    func reloadData(animatingDifferences: Bool = true) {
+        _reloadData(animatingDifferences)
     }
 }
