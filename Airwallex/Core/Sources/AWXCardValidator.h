@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, AWXBrandType) {
     AWXBrandTypeUnknown,
     AWXBrandTypeVisa,
     AWXBrandTypeAmex,
@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
     AWXBrandTypeJCB,
     AWXBrandTypeDinersClub,
     AWXBrandTypeUnionPay
-} AWXBrandType;
+};
 
 /**
  `AWXBrand` manages the card scheme brand.

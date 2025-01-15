@@ -12,19 +12,19 @@ extension UIImage {
     static func image(for brand: AWXBrandType) -> UIImage? {
         var imageName: String? = nil
         switch brand {
-        case AWXBrandTypeVisa:
+        case .visa:
             imageName = "visa"
-        case AWXBrandTypeAmex:
+        case .amex:
             imageName = "amex"
-        case AWXBrandTypeMastercard:
+        case .mastercard:
             imageName = "mastercard"
-        case AWXBrandTypeUnionPay:
+        case .unionPay:
             imageName = "unionpay"
-        case AWXBrandTypeJCB:
+        case .JCB:
             imageName = "jcb"
-        case AWXBrandTypeDinersClub:
+        case .dinersClub:
             imageName = "diners"
-        case AWXBrandTypeDiscover:
+        case .discover:
             imageName = "discover"
         default:
             imageName = nil

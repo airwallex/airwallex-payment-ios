@@ -27,17 +27,17 @@ class PaymentMethodsViewController: AWXViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    private var sectionProvider: SectionProvider<String, String, any SectionController, SectionProviderDataSource>
-    lazy var sectionProvider: CollectionViewSectionManager = {
-        let provider = CollectionViewSectionManager(
+    lazy var sectionProvider: CollectionViewManager = {
+        let provider = CollectionViewManager(
             viewController: self,
-            sectionProvider: self,
-            listConfiguration: UICollectionViewCompositionalLayoutConfiguration()
+            sectionProvider: self
         )
         return provider
     }()
     
-    private var token: AnyCancellable?
+    private var cancellable: AnyCancellable?
+    
+    private var preferConsentPayment = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +56,19 @@ class PaymentMethodsViewController: AWXViewController {
             }
         }
         
-        token = methodProvider.publisher.sink {[weak self] _ in
+        cancellable = methodProvider.publisher.sink {[weak self] _ in
             self?.sectionProvider.reloadData()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        registerKeyboard()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        unregisterKeyboard()
     }
     
     private func setupUI() {
@@ -73,10 +83,10 @@ class PaymentMethodsViewController: AWXViewController {
             target: self,
             action: #selector(onCloseButtonTapped)
         )
-        navigationItem.title = "DEMO CHECKOUT"
         
         let collectionView = sectionProvider.collectionView!
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.keyboardDismissMode = .interactive
         view.addSubview(collectionView)
         let constraints = [
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -89,6 +99,10 @@ class PaymentMethodsViewController: AWXViewController {
     
     @objc public func onCloseButtonTapped() {
         AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+    }
+    
+    override func activeScrollView() -> UIScrollView {
+        return sectionProvider.collectionView
     }
 }
 
@@ -108,10 +122,15 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
         }
         // horizontal list
         sections.append(.methodList)
-        if !methodProvider.consents.isEmpty {
-            sections.append(.cardPaymentConsent)
-        } else {
-            // TODO: add new card
+        
+        if let selectedMethodType = methodProvider.selectedMethod {
+            if selectedMethodType.name == "card" {
+                if preferConsentPayment && !methodProvider.consents.isEmpty {
+                    sections.append(.cardPaymentConsent)
+                } else {
+                    sections.append(.cardPaymentNew)
+                }
+            }
         }
         return sections
     }
@@ -136,9 +155,26 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
             let controller = CardPaymentConsentSectionController(
                 session: methodProvider.session,
                 section: section,
-                methodProvider: methodProvider
+                methodProvider: methodProvider,
+                addNewCardAction: { [weak self] in
+                    guard let self else { return }
+                    self.preferConsentPayment = false
+                    self.sectionProvider.reloadData()
+                }
             )
             return controller.anySectionController()
+        case .cardPaymentNew:
+            let controller = NewCardPaymentSectionController(
+                section: section,
+                methodType: methodProvider.selectedMethod!,
+                methodProvider: methodProvider,
+                switchToConsentPaymentAction: { [weak self] in
+                    guard let self else { return }
+                    self.preferConsentPayment = true
+                    self.sectionProvider.reloadData()
+                }
+            ).anySectionController()
+            return controller
         default:
             fatalError("unexpected section")
         }
@@ -147,7 +183,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
     func listBoundaryItemProviders() -> [BoundarySupplementaryItemProvider]? {
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(25)
+            heightDimension: .estimated(65)
         )
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,

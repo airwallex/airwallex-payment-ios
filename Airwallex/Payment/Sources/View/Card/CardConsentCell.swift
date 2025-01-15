@@ -1,5 +1,5 @@
 //
-//  PaymentConsentCell.swift
+//  CardConsentCell.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/18.
@@ -7,13 +7,13 @@
 //
 
 
-protocol PaymentConsentCellConfiguring {
+protocol CardConsentCellConfiguring {
     var image: UIImage? { get }
     var text: String { get }
     var buttonAction: () -> Void { get }
 }
 
-class PaymentConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
+class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let logo: UIImageView = {
         let view = UIImageView()
@@ -52,9 +52,9 @@ class PaymentConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     }
     
     
-    private(set) var viewModel: PaymentConsentCellConfiguring?
+    private(set) var viewModel: CardConsentCellConfiguring?
     
-    func setup(_ viewModel: any PaymentConsentCellConfiguring) {
+    func setup(_ viewModel: any CardConsentCellConfiguring) {
         self.viewModel = viewModel
         logo.image = viewModel.image
         label.text = viewModel.text
@@ -66,7 +66,7 @@ class PaymentConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     }
 }
 
-private extension PaymentConsentCell {
+private extension CardConsentCell {
     func setupViews() {
         contentView.addSubview(logo)
         contentView.addSubview(label)

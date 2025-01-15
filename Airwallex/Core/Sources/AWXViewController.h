@@ -75,7 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Return the active scrollView
  */
-- (UIScrollView *)activeScrollView;
+- (UIScrollView *_Nullable)activeScrollView;
 
 /**
  Dismiss or pop the current view controller

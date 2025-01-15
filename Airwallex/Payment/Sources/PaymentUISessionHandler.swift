@@ -52,31 +52,36 @@ class PaymentUISessionHandler: NSObject {
             actionProvider.handleFlow()
         }
     }
+    
+    func startPayment(card: AWXCard, saveCard: Bool = false) {
+        guard let actionProvider = actionProvider as? AWXCardProvider else { return }
+        actionProvider.confirmPaymentIntent(with: card, billing: nil, saveCard: saveCard)
+    }
 }
 
 extension PaymentUISessionHandler: AWXProviderDelegate {
     func providerDidStartRequest(_ provider: AWXDefaultProvider) {
-        addlog()
+        debugLog()
         viewController.startAnimating()
     }
     
     func providerDidEndRequest(_ provider: AWXDefaultProvider) {
-        addlog()
+        debugLog()
         viewController.stopAnimating()
     }
     
     func provider(_ provider: AWXDefaultProvider, didInitializePaymentIntentId paymentIntentId: String) {
-        addlog("paymentIntentId: \(paymentIntentId)")
+        debugLog("paymentIntentId: \(paymentIntentId)")
         session.updateInitialPaymentIntentId(paymentIntentId)
     }
     
     func provider(_ provider: AWXDefaultProvider, didCompleteWithPaymentConsentId paymentConsentId: String) {
-        addlog("paymentConsentId: \(paymentConsentId)")
+        debugLog("paymentConsentId: \(paymentConsentId)")
         AWXUIContext.shared().delegate?.paymentViewController?(viewController, didCompleteWithPaymentConsentId: paymentConsentId)
     }
     
     func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
-        addlog("stauts: \(status), error: \(error?.localizedDescription ?? "")")
+        debugLog("stauts: \(status), error: \(error?.localizedDescription ?? "")")
         AWXUIContext.shared().delegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
     }
      
@@ -137,10 +142,10 @@ private extension PaymentUISessionHandler {
 protocol SwiftLoggable {}
 
 extension SwiftLoggable {
-    func addlog(_ message: String = "",
-             file: String = #file,
-             functionName: String = #function,
-             line: Int = #line) {
+    func debugLog(_ message: String = "",
+                  file: String = #file,
+                  functionName: String = #function,
+                  line: Int = #line) {
         NSObject.logMesage("----Airwallex SDK----\(file)----\(functionName)----\(line)---\n \(message))")
     }
 }

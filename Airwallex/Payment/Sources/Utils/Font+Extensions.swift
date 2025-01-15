@@ -17,11 +17,18 @@
 
 extension UIFont {
     
+    /// 20
+    static var awxHeadline100: UIFont { UIFont.boldSystemFont(ofSize: 20)}
+    /// 14
     static var awxHeadline400: UIFont { UIFont.boldSystemFont(ofSize: 14)}
     
+    /// 14
     static var awxBody: UIFont { UIFont.systemFont(ofSize: 14) }
+    /// 14
     static var awxBodyBold: UIFont { UIFont.boldSystemFont(ofSize: 14) }
     
+    /// 12
     static var awxHint: UIFont { UIFont.systemFont(ofSize: 12) }
+    /// 12
     static var awxHintBold: UIFont { UIFont.boldSystemFont(ofSize: 12) }
 }
