@@ -18,17 +18,23 @@ class CardPaymentConsentSectionController: SectionController {
         consents.map { $0.id }
     }
     
-    let consents: [AWXPaymentConsent]
+    private(set) var consents: [AWXPaymentConsent]
     
     let session: AWXSession
     
     let methodProvider: PaymentMethodProvider
     
-    init(session: AWXSession, section: PaymentSectionType, methodProvider: PaymentMethodProvider) {
+    private let addNewCardAction: () -> Void
+    
+    init(session: AWXSession,
+         section: PaymentSectionType,
+         methodProvider: PaymentMethodProvider,
+         addNewCardAction: @escaping () -> Void) {
         self.session = session
         self.section = section
         self.consents = methodProvider.consents
         self.methodProvider = methodProvider
+        self.addNewCardAction = addNewCardAction
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
@@ -37,9 +43,9 @@ class CardPaymentConsentSectionController: SectionController {
     
     func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: PaymentConsentCell.reuseIdentifier,
+            withReuseIdentifier: CardConsentCell.reuseIdentifier,
             for: indexPath
-        ) as! PaymentConsentCell
+        ) as! CardConsentCell
         let consent = consents[indexPath.item]
         guard let card = consent.paymentMethod?.card,
               let brand = card.brand else {
@@ -51,7 +57,7 @@ class CardPaymentConsentSectionController: SectionController {
         if let cardBrand = AWXCardValidator.shared().brand(forCardName: brand) {
             image = UIImage.image(for: cardBrand.type)
         }
-        let viewModel = PaymentConsentCellViewModel(
+        let viewModel = CardConsentCellViewModel(
             image: image,
             text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
             buttonAction: { [weak self] in
@@ -69,15 +75,7 @@ class CardPaymentConsentSectionController: SectionController {
             actionTitle: NSLocalizedString("Add new", bundle: .payment, comment: ""),
             buttonAction: { [weak self] in
                 guard let self else { return }
-                // wpdebug
-                do {
-                    var snapshot = self.context.currentSnapshot()
-                    snapshot.reloadSections([self.section])
-                    context.dataSource.apply(snapshot)
-                    return
-                }
-                
-                showTODO()
+                self.addNewCardAction()
             }
         )
         header.setup(viewModel)
@@ -87,15 +85,10 @@ class CardPaymentConsentSectionController: SectionController {
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
             heightDimension: .absolute(56)
         )
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: itemSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: .spacing_16, leading: .spacing_16, bottom: .spacing_16, trailing: .spacing_16)
         
@@ -110,7 +103,7 @@ class CardPaymentConsentSectionController: SectionController {
     }
     
     func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.registerReusableCell(PaymentConsentCell.self)
+        collectionView.registerReusableCell(CardConsentCell.self)
         collectionView.registerSectionHeader(CardPaymentSectionHeader.self)
     }
     
@@ -153,13 +146,13 @@ class CardPaymentConsentSectionController: SectionController {
                 Task {
                     do {
                         try await self.methodProvider.disable(consent: consent)
-                        var snapshot = self.context.dataSource.snapshot()
-                        snapshot.deleteItems([consent.id])
-                        
-                        self.addlog("remove consent successfully. ID: \(consent.id)")
+                        guard let index = self.consents.firstIndex(of: consent) else { return }
+                        self.consents.remove(at: index)
+                        self.context.delete(items: [ consent.id ])
+                        self.debugLog("remove consent successfully. ID: \(consent.id)")
                     } catch {
                         self.showAlert(error.localizedDescription)
-                        self.addlog("removing consent failed. ID: \(consent.id)")
+                        self.debugLog("removing consent failed. ID: \(consent.id)")
                     }
                     self.context.viewController?.stopAnimating()
                     

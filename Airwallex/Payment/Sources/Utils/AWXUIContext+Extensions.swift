@@ -14,7 +14,7 @@ fileprivate var foo = true
 public extension AWXUIContext {
     @MainActor func presentPaymentViewController(from hostingVC: UIViewController) {
         foo.toggle()
-        //          wpdebug
+        //          wpdebug - old UI flow
         if foo {
             presentEntirePaymentFlow(from: hostingVC)
             return

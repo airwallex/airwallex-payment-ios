@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -588,11 +588,20 @@
 		D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodProvider.swift; sourceTree = "<group>"; };
 		D84E9A262D0C3652006B3421 /* PaymentUISessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentUISessionHandler.swift; sourceTree = "<group>"; };
 		D888268E2D12D68B00115198 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
-		D888269F2D12D9E000115198 /* CollectionViewSectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionManager.swift; sourceTree = "<group>"; };
+		D888269F2D12D9E000115198 /* CollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewManager.swift; sourceTree = "<group>"; };
 		D88826B02D13E64500115198 /* ApplePaySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySectionController.swift; sourceTree = "<group>"; };
 		D88826C12D13FCAA00115198 /* PaymentMethodListSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodListSectionController.swift; sourceTree = "<group>"; };
 		D88826C22D13FCD700115198 /* CardPaymentConsentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentConsentSectionController.swift; sourceTree = "<group>"; };
 		D888291A2D15443E00115198 /* ListHeaderFooterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeaderFooterProvider.swift; sourceTree = "<group>"; };
+		D88C3CDF2D1C128F00E77FFD /* CardExpireTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExpireTextFieldViewModel.swift; sourceTree = "<group>"; };
+		D88C3CE12D1C15CD00E77FFD /* CardCVCTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCVCTextFieldViewModel.swift; sourceTree = "<group>"; };
+		D88C3CE22D1D3DF600E77FFD /* InfoCollectorTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectorTextFieldViewModel.swift; sourceTree = "<group>"; };
+		D88C3CE32D1D436F00E77FFD /* CheckoutButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutButtonCell.swift; sourceTree = "<group>"; };
+		D88C3CE52D1D50E800E77FFD /* AWXCard+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCard+Extensions.swift"; sourceTree = "<group>"; };
+		D88C3CE62D1E4D7A00E77FFD /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		D88C3CE72D1E743500E77FFD /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
+		D88C3CE82D1E99D200E77FFD /* CardSavingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSavingCell.swift; sourceTree = "<group>"; };
+		D88C3CE92D1EA2B100E77FFD /* CardSavingCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSavingCellViewModel.swift; sourceTree = "<group>"; };
 		D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXUIContext+Card.h"; sourceTree = "<group>"; };
 		D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXUIContext+Card.m"; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
@@ -600,6 +609,34 @@
 		D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrencyCodes.json; sourceTree = "<group>"; };
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		D8DA089E2D08299F00B30AA2 /* PaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsViewController.swift; sourceTree = "<group>"; };
+		D8F302AD2D1A823000D29B49 /* NewCardPaymentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCardPaymentSectionController.swift; sourceTree = "<group>"; };
+		D8F303122D1ABAAE00D29B49 /* ApplePayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayCell.swift; sourceTree = "<group>"; };
+		D8F303132D1ABAAE00D29B49 /* ApplePayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayViewModel.swift; sourceTree = "<group>"; };
+		D8F303142D1ABAAE00D29B49 /* CardNumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberTextField.swift; sourceTree = "<group>"; };
+		D8F303152D1ABAAE00D29B49 /* CardPaymentSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentSectionHeader.swift; sourceTree = "<group>"; };
+		D8F303162D1ABAAE00D29B49 /* CardPaymentSectionHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentSectionHeaderViewModel.swift; sourceTree = "<group>"; };
+		D8F303172D1ABAAE00D29B49 /* LabelHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelHeader.swift; sourceTree = "<group>"; };
+		D8F303192D1ABAAE00D29B49 /* CardInfoCollectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfoCollectorCell.swift; sourceTree = "<group>"; };
+		D8F3031A2D1ABAAE00D29B49 /* CardConsentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardConsentCell.swift; sourceTree = "<group>"; };
+		D8F3031B2D1ABAAE00D29B49 /* CardConsentCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardConsentCellViewModel.swift; sourceTree = "<group>"; };
+		D8F3031C2D1ABAAE00D29B49 /* PaymentMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodCell.swift; sourceTree = "<group>"; };
+		D8F3031D2D1ABAAE00D29B49 /* PaymentMethodCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodCellViewModel.swift; sourceTree = "<group>"; };
+		D8F3031E2D1ABAAE00D29B49 /* PaymentMethodListSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodListSeparator.swift; sourceTree = "<group>"; };
+		D8F3031F2D1ABAAE00D29B49 /* InfoCollectorTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectorTextField.swift; sourceTree = "<group>"; };
+		D8F303202D1ABAAE00D29B49 /* ViewReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewReusable.swift; sourceTree = "<group>"; };
+		D8F303232D1ABAB100D29B49 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
+		D8F303242D1ABAB100D29B49 /* AWXUIContext+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXUIContext+Extensions.swift"; sourceTree = "<group>"; };
+		D8F303252D1ABAB100D29B49 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
+		D8F303262D1ABAB100D29B49 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		D8F303272D1ABAB100D29B49 /* Font+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extensions.swift"; sourceTree = "<group>"; };
+		D8F303282D1ABAB100D29B49 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
+		D8F303292D1ABAB100D29B49 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		D8F3032A2D1ABAB100D29B49 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
+		D8F3032C2D1ABB0200D29B49 /* CardNumberTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberTextFieldViewModel.swift; sourceTree = "<group>"; };
+		D8F3032D2D1ABBA600D29B49 /* CardInfoCollectorCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfoCollectorCellViewModel.swift; sourceTree = "<group>"; };
+		D8F3032E2D1ABDB600D29B49 /* AWXBrandType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXBrandType+Extensions.swift"; sourceTree = "<group>"; };
+		D8F303352D1BF15600D29B49 /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
+		D8F67EFB2D2CF77D004BAB26 /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
 		F9330DB1F34C6DD83245F7CF /* Pods-RedirectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.release.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -607,11 +644,6 @@
 		FC522BD223B734E323755856 /* Pods-RedirectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.debug.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FC9DFB3C3391C7ABDA4375D4 /* Pods_RedirectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RedirectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		D84E997C2D094298006B3421 /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
-		D84E9AA62D102083006B3421 /* Utils */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utils; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		085BD3C523CC62B4002E8F27 /* Frameworks */ = {
@@ -1193,13 +1225,14 @@
 				D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */,
 				D84E9A262D0C3652006B3421 /* PaymentUISessionHandler.swift */,
 				D888268E2D12D68B00115198 /* SectionController.swift */,
-				D888269F2D12D9E000115198 /* CollectionViewSectionManager.swift */,
+				D888269F2D12D9E000115198 /* CollectionViewManager.swift */,
 				D88826B02D13E64500115198 /* ApplePaySectionController.swift */,
 				D888291A2D15443E00115198 /* ListHeaderFooterProvider.swift */,
 				D88826C12D13FCAA00115198 /* PaymentMethodListSectionController.swift */,
+				D8F302AD2D1A823000D29B49 /* NewCardPaymentSectionController.swift */,
 				D88826C22D13FCD700115198 /* CardPaymentConsentSectionController.swift */,
-				D84E9AA62D102083006B3421 /* Utils */,
-				D84E997C2D094298006B3421 /* View */,
+				D8F3032B2D1ABAB100D29B49 /* Utils */,
+				D8F303212D1ABAAE00D29B49 /* View */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1213,6 +1246,64 @@
 				D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		D8F303212D1ABAAE00D29B49 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D8F303122D1ABAAE00D29B49 /* ApplePayCell.swift */,
+				D8F3032F2D1B9DAC00D29B49 /* Card */,
+				D8F303132D1ABAAE00D29B49 /* ApplePayViewModel.swift */,
+				D8F303172D1ABAAE00D29B49 /* LabelHeader.swift */,
+				D88C3CE32D1D436F00E77FFD /* CheckoutButtonCell.swift */,
+				D8F3031C2D1ABAAE00D29B49 /* PaymentMethodCell.swift */,
+				D8F3031D2D1ABAAE00D29B49 /* PaymentMethodCellViewModel.swift */,
+				D8F3031E2D1ABAAE00D29B49 /* PaymentMethodListSeparator.swift */,
+				D8F303202D1ABAAE00D29B49 /* ViewReusable.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D8F3032B2D1ABAB100D29B49 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D8F303232D1ABAB100D29B49 /* Array+Extensions.swift */,
+				D8F303242D1ABAB100D29B49 /* AWXUIContext+Extensions.swift */,
+				D8F303252D1ABAB100D29B49 /* Bundle+Extensions.swift */,
+				D8F3032E2D1ABDB600D29B49 /* AWXBrandType+Extensions.swift */,
+				D88C3CE52D1D50E800E77FFD /* AWXCard+Extensions.swift */,
+				D88C3CE72D1E743500E77FFD /* UIStackView+Extensions.swift */,
+				D8F303262D1ABAB100D29B49 /* UIColor+Extensions.swift */,
+				D88C3CE62D1E4D7A00E77FFD /* String+Extensions.swift */,
+				D8F303272D1ABAB100D29B49 /* Font+Extensions.swift */,
+				D8F303282D1ABAB100D29B49 /* CGFloat+Extensions.swift */,
+				D8F303292D1ABAB100D29B49 /* UIImage+Extensions.swift */,
+				D8F3032A2D1ABAB100D29B49 /* UITextField+Extensions.swift */,
+				D8F67EFB2D2CF77D004BAB26 /* NSLayoutConstraint+Extensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		D8F3032F2D1B9DAC00D29B49 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				D8F303192D1ABAAE00D29B49 /* CardInfoCollectorCell.swift */,
+				D8F3032D2D1ABBA600D29B49 /* CardInfoCollectorCellViewModel.swift */,
+				D8F303142D1ABAAE00D29B49 /* CardNumberTextField.swift */,
+				D8F3032C2D1ABB0200D29B49 /* CardNumberTextFieldViewModel.swift */,
+				D88C3CE12D1C15CD00E77FFD /* CardCVCTextFieldViewModel.swift */,
+				D88C3CDF2D1C128F00E77FFD /* CardExpireTextFieldViewModel.swift */,
+				D88C3CE82D1E99D200E77FFD /* CardSavingCell.swift */,
+				D88C3CE92D1EA2B100E77FFD /* CardSavingCellViewModel.swift */,
+				D8F303352D1BF15600D29B49 /* BaseTextField.swift */,
+				D8F3031F2D1ABAAE00D29B49 /* InfoCollectorTextField.swift */,
+				D88C3CE22D1D3DF600E77FFD /* InfoCollectorTextFieldViewModel.swift */,
+				D8F303152D1ABAAE00D29B49 /* CardPaymentSectionHeader.swift */,
+				D8F303162D1ABAAE00D29B49 /* CardPaymentSectionHeaderViewModel.swift */,
+				D8F3031A2D1ABAAE00D29B49 /* CardConsentCell.swift */,
+				D8F3031B2D1ABAAE00D29B49 /* CardConsentCellViewModel.swift */,
+			);
+			path = Card;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
