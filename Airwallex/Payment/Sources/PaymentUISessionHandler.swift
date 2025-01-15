@@ -53,9 +53,9 @@ class PaymentUISessionHandler: NSObject {
         }
     }
     
-    func startPayment(card: AWXCard, saveCard: Bool = false) {
+    func startPayment(card: AWXCard, billing: AWXPlaceDetails?, saveCard: Bool = false) {
         guard let actionProvider = actionProvider as? AWXCardProvider else { return }
-        actionProvider.confirmPaymentIntent(with: card, billing: nil, saveCard: saveCard)
+        actionProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
     }
 }
 
@@ -106,7 +106,13 @@ extension PaymentUISessionHandler: AWXProviderDelegate {
         controller.didMove(toParent: viewController)
     }
     
-    func provider(_ provider: AWXDefaultProvider, shouldPresent controller: UIViewController, forceToDismiss: Bool, withAnimation: Bool) {
+    func provider(_ provider: AWXDefaultProvider, shouldPresent controller: UIViewController?, forceToDismiss: Bool, withAnimation: Bool) {
+        guard let controller else {
+            if forceToDismiss {
+                viewController.presentedViewController?.dismiss(animated: withAnimation)
+            }
+            return
+        }
         if forceToDismiss {
             viewController.presentedViewController?.dismiss(animated: withAnimation) {
                 self.viewController.present(controller, animated: withAnimation)

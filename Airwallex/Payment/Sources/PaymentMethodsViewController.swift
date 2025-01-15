@@ -27,12 +27,15 @@ class PaymentMethodsViewController: AWXViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    lazy var sectionProvider: CollectionViewManager = {
-        let provider = CollectionViewManager(
+    private lazy var collectionViewManager: CollectionViewManager = {
+        let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
+        listConfiguration.interSectionSpacing = .spacing_16
+        let manager = CollectionViewManager(
             viewController: self,
-            sectionProvider: self
+            sectionProvider: self,
+            listConfiguration: listConfiguration
         )
-        return provider
+        return manager
     }()
     
     private var cancellable: AnyCancellable?
@@ -44,12 +47,11 @@ class PaymentMethodsViewController: AWXViewController {
         setupUI()
         
         startAnimating()
-        
         Task {
             do {
                 try await methodProvider.fetchPaymentMethods()
                 
-                sectionProvider.reloadData()
+                collectionViewManager.reloadData()
                 stopAnimating()
             } catch {
                 
@@ -57,7 +59,7 @@ class PaymentMethodsViewController: AWXViewController {
         }
         
         cancellable = methodProvider.publisher.sink {[weak self] _ in
-            self?.sectionProvider.reloadData()
+            self?.collectionViewManager.reloadData()
         }
     }
     
@@ -73,7 +75,7 @@ class PaymentMethodsViewController: AWXViewController {
     
     private func setupUI() {
         self.navigationItem.largeTitleDisplayMode = .never
-        view.backgroundColor = AWXTheme.shared().primaryBackgroundColor()
+        view.backgroundColor = .awxBackgroundPrimary
         let image = UIImage(named: "close", in: Bundle.resource())?
             .withRenderingMode(.alwaysTemplate)
             .withTintColor(.awxIconPrimary, renderingMode: .alwaysTemplate)
@@ -84,9 +86,10 @@ class PaymentMethodsViewController: AWXViewController {
             action: #selector(onCloseButtonTapped)
         )
         
-        let collectionView = sectionProvider.collectionView!
+        let collectionView = collectionViewManager.collectionView!
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.keyboardDismissMode = .interactive
+        collectionView.backgroundColor = .awxBackgroundPrimary
         view.addSubview(collectionView)
         let constraints = [
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -102,7 +105,7 @@ class PaymentMethodsViewController: AWXViewController {
     }
     
     override func activeScrollView() -> UIScrollView {
-        return sectionProvider.collectionView
+        return collectionViewManager.collectionView
     }
 }
 
@@ -124,12 +127,14 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
         sections.append(.methodList)
         
         if let selectedMethodType = methodProvider.selectedMethod {
-            if selectedMethodType.name == "card" {
+            if selectedMethodType.name == AWXCardKey {
                 if preferConsentPayment && !methodProvider.consents.isEmpty {
                     sections.append(.cardPaymentConsent)
                 } else {
                     sections.append(.cardPaymentNew)
                 }
+            } else if selectedMethodType.hasSchema {
+                sections.append(.schemaPayment(selectedMethodType.name))
             }
         }
         return sections
@@ -146,33 +151,34 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
             return controller.anySectionController()
         case .methodList:
             let controller = PaymentMethodListSectionController(
-                section: section,
-                methodTypes: methodProvider.methods.filter({ $0.name != AWXApplePayKey }),
-                session: methodProvider.session
+                methodProvider: methodProvider
             )
             return controller.anySectionController()
         case .cardPaymentConsent:
             let controller = CardPaymentConsentSectionController(
-                session: methodProvider.session,
-                section: section,
                 methodProvider: methodProvider,
                 addNewCardAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = false
-                    self.sectionProvider.reloadData()
+                    self.collectionViewManager.reloadData()
                 }
             )
             return controller.anySectionController()
         case .cardPaymentNew:
             let controller = NewCardPaymentSectionController(
-                section: section,
-                methodType: methodProvider.selectedMethod!,
+                cardPaymentMethod: methodProvider.selectedMethod!,
                 methodProvider: methodProvider,
                 switchToConsentPaymentAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = true
-                    self.sectionProvider.reloadData()
+                    self.collectionViewManager.reloadData()
                 }
+            ).anySectionController()
+            return controller
+        case .schemaPayment(_):
+            let controller = SchemaPaymentSectionController(
+                sectionType: section,
+                methodProvider: methodProvider
             ).anySectionController()
             return controller
         default:
@@ -203,4 +209,7 @@ enum PaymentSectionType: Hashable {
     case methodList
     case cardPaymentConsent
     case cardPaymentNew
+    case schemaPayment(String)
 }
+
+

@@ -7,7 +7,9 @@
 
 import Foundation
 
-class CardExpireTextFieldViewModel: ErrorHintableTextFieldConfiguring {
+class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
+    var isEnabled: Bool = true
+    
     var placeholder: String? = "MM / YY"
     
     var textFieldType: AWXTextFieldType? = .expires
@@ -46,27 +48,13 @@ class CardExpireTextFieldViewModel: ErrorHintableTextFieldConfiguring {
             return
         }
         let components = text.components(separatedBy: "/")
-        
-        guard components.count == 2,
-              let monthString = components.first,
-              let month = Int(monthString),
-              let yearString = components.last,
-              let year = Int(yearString),
-              month > 0 && month <= 12 else {
-            errorHint = NSLocalizedString("Card’s expiration date is invalid", bundle: .payment, comment: "")
-            return
+        do {
+            try AWXCardValidator.validate(expiryMonth: components.first, expiryYear: components.last)
+            errorHint = nil
+        } catch {
+            guard let error = error as? String else { return }
+            errorHint = error
         }
-        
-        let calendar = Calendar(identifier: .gregorian)
-        let date = Date()
-        let currentYear = calendar.component(.year, from: date) % 100
-        let currentMonth = calendar.component(.month, from: date)
-         
-        guard (year == currentYear && month >= currentMonth) || year > currentYear else {
-            errorHint = NSLocalizedString("Card’s expiration date is invalid", bundle: .payment, comment: "")
-            return
-        }
-        errorHint = nil
     }
 }
 

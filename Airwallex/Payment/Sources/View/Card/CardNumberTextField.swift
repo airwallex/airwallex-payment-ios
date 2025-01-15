@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-protocol CardNumberTextFieldConfiguring: ErrorHintableTextFieldConfiguring {
+protocol CardNumberTextFieldConfiguring: BaseTextFieldConfiguring {
     var supportedBrands: [AWXBrandType] { get }
     var currentBrand: AWXBrandType { get }
 }
@@ -36,7 +36,6 @@ class CardNumberTextField: BaseTextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
         horizontalStack.addArrangedSubview(logoStack)
-        horizontalStack.setCustomSpacing(0, after: logoStack)
         horizontalStack.addSpacer(.spacing_16)
     }
     

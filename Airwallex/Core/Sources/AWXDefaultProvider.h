@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param controller The view controller will be presented.
  @param forceToDismiss Whether the presenting view controller needs be dismissed forcibly.
  */
-- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation;
+- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(UIViewController *_Nullable)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation;
 
 /**
  This method is called when new controller is required. (as child view controller)
