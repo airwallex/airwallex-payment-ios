@@ -49,7 +49,7 @@ class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
         }
         
         attributedText = formatedString(month: String(expirationMonth), year: String(expirationYear))
-        if (expirationMonth.count + expirationYear.count == 4) && isValid {
+        if (expirationMonth.count + expirationYear.count == 4) {
             returnActionHandler?(textField)
         }
     }

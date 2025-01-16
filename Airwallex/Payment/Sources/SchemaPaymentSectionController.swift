@@ -161,7 +161,12 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         if field.uiType == AWXField.UIType.phone {
                             if let prefix = phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
                                !prefix.isEmpty {
-                                viewModel.text = prefix + " "
+                                viewModel.text = prefix
+                                viewModel.customInputValidator = { text in
+                                    guard let text, text.count > prefix.count else {
+                                        throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "")
+                                    }
+                                }
                             }
                         }
                         
@@ -226,13 +231,18 @@ private extension SchemaPaymentSectionController {
             
             // validate uiFields
             for viewModel in uiFieldViewModels {
-                try viewModel.validateUserInput(viewModel.text)
+                do {
+                    try viewModel.validateUserInput(viewModel.text)
+                } catch {
+                    context.scroll(to: viewModel.fieldName, position: .bottom, animated: true)
+                    throw error
+                }
             }
             
             let paymentMethod = AWXPaymentMethod()
             paymentMethod.type = methodType.name
             
-            //  update UI fields
+            //  update from UI fields
             let inputContents = uiFieldViewModels.reduce(into: [String: String]()) { partialResult, viewModel in
                 partialResult[viewModel.fieldName] = viewModel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             }

@@ -31,7 +31,7 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
         self.fieldName = fieldName
         self.isRequired = isRequired
         self.isEnabled = isEnabled
-        self.hideErrorHintLabel = true
+        self.hideErrorHintLabel = hideErrorHintLabel
         self.title = title
         self.errorHint = errorHint
         self.text = text
@@ -115,6 +115,11 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
 
 extension InfoCollectorTextFieldViewModel {
     func validateUserInput(_ text: String?) throws {
+        // prefer custom validator
+        if let customInputValidator {
+            try customInputValidator(text)
+            return
+        }
         if !isRequired && (text == nil || text?.isEmpty == true) {
             return
         }

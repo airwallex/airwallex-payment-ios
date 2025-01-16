@@ -48,7 +48,7 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
         
         attributedText = formatText(userInput, brand: cardBrandType)
         currentBrand = cardBrandType
-        if userInput.count == maxLength && isValid {
+        if userInput.count == maxLength {
             returnActionHandler?(textField)
         }
     }

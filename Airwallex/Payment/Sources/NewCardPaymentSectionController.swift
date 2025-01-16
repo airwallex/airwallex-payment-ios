@@ -208,13 +208,18 @@ private extension NewCardPaymentSectionController {
         debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         do {
             let card = cardInfoViewModel.cardFromCollectedInfo()
-            try validator.validate(card: card)
-            
+            do {
+                try validator.validate(card: card)
+            } catch {
+                context.scroll(to: Item.cardInfo.rawValue, position: .bottom, animated: true)
+                throw error
+            }
             var billingInfo: AWXPlaceDetails?
             if session.isBillingInformationRequired {
                 billingInfo = billingInfoViewModel.billingFromCollectedInfo()
                 let error = billingInfo?.validate()
                 if let error {
+                    context.scroll(to: Item.billingInfo.rawValue, position: .bottom, animated: true)
                     throw error
                 }
             }
