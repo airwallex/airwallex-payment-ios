@@ -16,6 +16,7 @@ extension UIColor {
     static var awxBackgroundHighlight: UIColor { UIColor(dynamicLightColor: awxPurple5, darkColor: awxPurple90) }
     static var awxBackgroundSelected: UIColor { UIColor(dynamicLightColor: awxPurple20, darkColor: awxPurple80) }
     static var awxBackgroundInteractive: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
+    static var awxBackgroundWarning: UIColor { .awxYello10 }
     
     // border
     static var awxBorderDecorative: UIColor { UIColor(dynamicLightColor: awxGray20, darkColor: awxGray80) }
@@ -38,7 +39,7 @@ extension UIColor {
     static var awxTextInverse: UIColor { UIColor(dynamicLightColor: awxWhite, darkColor: awxGray100) }
 }
 
-fileprivate extension UIColor {
+extension UIColor {
     
     static var awxWhite: UIColor { UIColor.white }
     
@@ -64,4 +65,17 @@ fileprivate extension UIColor {
     static var awxRed40: UIColor { UIColor(hex: 0xFC796D) }
     static var awxRed50: UIColor { UIColor(hex: 0xFF4F42) }
     static var awxRed60: UIColor { UIColor(hex: 0xD91807) }
+    
+    static var awxYello10: UIColor { UIColor(hex: 0xFFF6CC) }
+    
+    static var awxOrange50: UIColor { UIColor(hex: 0xE56820) }
+
+    convenience init(hex: UInt) {
+        let red = CGFloat((hex >> 16) & 0xFF) / 0xFF
+        let green = CGFloat((hex >> 8) & 0xFF) / 0xFF
+        let blue = CGFloat((hex >> 0) & 0xFF) / 0xFF
+        let alpha = hex > 0xFFFFFF ? CGFloat((hex >> 24) & 0xFF) / 0xFF : 1
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
+    }
+    
 }

@@ -612,6 +612,7 @@
 		D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
 		D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrencyCodes.json; sourceTree = "<group>"; };
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D8D69B0F2D38F84A00D04856 /* WarningViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewCell.swift; sourceTree = "<group>"; };
 		D8DA089E2D08299F00B30AA2 /* PaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		D8F302AD2D1A823000D29B49 /* NewCardPaymentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCardPaymentSectionController.swift; sourceTree = "<group>"; };
 		D8F303122D1ABAAE00D29B49 /* ApplePayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayCell.swift; sourceTree = "<group>"; };
@@ -1271,6 +1272,7 @@
 				D8F303172D1ABAAE00D29B49 /* LabelHeader.swift */,
 				D88C3CE32D1D436F00E77FFD /* CheckoutButtonCell.swift */,
 				D84529AF2D30FA380032BE17 /* SchemaPaymentRemiderCell.swift */,
+				D8D69B0F2D38F84A00D04856 /* WarningViewCell.swift */,
 				D8F3031C2D1ABAAE00D29B49 /* PaymentMethodCell.swift */,
 				D8F3031D2D1ABAAE00D29B49 /* PaymentMethodCellViewModel.swift */,
 				D8F3031E2D1ABAAE00D29B49 /* PaymentMethodListSeparator.swift */,

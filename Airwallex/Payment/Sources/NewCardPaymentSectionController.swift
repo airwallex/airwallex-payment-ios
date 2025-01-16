@@ -12,13 +12,13 @@ import AirwallexRisk
 
 class NewCardPaymentSectionController: NSObject, SectionController {
     
-    // TODO: what about other fields? email, first/last name, phone number
     enum Item: String {
         case cardInfo
         case checkoutButton
         // display this item only when session is AWXOneOffSession && has customerId
         case saveCardToggle
         case billingInfo
+        case unionPayWarning
     }
     
     private var methodType: AWXPaymentMethodType
@@ -89,6 +89,9 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         
         if supportCardSaving {
             items.append(Item.saveCardToggle.rawValue)
+            if shouldSaveCard && cardInfoViewModel.cardNumberConfigurer.currentBrand == .unionPay {
+                items.append(Item.unionPayWarning.rawValue)
+            }
         }
         
         items.append(Item.checkoutButton.rawValue)
@@ -116,15 +119,22 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                 isSelected: shouldSaveCard,
                 title: nil,
                 boxInfo: NSLocalizedString("Save my card for future payments", comment: "checkbox in checkout view"),
-                selectionDidChanged: { [weak self] isSelected in
-                    self?.shouldSaveCard = isSelected
-                }
+                selectionDidChanged: toggleCardSaving
             )
             cell.setup(viewModel)
             return cell
         case .billingInfo:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BillingInfoCell.reuseIdentifier, for: indexPath) as! BillingInfoCell
             cell.setup(billingInfoViewModel)
+            return cell
+        case .unionPayWarning:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WarningViewCell.reuseIdentifier, for: indexPath) as! WarningViewCell
+            let message = NSLocalizedString(
+                "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.",
+                bundle: .payment,
+                comment: ""
+            )
+            cell.setup(message)
             return cell
         }
     }
@@ -136,6 +146,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         collectionView.registerReusableCell(CheckBoxCell.self)
         collectionView.registerReusableCell(BillingInfoCell.self)
         collectionView.registerReusableCell(InfoCollectorCell.self)
+        collectionView.registerReusableCell(WarningViewCell.self)
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -259,6 +270,13 @@ private extension NewCardPaymentSectionController {
             }
         )
         context.reload(items: [ Item.billingInfo.rawValue ])
+    }
+    
+    func toggleCardSaving(_ shouldSaveCard: Bool) {
+        self.shouldSaveCard = shouldSaveCard
+        if cardInfoViewModel.cardNumberConfigurer.currentBrand == .unionPay {
+            context.performUpdates(section)
+        }
     }
 }
 
