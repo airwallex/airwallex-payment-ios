@@ -9,6 +9,15 @@
 import Foundation
 
 class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
+    var maxLengthGetter: () -> Int
+
+    init(maxLengthGetter: @escaping () -> Int,
+         returnKeyType: UIReturnKeyType = .default,
+         returnActionHandler: ((BaseTextField) -> Void)? = nil) {
+        self.maxLengthGetter = maxLengthGetter
+        self.returnKeyType = returnKeyType
+        self.returnActionHandler = returnActionHandler
+    }
     var isEnabled: Bool = true
     
     var errorHint: String? = nil
@@ -25,15 +34,16 @@ class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
     
     var placeholder: String? = "CVC"
     
-    var maxLengthGetter: () -> Int
-
-    init(maxLengthGetter: @escaping () -> Int) {
-        self.maxLengthGetter = maxLengthGetter
-    }
+    var returnKeyType: UIReturnKeyType?
     
-    func handleTextDidUpdate(to userInput: String) -> Bool {
-        text = String(userInput.filterIllegalCharacters(in: .decimalDigits.inverted).prefix(maxLengthGetter()))
-        return text?.count == maxLengthGetter()
+    var returnActionHandler: ((BaseTextField) -> Void)?
+    
+    func handleTextDidUpdate(textField: BaseTextField, to userInput: String) {
+        let cvcLength = maxLengthGetter()
+        text = String(userInput.filterIllegalCharacters(in: .decimalDigits.inverted).prefix(cvcLength))
+        if text?.count == cvcLength {
+            returnActionHandler?(textField)
+        }
     }
     
     func handleDidEndEditing() {

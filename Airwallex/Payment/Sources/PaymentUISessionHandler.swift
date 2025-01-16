@@ -154,7 +154,7 @@ extension SwiftLoggable {
                   file: String = #file,
                   functionName: String = #function,
                   line: Int = #line) {
-        NSObject.logMesage("----Airwallex SDK----\(file)----\(functionName)----\(line)---\n \(message))")
+        NSObject.logMesage("----Airwallex SDK----\(Date())---\n\(file)\n---\(functionName)-line: \(line)-\n---\(message)")
     }
 }
 

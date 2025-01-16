@@ -30,10 +30,14 @@ class BankSelectionViewModel: OptionSelectionViewConfiguring {
         }
     }
     
-    //  OptionSelectionViewConfiguring
+    // MARK: - OptionSelectionViewConfiguring
+    var fieldName: String = "bank"
+    
+    var isRequired: Bool = true
+    
     var title: String? = NSLocalizedString("Bank", bundle: .payment, comment: "")
     
-    var hideHintLabel = false
+    var hideErrorHintLabel = false
     
     var icon: UIImage? { nil }
     
@@ -65,9 +69,12 @@ class BankSelectionViewModel: OptionSelectionViewConfiguring {
     
     var placeholder: String? = NSLocalizedString("Select...", bundle: .payment, comment: "option selection view placeholder")
     
-    func handleTextDidUpdate(to userInput: String) -> Bool {
+    var returnKeyType: UIReturnKeyType? = nil
+    
+    var returnActionHandler: ((BaseTextField) -> Void)? = nil
+    
+    func handleTextDidUpdate(textField: BaseTextField, to userInput: String) {
         assert(false, "should never triggered")
-        return false
     }
     
     func handleDidEndEditing() {

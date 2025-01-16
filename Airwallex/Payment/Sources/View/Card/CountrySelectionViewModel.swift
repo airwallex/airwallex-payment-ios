@@ -7,7 +7,6 @@
 //
 
 class CountrySelectionViewModel: OptionSelectionViewConfiguring {
-
     var country: AWXCountry? {
         didSet {
             handleDidEndEditing()
@@ -25,10 +24,13 @@ class CountrySelectionViewModel: OptionSelectionViewConfiguring {
     }
     
     //  OptionSelectionViewConfiguring
+    var fieldName: String = "country"
+    
+    var isRequired: Bool = true
     
     var title: String? = nil
     
-    var hideHintLabel = true
+    var hideErrorHintLabel = true
     
     var icon: UIImage? {
         guard let country else { return nil }
@@ -59,9 +61,12 @@ class CountrySelectionViewModel: OptionSelectionViewConfiguring {
     
     var placeholder: String? = NSLocalizedString("Select..", bundle: .payment, comment: "country selection view placeholder")
     
-    func handleTextDidUpdate(to userInput: String) -> Bool {
+    var returnKeyType: UIReturnKeyType? = nil
+    
+    var returnActionHandler: ((BaseTextField) -> Void)? = nil
+    
+    func handleTextDidUpdate(textField: BaseTextField, to userInput: String) {
         assert(false, "should never triggered")
-        return false
     }
     
     func handleDidEndEditing() {

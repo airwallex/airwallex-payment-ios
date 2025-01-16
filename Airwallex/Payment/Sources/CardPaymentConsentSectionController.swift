@@ -230,6 +230,7 @@ class CardPaymentConsentSectionController: SectionController {
             let brand = AWXCardValidator.shared().brand(forCardName: consent.paymentMethod?.card?.brand ?? "")
             let cvcLength = AWXCardValidator.cvcLength(for: brand?.type ?? .unknown)
             cvcConfigurer = InfoCollectorTextFieldViewModel(
+                fieldName: "cvc",
                 textFieldType: .CVC,
                 placeholder: "CVC",
                 customTextModifier: { input in

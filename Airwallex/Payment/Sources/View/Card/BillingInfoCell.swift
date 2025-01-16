@@ -166,14 +166,43 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         reuseButton.isHidden = !viewModel.canReuseShippingAddress
         reuseButton.isSelected = viewModel.shouldReuseShippingAddress
         
-        firstNameTextField.setup(viewModel.firstNameConfigurer)
-        lastNameTextField.setup(viewModel.lastNameConfigurer)
         countrySelectionView.setup(viewModel.countryConfigurer)
+        
+        viewModel.streetConfigurer.returnActionHandler = { [weak self] _ in
+            self?.stateTextField.becomeFirstResponder()
+        }
         streetTextField.setup(viewModel.streetConfigurer)
+        
+        viewModel.stateConfigurer.returnActionHandler = { [weak self] _ in
+            self?.cityTextField.becomeFirstResponder()
+        }
         stateTextField.setup(viewModel.stateConfigurer)
+        
+        viewModel.cityConfigurer.returnActionHandler = { [weak self] _ in
+            self?.zipCodeTextField.becomeFirstResponder()
+        }
         cityTextField.setup(viewModel.cityConfigurer)
+        
+        viewModel.zipConfigurer.returnActionHandler = { [weak self] _ in
+            self?.firstNameTextField.becomeFirstResponder()
+        }
         zipCodeTextField.setup(viewModel.zipConfigurer)
+        
+        viewModel.firstNameConfigurer.returnActionHandler = { [weak self] _ in
+            self?.lastNameTextField.becomeFirstResponder()
+        }
+        firstNameTextField.setup(viewModel.firstNameConfigurer)
+        
+        viewModel.lastNameConfigurer.returnActionHandler = { [weak self] _ in
+            self?.phoneTextField.becomeFirstResponder()
+        }
+        lastNameTextField.setup(viewModel.lastNameConfigurer)
+        
+        viewModel.phoneConfigurer.returnActionHandler = { [weak self] _ in
+            self?.emailTextField.becomeFirstResponder()
+        }
         phoneTextField.setup(viewModel.phoneConfigurer)
+        
         emailTextField.setup(viewModel.emailConfigurer)
         
         hintLabel.text = viewModel.errorHintForBillingFields
@@ -249,14 +278,6 @@ private extension BillingInfoCell {
             phoneTextField.widthAnchor.constraint(equalTo: stack.widthAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
-        
-        streetTextField.nextField = stateTextField
-        stateTextField.nextField = cityTextField
-        cityTextField.nextField = zipCodeTextField
-        zipCodeTextField.nextField = firstNameTextField
-        firstNameTextField.nextField = lastNameTextField
-        lastNameTextField.nextField = phoneTextField
-        phoneTextField.nextField = emailTextField
     }
     
     func setupObservation() {

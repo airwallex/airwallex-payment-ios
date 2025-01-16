@@ -240,4 +240,9 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         guard let indexPath = dataSource.indexPath(for: item) else { return }
         collectionView.scrollToItem(at: indexPath, at: position, animated: animated)
     }
+    
+    func cellForItem(_ item: Item) -> UICollectionViewCell? {
+        guard let indexPath = dataSource.indexPath(for: item) else { return nil }
+        return collectionView.cellForItem(at: indexPath)
+    }
 }

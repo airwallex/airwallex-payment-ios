@@ -69,56 +69,72 @@ class BillingInfoCellViewModel: BillingInfoCellConfiguring {
             handleUserInteraction: countrySelectionHandler
         )
         streetConfigurer = InfoCollectorTextFieldViewModel(
+            fieldName: "street",
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.address.street,
             textFieldType: .street,
-            placeholder: NSLocalizedString("Street", bundle: .payment, comment: "info in billing address")
+            placeholder: NSLocalizedString("Street", bundle: .payment, comment: "info in billing address"),
+            returnKeyType: .next
         )
         stateConfigurer = InfoCollectorTextFieldViewModel(
+            fieldName: "state",
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.address.state,
             textFieldType: .state,
-            placeholder: NSLocalizedString("State", bundle: .payment, comment: "info in billing address")
+            placeholder: NSLocalizedString("State", bundle: .payment, comment: "info in billing address"),
+            returnKeyType: .next
         )
         cityConfigurer = InfoCollectorTextFieldViewModel(
+            fieldName: "city",
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.address.city,
             textFieldType: .city,
-            placeholder: NSLocalizedString("City", bundle: .payment, comment: "info in billing address")
+            placeholder: NSLocalizedString("City", bundle: .payment, comment: "info in billing address"),
+            returnKeyType: .next
         )
         zipConfigurer = InfoCollectorTextFieldViewModel(
+            fieldName: "zip",
             isRequired: false,
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.address.postcode,
             textFieldType: .zipcode,
-            placeholder: NSLocalizedString("Zip code (optional)", bundle: .payment, comment: "info in billing address")
+            placeholder: NSLocalizedString("Zip code (optional)", bundle: .payment, comment: "info in billing address"),
+            returnKeyType: .next
         )
         
         firstNameConfigurer = InfoCollectorTextFieldViewModel(
+            fieldName: "first_name",
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.firstName,
             textFieldType: .firstName,
-            placeholder: NSLocalizedString("First name", bundle: .payment, comment: "info in billing address")
+            placeholder: NSLocalizedString("First name", bundle: .payment, comment: "info in billing address"),
+            returnKeyType: .next
         )
         lastNameConfigurer = InfoCollectorTextFieldViewModel(
+            fieldName: "last_name",
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.lastName,
             textFieldType: .lastName,
-            placeholder: NSLocalizedString("Last name", bundle: .payment, comment: "info in billing address")
+            placeholder: NSLocalizedString("Last name", bundle: .payment, comment: "info in billing address"),
+            returnKeyType: .next
         )
         phoneConfigurer = InfoCollectorTextFieldViewModel(
+            fieldName: "phone",
             isRequired: false,
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.phoneNumber,
             textFieldType: .phoneNumber,
-            placeholder: NSLocalizedString("Phone number (optional)", bundle: .payment, comment: "info in billing address")
+            placeholder: NSLocalizedString("Phone number (optional)", bundle: .payment, comment: "info in billing address"),
+            returnKeyType: .next
         )
         emailConfigurer = InfoCollectorTextFieldViewModel(
+            fieldName: "email",
             isRequired: false,
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.email,
             textFieldType: .email,
-            placeholder: NSLocalizedString("Email (optional)", bundle: .payment, comment: "info in billing address")
+            placeholder: NSLocalizedString("Email (optional)", bundle: .payment, comment: "info in billing address"),
+            returnKeyType: .default
         )
 
         self.triggerLayoutUpdate = triggerLayoutUpdate

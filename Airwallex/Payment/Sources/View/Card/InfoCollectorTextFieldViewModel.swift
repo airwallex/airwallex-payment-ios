@@ -8,28 +8,30 @@
 
 
 class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
-    var isRequired: Bool = true
-    
     var customTextModifier: ((String?) -> (String?, NSAttributedString?, Bool))?
     
     var customInputValidator: ((String?) throws -> Void)?
     
-    var triggerLayoutUpdate: (() -> Void)
-    
-    init(isRequired: Bool = true,
+    init(fieldName: String,
+         isRequired: Bool = true,
          isEnabled: Bool = true,
+         hideErrorHintLabel: Bool = false,
+         isValid: Bool = true,
          title: String? = nil,
          errorHint: String? = nil,
          text: String? = nil,
          attributedText: NSAttributedString? = nil,
-         isValid: Bool = true,
          textFieldType: AWXTextFieldType? = .default,
          placeholder: String? = nil,
+         returnKeyType: UIReturnKeyType? = nil,
+         returnActionHandler: ((BaseTextField) -> Void)? = nil,
          customTextModifier: ((String?) -> (String?, NSAttributedString?, Bool))? = nil,
          customInputValidator: ((String?) throws -> Void)? = nil,
-         triggerLayoutUpdate: @escaping (() -> Void) = {}) {
+         triggerLayoutUpdate: (() -> Void)? = nil) {
+        self.fieldName = fieldName
         self.isRequired = isRequired
         self.isEnabled = isEnabled
+        self.hideErrorHintLabel = true
         self.title = title
         self.errorHint = errorHint
         self.text = text
@@ -37,12 +39,18 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
         self.isValid = isValid
         self.textFieldType = textFieldType
         self.placeholder = placeholder
+        self.returnKeyType = returnKeyType
+        self.returnActionHandler = returnActionHandler
         self.customTextModifier = customTextModifier
         self.customInputValidator = customInputValidator
         self.triggerLayoutUpdate = triggerLayoutUpdate
     }
     // MARK: InfoCollectorTextFieldConfiguring
-    var hideHintLabel = false
+    var fieldName: String
+    
+    var isRequired: Bool = true
+    
+    var hideErrorHintLabel = false
     
     var isEnabled = true
     
@@ -60,20 +68,29 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
     
     var placeholder: String?
     
-    func handleTextDidUpdate(to userInput: String) -> Bool {
+    var triggerLayoutUpdate: (() -> Void)?
+    
+    var returnKeyType: UIReturnKeyType?
+    
+    var returnActionHandler: ((BaseTextField) -> Void)?
+    
+    func handleTextDidUpdate(textField: BaseTextField, to userInput: String) {
         if let customTextModifier {
             let (text, attributedText, triggerNextField) = customTextModifier(userInput)
             self.text = text
             self.attributedText = attributedText
-            return triggerNextField
+            
+            if triggerNextField, let returnActionHandler {
+                returnActionHandler(textField)
+            }
+            return
         }
         guard !userInput.isEmpty else {
             text = nil
             attributedText = nil
-            return false
+            return
         }
         text = userInput
-        return false
     }
     
     func handleDidEndEditing() {

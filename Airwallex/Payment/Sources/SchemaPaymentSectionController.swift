@@ -33,7 +33,32 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     private var bankList: [AWXBank]?
     private var task: Task<Void, Never>?
     
-    private var uiFieldViewModels = [ String: InfoCollectorTextFieldViewModel ]()
+    private var uiFieldViewModels = [ InfoCollectorTextFieldViewModel ]()
+    private(set) lazy var countryCodeToPhonePrefix: [String: String] = {
+        do {
+            guard let url = Bundle.resource().url(forResource: "CountryCodes", withExtension: "json") else {
+                return [:]
+            }
+            let data = try Data(contentsOf: url)
+            let dict = try JSONDecoder().decode([String: String].self, from: data)
+            return dict
+        } catch {
+            return [:]
+        }
+    }()
+    
+    private(set) lazy var currencyCodeToPhonePrefix: [String: String] = {
+        do {
+            guard let url = Bundle.resource().url(forResource: "Codes", withExtension: "json") else {
+                return [:]
+            }
+            let data = try Data(contentsOf: url)
+            let dict = try JSONDecoder().decode([String: String].self, from: data)
+            return dict
+        } catch {
+            return [:]
+        }
+    }()
     
     init(sectionType: PaymentSectionType, methodProvider: PaymentMethodProvider) {
         self.section = sectionType
@@ -109,34 +134,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectorCell.reuseIdentifier, for: indexPath) as! InfoCollectorCell
-            if let viewModel = uiFieldViewModels[item] {
-                cell.setup(viewModel)
-            } else {
-                guard let field = schema?.uiFields.first(where: { $0.name == item }) else {
-                    assert(false, "field should exist")
-                    return cell
-                }
-                let viewModel = InfoCollectorTextFieldViewModel(
-                    title: field.displayName,
-                    textFieldType: field.textFieldType,
-                    triggerLayoutUpdate: { [weak self] in
-                        self?.context.invalidateLayout(for: [item])
-                    }
-                )
-                if field.uiType == AWXField.UIType.phone {
-                    // TODO: optimize this
-                    let a = AWXPaymentFormViewModel(
-                        session: session,
-                        paymentMethod: AWXPaymentMethod(),
-                        formMapping: AWXFormMapping()
-                    )
-                    if let prefix = a.phonePrefix(), !prefix.isEmpty {
-                        viewModel.text = prefix + " "
-                    }
-                }
-                uiFieldViewModels[item] = viewModel
-                cell.setup(viewModel)
-            }
+            let viewModel = uiFieldViewModels.first(where: { $0.fieldName == item})!
+            cell.setup(viewModel)
             return cell
         }
     }
@@ -148,6 +147,38 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                     let (schema, bankList) = try await self.getSchemaPaymentMethodDetails()
                     self.schema = schema
                     self.bankList = bankList
+                    
+                    uiFieldViewModels = schema.uiFields.reduce(into: [InfoCollectorTextFieldViewModel](), { partialResult, field in
+                        //  create view model for UI fields
+                        let viewModel = InfoCollectorTextFieldViewModel(
+                            fieldName: field.name,
+                            title: field.displayName,
+                            textFieldType: field.textFieldType,
+                            triggerLayoutUpdate: { [weak self] in
+                                self?.context.invalidateLayout(for: [field.name])
+                            }
+                        )
+                        if field.uiType == AWXField.UIType.phone {
+                            if let prefix = phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
+                               !prefix.isEmpty {
+                                viewModel.text = prefix + " "
+                            }
+                        }
+                        
+                        //  update return key and handler
+                        if let last = partialResult.last {
+                            last.returnKeyType = .next
+                            last.returnActionHandler = { [weak self] _ in
+                                guard let self else { return }
+                                self.context.scroll(to: field.name, position: .bottom, animated: true)
+                                if let cell = self.context.cellForItem(field.name) as? InfoCollectorCell {
+                                    cell.becomeFirstResponder()
+                                }
+                            }
+                        }
+                        //  update partial result
+                        partialResult.append(viewModel)
+                    })
                     context.performUpdates(section, updateItems: false, animatingDifferences: true)
                     task = nil
                 } catch {
@@ -194,7 +225,7 @@ private extension SchemaPaymentSectionController {
             try bankSelectionViewModel?.validate()
             
             // validate uiFields
-            for (_, viewModel) in uiFieldViewModels {
+            for viewModel in uiFieldViewModels {
                 try viewModel.validateUserInput(viewModel.text)
             }
             
@@ -202,8 +233,8 @@ private extension SchemaPaymentSectionController {
             paymentMethod.type = methodType.name
             
             //  update UI fields
-            let inputContents = uiFieldViewModels.reduce(into: [String: String]()) { partialResult, kvTuple in
-                partialResult[kvTuple.key] = kvTuple.value.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let inputContents = uiFieldViewModels.reduce(into: [String: String]()) { partialResult, viewModel in
+                partialResult[viewModel.fieldName] = viewModel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             }
             paymentMethod.appendAdditionalParams(inputContents)
             
@@ -223,8 +254,8 @@ private extension SchemaPaymentSectionController {
             showAlert(error)
             
             bankSelectionViewModel?.handleDidEndEditing()
-            for (_, value) in uiFieldViewModels {
-                value.handleDidEndEditing()
+            for viewModel in uiFieldViewModels {
+                viewModel.handleDidEndEditing()
             }
             context.reload(sections: [section])
         }
@@ -280,5 +311,19 @@ extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
         paymentFormViewController.dismiss(animated: true) {
             self.context.reload(items: [ Item.bankSelection] )
         }
+    }
+}
+
+private extension SchemaPaymentSectionController {
+    
+    func phonePrefix(countryCode: String?, currencyCode: String?) -> String? {
+        var prefix: String? = nil
+        if let countryCode {
+            prefix = countryCodeToPhonePrefix[countryCode]
+        }
+        if let currencyCode, prefix == nil {
+            prefix = currencyCodeToPhonePrefix[currencyCode]
+        }
+        return prefix
     }
 }

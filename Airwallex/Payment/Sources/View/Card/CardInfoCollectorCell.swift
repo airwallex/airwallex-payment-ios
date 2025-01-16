@@ -89,8 +89,20 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     
     func setup(_ viewModel: CardInfoCollectorCellConfiguring) {
         self.viewModel = viewModel
+        
+        viewModel.cardNumberConfigurer.returnActionHandler = { [weak self] textField in
+            self?.expiresTextField.becomeFirstResponder()
+        }
         numberTextField.setup(viewModel.cardNumberConfigurer)
+        
+        viewModel.expireDataConfigurer.returnActionHandler = { [weak self] _ in
+            self?.cvcTextField.becomeFirstResponder()
+        }
         expiresTextField.setup(viewModel.expireDataConfigurer)
+        
+        viewModel.cvcConfigurer.returnActionHandler = { [weak self] _ in
+            self?.nameTextField.becomeFirstResponder()
+        }
         cvcTextField.setup(viewModel.cvcConfigurer)
         hintLabel.text = viewModel.errorHintForCardFields
         
@@ -167,10 +179,6 @@ private extension CardInfoCollectorCell {
         }
         
         vStack.addArrangedSubview(nameTextField)
-        
-        numberTextField.nextField = expiresTextField
-        expiresTextField.nextField = cvcTextField
-        cvcTextField.nextField = nameTextField
         
         let constraints = [
             titleLabel.topAnchor.constraint(equalTo: container.topAnchor),

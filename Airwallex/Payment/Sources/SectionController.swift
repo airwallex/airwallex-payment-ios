@@ -48,13 +48,6 @@ extension SectionController {
         // do nothing by default
     }
     
-    func showTODO() {
-        // TODO: WPDEBUG
-        let alert = UIAlertController(title: "TODO", message: "Not Implemented yet", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "DONE", style: .default))
-        context.viewController?.present(alert, animated: true)
-    }
-    
     func anySectionController() -> AnySectionController<SectionIdentifierType, ItemIdentifierType> {
         AnySectionController(self)
     }

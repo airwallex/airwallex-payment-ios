@@ -8,6 +8,12 @@
 import Foundation
 
 class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
+    
+    init(returnActionhandler: ((BaseTextField) -> Void)? = nil) {
+        self.returnActionHandler = returnActionhandler
+    }
+    
+    // MARK: - BaseTextFieldConfiguring
     var isEnabled: Bool = true
     
     var placeholder: String? = "MM / YY"
@@ -26,7 +32,11 @@ class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
     
     var errorHint: String? = nil
     
-    func handleTextDidUpdate(to userInput: String) -> Bool {
+    var returnKeyType: UIReturnKeyType? = .default
+    
+    var returnActionHandler: ((BaseTextField) -> Void)?
+    
+    func handleTextDidUpdate(textField: BaseTextField, to userInput: String) {
         var userInput = userInput.filterIllegalCharacters(in: .decimalDigits.inverted)
         if let text, userInput.count == text.count - 1, text.hasPrefix(userInput), text.last == "/", userInput.count >= 1 {
             // when user deleting "/", we also delete the character before "/"
@@ -39,7 +49,9 @@ class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
         }
         
         attributedText = formatedString(month: String(expirationMonth), year: String(expirationYear))
-        return (expirationMonth.count + expirationYear.count == 4) && isValid
+        if (expirationMonth.count + expirationYear.count == 4) && isValid {
+            returnActionHandler?(textField)
+        }
     }
     
     func handleDidEndEditing() {

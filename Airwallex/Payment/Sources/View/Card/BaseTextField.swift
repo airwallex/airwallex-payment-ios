@@ -17,11 +17,10 @@ protocol BaseTextFieldConfiguring: AnyObject {
     var textFieldType: AWXTextFieldType? { get }
     var placeholder: String? { get }
     
-    /// will be called in UITextField's `textField(_:shouldChangeCharactersIn:replacementString:) -> Bool` delegate to decide whether
-    /// we should let user continue input in `nextField`
-    /// - Parameter userInput: user input
-    /// - Returns: true means we have a valid input and we should make `nextFiled`  the first responder
-    func handleTextDidUpdate(to userInput: String) -> Bool
+    var returnKeyType: UIReturnKeyType? { get set }
+    var returnActionHandler: ((BaseTextField) -> Void)? { get set }
+    
+    func handleTextDidUpdate(textField: BaseTextField, to userInput: String)
     func handleDidEndEditing()
 }
 
@@ -62,16 +61,6 @@ class BaseTextField: UIView, ViewConfigurable {
         stack.alignment = .center
         return stack
     }()
-    
-    weak var nextField: UIResponder? {
-        didSet {
-            if nextField != nil {
-                textField.returnKeyType = .next
-            } else {
-                textField.returnKeyType = .default
-            }
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -160,6 +149,7 @@ class BaseTextField: UIView, ViewConfigurable {
             textField.attributedPlaceholder = nil
         }
         isEnabled = viewModel.isEnabled
+        textField.returnKeyType = viewModel.returnKeyType ?? .default
         
         updateBorderAppearance()
     }
@@ -178,12 +168,13 @@ class BaseTextField: UIView, ViewConfigurable {
 
 extension BaseTextField: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let nextField  {
-            nextField.becomeFirstResponder()
+        if let returnHandler = viewModel?.returnActionHandler  {
+            returnHandler(self)
+            return false
         } else {
             resignFirstResponder()
+            return true
         }
-        return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -203,11 +194,8 @@ extension BaseTextField: UITextFieldDelegate {
         if let range = Range(range, in: currentText) {
             let text = currentText.replacingCharacters(in: range, with: string)
             guard let viewModel else { return false }
-            let moveToNextField = viewModel.handleTextDidUpdate(to: text)
+            viewModel.handleTextDidUpdate(textField: self, to: text)
             setup(viewModel)
-            if textField.isFirstResponder && moveToNextField {
-                nextField?.becomeFirstResponder()
-            }
         }
         return false
     }
