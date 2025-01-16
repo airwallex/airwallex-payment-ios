@@ -114,7 +114,7 @@ class PaymentMethodListSectionController: SectionController {
         context.reload(items: itemsToReload)
     }
     
-    func prepareItemUpdates() {
+    func updateItemsIfNecessary() {
         methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
         selectedMethod = methodProvider.selectedMethod?.name ?? ""
     }

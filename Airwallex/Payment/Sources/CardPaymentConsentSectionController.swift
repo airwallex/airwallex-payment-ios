@@ -254,7 +254,7 @@ class CardPaymentConsentSectionController: SectionController {
         }
     }
     
-    func prepareItemUpdates() {
+    func updateItemsIfNecessary() {
         consents = methodProvider.consents
     }
 }

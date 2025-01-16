@@ -106,7 +106,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                 sectionControllers[section] = sectionController
                 controller = sectionController
             } else {
-                controller?.prepareItemUpdates()
+                controller?.updateItemsIfNecessary()
             }
             let items = controller?.items ?? []
             snapshot.appendItems(items, toSection: section)
@@ -117,10 +117,12 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
         diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
-    func performUpdates(section: SectionType, forceReload: Bool = false, animatingDifferences: Bool = false) {
+    func performUpdates(section: SectionType, updateItems: Bool = true, forceReload: Bool = false, animatingDifferences: Bool = false) {
         guard let controller = sectionController(for: section) else { return }
         var snapshot = diffableDataSource.snapshot()
-        controller.prepareItemUpdates()
+        if updateItems {
+            controller.updateItemsIfNecessary()
+        }
         let items = snapshot.itemIdentifiers(inSection: section)
         snapshot.deleteItems(items)
         let newItems = controller.items
@@ -148,13 +150,13 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     private weak var layout: UICollectionViewCompositionalLayout!
     private(set) var dataSource: UICollectionViewDiffableDataSource<Section, Item>
     private var _performUpdates: (Bool, Bool) -> Void
-    private var _performUpdatesForSection: (Section, Bool, Bool) -> Void
+    private var _performUpdatesForSection: (Section, Bool, Bool, Bool) -> Void
     
     init(viewController: AWXViewController,
          collectionView: UICollectionView,
          layout: UICollectionViewCompositionalLayout,
          dataSource: UICollectionViewDiffableDataSource<Section, Item>,
-         reloadSectionData: @escaping (Section, Bool, Bool) -> Void,
+         reloadSectionData: @escaping (Section, Bool, Bool, Bool) -> Void,
          reloadData: @escaping (Bool, Bool) -> Void) {
         self.viewController = viewController
         self.collectionView = collectionView
@@ -168,8 +170,10 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         return dataSource.snapshot()
     }
     
-    func applySnapshot(_ snapshot: NSDiffableDataSourceSnapshot<Section, Item>) {
-        dataSource.apply(snapshot)
+    func applySnapshot(_ snapshot: NSDiffableDataSourceSnapshot<Section, Item>,
+                       animatingDifferences: Bool = false,
+                       completion: (() -> Void)? = nil) {
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences, completion: completion)
     }
     
     func invalidateLayout(for items: [Item], animated: Bool = false) {
@@ -225,8 +229,11 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         _performUpdates(forceReload, animatingDifferences)
     }
     
-    func performUpdates(_ section: Section, forceReload: Bool = false, animatingDifferences: Bool = false) {
-        _performUpdatesForSection(section, forceReload, animatingDifferences)
+    func performUpdates(_ section: Section,
+                        updateItems: Bool = true,
+                        forceReload: Bool = false,
+                        animatingDifferences: Bool = false) {
+        _performUpdatesForSection(section, updateItems, forceReload, animatingDifferences)
     }
     
     func scroll(to item: Item, position: UICollectionView.ScrollPosition, animated: Bool = false) {

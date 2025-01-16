@@ -30,12 +30,12 @@
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     
-    func prepareItemUpdates()
+    func updateItemsIfNecessary()
 }
 
 extension SectionController {
     
-    func prepareItemUpdates() {
+    func updateItemsIfNecessary() {
         // do nothing by default
     }
     
@@ -93,7 +93,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
         self._items = { sectionController.items }
         self._section = { sectionController.section }
         self._context = { sectionController.context }
-        self._prepareItemUpdates = { sectionController.prepareItemUpdates() }
+        self._prepareItemUpdates = { sectionController.updateItemsIfNecessary() }
     }
     
     func bind(context: CollectionViewContext<SectionType, ItemType>) {
@@ -120,7 +120,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
         _didSelectHandler(collectionView, indexPath)
     }
     
-    func prepareItemUpdates() {
+    func updateItemsIfNecessary() {
         _prepareItemUpdates()
     }
 }

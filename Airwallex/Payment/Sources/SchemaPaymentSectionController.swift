@@ -39,7 +39,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         self.section = sectionType
         self.methodProvider = methodProvider
         super.init()
-        self.prepareItemUpdates()
+        self.updateItemsIfNecessary()
     }
     
     // MARK: - SectionController
@@ -141,20 +141,14 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         }
     }
     
-    func prepareItemUpdates() {
-        // TODO: optimize this
+    func updateItemsIfNecessary() {
         if schema == nil && task == nil {
             task = Task {
                 do {
-                    let (schema, bankList) = try await self.getSchemaForPaymentMethod()
+                    let (schema, bankList) = try await self.getSchemaPaymentMethodDetails()
                     self.schema = schema
                     self.bankList = bankList
-                    
-                    var snapshot = self.context.currentSnapshot()
-                    let items = snapshot.itemIdentifiers(inSection: section)
-                    snapshot.deleteItems(items)
-                    snapshot.appendItems(self.items)
-                    self.context.applySnapshot(snapshot)
+                    context.performUpdates(section, updateItems: false, animatingDifferences: true)
                     task = nil
                 } catch {
                     schema = nil
@@ -162,13 +156,13 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                     task = nil
                     guard let error = error as? String else { return }
                     showAlert(error)
-                    debugLog("Failed to get fields for selected method. Error: \(error)")
+                    debugLog("Failed to get schema for selected method. Error: \(error)")
                 }
             }
         }
     }
     
-    func getSchemaForPaymentMethod() async throws -> (AWXSchema, [AWXBank]?)  {
+    func getSchemaPaymentMethodDetails() async throws -> (AWXSchema, [AWXBank]?)  {
         let response = try await methodProvider.getPaymentMethodTypeDetails(name: methodType.name)
         let schema = response.schemas.first { $0.transactionMode == session.transactionMode() }
         guard let schema, !schema.fields.isEmpty else {
@@ -191,7 +185,7 @@ private extension SchemaPaymentSectionController {
     func checkout() {
         guard let schema else {
             // check schema
-            prepareItemUpdates()
+            updateItemsIfNecessary()
             return
         }
         
