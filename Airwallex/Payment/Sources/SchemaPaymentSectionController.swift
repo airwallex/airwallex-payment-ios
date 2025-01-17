@@ -76,7 +76,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     var items: [String] {
         var items = [String]()
         
-        if let bankField = schema?.bankField {
+        if let bankSelectionViewModel {
             items.append(Item.bankSelection)
         }
         
@@ -113,17 +113,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             return context.dequeueReusableCell(SchemaPaymentRemiderCell.self, for: itemIdentifier, indexPath: indexPath)
         case Item.bankSelection:
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: itemIdentifier, indexPath: indexPath)
-            if let bankSelectionViewModel {
-                cell.setup(bankSelectionViewModel)
-            } else {
-                bankSelectionViewModel = BankSelectionViewModel(
-                    bank: bankList?.first,
-                    handleUserInteraction: { [weak self] in
-                        self?.handleBankSelection()
-                    }
-                )
-                cell.setup(bankSelectionViewModel!)
-            }
+            cell.setup(bankSelectionViewModel!)
             return cell
         default:
             let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
@@ -143,6 +133,15 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 let (schema, bankList) = try await self.getSchemaPaymentMethodDetails()
                 self.schema = schema
                 self.bankList = bankList
+                
+                if let field = schema.bankField, let bankList, !bankList.isEmpty {
+                    bankSelectionViewModel = BankSelectionViewModel(
+                        bank: bankList.count == 1 ? bankList.first! : nil,
+                        handleUserInteraction: { [weak self] in
+                            self?.handleBankSelection()
+                        }
+                    )
+                }
                 
                 uiFieldViewModels = schema.uiFields.reduce(into: [InfoCollectorTextFieldViewModel](), { partialResult, field in
                     //  create view model for UI fields
@@ -236,6 +235,11 @@ private extension SchemaPaymentSectionController {
             
             let paymentMethod = AWXPaymentMethod()
             paymentMethod.type = methodType.name
+            
+            // update bank selection
+            if let bankSelectionViewModel  {
+                paymentMethod.appendAdditionalParams([bankSelectionViewModel.fieldName: bankSelectionViewModel.bank?.name ?? ""])
+            }
             
             //  update from UI fields
             let inputContents = uiFieldViewModels.reduce(into: [String: String]()) { partialResult, viewModel in

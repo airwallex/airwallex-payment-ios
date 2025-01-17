@@ -31,7 +31,7 @@ class BankSelectionViewModel: OptionSelectionViewConfiguring {
     }
     
     // MARK: - OptionSelectionViewConfiguring
-    var fieldName: String = "bank"
+    let fieldName: String = "bank_name"
     
     var isRequired: Bool = true
     
