@@ -36,8 +36,8 @@ class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
     
     var returnActionHandler: ((BaseTextField) -> Void)?
     
-    func handleTextDidUpdate(textField: BaseTextField, to userInput: String) {
-        var userInput = userInput.filterIllegalCharacters(in: .decimalDigits.inverted)
+    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+        var userInput = textField.textField.text?.replacingCharacters(in: range, with: string).filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         if let text, userInput.count == text.count - 1, text.hasPrefix(userInput), text.last == "/", userInput.count >= 1 {
             // when user deleting "/", we also delete the character before "/"
             userInput = String(userInput.dropLast())
@@ -52,6 +52,7 @@ class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
         if (expirationMonth.count + expirationYear.count == 4) {
             returnActionHandler?(textField)
         }
+        return false
     }
     
     func handleDidEndEditing() {

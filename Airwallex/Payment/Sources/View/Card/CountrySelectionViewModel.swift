@@ -65,8 +65,9 @@ class CountrySelectionViewModel: OptionSelectionViewConfiguring {
     
     var returnActionHandler: ((BaseTextField) -> Void)? = nil
     
-    func handleTextDidUpdate(textField: BaseTextField, to userInput: String) {
+    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool {
         assert(false, "should never triggered")
+        return false
     }
     
     func handleDidEndEditing() {

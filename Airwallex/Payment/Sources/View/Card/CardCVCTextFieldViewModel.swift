@@ -38,12 +38,14 @@ class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
     
     var returnActionHandler: ((BaseTextField) -> Void)?
     
-    func handleTextDidUpdate(textField: BaseTextField, to userInput: String) {
+    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool {
         let cvcLength = maxLengthGetter()
-        text = String(userInput.filterIllegalCharacters(in: .decimalDigits.inverted).prefix(cvcLength))
+        var userInput = textField.textField.text?.replacingCharacters(in: range, with: string).filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
+        text = String(userInput.prefix(cvcLength))
         if text?.count == cvcLength {
             returnActionHandler?(textField)
         }
+        return false
     }
     
     func handleDidEndEditing() {

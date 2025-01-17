@@ -74,23 +74,24 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
     
     var returnActionHandler: ((BaseTextField) -> Void)?
     
-    func handleTextDidUpdate(textField: BaseTextField, to userInput: String) {
+    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+        let userInput = textField.textField.text?.replacingCharacters(in: range, with: string)
         if let customTextModifier {
             let (text, attributedText, triggerNextField) = customTextModifier(userInput)
             self.text = text
             self.attributedText = attributedText
-            
             if triggerNextField, let returnActionHandler {
                 returnActionHandler(textField)
             }
-            return
+            return false
         }
-        guard !userInput.isEmpty else {
+        guard userInput?.isEmpty == false else {
             text = nil
             attributedText = nil
-            return
+            return true
         }
         text = userInput
+        return true
     }
     
     func handleDidEndEditing() {

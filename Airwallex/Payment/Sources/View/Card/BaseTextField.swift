@@ -20,7 +20,7 @@ protocol BaseTextFieldConfiguring: AnyObject {
     var returnKeyType: UIReturnKeyType? { get set }
     var returnActionHandler: ((BaseTextField) -> Void)? { get set }
     
-    func handleTextDidUpdate(textField: BaseTextField, to userInput: String)
+    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool
     func handleDidEndEditing()
 }
 
@@ -191,12 +191,13 @@ extension BaseTextField: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
-        if let range = Range(range, in: currentText) {
-            let text = currentText.replacingCharacters(in: range, with: string)
-            guard let viewModel else { return false }
-            viewModel.handleTextDidUpdate(textField: self, to: text)
-            setup(viewModel)
+        guard let range = Range(range, in: currentText) else { return false }
+        guard let viewModel else { return true }
+        let shouldChange = viewModel.handleTextShouldChange(textField: self, range: range, replacementString: string)
+        if shouldChange {
+            return true
         }
+        setup(viewModel)
         return false
     }
 }
