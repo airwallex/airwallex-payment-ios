@@ -49,7 +49,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     
     private(set) lazy var currencyCodeToPhonePrefix: [String: String] = {
         do {
-            guard let url = Bundle.resource().url(forResource: "Codes", withExtension: "json") else {
+            guard let url = Bundle.resource().url(forResource: "CurrencyCodes", withExtension: "json") else {
                 return [:]
             }
             let data = try Data(contentsOf: url)

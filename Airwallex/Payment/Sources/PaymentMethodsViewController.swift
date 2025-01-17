@@ -41,7 +41,7 @@ class PaymentMethodsViewController: AWXViewController {
     private lazy var refreshControl: UIRefreshControl = {
         let view = UIRefreshControl()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(onPullToRefresh), for: .valueChanged)
+        view.addTarget(self, action: #selector(getMethodList(_:)), for: .valueChanged)
         return view
     }()
     
@@ -52,17 +52,7 @@ class PaymentMethodsViewController: AWXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
-        startAnimating()
-        Task {
-            do {
-                try await methodProvider.fetchPaymentMethods()
-                stopAnimating()
-            } catch {
-                showAlertMessage(error.localizedDescription)
-            }
-        }
-        
+        getMethodList()
         cancellable = methodProvider.publisher.sink {[weak self] _ in
             self?.collectionViewManager.performUpdates()
         }
@@ -112,9 +102,11 @@ class PaymentMethodsViewController: AWXViewController {
         AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
     }
     
-    @objc private func onPullToRefresh() {
-        refreshControl.endRefreshing()
+    @objc private func getMethodList(_ sender: UIRefreshControl? = nil) {
         Task {
+            if let sender {
+                sender.endRefreshing()
+            }
             startAnimating()
             do {
                 try await methodProvider.fetchPaymentMethods()
@@ -124,6 +116,7 @@ class PaymentMethodsViewController: AWXViewController {
             stopAnimating()
         }
     }
+    
     private func showAlertMessage(_ message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Close", bundle: .payment, comment: ""), style: .cancel))
