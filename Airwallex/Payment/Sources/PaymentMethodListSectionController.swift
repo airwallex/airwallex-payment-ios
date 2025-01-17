@@ -34,21 +34,12 @@ class PaymentMethodListSectionController: SectionController {
         methodTypes.compactMap { $0.name != AWXApplePayKey ? $0.name : nil }
     }
     
-    func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.registerReusableCell(PaymentMethodCell.self)
-        collectionView.registerSectionHeader(PaymentMethodListSeparator.self)
-    }
-    
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
         self.context = context
     }
     
-    func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: PaymentMethodCell.reuseIdentifier,
-            for: indexPath
-        ) as! PaymentMethodCell
-        
+    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = context.dequeueReusableCell(PaymentMethodCell.self, for: itemIdentifier, indexPath: indexPath)
         guard let methodType = methodTypes[safe: indexPath.item] else {
             assert(false, "index out of bounds")
             return cell
@@ -56,7 +47,7 @@ class PaymentMethodListSectionController: SectionController {
         let viewModel = PaymentMethodCellViewModel(
             name: methodType.displayName,
             imageURL: methodType.resources.logoURL,
-            isSelected: item == selectedMethod
+            isSelected: itemIdentifier == selectedMethod
         )
         cell.setup(viewModel)
         return cell
@@ -89,17 +80,16 @@ class PaymentMethodListSectionController: SectionController {
         return section
     }
     
-    func supplementaryView(for collectionView: UICollectionView,
-                           ofKind elementKind: String,
+    func supplementaryView(for elementKind: String,
                            at indexPath: IndexPath) -> UICollectionReusableView {
-        return collectionView.dequeueReusableSupplementaryView(
+        context.dequeueReusableSupplementaryView(
             ofKind: elementKind,
-            withReuseIdentifier: PaymentMethodListSeparator.reuseIdentifier,
-            for: indexPath
+            viewClass: PaymentMethodListSeparator.self,
+            indexPath: indexPath
         )
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(didSelectItem itemIdentifier: String, at indexPath: IndexPath) {
         guard let selected = methodTypes[safe: indexPath.item] else {
             assert(false, "invalid index")
             return

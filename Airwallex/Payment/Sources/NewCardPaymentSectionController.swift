@@ -102,19 +102,19 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         self.context = context
     }
     
-    func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        guard let item = Item(rawValue: item) else { fatalError("Invalid item") }
+    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
+        guard let item = Item(rawValue: itemIdentifier) else { fatalError("Invalid item") }
         switch item {
         case .cardInfo:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardInfoCollectorCell.reuseIdentifier, for: indexPath) as! CardInfoCollectorCell
+            let cell = context.dequeueReusableCell(CardInfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
             cell.setup(cardInfoViewModel)
             return cell
         case .checkoutButton:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CheckoutButtonCell.reuseIdentifier, for: indexPath) as! CheckoutButtonCell
+            let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: item.rawValue, indexPath: indexPath)
             cell.setup(CheckoutButtonCellViewModel(checkoutAction: checkout))
             return cell
         case .saveCardToggle:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CheckBoxCell.reuseIdentifier, for: indexPath) as! CheckBoxCell
+            let cell = context.dequeueReusableCell(CheckBoxCell.self, for: item.rawValue, indexPath: indexPath)
             let viewModel = CheckBoxCellViewModel(
                 isSelected: shouldSaveCard,
                 title: nil,
@@ -124,11 +124,11 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             cell.setup(viewModel)
             return cell
         case .billingInfo:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BillingInfoCell.reuseIdentifier, for: indexPath) as! BillingInfoCell
+            let cell = context.dequeueReusableCell(BillingInfoCell.self, for: item.rawValue, indexPath: indexPath)
             cell.setup(billingInfoViewModel)
             return cell
         case .unionPayWarning:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WarningViewCell.reuseIdentifier, for: indexPath) as! WarningViewCell
+            let cell = context.dequeueReusableCell(WarningViewCell.self, for: item.rawValue, indexPath: indexPath)
             let message = NSLocalizedString(
                 "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.",
                 bundle: .payment,
@@ -137,16 +137,6 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             cell.setup(message)
             return cell
         }
-    }
-    
-    func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.registerSectionHeader(CardPaymentSectionHeader.self)
-        collectionView.registerReusableCell(CardInfoCollectorCell.self)
-        collectionView.registerReusableCell(CheckoutButtonCell.self)
-        collectionView.registerReusableCell(CheckBoxCell.self)
-        collectionView.registerReusableCell(BillingInfoCell.self)
-        collectionView.registerReusableCell(InfoCollectorCell.self)
-        collectionView.registerReusableCell(WarningViewCell.self)
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -172,7 +162,12 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         return section
     }
     
-    func supplementaryView(for collectionView: UICollectionView, ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func supplementaryView(for elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let view = context.dequeueReusableSupplementaryView(
+            ofKind: elementKind,
+            viewClass: CardPaymentSectionHeader.self,
+            indexPath: indexPath
+        )
         let viewModel = CardPaymentSectionHeaderViewModel(
             title: NSLocalizedString("Add new", comment: ""),
             actionTitle: "Keep using saved cards",
@@ -181,11 +176,6 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                 self.switchToConsentPaymentAction()
             }
         )
-        let view = collectionView.dequeueReusableSupplementaryView(
-            ofKind: elementKind,
-            withReuseIdentifier: CardPaymentSectionHeader.reuseIdentifier,
-            for: indexPath
-        ) as! CardPaymentSectionHeader
         view.setup(viewModel)
         return view
     }

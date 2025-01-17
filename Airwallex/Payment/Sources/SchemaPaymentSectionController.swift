@@ -93,13 +93,6 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         self.context = context
     }
     
-    func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.registerReusableCell(CheckoutButtonCell.self)
-        collectionView.registerReusableCell(SchemaPaymentRemiderCell.self)
-        collectionView.registerReusableCell(BankSelectionCell.self)
-        collectionView.registerReusableCell(InfoCollectorCell.self)
-    }
-    
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
         let item = NSCollectionLayoutItem(layoutSize: layoutSize)
@@ -110,16 +103,16 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         return section
     }
     
-    func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        switch item {
+    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
+        switch itemIdentifier {
         case Item.checkoutButton:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CheckoutButtonCell.reuseIdentifier, for: indexPath) as! CheckoutButtonCell
+            let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
             cell.setup(CheckoutButtonCellViewModel(checkoutAction: checkout))
             return cell
         case Item.redirectRemider:
-            return collectionView.dequeueReusableCell(withReuseIdentifier: SchemaPaymentRemiderCell.reuseIdentifier, for: indexPath)
+            return context.dequeueReusableCell(SchemaPaymentRemiderCell.self, for: itemIdentifier, indexPath: indexPath)
         case Item.bankSelection:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BankSelectionCell.reuseIdentifier, for: indexPath) as! BankSelectionCell
+            let cell = context.dequeueReusableCell(BankSelectionCell.self, for: itemIdentifier, indexPath: indexPath)
             if let bankSelectionViewModel {
                 cell.setup(bankSelectionViewModel)
             } else {
@@ -133,67 +126,69 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             }
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectorCell.reuseIdentifier, for: indexPath) as! InfoCollectorCell
-            let viewModel = uiFieldViewModels.first(where: { $0.fieldName == item})!
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
+            let viewModel = uiFieldViewModels.first(where: { $0.fieldName == itemIdentifier})!
             cell.setup(viewModel)
             return cell
         }
     }
     
     func updateItemsIfNecessary() {
-        if schema == nil && task == nil {
-            task = Task {
-                do {
-                    let (schema, bankList) = try await self.getSchemaPaymentMethodDetails()
-                    self.schema = schema
-                    self.bankList = bankList
+        guard schema == nil && task == nil else {
+            // don't send request again if we already have schema info
+            return
+        }
+        task = Task {
+            do {
+                let (schema, bankList) = try await self.getSchemaPaymentMethodDetails()
+                self.schema = schema
+                self.bankList = bankList
+                
+                uiFieldViewModels = schema.uiFields.reduce(into: [InfoCollectorTextFieldViewModel](), { partialResult, field in
+                    //  create view model for UI fields
+                    let viewModel = InfoCollectorTextFieldViewModel(
+                        fieldName: field.name,
+                        title: field.displayName,
+                        textFieldType: field.textFieldType,
+                        triggerLayoutUpdate: { [weak self] in
+                            self?.context.invalidateLayout(for: [field.name])
+                        }
+                    )
+                    if field.uiType == AWXField.UIType.phone {
+                        if let prefix = phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
+                           !prefix.isEmpty {
+                            viewModel.text = prefix
+                            viewModel.customInputValidator = { text in
+                                guard let text, text.count > prefix.count else {
+                                    throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "")
+                                }
+                            }
+                        }
+                    }
                     
-                    uiFieldViewModels = schema.uiFields.reduce(into: [InfoCollectorTextFieldViewModel](), { partialResult, field in
-                        //  create view model for UI fields
-                        let viewModel = InfoCollectorTextFieldViewModel(
-                            fieldName: field.name,
-                            title: field.displayName,
-                            textFieldType: field.textFieldType,
-                            triggerLayoutUpdate: { [weak self] in
-                                self?.context.invalidateLayout(for: [field.name])
-                            }
-                        )
-                        if field.uiType == AWXField.UIType.phone {
-                            if let prefix = phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
-                               !prefix.isEmpty {
-                                viewModel.text = prefix
-                                viewModel.customInputValidator = { text in
-                                    guard let text, text.count > prefix.count else {
-                                        throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "")
-                                    }
-                                }
+                    //  update return key and handler
+                    if let last = partialResult.last {
+                        last.returnKeyType = .next
+                        last.returnActionHandler = { [weak self] _ in
+                            guard let self else { return }
+                            self.context.scroll(to: field.name, position: .bottom, animated: true)
+                            if let cell = self.context.cellForItem(field.name) as? InfoCollectorCell {
+                                cell.becomeFirstResponder()
                             }
                         }
-                        
-                        //  update return key and handler
-                        if let last = partialResult.last {
-                            last.returnKeyType = .next
-                            last.returnActionHandler = { [weak self] _ in
-                                guard let self else { return }
-                                self.context.scroll(to: field.name, position: .bottom, animated: true)
-                                if let cell = self.context.cellForItem(field.name) as? InfoCollectorCell {
-                                    cell.becomeFirstResponder()
-                                }
-                            }
-                        }
-                        //  update partial result
-                        partialResult.append(viewModel)
-                    })
-                    context.performUpdates(section, updateItems: false, animatingDifferences: true)
-                    task = nil
-                } catch {
-                    schema = nil
-                    bankList = nil
-                    task = nil
-                    guard let error = error as? String else { return }
-                    showAlert(error)
-                    debugLog("Failed to get schema for selected method. Error: \(error)")
-                }
+                    }
+                    //  update partial result
+                    partialResult.append(viewModel)
+                })
+                context.performUpdates(section, updateItems: false, animatingDifferences: true)
+                task = nil
+            } catch {
+                schema = nil
+                bankList = nil
+                task = nil
+                guard let error = error as? String else { return }
+                showAlert(error)
+                debugLog("Failed to get schema for selected method. Error: \(error)")
             }
         }
     }

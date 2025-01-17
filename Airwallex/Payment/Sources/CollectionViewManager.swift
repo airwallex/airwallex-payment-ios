@@ -51,12 +51,6 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         
-        if let boundaryItems {
-            for item in boundaryItems {
-                collectionView.register(item.reusableView, forSupplementaryViewOfKind: item.elementKind)
-            }
-        }
-        
         diffableDataSource = UICollectionViewDiffableDataSource<SectionType, ItemType>(
             collectionView: collectionView,
             cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
@@ -65,24 +59,24 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                     assert(false, "invalid section index")
                     return UICollectionViewCell()
                 }
-                return sectionController.cell(for: collectionView, item: itemIdentifier, at: indexPath)
+                return sectionController.cell(for: itemIdentifier, at: indexPath)
             }
         )
         
         diffableDataSource.supplementaryViewProvider = {[weak self] (collectionView, elementKind, indexPath) in
-            if elementKind == "collection-header-element-kind" {
-                return collectionView.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: LabelHeader.reuseIdentifier, for: indexPath)
+            guard let self else { return nil }
+            if let boundaryItem = boundaryItems?.first(where: { $0.elementKind == elementKind}) {
+                return self.context.dequeueReusableSupplementaryView(ofKind: elementKind, viewClass: boundaryItem.reusableView, indexPath: indexPath)
             }
-            guard let self,
-                  let section = self.sections[safe: indexPath.section],
+            guard let section = self.sections[safe: indexPath.section],
                   let sectionController = self.sectionControllers[section] else {
                 assert(false, "UI not consistance with data source")
-                return UICollectionReusableView()
+                return nil
             }
             
-            return sectionController.supplementaryView(for: collectionView, ofKind: elementKind, at: indexPath)
+            return sectionController.supplementaryView(for: elementKind, at: indexPath)
         }
-        self.context = CollectionViewContext(
+        context = CollectionViewContext(
             viewController: viewController,
             collectionView: collectionView,
             layout: layout,
@@ -90,6 +84,10 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
             reloadSectionData: performUpdates,
             reloadData: performUpdates
         )
+        
+        for item in boundaryItems ?? [] {
+            context.register(item.reusableView, forSupplementaryViewOfKind: item.elementKind)
+        }
     }
     
     func performUpdates(forceReload: Bool = false, animatingDifferences: Bool = false) {
@@ -102,7 +100,6 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
             if controller == nil {
                 let sectionController = sectionDataSource.sectionController(for: section)
                 sectionController.bind(context: context)
-                sectionController.registerReusableViews(to: collectionView)
                 sectionControllers[section] = sectionController
                 controller = sectionController
             } else {
@@ -139,8 +136,11 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = sections[safe: indexPath.section],
-              let controller = sectionControllers[section] else { return }
-        controller.collectionView(collectionView, didSelectItemAt: indexPath)
+              let controller = sectionControllers[section],
+              let itemIdentifier = diffableDataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+        controller.collectionView(didSelectItem: itemIdentifier, at: indexPath)
     }
 }
 
@@ -244,5 +244,33 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     func cellForItem(_ item: Item) -> UICollectionViewCell? {
         guard let indexPath = dataSource.indexPath(for: item) else { return nil }
         return collectionView.cellForItem(at: indexPath)
+    }
+    
+    // MARK: - register
+    
+    private lazy var registeredCells = Set<String>()
+    private lazy var registeredSupplementaryViews = Set<String>()
+    
+    fileprivate func register<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type) {
+        if registeredCells.contains(cellClass.reuseIdentifier) { return }
+        collectionView.register(cellClass, forCellWithReuseIdentifier: cellClass.reuseIdentifier)
+        registeredCells.insert(cellClass.reuseIdentifier)
+    }
+    
+    fileprivate func register<T: UICollectionReusableView & ViewReusable>(_ viewClass: T.Type, forSupplementaryViewOfKind elementKind: String) {
+        let key = elementKind + viewClass.reuseIdentifier
+        if registeredSupplementaryViews.contains(key) { return }
+        collectionView.register(viewClass, forSupplementaryViewOfKind: elementKind, withReuseIdentifier: viewClass.reuseIdentifier)
+        registeredSupplementaryViews.insert(key)
+    }
+    
+    func dequeueReusableCell<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type, for item: String, indexPath: IndexPath) -> T {
+        register(cellClass)
+        return collectionView.dequeueReusableCell(withReuseIdentifier: cellClass.reuseIdentifier, for: indexPath) as! T
+    }
+    
+    func dequeueReusableSupplementaryView<T: UICollectionReusableView & ViewReusable>(ofKind elementKind: String, viewClass: T.Type, indexPath: IndexPath) -> T {
+        register(viewClass, forSupplementaryViewOfKind: elementKind)
+        return collectionView.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: viewClass.reuseIdentifier, for: indexPath) as! T
     }
 }

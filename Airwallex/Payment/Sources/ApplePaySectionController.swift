@@ -29,24 +29,16 @@ class ApplePaySectionController: SectionController {
         )
     }
     
-    func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.registerReusableCell(ApplePayCell.self)
-    }
-    
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
         self.context = context
     }
     
-    func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ApplePayCell.reuseIdentifier,
-            for: indexPath
-        ) as! ApplePayCell
+    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = context.dequeueReusableCell(ApplePayCell.self, for: itemIdentifier, indexPath: indexPath)
         let viewModel = ApplePayViewModel { [weak self] in
             guard let handler = self?.paymentSessionHandler else { return }
             handler.startPayment()
         }
-        
         cell.setup(viewModel)
         return cell
     }
