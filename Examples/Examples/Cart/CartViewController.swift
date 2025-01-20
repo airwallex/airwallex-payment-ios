@@ -17,7 +17,7 @@ class CartViewController: UIViewController {
     
     var products: [Product] = .init()
     var shipping: AWXPlaceDetails?
-    var apiClient: APIClient!
+    private let apiClient: APIClient = DemoStoreAPIClient()
     private var applePayProvider: AWXApplePayProvider?
     private var redirectProvider: AWXRedirectActionProvider?
     
@@ -170,7 +170,7 @@ class CartViewController: UIViewController {
     
     @IBAction private func checkoutPressed(_ sender: UIButton) {
         guard let checkoutMode else {
-            showAlert("Checkout Mode is not set", withTitle: nil)
+            showAlert(message: "Checkout Mode is not set")
             return
         }
         
@@ -195,13 +195,13 @@ class CartViewController: UIViewController {
                         // Step 4: Present payment flow
                         self.presentPaymentFlow(session: session)
                     case .failure(let error):
-                        self.showAlert(error.localizedDescription, withTitle: nil)
+                        self.showAlert(message: error.localizedDescription)
                     }
                 }
             })
         case .recurringMode:
             guard let customerID else {
-                showAlert("Customer ID is not set", withTitle: nil)
+                showAlert(message: "Customer ID is not set")
                 return
             }
             
@@ -222,7 +222,7 @@ class CartViewController: UIViewController {
                         // Step 4: Present recurring flow
                         self.presentPaymentFlow(session: session)
                     case .failure(let error):
-                        self.showAlert(error.localizedDescription, withTitle: nil)
+                        self.showAlert(message: error.localizedDescription)
                     }
                 }
             })
@@ -346,13 +346,14 @@ class CartViewController: UIViewController {
     private func handlePaymentResult(status: AirwallexPaymentStatus, error: Error?) {
         switch status {
         case .success:
-            self.showAlert("Your payment has been charged", withTitle: "Payment successful")
+            showAlert(title: "Payment successful", message: "Your payment has been charged")
         case .inProgress:
             print("Payment in progress, you should check payment status from time to time from backend and show result to the payer")
         case .failure:
-            self.showAlert(error?.localizedDescription ?? "There was an error while processing your payment. Please try again.", withTitle: "Payment failed")
+            showAlert(title: "Payment failed", message: error?.localizedDescription ?? "There was an error while processing your payment. Please try again.")
         case .cancel:
-            self.showAlert("Your payment has been cancelled", withTitle: "Payment cancelled")
+            showAlert(title: "Payment cancelled", message: "Your payment has been cancelled")
+            break
         }
     }
 }

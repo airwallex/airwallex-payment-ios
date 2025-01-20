@@ -9,14 +9,6 @@
 import UIKit
 
 extension UIStoryboard {
-    @objc func createCartViewController() -> UIViewController? {
-        if let navController = instantiateInitialViewController() as? UINavigationController, let cartVC = navController.topViewController as? CartViewController {
-            cartVC.apiClient = DemoStoreAPIClient()
-            navController.viewControllers = [cartVC]
-            return navController
-        }
-        return nil
-    }
     
     func createOptionsViewController() -> UIViewController? {
         if let optionsVC = instantiateViewController(withIdentifier: "options") as? OptionsViewController {
@@ -24,5 +16,21 @@ extension UIStoryboard {
             return optionsVC
         }
         return nil
+    }
+    
+    static func instantiateHTML5DemoController() -> UIViewController? {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let demoVC = mainStoryboard.instantiateViewController(withIdentifier: "h5demo") as? InputViewController else {
+            return nil
+        }
+        return demoVC
+    }
+    
+    static func instantiateWeChatDemoController() -> UIViewController? {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let demoVC = mainStoryboard.instantiateViewController(withIdentifier: "wechatdemo") as? WechatPayViewController else {
+            return nil
+        }
+        return demoVC
     }
 }

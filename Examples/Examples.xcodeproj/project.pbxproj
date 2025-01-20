@@ -15,7 +15,6 @@
 		082D308523CEECE400C9D587 /* TotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308423CEECE400C9D587 /* TotalCell.m */; };
 		082D308823CEEDC100C9D587 /* AWXCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082D308723CEEDC100C9D587 /* AWXCartViewController.m */; };
 		084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084F15E6247646FA00DAAD76 /* ShippingCell.m */; };
-		085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BA64E23F0FB8A00FD33FA /* Splash.storyboard */; };
 		085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085BD3EF23CC64B6002E8F27 /* AppDelegate.m */; };
 		085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3F723CC64B6002E8F27 /* Main.storyboard */; };
 		085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085BD3FA23CC64B9002E8F27 /* Assets.xcassets */; };
@@ -42,6 +41,16 @@
 		C52EE6AD2864177B000571A1 /* OptionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C52EE6AC2864177B000571A1 /* OptionButton.m */; };
 		C5AB0C592860454200B436C3 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB0C582860454200B436C3 /* Product.m */; };
 		D8193D5C2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8193D5B2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy */; };
+		D81EAF692D3F474100B44784 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF682D3F474100B44784 /* UIViewController+Extensions.swift */; };
+		D81EAF6C2D3F6C1F00B44784 /* WeChatDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF6B2D3F6C1F00B44784 /* WeChatDemoViewController.swift */; };
+		D8BDF8682D3E1E3E00C9AE72 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */; };
+		D8BDF8692D3E1E3E00C9AE72 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF8662D3E1E3E00C9AE72 /* UIButton+Extension.swift */; };
+		D8BDF8702D3E206700C9AE72 /* H5DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */; };
+		D8BDF8742D3E2C4400C9AE72 /* ConfigTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF8732D3E2C4400C9AE72 /* ConfigTextField.swift */; };
+		D8BDF8762D3E3CB700C9AE72 /* ConfigTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF8752D3E3CB700C9AE72 /* ConfigTextFieldViewModel.swift */; };
+		D8BDF87A2D3E443800C9AE72 /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF8792D3E443300C9AE72 /* Font+Extensions.swift */; };
+		D8BDF87E2D3F32C200C9AE72 /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF87D2D3F32C200C9AE72 /* KeyboardHandler.swift */; };
+		D8BDF8802D3F3B4B00C9AE72 /* HomePageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,7 +71,6 @@
 		082D308723CEEDC100C9D587 /* AWXCartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXCartViewController.m; sourceTree = "<group>"; };
 		084F15E5247646FA00DAAD76 /* ShippingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShippingCell.h; sourceTree = "<group>"; };
 		084F15E6247646FA00DAAD76 /* ShippingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShippingCell.m; sourceTree = "<group>"; };
-		085BA64E23F0FB8A00FD33FA /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		085BD3EB23CC64B6002E8F27 /* Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Examples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3EE23CC64B6002E8F27 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		085BD3EF23CC64B6002E8F27 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -112,6 +120,16 @@
 		C5AB0C572860454200B436C3 /* Product.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
 		C5AB0C582860454200B436C3 /* Product.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
 		D8193D5B2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D81EAF682D3F474100B44784 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		D81EAF6B2D3F6C1F00B44784 /* WeChatDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeChatDemoViewController.swift; sourceTree = "<group>"; };
+		D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		D8BDF8662D3E1E3E00C9AE72 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H5DemoViewController.swift; sourceTree = "<group>"; };
+		D8BDF8732D3E2C4400C9AE72 /* ConfigTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTextField.swift; sourceTree = "<group>"; };
+		D8BDF8752D3E3CB700C9AE72 /* ConfigTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTextFieldViewModel.swift; sourceTree = "<group>"; };
+		D8BDF8792D3E443300C9AE72 /* Font+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extensions.swift"; sourceTree = "<group>"; };
+		D8BDF87D2D3F32C200C9AE72 /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandler.swift; sourceTree = "<group>"; };
+		D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +203,7 @@
 				182F1CE22C901C5E000B993D /* UIStoryboardUtils.swift */,
 				57F9EF83268DCB3600B744B2 /* AirwallexExamplesKeys.h */,
 				57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */,
+				D8BDF8672D3E1E3E00C9AE72 /* Revamped */,
 				00E501B9264CD2EF00027311 /* Demo */,
 				088F3E8023CEB7E6005AE40F /* API */,
 				082D307F23CEEC0700C9D587 /* Cart */,
@@ -204,7 +223,6 @@
 			children = (
 				085BD3FA23CC64B9002E8F27 /* Assets.xcassets */,
 				085BD3F723CC64B6002E8F27 /* Main.storyboard */,
-				085BA64E23F0FB8A00FD33FA /* Splash.storyboard */,
 				085BD3FC23CC64B9002E8F27 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
@@ -288,6 +306,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D8BDF8672D3E1E3E00C9AE72 /* Revamped */ = {
+			isa = PBXGroup;
+			children = (
+				D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */,
+				D81EAF682D3F474100B44784 /* UIViewController+Extensions.swift */,
+				D8BDF8662D3E1E3E00C9AE72 /* UIButton+Extension.swift */,
+				D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */,
+				D8BDF8732D3E2C4400C9AE72 /* ConfigTextField.swift */,
+				D8BDF8752D3E3CB700C9AE72 /* ConfigTextFieldViewModel.swift */,
+				D8BDF8792D3E443300C9AE72 /* Font+Extensions.swift */,
+				D8BDF87D2D3F32C200C9AE72 /* KeyboardHandler.swift */,
+				D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */,
+				D81EAF6B2D3F6C1F00B44784 /* WeChatDemoViewController.swift */,
+			);
+			path = Revamped;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -355,7 +390,6 @@
 				D8193D5C2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy in Resources */,
 				57DCD642269428C800705D5C /* Keys in Resources */,
 				085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */,
-				085BA64F23F0FB8A00FD33FA /* Splash.storyboard in Resources */,
 				085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */,
 				085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */,
 			);
@@ -381,7 +415,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Define the file to be modified\nFILE_PATH_UISTORYBOARDUTILS=\"${SRCROOT}/Examples/UIStoryboardUtils.swift\"\nFILE_PATH_OPTIONSCONTROLLER=\"${SRCROOT}/Examples/Cart/OptionsViewController.m\"\n\n# Define the content to be added\nINSERTION_POINT='preferredStyle:UIAlertControllerStyleActionSheet];'\nCODE_TO_INSERT='[controller addAction:[UIAlertAction actionWithTitle:@\"Production\" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) { [Airwallex setMode:AirwallexSDKProductionMode]; [AirwallexExamplesKeys shared].environment = AirwallexSDKProductionMode; [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];}]];'\n\n# Check if the configuration is Production\nif [ \"${CONFIGURATION}\" = \"Production\" ]; then\n\n    # Replace occurrences in UIStoryboardUtils.swift\n    if [ -f \"$FILE_PATH_UISTORYBOARDUTILS\" ]; then\n        sed -i '' 's/DemoStoreAPIClient/DirectAPIClient/g' \"$FILE_PATH_UISTORYBOARDUTILS\"\n        echo \"Replaced DemoStoreAPIClient with DirectAPIClient in $FILE_PATH_UISTORYBOARDUTILS\"\n    else\n        echo \"File $FILE_PATH_UISTORYBOARDUTILS not found!\"\n        exit 1\n    fi\n\n    # Add code block in OptionsController.swift\n    if [ -f \"$FILE_PATH_OPTIONSCONTROLLER\" ]; then\n        # Check if the insertion point exists\n        if grep -q \"$INSERTION_POINT\" \"$FILE_PATH_OPTIONSCONTROLLER\" && ! grep -q \"Production\" \"$FILE_PATH_OPTIONSCONTROLLER\"; then\n            sed -i '' \"/$INSERTION_POINT/a\\\\ \n            $CODE_TO_INSERT\n            \" \"$FILE_PATH_OPTIONSCONTROLLER\"\n            echo \"Added Production UIAlertAction to $FILE_PATH_OPTIONSCONTROLLER\"\n        else\n            echo \"Insertion point not found in $FILE_PATH_OPTIONSCONTROLLER or code has already been inserted\" \n        fi\n    else\n        echo \"File $FILE_PATH_OPTIONSCONTROLLER not found!\"\n        exit 1\n    fi\n\nelse\n    echo \"Not in Production configuration, script will not run.\"\nfi\n";
+			shellScript = "# Define the file to be modified\nFILE_PATH_UISTORYBOARDUTILS=\"${SRCROOT}/Examples/Cart/CartViewController.swift\"\nFILE_PATH_OPTIONSCONTROLLER=\"${SRCROOT}/Examples/Cart/OptionsViewController.m\"\n\n# Define the content to be added\nINSERTION_POINT='preferredStyle:UIAlertControllerStyleActionSheet];'\nCODE_TO_INSERT='[controller addAction:[UIAlertAction actionWithTitle:@\"Production\" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) { [Airwallex setMode:AirwallexSDKProductionMode]; [AirwallexExamplesKeys shared].environment = AirwallexSDKProductionMode; [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];}]];'\n\n# Check if the configuration is Production\nif [ \"${CONFIGURATION}\" = \"Production\" ]; then\n\n    # Replace occurrences in UIStoryboardUtils.swift\n    if [ -f \"$FILE_PATH_UISTORYBOARDUTILS\" ]; then\n        sed -i '' 's/DemoStoreAPIClient/DirectAPIClient/g' \"$FILE_PATH_UISTORYBOARDUTILS\"\n        echo \"Replaced DemoStoreAPIClient with DirectAPIClient in $FILE_PATH_UISTORYBOARDUTILS\"\n    else\n        echo \"File $FILE_PATH_UISTORYBOARDUTILS not found!\"\n        exit 1\n    fi\n\n    # Add code block in OptionsController.swift\n    if [ -f \"$FILE_PATH_OPTIONSCONTROLLER\" ]; then\n        # Check if the insertion point exists\n        if grep -q \"$INSERTION_POINT\" \"$FILE_PATH_OPTIONSCONTROLLER\" && ! grep -q \"Production\" \"$FILE_PATH_OPTIONSCONTROLLER\"; then\n            sed -i '' \"/$INSERTION_POINT/a\\\\ \n            $CODE_TO_INSERT\n            \" \"$FILE_PATH_OPTIONSCONTROLLER\"\n            echo \"Added Production UIAlertAction to $FILE_PATH_OPTIONSCONTROLLER\"\n        else\n            echo \"Insertion point not found in $FILE_PATH_OPTIONSCONTROLLER or code has already been inserted\" \n        fi\n    else\n        echo \"File $FILE_PATH_OPTIONSCONTROLLER not found!\"\n        exit 1\n    fi\n\nelse\n    echo \"Not in Production configuration, script will not run.\"\nfi\n";
 		};
 		27213DDF7CB718263CED259E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -485,6 +519,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8BDF8682D3E1E3E00C9AE72 /* HomeViewController.swift in Sources */,
+				D8BDF8692D3E1E3E00C9AE72 /* UIButton+Extension.swift in Sources */,
 				082D308823CEEDC100C9D587 /* AWXCartViewController.m in Sources */,
 				00E501BF264D06B400027311 /* WebViewController.m in Sources */,
 				082D308523CEECE400C9D587 /* TotalCell.m in Sources */,
@@ -494,22 +530,30 @@
 				18ADC9992C8AACF900A775BB /* Customer.swift in Sources */,
 				088F3E8323CEB7FF005AE40F /* MockAPIClient.m in Sources */,
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
+				D81EAF692D3F474100B44784 /* UIViewController+Extensions.swift in Sources */,
+				D8BDF87E2D3F32C200C9AE72 /* KeyboardHandler.swift in Sources */,
 				182F1CE52C903747000B993D /* DirectAPIClient.swift in Sources */,
 				C5AB0C592860454200B436C3 /* Product.m in Sources */,
 				084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */,
 				1859F19F2C8AA6700017FA4D /* CustomerRequest.swift in Sources */,
+				D8BDF8802D3F3B4B00C9AE72 /* HomePageTitleView.swift in Sources */,
 				57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */,
+				D81EAF6C2D3F6C1F00B44784 /* WeChatDemoViewController.swift in Sources */,
 				00D7B95A265F45AF00F2CBB6 /* WechatPayViewController.m in Sources */,
+				D8BDF8762D3E3CB700C9AE72 /* ConfigTextFieldViewModel.swift in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
 				182F1CE02C8F09F2000B993D /* String+Extensions.swift in Sources */,
 				182F1CE32C901C5E000B993D /* UIStoryboardUtils.swift in Sources */,
 				18ADC99E2C8B03E400A775BB /* CartViewController+TableView.swift in Sources */,
+				D8BDF8702D3E206700C9AE72 /* H5DemoViewController.swift in Sources */,
 				1859F19D2C8A9EE90017FA4D /* NSError+Extensions.swift in Sources */,
 				1859F19B2C89B0C40017FA4D /* PurchaseOrder.swift in Sources */,
 				182F1CE72C903B18000B993D /* Encodable+Extensions.swift in Sources */,
 				082D308223CEEC3300C9D587 /* ProductCell.m in Sources */,
 				00E501C2264D06BE00027311 /* SuccessViewController.m in Sources */,
+				D8BDF8742D3E2C4400C9AE72 /* ConfigTextField.swift in Sources */,
 				57033F2926958C94008A4780 /* UIViewController+Utils.m in Sources */,
+				D8BDF87A2D3E443800C9AE72 /* Font+Extensions.swift in Sources */,
 				C52EE6AD2864177B000571A1 /* OptionButton.m in Sources */,
 				08A3E99F24246C30003FDAAF /* OptionsViewController.m in Sources */,
 				1859F1972C89A6290017FA4D /* APIClient.swift in Sources */,

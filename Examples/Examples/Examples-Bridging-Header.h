@@ -7,10 +7,14 @@
 //
 
 #import "AirwallexExamplesKeys.h"
+#import "InputViewController.h"
 #import "MockAPIClient.h"
 #import "OptionsViewController.h"
 #import "Product.h"
 #import "ProductCell.h"
 #import "ShippingCell.h"
+#import "SuccessViewController.h"
 #import "TotalCell.h"
-#import "UIViewController+Utils.h"
+#import "WXApi.h"
+#import "WebViewController.h"
+#import "WechatPayViewController.h"
