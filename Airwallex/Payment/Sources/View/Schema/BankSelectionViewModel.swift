@@ -31,7 +31,7 @@ class BankSelectionViewModel: OptionSelectionViewConfiguring {
     }
     
     // MARK: - OptionSelectionViewConfiguring
-    let fieldName: String = "bank_name"
+    let fieldName: String = AWXField.Name.bankName
     
     var isRequired: Bool = true
     

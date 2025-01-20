@@ -25,7 +25,6 @@ extension AWXSchema {
     }
 }
 
-
 extension AWXField {
     struct UIType {
         static let text = "text"
@@ -41,7 +40,8 @@ extension AWXField {
     struct Name {
         static let flow = "flow"
         static let osType = "osType"
-        static let country_code = "country_code"
+        static let countryCode = "country_code"
+        static let bankName = "bank_name"
     }
     
     var textFieldType: AWXTextFieldType {

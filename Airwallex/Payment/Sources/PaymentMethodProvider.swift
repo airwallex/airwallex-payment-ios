@@ -131,8 +131,8 @@ extension PaymentMethodProvider: SwiftLoggable {
             params[AWXField.Name.osType] = "ios"
         }
         // country_code
-        if let countryCodeField = fields.first(where: { $0.name == AWXField.Name.country_code }) {
-            params[AWXField.Name.country_code] = session.countryCode
+        if let countryCodeField = fields.first(where: { $0.name == AWXField.Name.countryCode }) {
+            params[AWXField.Name.countryCode] = session.countryCode
         }
         
         return params
