@@ -51,6 +51,12 @@ class CartViewController: UIViewController {
         AirwallexExamplesKeys.shared().clientId.nilIfEmpty
     }
     
+    /// you can configure the payment method list manually.(But only available ones in your account will be displayed)
+    var paymentMethods: [String]? = nil
+    
+    /// launch or push payment UI
+    var preferredPaymentLaunchStyle = AWXUIContext.LaunchStyle.present
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -59,6 +65,7 @@ class CartViewController: UIViewController {
     }
     
     private func setupViews() {
+        customizeNavigationBackButton()
         view.backgroundColor = AWXTheme.shared().primaryBackgroundColor()
         titleLabel.textColor = AWXTheme.shared().primaryTextColor()
 
@@ -73,19 +80,21 @@ class CartViewController: UIViewController {
         let product1 = Product(name: "HomePod", detail: "White x 1", price: 469)
         products = [product0, product1]
 
-        let shipping: [String : Any] = [
-            "first_name": "Jason",
-            "last_name": "Wang",
-            "phone_number": "13800000000",
-            "address": [
-                "country_code": "CN",
-                "state": "Shanghai",
-                "city": "Shanghai",
-                "street": "Pudong District",
-                "postcode": "100000"
+        if shipping == nil {
+            let shipping: [String : Any] = [
+                "first_name": "Jason",
+                "last_name": "Wang",
+                "phone_number": "13800000000",
+                "address": [
+                    "country_code": "CN",
+                    "state": "Shanghai",
+                    "city": "Shanghai",
+                    "street": "Pudong District",
+                    "postcode": "100000"
+                ]
             ]
-        ]
-        self.shipping = AWXPlaceDetails.decode(fromJSON: shipping) as? AWXPlaceDetails
+            self.shipping = AWXPlaceDetails.decode(fromJSON: shipping) as? AWXPlaceDetails
+        }
     }
 
     private func setupSDK() {
@@ -250,18 +259,23 @@ class CartViewController: UIViewController {
         context.delegate = self
         context.session = session
         if (UserDefaults.standard.bool(forKey: kCachedCardMethodOnly)) {
-            context.presentCardPaymentFlow(from: self, cardSchemes: [.visa, .mastercard])
+            switch preferredPaymentLaunchStyle {
+            case .push:
+                context.pushCardPaymentFlow(from: self, cardSchemes: [.visa, .mastercard])
+            case .present:
+                context.presentCardPaymentFlow(from: self, cardSchemes: [.visa, .mastercard])
+            }
         } else {
-//            context.presentEntirePaymentFlow(from: self)
-            context.presentPaymentViewController(from: self)
+            context.launchPaymentList(from: self, style: preferredPaymentLaunchStyle)
         }
     }
     
     private func createSession(paymentIntent: AWXPaymentIntent? = nil, mode: AirwallexCheckoutMode) -> AWXSession {
+        var paymentSession: AWXSession
         switch mode {
         case .oneOffMode:
             let session = AWXOneOffSession()
-            
+            session.customerPaymentMethods()
             session.applePayOptions = applePayOptions
             session.countryCode = AirwallexExamplesKeys.shared().countryCode
             session.billing = shipping
@@ -269,10 +283,8 @@ class CartViewController: UIViewController {
             session.paymentIntent = paymentIntent
             session.autoCapture = UserDefaults.standard.bool(forKey: kCachedAutoCapture)
             
-            // you can configure the payment method list manually.(But only available ones in your account will be displayed)
-//            session.paymentMethods = ["card"]
 //            session.hidePaymentConsents = true
-            return session
+            paymentSession = session
         case .recurringMode:
             let session = AWXRecurringSession()
             
@@ -286,7 +298,7 @@ class CartViewController: UIViewController {
             session.nextTriggerByType = AirwallexNextTriggerByType(rawValue: UInt(UserDefaults.standard.integer(forKey: kCachedNextTriggerBy)))!
             session.setRequiresCVC(UserDefaults.standard.bool(forKey: kCachedRequiresCVC))
             session.merchantTriggerReason = .unscheduled
-            return session
+            paymentSession = session
         case .recurringWithIntentMode:
             let session = AWXRecurringWithIntentSession()
             
@@ -299,8 +311,12 @@ class CartViewController: UIViewController {
             session.setRequiresCVC(UserDefaults.standard.bool(forKey: kCachedRequiresCVC))
             session.autoCapture = UserDefaults.standard.bool(forKey: kCachedAutoCapture)
             session.merchantTriggerReason = .scheduled
-            return session
+            paymentSession = session
         }
+        
+        // you can configure the payment method list manually.(But only available ones in your account will be displayed)
+        paymentSession.paymentMethods = paymentMethods
+        return paymentSession
     }
     
     private func createPaymentIntentRequest(customerID: String?) -> PaymentIntentRequest {
@@ -346,13 +362,13 @@ class CartViewController: UIViewController {
     private func handlePaymentResult(status: AirwallexPaymentStatus, error: Error?) {
         switch status {
         case .success:
-            showAlert(title: "Payment successful", message: "Your payment has been charged")
+            showAlert(message: "Your payment has been charged", title: "Payment successful")
         case .inProgress:
             print("Payment in progress, you should check payment status from time to time from backend and show result to the payer")
         case .failure:
-            showAlert(title: "Payment failed", message: error?.localizedDescription ?? "There was an error while processing your payment. Please try again.")
+            showAlert(message: error?.localizedDescription ?? "There was an error while processing your payment. Please try again.", title: "Payment failed")
         case .cancel:
-            showAlert(title: "Payment cancelled", message: "Your payment has been cancelled")
+            showAlert(message: "Your payment has been cancelled", title: "Payment cancelled")
             break
         }
     }
@@ -360,8 +376,14 @@ class CartViewController: UIViewController {
 
 extension CartViewController: AWXPaymentResultDelegate {
     func paymentViewController(_ controller: UIViewController, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
-        controller.dismiss(animated: true) {
+        switch preferredPaymentLaunchStyle {
+        case .push:
+            navigationController?.popToViewController(self, animated: true)
             self.handlePaymentResult(status: status, error: error)
+        case .present:
+            controller.dismiss(animated: true) {
+                self.handlePaymentResult(status: status, error: error)
+            }
         }
     }
 }

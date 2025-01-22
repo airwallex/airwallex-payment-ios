@@ -21,12 +21,13 @@ class WeChatDemoViewController: UIViewController {
         static let sign = "sign"
     }
     
-    private lazy var titleLabel: UILabel = {
-        let view = UILabel()
+    private lazy var topView: TopView = {
+        let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = .awxFont(.headline1, weight: .bold)
-        view.textColor = .awxTextPrimary
-        view.text = "Launch HTML 5 demo"
+        let viewModel = TopViewModel(
+            title: NSLocalizedString("Launch WeChat demo", comment: "WeChat demo")
+        )
+        view.setup(viewModel)
         return view
     }()
     
@@ -46,7 +47,7 @@ class WeChatDemoViewController: UIViewController {
     }()
     
     private lazy var nextButton: UIButton = {
-        let view = UIButton(style: .primary, title: NSLocalizedString("Next", comment: "H5 demo next action"))
+        let view = UIButton(style: .primary, title: NSLocalizedString("Next", comment: "WeChat demo next action"))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onNextButtonTapped), for: .touchUpInside)
         return view
@@ -97,7 +98,7 @@ class WeChatDemoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        customiseNavigationBackButton()
+        customizeNavigationBackButton()
         setupViews()
     }
     
@@ -116,7 +117,7 @@ class WeChatDemoViewController: UIViewController {
         view.backgroundColor = .awxBackgroundPrimary
         view.addSubview(scrollView)
         scrollView.addSubview(stack)
-        stack.addArrangedSubview(titleLabel)
+        stack.addArrangedSubview(topView)
         for viewModel in fieldViewModels {
             let textField = ConfigTextField()
             textField.translatesAutoresizingMaskIntoConstraints = false
@@ -158,21 +159,25 @@ class WeChatDemoViewController: UIViewController {
     }
     
     @objc func onNextButtonTapped() {
+        var fields = [String: String]()
+        fields = fieldViewModels.reduce(into: fields, { partialResult, viewModel in
+            guard let text = viewModel.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty else { return }
+            partialResult[viewModel.fieldKey] = text
+        })
         
-        guard fieldViewModels.allSatisfy({
-            $0.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
-        }) else {
+        guard fields.count == fieldViewModels.count else {
             showAlert(message: NSLocalizedString("Please fill in all the fields", comment: "wechat demo"))
             return
         }
-        var payReq = PayReq()
-        payReq.partnerId = fieldViewModels.first(where: { $0.fieldKey == FieldKey.partnerId })?.text ?? ""
-        payReq.prepayId = fieldViewModels.first(where: { $0.fieldKey == FieldKey.prepayId })?.text ?? ""
-        payReq.package = fieldViewModels.first(where: { $0.fieldKey == FieldKey.package })?.text ?? ""
-        payReq.nonceStr = fieldViewModels.first(where: { $0.fieldKey == FieldKey.nonceStr })?.text ?? ""
-        payReq.timeStamp = UInt32(fieldViewModels.first(where: { $0.fieldKey == FieldKey.timeStamp })?.text ?? "") ?? 0
-        payReq.sign = fieldViewModels.first(where: { $0.fieldKey == FieldKey.sign })?.text ?? ""
+        let payReq = PayReq()
+        payReq.partnerId = fields[FieldKey.partnerId]!
+        payReq.prepayId = fields[FieldKey.prepayId]!
+        payReq.package = fields[FieldKey.package]!
+        payReq.nonceStr = fields[FieldKey.nonceStr]!
+        payReq.timeStamp = UInt32(fields[FieldKey.timeStamp]!) ?? 0
+        payReq.sign = fields[FieldKey.sign]!
         
+        print(payReq.partnerId, payReq.prepayId, payReq.package, payReq.nonceStr, payReq.timeStamp, payReq.sign)
         Task {
             let success = await WXApi.send(payReq)
             showAlert(message: success ? "Succeed to pay" : "Failed to call WeChat Pay")

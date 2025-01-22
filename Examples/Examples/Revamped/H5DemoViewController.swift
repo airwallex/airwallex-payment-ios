@@ -12,12 +12,13 @@ import Combine
 
 class H5DemoViewController: UIViewController {
 
-    private lazy var titleLabel: UILabel = {
-        let view = UILabel()
+    private lazy var topView: TopView = {
+        let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = .awxFont(.headline1, weight: .bold)
-        view.textColor = .awxTextPrimary
-        view.text = "Launch HTML 5 demo"
+        let viewModel = TopViewModel(
+            title: NSLocalizedString("Launch HTML 5 demo", comment: "H5 demo")
+        )
+        view.setup(viewModel)
         return view
     }()
     
@@ -83,7 +84,7 @@ class H5DemoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        customiseNavigationBackButton()
+        customizeNavigationBackButton()
         setupViews()
     }
     
@@ -102,7 +103,7 @@ class H5DemoViewController: UIViewController {
         view.backgroundColor = .awxBackgroundPrimary
         view.addSubview(scrollView)
         scrollView.addSubview(stack)
-        stack.addArrangedSubview(titleLabel)
+        stack.addArrangedSubview(topView)
         stack.addArrangedSubview(paymentURLField)
         stack.addArrangedSubview(referrerURLField)
         
