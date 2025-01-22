@@ -18,8 +18,6 @@ class CartViewController: UIViewController {
     var products: [Product] = .init()
     var shipping: AWXPlaceDetails?
     private let apiClient: APIClient = DemoStoreAPIClient()
-    private var applePayProvider: AWXApplePayProvider?
-    private var redirectProvider: AWXRedirectActionProvider?
     
     private var checkoutMode: AirwallexCheckoutMode? {
         AirwallexCheckoutMode(rawValue: UserDefaults.standard.integer(forKey: kCachedCheckoutMode))
@@ -54,8 +52,18 @@ class CartViewController: UIViewController {
     /// you can configure the payment method list manually.(But only available ones in your account will be displayed)
     var paymentMethods: [String]? = nil
     
-    /// launch or push payment UI
+    /// launch payment UI by push or present
     var preferredPaymentLaunchStyle = AWXUIContext.LaunchStyle.present
+    
+    /// Card information you collected from your own UI
+    /// this will be used for card low-level API integration
+    var card: AWXCard? = nil
+    /// save card
+    var saveCard: Bool = false
+    
+    private var cardProvider: AWXCardProvider?
+    
+    private var paymentUISessionHandler: PaymentUISessionHandler?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,11 +157,13 @@ class CartViewController: UIViewController {
     private func startAnimating() {
         activityIndicator.startAnimating()
         view.isUserInteractionEnabled = false
+        print("CartViewController start animating")
     }
 
     private func stopAnimating() {
         activityIndicator.stopAnimating()
         view.isUserInteractionEnabled = true
+        print("CartViewController stop animating")
     }
     
     @IBAction private func menuPressed(_ sender: UIBarButtonItem) {
@@ -239,25 +249,41 @@ class CartViewController: UIViewController {
     }
     
     private func presentPaymentFlow(session: AWXSession) {
+        let context = AWXUIContext.shared()
+        context.delegate = self
+        context.session = session
+        
         // Apple Pay low-level API integration
         if (UserDefaults.standard.bool(forKey: kCachedApplePayMethodOnly)) {
-            let applePayProvider = AWXApplePayProvider(delegate: self, session: session)
-            applePayProvider.startPayment()
-            self.applePayProvider = applePayProvider
+            paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
+                let provider = AWXApplePayProvider(delegate: handler, session: session)
+                provider.startPayment()
+                return provider as AWXDefaultProvider
+            }
             return
         }
+        
         // Redirect Pay low-level API integration
         if (UserDefaults.standard.bool(forKey: kCachedRedirectPayOnly)) {
-            let redirectProvider = AWXRedirectActionProvider(delegate: self, session: session)
-            redirectProvider.confirmPaymentIntent(with: "paypal", additionalInfo: ["shopper_name": "Hector", "country_code": "CN"])
-            self.redirectProvider = redirectProvider
+            paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
+                let provider = AWXRedirectActionProvider(delegate: handler, session: session)
+                provider.confirmPaymentIntent(with: "paypal", additionalInfo: ["shopper_name": "Hector", "country_code": "CN"])
+                return provider as AWXDefaultProvider
+            }
+            return
+        }
+        
+        // Card low-level API integration
+        if let card {
+            paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
+                let provider = AWXCardProvider(delegate: handler, session: session)
+                provider.confirmPaymentIntent(with: card, billing: nil, saveCard: saveCard)
+                return provider
+            }
             return
         }
         
         // Basic integration
-        let context = AWXUIContext.shared()
-        context.delegate = self
-        context.session = session
         if (UserDefaults.standard.bool(forKey: kCachedCardMethodOnly)) {
             switch preferredPaymentLaunchStyle {
             case .push:
@@ -379,27 +405,11 @@ extension CartViewController: AWXPaymentResultDelegate {
         switch preferredPaymentLaunchStyle {
         case .push:
             navigationController?.popToViewController(self, animated: true)
-            self.handlePaymentResult(status: status, error: error)
+            handlePaymentResult(status: status, error: error)
         case .present:
             controller.dismiss(animated: true) {
                 self.handlePaymentResult(status: status, error: error)
             }
         }
-    }
-}
-
-// ApplePayProvider delegate methods, no need to conform to if using AWXUIContext
-extension CartViewController: AWXProviderDelegate {
-    func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
-        handlePaymentResult(status: status, error: error)
-    }
-    
-    func providerDidStartRequest(_ provider: AWXDefaultProvider) {
-    }
-    
-    func providerDidEndRequest(_ provider: AWXDefaultProvider) {
-    }
-    
-    func provider(_ provider: AWXDefaultProvider, didInitializePaymentIntentId paymentIntentId: String) {
     }
 }
