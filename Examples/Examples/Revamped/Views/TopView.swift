@@ -73,7 +73,7 @@ class TopView: UIView {
         titleLabel.text = viewModel.title
         actionButton.setImage(viewModel.actionIcon, for: .normal)
         actionButton.setTitle(viewModel.actionTitle, for: .normal)
-        actionButton.isHidden = viewModel.actionIcon != nil && viewModel.actionTitle == nil
+        actionButton.isHidden = viewModel.actionIcon == nil && viewModel.actionTitle == nil
     }
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaymentUISessionHandler: NSObject {
+public class PaymentUISessionHandler: NSObject {
     
     var showCardDirectly = false
     
@@ -17,13 +17,13 @@ class PaymentUISessionHandler: NSObject {
     private var actionProvider: AWXDefaultProvider!
     
     /// how to avoid force unwrap here
-    weak var viewController: AWXViewController!
+    weak var viewController: UIViewController!
     
     private var paymentConsent: AWXPaymentConsent?
     
-    init?(session: AWXSession,
-         methodType: AWXPaymentMethodType,
-         viewController: AWXViewController) {
+    public init?(session: AWXSession,
+          methodType: AWXPaymentMethodType,
+          viewController: UIViewController) {
         self.session = session
         self.viewController = viewController
         
@@ -34,15 +34,23 @@ class PaymentUISessionHandler: NSObject {
         actionProvider = actionProviderClass.init(delegate: self, session: session, paymentMethodType: methodType)
     }
     
-    init(session: AWXSession,
+    public init(session: AWXSession,
          paymentConsent: AWXPaymentConsent,
-         viewController: AWXViewController) {
+         viewController: UIViewController) {
         self.session = session
         self.viewController = viewController
         self.paymentConsent = paymentConsent
-        
         super.init()
         actionProvider = AWXDefaultProvider(delegate: self, session: session)
+    }
+    
+    public init(session: AWXSession,
+         viewController: UIViewController,
+         actionProviderCreater: (PaymentUISessionHandler) -> AWXDefaultProvider) {
+        self.session = session
+        self.viewController = viewController
+        super.init()
+        self.actionProvider = actionProviderCreater(self)
     }
     
     func startPayment() {
@@ -53,43 +61,43 @@ class PaymentUISessionHandler: NSObject {
         }
     }
     
-    func startPayment(card: AWXCard, billing: AWXPlaceDetails?, saveCard: Bool = false) {
+    public func startPayment(card: AWXCard, billing: AWXPlaceDetails?, saveCard: Bool = false) {
         guard let actionProvider = actionProvider as? AWXCardProvider else { return }
         actionProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
     }
 }
 
 extension PaymentUISessionHandler: AWXProviderDelegate {
-    func providerDidStartRequest(_ provider: AWXDefaultProvider) {
-        debugLog()
-        viewController.startAnimating()
+    public func providerDidStartRequest(_ provider: AWXDefaultProvider) {
+        debugLog("start loading")
+        viewController.startLoading()
     }
     
-    func providerDidEndRequest(_ provider: AWXDefaultProvider) {
-        debugLog()
-        viewController.stopAnimating()
+    public func providerDidEndRequest(_ provider: AWXDefaultProvider) {
+        debugLog("stop loading")
+        viewController.stopLoading()
     }
     
-    func provider(_ provider: AWXDefaultProvider, didInitializePaymentIntentId paymentIntentId: String) {
+    public func provider(_ provider: AWXDefaultProvider, didInitializePaymentIntentId paymentIntentId: String) {
         debugLog("paymentIntentId: \(paymentIntentId)")
         session.updateInitialPaymentIntentId(paymentIntentId)
     }
     
-    func provider(_ provider: AWXDefaultProvider, didCompleteWithPaymentConsentId paymentConsentId: String) {
+    public func provider(_ provider: AWXDefaultProvider, didCompleteWithPaymentConsentId paymentConsentId: String) {
         debugLog("paymentConsentId: \(paymentConsentId)")
         AWXUIContext.shared().delegate?.paymentViewController?(viewController, didCompleteWithPaymentConsentId: paymentConsentId)
     }
     
-    func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
+    public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         debugLog("stauts: \(status), error: \(error?.localizedDescription ?? "")")
         AWXUIContext.shared().delegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
     }
      
-    func hostViewController() -> UIViewController {
+    public func hostViewController() -> UIViewController {
         return viewController
     }
 
-    func provider(_ provider: AWXDefaultProvider, shouldHandle nextAction: AWXConfirmPaymentNextAction) {
+    public func provider(_ provider: AWXDefaultProvider, shouldHandle nextAction: AWXConfirmPaymentNextAction) {
         guard let actionProviderClass = ClassToHandleNextActionForType(nextAction) as? AWXDefaultActionProvider.Type else {
             showAlert(NSLocalizedString("No provider matched the next action.", bundle: .payment, comment: ""))
             return
@@ -99,14 +107,14 @@ extension PaymentUISessionHandler: AWXProviderDelegate {
         actionProvider = actionHandler
     }
     
-    func provider(_ provider: AWXDefaultProvider, shouldInsert controller: UIViewController) {
+    public func provider(_ provider: AWXDefaultProvider, shouldInsert controller: UIViewController) {
         viewController.addChild(controller)
         controller.view.frame = viewController.view.frame.insetBy(dx: 0, dy: viewController.view.frame.maxY)
         viewController.view.addSubview(controller.view)
         controller.didMove(toParent: viewController)
     }
     
-    func provider(_ provider: AWXDefaultProvider, shouldPresent controller: UIViewController?, forceToDismiss: Bool, withAnimation: Bool) {
+    public func provider(_ provider: AWXDefaultProvider, shouldPresent controller: UIViewController?, forceToDismiss: Bool, withAnimation: Bool) {
         guard let controller else {
             if forceToDismiss {
                 viewController.presentedViewController?.dismiss(animated: withAnimation)

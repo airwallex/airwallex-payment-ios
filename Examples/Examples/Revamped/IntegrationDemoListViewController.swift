@@ -112,25 +112,31 @@ class IntegrationDemoListViewController: UIViewController {
         ActionViewModel(
             title: NSLocalizedString("Pay with card", comment: commentForLocalization),
             action: { [weak self] in
-                self?.payWithCard(autoSave: false)
+                self?.payWithCard()
             }
         ),
         ActionViewModel(
             title: NSLocalizedString("Pay with card and save card", comment: commentForLocalization),
             action: { [weak self] in
-                self?.payWithCard(autoSave: true)
+                self?.payWithCard(saveCard: true)
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("pay with card and trigger 3DS", comment: commentForLocalization),
+            title: NSLocalizedString("Pay with card and trigger 3DS", comment: commentForLocalization),
             action: { [weak self] in
-                self?.payWithCardAndTrigger3DS()
+                self?.payWithCard(force3DS: true)
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("pay with Apple Pay", comment: commentForLocalization),
+            title: NSLocalizedString("Pay with Apple Pay", comment: commentForLocalization),
             action: { [weak self] in
                 self?.payWithApplePay()
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("Pay with Redirect", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.payWithRedirect()
             }
         ),
         ActionViewModel(
@@ -180,6 +186,13 @@ class IntegrationDemoListViewController: UIViewController {
         customizeNavigationBackButton()
         setupViews()
         setupCheckoutMode()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // TODO: - remove these keys
+        AirwallexExamplesKeys.shared().applePayMethodOnly = false
+        AirwallexExamplesKeys.shared().redirectPayOnly = false
     }
 }
 
@@ -331,16 +344,48 @@ private extension IntegrationDemoListViewController {
 
 // low level API integration actions
 private extension IntegrationDemoListViewController {
-    func payWithCard(autoSave: Bool) {
-//        let card
-    }
-    
-    func payWithCardAndTrigger3DS() {
-        showAlert(message: "TODO")
+    func payWithCard(saveCard: Bool = false, force3DS: Bool = false) {
+        
+        // replace this testCard with card info you collected
+        let testCard = AWXCard()
+        testCard.number = "4111111111111111"
+        testCard.expiryYear = "2050"
+        testCard.expiryMonth = "11"
+        testCard.cvc = "333"
+        
+        let viewController = UIStoryboard.instantiateCartViewController()!
+        viewController.card = testCard
+        
+        if saveCard {
+            guard AirwallexExamplesKeys.shared().checkoutMode == .oneOffMode else {
+                showAlert(message: "Select \(AirwallexCheckoutMode.oneOffMode.localizedDescription) to enable card saving")
+                return
+            }
+            guard let customerId = UserDefaults.standard.string(forKey: kCachedCustomerID), !customerId.isEmpty else {
+                showAlert(message: "Generate customerId in Settings to enable card saving")
+                return
+            }
+        }
+        
+        viewController.saveCard = saveCard
+        navigationController?.pushViewController(viewController, animated: true)
+        
+        AirwallexExamplesKeys.shared().force3DS = force3DS
     }
     
     func payWithApplePay() {
-        showAlert(message: "TODO")
+        AirwallexExamplesKeys.shared().applePayMethodOnly = true
+        let viewController = UIStoryboard.instantiateCartViewController()!
+        viewController.shipping = shippingAddress
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func payWithRedirect() {
+        // TODO: - remove these keys
+        AirwallexExamplesKeys.shared().redirectPayOnly = true
+        let viewController = UIStoryboard.instantiateCartViewController()!
+        viewController.shipping = shippingAddress
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     func getPaymentMethods() {

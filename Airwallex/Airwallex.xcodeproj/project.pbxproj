@@ -588,6 +588,7 @@
 		D825DAA52D2F72EE005F725A /* AWXCardValidator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCardValidator+Extensions.swift"; sourceTree = "<group>"; };
 		D84443812D30BF2800DF9762 /* SchemaPaymentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentSectionController.swift; sourceTree = "<group>"; };
 		D84529AF2D30FA380032BE17 /* SchemaPaymentRemiderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentRemiderCell.swift; sourceTree = "<group>"; };
+		D81EAFA42D40F46600B44784 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodProvider.swift; sourceTree = "<group>"; };
 		D84E9A262D0C3652006B3421 /* PaymentUISessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentUISessionHandler.swift; sourceTree = "<group>"; };
 		D888268E2D12D68B00115198 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
@@ -1271,6 +1272,7 @@
 			isa = PBXGroup;
 			children = (
 				D8F303232D1ABAB100D29B49 /* Array+Extensions.swift */,
+				D81EAFA42D40F46600B44784 /* UIViewController+Extensions.swift */,
 				D8F303242D1ABAB100D29B49 /* AWXUIContext+Extensions.swift */,
 				D8F303252D1ABAB100D29B49 /* Bundle+Extensions.swift */,
 				D8F3032E2D1ABDB600D29B49 /* AWXBrandType+Extensions.swift */,
