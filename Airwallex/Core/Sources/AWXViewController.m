@@ -34,11 +34,13 @@
             [[AWXAnalyticsLogger shared] logPageViewWithName:trackable.pageName];
         }
     }
-
     self.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    UIImage *backImage = [UIImage imageNamed:@"back" inBundle:[NSBundle resourceBundle]];
-    self.navigationController.navigationBar.backIndicatorImage = backImage;
-    self.navigationController.navigationBar.backIndicatorTransitionMaskImage = backImage;
+    if (self.navigationController.viewControllers.firstObject == self) {
+        // only customize back indicator when it is the first item in the navigation stack
+        UIImage *backImage = [UIImage imageNamed:@"back" inBundle:[NSBundle resourceBundle]];
+        self.navigationController.navigationBar.backIndicatorImage = backImage;
+        self.navigationController.navigationBar.backIndicatorTransitionMaskImage = backImage;
+    }
 
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium];

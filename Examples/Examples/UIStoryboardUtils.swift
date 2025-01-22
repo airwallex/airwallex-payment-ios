@@ -9,6 +9,13 @@
 import UIKit
 
 extension UIStoryboard {
+    static func instantiateCartViewController() -> CartViewController? {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let viewController = mainStoryboard.instantiateViewController(withIdentifier: "cart") as? CartViewController {
+            return viewController
+        }
+        return nil
+    }
     
     func createOptionsViewController() -> UIViewController? {
         if let optionsVC = instantiateViewController(withIdentifier: "options") as? OptionsViewController {

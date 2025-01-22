@@ -57,10 +57,12 @@ class HomeViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+     
     override func viewDidLoad() {
         super.viewDidLoad()
-        customiseNavigationBackButton()
+       
+        customizeNavigationBackIndicator()
+        customizeNavigationBackButton()
         
         view.backgroundColor = .awxBackgroundPrimary
         view.addSubview(topView)
@@ -105,14 +107,11 @@ class HomeViewController: UIViewController {
 extension HomeViewController {
     
     @objc func integrateWithUIButtonTapped() {
-        /// TODO:
-        /// - create payment intent - one off - recuring with intent
-        /// - create client secret - recurring
-        /// final: present pyament flow
+        navigationController?.pushViewController(UIIntegrationDemoViewController(), animated: true)
     }
     
     @objc func lowLevelAPIButtonTapped() {
-        // TODO: - Add low level API integration
+        showAlert(message: "This feature is coming soon.")
     }
     
     @objc func html5DemoButtonTapped() {

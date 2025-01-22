@@ -14,11 +14,12 @@ extension UIButton {
     enum AWXButtonStyle {
         case primary
         case secondary
+        case mini
     }
     /// create a button for primary action usually at the bottom of the page
     /// - Parameter title: button title
     /// - Returns: customized button
-    convenience init(style: AWXButtonStyle, title: String? = nil) {
+    convenience init(style: AWXButtonStyle, title: String? = nil, icon: UIImage? = nil) {
         self.init(type: .custom)
         switch style {
         case .primary:
@@ -38,6 +39,18 @@ extension UIButton {
             
             setTitle(title, for: .normal)
             setTitleColor(.awxTextLink, for: .normal)
+        case .mini:
+            contentEdgeInsets = .init(top: 12, left: 12, bottom: 12, right: 12)
+            backgroundColor = .awxBackgroundPrimary
+            layer.borderColor = UIColor.awxBorderDecorative.cgColor
+            layer.cornerRadius = 8
+            layer.borderWidth = 1
+            titleLabel?.font = .awxFont(.headline2, weight: .bold)
+            
+            setTitle(title, for: .normal)
+            setImage(icon, for: .normal)
+            setTitleColor(.awxIconLink, for: .normal)
         }
+        
     }
 }

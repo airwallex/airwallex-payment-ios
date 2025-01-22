@@ -31,7 +31,7 @@ class LabelHeader: UICollectionReusableView, ViewReusable {
         addSubview(label)
         
         let constraints = [
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 40),
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             label.bottomAnchor.constraint(equalTo: bottomAnchor),
