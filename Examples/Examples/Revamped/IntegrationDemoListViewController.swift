@@ -1,5 +1,5 @@
 //
-//  UIIntegrationDemoViewController.swift
+//  IntegrationDemoListViewController.swift
 //  Examples
 //
 //  Created by Weiping Li on 2025/1/21.
@@ -8,15 +8,28 @@
 
 import UIKit
 
-class UIIntegrationDemoViewController: UIViewController {
+class IntegrationDemoListViewController: UIViewController {
+    
+    enum IntegrationType {
+        case UI
+        case API
+    }
+    
+    struct ActionViewModel {
+        let title: String
+        let action: () -> Void
+    }
     
     private let commentForLocalization = "UI integration demo"
     
     private lazy var topView: TopView = {
         let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        let title = integrationType == .UI ? NSLocalizedString("Integrate with Airwallex UI", comment: "UI integration demo")
+        : NSLocalizedString("Integrate with low-level API", comment: "UI integration demo")
+        
         let viewModel = TopViewModel(
-            title: NSLocalizedString("Integrate with Airwallex UI", comment: "UI integration demo"),
+            title: title,
             actionIcon: UIImage(named: "gear")?.withTintColor(.awxIconLink, renderingMode: .alwaysOriginal),
             actionHandler: { [weak self] in
                 self?.onSettingButtonTapped()
@@ -62,40 +75,77 @@ class UIIntegrationDemoViewController: UIViewController {
         return view
     }()
     
-    private lazy var defaultPaymentlistButton = {
-        let view = UIButton(style: .secondary, title: NSLocalizedString("Launch default payments list", comment: commentForLocalization))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(onDefaultPaymentListButtonTapped), for: .touchUpInside)
-        return view
-    }()
+    private lazy var viewModelsForUIIntegration: [ActionViewModel] = [
+        ActionViewModel(
+            title: NSLocalizedString("Launch default payments list", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.launchDefaultPaymentsList()
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("Launch custom payments list", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.launchCustompaymentsList()
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("Launch card payment", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.launchCardPayment()
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("Launch card payment (dialog)", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.launchCardPaymentDialog()
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("Launch shipping address (dialog)", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.launchShippingAddressDialog()
+            }
+        ),
+    ]
     
-    private lazy var customPaymentlistButton = {
-        let view = UIButton(style: .secondary, title: NSLocalizedString("Launch custom payments list", comment: commentForLocalization))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(onCustomPaymentListButtonTapped), for: .touchUpInside)
-        return view
-    }()
-    
-    private lazy var cardPaymentButton = {
-        let view = UIButton(style: .secondary, title: NSLocalizedString("Launch card payment", comment: commentForLocalization))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(onCardPaymentButtonTapped), for: .touchUpInside)
-        return view
-    }()
-    
-    private lazy var cardPaymentDialogButton = {
-        let view = UIButton(style: .secondary, title: NSLocalizedString("Launch card payment (dialog)", comment: commentForLocalization))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(onCardPaymentDialogButtonTapped), for: .touchUpInside)
-        return view
-    }()
-    
-    private lazy var shippingAddressDialogButton = {
-        let view = UIButton(style: .secondary, title: NSLocalizedString("Launch shipping address (dialog)", comment: commentForLocalization))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(onShippingAddressDialogButtonTapped), for: .touchUpInside)
-        return view
-    }()
+    private lazy var viewModelsForAPIIntegration: [ActionViewModel] = [
+        ActionViewModel(
+            title: NSLocalizedString("Pay with card", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.payWithCard(autoSave: false)
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("Pay with card and save card", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.payWithCard(autoSave: true)
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("pay with card and trigger 3DS", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.payWithCardAndTrigger3DS()
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("pay with Apple Pay", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.payWithApplePay()
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("Get payment methods", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.getPaymentMethods()
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("Get saved card methods", comment: commentForLocalization),
+            action: { [weak self] in
+                self?.getSavedCardMethods()
+            }
+        ),
+    ]
     
     private lazy var shippingAddress: AWXPlaceDetails = {
         let shipping: [String : Any] = [
@@ -113,6 +163,17 @@ class UIIntegrationDemoViewController: UIViewController {
         return AWXPlaceDetails.decode(fromJSON: shipping) as! AWXPlaceDetails
     }()
     
+    let integrationType: IntegrationType
+    
+    init(_ integrationStyle: IntegrationType) {
+        self.integrationType = integrationStyle
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -122,7 +183,7 @@ class UIIntegrationDemoViewController: UIViewController {
     }
 }
 
-private extension UIIntegrationDemoViewController {
+private extension IntegrationDemoListViewController {
     
     func setupViews() {
         view.backgroundColor = .awxBackgroundPrimary
@@ -137,11 +198,13 @@ private extension UIIntegrationDemoViewController {
         scrollView.addSubview(separator)
         scrollView.addSubview(bottomStack)
         do {
-            bottomStack.addArrangedSubview(defaultPaymentlistButton)
-            bottomStack.addArrangedSubview(customPaymentlistButton)
-            bottomStack.addArrangedSubview(cardPaymentButton)
-            bottomStack.addArrangedSubview(cardPaymentDialogButton)
-            bottomStack.addArrangedSubview(shippingAddressDialogButton)
+            let actions = integrationType == .UI ? viewModelsForUIIntegration : viewModelsForAPIIntegration
+            for action in actions {
+                let view = UIButton(style: .secondary, title: action.title)
+                view.translatesAutoresizingMaskIntoConstraints = false
+                view.addTarget(self, action: #selector(onActionButtonTapped(_:)), for: .touchUpInside)
+                bottomStack.addArrangedSubview(view)
+            }
         }
         let heightRef = UIView()
         heightRef.translatesAutoresizingMaskIntoConstraints = false
@@ -203,7 +266,28 @@ private extension UIIntegrationDemoViewController {
         }
     }
     
-    @objc func onDefaultPaymentListButtonTapped() {
+    @objc func onActionButtonTapped(_ sender: UIButton) {
+        switch integrationType {
+        case .UI:
+            guard let title = sender.currentTitle,
+                  let viewModel = viewModelsForUIIntegration.first(where: { $0.title == title }) else {
+                return
+            }
+            viewModel.action()
+        case .API:
+            guard let title = sender.currentTitle,
+                  let viewModel = viewModelsForAPIIntegration.first(where: { $0.title == title }) else {
+                return
+            }
+            viewModel.action()
+        }
+    }
+}
+
+//  UI Integration actions
+private extension IntegrationDemoListViewController {
+    
+    func launchDefaultPaymentsList() {
         AirwallexExamplesKeys.shared().cardMethodOnly = false
         let viewController = UIStoryboard.instantiateCartViewController()!
         viewController.preferredPaymentLaunchStyle = .push
@@ -211,7 +295,7 @@ private extension UIIntegrationDemoViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @objc func onCustomPaymentListButtonTapped() {
+    func launchCustompaymentsList() {
         AirwallexExamplesKeys.shared().cardMethodOnly = false
         let viewController = UIStoryboard.instantiateCartViewController()!
         viewController.preferredPaymentLaunchStyle = .push
@@ -220,7 +304,7 @@ private extension UIIntegrationDemoViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @objc func onCardPaymentButtonTapped() {
+    func launchCardPayment() {
         AirwallexExamplesKeys.shared().cardMethodOnly = true
         let viewController = UIStoryboard.instantiateCartViewController()!
         viewController.preferredPaymentLaunchStyle = .push
@@ -228,7 +312,7 @@ private extension UIIntegrationDemoViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @objc func onCardPaymentDialogButtonTapped() {
+    func launchCardPaymentDialog() {
         AirwallexExamplesKeys.shared().cardMethodOnly = true
         let viewController = UIStoryboard.instantiateCartViewController()!
         viewController.preferredPaymentLaunchStyle = .present
@@ -236,7 +320,7 @@ private extension UIIntegrationDemoViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    @objc func onShippingAddressDialogButtonTapped() {
+    func launchShippingAddressDialog() {
         let controller = AWXShippingViewController(nibName: nil, bundle: nil)
         controller.delegate = self
         controller.shipping = shippingAddress
@@ -245,7 +329,30 @@ private extension UIIntegrationDemoViewController {
     }
 }
 
-extension UIIntegrationDemoViewController: AWXShippingViewControllerDelegate {
+// low level API integration actions
+private extension IntegrationDemoListViewController {
+    func payWithCard(autoSave: Bool) {
+//        let card
+    }
+    
+    func payWithCardAndTrigger3DS() {
+        showAlert(message: "TODO")
+    }
+    
+    func payWithApplePay() {
+        showAlert(message: "TODO")
+    }
+    
+    func getPaymentMethods() {
+        showAlert(message: "TODO")
+    }
+    
+    func getSavedCardMethods() {
+        showAlert(message: "TODO")
+    }
+}
+
+extension IntegrationDemoListViewController: AWXShippingViewControllerDelegate {
     func shippingViewController(_ controller: AWXShippingViewController, didEditShipping shipping: AWXPlaceDetails) {
         navigationController?.popToViewController(self, animated: true)
         shippingAddress = shipping
