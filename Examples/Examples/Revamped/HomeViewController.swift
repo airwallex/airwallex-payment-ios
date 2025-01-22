@@ -107,11 +107,11 @@ class HomeViewController: UIViewController {
 extension HomeViewController {
     
     @objc func integrateWithUIButtonTapped() {
-        navigationController?.pushViewController(UIIntegrationDemoViewController(), animated: true)
+        navigationController?.pushViewController(IntegrationDemoListViewController(.UI), animated: true)
     }
     
     @objc func lowLevelAPIButtonTapped() {
-        showAlert(message: "This feature is coming soon.")
+        navigationController?.pushViewController(IntegrationDemoListViewController(.API), animated: true)
     }
     
     @objc func html5DemoButtonTapped() {
