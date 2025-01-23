@@ -52,6 +52,9 @@
 		D81EAF7D2D3F92D300B44784 /* OptionSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7C2D3F92D300B44784 /* OptionSelectView.swift */; };
 		D81EAF7F2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7E2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift */; };
 		D81EAF812D3FAAC600B44784 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF802D3FAABA00B44784 /* TopView.swift */; };
+		D81EAFA62D41DA1E00B44784 /* GetPaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */; };
+		D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */; };
+		D89C7AED2D423AD60042FC3B /* GetCardConsentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */; };
 		D8BDF8682D3E1E3E00C9AE72 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */; };
 		D8BDF8702D3E206700C9AE72 /* H5DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */; };
 		D8BDF8802D3F3B4B00C9AE72 /* HomePageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */; };
@@ -135,6 +138,9 @@
 		D81EAF7C2D3F92D300B44784 /* OptionSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSelectView.swift; sourceTree = "<group>"; };
 		D81EAF7E2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirwallexCheckoutMode+Extensions.swift"; sourceTree = "<group>"; };
 		D81EAF802D3FAABA00B44784 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
+		D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPaymentMethodsViewController.swift; sourceTree = "<group>"; };
+		D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentViewController.swift; sourceTree = "<group>"; };
+		D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCardConsentsViewController.swift; sourceTree = "<group>"; };
 		D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H5DemoViewController.swift; sourceTree = "<group>"; };
 		D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTitleView.swift; sourceTree = "<group>"; };
@@ -345,6 +351,9 @@
 				D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */,
 				D81EAF6B2D3F6C1F00B44784 /* WeChatDemoViewController.swift */,
 				D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */,
+				D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */,
+				D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */,
+				D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */,
 				D81EAF792D3F8BB100B44784 /* Views */,
 				D81EAF732D3F8B8F00B44784 /* Utils */,
 			);
@@ -569,6 +578,8 @@
 				182F1CE52C903747000B993D /* DirectAPIClient.swift in Sources */,
 				C5AB0C592860454200B436C3 /* Product.m in Sources */,
 				084F15E7247646FA00DAAD76 /* ShippingCell.m in Sources */,
+				D89C7AED2D423AD60042FC3B /* GetCardConsentsViewController.swift in Sources */,
+				D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */,
 				1859F19F2C8AA6700017FA4D /* CustomerRequest.swift in Sources */,
 				D8BDF8802D3F3B4B00C9AE72 /* HomePageTitleView.swift in Sources */,
 				57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */,
@@ -580,6 +591,7 @@
 				182F1CE02C8F09F2000B993D /* String+Extensions.swift in Sources */,
 				182F1CE32C901C5E000B993D /* UIStoryboardUtils.swift in Sources */,
 				18ADC99E2C8B03E400A775BB /* CartViewController+TableView.swift in Sources */,
+				D81EAFA62D41DA1E00B44784 /* GetPaymentMethodsViewController.swift in Sources */,
 				D8BDF8702D3E206700C9AE72 /* H5DemoViewController.swift in Sources */,
 				1859F19D2C8A9EE90017FA4D /* NSError+Extensions.swift in Sources */,
 				1859F19B2C89B0C40017FA4D /* PurchaseOrder.swift in Sources */,
