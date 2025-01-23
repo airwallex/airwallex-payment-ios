@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Airwallex
 
 class IntegrationDemoListViewController: UIViewController {
     
@@ -389,11 +390,13 @@ private extension IntegrationDemoListViewController {
     }
     
     func getPaymentMethods() {
-        showAlert(message: "TODO")
+        let viewController = GetPaymentMethodsViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     func getSavedCardMethods() {
-        showAlert(message: "TODO")
+        let viewController = GetPaymentConsentsViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

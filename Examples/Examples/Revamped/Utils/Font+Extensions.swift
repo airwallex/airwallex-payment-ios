@@ -7,12 +7,6 @@
 //
 
 extension UIFont {
-    static func preferredBoldFont(withTextStyle textStyle: UIFont.TextStyle) -> UIFont {
-        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: textStyle)
-        let boldDescriptor = descriptor.withSymbolicTraits(.traitBold) ?? descriptor
-        let boldFont = UIFont(descriptor: boldDescriptor, size: 0)
-        return boldFont
-    }
     
     enum AWXFont {
         case title1, title2, title3
