@@ -58,9 +58,9 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
         }
     }
     
-    let supportedCardSchemes: [AWXCardScheme]?
+    let supportedCardSchemes: [AWXCardScheme]
     
-    init(supportedCardSchemes: [AWXCardScheme]?) {
+    init(supportedCardSchemes: [AWXCardScheme]) {
         self.supportedCardSchemes = supportedCardSchemes
     }
 }
