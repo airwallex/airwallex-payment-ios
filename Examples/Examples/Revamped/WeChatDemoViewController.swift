@@ -113,11 +113,12 @@ class WeChatDemoViewController: UIViewController {
     }
     
     private func setupViews() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        customizeNavigationBackButton()
         view.backgroundColor = .awxBackgroundPrimary
         view.addSubview(scrollView)
         scrollView.addSubview(stack)
         stack.addArrangedSubview(topView)
+        
         for viewModel in fieldViewModels {
             let textField = ConfigTextField()
             textField.translatesAutoresizingMaskIntoConstraints = false

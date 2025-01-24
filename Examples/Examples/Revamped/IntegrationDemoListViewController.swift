@@ -40,8 +40,8 @@ class IntegrationDemoListViewController: UIViewController {
         return view
     }()
     
-    private lazy var optionView: OptionSelectView = {
-        let view = OptionSelectView()
+    private lazy var optionView: ConfigActionView = {
+        let view = ConfigActionView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -186,7 +186,6 @@ class IntegrationDemoListViewController: UIViewController {
 
         customizeNavigationBackButton()
         setupViews()
-        setupCheckoutMode()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -194,6 +193,7 @@ class IntegrationDemoListViewController: UIViewController {
         // TODO: - remove these keys
         AirwallexExamplesKeys.shared().applePayMethodOnly = false
         AirwallexExamplesKeys.shared().redirectPayOnly = false
+        setupCheckoutMode()
     }
 }
 
@@ -257,18 +257,19 @@ private extension IntegrationDemoListViewController {
     }
     
     func setupCheckoutMode() {
-        let viewModel = OptionSelectViewModel(
-            displayName: NSLocalizedString("Payment type", comment: "mobile SDK demo"),
-            selectedOption: AirwallexExamplesKeys.shared().checkoutMode.localizedDescription,
-            handleSelection: { [weak self] in
+        let viewModel = ConfigActionViewModel(
+            configName: NSLocalizedString("Payment type", comment: "mobile SDK demo"),
+            configValue: AirwallexExamplesKeys.shared().checkoutMode.localizedDescription,
+            primaryAction: { [weak self] _ in
                 self?.handleUserTapOptionSelectView()
             }
         )
+        
         optionView.setup(viewModel)
     }
     
     func onSettingButtonTapped() {
-        let optionsViewController = UIStoryboard(name: "Main", bundle: nil).createOptionsViewController()!
+        let optionsViewController = SettingsViewController()
         navigationController?.pushViewController(optionsViewController, animated: true)
     }
 
