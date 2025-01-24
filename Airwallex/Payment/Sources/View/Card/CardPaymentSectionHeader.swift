@@ -64,7 +64,6 @@ class CardPaymentSectionHeader: UICollectionReusableView, ViewReusable, ViewConf
     
     // Actions
     @objc func onRightButtonTapped() {
-        // TODO: handle buttonAction
         viewModel?.buttonAction()
     }
 }

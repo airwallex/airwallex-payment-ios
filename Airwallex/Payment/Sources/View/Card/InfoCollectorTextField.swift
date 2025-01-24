@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol InfoCollectorTextFieldConfiguring: ErrorHintableTextFieldConfiguring {
+protocol InfoCollectorTextFieldConfiguring: BaseTextFieldConfiguring {
     var title: String? { get }
 }
 
@@ -48,6 +48,9 @@ class InfoCollectorTextField: BaseTextField {
         }
         topLabel.text = viewModel.title
         hintLabel.text = viewModel.errorHint
+        
+        topLabel.isHidden = viewModel.title == nil || viewModel.title?.isEmpty == true
+        hintLabel.isHidden = viewModel.isValid || viewModel.errorHint == nil || viewModel.errorHint?.isEmpty == true
     }
     
     private func setupViews() {

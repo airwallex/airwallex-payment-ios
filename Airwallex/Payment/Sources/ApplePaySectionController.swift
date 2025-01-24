@@ -64,7 +64,7 @@ class ApplePaySectionController: SectionController {
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 24, leading: 16, bottom: 16, trailing: 16)
+        section.contentInsets = .zero.top(.spacing_24).horizontal(.spacing_16)
         return section
     }
 }
