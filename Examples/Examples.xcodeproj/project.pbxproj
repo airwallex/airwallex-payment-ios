@@ -49,12 +49,14 @@
 		D81EAF772D3F8B8F00B44784 /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF712D3F8B8F00B44784 /* KeyboardHandler.swift */; };
 		D81EAF782D3F8B8F00B44784 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */; };
 		D81EAF7B2D3F8BE200B44784 /* IntegrationDemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */; };
-		D81EAF7D2D3F92D300B44784 /* OptionSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7C2D3F92D300B44784 /* OptionSelectView.swift */; };
+		D81EAF7D2D3F92D300B44784 /* ConfigActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */; };
 		D81EAF7F2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7E2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift */; };
 		D81EAF812D3FAAC600B44784 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF802D3FAABA00B44784 /* TopView.swift */; };
 		D81EAFA62D41DA1E00B44784 /* GetPaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */; };
 		D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */; };
 		D89C7AED2D423AD60042FC3B /* GetCardConsentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */; };
+		D89C7AF32D424C890042FC3B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AF22D424C890042FC3B /* SettingsViewController.swift */; };
+		D89C7AF52D432D900042FC3B /* ConfigSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AF42D432D900042FC3B /* ConfigSwitchView.swift */; };
 		D8BDF8682D3E1E3E00C9AE72 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */; };
 		D8BDF8702D3E206700C9AE72 /* H5DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */; };
 		D8BDF8802D3F3B4B00C9AE72 /* HomePageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */; };
@@ -135,12 +137,14 @@
 		D81EAF712D3F8B8F00B44784 /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandler.swift; sourceTree = "<group>"; };
 		D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationDemoListViewController.swift; sourceTree = "<group>"; };
-		D81EAF7C2D3F92D300B44784 /* OptionSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSelectView.swift; sourceTree = "<group>"; };
+		D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigActionView.swift; sourceTree = "<group>"; };
 		D81EAF7E2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirwallexCheckoutMode+Extensions.swift"; sourceTree = "<group>"; };
 		D81EAF802D3FAABA00B44784 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentViewController.swift; sourceTree = "<group>"; };
 		D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCardConsentsViewController.swift; sourceTree = "<group>"; };
+		D89C7AF22D424C890042FC3B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D89C7AF42D432D900042FC3B /* ConfigSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigSwitchView.swift; sourceTree = "<group>"; };
 		D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H5DemoViewController.swift; sourceTree = "<group>"; };
 		D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTitleView.swift; sourceTree = "<group>"; };
@@ -335,11 +339,12 @@
 			isa = PBXGroup;
 			children = (
 				D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */,
+				D89C7AF42D432D900042FC3B /* ConfigSwitchView.swift */,
 				D81EAF6E2D3F8B8F00B44784 /* ConfigTextField.swift */,
-				D81EAF802D3FAABA00B44784 /* TopView.swift */,
-				D81EAF7C2D3F92D300B44784 /* OptionSelectView.swift */,
-				D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */,
 				D81EAF6F2D3F8B8F00B44784 /* ConfigTextFieldViewModel.swift */,
+				D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */,
+				D81EAF802D3FAABA00B44784 /* TopView.swift */,
+				D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -354,6 +359,7 @@
 				D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */,
 				D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */,
 				D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */,
+				D89C7AF22D424C890042FC3B /* SettingsViewController.swift */,
 				D81EAF792D3F8BB100B44784 /* Views */,
 				D81EAF732D3F8B8F00B44784 /* Utils */,
 			);
@@ -562,7 +568,7 @@
 				D81EAF752D3F8B8F00B44784 /* ConfigTextFieldViewModel.swift in Sources */,
 				D81EAF762D3F8B8F00B44784 /* Font+Extensions.swift in Sources */,
 				D81EAF772D3F8B8F00B44784 /* KeyboardHandler.swift in Sources */,
-				D81EAF7D2D3F92D300B44784 /* OptionSelectView.swift in Sources */,
+				D81EAF7D2D3F92D300B44784 /* ConfigActionView.swift in Sources */,
 				D81EAF782D3F8B8F00B44784 /* UIButton+Extension.swift in Sources */,
 				082D308823CEEDC100C9D587 /* AWXCartViewController.m in Sources */,
 				00E501BF264D06B400027311 /* WebViewController.m in Sources */,
@@ -572,6 +578,7 @@
 				00E501BC264D06A900027311 /* InputViewController.m in Sources */,
 				18ADC9992C8AACF900A775BB /* Customer.swift in Sources */,
 				088F3E8323CEB7FF005AE40F /* MockAPIClient.m in Sources */,
+				D89C7AF32D424C890042FC3B /* SettingsViewController.swift in Sources */,
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
 				D81EAF692D3F474100B44784 /* UIViewController+Extensions.swift in Sources */,
 				D81EAF7B2D3F8BE200B44784 /* IntegrationDemoListViewController.swift in Sources */,
@@ -584,6 +591,7 @@
 				D8BDF8802D3F3B4B00C9AE72 /* HomePageTitleView.swift in Sources */,
 				57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */,
 				D81EAF7F2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift in Sources */,
+				D89C7AF52D432D900042FC3B /* ConfigSwitchView.swift in Sources */,
 				D81EAF6C2D3F6C1F00B44784 /* WeChatDemoViewController.swift in Sources */,
 				00D7B95A265F45AF00F2CBB6 /* WechatPayViewController.m in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,

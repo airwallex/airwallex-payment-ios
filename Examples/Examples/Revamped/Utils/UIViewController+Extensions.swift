@@ -33,10 +33,12 @@ extension UIViewController {
         )
     }
     
-    func showAlert(message: String?, title: String? = nil) {
+    func showAlert(message: String?, title: String? = nil, action: (() -> Void)? = nil) {
         guard title != nil || message != nil else { return }
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let closeAction = UIAlertAction(title: NSLocalizedString("Close", comment: "SDK DEMO"), style: .cancel)
+        let closeAction = UIAlertAction(title: NSLocalizedString("OK", comment: "SDK DEMO"), style: .cancel) { _ in
+            action?()
+        }
         alert.addAction(closeAction)
         present(alert, animated: true)
     }
@@ -58,5 +60,34 @@ extension UIViewController {
         
         alertController.popoverPresentationController?.sourceView = sender
         present(alertController, animated: true)
+    }
+}
+
+extension UIViewController {
+    private static var tagForActivityIndicator = 2025
+    func startLoading() {
+        view.isUserInteractionEnabled = false
+        guard let indicator = view.viewWithTag(Self.tagForActivityIndicator) as? UIActivityIndicatorView  else {
+            let activityIndicator = UIActivityIndicatorView(style: .medium)
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.tag = Self.tagForActivityIndicator
+            view.addSubview(activityIndicator)
+            
+            NSLayoutConstraint.activate([
+                activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            ])
+            
+            activityIndicator.startAnimating()
+            return
+        }
+        view.bringSubviewToFront(indicator)
+        indicator.startAnimating()
+    }
+    
+    func stopLoading() {
+        view.isUserInteractionEnabled = true
+        (view.viewWithTag(Self.tagForActivityIndicator) as? UIActivityIndicatorView)?.stopAnimating()
     }
 }

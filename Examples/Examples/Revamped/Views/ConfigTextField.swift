@@ -15,7 +15,6 @@ class ConfigTextField: UIView {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
-        
         view.titleLabel?.font = .awxFont(.caption2, weight: .medium)
         view.setTitleColor(.secondaryLabel, for: .normal)
         view.isUserInteractionEnabled = false
@@ -27,6 +26,8 @@ class ConfigTextField: UIView {
     private(set) lazy var textField: ContentInsetableTextField = {
         let view = ContentInsetableTextField(textInsets: .init(top: 16, left: 16, bottom: 16, right: 16))
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.autocorrectionType = .no
+        view.autocapitalizationType = .none
         view.textColor = .label
         view.font = .awxFont(.body1)
         view.addTarget(self, action: #selector(textDidchange(_:)), for: .editingChanged)
