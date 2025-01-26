@@ -39,12 +39,8 @@ public extension AWXUIContext {
         hostingVC.present(nav, animated: true)
     }
     
-    enum LaunchStyle {
-        case push
-        case present
-    }
-    
-    @MainActor func launchPaymentList(from hostingVC: UIViewController, style: LaunchStyle = .present) {
+    @MainActor func launchPaymentList(from hostingVC: UIViewController, style: AWXPaymentLaunchStyle = .push) {
+        AWXUIContext.shared().launchStyle = style
         let viewModel = AWXPaymentMethodListViewModel(
             session: session,
             apiClient: AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
@@ -60,7 +56,7 @@ public extension AWXUIContext {
             nav.pushViewController(paymentVC, animated: true)
         case .present:
             let nav = UINavigationController(rootViewController: paymentVC)
-            nav.modalPresentationStyle = .fullScreen
+//            nav.modalPresentationStyle = .fullScreen
             let appearance = UINavigationBarAppearance()
             appearance.configureWithDefaultBackground()
             appearance.backgroundColor = UIColor.awxBackgroundHighlight // Set your desired color
