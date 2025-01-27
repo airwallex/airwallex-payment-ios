@@ -79,9 +79,7 @@ typedef enum {
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    if (AWXUIContext.sharedContext.launchStyle == AWXPaymentLaunchStylePresent) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
-    }
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     [self enableTapToEndEditing];
 
     _scrollView = [UIScrollView new];
@@ -340,13 +338,12 @@ typedef enum {
 }
 
 - (void)close:(id)sender {
-    if (AWXUIContext.sharedContext.launchStyle == AWXPaymentLaunchStylePresent) {
-        [self dismissViewControllerAnimated:true
-                                 completion:^{
-                                     id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
-                                     [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
-                                     [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %lu", delegate.class, AirwallexPaymentStatusCancel];
-                                 }];
+    if (_viewModel.isLaunchedDirectly) {
+        id<AWXPaymentResultDelegate> delegate = [AWXUIContext sharedContext].delegate;
+        [delegate paymentViewController:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+        [self log:@"Delegate: %@, paymentViewController:didCompleteWithStatus:error: %lu", delegate.class, AirwallexPaymentStatusCancel];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

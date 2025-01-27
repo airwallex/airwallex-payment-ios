@@ -102,7 +102,9 @@ class PaymentMethodsViewController: AWXViewController {
     }
     
     @objc public func onCloseButtonTapped() {
-        AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+        dismiss(animated: true) {
+            AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+        }
     }
     
     override func activeScrollView() -> UIScrollView {

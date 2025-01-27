@@ -193,6 +193,8 @@ class IntegrationDemoListViewController: UIViewController {
         }
     }
     
+    private var paymentUISessionHandler: PaymentUISessionHandler?
+    
     init(_ integrationStyle: IntegrationType) {
         self.integrationType = integrationStyle
         super.init(nibName: nil, bundle: nil)
@@ -327,7 +329,7 @@ private extension IntegrationDemoListViewController {
                 let session = try await createPaymentSession()
                 AWXUIContext.shared().delegate = self
                 AWXUIContext.shared().session = session
-                AWXUIContext.shared().launchPaymentList(from: self, style: .push)
+                AWXUIContext.shared().launchPayment(from: self, style: .push)
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -340,10 +342,10 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                session.paymentMethods = [ "applepay", "card", "alipaycn" ]
+                session.paymentMethods = [ AWXApplePayKey, AWXCardKey, "alipaycn" ]
                 AWXUIContext.shared().delegate = self
                 AWXUIContext.shared().session = session
-                AWXUIContext.shared().launchPaymentList(from: self, style: .push)
+                AWXUIContext.shared().launchPayment(from: self, style: .push)
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -356,11 +358,14 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                session.paymentMethods = ["card"]
+                session.paymentMethods = [ AWXCardKey ]
+                if let session = session as? AWXOneOffSession {
+                    session.hidePaymentConsents = true
+                }
 
                 AWXUIContext.shared().delegate = self
                 AWXUIContext.shared().session = session
-                AWXUIContext.shared().launchPaymentList(from: self, style: .push)
+                AWXUIContext.shared().launchPayment(from: self, style: .push)
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -373,10 +378,10 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                session.paymentMethods = ["card"]
+                session.paymentMethods = [ AWXCardKey ]
                 AWXUIContext.shared().delegate = self
                 AWXUIContext.shared().session = session
-                AWXUIContext.shared().launchPaymentList(from: self, style: .present)
+                AWXUIContext.shared().launchPayment(from: self, style: .present)
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -397,43 +402,68 @@ private extension IntegrationDemoListViewController {
 private extension IntegrationDemoListViewController {
     func payWithCard(saveCard: Bool = false, force3DS: Bool = false) {
         
-        // replace this testCard with card info you collected
+        // replace this testCard info
         let testCard = AWXCard()
         testCard.number = "4111111111111111"
         testCard.expiryYear = "2050"
         testCard.expiryMonth = "11"
         testCard.cvc = "333"
         
-        let viewController = UIStoryboard.instantiateCartViewController()!
-        viewController.card = testCard
-        
-        if saveCard {
-            guard AirwallexExamplesKeys.shared().checkoutMode == .oneOffMode else {
-                showAlert(message: "Select \(AirwallexCheckoutMode.oneOffMode.localizedDescription) to enable card saving")
-                return
-            }
-            guard let customerId = AirwallexExamplesKeys.shared().customerId, !customerId.isEmpty else {
-                showAlert(message: "Generate customerId in Settings to enable card saving")
-                return
+        Task {
+            AirwallexExamplesKeys.shared().force3DS = force3DS
+            do {
+                let session = try await createPaymentSession()
+                
+                AWXUIContext.shared().delegate = self
+                AWXUIContext.shared().session = session
+                
+                paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
+                    let provider = AWXCardProvider(delegate: handler, session: session)
+                    provider.confirmPaymentIntent(with: testCard, billing: nil, saveCard: saveCard)
+                    return provider
+                }
+            } catch {
+                showAlert(message: error.localizedDescription)
             }
         }
-        
-        viewController.saveCard = saveCard
-        navigationController?.pushViewController(viewController, animated: true)
-        
-        AirwallexExamplesKeys.shared().force3DS = force3DS
     }
     
     func payWithApplePay() {
-        let viewController = UIStoryboard.instantiateCartViewController()!
-        viewController.shipping = shippingAddress
-        navigationController?.pushViewController(viewController, animated: true)
+        Task {
+            do {
+                let session = try await createPaymentSession()
+                
+                AWXUIContext.shared().delegate = self
+                AWXUIContext.shared().session = session
+                
+                paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
+                    let provider = AWXApplePayProvider(delegate: handler, session: session)
+                    provider.startPayment()
+                    return provider as AWXDefaultProvider
+                }
+            } catch {
+                showAlert(message: error.localizedDescription)
+            }
+        }
     }
     
     func payWithRedirect() {
-        let viewController = UIStoryboard.instantiateCartViewController()!
-        viewController.shipping = shippingAddress
-        navigationController?.pushViewController(viewController, animated: true)
+        Task {
+            do {
+                let session = try await createPaymentSession()
+                
+                AWXUIContext.shared().delegate = self
+                AWXUIContext.shared().session = session
+                
+                paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
+                    let provider = AWXRedirectActionProvider(delegate: handler, session: session)
+                    provider.confirmPaymentIntent(with: "paypal", additionalInfo: ["shopper_name": "Hector", "country_code": "CN"])
+                    return provider as AWXDefaultProvider
+                }
+            } catch {
+                showAlert(message: error.localizedDescription)
+            }
+        }
     }
     
     func getPaymentMethods() {
