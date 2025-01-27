@@ -15,20 +15,11 @@ class GetPaymentConsentsViewController: UITableViewController {
     private lazy var dataSource: UITableViewDiffableDataSource = UITableViewDiffableDataSource<String, String>(tableView: tableView) { [weak self] tableView, indexPath, itemIdentifier in
         guard let self else { return UITableViewCell() }
         let consent = self.items[indexPath.row]
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) else {
-            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
-            configCell(cell, consent: consent)
-            return cell
-        }
-        configCell(cell, consent: consent)
-        return cell
-    }
-    
-    private func configCell(_ cell: UITableViewCell, consent: AWXPaymentConsent) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         guard let card = consent.paymentMethod?.card,
               let brand = card.brand else {
             assert(false, "invalid card consent")
-            return
+            return cell
         }
         cell.textLabel?.textColor = .awxTextPrimary
         cell.textLabel?.text = "\(brand.capitalized) •••• \(card.last4 ?? "")"
@@ -37,6 +28,7 @@ class GetPaymentConsentsViewController: UITableViewController {
             image = self.image(for: cardBrand.type)
         }
         cell.imageView?.image = image
+        return cell
     }
     
     private func image(for brand: AWXBrandType) -> UIImage? {
@@ -127,7 +119,7 @@ class GetPaymentConsentsViewController: UITableViewController {
                 items = response.items.filter { $0.paymentMethod?.type == AWXCardKey }
                 performUpdates()
             } catch {
-                showAlert(message: String(describing:error))
+                showAlert(message: error.localizedDescription)
             }
             refreshControl?.endRefreshing()
             activityIndicator.stopAnimating()

@@ -25,4 +25,6 @@ extension String {
     }
 }
 
-extension String: @retroactive Error {}
+extension String: @retroactive Error {
+    var localizedDescription: String { self }
+}

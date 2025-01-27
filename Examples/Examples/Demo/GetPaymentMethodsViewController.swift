@@ -52,7 +52,7 @@ class GetPaymentMethodsViewController: UITableViewController {
                     }
                 }
             } catch {
-                print("Failed to fetch image: \(error)")
+                print("Failed to fetch image: \(error.localizedDescription)")
             }
         }
     }
@@ -86,7 +86,6 @@ class GetPaymentMethodsViewController: UITableViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(onRefreshControlTriggered), for: .valueChanged)
         tableView.refreshControl = refreshControl
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         
         tableView.addSubview(activityIndicator)
         
@@ -118,7 +117,7 @@ class GetPaymentMethodsViewController: UITableViewController {
                 items = response.items
                 performUpdates()
             } catch {
-                showAlert(message: String(describing:error))
+                showAlert(message: error.localizedDescription)
             }
             refreshControl?.endRefreshing()
             activityIndicator.stopAnimating()
