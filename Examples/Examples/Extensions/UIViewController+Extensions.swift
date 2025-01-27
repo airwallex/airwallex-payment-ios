@@ -64,7 +64,7 @@ extension UIViewController {
 }
 
 extension UIViewController {
-    private static var tagForActivityIndicator = 2025
+    private static let tagForActivityIndicator = 2025
     func startLoading() {
         view.isUserInteractionEnabled = false
         guard let indicator = view.viewWithTag(Self.tagForActivityIndicator) as? UIActivityIndicatorView  else {

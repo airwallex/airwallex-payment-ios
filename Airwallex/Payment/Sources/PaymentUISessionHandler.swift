@@ -44,6 +44,11 @@ public class PaymentUISessionHandler: NSObject {
         actionProvider = AWXDefaultProvider(delegate: self, session: session)
     }
     
+    /// This init method typically works with low-level API integration for now.
+    /// - Parameters:
+    ///   - session: payment session
+    ///   - viewController: hosting view controller - where the payment launched
+    ///   - actionProviderCreater: a closure to create/start/return a provider for the payment
     public init(session: AWXSession,
          viewController: UIViewController,
          actionProviderCreater: (PaymentUISessionHandler) -> AWXDefaultProvider) {
