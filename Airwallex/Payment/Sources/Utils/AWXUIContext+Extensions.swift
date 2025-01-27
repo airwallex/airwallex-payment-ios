@@ -38,4 +38,37 @@ public extension AWXUIContext {
         nav.navigationBar.compactAppearance = appearance
         hostingVC.present(nav, animated: true)
     }
+    
+    enum LaunchStyle {
+        case push
+        case present
+    }
+    
+    @MainActor func launchPayment(from hostingVC: UIViewController, style: LaunchStyle = .push) {
+        let viewModel = AWXPaymentMethodListViewModel(
+            session: session,
+            apiClient: AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
+        )
+        let provider = PaymentMethodProvider(provider: viewModel)
+        let paymentVC = PaymentMethodsViewController(methodProvider: provider)
+        
+        switch style {
+        case .push:
+            guard let nav = hostingVC.navigationController else {
+                fallthrough
+            }
+            nav.pushViewController(paymentVC, animated: true)
+        case .present:
+            let nav = UINavigationController(rootViewController: paymentVC)
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithDefaultBackground()
+            appearance.backgroundColor = UIColor.awxBackgroundHighlight // Set your desired color
+            appearance.shadowColor = UIColor.awxBorderDecorative
+            
+            nav.navigationBar.standardAppearance = appearance
+            nav.navigationBar.scrollEdgeAppearance = appearance
+            nav.navigationBar.compactAppearance = appearance
+            hostingVC.present(nav, animated: true)
+        }
+    }
 }

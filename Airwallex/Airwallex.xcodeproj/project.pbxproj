@@ -585,6 +585,7 @@
 		C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Logging.h"; sourceTree = "<group>"; };
 		C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Logging.m"; sourceTree = "<group>"; };
 		CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D81EAFA42D40F46600B44784 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodProvider.swift; sourceTree = "<group>"; };
 		D84E9A262D0C3652006B3421 /* PaymentUISessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentUISessionHandler.swift; sourceTree = "<group>"; };
 		D888268E2D12D68B00115198 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
@@ -897,10 +898,6 @@
 				5775CEF726E5DF4F00C6AFE3 /* AWXAPIResponse.m */,
 				5775CED726E5DF4E00C6AFE3 /* AWXLogger.h */,
 				5775CEF126E5DF4F00C6AFE3 /* AWXLogger.m */,
-				5775CED626E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.h */,
-				5775CED526E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.m */,
-				5775CEE926E5DF4E00C6AFE3 /* AWXPaymentConsentResponse.h */,
-				5775CEFB26E5DF4F00C6AFE3 /* AWXPaymentConsentResponse.m */,
 				5775CEE126E5DF4E00C6AFE3 /* AWXPaymentMethodCell.h */,
 				5775CECE26E5DF4D00C6AFE3 /* AWXPaymentMethodCell.m */,
 				5775CED026E5DF4D00C6AFE3 /* AWXPaymentMethodListViewController.h */,
@@ -1082,6 +1079,10 @@
 				3C579F6C27F4148800840A3B /* Internal */,
 				5775CEDE26E5DF4E00C6AFE3 /* Core.h */,
 				5775CEE626E5DF4E00C6AFE3 /* AWXForm.h */,
+				5775CED626E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.h */,
+				5775CED526E5DF4E00C6AFE3 /* AWXPaymentConsentRequest.m */,
+				5775CEE926E5DF4E00C6AFE3 /* AWXPaymentConsentResponse.h */,
+				5775CEFB26E5DF4F00C6AFE3 /* AWXPaymentConsentResponse.m */,
 				3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */,
 				184169D629C4347800B02D96 /* UIColor+AWXTheme.h */,
 				184169D529C4347800B02D96 /* UIColor+AWXTheme.m */,
@@ -1268,6 +1269,7 @@
 			isa = PBXGroup;
 			children = (
 				D8F303232D1ABAB100D29B49 /* Array+Extensions.swift */,
+				D81EAFA42D40F46600B44784 /* UIViewController+Extensions.swift */,
 				D8F303242D1ABAB100D29B49 /* AWXUIContext+Extensions.swift */,
 				D8F303252D1ABAB100D29B49 /* Bundle+Extensions.swift */,
 				D8F3032E2D1ABDB600D29B49 /* AWXBrandType+Extensions.swift */,

@@ -11,6 +11,7 @@
 #import "AirwallexExamplesKeys.h"
 #import "Examples-Swift.h"
 #import "WXApi.h"
+#import <Airwallex/AWXAPIClient.h>
 
 @interface AppDelegate ()<WXApiDelegate>
 
@@ -31,11 +32,7 @@
                   logBlock:^(NSString *_Nonnull log) {
                       NSLog(@"WeChat Log: %@", log);
                   }];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self loadCartView];
-    });
-
+    [Airwallex setMode:[AirwallexExamplesKeys shared].environment];
     return YES;
 }
 
@@ -46,29 +43,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-#pragma mark - UI
-
-- (void)loadCartView {
-    UIViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] createCartViewController];
-    [self perform:controller];
-}
-
-- (void)perform:(UIViewController *)controller {
-    UIViewController *previousRootViewController = self.window.rootViewController;
-    [previousRootViewController dismissViewControllerAnimated:NO
-                                                   completion:^{
-                                                       [previousRootViewController.view removeFromSuperview];
-                                                   }];
-    self.window.rootViewController = controller;
-    [UIView transitionWithView:self.window
-                      duration:0.25
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.window.rootViewController = controller;
-                    }
-                    completion:nil];
 }
 
 #pragma mark - WXApiDelegate
