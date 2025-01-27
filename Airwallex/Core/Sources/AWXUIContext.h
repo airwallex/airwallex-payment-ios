@@ -13,11 +13,6 @@
 
 @class AWXWeChatPaySDKResponse, AWXPaymentMethodListViewController, AWXCardViewController, AWXPaymentViewController, AWXShippingViewController, AWXPaymentIntent, AWXPlaceDetails;
 
-typedef NS_CLOSED_ENUM(NSUInteger, AWXPaymentLaunchStyle) {
-    AWXPaymentLaunchStylePush,
-    AWXPaymentLaunchStylePresent,
-};
-
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -60,9 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
  Cureent session to handle.
  */
 @property (nonatomic, strong) AWXSession *session;
-
-/// launch style of Airwallex Payment UI
-@property (nonatomic, assign) AWXPaymentLaunchStyle launchStyle;
 
 /**
  Convenience constructor for a context.

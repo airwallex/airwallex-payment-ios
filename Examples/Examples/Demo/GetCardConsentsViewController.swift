@@ -218,19 +218,20 @@ class GetPaymentConsentsViewController: UITableViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    private func descriptionForConsent(_ methodType: AWXPaymentConsent) -> String {
-        var dict = [String: Any]()
-        dict["id"] = methodType.id
-        dict["customerId"] = methodType.customerId
-        dict["status"] = methodType.status
-        dict["createdAt"] = methodType.createdAt
-        dict["updatedAt"] = methodType.updatedAt
-        dict["paymentMethod"] = methodType.paymentMethod?.encodeToJSON()
-        dict["nextTriggeredBy"] = methodType.nextTriggeredBy
-        dict["merchantTriggerReason"] = methodType.merchantTriggerReason
-        dict["requiresCVC"] = methodType.requiresCVC
-        dict["clientSecret"] = methodType.clientSecret
-        return String(describing: dict)
+    private func descriptionForConsent(_ consent: AWXPaymentConsent) -> String {
+        var result = "AWXPaymentConsent:\n"
+        result += "- ID: \(consent.id)\n"
+        result += "- Request ID: \(consent.requestId)\n"
+        result += "- Customer ID: \(consent.customerId)\n"
+        result += "- Status: \(consent.status)\n"
+        result += "- Payment Method: \(consent.paymentMethod?.type ?? "None")\n"
+        result += "- Next Triggered By: \(consent.nextTriggeredBy)\n"
+        result += "- Merchant Trigger Reason: \(consent.merchantTriggerReason)\n"
+        result += "- Requires CVC: \(consent.requiresCVC ? "Yes" : "No")\n"
+        result += "- Created At: \(consent.createdAt)\n"
+        result += "- Updated At: \(consent.updatedAt)\n"
+        result += "- Client Secret: \(consent.clientSecret)\n"
+        return result
     }
     
 }

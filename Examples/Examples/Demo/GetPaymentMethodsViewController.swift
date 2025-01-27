@@ -216,16 +216,27 @@ class GetPaymentMethodsViewController: UITableViewController {
     }
     
     private func descriptionForMethodType(_ methodType: AWXPaymentMethodType) -> String {
-        var dict = [String: Any]()
-        dict["name"] = methodType.name
-        dict["displayname"] = methodType.displayName
-        dict["transactionMode"] = methodType.transactionMode
-        dict["flows"] = methodType.flows
-        dict["transactionCurrencies"] = methodType.transactionCurrencies
-        dict["active"] = methodType.active
-        dict["hasSchema"] = methodType.hasSchema
-        dict["cardSchemes"] = methodType.cardSchemes.map { $0.name }
-        return String(describing: dict)
+        var output = ""
+        output += "Payment Method Type:\n"
+        output += "- Name: \(methodType.name)\n"
+        output += "- Display Name: \(methodType.displayName)\n"
+        output += "- Transaction Mode: \(methodType.transactionMode)\n"
+        
+        let flowsDescription = methodType.flows.isEmpty ? "N/A" : methodType.flows.joined(separator: ", ")
+        output += "- Flows: \(flowsDescription)\n"
+        
+        let currenciesDescription = methodType.transactionCurrencies.isEmpty ? "N/A" : methodType.transactionCurrencies.joined(separator: ", ")
+        output += "- Transaction Currencies: \(currenciesDescription)\n"
+        
+        output += "- Active: \(methodType.active)\n"
+        output += "- Resources-logoURL: \(methodType.resources.logoURL)\n"
+        output += "- Resources-hasSchema: \(methodType.resources.hasSchema)\n"
+        output += "- Has Schema: \(methodType.hasSchema)\n"
+        
+        let cardSchemesDescription = methodType.cardSchemes.isEmpty ? "N/A" : methodType.cardSchemes.map { $0.name }.joined(separator: ", ")
+        output += "- Supported Card Schemes: \(cardSchemesDescription)\n"
+        
+        return output
     }
     
 }
