@@ -64,13 +64,11 @@ pod install
 ```
 ### Swift Package Manager
 Airwallex for iOS 可以通过 Swift 包管理器获取。要将其集成到您的项目中，请按照以下步骤操作：
-1. 添加包依赖
-请[参阅 Apple 的指南](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)了解如何在 Xcode 中添加包依赖。
-2. 仓库 URL
-使用以下 URL 获取 Airwallex 包：
-https://github.com/airwallex/airwallex-payment-ios
-3. 版本要求
-确保您指定的版本为 5.7.0 或更高版本。
+1. 参阅Apple的[Adding Package Dependencies to Your App](
+https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app
+)指南了解如何在Xcode中添加包依赖
+2. 使用`https://github.com/airwallex/airwallex-payment-ios`作为repository URL
+3. 确保指定的版本为`5.7.0`或更高
 
 ### 可集成的组件
 您可以添加 `Airwallex` 以包含所有组件，或者根据您的支付需求，有选择地将以下组件添加到您的项目中：
