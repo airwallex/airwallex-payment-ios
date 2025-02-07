@@ -80,6 +80,8 @@ https://github.com/airwallex/airwallex-payment-ios
 - `AirwallexRedirect`: 支持通过 url/deeplink 重定向进行支付。
 - `AirwallexWeChatPay`: 提供本地化的微信支付体验。
 
+因为`WechatOpenSDK`是一个使用`Objective-C`编写的静态库，当你集成`AirwallexWeChatPay`的时候，你可能需要在`Other Linker Flags`中添加 `-ObjC`来保证微信支付的正常工作 
+
 ### Swift
 
 即使`Airwallex`是用Objective-C编写的，它也可以轻松地用在Swift中。如果您使用[CocoaPods](https://cocoapods.org/)，请将以下行添加到[Podfile](https://guides.cocoapods.org/using/using-cocoapods.html)中：
