@@ -57,7 +57,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         }
     }
     
-    private lazy var storeAPIClient = DemoStoreAPIClient()
+    private lazy var storeAPIClient = Airwallex.apiClient
     private lazy var awxClient = AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
     private lazy var items = [AWXPaymentMethodType]()
     

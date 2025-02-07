@@ -155,7 +155,7 @@ class SettingsViewController: UIViewController {
     
     private lazy var keyboardHandler = KeyboardHandler()
     
-    private lazy var customerFetcher = DemoStoreAPIClient()
+    private lazy var customerFetcher = Airwallex.apiClient
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -346,7 +346,7 @@ private extension SettingsViewController {
                 secondaryAction: { [weak self] _ in
                     guard let self else { return }
                     self.startLoading()
-                    self.customerFetcher.createCustomer(
+                    let request = CustomerRequest(
                         firstName: "Jason",
                         lastName: "Wang",
                         email: "john.doe@airwallex.com",
@@ -356,19 +356,19 @@ private extension SettingsViewController {
                                          "first_successful_order_date": "2019-09-18"],
                         metadata: ["id": 1],
                         apiKey: AirwallexExamplesKeys.shared().apiKey,
-                        clientID: AirwallexExamplesKeys.shared().clientId,
-                        completion: { customer, error in
-                            DispatchQueue.main.async {
-                                guard let customer else {
-                                    self.showAlert(message: error?.localizedDescription)
-                                    return
-                                }
+                        clientID: AirwallexExamplesKeys.shared().clientId
+                    )
+                    self.customerFetcher.createCustomer(
+                        request: request) { result in
+                            self.stopLoading()
+                            switch result {
+                            case .success(let customer):
                                 AirwallexExamplesKeys.shared().customerId = customer.id
                                 self.setupCustomerIDGenerator()
-                                self.stopLoading()
+                            case .failure(let error):
+                                self.showAlert(message: error.localizedDescription)
                             }
                         }
-                    )
                 }
             )
             customerIDGenerator.setup(viewModel)
