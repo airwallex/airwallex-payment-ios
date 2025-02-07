@@ -101,7 +101,6 @@ let package = Package(
                 .linkedLibrary("z"),        // Links libz (zlib)
                 .linkedLibrary("sqlite3"),  // Links libsqlite3
                 .linkedLibrary("c++"),       // Links libc++
-                .unsafeFlags(["-ObjC", "-all_load"]),
             ]
         ),
         .testTarget(
