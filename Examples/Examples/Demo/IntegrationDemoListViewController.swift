@@ -172,7 +172,7 @@ class IntegrationDemoListViewController: UIViewController {
     
     let integrationType: IntegrationType
     
-    private let apiClient: APIClient = DemoStoreAPIClient()
+    private lazy var apiClient = Airwallex.apiClient
     
     private lazy var applePayOptions: AWXApplePayOptions = {
         let options = AWXApplePayOptions(merchantIdentifier: applePayMerchantId)

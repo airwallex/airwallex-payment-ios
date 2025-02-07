@@ -16,6 +16,17 @@ protocol APIClient {
     func createCustomer(request: CustomerRequest, completion: @escaping (Result<Customer, Error>) -> Void)
 }
 
+extension Airwallex {
+    static var apiClient: APIClient {
+        switch Airwallex.mode() {
+        case .demoMode, .stagingMode:
+            return DemoStoreAPIClient()
+        case .productionMode:
+            return DirectAPIClient()
+        }
+    }
+}
+
 @objc protocol CustomerFetchable {
     func createCustomer(
         firstName: String?,
