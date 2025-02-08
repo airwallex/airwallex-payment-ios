@@ -1,0 +1,4 @@
+framework module WechatOpenSDKDynamic {
+  umbrella header "WechatOpenSDKDynamic.h"
+  export *
+}

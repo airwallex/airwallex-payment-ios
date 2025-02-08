@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import <Airwallex/AWXViewController.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WechatPayViewController : UIViewController
+@interface WechatPayViewController : AWXViewController
 
 @end
 

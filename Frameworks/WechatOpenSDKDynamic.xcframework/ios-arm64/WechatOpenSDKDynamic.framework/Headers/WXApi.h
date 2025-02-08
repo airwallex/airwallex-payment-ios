@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WXApiObject.h"
+#import <WechatOpenSDKDynamic/WXApiObject.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

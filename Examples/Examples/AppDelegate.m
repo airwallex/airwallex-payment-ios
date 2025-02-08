@@ -10,7 +10,7 @@
 #import "AWXTheme.h"
 #import "AirwallexExamplesKeys.h"
 #import "Examples-Swift.h"
-#import "WXApi.h"
+@import WechatOpenSDKDynamic;
 
 @interface AppDelegate ()<WXApiDelegate>
 

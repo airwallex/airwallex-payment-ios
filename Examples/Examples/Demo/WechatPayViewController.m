@@ -7,8 +7,8 @@
 //
 
 #import "WechatPayViewController.h"
-#import "WXApi.h"
 #import <Airwallex/Core.h>
+@import WechatOpenSDKDynamic;
 
 @interface WechatPayViewController ()
 
@@ -24,6 +24,7 @@
 @property (strong, nonatomic, nonnull) IBOutlet UITextField *signTextField;
 @property (strong, nonatomic, nonnull) IBOutlet UITextField *timestampTextField;
 @property (strong, nonatomic, nonnull) IBOutlet AWXActionButton *submitButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
@@ -83,6 +84,22 @@
             }
             // Succeed to pay
         }];
+}
+
+#pragma mark -
+
+- (UIScrollView *)activeScrollView {
+    return self.scrollView;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self registerKeyboard];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self unregisterKeyboard];
 }
 
 @end
