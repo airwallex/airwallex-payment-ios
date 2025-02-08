@@ -10,7 +10,7 @@
 			<key>LibraryIdentifier</key>
 			<string>ios-arm64_armv7</string>
 			<key>LibraryPath</key>
-			<string>libWechatOpenSDK.a</string>
+			<string>AirwallexWeChatPay.dylib</string>
 			<key>SupportedArchitectures</key>
 			<array>
 				<string>arm64</string>
@@ -25,7 +25,7 @@
 			<key>LibraryIdentifier</key>
 			<string>ios-arm64_i386_x86_64-simulator</string>
 			<key>LibraryPath</key>
-			<string>libWechatOpenSDK.a</string>
+			<string>AirwallexWeChatPay.dylib</string>
 			<key>SupportedArchitectures</key>
 			<array>
 				<string>arm64</string>

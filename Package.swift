@@ -33,9 +33,6 @@ let package = Package(
             targets: ["AirwallexWeChatPay"]
         )
     ],
-    dependencies: [
-        .package(url: "https://github.com/weiping-awx/WeChatOpenSDKWrapper.git", exact: "0.0.2")
-    ],
     targets: [
         .binaryTarget(
             name: "AirwallexRisk",
@@ -44,6 +41,10 @@ let package = Package(
         .binaryTarget(
             name: "AirTracker",
             path: "Frameworks/AirTracker.xcframework"
+        ),
+        .binaryTarget(
+            name: "WechatOpenSDK",
+            path: "Frameworks/WechatOpenSDK.xcframework"
         ),
         .target(
             name: "AirwallexCore",
@@ -89,7 +90,7 @@ let package = Package(
             name: "AirwallexWeChatPay",
             dependencies: [
                 "AirwallexCore",
-                .product(name: "WeChatOpenSDKWrapper", package: "WeChatOpenSDKWrapper"),
+                "WechatOpenSDK"
             ],
             path: "Airwallex/WeChatPay",
             publicHeadersPath: "",
