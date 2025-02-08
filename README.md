@@ -80,7 +80,7 @@ You can add `Airwallex` to include all components, or selectively add the follow
 - `AirwallexApplePay`: For integrating Apple Pay.    
 - `AirwallexCard`: For card payments.
 - `AirwallexRedirect`: To support payments via url/deeplink redirection.
-- `AirwallexWechatPay`: For a native WeChat Pay experience.
+- `AirwallexWeChatPay`: For a native WeChat Pay experience.
 
 ### Swift
 
