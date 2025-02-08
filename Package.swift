@@ -10,7 +10,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Airwallex",
-            targets: [ "AirwallexCore", "AirwallexApplePay", "AirwallexCard", "AirwallexRedirect", "AirwallexWeChatPay" ]
+            targets: [ "AirwallexCore", "AirwallexApplePay", "AirwallexCard", "AirwallexRedirect", "AirwallexWechatPay" ]
         ),
         .library(
             name: "AirwallexCore",
@@ -29,8 +29,8 @@ let package = Package(
             targets: ["AirwallexRedirect"]
         ),
         .library(
-            name: "AirwallexWeChatPay",
-            targets: ["AirwallexWeChatPay"]
+            name: "AirwallexWechatPay",
+            targets: ["AirwallexWechatPay"]
         )
     ],
     targets: [
@@ -43,8 +43,8 @@ let package = Package(
             path: "Frameworks/AirTracker.xcframework"
         ),
         .binaryTarget(
-            name: "WechatOpenSDK",
-            path: "Frameworks/WechatOpenSDK.xcframework"
+            name: "WechatOpenSDKDynamic",
+            path: "Frameworks/WechatOpenSDKDynamic.xcframework"
         ),
         .target(
             name: "AirwallexCore",
@@ -87,10 +87,10 @@ let package = Package(
             ]
         ),
         .target(
-            name: "AirwallexWeChatPay",
+            name: "AirwallexWechatPay",
             dependencies: [
                 "AirwallexCore",
-                "WechatOpenSDK"
+                .target(name: "WechatOpenSDKDynamic")
             ],
             path: "Airwallex/WeChatPay",
             publicHeadersPath: "",

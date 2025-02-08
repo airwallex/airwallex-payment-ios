@@ -80,9 +80,8 @@ You can add `Airwallex` to include all components, or selectively add the follow
 - `AirwallexApplePay`: For integrating Apple Pay.    
 - `AirwallexCard`: For card payments.
 - `AirwallexRedirect`: To support payments via url/deeplink redirection.
-- `AirwallexWeChatPay`: For a native WeChat Pay experience.
+- `AirwallexWechatPay`: For a native WeChat Pay experience.
 
-You may need to add `-ObjC` to your project's Other Linker Flags when integrating `AirwallexWeChatPay`, as `WechatOpenSDK` is a static library written in Objective-C.
 ### Swift
 
 Even though `Airwallex` is written in Objective-C, it can be used in Swift with no hassle. If you use [CocoaPods](https://cocoapods.org/),  add the following line to your [Podfile](https://guides.cocoapods.org/using/using-cocoapods.html):
