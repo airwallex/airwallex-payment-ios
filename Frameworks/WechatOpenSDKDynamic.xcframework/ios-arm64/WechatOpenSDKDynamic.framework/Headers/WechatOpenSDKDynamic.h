@@ -2,7 +2,7 @@
 //  WechatOpenSDKDynamic.h
 //  WechatOpenSDKDynamic
 //
-//  Created by Weiping Li on 2025/2/8.
+//  Created by Weiping Li on 2025/2/11.
 //
 
 #import <Foundation/Foundation.h>
