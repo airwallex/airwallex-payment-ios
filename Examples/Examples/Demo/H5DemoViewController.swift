@@ -81,12 +81,43 @@ class H5DemoViewController: UIViewController {
     
     private lazy var keyboardHandler = KeyboardHandler()
     
-    private var cancellable: AnyCancellable? = nil
+    private var cancellables = [AnyCancellable]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         customizeNavigationBackButton()
         setupViews()
+        
+        let publishers = [
+            NotificationCenter.default.publisher(for: UITextField.textDidEndEditingNotification, object: paymentURLField.textField),
+            NotificationCenter.default.publisher(for: UITextField.textDidEndEditingNotification, object: referrerURLField.textField)
+        ]
+        Publishers.MergeMany(publishers)
+            .filter { [weak self] _ in
+                guard let self,
+                      let url = self.paymentURLField.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                      !url.isEmpty,
+                      let referrer = self.referrerURLField.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                      !referrer.isEmpty else {
+                    return false
+                }
+                return true
+            }
+            .sink { [weak self] _ in
+                guard let self else { return }
+                self.onNextButtonTapped()
+            }
+            .store(in: &cancellables)
+        
+        NotificationCenter.default.publisher(for: Notification.Name(rawValue: "showSuccessfullVC"))
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                self.navigationController?.popToViewController(self, animated: false)
+                let successVC = SuccessViewController()
+                self.navigationController?.pushViewController(successVC, animated: true)
+            }
+            .store(in: &cancellables)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -140,32 +171,25 @@ class H5DemoViewController: UIViewController {
     }
     
     @objc func onNextButtonTapped() {
-        guard let url = paymentURLField.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-              !url.isEmpty,
+        var url = paymentURLField.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard url.isEmpty == false,
               let referrer = referrerURLField.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
               !referrer.isEmpty else {
             showAlert(message: NSLocalizedString("Please fill in all the fields", comment: localizationComment))
             return
         }
         
-        guard let _ = URL(string: url)?.scheme else {
+        guard let URL  = URL(string: url) else {
             showAlert(message: "Invalid URL")
             return
         }
         
+        // add default scheme for url
+        if URL.scheme == nil {
+            url = "https://" + url
+        }
+        
         let webVC = WebViewController(url: url, referer: referrer)
         navigationController?.pushViewController(webVC, animated: true)
-        
-        cancellable = NotificationCenter.default.publisher(for: Notification.Name(rawValue: "showSuccessfullVC"))
-            .sink {[weak webVC, weak self] _ in
-                guard let self else { return }
-                if let webVC {
-                    webVC.navigationController?.popViewController(animated: true)
-                }
-                
-                let successVC = SuccessViewController()
-                self.navigationController?.pushViewController(successVC, animated: true)
-                self.cancellable = nil
-            }
     }
 }
