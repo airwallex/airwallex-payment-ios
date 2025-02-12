@@ -86,7 +86,7 @@
         }];
 }
 
-#pragma mark -
+#pragma mark - AWXViewController
 
 - (UIScrollView *)activeScrollView {
     return self.scrollView;
