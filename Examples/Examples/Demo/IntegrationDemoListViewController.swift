@@ -117,7 +117,7 @@ class IntegrationDemoListViewController: UIViewController {
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("Pay with card and save card", comment: commentForLocalization),
+            title: titleForPayAndSaveCard,
             action: { [weak self] in
                 self?.payWithCard(saveCard: true)
             }
@@ -135,7 +135,7 @@ class IntegrationDemoListViewController: UIViewController {
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("Pay with Redirect", comment: commentForLocalization),
+            title: titleForPayByRedirection,
             action: { [weak self] in
                 self?.payWithRedirect()
             }
@@ -203,6 +203,9 @@ class IntegrationDemoListViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private lazy var titleForPayAndSaveCard = NSLocalizedString("Pay with card and save card", comment: commentForLocalization)
+    private lazy var titleForPayByRedirection = NSLocalizedString("Pay with Redirect", comment: commentForLocalization)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -286,6 +289,24 @@ private extension IntegrationDemoListViewController {
         )
         
         optionView.setup(viewModel)
+        
+        if integrationType == .API {
+            // show save card and redirect payment method for one-off payment only
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1) {
+                for view in self.bottomStack.arrangedSubviews {
+                    guard let view = view as? UIButton,
+                          let title = view.currentTitle else {
+                        continue
+                    }
+                    if AirwallexExamplesKeys.shared().checkoutMode == .oneOffMode {
+                        view.isHidden = false
+                    } else {
+                        view.isHidden = title == self.titleForPayByRedirection || title == self.titleForPayByRedirection
+                    }
+                    view.alpha = view.isHidden ? 0 : 1
+                }
+            }
+        }
     }
     
     func onSettingButtonTapped() {
