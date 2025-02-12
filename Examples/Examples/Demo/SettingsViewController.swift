@@ -360,13 +360,15 @@ private extension SettingsViewController {
                     )
                     self.customerFetcher.createCustomer(
                         request: request) { result in
-                            self.stopLoading()
-                            switch result {
-                            case .success(let customer):
-                                AirwallexExamplesKeys.shared().customerId = customer.id
-                                self.setupCustomerIDGenerator()
-                            case .failure(let error):
-                                self.showAlert(message: error.localizedDescription)
+                            Task {
+                                self.stopLoading()
+                                switch result {
+                                case .success(let customer):
+                                    AirwallexExamplesKeys.shared().customerId = customer.id
+                                    self.setupCustomerIDGenerator()
+                                case .failure(let error):
+                                    self.showAlert(message: error.localizedDescription)
+                                }
                             }
                         }
                 }
