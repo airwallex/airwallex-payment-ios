@@ -151,7 +151,7 @@ class GetPaymentMethodsViewController: UITableViewController {
             ),
             metadata: ["id": 1],
             returnUrl: AirwallexExamplesKeys.shared().returnUrl,
-            customerID: UserDefaults.standard.string(forKey: kCachedCustomerID),
+            customerID: AirwallexExamplesKeys.shared().customerId,
             paymentMethodOptions: AirwallexExamplesKeys.shared().force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,
             apiKey: AirwallexExamplesKeys.shared().apiKey.nilIfEmpty,
             clientID: AirwallexExamplesKeys.shared().clientId.nilIfEmpty
@@ -172,7 +172,7 @@ class GetPaymentMethodsViewController: UITableViewController {
                 }
                 AWXAPIClientConfiguration.shared().clientSecret = intent.clientSecret
             case .recurringMode:
-                guard let customerId = UserDefaults.standard.string(forKey: kCachedCustomerID) else {
+                guard let customerId = AirwallexExamplesKeys.shared().customerId else {
                     throw "Customer ID is required"
                 }
                 let clientSecret = try await withCheckedThrowingContinuation { continuation in

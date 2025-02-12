@@ -162,7 +162,7 @@ class GetPaymentConsentsViewController: UITableViewController {
     
     private func requestCardConsents() async throws -> AWXGetPaymentConsentsResponse {
         
-        guard let customerId = UserDefaults.standard.string(forKey: kCachedCustomerID) else {
+        guard let customerId = AirwallexExamplesKeys.shared().customerId else {
             throw "Customer ID is required"
         }
         let checkoutMode = AirwallexExamplesKeys.shared().checkoutMode

@@ -157,6 +157,12 @@ class SettingsViewController: UIViewController {
     
     private lazy var customerFetcher = Airwallex.apiClient
     
+    private lazy var environmentOptions = [
+        (env: AirwallexSDKMode.productionMode, title: "Production"),
+        (env: AirwallexSDKMode.demoMode, title: "Demo"),
+        (env: AirwallexSDKMode.stagingMode, title: "Staging")
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -243,8 +249,8 @@ private extension SettingsViewController {
     
     func setupOptionForEnvironment() {
         let env = AirwallexExamplesKeys.shared().environment
-        let optionTitleArr = ["Production", "Demo", "Staging"]
-        let optionTitle = optionTitleArr[env.rawValue]
+        
+        let optionTitle = environmentOptions.first { $0.env == env }!.title
         
         let viewModel = ConfigActionViewModel(
             configName: NSLocalizedString("Environment", comment: pageName),
@@ -252,15 +258,15 @@ private extension SettingsViewController {
             caption: NSLocalizedString("If you switch environment, you will need to restart the app for it to take effect. ", comment: pageName),
             primaryAction: { [weak self] optionView in
                 guard let self else { return }
-                self.showOptions(optionTitleArr, sender: optionView) { index, _ in
-                    guard let environment = AirwallexSDKMode(rawValue: index),
-                          environment != env else {
+                self.showOptions(self.environmentOptions.map { $0.title }, sender: optionView) { index, _ in
+                    let environment = self.environmentOptions[index].env
+                    guard environment != env else {
                         return
                     }
                     AirwallexExamplesKeys.shared().environment = environment
                     Airwallex.setMode(environment)
                     self.setupOptionForEnvironment()
-                    self.showAlert(message: "Resart the app for \(optionTitleArr[index]) to take effect", title: nil) {
+                    self.showAlert(message: "Resart the app for \(self.environmentOptions[index].title) to take effect", title: nil) {
                         exit(0)
                     }
                 }
@@ -419,15 +425,22 @@ private extension SettingsViewController {
 
 private extension SettingsViewController {
     @objc func onResetButtonTapped() {
+        let currentEnv = AirwallexExamplesKeys.shared().environment
         AirwallexExamplesKeys.shared().resetKeys()
+        guard currentEnv == AirwallexExamplesKeys.shared().environment else {
+            // refresh UI
+            reloadData()
+            let envTitle = environmentOptions.first { $0.env == AirwallexExamplesKeys.shared().environment }!.title
+            showAlert(message: "Resart the app for \(envTitle) environment to take effect", title: nil) {
+                exit(0)
+            }
+            return
+        }
         
         // reset api client
         MockAPIClient.shared().apiKey = AirwallexExamplesKeys.shared().apiKey
         MockAPIClient.shared().clientID = AirwallexExamplesKeys.shared().clientId
         MockAPIClient.shared().createAuthenticationToken()
-        
-        // reset SDK environment
-        Airwallex.setMode(AirwallexExamplesKeys.shared().environment)
         
         // refresh UI
         reloadData()
