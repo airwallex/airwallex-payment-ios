@@ -11,12 +11,13 @@ import Airwallex
 import Combine
 
 class H5DemoViewController: UIViewController {
-
+    private let localizationComment = "H5 demo view controller"
+    
     private lazy var topView: TopView = {
         let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
         let viewModel = TopViewModel(
-            title: NSLocalizedString("Launch HTML 5 demo", comment: "H5 demo")
+            title: NSLocalizedString("Launch HTML 5 demo", comment: localizationComment)
         )
         view.setup(viewModel)
         return view
@@ -34,7 +35,7 @@ class H5DemoViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         
         let viewModel = ConfigTextFieldViewModel(
-            displayName: NSLocalizedString("Payment URL", comment: "H5 demo placeholder"),
+            displayName: "Payment URL",
             text: nil,
             caption: nil
         )
@@ -47,7 +48,7 @@ class H5DemoViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         
         let viewModel = ConfigTextFieldViewModel(
-            displayName: NSLocalizedString("Referrer URL", comment: "H5 demo placeholder"),
+            displayName: "Referrer URL",
             text: "https://checkout.airwallex.com",
             caption: nil
         )
@@ -64,7 +65,7 @@ class H5DemoViewController: UIViewController {
     }()
     
     private lazy var nextButton: UIButton = {
-        let view = UIButton(style: .primary, title: NSLocalizedString("Next", comment: "H5 demo next action"))
+        let view = UIButton(style: .primary, title: NSLocalizedString("Next", comment: localizationComment))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onNextButtonTapped), for: .touchUpInside)
         return view
@@ -143,22 +144,16 @@ class H5DemoViewController: UIViewController {
               !url.isEmpty,
               let referrer = referrerURLField.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
               !referrer.isEmpty else {
-            let alert = UIAlertController(
-                title: nil,
-                message: NSLocalizedString("Please fill in all the fields", comment: "H5 demo view controller"),
-                preferredStyle: .alert
-            )
-            alert.addAction(UIAlertAction(
-                title: NSLocalizedString("Sure", comment: "H5 demo view controller"),
-                style: .default)
-            )
-            present(alert, animated: true)
+            showAlert(message: NSLocalizedString("Please fill in all the fields", comment: localizationComment))
             return
         }
         
-        let webVC = WebViewController()
-        webVC.url = url
-        webVC.referer = referrer
+        guard let _ = URL(string: url)?.scheme else {
+            showAlert(message: "Invalid URL")
+            return
+        }
+        
+        let webVC = WebViewController(url: url, referer: referrer)
         navigationController?.pushViewController(webVC, animated: true)
         
         cancellable = NotificationCenter.default.publisher(for: Notification.Name(rawValue: "showSuccessfullVC"))
