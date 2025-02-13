@@ -128,8 +128,8 @@ class GetPaymentConsentsViewController: UITableViewController {
     
     private func createPaymentIntentRequest(customerID: String) -> PaymentIntentRequest {
         PaymentIntentRequest(
-            amount: Decimal(string: AirwallexExamplesKeys.shared().amount)!,
-            currency: AirwallexExamplesKeys.shared().currency,
+            amount: Decimal(string: ExamplesKeys.amount)!,
+            currency: ExamplesKeys.currency,
             order: .init(
                 products: [
                     .init(
@@ -152,21 +152,21 @@ class GetPaymentConsentsViewController: UITableViewController {
                 type: "physical_goods"
             ),
             metadata: ["id": 1],
-            returnUrl: AirwallexExamplesKeys.shared().returnUrl,
+            returnUrl: ExamplesKeys.returnUrl,
             customerID: customerID,
-            paymentMethodOptions: AirwallexExamplesKeys.shared().force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,
-            apiKey: AirwallexExamplesKeys.shared().apiKey.nilIfEmpty,
-            clientID: AirwallexExamplesKeys.shared().clientId.nilIfEmpty
+            paymentMethodOptions: nil,
+            apiKey: ExamplesKeys.apiKey?.nilIfEmpty,
+            clientID: ExamplesKeys.clientId?.nilIfEmpty
         )
     }
     
     private func requestCardConsents() async throws -> AWXGetPaymentConsentsResponse {
         
-        guard let customerId = AirwallexExamplesKeys.shared().customerId else {
+        guard let customerId = ExamplesKeys.customerId else {
             throw "Customer ID is required"
         }
-        let checkoutMode = AirwallexExamplesKeys.shared().checkoutMode
-        guard case .oneOffMode = checkoutMode else {
+        let checkoutMode = ExamplesKeys.checkoutMode
+        guard case .oneOff = checkoutMode else {
             throw "One-off payment is required"
         }
         // we need client secret to generate this API

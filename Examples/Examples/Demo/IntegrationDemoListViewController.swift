@@ -183,7 +183,7 @@ class IntegrationDemoListViewController: UIViewController {
     }()
     
     private var applePayMerchantId: String {
-        switch AirwallexExamplesKeys.shared().environment {
+        switch ExamplesKeys.environment {
         case .stagingMode:
             ""
         case .demoMode:
@@ -282,7 +282,7 @@ private extension IntegrationDemoListViewController {
     func setupCheckoutMode() {
         let viewModel = ConfigActionViewModel(
             configName: NSLocalizedString("Payment type", comment: "mobile SDK demo"),
-            configValue: AirwallexExamplesKeys.shared().checkoutMode.localizedDescription,
+            configValue: ExamplesKeys.checkoutMode.localizedDescription,
             primaryAction: { [weak self] _ in
                 self?.handleUserTapOptionSelectView()
             }
@@ -298,7 +298,7 @@ private extension IntegrationDemoListViewController {
                           let title = view.currentTitle else {
                         continue
                     }
-                    if AirwallexExamplesKeys.shared().checkoutMode == .oneOffMode {
+                    if ExamplesKeys.checkoutMode == .oneOff {
                         view.isHidden = false
                     } else {
                         view.isHidden = title == self.titleForPayByRedirection || title == self.titleForPayByRedirection
@@ -315,9 +315,9 @@ private extension IntegrationDemoListViewController {
     }
 
     func handleUserTapOptionSelectView() {
-        showOptions(AirwallexCheckoutMode.allCases.map({ $0.localizedDescription }), sender: optionView) { index, _ in
-            guard let checkoutMode = AirwallexCheckoutMode(rawValue: index) else { return }
-            AirwallexExamplesKeys.shared().checkoutMode = checkoutMode
+        showOptions(CheckoutMode.allCases.map({ $0.localizedDescription }), sender: optionView) { index, _ in
+            guard let checkoutMode = CheckoutMode(rawValue: index) else { return }
+            ExamplesKeys.checkoutMode = checkoutMode
             self.setupCheckoutMode()
         }
     }
@@ -431,7 +431,6 @@ private extension IntegrationDemoListViewController {
         testCard.cvc = "333"
         
         Task {
-            AirwallexExamplesKeys.shared().force3DS = force3DS
             do {
                 let session = try await createPaymentSession()
                 
@@ -500,10 +499,10 @@ private extension IntegrationDemoListViewController {
 
 private extension IntegrationDemoListViewController {
     
-    func createPaymentIntent() async throws -> AWXPaymentIntent {
+    func createPaymentIntent(force3DS: Bool = false) async throws -> AWXPaymentIntent {
         let request = PaymentIntentRequest(
-            amount: Decimal(string: AirwallexExamplesKeys.shared().amount)!,
-            currency: AirwallexExamplesKeys.shared().currency,
+            amount: Decimal(string: ExamplesKeys.amount)!,
+            currency: ExamplesKeys.currency,
             order: .init(products: [
                 .init(
                     type: "Free engraving",
@@ -532,11 +531,11 @@ private extension IntegrationDemoListViewController {
                 address: .init(countryCode: "CN", state: "Shanghai", city: "Shanghai", street: "Pudong District", postcode: "100000")
             ), type: "physical_goods"),
             metadata: ["id": 1],
-            returnUrl: AirwallexExamplesKeys.shared().returnUrl,
-            customerID: AirwallexExamplesKeys.shared().customerId,
-            paymentMethodOptions: AirwallexExamplesKeys.shared().force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,
-            apiKey: AirwallexExamplesKeys.shared().apiKey,
-            clientID: AirwallexExamplesKeys.shared().clientId
+            returnUrl: ExamplesKeys.returnUrl,
+            customerID: ExamplesKeys.customerId,
+            paymentMethodOptions: force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,
+            apiKey: ExamplesKeys.apiKey,
+            clientID: ExamplesKeys.clientId
         )
         
         let paymentIntent = try await withCheckedThrowingContinuation { continuation in
@@ -546,14 +545,14 @@ private extension IntegrationDemoListViewController {
     }
     
     func generateClientSecretForRecurringPayment() async throws -> String {
-        guard let customerId = AirwallexExamplesKeys.shared().customerId else {
+        guard let customerId = ExamplesKeys.customerId else {
             throw "Customer ID is not set"
         }
         let secret = try await withCheckedThrowingContinuation { continuation in
             apiClient.generateClientSecret(
                 customerID: customerId,
-                apiKey: AirwallexExamplesKeys.shared().apiKey,
-                clientID: AirwallexExamplesKeys.shared().clientId) { result in
+                apiKey: ExamplesKeys.apiKey,
+                clientID: ExamplesKeys.clientId) { result in
                     continuation.resume(with: result)
                 }
         }
@@ -562,39 +561,37 @@ private extension IntegrationDemoListViewController {
     
     func createPaymentSession() async throws -> AWXSession {
         var paymentSession: AWXSession
-        switch AirwallexExamplesKeys.shared().checkoutMode {
-        case .oneOffMode:
+        switch ExamplesKeys.checkoutMode {
+        case .oneOff:
             let paymentIntent = try await createPaymentIntent()
             AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
             let session = AWXOneOffSession()
             session.paymentIntent = paymentIntent
-            session.autoCapture = AirwallexExamplesKeys.shared().autoCapture
+            session.autoCapture = ExamplesKeys.autoCapture
             paymentSession = session
-        case .recurringMode:
+        case .recurring:
             AWXAPIClientConfiguration.shared().clientSecret = try await generateClientSecretForRecurringPayment()
             let session = AWXRecurringSession()
-            session.setCurrency(AirwallexExamplesKeys.shared().currency)
-            session.setAmount(NSDecimalNumber(string: AirwallexExamplesKeys.shared().amount))
-            session.setCustomerId(AirwallexExamplesKeys.shared().customerId)
-            session.nextTriggerByType = AirwallexExamplesKeys.shared().nextTriggerByType
-            session.setRequiresCVC(AirwallexExamplesKeys.shared().requireCVC)
+            session.setCurrency(ExamplesKeys.currency)
+            session.setAmount(NSDecimalNumber(string: ExamplesKeys.amount))
+            session.setCustomerId(ExamplesKeys.customerId)
+            session.nextTriggerByType = ExamplesKeys.nextTriggerByType
             session.merchantTriggerReason = .unscheduled
             paymentSession = session
-        case .recurringWithIntentMode:
+        case .recurringWithIntent:
             let paymentIntent = try await createPaymentIntent()
             AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
             let session = AWXRecurringWithIntentSession()
             session.paymentIntent = paymentIntent
-            session.nextTriggerByType = AirwallexExamplesKeys.shared().nextTriggerByType
-            session.setRequiresCVC(AirwallexExamplesKeys.shared().requireCVC)
-            session.autoCapture = AirwallexExamplesKeys.shared().autoCapture
+            session.nextTriggerByType = ExamplesKeys.nextTriggerByType
+            session.autoCapture = ExamplesKeys.autoCapture
             session.merchantTriggerReason = .scheduled
             paymentSession = session
         }
         paymentSession.billing = shippingAddress
-        paymentSession.countryCode = AirwallexExamplesKeys.shared().countryCode
+        paymentSession.countryCode = ExamplesKeys.countryCode
         paymentSession.applePayOptions = applePayOptions
-        paymentSession.returnURL = AirwallexExamplesKeys.shared().returnUrl
+        paymentSession.returnURL = ExamplesKeys.returnUrl
         return paymentSession
     }
 }

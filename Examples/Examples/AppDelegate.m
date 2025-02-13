@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "AWXTheme.h"
-#import "AirwallexExamplesKeys.h"
 #import "Examples-Swift.h"
 #import "WXApi.h"
 #import <Airwallex/AWXAPIClient.h>
@@ -32,7 +31,6 @@
                   logBlock:^(NSString *_Nonnull log) {
                       NSLog(@"WeChat Log: %@", log);
                   }];
-    [Airwallex setMode:[AirwallexExamplesKeys shared].environment];
     return YES;
 }
 

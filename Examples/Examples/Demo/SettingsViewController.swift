@@ -68,18 +68,6 @@ class SettingsViewController: UIViewController {
         return view
     }()
     
-    private lazy var switchForCVC: ConfigSwitchView = {
-        let view = ConfigSwitchView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var switchFor3DS: ConfigSwitchView = {
-        let view = ConfigSwitchView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var switchForAutoCapture: ConfigSwitchView = {
         let view = ConfigSwitchView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -194,8 +182,6 @@ private extension SettingsViewController {
         
         stack.addArrangedSubview(optionForEnvironment)
         stack.addArrangedSubview(optionForNextTrigger)
-        stack.addArrangedSubview(switchForCVC)
-        stack.addArrangedSubview(switchFor3DS)
         stack.addArrangedSubview(switchForAutoCapture)
         stack.addArrangedSubview(customerIDGenerator)
         
@@ -248,7 +234,7 @@ private extension SettingsViewController {
     }
     
     func setupOptionForEnvironment() {
-        let env = AirwallexExamplesKeys.shared().environment
+        let env = ExamplesKeys.environment
         
         let optionTitle = environmentOptions.first { $0.env == env }!.title
         
@@ -263,7 +249,7 @@ private extension SettingsViewController {
                     guard environment != env else {
                         return
                     }
-                    AirwallexExamplesKeys.shared().environment = environment
+                    ExamplesKeys.environment = environment
                     Airwallex.setMode(environment)
                     self.setupOptionForEnvironment()
                     self.showAlert(message: "Resart the app for \(self.environmentOptions[index].title) to take effect", title: nil) {
@@ -276,7 +262,7 @@ private extension SettingsViewController {
     }
     
     func setupOptionForNextTrigger() {
-        let option = AirwallexExamplesKeys.shared().nextTriggerByType
+        let option = ExamplesKeys.nextTriggerByType
         let optionTitleArr = ["Customer", "Merchant"]
         let optionTitle = optionTitleArr[Int(option.rawValue)]
         
@@ -290,7 +276,7 @@ private extension SettingsViewController {
                           option != newValue else {
                         return
                     }
-                    AirwallexExamplesKeys.shared().nextTriggerByType = newValue
+                    ExamplesKeys.nextTriggerByType = newValue
                     self.setupOptionForNextTrigger()
                 }
             }
@@ -299,46 +285,26 @@ private extension SettingsViewController {
     }
     
     func setupSwitches() {
-        switchForCVC.setup(
-            ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires CVC", comment: pageName),
-                isOn: AirwallexExamplesKeys.shared().requireCVC,
-                action: { isOn in
-                    AirwallexExamplesKeys.shared().requireCVC = isOn
-                }
-            )
-        )
-        
-        switchFor3DS.setup(
-            ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires 3DS", comment: pageName),
-                isOn: AirwallexExamplesKeys.shared().force3DS,
-                action: { isOn in
-                    AirwallexExamplesKeys.shared().force3DS = isOn
-                }
-            )
-        )
-        
         switchForAutoCapture.setup(
             ConfigSwitchViewModel(
                 title: NSLocalizedString("Auto capture", comment: pageName),
-                isOn: AirwallexExamplesKeys.shared().autoCapture,
+                isOn: ExamplesKeys.autoCapture,
                 action: { isOn in
-                    AirwallexExamplesKeys.shared().autoCapture = isOn
+                    ExamplesKeys.autoCapture = isOn
                 }
             )
         )
     }
     
     func setupCustomerIDGenerator() {
-        let customerId = AirwallexExamplesKeys.shared().customerId
+        let customerId = ExamplesKeys.customerId
         if let customerId {
             let viewModel = ConfigActionViewModel(
                 configName: NSLocalizedString("Customer ID", comment: pageName),
                 configValue: customerId,
                 secondaryActionIcon: UIImage(systemName: "xmark")?.withTintColor(.awxIconLink, renderingMode: .alwaysOriginal),
                 secondaryAction: { [weak self] _ in
-                    AirwallexExamplesKeys.shared().customerId = nil
+                    ExamplesKeys.customerId = nil
                     self?.setupCustomerIDGenerator()
                 }
             )
@@ -361,8 +327,8 @@ private extension SettingsViewController {
                                          "registration_date": "2019-09-18",
                                          "first_successful_order_date": "2019-09-18"],
                         metadata: ["id": 1],
-                        apiKey: AirwallexExamplesKeys.shared().apiKey,
-                        clientID: AirwallexExamplesKeys.shared().clientId
+                        apiKey: ExamplesKeys.apiKey,
+                        clientID: ExamplesKeys.clientId
                     )
                     self.customerFetcher.createCustomer(
                         request: request) { result in
@@ -370,7 +336,7 @@ private extension SettingsViewController {
                                 self.stopLoading()
                                 switch result {
                                 case .success(let customer):
-                                    AirwallexExamplesKeys.shared().customerId = customer.id
+                                    ExamplesKeys.customerId = customer.id
                                     self.setupCustomerIDGenerator()
                                 case .failure(let error):
                                     self.showAlert(message: error.localizedDescription)
@@ -387,37 +353,37 @@ private extension SettingsViewController {
         fieldForAPIKey.setup(
             ConfigTextFieldViewModel(
                 displayName: "API key",
-                text: AirwallexExamplesKeys.shared().apiKey
+                text: ExamplesKeys.apiKey
             )
         )
         fieldForClientID.setup(
             ConfigTextFieldViewModel(
                 displayName: "Client ID",
-                text: AirwallexExamplesKeys.shared().clientId
+                text: ExamplesKeys.clientId
             )
         )
         fieldForAmount.setup(
             ConfigTextFieldViewModel(
                 displayName: "Amount",
-                text: AirwallexExamplesKeys.shared().amount
+                text: ExamplesKeys.amount
             )
         )
         fieldForCurrency.setup(
             ConfigTextFieldViewModel(
                 displayName: "Currency",
-                text: AirwallexExamplesKeys.shared().currency
+                text: ExamplesKeys.currency
             )
         )
         fieldForCountryCode.setup(
             ConfigTextFieldViewModel(
                 displayName: "Country Code",
-                text: AirwallexExamplesKeys.shared().countryCode
+                text: ExamplesKeys.countryCode
             )
         )
         fieldForReturnURL.setup(
             ConfigTextFieldViewModel(
                 displayName: "Return URL",
-                text: AirwallexExamplesKeys.shared().returnUrl
+                text: ExamplesKeys.returnUrl
             )
         )
     }
@@ -425,12 +391,12 @@ private extension SettingsViewController {
 
 private extension SettingsViewController {
     @objc func onResetButtonTapped() {
-        let currentEnv = AirwallexExamplesKeys.shared().environment
-        AirwallexExamplesKeys.shared().resetKeys()
-        guard currentEnv == AirwallexExamplesKeys.shared().environment else {
+        let currentEnv = ExamplesKeys.environment
+        ExamplesKeys.reset()
+        guard currentEnv == ExamplesKeys.environment else {
             // refresh UI
             reloadData()
-            let envTitle = environmentOptions.first { $0.env == AirwallexExamplesKeys.shared().environment }!.title
+            let envTitle = environmentOptions.first { $0.env == ExamplesKeys.environment }!.title
             showAlert(message: "Resart the app for \(envTitle) environment to take effect", title: nil) {
                 exit(0)
             }
@@ -438,8 +404,8 @@ private extension SettingsViewController {
         }
         
         // reset api client
-        MockAPIClient.shared().apiKey = AirwallexExamplesKeys.shared().apiKey
-        MockAPIClient.shared().clientID = AirwallexExamplesKeys.shared().clientId
+        MockAPIClient.shared().apiKey = ExamplesKeys.apiKey ?? ""
+        MockAPIClient.shared().clientID = ExamplesKeys.clientId ?? ""
         MockAPIClient.shared().createAuthenticationToken()
         
         // refresh UI
@@ -447,14 +413,16 @@ private extension SettingsViewController {
     }
     
     @objc func onSaveButtonTapped() {
+        // TODO: save all
         // switches and configActionView will automatic save when value changed
-        AirwallexExamplesKeys.shared().apiKey = fieldForAPIKey.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        AirwallexExamplesKeys.shared().clientId = fieldForClientID.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        AirwallexExamplesKeys.shared().amount = fieldForAmount.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        AirwallexExamplesKeys.shared().currency = fieldForCurrency.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        AirwallexExamplesKeys.shared().countryCode = fieldForCountryCode.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        AirwallexExamplesKeys.shared().returnUrl = fieldForReturnURL.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        ExamplesKeys.apiKey = fieldForAPIKey.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        ExamplesKeys.clientId = fieldForClientID.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        ExamplesKeys.amount = fieldForAmount.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        ExamplesKeys.currency = fieldForCurrency.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        ExamplesKeys.countryCode = fieldForCountryCode.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        ExamplesKeys.returnUrl = fieldForReturnURL.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
         navigationController?.popViewController(animated: true)
+        MockAPIClient.shared().createAuthenticationToken()
     }
 }

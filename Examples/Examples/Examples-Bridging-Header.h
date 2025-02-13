@@ -8,6 +8,5 @@
 
 #import "AWXAPIClient.h"
 #import "AWXCodable.h"
-#import "AirwallexExamplesKeys.h"
 #import "MockAPIClient.h"
 #import "WXApi.h"
