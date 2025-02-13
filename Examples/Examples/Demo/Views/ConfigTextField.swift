@@ -33,6 +33,7 @@ class ConfigTextField: UIView {
         view.addTarget(self, action: #selector(textDidchange(_:)), for: .editingChanged)
         view.delegate = self
         view.returnKeyType = .done
+        view.clearButtonMode = .whileEditing
         return view
     }()
     

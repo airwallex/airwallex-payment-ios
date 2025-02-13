@@ -126,8 +126,8 @@ class GetPaymentMethodsViewController: UITableViewController {
     
     private func createPaymentIntentRequest() -> PaymentIntentRequest {
         PaymentIntentRequest(
-            amount: Decimal(string: AirwallexExamplesKeys.shared().amount)!,
-            currency: AirwallexExamplesKeys.shared().currency,
+            amount: Decimal(string: ExamplesKeys.amount)!,
+            currency: ExamplesKeys.currency,
             order: .init(
                 products: [
                     .init(
@@ -150,11 +150,11 @@ class GetPaymentMethodsViewController: UITableViewController {
                 type: "physical_goods"
             ),
             metadata: ["id": 1],
-            returnUrl: AirwallexExamplesKeys.shared().returnUrl,
-            customerID: AirwallexExamplesKeys.shared().customerId,
-            paymentMethodOptions: AirwallexExamplesKeys.shared().force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,
-            apiKey: AirwallexExamplesKeys.shared().apiKey.nilIfEmpty,
-            clientID: AirwallexExamplesKeys.shared().clientId.nilIfEmpty
+            returnUrl: ExamplesKeys.returnUrl,
+            customerID: ExamplesKeys.customerId,
+            paymentMethodOptions: nil,
+            apiKey: ExamplesKeys.apiKey?.nilIfEmpty,
+            clientID: ExamplesKeys.clientId?.nilIfEmpty
         )
     }
     
@@ -162,24 +162,24 @@ class GetPaymentMethodsViewController: UITableViewController {
         
         // we need client secret to generate this API
         if AWXAPIClientConfiguration.shared().clientSecret == nil {
-            let checkoutMode = AirwallexExamplesKeys.shared().checkoutMode
+            let checkoutMode = ExamplesKeys.checkoutMode
             switch checkoutMode {
-            case .oneOffMode, .recurringWithIntentMode:
+            case .oneOff, .recurringWithIntent:
                 let intent = try await withCheckedThrowingContinuation { continuation in
                     storeAPIClient.createPaymentIntent(request: createPaymentIntentRequest()) { result in
                         continuation.resume(with: result)
                     }
                 }
                 AWXAPIClientConfiguration.shared().clientSecret = intent.clientSecret
-            case .recurringMode:
-                guard let customerId = AirwallexExamplesKeys.shared().customerId else {
+            case .recurring:
+                guard let customerId = ExamplesKeys.customerId else {
                     throw "Customer ID is required"
                 }
                 let clientSecret = try await withCheckedThrowingContinuation { continuation in
                     storeAPIClient.generateClientSecret(
                         customerID: customerId,
-                        apiKey:  AirwallexExamplesKeys.shared().apiKey.nilIfEmpty,
-                        clientID: AirwallexExamplesKeys.shared().clientId.nilIfEmpty
+                        apiKey:  ExamplesKeys.apiKey?.nilIfEmpty,
+                        clientID: ExamplesKeys.clientId?.nilIfEmpty
                     ) { result in
                         continuation.resume(with: result)
                     }
@@ -189,9 +189,9 @@ class GetPaymentMethodsViewController: UITableViewController {
         }
         
         let request = AWXGetPaymentMethodTypesRequest()
-        request.transactionCurrency = AirwallexExamplesKeys.shared().currency
-        request.transactionMode = (AirwallexExamplesKeys.shared().checkoutMode == .oneOffMode) ? "oneoff" : "recurring"
-        request.countryCode = AirwallexExamplesKeys.shared().countryCode
+        request.transactionCurrency = ExamplesKeys.currency
+        request.transactionMode = (ExamplesKeys.checkoutMode == .oneOff) ? "oneoff" : "recurring"
+        request.countryCode = ExamplesKeys.countryCode
         request.pageNum = 0
         request.pageSize = 1000
         return try await awxClient.send(request) as! AWXGetPaymentMethodTypesResponse

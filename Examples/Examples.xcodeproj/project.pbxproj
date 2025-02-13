@@ -23,10 +23,10 @@
 		1859F19F2C8AA6700017FA4D /* CustomerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F19E2C8AA6700017FA4D /* CustomerRequest.swift */; };
 		18ADC9992C8AACF900A775BB /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADC9982C8AACF900A775BB /* Customer.swift */; };
 		57DCD642269428C800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
-		57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */; };
 		8C8B48417A8089F01476F8CD /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */; };
 		D80F0E222D5C6CF200401BA6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E212D5C6CF200401BA6 /* WebViewController.swift */; };
 		D80F0E242D5C769100401BA6 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E232D5C769100401BA6 /* SuccessViewController.swift */; };
+		D80F0E292D5C856600401BA6 /* ExamplesKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E282D5C856600401BA6 /* ExamplesKeys.swift */; };
 		D8193D5C2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8193D5B2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy */; };
 		D81EAF692D3F474100B44784 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF682D3F474100B44784 /* UIViewController+Extensions.swift */; };
 		D81EAF6C2D3F6C1F00B44784 /* WeChatDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF6B2D3F6C1F00B44784 /* WeChatDemoViewController.swift */; };
@@ -37,7 +37,6 @@
 		D81EAF782D3F8B8F00B44784 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */; };
 		D81EAF7B2D3F8BE200B44784 /* IntegrationDemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */; };
 		D81EAF7D2D3F92D300B44784 /* ConfigActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */; };
-		D81EAF7F2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7E2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift */; };
 		D81EAF812D3FAAC600B44784 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF802D3FAABA00B44784 /* TopView.swift */; };
 		D81EAFA62D41DA1E00B44784 /* GetPaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */; };
 		D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */; };
@@ -83,13 +82,12 @@
 		57CEC83326E6007F00695740 /* Redirect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Redirect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC83526E6008100695740 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57DCD641269428C800705D5C /* Keys */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Keys; sourceTree = "<group>"; };
-		57F9EF83268DCB3600B744B2 /* AirwallexExamplesKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexExamplesKeys.h; sourceTree = "<group>"; };
-		57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirwallexExamplesKeys.m; sourceTree = "<group>"; };
 		617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 		7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		D80F0E212D5C6CF200401BA6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		D80F0E232D5C769100401BA6 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
+		D80F0E282D5C856600401BA6 /* ExamplesKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesKeys.swift; sourceTree = "<group>"; };
 		D8193D5B2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		D81EAF682D3F474100B44784 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D81EAF6B2D3F6C1F00B44784 /* WeChatDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeChatDemoViewController.swift; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 		D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationDemoListViewController.swift; sourceTree = "<group>"; };
 		D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigActionView.swift; sourceTree = "<group>"; };
-		D81EAF7E2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirwallexCheckoutMode+Extensions.swift"; sourceTree = "<group>"; };
 		D81EAF802D3FAABA00B44784 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentViewController.swift; sourceTree = "<group>"; };
@@ -168,8 +165,7 @@
 				57DCD641269428C800705D5C /* Keys */,
 				085BD3EE23CC64B6002E8F27 /* AppDelegate.h */,
 				085BD3EF23CC64B6002E8F27 /* AppDelegate.m */,
-				57F9EF83268DCB3600B744B2 /* AirwallexExamplesKeys.h */,
-				57F9EF84268DCB3600B744B2 /* AirwallexExamplesKeys.m */,
+				D80F0E282D5C856600401BA6 /* ExamplesKeys.swift */,
 				00E501B9264CD2EF00027311 /* Demo */,
 				088F3E8023CEB7E6005AE40F /* API */,
 				182F1CE12C8F0A02000B993D /* Extensions */,
@@ -212,7 +208,6 @@
 				182F1CDF2C8F09F1000B993D /* String+Extensions.swift */,
 				182F1CE62C903B18000B993D /* Encodable+Extensions.swift */,
 				D81EAF682D3F474100B44784 /* UIViewController+Extensions.swift */,
-				D81EAF7E2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift */,
 				D81EAF702D3F8B8F00B44784 /* Font+Extensions.swift */,
 			);
 			path = Extensions;
@@ -480,6 +475,7 @@
 				18ADC9992C8AACF900A775BB /* Customer.swift in Sources */,
 				088F3E8323CEB7FF005AE40F /* MockAPIClient.m in Sources */,
 				D89C7AF32D424C890042FC3B /* SettingsViewController.swift in Sources */,
+				D80F0E292D5C856600401BA6 /* ExamplesKeys.swift in Sources */,
 				085BD3F023CC64B6002E8F27 /* AppDelegate.m in Sources */,
 				D81EAF692D3F474100B44784 /* UIViewController+Extensions.swift in Sources */,
 				D81EAF7B2D3F8BE200B44784 /* IntegrationDemoListViewController.swift in Sources */,
@@ -489,8 +485,6 @@
 				D80F0E222D5C6CF200401BA6 /* WebViewController.swift in Sources */,
 				1859F19F2C8AA6700017FA4D /* CustomerRequest.swift in Sources */,
 				D8BDF8802D3F3B4B00C9AE72 /* HomePageTitleView.swift in Sources */,
-				57F9EF85268DCB3600B744B2 /* AirwallexExamplesKeys.m in Sources */,
-				D81EAF7F2D3FA4ED00B44784 /* AirwallexCheckoutMode+Extensions.swift in Sources */,
 				D89C7AF52D432D900042FC3B /* ConfigSwitchView.swift in Sources */,
 				D81EAF6C2D3F6C1F00B44784 /* WeChatDemoViewController.swift in Sources */,
 				085BD40123CC64B9002E8F27 /* main.m in Sources */,
