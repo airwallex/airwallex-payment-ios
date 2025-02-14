@@ -464,6 +464,7 @@ private extension IntegrationDemoListViewController {
                 card.cvc = alertController.textFields![4].text ?? ""
                 
                 if let message = card.validate() {
+                    // TODO: more validation
                     continuation.resume(throwing: NSError.airwallexError(localizedMessage: message))
                 } else {
                     continuation.resume(returning: card)

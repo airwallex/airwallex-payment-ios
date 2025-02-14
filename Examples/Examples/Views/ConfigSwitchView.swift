@@ -8,10 +8,16 @@
 
 import UIKit
 
-struct ConfigSwitchViewModel {
+class ConfigSwitchViewModel {
     let title: String
-    let isOn: Bool
+    var isOn: Bool
     let action: (Bool) -> Void
+    
+    init(title: String, isOn: Bool, action: @escaping (Bool) -> Void) {
+        self.title = title
+        self.isOn = isOn
+        self.action = action
+    }
 }
 
 class ConfigSwitchView: UIView {
@@ -68,6 +74,7 @@ class ConfigSwitchView: UIView {
     }
     
     @objc func onSwitchToggled(_ sender: UISwitch) {
+        viewModel?.isOn = sender.isOn
         viewModel?.action(sender.isOn)
     }
 }

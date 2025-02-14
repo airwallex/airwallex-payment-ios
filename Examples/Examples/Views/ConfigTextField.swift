@@ -135,11 +135,16 @@ extension ConfigTextField: UITextFieldDelegate {
             topLabel.isHidden = true
         }
         viewModel?.text = textField.text
+        viewModel?.textDidChange?(textField.text)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        viewModel?.textDidEndEditing?(textField.text)
     }
 }
 

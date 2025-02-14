@@ -14,13 +14,20 @@ class ConfigTextFieldViewModel {
     var text: String?
     var caption: String?
     
+    var textDidChange: ((String?) -> Void)?
+    var textDidEndEditing: ((String?) -> Void)?
+    
     init(displayName: String,
          fieldKey: String = "",
          text: String? = nil,
-         caption: String? = nil) {
+         caption: String? = nil,
+         textDidChange: ((String?) -> Void)? = nil,
+         textDidEndEditing: ((String?) -> Void)? = nil) {
         self.fieldKey = fieldKey
         self.displayName = displayName
         self.text = text
         self.caption = caption
+        self.textDidChange = textDidChange
+        self.textDidEndEditing = textDidEndEditing
     }
 }
