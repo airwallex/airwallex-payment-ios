@@ -18,3 +18,14 @@ extension AirwallexSDKMode {
         }
     }
 }
+
+extension AirwallexNextTriggerByType {
+    var displayName: String {
+        switch self {
+        case .customerType:
+            return "Customer"
+        case .merchantType:
+            return "Merchant"
+        }
+    }
+}
