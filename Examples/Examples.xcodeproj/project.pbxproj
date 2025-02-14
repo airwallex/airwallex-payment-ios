@@ -192,9 +192,9 @@
 		182F1CE82C904131000B993D /* Deprecated */ = {
 			isa = PBXGroup;
 			children = (
+				182F1CE42C903747000B993D /* DirectAPIClient.swift */,
 				088F3E8123CEB7FF005AE40F /* MockAPIClient.h */,
 				088F3E8223CEB7FF005AE40F /* MockAPIClient.m */,
-				182F1CE42C903747000B993D /* DirectAPIClient.swift */,
 			);
 			path = Deprecated;
 			sourceTree = "<group>";

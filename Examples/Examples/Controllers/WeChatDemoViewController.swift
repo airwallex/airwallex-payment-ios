@@ -181,7 +181,7 @@ class WeChatDemoViewController: UIViewController {
         print(payReq.partnerId, payReq.prepayId, payReq.package, payReq.nonceStr, payReq.timeStamp, payReq.sign)
         Task {
             let success = await WXApi.send(payReq)
-            showAlert(message: success ? "Succeed to pay" : "Failed to call WeChat Pay")
+            showAlert(message: success ? "WXApi.send(payReq) succeed" : "WXApi.send(payReq) failed")
         }
     }
 }
