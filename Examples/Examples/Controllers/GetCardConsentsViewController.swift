@@ -114,7 +114,7 @@ class GetPaymentConsentsViewController: UITableViewController {
             do {
                 let response = try await requestCardConsents()
                 guard !response.items.isEmpty else {
-                    throw "No data"
+                    throw NSError.airwallexError(localizedMessage: "No consents found")
                 }
                 items = response.items.filter { $0.paymentMethod?.type == AWXCardKey }
                 performUpdates()
@@ -163,13 +163,10 @@ class GetPaymentConsentsViewController: UITableViewController {
     private func requestCardConsents() async throws -> AWXGetPaymentConsentsResponse {
         
         guard let customerId = ExamplesKeys.customerId else {
-            throw "Customer ID is required"
+            throw NSError.airwallexError(localizedMessage: "Customer ID is required")
         }
-        let checkoutMode = ExamplesKeys.checkoutMode
-        guard case .oneOff = checkoutMode else {
-            throw "One-off payment is required"
-        }
-        // we need client secret to generate this API
+        
+        // check client secret before request consents
         if AWXAPIClientConfiguration.shared().clientSecret == nil {
             let intent = try await withCheckedThrowingContinuation { continuation in
                 storeAPIClient.createPaymentIntent(request: createPaymentIntentRequest(customerID: customerId)) { result in
