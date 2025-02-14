@@ -162,14 +162,6 @@ class SettingsViewController: UIViewController {
     
     private lazy var customerFetcher = Airwallex.apiClient
     
-    private lazy var environmentOptions: [AirwallexSDKMode] = {
-        var arr = [ AirwallexSDKMode.demoMode, AirwallexSDKMode.stagingMode]
-        #if !DEBUG
-        arr.insert(AirwallexSDKMode.productionMode, at: 0)
-        #endif
-        return arr
-    }()
-    
     private var cancellables = [AnyCancellable]()
     
     override func viewDidLoad() {
@@ -262,7 +254,10 @@ private extension SettingsViewController {
     
     func setupOptionForEnvironment() {
         let env = ExamplesKeys.environment
-        
+        var environmentOptions = [ AirwallexSDKMode.demoMode, AirwallexSDKMode.stagingMode]
+        #if !DEBUG
+        environmentOptions.insert(AirwallexSDKMode.productionMode, at: 0)
+        #endif
         let optionTitle = environmentOptions.first { $0 == env }!.displayName
         
         let viewModel = ConfigActionViewModel(
@@ -271,8 +266,8 @@ private extension SettingsViewController {
             caption: NSLocalizedString("If you switch environment, you will need to restart the app for it to take effect. ", comment: pageName),
             primaryAction: { [weak self] optionView in
                 guard let self else { return }
-                self.showOptions(self.environmentOptions.map { $0.displayName }, sender: optionView) { index, _ in
-                    let environment = self.environmentOptions[index]
+                self.showOptions(environmentOptions.map { $0.displayName }, sender: optionView) { index, _ in
+                    let environment = environmentOptions[index]
                     guard environment != env else { return }
                     ExamplesKeys.environment = environment
                     Airwallex.setMode(environment)
@@ -285,26 +280,35 @@ private extension SettingsViewController {
     }
     
     func setupOptionForNextTrigger() {
-        let option = ExamplesKeys.nextTriggerByType
-        let optionTitleArr = ["Customer", "Merchant"]
-        let optionTitle = optionTitleArr[Int(option.rawValue)]
         
-        let viewModel = ConfigActionViewModel(
-            configName: NSLocalizedString("Next trigger by", comment: pageName),
-            configValue: optionTitle,
-            primaryAction: { [weak self] optionView in
-                guard let self else { return }
-                self.showOptions(optionTitleArr, sender: optionView) { index, _ in
-                    guard let newValue = AirwallexNextTriggerByType(rawValue: UInt(index)),
-                          option != newValue else {
-                        return
+        if ExamplesKeys.checkoutMode == .oneOff {
+            let viewModel = ConfigActionViewModel(
+                configName: NSLocalizedString("Next trigger by", comment: pageName),
+                configValue: AirwallexNextTriggerByType.customerType.displayName,
+                primaryAction: nil
+            )
+            optionForNextTrigger.setup(viewModel)
+        } else {
+            let option = ExamplesKeys.nextTriggerByType
+            let options = [ AirwallexNextTriggerByType.customerType, AirwallexNextTriggerByType.customerType ]
+
+            let viewModel = ConfigActionViewModel(
+                configName: NSLocalizedString("Next trigger by", comment: pageName),
+                configValue: option.displayName,
+                primaryAction: { [weak self] optionView in
+                    guard let self else { return }
+                    self.showOptions(options.map { $0.displayName }, sender: optionView) { index, _ in
+                        guard let newValue = AirwallexNextTriggerByType(rawValue: UInt(index)),
+                              option != newValue else {
+                            return
+                        }
+                        ExamplesKeys.nextTriggerByType = newValue
+                        self.setupOptionForNextTrigger()
                     }
-                    ExamplesKeys.nextTriggerByType = newValue
-                    self.setupOptionForNextTrigger()
                 }
-            }
-        )
-        optionForNextTrigger.setup(viewModel)
+            )
+            optionForNextTrigger.setup(viewModel)
+        }
     }
     
     func setupSwitches() {
@@ -393,10 +397,6 @@ private extension SettingsViewController {
         guard currentEnv == ExamplesKeys.environment else {
             // refresh UI
             reloadData()
-            let envTitle = environmentOptions.first { $0 == ExamplesKeys.environment }!.displayName
-            showAlert(message: "Resart the app for \(envTitle) environment to take effect", title: nil) {
-                exit(0)
-            }
             return
         }
         

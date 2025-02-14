@@ -45,7 +45,7 @@ class ConfigActionView: UIView {
         view.contentEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         
         view.titleLabel?.font = .awxFont(.caption2, weight: .medium)
-        view.setTitleColor(.secondaryLabel, for: .normal)
+        view.setTitleColor(.awxTextSecondary, for: .normal)
         view.isUserInteractionEnabled = false
         view.backgroundColor = .awxBackgroundPrimary
         return view
@@ -136,7 +136,9 @@ class ConfigActionView: UIView {
         actionButton.setImage(viewModel.secondaryActionIcon, for: .normal)
         actionButton.setTitle(viewModel.secondaryActionTitle, for: .normal)
         
-        tapGesture.isEnabled = viewModel.primaryAction != nil
+        let actionEnabled = viewModel.primaryAction != nil
+        tapGesture.isEnabled = actionEnabled
+        mainLabel.textColor =  actionEnabled ? .awxTextPrimary : .awxTextPlaceholder
         actionButton.isEnabled = viewModel.secondaryAction != nil
     }
     
