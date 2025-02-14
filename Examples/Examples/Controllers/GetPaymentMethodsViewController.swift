@@ -173,7 +173,7 @@ class GetPaymentMethodsViewController: UITableViewController {
                 AWXAPIClientConfiguration.shared().clientSecret = intent.clientSecret
             case .recurring:
                 guard let customerId = ExamplesKeys.customerId else {
-                    throw "Customer ID is required"
+                    throw NSError.airwallexError(localizedMessage: "Customer ID is required")
                 }
                 let clientSecret = try await withCheckedThrowingContinuation { continuation in
                     storeAPIClient.generateClientSecret(

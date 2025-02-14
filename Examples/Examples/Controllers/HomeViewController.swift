@@ -60,8 +60,10 @@ class HomeViewController: UIViewController {
      
     override func viewDidLoad() {
         super.viewDidLoad()
-        ExamplesKeys.loadDefaultKeys()
+        //  initialize
+        ExamplesKeys.loadDefaultKeysIfNilOrEmpty()
         Airwallex.setMode(ExamplesKeys.environment)
+        
         customizeNavigationBackIndicator()
         customizeNavigationBackButton()
         

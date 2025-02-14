@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 enum CheckoutMode: Int, CaseIterable {
     case oneOff
@@ -30,7 +29,13 @@ struct ExamplesKeys {
     static let storagePrefix = "airwallexExamples-"
     
     @RawRepresentableStorage("environment", defaultValue: AirwallexSDKMode.demoMode)
-    static var environment: AirwallexSDKMode
+    static var environment: AirwallexSDKMode {
+        didSet {
+            apiKey = nil
+            clientId = nil
+            loadDefaultKeysIfNilOrEmpty()
+        }
+    }
     
     @RawRepresentableStorage("checkoutMode", defaultValue: CheckoutMode.oneOff)
     static var checkoutMode: CheckoutMode
@@ -72,7 +77,7 @@ struct ExamplesKeys {
     }
 
     /// call at launch
-    static func loadDefaultKeys() {
+    static func loadDefaultKeysIfNilOrEmpty() {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         guard let url = Bundle.main.url(forResource: "Keys", withExtension: "json", subdirectory: "Keys"),
@@ -96,7 +101,7 @@ struct ExamplesKeys {
                 UserDefaults.standard.removeObject(forKey: key)
             }
         }
-        loadDefaultKeys()
+        loadDefaultKeysIfNilOrEmpty()
     }
 }
 
