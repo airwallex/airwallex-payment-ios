@@ -8,6 +8,7 @@
 
 import UIKit
 import Airwallex
+import Combine
 
 class SettingsViewController: UIViewController {
     
@@ -74,9 +75,25 @@ class SettingsViewController: UIViewController {
         return view
     }()
     
-    private lazy var customerIDGenerator: ConfigActionView = {
-        let view = ConfigActionView()
+    private lazy var fieldForCustomerId: ConfigTextField = {
+        let view = ConfigTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let button = customerIdActionButton
+        button.sizeToFit()
+        view.textField.rightView = button
+        view.textField.rightViewMode = .always
+        return view
+    }()
+    
+    private lazy var customerIdActionButton: UIButton = {
+        let view = UIButton(type: .custom)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.adjustsImageWhenHighlighted = false
+        view.setTitleColor(.awxIconLink, for: .normal)
+        view.titleLabel?.font = .awxFont(.body1, weight: .medium)
+        view.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        view.addTarget(self, action: #selector(onCustomerIdActionButtonTapped), for: .touchUpInside)
         return view
     }()
     
@@ -153,11 +170,19 @@ class SettingsViewController: UIViewController {
         return arr
     }()
     
+    private var cancellables = [AnyCancellable]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupViews()
         reloadData()
+        
+        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: fieldForCustomerId.textField)
+            .sink { [weak self] _ in
+                self?.updateCustomerIDGeneratorActionButton()
+            }
+            .store(in: &cancellables)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -185,7 +210,7 @@ private extension SettingsViewController {
         stack.addArrangedSubview(optionForEnvironment)
         stack.addArrangedSubview(optionForNextTrigger)
         stack.addArrangedSubview(switchForAutoCapture)
-        stack.addArrangedSubview(customerIDGenerator)
+        stack.addArrangedSubview(fieldForCustomerId)
         
         stack.addArrangedSubview(fieldForAPIKey)
         stack.addArrangedSubview(fieldForClientID)
@@ -295,55 +320,29 @@ private extension SettingsViewController {
     }
     
     func setupCustomerIDGenerator() {
-        let customerId = ExamplesKeys.customerId
-        if let customerId {
-            let viewModel = ConfigActionViewModel(
-                configName: NSLocalizedString("Customer ID", comment: pageName),
-                configValue: customerId,
-                secondaryActionIcon: UIImage(systemName: "xmark")?.withTintColor(.awxIconLink, renderingMode: .alwaysOriginal),
-                secondaryAction: { [weak self] _ in
-                    ExamplesKeys.customerId = nil
-                    self?.setupCustomerIDGenerator()
-                }
+        fieldForCustomerId.setup(
+            ConfigTextFieldViewModel(
+                displayName: "Customer ID",
+                text: ExamplesKeys.customerId
             )
-            customerIDGenerator.setup(viewModel)
+        )
+        
+        updateCustomerIDGeneratorActionButton()
+    }
+    
+    func updateCustomerIDGeneratorActionButton() {
+        if let id = fieldForCustomerId.textField.text, !id.isEmpty {
+            customerIdActionButton.setImage(
+                UIImage(systemName: "xmark")?.withTintColor(.awxIconLink, renderingMode: .alwaysOriginal),
+                for: .normal
+            )
+            customerIdActionButton.setTitle(nil, for: .normal)
         } else {
-            let viewModel = ConfigActionViewModel(
-                configName: NSLocalizedString("Customer ID", comment: pageName),
-                configValue: nil,
-                secondaryActionIcon: nil,
-                secondaryActionTitle: NSLocalizedString("Generate", comment: pageName),
-                secondaryAction: { [weak self] _ in
-                    guard let self else { return }
-                    self.startLoading()
-                    let request = CustomerRequest(
-                        firstName: "Jason",
-                        lastName: "Wang",
-                        email: "john.doe@airwallex.com",
-                        phoneNumber: "13800000000",
-                        additionalInfo: ["registered_via_social_media": false,
-                                         "registration_date": "2019-09-18",
-                                         "first_successful_order_date": "2019-09-18"],
-                        metadata: ["id": 1],
-                        apiKey: ExamplesKeys.apiKey,
-                        clientID: ExamplesKeys.clientId
-                    )
-                    self.customerFetcher.createCustomer(
-                        request: request) { result in
-                            Task {
-                                self.stopLoading()
-                                switch result {
-                                case .success(let customer):
-                                    ExamplesKeys.customerId = customer.id
-                                    self.setupCustomerIDGenerator()
-                                case .failure(let error):
-                                    self.showAlert(message: error.localizedDescription)
-                                }
-                            }
-                        }
-                }
+            customerIdActionButton.setTitle(
+                NSLocalizedString("Generate", comment: pageName),
+                for: .normal
             )
-            customerIDGenerator.setup(viewModel)
+            customerIdActionButton.setImage(nil, for: .normal)
         }
     }
     
@@ -419,8 +418,44 @@ private extension SettingsViewController {
         ExamplesKeys.currency = fieldForCurrency.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         ExamplesKeys.countryCode = fieldForCountryCode.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         ExamplesKeys.returnUrl = fieldForReturnURL.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        
+        ExamplesKeys.customerId = fieldForCustomerId.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         navigationController?.popViewController(animated: true)
         MockAPIClient.shared().createAuthenticationToken()
+    }
+    
+    @objc func onCustomerIdActionButtonTapped() {
+        if let id = fieldForCustomerId.textField.text, !id.isEmpty {
+            // clear customerId
+            ExamplesKeys.customerId = nil
+            setupCustomerIDGenerator()
+        } else {
+            // generate new customerId
+            self.startLoading()
+            let request = CustomerRequest(
+                firstName: "Jason",
+                lastName: "Wang",
+                email: "john.doe@airwallex.com",
+                phoneNumber: "13800000000",
+                additionalInfo: ["registered_via_social_media": false,
+                                 "registration_date": "2019-09-18",
+                                 "first_successful_order_date": "2019-09-18"],
+                metadata: ["id": 1],
+                apiKey: ExamplesKeys.apiKey,
+                clientID: ExamplesKeys.clientId
+            )
+            self.customerFetcher.createCustomer(
+                request: request) { result in
+                    Task {
+                        self.stopLoading()
+                        switch result {
+                        case .success(let customer):
+                            ExamplesKeys.customerId = customer.id
+                            self.setupCustomerIDGenerator()
+                        case .failure(let error):
+                            self.showAlert(message: error.localizedDescription)
+                        }
+                    }
+                }
+        }
     }
 }
