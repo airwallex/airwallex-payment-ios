@@ -250,9 +250,7 @@ private extension IntegrationDemoListViewController {
         Task {
             startLoading()
             do {
-                let session = try await createPaymentSession()
-                AWXUIContext.shared().delegate = self
-                AWXUIContext.shared().session = session
+                let _ = try await createPaymentSessionAndUpdateUIContext()
                 AWXUIContext.shared().launchPayment(from: self, style: .push)
             } catch {
                 showAlert(message: error.localizedDescription)
@@ -265,10 +263,9 @@ private extension IntegrationDemoListViewController {
         Task {
             startLoading()
             do {
-                let session = try await createPaymentSession()
+                let session = try await createPaymentSessionAndUpdateUIContext()
+                //  custom payment methods by an array of payment method name
                 session.paymentMethods = [ AWXApplePayKey, AWXCardKey, "alipaycn" ]
-                AWXUIContext.shared().delegate = self
-                AWXUIContext.shared().session = session
                 AWXUIContext.shared().launchPayment(from: self, style: .push)
             } catch {
                 showAlert(message: error.localizedDescription)
@@ -281,14 +278,13 @@ private extension IntegrationDemoListViewController {
         Task {
             startLoading()
             do {
-                let session = try await createPaymentSession()
+                let session = try await createPaymentSessionAndUpdateUIContext()
+                //  pass AWXCardKey only
                 session.paymentMethods = [ AWXCardKey ]
                 if let session = session as? AWXOneOffSession {
                     session.hidePaymentConsents = true
                 }
 
-                AWXUIContext.shared().delegate = self
-                AWXUIContext.shared().session = session
                 AWXUIContext.shared().launchPayment(from: self, style: .push)
             } catch {
                 showAlert(message: error.localizedDescription)
@@ -301,10 +297,9 @@ private extension IntegrationDemoListViewController {
         Task {
             startLoading()
             do {
-                let session = try await createPaymentSession()
+                let session = try await createPaymentSessionAndUpdateUIContext()
+                //  pass AWXCardKey only
                 session.paymentMethods = [ AWXCardKey ]
-                AWXUIContext.shared().delegate = self
-                AWXUIContext.shared().session = session
                 AWXUIContext.shared().launchPayment(from: self, style: .present)
             } catch {
                 showAlert(message: error.localizedDescription)
@@ -330,17 +325,10 @@ private extension IntegrationDemoListViewController {
         let testCard = force3DS ? DemoDataSource.testCard3DS : DemoDataSource.testCard
         
         Task {
+            startLoading()
             do {
-                guard let card = try await confirmCardInfo(testCard) else {
-                    // user cancel payment
-                    return
-                }
-                
-                let session = try await createPaymentSession(force3DS: force3DS)
-                
-                AWXUIContext.shared().delegate = self
-                AWXUIContext.shared().session = session
-                
+                let card = try await confirmCardInfo(testCard)
+                let session = try await createPaymentSessionAndUpdateUIContext(force3DS: force3DS)
                 paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
                     let provider = AWXCardProvider(delegate: handler, session: session)
                     provider.confirmPaymentIntent(with: card, billing: DemoDataSource.shippingAddress, saveCard: saveCard)
@@ -349,17 +337,15 @@ private extension IntegrationDemoListViewController {
             } catch {
                 showAlert(message: error.localizedDescription)
             }
+            stopLoading()
         }
     }
     
     func payWithApplePay() {
         Task {
+            startLoading()
             do {
-                let session = try await createPaymentSession()
-                
-                AWXUIContext.shared().delegate = self
-                AWXUIContext.shared().session = session
-                
+                let session = try await createPaymentSessionAndUpdateUIContext()
                 paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
                     let provider = AWXApplePayProvider(delegate: handler, session: session)
                     provider.startPayment()
@@ -368,17 +354,15 @@ private extension IntegrationDemoListViewController {
             } catch {
                 showAlert(message: error.localizedDescription)
             }
+            stopLoading()
         }
     }
     
     func payWithRedirect() {
         Task {
+            startLoading()
             do {
-                let session = try await createPaymentSession()
-                
-                AWXUIContext.shared().delegate = self
-                AWXUIContext.shared().session = session
-                
+                let session = try await createPaymentSessionAndUpdateUIContext()
                 paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
                     let provider = AWXRedirectActionProvider(delegate: handler, session: session)
                     provider.confirmPaymentIntent(with: "paypal", additionalInfo: ["shopper_name": "Hector", "country_code": "CN"])
@@ -387,6 +371,7 @@ private extension IntegrationDemoListViewController {
             } catch {
                 showAlert(message: error.localizedDescription)
             }
+            stopLoading()
         }
     }
     
@@ -421,7 +406,7 @@ private extension IntegrationDemoListViewController {
         textField.leftViewMode = .always
     }
     
-    func confirmCardInfo(_ testCard: AWXCard?) async throws -> AWXCard? {
+    func confirmCardInfo(_ testCard: AWXCard?) async throws -> AWXCard {
         let alertController = UIAlertController(
             title: "Card Info",
             message: "Environment: \(ExamplesKeys.environment.displayName.capitalized)",
@@ -486,7 +471,7 @@ private extension IntegrationDemoListViewController {
             }
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .default) { _ in
-                continuation.resume(returning: nil)
+                continuation.resume(throwing: NSError.airwallexError(localizedMessage: "Payment cancelled."))
             }
             
             // Add actions to the alert
@@ -535,7 +520,8 @@ private extension IntegrationDemoListViewController {
         return secret
     }
     
-    func createPaymentSession(force3DS: Bool = false) async throws -> AWXSession {
+    func createPaymentSessionAndUpdateUIContext(force3DS: Bool = false) async throws -> AWXSession {
+        // create payment session
         var paymentSession: AWXSession
         switch ExamplesKeys.checkoutMode {
         case .oneOff:
@@ -568,6 +554,10 @@ private extension IntegrationDemoListViewController {
         paymentSession.countryCode = ExamplesKeys.countryCode
         paymentSession.applePayOptions = DemoDataSource.applePayOptions
         paymentSession.returnURL = ExamplesKeys.returnUrl
+        
+        // update AWXUIContext
+        AWXUIContext.shared().delegate = self
+        AWXUIContext.shared().session = paymentSession
         return paymentSession
     }
 }
