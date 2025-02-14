@@ -29,13 +29,7 @@ struct ExamplesKeys {
     static let storagePrefix = "airwallexExamples-"
     
     @RawRepresentableStorage("environment", defaultValue: AirwallexSDKMode.demoMode)
-    static var environment: AirwallexSDKMode {
-        didSet {
-            apiKey = nil
-            clientId = nil
-            loadDefaultKeysIfNilOrEmpty()
-        }
-    }
+    static var environment: AirwallexSDKMode
     
     @RawRepresentableStorage("checkoutMode", defaultValue: CheckoutMode.oneOff)
     static var checkoutMode: CheckoutMode
@@ -67,6 +61,64 @@ struct ExamplesKeys {
     @Storage("returnUrl", defaultValue: "")
     static var returnUrl: String
         
+    static var allSettings: AllSettings {
+        get {
+            AllSettings(
+                environment: ExamplesKeys.environment,
+                nextTriggerByType: ExamplesKeys.nextTriggerByType,
+                autoCapture: ExamplesKeys.autoCapture,
+                customerId: ExamplesKeys.customerId,
+                apiKey: ExamplesKeys.apiKey,
+                clientId: ExamplesKeys.clientId,
+                amount: ExamplesKeys.amount,
+                currency: ExamplesKeys.currency,
+                countryCode: ExamplesKeys.countryCode,
+                returnUrl: ExamplesKeys.returnUrl
+            )
+        }
+        set {
+            ExamplesKeys.environment = newValue.environment
+            ExamplesKeys.nextTriggerByType = newValue.nextTriggerByType
+            ExamplesKeys.autoCapture = newValue.autoCapture
+            ExamplesKeys.customerId = newValue.customerId
+            ExamplesKeys.apiKey = newValue.apiKey
+            ExamplesKeys.clientId = newValue.clientId
+            ExamplesKeys.amount = newValue.amount
+            ExamplesKeys.currency = newValue.currency
+            ExamplesKeys.countryCode = newValue.countryCode
+            ExamplesKeys.returnUrl = newValue.returnUrl
+        }
+    }
+    
+    struct AllSettings: CustomStringConvertible {
+        var environment: AirwallexSDKMode
+        var nextTriggerByType: AirwallexNextTriggerByType
+        var autoCapture: Bool
+        var customerId: String?
+        
+        var apiKey: String?
+        var clientId: String?
+        var amount: String
+        var currency: String
+        var countryCode: String
+        var returnUrl: String
+        
+        var description: String {
+                """
+                🌍 AllSettings:
+                ├── Environment: \(environment.displayName)
+                ├── Next Trigger Type: \(nextTriggerByType.displayName)
+                ├── Auto Capture: \(autoCapture)
+                ├── Customer ID: \(customerId ?? "N/A")
+                ├── API Key: \(apiKey ?? "N/A")
+                ├── Client ID: \(clientId ?? "N/A")
+                ├── Amount: \(amount) \(currency)
+                ├── Country Code: \(countryCode)
+                ├── Return URL: \(returnUrl)
+                """
+        }
+    }
+    
     private struct DefaultKeys: Decodable {
         let apiKey: String?
         let clientId: String?

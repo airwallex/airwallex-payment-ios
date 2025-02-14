@@ -164,17 +164,13 @@ class SettingsViewController: UIViewController {
     
     private var cancellables = [AnyCancellable]()
     
+    private lazy var settings = ExamplesKeys.allSettings
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupViews()
         reloadData()
-        
-        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: fieldForCustomerId.textField)
-            .sink { [weak self] _ in
-                self?.updateCustomerIDGeneratorActionButton()
-            }
-            .store(in: &cancellables)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -190,6 +186,7 @@ class SettingsViewController: UIViewController {
 
 private extension SettingsViewController {
     func setupViews() {
+        
         customizeNavigationBackButton()
         view.backgroundColor = .awxBackgroundPrimary
         view.addSubview(scrollView)
@@ -253,7 +250,7 @@ private extension SettingsViewController {
     }
     
     func setupOptionForEnvironment() {
-        let env = ExamplesKeys.environment
+        let env = settings.environment
         var environmentOptions = [ AirwallexSDKMode.demoMode, AirwallexSDKMode.stagingMode]
         #if !DEBUG
         environmentOptions.insert(AirwallexSDKMode.productionMode, at: 0)
@@ -269,9 +266,9 @@ private extension SettingsViewController {
                 self.showOptions(environmentOptions.map { $0.displayName }, sender: optionView) { index, _ in
                     let environment = environmentOptions[index]
                     guard environment != env else { return }
-                    ExamplesKeys.environment = environment
-                    Airwallex.setMode(environment)
-                    //  some keys are stored by environment
+                    self.settings.environment = environment
+                    //  customerId are stored by environment
+                    self.settings.customerId = ExamplesKeys.customerId
                     self.reloadData()
                 }
             }
@@ -289,7 +286,7 @@ private extension SettingsViewController {
             )
             optionForNextTrigger.setup(viewModel)
         } else {
-            let option = ExamplesKeys.nextTriggerByType
+            let option = settings.nextTriggerByType
             let options = [ AirwallexNextTriggerByType.customerType, AirwallexNextTriggerByType.customerType ]
 
             let viewModel = ConfigActionViewModel(
@@ -302,7 +299,7 @@ private extension SettingsViewController {
                               option != newValue else {
                             return
                         }
-                        ExamplesKeys.nextTriggerByType = newValue
+                        self.settings.nextTriggerByType = newValue
                         self.setupOptionForNextTrigger()
                     }
                 }
@@ -315,9 +312,9 @@ private extension SettingsViewController {
         switchForAutoCapture.setup(
             ConfigSwitchViewModel(
                 title: NSLocalizedString("Auto capture", comment: pageName),
-                isOn: ExamplesKeys.autoCapture,
-                action: { isOn in
-                    ExamplesKeys.autoCapture = isOn
+                isOn: settings.autoCapture,
+                action: { [weak self] isOn in
+                    self?.settings.autoCapture = isOn
                 }
             )
         )
@@ -327,10 +324,15 @@ private extension SettingsViewController {
         fieldForCustomerId.setup(
             ConfigTextFieldViewModel(
                 displayName: "Customer ID",
-                text: ExamplesKeys.customerId
+                text: settings.customerId,
+                textDidChange: { [weak self] text in
+                    self?.updateCustomerIDGeneratorActionButton()
+                },
+                textDidEndEditing: { [weak self] text in
+                    self?.settings.customerId = text
+                }
             )
         )
-        
         updateCustomerIDGeneratorActionButton()
     }
     
@@ -354,37 +356,55 @@ private extension SettingsViewController {
         fieldForAPIKey.setup(
             ConfigTextFieldViewModel(
                 displayName: "API key",
-                text: ExamplesKeys.apiKey
+                text: settings.apiKey,
+                textDidEndEditing: { [weak self] text in
+                    self?.settings.apiKey = text
+                }
             )
         )
         fieldForClientID.setup(
             ConfigTextFieldViewModel(
                 displayName: "Client ID",
-                text: ExamplesKeys.clientId
+                text: settings.clientId,
+                textDidEndEditing: { [weak self] text in
+                    self?.settings.clientId = text
+                }
             )
         )
         fieldForAmount.setup(
             ConfigTextFieldViewModel(
                 displayName: "Amount",
-                text: ExamplesKeys.amount
+                text: settings.amount,
+                textDidEndEditing: { [weak self] text in
+                    self?.settings.amount = text ?? ""
+                }
             )
         )
         fieldForCurrency.setup(
             ConfigTextFieldViewModel(
                 displayName: "Currency",
-                text: ExamplesKeys.currency
+                text: settings.currency,
+                textDidEndEditing: { [weak self] text in
+                    self?.settings.currency = text ?? ""
+                }
             )
         )
         fieldForCountryCode.setup(
             ConfigTextFieldViewModel(
                 displayName: "Country Code",
-                text: ExamplesKeys.countryCode
+                text: settings.countryCode,
+                textDidEndEditing: { [weak self] text in
+                    self?.settings.countryCode = text ?? ""
+                }
             )
         )
         fieldForReturnURL.setup(
             ConfigTextFieldViewModel(
                 displayName: "Return URL",
-                text: ExamplesKeys.returnUrl
+                text: settings.returnUrl,
+                textDidEndEditing: { [weak self] text in
+                    self?.settings.returnUrl = text ?? ""
+                }
             )
         )
     }
@@ -392,41 +412,39 @@ private extension SettingsViewController {
 
 private extension SettingsViewController {
     @objc func onResetButtonTapped() {
-        let currentEnv = ExamplesKeys.environment
         ExamplesKeys.reset()
-        guard currentEnv == ExamplesKeys.environment else {
-            // refresh UI
-            reloadData()
-            return
-        }
-        
-        // reset api client
-        MockAPIClient.shared().apiKey = ExamplesKeys.apiKey ?? ""
-        MockAPIClient.shared().clientID = ExamplesKeys.clientId ?? ""
-        MockAPIClient.shared().createAuthenticationToken()
-        
+        settings = ExamplesKeys.allSettings
         // refresh UI
         reloadData()
+        showAlert(message: "Settings cleared") {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc func onSaveButtonTapped() {
-        // TODO: save all
-        // switches and configActionView will automatic save when value changed
-        ExamplesKeys.apiKey = fieldForAPIKey.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        ExamplesKeys.clientId = fieldForClientID.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        ExamplesKeys.amount = fieldForAmount.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        ExamplesKeys.currency = fieldForCurrency.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        ExamplesKeys.countryCode = fieldForCountryCode.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        ExamplesKeys.returnUrl = fieldForReturnURL.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        ExamplesKeys.customerId = fieldForCustomerId.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        navigationController?.popViewController(animated: true)
+        
+        guard NSLocale.isoCountryCodes.contains(where: { $0 == settings.countryCode }) else {
+            showAlert(message: "invalid country code \(settings.countryCode)")
+            return
+        }
+        
+        guard NSLocale.isoCurrencyCodes.contains(where: { $0 == settings.currency }) else {
+            showAlert(message: "invalid currency code \(settings.countryCode)")
+            return
+        }
+        ExamplesKeys.allSettings = settings
         MockAPIClient.shared().createAuthenticationToken()
+        
+        print(settings)
+        showAlert(message: "Settings saved", buttonTitle: "Close") {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc func onCustomerIdActionButtonTapped() {
         if let id = fieldForCustomerId.textField.text, !id.isEmpty {
             // clear customerId
-            ExamplesKeys.customerId = nil
+            settings.customerId = nil
             setupCustomerIDGenerator()
         } else {
             // generate new customerId
@@ -440,8 +458,8 @@ private extension SettingsViewController {
                                  "registration_date": "2019-09-18",
                                  "first_successful_order_date": "2019-09-18"],
                 metadata: ["id": 1],
-                apiKey: ExamplesKeys.apiKey,
-                clientID: ExamplesKeys.clientId
+                apiKey: settings.apiKey,
+                clientID: settings.clientId
             )
             self.customerFetcher.createCustomer(
                 request: request) { result in
@@ -449,7 +467,7 @@ private extension SettingsViewController {
                         self.stopLoading()
                         switch result {
                         case .success(let customer):
-                            ExamplesKeys.customerId = customer.id
+                            self.settings.customerId = customer.id
                             self.setupCustomerIDGenerator()
                         case .failure(let error):
                             self.showAlert(message: error.localizedDescription)

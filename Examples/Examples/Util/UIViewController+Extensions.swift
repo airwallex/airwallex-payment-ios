@@ -33,10 +33,13 @@ extension UIViewController {
         )
     }
     
-    func showAlert(message: String?, title: String? = nil, action: (() -> Void)? = nil) {
+    func showAlert(message: String?,
+                   title: String? = nil,
+                   buttonTitle: String = "OK",
+                   action: (() -> Void)? = nil) {
         guard title != nil || message != nil else { return }
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let closeAction = UIAlertAction(title: NSLocalizedString("OK", comment: "SDK DEMO"), style: .cancel) { _ in
+        let closeAction = UIAlertAction(title: NSLocalizedString(buttonTitle, comment: "SDK DEMO"), style: .default) { _ in
             action?()
         }
         alert.addAction(closeAction)
