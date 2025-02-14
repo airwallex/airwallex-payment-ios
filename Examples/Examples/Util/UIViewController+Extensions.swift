@@ -39,7 +39,7 @@ extension UIViewController {
                    action: (() -> Void)? = nil) {
         guard title != nil || message != nil else { return }
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let closeAction = UIAlertAction(title: NSLocalizedString(buttonTitle, comment: "SDK DEMO"), style: .default) { _ in
+        let closeAction = UIAlertAction(title: NSLocalizedString(buttonTitle, comment: "SDK DEMO"), style: .cancel) { _ in
             action?()
         }
         alert.addAction(closeAction)

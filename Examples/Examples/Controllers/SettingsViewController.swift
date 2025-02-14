@@ -255,7 +255,7 @@ private extension SettingsViewController {
         #if !DEBUG
         environmentOptions.insert(AirwallexSDKMode.productionMode, at: 0)
         #endif
-        let optionTitle = environmentOptions.first { $0 == env }!.displayName
+        let optionTitle = env.displayName
         
         let viewModel = ConfigActionViewModel(
             configName: NSLocalizedString("Environment", comment: pageName),
@@ -412,17 +412,25 @@ private extension SettingsViewController {
 
 private extension SettingsViewController {
     @objc func onResetButtonTapped() {
+        let env = ExamplesKeys.environment
         ExamplesKeys.reset()
         settings = ExamplesKeys.allSettings
         // refresh UI
         reloadData()
+        
+        // exit if needed
+        guard env == ExamplesKeys.environment else {
+            showAlert(message: "Relaunch (manually) required for the new environment to take effect.", buttonTitle: "Exit") {
+                exit(0)
+            }
+            return
+        }
         showAlert(message: "Settings cleared") {
             self.navigationController?.popViewController(animated: true)
         }
     }
     
     @objc func onSaveButtonTapped() {
-        
         guard NSLocale.isoCountryCodes.contains(where: { $0 == settings.countryCode }) else {
             showAlert(message: "invalid country code \(settings.countryCode)")
             return
@@ -432,9 +440,16 @@ private extension SettingsViewController {
             showAlert(message: "invalid currency code \(settings.countryCode)")
             return
         }
-        ExamplesKeys.allSettings = settings
-        MockAPIClient.shared().createAuthenticationToken()
         
+        let env = ExamplesKeys.environment
+        ExamplesKeys.allSettings = settings
+        // exit if needed
+        guard env == ExamplesKeys.environment else {
+            showAlert(message: "Relaunch (manually) required for the new environment to take effect.", buttonTitle: "Exit") {
+                exit(0)
+            }
+            return
+        }
         print(settings)
         showAlert(message: "Settings saved", buttonTitle: "Close") {
             self.navigationController?.popViewController(animated: true)

@@ -41,7 +41,12 @@ extension Airwallex {
     )
 }
 
-
+/// For demo/staging environment if clientId/apiKey is not set, airwallex demo/staging server will use default value configured on server
+/// If you configure it in on client side it will override default configuration on server
+///
+/// `DirectAPIClient` is for debugging purpose in production environment.
+///  For your app, you are recommended to config clientId/apiKey on your own server and let your server
+///  and let your server do the token creation and other communitation with airwallex service for your app
 class DemoStoreAPIClient: APIClient, CustomerFetchable {
     private var demoStoreBaseUrl: String? {
         switch Airwallex.mode() {
