@@ -7,13 +7,13 @@
 //
 
 
-protocol CardConsentCellConfiguring {
-    var image: UIImage? { get }
-    var text: String { get }
-    var buttonAction: () -> Void { get }
-    var actionTitle: String? { get }
-    var actionIcon: UIImage? { get }
-    var highlightable: Bool { get }
+struct CardConsentCellViewModel {
+    let image: UIImage?
+    let text: String
+    let highlightable: Bool
+    let actionTitle: String?
+    let actionIcon: UIImage?
+    let buttonAction: () -> Void
 }
 
 class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -76,9 +76,9 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         }
     }
     
-    private(set) var viewModel: CardConsentCellConfiguring?
+    private(set) var viewModel: CardConsentCellViewModel?
     
-    func setup(_ viewModel: any CardConsentCellConfiguring) {
+    func setup(_ viewModel: CardConsentCellViewModel) {
         self.viewModel = viewModel
         logo.image = viewModel.image
         label.text = viewModel.text

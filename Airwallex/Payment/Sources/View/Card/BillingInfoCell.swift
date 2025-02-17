@@ -9,24 +9,6 @@
 import UIKit
 import Combine
 
-protocol BillingInfoCellConfiguring {
-    var canReuseShippingAddress: Bool { get }
-    var shouldReuseShippingAddress: Bool { get }
-    var firstNameConfigurer: InfoCollectorTextFieldViewModel { get }
-    var lastNameConfigurer: InfoCollectorTextFieldViewModel { get }
-    var countryConfigurer: CountrySelectionViewModel { get }
-    var streetConfigurer: InfoCollectorTextFieldViewModel { get }
-    var stateConfigurer: InfoCollectorTextFieldViewModel { get }
-    var cityConfigurer: InfoCollectorTextFieldViewModel { get }
-    var zipConfigurer: InfoCollectorTextFieldViewModel { get }
-    var phoneConfigurer: InfoCollectorTextFieldViewModel { get }
-    var emailConfigurer: InfoCollectorTextFieldViewModel { get }
-    
-    var errorHintForBillingFields: String? { get }
-    var triggerLayoutUpdate: () -> Void { get }
-    var toggleReuseSelection: () -> Void { get }
-}
-
 class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let titleLabel: UILabel = {
@@ -159,9 +141,9 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private var cancellables = Set<AnyCancellable>()
     
-    private(set) var viewModel: BillingInfoCellConfiguring?
+    private(set) var viewModel: BillingInfoCellViewModel?
     
-    func setup(_ viewModel: BillingInfoCellConfiguring) {
+    func setup(_ viewModel: BillingInfoCellViewModel) {
         self.viewModel = viewModel
         reuseButton.isHidden = !viewModel.canReuseShippingAddress
         reuseButton.isSelected = viewModel.shouldReuseShippingAddress

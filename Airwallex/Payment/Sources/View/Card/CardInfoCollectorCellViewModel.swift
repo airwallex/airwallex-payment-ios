@@ -6,8 +6,7 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-class CardInfoCollectorCellViewModel: CardInfoCollectorCellConfiguring {
-    // MARK: CardInfoCollectorCellConfiguring
+class CardInfoCollectorCellViewModel {
     var nameOnCardConfigurer: InfoCollectorTextFieldViewModel
     
     var triggerLayoutUpdate: () -> Void

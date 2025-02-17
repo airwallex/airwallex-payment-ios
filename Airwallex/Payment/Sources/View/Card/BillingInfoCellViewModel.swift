@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BillingInfoCellViewModel: BillingInfoCellConfiguring {
+class BillingInfoCellViewModel {
     var phoneConfigurer: InfoCollectorTextFieldViewModel
     
     var emailConfigurer: InfoCollectorTextFieldViewModel

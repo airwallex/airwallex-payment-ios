@@ -123,6 +123,7 @@ class CardPaymentConsentSectionController: SectionController {
                     image: image,
                     text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
                     highlightable: true,
+                    actionTitle: nil,
                     actionIcon: UIImage(systemName: "ellipsis")?.rotate(degrees: 90),
                     buttonAction: { [weak self] in
                         self?.showAlertForDelete(consent, indexPath: indexPath)

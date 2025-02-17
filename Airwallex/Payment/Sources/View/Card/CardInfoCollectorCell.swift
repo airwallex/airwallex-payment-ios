@@ -9,16 +9,6 @@
 import UIKit
 import Combine
 
-protocol CardInfoCollectorCellConfiguring {
-    var cardNumberConfigurer: CardNumberTextFieldViewModel { get }
-    var expireDataConfigurer: CardExpireTextFieldViewModel { get }
-    var cvcConfigurer: CardCVCTextFieldViewModel { get }
-    var nameOnCardConfigurer: InfoCollectorTextFieldViewModel { get }
-    
-    var errorHintForCardFields: String? { get }
-    var triggerLayoutUpdate: () -> Void { get }
-}
-
 class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let titleLabel: UILabel = {
@@ -85,9 +75,9 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         return view
     }()
     
-    private(set) var viewModel: CardInfoCollectorCellConfiguring?
+    private(set) var viewModel: CardInfoCollectorCellViewModel?
     
-    func setup(_ viewModel: CardInfoCollectorCellConfiguring) {
+    func setup(_ viewModel: CardInfoCollectorCellViewModel) {
         self.viewModel = viewModel
         numberTextField.setup(viewModel.cardNumberConfigurer)
         expiresTextField.setup(viewModel.expireDataConfigurer)
