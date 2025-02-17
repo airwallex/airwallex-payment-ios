@@ -89,8 +89,7 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
             errorHint = nil
         } catch {
             isValid = false
-            guard let error = error as? String else { return }
-            errorHint = error
+            errorHint = error.localizedDescription
         }
     }
 }
@@ -100,38 +99,38 @@ extension InfoCollectorTextFieldViewModel {
         if !isRequired && (text == nil || text?.isEmpty == true) {
             return
         }
-        let defaultErrorMessage = NSLocalizedString("Invalid \(title ?? "input")", bundle: .payment, comment: "")
+        var defaultErrorMessage = NSLocalizedString("Invalid \(title ?? "input")", bundle: .payment, comment: "")
         guard let textFieldType else {
-            throw defaultErrorMessage
-        }	
+            throw ErrorMessage(rawValue: defaultErrorMessage)
+        }
         switch textFieldType {
         case .firstName:
             guard let text, !text.isEmpty else {
-                throw NSLocalizedString("Please enter your first name", bundle: .payment, comment: "")
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your first name", bundle: .payment, comment: ""))
             }
         case .lastName:
             guard let text, !text.isEmpty else {
-                throw NSLocalizedString("Please enter your last name", bundle: .payment, comment: "")
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your last name", bundle: .payment, comment: ""))
             }
         case .country:
             guard let text, !text.isEmpty else {
-                throw NSLocalizedString("Please enter your country", bundle: .payment, comment: "")
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your country", bundle: .payment, comment: ""))
             }
         case .state:
             guard let text, !text.isEmpty else {
-                throw NSLocalizedString("Invalid state", bundle: .payment, comment: "")
+                throw ErrorMessage(rawValue: NSLocalizedString("Invalid state", bundle: .payment, comment: ""))
             }
         case .city:
             guard let text, !text.isEmpty else {
-                throw NSLocalizedString("Please enter your city", bundle: .payment, comment: "")
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your city", bundle: .payment, comment: ""))
             }
         case .street:
             guard let text, !text.isEmpty else {
-                throw NSLocalizedString("Please enter your street", bundle: .payment, comment: "")
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your street", bundle: .payment, comment: ""))
             }
         case .nameOnCard:
             guard let text, !text.isEmpty else {
-                throw NSLocalizedString("Please enter your card name", bundle: .payment, comment: "")
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your card name", bundle: .payment, comment: ""))
             }
         case .email:
             guard let text, text.isValidEmail else {
@@ -139,7 +138,7 @@ extension InfoCollectorTextFieldViewModel {
             }       
         default:
             guard let text, !text.isEmpty else {
-                throw defaultErrorMessage
+                throw ErrorMessage(rawValue: defaultErrorMessage)
             }
         }
     }

@@ -597,6 +597,7 @@
 		D88826C12D13FCAA00115198 /* PaymentMethodListSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodListSectionController.swift; sourceTree = "<group>"; };
 		D88826C22D13FCD700115198 /* CardPaymentConsentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentConsentSectionController.swift; sourceTree = "<group>"; };
 		D888291A2D15443E00115198 /* ListHeaderFooterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeaderFooterProvider.swift; sourceTree = "<group>"; };
+		D88A5C572D630D81003B7C1A /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		D88C3CDF2D1C128F00E77FFD /* CardExpireTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExpireTextFieldViewModel.swift; sourceTree = "<group>"; };
 		D88C3CE12D1C15CD00E77FFD /* CardCVCTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCVCTextFieldViewModel.swift; sourceTree = "<group>"; };
 		D88C3CE22D1D3DF600E77FFD /* InfoCollectorTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectorTextFieldViewModel.swift; sourceTree = "<group>"; };
@@ -1272,6 +1273,7 @@
 			isa = PBXGroup;
 			children = (
 				D8F303232D1ABAB100D29B49 /* Array+Extensions.swift */,
+				D88A5C572D630D81003B7C1A /* ErrorMessage.swift */,
 				D81EAFA42D40F46600B44784 /* UIViewController+Extensions.swift */,
 				D8F303242D1ABAB100D29B49 /* AWXUIContext+Extensions.swift */,
 				D8F303252D1ABAB100D29B49 /* Bundle+Extensions.swift */,
