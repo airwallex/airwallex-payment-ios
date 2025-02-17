@@ -243,14 +243,14 @@ private extension BillingInfoCell {
             emailTextField
         ]
         
-        Publishers.MergeMany(fields.map { $0.textDidBeginEditingPublisher })
+        Publishers.MergeMany(fields.map { $0.textField.textDidBeginEditingPublisher })
             .sink { [weak self] _ in
                 self?.validateInputAndUpdateLayering(fields)
             }
             .store(in: &cancellables)
         
-        Publishers.MergeMany(fields.map { $0.textDidEndEditingPublisher})
-            .sink { [weak self] textField in
+        Publishers.MergeMany(fields.map { $0.textField.textDidEndEditingPublisher})
+            .sink { [weak self] _ in
                 guard let self, let viewModel = self.viewModel else { return }
                 self.hintLabel.text = viewModel.errorHintForBillingFields
                 self.hintLabel.isHidden = (self.hintLabel.text ?? "").isEmpty

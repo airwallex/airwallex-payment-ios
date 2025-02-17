@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 extension UITextField {
     func update(for fieldType: AWXTextFieldType) {
@@ -70,3 +71,22 @@ extension UITextField {
         delegate = tmp
     }
 }
+
+extension UITextField {
+    
+    var textDidBeginEditingPublisher: AnyPublisher<Notification, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification, object: self)
+            .eraseToAnyPublisher()
+    }
+    
+    var textDidEndEditingPublisher: AnyPublisher<Notification, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidEndEditingNotification, object: self)
+            .eraseToAnyPublisher()
+    }
+    
+    var textDidChangePublisher: AnyPublisher<Notification, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: self)
+            .eraseToAnyPublisher()
+    }
+}
+

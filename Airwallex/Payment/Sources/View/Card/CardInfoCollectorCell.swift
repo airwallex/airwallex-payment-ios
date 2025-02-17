@@ -122,9 +122,9 @@ private extension CardInfoCollectorCell {
         }
         
         Publishers.Merge3(
-            numberTextField.textDidBeginEditingPublisher,
-            expiresTextField.textDidBeginEditingPublisher,
-            cvcTextField.textDidBeginEditingPublisher
+            numberTextField.textField.textDidBeginEditingPublisher,
+            expiresTextField.textField.textDidBeginEditingPublisher,
+            cvcTextField.textField.textDidBeginEditingPublisher
         )
         .sink { _ in
             updateLayering()
@@ -132,13 +132,17 @@ private extension CardInfoCollectorCell {
         .store(in: &cancellables)
         
         Publishers.Merge4(
-            numberTextField.textDidEndEditingPublisher,
-            expiresTextField.textDidEndEditingPublisher,
-            cvcTextField.textDidEndEditingPublisher,
-            nameTextField.textDidEndEditingPublisher
+            numberTextField.textField.textDidEndEditingPublisher,
+            expiresTextField.textField.textDidEndEditingPublisher,
+            cvcTextField.textField.textDidEndEditingPublisher,
+            nameTextField.textField.textDidEndEditingPublisher
         )
-        .sink { [weak self] textField in
-            guard let self, let viewModel = self.viewModel else { return }
+        .sink { [weak self] notification in
+            guard let self,
+                  let viewModel = self.viewModel,
+                  let textField = notification.object as? UITextField else {
+                return
+            }
             self.hintLabel.text = viewModel.errorHintForCardFields
             if textField !== self.nameTextField.textField {
                 updateLayering()

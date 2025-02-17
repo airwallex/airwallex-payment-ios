@@ -35,7 +35,7 @@ class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         ]
         NSLayoutConstraint.activate(constraints)
         
-        field.textDidEndEditingPublisher
+        field.textField.textDidEndEditingPublisher
             .sink { [weak self] textField in
                 guard let self, let viewModel = self.viewModel else { return }
                 // this will be called after error hint update

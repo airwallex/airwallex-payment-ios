@@ -211,28 +211,6 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     }
 }
 
-extension BaseTextField {
-    
-    var textDidBeginEditingPublisher: AnyPublisher<UITextField, Never> {
-        NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification, object: textField)
-            .compactMap { [weak self] _ in self?.textField }
-            .eraseToAnyPublisher()
-    }
-    
-    var textDidEndEditingPublisher: AnyPublisher<UITextField, Never> {
-        NotificationCenter.default.publisher(for: UITextField.textDidEndEditingNotification, object: textField)
-            .compactMap { [weak self] _ in self?.textField }
-            .eraseToAnyPublisher()
-    }
-    
-    var textDidChangePublisher: AnyPublisher<UITextField, Never> {
-        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: textField)
-            .compactMap { [weak self] _ in self?.textField }
-            .eraseToAnyPublisher()
-    }
-}
-
-
 class ContentInsetableTextField: UITextField {
     
     var textInsets: UIEdgeInsets
