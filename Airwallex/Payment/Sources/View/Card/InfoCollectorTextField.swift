@@ -13,7 +13,7 @@ protocol InfoCollectorTextFieldConfiguring: BaseTextFieldConfiguring {
     var title: String? { get }
 }
 
-class InfoCollectorTextField: BaseTextField {
+class InfoCollectorTextField<T: InfoCollectorTextFieldConfiguring>: BaseTextField<T> {
     
     private let topLabel: UILabel = {
         let view = UILabel()
@@ -40,12 +40,9 @@ class InfoCollectorTextField: BaseTextField {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setup(_ viewModel: any BaseTextFieldConfiguring) {
+    override func setup(_ viewModel: T) {
         super.setup(viewModel)
-        guard let viewModel = viewModel as? InfoCollectorTextFieldConfiguring else {
-            assert(false, "invalid view model")
-            return
-        }
+        
         topLabel.text = viewModel.title
         hintLabel.text = viewModel.errorHint
         

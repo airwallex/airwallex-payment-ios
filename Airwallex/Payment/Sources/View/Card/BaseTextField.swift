@@ -25,7 +25,7 @@ protocol BaseTextFieldConfiguring: AnyObject {
     func handleDidEndEditing()
 }
 
-class BaseTextField: UIView, ViewConfigurable {
+class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITextFieldDelegate {
     
     let textField: ContentInsetableTextField = {
         let view = ContentInsetableTextField()
@@ -135,9 +135,9 @@ class BaseTextField: UIView, ViewConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private(set) var viewModel: (any BaseTextFieldConfiguring)?
+    private(set) var viewModel: T?
     
-    func setup(_ viewModel: any BaseTextFieldConfiguring) {
+    func setup(_ viewModel: T) {
         self.viewModel = viewModel
         textField.update(for: viewModel.textFieldType ?? .default)
         if let attributedText = viewModel.attributedText {
@@ -174,9 +174,7 @@ class BaseTextField: UIView, ViewConfigurable {
             box.layer.borderWidth = 1
         }
     }
-}
-
-extension BaseTextField: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let nextField  {
             nextField.becomeFirstResponder()
@@ -215,21 +213,21 @@ extension BaseTextField: UITextFieldDelegate {
 
 extension BaseTextField {
     
-    var textDidBeginEditingPublisher: AnyPublisher<BaseTextField, Never> {
+    var textDidBeginEditingPublisher: AnyPublisher<UITextField, Never> {
         NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification, object: textField)
-            .compactMap { _ in self }
+            .compactMap { [weak self] _ in self?.textField }
             .eraseToAnyPublisher()
     }
     
-    var textDidEndEditingPublisher: AnyPublisher<BaseTextField, Never> {
+    var textDidEndEditingPublisher: AnyPublisher<UITextField, Never> {
         NotificationCenter.default.publisher(for: UITextField.textDidEndEditingNotification, object: textField)
-            .compactMap { _ in self }
+            .compactMap { [weak self] _ in self?.textField }
             .eraseToAnyPublisher()
     }
     
-    var textDidChangePublisher: AnyPublisher<BaseTextField, Never> {
+    var textDidChangePublisher: AnyPublisher<UITextField, Never> {
         NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: textField)
-            .compactMap { _ in self }
+            .compactMap { [weak self] _ in self?.textField }
             .eraseToAnyPublisher()
     }
 }

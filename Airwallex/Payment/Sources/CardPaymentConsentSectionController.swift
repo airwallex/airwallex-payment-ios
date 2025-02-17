@@ -49,7 +49,7 @@ class CardPaymentConsentSectionController: SectionController {
     private var paymentSessionHandler: PaymentUISessionHandler?
     
     private var selectedConsent: AWXPaymentConsent?
-    private var cvcConfigurer: InfoCollectorCellConfiguring?
+    private var cvcConfigurer: InfoCollectorTextFieldViewModel?
     private var mode: Mode {
         selectedConsent == nil ? .list : .payment
     }

@@ -13,7 +13,7 @@ protocol CountrySelectionViewConfiguring: BaseTextFieldConfiguring {
     var handleUserInteraction: () -> Void { get }
 }
 
-class CountrySelectionView: BaseTextField {
+class CountrySelectionView: BaseTextField<CountrySelectionViewModel> {
     
     private let iconWrapper: UIView = {
         let view = UIView()
@@ -57,12 +57,9 @@ class CountrySelectionView: BaseTextField {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setup(_ viewModel: any BaseTextFieldConfiguring) {
+    override func setup(_ viewModel: CountrySelectionViewModel) {
         super.setup(viewModel)
-        guard let viewModel = viewModel as? CountrySelectionViewConfiguring else {
-            assert(false, "invalid view model")
-            return
-        }
+        
         iconWrapper.isHidden = viewModel.country == nil
         if let country = viewModel.country {
             icon.image = UIImage(named: country.countryCode, in: Bundle.resource())

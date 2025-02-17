@@ -16,7 +16,7 @@ protocol InfoCollectorCellConfiguring: InfoCollectorTextFieldConfiguring {
 class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let field: InfoCollectorTextField = {
-        let view = InfoCollectorTextField()
+        let view = InfoCollectorTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -48,11 +48,11 @@ class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var viewModel: (any InfoCollectorCellConfiguring)? {
-        field.viewModel as? InfoCollectorCellConfiguring
+    var viewModel: InfoCollectorTextFieldViewModel? {
+        field.viewModel
     }
     
-    func setup(_ viewModel: (any InfoCollectorCellConfiguring)) {
+    func setup(_ viewModel: InfoCollectorTextFieldViewModel) {
         field.setup(viewModel)
     }
 }

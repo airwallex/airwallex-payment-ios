@@ -10,10 +10,10 @@ import UIKit
 import Combine
 
 protocol CardInfoCollectorCellConfiguring {
-    var cardNumberConfigurer: CardNumberTextFieldConfiguring { get }
-    var expireDataConfigurer: BaseTextFieldConfiguring { get }
-    var cvcConfigurer: BaseTextFieldConfiguring { get }
-    var nameOnCardConfigurer: InfoCollectorTextFieldConfiguring { get }
+    var cardNumberConfigurer: CardNumberTextFieldViewModel { get }
+    var expireDataConfigurer: CardExpireTextFieldViewModel { get }
+    var cvcConfigurer: CardCVCTextFieldViewModel { get }
+    var nameOnCardConfigurer: InfoCollectorTextFieldViewModel { get }
     
     var errorHintForCardFields: String? { get }
     var triggerLayoutUpdate: () -> Void { get }
@@ -44,14 +44,14 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     }()
     
     private let expiresTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<CardExpireTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMinXMaxYCorner
         return view
     }()
     
     private let cvcTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<CardCVCTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMaxXMaxYCorner
         
@@ -72,7 +72,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     }()
     
     private let nameTextField: InfoCollectorTextField = {
-        let view = InfoCollectorTextField()
+        let view = InfoCollectorTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -115,15 +115,18 @@ private extension CardInfoCollectorCell {
     func setupObservation() {
         let updateLayering = { [weak self] in
             guard let self else { return }
-            let arr = [ self.numberTextField, self.expiresTextField, self.cvcTextField ]
+            let arr: [(view: UIView, isValid: Bool, isFirstResponder: Bool)] = [
+                (self.numberTextField, self.numberTextField.viewModel?.isValid ?? true, self.numberTextField.isFirstResponder),
+                (self.expiresTextField, self.expiresTextField.viewModel?.isValid ?? true, self.expiresTextField.isFirstResponder),
+                (self.cvcTextField, self.cvcTextField.viewModel?.isValid ?? true, self.cvcTextField.isFirstResponder)
+            ]
             
-            for view in arr {
-                guard let viewModel = view.viewModel else { continue }
-                if !viewModel.isValid {
+            for (view, isValid, _) in arr {
+                if !isValid {
                     self.container.bringSubviewToFront(view)
                 }
             }
-            if let editingField = arr.first(where: { $0.isFirstResponder }) {
+            if let editingField = arr.first(where: { $0.isFirstResponder })?.view {
                 self.container.bringSubviewToFront(editingField)
             }
         }
@@ -147,7 +150,7 @@ private extension CardInfoCollectorCell {
         .sink { [weak self] textField in
             guard let self, let viewModel = self.viewModel else { return }
             self.hintLabel.text = viewModel.errorHintForCardFields
-            if textField !== nameTextField {
+            if textField !== self.nameTextField.textField {
                 updateLayering()
             }
             viewModel.triggerLayoutUpdate()

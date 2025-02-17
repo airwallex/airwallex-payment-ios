@@ -9,13 +9,13 @@
 import Foundation
 
 class BillingInfoCellViewModel: BillingInfoCellConfiguring {
-    var phoneConfigurer: any BaseTextFieldConfiguring
+    var phoneConfigurer: InfoCollectorTextFieldViewModel
     
-    var emailConfigurer: any BaseTextFieldConfiguring
+    var emailConfigurer: InfoCollectorTextFieldViewModel
     
-    var firstNameConfigurer: any BaseTextFieldConfiguring
+    var firstNameConfigurer: InfoCollectorTextFieldViewModel
     
-    var lastNameConfigurer: any BaseTextFieldConfiguring
+    var lastNameConfigurer: InfoCollectorTextFieldViewModel
     
     var canReuseShippingAddress: Bool
     
@@ -23,18 +23,18 @@ class BillingInfoCellViewModel: BillingInfoCellConfiguring {
     
     var toggleReuseSelection: () -> Void
     
-    var countryConfigurer: any CountrySelectionViewConfiguring
+    var countryConfigurer: CountrySelectionViewModel
     
-    var streetConfigurer: any BaseTextFieldConfiguring
+    var streetConfigurer: InfoCollectorTextFieldViewModel
     
-    var stateConfigurer: any BaseTextFieldConfiguring
+    var stateConfigurer: InfoCollectorTextFieldViewModel
     
-    var cityConfigurer: any BaseTextFieldConfiguring
+    var cityConfigurer: InfoCollectorTextFieldViewModel
     
-    var zipConfigurer: any BaseTextFieldConfiguring
+    var zipConfigurer: InfoCollectorTextFieldViewModel
     
     var errorHintForBillingFields: String? {
-        let arr = [
+        let arr: [any BaseTextFieldConfiguring] = [
             countryConfigurer,
             streetConfigurer,
             stateConfigurer,
