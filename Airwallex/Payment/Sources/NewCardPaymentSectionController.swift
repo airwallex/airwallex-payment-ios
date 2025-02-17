@@ -45,7 +45,7 @@ class NewCardPaymentSectionController: SectionController {
     }
     private let methodProvider: PaymentMethodProvider
     private let switchToConsentPaymentAction: () -> Void
-    private var shouldSaveCard = true
+    private var shouldSaveCard = false
     
     init(section: PaymentSectionType,
          methodType: AWXPaymentMethodType,

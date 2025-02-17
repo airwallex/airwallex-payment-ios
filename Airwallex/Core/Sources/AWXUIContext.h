@@ -56,6 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong) AWXSession *session;
 
+/// one time dismiss action, will be set every time `launchPayment(from:style:)` called
+/// and clear after consumed in `PaymentUISessionHandler`
+@property (nonatomic, copy, nullable) void (^paymentUIDismissAction)(void (^completion)(void));
+
 /**
  Convenience constructor for a context.
 
@@ -66,14 +70,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Present the entire payment flow from payment methods list.
  */
-- (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController;
+- (void)presentEntirePaymentFlowFrom:(UIViewController *)hostViewController __deprecated_msg("Use launchPayment(from:style:) in AWXUIContext+Extensions.swift within the Payment Module instead.");
 
 - (void)presentPaymentFlowFrom:(UIViewController *)hostViewController __attribute__((deprecated("Use 'presentEntirePaymentFlowFrom' instead")));
 
 /**
  Push the entire payment flow from payment methods list.
  */
-- (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController;
+- (void)pushEntirePaymentFlowFrom:(UIViewController *)hostViewController __deprecated_msg("Use launchPayment(from:style:) in AWXUIContext+Extensions.swift within the Payment Module instead.");
 
 - (void)pushPaymentFlowFrom:(UIViewController *)hostViewController __attribute__((deprecated("Use 'pushEntirePaymentFlowFrom' instead")));
 

@@ -95,7 +95,14 @@ extension PaymentUISessionHandler: AWXProviderDelegate {
     
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         debugLog("stauts: \(status), error: \(error?.localizedDescription ?? "")")
-        AWXUIContext.shared().delegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
+        if let action = AWXUIContext.shared().paymentUIDismissAction {
+            action {
+                AWXUIContext.shared().delegate?.paymentViewController(self.viewController, didCompleteWith: status, error: error)
+            }
+            AWXUIContext.shared().paymentUIDismissAction = nil
+        } else {
+            AWXUIContext.shared().delegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
+        }
     }
      
     public func hostViewController() -> UIViewController {
