@@ -52,7 +52,7 @@ class CardInfoCollectorCellViewModel: CardInfoCollectorCellConfiguring {
         )
         
         if let errorMessage = card.validate() {
-            throw errorMessage
+            throw ErrorMessage(rawValue: errorMessage)
         }
         return card
     }

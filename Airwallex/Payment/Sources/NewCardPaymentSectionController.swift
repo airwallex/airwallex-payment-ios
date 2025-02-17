@@ -168,7 +168,7 @@ private extension NewCardPaymentSectionController {
             handler?.startPayment(card: card, saveCard: shouldSaveCard)
             self.paymentSessionHandler = handler
         } catch {
-            guard let message = error as? String else { return }
+            let message = error.localizedDescription
             showAlert(message)
             AWXAnalyticsLogger.shared().logAction(withName: "card_payment_validation", additionalInfo: ["message": message])
             debugLog("Payment failed. Intent ID: \(session.paymentIntentId()). Reason: \(message)")
