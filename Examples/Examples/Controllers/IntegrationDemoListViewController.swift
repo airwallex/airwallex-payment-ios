@@ -565,8 +565,8 @@ private extension IntegrationDemoListViewController {
 
 extension IntegrationDemoListViewController: AWXShippingViewControllerDelegate {
     func shippingViewController(_ controller: AWXShippingViewController, didEditShipping shipping: AWXPlaceDetails) {
-        navigationController?.popToViewController(self, animated: true)
         shippingAddress = shipping
+        controller.dismiss(animated: true)
     }
 }
 

@@ -8,37 +8,7 @@
 
 import Foundation
 
-// Debug
-fileprivate var foo = true
-
 public extension AWXUIContext {
-    @MainActor func presentPaymentViewController(from hostingVC: UIViewController) {
-        foo.toggle()
-        //          wpdebug - old UI flow
-        if foo {
-            presentEntirePaymentFlow(from: hostingVC)
-            return
-        }
-        
-        let viewModel = AWXPaymentMethodListViewModel(
-            session: session,
-            apiClient: AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
-        )
-        let provider = PaymentMethodProvider(provider: viewModel)
-        let paymentVC = PaymentMethodsViewController(methodProvider: provider)
-        let nav = UINavigationController(rootViewController: paymentVC)
-        nav.modalPresentationStyle = .fullScreen
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithDefaultBackground()
-        appearance.backgroundColor = UIColor.awxBackgroundHighlight // Set your desired color
-        appearance.shadowColor = UIColor.awxBorderDecorative
-        
-        nav.navigationBar.standardAppearance = appearance
-        nav.navigationBar.scrollEdgeAppearance = appearance
-        nav.navigationBar.compactAppearance = appearance
-        hostingVC.present(nav, animated: true)
-    }
-    
     enum LaunchStyle {
         case push
         case present
@@ -51,13 +21,20 @@ public extension AWXUIContext {
         )
         let provider = PaymentMethodProvider(provider: viewModel)
         let paymentVC = PaymentMethodsViewController(methodProvider: provider)
-        
         switch style {
         case .push:
             guard let nav = hostingVC.navigationController else {
                 fallthrough
             }
             nav.pushViewController(paymentVC, animated: true)
+            AWXUIContext.shared().paymentUIDismissAction = { completion in
+                CATransaction.begin()
+                CATransaction.setCompletionBlock {
+                    completion()
+                }
+                nav.popToViewController(hostingVC, animated: true)
+                CATransaction.commit()
+            }
         case .present:
             let nav = UINavigationController(rootViewController: paymentVC)
             let appearance = UINavigationBarAppearance()
@@ -69,6 +46,11 @@ public extension AWXUIContext {
             nav.navigationBar.scrollEdgeAppearance = appearance
             nav.navigationBar.compactAppearance = appearance
             hostingVC.present(nav, animated: true)
+            AWXUIContext.shared().paymentUIDismissAction = { completion in
+                nav.dismiss(animated: true) {
+                    completion()
+                }
+            }
         }
     }
 }
