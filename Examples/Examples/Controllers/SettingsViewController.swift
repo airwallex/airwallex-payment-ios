@@ -268,7 +268,7 @@ private extension SettingsViewController {
                     guard environment != env else { return }
                     self.settings.environment = environment
                     //  customerId are stored by environment
-                    self.settings.customerId = ExamplesKeys.customerId
+                    self.settings.customerId = ExamplesKeys.readValue("customerId", environment: environment)
                     self.reloadData()
                 }
             }

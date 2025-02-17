@@ -155,6 +155,17 @@ struct ExamplesKeys {
         }
         loadDefaultKeysIfNilOrEmpty()
     }
+    
+    static func readValue<T>(_ name: String, environment: AirwallexSDKMode = environment) -> T? {
+        let key = ExamplesKeys.storagePrefix + name + "-\(environment.rawValue)"
+        return UserDefaults.standard.object(forKey: key) as? T
+    }
+    
+    static func readValue<T: RawRepresentable>(_ name: String, environment: AirwallexSDKMode = environment) -> T? {
+        let key = ExamplesKeys.storagePrefix + name + "-\(environment.rawValue)"
+        guard let value = UserDefaults.standard.object(forKey: key) as? T.RawValue else { return nil }
+        return T(rawValue: value)
+    }
 }
 
 @propertyWrapper
