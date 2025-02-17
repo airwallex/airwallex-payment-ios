@@ -27,6 +27,10 @@ class PaymentMethodsViewController: AWXViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        AWXUIContext.shared().paymentUIDismissAction = nil
+    }
+    
     lazy var sectionProvider: CollectionViewManager = {
         let provider = CollectionViewManager(
             viewController: self,

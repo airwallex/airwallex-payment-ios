@@ -27,10 +27,14 @@ public extension AWXUIContext {
                 fallthrough
             }
             nav.pushViewController(paymentVC, animated: true)
-            AWXUIContext.shared().paymentUIDismissAction = { completion in
+            AWXUIContext.shared().paymentUIDismissAction = { [weak hostingVC, weak nav] completion in
+                guard let hostingVC, let nav else {
+                    completion?()
+                    return
+                }
                 CATransaction.begin()
                 CATransaction.setCompletionBlock {
-                    completion()
+                    completion?()
                 }
                 nav.popToViewController(hostingVC, animated: true)
                 CATransaction.commit()
@@ -46,9 +50,13 @@ public extension AWXUIContext {
             nav.navigationBar.scrollEdgeAppearance = appearance
             nav.navigationBar.compactAppearance = appearance
             hostingVC.present(nav, animated: true)
-            AWXUIContext.shared().paymentUIDismissAction = { completion in
+            AWXUIContext.shared().paymentUIDismissAction = { [weak nav] completion in
+                guard let nav else {
+                    completion?()
+                    return
+                }
                 nav.dismiss(animated: true) {
-                    completion()
+                    completion?()
                 }
             }
         }

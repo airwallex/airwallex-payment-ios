@@ -57,8 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) AWXSession *session;
 
 /// one time dismiss action, will be set every time `launchPayment(from:style:)` called
-/// and clear after consumed in `PaymentUISessionHandler`
-@property (nonatomic, copy, nullable) void (^paymentUIDismissAction)(void (^completion)(void));
+/// and consumed in `PaymentUISessionHandler` after payement success/failure/cancelled
+@property (nonatomic, copy, nullable) void (^paymentUIDismissAction)(void (^_Nullable completion)(void));
 
 /**
  Convenience constructor for a context.
