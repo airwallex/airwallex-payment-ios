@@ -283,7 +283,6 @@
 			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */;
 			buildPhases = (
 				27213DDF7CB718263CED259E /* [CP] Check Pods Manifest.lock */,
-				182F1CEB2C90429D000B993D /* Enable Production Testing */,
 				085BD3E723CC64B6002E8F27 /* Sources */,
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
@@ -351,25 +350,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		182F1CEB2C90429D000B993D /* Enable Production Testing */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Enable Production Testing";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Define the file to be modified\nFILE_PATH_UISTORYBOARDUTILS=\"${SRCROOT}/Examples/Cart/CartViewController.swift\"\nFILE_PATH_OPTIONSCONTROLLER=\"${SRCROOT}/Examples/Cart/OptionsViewController.m\"\n\n# Define the content to be added\nINSERTION_POINT='preferredStyle:UIAlertControllerStyleActionSheet];'\nCODE_TO_INSERT='[controller addAction:[UIAlertAction actionWithTitle:@\"Production\" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) { [Airwallex setMode:AirwallexSDKProductionMode]; [AirwallexExamplesKeys shared].environment = AirwallexSDKProductionMode; [self.modeButton setTitle:FormatAirwallexSDKMode(Airwallex.mode).capitalizedString forState:UIControlStateNormal];}]];'\n\n# Check if the configuration is Production\nif [ \"${CONFIGURATION}\" = \"Production\" ]; then\n\n    # Replace occurrences in UIStoryboardUtils.swift\n    if [ -f \"$FILE_PATH_UISTORYBOARDUTILS\" ]; then\n        sed -i '' 's/DemoStoreAPIClient/DirectAPIClient/g' \"$FILE_PATH_UISTORYBOARDUTILS\"\n        echo \"Replaced DemoStoreAPIClient with DirectAPIClient in $FILE_PATH_UISTORYBOARDUTILS\"\n    else\n        echo \"File $FILE_PATH_UISTORYBOARDUTILS not found!\"\n        exit 1\n    fi\n\n    # Add code block in OptionsController.swift\n    if [ -f \"$FILE_PATH_OPTIONSCONTROLLER\" ]; then\n        # Check if the insertion point exists\n        if grep -q \"$INSERTION_POINT\" \"$FILE_PATH_OPTIONSCONTROLLER\" && ! grep -q \"Production\" \"$FILE_PATH_OPTIONSCONTROLLER\"; then\n            sed -i '' \"/$INSERTION_POINT/a\\\\ \n            $CODE_TO_INSERT\n            \" \"$FILE_PATH_OPTIONSCONTROLLER\"\n            echo \"Added Production UIAlertAction to $FILE_PATH_OPTIONSCONTROLLER\"\n        else\n            echo \"Insertion point not found in $FILE_PATH_OPTIONSCONTROLLER or code has already been inserted\" \n        fi\n    else\n        echo \"File $FILE_PATH_OPTIONSCONTROLLER not found!\"\n        exit 1\n    fi\n\nelse\n    echo \"Not in Production configuration, script will not run.\"\nfi\n";
-		};
 		27213DDF7CB718263CED259E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
