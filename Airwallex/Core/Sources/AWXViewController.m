@@ -164,8 +164,12 @@
 - (void)close:(id)sender {
     if (self.presentingViewController) {
         [self dismissViewControllerAnimated:YES completion:nil];
-    } else {
-        [self.navigationController popViewControllerAnimated:YES];
+    } else if (self.navigationController) {
+        if (self == self.navigationController.viewControllers.firstObject && self.navigationController.presentingViewController) {
+            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
 }
 

@@ -26,6 +26,10 @@ class PaymentMethodsViewController: AWXViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    deinit {
+        AWXUIContext.shared().paymentUIDismissAction = nil
+    }
     
     private lazy var collectionViewManager: CollectionViewManager = {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()

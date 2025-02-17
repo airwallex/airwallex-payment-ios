@@ -15,7 +15,7 @@
 //Bold: [700]
 //Heavy/Black: [800] (both can map to higher numeric values)
 
-public extension UIFont {
+extension UIFont {
     
     /// 20
     static var awxHeadline100: UIFont { UIFont.boldSystemFont(ofSize: 20)}
