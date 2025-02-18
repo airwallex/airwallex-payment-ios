@@ -6,6 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import UIKit
+
 @MainActor protocol SectionController: SwiftLoggable  {
     associatedtype SectionIdentifierType: Hashable, Sendable
     associatedtype ItemIdentifierType: Hashable, Sendable

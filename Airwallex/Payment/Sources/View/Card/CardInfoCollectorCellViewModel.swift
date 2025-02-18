@@ -6,6 +6,11 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import Foundation
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif  
+
 class CardInfoCollectorCellViewModel: CardInfoCollectorCellConfiguring {
     var nameOnCardConfigurer: any InfoCollectorTextFieldConfiguring
     

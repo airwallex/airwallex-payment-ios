@@ -6,6 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import Foundation
+
 struct PaymentMethodCellViewModel: PaymentMethodCellConfiguring {
     var name: String
     

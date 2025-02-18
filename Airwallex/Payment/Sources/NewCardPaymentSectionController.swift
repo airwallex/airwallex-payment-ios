@@ -9,6 +9,9 @@
 import Foundation
 import Combine
 import AirwallexRisk
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif  
 
 class NewCardPaymentSectionController: SectionController {
     

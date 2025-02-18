@@ -6,6 +6,10 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import UIKit
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif
 
 extension UIImage {
     

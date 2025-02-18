@@ -7,6 +7,10 @@
 //
 
 import Combine
+import UIKit
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif
 
 protocol ErrorHintableTextFieldConfiguring: BaseTextFieldConfiguring {
     var errorHint: String? { get }
@@ -173,7 +177,7 @@ extension BaseTextField: UITextFieldDelegate {
         if let nextField  {
             nextField.becomeFirstResponder()
         } else {
-            resignFirstResponder()
+            _ = resignFirstResponder()
         }
         return true
     }

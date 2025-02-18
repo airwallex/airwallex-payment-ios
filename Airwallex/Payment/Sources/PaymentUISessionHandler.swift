@@ -7,6 +7,10 @@
 //
 
 import UIKit
+#if SWIFT_PACKAGE
+import AirwallexCore
+import AirwallexCard
+#endif
 
 public class PaymentUISessionHandler: NSObject {
     

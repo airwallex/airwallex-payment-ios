@@ -6,6 +6,7 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import UIKit
 
 protocol CardConsentCellConfiguring {
     var image: UIImage? { get }
@@ -31,7 +32,7 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return view
     }()
     
-    private let button: UIButton = {
+    private lazy var button: UIButton = {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.tintColor = .awxIconLink

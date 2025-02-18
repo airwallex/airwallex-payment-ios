@@ -6,7 +6,10 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-import Foundation
+import UIKit
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif  
 
 public extension AWXUIContext {
     enum LaunchStyle {

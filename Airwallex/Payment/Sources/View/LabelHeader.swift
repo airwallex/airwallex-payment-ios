@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif
 
 class LabelHeader: UICollectionReusableView, ViewReusable {
     lazy var label: UILabel = {

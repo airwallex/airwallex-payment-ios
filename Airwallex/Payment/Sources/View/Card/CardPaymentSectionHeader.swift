@@ -6,6 +6,7 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import UIKit
 
 protocol CardPaymentSectionHeaderConfiguring {
     var title: String { get }

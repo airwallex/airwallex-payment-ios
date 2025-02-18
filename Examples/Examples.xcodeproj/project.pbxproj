@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,7 +23,6 @@
 		1859F19F2C8AA6700017FA4D /* CustomerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F19E2C8AA6700017FA4D /* CustomerRequest.swift */; };
 		18ADC9992C8AACF900A775BB /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADC9982C8AACF900A775BB /* Customer.swift */; };
 		57DCD642269428C800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
-		8C8B48417A8089F01476F8CD /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */; };
 		D80F0E222D5C6CF200401BA6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E212D5C6CF200401BA6 /* WebViewController.swift */; };
 		D80F0E242D5C769100401BA6 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E232D5C769100401BA6 /* SuccessViewController.swift */; };
 		D80F0E292D5C856600401BA6 /* ExamplesKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E282D5C856600401BA6 /* ExamplesKeys.swift */; };
@@ -41,6 +40,7 @@
 		D81EAF7D2D3F92D300B44784 /* ConfigActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */; };
 		D81EAF812D3FAAC600B44784 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF802D3FAABA00B44784 /* TopView.swift */; };
 		D81EAFA62D41DA1E00B44784 /* GetPaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */; };
+		D85964512D646C3C00110D30 /* Airwallex in Frameworks */ = {isa = PBXBuildFile; productRef = D85964502D646C3C00110D30 /* Airwallex */; };
 		D872B35A2D5DFA24007BC089 /* DemoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D872B3592D5DFA1A007BC089 /* DemoListView.swift */; };
 		D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */; };
 		D89C7AED2D423AD60042FC3B /* GetCardConsentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */; };
@@ -52,7 +52,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		033312AB8B6212DA17E09623 /* Pods-Examples.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.production.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.production.xcconfig"; sourceTree = "<group>"; };
 		085BD3EB23CC64B6002E8F27 /* Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Examples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085BD3EE23CC64B6002E8F27 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		085BD3EF23CC64B6002E8F27 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -85,9 +84,6 @@
 		57CEC83326E6007F00695740 /* Redirect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Redirect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC83526E6008100695740 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57DCD641269428C800705D5C /* Keys */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Keys; sourceTree = "<group>"; };
-		617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
-		7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		D80F0E212D5C6CF200401BA6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		D80F0E232D5C769100401BA6 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
 		D80F0E282D5C856600401BA6 /* ExamplesKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesKeys.swift; sourceTree = "<group>"; };
@@ -120,7 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C8B48417A8089F01476F8CD /* Pods_Examples.framework in Frameworks */,
+				D85964512D646C3C00110D30 /* Airwallex in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +129,6 @@
 				085BD3ED23CC64B6002E8F27 /* Examples */,
 				085BD3EC23CC64B6002E8F27 /* Products */,
 				A124BE0DCF06F969177C95C3 /* Frameworks */,
-				242E8629232F042B71464DAF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -199,17 +194,6 @@
 			path = Deprecated;
 			sourceTree = "<group>";
 		};
-		242E8629232F042B71464DAF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */,
-				89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */,
-				033312AB8B6212DA17E09623 /* Pods-Examples.production.xcconfig */,
-			);
-			name = Pods;
-			path = ../Pods;
-			sourceTree = "<group>";
-		};
 		A124BE0DCF06F969177C95C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,7 +207,6 @@
 				57CEC82726E6005400695740 /* Redirect.framework */,
 				57CEC82526E6005000695740 /* Card.framework */,
 				08B55E372421D8C60054E254 /* Airwallex.framework */,
-				7D7D702013D115ED98FFEFA0 /* Pods_Examples.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -282,14 +265,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */;
 			buildPhases = (
-				27213DDF7CB718263CED259E /* [CP] Check Pods Manifest.lock */,
 				085BD3E723CC64B6002E8F27 /* Sources */,
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
 				C52EE7B32865394100F966DD /* Run clang-format */,
 				D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */,
-				4711CE21021D18C8C59691F5 /* [CP] Embed Pods Frameworks */,
-				F9CCB598F321B67E077201D9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -325,6 +305,9 @@
 				Base,
 			);
 			mainGroup = 085BD3E223CC64B6002E8F27;
+			packageReferences = (
+				D859644F2D646C3C00110D30 /* XCLocalSwiftPackageReference "../../airwallex-payment-ios" */,
+			);
 			productRefGroup = 085BD3EC23CC64B6002E8F27 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -350,45 +333,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		27213DDF7CB718263CED259E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Examples-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4711CE21021D18C8C59691F5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C52EE7B32865394100F966DD /* Run clang-format */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -427,23 +371,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PROJECT_DIR}/../scripts/generate_spm_public_headers.sh\n";
-		};
-		F9CCB598F321B67E077201D9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -627,7 +554,6 @@
 		};
 		085BD40523CC64B9002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 617807456E4EF1973ABF7042 /* Pods-Examples.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -652,7 +578,6 @@
 		};
 		085BD40623CC64B9002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89340FFBA0BDAB8E114F5872 /* Pods-Examples.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -734,7 +659,6 @@
 		};
 		182F1CEA2C90425E000B993D /* Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 033312AB8B6212DA17E09623 /* Pods-Examples.production.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -780,6 +704,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		D859644F2D646C3C00110D30 /* XCLocalSwiftPackageReference "../../airwallex-payment-ios" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../airwallex-payment-ios";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D85964502D646C3C00110D30 /* Airwallex */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Airwallex;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 085BD3E323CC64B6002E8F27 /* Project object */;
 }

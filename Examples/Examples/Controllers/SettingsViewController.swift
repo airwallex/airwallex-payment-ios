@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Airwallex
+
 import Combine
 
 class SettingsViewController: UIViewController {

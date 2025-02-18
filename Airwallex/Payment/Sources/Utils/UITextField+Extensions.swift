@@ -7,6 +7,10 @@
 //
 
 import Foundation
+import UIKit
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif
 
 extension UITextField {
     func update(for fieldType: AWXTextFieldType) {
@@ -55,6 +59,7 @@ extension UITextField {
                 textContentType = .creditCardSecurityCode
             }
             keyboardType = .numberPad
+        @unknown default: return
         }
     }
     

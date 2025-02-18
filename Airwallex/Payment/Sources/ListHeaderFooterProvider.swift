@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct BoundarySupplementaryItemProvider {
     let elementKind: String

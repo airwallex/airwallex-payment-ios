@@ -6,7 +6,11 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-//
+import UIKit
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif
+
 protocol CollectionViewSectionProvider: AnyObject {
     associatedtype SectionType: Hashable & Sendable
     associatedtype ItemType: Hashable & Sendable

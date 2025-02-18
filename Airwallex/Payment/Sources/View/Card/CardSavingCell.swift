@@ -6,6 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import UIKit
+
 protocol CardSavingCellConfiguring {
     var shouldSaveCard: Bool { get set }
     

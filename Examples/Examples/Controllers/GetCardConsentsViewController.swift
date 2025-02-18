@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Airwallex
+
 
 class GetPaymentConsentsViewController: UITableViewController {
     

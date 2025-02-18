@@ -7,6 +7,7 @@
 //
 
 import Combine
+import UIKit
 
 protocol PaymentMethodCellConfiguring {
     var name: String { get }

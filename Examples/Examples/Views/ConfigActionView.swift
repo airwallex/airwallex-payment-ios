@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Airwallex
+
 
 struct ConfigActionViewModel {
     let configName: String

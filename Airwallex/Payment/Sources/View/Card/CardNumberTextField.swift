@@ -8,6 +8,9 @@
 
 import UIKit
 import Combine
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif  
 
 protocol CardNumberTextFieldConfiguring: ErrorHintableTextFieldConfiguring {
     var supportedBrands: [AWXBrandType] { get }

@@ -7,7 +7,11 @@
 //
 
 import Foundation
+#if canImport(Airwallex)
 import Airwallex
+#else
+import AirwallexPayment
+#endif
 
 extension UIButton {
     

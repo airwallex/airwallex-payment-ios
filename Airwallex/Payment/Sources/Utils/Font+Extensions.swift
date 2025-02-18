@@ -15,6 +15,8 @@
 //Bold: [700]
 //Heavy/Black: [800] (both can map to higher numeric values)
 
+import UIKit
+
 extension UIFont {
     
     /// 20

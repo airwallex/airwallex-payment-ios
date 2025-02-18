@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif
 
 class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
     var placeholder: String? = "1234 1234 1234 1234"

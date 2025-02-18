@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 protocol InfoCollectorTextFieldConfiguring: ErrorHintableTextFieldConfiguring {
     var title: String? { get }

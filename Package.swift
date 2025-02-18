@@ -10,7 +10,16 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Airwallex",
-            targets: [ "AirwallexCore", "AirwallexApplePay", "AirwallexCard", "AirwallexRedirect", "AirwallexWeChatpay" ]
+            targets: [ "AirwallexPayment",
+                       "AirwallexCore",
+                       "AirwallexApplePay",
+                       "AirwallexCard",
+                       "AirwallexRedirect",
+                       "AirwallexWeChatpay" ]
+        ),
+        .library(
+            name: "AirwallexPayment",
+            targets: ["AirwallexPayment"]
         ),
         .library(
             name: "AirwallexCore",
@@ -31,7 +40,7 @@ let package = Package(
         .library(
             name: "AirwallexWeChatpay",
             targets: ["AirwallexWeChatpay"]
-        )
+        ),
     ],
     targets: [
         .binaryTarget(
@@ -104,9 +113,14 @@ let package = Package(
                 .unsafeFlags(["-ObjC", "-all_load"]),
             ]
         ),
-        .testTarget(
-            name: "AirwallexCoreTests",
-            dependencies: [ "AirwallexCore" ]
-        ),
+        .target(
+            name: "AirwallexPayment",
+            dependencies: [
+                "AirwallexCore",
+                "AirwallexCard",
+                "AirwallexRisk"
+            ],
+            path: "Airwallex/Payment"
+        )
     ]
 )

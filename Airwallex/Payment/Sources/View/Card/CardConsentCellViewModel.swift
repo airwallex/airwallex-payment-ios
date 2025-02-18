@@ -6,6 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import UIKit
+
 struct CardConsentCellViewModel: CardConsentCellConfiguring {
     var image: UIImage?
     

@@ -6,6 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import UIKit
+
 protocol CheckoutButtonCellConfiguring {
     var checkoutAction: () -> Void { get }
 }

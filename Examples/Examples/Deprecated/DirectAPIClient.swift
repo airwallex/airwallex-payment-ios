@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Airwallex
+
 
 class DirectAPIClient: APIClient {
     init() {

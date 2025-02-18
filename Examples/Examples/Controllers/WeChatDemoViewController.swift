@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Airwallex
+
 
 class WeChatDemoViewController: UIViewController {
     

@@ -6,6 +6,11 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+
+#if SWIFT_PACKAGE
+import AirwallexCard
+#endif
+
 extension AWXCard {
     // convert this into an init method in swift
     convenience init(name: String, cardNumber: String, expiry: String, cvc: String) {

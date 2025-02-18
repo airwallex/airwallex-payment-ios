@@ -8,6 +8,9 @@
 
 import Foundation
 import Combine
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif
 
 @MainActor
 final class PaymentMethodProvider {

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Airwallex
+
 
 class SuccessViewController: UIViewController {
 

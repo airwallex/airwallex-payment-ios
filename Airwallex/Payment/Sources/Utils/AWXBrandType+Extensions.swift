@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif
 
 extension AWXBrandType {
     public static var supportedBrands: [AWXBrandType] {

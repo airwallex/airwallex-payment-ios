@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif
 
 class ApplePaySectionController: SectionController {
     

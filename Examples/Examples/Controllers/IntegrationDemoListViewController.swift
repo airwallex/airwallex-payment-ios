@@ -7,8 +7,16 @@
 //
 
 import UIKit
-import Airwallex
 import Combine
+
+#if canImport(Airwallex)
+import Airwallex
+#else
+import AirwallexPayment
+import AirwallexCard
+import AirwallexApplePay
+import AirwallexRedirect
+#endif
 
 class IntegrationDemoListViewController: UIViewController {
     

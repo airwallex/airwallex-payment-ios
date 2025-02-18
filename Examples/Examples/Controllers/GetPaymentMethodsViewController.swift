@@ -5,7 +5,7 @@
 //  Created by Weiping Li on 2025/1/23.
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
-import Airwallex
+
 
 class GetPaymentMethodsViewController: UITableViewController {
     

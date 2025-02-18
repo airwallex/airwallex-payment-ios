@@ -6,6 +6,7 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import Foundation
 
 fileprivate class BundleProvider {
     static let bundle = Bundle(for: BundleProvider.self)

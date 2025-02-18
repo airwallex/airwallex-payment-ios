@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Airwallex
+
 
 class ConfigTextField: UIView {
     

@@ -5,6 +5,7 @@
 //  Created by Weiping Li on 2024/12/27.
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
+import UIKit
 
 extension UIStackView {
     func addSpacer(_ space: CGFloat) {
@@ -26,6 +27,9 @@ extension UIStackView {
             let vConstraint = spacer.heightAnchor.constraint(equalToConstant: space)
             vConstraint.priority = .required - 1
             vConstraint.isActive = true
+        @unknown default:
+            assert(false, "unexpected axis")
+            return
         }
         addArrangedSubview(spacer)
     }

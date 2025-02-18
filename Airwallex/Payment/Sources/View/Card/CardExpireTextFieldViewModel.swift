@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif
 
 class CardExpireTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     var placeholder: String? = "MM / YY"

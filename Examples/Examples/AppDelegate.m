@@ -10,7 +10,11 @@
 #import "AWXTheme.h"
 #import "Examples-Swift.h"
 #import "WXApi.h"
+#if __has_include(<Airwallex/AWXAPIClient.h>)
 #import <Airwallex/AWXAPIClient.h>
+#else
+@import AirwallexCore;
+#endif
 
 @interface AppDelegate ()<WXApiDelegate>
 

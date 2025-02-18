@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if SWIFT_PACKAGE
+import AirwallexCore
+#endif  
 
 class PaymentMethodListSectionController: SectionController {
     var context: CollectionViewContext<PaymentSectionType, String>!
