@@ -14,7 +14,7 @@
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSchemaProvider.h"
 #import "AWXSession.h"
-#import <OCMock/OCMock.h>
+@import OCMock;
 #import <XCTest/XCTest.h>
 
 @interface AWXSchemaProviderTests : XCTestCase

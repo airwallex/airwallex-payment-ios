@@ -265,11 +265,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */;
 			buildPhases = (
+				D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */,
 				085BD3E723CC64B6002E8F27 /* Sources */,
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
 				C52EE7B32865394100F966DD /* Run clang-format */,
-				D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */,
 			);
 			buildRules = (
 			);
