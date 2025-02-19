@@ -9,24 +9,6 @@
 import UIKit
 import Combine
 
-protocol BillingInfoCellConfiguring {
-    var canReuseShippingAddress: Bool { get }
-    var shouldReuseShippingAddress: Bool { get }
-    var firstNameConfigurer: BaseTextFieldConfiguring { get }
-    var lastNameConfigurer: BaseTextFieldConfiguring { get }
-    var countryConfigurer: OptionSelectionViewConfiguring { get }
-    var streetConfigurer: BaseTextFieldConfiguring { get }
-    var stateConfigurer: BaseTextFieldConfiguring { get }
-    var cityConfigurer: BaseTextFieldConfiguring { get }
-    var zipConfigurer: BaseTextFieldConfiguring { get }
-    var phoneConfigurer: BaseTextFieldConfiguring { get }
-    var emailConfigurer: BaseTextFieldConfiguring { get }
-    
-    var errorHintForBillingFields: String? { get }
-    var triggerLayoutUpdate: () -> Void { get }
-    var toggleReuseSelection: () -> Void { get }
-}
-
 class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let titleLabel: UILabel = {
@@ -68,63 +50,63 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     }()
     
     private lazy var countrySelectionView: OptionSelectionView = {
-        let view = OptionSelectionView()
+        let view = OptionSelectionView<CountrySelectionViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = [ .layerMinXMinYCorner, .layerMaxXMinYCorner ]
         return view
     }()
     
     private let streetTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = []
         return view
     }()
     
     private let stateTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = []
         return view
     }()
     
     private let cityTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = []
         return view
     }()
     
     private let zipCodeTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = []
         return view
     }()
     
     private let firstNameTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = []
         return view
     }()
     
     private let lastNameTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = []
         return view
     }()
     
     private let phoneTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = []
         return view
     }()
     
     private let emailTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = [ .layerMinXMaxYCorner, .layerMaxXMaxYCorner ]
         return view
@@ -159,9 +141,9 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private var cancellables = Set<AnyCancellable>()
     
-    private(set) var viewModel: (any BillingInfoCellConfiguring)?
+    private(set) var viewModel: BillingInfoCellViewModel?
     
-    func setup(_ viewModel: any BillingInfoCellConfiguring) {
+    func setup(_ viewModel: BillingInfoCellViewModel) {
         self.viewModel = viewModel
         reuseButton.isHidden = !viewModel.canReuseShippingAddress
         reuseButton.isSelected = viewModel.shouldReuseShippingAddress
@@ -292,14 +274,14 @@ private extension BillingInfoCell {
             emailTextField
         ]
         
-        Publishers.MergeMany(fields.map { $0.textDidBeginEditingPublisher })
+        Publishers.MergeMany(fields.map { $0.textField.textDidBeginEditingPublisher })
             .sink { [weak self] _ in
                 self?.validateInputAndUpdateLayering(fields)
             }
             .store(in: &cancellables)
         
-        Publishers.MergeMany(fields.map { $0.textDidEndEditingPublisher})
-            .sink { [weak self] textField in
+        Publishers.MergeMany(fields.map { $0.textField.textDidEndEditingPublisher})
+            .sink { [weak self] _ in
                 guard let self, let viewModel = self.viewModel else { return }
                 self.hintLabel.text = viewModel.errorHintForBillingFields
                 self.hintLabel.isHidden = (self.hintLabel.text ?? "").isEmpty
@@ -309,7 +291,7 @@ private extension BillingInfoCell {
             .store(in: &cancellables)
     }
     
-    func validateInputAndUpdateLayering(_ fields: [BaseTextField]) {
+    func validateInputAndUpdateLayering(_ fields: [BaseTextField<InfoCollectorTextFieldViewModel>]) {
         for view in fields {
             guard let viewModel = view.viewModel else { continue }
             if !viewModel.isValid {

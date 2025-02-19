@@ -8,12 +8,31 @@
 
 import UIKit
 
-protocol CheckBoxCellConfiguring {
-    var isSelected: Bool { get }
-    var title: String? { get }
-    var boxInfo: String { get }
-    func toggleSelection()
+class CheckBoxCellViewModel {
+    private(set) var isSelected: Bool
+    
+    let title: String?
+    
+    let boxInfo: String
+    
+    func toggleSelection() {
+        isSelected.toggle()
+        selectionDidChanged?(isSelected)
+    }
+    //  MARK: -
+    private var selectionDidChanged: ((Bool) -> Void)?
+    
+    init(isSelected: Bool,
+         title: String?,
+         boxInfo: String = "",
+         selectionDidChanged: ((Bool) -> Void)? = nil) {
+        self.isSelected = isSelected
+        self.title = title
+        self.boxInfo = boxInfo
+        self.selectionDidChanged = selectionDidChanged
+    }
 }
+   
 
 class CheckBoxCell: UICollectionViewCell, ViewConfigurable, ViewReusable {
     
@@ -82,9 +101,9 @@ class CheckBoxCell: UICollectionViewCell, ViewConfigurable, ViewReusable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private(set) var viewModel: (any CheckBoxCellConfiguring)?
+    private(set) var viewModel: CheckBoxCellViewModel?
     
-    func setup(_ viewModel: any CheckBoxCellConfiguring) {
+    func setup(_ viewModel: CheckBoxCellViewModel) {
         self.viewModel = viewModel
         button.isSelected = viewModel.isSelected
         titleLabel.text = viewModel.title

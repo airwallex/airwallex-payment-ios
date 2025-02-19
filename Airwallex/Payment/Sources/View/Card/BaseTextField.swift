@@ -16,15 +16,14 @@ protocol BaseTextFieldConfiguring: AnyObject {
     var errorHint: String? { get }
     var textFieldType: AWXTextFieldType? { get }
     var placeholder: String? { get }
-    
     var returnKeyType: UIReturnKeyType? { get set }
-    var returnActionHandler: ((BaseTextField) -> Void)? { get set }
+    var returnActionHandler: ((UITextField) -> Void)? { get set }
     
-    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool
+    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool
     func handleDidEndEditing()
 }
 
-class BaseTextField: UIView, ViewConfigurable {
+class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITextFieldDelegate {
     
     let textField: ContentInsetableTextField = {
         let view = ContentInsetableTextField()
@@ -124,9 +123,9 @@ class BaseTextField: UIView, ViewConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private(set) var viewModel: (any BaseTextFieldConfiguring)?
+    private(set) var viewModel: T?
     
-    func setup(_ viewModel: any BaseTextFieldConfiguring) {
+    func setup(_ viewModel: T) {
         self.viewModel = viewModel
         textField.update(for: viewModel.textFieldType ?? .default)
         if let attributedText = viewModel.attributedText {
@@ -164,12 +163,11 @@ class BaseTextField: UIView, ViewConfigurable {
             box.layer.borderWidth = 1
         }
     }
-}
 
-extension BaseTextField: UITextFieldDelegate {
+    //  MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let returnHandler = viewModel?.returnActionHandler  {
-            returnHandler(self)
+            returnHandler(textField)
             return false
         } else {
             resignFirstResponder()
@@ -193,7 +191,7 @@ extension BaseTextField: UITextFieldDelegate {
         let currentText = textField.text ?? ""
         guard let range = Range(range, in: currentText) else { return false }
         guard let viewModel else { return true }
-        let shouldChange = viewModel.handleTextShouldChange(textField: self, range: range, replacementString: string)
+        let shouldChange = viewModel.handleTextShouldChange(textField: textField, range: range, replacementString: string)
         if shouldChange {
             return true
         }
@@ -201,28 +199,6 @@ extension BaseTextField: UITextFieldDelegate {
         return false
     }
 }
-
-extension BaseTextField {
-    
-    var textDidBeginEditingPublisher: AnyPublisher<BaseTextField, Never> {
-        NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification, object: textField)
-            .compactMap { _ in self }
-            .eraseToAnyPublisher()
-    }
-    
-    var textDidEndEditingPublisher: AnyPublisher<BaseTextField, Never> {
-        NotificationCenter.default.publisher(for: UITextField.textDidEndEditingNotification, object: textField)
-            .compactMap { _ in self }
-            .eraseToAnyPublisher()
-    }
-    
-    var textDidChangePublisher: AnyPublisher<BaseTextField, Never> {
-        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: textField)
-            .compactMap { _ in self }
-            .eraseToAnyPublisher()
-    }
-}
-
 
 class ContentInsetableTextField: UITextField {
     

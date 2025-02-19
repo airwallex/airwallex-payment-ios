@@ -8,10 +8,10 @@
 
 import Combine
 
-protocol PaymentMethodCellConfiguring {
-    var name: String { get }
-    var imageURL: URL { get }
-    var isSelected: Bool { get }
+struct PaymentMethodCellViewModel {
+    let name: String
+    let imageURL: URL
+    let isSelected: Bool
 }
 
 class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -51,8 +51,8 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return view
     }()
     
-    private(set) var viewModel: PaymentMethodCellConfiguring?
-    func setup(_ viewModel: PaymentMethodCellConfiguring) {
+    private(set) var viewModel: PaymentMethodCellViewModel?
+    func setup(_ viewModel: PaymentMethodCellViewModel) {
         self.viewModel = viewModel
         logo.setImageURL(viewModel.imageURL, placeholder: nil)
         label.text = viewModel.name

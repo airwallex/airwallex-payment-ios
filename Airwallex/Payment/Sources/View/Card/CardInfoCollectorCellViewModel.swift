@@ -6,15 +6,14 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-class CardInfoCollectorCellViewModel: CardInfoCollectorCellConfiguring {
-    // MARK: CardInfoCollectorCellConfiguring
-    var nameOnCardConfigurer: any InfoCollectorTextFieldConfiguring
+class CardInfoCollectorCellViewModel {
+    var nameOnCardConfigurer: InfoCollectorTextFieldViewModel
     
     var triggerLayoutUpdate: () -> Void
     
-    var cardNumberConfigurer: any CardNumberTextFieldConfiguring
-    var expireDataConfigurer: any BaseTextFieldConfiguring
-    lazy var cvcConfigurer: any BaseTextFieldConfiguring = {
+    var cardNumberConfigurer: CardNumberTextFieldViewModel
+    var expireDataConfigurer: CardExpireTextFieldViewModel
+    lazy var cvcConfigurer: CardCVCTextFieldViewModel = {
         CardCVCTextFieldViewModel(maxLengthGetter: { [weak self] in
             guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
             return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
@@ -58,7 +57,8 @@ extension CardInfoCollectorCellViewModel {
     }
     
     func updateValidStatusForCheckout() {
-        for configurer in [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer, nameOnCardConfigurer] {
+        let arr: [any BaseTextFieldConfiguring] = [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer, nameOnCardConfigurer]
+        for configurer in arr {
             //  force configurer to check valid status if user left this field untouched
             configurer.handleDidEndEditing()
         }

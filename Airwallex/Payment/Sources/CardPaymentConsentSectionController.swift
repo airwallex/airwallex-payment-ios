@@ -49,7 +49,7 @@ class CardPaymentConsentSectionController: SectionController {
     private var paymentSessionHandler: PaymentUISessionHandler?
     
     private var selectedConsent: AWXPaymentConsent?
-    private var cvcConfigurer: InfoCollectorCellConfiguring?
+    private var cvcConfigurer: InfoCollectorTextFieldViewModel?
     private var mode: Mode {
         selectedConsent == nil ? .list : .payment
     }
@@ -120,6 +120,7 @@ class CardPaymentConsentSectionController: SectionController {
                     image: image,
                     text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
                     highlightable: true,
+                    actionTitle: nil,
                     actionIcon: UIImage(systemName: "ellipsis")?.rotate(degrees: 90),
                     buttonAction: { [weak self] in
                         self?.showAlertForDelete(consent, indexPath: indexPath)

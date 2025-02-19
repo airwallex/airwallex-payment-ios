@@ -16,7 +16,7 @@ protocol InfoCollectorCellConfiguring: InfoCollectorTextFieldConfiguring {
 class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let field: InfoCollectorTextField = {
-        let view = InfoCollectorTextField()
+        let view = InfoCollectorTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -35,7 +35,7 @@ class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         ]
         NSLayoutConstraint.activate(constraints)
         
-        field.textDidEndEditingPublisher
+        field.textField.textDidEndEditingPublisher
             .sink { [weak self] textField in
                 guard let self, let viewModel = self.viewModel else { return }
                 // this will be called after error hint update
@@ -69,11 +69,11 @@ class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         field.isFirstResponder
     }
     
-    var viewModel: (any InfoCollectorCellConfiguring)? {
-        field.viewModel as? InfoCollectorCellConfiguring
+    var viewModel: InfoCollectorTextFieldViewModel? {
+        field.viewModel as? InfoCollectorTextFieldViewModel
     }
     
-    func setup(_ viewModel: (any InfoCollectorCellConfiguring)) {
+    func setup(_ viewModel: InfoCollectorTextFieldViewModel) {
         field.setup(viewModel)
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 class BankSelectionCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private let view: OptionSelectionView = {
-        let view = OptionSelectionView()
+        let view = OptionSelectionView<BankSelectionViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -32,11 +32,11 @@ class BankSelectionCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var viewModel: (any OptionSelectionViewConfiguring)? {
-        view.viewModel as? OptionSelectionViewConfiguring
+    var viewModel: BankSelectionViewModel? {
+        view.viewModel as? BankSelectionViewModel
     }
     
-    func setup(_ viewModel: OptionSelectionViewConfiguring) {
+    func setup(_ viewModel: BankSelectionViewModel) {
         view.setup(viewModel)
     }
 }

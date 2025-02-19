@@ -15,7 +15,7 @@ extension AWXCardValidator {
     
     func validate(card: AWXCard) throws {
         do {
-            try Self.validate(number: card.number, supportedSchemes: supportedSchemes)
+            try Self.validate(number: card.number, supportedSchemes: supportedSchemes ?? [])
         } catch {
             throw NSLocalizedString("Invalid card number", bundle: .payment, comment: "card validator error message")
         }
@@ -43,9 +43,9 @@ extension AWXCardValidator {
     
     /// validate card number
     /// - Parameters:
-    ///   - number: string composed of decimals
-    ///   - supportedSchemes: supported scheme return from server, will not validate schemes if nil
-    static func validate(number: String?, supportedSchemes: [AWXCardScheme]? = nil) throws {
+    ///   - number: string composed of decimal digits
+    ///   - supportedSchemes: supported scheme return from server
+    static func validate(number: String?, supportedSchemes: [AWXCardScheme]) throws {
         guard let cardNumber = number?.filterIllegalCharacters(in: .decimalDigits.inverted),
               !cardNumber.isEmpty else {
             throw NSLocalizedString("Card number is required", bundle: .payment, comment: "card validator error message")
@@ -58,8 +58,6 @@ extension AWXCardValidator {
         guard let brand else {
             throw NSLocalizedString("Card not supported for payment", bundle: .payment, comment: "card validator error message")
         }
-        
-        guard let supportedSchemes else { return }
         
         guard supportedSchemes.contains(where: { $0.name.lowercased() == brand.name.lowercased() }) else {
             throw NSLocalizedString("Card not supported for payment", bundle: .payment, comment: "card validator error message")

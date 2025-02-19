@@ -24,7 +24,7 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
          textFieldType: AWXTextFieldType? = .default,
          placeholder: String? = nil,
          returnKeyType: UIReturnKeyType? = nil,
-         returnActionHandler: ((BaseTextField) -> Void)? = nil,
+         returnActionHandler: ((UITextField) -> Void)? = nil,
          customTextModifier: ((String?) -> (String?, NSAttributedString?, Bool))? = nil,
          customInputValidator: ((String?) throws -> Void)? = nil,
          triggerLayoutUpdate: (() -> Void)? = nil) {
@@ -72,10 +72,10 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
     
     var returnKeyType: UIReturnKeyType?
     
-    var returnActionHandler: ((BaseTextField) -> Void)?
+    var returnActionHandler: ((UITextField) -> Void)?
     
-    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool {
-        let userInput = textField.textField.text?.replacingCharacters(in: range, with: string)
+    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+        let userInput = textField.text?.replacingCharacters(in: range, with: string)
         if let customTextModifier {
             let (text, attributedText, triggerNextField) = customTextModifier(userInput)
             self.text = text

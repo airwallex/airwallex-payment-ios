@@ -33,10 +33,10 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
     
     var returnKeyType: UIReturnKeyType? = nil
     
-    var returnActionHandler: ((BaseTextField) -> Void)? = nil
+    var returnActionHandler: ((UITextField) -> Void)? = nil
     
-    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool {
-        var userInput = textField.textField.text?
+    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+        var userInput = textField.text?
             .replacingCharacters(in: range, with: string)
             .filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         let maxLength = AWXCardValidator.shared().maxLength(forCardNumber: userInput)
@@ -76,9 +76,9 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
         }
     }
     
-    let supportedCardSchemes: [AWXCardScheme]?
+    let supportedCardSchemes: [AWXCardScheme]
     
-    init(supportedCardSchemes: [AWXCardScheme]?) {
+    init(supportedCardSchemes: [AWXCardScheme]) {
         self.supportedCardSchemes = supportedCardSchemes
     }
 }

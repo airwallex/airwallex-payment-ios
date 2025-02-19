@@ -9,7 +9,7 @@ import Foundation
 
 class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
     
-    init(returnActionhandler: ((BaseTextField) -> Void)? = nil) {
+    init(returnActionhandler: ((UITextField) -> Void)? = nil) {
         self.returnActionHandler = returnActionhandler
     }
     
@@ -34,10 +34,10 @@ class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
     
     var returnKeyType: UIReturnKeyType? = .default
     
-    var returnActionHandler: ((BaseTextField) -> Void)?
+    var returnActionHandler: ((UITextField) -> Void)?
     
-    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool {
-        var userInput = textField.textField.text?.replacingCharacters(in: range, with: string).filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
+    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+        var userInput = textField.text?.replacingCharacters(in: range, with: string).filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         if let text, userInput.count == text.count - 1, text.hasPrefix(userInput), text.last == "/", userInput.count >= 1 {
             // when user deleting "/", we also delete the character before "/"
             userInput = String(userInput.dropLast())

@@ -13,7 +13,7 @@ class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
 
     init(maxLengthGetter: @escaping () -> Int,
          returnKeyType: UIReturnKeyType = .default,
-         returnActionHandler: ((BaseTextField) -> Void)? = nil) {
+         returnActionHandler: ((UITextField) -> Void)? = nil) {
         self.maxLengthGetter = maxLengthGetter
         self.returnKeyType = returnKeyType
         self.returnActionHandler = returnActionHandler
@@ -36,11 +36,11 @@ class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
     
     var returnKeyType: UIReturnKeyType?
     
-    var returnActionHandler: ((BaseTextField) -> Void)?
+    var returnActionHandler: ((UITextField) -> Void)?
     
-    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
         let cvcLength = maxLengthGetter()
-        var userInput = textField.textField.text?.replacingCharacters(in: range, with: string).filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
+        var userInput = textField.text?.replacingCharacters(in: range, with: string).filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         text = String(userInput.prefix(cvcLength))
         if text?.count == cvcLength {
             returnActionHandler?(textField)

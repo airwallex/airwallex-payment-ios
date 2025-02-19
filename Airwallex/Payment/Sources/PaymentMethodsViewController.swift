@@ -85,7 +85,6 @@ class PaymentMethodsViewController: AWXViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.keyboardDismissMode = .interactive
         collectionView.backgroundColor = .awxBackgroundPrimary
-        
         collectionView.refreshControl = refreshControl
         
         view.addSubview(collectionView)

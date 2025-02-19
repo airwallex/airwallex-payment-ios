@@ -9,8 +9,8 @@
 import UIKit
 import PassKit
 
-protocol ApplePayViewConfiguring {
-    var onPaymentButtonTapped: () -> Void { get }
+struct ApplePayViewModel {
+    var onPaymentButtonTapped: () -> Void
 }
 
 class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -41,9 +41,9 @@ class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         NSLayoutConstraint.activate(constraints)
     }
     
-    var viewModel: ApplePayViewConfiguring?
+    var viewModel: ApplePayViewModel?
     
-    func setup(_ viewModel: ApplePayViewConfiguring) {
+    func setup(_ viewModel: ApplePayViewModel) {
         self.viewModel = viewModel
     }
     

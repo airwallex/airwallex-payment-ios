@@ -71,9 +71,9 @@ class BankSelectionViewModel: OptionSelectionViewConfiguring {
     
     var returnKeyType: UIReturnKeyType? = nil
     
-    var returnActionHandler: ((BaseTextField) -> Void)? = nil
+    var returnActionHandler: ((UITextField) -> Void)? = nil
     
-    func handleTextShouldChange(textField: BaseTextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
         assert(false, "should never triggered")
         return false
     }
