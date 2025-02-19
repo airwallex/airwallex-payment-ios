@@ -7,10 +7,10 @@
 //
 
 
-protocol CardPaymentSectionHeaderConfiguring {
-    var title: String { get }
-    var actionTitle: String { get }
-    var buttonAction: () -> Void { get }
+struct CardPaymentSectionHeaderViewModel {
+    let title: String
+    let actionTitle: String
+    let buttonAction: () -> Void
 }
 
 class CardPaymentSectionHeader: UICollectionReusableView, ViewReusable, ViewConfigurable {
@@ -54,9 +54,9 @@ class CardPaymentSectionHeader: UICollectionReusableView, ViewReusable, ViewConf
         fatalError("init(coder:) has not been implemented")
     }
     
-    private(set) var viewModel: (any CardPaymentSectionHeaderConfiguring)?
+    private(set) var viewModel: CardPaymentSectionHeaderViewModel?
     
-    func setup(_ viewModel: CardPaymentSectionHeaderConfiguring) {
+    func setup(_ viewModel: CardPaymentSectionHeaderViewModel) {
         self.viewModel = viewModel
         label.text = viewModel.title
         actionButton.setTitle(viewModel.actionTitle, for: .normal)
@@ -64,7 +64,6 @@ class CardPaymentSectionHeader: UICollectionReusableView, ViewReusable, ViewConf
     
     // Actions
     @objc func onRightButtonTapped() {
-        // TODO: handle buttonAction
         viewModel?.buttonAction()
     }
 }

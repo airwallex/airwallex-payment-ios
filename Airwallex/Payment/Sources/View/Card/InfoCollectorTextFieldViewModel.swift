@@ -7,7 +7,44 @@
 //
 
 
-class InfoCollectorTextFieldViewModel: InfoCollectorTextFieldConfiguring {
+class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
+    var isRequired: Bool = true
+    
+    var customTextModifier: ((String?) -> (String?, NSAttributedString?, Bool))?
+    
+    var customInputValidator: ((String?) throws -> Void)?
+    
+    var triggerLayoutUpdate: (() -> Void)
+    
+    init(isRequired: Bool = true,
+         isEnabled: Bool = true,
+         title: String? = nil,
+         errorHint: String? = nil,
+         text: String? = nil,
+         attributedText: NSAttributedString? = nil,
+         isValid: Bool = true,
+         textFieldType: AWXTextFieldType? = .default,
+         placeholder: String? = nil,
+         customTextModifier: ((String?) -> (String?, NSAttributedString?, Bool))? = nil,
+         customInputValidator: ((String?) throws -> Void)? = nil,
+         triggerLayoutUpdate: @escaping (() -> Void) = {}) {
+        self.isRequired = isRequired
+        self.isEnabled = isEnabled
+        self.title = title
+        self.errorHint = errorHint
+        self.text = text
+        self.attributedText = attributedText
+        self.isValid = isValid
+        self.textFieldType = textFieldType
+        self.placeholder = placeholder
+        self.customTextModifier = customTextModifier
+        self.customInputValidator = customInputValidator
+        self.triggerLayoutUpdate = triggerLayoutUpdate
+    }
+    // MARK: InfoCollectorTextFieldConfiguring
+    
+    var isEnabled: Bool = true
+    
     var title: String?
     
     var errorHint: String?
@@ -23,8 +60,15 @@ class InfoCollectorTextFieldViewModel: InfoCollectorTextFieldConfiguring {
     var placeholder: String?
     
     func handleTextDidUpdate(to userInput: String) -> Bool {
+        if let customTextModifier {
+            let (text, attributedText, triggerNextField) = customTextModifier(userInput)
+            self.text = text
+            self.attributedText = attributedText
+            return triggerNextField
+        }
         guard !userInput.isEmpty else {
             text = nil
+            attributedText = nil
             return false
         }
         text = userInput
@@ -33,33 +77,29 @@ class InfoCollectorTextFieldViewModel: InfoCollectorTextFieldConfiguring {
     
     func handleDidEndEditing() {
         do {
-            try validateUserInput(text)
+            if textFieldType == .phoneNumber {
+                text = text?.filterIllegalCharacters(in: .whitespacesAndNewlines)
+            }
+            if let customInputValidator {
+                try customInputValidator(text)
+            } else {
+                try validateUserInput(text)
+            }
+            isValid = true
             errorHint = nil
         } catch {
+            isValid = false
             guard let error = error as? String else { return }
             errorHint = error
-        }     
-    }
-    
-    init(title: String? = nil,
-         errorHint: String? = nil,
-         text: String? = nil,
-         attributedText: NSAttributedString? = nil,
-         isValid: Bool = true,
-         textFieldType: AWXTextFieldType? = .default,
-         placeholder: String? = nil) {
-        self.title = title
-        self.errorHint = errorHint
-        self.text = text
-        self.attributedText = attributedText
-        self.isValid = isValid
-        self.textFieldType = textFieldType
-        self.placeholder = placeholder
+        }
     }
 }
 
 extension InfoCollectorTextFieldViewModel {
     func validateUserInput(_ text: String?) throws {
+        if !isRequired && (text == nil || text?.isEmpty == true) {
+            return
+        }
         let defaultErrorMessage = NSLocalizedString("Invalid \(title ?? "input")", bundle: .payment, comment: "")
         guard let textFieldType else {
             throw defaultErrorMessage
@@ -93,6 +133,10 @@ extension InfoCollectorTextFieldViewModel {
             guard let text, !text.isEmpty else {
                 throw NSLocalizedString("Please enter your card name", bundle: .payment, comment: "")
             }
+        case .email:
+            guard let text, text.isValidEmail else {
+                throw NSLocalizedString("Invalid email", bundle: .payment, comment: "")
+            }       
         default:
             guard let text, !text.isEmpty else {
                 throw defaultErrorMessage

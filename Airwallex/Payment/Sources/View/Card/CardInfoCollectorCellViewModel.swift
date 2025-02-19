@@ -6,34 +6,23 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-class CardInfoCollectorCellViewModel: CardInfoCollectorCellConfiguring {
-    var nameOnCardConfigurer: any InfoCollectorTextFieldConfiguring
+class CardInfoCollectorCellViewModel {
+    var nameOnCardConfigurer: InfoCollectorTextFieldViewModel
     
     var triggerLayoutUpdate: () -> Void
     
-    var cardNumberConfigurer: any CardNumberTextFieldConfiguring
-    var expireDataConfigurer: any ErrorHintableTextFieldConfiguring
-    lazy var cvcConfigurer: any ErrorHintableTextFieldConfiguring = {
+    var cardNumberConfigurer: CardNumberTextFieldViewModel
+    var expireDataConfigurer: CardExpireTextFieldViewModel
+    lazy var cvcConfigurer: CardCVCTextFieldViewModel = {
         CardCVCTextFieldViewModel(maxLengthGetter: { [weak self] in
             guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
             return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
         })
     }()
     
-    init(cardSchemes: [AWXCardScheme], callbackForLayoutUpdate: @escaping () -> Void) {
-        self.triggerLayoutUpdate = callbackForLayoutUpdate
-        cardNumberConfigurer = CardNumberTextFieldViewModel(
-            supportedCardSchemes: cardSchemes
-        )
-        expireDataConfigurer = CardExpireTextFieldViewModel()
-        nameOnCardConfigurer = InfoCollectorTextFieldViewModel(
-            title: NSLocalizedString("Name on card", bundle: .payment, comment: "")
-        )
-    }
-    
     var errorHintForCardFields: String? {
         for configurer in [ cardNumberConfigurer, expireDataConfigurer, cvcConfigurer ] {
-            if let configurer = configurer as? ErrorHintableTextFieldConfiguring,
+            if let configurer = configurer as? BaseTextFieldConfiguring,
                let errorHint = configurer.errorHint,
                !configurer.isValid {
                 return errorHint
@@ -42,18 +31,35 @@ class CardInfoCollectorCellViewModel: CardInfoCollectorCellConfiguring {
         
         return nil
     }
-    
-    func createAndValidateCard() throws -> AWXCard {
+    // MARK: -
+    init(cardSchemes: [AWXCardScheme], callbackForLayoutUpdate: @escaping () -> Void) {
+        triggerLayoutUpdate = callbackForLayoutUpdate
+        cardNumberConfigurer = CardNumberTextFieldViewModel(
+            supportedCardSchemes: cardSchemes
+        )
+        expireDataConfigurer = CardExpireTextFieldViewModel()
+        nameOnCardConfigurer = InfoCollectorTextFieldViewModel(
+            title: NSLocalizedString("Name on card", bundle: .payment, comment: "")
+        )
+    }
+}
+
+extension CardInfoCollectorCellViewModel {
+    func cardFromCollectedInfo() -> AWXCard {
         let card = AWXCard(
             name: nameOnCardConfigurer.text ?? "",
             cardNumber: cardNumberConfigurer.text ?? "",
             expiry: expireDataConfigurer.text ?? "",
             cvc: cvcConfigurer.text ?? ""
         )
-        
-        if let errorMessage = card.validate() {
-            throw errorMessage
-        }
         return card
+    }
+    
+    func updateValidStatusForCheckout() {
+        let arr: [any BaseTextFieldConfiguring] = [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer, nameOnCardConfigurer]
+        for configurer in arr {
+            //  force configurer to check valid status if user left this field untouched
+            configurer.handleDidEndEditing()
+        }
     }
 }

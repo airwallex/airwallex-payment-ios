@@ -8,15 +8,25 @@
 
 import Combine
 
-protocol PaymentMethodCellConfiguring {
-    var name: String { get }
-    var imageURL: URL { get }
-    var isSelected: Bool { get }
+struct PaymentMethodCellViewModel {
+    let name: String
+    let imageURL: URL
+    let isSelected: Bool
 }
 
 class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
-    let logo: UIImageView =  {
+    private let roundedBG: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = .radius_l
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.awxBorderInterative.cgColor
+        view.backgroundColor = .awxBackgroundPrimary
+        return view
+    }()
+    
+    private let logo: UIImageView =  {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 3
@@ -24,7 +34,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return view
     }()
     
-    let label: UILabel = {
+    private let label: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.awxHint
@@ -32,7 +42,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return view
     }()
     
-    let stack: UIStackView = {
+    private let stack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
@@ -41,14 +51,15 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return view
     }()
     
-    private(set) var viewModel: PaymentMethodCellConfiguring?
-    func setup(_ viewModel: PaymentMethodCellConfiguring) {
+    private(set) var viewModel: PaymentMethodCellViewModel?
+    func setup(_ viewModel: PaymentMethodCellViewModel) {
         self.viewModel = viewModel
         logo.setImageURL(viewModel.imageURL, placeholder: nil)
         label.text = viewModel.name
         self.label.font = viewModel.isSelected ? .awxHintBold : .awxHint
         self.label.textColor = viewModel.isSelected ? .awxTextLink : .awxTextPrimary
-        self.contentView.layer.borderColor = viewModel.isSelected ? UIColor.awxBorderInterative.cgColor : UIColor.awxBorderDecorative.cgColor
+        roundedBG.layer.borderColor = viewModel.isSelected ? UIColor.awxBorderInterative.cgColor : UIColor.awxBorderDecorative.cgColor
+        roundedBG.backgroundColor = viewModel.isSelected ? UIColor.awxBackgroundHighlight : UIColor.awxBackgroundPrimary
     }
     
     override init(frame: CGRect) {
@@ -63,9 +74,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
 
 private extension PaymentMethodCell {
     func setupViews() {
-        contentView.layer.cornerRadius = .radius_l
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.awxBorderInterative.cgColor
+        backgroundView = roundedBG
         
         contentView.addSubview(stack)
         stack.addArrangedSubview(logo)

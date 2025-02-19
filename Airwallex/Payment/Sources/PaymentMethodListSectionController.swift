@@ -9,24 +9,29 @@
 import Foundation
 
 class PaymentMethodListSectionController: SectionController {
-    var context: CollectionViewContext<PaymentSectionType, String>!
     
-    let section: PaymentSectionType
-    
-    var items: [String]  {
-        methodTypes.map { $0.name }
+    private var session: AWXSession {
+        methodProvider.session
     }
     
-    let session: AWXSession
-    private var paymentSessionHandler: PaymentUISessionHandler?
-    private var selectedMethod: AWXPaymentMethodType?
-    let methodTypes: [AWXPaymentMethodType]
+    private var selectedMethod: String
+    private let methodProvider: PaymentMethodProvider
     
-    init(section: PaymentSectionType, methodTypes: [AWXPaymentMethodType], session: AWXSession) {
-        self.section = section
-        self.methodTypes = methodTypes
-        self.selectedMethod = methodTypes.first
-        self.session = session
+    private var methodTypes: [AWXPaymentMethodType]
+    
+    init(methodProvider: PaymentMethodProvider) {
+        self.methodProvider = methodProvider
+        methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
+        selectedMethod = methodProvider.selectedMethod?.name ?? ""
+    }
+    
+    // MARK: - SectionController
+    var context: CollectionViewContext<PaymentSectionType, String>!
+    
+    let section = PaymentSectionType.methodList
+    
+    var items: [String]  {
+        methodTypes.compactMap { $0.name != AWXApplePayKey ? $0.name : nil }
     }
     
     func registerReusableViews(to collectionView: UICollectionView) {
@@ -44,11 +49,14 @@ class PaymentMethodListSectionController: SectionController {
             for: indexPath
         ) as! PaymentMethodCell
         
-        let methodType = methodTypes[indexPath.item]
+        guard let methodType = methodTypes[safe: indexPath.item] else {
+            assert(false, "index out of bounds")
+            return cell
+        }
         let viewModel = PaymentMethodCellViewModel(
             name: methodType.displayName,
             imageURL: methodType.resources.logoURL,
-            isSelected: item == self.selectedMethod?.name
+            isSelected: item == self.selectedMethod
         )
         cell.setup(viewModel)
         return cell
@@ -63,19 +71,21 @@ class PaymentMethodListSectionController: SectionController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 24, leading: 16, bottom: 24, trailing: 16)
-        section.interGroupSpacing = 8
+        section.contentInsets = .init(top: .spacing_24, leading: .spacing_16, bottom: .spacing_8, trailing: .spacing_16)
+        section.interGroupSpacing = .spacing_8
         
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(22)
-        )
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-        section.boundarySupplementaryItems = [header]
+        if methodProvider.isApplePayAvailable {
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(22)
+            )
+            let header = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            section.boundarySupplementaryItems = [header]
+        }
         return section
     }
     
@@ -90,10 +100,18 @@ class PaymentMethodListSectionController: SectionController {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedMethod = methodTypes[indexPath.item]
-        var snapshot = context.currentSnapshot()
-        let items = snapshot.itemIdentifiers(inSection: section)
-        snapshot.reloadItems(items)
-        context.applySnapshot(snapshot)
+        guard let selected = methodTypes[safe: indexPath.item] else {
+            assert(false, "invalid index")
+            return
+        }
+        guard selected.name != selectedMethod else { return }
+        var itemsToReload = [ selected.name, selectedMethod ]
+        selectedMethod = selected.name
+        context.reload(items: itemsToReload)
+        methodProvider.selectedMethod = selected
+    }
+    
+    func prepareItemsForReload() {
+        methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
     }
 }

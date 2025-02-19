@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 extension UITextField {
     func update(for fieldType: AWXTextFieldType) {
@@ -31,8 +32,10 @@ extension UITextField {
             autocapitalizationType = .none
             autocorrectionType = .no
             textContentType = .emailAddress
+            keyboardType = .emailAddress
         case .phoneNumber:
             textContentType = .telephoneNumber
+            keyboardType = .phonePad
         case .country:
             textContentType = .countryName
         case .state:
@@ -43,6 +46,7 @@ extension UITextField {
             textContentType = .fullStreetAddress
         case .zipcode:
             textContentType = .postalCode
+            keyboardType = .asciiCapableNumberPad
         case .cardNumber:
             keyboardType = .asciiCapableNumberPad
         case .expires:
@@ -54,7 +58,9 @@ extension UITextField {
             if #available(iOS 17.0, *) {
                 textContentType = .creditCardSecurityCode
             }
-            keyboardType = .numberPad
+            keyboardType = .asciiCapableNumberPad
+        @unknown default:
+            fatalError()
         }
     }
     
@@ -65,3 +71,22 @@ extension UITextField {
         delegate = tmp
     }
 }
+
+extension UITextField {
+    
+    var textDidBeginEditingPublisher: AnyPublisher<Notification, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification, object: self)
+            .eraseToAnyPublisher()
+    }
+    
+    var textDidEndEditingPublisher: AnyPublisher<Notification, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidEndEditingNotification, object: self)
+            .eraseToAnyPublisher()
+    }
+    
+    var textDidChangePublisher: AnyPublisher<Notification, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: self)
+            .eraseToAnyPublisher()
+    }
+}
+

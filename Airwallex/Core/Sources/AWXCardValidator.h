@@ -65,10 +65,13 @@ typedef NS_ENUM(NSUInteger, AWXBrandType) {
 
 @end
 
+@class AWXCardScheme;
 /**
  `AWXCardValidator` manages the card info.
  */
 @interface AWXCardValidator : NSObject
+
+@property (nonatomic, copy, nullable) NSArray<AWXCardScheme *> *supportedSchemes;
 
 + (instancetype)sharedCardValidator;
 - (nullable AWXBrand *)brandForCardNumber:(NSString *)cardNumber;

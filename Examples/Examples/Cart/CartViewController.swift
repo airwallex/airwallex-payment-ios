@@ -355,9 +355,7 @@ class CartViewController: UIViewController {
         case .failure:
             self.showAlert(error?.localizedDescription ?? "There was an error while processing your payment. Please try again.", withTitle: "Payment failed")
         case .cancel:
-            break
-            // wpdebug
-//            self.showAlert("Your payment has been cancelled", withTitle: "Payment cancelled")
+            self.showAlert("Your payment has been cancelled", withTitle: "Payment cancelled")
         }
     }
 }
