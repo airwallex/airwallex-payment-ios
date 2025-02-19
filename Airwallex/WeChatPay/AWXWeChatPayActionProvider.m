@@ -12,7 +12,7 @@
 #import "AWXSession.h"
 #import "AWXWeChatPaySDKResponse.h"
 #import "NSObject+Logging.h"
-#import "WXApi.h"
+@import WechatOpenSDKDynamic;
 
 @implementation AWXWeChatPayActionProvider
 
