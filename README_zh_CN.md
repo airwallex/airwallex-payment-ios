@@ -76,7 +76,7 @@ https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_y
 - `AirwallexApplePay`: 用于集成 Apple Pay。
 - `AirwallexCard`: 用于卡支付服务。
 - `AirwallexRedirect`: 支持通过 url/deeplink 重定向进行支付。
-- `AirwallexWeChatpay`: 提供本地化的微信支付体验。
+- `AirwallexWeChatPay`: 提供本地化的微信支付体验。
 
 ### Swift
 

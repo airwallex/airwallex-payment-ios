@@ -10,7 +10,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Airwallex",
-            targets: [ "AirwallexCore", "AirwallexApplePay", "AirwallexCard", "AirwallexRedirect", "AirwallexWeChatpay" ]
+            targets: [ "AirwallexCore", "AirwallexApplePay", "AirwallexCard", "AirwallexRedirect", "AirwallexWeChatPay" ]
         ),
         .library(
             name: "AirwallexCore",
@@ -29,8 +29,8 @@ let package = Package(
             targets: ["AirwallexRedirect"]
         ),
         .library(
-            name: "AirwallexWeChatpay",
-            targets: ["AirwallexWeChatpay"]
+            name: "AirwallexWeChatPay",
+            targets: ["AirwallexWeChatPay"]
         )
     ],
     targets: [
@@ -43,8 +43,8 @@ let package = Package(
             path: "Frameworks/AirTracker.xcframework"
         ),
         .binaryTarget(
-            name: "WechatOpenSDK",
-            path: "Frameworks/WechatOpenSDK.xcframework"
+            name: "WechatOpenSDKDynamic",
+            path: "Frameworks/WechatOpenSDKDynamic.xcframework"
         ),
         .target(
             name: "AirwallexCore",
@@ -87,21 +87,15 @@ let package = Package(
             ]
         ),
         .target(
-            name: "AirwallexWeChatpay",
+            name: "AirwallexWeChatPay",
             dependencies: [
                 "AirwallexCore",
-                "WechatOpenSDK"
+                .target(name: "WechatOpenSDKDynamic")
             ],
             path: "Airwallex/WeChatPay",
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")
-            ],
-            linkerSettings: [
-                .linkedLibrary("z"),        // Links libz (zlib)
-                .linkedLibrary("sqlite3"),  // Links libsqlite3
-                .linkedLibrary("c++"),       // Links libc++
-                .unsafeFlags(["-ObjC", "-all_load"]),
             ]
         ),
         .testTarget(
