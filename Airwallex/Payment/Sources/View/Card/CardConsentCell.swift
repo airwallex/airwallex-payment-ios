@@ -7,13 +7,25 @@
 //
 
 
-protocol CardConsentCellConfiguring {
-    var image: UIImage? { get }
-    var text: String { get }
-    var buttonAction: () -> Void { get }
+struct CardConsentCellViewModel {
+    let image: UIImage?
+    let text: String
+    let highlightable: Bool
+    let actionTitle: String?
+    let actionIcon: UIImage?
+    let buttonAction: () -> Void
 }
 
 class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
+    
+    private let roundedBG: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = .radius_l
+        view.clipsToBounds = true
+        view.backgroundColor = .awxBackgroundPrimary
+        return view
+    }()
     
     private let logo: UIImageView = {
         let view = UIImageView()
@@ -31,16 +43,15 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return view
     }()
     
-    private let button: UIButton = {
+    private lazy var button: UIButton = {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.tintColor = .awxIconLink
+        view.setTitleColor(.awxIconLink, for: .normal)
+        view.titleLabel?.font = .awxHeadline400
         view.addTarget(self, action: #selector(onActionButtonTapped), for: .touchUpInside)
-        view.setImage(UIImage(systemName: "ellipsis"), for: .normal)
-        view.transform = CGAffineTransformMakeRotation(.pi/2)
         return view
     }()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,13 +62,28 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var isHighlighted: Bool {
+        didSet {
+            guard let viewModel, viewModel.highlightable else {
+                roundedBG.backgroundColor = .awxBackgroundPrimary
+                return
+            }
+            if isHighlighted {
+                roundedBG.backgroundColor = .awxBackgroundHighlight
+            } else {
+                roundedBG.backgroundColor = .awxBackgroundPrimary
+            }
+        }
+    }
     
-    private(set) var viewModel: CardConsentCellConfiguring?
+    private(set) var viewModel: CardConsentCellViewModel?
     
-    func setup(_ viewModel: any CardConsentCellConfiguring) {
+    func setup(_ viewModel: CardConsentCellViewModel) {
         self.viewModel = viewModel
         logo.image = viewModel.image
         label.text = viewModel.text
+        button.setTitle(viewModel.actionTitle, for: .normal)
+        button.setImage(viewModel.actionIcon, for: .normal)
     }
     
     // Action
@@ -68,9 +94,13 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
 
 private extension CardConsentCell {
     func setupViews() {
+        backgroundView = roundedBG
         contentView.addSubview(logo)
         contentView.addSubview(label)
         contentView.addSubview(button)
+        
+        label.setContentCompressionResistancePriority(.defaultHigh - 10, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         
         let constraints = [
             logo.widthAnchor.constraint(equalToConstant: 30),
@@ -85,7 +115,7 @@ private extension CardConsentCell {
             button.topAnchor.constraint(equalTo: contentView.topAnchor),
             button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            button.widthAnchor.constraint(equalTo: button.heightAnchor)
+            button.widthAnchor.constraint(greaterThanOrEqualTo: button.heightAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)

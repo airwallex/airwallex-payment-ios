@@ -8,9 +8,8 @@
 
 import Foundation
 
-class CardCVCTextFieldViewModel: ErrorHintableTextFieldConfiguring {
-    
-    var maxLengthGetter: () -> Int
+class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
+    var isEnabled: Bool = true
     
     var errorHint: String? = nil
     
@@ -26,6 +25,8 @@ class CardCVCTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     
     var placeholder: String? = "CVC"
     
+    var maxLengthGetter: () -> Int
+
     init(maxLengthGetter: @escaping () -> Int) {
         self.maxLengthGetter = maxLengthGetter
     }
@@ -36,14 +37,12 @@ class CardCVCTextFieldViewModel: ErrorHintableTextFieldConfiguring {
     }
     
     func handleDidEndEditing() {
-        guard let text else {
-            errorHint = NSLocalizedString("Security code is required", bundle: .payment, comment: "")
-            return
+        do {
+            try AWXCardValidator.validate(cvc: text, requiredLength: maxLengthGetter())
+            errorHint = nil
+        } catch {
+            guard let error = error as? String else { return }
+            errorHint = error
         }
-        guard text.count == maxLengthGetter() else {
-            errorHint = NSLocalizedString("Security code is invalid", bundle: .payment, comment: "")
-            return
-        }
-        errorHint = nil
     }
 }

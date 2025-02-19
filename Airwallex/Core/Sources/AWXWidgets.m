@@ -1066,12 +1066,8 @@
     UIImageView *iconImage = [UIImageView new];
     [iconImage.widthAnchor constraintEqualToConstant:24].active = YES;
     [iconImage.heightAnchor constraintEqualToConstant:24].active = YES;
-    if (@available(iOS 13.0, *)) {
-        iconImage.image = [UIImage systemImageNamed:@"exclamationmark.circle.fill"];
-        iconImage.tintColor = UIColor.airwallexOrange50Color;
-    } else {
-        iconImage.image = [UIImage imageNamed:@"warning" inBundle:[NSBundle resourceBundle]];
-    }
+    iconImage.image = [UIImage systemImageNamed:@"exclamationmark.circle.fill"];
+    iconImage.tintColor = UIColor.airwallexOrange50Color;
 
     UILabel *warningLabel = [UILabel new];
     [warningLabel setTextColor:UIColor.airwallexGray80Color];
