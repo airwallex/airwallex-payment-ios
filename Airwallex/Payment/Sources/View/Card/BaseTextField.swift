@@ -8,14 +8,12 @@
 
 import Combine
 
-protocol ErrorHintableTextFieldConfiguring: BaseTextFieldConfiguring {
-    var errorHint: String? { get }
-}
-
 protocol BaseTextFieldConfiguring: AnyObject {
+    var isEnabled: Bool { get }
     var text: String? { get }
     var attributedText: NSAttributedString? { get }
     var isValid: Bool { get }
+    var errorHint: String? { get }
     var textFieldType: AWXTextFieldType? { get }
     var placeholder: String? { get }
     
@@ -27,7 +25,7 @@ protocol BaseTextFieldConfiguring: AnyObject {
     func handleDidEndEditing()
 }
 
-class BaseTextField: UIView, ViewConfigurable {
+class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITextFieldDelegate {
     
     let textField: ContentInsetableTextField = {
         let view = ContentInsetableTextField()
@@ -39,7 +37,6 @@ class BaseTextField: UIView, ViewConfigurable {
         view.textInsets = UIEdgeInsets(top: .spacing_12, left: .spacing_16, bottom: .spacing_12, right: .spacing_16)
         return view
     }()
-    
     
     let verticalStack: UIStackView = {
         let stack = UIStackView()
@@ -62,7 +59,6 @@ class BaseTextField: UIView, ViewConfigurable {
     let horizontalStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.spacing = .spacing_8
         stack.alignment = .center
         return stack
     }()
@@ -112,6 +108,7 @@ class BaseTextField: UIView, ViewConfigurable {
         textField.becomeFirstResponder()
     }
     
+    @discardableResult
     override func resignFirstResponder() -> Bool {
         textField.resignFirstResponder()
     }
@@ -124,13 +121,23 @@ class BaseTextField: UIView, ViewConfigurable {
         textField.isFirstResponder
     }
     
+    var isEnabled: Bool {
+        get {
+            textField.isEnabled
+        }
+        set {
+            textField.isEnabled = newValue
+            textField.textColor = newValue ? .awxTextPrimary : .awxTextPlaceholder
+        }
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var viewModel: (any BaseTextFieldConfiguring)?
+    private(set) var viewModel: T?
     
-    func setup(_ viewModel: any BaseTextFieldConfiguring) {
+    func setup(_ viewModel: T) {
         self.viewModel = viewModel
         textField.update(for: viewModel.textFieldType ?? .default)
         if let attributedText = viewModel.attributedText {
@@ -152,6 +159,7 @@ class BaseTextField: UIView, ViewConfigurable {
         } else {
             textField.attributedPlaceholder = nil
         }
+        isEnabled = viewModel.isEnabled
         
         updateBorderAppearance()
     }
@@ -166,9 +174,7 @@ class BaseTextField: UIView, ViewConfigurable {
             box.layer.borderWidth = 1
         }
     }
-}
-
-extension BaseTextField: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let nextField  {
             nextField.becomeFirstResponder()
@@ -205,30 +211,10 @@ extension BaseTextField: UITextFieldDelegate {
     }
 }
 
-extension BaseTextField {
-    
-    var textDidBeginEditingPublisher: AnyPublisher<BaseTextField, Never> {
-        NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification, object: textField)
-            .compactMap { _ in self }
-            .eraseToAnyPublisher()
-    }
-    
-    var textDidEndEditingPublisher: AnyPublisher<BaseTextField, Never> {
-        NotificationCenter.default.publisher(for: UITextField.textDidEndEditingNotification, object: textField)
-            .compactMap { _ in self }
-            .eraseToAnyPublisher()
-    }
-    
-    var textDidChangePublisher: AnyPublisher<BaseTextField, Never> {
-        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: textField)
-            .compactMap { _ in self }
-            .eraseToAnyPublisher()
-    }
-}
-
-
 class ContentInsetableTextField: UITextField {
     
+    var textInsets: UIEdgeInsets
+
     init(textInsets: UIEdgeInsets = .zero) {
         self.textInsets = textInsets
         super.init(frame: .zero)
@@ -237,7 +223,6 @@ class ContentInsetableTextField: UITextField {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    var textInsets: UIEdgeInsets
     
     // Rect for text already in the field
     override func textRect(forBounds bounds: CGRect) -> CGRect {

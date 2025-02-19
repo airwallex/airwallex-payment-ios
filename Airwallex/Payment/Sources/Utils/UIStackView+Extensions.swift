@@ -7,12 +7,28 @@
 //
 
 extension UIStackView {
-    func addSpacer(_ space: CGFloat) {
+    @discardableResult
+    func insertSpacer(_ space: CGFloat,
+                      at index: Int,
+                      priority: UILayoutPriority? = nil) -> UIView {
+        let spacer = spacer(space, priority: priority)
+        insertArrangedSubview(spacer, at: index)
+        return spacer
+    }
+    
+    @discardableResult
+    func addSpacer(_ space: CGFloat, priority: UILayoutPriority? = nil) -> UIView {
+        let spacer = spacer(space, priority: priority)
+        addArrangedSubview(spacer)
+        return spacer
+    }
+    
+    private func spacer(_ space: CGFloat, priority: UILayoutPriority? = nil) -> UIView {
         let spacer = UIView()
         switch axis {
         case .horizontal:
             let hConstraint = spacer.widthAnchor.constraint(equalToConstant: space)
-            hConstraint.priority = .required - 1
+            hConstraint.priority = priority ?? .required - 1
             hConstraint.isActive = true
             
             let vConstraint = spacer.heightAnchor.constraint(equalToConstant: space)
@@ -24,9 +40,9 @@ extension UIStackView {
             hConstraint.isActive = true
             
             let vConstraint = spacer.heightAnchor.constraint(equalToConstant: space)
-            vConstraint.priority = .required - 1
+            vConstraint.priority = priority ?? .required - 1
             vConstraint.isActive = true
         }
-        addArrangedSubview(spacer)
+        return spacer
     }
 }

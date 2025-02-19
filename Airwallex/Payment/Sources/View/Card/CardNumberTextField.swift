@@ -9,12 +9,12 @@
 import UIKit
 import Combine
 
-protocol CardNumberTextFieldConfiguring: ErrorHintableTextFieldConfiguring {
+protocol CardNumberTextFieldConfiguring: BaseTextFieldConfiguring {
     var supportedBrands: [AWXBrandType] { get }
     var currentBrand: AWXBrandType { get }
 }
 
-class CardNumberTextField: BaseTextField {
+class CardNumberTextField: BaseTextField<CardNumberTextFieldViewModel> {
     
     private let logoStack: UIStackView = {
         let stack = UIStackView()
@@ -36,7 +36,6 @@ class CardNumberTextField: BaseTextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
         horizontalStack.addArrangedSubview(logoStack)
-        horizontalStack.setCustomSpacing(0, after: logoStack)
         horizontalStack.addSpacer(.spacing_16)
     }
     
@@ -44,12 +43,8 @@ class CardNumberTextField: BaseTextField {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setup(_ viewModel: any BaseTextFieldConfiguring) {
+    override func setup(_ viewModel: CardNumberTextFieldViewModel) {
         super.setup(viewModel)
-        guard let viewModel = viewModel as? CardNumberTextFieldConfiguring else {
-            assert(false, "invalid view model type")
-            return
-        }
         if viewModel.currentBrand != .unknown {
             updateLogos(brands: [viewModel.currentBrand])
         } else {
@@ -96,7 +91,7 @@ private extension CardNumberTextField {
     
     func setupTimer() {
         invalidateTimer()
-        guard let viewModel = viewModel as? CardNumberTextFieldConfiguring, viewModel.currentBrand == .unknown, window != nil else { return }
+        guard let viewModel, viewModel.currentBrand == .unknown, window != nil else { return }
         let animatingBrands = viewModel.supportedBrands[(logoStack.arrangedSubviews.count-1)...]
         //  animatingBrands.count > 1 means there are more brands than logo stack's arranged subview,
         //  we need to display them 1 by 1 at the last position of the logo stack

@@ -6,12 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-protocol CheckoutButtonCellConfiguring {
-    var checkoutAction: () -> Void { get }
-}
-
-struct CheckoutButtonCellViewModel: CheckoutButtonCellConfiguring {
-    var checkoutAction: () -> Void
+struct CheckoutButtonCellViewModel {
+    let checkoutAction: () -> Void
 }
 
 class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -48,9 +44,9 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private(set) var viewModel: CheckoutButtonCellConfiguring?
+    private(set) var viewModel: CheckoutButtonCellViewModel?
     
-    func setup(_ viewModel: any CheckoutButtonCellConfiguring) {
+    func setup(_ viewModel: CheckoutButtonCellViewModel) {
         self.viewModel = viewModel
     }
     

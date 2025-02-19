@@ -9,16 +9,6 @@
 import UIKit
 import Combine
 
-protocol CardInfoCollectorCellConfiguring {
-    var cardNumberConfigurer: CardNumberTextFieldConfiguring { get }
-    var expireDataConfigurer: ErrorHintableTextFieldConfiguring { get }
-    var cvcConfigurer: ErrorHintableTextFieldConfiguring { get }
-    var nameOnCardConfigurer: InfoCollectorTextFieldConfiguring { get }
-    
-    var errorHintForCardFields: String? { get }
-    var triggerLayoutUpdate: () -> Void { get }
-}
-
 class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let titleLabel: UILabel = {
@@ -44,14 +34,14 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     }()
     
     private let expiresTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<CardExpireTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMinXMaxYCorner
         return view
     }()
     
     private let cvcTextField: BaseTextField = {
-        let view = BaseTextField()
+        let view = BaseTextField<CardCVCTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMaxXMaxYCorner
         
@@ -72,7 +62,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     }()
     
     private let nameTextField: InfoCollectorTextField = {
-        let view = InfoCollectorTextField()
+        let view = InfoCollectorTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -85,9 +75,9 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         return view
     }()
     
-    private(set) var viewModel: CardInfoCollectorCellConfiguring?
+    private(set) var viewModel: CardInfoCollectorCellViewModel?
     
-    func setup(_ viewModel: CardInfoCollectorCellConfiguring) {
+    func setup(_ viewModel: CardInfoCollectorCellViewModel) {
         self.viewModel = viewModel
         numberTextField.setup(viewModel.cardNumberConfigurer)
         expiresTextField.setup(viewModel.expireDataConfigurer)
@@ -115,23 +105,26 @@ private extension CardInfoCollectorCell {
     func setupObservation() {
         let updateLayering = { [weak self] in
             guard let self else { return }
-            let arr = [ self.numberTextField, self.expiresTextField, self.cvcTextField ]
+            let arr: [(view: UIView, isValid: Bool, isFirstResponder: Bool)] = [
+                (self.numberTextField, self.numberTextField.viewModel?.isValid ?? true, self.numberTextField.isFirstResponder),
+                (self.expiresTextField, self.expiresTextField.viewModel?.isValid ?? true, self.expiresTextField.isFirstResponder),
+                (self.cvcTextField, self.cvcTextField.viewModel?.isValid ?? true, self.cvcTextField.isFirstResponder)
+            ]
             
-            for view in arr {
-                guard let viewModel = view.viewModel else { continue }
-                if !viewModel.isValid {
+            for (view, isValid, _) in arr {
+                if !isValid {
                     self.container.bringSubviewToFront(view)
                 }
             }
-            if let editingField = arr.first(where: { $0.isFirstResponder }) {
+            if let editingField = arr.first(where: { $0.isFirstResponder })?.view {
                 self.container.bringSubviewToFront(editingField)
             }
         }
         
         Publishers.Merge3(
-            numberTextField.textDidBeginEditingPublisher,
-            expiresTextField.textDidBeginEditingPublisher,
-            cvcTextField.textDidBeginEditingPublisher
+            numberTextField.textField.textDidBeginEditingPublisher,
+            expiresTextField.textField.textDidBeginEditingPublisher,
+            cvcTextField.textField.textDidBeginEditingPublisher
         )
         .sink { _ in
             updateLayering()
@@ -139,15 +132,19 @@ private extension CardInfoCollectorCell {
         .store(in: &cancellables)
         
         Publishers.Merge4(
-            numberTextField.textDidEndEditingPublisher,
-            expiresTextField.textDidEndEditingPublisher,
-            cvcTextField.textDidEndEditingPublisher,
-            nameTextField.textDidEndEditingPublisher
+            numberTextField.textField.textDidEndEditingPublisher,
+            expiresTextField.textField.textDidEndEditingPublisher,
+            cvcTextField.textField.textDidEndEditingPublisher,
+            nameTextField.textField.textDidEndEditingPublisher
         )
-        .sink { [weak self] textField in
-            guard let self, let viewModel = self.viewModel else { return }
+        .sink { [weak self] notification in
+            guard let self,
+                  let viewModel = self.viewModel,
+                  let textField = notification.object as? UITextField else {
+                return
+            }
             self.hintLabel.text = viewModel.errorHintForCardFields
-            if textField !== nameTextField {
+            if textField !== self.nameTextField.textField {
                 updateLayering()
             }
             viewModel.triggerLayoutUpdate()
