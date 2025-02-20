@@ -18,12 +18,21 @@ public class PaymentUISessionHandler: NSObject {
     
     /// how to avoid force unwrap here
     weak var viewController: UIViewController!
+
+    private var paymentResultDelegate: AWXPaymentResultDelegate? {
+        (viewController as? AWXPaymentResultDelegate) ?? AWXUIContext.shared().delegate
+    }
     
     private var paymentConsent: AWXPaymentConsent?
     
+    /// Initializes a paymentUISessionHandler with `AWXPaymentMethodType`.
+    /// - Parameters:
+    ///   - session: The payment session containing transaction details.
+    ///   - methodType: The payment method type return from server.
+    ///   - viewController: The hosting view controller from which the payment process is launched.
     public init?(session: AWXSession,
-          methodType: AWXPaymentMethodType,
-          viewController: UIViewController) {
+                 methodType: AWXPaymentMethodType,
+                 viewController: UIViewController) {
         self.session = session
         self.viewController = viewController
         
@@ -34,9 +43,14 @@ public class PaymentUISessionHandler: NSObject {
         actionProvider = actionProviderClass.init(delegate: self, session: session, paymentMethodType: methodType)
     }
     
+    /// Initializes a paymentUISessionHandler with `AWXPaymentConsent`.
+    /// - Parameters:
+    ///   - session: The payment session containing transaction details.
+    ///   - paymentConsent: The payment consent return from server.
+    ///   - viewController: The hosting view controller from which the payment process is launched.
     public init(session: AWXSession,
-         paymentConsent: AWXPaymentConsent,
-         viewController: UIViewController) {
+                paymentConsent: AWXPaymentConsent,
+                viewController: UIViewController) {
         self.session = session
         self.viewController = viewController
         self.paymentConsent = paymentConsent
@@ -44,14 +58,14 @@ public class PaymentUISessionHandler: NSObject {
         actionProvider = AWXDefaultProvider(delegate: self, session: session)
     }
     
-    /// This init method typically works with low-level API integration for now.
+    /// Initializes a paymentUISessionHandler, primarily used for low-level API integrations.
     /// - Parameters:
-    ///   - session: payment session
-    ///   - viewController: hosting view controller - where the payment launched
-    ///   - actionProviderCreater: a closure to create/start/return a provider for the payment
+    ///   - session: The payment session containing transaction details.
+    ///   - viewController: The hosting view controller from which the payment process is launched.
+    ///   - actionProviderCreater: A closure that creates, starts, and returns a provider for handling the payment process.
     public init(session: AWXSession,
-         viewController: UIViewController,
-         actionProviderCreater: (PaymentUISessionHandler) -> AWXDefaultProvider) {
+                viewController: UIViewController & AWXPaymentResultDelegate,
+                actionProviderCreater: (PaymentUISessionHandler) -> AWXDefaultProvider) {
         self.session = session
         self.viewController = viewController
         super.init()
@@ -90,25 +104,25 @@ extension PaymentUISessionHandler: AWXProviderDelegate {
     
     public func provider(_ provider: AWXDefaultProvider, didCompleteWithPaymentConsentId paymentConsentId: String) {
         debugLog("paymentConsentId: \(paymentConsentId)")
-        AWXUIContext.shared().delegate?.paymentViewController?(viewController, didCompleteWithPaymentConsentId: paymentConsentId)
+        paymentResultDelegate?.paymentViewController?(viewController, didCompleteWithPaymentConsentId: paymentConsentId)
     }
     
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         debugLog("stauts: \(status), error: \(error)")
         if let action = AWXUIContext.shared().paymentUIDismissAction {
             action {
-                AWXUIContext.shared().delegate?.paymentViewController(self.viewController, didCompleteWith: status, error: error)
+                self.paymentResultDelegate?.paymentViewController(self.viewController, didCompleteWith: status, error: error)
             }
             AWXUIContext.shared().paymentUIDismissAction = nil
         } else {
-            AWXUIContext.shared().delegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
+            paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
         }
     }
-     
+    
     public func hostViewController() -> UIViewController {
         return viewController
     }
-
+    
     public func provider(_ provider: AWXDefaultProvider, shouldHandle nextAction: AWXConfirmPaymentNextAction) {
         guard let actionProviderClass = ClassToHandleNextActionForType(nextAction) as? AWXDefaultActionProvider.Type else {
             showAlert(NSLocalizedString("No provider matched the next action.", bundle: .payment, comment: ""))

@@ -14,7 +14,18 @@ public extension AWXUIContext {
         case present
     }
     
-    @MainActor func launchPayment(from hostingVC: UIViewController, style: LaunchStyle = .push) {
+    @MainActor func launchPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
+                                  session: AWXSession,
+                                  style: LaunchStyle = .push) {
+        launchPayment(from: hostingVC, session: session, paymentResultDelegate: hostingVC, style: style)
+    }
+    
+    @MainActor func launchPayment(from hostingVC: UIViewController,
+                                  session: AWXSession,
+                                  paymentResultDelegate: AWXPaymentResultDelegate,
+                                  style: LaunchStyle = .push) {
+        self.session = session
+        self.delegate = paymentResultDelegate
         let viewModel = AWXPaymentMethodListViewModel(
             session: session,
             apiClient: AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
