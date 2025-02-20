@@ -24,7 +24,9 @@ extension String {
         return emailTest.evaluate(with: self)
     }
 }
-//
-//extension String: @retroactive Error {
-//    var localizedDescription: String { self }
-//}
+
+extension String {
+    func asError() -> ErrorMessage {
+        ErrorMessage(rawValue: self)
+    }
+}

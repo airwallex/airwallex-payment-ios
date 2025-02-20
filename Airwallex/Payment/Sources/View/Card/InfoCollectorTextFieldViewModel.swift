@@ -134,8 +134,8 @@ extension InfoCollectorTextFieldViewModel {
             }
         case .email:
             guard let text, text.isValidEmail else {
-                throw NSLocalizedString("Invalid email", bundle: .payment, comment: "")
-            }       
+                throw NSLocalizedString("Invalid email", bundle: .payment, comment: "").asError()
+            }
         default:
             guard let text, !text.isEmpty else {
                 throw ErrorMessage(rawValue: defaultErrorMessage)
