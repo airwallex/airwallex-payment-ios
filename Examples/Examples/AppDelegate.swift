@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        NotificationCenter.default.post(name: .init("showSuccessfullVC"), object: nil)
+        NotificationCenter.default.post(name: PaymentResultViewController.paymentResultNotification, object: nil)
         return WXApi.handleOpen(url, delegate: self)
     }
 }

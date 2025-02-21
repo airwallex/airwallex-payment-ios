@@ -109,12 +109,12 @@ class H5DemoViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        NotificationCenter.default.publisher(for: Notification.Name(rawValue: "showSuccessfullVC"))
+        NotificationCenter.default.publisher(for: PaymentResultViewController.paymentResultNotification)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
                 self.navigationController?.popToViewController(self, animated: false)
-                let successVC = SuccessViewController()
+                let successVC = PaymentResultViewController()
                 self.navigationController?.pushViewController(successVC, animated: true)
             }
             .store(in: &cancellables)
