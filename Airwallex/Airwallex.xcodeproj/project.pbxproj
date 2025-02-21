@@ -1268,9 +1268,9 @@
 		D8F303212D1ABAAE00D29B49 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D8F303122D1ABAAE00D29B49 /* ApplePayCell.swift */,
 				D8F3032F2D1B9DAC00D29B49 /* Card */,
 				D82737202D364C7A00AA41A6 /* Schema */,
+				D8F303122D1ABAAE00D29B49 /* ApplePayCell.swift */,
 				D8F303172D1ABAAE00D29B49 /* LabelHeader.swift */,
 				D8F67F002D2E2703004BAB26 /* OptionSelectionView.swift */,
 				D8F67EFC2D2CFBEA004BAB26 /* CheckBoxCell.swift */,

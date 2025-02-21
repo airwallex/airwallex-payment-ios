@@ -48,7 +48,7 @@ class WarningViewCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private let label: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = .awxBody
+        view.font = .awxFont(.body2)
         view.textColor = .awxTextPrimary
         view.numberOfLines = 0
         return view

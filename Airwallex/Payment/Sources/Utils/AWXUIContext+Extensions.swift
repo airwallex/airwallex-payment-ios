@@ -61,6 +61,7 @@ public extension AWXUIContext {
             nav.navigationBar.standardAppearance = appearance
             nav.navigationBar.scrollEdgeAppearance = appearance
             nav.navigationBar.compactAppearance = appearance
+            nav.navigationBar.tintColor = UIColor.awxIconLink
             hostingVC.present(nav, animated: true)
             AWXUIContext.shared().paymentUIDismissAction = { [weak nav] completion in
                 guard let nav else {

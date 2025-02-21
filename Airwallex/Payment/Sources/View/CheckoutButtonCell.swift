@@ -19,7 +19,7 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.addTarget(self, action: #selector(onButtonTapped), for: .touchUpInside)
         
         view.setTitleColor(.awxTextInverse, for: .normal)
-        view.titleLabel?.font = .awxHeadline100
+        view.titleLabel?.font = .awxFont(.title1, weight: .bold)
         view.backgroundColor = UIColor.awxBackgroundInteractive
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = true

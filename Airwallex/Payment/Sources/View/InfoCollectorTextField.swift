@@ -26,7 +26,7 @@ class InfoCollectorTextField<T: InfoCollectorTextFieldConfiguring>: BaseTextFiel
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .awxTextPrimary
-        view.font = .awxBody
+        view.font = .awxFont(.body2)
         return view
     }()
     
@@ -34,7 +34,7 @@ class InfoCollectorTextField<T: InfoCollectorTextFieldConfiguring>: BaseTextFiel
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .awxTextError
-        view.font = .awxHint
+        view.font = .awxFont(.caption2)
         return view
     }()
     

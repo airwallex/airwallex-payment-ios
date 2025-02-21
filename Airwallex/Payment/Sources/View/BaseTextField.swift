@@ -45,7 +45,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         let view = ContentInsetableTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .awxTextPrimary
-        view.font = .awxBody
+        view.font = .awxFont(.body2)
         view.setContentHuggingPriority(.defaultLow - 50, for: .horizontal)
         view.setContentCompressionResistancePriority(.defaultHigh - 50, for: .horizontal)
         view.textInsets = UIEdgeInsets(top: .spacing_12, left: .spacing_16, bottom: .spacing_12, right: .spacing_16)
@@ -157,7 +157,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
                 string: placeholder,
                 attributes: [
                     .foregroundColor: UIColor.awxTextPlaceholder,
-                    .font: UIFont.awxBody
+                    .font: UIFont.awxFont(.body2)
                 ]
             )
         } else {

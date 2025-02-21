@@ -37,7 +37,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private let label: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = UIFont.awxHint
+        view.font = UIFont.awxFont(.caption2)
         view.textColor = UIColor.awxTextLink
         return view
     }()
@@ -56,7 +56,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         self.viewModel = viewModel
         logo.setImageURL(viewModel.imageURL, placeholder: nil)
         label.text = viewModel.name
-        self.label.font = viewModel.isSelected ? .awxHintBold : .awxHint
+        self.label.font = viewModel.isSelected ? .awxFont(.caption2, weight: .bold) : .awxFont(.caption2)
         self.label.textColor = viewModel.isSelected ? .awxTextLink : .awxTextPrimary
         roundedBG.layer.borderColor = viewModel.isSelected ? UIColor.awxBorderInterative.cgColor : UIColor.awxBorderDecorative.cgColor
         roundedBG.backgroundColor = viewModel.isSelected ? UIColor.awxBackgroundHighlight : UIColor.awxBackgroundPrimary

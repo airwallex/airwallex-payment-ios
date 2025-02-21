@@ -32,7 +32,6 @@
 		D81EAF6C2D3F6C1F00B44784 /* WeChatDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF6B2D3F6C1F00B44784 /* WeChatDemoViewController.swift */; };
 		D81EAF742D3F8B8F00B44784 /* ConfigTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF6E2D3F8B8F00B44784 /* ConfigTextField.swift */; };
 		D81EAF752D3F8B8F00B44784 /* ConfigTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF6F2D3F8B8F00B44784 /* ConfigTextFieldViewModel.swift */; };
-		D81EAF762D3F8B8F00B44784 /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF702D3F8B8F00B44784 /* Font+Extensions.swift */; };
 		D81EAF772D3F8B8F00B44784 /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF712D3F8B8F00B44784 /* KeyboardHandler.swift */; };
 		D81EAF782D3F8B8F00B44784 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */; };
 		D81EAF7B2D3F8BE200B44784 /* IntegrationDemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */; };
@@ -94,7 +93,6 @@
 		D81EAF6B2D3F6C1F00B44784 /* WeChatDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeChatDemoViewController.swift; sourceTree = "<group>"; };
 		D81EAF6E2D3F8B8F00B44784 /* ConfigTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTextField.swift; sourceTree = "<group>"; };
 		D81EAF6F2D3F8B8F00B44784 /* ConfigTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTextFieldViewModel.swift; sourceTree = "<group>"; };
-		D81EAF702D3F8B8F00B44784 /* Font+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extensions.swift"; sourceTree = "<group>"; };
 		D81EAF712D3F8B8F00B44784 /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandler.swift; sourceTree = "<group>"; };
 		D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationDemoListViewController.swift; sourceTree = "<group>"; };
@@ -263,7 +261,6 @@
 				D80F0E302D5DC4B400401BA6 /* AirwallexSDKMode+Extensions.swift */,
 				182F1CE62C903B18000B993D /* Encodable+Extensions.swift */,
 				D81EAF682D3F474100B44784 /* UIViewController+Extensions.swift */,
-				D81EAF702D3F8B8F00B44784 /* Font+Extensions.swift */,
 				1859F19C2C8A9EE90017FA4D /* NSError+Extensions.swift */,
 				D81EAF712D3F8B8F00B44784 /* KeyboardHandler.swift */,
 			);
@@ -450,7 +447,6 @@
 				D8BDF8682D3E1E3E00C9AE72 /* HomeViewController.swift in Sources */,
 				D81EAF742D3F8B8F00B44784 /* ConfigTextField.swift in Sources */,
 				D81EAF752D3F8B8F00B44784 /* ConfigTextFieldViewModel.swift in Sources */,
-				D81EAF762D3F8B8F00B44784 /* Font+Extensions.swift in Sources */,
 				D81EAF772D3F8B8F00B44784 /* KeyboardHandler.swift in Sources */,
 				D81EAF7D2D3F92D300B44784 /* ConfigActionView.swift in Sources */,
 				D81EAF782D3F8B8F00B44784 /* UIButton+Extension.swift in Sources */,

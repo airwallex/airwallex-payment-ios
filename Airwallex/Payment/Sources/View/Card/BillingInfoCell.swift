@@ -14,7 +14,7 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private let titleLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font  = .awxBody
+        view.font  = .awxFont(.body2)
         view.textColor = .awxTextPrimary
         view.text = NSLocalizedString("Billing Address", bundle: .payment, comment: "")
         return view
@@ -28,7 +28,7 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
             for: .normal
         )
         button.setTitleColor(.awxTextPrimary, for: .normal)
-        button.titleLabel?.font = .awxHint
+        button.titleLabel?.font = .awxFont(.caption2)
         
         let config = UIImage.SymbolConfiguration(pointSize: 16)
         let normalImage = UIImage(systemName: "square", withConfiguration: config)!
@@ -116,7 +116,7 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .awxTextError
-        view.font = .awxHint
+        view.font = .awxFont(.caption2)
         return view
     }()
     

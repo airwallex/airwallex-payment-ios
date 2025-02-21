@@ -20,7 +20,7 @@ class SchemaPaymentRemiderCell: UICollectionViewCell, ViewReusable {
     private let label: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = .awxBody
+        view.font = .awxFont(.body2)
         view.textColor = .awxTextPrimary
         view.numberOfLines = 0
         view.text = NSLocalizedString("You will be redirected to complete your payment upon confirmation.", bundle: .payment, comment: "schema redirect remider")

@@ -38,7 +38,7 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private let label: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = .awxBody
+        view.font = .awxFont(.body2)
         view.textColor = .awxTextPrimary
         return view
     }()
@@ -48,7 +48,7 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.tintColor = .awxIconLink
         view.setTitleColor(.awxIconLink, for: .normal)
-        view.titleLabel?.font = .awxHeadline400
+        view.titleLabel?.font = .awxFont(.headline2, weight: .bold)
         view.addTarget(self, action: #selector(onActionButtonTapped), for: .touchUpInside)
         return view
     }()

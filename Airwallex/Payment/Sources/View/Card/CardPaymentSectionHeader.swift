@@ -18,7 +18,7 @@ class CardPaymentSectionHeader: UICollectionReusableView, ViewReusable, ViewConf
     private let label: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = .awxBodyBold
+        view.font = .awxFont(.body2, weight: .bold)
         view.textColor = .awxTextPrimary
         return view
     }()
@@ -26,7 +26,7 @@ class CardPaymentSectionHeader: UICollectionReusableView, ViewReusable, ViewConf
     private lazy var actionButton: UIButton = {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.titleLabel?.font = .awxHeadline400
+        view.titleLabel?.font = .awxFont(.headline2, weight: .bold)
         view.setTitleColor(.awxTextLink, for: .normal)
         view.addTarget(self, action: #selector(onRightButtonTapped), for: .touchUpInside)
         return view

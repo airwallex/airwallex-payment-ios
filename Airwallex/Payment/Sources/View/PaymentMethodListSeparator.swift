@@ -28,7 +28,7 @@ class PaymentMethodListSeparator: UICollectionReusableView, ViewReusable {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .awxTextSecondary
-        view.font = .awxBody
+        view.font = .awxFont(.body2)
         view.text = NSLocalizedString("Or pay with", bundle: .payment, comment: "")
         return view
     }()

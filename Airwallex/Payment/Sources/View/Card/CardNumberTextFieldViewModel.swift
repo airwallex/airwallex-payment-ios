@@ -88,7 +88,7 @@ extension CardNumberTextFieldViewModel {
     func formatText(_ text: String, brand: AWXBrandType) -> NSAttributedString? {
         let attributedString = NSMutableAttributedString(
             string: text,
-            attributes: [.font: UIFont.awxBody, .foregroundColor: UIColor.awxTextPrimary]
+            attributes: [.font: UIFont.awxFont(.body2), .foregroundColor: UIColor.awxTextPrimary]
         )
         var type: AWXBrandType = .unknown
         if !text.isEmpty, let brand = AWXCardValidator.shared().brand(forCardNumber: text) {
