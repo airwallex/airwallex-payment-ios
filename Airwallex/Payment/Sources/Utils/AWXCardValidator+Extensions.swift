@@ -17,13 +17,13 @@ extension AWXCardValidator {
         do {
             try Self.validate(number: card.number, supportedSchemes: supportedSchemes ?? [])
         } catch {
-            throw NSLocalizedString("Invalid card number", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Invalid card number", bundle: .payment, comment: "card validator error message").asError()
         }
         
         do {
             try Self.validate(expiryMonth: card.expiryMonth, expiryYear: card.expiryYear)
         } catch {
-            throw NSLocalizedString("Invalid expires date", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Invalid expires date", bundle: .payment, comment: "card validator error message").asError()
         }
         
         do {
@@ -31,13 +31,13 @@ extension AWXCardValidator {
             let brand = brand(forCardNumber: card.number)!
             try Self.validate(cvc: card.cvc, requiredLength: Self.cvcLength(for: brand.type))
         } catch {
-            throw NSLocalizedString("Invalid CVC / CVV", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Invalid CVC / CVV", bundle: .payment, comment: "card validator error message").asError()
         }
         
         do {
             try Self.validate(nameOnCard: card.name)
         } catch {
-            throw NSLocalizedString("Invalid name on card", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Invalid name on card", bundle: .payment, comment: "card validator error message").asError()
         }
     }
     
@@ -48,19 +48,19 @@ extension AWXCardValidator {
     static func validate(number: String?, supportedSchemes: [AWXCardScheme]) throws {
         guard let cardNumber = number?.filterIllegalCharacters(in: .decimalDigits.inverted),
               !cardNumber.isEmpty else {
-            throw NSLocalizedString("Card number is required", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Card number is required", bundle: .payment, comment: "card validator error message").asError()
         }
         guard AWXCardValidator.shared().isValidCardLength(cardNumber) else {
-            throw NSLocalizedString("Card number is invalid", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Card number is invalid", bundle: .payment, comment: "card validator error message").asError()
         }
         let brand = AWXCardValidator.shared().brand(forCardNumber: cardNumber)
         
         guard let brand else {
-            throw NSLocalizedString("Card not supported for payment", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Card not supported for payment", bundle: .payment, comment: "card validator error message").asError()
         }
         
         guard supportedSchemes.contains(where: { $0.name.lowercased() == brand.name.lowercased() }) else {
-            throw NSLocalizedString("Card not supported for payment", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Card not supported for payment", bundle: .payment, comment: "card validator error message").asError()
         }
     }
     
@@ -69,13 +69,13 @@ extension AWXCardValidator {
               !expiryMonth.isEmpty,
               let expiryYear = expiryYear?.trimmingCharacters(in: .whitespacesAndNewlines),
               !expiryYear.isEmpty else {
-            throw NSLocalizedString("Expiry date is required", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Expiry date is required", bundle: .payment, comment: "card validator error message").asError()
         }
         
         guard let month = Int(expiryMonth),
               let year = Int(expiryYear),
               month > 0 && month <= 12 else {
-            throw NSLocalizedString("Card’s expiration date is invalid", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Card’s expiration date is invalid", bundle: .payment, comment: "card validator error message").asError()
         }
         
         let calendar = Calendar(identifier: .gregorian)
@@ -84,23 +84,23 @@ extension AWXCardValidator {
         let currentMonth = calendar.component(.month, from: date)
          
         guard (year == currentYear && month >= currentMonth) || year > currentYear else {
-            throw NSLocalizedString("Card’s expiration date is invalid", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Card’s expiration date is invalid", bundle: .payment, comment: "card validator error message").asError()
         }
     }
     
     static func validate(cvc: String?, requiredLength: Int) throws {
         guard let cvc = cvc?.filterIllegalCharacters(in: .decimalDigits.inverted),
               !cvc.isEmpty else {
-            throw NSLocalizedString("Security code is required", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Security code is required", bundle: .payment, comment: "card validator error message").asError()
         }
         guard cvc.count == requiredLength else {
-            throw NSLocalizedString("Security code is invalid", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Security code is invalid", bundle: .payment, comment: "card validator error message").asError()
         }
     }
     
     static func validate(nameOnCard: String?) throws {
         guard let nameOnCard, !nameOnCard.isEmpty else {
-            throw NSLocalizedString("Please enter your card name", bundle: .payment, comment: "card validator error message")
+            throw NSLocalizedString("Please enter your card name", bundle: .payment, comment: "card validator error message").asError()
         }
     }
 }

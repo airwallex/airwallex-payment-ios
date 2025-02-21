@@ -44,6 +44,17 @@
                ReferencedContainer = "container:../Airwallex/Airwallex.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D81EAF872D40C7F000B44784"
+               BuildableName = "ExamplesUITests.xctest"
+               BlueprintName = "ExamplesUITests"
+               ReferencedContainer = "container:Examples.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

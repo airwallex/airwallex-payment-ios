@@ -26,6 +26,10 @@ class PaymentMethodsViewController: AWXViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    deinit {
+        AWXUIContext.shared().paymentUIDismissAction = nil
+    }
     
     private lazy var collectionViewManager: CollectionViewManager = {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
@@ -76,15 +80,16 @@ class PaymentMethodsViewController: AWXViewController {
     private func setupUI() {
         self.navigationItem.largeTitleDisplayMode = .never
         view.backgroundColor = .awxBackgroundPrimary
-        let image = UIImage(named: "close", in: Bundle.resource())?
-            .withRenderingMode(.alwaysTemplate)
-            .withTintColor(.awxIconPrimary, renderingMode: .alwaysTemplate)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: image,
-            style: .plain,
-            target: self,
-            action: #selector(onCloseButtonTapped)
-        )
+        if navigationController?.viewControllers.first === self {
+            let image = UIImage(named: "close", in: Bundle.resource())?
+                .withTintColor(.awxIconPrimary, renderingMode: .alwaysTemplate)
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: image,
+                style: .plain,
+                target: self,
+                action: #selector(onCloseButtonTapped)
+            )
+        }
         
         let collectionView = collectionViewManager.collectionView!
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -101,7 +106,9 @@ class PaymentMethodsViewController: AWXViewController {
     }
     
     @objc public func onCloseButtonTapped() {
-        AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+        dismiss(animated: true) {
+            AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+        }
     }
     
     override func activeScrollView() -> UIScrollView {
