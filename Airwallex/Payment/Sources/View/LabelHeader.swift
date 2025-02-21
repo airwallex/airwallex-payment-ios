@@ -13,7 +13,7 @@ class LabelHeader: UICollectionReusableView, ViewReusable {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.boldSystemFont(ofSize: 20)
-        view.text = NSLocalizedString("Payment Methods", bundle: Bundle.resource(), comment: "title in payment list")
+        view.text = NSLocalizedString("Payment Methods", bundle: .payment, comment: "title in payment list")
         view.textColor = AWXTheme.shared().primaryTextColor()
         return view
     }()
