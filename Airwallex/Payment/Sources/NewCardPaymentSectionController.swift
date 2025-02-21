@@ -204,7 +204,7 @@ private extension NewCardPaymentSectionController {
                 billingInfo = billingInfoViewModel.billingFromCollectedInfo()
                 let error = billingInfo?.validate()
                 if let error {
-                    throw error
+                    throw ErrorMessage(rawValue: error)
                 }
             }
             
@@ -218,7 +218,7 @@ private extension NewCardPaymentSectionController {
                 methodType: methodType,
                 viewController: context.viewController!
             ) else {
-                throw "Invalid payment method"
+                throw ErrorMessage(rawValue: "Invalid payment method")
             }
             handler.startPayment(card: card, billing: billingInfo, saveCard: shouldSaveCard)
             paymentSessionHandler = handler
@@ -226,7 +226,7 @@ private extension NewCardPaymentSectionController {
             cardInfoViewModel.updateValidStatusForCheckout()
             billingInfoViewModel.updateValidStatusForCheckout()
             context.reload(sections: [section])
-            guard let message = error as? String else { return }
+            let message = error.localizedDescription
             showAlert(message)
             AWXAnalyticsLogger.shared().logAction(withName: "card_payment_validation", additionalInfo: ["message": message])
             debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")

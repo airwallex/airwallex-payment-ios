@@ -6,11 +6,7 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-#import "AirwallexExamplesKeys.h"
+#import "AWXAPIClient.h"
+#import "AWXCodable.h"
 #import "MockAPIClient.h"
-#import "OptionsViewController.h"
-#import "Product.h"
-#import "ProductCell.h"
-#import "ShippingCell.h"
-#import "TotalCell.h"
-#import "UIViewController+Utils.h"
+#import "WXApi.h"
