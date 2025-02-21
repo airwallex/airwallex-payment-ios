@@ -1,5 +1,5 @@
 //
-//  Untitled.swift
+//  BillingInfoCell.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2025/1/7.
@@ -49,8 +49,8 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return button
     }()
     
-    private lazy var countrySelectionView: CountrySelectionView = {
-        let view = CountrySelectionView()
+    private lazy var countrySelectionView: OptionSelectionView = {
+        let view = OptionSelectionView<CountrySelectionViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = [ .layerMinXMinYCorner, .layerMaxXMinYCorner ]
         return view
@@ -148,14 +148,43 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         reuseButton.isHidden = !viewModel.canReuseShippingAddress
         reuseButton.isSelected = viewModel.shouldReuseShippingAddress
         
-        firstNameTextField.setup(viewModel.firstNameConfigurer)
-        lastNameTextField.setup(viewModel.lastNameConfigurer)
         countrySelectionView.setup(viewModel.countryConfigurer)
+        
+        viewModel.streetConfigurer.returnActionHandler = { [weak self] _ in
+            self?.stateTextField.becomeFirstResponder()
+        }
         streetTextField.setup(viewModel.streetConfigurer)
+        
+        viewModel.stateConfigurer.returnActionHandler = { [weak self] _ in
+            self?.cityTextField.becomeFirstResponder()
+        }
         stateTextField.setup(viewModel.stateConfigurer)
+        
+        viewModel.cityConfigurer.returnActionHandler = { [weak self] _ in
+            self?.zipCodeTextField.becomeFirstResponder()
+        }
         cityTextField.setup(viewModel.cityConfigurer)
+        
+        viewModel.zipConfigurer.returnActionHandler = { [weak self] _ in
+            self?.firstNameTextField.becomeFirstResponder()
+        }
         zipCodeTextField.setup(viewModel.zipConfigurer)
+        
+        viewModel.firstNameConfigurer.returnActionHandler = { [weak self] _ in
+            self?.lastNameTextField.becomeFirstResponder()
+        }
+        firstNameTextField.setup(viewModel.firstNameConfigurer)
+        
+        viewModel.lastNameConfigurer.returnActionHandler = { [weak self] _ in
+            self?.phoneTextField.becomeFirstResponder()
+        }
+        lastNameTextField.setup(viewModel.lastNameConfigurer)
+        
+        viewModel.phoneConfigurer.returnActionHandler = { [weak self] _ in
+            self?.emailTextField.becomeFirstResponder()
+        }
         phoneTextField.setup(viewModel.phoneConfigurer)
+        
         emailTextField.setup(viewModel.emailConfigurer)
         
         hintLabel.text = viewModel.errorHintForBillingFields
@@ -180,14 +209,20 @@ private extension BillingInfoCell {
         stack.addArrangedSubview(streetTextField)
         
         let stateCitySpacer = stack.addSpacer(40, priority: .defaultLow)
-        stack.addSubview(stateTextField)
-        stack.addSubview(cityTextField)
+        do {
+            // horizontal stack for state and city
+            stack.addSubview(stateTextField)
+            stack.addSubview(cityTextField)
+        }
         
         stack.addArrangedSubview(zipCodeTextField)
         
         let nameSpacer = stack.addSpacer(40, priority: .defaultLow)
-        stack.addSubview(firstNameTextField)
-        stack.addSubview(lastNameTextField)
+        do {
+            // horizontal stack for first name and last name
+            stack.addSubview(firstNameTextField)
+            stack.addSubview(lastNameTextField)
+        }
         
         stack.addArrangedSubview(phoneTextField)
         stack.addArrangedSubview(emailTextField)
@@ -225,10 +260,6 @@ private extension BillingInfoCell {
             phoneTextField.widthAnchor.constraint(equalTo: stack.widthAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
-        
-        streetTextField.nextField = stateTextField
-        stateTextField.nextField = cityTextField
-        cityTextField.nextField = zipCodeTextField
     }
     
     func setupObservation() {

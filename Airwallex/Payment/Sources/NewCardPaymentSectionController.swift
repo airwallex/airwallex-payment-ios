@@ -12,13 +12,13 @@ import AirwallexRisk
 
 class NewCardPaymentSectionController: NSObject, SectionController {
     
-    // TODO: what about other fields? email, first/last name, phone number
     enum Item: String {
         case cardInfo
         case checkoutButton
         // display this item only when session is AWXOneOffSession && has customerId
         case saveCardToggle
         case billingInfo
+        case unionPayWarning
     }
     
     private var methodType: AWXPaymentMethodType
@@ -89,6 +89,9 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         
         if supportCardSaving {
             items.append(Item.saveCardToggle.rawValue)
+            if shouldSaveCard && cardInfoViewModel.cardNumberConfigurer.currentBrand == .unionPay {
+                items.append(Item.unionPayWarning.rawValue)
+            }
         }
         
         items.append(Item.checkoutButton.rawValue)
@@ -99,43 +102,41 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         self.context = context
     }
     
-    func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        guard let item = Item(rawValue: item) else { fatalError("Invalid item") }
+    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
+        guard let item = Item(rawValue: itemIdentifier) else { fatalError("Invalid item") }
         switch item {
         case .cardInfo:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardInfoCollectorCell.reuseIdentifier, for: indexPath) as! CardInfoCollectorCell
+            let cell = context.dequeueReusableCell(CardInfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
             cell.setup(cardInfoViewModel)
             return cell
         case .checkoutButton:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CheckoutButtonCell.reuseIdentifier, for: indexPath) as! CheckoutButtonCell
+            let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: item.rawValue, indexPath: indexPath)
             cell.setup(CheckoutButtonCellViewModel(checkoutAction: checkout))
             return cell
         case .saveCardToggle:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CheckBoxCell.reuseIdentifier, for: indexPath) as! CheckBoxCell
+            let cell = context.dequeueReusableCell(CheckBoxCell.self, for: item.rawValue, indexPath: indexPath)
             let viewModel = CheckBoxCellViewModel(
                 isSelected: shouldSaveCard,
                 title: nil,
                 boxInfo: NSLocalizedString("Save my card for future payments", comment: "checkbox in checkout view"),
-                selectionDidChanged: { [weak self] isSelected in
-                    self?.shouldSaveCard = isSelected
-                }
+                selectionDidChanged: toggleCardSaving
             )
             cell.setup(viewModel)
             return cell
         case .billingInfo:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BillingInfoCell.reuseIdentifier, for: indexPath) as! BillingInfoCell
+            let cell = context.dequeueReusableCell(BillingInfoCell.self, for: item.rawValue, indexPath: indexPath)
             cell.setup(billingInfoViewModel)
             return cell
+        case .unionPayWarning:
+            let cell = context.dequeueReusableCell(WarningViewCell.self, for: item.rawValue, indexPath: indexPath)
+            let message = NSLocalizedString(
+                "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.",
+                bundle: .payment,
+                comment: ""
+            )
+            cell.setup(message)
+            return cell
         }
-    }
-    
-    func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.registerSectionHeader(CardPaymentSectionHeader.self)
-        collectionView.registerReusableCell(CardInfoCollectorCell.self)
-        collectionView.registerReusableCell(CheckoutButtonCell.self)
-        collectionView.registerReusableCell(CheckBoxCell.self)
-        collectionView.registerReusableCell(BillingInfoCell.self)
-        collectionView.registerReusableCell(InfoCollectorCell.self)
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -146,7 +147,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         let item = NSCollectionLayoutItem(layoutSize: layoutSize)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(horizontal: .spacing_16)
+        section.contentInsets = .init(horizontal: .spacing_16).top(.spacing_12)
         section.interGroupSpacing = .spacing_16
         
         if !methodProvider.consents.isEmpty {
@@ -161,7 +162,12 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         return section
     }
     
-    func supplementaryView(for collectionView: UICollectionView, ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func supplementaryView(for elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let view = context.dequeueReusableSupplementaryView(
+            ofKind: elementKind,
+            viewClass: CardPaymentSectionHeader.self,
+            indexPath: indexPath
+        )
         let viewModel = CardPaymentSectionHeaderViewModel(
             title: NSLocalizedString("Add new", comment: ""),
             actionTitle: "Keep using saved cards",
@@ -170,11 +176,6 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                 self.switchToConsentPaymentAction()
             }
         )
-        let view = collectionView.dequeueReusableSupplementaryView(
-            ofKind: elementKind,
-            withReuseIdentifier: CardPaymentSectionHeader.reuseIdentifier,
-            for: indexPath
-        ) as! CardPaymentSectionHeader
         view.setup(viewModel)
         return view
     }
@@ -197,13 +198,18 @@ private extension NewCardPaymentSectionController {
         debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         do {
             let card = cardInfoViewModel.cardFromCollectedInfo()
-            try validator.validate(card: card)
-            
+            do {
+                try validator.validate(card: card)
+            } catch {
+                context.scroll(to: Item.cardInfo.rawValue, position: .bottom, animated: true)
+                throw error
+            }
             var billingInfo: AWXPlaceDetails?
             if session.isBillingInformationRequired {
                 billingInfo = billingInfoViewModel.billingFromCollectedInfo()
                 let error = billingInfo?.validate()
                 if let error {
+                    context.scroll(to: Item.billingInfo.rawValue, position: .bottom, animated: true)
                     throw ErrorMessage(rawValue: error)
                 }
             }
@@ -236,7 +242,7 @@ private extension NewCardPaymentSectionController {
     func triggerCountrySelection() {
         let controller = AWXCountryListViewController(nibName: nil, bundle: nil)
         controller.delegate = self
-        controller.country = billingInfoViewModel.countryConfigurer.country
+        controller.country = billingInfoViewModel.selectedCountry
         let nav = UINavigationController(rootViewController: controller)
         context.viewController?.present(nav, animated: true)
     }
@@ -260,12 +266,19 @@ private extension NewCardPaymentSectionController {
         )
         context.reload(items: [ Item.billingInfo.rawValue ])
     }
+    
+    func toggleCardSaving(_ shouldSaveCard: Bool) {
+        self.shouldSaveCard = shouldSaveCard
+        if cardInfoViewModel.cardNumberConfigurer.currentBrand == .unionPay {
+            context.performUpdates(section)
+        }
+    }
 }
 
 extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate {
     func countryListViewController(_ controller: AWXCountryListViewController, didSelect country: AWXCountry) {
         controller.dismiss(animated: true)
-        billingInfoViewModel.countryConfigurer.country = country
+        billingInfoViewModel.selectedCountry = country
         context.reload(items: [ Item.billingInfo.rawValue ])
     }
 }

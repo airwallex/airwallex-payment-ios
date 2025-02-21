@@ -15,16 +15,24 @@ final class PaymentMethodProvider {
     var session: AWXSession {
         provider.session
     }
+    enum UpdateType {
+        case listUpdated
+        case methodSelected(AWXPaymentMethodType)
+        case consentDeleted(AWXPaymentConsent)
+    }
     
-    let publisher = PassthroughSubject<Void, Never>()
+    let updatePublisher = PassthroughSubject<UpdateType, Never>()
     var selectedMethod: AWXPaymentMethodType? {
         didSet {
-            publisher.send()
+            if let selectedMethod {
+                updatePublisher.send(.methodSelected(selectedMethod))
+            }
         }
     }
     
     private(set) var methods = [AWXPaymentMethodType]()
     private(set) var consents = [AWXPaymentConsent]()
+    private lazy var client = AWXAPIClient(configuration: .shared())
     
     init(provider: AWXPaymentMethodListViewModel) {
         self.provider = provider
@@ -78,8 +86,8 @@ final class PaymentMethodProvider {
         
         self.methods = filteredMethods
         self.consents = filteredConsents
-        self.selectedMethod = filteredMethods.first { $0.name != AWXApplePayKey }
-        publisher.send()
+        selectedMethod = selectedMethod ?? filteredMethods.first { $0.name != AWXApplePayKey }
+        updatePublisher.send(.listUpdated)
     }
     
     func method(named name: String) -> AWXPaymentMethodType? {
@@ -94,12 +102,40 @@ final class PaymentMethodProvider {
         let request = AWXDisablePaymentConsentRequest()
         request.requestId = UUID().uuidString
         request.id = consent.id
-        let client = AWXAPIClient(configuration: .shared())
         try await client.send(request)
         if let index = consents.firstIndex(where: { $0.id == consent.id }) {
-            consents.remove(at: index)
-            publisher.send()
+            let deleted = consents.remove(at: index)
+            updatePublisher.send(.consentDeleted(deleted))
         }
+    }
+}
+
+extension PaymentMethodProvider: SwiftLoggable {
+    
+    /// get payment method details for LPM
+    /// - Parameter name: name of the method
+    /// - Returns: details including a list of AWXSchema
+    func getPaymentMethodTypeDetails(name: String? = nil) async throws -> (AWXGetPaymentMethodTypeResponse) {
+        guard let selectedMethod else {
+            throw ErrorMessage(rawValue:"No payment method selected")
+        }
+        let request = AWXGetPaymentMethodTypeRequest()
+        request.name = name ?? selectedMethod.name
+        request.transactionMode = session.transactionMode()
+        request.lang = session.lang
+        return try await client.send(request) as! AWXGetPaymentMethodTypeResponse
+    }
+    
+    func getBankList() async throws -> AWXGetAvailableBanksResponse {
+        guard let selectedMethod else {
+            throw ErrorMessage(rawValue:"No payment method selected")
+        }
+        let request = AWXGetAvailableBanksRequest()
+        request.paymentMethodType = selectedMethod.name
+        request.countryCode = session.countryCode
+        request.lang = session.lang
+        let response = try await client.send(request)
+        return response as! AWXGetAvailableBanksResponse
     }
 }
 

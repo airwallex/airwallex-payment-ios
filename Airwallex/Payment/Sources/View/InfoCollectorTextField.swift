@@ -10,7 +10,14 @@ import Foundation
 import Combine
 
 protocol InfoCollectorTextFieldConfiguring: BaseTextFieldConfiguring {
+    /// Indicates whether this information is required.
+    var isRequired: Bool { get }
+    /// The title displayed above the text field.
     var title: String? { get }
+    /// Determines whether the error hint label, displayed below the text field, should be hidden.
+    var hideErrorHintLabel: Bool { get }
+    /// Useful when you need to compose parameters from the view model.
+    var fieldName: String { get }
 }
 
 class InfoCollectorTextField<T: InfoCollectorTextFieldConfiguring>: BaseTextField<T> {
@@ -47,7 +54,7 @@ class InfoCollectorTextField<T: InfoCollectorTextFieldConfiguring>: BaseTextFiel
         hintLabel.text = viewModel.errorHint
         
         topLabel.isHidden = viewModel.title == nil || viewModel.title?.isEmpty == true
-        hintLabel.isHidden = viewModel.isValid || viewModel.errorHint == nil || viewModel.errorHint?.isEmpty == true
+        hintLabel.isHidden = viewModel.hideErrorHintLabel || viewModel.isValid || viewModel.errorHint == nil || viewModel.errorHint?.isEmpty == true
     }
     
     private func setupViews() {

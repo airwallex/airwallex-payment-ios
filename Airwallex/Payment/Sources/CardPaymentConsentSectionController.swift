@@ -10,19 +10,19 @@ import Foundation
 
 class CardPaymentConsentSectionController: SectionController {
     
-    private enum Items {
+    private struct Items {
+        /// checkout button for payment mode
         static let checkoutButton: String = "checkoutButton"
+        /// cvc field if required for payment mode
         static let cvcField: String = "cvcField"
     }
     
     private enum Mode {
+        /// display all consents in a list
         case list
+        /// display selected consent for checkout
         case payment
     }
-    
-    private(set)var context: CollectionViewContext<PaymentSectionType, String>!
-    
-    let section = PaymentSectionType.cardPaymentConsent
     
     var items: [String] {
         if let selectedConsent {
@@ -62,14 +62,19 @@ class CardPaymentConsentSectionController: SectionController {
     }
     
     // MARK: - SectionController
+    
+    private(set) var context: CollectionViewContext<PaymentSectionType, String>!
+    
+    let section = PaymentSectionType.cardPaymentConsent
+    
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
         self.context = context
     }
     
-    func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        switch item {
+    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
+        switch itemIdentifier {
         case Items.checkoutButton:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CheckoutButtonCell.reuseIdentifier, for: indexPath) as! CheckoutButtonCell
+            let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel { [weak self] in
                 guard let self, let selectedConsent else {
                     assert(false, "selected consent not found")
@@ -80,16 +85,13 @@ class CardPaymentConsentSectionController: SectionController {
             cell.setup(viewModel)
             return cell
         case Items.cvcField:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectorCell.reuseIdentifier, for: indexPath) as! InfoCollectorCell
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
             if let cvcConfigurer {
                 cell.setup(cvcConfigurer)
             }
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: CardConsentCell.reuseIdentifier,
-                for: indexPath
-            ) as! CardConsentCell
+            let cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
             
             guard let consent = selectedConsent ?? consents[safe: indexPath.item],
                   let card = consent.paymentMethod?.card,
@@ -115,7 +117,7 @@ class CardPaymentConsentSectionController: SectionController {
                         guard let self else { return }
                         self.selectedConsent = nil
                         self.cvcConfigurer = nil
-                        self.context.reloadSectionData(section, fullReload: true, animatingDifferences: false)
+                        self.context.performUpdates(section, forceReload: true, animatingDifferences: false)
                     }
                 )
             } else {
@@ -135,8 +137,8 @@ class CardPaymentConsentSectionController: SectionController {
         }
     }
     
-    func supplementaryView(for collectionView: UICollectionView, ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: CardPaymentSectionHeader.reuseIdentifier, for: indexPath) as! CardPaymentSectionHeader
+    func supplementaryView(for elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = context.dequeueReusableSupplementaryView(ofKind: elementKind, viewClass: CardPaymentSectionHeader.self, indexPath: indexPath)
         let viewModel = CardPaymentSectionHeaderViewModel(
             title: NSLocalizedString("Choose a card", comment: ""),
             actionTitle: NSLocalizedString("Add new", bundle: .payment, comment: ""),
@@ -207,16 +209,10 @@ class CardPaymentConsentSectionController: SectionController {
         }
     }
     
-    func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.registerReusableCell(CardConsentCell.self)
-        collectionView.registerSectionHeader(CardPaymentSectionHeader.self)
-        collectionView.registerReusableCell(CheckoutButtonCell.self)
-        collectionView.registerReusableCell(InfoCollectorCell.self)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(didSelectItem itemIdentifier: String, at indexPath: IndexPath) {
         if mode == .payment {
             // do nothing if consent is already selected
+            // use needs to select change button in section header to go back to consent list
             return
         }
         
@@ -226,7 +222,7 @@ class CardPaymentConsentSectionController: SectionController {
             return
         }
         
-        if consent.paymentMethod?.card?.numberType == "PAN" {
+        if consent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
             selectedConsent = consent
             let brand = AWXCardValidator.shared().brand(forCardName: consent.paymentMethod?.card?.brand ?? "")
             let cvcLength = AWXCardValidator.cvcLength(for: brand?.type ?? .unknown)
@@ -248,14 +244,14 @@ class CardPaymentConsentSectionController: SectionController {
                     self?.context.invalidateLayout(for: [consent.id], animated: false)
                 }
             )
-            context.reloadSectionData(section, fullReload: true)
+            context.performUpdates(section, forceReload: true)
         } else {
             //  CVC not required, checkout directly
             checkout(consent: consent)
         }
     }
     
-    func prepareItemsForReload() {
+    func updateItemsIfNecessary() {
         consents = methodProvider.consents
     }
 }

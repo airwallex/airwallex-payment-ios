@@ -16,7 +16,6 @@ public class PaymentUISessionHandler: NSObject {
     
     private var actionProvider: AWXDefaultProvider!
     
-    /// how to avoid force unwrap here
     weak var viewController: UIViewController!
 
     private var paymentResultDelegate: AWXPaymentResultDelegate? {
@@ -72,8 +71,10 @@ public class PaymentUISessionHandler: NSObject {
         self.actionProvider = actionProviderCreater(self)
     }
     
-    func startPayment() {
-        if let paymentMethod = paymentConsent?.paymentMethod {
+    func startPayment(_ paymentMethod: AWXPaymentMethod? = nil) {
+           if let paymentMethod {
+               actionProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
+           } else if let paymentMethod = paymentConsent?.paymentMethod {
             actionProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: paymentConsent)
         } else {
             actionProvider.handleFlow()
@@ -186,7 +187,7 @@ extension SwiftLoggable {
                   file: String = #file,
                   functionName: String = #function,
                   line: Int = #line) {
-        NSObject.logMesage("----Airwallex SDK----\(file)----\(functionName)----\(line)---\n \(message))")
+        NSObject.logMesage("----Airwallex SDK----\(Date())---\n\(file)\n---\(functionName)-line: \(line)-\n---\(message)")
     }
 }
 

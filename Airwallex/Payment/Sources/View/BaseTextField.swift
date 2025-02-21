@@ -9,19 +9,33 @@
 import Combine
 
 protocol BaseTextFieldConfiguring: AnyObject {
+    /// If user editing is enabled, the text color will change based on this setting.
     var isEnabled: Bool { get }
+    /// The text displayed in the embedded text field.
     var text: String? { get }
+    /// If this value is not nil, it will be displayed instead of  `text`.
     var attributedText: NSAttributedString? { get }
+    /// if the input text is valid
     var isValid: Bool { get }
+    /// error message for invalid input (will not displayed in `BaseTextField` but may be displayed in subclass)
     var errorHint: String? { get }
+    /// type of the text field
     var textFieldType: AWXTextFieldType? { get }
+    /// placeholder for text field
     var placeholder: String? { get }
-    
-    /// will be called in UITextField's `textField(_:shouldChangeCharactersIn:replacementString:) -> Bool` delegate to decide whether
-    /// we should let user continue input in `nextField`
-    /// - Parameter userInput: user input
-    /// - Returns: true means we have a valid input and we should make `nextFiled`  the first responder
-    func handleTextDidUpdate(to userInput: String) -> Bool
+    /// return key type of the text field
+    var returnKeyType: UIReturnKeyType { get set }
+    /// This will be called in `textFieldShouldReturn` and is intended to customize the return key action.
+    var returnActionHandler: ((UITextField) -> Void)? { get set }
+    /// Called in `textField(_:shouldChangeCharactersIn:replacementString:)`
+    /// - Parameters:
+    ///   - textField: The text field being edited.
+    ///   - range: The range of characters to be replaced, converted from `NSRange` to `Range<String.Index>`.
+    ///   - string: The replacement string entered by the user.
+    /// - Returns: A Boolean value indicating whether the user input should be updated naturally.
+    ///   If `false`, `BaseTextField` will be setup with the updated view model again.
+    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool
+    /// will be called in `textFieldDidEndEditing`
     func handleDidEndEditing()
 }
 
@@ -62,16 +76,6 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         stack.alignment = .center
         return stack
     }()
-    
-    weak var nextField: UIResponder? {
-        didSet {
-            if nextField != nil {
-                textField.returnKeyType = .next
-            } else {
-                textField.returnKeyType = .default
-            }
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -160,6 +164,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
             textField.attributedPlaceholder = nil
         }
         isEnabled = viewModel.isEnabled
+        textField.returnKeyType = viewModel.returnKeyType
         
         updateBorderAppearance()
     }
@@ -174,14 +179,16 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
             box.layer.borderWidth = 1
         }
     }
-    
+
+    //  MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let nextField  {
-            nextField.becomeFirstResponder()
+        if let returnHandler = viewModel?.returnActionHandler  {
+            returnHandler(textField)
+            return false
         } else {
             resignFirstResponder()
+            return true
         }
-        return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -197,16 +204,21 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = textField.text ?? ""
-        if let range = Range(range, in: currentText) {
-            let text = currentText.replacingCharacters(in: range, with: string)
-            guard let viewModel else { return false }
-            let moveToNextField = viewModel.handleTextDidUpdate(to: text)
-            setup(viewModel)
-            if textField.isFirstResponder && moveToNextField {
-                nextField?.becomeFirstResponder()
-            }
+        guard let viewModel,
+              let range = Range(range, in: textField.text ?? "") else {
+            return false
         }
+        let shouldChange = viewModel.handleTextShouldChange(
+            textField: textField,
+            range: range,
+            replacementString: string
+        )
+        if shouldChange {
+            // text input not modified in viewModel
+            return true
+        }
+        // text or attributedText is changed
+        setup(viewModel)
         return false
     }
 }
