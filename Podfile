@@ -6,10 +6,6 @@ inhibit_all_warnings!
 
 workspace 'Airwallex.xcworkspace'
 
-target 'WeChatPay' do
-  project './Airwallex/Airwallex.xcodeproj'
-end
-
 target 'CoreTests' do
   project './Airwallex/Airwallex.xcodeproj'
   pod 'OCMock'
