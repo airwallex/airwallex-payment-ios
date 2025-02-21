@@ -117,7 +117,7 @@ extension PaymentMethodProvider: SwiftLoggable {
     /// - Returns: details including a list of AWXSchema
     func getPaymentMethodTypeDetails(name: String? = nil) async throws -> (AWXGetPaymentMethodTypeResponse) {
         guard let selectedMethod else {
-            throw "No payment method selected"
+            throw ErrorMessage(rawValue:"No payment method selected")
         }
         let request = AWXGetPaymentMethodTypeRequest()
         request.name = name ?? selectedMethod.name
@@ -128,7 +128,7 @@ extension PaymentMethodProvider: SwiftLoggable {
     
     func getBankList() async throws -> AWXGetAvailableBanksResponse {
         guard let selectedMethod else {
-            throw "No payment method selected"
+            throw ErrorMessage(rawValue:"No payment method selected")
         }
         let request = AWXGetAvailableBanksRequest()
         request.paymentMethodType = selectedMethod.name

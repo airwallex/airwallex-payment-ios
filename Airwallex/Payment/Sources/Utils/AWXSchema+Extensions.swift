@@ -88,7 +88,7 @@ extension AWXField {
         if let countryCode {
             do {
                 guard let url = Bundle.resource().url(forResource: "CountryCodes", withExtension: "json") else {
-                    throw "no data for country code"
+                    throw ErrorMessage(rawValue: "no data for country code")
                 }
                 let data = try Data(contentsOf: url)
                 let dict = try JSONDecoder().decode([String: String].self, from: data)
@@ -103,7 +103,7 @@ extension AWXField {
         if let currencyCode {
             do {
                 guard let url = Bundle.resource().url(forResource: "CurrencyCodes", withExtension: "json") else {
-                    throw "no data for currency code"
+                    throw ErrorMessage(rawValue:"no data for currency code")
                 }
                 let data = try Data(contentsOf: url)
                 let dict = try JSONDecoder().decode([String: String].self, from: data)

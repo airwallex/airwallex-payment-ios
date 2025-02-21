@@ -13,7 +13,7 @@ class LabelHeader: UICollectionReusableView, ViewReusable {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.boldSystemFont(ofSize: 20)
-        view.text = NSLocalizedString("Payment Methods", bundle: Bundle.resource(), comment: "title in payment list")
+        view.text = NSLocalizedString("Payment Methods", bundle: .payment, comment: "title for payment sheet")
         view.textColor = AWXTheme.shared().primaryTextColor()
         return view
     }()
@@ -31,7 +31,7 @@ class LabelHeader: UICollectionReusableView, ViewReusable {
         addSubview(label)
         
         let constraints = [
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 40),
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             label.bottomAnchor.constraint(equalTo: bottomAnchor),

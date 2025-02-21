@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Return whether it requres CVC.
  */
-- (BOOL)requiresCVC;
+- (BOOL)requiresCVC __deprecated_msg("requiresCVC will be determined by consent returned by server (numberType), passing requiresCVC as a parameter is no longer needed");
 
 @end
 
@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
  Only applicable when next_triggered_by is customer and the payment_method.type is card. If true, the customer must provide cvc for the subsequent payment with this PaymentConsent.
  Default: NO
  */
-@property (nonatomic) BOOL requiresCVC;
+@property (nonatomic) BOOL requiresCVC __deprecated_msg("requiresCVC will be determined by consent returned by server (numberType), passing requiresCVC as a parameter is no longer needed");
 
 /**
  Merchant trigger reason
@@ -185,7 +185,7 @@ NS_ASSUME_NONNULL_BEGIN
  Only applicable when next_triggered_by is customer and the payment_method.type is card. If true, the customer must provide cvc for the subsequent payment with this PaymentConsent.
  Default: NO
  */
-@property (nonatomic) BOOL requiresCVC;
+@property (nonatomic) BOOL requiresCVC __deprecated_msg("requiresCVC will be determined by consent returned by server (numberType), passing requiresCVC as a parameter is no longer needed");
 
 /**
  Only applicable when payment_method.type is card. If true the payment will be captured immediately after authorization succeeds.

@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     // background
     static var awxBackgroundPrimary: UIColor { UIColor(dynamicLightColor: awxWhite, darkColor: awxGray100) }
     static var awxBackgroundSecondary: UIColor { UIColor(dynamicLightColor: awxGray10, darkColor: awxGray90) }
@@ -26,7 +26,7 @@ extension UIColor {
     
     // Icon
     static var awxIconPrimary: UIColor { UIColor(dynamicLightColor: awxGray80, darkColor: awxGray30) }
-    static var awxIconSecondary: UIColor { UIColor(dynamicLightColor: awxGray60, darkColor: awxGray50) }
+    static var awxIconSecondary: UIColor { UIColor(dynamicLightColor: awxGray50, darkColor: awxGray50) }
     static var awxIconLink: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
     static var awxIconDisabled: UIColor { UIColor(dynamicLightColor: awxGray40, darkColor: awxGray70) }
     
