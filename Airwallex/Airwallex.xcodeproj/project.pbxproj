@@ -224,10 +224,10 @@
 		57E7371A272AC043009905DC /* AWXSchemaProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E73718272AC043009905DC /* AWXSchemaProvider.m */; };
 		6EE990B728D9A300008C22B7 /* AWXCardViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 184EADAF28D15C1600FD965D /* AWXCardViewModel.m */; };
 		6EE990BA28D9A3B7008C22B7 /* AWXCardViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE990B928D9A3B7008C22B7 /* AWXCardViewModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9184A98A3FB097B3E30DFD42 /* Pods_WeChatPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A5DE28F611F49B21B3B1DA1 /* Pods_WeChatPay.framework */; };
 		C844DC7D2C3CE37F0099614C /* NSObject+Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */; };
 		C844DC7E2C3CE37F0099614C /* NSObject+Logging.h in Headers */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CA09778887CAF1A3CB3519E4 /* Pods_ApplePayTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 766C109E04EF1051D97CC9A3 /* Pods_ApplePayTests.framework */; };
+		D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D8B5996B2CF6F935005C3C1D /* AWXUIContext+Card.h in Headers */ = {isa = PBXBuildFile; fileRef = D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */; };
 		D8B5996C2CF6F935005C3C1D /* AWXUIContext+Card.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */; };
 		D8BD9E122D0191BF0045A892 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */; };
@@ -241,6 +241,53 @@
 		EA34697AD30A2D71BD5C1D8A /* Pods_CardTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A358577D1CBCE19AB5E4572 /* Pods_CardTests.framework */; };
 		FB357E04D7E4A8E8C5F54146 /* Pods_RedirectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9DFB3C3391C7ABDA4375D4 /* Pods_RedirectTests.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		D84E94D62D6849FB00CDC04C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = text.plist.stringsdict;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# builtin-copyStrings\n";
+		};
+		D84E94D72D684A0900CDC04C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = text.plist.stringsdict;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# builtin-copyStrings\n";
+		};
+		D84E94D82D684A1600CDC04C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = text.plist.strings;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# builtin-copyStrings\n";
+		};
+		D84E94D92D684A1C00CDC04C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = text.plist.strings;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# builtin-copyStrings\n";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		085BD3D323CC62B4002E8F27 /* PBXContainerItemProxy */ = {
@@ -585,10 +632,12 @@
 		C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Logging.h"; sourceTree = "<group>"; };
 		C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Logging.m"; sourceTree = "<group>"; };
 		CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D81EAFA42D40F46600B44784 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D825DAA52D2F72EE005F725A /* AWXCardValidator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCardValidator+Extensions.swift"; sourceTree = "<group>"; };
 		D84443812D30BF2800DF9762 /* SchemaPaymentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentSectionController.swift; sourceTree = "<group>"; };
 		D84529AF2D30FA380032BE17 /* SchemaPaymentRemiderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentRemiderCell.swift; sourceTree = "<group>"; };
-		D81EAFA42D40F46600B44784 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
+		D84E94DA2D684F0800CDC04C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodProvider.swift; sourceTree = "<group>"; };
 		D84E9A262D0C3652006B3421 /* PaymentUISessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentUISessionHandler.swift; sourceTree = "<group>"; };
 		D888268E2D12D68B00115198 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
@@ -692,8 +741,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */,
 				57CEC81426E5FB3500695740 /* Core.framework in Frameworks */,
-				9184A98A3FB097B3E30DFD42 /* Pods_WeChatPay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -980,6 +1029,7 @@
 				3C579F6B27F4124B00840A3B /* Internal */,
 				3C99E78927EAF1A20074156C /* ApplePay.h */,
 				3C99E7A227EAF2840074156C /* AWXApplePayProvider.h */,
+				D84E94DA2D684F0800CDC04C /* Info.plist */,
 				3C99E7A327EAF2840074156C /* AWXApplePayProvider.m */,
 			);
 			path = ApplePay;
@@ -1176,6 +1226,7 @@
 		9261DD5DE5B6EE3DE55C5588 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */,
 				186277D629E7C0530002892A /* AirTracker.xcframework */,
 				1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */,
 				3C5A37DB27ED404700CFC2EF /* PassKit.framework */,
@@ -1489,6 +1540,7 @@
 				18E0571129C9536D0099388A /* Embed Frameworks */,
 			);
 			buildRules = (
+				D84E94D62D6849FB00CDC04C /* PBXBuildRule */,
 			);
 			dependencies = (
 				3C99E7A927EAF4890074156C /* PBXTargetDependency */,
@@ -1606,6 +1658,9 @@
 				5775CEA926E5DF3300C6AFE3 /* Resources */,
 			);
 			buildRules = (
+				D84E94D92D684A1C00CDC04C /* PBXBuildRule */,
+				D84E94D82D684A1600CDC04C /* PBXBuildRule */,
+				D84E94D72D684A0900CDC04C /* PBXBuildRule */,
 			);
 			dependencies = (
 				5775CF9B26E5F87100C6AFE3 /* PBXTargetDependency */,
@@ -2448,7 +2503,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ApplePay/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Airwallex. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2474,7 +2530,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ApplePay/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Airwallex. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
