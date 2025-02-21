@@ -32,7 +32,7 @@ class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
     
     var errorHint: String? = nil
     
-    var returnKeyType: UIReturnKeyType? = .default
+    var returnKeyType: UIReturnKeyType = .default
     
     var returnActionHandler: ((UITextField) -> Void)?
     

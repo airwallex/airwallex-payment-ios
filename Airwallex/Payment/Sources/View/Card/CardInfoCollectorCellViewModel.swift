@@ -39,7 +39,6 @@ class CardInfoCollectorCellViewModel {
         )
         expireDataConfigurer = CardExpireTextFieldViewModel()
         nameOnCardConfigurer = InfoCollectorTextFieldViewModel(
-            fieldName: "nameOnCard",
             title: NSLocalizedString("Name on card", bundle: .payment, comment: "")
         )
     }

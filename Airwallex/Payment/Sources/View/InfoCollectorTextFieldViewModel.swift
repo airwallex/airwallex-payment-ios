@@ -12,7 +12,7 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
     
     var customInputValidator: ((String?) throws -> Void)?
     
-    init(fieldName: String,
+    init(fieldName: String = "",
          isRequired: Bool = true,
          isEnabled: Bool = true,
          hideErrorHintLabel: Bool = false,
@@ -23,7 +23,7 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
          attributedText: NSAttributedString? = nil,
          textFieldType: AWXTextFieldType? = .default,
          placeholder: String? = nil,
-         returnKeyType: UIReturnKeyType? = nil,
+         returnKeyType: UIReturnKeyType = .default,
          returnActionHandler: ((UITextField) -> Void)? = nil,
          customTextModifier: ((String?) -> (String?, NSAttributedString?, Bool))? = nil,
          customInputValidator: ((String?) throws -> Void)? = nil,
@@ -70,7 +70,7 @@ class InfoCollectorTextFieldViewModel: InfoCollectorCellConfiguring {
     
     var triggerLayoutUpdate: (() -> Void)?
     
-    var returnKeyType: UIReturnKeyType?
+    var returnKeyType: UIReturnKeyType
     
     var returnActionHandler: ((UITextField) -> Void)?
     

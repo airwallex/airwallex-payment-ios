@@ -56,8 +56,8 @@
     ///   - indexPath: index path of the selected cell
     func collectionView(didSelectItem item: ItemType, at indexPath: IndexPath)
     
-    /// this method will be called right after the initialization of the section controller
-    /// or when you call `performUpdates(...)` on `context`
+    /// this method will be called in `CollectionViewContext.performUpdates(...)`
+    /// this will be the place for you to update items in your section controller
     func updateItemsIfNecessary()
 }
 

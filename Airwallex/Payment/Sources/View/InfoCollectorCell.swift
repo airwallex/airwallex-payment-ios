@@ -10,6 +10,7 @@ import UIKit
 import Combine
 
 protocol InfoCollectorCellConfiguring: InfoCollectorTextFieldConfiguring {
+    /// callback when cell height needs to change
     var triggerLayoutUpdate: (() -> Void)? { get }
 }
 

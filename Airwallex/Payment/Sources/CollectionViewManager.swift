@@ -81,8 +81,12 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
             collectionView: collectionView,
             layout: layout,
             dataSource: diffableDataSource,
-            reloadSectionData: performUpdates,
-            reloadData: performUpdates
+            performSectionUpdates: { [weak self] in
+                self?.performUpdates(section: $0, updateItems: $1, forceReload: $2, animatingDifferences: $3)
+            },
+            performUpdates: { [weak self] in
+                self?.performUpdates(forceReload: $0, animatingDifferences: $1)
+            }
         )
         
         for item in boundaryItems ?? [] {
@@ -156,14 +160,14 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
          collectionView: UICollectionView,
          layout: UICollectionViewCompositionalLayout,
          dataSource: UICollectionViewDiffableDataSource<Section, Item>,
-         reloadSectionData: @escaping (Section, Bool, Bool, Bool) -> Void,
-         reloadData: @escaping (Bool, Bool) -> Void) {
+         performSectionUpdates: @escaping (Section, Bool, Bool, Bool) -> Void,
+         performUpdates: @escaping (Bool, Bool) -> Void) {
         self.viewController = viewController
         self.collectionView = collectionView
         self.layout = layout
         self.dataSource = dataSource
-        self._performUpdates = reloadData
-        self._performUpdatesForSection = reloadSectionData
+        self._performUpdates = performUpdates
+        self._performUpdatesForSection = performSectionUpdates
     }
     
     func currentSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
@@ -246,20 +250,20 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         return collectionView.cellForItem(at: indexPath)
     }
     
-    // MARK: - register
+    // MARK: - register reusable views
     
     private lazy var registeredCells = Set<String>()
     private lazy var registeredSupplementaryViews = Set<String>()
     
     fileprivate func register<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type) {
-        if registeredCells.contains(cellClass.reuseIdentifier) { return }
+        guard !registeredCells.contains(cellClass.reuseIdentifier) else { return }
         collectionView.register(cellClass, forCellWithReuseIdentifier: cellClass.reuseIdentifier)
         registeredCells.insert(cellClass.reuseIdentifier)
     }
     
     fileprivate func register<T: UICollectionReusableView & ViewReusable>(_ viewClass: T.Type, forSupplementaryViewOfKind elementKind: String) {
         let key = elementKind + viewClass.reuseIdentifier
-        if registeredSupplementaryViews.contains(key) { return }
+        guard !registeredSupplementaryViews.contains(key) else { return }
         collectionView.register(viewClass, forSupplementaryViewOfKind: elementKind, withReuseIdentifier: viewClass.reuseIdentifier)
         registeredSupplementaryViews.insert(key)
     }

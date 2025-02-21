@@ -69,7 +69,7 @@ class BankSelectionViewModel: OptionSelectionViewConfiguring {
     
     var placeholder: String? = NSLocalizedString("Select...", bundle: .payment, comment: "option selection view placeholder")
     
-    var returnKeyType: UIReturnKeyType? = nil
+    var returnKeyType: UIReturnKeyType = .default
     
     var returnActionHandler: ((UITextField) -> Void)? = nil
     

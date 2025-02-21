@@ -7,58 +7,35 @@
 //
 import AirwallexRisk
 
+/// This section controlelr is for schema payment
 class SchemaPaymentSectionController: NSObject, SectionController {
     
     struct Item {
-        static let bankSelection: String = "bankSelection"
-        static let redirectRemider: String = "redirectRemider"
-        static let checkoutButton: String = "checkoutButton"
+        static let bankSelection = "bankSelection"
+        static let redirectRemider = "redirectRemider"
+        static let checkoutButton = "checkoutButton"
     }
     
     private var session: AWXSession {
         methodProvider.session
     }
-    private var methodType: AWXPaymentMethodType {
+    private lazy var methodType: AWXPaymentMethodType = {
         guard case let PaymentSectionType.schemaPayment(name) = section,
               let methodType = methodProvider.method(named: name) else {
             fatalError("method type not found")
         }
         return methodType
-    }
+    }()
     private var paymentSessionHandler: PaymentUISessionHandler?
     private var methodProvider: PaymentMethodProvider
     
+    // data from method details API
     private var schema: AWXSchema?
-    private var bankSelectionViewModel: BankSelectionViewModel?
     private var bankList: [AWXBank]?
     private var task: Task<Void, Never>?
+    private var bankSelectionViewModel: BankSelectionViewModel?
     
-    private var uiFieldViewModels = [ InfoCollectorTextFieldViewModel ]()
-    private(set) lazy var countryCodeToPhonePrefix: [String: String] = {
-        do {
-            guard let url = Bundle.resource().url(forResource: "CountryCodes", withExtension: "json") else {
-                return [:]
-            }
-            let data = try Data(contentsOf: url)
-            let dict = try JSONDecoder().decode([String: String].self, from: data)
-            return dict
-        } catch {
-            return [:]
-        }
-    }()
-    
-    private(set) lazy var currencyCodeToPhonePrefix: [String: String] = {
-        do {
-            guard let url = Bundle.resource().url(forResource: "CurrencyCodes", withExtension: "json") else {
-                return [:]
-            }
-            let data = try Data(contentsOf: url)
-            let dict = try JSONDecoder().decode([String: String].self, from: data)
-            return dict
-        } catch {
-            return [:]
-        }
-    }()
+    private var uiFieldViewModels = [InfoCollectorTextFieldViewModel]()
     
     init(sectionType: PaymentSectionType, methodProvider: PaymentMethodProvider) {
         self.section = sectionType
@@ -130,18 +107,31 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         }
         task = Task {
             do {
-                let (schema, bankList) = try await self.getSchemaPaymentMethodDetails()
+                //  request method details from server
+                let response = try await methodProvider.getPaymentMethodTypeDetails(name: methodType.name)
+                //  check schema
+                let schema = response.schemas.first { $0.transactionMode == session.transactionMode() }
+                guard let schema, !schema.fields.isEmpty else {
+                    throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "")
+                }
                 self.schema = schema
-                self.bankList = bankList
                 
-                if let field = schema.bankField, let bankList, !bankList.isEmpty {
+                // update bank selection
+                var bankList: [AWXBank]?
+                if let bankField = schema.bankField {
+                    let banks = try await methodProvider.getBankList().items
+                    guard !banks.isEmpty else {
+                        throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "")
+                    }
                     bankSelectionViewModel = BankSelectionViewModel(
-                        bank: bankList.count == 1 ? bankList.first! : nil,
+                        bank: banks.count == 1 ? banks.first! : nil,
                         handleUserInteraction: { [weak self] in
                             self?.handleBankSelection()
                         }
                     )
+                    bankList = banks
                 }
+                self.bankList = bankList
                 
                 uiFieldViewModels = schema.uiFields.reduce(into: [InfoCollectorTextFieldViewModel](), { partialResult, field in
                     //  create view model for UI fields
@@ -154,7 +144,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         }
                     )
                     if field.uiType == AWXField.UIType.phone {
-                        if let prefix = phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
+                        if let prefix = AWXField.phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
                            !prefix.isEmpty {
                             viewModel.text = prefix
                             viewModel.customInputValidator = { text in
@@ -172,13 +162,14 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                             guard let self else { return }
                             self.context.scroll(to: field.name, position: .bottom, animated: true)
                             if let cell = self.context.cellForItem(field.name) as? InfoCollectorCell {
-                                cell.becomeFirstResponder()
+                                let _ = cell.becomeFirstResponder()
                             }
                         }
                     }
                     //  update partial result
                     partialResult.append(viewModel)
                 })
+                //  avoid recursion by passing false to updateItems:
                 context.performUpdates(section, updateItems: false, animatingDifferences: true)
                 task = nil
             } catch {
@@ -190,24 +181,6 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 debugLog("Failed to get schema for selected method. Error: \(error)")
             }
         }
-    }
-    
-    func getSchemaPaymentMethodDetails() async throws -> (AWXSchema, [AWXBank]?)  {
-        let response = try await methodProvider.getPaymentMethodTypeDetails(name: methodType.name)
-        let schema = response.schemas.first { $0.transactionMode == session.transactionMode() }
-        guard let schema, !schema.fields.isEmpty else {
-            throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "")
-        }
-        
-        var bankList: [AWXBank]?
-        if let bankField = schema.bankField {
-            let banks = try await methodProvider.getBankList().items
-            guard !banks.isEmpty else {
-                throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "")
-            }
-            bankList = banks
-        }
-        return (schema, bankList)
     }
 }
 
@@ -248,7 +221,8 @@ private extension SchemaPaymentSectionController {
             paymentMethod.appendAdditionalParams(inputContents)
             
             // update hidden fields
-            paymentMethod.appendAdditionalParams(parametersForHiddenFields(schema: schema))
+            paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
+            
             paymentSessionHandler = PaymentUISessionHandler(
                 session: session,
                 methodType: methodType,
@@ -270,29 +244,6 @@ private extension SchemaPaymentSectionController {
         }
     }
     
-    func parametersForHiddenFields(schema: AWXSchema) -> [String: String] {
-        let fields = schema.fields.filter { $0.hidden }
-        var params = [String: String]()
-        // flow
-        if let flowField = fields.first(where: { $0.name == AWXField.Name.flow }) {
-            if flowField.candidates.contains(where: { $0.value == AWXPaymentMethodFlow.app.rawValue }) {
-                params[AWXField.Name.flow] = AWXPaymentMethodFlow.app.rawValue
-            } else {
-                params[AWXField.Name.flow] = flowField.candidates.first?.value
-            }
-        }
-        // osType
-        if let osTypeField = fields.first(where: { $0.name == AWXField.Name.osType }) {
-            params[AWXField.Name.osType] = "ios"
-        }
-        // country_code
-        if let countryCodeField = fields.first(where: { $0.name == AWXField.Name.countryCode }) {
-            params[AWXField.Name.countryCode] = session.countryCode
-        }
-        
-        return params
-    }
-    
     func handleBankSelection() {
         guard let bankList = bankList else { return }
         let formMapping = AWXFormMapping()
@@ -301,6 +252,7 @@ private extension SchemaPaymentSectionController {
             let form = AWXForm.init(key: bank.name, type: .listCell, title: bank.displayName, logo: bank.resources.logoURL)
             return form
         }
+        // this pseudoMethod is only used to satisfy AWXPaymentFormViewController and will never be used
         let pseudoMethod = AWXPaymentMethod()
         let controller = AWXPaymentFormViewController()
         controller.delegate = self
@@ -317,22 +269,9 @@ extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
     func paymentFormViewController(_ paymentFormViewController: AWXPaymentFormViewController, didSelectOption optionKey: String) {
         guard let bank = bankList?.first(where: { $0.name == optionKey }) else { return }
         bankSelectionViewModel?.bank = bank
+        AWXAnalyticsLogger.shared().logAction(withName: "select_bank", additionalInfo: [ "bankName": optionKey ])
         paymentFormViewController.dismiss(animated: true) {
             self.context.reload(items: [ Item.bankSelection] )
         }
-    }
-}
-
-private extension SchemaPaymentSectionController {
-    
-    func phonePrefix(countryCode: String?, currencyCode: String?) -> String? {
-        var prefix: String? = nil
-        if let countryCode {
-            prefix = countryCodeToPhonePrefix[countryCode]
-        }
-        if let currencyCode, prefix == nil {
-            prefix = currencyCodeToPhonePrefix[currencyCode]
-        }
-        return prefix
     }
 }

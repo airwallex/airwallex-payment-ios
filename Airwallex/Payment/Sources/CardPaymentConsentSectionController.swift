@@ -10,19 +10,19 @@ import Foundation
 
 class CardPaymentConsentSectionController: SectionController {
     
-    private enum Items {
+    private struct Items {
+        /// checkout button for payment mode
         static let checkoutButton: String = "checkoutButton"
+        /// cvc field if required for payment mode
         static let cvcField: String = "cvcField"
     }
     
     private enum Mode {
+        /// display all consents in a list
         case list
+        /// display selected consent for checkout
         case payment
     }
-    
-    private(set)var context: CollectionViewContext<PaymentSectionType, String>!
-    
-    let section = PaymentSectionType.cardPaymentConsent
     
     var items: [String] {
         if let selectedConsent {
@@ -62,6 +62,11 @@ class CardPaymentConsentSectionController: SectionController {
     }
     
     // MARK: - SectionController
+    
+    private(set) var context: CollectionViewContext<PaymentSectionType, String>!
+    
+    let section = PaymentSectionType.cardPaymentConsent
+    
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
         self.context = context
     }
@@ -207,6 +212,7 @@ class CardPaymentConsentSectionController: SectionController {
     func collectionView(didSelectItem itemIdentifier: String, at indexPath: IndexPath) {
         if mode == .payment {
             // do nothing if consent is already selected
+            // use needs to select change button in section header to go back to consent list
             return
         }
         
@@ -216,12 +222,11 @@ class CardPaymentConsentSectionController: SectionController {
             return
         }
         
-        if consent.paymentMethod?.card?.numberType == "PAN" {
+        if consent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
             selectedConsent = consent
             let brand = AWXCardValidator.shared().brand(forCardName: consent.paymentMethod?.card?.brand ?? "")
             let cvcLength = AWXCardValidator.cvcLength(for: brand?.type ?? .unknown)
             cvcConfigurer = InfoCollectorTextFieldViewModel(
-                fieldName: "cvc",
                 textFieldType: .CVC,
                 placeholder: "CVC",
                 customTextModifier: { input in

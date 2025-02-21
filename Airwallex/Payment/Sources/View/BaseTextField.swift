@@ -9,17 +9,33 @@
 import Combine
 
 protocol BaseTextFieldConfiguring: AnyObject {
+    /// If user editing is enabled, the text color will change based on this setting.
     var isEnabled: Bool { get }
+    /// The text displayed in the embedded text field.
     var text: String? { get }
+    /// If this value is not nil, it will be displayed instead of  `text`.
     var attributedText: NSAttributedString? { get }
+    /// if the input text is valid
     var isValid: Bool { get }
+    /// error message for invalid input (will not displayed in `BaseTextField` but may be displayed in subclass)
     var errorHint: String? { get }
+    /// type of the text field
     var textFieldType: AWXTextFieldType? { get }
+    /// placeholder for text field
     var placeholder: String? { get }
-    var returnKeyType: UIReturnKeyType? { get set }
+    /// return key type of the text field
+    var returnKeyType: UIReturnKeyType { get set }
+    /// This will be called in `textFieldShouldReturn` and is intended to customize the return key action.
     var returnActionHandler: ((UITextField) -> Void)? { get set }
-    
+    /// Called in `textField(_:shouldChangeCharactersIn:replacementString:)`
+    /// - Parameters:
+    ///   - textField: The text field being edited.
+    ///   - range: The range of characters to be replaced, converted from `NSRange` to `Range<String.Index>`.
+    ///   - string: The replacement string entered by the user.
+    /// - Returns: A Boolean value indicating whether the user input should be updated naturally.
+    ///   If `false`, `BaseTextField` will be setup with the updated view model again.
     func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool
+    /// will be called in `textFieldDidEndEditing`
     func handleDidEndEditing()
 }
 
@@ -148,7 +164,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
             textField.attributedPlaceholder = nil
         }
         isEnabled = viewModel.isEnabled
-        textField.returnKeyType = viewModel.returnKeyType ?? .default
+        textField.returnKeyType = viewModel.returnKeyType
         
         updateBorderAppearance()
     }
@@ -188,13 +204,20 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = textField.text ?? ""
-        guard let range = Range(range, in: currentText) else { return false }
-        guard let viewModel else { return true }
-        let shouldChange = viewModel.handleTextShouldChange(textField: textField, range: range, replacementString: string)
+        guard let viewModel,
+              let range = Range(range, in: textField.text ?? "") else {
+            return false
+        }
+        let shouldChange = viewModel.handleTextShouldChange(
+            textField: textField,
+            range: range,
+            replacementString: string
+        )
         if shouldChange {
+            // text input not modified in viewModel
             return true
         }
+        // text or attributedText is changed
         setup(viewModel)
         return false
     }

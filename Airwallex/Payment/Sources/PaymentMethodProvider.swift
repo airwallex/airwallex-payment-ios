@@ -15,11 +15,18 @@ final class PaymentMethodProvider {
     var session: AWXSession {
         provider.session
     }
+    enum UpdateType {
+        case listUpdated
+        case methodSelected(AWXPaymentMethodType)
+        case consentDeleted(AWXPaymentConsent)
+    }
     
-    let publisher = PassthroughSubject<Void, Never>()
+    let updatePublisher = PassthroughSubject<UpdateType, Never>()
     var selectedMethod: AWXPaymentMethodType? {
         didSet {
-            publisher.send()
+            if let selectedMethod {
+                updatePublisher.send(.methodSelected(selectedMethod))
+            }
         }
     }
     
@@ -80,7 +87,7 @@ final class PaymentMethodProvider {
         self.methods = filteredMethods
         self.consents = filteredConsents
         selectedMethod = selectedMethod ?? filteredMethods.first { $0.name != AWXApplePayKey }
-        publisher.send()
+        updatePublisher.send(.listUpdated)
     }
     
     func method(named name: String) -> AWXPaymentMethodType? {
@@ -97,14 +104,17 @@ final class PaymentMethodProvider {
         request.id = consent.id
         try await client.send(request)
         if let index = consents.firstIndex(where: { $0.id == consent.id }) {
-            consents.remove(at: index)
-            publisher.send()
+            let deleted = consents.remove(at: index)
+            updatePublisher.send(.consentDeleted(deleted))
         }
     }
 }
 
 extension PaymentMethodProvider: SwiftLoggable {
     
+    /// get payment method details for LPM
+    /// - Parameter name: name of the method
+    /// - Returns: details including a list of AWXSchema
     func getPaymentMethodTypeDetails(name: String? = nil) async throws -> (AWXGetPaymentMethodTypeResponse) {
         guard let selectedMethod else {
             throw "No payment method selected"
@@ -114,28 +124,6 @@ extension PaymentMethodProvider: SwiftLoggable {
         request.transactionMode = session.transactionMode()
         request.lang = session.lang
         return try await client.send(request) as! AWXGetPaymentMethodTypeResponse
-    }
-    
-    func parametersForHiddenFields(_ fields: [AWXField]) -> [String: String] {
-        var params = [String: String]()
-        // flow
-        if let flowField = fields.first(where: { $0.name == AWXField.Name.flow }) {
-            if flowField.candidates.contains(where: { $0.value == AWXPaymentMethodFlow.app.rawValue }) {
-                params[AWXField.Name.flow] = AWXPaymentMethodFlow.app.rawValue
-            } else {
-                params[AWXField.Name.flow] = flowField.candidates.first?.value
-            }
-        }
-        // osType
-        if let osTypeField = fields.first(where: { $0.name == AWXField.Name.osType }) {
-            params[AWXField.Name.osType] = "ios"
-        }
-        // country_code
-        if let countryCodeField = fields.first(where: { $0.name == AWXField.Name.countryCode }) {
-            params[AWXField.Name.countryCode] = session.countryCode
-        }
-        
-        return params
     }
     
     func getBankList() async throws -> AWXGetAvailableBanksResponse {

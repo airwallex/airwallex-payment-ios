@@ -23,6 +23,29 @@ extension AWXSchema {
     var hiddenFields: [AWXField] {
         fields.filter { $0.hidden }
     }
+    
+    func parametersForHiddenFields(countryCode: String) -> [String: String] {
+        let fields = hiddenFields
+        var params = [String: String]()
+        // flow
+        if let flowField = fields.first(where: { $0.name == AWXField.Name.flow }) {
+            if flowField.candidates.contains(where: { $0.value == AWXPaymentMethodFlow.app.rawValue }) {
+                params[AWXField.Name.flow] = AWXPaymentMethodFlow.app.rawValue
+            } else {
+                params[AWXField.Name.flow] = flowField.candidates.first?.value
+            }
+        }
+        // osType
+        if let osTypeField = fields.first(where: { $0.name == AWXField.Name.osType }) {
+            params[AWXField.Name.osType] = "ios"
+        }
+        // country_code
+        if let countryCodeField = fields.first(where: { $0.name == AWXField.Name.countryCode }) {
+            params[AWXField.Name.countryCode] = countryCode
+        }
+        
+        return params
+    }
 }
 
 extension AWXField {
@@ -57,5 +80,39 @@ extension AWXField {
         default:
             return .default
         }
+    }
+    
+    static func phonePrefix(countryCode: String?, currencyCode: String?) -> String? {
+        var prefix: String? = nil
+        
+        if let countryCode {
+            do {
+                guard let url = Bundle.resource().url(forResource: "CountryCodes", withExtension: "json") else {
+                    throw "no data for country code"
+                }
+                let data = try Data(contentsOf: url)
+                let dict = try JSONDecoder().decode([String: String].self, from: data)
+                prefix = dict[countryCode]
+            } catch {
+                // continue to check currency code
+            }
+        }
+        
+        if let prefix { return prefix }
+        
+        if let currencyCode {
+            do {
+                guard let url = Bundle.resource().url(forResource: "CurrencyCodes", withExtension: "json") else {
+                    throw "no data for currency code"
+                }
+                let data = try Data(contentsOf: url)
+                let dict = try JSONDecoder().decode([String: String].self, from: data)
+                prefix = dict[currencyCode]
+            } catch {
+                // prefix not found
+            }
+        }
+        
+        return prefix
     }
 }

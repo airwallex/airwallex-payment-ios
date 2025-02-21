@@ -69,7 +69,6 @@ class BillingInfoCellViewModel {
             handleUserInteraction: countrySelectionHandler
         )
         streetConfigurer = InfoCollectorTextFieldViewModel(
-            fieldName: "street",
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.address.street,
             textFieldType: .street,
@@ -77,7 +76,6 @@ class BillingInfoCellViewModel {
             returnKeyType: .next
         )
         stateConfigurer = InfoCollectorTextFieldViewModel(
-            fieldName: "state",
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.address.state,
             textFieldType: .state,
@@ -85,7 +83,6 @@ class BillingInfoCellViewModel {
             returnKeyType: .next
         )
         cityConfigurer = InfoCollectorTextFieldViewModel(
-            fieldName: "city",
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.address.city,
             textFieldType: .city,
@@ -93,7 +90,6 @@ class BillingInfoCellViewModel {
             returnKeyType: .next
         )
         zipConfigurer = InfoCollectorTextFieldViewModel(
-            fieldName: "zip",
             isRequired: false,
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.address.postcode,
@@ -103,7 +99,6 @@ class BillingInfoCellViewModel {
         )
         
         firstNameConfigurer = InfoCollectorTextFieldViewModel(
-            fieldName: "first_name",
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.firstName,
             textFieldType: .firstName,
@@ -111,7 +106,6 @@ class BillingInfoCellViewModel {
             returnKeyType: .next
         )
         lastNameConfigurer = InfoCollectorTextFieldViewModel(
-            fieldName: "last_name",
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.lastName,
             textFieldType: .lastName,
@@ -119,7 +113,6 @@ class BillingInfoCellViewModel {
             returnKeyType: .next
         )
         phoneConfigurer = InfoCollectorTextFieldViewModel(
-            fieldName: "phone",
             isRequired: false,
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.phoneNumber,
@@ -128,7 +121,6 @@ class BillingInfoCellViewModel {
             returnKeyType: .next
         )
         emailConfigurer = InfoCollectorTextFieldViewModel(
-            fieldName: "email",
             isRequired: false,
             isEnabled: !reusingShippingInfo,
             text: shippingInfo?.email,

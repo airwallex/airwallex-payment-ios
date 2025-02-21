@@ -34,7 +34,7 @@ class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
     
     var placeholder: String? = "CVC"
     
-    var returnKeyType: UIReturnKeyType?
+    var returnKeyType: UIReturnKeyType
     
     var returnActionHandler: ((UITextField) -> Void)?
     

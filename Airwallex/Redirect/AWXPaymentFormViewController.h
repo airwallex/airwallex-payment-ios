@@ -25,9 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)paymentFormViewController:(AWXPaymentFormViewController *)paymentFormViewController
           didConfirmPaymentMethod:(AWXPaymentMethod *)paymentMethod;
 
-/// temporary solution, used by
-/// only AWXOptionView will trigger this delegate callback
-/// will be called before `paymentFormViewController:didUpdatePaymentMethod:`
+/// temporary solution, used for handling bank selection in `SchemaPaymentSectionController` only
+/// will be called after user select an option and before `paymentFormViewController:didUpdatePaymentMethod:`
 /// - Parameters:
 ///   - paymentFormViewController: controller
 ///   - optionKey: key for the selected option

@@ -53,7 +53,7 @@ class PaymentMethodsViewController: AWXViewController {
         super.viewDidLoad()
         setupUI()
         getMethodList()
-        cancellable = methodProvider.publisher.sink {[weak self] _ in
+        cancellable = methodProvider.updatePublisher.sink {[weak self] _ in
             self?.collectionViewManager.performUpdates()
         }
     }

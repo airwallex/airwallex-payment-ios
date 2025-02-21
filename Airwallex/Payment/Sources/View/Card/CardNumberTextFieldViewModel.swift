@@ -31,7 +31,7 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
     
     var errorHint: String? = nil
     
-    var returnKeyType: UIReturnKeyType? = nil
+    var returnKeyType: UIReturnKeyType = .default
     
     var returnActionHandler: ((UITextField) -> Void)? = nil
     
