@@ -54,7 +54,7 @@ public extension AWXUIContext {
             let nav = UINavigationController(rootViewController: paymentVC)
             let appearance = UINavigationBarAppearance()
             appearance.configureWithDefaultBackground()
-            appearance.backgroundColor = UIColor.awxBackgroundHighlight // Set your desired color
+            appearance.backgroundColor = UIColor.awxBackgroundHighlight
             appearance.shadowColor = UIColor.awxBorderDecorative
             
             nav.navigationBar.standardAppearance = appearance
