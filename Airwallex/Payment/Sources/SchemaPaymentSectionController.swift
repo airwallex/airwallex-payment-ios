@@ -112,7 +112,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 //  check schema
                 let schema = response.schemas.first { $0.transactionMode == session.transactionMode() }
                 guard let schema, !schema.fields.isEmpty else {
-                    throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "")
+                    throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "").asError()
                 }
                 self.schema = schema
                 
@@ -121,7 +121,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 if let bankField = schema.bankField {
                     let banks = try await methodProvider.getBankList().items
                     guard !banks.isEmpty else {
-                        throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "")
+                        throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "").asError()
                     }
                     bankSelectionViewModel = BankSelectionViewModel(
                         bank: banks.count == 1 ? banks.first! : nil,
@@ -149,7 +149,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                             viewModel.text = prefix
                             viewModel.customInputValidator = { text in
                                 guard let text, text.count > prefix.count else {
-                                    throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "")
+                                    throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "").asError()
                                 }
                             }
                         }

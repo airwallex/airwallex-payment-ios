@@ -38,6 +38,9 @@
     [super viewDidLoad];
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Save", @"Save") style:UIBarButtonItemStylePlain target:self action:@selector(savePressed:)];
+    if (self.navigationController.viewControllers.firstObject == self) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
+    }
     [self enableTapToEndEditing];
 
     _scrollView = [UIScrollView new];

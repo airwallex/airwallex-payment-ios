@@ -110,7 +110,7 @@ typedef enum : NSUInteger {
 /**
  The base URL.
  */
-@property (nonatomic, copy) NSURL *baseURL;
+@property (nonatomic, readonly) NSURL *baseURL;
 
 /**
  The client secret for payment.

@@ -26,7 +26,7 @@ class BankSelectionViewModel: OptionSelectionViewConfiguring {
     
     func validate() throws {
         guard let bank else {
-            throw errorMessage
+            throw errorMessage.asError()
         }
     }
     

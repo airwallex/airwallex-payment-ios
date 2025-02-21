@@ -15,9 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MockAPIClient : NSObject
 
 @property (nonatomic, readonly) NSURL *paymentBaseURL;
-@property (nonatomic, strong) NSString *apiKey;
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSString *token;
+@property (nonatomic, strong, nullable) NSString *apiKey;
+@property (nonatomic, strong, nullable) NSString *clientID;
+@property (nonatomic, strong, nullable) NSString *token;
 
 + (instancetype)sharedClient;
 

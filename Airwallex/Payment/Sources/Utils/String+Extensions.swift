@@ -24,4 +24,8 @@ extension String {
     }
 }
 
-extension String: Error {}
+extension String {
+    func asError() -> ErrorMessage {
+        ErrorMessage(rawValue: self)
+    }
+}
