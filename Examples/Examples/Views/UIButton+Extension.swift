@@ -9,18 +9,22 @@
 import Foundation
 import Airwallex
 
-extension UIButton {
+class AWXButton: UIButton {
     
     enum AWXButtonStyle {
         case primary
         case secondary
         case mini
     }
+    
+    private let style: AWXButtonStyle
+    
     /// create a button for primary action usually at the bottom of the page
     /// - Parameter title: button title
     /// - Returns: customized button
-    convenience init(style: AWXButtonStyle, title: String? = nil, icon: UIImage? = nil) {
-        self.init(type: .custom)
+    init(style: AWXButtonStyle, title: String? = nil, icon: UIImage? = nil) {
+        self.style = style
+        super.init(frame: .zero)
         switch style {
         case .primary:
             backgroundColor = .awxColor(.backgroundInteractive)
@@ -51,6 +55,22 @@ extension UIButton {
             setImage(icon, for: .normal)
             setTitleColor(.awxColor(.iconLink), for: .normal)
         }
-        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            switch style {
+            case .secondary:
+                layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+            case .mini:
+                layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+            default: break
+            }
+        }
     }
 }

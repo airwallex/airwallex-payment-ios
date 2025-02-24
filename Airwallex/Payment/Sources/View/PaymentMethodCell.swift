@@ -70,6 +70,13 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            roundedBG.layer.borderColor = (viewModel?.isSelected ?? false) ? UIColor.awxColor(.borderInteractive).cgColor : UIColor.awxColor(.borderDecorative).cgColor
+        }
+    }
 }
 
 private extension PaymentMethodCell {

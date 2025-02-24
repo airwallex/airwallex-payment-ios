@@ -39,7 +39,7 @@ class TopView: UIView {
     }()
     
     private lazy var actionButton: UIButton = {
-        let view = UIButton(style: .mini)
+        let view = AWXButton(style: .mini)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onActionButtonTapped), for: .touchUpInside)
         return view

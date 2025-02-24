@@ -89,6 +89,13 @@ class ConfigTextField: UIView {
         topLabel.isHidden = (textField.text ?? "").isEmpty
         hintLabel.isHidden = (viewModel.caption ?? "").isEmpty
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            boxView.layer.borderColor = UIColor.separator.cgColor
+        }
+    }
 }
 
 private extension ConfigTextField {

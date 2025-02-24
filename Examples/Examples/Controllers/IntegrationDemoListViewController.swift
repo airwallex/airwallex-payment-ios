@@ -143,7 +143,7 @@ private extension IntegrationDemoListViewController {
         setupTitle()
         // setup actions
         for action in (integrationType == .UI ? viewModelsForUIIntegration : viewModelsForAPIIntegration) {
-            let view = UIButton(style: .secondary, title: action.title)
+            let view = AWXButton(style: .secondary, title: action.title)
             view.translatesAutoresizingMaskIntoConstraints = false
             view.addTarget(self, action: #selector(onActionButtonTapped(_:)), for: .touchUpInside)
             listView.bottomStack.addArrangedSubview(view)

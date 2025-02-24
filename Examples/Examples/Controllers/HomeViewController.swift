@@ -17,28 +17,28 @@ class HomeViewController: UIViewController {
     }()
     
     private lazy var integrateWithUIButton: UIButton = {
-        let view = UIButton(style: .secondary, title: NSLocalizedString("Integrate with Airwallex UI", comment: "SDK DEMO"))
+        let view = AWXButton(style: .secondary, title: NSLocalizedString("Integrate with Airwallex UI", comment: "SDK DEMO"))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(integrateWithUIButtonTapped), for: .touchUpInside)
         return view
     }()
     
     private lazy var lowLevelAPIButton: UIButton = {
-        let view = UIButton(style: .secondary, title: NSLocalizedString("Integrate with low-level API", comment: "SDK DEMO"))
+        let view = AWXButton(style: .secondary, title: NSLocalizedString("Integrate with low-level API", comment: "SDK DEMO"))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(lowLevelAPIButtonTapped), for: .touchUpInside)
         return view
     }()
     
     private lazy var html5DemoButton: UIButton = {
-        let view = UIButton(style: .secondary, title: NSLocalizedString("Integrate with HTML5 DEMO", comment: "SDK DEMO"))
+        let view = AWXButton(style: .secondary, title: NSLocalizedString("Integrate with HTML5 DEMO", comment: "SDK DEMO"))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(html5DemoButtonTapped), for: .touchUpInside)
         return view
     }()
     
     private lazy var WeChatDemoButton: UIButton = {
-        let view = UIButton(style: .secondary, title: NSLocalizedString("Integrate with WeChat DEMO", comment: "SDK DEMO"))
+        let view = AWXButton(style: .secondary, title: NSLocalizedString("Integrate with WeChat DEMO", comment: "SDK DEMO"))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(weChatDemoButtonTapped), for: .touchUpInside)
         return view

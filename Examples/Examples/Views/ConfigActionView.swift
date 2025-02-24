@@ -149,6 +149,13 @@ class ConfigActionView: UIView {
     @objc func onActionButtonTapped() {
         viewModel?.secondaryAction?(self)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            boxView.layer.borderColor = UIColor.separator.cgColor
+        }
+    }
 }
 
 extension ConfigActionView {

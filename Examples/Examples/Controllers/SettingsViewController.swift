@@ -43,7 +43,7 @@ class SettingsViewController: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        let view = UIButton(style: .primary, title: NSLocalizedString("Save", comment: pageName))
+        let view = AWXButton(style: .primary, title: NSLocalizedString("Save", comment: pageName))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onSaveButtonTapped), for: .touchUpInside)
         return view
@@ -181,6 +181,13 @@ class SettingsViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         keyboardHandler.stopObserving()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            bottomView.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+        }
     }
 }
 

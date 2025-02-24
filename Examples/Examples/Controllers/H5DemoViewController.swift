@@ -65,7 +65,7 @@ class H5DemoViewController: UIViewController {
     }()
     
     private lazy var nextButton: UIButton = {
-        let view = UIButton(style: .primary, title: NSLocalizedString("Next", comment: localizationComment))
+        let view = AWXButton(style: .primary, title: NSLocalizedString("Next", comment: localizationComment))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onNextButtonTapped), for: .touchUpInside)
         return view
@@ -191,5 +191,12 @@ class H5DemoViewController: UIViewController {
         
         let webVC = WebViewController(url: url, referer: referrer)
         navigationController?.pushViewController(webVC, animated: true)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            bottomView.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+        }
     }
 }
