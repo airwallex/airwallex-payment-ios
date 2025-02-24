@@ -74,10 +74,10 @@ class PaymentMethodsViewController: AWXViewController {
     
     private func setupUI() {
         self.navigationItem.largeTitleDisplayMode = .never
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         if navigationController?.viewControllers.first === self {
             let image = UIImage(named: "close", in: Bundle.resource())?
-                .withTintColor(.awxIconPrimary, renderingMode: .alwaysTemplate)
+                .withTintColor(.awxColor(.iconPrimary), renderingMode: .alwaysTemplate)
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 image: image,
                 style: .plain,
@@ -89,7 +89,7 @@ class PaymentMethodsViewController: AWXViewController {
         let collectionView = collectionViewManager.collectionView!
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.keyboardDismissMode = .interactive
-        collectionView.backgroundColor = .awxBackgroundPrimary
+        collectionView.backgroundColor = .awxColor(.backgroundPrimary)
         collectionView.refreshControl = refreshControl
         
         view.addSubview(collectionView)

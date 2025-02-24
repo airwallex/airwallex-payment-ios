@@ -23,7 +23,7 @@ class WarningViewCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = .radius_l
         view.clipsToBounds = true
-        view.backgroundColor = .awxBackgroundWarning
+        view.backgroundColor = .awxColor(.backgroundWarning)
         return view
     }()
     
@@ -49,7 +49,7 @@ class WarningViewCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.body2)
-        view.textColor = .awxTextPrimary
+        view.textColor = .awxColor(.textPrimary)
         view.numberOfLines = 0
         return view
     }()

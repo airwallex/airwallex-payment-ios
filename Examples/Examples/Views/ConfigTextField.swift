@@ -18,7 +18,7 @@ class ConfigTextField: UIView {
         view.titleLabel?.font = .awxFont(.caption2, weight: .medium)
         view.setTitleColor(.secondaryLabel, for: .normal)
         view.isUserInteractionEnabled = false
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.isHidden = true
         return view
     }()
@@ -93,7 +93,7 @@ class ConfigTextField: UIView {
 
 private extension ConfigTextField {
     func setupViews() {
-        backgroundColor = .awxBackgroundPrimary
+        backgroundColor = .awxColor(.backgroundPrimary)
         addSubview(stack)
         stack.addArrangedSubview(container)
         do {

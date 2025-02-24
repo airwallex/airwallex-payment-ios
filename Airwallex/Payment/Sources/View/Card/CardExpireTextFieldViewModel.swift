@@ -77,14 +77,14 @@ private extension CardExpireTextFieldViewModel {
         guard let year, !year.isEmpty else {
             return NSMutableAttributedString(
                 string: month,
-                attributes: [.font: UIFont.awxFont(.body2), .foregroundColor: UIColor.awxTextPrimary]
+                attributes: [.font: UIFont.awxFont(.body2), .foregroundColor: UIColor.awxColor(.textPrimary)]
             )
         }
         let attributedString = NSMutableAttributedString(
             string: "\(month)/\(year)",
             attributes: [
                 .font: UIFont.awxFont(.body2),
-                .foregroundColor: UIColor.awxTextPrimary,
+                .foregroundColor: UIColor.awxColor(.textPrimary),
             ]
         )
         attributedString.addAttribute(

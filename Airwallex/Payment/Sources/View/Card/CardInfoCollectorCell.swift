@@ -15,7 +15,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.body2)
-        view.textColor = .awxTextPrimary
+        view.textColor = .awxColor(.textPrimary)
         view.text = NSLocalizedString("Card Information", comment: "")
         return view
     }()
@@ -56,7 +56,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     private let hintLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .awxTextError
+        view.textColor = .awxColor(.textError)
         view.font = .awxFont(.caption2)
         return view
     }()

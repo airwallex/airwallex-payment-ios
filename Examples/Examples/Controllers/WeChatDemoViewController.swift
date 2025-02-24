@@ -56,7 +56,7 @@ class WeChatDemoViewController: UIViewController {
     private lazy var bottomView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.awxBorderDecorative.cgColor
+        view.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
         view.layer.borderWidth = 1
         return view
     }()
@@ -114,7 +114,7 @@ class WeChatDemoViewController: UIViewController {
     
     private func setupViews() {
         customizeNavigationBackButton()
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(scrollView)
         scrollView.addSubview(stack)
         stack.addArrangedSubview(topView)

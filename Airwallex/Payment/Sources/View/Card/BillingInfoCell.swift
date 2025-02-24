@@ -15,7 +15,7 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font  = .awxFont(.body2)
-        view.textColor = .awxTextPrimary
+        view.textColor = .awxColor(.textPrimary)
         view.text = NSLocalizedString("Billing Address", bundle: .payment, comment: "")
         return view
     }()
@@ -27,15 +27,15 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
             NSLocalizedString("Same as shipping address", bundle: .payment, comment: "checkbox in checkout view"),
             for: .normal
         )
-        button.setTitleColor(.awxTextPrimary, for: .normal)
+        button.setTitleColor(.awxColor(.textPrimary), for: .normal)
         button.titleLabel?.font = .awxFont(.caption2)
         
         let config = UIImage.SymbolConfiguration(pointSize: 16)
         let normalImage = UIImage(systemName: "square", withConfiguration: config)!
-            .withTintColor(.awxBorderPerceivable, renderingMode: .alwaysOriginal)
+            .withTintColor(.awxColor(.borderPerceivable), renderingMode: .alwaysOriginal)
         
         let selectedImage = UIImage(systemName: "checkmark.square.fill", withConfiguration: config)!
-            .withTintColor(.awxBackgroundInteractive, renderingMode: .alwaysOriginal)
+            .withTintColor(.awxColor(.backgroundInteractive), renderingMode: .alwaysOriginal)
         
         button.setImage(normalImage, for: .normal)
         button.setImage(selectedImage, for: .selected)
@@ -115,7 +115,7 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private let hintLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .awxTextError
+        view.textColor = .awxColor(.textError)
         view.font = .awxFont(.caption2)
         return view
     }()

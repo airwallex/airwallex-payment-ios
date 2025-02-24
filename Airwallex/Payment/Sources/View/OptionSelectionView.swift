@@ -39,7 +39,7 @@ class OptionSelectionView<T: OptionSelectionViewConfiguring>: InfoCollectorTextF
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named: "down", in: Bundle.resource())?
-            .withTintColor(.awxIconSecondary, renderingMode: .alwaysOriginal)
+            .withTintColor(.awxColor(.iconSecondary), renderingMode: .alwaysOriginal)
         return view
     }()
     

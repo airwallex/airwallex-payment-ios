@@ -74,7 +74,7 @@ class H5DemoViewController: UIViewController {
     private lazy var bottomView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.awxBorderDecorative.cgColor
+        view.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
         view.layer.borderWidth = 1
         return view
     }()
@@ -132,7 +132,7 @@ class H5DemoViewController: UIViewController {
     
     private func setupViews() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(scrollView)
         scrollView.addSubview(stack)
         stack.addArrangedSubview(topView)

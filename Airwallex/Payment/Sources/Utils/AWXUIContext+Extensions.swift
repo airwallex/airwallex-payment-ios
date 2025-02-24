@@ -55,13 +55,13 @@ public extension AWXUIContext {
             let nav = UINavigationController(rootViewController: paymentVC)
             let appearance = UINavigationBarAppearance()
             appearance.configureWithDefaultBackground()
-            appearance.backgroundColor = UIColor.awxBackgroundHighlight
-            appearance.shadowColor = UIColor.awxBorderDecorative
+            appearance.backgroundColor = UIColor.awxColor(.backgroundHighlight)
+            appearance.shadowColor = UIColor.awxColor(.borderDecorative)
             
             nav.navigationBar.standardAppearance = appearance
             nav.navigationBar.scrollEdgeAppearance = appearance
             nav.navigationBar.compactAppearance = appearance
-            nav.navigationBar.tintColor = UIColor.awxIconLink
+            nav.navigationBar.tintColor = UIColor.awxColor(.iconLink)
             hostingVC.present(nav, animated: true)
             AWXUIContext.shared().paymentUIDismissAction = { [weak nav] completion in
                 guard let nav else {

@@ -137,7 +137,7 @@ class IntegrationDemoListViewController: UIViewController {
 private extension IntegrationDemoListViewController {
     
     func setupViews() {
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(listView)
         
         setupTitle()
@@ -165,7 +165,7 @@ private extension IntegrationDemoListViewController {
         
         let viewModel = TopViewModel(
             title: title,
-            actionIcon: UIImage(named: "gear")?.withTintColor(.awxIconLink, renderingMode: .alwaysOriginal),
+            actionIcon: UIImage(named: "gear")?.withTintColor(.awxColor(.iconLink), renderingMode: .alwaysOriginal),
             actionHandler: { [weak self] in
                 self?.onSettingButtonTapped()
             }
@@ -398,7 +398,7 @@ private extension IntegrationDemoListViewController {
         // left view
         let label = UILabel()
         label.text = fieldName
-        label.textColor = .awxTextPlaceholder
+        label.textColor = .awxColor(.textPlaceholder)
         label.font = .awxFont(.caption3)
         label.sizeToFit()
         

@@ -32,7 +32,7 @@ class TopView: UIView {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.headline1, weight: .bold)
-        view.textColor = .awxTextPrimary
+        view.textColor = .awxColor(.textPrimary)
         view.setContentHuggingPriority(.defaultLow - 10, for: .horizontal)
         view.setContentCompressionResistancePriority(.defaultHigh - 10, for: .horizontal)
         return view

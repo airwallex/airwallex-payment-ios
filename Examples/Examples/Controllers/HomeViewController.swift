@@ -67,7 +67,7 @@ class HomeViewController: UIViewController {
         customizeNavigationBackIndicator()
         customizeNavigationBackButton()
         
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(topView)
         view.addSubview(scrollView)
         scrollView.addSubview(stack)

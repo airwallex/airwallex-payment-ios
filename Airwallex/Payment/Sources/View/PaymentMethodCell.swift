@@ -21,8 +21,8 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = .radius_l
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.awxBorderInterative.cgColor
-        view.backgroundColor = .awxBackgroundPrimary
+        view.layer.borderColor = UIColor.awxColor(.borderInteractive).cgColor
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         return view
     }()
     
@@ -38,7 +38,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.awxFont(.caption2)
-        view.textColor = UIColor.awxTextLink
+        view.textColor = .awxColor(.textLink)
         return view
     }()
     
@@ -57,9 +57,9 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         logo.setImageURL(viewModel.imageURL, placeholder: nil)
         label.text = viewModel.name
         self.label.font = viewModel.isSelected ? .awxFont(.caption2, weight: .bold) : .awxFont(.caption2)
-        self.label.textColor = viewModel.isSelected ? .awxTextLink : .awxTextPrimary
-        roundedBG.layer.borderColor = viewModel.isSelected ? UIColor.awxBorderInterative.cgColor : UIColor.awxBorderDecorative.cgColor
-        roundedBG.backgroundColor = viewModel.isSelected ? UIColor.awxBackgroundHighlight : UIColor.awxBackgroundPrimary
+        self.label.textColor = viewModel.isSelected ? .awxColor(.textLink) : .awxColor(.textPrimary)
+        roundedBG.layer.borderColor = viewModel.isSelected ? UIColor.awxColor(.borderInteractive).cgColor : UIColor.awxColor(.borderDecorative).cgColor
+        roundedBG.backgroundColor = viewModel.isSelected ? UIColor.awxColor(.backgroundHighlight) : .awxColor(.backgroundPrimary)
     }
     
     override init(frame: CGRect) {

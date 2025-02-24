@@ -9,34 +9,70 @@
 import UIKit
 
 public extension UIColor {
-    // background
-    static var awxBackgroundPrimary: UIColor { UIColor(dynamicLightColor: awxWhite, darkColor: awxGray100) }
-    static var awxBackgroundSecondary: UIColor { UIColor(dynamicLightColor: awxGray10, darkColor: awxGray90) }
-    static var awxBackgroundField: UIColor { UIColor(dynamicLightColor: awxGray5, darkColor: awxGray90) }
-    static var awxBackgroundHighlight: UIColor { UIColor(dynamicLightColor: awxPurple5, darkColor: awxPurple90) }
-    static var awxBackgroundSelected: UIColor { UIColor(dynamicLightColor: awxPurple20, darkColor: awxPurple80) }
-    static var awxBackgroundInteractive: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
-    static var awxBackgroundWarning: UIColor { .awxYello10 }
     
-    // border
-    static var awxBorderDecorative: UIColor { UIColor(dynamicLightColor: awxGray20, darkColor: awxGray80) }
-    static var awxBorderPerceivable: UIColor { UIColor(dynamicLightColor: awxGray50, darkColor: awxGray60) }
-    static var awxBorderInterative: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
-    static var awxBorderError: UIColor { UIColor(dynamicLightColor: awxRed50, darkColor: awxRed60) }
+    public enum AWXColor {
+        // Background colors
+        case backgroundPrimary
+        case backgroundSecondary
+        case backgroundField
+        case backgroundHighlight
+        case backgroundSelected
+        case backgroundInteractive
+        case backgroundWarning
+        
+        // Border colors
+        case borderDecorative
+        case borderPerceivable
+        case borderInteractive
+        case borderError
+        
+        // Icon colors
+        case iconPrimary
+        case iconSecondary
+        case iconLink
+        case iconDisabled
+        
+        // Text colors
+        case textLink
+        case textPrimary
+        case textSecondary
+        case textPlaceholder
+        case textError
+        case textInverse
+    }
     
-    // Icon
-    static var awxIconPrimary: UIColor { UIColor(dynamicLightColor: awxGray80, darkColor: awxGray30) }
-    static var awxIconSecondary: UIColor { UIColor(dynamicLightColor: awxGray50, darkColor: awxGray50) }
-    static var awxIconLink: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
-    static var awxIconDisabled: UIColor { UIColor(dynamicLightColor: awxGray40, darkColor: awxGray70) }
-    
-    // text
-    static var awxTextLink: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
-    static var awxTextPrimary: UIColor { UIColor(dynamicLightColor: awxGray100, darkColor: awxGray10) }
-    static var awxTextSecondary: UIColor { UIColor(dynamicLightColor: awxGray60, darkColor: awxGray50) }
-    static var awxTextPlaceholder: UIColor { UIColor(dynamicLightColor: awxGray50, darkColor: awxGray60) }
-    static var awxTextError: UIColor { UIColor(dynamicLightColor: awxRed60, darkColor: awxRed40) }
-    static var awxTextInverse: UIColor { UIColor(dynamicLightColor: awxWhite, darkColor: awxGray100) }
+    static func awxColor(_ color: AWXColor) -> UIColor {
+        switch color {
+            // Background Colors
+        case .backgroundPrimary: return UIColor(dynamicLightColor: .awxWhite, darkColor: .awxGray100)
+        case .backgroundSecondary: return UIColor(dynamicLightColor: .awxGray10, darkColor: .awxGray90)
+        case .backgroundField: return UIColor(dynamicLightColor: .awxGray5, darkColor: .awxGray90)
+        case .backgroundHighlight: return UIColor(dynamicLightColor: .awxPurple5, darkColor: .awxPurple90)
+        case .backgroundSelected: return UIColor(dynamicLightColor: .awxPurple20, darkColor: .awxPurple80)
+        case .backgroundInteractive: return UIColor(dynamicLightColor: .awxPurple70, darkColor: .awxPurple40)
+        case .backgroundWarning: return .awxYello10
+            
+            // Border Colors
+        case .borderDecorative: return UIColor(dynamicLightColor: .awxGray20, darkColor: .awxGray80)
+        case .borderPerceivable: return UIColor(dynamicLightColor: .awxGray50, darkColor: .awxGray60)
+        case .borderInteractive: return UIColor(dynamicLightColor: .awxPurple70, darkColor: .awxPurple40)
+        case .borderError: return UIColor(dynamicLightColor: .awxRed50, darkColor: .awxRed60)
+            
+            // Icon Colors
+        case .iconPrimary: return UIColor(dynamicLightColor: .awxGray80, darkColor: .awxGray30)
+        case .iconSecondary: return UIColor(dynamicLightColor: .awxGray50, darkColor: .awxGray50)
+        case .iconLink: return UIColor(dynamicLightColor: .awxPurple70, darkColor: .awxPurple40)
+        case .iconDisabled: return UIColor(dynamicLightColor: .awxGray40, darkColor: .awxGray70)
+            
+            // Text Colors
+        case .textLink: return UIColor(dynamicLightColor: .awxPurple70, darkColor: .awxPurple40)
+        case .textPrimary: return UIColor(dynamicLightColor: .awxGray100, darkColor: .awxGray10)
+        case .textSecondary: return UIColor(dynamicLightColor: .awxGray60, darkColor: .awxGray50)
+        case .textPlaceholder: return UIColor(dynamicLightColor: .awxGray50, darkColor: .awxGray60)
+        case .textError: return UIColor(dynamicLightColor: .awxRed60, darkColor: .awxRed40)
+        case .textInverse: return UIColor(dynamicLightColor: .awxWhite, darkColor: .awxGray100)
+        }
+    }
 }
 
 extension UIColor {
@@ -77,5 +113,4 @@ extension UIColor {
         let alpha = hex > 0xFFFFFF ? CGFloat((hex >> 24) & 0xFF) / 0xFF : 1
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
-    
 }

@@ -21,7 +21,7 @@ class HomePageTitleView: UIView {
     private let bar: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .awxBorderDecorative
+        view.backgroundColor = .awxColor(.borderDecorative)
         return view
     }()
     
@@ -29,7 +29,7 @@ class HomePageTitleView: UIView {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.text = "Airwallex SDK"
-        view.textColor = .awxTextPrimary
+        view.textColor = .awxColor(.textPrimary)
         view.font = .awxFont(.headline1, weight: .bold)
         view.setContentHuggingPriority(.defaultLow - 10, for: .horizontal)
         return view
@@ -46,7 +46,7 @@ class HomePageTitleView: UIView {
     private let bottomLine: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .awxBorderDecorative
+        view.backgroundColor = .awxColor(.borderDecorative)
         return view
     }()
     

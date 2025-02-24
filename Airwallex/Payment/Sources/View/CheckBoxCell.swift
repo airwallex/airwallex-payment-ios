@@ -40,7 +40,7 @@ class CheckBoxCell: UICollectionViewCell, ViewConfigurable, ViewReusable {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font  = .awxFont(.body2)
-        view.textColor = .awxTextPrimary
+        view.textColor = .awxColor(.textPrimary)
         return view
     }()
     
@@ -57,15 +57,15 @@ class CheckBoxCell: UICollectionViewCell, ViewConfigurable, ViewReusable {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("Save my card for future payments", bundle: .payment, comment: ""), for: .normal)
-        button.setTitleColor(.awxTextPrimary, for: .normal)
+        button.setTitleColor(.awxColor(.textPrimary), for: .normal)
         button.titleLabel?.font = .awxFont(.caption2)
         
         let config = UIImage.SymbolConfiguration(pointSize: 16)
         let normalImage = UIImage(systemName: "square", withConfiguration: config)!
-            .withTintColor(.awxBorderPerceivable, renderingMode: .alwaysOriginal)
+            .withTintColor(.awxColor(.borderPerceivable), renderingMode: .alwaysOriginal)
         
         let selectedImage = UIImage(systemName: "checkmark.square.fill", withConfiguration: config)!
-            .withTintColor(.awxBackgroundInteractive, renderingMode: .alwaysOriginal)
+            .withTintColor(.awxColor(.backgroundInteractive), renderingMode: .alwaysOriginal)
         
         button.setImage(normalImage, for: .normal)
         button.setImage(selectedImage, for: .selected)

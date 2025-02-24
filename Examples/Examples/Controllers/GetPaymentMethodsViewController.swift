@@ -24,7 +24,7 @@ class GetPaymentMethodsViewController: UITableViewController {
     }
     
     private func configCell(_ cell: UITableViewCell, methodType: AWXPaymentMethodType) {
-        cell.textLabel?.textColor = .awxTextPrimary
+        cell.textLabel?.textColor = .awxColor(.textPrimary)
         cell.textLabel?.text = methodType.displayName
         cell.detailTextLabel?.text = methodType.transactionCurrencies.joined(separator: ", ")
         Task {
@@ -82,7 +82,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         super.viewDidLoad()
         customizeNavigationBackButton()
         
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(onRefreshControlTriggered), for: .valueChanged)
         tableView.refreshControl = refreshControl

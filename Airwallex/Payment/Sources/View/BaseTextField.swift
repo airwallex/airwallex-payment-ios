@@ -44,7 +44,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     let textField: ContentInsetableTextField = {
         let view = ContentInsetableTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .awxTextPrimary
+        view.textColor = .awxColor(.textPrimary)
         view.font = .awxFont(.body2)
         view.setContentHuggingPriority(.defaultLow - 50, for: .horizontal)
         view.setContentCompressionResistancePriority(.defaultHigh - 50, for: .horizontal)
@@ -65,8 +65,8 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.borderWidth = 1
         view.layer.cornerRadius = .radius_l
-        view.layer.borderColor = UIColor.awxBorderDecorative.cgColor
-        view.backgroundColor = .awxBackgroundField
+        view.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+        view.backgroundColor = .awxColor(.backgroundField)
         return view
     }()
 
@@ -131,7 +131,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         }
         set {
             textField.isEnabled = newValue
-            textField.textColor = newValue ? .awxTextPrimary : .awxTextPlaceholder
+            textField.textColor = newValue ? .awxColor(.textPrimary) : .awxColor(.textPlaceholder)
         }
     }
     
@@ -156,7 +156,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
             textField.attributedPlaceholder = NSAttributedString(
                 string: placeholder,
                 attributes: [
-                    .foregroundColor: UIColor.awxTextPlaceholder,
+                    .foregroundColor: UIColor.awxColor(.textPlaceholder),
                     .font: UIFont.awxFont(.body2)
                 ]
             )
@@ -172,10 +172,10 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     func updateBorderAppearance() {
         guard let viewModel else { return }
         if textField.isFirstResponder {
-            box.layer.borderColor = UIColor.awxBorderInterative.cgColor
+            box.layer.borderColor = UIColor.awxColor(.borderInteractive).cgColor
             box.layer.borderWidth = 2
         } else {
-            box.layer.borderColor = viewModel.isValid ? UIColor.awxBorderDecorative.cgColor : UIColor.awxBorderError.cgColor
+            box.layer.borderColor = viewModel.isValid ? UIColor.awxColor(.borderDecorative).cgColor : UIColor.awxColor(.borderError).cgColor
             box.layer.borderWidth = 1
         }
     }

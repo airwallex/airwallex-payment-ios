@@ -44,7 +44,7 @@ class BankSelectionViewModel: OptionSelectionViewConfiguring {
     var indicator: UIImage? {
         UIImage(named: "down", in: Bundle.resource())?
             .withTintColor(
-                isEnabled ? .awxIconSecondary : .awxIconDisabled,
+                isEnabled ? .awxColor(.iconSecondary) : .awxColor(.iconDisabled),
                 renderingMode: .alwaysOriginal
             )
     }

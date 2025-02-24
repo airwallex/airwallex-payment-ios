@@ -52,7 +52,7 @@ class SettingsViewController: UIViewController {
     private lazy var bottomView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.awxBorderDecorative.cgColor
+        view.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
         view.layer.borderWidth = 1
         return view
     }()
@@ -90,7 +90,7 @@ class SettingsViewController: UIViewController {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.adjustsImageWhenHighlighted = false
-        view.setTitleColor(.awxIconLink, for: .normal)
+        view.setTitleColor(.awxColor(.iconLink), for: .normal)
         view.titleLabel?.font = .awxFont(.body1, weight: .medium)
         view.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         view.addTarget(self, action: #selector(onCustomerIdActionButtonTapped), for: .touchUpInside)
@@ -142,7 +142,7 @@ class SettingsViewController: UIViewController {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.caption1)
-        view.textColor = .awxTextPlaceholder
+        view.textColor = .awxColor(.textPlaceholder)
         view.text = "WeChat Region: HK"
         return view
     }()
@@ -151,7 +151,7 @@ class SettingsViewController: UIViewController {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.caption1)
-        view.textColor = .awxTextPlaceholder
+        view.textColor = .awxColor(.textPlaceholder)
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
         view.text = "App Version: v\(version) (\(build))"
@@ -188,7 +188,7 @@ private extension SettingsViewController {
     func setupViews() {
         
         customizeNavigationBackButton()
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(scrollView)
         scrollView.addSubview(stack)
         stack.addArrangedSubview(topView)
@@ -339,7 +339,7 @@ private extension SettingsViewController {
     func updateCustomerIDGeneratorActionButton() {
         if let id = fieldForCustomerId.textField.text, !id.isEmpty {
             customerIdActionButton.setImage(
-                UIImage(systemName: "xmark")?.withTintColor(.awxIconLink, renderingMode: .alwaysOriginal),
+                UIImage(systemName: "xmark")?.withTintColor(.awxColor(.iconLink), renderingMode: .alwaysOriginal),
                 for: .normal
             )
             customerIdActionButton.setTitle(nil, for: .normal)
