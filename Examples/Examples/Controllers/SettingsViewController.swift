@@ -251,10 +251,12 @@ private extension SettingsViewController {
     
     func setupOptionForEnvironment() {
         let env = settings.environment
-        var environmentOptions = [ AirwallexSDKMode.demoMode, AirwallexSDKMode.stagingMode]
-        #if !DEBUG
-        environmentOptions.insert(AirwallexSDKMode.productionMode, at: 0)
-        #endif
+        var environmentOptions = [ AirwallexSDKMode.productionMode, AirwallexSDKMode.demoMode, AirwallexSDKMode.stagingMode]
+#if DEBUG
+        if !CommandLine.arguments.contains("-production") {
+            environmentOptions.remove(at: 0)
+        }
+#endif
         let optionTitle = env.displayName
         
         let viewModel = ConfigActionViewModel(
@@ -431,6 +433,10 @@ private extension SettingsViewController {
     }
     
     @objc func onSaveButtonTapped() {
+        // This line of code forces the text field to end editing when the Save button is pressed.
+        // It is especially useful for simulators, where the keyboard is not displayed while editing.
+        scrollView.endEditing(true)
+        
         guard NSLocale.isoCountryCodes.contains(where: { $0 == settings.countryCode }) else {
             showAlert(message: "invalid country code \(settings.countryCode)")
             return
