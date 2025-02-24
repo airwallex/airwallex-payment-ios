@@ -177,7 +177,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 bankList = nil
                 task = nil
                 showAlert(error.localizedDescription)
-                debugLog("Failed to get schema for selected method. Error: \(error)")
+                debugLog("Failed to get schema for selected method. Error: \(error.localizedDescription)")
             }
         }
     }

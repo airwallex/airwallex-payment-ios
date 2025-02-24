@@ -128,27 +128,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         PaymentIntentRequest(
             amount: Decimal(string: ExamplesKeys.amount)!,
             currency: ExamplesKeys.currency,
-            order: .init(
-                products: [
-                    .init(
-                        type: "Free engraving",
-                        code: "123",
-                        name: "AirPods Pro",
-                        sku: "piece",
-                        quantity: 1,
-                        unitPrice: 399,
-                        desc: "Buy AirPods Pro, per month with trade-in",
-                        url: "www.aircross.com"
-                    ),
-                ],
-                shipping: .init(
-                    firstName: "Jason",
-                    lastName: "Wang",
-                    phoneNumber: "13800000000",
-                    address: .init(countryCode: "CN", state: "Shanghai", city: "Shanghai", street: "Pudong District", postcode: "100000")
-                ),
-                type: "physical_goods"
-            ),
+            order: DemoDataSource.createOrder(),
             metadata: ["id": 1],
             returnUrl: ExamplesKeys.returnUrl,
             customerID: ExamplesKeys.customerId,
@@ -194,6 +174,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         request.countryCode = ExamplesKeys.countryCode
         request.pageNum = 0
         request.pageSize = 1000
+        request.flow = AWXPaymentMethodFlow.app.rawValue
         return try await awxClient.send(request) as! AWXGetPaymentMethodTypesResponse
     }
     
