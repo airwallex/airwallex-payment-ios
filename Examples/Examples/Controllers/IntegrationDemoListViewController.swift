@@ -110,7 +110,7 @@ class IntegrationDemoListViewController: UIViewController {
     
     private let integrationType: IntegrationType
     
-    private var paymentUISessionHandler: PaymentUISessionHandler?
+    private var paymentUISessionHandler: PaymentSessionHandler?
     
     init(_ integrationStyle: IntegrationType) {
         self.integrationType = integrationStyle
@@ -329,11 +329,12 @@ private extension IntegrationDemoListViewController {
             do {
                 let card = try await confirmCardInfo(testCard)
                 let session = try await createPaymentSession(force3DS: force3DS)
-                paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
-                    let provider = AWXCardProvider(delegate: handler, session: session)
-                    provider.confirmPaymentIntent(with: card, billing: DemoDataSource.shippingAddress, saveCard: saveCard)
-                    return provider
-                }
+                paymentUISessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentUISessionHandler?.startCardPayment(
+                    with: card,
+                    billing: DemoDataSource.shippingAddress,
+                    saveCard: saveCard
+                )
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -346,11 +347,8 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
-                    let provider = AWXApplePayProvider(delegate: handler, session: session)
-                    provider.startPayment()
-                    return provider as AWXDefaultProvider
-                }
+                paymentUISessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentUISessionHandler?.startApplePay()
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -363,11 +361,11 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
-                    let provider = AWXRedirectActionProvider(delegate: handler, session: session)
-                    provider.confirmPaymentIntent(with: "paypal", additionalInfo: ["shopper_name": "Hector", "country_code": "CN"])
-                    return provider as AWXDefaultProvider
-                }
+                paymentUISessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentUISessionHandler?.startSchemaPayment(
+                    with: "paypal",
+                    additionalInfo: ["shopper_name": "Hector", "country_code": "CN"]
+                )
             } catch {
                 showAlert(message: error.localizedDescription)
             }

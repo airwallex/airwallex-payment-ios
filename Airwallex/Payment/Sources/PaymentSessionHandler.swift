@@ -1,5 +1,5 @@
 //
-//  PaymentUISessionHandler.swift
+//  PaymentSessionHandler.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/13.
@@ -8,9 +8,7 @@
 
 import UIKit
 
-public class PaymentUISessionHandler: NSObject {
-    
-    var showCardDirectly = false
+public class PaymentSessionHandler: NSObject {
     
     private(set) var session: AWXSession
     
@@ -22,72 +20,70 @@ public class PaymentUISessionHandler: NSObject {
         (viewController as? AWXPaymentResultDelegate) ?? AWXUIContext.shared().delegate
     }
     
-    private var paymentConsent: AWXPaymentConsent?
-    
-    /// Initializes a paymentUISessionHandler with `AWXPaymentMethodType`.
+    /// Initializes a `PaymentSessionHandler` with a payment session and the view controller from which the payment is initiated.
     /// - Parameters:
-    ///   - session: The payment session containing transaction details.
-    ///   - methodType: The payment method type return from server.
-    ///   - viewController: The hosting view controller from which the payment process is launched.
-    public init?(session: AWXSession,
-                 methodType: AWXPaymentMethodType,
-                 viewController: UIViewController) {
+    ///   - session: The payment session.
+    ///   - viewController: The view controller from which the payment is initiated.
+    public init(session: AWXSession, viewController: UIViewController) {
         self.session = session
         self.viewController = viewController
-        
-        guard let actionProviderClass = ClassToHandleFlowForPaymentMethodType(methodType) as? AWXDefaultProvider.Type else {
-            return nil
-        }
-        super.init()
-        actionProvider = actionProviderClass.init(delegate: self, session: session, paymentMethodType: methodType)
     }
     
-    /// Initializes a paymentUISessionHandler with `AWXPaymentConsent`.
+    /// Initializes a `PaymentSessionHandler` with a payment session and a view controller that also acts as a payment result delegate.
     /// - Parameters:
-    ///   - session: The payment session containing transaction details.
-    ///   - paymentConsent: The payment consent return from server.
-    ///   - viewController: The hosting view controller from which the payment process is launched.
-    public init(session: AWXSession,
-                paymentConsent: AWXPaymentConsent,
-                viewController: UIViewController) {
+    ///   - session: The payment session.
+    ///   - viewController: The view controller from which the payment is initiated, conforming to `AWXPaymentResultDelegate` to handle payment results.
+    public init(session: AWXSession, viewController: UIViewController & AWXPaymentResultDelegate) {
         self.session = session
         self.viewController = viewController
-        self.paymentConsent = paymentConsent
-        super.init()
-        actionProvider = AWXDefaultProvider(delegate: self, session: session)
     }
     
-    /// Initializes a paymentUISessionHandler, primarily used for low-level API integrations.
-    /// - Parameters:
-    ///   - session: The payment session containing transaction details.
-    ///   - viewController: The hosting view controller from which the payment process is launched.
-    ///   - actionProviderCreater: A closure that creates, starts, and returns a provider for handling the payment process.
-    public init(session: AWXSession,
-                viewController: UIViewController & AWXPaymentResultDelegate,
-                actionProviderCreater: (PaymentUISessionHandler) -> AWXDefaultProvider) {
-        self.session = session
-        self.viewController = viewController
-        super.init()
-        self.actionProvider = actionProviderCreater(self)
+    public func startApplePay(methodType: AWXPaymentMethodType? = nil) {
+        let applePayProvider = AWXApplePayProvider(
+            delegate: self,
+            session: session,
+            paymentMethodType: methodType
+        )
+        actionProvider = applePayProvider
+        applePayProvider.startPayment()
     }
     
-    func startPayment(_ paymentMethod: AWXPaymentMethod? = nil) {
-           if let paymentMethod {
-               actionProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
-           } else if let paymentMethod = paymentConsent?.paymentMethod {
-            actionProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: paymentConsent)
-        } else {
-            actionProvider.handleFlow()
-        }
+    public func startCardPayment(with card: AWXCard,
+                                 billing: AWXPlaceDetails?,
+                                 saveCard: Bool = false,
+                                 methodType: AWXPaymentMethodType? = nil) {
+        let cardProvider = AWXCardProvider(
+            delegate: self,
+            session: session,
+            paymentMethodType: methodType
+        )
+        actionProvider = cardProvider
+        cardProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
     }
     
-    public func startPayment(card: AWXCard, billing: AWXPlaceDetails?, saveCard: Bool = false) {
-        guard let actionProvider = actionProvider as? AWXCardProvider else { return }
-        actionProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
+    public func startConsentPayment(with consent: AWXPaymentConsent, paymentMethod: AWXPaymentMethod) {
+        let cardProvider = AWXCardProvider(
+            delegate: self,
+            session: session
+        )
+        actionProvider = cardProvider
+        cardProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: consent)
+    }
+    
+    public func startSchemaPayment(with paymentMethod: AWXPaymentMethod, methodType: AWXPaymentMethodType? = nil) {
+        let schemaProvider = AWXSchemaProvider(delegate: self, session: session, paymentMethodType: methodType)
+        actionProvider = schemaProvider
+        schemaProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
+    }
+    
+    public func startSchemaPayment(with name: String, additionalInfo: [String: String]?) {
+        let redirectAction = AWXRedirectActionProvider(delegate: self, session: session)
+        actionProvider = redirectAction
+        redirectAction.confirmPaymentIntent(with: name, additionalInfo: additionalInfo)
     }
 }
 
-extension PaymentUISessionHandler: AWXProviderDelegate {
+extension PaymentSessionHandler: AWXProviderDelegate {
     public func providerDidStartRequest(_ provider: AWXDefaultProvider) {
         debugLog("start loading")
         viewController.startLoading()
@@ -153,16 +149,12 @@ extension PaymentUISessionHandler: AWXProviderDelegate {
                 self.viewController.present(controller, animated: withAnimation)
             }
         } else {
-            if controller is AWXCardViewController && showCardDirectly {
-                viewController.navigationController?.pushViewController(controller, animated: withAnimation)
-            } else {
-                viewController.present(controller, animated: withAnimation)
-            }
+            viewController.present(controller, animated: withAnimation)
         }
     }
 }
 
-private extension PaymentUISessionHandler {
+private extension PaymentSessionHandler {
     
     func showAlert(_ message: String) {
         let alertVC = UIAlertController(

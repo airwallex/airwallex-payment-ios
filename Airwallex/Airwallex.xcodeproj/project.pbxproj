@@ -600,7 +600,7 @@
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
 		D84E94DA2D684F0800CDC04C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodProvider.swift; sourceTree = "<group>"; };
-		D84E9A262D0C3652006B3421 /* PaymentUISessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentUISessionHandler.swift; sourceTree = "<group>"; };
+		D84E9A262D0C3652006B3421 /* PaymentSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSessionHandler.swift; sourceTree = "<group>"; };
 		D888268E2D12D68B00115198 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
 		D888269F2D12D9E000115198 /* CollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewManager.swift; sourceTree = "<group>"; };
 		D88826B02D13E64500115198 /* ApplePaySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySectionController.swift; sourceTree = "<group>"; };
@@ -1239,7 +1239,7 @@
 			children = (
 				D8DA089E2D08299F00B30AA2 /* PaymentMethodsViewController.swift */,
 				D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */,
-				D84E9A262D0C3652006B3421 /* PaymentUISessionHandler.swift */,
+				D84E9A262D0C3652006B3421 /* PaymentSessionHandler.swift */,
 				D888268E2D12D68B00115198 /* SectionController.swift */,
 				D888269F2D12D9E000115198 /* CollectionViewManager.swift */,
 				D88826B02D13E64500115198 /* ApplePaySectionController.swift */,

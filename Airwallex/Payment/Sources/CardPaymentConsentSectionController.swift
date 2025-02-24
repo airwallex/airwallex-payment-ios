@@ -46,7 +46,7 @@ class CardPaymentConsentSectionController: SectionController {
     
     private let addNewCardAction: () -> Void
     
-    private var paymentSessionHandler: PaymentUISessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandler?
     
     private var selectedConsent: AWXPaymentConsent?
     private var cvcConfigurer: InfoCollectorTextFieldViewModel?
@@ -252,7 +252,7 @@ class CardPaymentConsentSectionController: SectionController {
     }
     
     func updateItemsIfNecessary() {
-        consents = methodProvider.consents
+        consents = methodProvider.consents.filter { $0.paymentMethod != nil }
     }
 }
  
@@ -305,11 +305,10 @@ private extension CardPaymentConsentSectionController {
             }
             consent.paymentMethod?.card?.cvc = cvcConfigurer.text
         }
-        paymentSessionHandler = PaymentUISessionHandler(
-            session: session,
-            paymentConsent: consent,
-            viewController: viewController
+        paymentSessionHandler = PaymentSessionHandler(session: session, viewController: viewController)
+        paymentSessionHandler?.startConsentPayment(
+            with: consent,
+            paymentMethod: consent.paymentMethod!
         )
-        paymentSessionHandler?.startPayment()
     }
 }

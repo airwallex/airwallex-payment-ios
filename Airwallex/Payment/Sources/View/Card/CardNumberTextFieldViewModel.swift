@@ -71,8 +71,7 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
             try AWXCardValidator.validate(number: cardNumber, supportedSchemes: supportedCardSchemes)
             errorHint = nil
         } catch {
-            guard let error = error as? String else { return }
-            errorHint = error
+            errorHint = error.localizedDescription
         }
     }
     

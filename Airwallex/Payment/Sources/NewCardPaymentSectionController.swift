@@ -23,7 +23,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     
     private var methodType: AWXPaymentMethodType
     
-    private var paymentSessionHandler: PaymentUISessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandler?
     private var session: AWXSession {
         methodProvider.session
     }
@@ -214,20 +214,13 @@ private extension NewCardPaymentSectionController {
                 }
             }
             
-            let handler = PaymentUISessionHandler(
-                session: session,
-                methodType: methodType,
-                viewController: context.viewController!
+            paymentSessionHandler = PaymentSessionHandler(session: session, viewController: context.viewController!)
+            paymentSessionHandler?.startCardPayment(
+                with: card,
+                billing: billingInfo,
+                saveCard: shouldSaveCard,
+                methodType: methodType
             )
-            guard let handler = PaymentUISessionHandler(
-                session: session,
-                methodType: methodType,
-                viewController: context.viewController!
-            ) else {
-                throw ErrorMessage(rawValue: "Invalid payment method")
-            }
-            handler.startPayment(card: card, billing: billingInfo, saveCard: shouldSaveCard)
-            paymentSessionHandler = handler
         } catch {
             cardInfoViewModel.updateValidStatusForCheckout()
             billingInfoViewModel.updateValidStatusForCheckout()

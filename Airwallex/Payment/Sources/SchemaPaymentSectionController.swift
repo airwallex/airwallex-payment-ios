@@ -26,7 +26,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         }
         return methodType
     }()
-    private var paymentSessionHandler: PaymentUISessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandler?
     private var methodProvider: PaymentMethodProvider
     
     // data from method details API
@@ -176,8 +176,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 schema = nil
                 bankList = nil
                 task = nil
-                guard let error = error as? String else { return }
-                showAlert(error)
+                showAlert(error.localizedDescription)
                 debugLog("Failed to get schema for selected method. Error: \(error)")
             }
         }
@@ -223,18 +222,16 @@ private extension SchemaPaymentSectionController {
             // update hidden fields
             paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
             
-            paymentSessionHandler = PaymentUISessionHandler(
+            paymentSessionHandler = PaymentSessionHandler(
                 session: session,
-                methodType: methodType,
                 viewController: context.viewController!
             )
-            paymentSessionHandler?.startPayment(paymentMethod)
+            paymentSessionHandler?.startSchemaPayment(with: paymentMethod)
             
             AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button")
             debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         } catch {
-            guard let error = error as? String else { return }
-            showAlert(error)
+            showAlert(error.localizedDescription)
             
             bankSelectionViewModel?.handleDidEndEditing()
             for viewModel in uiFieldViewModels {

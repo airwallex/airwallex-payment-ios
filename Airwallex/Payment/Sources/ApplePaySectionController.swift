@@ -15,18 +15,13 @@ class ApplePaySectionController: SectionController {
     let section = PaymentSectionType.applePay
     let session: AWXSession
     let methodType: AWXPaymentMethodType
-    let paymentSessionHandler: PaymentUISessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandler?
     private(set) var items: [String]
     
-    init(session: AWXSession, methodType: AWXPaymentMethodType, viewController: AWXViewController) {
+    init(session: AWXSession, methodType: AWXPaymentMethodType) {
         self.session = session
         self.methodType = methodType
         self.items = [ methodType.name ]
-        self.paymentSessionHandler = PaymentUISessionHandler(
-            session: session,
-            methodType: methodType,
-            viewController: viewController
-        )
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
@@ -36,8 +31,12 @@ class ApplePaySectionController: SectionController {
     func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
         let cell = context.dequeueReusableCell(ApplePayCell.self, for: itemIdentifier, indexPath: indexPath)
         let viewModel = ApplePayViewModel { [weak self] in
-            guard let handler = self?.paymentSessionHandler else { return }
-            handler.startPayment()
+            guard let self , let viewController = self.context.viewController else { return }
+            self.paymentSessionHandler = PaymentSessionHandler(
+                session: self.session,
+                viewController: viewController
+            )
+            self.paymentSessionHandler?.startApplePay(methodType: self.methodType)
         }
         cell.setup(viewModel)
         return cell

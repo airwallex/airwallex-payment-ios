@@ -53,8 +53,7 @@ class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
             try AWXCardValidator.validate(cvc: text, requiredLength: maxLengthGetter())
             errorHint = nil
         } catch {
-            guard let error = error as? String else { return }
-            errorHint = error
+            errorHint = error.localizedDescription
         }
     }
 }

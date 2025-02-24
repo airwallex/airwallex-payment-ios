@@ -14,7 +14,7 @@ class PaymentMethodsViewController: AWXViewController {
     static let collectionHeaderElementKind = "collection-header-element-kind"
     
     let methodProvider: PaymentMethodProvider
-    private var paymentUISession: PaymentUISessionHandler?
+    private var paymentUISession: PaymentSessionHandler?
     private var selectedMethod: String? = nil
     
     init(methodProvider: PaymentMethodProvider) {
@@ -170,8 +170,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
         case .applePay:
             let controller = ApplePaySectionController(
                 session: methodProvider.session,
-                methodType: methodProvider.applePayMethodType!,
-                viewController: self
+                methodType: methodProvider.applePayMethodType!
             )
             return controller.anySectionController()
         case .methodList:

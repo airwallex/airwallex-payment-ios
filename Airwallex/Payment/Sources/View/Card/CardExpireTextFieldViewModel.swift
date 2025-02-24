@@ -65,8 +65,7 @@ class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
             try AWXCardValidator.validate(expiryMonth: components.first, expiryYear: components.last)
             errorHint = nil
         } catch {
-            guard let error = error as? String else { return }
-            errorHint = error
+            errorHint = error.localizedDescription
         }
     }
 }
