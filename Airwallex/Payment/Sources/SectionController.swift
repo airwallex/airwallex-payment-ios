@@ -79,12 +79,6 @@ extension SectionController {
     func anySectionController() -> AnySectionController<SectionType, ItemType> {
         AnySectionController(self)
     }
-    
-    func showAlert(_ message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Close", bundle: .payment, comment: ""), style: .cancel))
-        context.viewController?.present(alert, animated: true)
-    }
 }
 
 /// Type erasor for SectionController

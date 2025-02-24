@@ -122,7 +122,14 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     
     public func provider(_ provider: AWXDefaultProvider, shouldHandle nextAction: AWXConfirmPaymentNextAction) {
         guard let actionProviderClass = ClassToHandleNextActionForType(nextAction) as? AWXDefaultActionProvider.Type else {
-            showAlert(NSLocalizedString("No provider matched the next action.", bundle: .payment, comment: ""))
+            let error = NSError(
+                domain: AWXSDKErrorDomain,
+                code: -1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: NSLocalizedString("No provider matched the next action.", bundle: .payment, comment: "")
+                ]
+            )
+            paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: .failure, error: error)
             return
         }
         let actionHandler = actionProviderClass.init(delegate: self, session: session)
@@ -151,24 +158,6 @@ extension PaymentSessionHandler: AWXProviderDelegate {
         } else {
             viewController.present(controller, animated: withAnimation)
         }
-    }
-}
-
-private extension PaymentSessionHandler {
-    
-    func showAlert(_ message: String) {
-        let alertVC = UIAlertController(
-            title: nil,
-            message: message,
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(
-            title: NSLocalizedString("Close", bundle: .payment, comment: ""),
-            style: .cancel,
-            handler: nil
-        )
-        alertVC.addAction(action)
-        viewController.present(alertVC, animated: true)
     }
 }
 

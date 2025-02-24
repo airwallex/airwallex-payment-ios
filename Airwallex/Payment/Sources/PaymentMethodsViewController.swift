@@ -117,16 +117,10 @@ class PaymentMethodsViewController: AWXViewController {
             do {
                 try await methodProvider.fetchPaymentMethods()
             } catch {
-                showAlertMessage(error.localizedDescription)
+                showAlert(message: error.localizedDescription)
             }
             stopAnimating()
         }
-    }
-    
-    private func showAlertMessage(_ message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Close", bundle: .payment, comment: ""), style: .cancel))
-        self.present(alert, animated: true)
     }
     
     override func activeScrollView() -> UIScrollView {

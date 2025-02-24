@@ -226,7 +226,7 @@ private extension NewCardPaymentSectionController {
             billingInfoViewModel.updateValidStatusForCheckout()
             context.reload(sections: [section])
             let message = error.localizedDescription
-            showAlert(message)
+            context.viewController?.showAlert(message: message)
             AWXAnalyticsLogger.shared().logAction(withName: "card_payment_validation", additionalInfo: ["message": message])
             debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
         }

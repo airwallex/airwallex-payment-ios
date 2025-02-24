@@ -259,7 +259,7 @@ class CardPaymentConsentSectionController: SectionController {
 private extension CardPaymentConsentSectionController {
     // actions
     func showAlertForDelete(_ consent: AWXPaymentConsent, indexPath: IndexPath) {
-        let alert = UIAlertController(
+        let alert = AWXAlertController(
             title: nil,
             message: NSLocalizedString("Would you like to delete this card?", bundle: .payment, comment: ""),
             preferredStyle: .alert
@@ -275,7 +275,7 @@ private extension CardPaymentConsentSectionController {
                         self.context.delete(items: [ consent.id ])
                         self.debugLog("remove consent successfully. ID: \(consent.id)")
                     } catch {
-                        self.showAlert(error.localizedDescription)
+                        self.context.viewController?.showAlert(message: error.localizedDescription)
                         self.debugLog("removing consent failed. ID: \(consent.id)")
                     }
                     self.context.viewController?.stopAnimating()
@@ -300,7 +300,7 @@ private extension CardPaymentConsentSectionController {
             cvcConfigurer.handleDidEndEditing()
             guard cvcConfigurer.isValid else {
                 let message = cvcConfigurer.errorHint ?? NSLocalizedString("Invalid CVC / CVV", bundle: .payment, comment: "")
-                showAlert(message)
+                context.viewController?.showAlert(message: message)
                 return
             }
             consent.paymentMethod?.card?.cvc = cvcConfigurer.text

@@ -176,7 +176,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 schema = nil
                 bankList = nil
                 task = nil
-                showAlert(error.localizedDescription)
+                context.viewController?.showAlert(message: error.localizedDescription)
                 debugLog("Failed to get schema for selected method. Error: \(error.localizedDescription)")
             }
         }
@@ -231,8 +231,7 @@ private extension SchemaPaymentSectionController {
             AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button")
             debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         } catch {
-            showAlert(error.localizedDescription)
-            
+            context.viewController?.showAlert(message: error.localizedDescription)
             bankSelectionViewModel?.handleDidEndEditing()
             for viewModel in uiFieldViewModels {
                 viewModel.handleDidEndEditing()
