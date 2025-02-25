@@ -602,6 +602,8 @@
 		D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodProvider.swift; sourceTree = "<group>"; };
 		D84E9A262D0C3652006B3421 /* PaymentSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSessionHandler.swift; sourceTree = "<group>"; };
 		D85A877B2D6C71430084F7FA /* AWXAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXAlertController.swift; sourceTree = "<group>"; };
+		D85A877C2D6D5B370084F7FA /* SimpleSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSectionController.swift; sourceTree = "<group>"; };
+		D85A88482D6D607B0084F7FA /* LabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		D888268E2D12D68B00115198 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
 		D888269F2D12D9E000115198 /* CollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewManager.swift; sourceTree = "<group>"; };
 		D88826B02D13E64500115198 /* ApplePaySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySectionController.swift; sourceTree = "<group>"; };
@@ -628,7 +630,6 @@
 		D8F303122D1ABAAE00D29B49 /* ApplePayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayCell.swift; sourceTree = "<group>"; };
 		D8F303142D1ABAAE00D29B49 /* CardNumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberTextField.swift; sourceTree = "<group>"; };
 		D8F303152D1ABAAE00D29B49 /* CardPaymentSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentSectionHeader.swift; sourceTree = "<group>"; };
-		D8F303172D1ABAAE00D29B49 /* LabelHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelHeader.swift; sourceTree = "<group>"; };
 		D8F303192D1ABAAE00D29B49 /* CardInfoCollectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfoCollectorCell.swift; sourceTree = "<group>"; };
 		D8F3031A2D1ABAAE00D29B49 /* CardConsentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardConsentCell.swift; sourceTree = "<group>"; };
 		D8F3031C2D1ABAAE00D29B49 /* PaymentMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodCell.swift; sourceTree = "<group>"; };
@@ -1244,6 +1245,7 @@
 				D888268E2D12D68B00115198 /* SectionController.swift */,
 				D888269F2D12D9E000115198 /* CollectionViewManager.swift */,
 				D88826B02D13E64500115198 /* ApplePaySectionController.swift */,
+				D85A877C2D6D5B370084F7FA /* SimpleSectionController.swift */,
 				D888291A2D15443E00115198 /* ListHeaderFooterProvider.swift */,
 				D88826C12D13FCAA00115198 /* PaymentMethodListSectionController.swift */,
 				D8F302AD2D1A823000D29B49 /* NewCardPaymentSectionController.swift */,
@@ -1272,7 +1274,7 @@
 				D8F3032F2D1B9DAC00D29B49 /* Card */,
 				D82737202D364C7A00AA41A6 /* Schema */,
 				D8F303122D1ABAAE00D29B49 /* ApplePayCell.swift */,
-				D8F303172D1ABAAE00D29B49 /* LabelHeader.swift */,
+				D85A88482D6D607B0084F7FA /* LabelCell.swift */,
 				D8F67F002D2E2703004BAB26 /* OptionSelectionView.swift */,
 				D8F67EFC2D2CFBEA004BAB26 /* CheckBoxCell.swift */,
 				D8F67F022D2E669D004BAB26 /* InfoCollectorCell.swift */,
@@ -1657,7 +1659,7 @@
 		085BD3BF23CC62B4002E8F27 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1330;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = Airwallex;
 				TargetAttributes = {

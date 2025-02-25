@@ -137,14 +137,25 @@ extension PaymentMethodsViewController: AWXPageViewTrackable {
 
 extension PaymentMethodsViewController: CollectionViewSectionProvider {
     
+    var singleNonApplePayPaymentMethodAvailable: Bool {
+        !methodProvider.isApplePayAvailable && methodProvider.methods.count == 1
+    }
+    
     func sections() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
+        //  title of the list
+        sections.append(.listTitle)
+        
         if methodProvider.isApplePayAvailable {
             sections.append(.applePay)
         }
-        // horizontal list
-        sections.append(.methodList)
+
+        if !singleNonApplePayPaymentMethodAvailable {
+            // horizontal list
+            sections.append(.methodList)
+        }
         
+        //  display selected payment method
         if let selectedMethodType = methodProvider.selectedMethod {
             if selectedMethodType.name == AWXCardKey {
                 if preferConsentPayment && !methodProvider.consents.isEmpty {
@@ -161,6 +172,30 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
     
     func sectionController(for section: PaymentSectionType) -> AnySectionController<PaymentSectionType, String> {
         switch section {
+        case .listTitle:
+            let layoutSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(44)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: layoutSize)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
+            let layout = NSCollectionLayoutSection(group: group)
+            layout.contentInsets = .init(top: 32, leading: 16, bottom: 8, trailing: 16)
+            
+            let controller = SimpleSectionController(
+                section: .listTitle,
+                item: "list_title",
+                layout: layout) { [weak self] context, item, indexPath in
+                    guard let self else { return UICollectionViewCell() }
+                    let cell = context.dequeueReusableCell(LabelCell.self, for: item, indexPath: indexPath)
+                    if self.singleNonApplePayPaymentMethodAvailable {
+                        cell.label.text = self.methodProvider.selectedMethod?.displayName
+                    } else {
+                        cell.label.text = NSLocalizedString("Payment Methods", bundle: .payment, comment: "title for payment sheet")
+                    }
+                    return cell
+                }
+            return controller.anySectionController()
         case .applePay:
             let controller = ApplePaySectionController(
                 session: methodProvider.session,
@@ -205,24 +240,12 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
     }
     
     func listBoundaryItemProviders() -> [BoundarySupplementaryItemProvider]? {
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(65)
-        )
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: Self.collectionHeaderElementKind,
-            alignment: .top
-        )
-        return [BoundarySupplementaryItemProvider(
-            elementKind: Self.collectionHeaderElementKind,
-            layout: header,
-            reusableView: LabelHeader.self
-        )]
+        return nil
     }
 }
 
 enum PaymentSectionType: Hashable {
+    case listTitle
     case applePay
     case methodList
     case cardPaymentConsent

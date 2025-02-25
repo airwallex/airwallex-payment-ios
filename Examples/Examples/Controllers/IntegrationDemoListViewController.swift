@@ -38,13 +38,13 @@ class IntegrationDemoListViewController: UIViewController {
         ActionViewModel(
             title: NSLocalizedString("Launch card payment", comment: DemoDataSource.commentForLocalization),
             action: { [weak self] in
-                self?.launchCardPayment()
+                self?.launchCardPayment(style: .push)
             }
         ),
         ActionViewModel(
             title: NSLocalizedString("Launch card payment (dialog)", comment: DemoDataSource.commentForLocalization),
             action: { [weak self] in
-                self?.launchCardPaymentDialog()
+                self?.launchCardPayment(style: .present)
             }
         ),
         ActionViewModel(
@@ -274,7 +274,7 @@ private extension IntegrationDemoListViewController {
         }
     }
     
-    func launchCardPayment() {
+    func launchCardPayment(style: AWXUIContext.LaunchStyle = .push) {
         Task {
             startLoading()
             do {
@@ -282,25 +282,11 @@ private extension IntegrationDemoListViewController {
                 //  pass AWXCardKey only
                 session.paymentMethods = [ AWXCardKey ]
                 if let session = session as? AWXOneOffSession {
+                    // for recurring session and recurring with intent, consents are already hidden
                     session.hidePaymentConsents = true
                 }
                 
                 AWXUIContext.shared().launchPayment(from: self, session: session, style: .push)
-            } catch {
-                showAlert(message: error.localizedDescription)
-            }
-            stopLoading()
-        }
-    }
-    
-    func launchCardPaymentDialog() {
-        Task {
-            startLoading()
-            do {
-                let session = try await createPaymentSession()
-                //  pass AWXCardKey only
-                session.paymentMethods = [ AWXCardKey ]
-                AWXUIContext.shared().launchPayment(from: self, session: session, style: .present)
             } catch {
                 showAlert(message: error.localizedDescription)
             }

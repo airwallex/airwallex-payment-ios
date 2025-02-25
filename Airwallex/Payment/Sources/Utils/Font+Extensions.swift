@@ -6,14 +6,6 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 //
-//UltraLight: [100] (approximation)
-//Thin: [200] (approximation)
-//Light: [300]
-//Regular: [400]
-//Medium: [500]
-//Semibold: [600]
-//Bold: [700]
-//Heavy/Black: [800] (both can map to higher numeric values)
 
 public extension UIFont {
     
@@ -89,6 +81,14 @@ public extension UIFont {
     /// - Parameters:
     ///   - font: Defined by UI
     ///   - weight: weight of font
+    ///   UltraLight: [100] (approximation)
+    ///   Thin: [200] (approximation)
+    ///   Light: [300]
+    ///   Regular: [400]
+    ///   Medium: [500]
+    ///   Semibold: [600]
+    ///   Bold: [700]
+    ///   Heavy/Black: [800] (both can map to higher numeric values)
     /// - Returns: UIFont
     public static func awxFont(_ font: AWXFont, weight: UIFont.Weight = .regular) -> UIFont {
         UIFont.systemFont(ofSize: font.size, weight: weight)
