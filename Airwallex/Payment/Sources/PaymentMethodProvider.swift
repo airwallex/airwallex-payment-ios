@@ -11,7 +11,7 @@ import Combine
 
 @MainActor
 final class PaymentMethodProvider {
-    private let provider: AWXPaymentMethodListViewModel
+    private let provider: PaymentMethodFetcher
     var session: AWXSession {
         provider.session
     }
@@ -34,7 +34,7 @@ final class PaymentMethodProvider {
     private(set) var consents = [AWXPaymentConsent]()
     private lazy var client = AWXAPIClient(configuration: .shared())
     
-    init(provider: AWXPaymentMethodListViewModel) {
+    init(provider: PaymentMethodFetcher) {
         self.provider = provider
     }
     
@@ -116,22 +116,22 @@ extension PaymentMethodProvider: SwiftLoggable {
     /// - Parameter name: name of the method
     /// - Returns: details including a list of AWXSchema
     func getPaymentMethodTypeDetails(name: String? = nil) async throws -> (AWXGetPaymentMethodTypeResponse) {
-        guard let selectedMethod else {
-            throw ErrorMessage(rawValue:"No payment method selected")
+        guard let name = name ?? selectedMethod?.name else {
+            throw ErrorMessage(rawValue:"Payment method name required")
         }
         let request = AWXGetPaymentMethodTypeRequest()
-        request.name = name ?? selectedMethod.name
+        request.name = name
         request.transactionMode = session.transactionMode()
         request.lang = session.lang
         return try await client.send(request) as! AWXGetPaymentMethodTypeResponse
     }
     
-    func getBankList() async throws -> AWXGetAvailableBanksResponse {
-        guard let selectedMethod else {
-            throw ErrorMessage(rawValue:"No payment method selected")
+    func getBankList(name: String? = nil) async throws -> AWXGetAvailableBanksResponse {
+        guard let name = name ?? selectedMethod?.name else {
+            throw ErrorMessage(rawValue:"Payment method name required")
         }
         let request = AWXGetAvailableBanksRequest()
-        request.paymentMethodType = selectedMethod.name
+        request.paymentMethodType = name
         request.countryCode = session.countryCode
         request.lang = session.lang
         let response = try await client.send(request)

@@ -280,13 +280,12 @@ private extension IntegrationDemoListViewController {
             do {
                 let session = try await createPaymentSession()
                 //  pass AWXCardKey only
-                session.paymentMethods = [ AWXCardKey ]
-                if let session = session as? AWXOneOffSession {
-                    // for recurring session and recurring with intent, consents are already hidden
-                    session.hidePaymentConsents = true
-                }
-                
-                AWXUIContext.shared().launchPayment(from: self, session: session, style: .push)
+                AWXUIContext.shared().launchCardPayment(
+                    from: self,
+                    supportedBrands: AWXCardBrand.all,
+                    session: session,
+                    style: style
+                )
             } catch {
                 showAlert(message: error.localizedDescription)
             }

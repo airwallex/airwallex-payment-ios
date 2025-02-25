@@ -180,7 +180,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
         case .listTitle:
             let layoutSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(44)
+                heightDimension: .estimated(20)
             )
             let item = NSCollectionLayoutItem(layoutSize: layoutSize)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])

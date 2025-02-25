@@ -147,7 +147,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         let item = NSCollectionLayoutItem(layoutSize: layoutSize)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(horizontal: .spacing_16).top(.spacing_12)
+        section.contentInsets = .init(horizontal: .spacing_16).top(.spacing_8)
         section.interGroupSpacing = .spacing_16
         
         if !methodProvider.consents.isEmpty {

@@ -604,6 +604,8 @@
 		D85A877B2D6C71430084F7FA /* AWXAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXAlertController.swift; sourceTree = "<group>"; };
 		D85A877C2D6D5B370084F7FA /* SimpleSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSectionController.swift; sourceTree = "<group>"; };
 		D85A88482D6D607B0084F7FA /* LabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
+		D85A88492D6D8D580084F7FA /* PaymentMethodFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodFetcher.swift; sourceTree = "<group>"; };
+		D85A884B2D6D9B0B0084F7FA /* AWXCardBrand+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCardBrand+Extensions.swift"; sourceTree = "<group>"; };
 		D888268E2D12D68B00115198 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
 		D888269F2D12D9E000115198 /* CollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewManager.swift; sourceTree = "<group>"; };
 		D88826B02D13E64500115198 /* ApplePaySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySectionController.swift; sourceTree = "<group>"; };
@@ -1251,6 +1253,7 @@
 				D8F302AD2D1A823000D29B49 /* NewCardPaymentSectionController.swift */,
 				D88826C22D13FCD700115198 /* CardPaymentConsentSectionController.swift */,
 				D84443812D30BF2800DF9762 /* SchemaPaymentSectionController.swift */,
+				D85A88492D6D8D580084F7FA /* PaymentMethodFetcher.swift */,
 				D8F3032B2D1ABAB100D29B49 /* Utils */,
 				D8F303212D1ABAAE00D29B49 /* View */,
 			);
@@ -1301,6 +1304,7 @@
 				D8F303242D1ABAB100D29B49 /* AWXUIContext+Extensions.swift */,
 				D8F303252D1ABAB100D29B49 /* Bundle+Extensions.swift */,
 				D8F3032E2D1ABDB600D29B49 /* AWXBrandType+Extensions.swift */,
+				D85A884B2D6D9B0B0084F7FA /* AWXCardBrand+Extensions.swift */,
 				D88C3CE52D1D50E800E77FFD /* AWXCard+Extensions.swift */,
 				D88C3CE72D1E743500E77FFD /* UIStackView+Extensions.swift */,
 				D8F303262D1ABAB100D29B49 /* UIColor+Extensions.swift */,
