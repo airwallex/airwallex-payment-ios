@@ -9,13 +9,18 @@
 import UIKit
 import Combine
 
+enum PaymentSectionType: Hashable {
+    case listTitle
+    case applePay
+    case methodList
+    case cardPaymentConsent
+    case cardPaymentNew
+    case schemaPayment(String)
+}
+
 class PaymentMethodsViewController: AWXViewController {
     
-    static let collectionHeaderElementKind = "collection-header-element-kind"
-    
     let methodProvider: PaymentMethodProvider
-    private var paymentUISession: PaymentSessionHandler?
-    private var selectedMethod: String? = nil
     
     init(methodProvider: PaymentMethodProvider) {
         self.methodProvider = methodProvider
@@ -243,14 +248,4 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
         return nil
     }
 }
-
-enum PaymentSectionType: Hashable {
-    case listTitle
-    case applePay
-    case methodList
-    case cardPaymentConsent
-    case cardPaymentNew
-    case schemaPayment(String)
-}
-
 
