@@ -232,8 +232,12 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
 
 class ContentInsetableTextField: UITextField {
     
-    var textInsets: UIEdgeInsets
-
+    var textInsets: UIEdgeInsets {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
     init(textInsets: UIEdgeInsets = .zero) {
         self.textInsets = textInsets
         super.init(frame: .zero)
@@ -245,16 +249,22 @@ class ContentInsetableTextField: UITextField {
     
     // Rect for text already in the field
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: textInsets)
+        let textRect = super.textRect(forBounds: bounds)
+        let rect = bounds.inset(by: textInsets)
+        return textRect.intersection(rect)
     }
     
     // Rect for text when editing
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: textInsets)
+        let editingRect = super.editingRect(forBounds: bounds)
+        let rect = textRect(forBounds: bounds)
+        return editingRect.intersection(rect)
     }
     
     // Optionally adjust the placeholder's rectangle
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: textInsets)
+        let placeholderRect = super.placeholderRect(forBounds: bounds)
+        let rect = bounds.inset(by: textInsets)
+        return placeholderRect.intersection(rect)
     }
 }
