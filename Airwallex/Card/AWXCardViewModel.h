@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) BOOL isReusingShippingAsBillingInformation;
 @property (nonatomic, readonly) BOOL isBillingInformationRequired;
 @property (nonatomic, readonly) BOOL isCardSavingEnabled;
+@property (nonatomic, readonly) BOOL autoSaveCardForFuturePayments;
 @property (nonatomic, strong, readonly) AWXPlaceDetails *initialBilling;
 @property (nonatomic, strong, nullable) AWXCountry *selectedCountry;
 @property (nonatomic) AWXBrandType currentBrand;

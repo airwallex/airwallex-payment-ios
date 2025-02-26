@@ -29,7 +29,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     }
     private let methodProvider: PaymentMethodProvider
     private let switchToConsentPaymentAction: () -> Void
-    private lazy var shouldSaveCard = false
+    private var shouldSaveCard = false
     private var shouldReuseShippingAddress: Bool
     private let validator: AWXCardValidator
     
@@ -71,6 +71,9 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         self.switchToConsentPaymentAction = switchToConsentPaymentAction
         self.validator = AWXCardValidator(cardPaymentMethod.cardSchemes)
         self.shouldReuseShippingAddress = methodProvider.session.billing != nil
+        if let oneOffSession = methodProvider.session as? AWXOneOffSession {
+            self.shouldSaveCard = oneOffSession.autoSaveCardForFuturePayments
+        }
     }
     
     // MARK: - SectionController
