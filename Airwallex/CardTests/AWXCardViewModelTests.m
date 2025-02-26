@@ -63,11 +63,16 @@
     session.paymentIntent = intent;
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL launchDirectly:NO];
     XCTAssertTrue(viewModel.isCardSavingEnabled);
+
+    XCTAssertFalse(viewModel.isCardSavingEnabledByDefault);
+    session.isCardSavingEnabledByDefault = true;
+    XCTAssertTrue(viewModel.isCardSavingEnabledByDefault);
 }
 
 - (void)testIsCardSavingEnabledWhenRecurringSession {
     AWXCardViewModel *viewModel = [self mockRecurringViewModel];
     XCTAssertFalse(viewModel.isCardSavingEnabled);
+    XCTAssertFalse(viewModel.isCardSavingEnabledByDefault);
 }
 
 - (void)testInitialBilling {

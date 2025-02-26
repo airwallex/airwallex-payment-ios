@@ -194,6 +194,9 @@ class CartViewController: UIViewController {
                         
                         // Step 4: Present payment flow
                         self.presentPaymentFlow(session: session)
+                        
+                        // For one-off session, you can choose to enable card saving by default
+                        (session as? AWXOneOffSession)?.isCardSavingEnabledByDefault = true
                     case .failure(let error):
                         self.showAlert(error.localizedDescription, withTitle: nil)
                     }
