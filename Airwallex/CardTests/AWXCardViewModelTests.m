@@ -64,9 +64,9 @@
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL launchDirectly:NO];
     XCTAssertTrue(viewModel.isCardSavingEnabled);
 
-    XCTAssertFalse(viewModel.isCardSavingEnabledByDefault);
-    session.isCardSavingEnabledByDefault = true;
     XCTAssertTrue(viewModel.isCardSavingEnabledByDefault);
+    session.isCardSavingEnabledByDefault = false;
+    XCTAssertFalse(viewModel.isCardSavingEnabledByDefault);
 }
 
 - (void)testIsCardSavingEnabledWhenRecurringSession {
