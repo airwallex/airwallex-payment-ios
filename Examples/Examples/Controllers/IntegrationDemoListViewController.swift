@@ -110,7 +110,7 @@ class IntegrationDemoListViewController: UIViewController {
     
     private let integrationType: IntegrationType
     
-    private var paymentUISessionHandler: PaymentSessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandler?
     
     init(_ integrationStyle: IntegrationType) {
         self.integrationType = integrationStyle
@@ -251,7 +251,7 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                AWXUIContext.shared().launchPayment(from: self, session: session, style: .push)
+                AWXUIContext.shared().launchPayment(from: self, session: session)
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -265,8 +265,11 @@ private extension IntegrationDemoListViewController {
             do {
                 let session = try await createPaymentSession()
                 //  custom payment methods by an array of payment method name
-                session.paymentMethods = [ AWXApplePayKey, AWXCardKey, "alipaycn" ]
-                AWXUIContext.shared().launchPayment(from: self, session: session, style: .push)
+                AWXUIContext.shared().launchPayment(
+                    from: self,
+                    session: session,
+                    filterBy: [ AWXApplePayKey, AWXCardKey, "alipaycn", "alipayhk" ]
+                )
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -274,7 +277,7 @@ private extension IntegrationDemoListViewController {
         }
     }
     
-    func launchCardPayment(style: AWXUIContext.LaunchStyle = .push) {
+    func launchCardPayment(style: AWXUIContext.LaunchStyle) {
         Task {
             startLoading()
             do {
@@ -282,8 +285,8 @@ private extension IntegrationDemoListViewController {
                 //  pass AWXCardKey only
                 AWXUIContext.shared().launchCardPayment(
                     from: self,
-                    supportedBrands: AWXCardBrand.all,
                     session: session,
+                    supportedBrands: AWXCardBrand.all,
                     style: style
                 )
             } catch {
@@ -314,8 +317,8 @@ private extension IntegrationDemoListViewController {
             do {
                 let card = try await confirmCardInfo(testCard)
                 let session = try await createPaymentSession(force3DS: force3DS)
-                paymentUISessionHandler = PaymentSessionHandler(session: session, viewController: self)
-                paymentUISessionHandler?.startCardPayment(
+                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler?.startCardPayment(
                     with: card,
                     billing: DemoDataSource.shippingAddress,
                     saveCard: saveCard
@@ -332,8 +335,8 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                paymentUISessionHandler = PaymentSessionHandler(session: session, viewController: self)
-                paymentUISessionHandler?.startApplePay()
+                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler?.startApplePay()
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -346,8 +349,8 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                paymentUISessionHandler = PaymentSessionHandler(session: session, viewController: self)
-                paymentUISessionHandler?.startSchemaPayment(
+                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler?.startSchemaPayment(
                     with: "paypal",
                     additionalInfo: ["shopper_name": "Hector", "country_code": "CN"]
                 )

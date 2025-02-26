@@ -80,7 +80,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-production"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>

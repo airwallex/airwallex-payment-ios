@@ -28,7 +28,11 @@ class GetPaymentMethodsViewController: UITableViewController {
         cell.textLabel?.text = methodType.displayName
         cell.detailTextLabel?.text = methodType.transactionCurrencies.joined(separator: ", ")
         Task {
-            let logoURL = methodType.resources.logoURL
+            guard let logoURL = methodType.resources.logoURL else {
+                cell.imageView?.image = nil
+                cell.setNeedsLayout()
+                return
+            }
             if let cachedImage = self.imageCache.object(forKey: logoURL as NSURL) {
                 // Use the cached image
                 await MainActor.run {
@@ -209,7 +213,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         output += "- Transaction Currencies: \(currenciesDescription)\n"
         
         output += "- Active: \(methodType.active)\n"
-        output += "- Resources-logoURL: \(methodType.resources.logoURL)\n"
+        output += "- Resources-logoURL: \(methodType.resources.logoURL?.absoluteString ?? "N/A")\n"
         output += "- Resources-hasSchema: \(methodType.resources.hasSchema)\n"
         output += "- Has Schema: \(methodType.hasSchema)\n"
         

@@ -599,13 +599,15 @@
 		D84529AF2D30FA380032BE17 /* SchemaPaymentRemiderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentRemiderCell.swift; sourceTree = "<group>"; };
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
 		D84E94DA2D684F0800CDC04C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodProvider.swift; sourceTree = "<group>"; };
+		D84E998F2D0AFAC9006B3421 /* PaymentSheetMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSheetMethodProvider.swift; sourceTree = "<group>"; };
 		D84E9A262D0C3652006B3421 /* PaymentSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSessionHandler.swift; sourceTree = "<group>"; };
 		D85A877B2D6C71430084F7FA /* AWXAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXAlertController.swift; sourceTree = "<group>"; };
 		D85A877C2D6D5B370084F7FA /* SimpleSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSectionController.swift; sourceTree = "<group>"; };
 		D85A88482D6D607B0084F7FA /* LabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
-		D85A88492D6D8D580084F7FA /* PaymentMethodFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodFetcher.swift; sourceTree = "<group>"; };
+		D85A88492D6D8D580084F7FA /* SinglePaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentMethodProvider.swift; sourceTree = "<group>"; };
 		D85A884B2D6D9B0B0084F7FA /* AWXCardBrand+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCardBrand+Extensions.swift"; sourceTree = "<group>"; };
+		D85A884D2D6DBAA50084F7FA /* AWXPaymentMethodType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXPaymentMethodType+Extensions.swift"; sourceTree = "<group>"; };
+		D85A884E2D6EE53D0084F7FA /* PaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodProvider.swift; sourceTree = "<group>"; };
 		D888268E2D12D68B00115198 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
 		D888269F2D12D9E000115198 /* CollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewManager.swift; sourceTree = "<group>"; };
 		D88826B02D13E64500115198 /* ApplePaySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySectionController.swift; sourceTree = "<group>"; };
@@ -1242,7 +1244,8 @@
 			isa = PBXGroup;
 			children = (
 				D8DA089E2D08299F00B30AA2 /* PaymentMethodsViewController.swift */,
-				D84E998F2D0AFAC9006B3421 /* PaymentMethodProvider.swift */,
+				D84E998F2D0AFAC9006B3421 /* PaymentSheetMethodProvider.swift */,
+				D85A884E2D6EE53D0084F7FA /* PaymentMethodProvider.swift */,
 				D84E9A262D0C3652006B3421 /* PaymentSessionHandler.swift */,
 				D888268E2D12D68B00115198 /* SectionController.swift */,
 				D888269F2D12D9E000115198 /* CollectionViewManager.swift */,
@@ -1253,7 +1256,7 @@
 				D8F302AD2D1A823000D29B49 /* NewCardPaymentSectionController.swift */,
 				D88826C22D13FCD700115198 /* CardPaymentConsentSectionController.swift */,
 				D84443812D30BF2800DF9762 /* SchemaPaymentSectionController.swift */,
-				D85A88492D6D8D580084F7FA /* PaymentMethodFetcher.swift */,
+				D85A88492D6D8D580084F7FA /* SinglePaymentMethodProvider.swift */,
 				D8F3032B2D1ABAB100D29B49 /* Utils */,
 				D8F303212D1ABAAE00D29B49 /* View */,
 			);
@@ -1307,6 +1310,7 @@
 				D85A884B2D6D9B0B0084F7FA /* AWXCardBrand+Extensions.swift */,
 				D88C3CE52D1D50E800E77FFD /* AWXCard+Extensions.swift */,
 				D88C3CE72D1E743500E77FFD /* UIStackView+Extensions.swift */,
+				D85A884D2D6DBAA50084F7FA /* AWXPaymentMethodType+Extensions.swift */,
 				D8F303262D1ABAB100D29B49 /* UIColor+Extensions.swift */,
 				D88C3CE62D1E4D7A00E77FFD /* String+Extensions.swift */,
 				D8F303272D1ABAB100D29B49 /* Font+Extensions.swift */,

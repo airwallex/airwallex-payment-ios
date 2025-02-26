@@ -115,16 +115,29 @@ class PaymentMethodsViewController: AWXViewController {
     
     @objc private func getMethodList(_ sender: UIRefreshControl? = nil) {
         Task {
-            if let sender {
-                sender.endRefreshing()
-            }
             startAnimating()
             do {
-                try await methodProvider.fetchPaymentMethods()
+                try await methodProvider.getPaymentMethodTypes()
+                stopAnimating()
+                if let sender {
+                    sender.endRefreshing()
+                }
             } catch {
-                showAlert(message: error.localizedDescription)
+                debugLog("failed to get payment method list: \(error)")
+                showAlert(message: error.localizedDescription) { _ in
+                    guard self.methodProvider.methods.isEmpty else {
+                        return
+                    }
+                    if let action = AWXUIContext.shared().paymentUIDismissAction {
+                        action {
+                            AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
+                        }
+                        AWXUIContext.shared().paymentUIDismissAction = nil
+                    } else {
+                        AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
+                    }
+                }
             }
-            stopAnimating()
         }
     }
     
@@ -142,8 +155,12 @@ extension PaymentMethodsViewController: AWXPageViewTrackable {
 
 extension PaymentMethodsViewController: CollectionViewSectionProvider {
     
-    var singleNonApplePayPaymentMethodAvailable: Bool {
+    private var singleNonApplePayPaymentMethodAvailable: Bool {
         !methodProvider.isApplePayAvailable && methodProvider.methods.count == 1
+    }
+    
+    private var displayMethodList: Bool {
+        return methodProvider.methods.count > 1
     }
     
     func sections() -> [PaymentSectionType] {
@@ -155,7 +172,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
             sections.append(.applePay)
         }
 
-        if !singleNonApplePayPaymentMethodAvailable {
+        if displayMethodList {
             // horizontal list
             sections.append(.methodList)
         }

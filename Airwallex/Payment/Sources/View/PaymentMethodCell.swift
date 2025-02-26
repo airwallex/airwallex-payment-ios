@@ -10,7 +10,7 @@ import Combine
 
 struct PaymentMethodCellViewModel {
     let name: String
-    let imageURL: URL
+    let imageURL: URL?
     let isSelected: Bool
 }
 
@@ -54,10 +54,14 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private(set) var viewModel: PaymentMethodCellViewModel?
     func setup(_ viewModel: PaymentMethodCellViewModel) {
         self.viewModel = viewModel
-        logo.setImageURL(viewModel.imageURL, placeholder: nil)
+        if let URL = viewModel.imageURL {
+            logo.setImageURL(URL, placeholder: nil)
+        } else {
+            logo.image = nil
+        }
         label.text = viewModel.name
-        self.label.font = viewModel.isSelected ? .awxFont(.caption2, weight: .bold) : .awxFont(.caption2)
-        self.label.textColor = viewModel.isSelected ? .awxColor(.textLink) : .awxColor(.textPrimary)
+        label.font = viewModel.isSelected ? .awxFont(.caption2, weight: .bold) : .awxFont(.caption2)
+        label.textColor = viewModel.isSelected ? .awxColor(.textLink) : .awxColor(.textPrimary)
         roundedBG.layer.borderColor = viewModel.isSelected ? UIColor.awxColor(.borderInteractive).cgColor : UIColor.awxColor(.borderDecorative).cgColor
         roundedBG.backgroundColor = viewModel.isSelected ? UIColor.awxColor(.backgroundHighlight) : .awxColor(.backgroundPrimary)
     }
