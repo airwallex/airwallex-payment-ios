@@ -126,8 +126,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) BOOL hidePaymentConsents;
 
-/// Indicates whether card saving is enabled by default for card payments. Defaults to YES.
-@property (nonatomic, assign) BOOL isCardSavingEnabledByDefault;
+/// Indicates whether card saving is enabled by default. Defaults to YES.
+@property (nonatomic, assign) BOOL autoSaveCardForFuturePayments;
 
 @end
 

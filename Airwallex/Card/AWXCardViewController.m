@@ -169,7 +169,7 @@ typedef enum {
     [_expiresField.widthAnchor constraintEqualToAnchor:_cvcField.widthAnchor multiplier:1.7].active = YES;
 
     if (self.viewModel.isCardSavingEnabled) {
-        self.saveCard = self.viewModel.isCardSavingEnabledByDefault;
+        self.saveCard = self.viewModel.autoSaveCardForFuturePayments;
         [stackView addArrangedSubview:[self switchOfType:SaveCardSwitch isOn:self.saveCard]];
     }
 

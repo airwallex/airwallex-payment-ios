@@ -155,9 +155,8 @@ static NSString *const recurring = @"recurring";
 - (instancetype)init {
     if (self = [super init]) {
         self.autoCapture = YES;
-        self.isCardSavingEnabledByDefault = YES;
+        self.autoSaveCardForFuturePayments = YES;
     }
-
     return self;
 }
 

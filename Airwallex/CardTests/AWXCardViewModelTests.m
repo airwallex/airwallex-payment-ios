@@ -64,15 +64,15 @@
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL launchDirectly:NO];
     XCTAssertTrue(viewModel.isCardSavingEnabled);
 
-    XCTAssertTrue(viewModel.isCardSavingEnabledByDefault);
-    session.isCardSavingEnabledByDefault = false;
-    XCTAssertFalse(viewModel.isCardSavingEnabledByDefault);
+    XCTAssertTrue(viewModel.autoSaveCardForFuturePayments);
+    session.autoSaveCardForFuturePayments = false;
+    XCTAssertFalse(viewModel.autoSaveCardForFuturePayments);
 }
 
 - (void)testIsCardSavingEnabledWhenRecurringSession {
     AWXCardViewModel *viewModel = [self mockRecurringViewModel];
     XCTAssertFalse(viewModel.isCardSavingEnabled);
-    XCTAssertFalse(viewModel.isCardSavingEnabledByDefault);
+    XCTAssertFalse(viewModel.autoSaveCardForFuturePayments);
 }
 
 - (void)testInitialBilling {

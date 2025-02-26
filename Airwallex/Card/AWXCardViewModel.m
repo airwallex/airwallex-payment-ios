@@ -61,12 +61,12 @@
     return [self.session isKindOfClass:[AWXOneOffSession class]] && self.session.customerId;
 }
 
-- (BOOL)isCardSavingEnabledByDefault {
+- (BOOL)autoSaveCardForFuturePayments {
     if (!self.isCardSavingEnabled) {
         return NO;
     }
 
-    return [(AWXOneOffSession *)self.session isCardSavingEnabledByDefault];
+    return [(AWXOneOffSession *)self.session autoSaveCardForFuturePayments];
 }
 
 - (AWXPlaceDetails *)initialBilling {
