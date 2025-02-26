@@ -6,6 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import UIKit
+
 class DemoListView: UIView {
     private(set) lazy var topView: TopView = {
         let view = TopView()

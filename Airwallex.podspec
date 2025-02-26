@@ -10,7 +10,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target   = '13.0'
   s.static_framework        = true
   s.swift_versions          = '5.0'
-  s.default_subspecs        = 'Payment'
   
   s.subspec 'Payment' do |plugin|
     plugin.source_files = 'Airwallex/Payment/Sources/**/*.{swift,h,m}'

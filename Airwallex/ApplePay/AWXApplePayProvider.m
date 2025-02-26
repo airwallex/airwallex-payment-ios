@@ -57,6 +57,19 @@ typedef enum {
     return self;
 }
 
++ (BOOL)canHandleSession:(AWXSession *)session error:(NSError *_Nullable *)error {
+    NSString *errorMessage;
+    BOOL result = [self canHandleSession:session errorMessage:&errorMessage];
+    if (error != nil && errorMessage != nil) {
+        *error = [NSError errorWithDomain:AWXSDKErrorDomain
+                                     code:-1
+                                 userInfo:@{
+                                     NSLocalizedDescriptionKey: errorMessage
+                                 }];
+    }
+    return result;
+}
+
 #pragma mark - Launch Apple Pay flow
 - (void)startPayment {
     NSString *errorMessage;

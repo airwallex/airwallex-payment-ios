@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  This method is called when the user has completed the checkout.
 
- @param controller The controller handling payment result. Might be nil if user pop/dismiss payment view controller.
+ @param controller The controller handling payment result. Could be nil for low level API integration or when user dismiss the payment view controller.
  @param status The status of checkout result.
  @param error The error if checkout failed.
  */
@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  This method is called when the user has completed the checkout and payment consent id is produced.
 
- @param controller The controller handling payment result.
+ @param controller The controller handling payment result. Could be nil for low level API integration.
  @param paymentConsentId The id of payment consent.
  */
 - (void)paymentViewController:(UIViewController *_Nullable)controller didCompleteWithPaymentConsentId:(NSString *)paymentConsentId;

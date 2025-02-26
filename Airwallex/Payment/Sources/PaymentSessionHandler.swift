@@ -7,16 +7,38 @@
 //
 
 import UIKit
+#if canImport(Core)
+import Core
+#endif
+#if canImport(ApplePay)
+import ApplePay
+#endif
+#if canImport(Redirect)
+import Redirect
+#endif
+#if canImport(Card)
+import Card
+#endif
 
 public class PaymentSessionHandler: NSObject {
     
-    private let session: AWXSession
+    public struct ValidationFailure:  LocalizedError {
+        public var failureReason: String
+        init(_ reason: String) {
+            self.failureReason = reason
+        }
+        public var errorDescription: String? {
+            failureReason
+        }
+    }
+    
+    let session: AWXSession
     
     private var actionProvider: AWXDefaultProvider!
     
-    weak var _viewController: UIViewController?
+    private weak var _viewController: UIViewController?
     
-    private var viewController: UIViewController {
+    var viewController: UIViewController {
         assert(_viewController != nil, "The view controller that launches the payment is expected to remain present until the session ends.")
         if let viewController = _viewController {
             return viewController
@@ -29,9 +51,9 @@ public class PaymentSessionHandler: NSObject {
         }
     }
 
-    private var methodType: AWXPaymentMethodType?
+    private(set) var methodType: AWXPaymentMethodType?
     
-    private weak var paymentResultDelegate: AWXPaymentResultDelegate?
+    private(set) weak var paymentResultDelegate: AWXPaymentResultDelegate?
     
     /// Initializes a `PaymentSessionHandler` with a payment session and the view controller from which the payment is initiated.
     /// - Parameters:
@@ -54,13 +76,15 @@ public class PaymentSessionHandler: NSObject {
     ///   - session: The payment session containing relevant transaction details.
     ///   - viewController: The view controller initiating the payment, which conforms to `AWXPaymentResultDelegate` for handling payment results.
     ///   - methodType: The payment method type returned from the server (optional).
-    @objc public init(session: AWXSession,
-                      viewController: UIViewController & AWXPaymentResultDelegate,
-                      methodType: AWXPaymentMethodType? = nil) {
-        self.session = session
-        self._viewController = viewController
-        self.methodType = methodType
-        self.paymentResultDelegate = viewController
+    @objc public convenience init(session: AWXSession,
+                                  viewController: UIViewController & AWXPaymentResultDelegate,
+                                  methodType: AWXPaymentMethodType? = nil) {
+        self.init(
+            session: session,
+            viewController: viewController,
+            paymentResultDelegate: viewController,
+            methodType: methodType
+        )
     }
 }
 
@@ -68,8 +92,8 @@ public class PaymentSessionHandler: NSObject {
 @objc public extension PaymentSessionHandler {
     /// Initiates an Apple Pay transaction.
     /// This method sets up and starts the Apple Pay payment flow.
-    func startApplePay() {
-        startApplePay(cancelPaymentOnDismiss: true)
+    func startApplePay() throws {
+        try startApplePay(cancelPaymentOnDismiss: true)
     }
     
     /// Initiates a card payment transaction.
@@ -80,8 +104,17 @@ public class PaymentSessionHandler: NSObject {
     ///   - saveCard: A boolean indicating whether to save the card for future transactions (default is `false`).
     func startCardPayment(with card: AWXCard,
                           billing: AWXPlaceDetails?,
-                          saveCard: Bool = false) {
-        assert(methodType == nil || methodType?.name == AWXCardKey)
+                          saveCard: Bool = false) throws {
+        guard (methodType == nil || methodType?.name == AWXCardKey) else {
+            throw ValidationFailure("method type not matched")
+        }
+        
+        if let methodType {
+            guard !methodType.cardSchemes.isEmpty else {
+                throw ValidationFailure("card schemes should not be empty")
+            }
+        }
+        
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -96,7 +129,10 @@ public class PaymentSessionHandler: NSObject {
     /// - Parameters:
     ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
     ///   If The payment method details, which may require additional input such as a CVC for validation.
-    func startConsentPayment(with consent: AWXPaymentConsent) {
+    func startConsentPayment(with consent: AWXPaymentConsent) throws {
+        guard !consent.id.isEmpty, consent.id.hasPrefix("cst_") else {
+            throw ValidationFailure("invalid consentId")
+        }
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -116,7 +152,10 @@ public class PaymentSessionHandler: NSObject {
     
     /// Initiates a payment using a consent ID.
     /// - Parameter consentId: The previously generated consent identifier.
-    func startConsentPayment(withId consentId: String) {
+    func startConsentPayment(withId consentId: String) throws {
+        guard !consentId.isEmpty, consentId.hasPrefix("cst_") else {
+            throw ValidationFailure("invalid consentId")
+        }
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -133,8 +172,10 @@ public class PaymentSessionHandler: NSObject {
     /// - Parameters:
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
-    func startRedirectPayment(with name: String, additionalInfo: [String: String]?) {
-        assert(methodType == nil || methodType?.name == name)
+    func startRedirectPayment(with name: String, additionalInfo: [String: String]?) throws {
+        guard (methodType == nil || methodType?.name == name) else {
+            throw ValidationFailure("method type not matched")
+        }
         let redirectAction = AWXRedirectActionProvider(
             delegate: self,
             session: session
@@ -150,8 +191,16 @@ extension PaymentSessionHandler {
     ///   - If `true`, the standard Apple Pay flow is followed, and the payment result delegate
     ///     receives a cancellation callback if the user dismisses the sheet.
     ///   - If `false`, dismissing the Apple Pay sheet does not trigger a cancellation callback,
-    func startApplePay(cancelPaymentOnDismiss: Bool) {
-        assert(methodType == nil || methodType?.name == AWXApplePayKey)
+    func startApplePay(cancelPaymentOnDismiss: Bool) throws {
+        guard (methodType == nil || methodType?.name == AWXApplePayKey) else {
+            throw ValidationFailure("method type not matched")
+        }
+        do {
+            try AWXApplePayProvider.canHandle(session)
+        } catch {
+            throw ValidationFailure(error.localizedDescription)
+        }
+        
         let applePayProvider = AWXApplePayProvider(
             delegate: self,
             session: session,
@@ -170,8 +219,10 @@ extension PaymentSessionHandler {
     /// You should collect all information from your user before calling this api
     /// - Parameters:
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
-    func startRedirectPayment(with paymentMethod: AWXPaymentMethod) {
-        assert(methodType == nil || methodType?.name == paymentMethod.type)
+    func startRedirectPayment(with paymentMethod: AWXPaymentMethod) throws {
+        guard (methodType == nil || methodType?.name == paymentMethod.type) else {
+            throw ValidationFailure("method type not matched")
+        }
         let schemaProvider = AWXSchemaProvider(
             delegate: self,
             session: session,
@@ -204,13 +255,12 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     }
     
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
-        debugLog("stauts: \(status), error: \(error?.localizedDescription ?? "")")
-        
         if status == .cancel {
             // only log payment_canceled here
             // payment_success and error eent are logged in AWXDefaultProvider
             AnalyticsLogger.log(action: .paymentCanceled)
         }
+        debugLog("stauts: \(status), error: \(error?.localizedDescription ?? "N/A")")
         if let action = AWXUIContext.shared().paymentUIDismissAction {
             action {
                 self.paymentResultDelegate?.paymentViewController(self.viewController, didCompleteWith: status, error: error)

@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if canImport(Core)
+import Core
+#endif
 
 public struct Palette {
     

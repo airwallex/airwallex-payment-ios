@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
  Launch Apple Pay sheet to confirm the payment intent.
  */
 - (void)startPayment;
+
++ (BOOL)canHandleSession:(AWXSession *)session error:(NSError *_Nullable *)error;
+
 @end
 
 NS_ASSUME_NONNULL_END

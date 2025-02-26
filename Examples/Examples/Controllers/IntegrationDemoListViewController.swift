@@ -317,7 +317,7 @@ private extension IntegrationDemoListViewController {
                 let card = try await confirmCardInfo(testCard)
                 let session = try await createPaymentSession(force3DS: force3DS)
                 paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
-                paymentSessionHandler?.startCardPayment(
+                try paymentSessionHandler?.startCardPayment(
                     with: card,
                     billing: DemoDataSource.shippingAddress,
                     saveCard: saveCard
@@ -335,7 +335,7 @@ private extension IntegrationDemoListViewController {
             do {
                 let session = try await createPaymentSession()
                 paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
-                paymentSessionHandler?.startApplePay()
+                try paymentSessionHandler?.startApplePay()
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -349,7 +349,7 @@ private extension IntegrationDemoListViewController {
             do {
                 let session = try await createPaymentSession()
                 paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
-                paymentSessionHandler?.startRedirectPayment(
+                try paymentSessionHandler?.startRedirectPayment(
                     with: "paypal",
                     additionalInfo: ["shopper_name": "Hector", "country_code": "CN"]
                 )
@@ -597,6 +597,8 @@ extension IntegrationDemoListViewController: AWXPaymentResultDelegate {
             showAlert(message: error?.localizedDescription ?? "There was an error while processing your payment. Please try again.", title: "Payment failed")
         case .cancel:
             showAlert(message: "Your payment has been cancelled", title: "Payment cancelled")
+        case .notStarted:
+            break
         }
     }
     

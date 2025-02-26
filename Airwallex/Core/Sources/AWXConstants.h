@@ -47,6 +47,7 @@ typedef NS_CLOSED_ENUM(NSInteger, AirwallexSDKMode) {
 };
 
 typedef NS_CLOSED_ENUM(NSUInteger, AirwallexPaymentStatus) {
+    AirwallexPaymentStatusNotStarted,
     AirwallexPaymentStatusSuccess,
     AirwallexPaymentStatusInProgress,
     AirwallexPaymentStatusFailure,
