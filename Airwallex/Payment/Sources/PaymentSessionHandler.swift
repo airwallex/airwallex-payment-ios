@@ -160,16 +160,3 @@ extension PaymentSessionHandler: AWXProviderDelegate {
         }
     }
 }
-
-protocol SwiftLoggable {}
-
-extension SwiftLoggable {
-    func debugLog(_ message: String = "",
-                  file: String = #file,
-                  functionName: String = #function,
-                  line: Int = #line) {
-        NSObject.logMesage("----Airwallex SDK----\(Date())---\n\(file)\n---\(functionName)-line: \(line)-\n---\(message)")
-    }
-}
-
-extension NSObject: SwiftLoggable {}

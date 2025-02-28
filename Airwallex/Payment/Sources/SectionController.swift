@@ -8,7 +8,7 @@
 
 /// this protocol is designed to work with `CollectionViewManager`
 /// SectionController  define the behavior of a section in a UICollectionView
-@MainActor protocol SectionController: SwiftLoggable  {
+@MainActor protocol SectionController: DebugLoggable  {
     associatedtype SectionType: Hashable, Sendable
     associatedtype ItemType: Hashable, Sendable
     

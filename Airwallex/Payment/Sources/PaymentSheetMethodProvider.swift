@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 @MainActor
-final class PaymentSheetMethodProvider: PaymentMethodProvider, SwiftLoggable {
+final class PaymentSheetMethodProvider: PaymentMethodProvider, DebugLoggable {
     
     private let provider: AWXPaymentMethodListViewModel
     var session: AWXSession {
