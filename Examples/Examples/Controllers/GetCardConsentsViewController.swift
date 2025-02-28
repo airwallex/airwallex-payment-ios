@@ -21,7 +21,7 @@ class GetPaymentConsentsViewController: UITableViewController {
             assert(false, "invalid card consent")
             return cell
         }
-        cell.textLabel?.textColor = .awxTextPrimary
+        cell.textLabel?.textColor = .awxColor(.textPrimary)
         cell.textLabel?.text = "\(brand.capitalized) •••• \(card.last4 ?? "")"
         var image: UIImage? = nil
         if let cardBrand = AWXCardValidator.shared().brand(forCardName: brand) {
@@ -80,7 +80,7 @@ class GetPaymentConsentsViewController: UITableViewController {
         super.viewDidLoad()
         customizeNavigationBackButton()
         
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(onRefreshControlTriggered), for: .valueChanged)
         tableView.refreshControl = refreshControl

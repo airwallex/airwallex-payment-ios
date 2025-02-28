@@ -709,14 +709,21 @@
 @property (nonatomic, strong) UIButton *contentView;
 @property (nonatomic, strong) UILabel *formLabel;
 @property (nonatomic, strong) NSString *placeholder;
+// store selection handler as property
+@property (nonatomic, copy) void (^selectionHandler)(AWXOptionView *);
 
 @end
 
 @implementation AWXOptionView
 
-- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText logoURL:(NSURL *)logoURL {
+- (instancetype)initWithKey:(NSString *)key
+                  formLabel:(NSString *)formLabelText
+                    logoURL:(NSURL *)logoURL
+           selectionHandler:(nonnull void (^)(AWXOptionView *_Nonnull))handler {
     if (self = [super initWithKey:key]) {
+        self.selectionHandler = handler;
         UIButton *contentView = [UIButton autoLayoutView];
+        [contentView addTarget:self action:@selector(onButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         self.contentView = contentView;
         contentView.layer.masksToBounds = YES;
         contentView.layer.cornerRadius = 8;
@@ -763,8 +770,8 @@
     return self;
 }
 
-- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents {
-    [self.contentView addTarget:target action:action forControlEvents:controlEvents];
+- (void)onButtonTapped {
+    self.selectionHandler(self);
 }
 
 @end

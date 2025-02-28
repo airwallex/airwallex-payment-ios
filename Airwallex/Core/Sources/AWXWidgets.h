@@ -95,8 +95,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AWXOptionView : AWXView
 
-- (instancetype)initWithKey:(NSString *)key formLabel:(NSString *)formLabelText logoURL:(NSURL *)logoURL;
-- (void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
+- (instancetype)initWithKey:(NSString *)key
+                  formLabel:(NSString *)formLabelText
+                    logoURL:(NSURL *)logoURL
+           selectionHandler:(void (^)(AWXOptionView *option))handler;
 
 @end
 

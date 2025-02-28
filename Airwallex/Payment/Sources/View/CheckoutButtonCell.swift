@@ -18,9 +18,9 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.setTitle(NSLocalizedString("Pay", comment: "checkout button"), for: .normal)
         view.addTarget(self, action: #selector(onButtonTapped), for: .touchUpInside)
         
-        view.setTitleColor(.awxTextInverse, for: .normal)
-        view.titleLabel?.font = .awxHeadline100
-        view.backgroundColor = UIColor.awxBackgroundInteractive
+        view.setTitleColor(.awxColor(.textInverse), for: .normal)
+        view.titleLabel?.font = .awxFont(.headline1, weight: .bold)
+        view.backgroundColor = UIColor.awxColor(.backgroundInteractive)
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = true
         return view

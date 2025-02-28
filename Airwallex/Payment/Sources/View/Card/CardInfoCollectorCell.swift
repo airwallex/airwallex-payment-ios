@@ -14,8 +14,8 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     private let titleLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = .awxBody
-        view.textColor = .awxTextPrimary
+        view.font = .awxFont(.body2)
+        view.textColor = .awxColor(.textPrimary)
         view.text = NSLocalizedString("Card Information", comment: "")
         return view
     }()
@@ -56,8 +56,8 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     private let hintLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .awxTextError
-        view.font = .awxHint
+        view.textColor = .awxColor(.textError)
+        view.font = .awxFont(.caption2)
         return view
     }()
     
@@ -79,8 +79,20 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     
     func setup(_ viewModel: CardInfoCollectorCellViewModel) {
         self.viewModel = viewModel
+        
+        viewModel.cardNumberConfigurer.returnActionHandler = { [weak self] _ in
+            self?.expiresTextField.becomeFirstResponder()
+        }
         numberTextField.setup(viewModel.cardNumberConfigurer)
+        
+        viewModel.expireDataConfigurer.returnActionHandler = { [weak self] _ in
+            self?.cvcTextField.becomeFirstResponder()
+        }
         expiresTextField.setup(viewModel.expireDataConfigurer)
+        
+        viewModel.cvcConfigurer.returnActionHandler = { [weak self] _ in
+            self?.nameTextField.becomeFirstResponder()
+        }
         cvcTextField.setup(viewModel.cvcConfigurer)
         hintLabel.text = viewModel.errorHintForCardFields
         
@@ -164,10 +176,6 @@ private extension CardInfoCollectorCell {
         }
         
         vStack.addArrangedSubview(nameTextField)
-        
-        numberTextField.nextField = expiresTextField
-        expiresTextField.nextField = cvcTextField
-        cvcTextField.nextField = nameTextField
         
         let constraints = [
             titleLabel.topAnchor.constraint(equalTo: container.topAnchor),

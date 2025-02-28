@@ -1,19 +1,22 @@
 //
-//  Untitled.swift
+//  OptionSelectionView.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2025/1/8.
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-protocol CountrySelectionViewConfiguring: BaseTextFieldConfiguring {
-    
-    var country: AWXCountry? { get set }
-    
+protocol OptionSelectionViewConfiguring: InfoCollectorTextFieldConfiguring {
+    /// The icon displayed at the leading edge of the user input field.
+    var icon: UIImage? { get }
+    /// The icon displayed at the trailing edge of the user input field.
+    /// By default, a down arrow will be shown.
+    var indicator: UIImage? { get }
+    /// Callback triggered when the user interacts with the input field.
     var handleUserInteraction: () -> Void { get }
 }
 
-class CountrySelectionView: BaseTextField<CountrySelectionViewModel> {
+class OptionSelectionView<T: OptionSelectionViewConfiguring>: InfoCollectorTextField<T> {
     
     private let iconWrapper: UIView = {
         let view = UIView()
@@ -36,7 +39,7 @@ class CountrySelectionView: BaseTextField<CountrySelectionViewModel> {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named: "down", in: Bundle.resource())?
-            .withTintColor(.awxIconSecondary, renderingMode: .alwaysOriginal)
+            .withTintColor(.awxColor(.iconSecondary), renderingMode: .alwaysOriginal)
         return view
     }()
     
@@ -57,19 +60,25 @@ class CountrySelectionView: BaseTextField<CountrySelectionViewModel> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setup(_ viewModel: CountrySelectionViewModel) {
+    override func setup(_ viewModel: T) {
         super.setup(viewModel)
-        
-        iconWrapper.isHidden = viewModel.country == nil
-        if let country = viewModel.country {
-            icon.image = UIImage(named: country.countryCode, in: Bundle.resource())
+        iconWrapper.isHidden = viewModel.icon == nil
+        icon.image = viewModel.icon
+        indicator.image = viewModel.indicator
+    }
+    
+    @objc func onUserTapped() {
+        guard let viewModel = viewModel as? OptionSelectionViewConfiguring else {
+            assert(false, "invalid view model")
+            return
         }
-        indicator.image = UIImage(named: "down", in: Bundle.resource())?
-            .withTintColor(viewModel.isEnabled ? .awxIconSecondary : .awxIconDisabled, renderingMode: .alwaysOriginal)
+        if viewModel.isEnabled == true {
+            viewModel.handleUserInteraction()
+        }
     }
 }
 
-private extension CountrySelectionView {
+private extension OptionSelectionView {
     
     func setupViews() {
         iconWrapper.addSubview(icon)
@@ -95,15 +104,5 @@ private extension CountrySelectionView {
             icon.bottomAnchor.constraint(equalTo: iconWrapper.bottomAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
-    }
-    
-    @objc func onUserTapped() {
-        guard let viewModel = viewModel as? CountrySelectionViewConfiguring else {
-            assert(false, "invalid view model")
-            return
-        }
-        if viewModel.isEnabled == true {
-            viewModel.handleUserInteraction()
-        }
     }
 }

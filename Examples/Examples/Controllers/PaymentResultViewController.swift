@@ -27,7 +27,7 @@ class PaymentResultViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "You will need to check payment status from backend or deeplink url and show the result."
-        label.textColor = .awxTextPrimary
+        label.textColor = .awxColor(.textPrimary)
         label.font = UIFont.systemFont(ofSize: 30)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -36,7 +36,7 @@ class PaymentResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(topView)
         view.addSubview(label)
         view.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)

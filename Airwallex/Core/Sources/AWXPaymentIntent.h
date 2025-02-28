@@ -56,12 +56,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Payment methods.
  */
-@property (nonatomic, strong) NSArray<AWXPaymentMethod *> *paymentMethods;
+@property (nonatomic, strong) NSArray<AWXPaymentMethod *> *paymentMethods __deprecated_msg("mark as deprecated in api changelog 2021-08-06");
 
 /**
  Payment consents .
  */
-@property (nonatomic, strong) NSArray<AWXPaymentConsent *> *paymentConsents;
+@property (nonatomic, strong) NSArray<AWXPaymentConsent *> *paymentConsents __deprecated_msg("mark as deprecated in api changelog 2021-08-06");
 
 @end
 

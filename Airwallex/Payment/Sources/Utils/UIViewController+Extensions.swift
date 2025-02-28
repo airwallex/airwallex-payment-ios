@@ -36,4 +36,20 @@ extension UIViewController {
         view.isUserInteractionEnabled = true
         (view.viewWithTag(Self.tagForActivityIndicator) as? UIActivityIndicatorView)?.stopAnimating()
     }
+    
+    func showAlert(
+        title: String? = nil,
+        message: String? = nil,
+        action: ((UIAlertAction) -> Void)? = nil
+    ) {
+        let alert = AWXAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("Close", bundle: .payment, comment: ""),
+                style: .cancel,
+                handler: action
+            )
+        )
+        present(alert, animated: true)
+    }
 }

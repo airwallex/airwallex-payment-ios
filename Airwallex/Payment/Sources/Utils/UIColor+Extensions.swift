@@ -9,59 +9,112 @@
 import UIKit
 
 public extension UIColor {
-    // background
-    static var awxBackgroundPrimary: UIColor { UIColor(dynamicLightColor: awxWhite, darkColor: awxGray100) }
-    static var awxBackgroundSecondary: UIColor { UIColor(dynamicLightColor: awxGray10, darkColor: awxGray90) }
-    static var awxBackgroundField: UIColor { UIColor(dynamicLightColor: awxGray5, darkColor: awxGray90) }
-    static var awxBackgroundHighlight: UIColor { UIColor(dynamicLightColor: awxPurple5, darkColor: awxPurple90) }
-    static var awxBackgroundSelected: UIColor { UIColor(dynamicLightColor: awxPurple20, darkColor: awxPurple80) }
-    static var awxBackgroundInteractive: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
     
-    // border
-    static var awxBorderDecorative: UIColor { UIColor(dynamicLightColor: awxGray20, darkColor: awxGray80) }
-    static var awxBorderPerceivable: UIColor { UIColor(dynamicLightColor: awxGray50, darkColor: awxGray60) }
-    static var awxBorderInterative: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
-    static var awxBorderError: UIColor { UIColor(dynamicLightColor: awxRed50, darkColor: awxRed60) }
-    
-    // Icon
-    static var awxIconPrimary: UIColor { UIColor(dynamicLightColor: awxGray80, darkColor: awxGray30) }
-    static var awxIconSecondary: UIColor { UIColor(dynamicLightColor: awxGray50, darkColor: awxGray50) }
-    static var awxIconLink: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
-    static var awxIconDisabled: UIColor { UIColor(dynamicLightColor: awxGray40, darkColor: awxGray70) }
-    
-    // text
-    static var awxTextLink: UIColor { UIColor(dynamicLightColor: awxPurple70, darkColor: awxPurple40) }
-    static var awxTextPrimary: UIColor { UIColor(dynamicLightColor: awxGray100, darkColor: awxGray10) }
-    static var awxTextSecondary: UIColor { UIColor(dynamicLightColor: awxGray60, darkColor: awxGray50) }
-    static var awxTextPlaceholder: UIColor { UIColor(dynamicLightColor: awxGray50, darkColor: awxGray60) }
-    static var awxTextError: UIColor { UIColor(dynamicLightColor: awxRed60, darkColor: awxRed40) }
-    static var awxTextInverse: UIColor { UIColor(dynamicLightColor: awxWhite, darkColor: awxGray100) }
+    static func awxColor(_ color: Palette.SemanticColor) -> UIColor {
+        switch color {
+            // Background Colors
+        case .backgroundPrimary:
+            return UIColor(dynamicLightColor: Palette.white, darkColor: Palette.gray100)
+        case .backgroundSecondary:
+            return UIColor(dynamicLightColor: Palette.gray10, darkColor: Palette.gray90)
+        case .backgroundField:
+            return UIColor(dynamicLightColor: Palette.gray5, darkColor: Palette.gray90)
+        case .backgroundHighlight:
+            return UIColor(dynamicLightColor: Palette.themeColor(by: .level5), darkColor: Palette.themeColor(by: .level90))
+        case .backgroundSelected:
+            return UIColor(dynamicLightColor: Palette.themeColor(by: .level20), darkColor: Palette.themeColor(by: .level80))
+        case .backgroundInteractive:
+            return UIColor(dynamicLightColor: Palette.themeColor(by: .level70), darkColor: Palette.themeColor(by: .level40))
+        case .backgroundWarning:
+            return Palette.yellow10
+            
+            // Border Colors
+        case .borderDecorative:
+            return UIColor(dynamicLightColor: Palette.gray20, darkColor: Palette.gray80)
+        case .borderPerceivable:
+            return UIColor(dynamicLightColor: Palette.gray50, darkColor: Palette.gray60)
+        case .borderInteractive:
+            return UIColor(dynamicLightColor: Palette.themeColor(by: .level70), darkColor: Palette.themeColor(by: .level40))
+        case .borderError:
+            return UIColor(dynamicLightColor: Palette.red50, darkColor: Palette.red60)
+            
+            // Icon Colors
+        case .iconPrimary:
+            return UIColor(dynamicLightColor: Palette.gray80, darkColor: Palette.gray30)
+        case .iconSecondary:
+            return UIColor(dynamicLightColor: Palette.gray50, darkColor: Palette.gray50)
+        case .iconLink:
+            return UIColor(dynamicLightColor: Palette.themeColor(by: .level70), darkColor: Palette.themeColor(by: .level40))
+        case .iconDisabled:
+            return UIColor(dynamicLightColor: Palette.gray40, darkColor: Palette.gray70)
+            
+            // Text Colors
+        case .textLink:
+            return UIColor(dynamicLightColor: Palette.themeColor(by: .level70), darkColor: Palette.themeColor(by: .level40))
+        case .textPrimary:
+            return UIColor(dynamicLightColor: Palette.gray100, darkColor: Palette.gray10)
+        case .textSecondary:
+            return UIColor(dynamicLightColor: Palette.gray60, darkColor: Palette.gray50)
+        case .textPlaceholder:
+            return UIColor(dynamicLightColor: Palette.gray50, darkColor: Palette.gray60)
+        case .textError:
+            return UIColor(dynamicLightColor: Palette.red60, darkColor: Palette.red40)
+        case .textInverse:
+            return UIColor(dynamicLightColor: Palette.white, darkColor: Palette.gray100)
+        }
+    }
 }
 
-fileprivate extension UIColor {
+extension UIColor {
+    convenience init(hex: UInt) {
+        let red = CGFloat((hex >> 16) & 0xFF) / 0xFF
+        let green = CGFloat((hex >> 8) & 0xFF) / 0xFF
+        let blue = CGFloat((hex >> 0) & 0xFF) / 0xFF
+        let alpha = hex > 0xFFFFFF ? CGFloat((hex >> 24) & 0xFF) / 0xFF : 1
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
+    }
     
-    static var awxWhite: UIColor { UIColor.white }
+    /// Initializes a `UIColor` from a hex string (e.g., `"#612FFF"`).
+    convenience init(hex: String) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+
+        var rgb: UInt64 = 0
+        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+
+        let r = CGFloat((rgb >> 16) & 0xFF) / 255.0
+        let g = CGFloat((rgb >> 8) & 0xFF) / 255.0
+        let b = CGFloat(rgb & 0xFF) / 255.0
+
+        self.init(red: r, green: g, blue: b, alpha: 1.0)
+    }
     
-    static var awxGray5: UIColor { UIColor(hex: 0xFAFAFB) }
-    static var awxGray10: UIColor { UIColor(hex: 0xF5F6F7) }
-    static var awxGray20: UIColor { UIColor(hex: 0xE8EAED) }
-    static var awxGray30: UIColor { UIColor(hex: 0xD0D4D9) }
-    static var awxGray40: UIColor { UIColor(hex: 0xB0B6BF) }
-    static var awxGray50: UIColor { UIColor(hex: 0x878E99) }
-    static var awxGray60: UIColor { UIColor(hex: 0x68707A) }
-    static var awxGray70: UIColor { UIColor(hex: 0x4C5259) }
-    static var awxGray80: UIColor { UIColor(hex: 0x2B2F33) }
-    static var awxGray90: UIColor { UIColor(hex: 0x1B1F21) }
-    static var awxGray100: UIColor { UIColor(hex: 0x14171A) }
+    /// Converts UIColor -> Hex String.
+    func toHex() -> String {
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+
+        let rgb: Int = (Int(r * 255) << 16) | (Int(g * 255) << 8) | Int(b * 255)
+        return String(format: "#%06X", rgb)
+    }
     
-    static var awxPurple5: UIColor { UIColor(hex: 0xF7F7FF) }
-    static var awxPurple20: UIColor { UIColor(hex: 0xDFDEFF) }
-    static var awxPurple40: UIColor { UIColor(hex: 0xABA8FF) }
-    static var awxPurple70: UIColor { UIColor(hex: 0x612FFF) }
-    static var awxPurple80: UIColor { UIColor(hex: 0x5500E5) }
-    static var awxPurple90: UIColor { UIColor(hex: 0x320094) }
-    
-    static var awxRed40: UIColor { UIColor(hex: 0xFC796D) }
-    static var awxRed50: UIColor { UIColor(hex: 0xFF4F42) }
-    static var awxRed60: UIColor { UIColor(hex: 0xD91807) }
+    /// Linearly interpolates with another color by a given fraction (0 to 1).
+    /// - Parameters:
+    ///   - color: The target color to interpolate with.
+    ///   - fraction: A CGFloat from 0 to 1 representing the interpolation amount.
+    /// - Returns: A new UIColor representing the interpolated color.
+    func interpolates(with color: UIColor, fraction: CGFloat) -> UIColor {
+        let color1 = self
+        let color2 = color
+        var r1: CGFloat = 0, g1: CGFloat = 0, b1: CGFloat = 0, a1: CGFloat = 0
+        var r2: CGFloat = 0, g2: CGFloat = 0, b2: CGFloat = 0, a2: CGFloat = 0
+
+        color1.getRed(&r1, green: &g1, blue: &b1, alpha: &a1)
+        color2.getRed(&r2, green: &g2, blue: &b2, alpha: &a2)
+        let newR = min(max(r1 + (r2 - r1) * fraction, 0), 1)
+        let newG = min(max(g1 + (g2 - g1) * fraction, 0), 1)
+        let newB = min(max(b1 + (b2 - b1) * fraction, 0), 1)
+        let newA = min(max(a1 + (a2 - a1) * fraction, 0), 1)
+        return UIColor(red: newR, green: newG, blue: newB, alpha: newA)
+    }
 }
