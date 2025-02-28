@@ -268,7 +268,7 @@ private extension CardPaymentConsentSectionController {
             title: NSLocalizedString("Delete", comment: "delete consent"),
             style: .destructive) { [weak self] _ in
                 guard let self else { return }
-                self.context.viewController?.startAnimating()
+                self.context.viewController?.startLoading()
                 Task {
                     do {
                         try await self.methodProvider.disable(consent: consent)
@@ -278,7 +278,7 @@ private extension CardPaymentConsentSectionController {
                         self.context.viewController?.showAlert(message: error.localizedDescription)
                         self.debugLog("removing consent failed. ID: \(consent.id)")
                     }
-                    self.context.viewController?.stopAnimating()
+                    self.context.viewController?.stopLoading()
                 }
         }
         alert.addAction(deleteAction)

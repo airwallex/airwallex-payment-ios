@@ -10,7 +10,7 @@ import UIKit
 
 extension UIViewController {
     
-    private static let tagForActivityIndicator = 9527
+    private static let tagForActivityIndicator = Int.random(in: Int.max/2...Int.max)
     func startLoading() {
         view.isUserInteractionEnabled = false
         guard let indicator = view.viewWithTag(Self.tagForActivityIndicator) as? UIActivityIndicatorView  else {

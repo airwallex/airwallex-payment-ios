@@ -26,7 +26,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     private var context: CollectionViewContext<SectionType, ItemType>!
     private(set) var collectionView: UICollectionView!
     
-    init(viewController: AWXViewController,
+    init(viewController: UIViewController,
          sectionProvider: SectionProvider,
          listConfiguration: UICollectionViewCompositionalLayoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()) {
         self.sectionDataSource = sectionProvider
@@ -149,14 +149,14 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
 }
 
 class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable>: SwiftLoggable {
-    private(set) weak var viewController: AWXViewController?
+    private(set) weak var viewController: UIViewController?
     private weak var collectionView: UICollectionView!
     private weak var layout: UICollectionViewCompositionalLayout!
     private(set) var dataSource: UICollectionViewDiffableDataSource<Section, Item>
     private var _performUpdates: (Bool, Bool) -> Void
     private var _performUpdatesForSection: (Section, Bool, Bool, Bool) -> Void
     
-    init(viewController: AWXViewController,
+    init(viewController: UIViewController,
          collectionView: UICollectionView,
          layout: UICollectionViewCompositionalLayout,
          dataSource: UICollectionViewDiffableDataSource<Section, Item>,
