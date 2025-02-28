@@ -62,8 +62,16 @@ class PaymentMethodsViewController: AWXViewController {
         super.viewDidLoad()
         setupUI()
         getMethodList()
-        cancellable = methodProvider.updatePublisher.sink {[weak self] _ in
+        cancellable = methodProvider.updatePublisher.sink {[weak self] type in
             self?.collectionViewManager.performUpdates()
+            switch type {
+            case let .methodSelected(name):
+                AWXAnalyticsLogger.shared().logAction(
+                    withName: "select_payment",
+                    additionalInfo: ["payment_method": name]
+                )
+            default: break
+            }
         }
     }
     

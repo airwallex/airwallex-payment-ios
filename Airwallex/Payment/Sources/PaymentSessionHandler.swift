@@ -20,25 +20,38 @@ public class PaymentSessionHandler: NSObject {
         (viewController as? AWXPaymentResultDelegate) ?? AWXUIContext.shared().delegate
     }
     
+    private var methodType: AWXPaymentMethodType?
+    
     /// Initializes a `PaymentSessionHandler` with a payment session and the view controller from which the payment is initiated.
     /// - Parameters:
-    ///   - session: The payment session.
-    ///   - viewController: The view controller from which the payment is initiated.
-    public init(session: AWXSession, viewController: UIViewController) {
+    ///   - session: The payment session containing relevant transaction details.
+    ///   - viewController: The view controller that initiates the payment process.
+    ///   - methodType: The payment method type returned from the server (optional).
+    public init(session: AWXSession,
+                viewController: UIViewController,
+                methodType: AWXPaymentMethodType? = nil) {
         self.session = session
         self.viewController = viewController
+        self.methodType = methodType
     }
     
     /// Initializes a `PaymentSessionHandler` with a payment session and a view controller that also acts as a payment result delegate.
     /// - Parameters:
-    ///   - session: The payment session.
-    ///   - viewController: The view controller from which the payment is initiated, conforming to `AWXPaymentResultDelegate` to handle payment results.
-    public init(session: AWXSession, viewController: UIViewController & AWXPaymentResultDelegate) {
+    ///   - session: The payment session containing relevant transaction details.
+    ///   - viewController: The view controller initiating the payment, which conforms to `AWXPaymentResultDelegate` for handling payment outcomes.
+    ///   - methodType: The payment method type returned from the server (optional).
+    public init(session: AWXSession,
+                viewController: UIViewController & AWXPaymentResultDelegate,
+                methodType: AWXPaymentMethodType? = nil) {
         self.session = session
         self.viewController = viewController
+        self.methodType = methodType
     }
     
-    public func startApplePay(methodType: AWXPaymentMethodType? = nil) {
+    /// Initiates an Apple Pay transaction.
+    /// This method sets up and starts the Apple Pay payment flow.
+    public func startApplePay() {
+        assert(methodType == nil || methodType?.name == AWXApplePayKey)
         let applePayProvider = AWXApplePayProvider(
             delegate: self,
             session: session,
@@ -48,10 +61,16 @@ public class PaymentSessionHandler: NSObject {
         applePayProvider.startPayment()
     }
     
+    /// Initiates a card payment transaction.
+    /// This method sets up and confirms a card-based payment, including optional billing and card-saving preferences.
+    /// - Parameters:
+    ///   - card: The card details required for processing the payment.
+    ///   - billing: Billing information for the transaction (optional).
+    ///   - saveCard: A boolean indicating whether to save the card for future transactions (default is `false`).
     public func startCardPayment(with card: AWXCard,
                                  billing: AWXPlaceDetails?,
-                                 saveCard: Bool = false,
-                                 methodType: AWXPaymentMethodType? = nil) {
+                                 saveCard: Bool = false) {
+        assert(methodType == nil || methodType?.name == AWXCardKey)
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -61,23 +80,50 @@ public class PaymentSessionHandler: NSObject {
         cardProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
     }
     
+    /// Initiates a consent-based payment.
+    /// This method processes a payment using a previously obtained payment consent, which may require additional input such as a CVC.
+    /// - Parameters:
+    ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
+    ///   - paymentMethod: The payment method details, which may require additional input such as a CVC for validation.
     public func startConsentPayment(with consent: AWXPaymentConsent, paymentMethod: AWXPaymentMethod) {
+        assert(methodType == nil || methodType?.name == AWXCardKey)
         let cardProvider = AWXCardProvider(
             delegate: self,
-            session: session
+            session: session,
+            paymentMethodType: methodType
         )
         actionProvider = cardProvider
         cardProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: consent)
     }
     
-    public func startSchemaPayment(with paymentMethod: AWXPaymentMethod, methodType: AWXPaymentMethodType? = nil) {
-        let schemaProvider = AWXSchemaProvider(delegate: self, session: session, paymentMethodType: methodType)
+    /// Initiates a schema-based payment transaction.
+    /// This method processes a payment with schema-based payment methods such as digital wallets or bank transfers.
+    /// You should collect all information from your user before calling this api
+    /// - Parameters:
+    ///   - paymentMethod: The payment method details, pre-validated with all required information.
+    public func startSchemaPayment(with paymentMethod: AWXPaymentMethod) {
+        assert(methodType == nil || methodType?.name == paymentMethod.type)
+        let schemaProvider = AWXSchemaProvider(
+            delegate: self,
+            session: session,
+            paymentMethodType: methodType
+        )
         actionProvider = schemaProvider
         schemaProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
     }
     
+    /// Initiates a schema-based payment transaction.
+    /// This method processes a payment with schema-based payment methods such as digital wallets or bank transfers.
+    /// You should collect all information from your user before calling this api
+    /// - Parameters:
+    ///   - name: The name of the payment method, as defined by the payment platform.
+    ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     public func startSchemaPayment(with name: String, additionalInfo: [String: String]?) {
-        let redirectAction = AWXRedirectActionProvider(delegate: self, session: session)
+        assert(methodType == nil || methodType?.name == name)
+        let redirectAction = AWXRedirectActionProvider(
+            delegate: self,
+            session: session
+        )
         actionProvider = redirectAction
         redirectAction.confirmPaymentIntent(with: name, additionalInfo: additionalInfo)
     }

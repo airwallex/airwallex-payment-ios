@@ -295,7 +295,13 @@ private extension CardPaymentConsentSectionController {
             assert(false, "view controller not found")
             return
         }
-        
+        AWXAnalyticsLogger.shared().logAction(
+            withName: "tap_pay_button",
+            additionalInfo: [
+                "payment_method": AWXCardKey,
+                "is_consent": true
+            ]
+        )
         if let cvcConfigurer {
             cvcConfigurer.handleDidEndEditing()
             guard cvcConfigurer.isValid else {

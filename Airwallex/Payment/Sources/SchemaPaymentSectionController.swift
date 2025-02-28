@@ -185,6 +185,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
 
 private extension SchemaPaymentSectionController {
     func checkout() {
+        AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button", additionalInfo: ["payment_method": methodType.name])
         guard let schema else {
             // check schema
             updateItemsIfNecessary()
@@ -224,11 +225,11 @@ private extension SchemaPaymentSectionController {
             
             paymentSessionHandler = PaymentSessionHandler(
                 session: session,
-                viewController: context.viewController!
+                viewController: context.viewController!,
+                methodType: methodType
             )
             paymentSessionHandler?.startSchemaPayment(with: paymentMethod)
             
-            AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button")
             debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)

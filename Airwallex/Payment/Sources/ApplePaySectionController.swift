@@ -32,11 +32,13 @@ class ApplePaySectionController: SectionController {
         let cell = context.dequeueReusableCell(ApplePayCell.self, for: itemIdentifier, indexPath: indexPath)
         let viewModel = ApplePayViewModel { [weak self] in
             guard let self , let viewController = self.context.viewController else { return }
+            AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button", additionalInfo: ["payment_method": methodType.name])
             self.paymentSessionHandler = PaymentSessionHandler(
                 session: self.session,
-                viewController: viewController
+                viewController: viewController,
+                methodType: methodType
             )
-            self.paymentSessionHandler?.startApplePay(methodType: self.methodType)
+            self.paymentSessionHandler?.startApplePay()
         }
         cell.setup(viewModel)
         return cell

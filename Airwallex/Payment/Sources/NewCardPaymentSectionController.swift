@@ -30,7 +30,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     private let methodProvider: PaymentMethodProvider
     private let switchToConsentPaymentAction: () -> Void
     private lazy var shouldSaveCard = false
-    private var shouldReuseShippingAddress = true
+    private var shouldReuseShippingAddress: Bool
     private let validator: AWXCardValidator
     
     private lazy var cardInfoViewModel: CardInfoCollectorCellViewModel = {
@@ -193,7 +193,11 @@ private extension NewCardPaymentSectionController {
     }
     
     func checkout() {
-        AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button")
+        AWXAnalyticsLogger.shared().logAction(
+            withName: "tap_pay_button",
+            additionalInfo: ["payment_method": AWXCardKey, "is_consent": false]
+        )
+        
         Risk.log(event: "click_payment_button", screen: "page_create_card")
         debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         do {
@@ -214,12 +218,15 @@ private extension NewCardPaymentSectionController {
                 }
             }
             
-            paymentSessionHandler = PaymentSessionHandler(session: session, viewController: context.viewController!)
+            paymentSessionHandler = PaymentSessionHandler(
+                session: session,
+                viewController: context.viewController!,
+                methodType: methodType
+            )
             paymentSessionHandler?.startCardPayment(
                 with: card,
                 billing: billingInfo,
-                saveCard: shouldSaveCard,
-                methodType: methodType
+                saveCard: shouldSaveCard
             )
         } catch {
             cardInfoViewModel.updateValidStatusForCheckout()
@@ -241,6 +248,7 @@ private extension NewCardPaymentSectionController {
     }
     
     func toggleReuseBillingAddress(_ reuseBillingAddress: Bool) {
+        AWXAnalyticsLogger.shared().logAction(withName: "toggle_billing_address")
         shouldReuseShippingAddress = reuseBillingAddress
         billingInfoViewModel = BillingInfoCellViewModel(
             shippingInfo: session.billing,
@@ -261,6 +269,7 @@ private extension NewCardPaymentSectionController {
     }
     
     func toggleCardSaving(_ shouldSaveCard: Bool) {
+        AWXAnalyticsLogger.shared().logAction(withName: "save_card", additionalInfo: ["value": shouldSaveCard])
         self.shouldSaveCard = shouldSaveCard
         if cardInfoViewModel.cardNumberConfigurer.currentBrand == .unionPay {
             context.performUpdates(section)

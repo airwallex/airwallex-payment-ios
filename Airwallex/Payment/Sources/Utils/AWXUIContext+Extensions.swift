@@ -46,6 +46,13 @@ public extension AWXUIContext {
                                   paymentResultDelegate: AWXPaymentResultDelegate,
                                   filterBy methodNames: [String]? = nil,
                                   style: LaunchStyle = .push) {
+        AWXAnalyticsLogger.shared().logAction(
+            withName: "payment_launched",
+            additionalInfo: [
+                "payment_method": "dropin",
+                "transaction_mode": session.transactionMode()
+            ]
+        )
         let client = AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
         if let methodNames {
             session.paymentMethods = methodNames
@@ -65,7 +72,7 @@ public extension AWXUIContext {
     }
 }
 
-//  MARK: - Card
+//  MARK: - Single Payment Method
 public extension AWXUIContext {
     
     /// Launches the Airwallex card payment flow.
@@ -81,8 +88,8 @@ public extension AWXUIContext {
         launchCardPayment(
             from: hostingVC,
             session: session,
-            supportedBrands: supportedBrands,
             paymentResultDelegate: hostingVC,
+            supportedBrands: supportedBrands,
             style: style
         )
     }
@@ -95,20 +102,16 @@ public extension AWXUIContext {
     ///   - style: The presentation style of the payment sheet, which defaults to `.push`.
     @MainActor func launchCardPayment(from hostingVC: UIViewController,
                                       session: AWXSession,
-                                      supportedBrands: [AWXCardBrand],
                                       paymentResultDelegate: AWXPaymentResultDelegate,
+                                      supportedBrands: [AWXCardBrand],
                                       style: LaunchStyle = .push) {
         assert(!supportedBrands.isEmpty, "supported brands should never be empty")
-        let methodProvider = SinglePaymentMethodProvider(
-            session: session,
-            name: AWXCardKey,
-            supportedCardBrands: supportedBrands
-        )
         launchPayment(
+            name: AWXCardKey,
             from: hostingVC,
             session: session,
-            paymentMethodProvider: methodProvider,
             paymentResultDelegate: paymentResultDelegate,
+            supportedBrands: supportedBrands,
             style: style
         )
     }
@@ -118,15 +121,22 @@ public extension AWXUIContext {
     ///   - name: The name of the payment method.
     ///   - hostingVC: The view controller that presents the payment sheet.
     ///   - session: The current payment session containing transaction details.
-    ///   - supportedBrands: A list of supported card brands for the payment method.
     ///   - paymentResultDelegate: The delegate that handles payment result callbacks.
+    ///   - supportedBrands: A list of supported card brands for the payment method. Required for Card Payment
     ///   - style: The presentation style of the payment sheet. Defaults to `.push`.
     @MainActor func launchPayment(name: String,
                                   from hostingVC: UIViewController,
                                   session: AWXSession,
-                                  supportedBrands: [AWXCardBrand],
                                   paymentResultDelegate: AWXPaymentResultDelegate,
+                                  supportedBrands: [AWXCardBrand]? = nil,
                                   style: LaunchStyle = .push) {
+        AWXAnalyticsLogger.shared().logAction(
+            withName: "payment_launched",
+            additionalInfo: [
+                "payment_method": name,
+                "transaction_mode": session.transactionMode()
+            ]
+        )
         let methodProvider = SinglePaymentMethodProvider(
             session: session,
             name: name,
