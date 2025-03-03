@@ -176,20 +176,32 @@ class ContentInsetableTextField: UITextField {
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         let textRect = super.textRect(forBounds: bounds)
         let rect = bounds.inset(by: textInsets)
-        return textRect.intersection(rect)
+        let result = textRect.intersection(rect)
+        guard !(result.isEmpty || result.isEmpty || result.isInfinite) else {
+            return rect
+        }
+        return result
     }
     
     // Rect for text when editing
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         let editingRect = super.editingRect(forBounds: bounds)
-        let rect = textRect(forBounds: bounds)
-        return editingRect.intersection(rect)
+        let rect = bounds.inset(by: textInsets)
+        let result = editingRect.intersection(rect)
+        guard !(result.isEmpty || result.isEmpty || result.isInfinite) else {
+            return rect
+        }
+        return result
     }
     
     // Optionally adjust the placeholder's rectangle
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         let placeholderRect = super.placeholderRect(forBounds: bounds)
         let rect = bounds.inset(by: textInsets)
-        return placeholderRect.intersection(rect)
+        let result = placeholderRect.intersection(rect)
+        guard !(result.isEmpty || result.isEmpty || result.isInfinite) else {
+            return rect
+        }
+        return result
     }
 }

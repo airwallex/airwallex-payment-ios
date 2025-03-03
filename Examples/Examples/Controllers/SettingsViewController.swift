@@ -92,7 +92,7 @@ class SettingsViewController: UIViewController {
         view.adjustsImageWhenHighlighted = false
         view.setTitleColor(.awxColor(.iconLink), for: .normal)
         view.titleLabel?.font = .awxFont(.body1, weight: .medium)
-        view.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        view.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         view.addTarget(self, action: #selector(onCustomerIdActionButtonTapped), for: .touchUpInside)
         return view
     }()
