@@ -1,12 +1,12 @@
 //
-//  SchemaPaymentRemiderCell.swift
+//  SchemaPaymentReminderCell.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2025/1/10.
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-class SchemaPaymentRemiderCell: UICollectionViewCell, ViewReusable {
+class SchemaPaymentReminderCell: UICollectionViewCell, ViewReusable {
     
     private let imageView: UIImageView = {
         let view = UIImageView()
@@ -23,7 +23,7 @@ class SchemaPaymentRemiderCell: UICollectionViewCell, ViewReusable {
         view.font = .awxFont(.body2)
         view.textColor = .awxColor(.textPrimary)
         view.numberOfLines = 0
-        view.text = NSLocalizedString("You will be redirected to complete your payment upon confirmation.", bundle: .payment, comment: "schema redirect remider")
+        view.text = NSLocalizedString("You will be redirected to complete your payment upon confirmation.", bundle: .payment, comment: "schema redirect reminder")
         return view
     }()
     

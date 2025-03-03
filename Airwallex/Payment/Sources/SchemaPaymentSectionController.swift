@@ -12,7 +12,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     
     struct Item {
         static let bankSelection = "bankSelection"
-        static let redirectRemider = "redirectRemider"
+        static let redirectReminder = "redirectReminder"
         static let checkoutButton = "checkoutButton"
     }
     
@@ -61,7 +61,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             items.append(contentsOf: uiFields.map { $0.name })
         }
         
-        items.append(Item.redirectRemider)
+        items.append(Item.redirectReminder)
         items.append(Item.checkoutButton)
         return items
     }
@@ -86,8 +86,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
             cell.setup(CheckoutButtonCellViewModel(checkoutAction: checkout))
             return cell
-        case Item.redirectRemider:
-            return context.dequeueReusableCell(SchemaPaymentRemiderCell.self, for: itemIdentifier, indexPath: indexPath)
+        case Item.redirectReminder:
+            return context.dequeueReusableCell(SchemaPaymentReminderCell.self, for: itemIdentifier, indexPath: indexPath)
         case Item.bankSelection:
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: itemIdentifier, indexPath: indexPath)
             cell.setup(bankSelectionViewModel!)

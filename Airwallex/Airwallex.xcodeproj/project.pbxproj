@@ -597,7 +597,7 @@
 		D82737232D364D0800AA41A6 /* BankSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankSelectionViewModel.swift; sourceTree = "<group>"; };
 		D82737252D3654A900AA41A6 /* BankSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankSelectionCell.swift; sourceTree = "<group>"; };
 		D84443812D30BF2800DF9762 /* SchemaPaymentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentSectionController.swift; sourceTree = "<group>"; };
-		D84529AF2D30FA380032BE17 /* SchemaPaymentRemiderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentRemiderCell.swift; sourceTree = "<group>"; };
+		D84529AF2D30FA380032BE17 /* SchemaPaymentReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentReminderCell.swift; sourceTree = "<group>"; };
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
 		D84E94DA2D684F0800CDC04C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D84E998F2D0AFAC9006B3421 /* PaymentSheetMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSheetMethodProvider.swift; sourceTree = "<group>"; };
@@ -1289,7 +1289,7 @@
 				D8F3031F2D1ABAAE00D29B49 /* InfoCollectorTextField.swift */,
 				D88C3CE22D1D3DF600E77FFD /* InfoCollectorTextFieldViewModel.swift */,
 				D88C3CE32D1D436F00E77FFD /* CheckoutButtonCell.swift */,
-				D84529AF2D30FA380032BE17 /* SchemaPaymentRemiderCell.swift */,
+				D84529AF2D30FA380032BE17 /* SchemaPaymentReminderCell.swift */,
 				D8D69B0F2D38F84A00D04856 /* WarningViewCell.swift */,
 				D8F3031C2D1ABAAE00D29B49 /* PaymentMethodCell.swift */,
 				D8F3031E2D1ABAAE00D29B49 /* PaymentMethodListSeparator.swift */,
