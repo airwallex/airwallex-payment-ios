@@ -16,6 +16,7 @@ enum PaymentMethodProviderUpdateType {
 }
 
 /// A protocol that defines a provider responsible for managing payment methods.
+@MainActor
 protocol PaymentMethodProvider: AnyObject {
     
     /// The API client used for making network requests.

@@ -9,7 +9,6 @@
 import Foundation
 import Combine
 
-@MainActor
 final class PaymentSheetMethodProvider: PaymentMethodProvider, DebugLoggable {
     
     private let provider: AWXPaymentMethodListViewModel

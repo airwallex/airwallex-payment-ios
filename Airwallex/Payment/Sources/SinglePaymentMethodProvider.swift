@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-@MainActor class SinglePaymentMethodProvider: PaymentMethodProvider {
+class SinglePaymentMethodProvider: PaymentMethodProvider {
     
     let name: String
     private var supportedCardBrands: [AWXCardBrand]?
