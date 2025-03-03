@@ -73,12 +73,9 @@ extension PaymentMethodProvider {
     }
     
     /// Retrieves the payment method details for a payment method, typically used for LPM.
-    /// - Parameter name: The name of the payment method (optional).
+    /// - Parameter name: The name of the payment method.
     /// - Returns: A response containing the payment method details, including a list of `AWXSchema` objects.
-    func getPaymentMethodTypeDetails(name: String? = nil) async throws -> AWXGetPaymentMethodTypeResponse{
-        guard let name = name ?? selectedMethod?.name else {
-            throw ErrorMessage(rawValue:"Payment method name required")
-        }
+    func getPaymentMethodTypeDetails(name: String) async throws -> AWXGetPaymentMethodTypeResponse{
         let request = AWXGetPaymentMethodTypeRequest()
         request.name = name
         request.transactionMode = session.transactionMode()
@@ -87,12 +84,9 @@ extension PaymentMethodProvider {
     }
     
     /// Retrieves a list of available banks for certain online banking payment methods that require bank selection.
-    /// - Parameter name: The name of the payment method (optional).
+    /// - Parameter name: The name of the payment method.
     /// - Returns: A response containing the list of available banks.
-    func getBankList(name: String? = nil) async throws -> AWXGetAvailableBanksResponse {
-        guard let name = name ?? selectedMethod?.name else {
-            throw ErrorMessage(rawValue:"Payment method name required")
-        }
+    func getBankList(name: String) async throws -> AWXGetAvailableBanksResponse {
         let request = AWXGetAvailableBanksRequest()
         request.paymentMethodType = name
         request.countryCode = session.countryCode

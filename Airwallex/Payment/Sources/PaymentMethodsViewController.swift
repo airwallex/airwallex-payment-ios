@@ -258,14 +258,12 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
                 }
             ).anySectionController()
             return controller
-        case .schemaPayment(_):
+        case .schemaPayment(let name):
             let controller = SchemaPaymentSectionController(
-                sectionType: section,
+                name: name,
                 methodProvider: methodProvider
             ).anySectionController()
             return controller
-        default:
-            fatalError("unexpected section")
         }
     }
     

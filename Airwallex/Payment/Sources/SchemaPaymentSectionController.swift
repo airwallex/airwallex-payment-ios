@@ -19,13 +19,6 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     private var session: AWXSession {
         methodProvider.session
     }
-    private lazy var methodType: AWXPaymentMethodType = {
-        guard case let PaymentSectionType.schemaPayment(name) = section,
-              let methodType = methodProvider.method(named: name) else {
-            fatalError("method type not found")
-        }
-        return methodType
-    }()
     private var paymentSessionHandler: PaymentSessionHandler?
     private var methodProvider: PaymentMethodProvider
     
@@ -36,9 +29,11 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     private var bankSelectionViewModel: BankSelectionViewModel?
     
     private var uiFieldViewModels = [InfoCollectorTextFieldViewModel]()
+    private let name: String
     
-    init(sectionType: PaymentSectionType, methodProvider: PaymentMethodProvider) {
-        self.section = sectionType
+    init(name: String, methodProvider: PaymentMethodProvider) {
+        self.name = name
+        self.section = PaymentSectionType.schemaPayment(name)
         self.methodProvider = methodProvider
         super.init()
         self.updateItemsIfNecessary()
@@ -113,7 +108,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                     context.viewController?.stopLoading()
                 }
                 //  request method details from server
-                let response = try await methodProvider.getPaymentMethodTypeDetails(name: methodType.name)
+                let response = try await methodProvider.getPaymentMethodTypeDetails(name: name)
                 //  check schema
                 let schema = response.schemas.first { $0.transactionMode == session.transactionMode() }
                 guard let schema, !schema.fields.isEmpty else {
@@ -124,7 +119,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 // update bank selection
                 var bankList: [AWXBank]?
                 if let bankField = schema.bankField {
-                    let banks = try await methodProvider.getBankList().items
+                    let banks = try await methodProvider.getBankList(name: name).items
                     guard !banks.isEmpty else {
                         throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "").asError()
                     }
@@ -190,7 +185,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
 
 private extension SchemaPaymentSectionController {
     func checkout() {
-        AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button", additionalInfo: ["payment_method": methodType.name])
+        AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button", additionalInfo: ["payment_method": name])
         guard let schema else {
             // check schema
             updateItemsIfNecessary()
@@ -212,7 +207,7 @@ private extension SchemaPaymentSectionController {
             }
             
             let paymentMethod = AWXPaymentMethod()
-            paymentMethod.type = methodType.name
+            paymentMethod.type = name
             
             // update bank selection
             if let bankSelectionViewModel  {
@@ -231,7 +226,7 @@ private extension SchemaPaymentSectionController {
             paymentSessionHandler = PaymentSessionHandler(
                 session: session,
                 viewController: context.viewController!,
-                methodType: methodType
+                methodType: methodProvider.method(named: name)
             )
             paymentSessionHandler?.startSchemaPayment(with: paymentMethod)
             
