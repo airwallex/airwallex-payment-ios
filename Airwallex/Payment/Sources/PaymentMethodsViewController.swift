@@ -9,13 +9,18 @@
 import UIKit
 import Combine
 
+enum PaymentSectionType: Hashable {
+    case listTitle
+    case applePay
+    case methodList
+    case cardPaymentConsent
+    case cardPaymentNew
+    case schemaPayment(String)
+}
+
 class PaymentMethodsViewController: AWXViewController {
     
-    static let collectionHeaderElementKind = "collection-header-element-kind"
-    
     let methodProvider: PaymentMethodProvider
-    private var paymentUISession: PaymentUISessionHandler?
-    private var selectedMethod: String? = nil
     
     init(methodProvider: PaymentMethodProvider) {
         self.methodProvider = methodProvider
@@ -42,6 +47,13 @@ class PaymentMethodsViewController: AWXViewController {
         return manager
     }()
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addTarget(self, action: #selector(getMethodList(_:)), for: .valueChanged)
+        return view
+    }()
+    
     private var cancellable: AnyCancellable?
     
     private var preferConsentPayment = true
@@ -49,21 +61,17 @@ class PaymentMethodsViewController: AWXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
-        startAnimating()
-        Task {
-            do {
-                try await methodProvider.fetchPaymentMethods()
-                
-                collectionViewManager.reloadData()
-                stopAnimating()
-            } catch {
-                
+        getMethodList()
+        cancellable = methodProvider.updatePublisher.sink {[weak self] type in
+            self?.collectionViewManager.performUpdates()
+            switch type {
+            case let .methodSelected(name):
+                AWXAnalyticsLogger.shared().logAction(
+                    withName: "select_payment",
+                    additionalInfo: ["payment_method": name]
+                )
+            default: break
             }
-        }
-        
-        cancellable = methodProvider.publisher.sink {[weak self] _ in
-            self?.collectionViewManager.reloadData()
         }
     }
     
@@ -79,10 +87,10 @@ class PaymentMethodsViewController: AWXViewController {
     
     private func setupUI() {
         self.navigationItem.largeTitleDisplayMode = .never
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         if navigationController?.viewControllers.first === self {
             let image = UIImage(named: "close", in: Bundle.resource())?
-                .withTintColor(.awxIconPrimary, renderingMode: .alwaysTemplate)
+                .withTintColor(.awxColor(.iconPrimary), renderingMode: .alwaysTemplate)
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 image: image,
                 style: .plain,
@@ -94,7 +102,9 @@ class PaymentMethodsViewController: AWXViewController {
         let collectionView = collectionViewManager.collectionView!
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.keyboardDismissMode = .interactive
-        collectionView.backgroundColor = .awxBackgroundPrimary
+        collectionView.backgroundColor = .awxColor(.backgroundPrimary)
+        collectionView.refreshControl = refreshControl
+        
         view.addSubview(collectionView)
         let constraints = [
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -108,6 +118,34 @@ class PaymentMethodsViewController: AWXViewController {
     @objc public func onCloseButtonTapped() {
         dismiss(animated: true) {
             AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+        }
+    }
+    
+    @objc private func getMethodList(_ sender: UIRefreshControl? = nil) {
+        Task {
+            startAnimating()
+            do {
+                try await methodProvider.getPaymentMethodTypes()
+                stopAnimating()
+                if let sender {
+                    sender.endRefreshing()
+                }
+            } catch {
+                debugLog("failed to get payment method list: \(error)")
+                showAlert(message: error.localizedDescription) { _ in
+                    guard self.methodProvider.methods.isEmpty else {
+                        return
+                    }
+                    if let action = AWXUIContext.shared().paymentUIDismissAction {
+                        action {
+                            AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
+                        }
+                        AWXUIContext.shared().paymentUIDismissAction = nil
+                    } else {
+                        AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
+                    }
+                }
+            }
         }
     }
     
@@ -125,14 +163,29 @@ extension PaymentMethodsViewController: AWXPageViewTrackable {
 
 extension PaymentMethodsViewController: CollectionViewSectionProvider {
     
+    private var singleNonApplePayPaymentMethodAvailable: Bool {
+        !methodProvider.isApplePayAvailable && methodProvider.methods.count == 1
+    }
+    
+    private var displayMethodList: Bool {
+        return methodProvider.methods.count > 1
+    }
+    
     func sections() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
+        //  title of the list
+        sections.append(.listTitle)
+        
         if methodProvider.isApplePayAvailable {
             sections.append(.applePay)
         }
-        // horizontal list
-        sections.append(.methodList)
+
+        if displayMethodList {
+            // horizontal list
+            sections.append(.methodList)
+        }
         
+        //  display selected payment method
         if let selectedMethodType = methodProvider.selectedMethod {
             if selectedMethodType.name == AWXCardKey {
                 if preferConsentPayment && !methodProvider.consents.isEmpty {
@@ -149,11 +202,34 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
     
     func sectionController(for section: PaymentSectionType) -> AnySectionController<PaymentSectionType, String> {
         switch section {
+        case .listTitle:
+            let layoutSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(20)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: layoutSize)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
+            let layout = NSCollectionLayoutSection(group: group)
+            layout.contentInsets = .init(top: 32, leading: 16, bottom: 8, trailing: 16)
+            
+            let controller = SimpleSectionController(
+                section: .listTitle,
+                item: "list_title",
+                layout: layout) { [weak self] context, item, indexPath in
+                    guard let self else { return UICollectionViewCell() }
+                    let cell = context.dequeueReusableCell(LabelCell.self, for: item, indexPath: indexPath)
+                    if self.singleNonApplePayPaymentMethodAvailable {
+                        cell.label.text = self.methodProvider.selectedMethod?.displayName
+                    } else {
+                        cell.label.text = NSLocalizedString("Payment Methods", bundle: .payment, comment: "title for payment sheet")
+                    }
+                    return cell
+                }
+            return controller.anySectionController()
         case .applePay:
             let controller = ApplePaySectionController(
                 session: methodProvider.session,
-                methodType: methodProvider.applePayMethodType!,
-                viewController: self
+                methodType: methodProvider.applePayMethodType!
             )
             return controller.anySectionController()
         case .methodList:
@@ -167,7 +243,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
                 addNewCardAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = false
-                    self.collectionViewManager.reloadData()
+                    self.collectionViewManager.performUpdates()
                 }
             )
             return controller.anySectionController()
@@ -178,45 +254,21 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
                 switchToConsentPaymentAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = true
-                    self.collectionViewManager.reloadData()
+                    self.collectionViewManager.performUpdates()
                 }
             ).anySectionController()
             return controller
-        case .schemaPayment(_):
+        case .schemaPayment(let name):
             let controller = SchemaPaymentSectionController(
-                sectionType: section,
+                name: name,
                 methodProvider: methodProvider
             ).anySectionController()
             return controller
-        default:
-            fatalError("unexpected section")
         }
     }
     
     func listBoundaryItemProviders() -> [BoundarySupplementaryItemProvider]? {
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(65)
-        )
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: Self.collectionHeaderElementKind,
-            alignment: .top
-        )
-        return [BoundarySupplementaryItemProvider(
-            elementKind: Self.collectionHeaderElementKind,
-            layout: header,
-            reusableView: LabelHeader.self
-        )]
+        return nil
     }
 }
-
-enum PaymentSectionType: Hashable {
-    case applePay
-    case methodList
-    case cardPaymentConsent
-    case cardPaymentNew
-    case schemaPayment(String)
-}
-
 

@@ -43,7 +43,7 @@ class SettingsViewController: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        let view = UIButton(style: .primary, title: NSLocalizedString("Save", comment: pageName))
+        let view = AWXButton(style: .primary, title: NSLocalizedString("Save", comment: pageName))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onSaveButtonTapped), for: .touchUpInside)
         return view
@@ -52,7 +52,7 @@ class SettingsViewController: UIViewController {
     private lazy var bottomView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.awxBorderDecorative.cgColor
+        view.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
         view.layer.borderWidth = 1
         return view
     }()
@@ -90,9 +90,9 @@ class SettingsViewController: UIViewController {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.adjustsImageWhenHighlighted = false
-        view.setTitleColor(.awxIconLink, for: .normal)
+        view.setTitleColor(.awxColor(.iconLink), for: .normal)
         view.titleLabel?.font = .awxFont(.body1, weight: .medium)
-        view.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        view.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         view.addTarget(self, action: #selector(onCustomerIdActionButtonTapped), for: .touchUpInside)
         return view
     }()
@@ -142,7 +142,7 @@ class SettingsViewController: UIViewController {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.caption1)
-        view.textColor = .awxTextPlaceholder
+        view.textColor = .awxColor(.textPlaceholder)
         view.text = "WeChat Region: HK"
         return view
     }()
@@ -151,7 +151,7 @@ class SettingsViewController: UIViewController {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.caption1)
-        view.textColor = .awxTextPlaceholder
+        view.textColor = .awxColor(.textPlaceholder)
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
         view.text = "App Version: v\(version) (\(build))"
@@ -182,13 +182,20 @@ class SettingsViewController: UIViewController {
         super.viewDidDisappear(animated)
         keyboardHandler.stopObserving()
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            bottomView.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+        }
+    }
 }
 
 private extension SettingsViewController {
     func setupViews() {
         
         customizeNavigationBackButton()
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(scrollView)
         scrollView.addSubview(stack)
         stack.addArrangedSubview(topView)
@@ -251,10 +258,12 @@ private extension SettingsViewController {
     
     func setupOptionForEnvironment() {
         let env = settings.environment
-        var environmentOptions = [ AirwallexSDKMode.demoMode, AirwallexSDKMode.stagingMode]
-        #if !DEBUG
-        environmentOptions.insert(AirwallexSDKMode.productionMode, at: 0)
-        #endif
+        var environmentOptions = [ AirwallexSDKMode.productionMode, AirwallexSDKMode.demoMode, AirwallexSDKMode.stagingMode]
+#if DEBUG
+        if !CommandLine.arguments.contains("-production") {
+            environmentOptions.remove(at: 0)
+        }
+#endif
         let optionTitle = env.displayName
         
         let viewModel = ConfigActionViewModel(
@@ -339,7 +348,7 @@ private extension SettingsViewController {
     func updateCustomerIDGeneratorActionButton() {
         if let id = fieldForCustomerId.textField.text, !id.isEmpty {
             customerIdActionButton.setImage(
-                UIImage(systemName: "xmark")?.withTintColor(.awxIconLink, renderingMode: .alwaysOriginal),
+                UIImage(systemName: "xmark")?.withTintColor(.awxColor(.iconLink), renderingMode: .alwaysOriginal),
                 for: .normal
             )
             customerIdActionButton.setTitle(nil, for: .normal)
@@ -431,6 +440,10 @@ private extension SettingsViewController {
     }
     
     @objc func onSaveButtonTapped() {
+        // This line of code forces the text field to end editing when the Save button is pressed.
+        // It is especially useful for simulators, where the keyboard is not displayed while editing.
+        scrollView.endEditing(true)
+        
         guard NSLocale.isoCountryCodes.contains(where: { $0 == settings.countryCode }) else {
             showAlert(message: "invalid country code \(settings.countryCode)")
             return

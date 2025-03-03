@@ -25,7 +25,7 @@ class ConfigSwitchView: UIView {
     private(set) lazy var optionLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .awxTextPrimary
+        view.textColor = .awxColor(.textPrimary)
         view.font = .awxFont(.body2)
         return view
     }()
@@ -33,7 +33,7 @@ class ConfigSwitchView: UIView {
     private(set) lazy var optionSwitch: UISwitch = {
         let view = UISwitch()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.tintColor = .awxIconLink
+        view.tintColor = .awxColor(.iconLink)
         view.addTarget(self, action: #selector(onSwitchToggled(_:)), for: .valueChanged)
         return view
     }()

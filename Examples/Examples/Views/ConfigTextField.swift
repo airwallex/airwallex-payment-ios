@@ -18,7 +18,7 @@ class ConfigTextField: UIView {
         view.titleLabel?.font = .awxFont(.caption2, weight: .medium)
         view.setTitleColor(.secondaryLabel, for: .normal)
         view.isUserInteractionEnabled = false
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.isHidden = true
         return view
     }()
@@ -89,11 +89,18 @@ class ConfigTextField: UIView {
         topLabel.isHidden = (textField.text ?? "").isEmpty
         hintLabel.isHidden = (viewModel.caption ?? "").isEmpty
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            boxView.layer.borderColor = UIColor.separator.cgColor
+        }
+    }
 }
 
 private extension ConfigTextField {
     func setupViews() {
-        backgroundColor = .awxBackgroundPrimary
+        backgroundColor = .awxColor(.backgroundPrimary)
         addSubview(stack)
         stack.addArrangedSubview(container)
         do {
@@ -150,6 +157,12 @@ extension ConfigTextField: UITextFieldDelegate {
 
 class ContentInsetableTextField: UITextField {
     
+    var textInsets: UIEdgeInsets {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
     init(textInsets: UIEdgeInsets = .zero) {
         self.textInsets = textInsets
         super.init(frame: .zero)
@@ -158,20 +171,37 @@ class ContentInsetableTextField: UITextField {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    var textInsets: UIEdgeInsets
     
     // Rect for text already in the field
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: textInsets)
+        let textRect = super.textRect(forBounds: bounds)
+        let rect = bounds.inset(by: textInsets)
+        let result = textRect.intersection(rect)
+        guard !(result.isEmpty || result.isEmpty || result.isInfinite) else {
+            return rect
+        }
+        return result
     }
     
     // Rect for text when editing
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: textInsets)
+        let editingRect = super.editingRect(forBounds: bounds)
+        let rect = bounds.inset(by: textInsets)
+        let result = editingRect.intersection(rect)
+        guard !(result.isEmpty || result.isEmpty || result.isInfinite) else {
+            return rect
+        }
+        return result
     }
     
     // Optionally adjust the placeholder's rectangle
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: textInsets)
+        let placeholderRect = super.placeholderRect(forBounds: bounds)
+        let rect = bounds.inset(by: textInsets)
+        let result = placeholderRect.intersection(rect)
+        guard !(result.isEmpty || result.isEmpty || result.isInfinite) else {
+            return rect
+        }
+        return result
     }
 }

@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title;
 + (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title textFieldType:(AWXTextFieldType)textFieldType;
-+ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title logo:(NSURL *)logo;
++ (instancetype)formWithKey:(NSString *)key type:(AWXFormType)type title:(NSString *)title logo:(NSURL *_Nullable)logo;
 
 @end
 

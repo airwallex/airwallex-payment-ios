@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Logo url
  */
-@property (nonatomic, copy) NSURL *logoURL;
+@property (nonatomic, copy, nullable) NSURL *logoURL;
 
 /**
  has_schema

@@ -49,7 +49,11 @@ typedef enum {
 }
 
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *)paymentMethodType {
-    self = [super initWithDelegate:delegate session:session paymentMethodType:paymentMethodType];
+    if (paymentMethodType) {
+        self = [super initWithDelegate:delegate session:session paymentMethodType:paymentMethodType];
+    } else {
+        self = [self initWithDelegate:delegate session:session];
+    }
     return self;
 }
 
