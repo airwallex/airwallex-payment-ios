@@ -107,6 +107,11 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         }
         task = Task {
             do {
+                // block user from checkout when paymentmethod type is loading
+                context.viewController?.startLoading()
+                defer {
+                    context.viewController?.stopLoading()
+                }
                 //  request method details from server
                 let response = try await methodProvider.getPaymentMethodTypeDetails(name: methodType.name)
                 //  check schema
