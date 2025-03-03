@@ -130,6 +130,7 @@ public extension AWXUIContext {
                                   paymentResultDelegate: AWXPaymentResultDelegate,
                                   supportedBrands: [AWXCardBrand]? = nil,
                                   style: LaunchStyle = .push) {
+        let name = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         AWXAnalyticsLogger.shared().logAction(
             withName: "payment_launched",
             additionalInfo: [
@@ -137,6 +138,9 @@ public extension AWXUIContext {
                 "transaction_mode": session.transactionMode()
             ]
         )
+        if name == AWXCardKey {
+            assert(supportedBrands != nil && supportedBrands?.isEmpty == false, "Supported card brands are required for card payment.")
+        }
         let methodProvider = SinglePaymentMethodProvider(
             session: session,
             name: name,
