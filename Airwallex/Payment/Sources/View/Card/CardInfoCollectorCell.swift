@@ -162,6 +162,54 @@ private extension CardInfoCollectorCell {
             viewModel.triggerLayoutUpdate()
         }
         .store(in: &cancellables)
+        
+        numberTextField.textField.textDidBeginEditingPublisher
+            .sink { [weak self] _ in
+                guard let viewModel = self?.viewModel,
+                      let textField = self?.numberTextField.textField,
+                      let textFieldType = self?.numberTextField.viewModel?.textFieldType else {
+                    assert(false)
+                    return
+                }
+                viewModel.handleFieldDidBeginEditing(textField, type: textFieldType)
+            }
+            .store(in: &cancellables)
+        
+        cvcTextField.textField.textDidBeginEditingPublisher
+            .sink { [weak self] _ in
+                guard let viewModel = self?.viewModel,
+                      let textField = self?.cvcTextField.textField,
+                      let textFieldType = self?.cvcTextField.viewModel?.textFieldType else {
+                    assert(false)
+                    return
+                }
+                viewModel.handleFieldDidBeginEditing(textField, type: textFieldType)
+            }
+            .store(in: &cancellables)
+        
+        expiresTextField.textField.textDidBeginEditingPublisher
+            .sink { [weak self] _ in
+                guard let viewModel = self?.viewModel,
+                      let textField = self?.expiresTextField.textField,
+                      let textFieldType = self?.expiresTextField.viewModel?.textFieldType else {
+                    assert(false)
+                    return
+                }
+                viewModel.handleFieldDidBeginEditing(textField, type: textFieldType)
+            }
+            .store(in: &cancellables)
+        
+        nameTextField.textField.textDidBeginEditingPublisher
+            .sink { [weak self] _ in
+                guard let viewModel = self?.viewModel,
+                      let textField = self?.nameTextField.textField,
+                      let textFieldType = self?.nameTextField.viewModel?.textFieldType else {
+                    assert(false)
+                    return
+                }
+                viewModel.handleFieldDidBeginEditing(textField, type: textFieldType)
+            }
+            .store(in: &cancellables)
     }
     
     func setupViews() {
