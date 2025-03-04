@@ -6,6 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import AirwallexRisk
+
 class CardInfoCollectorCellViewModel {
     var nameOnCardConfigurer: InfoCollectorTextFieldViewModel
     
@@ -39,8 +41,24 @@ class CardInfoCollectorCellViewModel {
         )
         expireDataConfigurer = CardExpireTextFieldViewModel()
         nameOnCardConfigurer = InfoCollectorTextFieldViewModel(
-            title: NSLocalizedString("Name on card", bundle: .payment, comment: "")
+            title: NSLocalizedString("Name on card", bundle: .payment, comment: ""),
+            textFieldType: .nameOnCard
         )
+    }
+    
+    func handleFieldDidBeginEditing(_ textField: UITextField, type: AWXTextFieldType) {
+        switch type {
+        case .cardNumber:
+            Risk.log(event: "input_card_number", screen: "page_create_card")
+        case .expires:
+            Risk.log(event: "input_card_expiry", screen: "page_create_card")
+        case .CVC:
+            Risk.log(event: "input_card_cvc", screen: "page_create_card")
+        case .nameOnCard:
+            Risk.log(event: "input_card_holder_name", screen: "page_create_card")
+        default:
+            break
+        }
     }
 }
 
