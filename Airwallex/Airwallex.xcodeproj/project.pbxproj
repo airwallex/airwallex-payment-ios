@@ -591,6 +591,8 @@
 		C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Logging.m"; sourceTree = "<group>"; };
 		CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D81985F72D719B88008008A3 /* DebugLoggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLoggable.swift; sourceTree = "<group>"; };
+		D81985F82D754FED008008A3 /* SectionDisplayHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDisplayHandler.swift; sourceTree = "<group>"; };
+		D81985F92D769E56008008A3 /* CollectionViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContext.swift; sourceTree = "<group>"; };
 		D81EAFA42D40F46600B44784 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D825DAA52D2F72EE005F725A /* AWXCardValidator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCardValidator+Extensions.swift"; sourceTree = "<group>"; };
 		D827371E2D362A9900AA41A6 /* AWXSchema+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXSchema+Extensions.swift"; sourceTree = "<group>"; };
@@ -1224,6 +1226,19 @@
 			path = Schema;
 			sourceTree = "<group>";
 		};
+		D83904DD2D76EC0E003B3CF9 /* CollectionViewManager */ = {
+			isa = PBXGroup;
+			children = (
+				D888269F2D12D9E000115198 /* CollectionViewManager.swift */,
+				D888268E2D12D68B00115198 /* SectionController.swift */,
+				D81985F92D769E56008008A3 /* CollectionViewContext.swift */,
+				D81985F82D754FED008008A3 /* SectionDisplayHandler.swift */,
+				D85A877C2D6D5B370084F7FA /* SimpleSectionController.swift */,
+				D888291A2D15443E00115198 /* ListHeaderFooterProvider.swift */,
+			);
+			path = CollectionViewManager;
+			sourceTree = "<group>";
+		};
 		D8765DFD2D0824B30086B37F /* Payment */ = {
 			isa = PBXGroup;
 			children = (
@@ -1247,16 +1262,13 @@
 				D84E998F2D0AFAC9006B3421 /* PaymentSheetMethodProvider.swift */,
 				D85A884E2D6EE53D0084F7FA /* PaymentMethodProvider.swift */,
 				D84E9A262D0C3652006B3421 /* PaymentSessionHandler.swift */,
-				D888268E2D12D68B00115198 /* SectionController.swift */,
-				D888269F2D12D9E000115198 /* CollectionViewManager.swift */,
 				D88826B02D13E64500115198 /* ApplePaySectionController.swift */,
-				D85A877C2D6D5B370084F7FA /* SimpleSectionController.swift */,
-				D888291A2D15443E00115198 /* ListHeaderFooterProvider.swift */,
 				D88826C12D13FCAA00115198 /* PaymentMethodListSectionController.swift */,
 				D8F302AD2D1A823000D29B49 /* NewCardPaymentSectionController.swift */,
 				D88826C22D13FCD700115198 /* CardPaymentConsentSectionController.swift */,
 				D84443812D30BF2800DF9762 /* SchemaPaymentSectionController.swift */,
 				D85A88492D6D8D580084F7FA /* SinglePaymentMethodProvider.swift */,
+				D83904DD2D76EC0E003B3CF9 /* CollectionViewManager */,
 				D8F3032B2D1ABAB100D29B49 /* Utils */,
 				D8F303212D1ABAAE00D29B49 /* View */,
 			);

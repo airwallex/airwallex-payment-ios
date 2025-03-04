@@ -182,6 +182,10 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         view.setup(viewModel)
         return view
     }
+    
+    func sectionWillDisplay() {
+        Risk.log(event: "show_create_card", screen: "page_create_card")
+    }
 }
 
 private extension NewCardPaymentSectionController {
@@ -269,7 +273,7 @@ private extension NewCardPaymentSectionController {
                 self.toggleReuseBillingAddress(self.shouldReuseShippingAddress)
             }
         )
-        context.reload(items: [ Item.billingInfo.rawValue ])
+        context.reconfigure(items: [ Item.billingInfo.rawValue ])
     }
     
     func toggleCardSaving(_ shouldSaveCard: Bool) {
@@ -285,7 +289,7 @@ extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate 
     func countryListViewController(_ controller: AWXCountryListViewController, didSelect country: AWXCountry) {
         controller.dismiss(animated: true)
         billingInfoViewModel.selectedCountry = country
-        context.reload(items: [ Item.billingInfo.rawValue ])
+        context.reconfigure(items: [ Item.billingInfo.rawValue ])
     }
 }
 

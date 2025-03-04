@@ -272,7 +272,7 @@ extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
         bankSelectionViewModel?.bank = bank
         AWXAnalyticsLogger.shared().logAction(withName: "select_bank", additionalInfo: [ "bankName": optionKey ])
         paymentFormViewController.dismiss(animated: true) {
-            self.context.reload(items: [ Item.bankSelection] )
+            self.context.reconfigure(items: [ Item.bankSelection] )
         }
     }
 }
