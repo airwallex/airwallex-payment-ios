@@ -46,13 +46,8 @@ public extension AWXUIContext {
                                   paymentResultDelegate: AWXPaymentResultDelegate,
                                   filterBy methodNames: [String]? = nil,
                                   style: LaunchStyle = .push) {
-        AWXAnalyticsLogger.shared().logAction(
-            withName: "payment_launched",
-            additionalInfo: [
-                "payment_method": "dropin",
-                "transaction_mode": session.transactionMode()
-            ]
-        )
+        Event.log(action: .launchPayment, extraInfo: [.subType: "dropin"])
+        
         let client = AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
         if let methodNames {
             session.paymentMethods = methodNames
@@ -131,13 +126,8 @@ public extension AWXUIContext {
                                   supportedBrands: [AWXCardBrand]? = nil,
                                   style: LaunchStyle = .push) {
         let name = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        AWXAnalyticsLogger.shared().logAction(
-            withName: "payment_launched",
-            additionalInfo: [
-                "payment_method": name,
-                "transaction_mode": session.transactionMode()
-            ]
-        )
+        Event.log(action: .launchPayment, extraInfo: [.subType: "element", .paymentMethod: name])
+        
         if name == AWXCardKey {
             assert(supportedBrands != nil && supportedBrands?.isEmpty == false, "Supported card brands are required for card payment.")
         }

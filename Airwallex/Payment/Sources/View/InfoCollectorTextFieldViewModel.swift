@@ -160,6 +160,10 @@ extension InfoCollectorTextFieldViewModel {
             guard let text, text.isValidEmail else {
                 throw NSLocalizedString("Invalid email", bundle: .payment, comment: "").asError()
             }
+        case .phoneNumber:
+            guard let text, text.isValidE164PhoneNumber else {
+                throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "").asError()
+            }
         default:
             guard let text, !text.isEmpty else {
                 throw ErrorMessage(rawValue: defaultErrorMessage)

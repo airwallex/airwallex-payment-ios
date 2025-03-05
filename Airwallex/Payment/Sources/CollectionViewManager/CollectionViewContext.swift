@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable>: DebugLoggable {
     private(set) weak var viewController: UIViewController?
     private weak var collectionView: UICollectionView!

@@ -114,16 +114,22 @@ private extension SectionDisplayHandler {
                indexPath: IndexPath) {
         if counter.count(for: sectionController) == 0 {
             sectionController.sectionWillDisplay()
+//            debugLog("\(sectionController.section) will display")
         }
         counter.add(sectionController)
     }
     
     func count(didEndDisplaying reusableView: UICollectionReusableView,
-                               for sectionController: AnySectionController<SectionType, ItemType>,
-                               indexPath: IndexPath) {
-        counter.remove(sectionController)
-        if counter.count(for: sectionController) == 0 {
-            sectionController.sectionDidEndDisplaying()
+               for sectionController: AnySectionController<SectionType, ItemType>,
+               indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            // defer couting to next runloop to avoid unnecessary
+            // end displaying/ will display callback when reload section
+            self.counter.remove(sectionController)
+            if self.counter.count(for: sectionController) == 0 {
+                sectionController.sectionDidEndDisplaying()
+//                self.debugLog("\(sectionController.section) end displaying ")
+            }
         }
     }
 }

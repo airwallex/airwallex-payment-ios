@@ -151,7 +151,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                            !prefix.isEmpty {
                             viewModel.text = prefix
                             viewModel.customInputValidator = { text in
-                                guard let text, text.count > prefix.count else {
+                                guard let text, text.count > prefix.count, text.isValidE164PhoneNumber else {
                                     throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "").asError()
                                 }
                             }
@@ -184,11 +184,15 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             }
         }
     }
+    
+    func sectionWillDisplay() {
+        Event.log(paymentView: name)
+    }
 }
 
 private extension SchemaPaymentSectionController {
     func checkout() {
-        AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button", additionalInfo: ["payment_method": name])
+        Event.log(action: .tapPayButton, extraInfo: [.paymentMethod: name])
         guard let schema else {
             // check schema
             updateItemsIfNecessary()
@@ -270,7 +274,7 @@ extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
     func paymentFormViewController(_ paymentFormViewController: AWXPaymentFormViewController, didSelectOption optionKey: String) {
         guard let bank = bankList?.first(where: { $0.name == optionKey }) else { return }
         bankSelectionViewModel?.bank = bank
-        AWXAnalyticsLogger.shared().logAction(withName: "select_bank", additionalInfo: [ "bankName": optionKey ])
+        Event.log(action: .selectBank, extraInfo: [.bankName: optionKey])
         paymentFormViewController.dismiss(animated: true) {
             self.context.reconfigure(items: [ Item.bankSelection] )
         }
