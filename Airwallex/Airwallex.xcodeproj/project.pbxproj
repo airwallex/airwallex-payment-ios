@@ -630,6 +630,7 @@
 		D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
 		D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrencyCodes.json; sourceTree = "<group>"; };
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D8C9836D2D78484000842576 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		D8D69B0F2D38F84A00D04856 /* WarningViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewCell.swift; sourceTree = "<group>"; };
 		D8DA089E2D08299F00B30AA2 /* PaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		D8F302AD2D1A823000D29B49 /* NewCardPaymentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCardPaymentSectionController.swift; sourceTree = "<group>"; };
@@ -1315,6 +1316,7 @@
 			children = (
 				D8F303232D1ABAB100D29B49 /* Array+Extensions.swift */,
 				D88A5C572D630D81003B7C1A /* ErrorMessage.swift */,
+				D8C9836D2D78484000842576 /* Events.swift */,
 				D81EAFA42D40F46600B44784 /* UIViewController+Extensions.swift */,
 				D8F303242D1ABAB100D29B49 /* AWXUIContext+Extensions.swift */,
 				D8F303252D1ABAB100D29B49 /* Bundle+Extensions.swift */,

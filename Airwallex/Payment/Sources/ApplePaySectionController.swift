@@ -32,7 +32,7 @@ class ApplePaySectionController: SectionController {
         let cell = context.dequeueReusableCell(ApplePayCell.self, for: itemIdentifier, indexPath: indexPath)
         let viewModel = ApplePayViewModel { [weak self] in
             guard let self , let viewController = self.context.viewController else { return }
-            AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button", additionalInfo: ["payment_method": methodType.name])
+            Event.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
             self.paymentSessionHandler = PaymentSessionHandler(
                 session: self.session,
                 viewController: viewController,
@@ -60,5 +60,9 @@ class ApplePaySectionController: SectionController {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(horizontal: 16)
         return section
+    }
+    
+    func sectionWillDisplay() {
+        Event.log(paymentView: .applePay)
     }
 }

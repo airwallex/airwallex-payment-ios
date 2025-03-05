@@ -10,6 +10,8 @@ import Foundation
 
 class CardPaymentConsentSectionController: SectionController {
     
+    static let subType = "consent"
+    
     private struct Items {
         /// checkout button for payment mode
         static let checkoutButton: String = "checkoutButton"
@@ -145,6 +147,14 @@ class CardPaymentConsentSectionController: SectionController {
             buttonAction: { [weak self] in
                 guard let self else { return }
                 self.addNewCardAction()
+                
+                Event.log(
+                    action: .selectPayment,
+                    extraInfo: [
+                        .paymentMethod: AWXCardKey,
+                        .subType: NewCardPaymentSectionController.subType
+                    ]
+                )
             }
         )
         header.setup(viewModel)
@@ -221,6 +231,14 @@ class CardPaymentConsentSectionController: SectionController {
             assert(false, "view controller not found")
             return
         }
+        Event.log(
+            action: .selectPayment,
+            extraInfo: [
+                .paymentMethod: AWXCardKey,
+                .subType: Self.subType,
+                .consentId: consent.id
+            ]
+        )
         
         if consent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
             selectedConsent = consent
@@ -253,6 +271,15 @@ class CardPaymentConsentSectionController: SectionController {
     
     func updateItemsIfNecessary() {
         consents = methodProvider.consents.filter { $0.paymentMethod != nil }
+    }
+    
+    func sectionWillDisplay() {
+        Event.log(
+            paymentView: .card,
+            extraInfo: [
+                .subType: Self.subType
+            ]
+        )
     }
 }
  
@@ -295,11 +322,11 @@ private extension CardPaymentConsentSectionController {
             assert(false, "view controller not found")
             return
         }
-        AWXAnalyticsLogger.shared().logAction(
-            withName: "tap_pay_button",
-            additionalInfo: [
-                "payment_method": AWXCardKey,
-                "is_consent": true
+        Event.log(
+            action: .tapPayButton,
+            extraInfo: [
+                .paymentMethod: AWXCardKey,
+                .subType: Self.subType
             ]
         )
         if let cvcConfigurer {

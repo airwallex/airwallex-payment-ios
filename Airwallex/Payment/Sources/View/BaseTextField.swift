@@ -201,7 +201,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let viewModel else { return }
         viewModel.handleDidEndEditing()
-        textField.updateWithoutDelegate { tf in
+        textField.updateWithoutDelegate { _ in
             setup(viewModel)
         }
     }

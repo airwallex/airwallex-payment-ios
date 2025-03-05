@@ -148,7 +148,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
     private let _section: () -> SectionType
     private let _context: () -> CollectionViewContext<SectionType, ItemType>
     private let _bindContext: (CollectionViewContext<SectionType, ItemType>) -> Void
-    private let _prepareItemUpdates: () -> Void
+    private let _updateItemsIfNecessary: () -> Void
     private let _willDisplayCell: (UICollectionViewCell, ItemType, IndexPath) -> Void
     private let _didEndDisplayingCell: (UICollectionViewCell, ItemType, IndexPath) -> Void
     private let _willDisplaySupplementaryView: (UICollectionReusableView, IndexPath) -> Void
@@ -169,7 +169,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
         self._items = { sectionController.items }
         self._section = { sectionController.section }
         self._context = { sectionController.context }
-        self._prepareItemUpdates = { sectionController.updateItemsIfNecessary() }
+        self._updateItemsIfNecessary = { sectionController.updateItemsIfNecessary() }
         self._willDisplayCell = sectionController.willDisplay(cell:itemIdentifier:at:)
         self._didEndDisplayingCell = sectionController.didEndDisplaying(cell:itemIdentifier:at:)
         self._willDisplaySupplementaryView = sectionController.willDisplay(supplementaryView:at:)
@@ -199,7 +199,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
     }
     
     func updateItemsIfNecessary() {
-        _prepareItemUpdates()
+        _updateItemsIfNecessary()
     }
     
     func willDisplay(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath) {

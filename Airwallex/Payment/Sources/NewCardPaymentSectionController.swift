@@ -12,6 +12,8 @@ import AirwallexRisk
 
 class NewCardPaymentSectionController: NSObject, SectionController {
     
+    static let subType = "card"
+    
     enum Item: String {
         case cardInfo
         case checkoutButton
@@ -177,6 +179,14 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             buttonAction: { [weak self] in
                 guard let self else { return }
                 self.switchToConsentPaymentAction()
+                
+                Event.log(
+                    action: .selectPayment,
+                    extraInfo: [
+                        .paymentMethod: AWXCardKey,
+                        .subType: CardPaymentConsentSectionController.subType
+                    ]
+                )
             }
         )
         view.setup(viewModel)
@@ -185,6 +195,14 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     
     func sectionWillDisplay() {
         Risk.log(event: "show_create_card", screen: "page_create_card")
+        
+        Event.log(
+            paymentView: .card,
+            extraInfo: [
+                .subType: Self.subType,
+                .supportedSchemes: methodType.cardSchemes.compactMap { $0.name }
+            ]
+        )
     }
 }
 
@@ -200,9 +218,12 @@ private extension NewCardPaymentSectionController {
     }
     
     func checkout() {
-        AWXAnalyticsLogger.shared().logAction(
-            withName: "tap_pay_button",
-            additionalInfo: ["payment_method": AWXCardKey, "is_consent": false]
+        Event.log(
+            action: .tapPayButton,
+            extraInfo: [
+                .paymentMethod: AWXCardKey,
+                .subType: Self.subType
+            ]
         )
         
         Risk.log(event: "click_payment_button", screen: "page_create_card")
@@ -242,7 +263,14 @@ private extension NewCardPaymentSectionController {
             context.reload(sections: [section])
             let message = error.localizedDescription
             context.viewController?.showAlert(message: message)
-            AWXAnalyticsLogger.shared().logAction(withName: "card_payment_validation", additionalInfo: ["message": message])
+            
+            Event.log(
+                action: .cardPaymentValidation,
+                extraInfo: [
+                    .message: message,
+                    .subType: Self.subType
+                ]
+            )
             debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
         }
     }
@@ -256,7 +284,13 @@ private extension NewCardPaymentSectionController {
     }
     
     func toggleReuseBillingAddress(_ reuseBillingAddress: Bool) {
-        AWXAnalyticsLogger.shared().logAction(withName: "toggle_billing_address")
+        Event.log(
+            action: .toggleBillingAddress,
+            extraInfo: [
+                .value: reuseBillingAddress,
+                .subType: Self.subType
+            ]
+        )
         shouldReuseShippingAddress = reuseBillingAddress
         billingInfoViewModel = BillingInfoCellViewModel(
             shippingInfo: session.billing,
@@ -277,7 +311,13 @@ private extension NewCardPaymentSectionController {
     }
     
     func toggleCardSaving(_ shouldSaveCard: Bool) {
-        AWXAnalyticsLogger.shared().logAction(withName: "save_card", additionalInfo: ["value": shouldSaveCard])
+        Event.log(
+            action: .saveCard,
+            extraInfo: [
+                .value: shouldSaveCard,
+                .subType: Self.subType
+            ]
+        )
         self.shouldSaveCard = shouldSaveCard
         if cardInfoViewModel.cardNumberConfigurer.currentBrand == .unionPay {
             context.performUpdates(section)
