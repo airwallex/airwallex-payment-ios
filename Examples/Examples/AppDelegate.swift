@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WXApi.startLog(by: .normal) { log in
             print("WeChat Log: \(log)")
         }
-        AWXAnalyticsLogger.shared().verbose = true
         return true
     }
     
