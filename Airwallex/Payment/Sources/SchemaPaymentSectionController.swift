@@ -229,6 +229,7 @@ private extension SchemaPaymentSectionController {
             paymentSessionHandler = PaymentSessionHandler(
                 session: session,
                 viewController: context.viewController!,
+                paymentResultDelegate: AWXUIContext.shared().delegate,
                 methodType: methodProvider.method(named: name)
             )
             paymentSessionHandler?.startSchemaPayment(with: paymentMethod)

@@ -224,6 +224,7 @@ private extension NewCardPaymentSectionController {
             paymentSessionHandler = PaymentSessionHandler(
                 session: session,
                 viewController: context.viewController!,
+                paymentResultDelegate: AWXUIContext.shared().delegate,
                 methodType: methodType
             )
             paymentSessionHandler?.startCardPayment(

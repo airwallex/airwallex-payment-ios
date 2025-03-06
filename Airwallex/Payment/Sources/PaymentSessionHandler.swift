@@ -18,32 +18,38 @@ public class PaymentSessionHandler: NSObject {
     
     private var viewController: UIViewController {
         assert(_viewController != nil, "The view controller that launches the payment is expected to remain present until the session ends.")
-        return _viewController ?? (UIApplication.shared.keyWindow?.rootViewController ?? UIViewController())
+        let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
+        if #available(iOS 15.0, *) {
+            return windowScene?.keyWindow?.rootViewController ?? UIViewController()
+        } else {
+            return windowScene?.windows.first?.rootViewController ?? UIViewController()
+        }
     }
 
-    private var paymentResultDelegate: AWXPaymentResultDelegate? {
-        (viewController as? AWXPaymentResultDelegate) ?? AWXUIContext.shared().delegate
-    }
-    
     private var methodType: AWXPaymentMethodType?
+    
+    private weak var paymentResultDelegate: AWXPaymentResultDelegate?
     
     /// Initializes a `PaymentSessionHandler` with a payment session and the view controller from which the payment is initiated.
     /// - Parameters:
     ///   - session: The payment session containing relevant transaction details.
     ///   - viewController: The view controller that initiates the payment process.
+    ///   - paymentResultDelegate: delegate which conforms to `AWXPaymentResultDelegate` for handling payment results
     ///   - methodType: The payment method type returned from the server (optional).
     public init(session: AWXSession,
                 viewController: UIViewController,
+                paymentResultDelegate: AWXPaymentResultDelegate?,
                 methodType: AWXPaymentMethodType? = nil) {
         self.session = session
         self._viewController = viewController
         self.methodType = methodType
+        self.paymentResultDelegate = paymentResultDelegate
     }
     
     /// Initializes a `PaymentSessionHandler` with a payment session and a view controller that also acts as a payment result delegate.
     /// - Parameters:
     ///   - session: The payment session containing relevant transaction details.
-    ///   - viewController: The view controller initiating the payment, which conforms to `AWXPaymentResultDelegate` for handling payment outcomes.
+    ///   - viewController: The view controller initiating the payment, which conforms to `AWXPaymentResultDelegate` for handling payment results.
     ///   - methodType: The payment method type returned from the server (optional).
     public init(session: AWXSession,
                 viewController: UIViewController & AWXPaymentResultDelegate,
@@ -51,6 +57,7 @@ public class PaymentSessionHandler: NSObject {
         self.session = session
         self._viewController = viewController
         self.methodType = methodType
+        self.paymentResultDelegate = viewController
     }
     
     /// Initiates an Apple Pay transaction.

@@ -311,7 +311,11 @@ private extension CardPaymentConsentSectionController {
             }
             consent.paymentMethod?.card?.cvc = cvcConfigurer.text
         }
-        paymentSessionHandler = PaymentSessionHandler(session: session, viewController: viewController)
+        paymentSessionHandler = PaymentSessionHandler(
+            session: session,
+            viewController: viewController,
+            paymentResultDelegate: AWXUIContext.shared().delegate
+        )
         paymentSessionHandler?.startConsentPayment(
             with: consent,
             paymentMethod: consent.paymentMethod!

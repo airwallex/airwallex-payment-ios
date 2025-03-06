@@ -36,6 +36,7 @@ class ApplePaySectionController: SectionController {
             self.paymentSessionHandler = PaymentSessionHandler(
                 session: self.session,
                 viewController: viewController,
+                paymentResultDelegate: AWXUIContext.shared().delegate,
                 methodType: methodType
             )
             self.paymentSessionHandler?.startApplePay()
