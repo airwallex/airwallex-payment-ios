@@ -167,6 +167,12 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         debugLog("stauts: \(status), error: \(error?.localizedDescription ?? "")")
+        
+        if status == .cancel {
+            // only log payment_canceled here
+            // payment_success and error eent are logged in AWXDefaultProvider
+            AnalyticEvent.log(action: .paymentCanceled)
+        }
         if let action = AWXUIContext.shared().paymentUIDismissAction {
             action {
                 self.paymentResultDelegate?.paymentViewController(self.viewController, didCompleteWith: status, error: error)

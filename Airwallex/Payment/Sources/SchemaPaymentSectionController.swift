@@ -5,7 +5,6 @@
 //  Created by Weiping Li on 2025/1/10.
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
-import AirwallexRisk
 
 /// This section controlelr is for schema payment
 class SchemaPaymentSectionController: NSObject, SectionController {
@@ -186,13 +185,13 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     }
     
     func sectionWillDisplay() {
-        Event.log(paymentView: name)
+        AnalyticEvent.log(paymentView: name)
     }
 }
 
 private extension SchemaPaymentSectionController {
     func checkout() {
-        Event.log(action: .tapPayButton, extraInfo: [.paymentMethod: name])
+        AnalyticEvent.log(action: .tapPayButton, extraInfo: [.paymentMethod: name])
         guard let schema else {
             // check schema
             updateItemsIfNecessary()
@@ -274,7 +273,7 @@ extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
     func paymentFormViewController(_ paymentFormViewController: AWXPaymentFormViewController, didSelectOption optionKey: String) {
         guard let bank = bankList?.first(where: { $0.name == optionKey }) else { return }
         bankSelectionViewModel?.bank = bank
-        Event.log(action: .selectBank, extraInfo: [.bankName: optionKey])
+        AnalyticEvent.log(action: .selectBank, extraInfo: [.bankName: optionKey])
         paymentFormViewController.dismiss(animated: true) {
             self.context.reconfigure(items: [ Item.bankSelection] )
         }

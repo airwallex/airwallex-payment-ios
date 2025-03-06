@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import AirwallexRisk
 
 class NewCardPaymentSectionController: NSObject, SectionController {
     
@@ -180,7 +179,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                 guard let self else { return }
                 self.switchToConsentPaymentAction()
                 
-                Event.log(
+                AnalyticEvent.log(
                     action: .selectPayment,
                     extraInfo: [
                         .paymentMethod: AWXCardKey,
@@ -194,9 +193,9 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     }
     
     func sectionWillDisplay() {
-        Risk.log(event: "show_create_card", screen: "page_create_card")
+        RiskEvent.log(.showCreateCard, screen: .createCard)
         
-        Event.log(
+        AnalyticEvent.log(
             paymentView: .card,
             extraInfo: [
                 .subType: Self.subType,
@@ -218,7 +217,7 @@ private extension NewCardPaymentSectionController {
     }
     
     func checkout() {
-        Event.log(
+        AnalyticEvent.log(
             action: .tapPayButton,
             extraInfo: [
                 .paymentMethod: AWXCardKey,
@@ -226,7 +225,7 @@ private extension NewCardPaymentSectionController {
             ]
         )
         
-        Risk.log(event: "click_payment_button", screen: "page_create_card")
+        RiskEvent.log(.clickPaymentButton, screen: .createCard)
         debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         do {
             let card = cardInfoViewModel.cardFromCollectedInfo()
@@ -264,7 +263,7 @@ private extension NewCardPaymentSectionController {
             let message = error.localizedDescription
             context.viewController?.showAlert(message: message)
             
-            Event.log(
+            AnalyticEvent.log(
                 action: .cardPaymentValidation,
                 extraInfo: [
                     .message: message,
@@ -284,7 +283,7 @@ private extension NewCardPaymentSectionController {
     }
     
     func toggleReuseBillingAddress(_ reuseBillingAddress: Bool) {
-        Event.log(
+        AnalyticEvent.log(
             action: .toggleBillingAddress,
             extraInfo: [
                 .value: reuseBillingAddress,
@@ -311,7 +310,7 @@ private extension NewCardPaymentSectionController {
     }
     
     func toggleCardSaving(_ shouldSaveCard: Bool) {
-        Event.log(
+        AnalyticEvent.log(
             action: .saveCard,
             extraInfo: [
                 .value: shouldSaveCard,

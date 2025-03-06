@@ -6,7 +6,7 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-import AirwallexRisk
+import UIKit
 
 class CardInfoCollectorCellViewModel {
     var nameOnCardConfigurer: InfoCollectorTextFieldViewModel
@@ -49,13 +49,13 @@ class CardInfoCollectorCellViewModel {
     func handleFieldDidBeginEditing(_ textField: UITextField, type: AWXTextFieldType) {
         switch type {
         case .cardNumber:
-            Risk.log(event: "input_card_number", screen: "page_create_card")
+            RiskEvent.log(.inputCardNumber, screen: .createCard)
         case .expires:
-            Risk.log(event: "input_card_expiry", screen: "page_create_card")
+            RiskEvent.log(.inputCardExpiry, screen: .createCard)
         case .CVC:
-            Risk.log(event: "input_card_cvc", screen: "page_create_card")
+            RiskEvent.log(.inputCardCVC, screen: .createCard)
         case .nameOnCard:
-            Risk.log(event: "input_card_holder_name", screen: "page_create_card")
+            RiskEvent.log(.inputCardHolderName, screen: .createCard)
         default:
             break
         }
