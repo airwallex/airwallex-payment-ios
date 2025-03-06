@@ -163,53 +163,36 @@ private extension CardInfoCollectorCell {
         }
         .store(in: &cancellables)
         
-        numberTextField.textField.textDidBeginEditingPublisher
-            .sink { [weak self] _ in
-                guard let viewModel = self?.viewModel,
-                      let textField = self?.numberTextField.textField,
-                      let textFieldType = self?.numberTextField.viewModel?.textFieldType else {
-                    assert(false)
-                    return
-                }
-                viewModel.handleFieldDidBeginEditing(textField, type: textFieldType)
+        //  for Risk events
+        Publishers.Merge4(
+            numberTextField.textField.textDidBeginEditingPublisher,
+            expiresTextField.textField.textDidBeginEditingPublisher,
+            cvcTextField.textField.textDidBeginEditingPublisher,
+            nameTextField.textField.textDidBeginEditingPublisher
+        )
+        .sink { [weak self] notification in
+            guard let self,
+                  let viewModel = self.viewModel,
+                  let textField = notification.object as? UITextField else {
+                assert(false)
+                return
             }
-            .store(in: &cancellables)
-        
-        cvcTextField.textField.textDidBeginEditingPublisher
-            .sink { [weak self] _ in
-                guard let viewModel = self?.viewModel,
-                      let textField = self?.cvcTextField.textField,
-                      let textFieldType = self?.cvcTextField.viewModel?.textFieldType else {
-                    assert(false)
-                    return
-                }
-                viewModel.handleFieldDidBeginEditing(textField, type: textFieldType)
+            var textFieldType: AWXTextFieldType
+            switch textField {
+            case self.numberTextField.textField:
+                textFieldType = .cardNumber
+            case self.expiresTextField.textField:
+                textFieldType = .expires
+            case self.cvcTextField.textField:
+                textFieldType = .CVC
+            case self.nameTextField.textField:
+                textFieldType = .nameOnCard
+            default:
+                textFieldType = .default
             }
-            .store(in: &cancellables)
-        
-        expiresTextField.textField.textDidBeginEditingPublisher
-            .sink { [weak self] _ in
-                guard let viewModel = self?.viewModel,
-                      let textField = self?.expiresTextField.textField,
-                      let textFieldType = self?.expiresTextField.viewModel?.textFieldType else {
-                    assert(false)
-                    return
-                }
-                viewModel.handleFieldDidBeginEditing(textField, type: textFieldType)
-            }
-            .store(in: &cancellables)
-        
-        nameTextField.textField.textDidBeginEditingPublisher
-            .sink { [weak self] _ in
-                guard let viewModel = self?.viewModel,
-                      let textField = self?.nameTextField.textField,
-                      let textFieldType = self?.nameTextField.viewModel?.textFieldType else {
-                    assert(false)
-                    return
-                }
-                viewModel.handleFieldDidBeginEditing(textField, type: textFieldType)
-            }
-            .store(in: &cancellables)
+            viewModel.handleFieldDidBeginEditing(textField, type: textFieldType)
+        }
+        .store(in: &cancellables)
     }
     
     func setupViews() {

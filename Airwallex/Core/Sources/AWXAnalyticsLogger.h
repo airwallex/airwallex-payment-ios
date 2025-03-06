@@ -14,17 +14,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXAnalyticsLogger : NSObject
 
+/// Defaults to `false`, will print all events to console if set to true
+@property (nonatomic, assign) BOOL verbose;
+
 + (instancetype)shared;
 
 - (void)logPageViewWithName:(NSString *)pageName;
 
-- (void)logPageViewWithName:(NSString *)pageName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
+- (void)logPageViewWithName:(NSString *)pageName additionalInfo:(NSDictionary<NSString *, id> *_Nullable)additionalInfo;
 
 - (void)logPaymentViewWithName:(NSString *)name;
 
-- (void)logPaymentViewWithName:(NSString *)name additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
+- (void)logPaymentViewWithName:(NSString *)name additionalInfo:(NSDictionary<NSString *, id> *_Nullable)additionalInfo;
 
-- (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
+- (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *, id> *_Nullable)additionalInfo;
 
 - (void)logErrorWithName:(NSString *)eventName url:(NSURL *)url response:(AWXAPIErrorResponse *)errorResponse;
 
@@ -32,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)logActionWithName:(NSString *)actionName;
 
-- (void)logActionWithName:(NSString *)actionName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
+- (void)logActionWithName:(NSString *)actionName additionalInfo:(NSDictionary<NSString *, id> *_Nullable)additionalInfo;
 
 @end
 
