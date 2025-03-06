@@ -85,12 +85,15 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             return context.dequeueReusableCell(SchemaPaymentReminderCell.self, for: itemIdentifier, indexPath: indexPath)
         case Item.bankSelection:
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: itemIdentifier, indexPath: indexPath)
-            cell.setup(bankSelectionViewModel!)
+            if let bankSelectionViewModel {
+                cell.setup(bankSelectionViewModel)
+            }
             return cell
         default:
             let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
-            let viewModel = uiFieldViewModels.first(where: { $0.fieldName == itemIdentifier})!
-            cell.setup(viewModel)
+            if let viewModel = uiFieldViewModels.first(where: { $0.fieldName == itemIdentifier}) {
+                cell.setup(viewModel)
+            }
             return cell
         }
     }
