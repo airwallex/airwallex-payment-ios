@@ -154,7 +154,7 @@ class CardPaymentConsentSectionController: SectionController {
                     action: .selectPayment,
                     extraInfo: [
                         .paymentMethod: AWXCardKey,
-                        .subType: NewCardPaymentSectionController.subType
+                        .subtype: NewCardPaymentSectionController.subType
                     ]
                 )
             }
@@ -237,7 +237,7 @@ class CardPaymentConsentSectionController: SectionController {
             action: .selectPayment,
             extraInfo: [
                 .paymentMethod: AWXCardKey,
-                .subType: Self.subType,
+                .subtype: Self.subType,
                 .consentId: consent.id
             ]
         )
@@ -281,7 +281,7 @@ class CardPaymentConsentSectionController: SectionController {
         AnalyticEvent.log(
             paymentView: .card,
             extraInfo: [
-                .subType: Self.subType
+                .subtype: Self.subType
             ]
         )
         
@@ -348,7 +348,7 @@ private extension CardPaymentConsentSectionController {
             action: .tapPayButton,
             extraInfo: [
                 .paymentMethod: AWXCardKey,
-                .subType: Self.subType,
+                .subtype: Self.subType,
                 .consentId: consent.id
             ]
         )
