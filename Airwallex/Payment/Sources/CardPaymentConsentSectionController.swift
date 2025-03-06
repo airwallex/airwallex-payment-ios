@@ -326,7 +326,8 @@ private extension CardPaymentConsentSectionController {
             action: .tapPayButton,
             extraInfo: [
                 .paymentMethod: AWXCardKey,
-                .subType: Self.subType
+                .subType: Self.subType,
+                .consentId: consent.id
             ]
         )
         if let cvcConfigurer {

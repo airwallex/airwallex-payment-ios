@@ -114,7 +114,6 @@ private extension SectionDisplayHandler {
                indexPath: IndexPath) {
         if counter.count(for: sectionController) == 0 {
             sectionController.sectionWillDisplay()
-//            debugLog("\(sectionController.section) will display")
         }
         counter.add(sectionController)
     }
@@ -128,7 +127,6 @@ private extension SectionDisplayHandler {
             self.counter.remove(sectionController)
             if self.counter.count(for: sectionController) == 0 {
                 sectionController.sectionDidEndDisplaying()
-//                self.debugLog("\(sectionController.section) end displaying ")
             }
         }
     }
