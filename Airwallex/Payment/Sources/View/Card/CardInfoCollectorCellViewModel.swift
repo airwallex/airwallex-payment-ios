@@ -49,13 +49,13 @@ class CardInfoCollectorCellViewModel {
     func handleFieldDidBeginEditing(_ textField: UITextField, type: AWXTextFieldType) {
         switch type {
         case .cardNumber:
-            RiskEvent.log(.inputCardNumber, screen: .createCard)
+            RiskLogger.log(.inputCardNumber, screen: .createCard)
         case .expires:
-            RiskEvent.log(.inputCardExpiry, screen: .createCard)
+            RiskLogger.log(.inputCardExpiry, screen: .createCard)
         case .CVC:
-            RiskEvent.log(.inputCardCVC, screen: .createCard)
+            RiskLogger.log(.inputCardCVC, screen: .createCard)
         case .nameOnCard:
-            RiskEvent.log(.inputCardHolderName, screen: .createCard)
+            RiskLogger.log(.inputCardHolderName, screen: .createCard)
         default:
             break
         }

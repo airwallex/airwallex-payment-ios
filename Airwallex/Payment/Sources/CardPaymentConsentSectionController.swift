@@ -150,7 +150,7 @@ class CardPaymentConsentSectionController: SectionController {
                 guard let self else { return }
                 self.addNewCardAction()
                 
-                AnalyticEvent.log(
+                AnalyticsLogger.log(
                     action: .selectPayment,
                     extraInfo: [
                         .paymentMethod: AWXCardKey,
@@ -233,7 +233,7 @@ class CardPaymentConsentSectionController: SectionController {
             assert(false, "view controller not found")
             return
         }
-        AnalyticEvent.log(
+        AnalyticsLogger.log(
             action: .selectPayment,
             extraInfo: [
                 .paymentMethod: AWXCardKey,
@@ -266,7 +266,7 @@ class CardPaymentConsentSectionController: SectionController {
             )
             context.performUpdates(section, forceReload: true)
             
-            RiskEvent.log(.showConsent, screen: .consent)
+            RiskLogger.log(.showConsent, screen: .consent)
         } else {
             //  CVC not required, checkout directly
             checkout(consent: consent)
@@ -278,7 +278,7 @@ class CardPaymentConsentSectionController: SectionController {
     }
     
     func sectionWillDisplay() {
-        AnalyticEvent.log(
+        AnalyticsLogger.log(
             paymentMethodView: .card,
             extraInfo: [
                 .subtype: Self.subType
@@ -296,7 +296,7 @@ class CardPaymentConsentSectionController: SectionController {
                 return object.isDescendant(of: cell)
             }
             .sink { _ in
-                RiskEvent.log(.inputCardCVC, screen: .consent)
+                RiskLogger.log(.inputCardCVC, screen: .consent)
             }
     }
     
@@ -344,7 +344,7 @@ private extension CardPaymentConsentSectionController {
             assert(false, "view controller not found")
             return
         }
-        AnalyticEvent.log(
+        AnalyticsLogger.log(
             action: .tapPayButton,
             extraInfo: [
                 .paymentMethod: AWXCardKey,
@@ -363,7 +363,7 @@ private extension CardPaymentConsentSectionController {
             
         }
         if mode == .payment {
-            RiskEvent.log(.clickPaymentButton, screen: .consent)
+            RiskLogger.log(.clickPaymentButton, screen: .consent)
         }
         paymentSessionHandler = PaymentSessionHandler(
             session: session,

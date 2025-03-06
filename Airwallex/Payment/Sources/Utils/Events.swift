@@ -48,30 +48,30 @@ enum AnalyticEvent {
     }
 }
 
-extension AnalyticEvent {
+extension AnalyticsLogger {
     static func log(pageView name: AnalyticEvent.PageView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
         if let extraInfo {
-            AWXAnalyticsLogger.shared().logPageView(
+            shared().logPageView(
                 withName: name.rawValue,
                 additionalInfo: extraInfo.reduce(into: [String: Any]()) { partialResult, keyValuePair in
                     partialResult[keyValuePair.key.rawValue] = keyValuePair.value
                 }
             )
         } else {
-            AWXAnalyticsLogger.shared().logPageView(withName: name.rawValue)
+            shared().logPageView(withName: name.rawValue)
         }
     }
     
     static func log(action name: AnalyticEvent.Action, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
         if let extraInfo {
-            AWXAnalyticsLogger.shared().logAction(
+            shared().logAction(
                 withName: name.rawValue,
                 additionalInfo: extraInfo.reduce(into: [String: Any]()) { partialResult, keyValuePair in
                     partialResult[keyValuePair.key.rawValue] = keyValuePair.value
                 }
             )
         } else {
-            AWXAnalyticsLogger.shared().logAction(withName: name.rawValue)
+            shared().logAction(withName: name.rawValue)
         }
     }
     
@@ -81,14 +81,14 @@ extension AnalyticEvent {
     
     static func log(paymentMethodView name: AnalyticEvent.PaymentMethodView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
         if let extraInfo {
-            AWXAnalyticsLogger.shared().logPaymentMethodView(
+            shared().logPaymentMethodView(
                 withName: name.rawValue,
                 additionalInfo: extraInfo.reduce(into: [String: Any]()) { partialResult, keyValuePair in
                     partialResult[keyValuePair.key.rawValue] = keyValuePair.value
                 }
             )
         } else {
-            AWXAnalyticsLogger.shared().logPaymentMethodView(withName: name.rawValue)
+            shared().logPaymentMethodView(withName: name.rawValue)
         }
     }
 }
@@ -107,7 +107,9 @@ enum RiskEvent: String {
     case inputCardCVC = "input_card_cvc"
     case inputCardHolderName = "input_card_holder_name"
     case clickPaymentButton = "click_payment_button"
-    
+}
+
+enum RiskLogger {
     static func log(_ event: RiskEvent, screen: RiskEvent.Page?) {
         Risk.log(event: event.rawValue, screen: screen?.rawValue)
     }

@@ -12,6 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NS_SWIFT_NAME(AnalyticsLogger)
 @interface AWXAnalyticsLogger : NSObject
 
 /// Defaults to `false`, will print all events to console if set to true
