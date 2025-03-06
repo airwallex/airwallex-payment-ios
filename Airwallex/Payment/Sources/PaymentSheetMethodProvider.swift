@@ -65,8 +65,6 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider, DebugLoggable {
                 filteredMethods.append(method)
             }
         }
-        //  fps (webqr) is not supported for now
-        filteredMethods = filteredMethods.filter { $0.name != "fps"}
         
         //  filter consents
         set.removeAll()
