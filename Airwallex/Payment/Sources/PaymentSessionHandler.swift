@@ -10,11 +10,16 @@ import UIKit
 
 public class PaymentSessionHandler: NSObject {
     
-    private(set) var session: AWXSession
+    private let session: AWXSession
     
     private var actionProvider: AWXDefaultProvider!
     
-    weak var viewController: UIViewController!
+    weak var _viewController: UIViewController?
+    
+    private var viewController: UIViewController {
+        assert(_viewController != nil, "The view controller that launches the payment is expected to remain present until the session ends.")
+        return _viewController ?? (UIApplication.shared.keyWindow?.rootViewController ?? UIViewController())
+    }
 
     private var paymentResultDelegate: AWXPaymentResultDelegate? {
         (viewController as? AWXPaymentResultDelegate) ?? AWXUIContext.shared().delegate
@@ -31,7 +36,7 @@ public class PaymentSessionHandler: NSObject {
                 viewController: UIViewController,
                 methodType: AWXPaymentMethodType? = nil) {
         self.session = session
-        self.viewController = viewController
+        self._viewController = viewController
         self.methodType = methodType
     }
     
@@ -44,7 +49,7 @@ public class PaymentSessionHandler: NSObject {
                 viewController: UIViewController & AWXPaymentResultDelegate,
                 methodType: AWXPaymentMethodType? = nil) {
         self.session = session
-        self.viewController = viewController
+        self._viewController = viewController
         self.methodType = methodType
     }
     
@@ -101,7 +106,7 @@ public class PaymentSessionHandler: NSObject {
     /// You should collect all information from your user before calling this api
     /// - Parameters:
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
-    public func startSchemaPayment(with paymentMethod: AWXPaymentMethod) {
+    func startSchemaPayment(with paymentMethod: AWXPaymentMethod) {
         assert(methodType == nil || methodType?.name == paymentMethod.type)
         let schemaProvider = AWXSchemaProvider(
             delegate: self,
@@ -151,7 +156,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     }
     
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
-        debugLog("stauts: \(status), error: \(error)")
+        debugLog("stauts: \(status), error: \(error?.localizedDescription ?? "")")
         if let action = AWXUIContext.shared().paymentUIDismissAction {
             action {
                 self.paymentResultDelegate?.paymentViewController(self.viewController, didCompleteWith: status, error: error)
