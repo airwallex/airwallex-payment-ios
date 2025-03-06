@@ -33,8 +33,6 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedLogger = [self new];
-        // wpdebug
-        sharedLogger.verbose = true;
     });
     return sharedLogger;
 }
