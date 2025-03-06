@@ -12,7 +12,7 @@ struct Event {
     
     private init() {}
     struct Fields: RawRepresentable, Hashable {
-        static let subType = Fields(rawValue: "sub_type")
+        static let subType = Fields(rawValue: "subtype")
         static let intentId = Fields(rawValue: "intent_id")
         static let paymentMethod = Fields(rawValue: "payment_method")
         
@@ -54,7 +54,7 @@ struct Event {
         static let toggleBillingAddress = Action(rawValue: "toggle_billing_address")
         static let saveCard = Action(rawValue: "save_card")
         static let selectBank = Action(rawValue: "select_bank")
-        static let launchPayment = Action(rawValue: "launchPayment")
+        static let launchPayment = Action(rawValue: "launch_payment")
         
         let rawValue: String
         init(rawValue: String) {
@@ -96,14 +96,14 @@ extension Event {
     
     static func log(paymentView name: Event.PaymentView, extraInfo: [Event.Fields : Any]? = nil) {
         if let extraInfo {
-            AWXAnalyticsLogger.shared().logPaymentView(
+            AWXAnalyticsLogger.shared().logPaymentMethodView(
                 withName: name.rawValue,
                 additionalInfo: extraInfo.reduce(into: [String: Any]()) { partialResult, keyValuePair in
                     partialResult[keyValuePair.key.rawValue] = keyValuePair.value
                 }
             )
         } else {
-            AWXAnalyticsLogger.shared().logPaymentView(withName: name.rawValue)
+            AWXAnalyticsLogger.shared().logPaymentMethodView(withName: name.rawValue)
         }
     }
 }

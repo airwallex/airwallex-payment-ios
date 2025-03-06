@@ -23,9 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)logPageViewWithName:(NSString *)pageName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
 
-- (void)logPaymentViewWithName:(NSString *)name;
+- (void)logPaymentMethodViewWithName:(NSString *)name;
 
-- (void)logPaymentViewWithName:(NSString *)name additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
+- (void)logPaymentMethodViewWithName:(NSString *)name additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
 
 - (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
 
