@@ -10,6 +10,8 @@ import Foundation
 
 //  MARK: - Method List
 public extension AWXUIContext {
+    static let subtypeDropin = "dropin"
+    static let subtypeElement = "element"
     enum LaunchStyle {
         case push
         case present
@@ -62,7 +64,7 @@ public extension AWXUIContext {
             style: style
         )
         
-        AnalyticEvent.log(action: .launchPayment, extraInfo: [.subtype: "dropin"])
+        AnalyticEvent.log(action: .launchPayment, extraInfo: [.subtype: Self.subtypeDropin])
     }
 }
 
@@ -141,7 +143,7 @@ public extension AWXUIContext {
             paymentResultDelegate: paymentResultDelegate,
             style: style
         )
-        AnalyticEvent.log(action: .launchPayment, extraInfo: [.subtype: "element", .paymentMethod: name])
+        AnalyticEvent.log(action: .launchPayment, extraInfo: [.subtype: Self.subtypeElement, .paymentMethod: name])
     }
 }
 
