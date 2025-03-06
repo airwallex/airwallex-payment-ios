@@ -33,7 +33,11 @@ class PaymentMethodsViewController: AWXViewController {
     }
 
     deinit {
-        AWXUIContext.shared().paymentUIDismissAction = nil
+        if AWXUIContext.shared().paymentUIDismissAction != nil {
+            // user cancel payment by navigation stack interactions, like screen edge pan gesture
+            AWXUIContext.shared().paymentUIDismissAction = nil
+            AnalyticEvent.log(action: .paymentCanceled)
+        }
     }
     
     private lazy var collectionViewManager: CollectionViewManager = {

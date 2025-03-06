@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import AirwallexRisk
 
-struct Event {
+struct AnalyticEvent {
     
     private init() {}
     struct Fields: RawRepresentable, Hashable {
@@ -55,6 +56,7 @@ struct Event {
         static let saveCard = Action(rawValue: "save_card")
         static let selectBank = Action(rawValue: "select_bank")
         static let launchPayment = Action(rawValue: "launch_payment")
+        static let paymentCanceled = Action(rawValue: "payment_canceled")
         
         let rawValue: String
         init(rawValue: String) {
@@ -63,8 +65,8 @@ struct Event {
     }
 }
 
-extension Event {
-    static func log(pageView name: Event.PageView, extraInfo: [Event.Fields : Any]? = nil) {
+extension AnalyticEvent {
+    static func log(pageView name: AnalyticEvent.PageView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
         if let extraInfo {
             AWXAnalyticsLogger.shared().logPageView(
                 withName: name.rawValue,
@@ -77,7 +79,7 @@ extension Event {
         }
     }
     
-    static func log(action name: Event.Action, extraInfo: [Event.Fields : Any]? = nil) {
+    static func log(action name: AnalyticEvent.Action, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
         if let extraInfo {
             AWXAnalyticsLogger.shared().logAction(
                 withName: name.rawValue,
@@ -90,11 +92,11 @@ extension Event {
         }
     }
     
-    static func log(paymentView name: String, extraInfo: [Event.Fields : Any]? = nil) {
-        log(paymentView: Event.PaymentView(rawValue: name), extraInfo: extraInfo)
+    static func log(paymentView name: String, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+        log(paymentView: AnalyticEvent.PaymentView(rawValue: name), extraInfo: extraInfo)
     }
     
-    static func log(paymentView name: Event.PaymentView, extraInfo: [Event.Fields : Any]? = nil) {
+    static func log(paymentView name: AnalyticEvent.PaymentView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
         if let extraInfo {
             AWXAnalyticsLogger.shared().logPaymentMethodView(
                 withName: name.rawValue,
@@ -105,5 +107,26 @@ extension Event {
         } else {
             AWXAnalyticsLogger.shared().logPaymentMethodView(withName: name.rawValue)
         }
+    }
+}
+
+enum RiskEvent: String {
+    enum Page: String {
+        case consent = "page_consent"
+        case createCard = "page_create_card"
+    }
+    
+    case showCreateCard = "show_create_card"
+    case showConsent = "show_consent"
+    case pageCreateCard = "page_create_card"
+    
+    case inputCardNumber = "input_card_number"
+    case inputCardExpiry = "input_card_expiry"
+    case inputCardCVC = "input_card_cvc"
+    case inputCardHolderName = "input_card_holder_name"
+    case clickPaymentButton = "click_payment_button"
+    
+    static func log(_ event: RiskEvent, screen: RiskEvent.Page?) {
+        Risk.log(event: event.rawValue, screen: screen?.rawValue)
     }
 }

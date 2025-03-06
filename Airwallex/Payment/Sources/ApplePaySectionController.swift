@@ -32,7 +32,7 @@ class ApplePaySectionController: SectionController {
         let cell = context.dequeueReusableCell(ApplePayCell.self, for: itemIdentifier, indexPath: indexPath)
         let viewModel = ApplePayViewModel { [weak self] in
             guard let self , let viewController = self.context.viewController else { return }
-            Event.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
+            AnalyticEvent.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
             self.paymentSessionHandler = PaymentSessionHandler(
                 session: self.session,
                 viewController: viewController,
@@ -63,6 +63,6 @@ class ApplePaySectionController: SectionController {
     }
     
     func sectionWillDisplay() {
-        Event.log(paymentView: .applePay)
+        AnalyticEvent.log(paymentView: .applePay)
     }
 }
