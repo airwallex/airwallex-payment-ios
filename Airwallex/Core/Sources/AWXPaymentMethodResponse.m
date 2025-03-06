@@ -76,7 +76,10 @@
     AWXGetPaymentMethodTypeResponse *response = [AWXGetPaymentMethodTypeResponse new];
     response.name = responseObject[@"name"];
     response.displayName = responseObject[@"display_name"];
-    response.logoURL = responseObject[@"logo_url"];
+    NSDictionary *logos = responseObject[@"logos"];
+    if (logos && logos[@"png"]) {
+        response.logoURL = [NSURL URLWithString:logos[@"png"]];
+    }
     response.hasSchema = [responseObject[@"has_schema"] boolValue];
 
     NSMutableArray *items = [NSMutableArray array];

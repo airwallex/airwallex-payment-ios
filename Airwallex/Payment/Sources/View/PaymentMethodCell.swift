@@ -10,7 +10,7 @@ import Combine
 
 struct PaymentMethodCellViewModel {
     let name: String
-    let imageURL: URL
+    let imageURL: URL?
     let isSelected: Bool
 }
 
@@ -21,8 +21,8 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = .radius_l
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.awxBorderInterative.cgColor
-        view.backgroundColor = .awxBackgroundPrimary
+        view.layer.borderColor = UIColor.awxColor(.borderInteractive).cgColor
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         return view
     }()
     
@@ -37,8 +37,8 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private let label: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = UIFont.awxHint
-        view.textColor = UIColor.awxTextLink
+        view.font = UIFont.awxFont(.caption2)
+        view.textColor = .awxColor(.textLink)
         return view
     }()
     
@@ -54,12 +54,16 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private(set) var viewModel: PaymentMethodCellViewModel?
     func setup(_ viewModel: PaymentMethodCellViewModel) {
         self.viewModel = viewModel
-        logo.setImageURL(viewModel.imageURL, placeholder: nil)
+        if let URL = viewModel.imageURL {
+            logo.setImageURL(URL, placeholder: nil)
+        } else {
+            logo.image = nil
+        }
         label.text = viewModel.name
-        self.label.font = viewModel.isSelected ? .awxHintBold : .awxHint
-        self.label.textColor = viewModel.isSelected ? .awxTextLink : .awxTextPrimary
-        roundedBG.layer.borderColor = viewModel.isSelected ? UIColor.awxBorderInterative.cgColor : UIColor.awxBorderDecorative.cgColor
-        roundedBG.backgroundColor = viewModel.isSelected ? UIColor.awxBackgroundHighlight : UIColor.awxBackgroundPrimary
+        label.font = viewModel.isSelected ? .awxFont(.caption2, weight: .bold) : .awxFont(.caption2)
+        label.textColor = viewModel.isSelected ? .awxColor(.textLink) : .awxColor(.textPrimary)
+        roundedBG.layer.borderColor = viewModel.isSelected ? UIColor.awxColor(.borderInteractive).cgColor : UIColor.awxColor(.borderDecorative).cgColor
+        roundedBG.backgroundColor = viewModel.isSelected ? UIColor.awxColor(.backgroundHighlight) : .awxColor(.backgroundPrimary)
     }
     
     override init(frame: CGRect) {
@@ -69,6 +73,13 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            roundedBG.layer.borderColor = (viewModel?.isSelected ?? false) ? UIColor.awxColor(.borderInteractive).cgColor : UIColor.awxColor(.borderDecorative).cgColor
+        }
     }
 }
 

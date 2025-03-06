@@ -24,11 +24,15 @@ class GetPaymentMethodsViewController: UITableViewController {
     }
     
     private func configCell(_ cell: UITableViewCell, methodType: AWXPaymentMethodType) {
-        cell.textLabel?.textColor = .awxTextPrimary
+        cell.textLabel?.textColor = .awxColor(.textPrimary)
         cell.textLabel?.text = methodType.displayName
         cell.detailTextLabel?.text = methodType.transactionCurrencies.joined(separator: ", ")
         Task {
-            let logoURL = methodType.resources.logoURL
+            guard let logoURL = methodType.resources.logoURL else {
+                cell.imageView?.image = nil
+                cell.setNeedsLayout()
+                return
+            }
             if let cachedImage = self.imageCache.object(forKey: logoURL as NSURL) {
                 // Use the cached image
                 await MainActor.run {
@@ -82,7 +86,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         super.viewDidLoad()
         customizeNavigationBackButton()
         
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(onRefreshControlTriggered), for: .valueChanged)
         tableView.refreshControl = refreshControl
@@ -128,27 +132,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         PaymentIntentRequest(
             amount: Decimal(string: ExamplesKeys.amount)!,
             currency: ExamplesKeys.currency,
-            order: .init(
-                products: [
-                    .init(
-                        type: "Free engraving",
-                        code: "123",
-                        name: "AirPods Pro",
-                        sku: "piece",
-                        quantity: 1,
-                        unitPrice: 399,
-                        desc: "Buy AirPods Pro, per month with trade-in",
-                        url: "www.aircross.com"
-                    ),
-                ],
-                shipping: .init(
-                    firstName: "Jason",
-                    lastName: "Wang",
-                    phoneNumber: "13800000000",
-                    address: .init(countryCode: "CN", state: "Shanghai", city: "Shanghai", street: "Pudong District", postcode: "100000")
-                ),
-                type: "physical_goods"
-            ),
+            order: DemoDataSource.createOrder(),
             metadata: ["id": 1],
             returnUrl: ExamplesKeys.returnUrl,
             customerID: ExamplesKeys.customerId,
@@ -194,6 +178,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         request.countryCode = ExamplesKeys.countryCode
         request.pageNum = 0
         request.pageSize = 1000
+        request.flow = AWXPaymentMethodFlow.app.rawValue
         return try await awxClient.send(request) as! AWXGetPaymentMethodTypesResponse
     }
     
@@ -228,7 +213,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         output += "- Transaction Currencies: \(currenciesDescription)\n"
         
         output += "- Active: \(methodType.active)\n"
-        output += "- Resources-logoURL: \(methodType.resources.logoURL)\n"
+        output += "- Resources-logoURL: \(methodType.resources.logoURL?.absoluteString ?? "N/A")\n"
         output += "- Resources-hasSchema: \(methodType.resources.hasSchema)\n"
         output += "- Has Schema: \(methodType.hasSchema)\n"
         

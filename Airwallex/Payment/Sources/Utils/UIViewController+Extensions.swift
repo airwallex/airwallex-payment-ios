@@ -10,7 +10,7 @@ import UIKit
 
 extension UIViewController {
     
-    private static let tagForActivityIndicator = 9527
+    private static let tagForActivityIndicator = Int.random(in: Int.max/2...Int.max)
     func startLoading() {
         view.isUserInteractionEnabled = false
         guard let indicator = view.viewWithTag(Self.tagForActivityIndicator) as? UIActivityIndicatorView  else {
@@ -35,5 +35,21 @@ extension UIViewController {
     func stopLoading() {
         view.isUserInteractionEnabled = true
         (view.viewWithTag(Self.tagForActivityIndicator) as? UIActivityIndicatorView)?.stopAnimating()
+    }
+    
+    func showAlert(
+        title: String? = nil,
+        message: String? = nil,
+        action: ((UIAlertAction) -> Void)? = nil
+    ) {
+        let alert = AWXAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("Close", bundle: .payment, comment: ""),
+                style: .cancel,
+                handler: action
+            )
+        )
+        present(alert, animated: true)
     }
 }

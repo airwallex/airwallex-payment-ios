@@ -45,7 +45,7 @@ class DemoListView: UIView {
     private lazy var separator: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .awxBorderDecorative
+        view.backgroundColor = .awxColor(.borderDecorative)
         return view
     }()
     
@@ -60,7 +60,7 @@ class DemoListView: UIView {
     
     
     func setupViews() {
-        backgroundColor = .awxBackgroundPrimary
+        backgroundColor = .awxColor(.backgroundPrimary)
         addSubview(scrollView)
         scrollView.addSubview(topStack)
         do {

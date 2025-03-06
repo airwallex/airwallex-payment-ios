@@ -26,7 +26,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     private var context: CollectionViewContext<SectionType, ItemType>!
     private(set) var collectionView: UICollectionView!
     
-    init(viewController: AWXViewController,
+    init(viewController: UIViewController,
          sectionProvider: SectionProvider,
          listConfiguration: UICollectionViewCompositionalLayoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()) {
         self.sectionDataSource = sectionProvider
@@ -51,13 +51,6 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         
-        if let boundaryItems {
-            for item in boundaryItems {
-                collectionView.register(item.reusableView, forSupplementaryViewOfKind: item.elementKind)
-            }
-        }
-        
-       
         diffableDataSource = UICollectionViewDiffableDataSource<SectionType, ItemType>(
             collectionView: collectionView,
             cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
@@ -66,34 +59,42 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                     assert(false, "invalid section index")
                     return UICollectionViewCell()
                 }
-                return sectionController.cell(for: collectionView, item: itemIdentifier, at: indexPath)
+                return sectionController.cell(for: itemIdentifier, at: indexPath)
             }
         )
         
         diffableDataSource.supplementaryViewProvider = {[weak self] (collectionView, elementKind, indexPath) in
-            if elementKind == "collection-header-element-kind" {
-                return collectionView.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: LabelHeader.reuseIdentifier, for: indexPath)
+            guard let self else { return nil }
+            if let boundaryItem = boundaryItems?.first(where: { $0.elementKind == elementKind}) {
+                return self.context.dequeueReusableSupplementaryView(ofKind: elementKind, viewClass: boundaryItem.reusableView, indexPath: indexPath)
             }
-            guard let self,
-                  let section = self.sections[safe: indexPath.section],
+            guard let section = self.sections[safe: indexPath.section],
                   let sectionController = self.sectionControllers[section] else {
                 assert(false, "UI not consistance with data source")
-                return UICollectionReusableView()
+                return nil
             }
             
-            return sectionController.supplementaryView(for: collectionView, ofKind: elementKind, at: indexPath)
+            return sectionController.supplementaryView(for: elementKind, at: indexPath)
         }
-        self.context = CollectionViewContext(
+        context = CollectionViewContext(
             viewController: viewController,
             collectionView: collectionView,
             layout: layout,
             dataSource: diffableDataSource,
-            reloadSectionData: reloadSectionData,
-            reloadData: reloadData
+            performSectionUpdates: { [weak self] in
+                self?.performUpdates(section: $0, updateItems: $1, forceReload: $2, animatingDifferences: $3)
+            },
+            performUpdates: { [weak self] in
+                self?.performUpdates(forceReload: $0, animatingDifferences: $1)
+            }
         )
+        
+        for item in boundaryItems ?? [] {
+            context.register(item.reusableView, forSupplementaryViewOfKind: item.elementKind)
+        }
     }
     
-    func reloadData(fullReload: Bool = false, animatingDifferences: Bool = false) {
+    func performUpdates(forceReload: Bool = false, animatingDifferences: Bool = false) {
         guard let sectionDataSource else { return }
         sections = sectionDataSource.sections()
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
@@ -103,29 +104,31 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
             if controller == nil {
                 let sectionController = sectionDataSource.sectionController(for: section)
                 sectionController.bind(context: context)
-                sectionController.registerReusableViews(to: collectionView)
                 sectionControllers[section] = sectionController
                 controller = sectionController
+            } else {
+                controller?.updateItemsIfNecessary()
             }
-            controller?.prepareItemsForReload()
             let items = controller?.items ?? []
             snapshot.appendItems(items, toSection: section)
         }
-        if fullReload {
+        if forceReload {
             snapshot.reloadSections(sections)
         }
         diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
-    func reloadSectionData(_ section: SectionType, fullReload: Bool = false, animatingDifferences: Bool = false) {
+    func performUpdates(section: SectionType, updateItems: Bool = true, forceReload: Bool = false, animatingDifferences: Bool = false) {
         guard let controller = sectionController(for: section) else { return }
         var snapshot = diffableDataSource.snapshot()
-        controller.prepareItemsForReload()
+        if updateItems {
+            controller.updateItemsIfNecessary()
+        }
         let items = snapshot.itemIdentifiers(inSection: section)
         snapshot.deleteItems(items)
         let newItems = controller.items
         snapshot.appendItems(newItems, toSection: section)
-        if fullReload {
+        if forceReload {
             snapshot.reloadSections([section])
         }
         diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
@@ -137,39 +140,44 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = sections[safe: indexPath.section],
-              let controller = sectionControllers[section] else { return }
-        controller.collectionView(collectionView, didSelectItemAt: indexPath)
+              let controller = sectionControllers[section],
+              let itemIdentifier = diffableDataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+        controller.collectionView(didSelectItem: itemIdentifier, at: indexPath)
     }
 }
 
-class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable> {
-    private(set) weak var viewController: AWXViewController?
+class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable>: DebugLoggable {
+    private(set) weak var viewController: UIViewController?
     private weak var collectionView: UICollectionView!
     private weak var layout: UICollectionViewCompositionalLayout!
     private(set) var dataSource: UICollectionViewDiffableDataSource<Section, Item>
-    private var _reloadData: (Bool, Bool) -> Void
-    private var _reloadSectionData: (Section, Bool, Bool) -> Void
+    private var _performUpdates: (Bool, Bool) -> Void
+    private var _performUpdatesForSection: (Section, Bool, Bool, Bool) -> Void
     
-    init(viewController: AWXViewController,
+    init(viewController: UIViewController,
          collectionView: UICollectionView,
          layout: UICollectionViewCompositionalLayout,
          dataSource: UICollectionViewDiffableDataSource<Section, Item>,
-         reloadSectionData: @escaping (Section, Bool, Bool) -> Void,
-         reloadData: @escaping (Bool, Bool) -> Void) {
+         performSectionUpdates: @escaping (Section, Bool, Bool, Bool) -> Void,
+         performUpdates: @escaping (Bool, Bool) -> Void) {
         self.viewController = viewController
         self.collectionView = collectionView
         self.layout = layout
         self.dataSource = dataSource
-        self._reloadData = reloadData
-        self._reloadSectionData = reloadSectionData
+        self._performUpdates = performUpdates
+        self._performUpdatesForSection = performSectionUpdates
     }
     
     func currentSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
         return dataSource.snapshot()
     }
     
-    func applySnapshot(_ snapshot: NSDiffableDataSourceSnapshot<Section, Item>) {
-        dataSource.apply(snapshot)
+    func applySnapshot(_ snapshot: NSDiffableDataSourceSnapshot<Section, Item>,
+                       animatingDifferences: Bool = false,
+                       completion: (() -> Void)? = nil) {
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences, completion: completion)
     }
     
     func invalidateLayout(for items: [Item], animated: Bool = false) {
@@ -196,32 +204,77 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     
     func reload(sections: [Section], animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
+        let existingSections = Set(snapshot.sectionIdentifiers)
+        assert(existingSections.isSuperset(of: sections), "reload sections not existing")
+        let sections = Array(existingSections.intersection(sections))
         snapshot.reloadSections(sections)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
     func reload(items: [Item], animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
+        let existingItems = Set(snapshot.itemIdentifiers)
+        assert(existingItems.isSuperset(of: items), "reload items not existing")
+        let items = Array(existingItems.intersection(items))
         snapshot.reloadItems(items)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
     func delete(items: [Item], animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
+        let existingItems = Set(snapshot.itemIdentifiers)
+        assert(existingItems.isSuperset(of: items), "delete items not existing")
+        let items = Array(existingItems.intersection(items))
         snapshot.deleteItems(items)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
-    func reloadData(fullReload: Bool = false, animatingDifferences: Bool = false) {
-        _reloadData(fullReload, animatingDifferences)
+    func performUpdates(forceReload: Bool = false, animatingDifferences: Bool = false) {
+        _performUpdates(forceReload, animatingDifferences)
     }
     
-    func reloadSectionData(_ section: Section, fullReload: Bool = false, animatingDifferences: Bool = false) {
-        _reloadSectionData(section, fullReload, animatingDifferences)
+    func performUpdates(_ section: Section,
+                        updateItems: Bool = true,
+                        forceReload: Bool = false,
+                        animatingDifferences: Bool = false) {
+        _performUpdatesForSection(section, updateItems, forceReload, animatingDifferences)
     }
     
     func scroll(to item: Item, position: UICollectionView.ScrollPosition, animated: Bool = false) {
         guard let indexPath = dataSource.indexPath(for: item) else { return }
         collectionView.scrollToItem(at: indexPath, at: position, animated: animated)
+    }
+    
+    func cellForItem(_ item: Item) -> UICollectionViewCell? {
+        guard let indexPath = dataSource.indexPath(for: item) else { return nil }
+        return collectionView.cellForItem(at: indexPath)
+    }
+    
+    // MARK: - register reusable views
+    
+    private lazy var registeredCells = Set<String>()
+    private lazy var registeredSupplementaryViews = Set<String>()
+    
+    fileprivate func register<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type) {
+        guard !registeredCells.contains(cellClass.reuseIdentifier) else { return }
+        collectionView.register(cellClass, forCellWithReuseIdentifier: cellClass.reuseIdentifier)
+        registeredCells.insert(cellClass.reuseIdentifier)
+    }
+    
+    fileprivate func register<T: UICollectionReusableView & ViewReusable>(_ viewClass: T.Type, forSupplementaryViewOfKind elementKind: String) {
+        let key = elementKind + viewClass.reuseIdentifier
+        guard !registeredSupplementaryViews.contains(key) else { return }
+        collectionView.register(viewClass, forSupplementaryViewOfKind: elementKind, withReuseIdentifier: viewClass.reuseIdentifier)
+        registeredSupplementaryViews.insert(key)
+    }
+    
+    func dequeueReusableCell<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type, for item: String, indexPath: IndexPath) -> T {
+        register(cellClass)
+        return collectionView.dequeueReusableCell(withReuseIdentifier: cellClass.reuseIdentifier, for: indexPath) as! T
+    }
+    
+    func dequeueReusableSupplementaryView<T: UICollectionReusableView & ViewReusable>(ofKind elementKind: String, viewClass: T.Type, indexPath: IndexPath) -> T {
+        register(viewClass, forSupplementaryViewOfKind: elementKind)
+        return collectionView.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: viewClass.reuseIdentifier, for: indexPath) as! T
     }
 }
