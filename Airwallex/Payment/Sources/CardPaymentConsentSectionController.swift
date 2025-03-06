@@ -279,7 +279,7 @@ class CardPaymentConsentSectionController: SectionController {
     
     func sectionWillDisplay() {
         AnalyticEvent.log(
-            paymentView: .card,
+            paymentMethodView: .card,
             extraInfo: [
                 .subtype: Self.subType
             ]

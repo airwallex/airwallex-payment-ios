@@ -63,6 +63,6 @@ class ApplePaySectionController: SectionController {
     }
     
     func sectionWillDisplay() {
-        AnalyticEvent.log(paymentView: .applePay)
+        AnalyticEvent.log(paymentMethodView: .applePay)
     }
 }

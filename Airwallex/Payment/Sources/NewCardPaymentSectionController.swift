@@ -196,7 +196,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         RiskEvent.log(.showCreateCard, screen: .createCard)
         
         AnalyticEvent.log(
-            paymentView: .card,
+            paymentMethodView: .card,
             extraInfo: [
                 .subtype: Self.subType,
                 .supportedSchemes: methodType.cardSchemes.compactMap { $0.name }
