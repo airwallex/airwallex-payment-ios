@@ -179,7 +179,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                 guard let self else { return }
                 self.switchToConsentPaymentAction()
                 
-                AnalyticEvent.log(
+                AnalyticsLogger.log(
                     action: .selectPayment,
                     extraInfo: [
                         .paymentMethod: AWXCardKey,
@@ -193,9 +193,9 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     }
     
     func sectionWillDisplay() {
-        RiskEvent.log(.showCreateCard, screen: .createCard)
+        RiskLogger.log(.showCreateCard, screen: .createCard)
         
-        AnalyticEvent.log(
+        AnalyticsLogger.log(
             paymentMethodView: .card,
             extraInfo: [
                 .subtype: Self.subType,
@@ -217,7 +217,7 @@ private extension NewCardPaymentSectionController {
     }
     
     func checkout() {
-        AnalyticEvent.log(
+        AnalyticsLogger.log(
             action: .tapPayButton,
             extraInfo: [
                 .paymentMethod: AWXCardKey,
@@ -225,7 +225,7 @@ private extension NewCardPaymentSectionController {
             ]
         )
         
-        RiskEvent.log(.clickPaymentButton, screen: .createCard)
+        RiskLogger.log(.clickPaymentButton, screen: .createCard)
         debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         do {
             let card = cardInfoViewModel.cardFromCollectedInfo()
@@ -263,7 +263,7 @@ private extension NewCardPaymentSectionController {
             let message = error.localizedDescription
             context.viewController?.showAlert(message: message)
             
-            AnalyticEvent.log(
+            AnalyticsLogger.log(
                 action: .cardPaymentValidation,
                 extraInfo: [
                     .message: message,
@@ -283,7 +283,7 @@ private extension NewCardPaymentSectionController {
     }
     
     func toggleReuseBillingAddress(_ reuseBillingAddress: Bool) {
-        AnalyticEvent.log(
+        AnalyticsLogger.log(
             action: .toggleBillingAddress,
             extraInfo: [
                 .value: reuseBillingAddress,
@@ -310,7 +310,7 @@ private extension NewCardPaymentSectionController {
     }
     
     func toggleCardSaving(_ shouldSaveCard: Bool) {
-        AnalyticEvent.log(
+        AnalyticsLogger.log(
             action: .saveCard,
             extraInfo: [
                 .value: shouldSaveCard,

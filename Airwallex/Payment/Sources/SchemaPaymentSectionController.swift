@@ -185,13 +185,13 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     }
     
     func sectionWillDisplay() {
-        AnalyticEvent.log(paymentMethodView: name)
+        AnalyticsLogger.log(paymentMethodView: name)
     }
 }
 
 private extension SchemaPaymentSectionController {
     func checkout() {
-        AnalyticEvent.log(action: .tapPayButton, extraInfo: [.paymentMethod: name])
+        AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: name])
         guard let schema else {
             // check schema
             updateItemsIfNecessary()
@@ -273,7 +273,7 @@ extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
     func paymentFormViewController(_ paymentFormViewController: AWXPaymentFormViewController, didSelectOption optionKey: String) {
         guard let bank = bankList?.first(where: { $0.name == optionKey }) else { return }
         bankSelectionViewModel?.bank = bank
-        AnalyticEvent.log(action: .selectBank, extraInfo: [.bankName: optionKey])
+        AnalyticsLogger.log(action: .selectBank, extraInfo: [.bankName: optionKey])
         paymentFormViewController.dismiss(animated: true) {
             self.context.reconfigure(items: [ Item.bankSelection] )
         }

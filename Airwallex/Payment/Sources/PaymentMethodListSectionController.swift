@@ -98,7 +98,7 @@ class PaymentMethodListSectionController: SectionController {
             debugLog("select same method")
             return
         }
-        AnalyticEvent.log(action: .selectPayment, extraInfo: [.paymentMethod: itemIdentifier])
+        AnalyticsLogger.log(action: .selectPayment, extraInfo: [.paymentMethod: itemIdentifier])
         
         var itemsToReload = [ selected.name, selectedMethod ]
         selectedMethod = selected.name
