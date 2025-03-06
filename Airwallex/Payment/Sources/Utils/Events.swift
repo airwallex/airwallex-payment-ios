@@ -43,7 +43,7 @@ enum AnalyticEvent {
         case toggleBillingAddress = "toggle_billing_address"
         case saveCard = "save_card"
         case selectBank = "select_bank"
-        case launchPayment = "launch_payment"
+        case paymentLaunched = "payment_launched"
         case paymentCanceled = "payment_canceled"
     }
 }
@@ -101,7 +101,6 @@ enum RiskEvent: String {
     
     case showCreateCard = "show_create_card"
     case showConsent = "show_consent"
-    case pageCreateCard = "page_create_card"
     
     case inputCardNumber = "input_card_number"
     case inputCardExpiry = "input_card_expiry"
