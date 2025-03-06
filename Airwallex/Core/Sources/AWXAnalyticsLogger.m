@@ -56,7 +56,9 @@
     extraInfo[@"eventType"] = @"page_view";
     [extraInfo addInfoFromPaymentSession];
     [_tracker infoWithEventName:pageName extraInfo:extraInfo];
-    if (self.verbose) { [self log:@"page_view: %@, extraInfo: %@", pageName, extraInfo]; }
+    if (self.verbose) {
+        [self log:@"page_view: %@, extraInfo: %@", pageName, extraInfo];
+    }
 }
 
 - (void)logPaymentViewWithName:(NSString *)name {
@@ -68,7 +70,9 @@
     extraInfo[@"eventType"] = @"payment_view";
     [extraInfo addInfoFromPaymentSession];
     [_tracker infoWithEventName:name extraInfo:extraInfo];
-    if (self.verbose) { [self log:@"payment_view: %@, extraInfo: %@", name, extraInfo]; }
+    if (self.verbose) {
+        [self log:@"payment_view: %@, extraInfo: %@", name, extraInfo];
+    }
 }
 
 - (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
@@ -105,7 +109,9 @@
     NSMutableDictionary *extraInfo = @{@"eventType": @"action"}.mutableCopy;
     [extraInfo addInfoFromPaymentSession];
     [_tracker infoWithEventName:actionName extraInfo:extraInfo];
-    if (self.verbose) { [self log:@"action_name: %@, extraInfo: %@", actionName, extraInfo]; }
+    if (self.verbose) {
+        [self log:@"action_name: %@, extraInfo: %@", actionName, extraInfo];
+    }
 }
 
 - (void)logActionWithName:(NSString *)actionName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
@@ -113,7 +119,9 @@
     extraInfo[@"eventType"] = @"action";
     [extraInfo addInfoFromPaymentSession];
     [_tracker infoWithEventName:actionName extraInfo:extraInfo];
-    if (self.verbose) { [self log:@"action_name: %@, extraInfo: %@", actionName, extraInfo]; }
+    if (self.verbose) {
+        [self log:@"action_name: %@, extraInfo: %@", actionName, extraInfo];
+    }
 }
 
 #pragma mark - Private methods
