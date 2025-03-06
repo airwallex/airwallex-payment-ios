@@ -33,6 +33,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedLogger = [self new];
+        // wpdebug
+        sharedLogger.verbose = true;
     });
     return sharedLogger;
 }
@@ -61,13 +63,13 @@
     }
 }
 
-- (void)logPaymentViewWithName:(NSString *)name {
-    [self logPaymentViewWithName:name additionalInfo:@{}];
+- (void)logPaymentMethodViewWithName:(NSString *)name {
+    [self logPaymentMethodViewWithName:name additionalInfo:@{}];
 }
 
-- (void)logPaymentViewWithName:(NSString *)name additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
+- (void)logPaymentMethodViewWithName:(NSString *)name additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
     NSMutableDictionary *extraInfo = additionalInfo.mutableCopy;
-    extraInfo[@"eventType"] = @"payment_view";
+    extraInfo[@"eventType"] = @"payment_method_view";
     [extraInfo addInfoFromPaymentSession];
     [_tracker infoWithEventName:name extraInfo:extraInfo];
     if (self.verbose) {
