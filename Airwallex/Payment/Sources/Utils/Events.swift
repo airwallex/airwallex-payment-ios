@@ -26,9 +26,9 @@ enum AnalyticEvent {
         case paymentMethodList = "payment_method_list"
     }
     
-    struct PaymentView: RawRepresentable {
-        static let applePay = PaymentView(rawValue: AWXApplePayKey)
-        static let card = PaymentView(rawValue: AWXCardKey)
+    struct PaymentMethodView: RawRepresentable {
+        static let applePay = PaymentMethodView(rawValue: AWXApplePayKey)
+        static let card = PaymentMethodView(rawValue: AWXCardKey)
         
         let rawValue: String
         init(rawValue: String) {
@@ -75,11 +75,11 @@ extension AnalyticEvent {
         }
     }
     
-    static func log(paymentView name: String, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
-        log(paymentView: AnalyticEvent.PaymentView(rawValue: name), extraInfo: extraInfo)
+    static func log(paymentMethodView name: String, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+        log(paymentMethodView: AnalyticEvent.PaymentMethodView(rawValue: name), extraInfo: extraInfo)
     }
     
-    static func log(paymentView name: AnalyticEvent.PaymentView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+    static func log(paymentMethodView name: AnalyticEvent.PaymentMethodView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
         if let extraInfo {
             AWXAnalyticsLogger.shared().logPaymentMethodView(
                 withName: name.rawValue,

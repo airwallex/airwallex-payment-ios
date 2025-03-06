@@ -185,7 +185,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     }
     
     func sectionWillDisplay() {
-        AnalyticEvent.log(paymentView: name)
+        AnalyticEvent.log(paymentMethodView: name)
     }
 }
 
