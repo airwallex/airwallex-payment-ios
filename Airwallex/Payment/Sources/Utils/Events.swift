@@ -9,33 +9,21 @@
 import Foundation
 import AirwallexRisk
 
-struct AnalyticEvent {
+enum AnalyticEvent {
     
-    private init() {}
-    struct Fields: RawRepresentable, Hashable {
-        static let subType = Fields(rawValue: "subtype")
-        static let intentId = Fields(rawValue: "intent_id")
-        static let paymentMethod = Fields(rawValue: "payment_method")
-        
-        static let consentId = Fields(rawValue: "consent_id")
-        static let supportedSchemes = Fields(rawValue: "supportedSchemes")
-        static let bankName = Fields(rawValue: "bankName")
-        static let message = Fields(rawValue: "message")
-        static let value = Fields(rawValue: "value")
-        
-        let rawValue: String
-        init(rawValue: String) {
-            self.rawValue = rawValue
-        }
+    enum Fields: String {
+        case subtype = "subtype"
+        case intentId = "intent_id"
+        case paymentMethod = "payment_method"
+        case consentId = "consent_id"
+        case supportedSchemes = "supportedSchemes"
+        case bankName = "bankName"
+        case message = "message"
+        case value = "value"
     }
     
-    struct PageView: RawRepresentable {
-        static let paymentMethodList = PageView(rawValue: "payment_method_list")
-        
-        let rawValue: String
-        init(rawValue: String) {
-            self.rawValue = rawValue
-        }
+    enum PageView: String {
+        case paymentMethodList = "payment_method_list"
     }
     
     struct PaymentView: RawRepresentable {
@@ -48,20 +36,15 @@ struct AnalyticEvent {
         }
     }
     
-    struct Action: RawRepresentable {
-        static let selectPayment = Action(rawValue: "select_payment")
-        static let tapPayButton = Action(rawValue: "tap_pay_button")
-        static let cardPaymentValidation = Action(rawValue: "card_payment_validation")
-        static let toggleBillingAddress = Action(rawValue: "toggle_billing_address")
-        static let saveCard = Action(rawValue: "save_card")
-        static let selectBank = Action(rawValue: "select_bank")
-        static let launchPayment = Action(rawValue: "launch_payment")
-        static let paymentCanceled = Action(rawValue: "payment_canceled")
-        
-        let rawValue: String
-        init(rawValue: String) {
-            self.rawValue = rawValue
-        }
+    enum Action: String {
+        case selectPayment = "select_payment"
+        case tapPayButton = "tap_pay_button"
+        case cardPaymentValidation = "card_payment_validation"
+        case toggleBillingAddress = "toggle_billing_address"
+        case saveCard = "save_card"
+        case selectBank = "select_bank"
+        case launchPayment = "launch_payment"
+        case paymentCanceled = "payment_canceled"
     }
 }
 

@@ -183,7 +183,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                     action: .selectPayment,
                     extraInfo: [
                         .paymentMethod: AWXCardKey,
-                        .subType: CardPaymentConsentSectionController.subType
+                        .subtype: CardPaymentConsentSectionController.subType
                     ]
                 )
             }
@@ -198,7 +198,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         AnalyticEvent.log(
             paymentView: .card,
             extraInfo: [
-                .subType: Self.subType,
+                .subtype: Self.subType,
                 .supportedSchemes: methodType.cardSchemes.compactMap { $0.name }
             ]
         )
@@ -221,7 +221,7 @@ private extension NewCardPaymentSectionController {
             action: .tapPayButton,
             extraInfo: [
                 .paymentMethod: AWXCardKey,
-                .subType: Self.subType
+                .subtype: Self.subType
             ]
         )
         
@@ -267,7 +267,7 @@ private extension NewCardPaymentSectionController {
                 action: .cardPaymentValidation,
                 extraInfo: [
                     .message: message,
-                    .subType: Self.subType
+                    .subtype: Self.subType
                 ]
             )
             debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
@@ -287,7 +287,7 @@ private extension NewCardPaymentSectionController {
             action: .toggleBillingAddress,
             extraInfo: [
                 .value: reuseBillingAddress,
-                .subType: Self.subType
+                .subtype: Self.subType
             ]
         )
         shouldReuseShippingAddress = reuseBillingAddress
@@ -314,7 +314,7 @@ private extension NewCardPaymentSectionController {
             action: .saveCard,
             extraInfo: [
                 .value: shouldSaveCard,
-                .subType: Self.subType
+                .subtype: Self.subType
             ]
         )
         self.shouldSaveCard = shouldSaveCard

@@ -64,7 +64,7 @@ public extension AWXUIContext {
             style: style
         )
         
-        AnalyticEvent.log(action: .launchPayment, extraInfo: [.subType: "dropin"])
+        AnalyticEvent.log(action: .launchPayment, extraInfo: [.subtype: "dropin"])
     }
 }
 
@@ -143,7 +143,7 @@ public extension AWXUIContext {
             paymentResultDelegate: paymentResultDelegate,
             style: style
         )
-        AnalyticEvent.log(action: .launchPayment, extraInfo: [.subType: "element", .paymentMethod: name])
+        AnalyticEvent.log(action: .launchPayment, extraInfo: [.subtype: "element", .paymentMethod: name])
     }
 }
 
