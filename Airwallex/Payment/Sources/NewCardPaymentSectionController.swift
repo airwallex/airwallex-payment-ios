@@ -37,8 +37,12 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     private lazy var cardInfoViewModel: CardInfoCollectorCellViewModel = {
         let viewModel = CardInfoCollectorCellViewModel(
             cardSchemes: methodType.cardSchemes,
-            callbackForLayoutUpdate: { [weak self] in
-                self?.context.invalidateLayout(for: [Item.cardInfo.rawValue], animated: false)
+            reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                self?.context.reconfigure(
+                    items: [Item.cardInfo.rawValue],
+                    invalidateLayout: invalidateLayout,
+                    configurer: nil
+                )
             }
         )
         return viewModel
@@ -58,6 +62,13 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                 guard let self else { return }
                 self.shouldReuseShippingAddress.toggle()
                 self.toggleReuseBillingAddress(shouldReuseShippingAddress)
+            },
+            reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                self?.context.reconfigure(
+                    items: [Item.billingInfo.rawValue],
+                    invalidateLayout: invalidateLayout,
+                    configurer: nil
+                )
             }
         )
         return viewModel
@@ -260,6 +271,7 @@ private extension NewCardPaymentSectionController {
             cardInfoViewModel.updateValidStatusForCheckout()
             billingInfoViewModel.updateValidStatusForCheckout()
             context.reload(sections: [section])
+            // TODO: optimize this, avoid reconfigure multiple times
             let message = error.localizedDescription
             context.viewController?.showAlert(message: message)
             
@@ -291,7 +303,7 @@ private extension NewCardPaymentSectionController {
             ]
         )
         shouldReuseShippingAddress = reuseBillingAddress
-        billingInfoViewModel = BillingInfoCellViewModel(
+        let viewModel = BillingInfoCellViewModel(
             shippingInfo: session.billing,
             reusingShippingInfo: reuseBillingAddress,
             countrySelectionHandler: { [weak self] in
@@ -304,9 +316,20 @@ private extension NewCardPaymentSectionController {
                 guard let self else { return }
                 self.shouldReuseShippingAddress.toggle()
                 self.toggleReuseBillingAddress(self.shouldReuseShippingAddress)
+            },
+            reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                self?.context.reconfigure(
+                    items: [Item.cardInfo.rawValue],
+                    invalidateLayout: invalidateLayout,
+                    configurer: nil
+                )
             }
         )
-        context.reconfigure(items: [ Item.billingInfo.rawValue ])
+        billingInfoViewModel = viewModel
+        context.reconfigure(items: [ Item.billingInfo.rawValue ], invalidateLayout: true) { cell in
+            guard let cell = cell as? BillingInfoCell else { return }
+            cell.setup(viewModel)
+        }
     }
     
     func toggleCardSaving(_ shouldSaveCard: Bool) {
@@ -328,7 +351,11 @@ extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate 
     func countryListViewController(_ controller: AWXCountryListViewController, didSelect country: AWXCountry) {
         controller.dismiss(animated: true)
         billingInfoViewModel.selectedCountry = country
-        context.reconfigure(items: [ Item.billingInfo.rawValue ])
+        context.reconfigure(
+            items: [ Item.billingInfo.rawValue ],
+            invalidateLayout: true,
+            configurer: nil
+        )
     }
 }
 

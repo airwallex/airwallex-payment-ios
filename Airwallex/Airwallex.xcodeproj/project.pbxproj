@@ -623,6 +623,11 @@
 		D88C3CE52D1D50E800E77FFD /* AWXCard+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCard+Extensions.swift"; sourceTree = "<group>"; };
 		D88C3CE62D1E4D7A00E77FFD /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		D88C3CE72D1E743500E77FFD /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
+		D8969C742D7ABF64006E502B /* CardCVCValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCVCValidator.swift; sourceTree = "<group>"; };
+		D8969C762D7AE22C006E502B /* InfoCollectorDefaultValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectorDefaultValidator.swift; sourceTree = "<group>"; };
+		D8969C772D7AE7CB006E502B /* CardNumberValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberValidator.swift; sourceTree = "<group>"; };
+		D8969C782D7AEB12006E502B /* CardExpiryValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExpiryValidator.swift; sourceTree = "<group>"; };
+		D8969C792D7AF5E0006E502B /* BlockValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockValidator.swift; sourceTree = "<group>"; };
 		D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXUIContext+Card.h"; sourceTree = "<group>"; };
 		D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXUIContext+Card.m"; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
@@ -1266,6 +1271,19 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		D8969C752D7AE1AF006E502B /* Validators */ = {
+			isa = PBXGroup;
+			children = (
+				D825DAA52D2F72EE005F725A /* AWXCardValidator+Extensions.swift */,
+				D8969C762D7AE22C006E502B /* InfoCollectorDefaultValidator.swift */,
+				D8969C742D7ABF64006E502B /* CardCVCValidator.swift */,
+				D8969C772D7AE7CB006E502B /* CardNumberValidator.swift */,
+				D8969C782D7AEB12006E502B /* CardExpiryValidator.swift */,
+				D8969C792D7AF5E0006E502B /* BlockValidator.swift */,
+			);
+			path = Validators;
+			sourceTree = "<group>";
+		};
 		D8BD9E112D0191BF0045A892 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1304,6 +1322,7 @@
 		D8F3032B2D1ABAB100D29B49 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D8969C752D7AE1AF006E502B /* Validators */,
 				D8F303232D1ABAB100D29B49 /* Array+Extensions.swift */,
 				D88A5C572D630D81003B7C1A /* ErrorMessage.swift */,
 				D8C9836D2D78484000842576 /* Events.swift */,
@@ -1320,7 +1339,6 @@
 				D8F303272D1ABAB100D29B49 /* Font+Extensions.swift */,
 				D827371E2D362A9900AA41A6 /* AWXSchema+Extensions.swift */,
 				D8F303282D1ABAB100D29B49 /* CGFloat+Extensions.swift */,
-				D825DAA52D2F72EE005F725A /* AWXCardValidator+Extensions.swift */,
 				D8F303292D1ABAB100D29B49 /* UIImage+Extensions.swift */,
 				D8F3032A2D1ABAB100D29B49 /* UITextField+Extensions.swift */,
 				D8F67EFB2D2CF77D004BAB26 /* NSLayoutConstraint+Extensions.swift */,

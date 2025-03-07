@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BankSelectionViewModel: OptionSelectionViewConfiguring {
+class BankSelectionViewModel: NSObject, OptionSelectionViewConfiguring {
     
     var bank: AWXBank? {
         didSet {

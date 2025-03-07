@@ -141,19 +141,18 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         fieldName: field.name,
                         title: field.displayName,
                         textFieldType: field.textFieldType,
-                        triggerLayoutUpdate: { [weak self] in
-                            self?.context.invalidateLayout(for: [field.name])
+                        reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                            self?.context.reconfigure(
+                                items: [viewModel.fieldName],
+                                invalidateLayout: invalidateLayout,
+                                configurer: nil
+                            )
                         }
                     )
                     if field.uiType == AWXField.UIType.phone {
                         if let prefix = AWXField.phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
                            !prefix.isEmpty {
                             viewModel.text = prefix
-                            viewModel.customInputValidator = { text in
-                                guard let text, text.count > prefix.count, text.isValidE164PhoneNumber else {
-                                    throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "").asError()
-                                }
-                            }
                         }
                     }
                     
@@ -205,7 +204,7 @@ private extension SchemaPaymentSectionController {
             // validate uiFields
             for viewModel in uiFieldViewModels {
                 do {
-                    try viewModel.validateUserInput(viewModel.text)
+                    try viewModel.inputValidator.validateUserInput(viewModel.text)
                 } catch {
                     context.scroll(to: viewModel.fieldName, position: .bottom, animated: true)
                     throw error
@@ -244,7 +243,6 @@ private extension SchemaPaymentSectionController {
             for viewModel in uiFieldViewModels {
                 viewModel.handleDidEndEditing()
             }
-            context.reload(sections: [section])
         }
     }
     
@@ -275,7 +273,11 @@ extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
         bankSelectionViewModel?.bank = bank
         AnalyticsLogger.log(action: .selectBank, extraInfo: [.bankName: optionKey])
         paymentFormViewController.dismiss(animated: true) {
-            self.context.reconfigure(items: [ Item.bankSelection] )
+            self.context.reconfigure(
+                items: [ Item.bankSelection],
+                invalidateLayout: true,
+                configurer: nil
+            )
         }
     }
 }

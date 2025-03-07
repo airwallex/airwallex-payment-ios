@@ -7,11 +7,9 @@
 //
 
 import UIKit
-import Combine
 
 protocol InfoCollectorCellConfiguring: InfoCollectorTextFieldConfiguring {
-    /// callback when cell height needs to change
-    var triggerLayoutUpdate: (() -> Void)? { get }
+    var reconfigureHandler: ((InfoCollectorTextFieldViewModel, Bool) -> Void) { get }
 }
 
 class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -21,8 +19,6 @@ class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    private var cancellables = Set<AnyCancellable>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,14 +31,6 @@ class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
             field.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
-        
-        field.textField.textDidEndEditingPublisher
-            .sink { [weak self] textField in
-                guard let self, let viewModel = self.viewModel else { return }
-                // this will be called after error hint update
-                viewModel.triggerLayoutUpdate?()
-            }
-            .store(in: &cancellables)
     }
     
     required init?(coder: NSCoder) {
