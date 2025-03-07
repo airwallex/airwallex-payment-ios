@@ -22,6 +22,11 @@ extension String {
         let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         return emailTest.evaluate(with: self)
     }
+    
+    var isValidE164PhoneNumber: Bool {
+        let e164Regex = #"^\+?[1-9]\d{1,14}$"#
+        return NSPredicate(format: "SELF MATCHES %@", e164Regex).evaluate(with: self)
+    }
 }
 
 extension String {

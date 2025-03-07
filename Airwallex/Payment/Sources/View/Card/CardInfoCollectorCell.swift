@@ -41,7 +41,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     }()
     
     private let cvcTextField: BaseTextField = {
-        let view = BaseTextField<CardCVCTextFieldViewModel>()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMaxXMaxYCorner
         
@@ -143,6 +143,7 @@ private extension CardInfoCollectorCell {
         }
         .store(in: &cancellables)
         
+        // TODO: combine did begin/end editing notification for layering updates
         Publishers.Merge4(
             numberTextField.textField.textDidEndEditingPublisher,
             expiresTextField.textField.textDidEndEditingPublisher,
@@ -155,11 +156,40 @@ private extension CardInfoCollectorCell {
                   let textField = notification.object as? UITextField else {
                 return
             }
-            self.hintLabel.text = viewModel.errorHintForCardFields
             if textField !== self.nameTextField.textField {
                 updateLayering()
             }
-            viewModel.triggerLayoutUpdate()
+        }
+        .store(in: &cancellables)
+        
+        //  for Risk events
+        Publishers.Merge4(
+            numberTextField.textField.textDidBeginEditingPublisher,
+            expiresTextField.textField.textDidBeginEditingPublisher,
+            cvcTextField.textField.textDidBeginEditingPublisher,
+            nameTextField.textField.textDidBeginEditingPublisher
+        )
+        .sink { [weak self] notification in
+            guard let self,
+                  let viewModel = self.viewModel,
+                  let textField = notification.object as? UITextField else {
+                assert(false)
+                return
+            }
+            var textFieldType: AWXTextFieldType
+            switch textField {
+            case self.numberTextField.textField:
+                textFieldType = .cardNumber
+            case self.expiresTextField.textField:
+                textFieldType = .expires
+            case self.cvcTextField.textField:
+                textFieldType = .CVC
+            case self.nameTextField.textField:
+                textFieldType = .nameOnCard
+            default:
+                textFieldType = .default
+            }
+            viewModel.handleFieldDidBeginEditing(textField, type: textFieldType)
         }
         .store(in: &cancellables)
     }

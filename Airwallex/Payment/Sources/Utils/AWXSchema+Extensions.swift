@@ -98,7 +98,7 @@ extension AWXField {
             }
         }
         
-        if let prefix { return prefix }
+        if let prefix { return prefix + " " } // add a space after country code
         
         if let currencyCode {
             do {
@@ -112,7 +112,9 @@ extension AWXField {
                 // prefix not found
             }
         }
-        
+        if let prefix {
+            return prefix + " "// add a space after country code
+        }
         return prefix
     }
 }

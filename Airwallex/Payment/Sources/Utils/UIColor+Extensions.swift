@@ -11,6 +11,8 @@ import UIKit
 public extension UIColor {
     
     public enum AWXColor {
+        case theme
+        
         // Background colors
         case backgroundPrimary
         case backgroundSecondary
@@ -43,6 +45,7 @@ public extension UIColor {
     
     static func awxColor(_ color: AWXColor) -> UIColor {
         switch color {
+        case .theme: return UIColor(dynamicLightColor: .awxPurple70, darkColor: .awxPurple40)
             // Background Colors
         case .backgroundPrimary: return UIColor(dynamicLightColor: .awxWhite, darkColor: .awxGray100)
         case .backgroundSecondary: return UIColor(dynamicLightColor: .awxGray10, darkColor: .awxGray90)

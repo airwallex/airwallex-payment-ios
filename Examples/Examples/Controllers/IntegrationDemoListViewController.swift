@@ -282,7 +282,6 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                //  pass AWXCardKey only
                 AWXUIContext.shared().launchCardPayment(
                     from: self,
                     session: session,

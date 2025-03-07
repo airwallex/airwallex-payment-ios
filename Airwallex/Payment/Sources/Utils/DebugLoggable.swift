@@ -15,7 +15,8 @@ extension DebugLoggable {
                   file: String = #file,
                   functionName: String = #function,
                   line: Int = #line) {
-        NSObject.logMesage("----Airwallex SDK----\(Date())---\n\(file)\n---\(functionName)-line: \(line)-\n---\(message)")
+        let fileName = file.split(separator: "/").map { String($0) }.last ?? file
+        NSObject.logMesage("----Airwallex SDK----\(Date())---\n- \(fileName) L:\(line)\n- func: \(functionName)\n- \(message)")
     }
 }
 

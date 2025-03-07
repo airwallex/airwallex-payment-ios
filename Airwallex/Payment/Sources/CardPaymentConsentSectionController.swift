@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import Combine
 
 class CardPaymentConsentSectionController: SectionController {
+    
+    static let subType = "consent"
     
     private struct Items {
         /// checkout button for payment mode
@@ -53,6 +56,7 @@ class CardPaymentConsentSectionController: SectionController {
     private var mode: Mode {
         selectedConsent == nil ? .list : .payment
     }
+    private var cvcInputToken: AnyCancellable?
     
     init(methodProvider: PaymentMethodProvider,
          addNewCardAction: @escaping () -> Void) {
@@ -145,6 +149,14 @@ class CardPaymentConsentSectionController: SectionController {
             buttonAction: { [weak self] in
                 guard let self else { return }
                 self.addNewCardAction()
+                
+                AnalyticsLogger.log(
+                    action: .selectPayment,
+                    extraInfo: [
+                        .paymentMethod: AWXCardKey,
+                        .subtype: NewCardPaymentSectionController.subType
+                    ]
+                )
             }
         )
         header.setup(viewModel)
@@ -221,30 +233,33 @@ class CardPaymentConsentSectionController: SectionController {
             assert(false, "view controller not found")
             return
         }
+        AnalyticsLogger.log(
+            action: .selectPayment,
+            extraInfo: [
+                .paymentMethod: AWXCardKey,
+                .subtype: Self.subType,
+                .consentId: consent.id
+            ]
+        )
         
         if consent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
             selectedConsent = consent
             let brand = AWXCardValidator.shared().brand(forCardName: consent.paymentMethod?.card?.brand ?? "")
             let cvcLength = AWXCardValidator.cvcLength(for: brand?.type ?? .unknown)
-            cvcConfigurer = InfoCollectorTextFieldViewModel(
-                textFieldType: .CVC,
-                placeholder: "CVC",
-                customTextModifier: { input in
-                    guard let input, !input.isEmpty else {
-                        return (nil, nil, false)
-                    }
-                    let text = String(input.filterIllegalCharacters(in: .decimalDigits.inverted).prefix(cvcLength))
-                    let shouldTriggerNextField = text.count == cvcLength
-                    return (text, nil, shouldTriggerNextField)
-                },
-                customInputValidator: { text in
-                    try AWXCardValidator.validate(cvc: text, requiredLength: cvcLength)
-                },
-                triggerLayoutUpdate: { [weak self] in
-                    self?.context.invalidateLayout(for: [consent.id], animated: false)
+            cvcConfigurer = CardCVCTextFieldViewModel(
+                cvcValidator: CardCVCValidator(maxLength: cvcLength),
+                reconfigureHandler: { [weak self] _, invalidateLayout in
+                    guard let self else { return }
+                    self.context.reconfigure(
+                        items: [Items.cvcField],
+                        invalidateLayout: invalidateLayout,
+                        configurer: nil
+                    )
                 }
             )
             context.performUpdates(section, forceReload: true)
+            
+            RiskLogger.log(.showConsent, screen: .consent)
         } else {
             //  CVC not required, checkout directly
             checkout(consent: consent)
@@ -253,6 +268,33 @@ class CardPaymentConsentSectionController: SectionController {
     
     func updateItemsIfNecessary() {
         consents = methodProvider.consents.filter { $0.paymentMethod != nil }
+    }
+    
+    func sectionWillDisplay() {
+        AnalyticsLogger.log(
+            paymentMethodView: .card,
+            extraInfo: [
+                .subtype: Self.subType
+            ]
+        )
+        
+        cvcInputToken = NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)
+            .filter { [weak self] in
+                guard let self,
+                      self.mode == .payment,
+                      let object = $0.object as? UITextField,
+                      let cell = context.cellForItem(Items.cvcField) as? InfoCollectorCell else {
+                    return false
+                }
+                return object.isDescendant(of: cell)
+            }
+            .sink { _ in
+                RiskLogger.log(.inputCardCVC, screen: .consent)
+            }
+    }
+    
+    func sectionDidEndDisplaying() {
+        cvcInputToken?.cancel()
     }
 }
  
@@ -295,11 +337,12 @@ private extension CardPaymentConsentSectionController {
             assert(false, "view controller not found")
             return
         }
-        AWXAnalyticsLogger.shared().logAction(
-            withName: "tap_pay_button",
-            additionalInfo: [
-                "payment_method": AWXCardKey,
-                "is_consent": true
+        AnalyticsLogger.log(
+            action: .tapPayButton,
+            extraInfo: [
+                .paymentMethod: AWXCardKey,
+                .subtype: Self.subType,
+                .consentId: consent.id
             ]
         )
         if let cvcConfigurer {
@@ -310,6 +353,10 @@ private extension CardPaymentConsentSectionController {
                 return
             }
             consent.paymentMethod?.card?.cvc = cvcConfigurer.text
+            
+        }
+        if mode == .payment {
+            RiskLogger.log(.clickPaymentButton, screen: .consent)
         }
         paymentSessionHandler = PaymentSessionHandler(
             session: session,

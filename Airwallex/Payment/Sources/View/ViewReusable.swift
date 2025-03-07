@@ -23,3 +23,10 @@ protocol ViewConfigurable: UIView {
     var viewModel: ViewModel? { get }
     func setup(_ viewModel: ViewModel)
 }
+
+extension ViewConfigurable {
+    func reconfigure() {
+        guard let viewModel else { return }
+        setup(viewModel)
+    }
+}

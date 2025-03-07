@@ -8,9 +8,10 @@
 
 import Foundation
 import Combine
-import AirwallexRisk
 
 class NewCardPaymentSectionController: NSObject, SectionController {
+    
+    static let subType = "card"
     
     enum Item: String {
         case cardInfo
@@ -36,8 +37,12 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     private lazy var cardInfoViewModel: CardInfoCollectorCellViewModel = {
         let viewModel = CardInfoCollectorCellViewModel(
             cardSchemes: methodType.cardSchemes,
-            callbackForLayoutUpdate: { [weak self] in
-                self?.context.invalidateLayout(for: [Item.cardInfo.rawValue], animated: false)
+            reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                self?.context.reconfigure(
+                    items: [Item.cardInfo.rawValue],
+                    invalidateLayout: invalidateLayout,
+                    configurer: nil
+                )
             }
         )
         return viewModel
@@ -57,6 +62,13 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                 guard let self else { return }
                 self.shouldReuseShippingAddress.toggle()
                 self.toggleReuseBillingAddress(shouldReuseShippingAddress)
+            },
+            reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                self?.context.reconfigure(
+                    items: [Item.billingInfo.rawValue],
+                    invalidateLayout: invalidateLayout,
+                    configurer: nil
+                )
             }
         )
         return viewModel
@@ -177,10 +189,30 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             buttonAction: { [weak self] in
                 guard let self else { return }
                 self.switchToConsentPaymentAction()
+                
+                AnalyticsLogger.log(
+                    action: .selectPayment,
+                    extraInfo: [
+                        .paymentMethod: AWXCardKey,
+                        .subtype: CardPaymentConsentSectionController.subType
+                    ]
+                )
             }
         )
         view.setup(viewModel)
         return view
+    }
+    
+    func sectionWillDisplay() {
+        RiskLogger.log(.showCreateCard, screen: .createCard)
+        
+        AnalyticsLogger.log(
+            paymentMethodView: .card,
+            extraInfo: [
+                .subtype: Self.subType,
+                .supportedSchemes: methodType.cardSchemes.compactMap { $0.name }
+            ]
+        )
     }
 }
 
@@ -196,12 +228,15 @@ private extension NewCardPaymentSectionController {
     }
     
     func checkout() {
-        AWXAnalyticsLogger.shared().logAction(
-            withName: "tap_pay_button",
-            additionalInfo: ["payment_method": AWXCardKey, "is_consent": false]
+        AnalyticsLogger.log(
+            action: .tapPayButton,
+            extraInfo: [
+                .paymentMethod: AWXCardKey,
+                .subtype: Self.subType
+            ]
         )
         
-        Risk.log(event: "click_payment_button", screen: "page_create_card")
+        RiskLogger.log(.clickPaymentButton, screen: .createCard)
         debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         do {
             let card = cardInfoViewModel.cardFromCollectedInfo()
@@ -236,9 +271,17 @@ private extension NewCardPaymentSectionController {
             cardInfoViewModel.updateValidStatusForCheckout()
             billingInfoViewModel.updateValidStatusForCheckout()
             context.reload(sections: [section])
+            // TODO: optimize this, avoid reconfigure multiple times
             let message = error.localizedDescription
             context.viewController?.showAlert(message: message)
-            AWXAnalyticsLogger.shared().logAction(withName: "card_payment_validation", additionalInfo: ["message": message])
+            
+            AnalyticsLogger.log(
+                action: .cardPaymentValidation,
+                extraInfo: [
+                    .message: message,
+                    .subtype: Self.subType
+                ]
+            )
             debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
         }
     }
@@ -252,9 +295,15 @@ private extension NewCardPaymentSectionController {
     }
     
     func toggleReuseBillingAddress(_ reuseBillingAddress: Bool) {
-        AWXAnalyticsLogger.shared().logAction(withName: "toggle_billing_address")
+        AnalyticsLogger.log(
+            action: .toggleBillingAddress,
+            extraInfo: [
+                .value: reuseBillingAddress,
+                .subtype: Self.subType
+            ]
+        )
         shouldReuseShippingAddress = reuseBillingAddress
-        billingInfoViewModel = BillingInfoCellViewModel(
+        let viewModel = BillingInfoCellViewModel(
             shippingInfo: session.billing,
             reusingShippingInfo: reuseBillingAddress,
             countrySelectionHandler: { [weak self] in
@@ -267,13 +316,30 @@ private extension NewCardPaymentSectionController {
                 guard let self else { return }
                 self.shouldReuseShippingAddress.toggle()
                 self.toggleReuseBillingAddress(self.shouldReuseShippingAddress)
+            },
+            reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                self?.context.reconfigure(
+                    items: [Item.cardInfo.rawValue],
+                    invalidateLayout: invalidateLayout,
+                    configurer: nil
+                )
             }
         )
-        context.reload(items: [ Item.billingInfo.rawValue ])
+        billingInfoViewModel = viewModel
+        context.reconfigure(items: [ Item.billingInfo.rawValue ], invalidateLayout: true) { cell in
+            guard let cell = cell as? BillingInfoCell else { return }
+            cell.setup(viewModel)
+        }
     }
     
     func toggleCardSaving(_ shouldSaveCard: Bool) {
-        AWXAnalyticsLogger.shared().logAction(withName: "save_card", additionalInfo: ["value": shouldSaveCard])
+        AnalyticsLogger.log(
+            action: .saveCard,
+            extraInfo: [
+                .value: shouldSaveCard,
+                .subtype: Self.subType
+            ]
+        )
         self.shouldSaveCard = shouldSaveCard
         if cardInfoViewModel.cardNumberConfigurer.currentBrand == .unionPay {
             context.performUpdates(section)
@@ -285,7 +351,11 @@ extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate 
     func countryListViewController(_ controller: AWXCountryListViewController, didSelect country: AWXCountry) {
         controller.dismiss(animated: true)
         billingInfoViewModel.selectedCountry = country
-        context.reload(items: [ Item.billingInfo.rawValue ])
+        context.reconfigure(
+            items: [ Item.billingInfo.rawValue ],
+            invalidateLayout: true,
+            configurer: nil
+        )
     }
 }
 

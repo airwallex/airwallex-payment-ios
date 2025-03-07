@@ -7,36 +7,25 @@
 
 import Foundation
 
-class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
+class CardExpireTextFieldViewModel: InfoCollectorTextFieldViewModel {
     
-    init(returnActionhandler: ((UITextField) -> Void)? = nil) {
-        self.returnActionHandler = returnActionhandler
+    init(reconfigureHandler: @escaping ReconfigureHandler) {
+        super.init(
+            textFieldType: .expires,
+            placeholder: "MM / YY",
+            customInputValidator: CardExpiryValidator(),
+            reconfigureHandler: reconfigureHandler
+        )
     }
     
-    // MARK: - BaseTextFieldConfiguring
-    var isEnabled: Bool = true
-    
-    var placeholder: String? = "MM / YY"
-    
-    var textFieldType: AWXTextFieldType? = .expires
-    
-    var text: String? {
-        attributedText?.string
-    }
-    
-    var attributedText: NSAttributedString? = nil
-    
-    var isValid: Bool {
-        errorHint == nil ? true : false
-    }
-    
-    var errorHint: String? = nil
-    
-    var returnKeyType: UIReturnKeyType = .default
-    
-    var returnActionHandler: ((UITextField) -> Void)?
-    
-    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let range = Range(range, in: textField.text ?? "") else {
+            return false
+        }
+        defer {
+            //  update text
+            reconfigureHandler(self, false)
+        }
         var userInput = textField.text?.replacingCharacters(in: range, with: string).filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         if let text, userInput.count == text.count - 1, text.hasPrefix(userInput), text.last == "/", userInput.count >= 1 {
             // when user deleting "/", we also delete the character before "/"
@@ -49,27 +38,14 @@ class CardExpireTextFieldViewModel: BaseTextFieldConfiguring {
         }
         
         attributedText = formatedString(month: String(expirationMonth), year: String(expirationYear))
+        print(attributedText)
         if (expirationMonth.count + expirationYear.count == 4) {
             returnActionHandler?(textField)
         }
         return false
     }
-    
-    func handleDidEndEditing() {
-        guard let text = text, !text.isEmpty else {
-            errorHint = NSLocalizedString("Expiry date is required", bundle: .payment, comment: "")
-            return
-        }
-        let components = text.components(separatedBy: "/")
-        do {
-            try AWXCardValidator.validate(expiryMonth: components.first, expiryYear: components.last)
-            errorHint = nil
-        } catch {
-            errorHint = error.localizedDescription
-        }
-    }
 }
-
+// TODO: text formatter for cvc
 private extension CardExpireTextFieldViewModel {
     func formatedString(month: String?, year: String?) -> NSAttributedString? {
         guard let month, !month.isEmpty else { return nil }
