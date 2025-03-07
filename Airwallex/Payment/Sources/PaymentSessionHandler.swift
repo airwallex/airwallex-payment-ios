@@ -171,7 +171,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
         if status == .cancel {
             // only log payment_canceled here
             // payment_success and error eent are logged in AWXDefaultProvider
-            AnalyticEvent.log(action: .paymentCanceled)
+            AnalyticsLogger.log(action: .paymentCanceled)
         }
         if let action = AWXUIContext.shared().paymentUIDismissAction {
             action {
