@@ -283,7 +283,6 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         guard !items.isEmpty else { return }
         for item in items {
             guard let cell = cellForItem(item) else {
-                assert(false, "make your cell conforms to ViewConfigurable")
                 continue
             }
             if let configurer {
@@ -291,6 +290,8 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
             } else {
                 if let cell = cell as? any ViewConfigurable {
                     cell.reconfigure()
+                } else {
+                    assert(false, "make your cell conforms to ViewConfigurable")
                 }
             }
         }
@@ -328,7 +329,10 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     }
     
     func cellForItem(_ item: Item) -> UICollectionViewCell? {
-        guard let indexPath = dataSource.indexPath(for: item) else { return nil }
+        guard let indexPath = dataSource.indexPath(for: item) else {
+            assert(false)
+            return nil
+        }
         return collectionView.cellForItem(at: indexPath)
     }
     

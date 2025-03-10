@@ -46,6 +46,34 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
     
     var reconfigureHandler: ((InfoCollectorTextFieldViewModel, Bool) -> Void)
     
+    // MARK: InfoCollectorTextFieldConfiguring
+    var fieldName: String
+    
+    var isRequired: Bool = true
+    
+    var hideErrorHintLabel = false
+    
+    var isEnabled = true
+    
+    var title: String?
+    
+    var errorHint: String?
+    
+    var text: String?
+    
+    var attributedText: NSAttributedString?
+    
+    var isValid: Bool
+    
+    var textFieldType: AWXTextFieldType?
+    
+    var placeholder: String?
+    
+    var returnKeyType: UIReturnKeyType
+    
+    var returnActionHandler: ((UITextField) -> Void)?
+    
+    // MARK: -
     init(fieldName: String = "",
          isRequired: Bool = true,
          isEnabled: Bool = true,
@@ -87,32 +115,6 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
         self.inputFormatter = customInputFormatter
         self.reconfigureHandler = reconfigureHandler
     }
-    // MARK: InfoCollectorTextFieldConfiguring
-    var fieldName: String
-    
-    var isRequired: Bool = true
-    
-    var hideErrorHintLabel = false
-    
-    var isEnabled = true
-    
-    var title: String?
-    
-    var errorHint: String?
-    
-    var text: String?
-    
-    var attributedText: NSAttributedString?
-    
-    var isValid: Bool
-    
-    var textFieldType: AWXTextFieldType?
-    
-    var placeholder: String?
-    
-    var returnKeyType: UIReturnKeyType
-    
-    var returnActionHandler: ((UITextField) -> Void)?
     
     func handleDidEndEditing() {
         do {
@@ -122,13 +124,13 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
         } catch {
             isValid = false
             errorHint = error.localizedDescription
-            DispatchQueue.main.async {
-                // deplay to next runloop to avoid deadlock in NSDiffableDataSource
-                // e.g. a reload action cause the editing textField to resign first responder, then there
-                // will be a reload and a reconfigure happened at the same time which might cause deadlock
-                self.reconfigureHandler(self, true)
-                // TODO: maybe we can optimize this, and not always pass true for layout update
-            }
+        }
+        DispatchQueue.main.async {
+            // deplay to next runloop to avoid deadlock in NSDiffableDataSource
+            // e.g. a reload action cause the editing textField to resign first responder, then there
+            // will be a reload and a reconfigure happened at the same time which might cause deadlock
+            self.reconfigureHandler(self, true)
+            // TODO: maybe we can optimize this, and not always pass true for layout update
         }
     }
 }
@@ -188,5 +190,9 @@ extension InfoCollectorTextFieldViewModel {
             customInputValidator: cvcValidator,
             reconfigureHandler: reconfigureHandler
         )
+    }
+    
+    func validate() throws {
+        try inputValidator.validateUserInput(text)
     }
 }

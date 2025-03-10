@@ -10,7 +10,7 @@
 class SchemaPaymentSectionController: NSObject, SectionController {
     
     struct Item {
-        static let bankSelection = "bankSelection"
+        static let bankName = AWXField.Name.bankName
         static let redirectReminder = "redirectReminder"
         static let checkoutButton = "checkoutButton"
     }
@@ -48,7 +48,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         var items = [String]()
         
         if let bankSelectionViewModel {
-            items.append(Item.bankSelection)
+            items.append(Item.bankName)
         }
         
         if let uiFields = schema?.uiFields {
@@ -82,7 +82,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             return cell
         case Item.redirectReminder:
             return context.dequeueReusableCell(SchemaPaymentReminderCell.self, for: itemIdentifier, indexPath: indexPath)
-        case Item.bankSelection:
+        case Item.bankName:
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: itemIdentifier, indexPath: indexPath)
             if let bankSelectionViewModel {
                 cell.setup(bankSelectionViewModel)
@@ -129,6 +129,13 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         bank: banks.count == 1 ? banks.first! : nil,
                         handleUserInteraction: { [weak self] in
                             self?.handleBankSelection()
+                        },
+                        reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                            self?.context.reconfigure(
+                                items: [viewModel.fieldName],
+                                invalidateLayout: invalidateLayout,
+                                configurer: nil
+                            )
                         }
                     )
                     bankList = banks
@@ -272,12 +279,6 @@ extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
         guard let bank = bankList?.first(where: { $0.name == optionKey }) else { return }
         bankSelectionViewModel?.bank = bank
         AnalyticsLogger.log(action: .selectBank, extraInfo: [.bankName: optionKey])
-        paymentFormViewController.dismiss(animated: true) {
-            self.context.reconfigure(
-                items: [ Item.bankSelection],
-                invalidateLayout: true,
-                configurer: nil
-            )
-        }
+        paymentFormViewController.dismiss(animated: true)
     }
 }
