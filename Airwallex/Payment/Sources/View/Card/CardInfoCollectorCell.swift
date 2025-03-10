@@ -34,7 +34,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     }()
     
     private let expiresTextField: BaseTextField = {
-        let view = BaseTextField<CardExpireTextFieldViewModel>()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMinXMaxYCorner
         return view

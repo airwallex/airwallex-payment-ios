@@ -10,12 +10,39 @@ protocol UserInputValidator {
     func validateUserInput(_ text: String?) throws
 }
 
+protocol UserInputFormatter {
+    func formatUserInput(_ textField: UITextField,
+                         changeCharactersIn range: Range<String.Index>,
+                         replacementString string: String) -> (NSAttributedString?, Bool)
+}
+
+extension UserInputFormatter {
+    func shouldTriggerReturn(modifiedInput input: String?,
+                             range: Range<String.Index>,
+                             replacementString string: String,
+                             maxLength: Int) -> Bool {
+        guard let input else { return false }
+        // check max length
+        let check1 = input.count == maxLength
+        
+        // check cursor index
+        let endCursor = input.index(
+            range.lowerBound,
+            offsetBy: string.count,
+            limitedBy: input.endIndex
+        ) ?? input.endIndex
+        let check2 = endCursor == input.endIndex
+        
+        return check1 && check2
+    }
+}
+
 class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
     typealias ReconfigureHandler = (InfoCollectorTextFieldViewModel, Bool) -> Void
-                                    
-    var customTextModifier: ((String?) -> (String?, NSAttributedString?, Bool))?
     
     var inputValidator: UserInputValidator
+    
+    var inputFormatter: UserInputFormatter?
     
     var reconfigureHandler: ((InfoCollectorTextFieldViewModel, Bool) -> Void)
     
@@ -32,7 +59,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
          placeholder: String? = nil,
          returnKeyType: UIReturnKeyType = .default,
          returnActionHandler: ((UITextField) -> Void)? = nil,
-         customTextModifier: ((String?) -> (String?, NSAttributedString?, Bool))? = nil,
+         customInputFormatter: UserInputFormatter? = nil,
          customInputValidator: UserInputValidator? = nil,
          reconfigureHandler: @escaping ReconfigureHandler) {
         self.fieldName = fieldName
@@ -48,7 +75,6 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
         self.placeholder = placeholder
         self.returnKeyType = returnKeyType
         self.returnActionHandler = returnActionHandler
-        self.customTextModifier = customTextModifier
         if let customInputValidator {
             self.inputValidator = customInputValidator
         } else {
@@ -58,6 +84,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
                 title: title
             )
         }
+        self.inputFormatter = customInputFormatter
         self.reconfigureHandler = reconfigureHandler
     }
     // MARK: InfoCollectorTextFieldConfiguring
@@ -89,7 +116,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
     
     func handleDidEndEditing() {
         do {
-            try inputValidator.validateUserInput(text)
+            try inputValidator.validateUserInput(attributedText?.string ?? text)
             isValid = true
             errorHint = nil
         } catch {
@@ -113,27 +140,28 @@ extension InfoCollectorTextFieldViewModel {
         guard let range = Range(range, in: textField.text ?? "") else {
             return false
         }
-        let userInput = textField.text?.replacingCharacters(in: range, with: string)
-        if let customTextModifier {
-            let (text, attributedText, triggerNextField) = customTextModifier(userInput)
-            self.text = text
+        
+        if let inputFormatter {
+            let (attributedText, triggerReturnAction) = inputFormatter.formatUserInput(
+                textField,
+                changeCharactersIn: range,
+                replacementString: string
+            )
+            text = attributedText?.string
             self.attributedText = attributedText
-            if triggerNextField, let returnActionHandler {
-                returnActionHandler(textField)
-            }
-            
             //  update text
             reconfigureHandler(self, false)
-            
+            // trigger return action if we have a valid input, and the cursor is at the end of the text field
+            if triggerReturnAction, let returnActionHandler {
+                returnActionHandler(textField)
+            }
             return false
-        }
-        guard userInput?.isEmpty == false else {
-            text = nil
+        } else {
+            let userInput = textField.text?.replacingCharacters(in: range, with: string)
+            text = userInput
             attributedText = nil
             return true
         }
-        text = userInput
-        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -147,5 +175,18 @@ extension InfoCollectorTextFieldViewModel {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         handleDidEndEditing()
+    }
+}
+
+extension InfoCollectorTextFieldViewModel {
+    convenience init(cvcValidator: CardCVCValidator,
+                     reconfigureHandler: @escaping ReconfigureHandler) {
+        self.init(
+            textFieldType: .CVC,
+            placeholder: "CVC",
+            customInputFormatter: cvcValidator,
+            customInputValidator: cvcValidator,
+            reconfigureHandler: reconfigureHandler
+        )
     }
 }

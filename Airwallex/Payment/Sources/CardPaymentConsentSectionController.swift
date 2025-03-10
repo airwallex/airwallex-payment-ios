@@ -244,10 +244,8 @@ class CardPaymentConsentSectionController: SectionController {
         
         if consent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
             selectedConsent = consent
-            let brand = AWXCardValidator.shared().brand(forCardName: consent.paymentMethod?.card?.brand ?? "")
-            let cvcLength = AWXCardValidator.cvcLength(for: brand?.type ?? .unknown)
-            cvcConfigurer = CardCVCTextFieldViewModel(
-                cvcValidator: CardCVCValidator(maxLength: cvcLength),
+            cvcConfigurer = InfoCollectorTextFieldViewModel(
+                cvcValidator: CardCVCValidator(cardName: consent.paymentMethod?.card?.brand ?? ""),
                 reconfigureHandler: { [weak self] _, invalidateLayout in
                     guard let self else { return }
                     self.context.reconfigure(

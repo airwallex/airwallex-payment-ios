@@ -9,13 +9,13 @@
 import UIKit
 
 class CardInfoCollectorCellViewModel {
-    var nameOnCardConfigurer: InfoCollectorTextFieldViewModel!
     
     var reconfigureHandler: (CardInfoCollectorCellViewModel, Bool) -> Void
     
     var cardNumberConfigurer: CardNumberTextFieldViewModel!
-    var expireDataConfigurer: CardExpireTextFieldViewModel!
-    var cvcConfigurer: CardCVCTextFieldViewModel!
+    var expireDataConfigurer: InfoCollectorTextFieldViewModel!
+    var cvcConfigurer: InfoCollectorTextFieldViewModel!
+    var nameOnCardConfigurer: InfoCollectorTextFieldViewModel!
     
     var errorHintForCardFields: String? {
         for configurer in [ cardNumberConfigurer, expireDataConfigurer, cvcConfigurer ] {
@@ -39,14 +39,18 @@ class CardInfoCollectorCellViewModel {
                 self.reconfigureHandler(self, layoutUpdate)
             }
         )
-        expireDataConfigurer = CardExpireTextFieldViewModel(
+        expireDataConfigurer = InfoCollectorTextFieldViewModel(
+            textFieldType: .expires,
+            placeholder: "MM / YY",
+            customInputFormatter: CardExpiryFormatter(),
+            customInputValidator: CardExpiryValidator(),
             reconfigureHandler: { [weak self] _, layoutUpdate in
                 guard let self else { return }
                 self.reconfigureHandler(self, layoutUpdate)
             }
         )
         
-        cvcConfigurer = CardCVCTextFieldViewModel(
+        cvcConfigurer = InfoCollectorTextFieldViewModel(
             cvcValidator: CardCVCValidator { [weak self] in
                 guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
                 return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
