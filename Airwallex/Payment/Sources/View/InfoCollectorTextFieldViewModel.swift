@@ -46,6 +46,8 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
     
     var reconfigureHandler: ((InfoCollectorTextFieldViewModel, Bool) -> Void)
     
+    var returnActionHandler: ((UITextField) -> Void)?
+    
     // MARK: InfoCollectorTextFieldConfiguring
     var fieldName: String
     
@@ -71,7 +73,9 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
     
     var returnKeyType: UIReturnKeyType
     
-    var returnActionHandler: ((UITextField) -> Void)?
+    var textFieldDelegate: (any UITextFieldDelegate)? {
+        return self
+    }
     
     // MARK: -
     init(fieldName: String = "",
@@ -115,28 +119,10 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
         self.inputFormatter = customInputFormatter
         self.reconfigureHandler = reconfigureHandler
     }
-    
-    func handleDidEndEditing() {
-        do {
-            try inputValidator.validateUserInput(attributedText?.string ?? text)
-            isValid = true
-            errorHint = nil
-        } catch {
-            isValid = false
-            errorHint = error.localizedDescription
-        }
-        DispatchQueue.main.async {
-            // deplay to next runloop to avoid deadlock in NSDiffableDataSource
-            // e.g. a reload action cause the editing textField to resign first responder, then there
-            // will be a reload and a reconfigure happened at the same time which might cause deadlock
-            self.reconfigureHandler(self, true)
-            // TODO: maybe we can optimize this, and not always pass true for layout update
-        }
-    }
 }
 
 // MARK: - UITextFieldDelegate
-extension InfoCollectorTextFieldViewModel {
+extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let range = Range(range, in: textField.text ?? "") else {
@@ -176,7 +162,7 @@ extension InfoCollectorTextFieldViewModel {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        handleDidEndEditing()
+        handleDidEndEditing(reconfigureIfNeeded: true)
     }
 }
 
@@ -193,6 +179,24 @@ extension InfoCollectorTextFieldViewModel {
     }
     
     func validate() throws {
-        try inputValidator.validateUserInput(text)
+        try inputValidator.validateUserInput(attributedText?.string ?? text)
+    }
+    
+    func handleDidEndEditing(reconfigureIfNeeded: Bool = false) {
+        let isValidCheck = isValid
+        let errorHintCheck = errorHint
+        do {
+            try validate()
+            isValid = true
+            errorHint = nil
+        } catch {
+            isValid = false
+            errorHint = error.localizedDescription
+        }
+        
+        let needReconfigure = (isValidCheck != isValid || errorHintCheck != errorHint)
+        if needReconfigure && reconfigureIfNeeded {
+            reconfigureHandler(self, true)
+        }
     }
 }

@@ -98,12 +98,10 @@ extension CardInfoCollectorCellViewModel {
     }
     
     func updateValidStatusForCheckout() {
-        let arr: [any BaseTextFieldConfiguring] = [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer, nameOnCardConfigurer]
+        let arr: [InfoCollectorTextFieldViewModel] = [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer, nameOnCardConfigurer]
         for configurer in arr {
             //  force configurer to check valid status if user left this field untouched
-//            configurer.handleDidEndEditing()
-            configurer.textFieldDidEndEditing?(UITextField())
-            // TODO:  try optimize this
+            configurer.handleDidEndEditing()
         }
     }
 }

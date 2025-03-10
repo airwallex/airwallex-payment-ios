@@ -8,7 +8,7 @@
 
 import Combine
 
-protocol BaseTextFieldConfiguring: UITextFieldDelegate {
+protocol BaseTextFieldConfiguring: AnyObject {
     /// If user editing is enabled, the text color will change based on this setting.
     var isEnabled: Bool { get }
     /// The text displayed in the embedded text field.
@@ -25,18 +25,8 @@ protocol BaseTextFieldConfiguring: UITextFieldDelegate {
     var placeholder: String? { get }
     /// return key type of the text field
     var returnKeyType: UIReturnKeyType { get set }
-    /// This will be called in `textFieldShouldReturn` and is intended to customize the return key action.
-    var returnActionHandler: ((UITextField) -> Void)? { get set }
-//    /// Called in `textField(_:shouldChangeCharactersIn:replacementString:)`
-//    /// - Parameters:
-//    ///   - textField: The text field being edited.
-//    ///   - range: The range of characters to be replaced, converted from `NSRange` to `Range<String.Index>`.
-//    ///   - string: The replacement string entered by the user.
-//    /// - Returns: A Boolean value indicating whether the user input should be updated naturally.
-//    ///   If `false`, `BaseTextField` will be setup with the updated view model again.
-//    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool
-//    /// will be called in `textFieldDidEndEditing`
-//    func handleDidEndEditing()
+    /// delegate for the embeded text field
+    var textFieldDelegate: UITextFieldDelegate? { get }
 }
 
 class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITextFieldDelegate {
@@ -103,6 +93,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         updateBorderAppearance()
 
         textField.addTarget(self, action: #selector(editingDidBegin(_:)), for: UITextField.Event.editingDidBegin)
+        textField.addTarget(self, action: #selector(editingDidEnd(_:)), for: UITextField.Event.editingDidEnd)
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -166,7 +157,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         }
         isEnabled = viewModel.isEnabled
         textField.returnKeyType = viewModel.returnKeyType
-        textField.delegate = viewModel
+        textField.delegate = viewModel.textFieldDelegate
         
         updateBorderAppearance()
     }
@@ -188,51 +179,13 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
             updateBorderAppearance()
         }
     }
-
-    //  MARK: - UITextFieldDelegate
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        if let returnHandler = viewModel?.returnActionHandler  {
-//            returnHandler(textField)
-//            return false
-//        } else {
-//            resignFirstResponder()
-//            return true
-//        }
-//    }
-//    
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        guard let viewModel else { return }
-//        viewModel.handleDidEndEditing()
-//        textField.updateWithoutDelegate { _ in
-//            setup(viewModel)
-//        }
-//    }
-//    
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        updateBorderAppearance()
-//    }
-//    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        guard let viewModel,
-//              let range = Range(range, in: textField.text ?? "") else {
-//            return false
-//        }
-//        let shouldChange = viewModel.handleTextShouldChange(
-//            textField: textField,
-//            range: range,
-//            replacementString: string
-//        )
-//        if shouldChange {
-//            // text input not modified in viewModel
-//            return true
-//        }
-//        // text or attributedText is changed
-//        setup(viewModel)
-//        return false
-//    }
     
-    //  MARK: -
+    //  MARK: - UITextField.Event
     @objc func editingDidBegin(_ textField: UITextField) {
+        updateBorderAppearance()
+    }
+    
+    @objc func editingDidEnd(_ textField: UITextField) {
         updateBorderAppearance()
     }
 }

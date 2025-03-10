@@ -344,14 +344,14 @@ private extension CardPaymentConsentSectionController {
             ]
         )
         if let cvcConfigurer {
-            cvcConfigurer.handleDidEndEditing()
-            guard cvcConfigurer.isValid else {
-                let message = cvcConfigurer.errorHint ?? NSLocalizedString("Invalid CVC / CVV", bundle: .payment, comment: "")
-                context.viewController?.showAlert(message: message)
+            cvcConfigurer.handleDidEndEditing(reconfigureIfNeeded: true)
+            do {
+                try cvcConfigurer.validate()
+                consent.paymentMethod?.card?.cvc = cvcConfigurer.text
+            } catch {
+                context.viewController?.showAlert(message: error.localizedDescription)
                 return
             }
-            consent.paymentMethod?.card?.cvc = cvcConfigurer.text
-            
         }
         if mode == .payment {
             RiskLogger.log(.clickPaymentButton, screen: .consent)

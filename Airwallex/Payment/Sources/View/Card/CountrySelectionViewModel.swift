@@ -10,7 +10,7 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
     var country: AWXCountry? {
         didSet {
             text = country?.countryName
-            handleDidEndEditing()
+            handleDidEndEditing(reconfigureIfNeeded: true)
         }
     }
     

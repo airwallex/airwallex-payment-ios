@@ -207,9 +207,7 @@ class BillingInfoCellViewModel {
         ]
         for configurer in fieldConfigurers {
             //  force configurer to check valid status if user left this field untouched
-//            configurer.handleDidEndEditing()
-            // wpdebug optimize this
-            configurer?.textFieldDidEndEditing(UITextField())
+            configurer?.handleDidEndEditing()
         }
     }
     

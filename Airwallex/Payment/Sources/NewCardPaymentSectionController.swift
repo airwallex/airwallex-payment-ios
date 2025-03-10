@@ -271,7 +271,6 @@ private extension NewCardPaymentSectionController {
             cardInfoViewModel.updateValidStatusForCheckout()
             billingInfoViewModel.updateValidStatusForCheckout()
             context.reload(sections: [section])
-            // TODO: optimize this, avoid reconfigure multiple times
             let message = error.localizedDescription
             context.viewController?.showAlert(message: message)
             
@@ -319,7 +318,7 @@ private extension NewCardPaymentSectionController {
             },
             reconfigureHandler: { [weak self] viewModel, invalidateLayout in
                 self?.context.reconfigure(
-                    items: [Item.cardInfo.rawValue],
+                    items: [Item.billingInfo.rawValue],
                     invalidateLayout: invalidateLayout,
                     configurer: nil
                 )

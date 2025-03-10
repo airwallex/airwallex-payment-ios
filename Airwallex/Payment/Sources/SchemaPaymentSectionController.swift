@@ -211,7 +211,7 @@ private extension SchemaPaymentSectionController {
             // validate uiFields
             for viewModel in uiFieldViewModels {
                 do {
-                    try viewModel.inputValidator.validateUserInput(viewModel.text)
+                    try viewModel.validate()
                 } catch {
                     context.scroll(to: viewModel.fieldName, position: .bottom, animated: true)
                     throw error
@@ -246,10 +246,10 @@ private extension SchemaPaymentSectionController {
             debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)
-            bankSelectionViewModel?.handleDidEndEditing()
             for viewModel in uiFieldViewModels {
                 viewModel.handleDidEndEditing()
             }
+            context.reload(sections: [section])
         }
     }
     

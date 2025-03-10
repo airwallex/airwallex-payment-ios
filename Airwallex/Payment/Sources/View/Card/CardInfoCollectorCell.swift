@@ -133,32 +133,24 @@ private extension CardInfoCollectorCell {
             }
         }
         
-        Publishers.Merge3(
+        Publishers.MergeMany(
             numberTextField.textField.textDidBeginEditingPublisher,
             expiresTextField.textField.textDidBeginEditingPublisher,
-            cvcTextField.textField.textDidBeginEditingPublisher
-        )
-        .sink { _ in
-            updateLayering()
-        }
-        .store(in: &cancellables)
-        
-        // TODO: combine did begin/end editing notification for layering updates
-        Publishers.Merge4(
+            cvcTextField.textField.textDidBeginEditingPublisher,
             numberTextField.textField.textDidEndEditingPublisher,
             expiresTextField.textField.textDidEndEditingPublisher,
             cvcTextField.textField.textDidEndEditingPublisher,
             nameTextField.textField.textDidEndEditingPublisher
         )
+        .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
         .sink { [weak self] notification in
             guard let self,
                   let viewModel = self.viewModel,
-                  let textField = notification.object as? UITextField else {
+                  let textField = notification.object as? UITextField,
+                  textField !== self.nameTextField.textField else {
                 return
             }
-            if textField !== self.nameTextField.textField {
-                updateLayering()
-            }
+            updateLayering()
         }
         .store(in: &cancellables)
         

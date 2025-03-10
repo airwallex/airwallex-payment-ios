@@ -103,11 +103,7 @@ class PaymentMethodListSectionController: SectionController {
         var itemsToReload = [ selected.name, selectedMethod ]
         selectedMethod = selected.name
         methodProvider.selectedMethod = selected
-        context.reconfigure(
-            items: itemsToReload,
-            invalidateLayout: false,
-            configurer: nil
-        )
+        context.reload(items: itemsToReload)
     }
     
     func updateItemsIfNecessary() {
