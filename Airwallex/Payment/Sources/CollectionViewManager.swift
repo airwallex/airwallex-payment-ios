@@ -265,17 +265,41 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
-    func reconfigure(items: [Item], animatingDifferences: Bool = false) {
+    /// Reconfigures cells instead of reloading them.
+    /// Calling this method will not trigger any `UICollectionViewDataSource` methods.
+    /// - Parameters:
+    ///   - items: The items that need to be reconfigured.
+    ///   - invalidateLayout: A boolean indicating whether to invalidate the layout of the items.
+    ///   - configurer: A closure that allows you to configure each cell.
+    ///     - If no closure is provided, the method attempts to cast the cell to `ViewConfigurable` and call `reconfigure`,
+    ///       which updates the cell using the current `viewModel` without replacing it.
+    ///     - `Important!` If you need to configure the cell with a new `viewModel`, you should provide a `configurer` block and update the cell in the block
+    ///   - animatingDifferences: A boolean indicating whether to animate changes.
+    func reconfigure(items: [Item],
+                     invalidateLayout: Bool,
+                     configurer: ((UICollectionViewCell) -> Void)?,
+                     animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
-        let existingItems = Set(snapshot.itemIdentifiers)
-        assert(existingItems.isSuperset(of: items), "reload items not existing")
-        let items = Array(existingItems.intersection(items))
-        if #available(iOS 15.0, *) {
-            snapshot.reconfigureItems(items)
-        } else {
-            snapshot.reloadItems(items)
+        guard !items.isEmpty else { return }
+        for item in items {
+            guard let cell = cellForItem(item) else {
+                assert(false, "make your cell conforms to ViewConfigurable")
+                continue
+            }
+            if let configurer {
+                configurer(cell)
+            } else {
+                if let cell = cell as? any ViewConfigurable {
+                    cell.reconfigure()
+                }
+            }
         }
-        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+        if invalidateLayout {
+            self.invalidateLayout(for: items)
+        }
+        // TODO: Update to `snapshot.reconfigureItems(items)` once the deployment target is iOS 15.0 or later.
+        //            snapshot.reconfigureItems(items)
+        //            dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
     func delete(items: [Item], animatingDifferences: Bool = false) {

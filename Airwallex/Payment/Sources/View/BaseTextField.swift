@@ -8,7 +8,7 @@
 
 import Combine
 
-protocol BaseTextFieldConfiguring: AnyObject {
+protocol BaseTextFieldConfiguring: UITextFieldDelegate {
     /// If user editing is enabled, the text color will change based on this setting.
     var isEnabled: Bool { get }
     /// The text displayed in the embedded text field.
@@ -27,16 +27,16 @@ protocol BaseTextFieldConfiguring: AnyObject {
     var returnKeyType: UIReturnKeyType { get set }
     /// This will be called in `textFieldShouldReturn` and is intended to customize the return key action.
     var returnActionHandler: ((UITextField) -> Void)? { get set }
-    /// Called in `textField(_:shouldChangeCharactersIn:replacementString:)`
-    /// - Parameters:
-    ///   - textField: The text field being edited.
-    ///   - range: The range of characters to be replaced, converted from `NSRange` to `Range<String.Index>`.
-    ///   - string: The replacement string entered by the user.
-    /// - Returns: A Boolean value indicating whether the user input should be updated naturally.
-    ///   If `false`, `BaseTextField` will be setup with the updated view model again.
-    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool
-    /// will be called in `textFieldDidEndEditing`
-    func handleDidEndEditing()
+//    /// Called in `textField(_:shouldChangeCharactersIn:replacementString:)`
+//    /// - Parameters:
+//    ///   - textField: The text field being edited.
+//    ///   - range: The range of characters to be replaced, converted from `NSRange` to `Range<String.Index>`.
+//    ///   - string: The replacement string entered by the user.
+//    /// - Returns: A Boolean value indicating whether the user input should be updated naturally.
+//    ///   If `false`, `BaseTextField` will be setup with the updated view model again.
+//    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool
+//    /// will be called in `textFieldDidEndEditing`
+//    func handleDidEndEditing()
 }
 
 class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITextFieldDelegate {
@@ -80,12 +80,11 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     override init(frame: CGRect) {
         super.init(frame: frame)
     
+        textField.tintColor = .awxColor(.textLink)
         addSubview(verticalStack)
         verticalStack.addArrangedSubview(box)
         box.addSubview(horizontalStack)
         horizontalStack.addArrangedSubview(textField)
-        
-        textField.delegate = self
         
         let constraints = [
             verticalStack.topAnchor.constraint(equalTo: topAnchor),
@@ -102,6 +101,8 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         NSLayoutConstraint.activate(constraints)
         
         updateBorderAppearance()
+
+        textField.addTarget(self, action: #selector(editingDidBegin(_:)), for: UITextField.Event.editingDidBegin)
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -165,6 +166,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         }
         isEnabled = viewModel.isEnabled
         textField.returnKeyType = viewModel.returnKeyType
+        textField.delegate = viewModel
         
         updateBorderAppearance()
     }
@@ -188,45 +190,50 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     }
 
     //  MARK: - UITextFieldDelegate
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let returnHandler = viewModel?.returnActionHandler  {
-            returnHandler(textField)
-            return false
-        } else {
-            resignFirstResponder()
-            return true
-        }
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        if let returnHandler = viewModel?.returnActionHandler  {
+//            returnHandler(textField)
+//            return false
+//        } else {
+//            resignFirstResponder()
+//            return true
+//        }
+//    }
+//    
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        guard let viewModel else { return }
+//        viewModel.handleDidEndEditing()
+//        textField.updateWithoutDelegate { _ in
+//            setup(viewModel)
+//        }
+//    }
+//    
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        updateBorderAppearance()
+//    }
+//    
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        guard let viewModel,
+//              let range = Range(range, in: textField.text ?? "") else {
+//            return false
+//        }
+//        let shouldChange = viewModel.handleTextShouldChange(
+//            textField: textField,
+//            range: range,
+//            replacementString: string
+//        )
+//        if shouldChange {
+//            // text input not modified in viewModel
+//            return true
+//        }
+//        // text or attributedText is changed
+//        setup(viewModel)
+//        return false
+//    }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let viewModel else { return }
-        viewModel.handleDidEndEditing()
-        textField.updateWithoutDelegate { _ in
-            setup(viewModel)
-        }
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    //  MARK: -
+    @objc func editingDidBegin(_ textField: UITextField) {
         updateBorderAppearance()
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let viewModel,
-              let range = Range(range, in: textField.text ?? "") else {
-            return false
-        }
-        let shouldChange = viewModel.handleTextShouldChange(
-            textField: textField,
-            range: range,
-            replacementString: string
-        )
-        if shouldChange {
-            // text input not modified in viewModel
-            return true
-        }
-        // text or attributedText is changed
-        setup(viewModel)
-        return false
     }
 }
 

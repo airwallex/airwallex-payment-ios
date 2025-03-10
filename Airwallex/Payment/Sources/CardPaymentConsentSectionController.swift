@@ -246,22 +246,15 @@ class CardPaymentConsentSectionController: SectionController {
             selectedConsent = consent
             let brand = AWXCardValidator.shared().brand(forCardName: consent.paymentMethod?.card?.brand ?? "")
             let cvcLength = AWXCardValidator.cvcLength(for: brand?.type ?? .unknown)
-            cvcConfigurer = InfoCollectorTextFieldViewModel(
-                textFieldType: .CVC,
-                placeholder: "CVC",
-                customTextModifier: { input in
-                    guard let input, !input.isEmpty else {
-                        return (nil, nil, false)
-                    }
-                    let text = String(input.filterIllegalCharacters(in: .decimalDigits.inverted).prefix(cvcLength))
-                    let shouldTriggerNextField = text.count == cvcLength
-                    return (text, nil, shouldTriggerNextField)
-                },
-                customInputValidator: { text in
-                    try AWXCardValidator.validate(cvc: text, requiredLength: cvcLength)
-                },
-                triggerLayoutUpdate: { [weak self] in
-                    self?.context.invalidateLayout(for: [consent.id], animated: false)
+            cvcConfigurer = CardCVCTextFieldViewModel(
+                cvcValidator: CardCVCValidator(maxLength: cvcLength),
+                reconfigureHandler: { [weak self] _, invalidateLayout in
+                    guard let self else { return }
+                    self.context.reconfigure(
+                        items: [Items.cvcField],
+                        invalidateLayout: invalidateLayout,
+                        configurer: nil
+                    )
                 }
             )
             context.performUpdates(section, forceReload: true)

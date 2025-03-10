@@ -41,7 +41,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     }()
     
     private let cvcTextField: BaseTextField = {
-        let view = BaseTextField<CardCVCTextFieldViewModel>()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMaxXMaxYCorner
         
@@ -143,6 +143,7 @@ private extension CardInfoCollectorCell {
         }
         .store(in: &cancellables)
         
+        // TODO: combine did begin/end editing notification for layering updates
         Publishers.Merge4(
             numberTextField.textField.textDidEndEditingPublisher,
             expiresTextField.textField.textDidEndEditingPublisher,
@@ -155,11 +156,9 @@ private extension CardInfoCollectorCell {
                   let textField = notification.object as? UITextField else {
                 return
             }
-            self.hintLabel.text = viewModel.errorHintForCardFields
             if textField !== self.nameTextField.textField {
                 updateLayering()
             }
-            viewModel.triggerLayoutUpdate()
         }
         .store(in: &cancellables)
         

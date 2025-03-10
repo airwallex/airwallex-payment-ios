@@ -8,34 +8,34 @@
 
 import Foundation
 
-class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
-    var isEnabled: Bool = true
-    
-    var placeholder: String? = "1234 1234 1234 1234"
-    
-    let textFieldType: AWXTextFieldType? = .cardNumber
-    
-    var text: String? {
-        attributedText?.string
-    }
-    
-    var attributedText: NSAttributedString?
-
+class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardNumberTextFieldConfiguring {
     let supportedBrands = AWXBrandType.supportedBrands
     
     var currentBrand: AWXBrandType = .unknown
     
-    var isValid: Bool {
-        errorHint == nil
+    let supportedCardSchemes: [AWXCardScheme]
+    
+    init(supportedCardSchemes: [AWXCardScheme],
+         reconfigureHandler: @escaping ReconfigureHandler) {
+        self.supportedCardSchemes = supportedCardSchemes
+        super.init(
+            textFieldType: .cardNumber,
+            placeholder: "1234 1234 1234 1234",
+            customInputValidator: CardNumberValidator(supportedCardSchemes: supportedCardSchemes),
+            reconfigureHandler: reconfigureHandler
+        )
     }
-    
-    var errorHint: String? = nil
-    
-    var returnKeyType: UIReturnKeyType = .default
-    
-    var returnActionHandler: ((UITextField) -> Void)? = nil
-    
-    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+}
+
+extension CardNumberTextFieldViewModel {
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let range = Range(range, in: textField.text ?? "") else {
+            return false
+        }
+        defer {
+            //  update text
+            reconfigureHandler(self, false)
+        }
         var userInput = textField.text?
             .replacingCharacters(in: range, with: string)
             .filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
@@ -63,22 +63,6 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
             }
         }
         return false
-    }
-    
-    func handleDidEndEditing() {
-        let cardNumber = attributedText?.string ?? ""
-        do {
-            try AWXCardValidator.validate(number: cardNumber, supportedSchemes: supportedCardSchemes)
-            errorHint = nil
-        } catch {
-            errorHint = error.localizedDescription
-        }
-    }
-    
-    let supportedCardSchemes: [AWXCardScheme]
-    
-    init(supportedCardSchemes: [AWXCardScheme]) {
-        self.supportedCardSchemes = supportedCardSchemes
     }
 }
 

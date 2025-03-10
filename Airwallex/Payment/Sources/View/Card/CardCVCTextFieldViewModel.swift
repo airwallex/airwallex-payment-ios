@@ -8,52 +8,36 @@
 
 import Foundation
 
-class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
-    var maxLengthGetter: () -> Int
-
-    init(maxLengthGetter: @escaping () -> Int,
-         returnKeyType: UIReturnKeyType = .default,
-         returnActionHandler: ((UITextField) -> Void)? = nil) {
-        self.maxLengthGetter = maxLengthGetter
-        self.returnKeyType = returnKeyType
-        self.returnActionHandler = returnActionHandler
+// TODO: replace with InfoCollectorTextFieldViewModel directly
+class CardCVCTextFieldViewModel: InfoCollectorTextFieldViewModel {
+    
+    private let cvcValidator: CardCVCValidator
+    
+    init(cvcValidator: CardCVCValidator,
+         reconfigureHandler: @escaping ReconfigureHandler) {
+        self.cvcValidator = cvcValidator
+        super.init(
+            textFieldType: .CVC,
+            placeholder: "CVC",
+            customInputValidator: cvcValidator,
+            reconfigureHandler: reconfigureHandler
+        )
     }
-    var isEnabled: Bool = true
-    
-    var errorHint: String? = nil
-    
-    var text: String? = nil
-    
-    var attributedText: NSAttributedString? = nil
-    
-    var isValid: Bool {
-        errorHint == nil ? true : false
-    }
-    
-    var textFieldType: AWXTextFieldType? = .CVC
-    
-    var placeholder: String? = "CVC"
-    
-    var returnKeyType: UIReturnKeyType
-    
-    var returnActionHandler: ((UITextField) -> Void)?
-    
-    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
-        let cvcLength = maxLengthGetter()
+    // TODO: text formatter for cvc
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let range = Range(range, in: textField.text ?? "") else {
+            return false
+        }
+        defer {
+            //  update text
+            reconfigureHandler(self, false)
+        }
+        let cvcLength = cvcValidator.maxLength
         var userInput = textField.text?.replacingCharacters(in: range, with: string).filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         text = String(userInput.prefix(cvcLength))
         if text?.count == cvcLength {
             returnActionHandler?(textField)
         }
         return false
-    }
-    
-    func handleDidEndEditing() {
-        do {
-            try AWXCardValidator.validate(cvc: text, requiredLength: maxLengthGetter())
-            errorHint = nil
-        } catch {
-            errorHint = error.localizedDescription
-        }
     }
 }
