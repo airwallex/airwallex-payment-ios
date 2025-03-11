@@ -12,43 +12,44 @@ class CardNumberFormatter: UserInputFormatter {
     
     private(set) var currentBrand: AWXBrandType = .unknown
     
-    func formatUserInput(_ textField: UITextField,
-                         changeCharactersIn range: Range<String.Index>,
-                         replacementString string: String) -> (NSAttributedString?, Bool) {
-        var userInput = textField.text?
-            .replacingCharacters(in: range, with: string)
-            .filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
-        let maxLength = AWXCardValidator.shared().maxLength(forCardNumber: userInput)
-        userInput = String(userInput.prefix(maxLength))
+    func automaticTriggerReturnAction(textField: UITextField) -> Bool {
+        guard let selectedRange = textField.selectedTextRange else {
+            return false
+        }
+        let text = textField.text ?? ""
+        let maxLength = AWXCardValidator.shared().maxLength(forCardNumber: text)
+        return selectedRange.end == textField.endOfDocument && text.count >= maxLength
+    }
+    
+    func handleUserInput(_ textField: UITextField, changeCharactersIn range: Range<String.Index>, replacementString string: String) {
+        let before = textField.text ?? ""
+        let replacementString = string.filterIllegalCharacters(in: .decimalDigits.inverted)
+        var after = before.replacingCharacters(in: range, with: string)
         
         var cardBrandType: AWXBrandType = .unknown
-        if !userInput.isEmpty, let brand = AWXCardValidator.shared().brand(forCardNumber: userInput) {
+        if !after.isEmpty, let brand = AWXCardValidator.shared().brand(forCardNumber: after) {
             cardBrandType = brand.type
         }
         currentBrand = cardBrandType
         
+        let maxLength = AWXCardValidator.shared().maxLength(forCardNumber: after)
         let attributedText = formatText(
-            userInput,
+            after,
             brand: cardBrandType,
-            defaultTextAttributes: textField.defaultTextAttributes
+            attributes: textField.defaultTextAttributes
         )
-        
-        // Check if the user has provided a valid input and if the cursor is at the end of the text field.
-        let shouldTriggerReturn = shouldTriggerReturn(
-            modifiedInput: userInput,
-            range: range,
-            replacementString: string,
+        textField.updateContentAndCursor(
+            attributedText: attributedText,
             maxLength: maxLength
         )
-        return (attributedText, shouldTriggerReturn)
     }
     
     func formatText(_ text: String,
                     brand: AWXBrandType,
-                    defaultTextAttributes: [NSAttributedString.Key: Any]) -> NSAttributedString? {
+                    attributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(
             string: text,
-            attributes: [.font: UIFont.awxFont(.body2), .foregroundColor: UIColor.awxColor(.textPrimary)]
+            attributes: attributes
         )
         var type: AWXBrandType = .unknown
         if !text.isEmpty, let brand = AWXCardValidator.shared().brand(forCardNumber: text) {

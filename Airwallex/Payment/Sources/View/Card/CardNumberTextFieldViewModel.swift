@@ -29,4 +29,10 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardNumberT
             reconfigureHandler: reconfigureHandler
         )
     }
+    
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let _ = super.textField(textField, shouldChangeCharactersIn: range, replacementString: string)
+        reconfigureHandler(self, false)
+        return false
+    }
 }

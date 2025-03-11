@@ -636,6 +636,7 @@
 		D8C9836D2D78484000842576 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		D8D18D402D7EC53200830C68 /* CardExpiryFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExpiryFormatter.swift; sourceTree = "<group>"; };
 		D8D18D412D7FD6BF00830C68 /* BeginEditingEventObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginEditingEventObserver.swift; sourceTree = "<group>"; };
+		D8D18D432D802E9900830C68 /* MaxLengthFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxLengthFormatter.swift; sourceTree = "<group>"; };
 		D8D69B0F2D38F84A00D04856 /* WarningViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewCell.swift; sourceTree = "<group>"; };
 		D8DA089E2D08299F00B30AA2 /* PaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		D8F302AD2D1A823000D29B49 /* NewCardPaymentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCardPaymentSectionController.swift; sourceTree = "<group>"; };
@@ -1290,6 +1291,7 @@
 			children = (
 				D8969C7B2D7EBAAE006E502B /* CardNumberFormatter.swift */,
 				D8D18D402D7EC53200830C68 /* CardExpiryFormatter.swift */,
+				D8D18D432D802E9900830C68 /* MaxLengthFormatter.swift */,
 			);
 			path = Formatters;
 			sourceTree = "<group>";

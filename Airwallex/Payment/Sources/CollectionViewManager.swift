@@ -330,7 +330,6 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     
     func cellForItem(_ item: Item) -> UICollectionViewCell? {
         guard let indexPath = dataSource.indexPath(for: item) else {
-            assert(false)
             return nil
         }
         return collectionView.cellForItem(at: indexPath)

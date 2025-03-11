@@ -9,21 +9,29 @@
 import Foundation
 
 struct CardExpiryFormatter: UserInputFormatter {
-    func formatUserInput(_ textField: UITextField,
+    
+    private let maxLength = 5
+    func automaticTriggerReturnAction(textField: UITextField) -> Bool {
+        guard let selectedRange = textField.selectedTextRange else {
+            return false
+        }
+        let text = textField.text ?? ""
+        return selectedRange.end == textField.endOfDocument && text.count >= maxLength
+    }
+    
+    func handleUserInput(_ textField: UITextField,
                          changeCharactersIn range: Range<String.Index>,
-                         replacementString string: String) -> (NSAttributedString?, Bool) {
+                         replacementString string: String) {
         var userInput = textField.text?.replacingCharacters(in: range, with: string)
             .filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         if let text = textField.text,
-            userInput.count == text.count - 1,
-            text.hasPrefix(userInput),
-            text.last == "/",
-            userInput.count >= 1 {
-            // when user deleting "/", we also delete the character before "/"
-            userInput = String(userInput.dropLast())
+           text[range] == "/",
+           string != "/" {
+            // when user deleting "/", delete all content behind "/"
+            userInput = String(text[text.startIndex..<range.lowerBound])
         }
         var expirationMonth = userInput.prefix(2)
-        var expirationYear = userInput.dropFirst(2).prefix(2)
+        var expirationYear = userInput.dropFirst(2)
         if expirationMonth.count == 1 && expirationMonth != "0" && expirationMonth != "1" {
             expirationMonth = "0" + expirationMonth
         }
@@ -31,31 +39,28 @@ struct CardExpiryFormatter: UserInputFormatter {
         let attributedText = formatedString(
             month: String(expirationMonth),
             year: String(expirationYear),
-            defaultTextAttributes: textField.defaultTextAttributes
+            attributes: textField.defaultTextAttributes
         )
         
-        let shouldTriggerReturn = shouldTriggerReturn(
-            modifiedInput: userInput,
-            range: range,
-            replacementString: string,
-            maxLength: 5
+        textField.updateContentAndCursor(
+            attributedText: attributedText,
+            maxLength: maxLength
         )
-        return (attributedText, shouldTriggerReturn)
     }
     
     func formatedString(month: String?,
                         year: String?,
-                        defaultTextAttributes: [NSAttributedString.Key: Any]) -> NSAttributedString? {
-        guard let month, !month.isEmpty else { return nil }
+                        attributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
+        guard let month, !month.isEmpty else { return NSAttributedString() }
         guard let year, !year.isEmpty else {
             return NSAttributedString(
                 string: month,
-                attributes: defaultTextAttributes
+                attributes: attributes
             )
         }
         let attributedString = NSMutableAttributedString(
             string: "\(month)/\(year)",
-            attributes: defaultTextAttributes
+            attributes: attributes
         )
         attributedString.addAttribute(
             .kern,

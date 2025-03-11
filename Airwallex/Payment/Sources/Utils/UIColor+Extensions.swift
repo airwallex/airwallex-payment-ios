@@ -33,6 +33,7 @@ public extension UIColor {
         case iconSecondary
         case iconLink
         case iconDisabled
+        case iconWarning
         
         // Text colors
         case textLink
@@ -66,6 +67,7 @@ public extension UIColor {
         case .iconSecondary: return UIColor(dynamicLightColor: .awxGray50, darkColor: .awxGray50)
         case .iconLink: return UIColor(dynamicLightColor: .awxPurple70, darkColor: .awxPurple40)
         case .iconDisabled: return UIColor(dynamicLightColor: .awxGray40, darkColor: .awxGray70)
+        case .iconWarning: return .awxOrange50
             
             // Text Colors
         case .textLink: return UIColor(dynamicLightColor: .awxPurple70, darkColor: .awxPurple40)
@@ -78,7 +80,7 @@ public extension UIColor {
     }
 }
 
-extension UIColor {
+fileprivate extension UIColor {
     
     static var awxWhite: UIColor { UIColor.white }
     

@@ -11,32 +11,17 @@ protocol UserInputValidator {
 }
 
 protocol UserInputFormatter {
-    func formatUserInput(_ textField: UITextField,
+    func automaticTriggerReturnAction(textField: UITextField) -> Bool
+    
+    func handleUserInput(_ textField: UITextField,
                          changeCharactersIn range: Range<String.Index>,
-                         replacementString string: String) -> (NSAttributedString?, Bool)
+                         replacementString string: String)
 }
 
 protocol UserEditingEventObserver: UITextFieldDelegate {}
 
 extension UserInputFormatter {
-    func shouldTriggerReturn(modifiedInput input: String?,
-                             range: Range<String.Index>,
-                             replacementString string: String,
-                             maxLength: Int) -> Bool {
-        guard let input else { return false }
-        // check max length
-        let check1 = input.count == maxLength
-        
-        // check cursor index
-        let endCursor = input.index(
-            range.lowerBound,
-            offsetBy: string.count,
-            limitedBy: input.endIndex
-        ) ?? input.endIndex
-        let check2 = endCursor == input.endIndex
-        
-        return check1 && check2
-    }
+    func automaticTriggerReturnAction(textField: UITextField) -> Bool { return false }
 }
 
 class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
@@ -140,17 +125,16 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
         }
         
         if let inputFormatter {
-            let (attributedText, triggerReturnAction) = inputFormatter.formatUserInput(
+            inputFormatter.handleUserInput(
                 textField,
                 changeCharactersIn: range,
                 replacementString: string
             )
+            attributedText = textField.attributedText
             text = attributedText?.string
-            self.attributedText = attributedText
-            //  update text
-            reconfigureHandler(self, false)
+            
             // trigger return action if we have a valid input, and the cursor is at the end of the text field
-            if triggerReturnAction, let returnActionHandler {
+            if let returnActionHandler, inputFormatter.automaticTriggerReturnAction(textField: textField) {
                 returnActionHandler(textField)
             }
             return false
