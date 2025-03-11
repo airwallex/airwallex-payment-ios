@@ -635,6 +635,7 @@
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		D8C9836D2D78484000842576 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		D8D18D402D7EC53200830C68 /* CardExpiryFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExpiryFormatter.swift; sourceTree = "<group>"; };
+		D8D18D412D7FD6BF00830C68 /* BeginEditingEventObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginEditingEventObserver.swift; sourceTree = "<group>"; };
 		D8D69B0F2D38F84A00D04856 /* WarningViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewCell.swift; sourceTree = "<group>"; };
 		D8DA089E2D08299F00B30AA2 /* PaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		D8F302AD2D1A823000D29B49 /* NewCardPaymentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCardPaymentSectionController.swift; sourceTree = "<group>"; };
@@ -1304,6 +1305,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		D8D18D422D7FDB5400830C68 /* EditingEventObserver */ = {
+			isa = PBXGroup;
+			children = (
+				D8D18D412D7FD6BF00830C68 /* BeginEditingEventObserver.swift */,
+			);
+			path = EditingEventObserver;
+			sourceTree = "<group>";
+		};
 		D8F303212D1ABAAE00D29B49 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1333,6 +1342,7 @@
 			children = (
 				D8969C752D7AE1AF006E502B /* Validators */,
 				D8969C7A2D7EBA9B006E502B /* Formatters */,
+				D8D18D422D7FDB5400830C68 /* EditingEventObserver */,
 				D8F303232D1ABAB100D29B49 /* Array+Extensions.swift */,
 				D88A5C572D630D81003B7C1A /* ErrorMessage.swift */,
 				D8C9836D2D78484000842576 /* Events.swift */,

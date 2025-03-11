@@ -18,12 +18,14 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardNumberT
     private let formatter = CardNumberFormatter()
     
     init(supportedCardSchemes: [AWXCardScheme],
+         editingEventObserver: UserEditingEventObserver?,
          reconfigureHandler: @escaping ReconfigureHandler) {
         super.init(
             textFieldType: .cardNumber,
             placeholder: "1234 1234 1234 1234",
             customInputFormatter: formatter,
             customInputValidator: CardNumberValidator(supportedCardSchemes: supportedCardSchemes),
+            editingEventObserver: editingEventObserver,
             reconfigureHandler: reconfigureHandler
         )
     }

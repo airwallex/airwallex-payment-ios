@@ -33,8 +33,6 @@ struct CardExpiryFormatter: UserInputFormatter {
             year: String(expirationYear),
             defaultTextAttributes: textField.defaultTextAttributes
         )
-        // wpdebug
-        print(attributedText)
         
         let shouldTriggerReturn = shouldTriggerReturn(
             modifiedInput: userInput,

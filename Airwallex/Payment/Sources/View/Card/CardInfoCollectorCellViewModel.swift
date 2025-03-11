@@ -34,6 +34,9 @@ class CardInfoCollectorCellViewModel {
         self.reconfigureHandler = reconfigureHandler
         cardNumberConfigurer = CardNumberTextFieldViewModel(
             supportedCardSchemes: cardSchemes,
+            editingEventObserver: BeginEditingEventObserver {
+                RiskLogger.log(.inputCardNumber, screen: .createCard)
+            },
             reconfigureHandler: { [weak self] _, layoutUpdate in
                 guard let self else { return }
                 self.reconfigureHandler(self, layoutUpdate)
@@ -44,6 +47,9 @@ class CardInfoCollectorCellViewModel {
             placeholder: "MM / YY",
             customInputFormatter: CardExpiryFormatter(),
             customInputValidator: CardExpiryValidator(),
+            editingEventObserver: BeginEditingEventObserver {
+                RiskLogger.log(.inputCardExpiry, screen: .createCard)
+            },
             reconfigureHandler: { [weak self] _, layoutUpdate in
                 guard let self else { return }
                 self.reconfigureHandler(self, layoutUpdate)
@@ -55,6 +61,9 @@ class CardInfoCollectorCellViewModel {
                 guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
                 return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
             },
+            editingEventObserver: BeginEditingEventObserver {
+                RiskLogger.log(.inputCardCVC, screen: .createCard)
+            },
             reconfigureHandler: { [weak self] _, layoutUpdate in
                 guard let self else { return }
                 self.reconfigureHandler(self, layoutUpdate)
@@ -63,26 +72,14 @@ class CardInfoCollectorCellViewModel {
         nameOnCardConfigurer = InfoCollectorTextFieldViewModel(
             title: NSLocalizedString("Name on card", bundle: .payment, comment: ""),
             textFieldType: .nameOnCard,
+            editingEventObserver: BeginEditingEventObserver {
+                RiskLogger.log(.inputCardHolderName, screen: .createCard)
+            },
             reconfigureHandler: { [weak self] viewModel, layoutUpdates in
                 guard let self else { return }
                 self.reconfigureHandler(self, layoutUpdates)
             }
         )
-    }
-    
-    func handleFieldDidBeginEditing(_ textField: UITextField, type: AWXTextFieldType) {
-        switch type {
-        case .cardNumber:
-            RiskLogger.log(.inputCardNumber, screen: .createCard)
-        case .expires:
-            RiskLogger.log(.inputCardExpiry, screen: .createCard)
-        case .CVC:
-            RiskLogger.log(.inputCardCVC, screen: .createCard)
-        case .nameOnCard:
-            RiskLogger.log(.inputCardHolderName, screen: .createCard)
-        default:
-            break
-        }
     }
 }
 

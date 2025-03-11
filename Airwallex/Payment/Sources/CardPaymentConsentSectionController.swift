@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 class CardPaymentConsentSectionController: SectionController {
     
@@ -56,7 +55,6 @@ class CardPaymentConsentSectionController: SectionController {
     private var mode: Mode {
         selectedConsent == nil ? .list : .payment
     }
-    private var cvcInputToken: AnyCancellable?
     
     init(methodProvider: PaymentMethodProvider,
          addNewCardAction: @escaping () -> Void) {
@@ -246,6 +244,9 @@ class CardPaymentConsentSectionController: SectionController {
             selectedConsent = consent
             cvcConfigurer = InfoCollectorTextFieldViewModel(
                 cvcValidator: CardCVCValidator(cardName: consent.paymentMethod?.card?.brand ?? ""),
+                editingEventObserver: BeginEditingEventObserver {
+                    RiskLogger.log(.inputCardCVC, screen: .consent)
+                },
                 reconfigureHandler: { [weak self] _, invalidateLayout in
                     guard let self else { return }
                     self.context.reconfigure(
@@ -275,24 +276,6 @@ class CardPaymentConsentSectionController: SectionController {
                 .subtype: Self.subType
             ]
         )
-        
-        cvcInputToken = NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)
-            .filter { [weak self] in
-                guard let self,
-                      self.mode == .payment,
-                      let object = $0.object as? UITextField,
-                      let cell = context.cellForItem(Items.cvcField) as? InfoCollectorCell else {
-                    return false
-                }
-                return object.isDescendant(of: cell)
-            }
-            .sink { _ in
-                RiskLogger.log(.inputCardCVC, screen: .consent)
-            }
-    }
-    
-    func sectionDidEndDisplaying() {
-        cvcInputToken?.cancel()
     }
 }
  
