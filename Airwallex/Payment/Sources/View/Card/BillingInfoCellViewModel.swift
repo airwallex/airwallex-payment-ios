@@ -48,8 +48,6 @@ class BillingInfoCellViewModel {
         return arr.first { !$0.isValid && $0.errorHint != nil }?.errorHint
     }
     
-    var triggerLayoutUpdate: () -> Void
-    
     var reconfigureHandler: (BillingInfoCellViewModel, Bool) -> Void
     
     // MARK: -
@@ -58,7 +56,6 @@ class BillingInfoCellViewModel {
     init(shippingInfo: AWXPlaceDetails?,
          reusingShippingInfo: Bool = true,
          countrySelectionHandler: @escaping () -> Void,
-         triggerLayoutUpdate: @escaping () -> Void,
          toggleReuseSelection: @escaping () -> Void,
          reconfigureHandler: @escaping (BillingInfoCellViewModel, Bool) -> Void) {
         let reusingShippingInfo = (shippingInfo != nil) && reusingShippingInfo
@@ -67,7 +64,6 @@ class BillingInfoCellViewModel {
             country = AWXCountry(code: countryCode)
         }
         
-        self.triggerLayoutUpdate = triggerLayoutUpdate
         canReuseShippingAddress = shippingInfo != nil
         shouldReuseShippingAddress = reusingShippingInfo
         self.toggleReuseSelection = toggleReuseSelection
