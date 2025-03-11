@@ -32,6 +32,7 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardNumberT
     
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let _ = super.textField(textField, shouldChangeCharactersIn: range, replacementString: string)
+        // force reconfigure to update current card brand logo on the right of the text field
         reconfigureHandler(self, false)
         return false
     }

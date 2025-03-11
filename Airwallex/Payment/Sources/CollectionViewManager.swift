@@ -21,7 +21,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     
     private weak var sectionDataSource: SectionProvider?
     private var sections = [SectionType]()
-    private(set) var sectionControllers = [SectionType: AnySectionController<SectionType, ItemType>]()
+    private var sectionControllers = [SectionType: AnySectionController<SectionType, ItemType>]()
     
     private var diffableDataSource: UICollectionViewDiffableDataSource<SectionType, ItemType>!
     private var context: CollectionViewContext<SectionType, ItemType>!
@@ -329,9 +329,7 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     }
     
     func cellForItem(_ item: Item) -> UICollectionViewCell? {
-        guard let indexPath = dataSource.indexPath(for: item) else {
-            return nil
-        }
+        guard let indexPath = dataSource.indexPath(for: item) else { return nil }
         return collectionView.cellForItem(at: indexPath)
     }
     
