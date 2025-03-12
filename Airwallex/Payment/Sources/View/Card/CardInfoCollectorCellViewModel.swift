@@ -19,7 +19,7 @@ class CardInfoCollectorCellViewModel {
     
     var errorHintForCardFields: String? {
         for configurer in [ cardNumberConfigurer, expireDataConfigurer, cvcConfigurer ] {
-            if let configurer = configurer as? BaseTextFieldConfiguring,
+            if let configurer,
                let errorHint = configurer.errorHint,
                !configurer.isValid {
                 return errorHint

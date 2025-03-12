@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol InfoCollectorCellConfiguring: InfoCollectorTextFieldConfiguring {
-    var reconfigureHandler: ((InfoCollectorTextFieldViewModel, Bool) -> Void) { get }
-}
-
 class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let field: InfoCollectorTextField = {
@@ -59,7 +55,7 @@ class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     }
     
     var viewModel: InfoCollectorTextFieldViewModel? {
-        field.viewModel as? InfoCollectorTextFieldViewModel
+        field.viewModel
     }
     
     func setup(_ viewModel: InfoCollectorTextFieldViewModel) {

@@ -34,7 +34,7 @@ class BillingInfoCellViewModel {
     var zipConfigurer: InfoCollectorTextFieldViewModel!
     
     var errorHintForBillingFields: String? {
-        let arr: [any BaseTextFieldConfiguring] = [
+        let arr: [InfoCollectorTextFieldViewModel] = [
             countryConfigurer,
             streetConfigurer,
             stateConfigurer,

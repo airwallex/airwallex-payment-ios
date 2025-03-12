@@ -17,8 +17,6 @@ protocol BaseTextFieldConfiguring: AnyObject {
     var attributedText: NSAttributedString? { get }
     /// if the input text is valid
     var isValid: Bool { get }
-    /// error message for invalid input (will not displayed in `BaseTextField` but may be displayed in subclass)
-    var errorHint: String? { get }
     /// type of the text field
     var textFieldType: AWXTextFieldType? { get }
     /// placeholder for text field

@@ -24,7 +24,7 @@ extension UserInputFormatter {
     func automaticTriggerReturnAction(textField: UITextField) -> Bool { return false }
 }
 
-class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorCellConfiguring {
+class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguring {
     typealias ReconfigureHandler = (InfoCollectorTextFieldViewModel, Bool) -> Void
     
     var inputValidator: UserInputValidator
