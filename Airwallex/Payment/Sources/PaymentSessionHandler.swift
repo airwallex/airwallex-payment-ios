@@ -18,6 +18,9 @@ public class PaymentSessionHandler: NSObject {
     
     private var viewController: UIViewController {
         assert(_viewController != nil, "The view controller that launches the payment is expected to remain present until the session ends.")
+        if let viewController = _viewController {
+            return viewController
+        }
         let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
         if #available(iOS 15.0, *) {
             return windowScene?.keyWindow?.rootViewController ?? UIViewController()
