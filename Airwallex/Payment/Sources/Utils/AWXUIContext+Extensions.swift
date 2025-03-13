@@ -115,6 +115,7 @@ public extension AWXUIContext {
     /// Launches the Airwallex payment sheet for a specified payment method.
     /// - Parameters:
     ///   - name: The name of the payment method.
+    ///   API reference: https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get JSON Object field: items.name
     ///   - hostingVC: The view controller that presents the payment sheet.
     ///   - session: The current payment session containing transaction details.
     ///   - paymentResultDelegate: The delegate that handles payment result callbacks.
