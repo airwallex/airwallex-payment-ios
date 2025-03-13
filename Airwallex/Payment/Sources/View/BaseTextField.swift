@@ -17,26 +17,14 @@ protocol BaseTextFieldConfiguring: AnyObject {
     var attributedText: NSAttributedString? { get }
     /// if the input text is valid
     var isValid: Bool { get }
-    /// error message for invalid input (will not displayed in `BaseTextField` but may be displayed in subclass)
-    var errorHint: String? { get }
     /// type of the text field
     var textFieldType: AWXTextFieldType? { get }
     /// placeholder for text field
     var placeholder: String? { get }
     /// return key type of the text field
     var returnKeyType: UIReturnKeyType { get set }
-    /// This will be called in `textFieldShouldReturn` and is intended to customize the return key action.
-    var returnActionHandler: ((UITextField) -> Void)? { get set }
-    /// Called in `textField(_:shouldChangeCharactersIn:replacementString:)`
-    /// - Parameters:
-    ///   - textField: The text field being edited.
-    ///   - range: The range of characters to be replaced, converted from `NSRange` to `Range<String.Index>`.
-    ///   - string: The replacement string entered by the user.
-    /// - Returns: A Boolean value indicating whether the user input should be updated naturally.
-    ///   If `false`, `BaseTextField` will be setup with the updated view model again.
-    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool
-    /// will be called in `textFieldDidEndEditing`
-    func handleDidEndEditing()
+    /// delegate for the embeded text field
+    var textFieldDelegate: UITextFieldDelegate? { get }
 }
 
 class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITextFieldDelegate {
@@ -80,12 +68,11 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     override init(frame: CGRect) {
         super.init(frame: frame)
     
+        textField.tintColor = .awxColor(.textLink)
         addSubview(verticalStack)
         verticalStack.addArrangedSubview(box)
         box.addSubview(horizontalStack)
         horizontalStack.addArrangedSubview(textField)
-        
-        textField.delegate = self
         
         let constraints = [
             verticalStack.topAnchor.constraint(equalTo: topAnchor),
@@ -102,6 +89,9 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         NSLayoutConstraint.activate(constraints)
         
         updateBorderAppearance()
+
+        textField.addTarget(self, action: #selector(editingDidBegin(_:)), for: UITextField.Event.editingDidBegin)
+        textField.addTarget(self, action: #selector(editingDidEnd(_:)), for: UITextField.Event.editingDidEnd)
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -165,6 +155,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         }
         isEnabled = viewModel.isEnabled
         textField.returnKeyType = viewModel.returnKeyType
+        textField.delegate = viewModel.textFieldDelegate
         
         updateBorderAppearance()
     }
@@ -186,47 +177,14 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
             updateBorderAppearance()
         }
     }
-
-    //  MARK: - UITextFieldDelegate
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let returnHandler = viewModel?.returnActionHandler  {
-            returnHandler(textField)
-            return false
-        } else {
-            resignFirstResponder()
-            return true
-        }
-    }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let viewModel else { return }
-        viewModel.handleDidEndEditing()
-        textField.updateWithoutDelegate { tf in
-            setup(viewModel)
-        }
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    //  MARK: - UITextField.Event
+    @objc func editingDidBegin(_ textField: UITextField) {
         updateBorderAppearance()
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let viewModel,
-              let range = Range(range, in: textField.text ?? "") else {
-            return false
-        }
-        let shouldChange = viewModel.handleTextShouldChange(
-            textField: textField,
-            range: range,
-            replacementString: string
-        )
-        if shouldChange {
-            // text input not modified in viewModel
-            return true
-        }
-        // text or attributedText is changed
-        setup(viewModel)
-        return false
+    @objc func editingDidEnd(_ textField: UITextField) {
+        updateBorderAppearance()
     }
 }
 

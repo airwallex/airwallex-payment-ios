@@ -112,7 +112,6 @@ extension AWXField {
                 // prefix not found
             }
         }
-        
         return prefix
     }
 }

@@ -12,13 +12,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NS_SWIFT_NAME(AnalyticsLogger)
 @interface AWXAnalyticsLogger : NSObject
+
+/// Defaults to `false`, will print all events to console if set to true
+@property (nonatomic, assign) BOOL verbose;
 
 + (instancetype)shared;
 
 - (void)logPageViewWithName:(NSString *)pageName;
 
 - (void)logPageViewWithName:(NSString *)pageName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
+
+- (void)logPaymentMethodViewWithName:(NSString *)name;
+
+- (void)logPaymentMethodViewWithName:(NSString *)name additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
 
 - (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
 

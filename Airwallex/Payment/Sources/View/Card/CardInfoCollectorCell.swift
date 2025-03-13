@@ -34,14 +34,14 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     }()
     
     private let expiresTextField: BaseTextField = {
-        let view = BaseTextField<CardExpireTextFieldViewModel>()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMinXMaxYCorner
         return view
     }()
     
     private let cvcTextField: BaseTextField = {
-        let view = BaseTextField<CardCVCTextFieldViewModel>()
+        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMaxXMaxYCorner
         
@@ -133,33 +133,24 @@ private extension CardInfoCollectorCell {
             }
         }
         
-        Publishers.Merge3(
+        Publishers.MergeMany(
             numberTextField.textField.textDidBeginEditingPublisher,
             expiresTextField.textField.textDidBeginEditingPublisher,
-            cvcTextField.textField.textDidBeginEditingPublisher
-        )
-        .sink { _ in
-            updateLayering()
-        }
-        .store(in: &cancellables)
-        
-        Publishers.Merge4(
+            cvcTextField.textField.textDidBeginEditingPublisher,
             numberTextField.textField.textDidEndEditingPublisher,
             expiresTextField.textField.textDidEndEditingPublisher,
             cvcTextField.textField.textDidEndEditingPublisher,
             nameTextField.textField.textDidEndEditingPublisher
         )
+        .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
         .sink { [weak self] notification in
             guard let self,
                   let viewModel = self.viewModel,
-                  let textField = notification.object as? UITextField else {
+                  let textField = notification.object as? UITextField,
+                  textField !== self.nameTextField.textField else {
                 return
             }
-            self.hintLabel.text = viewModel.errorHintForCardFields
-            if textField !== self.nameTextField.textField {
-                updateLayering()
-            }
-            viewModel.triggerLayoutUpdate()
+            updateLayering()
         }
         .store(in: &cancellables)
     }
