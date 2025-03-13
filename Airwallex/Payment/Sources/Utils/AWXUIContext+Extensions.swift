@@ -53,7 +53,6 @@ public extension AWXUIContext {
                 "transaction_mode": session.transactionMode()
             ]
         )
-        let client = AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
         if let methodNames {
             session.paymentMethods = methodNames
             if let session = session as? AWXOneOffSession,
