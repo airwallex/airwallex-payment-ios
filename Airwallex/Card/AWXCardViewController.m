@@ -169,7 +169,8 @@ typedef enum {
     [_expiresField.widthAnchor constraintEqualToAnchor:_cvcField.widthAnchor multiplier:1.7].active = YES;
 
     if (self.viewModel.isCardSavingEnabled) {
-        [stackView addArrangedSubview:[self switchOfType:SaveCardSwitch]];
+        self.saveCard = self.viewModel.autoSaveCardForFuturePayments;
+        [stackView addArrangedSubview:[self switchOfType:SaveCardSwitch isOn:self.saveCard]];
     }
 
     if (self.viewModel.isBillingInformationRequired) {
@@ -200,12 +201,10 @@ typedef enum {
         }
     }
     [self setBillingInputHidden:self.viewModel.isReusingShippingAsBillingInformation];
-    _addressSwitch.on = self.viewModel.isReusingShippingAsBillingInformation;
-    self.saveCard = false;
     self.container = stackView;
 }
 
-- (UIStackView *)switchOfType:(SwitchType)type {
+- (UIStackView *)switchOfType:(SwitchType)type isOn:(BOOL)isOn {
     UIStackView *container = [UIStackView new];
     container.axis = UILayoutConstraintAxisHorizontal;
     container.alignment = UIStackViewAlignmentFill;
@@ -231,6 +230,7 @@ typedef enum {
     titleLabel.font = [UIFont subhead1Font];
     [container addArrangedSubview:titleLabel];
     [container addArrangedSubview:switchButton];
+    switchButton.on = isOn;
     return container;
 }
 
@@ -248,7 +248,7 @@ typedef enum {
     billingLabel.font = [UIFont subhead2Font];
     [stackView addArrangedSubview:billingLabel];
 
-    [stackView addArrangedSubview:[self switchOfType:AddressSwitch]];
+    [stackView addArrangedSubview:[self switchOfType:AddressSwitch isOn:self.viewModel.isReusingShippingAsBillingInformation]];
 
     _firstNameField = [AWXFloatingLabelTextField new];
     _firstNameField.fieldType = AWXTextFieldTypeFirstName;

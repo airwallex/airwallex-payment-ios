@@ -38,13 +38,13 @@ class IntegrationDemoListViewController: UIViewController {
         ActionViewModel(
             title: NSLocalizedString("Launch card payment", comment: DemoDataSource.commentForLocalization),
             action: { [weak self] in
-                self?.launchCardPayment()
+                self?.launchCardPayment(style: .push)
             }
         ),
         ActionViewModel(
             title: NSLocalizedString("Launch card payment (dialog)", comment: DemoDataSource.commentForLocalization),
             action: { [weak self] in
-                self?.launchCardPaymentDialog()
+                self?.launchCardPayment(style: .present)
             }
         ),
         ActionViewModel(
@@ -110,7 +110,7 @@ class IntegrationDemoListViewController: UIViewController {
     
     private let integrationType: IntegrationType
     
-    private var paymentUISessionHandler: PaymentUISessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandler?
     
     init(_ integrationStyle: IntegrationType) {
         self.integrationType = integrationStyle
@@ -137,13 +137,13 @@ class IntegrationDemoListViewController: UIViewController {
 private extension IntegrationDemoListViewController {
     
     func setupViews() {
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(listView)
         
         setupTitle()
         // setup actions
         for action in (integrationType == .UI ? viewModelsForUIIntegration : viewModelsForAPIIntegration) {
-            let view = UIButton(style: .secondary, title: action.title)
+            let view = AWXButton(style: .secondary, title: action.title)
             view.translatesAutoresizingMaskIntoConstraints = false
             view.addTarget(self, action: #selector(onActionButtonTapped(_:)), for: .touchUpInside)
             listView.bottomStack.addArrangedSubview(view)
@@ -165,7 +165,7 @@ private extension IntegrationDemoListViewController {
         
         let viewModel = TopViewModel(
             title: title,
-            actionIcon: UIImage(named: "gear")?.withTintColor(.awxIconLink, renderingMode: .alwaysOriginal),
+            actionIcon: UIImage(named: "gear")?.withTintColor(.awxColor(.iconLink), renderingMode: .alwaysOriginal),
             actionHandler: { [weak self] in
                 self?.onSettingButtonTapped()
             }
@@ -251,7 +251,7 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                AWXUIContext.shared().launchPayment(from: self, session: session, style: .push)
+                AWXUIContext.shared().launchPayment(from: self, session: session)
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -265,8 +265,11 @@ private extension IntegrationDemoListViewController {
             do {
                 let session = try await createPaymentSession()
                 //  custom payment methods by an array of payment method name
-                session.paymentMethods = [ AWXApplePayKey, AWXCardKey, "alipaycn" ]
-                AWXUIContext.shared().launchPayment(from: self, session: session, style: .push)
+                AWXUIContext.shared().launchPayment(
+                    from: self,
+                    session: session,
+                    filterBy: [ AWXApplePayKey, AWXCardKey, "alipaycn", "alipayhk" ]
+                )
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -274,33 +277,18 @@ private extension IntegrationDemoListViewController {
         }
     }
     
-    func launchCardPayment() {
+    func launchCardPayment(style: AWXUIContext.LaunchStyle) {
         Task {
             startLoading()
             do {
                 let session = try await createPaymentSession()
                 //  pass AWXCardKey only
-                session.paymentMethods = [ AWXCardKey ]
-                if let session = session as? AWXOneOffSession {
-                    session.hidePaymentConsents = true
-                }
-                
-                AWXUIContext.shared().launchPayment(from: self, session: session, style: .push)
-            } catch {
-                showAlert(message: error.localizedDescription)
-            }
-            stopLoading()
-        }
-    }
-    
-    func launchCardPaymentDialog() {
-        Task {
-            startLoading()
-            do {
-                let session = try await createPaymentSession()
-                //  pass AWXCardKey only
-                session.paymentMethods = [ AWXCardKey ]
-                AWXUIContext.shared().launchPayment(from: self, session: session, style: .present)
+                AWXUIContext.shared().launchCardPayment(
+                    from: self,
+                    session: session,
+                    supportedBrands: AWXCardBrand.all,
+                    style: style
+                )
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -329,11 +317,12 @@ private extension IntegrationDemoListViewController {
             do {
                 let card = try await confirmCardInfo(testCard)
                 let session = try await createPaymentSession(force3DS: force3DS)
-                paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
-                    let provider = AWXCardProvider(delegate: handler, session: session)
-                    provider.confirmPaymentIntent(with: card, billing: DemoDataSource.shippingAddress, saveCard: saveCard)
-                    return provider
-                }
+                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler?.startCardPayment(
+                    with: card,
+                    billing: DemoDataSource.shippingAddress,
+                    saveCard: saveCard
+                )
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -346,11 +335,8 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
-                    let provider = AWXApplePayProvider(delegate: handler, session: session)
-                    provider.startPayment()
-                    return provider as AWXDefaultProvider
-                }
+                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler?.startApplePay()
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -363,11 +349,11 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                paymentUISessionHandler = PaymentUISessionHandler(session: session, viewController: self) { handler in
-                    let provider = AWXRedirectActionProvider(delegate: handler, session: session)
-                    provider.confirmPaymentIntent(with: "paypal", additionalInfo: ["shopper_name": "Hector", "country_code": "CN"])
-                    return provider as AWXDefaultProvider
-                }
+                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler?.startSchemaPayment(
+                    with: "paypal",
+                    additionalInfo: ["shopper_name": "Hector", "country_code": "CN"]
+                )
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -398,7 +384,7 @@ private extension IntegrationDemoListViewController {
         // left view
         let label = UILabel()
         label.text = fieldName
-        label.textColor = .awxTextPlaceholder
+        label.textColor = .awxColor(.textPlaceholder)
         label.font = .awxFont(.caption3)
         label.sizeToFit()
         

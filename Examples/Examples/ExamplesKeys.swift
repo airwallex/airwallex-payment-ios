@@ -137,6 +137,14 @@ struct ExamplesKeys {
               let keys = try? decoder.decode(DefaultKeys.self, from: data) else {
             return
         }
+#if DEBUG
+        if !CommandLine.arguments.contains("-production") {
+            if environment == .productionMode {
+                // fallback to demo mode
+                environment = .demoMode
+            }
+        }
+#endif
         
         if apiKey?.nilIfEmpty == nil { apiKey = keys.apiKey }
         if clientId?.nilIfEmpty == nil { clientId = keys.clientId }

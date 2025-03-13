@@ -31,9 +31,14 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
     
     var errorHint: String? = nil
     
-    func handleTextDidUpdate(to userInput: String) -> Bool {
-        // check max length
-        var userInput = userInput.filterIllegalCharacters(in: .decimalDigits.inverted)
+    var returnKeyType: UIReturnKeyType = .default
+    
+    var returnActionHandler: ((UITextField) -> Void)? = nil
+    
+    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+        var userInput = textField.text?
+            .replacingCharacters(in: range, with: string)
+            .filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         let maxLength = AWXCardValidator.shared().maxLength(forCardNumber: userInput)
         userInput = String(userInput.prefix(maxLength))
         
@@ -44,7 +49,20 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
         
         attributedText = formatText(userInput, brand: cardBrandType)
         currentBrand = cardBrandType
-        return userInput.count == maxLength && isValid
+        if userInput.count == maxLength {
+            guard let cursorIndex = userInput.index(
+                range.lowerBound,
+                offsetBy: string.count,
+                limitedBy: userInput.endIndex
+            ) else {
+                returnActionHandler?(textField)
+                return false
+            }
+            if cursorIndex == userInput.endIndex {
+                returnActionHandler?(textField)
+            }
+        }
+        return false
     }
     
     func handleDidEndEditing() {
@@ -53,8 +71,7 @@ class CardNumberTextFieldViewModel: CardNumberTextFieldConfiguring {
             try AWXCardValidator.validate(number: cardNumber, supportedSchemes: supportedCardSchemes)
             errorHint = nil
         } catch {
-            guard let error = error as? String else { return }
-            errorHint = error
+            errorHint = error.localizedDescription
         }
     }
     
@@ -70,7 +87,7 @@ extension CardNumberTextFieldViewModel {
     func formatText(_ text: String, brand: AWXBrandType) -> NSAttributedString? {
         let attributedString = NSMutableAttributedString(
             string: text,
-            attributes: [.font: UIFont.awxBody, .foregroundColor: UIColor.awxTextPrimary]
+            attributes: [.font: UIFont.awxFont(.body2), .foregroundColor: UIColor.awxColor(.textPrimary)]
         )
         var type: AWXBrandType = .unknown
         if !text.isEmpty, let brand = AWXCardValidator.shared().brand(forCardNumber: text) {

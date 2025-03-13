@@ -23,7 +23,7 @@ struct ConfigActionViewModel {
     init(configName: String,
          configValue: String?,
          caption: String? = nil,
-         secondaryActionIcon: UIImage? = UIImage(systemName: "chevron.down")!.withTintColor(.awxIconSecondary, renderingMode: .alwaysOriginal),
+         secondaryActionIcon: UIImage? = UIImage(systemName: "chevron.down")!.withTintColor(.awxColor(.iconSecondary), renderingMode: .alwaysOriginal),
          secondaryActionTitle: String? = nil,
          primaryAction: ((UIView) -> Void)? = nil,
          secondaryAction: ((UIView) -> Void)? = nil) {
@@ -45,9 +45,9 @@ class ConfigActionView: UIView {
         view.contentEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         
         view.titleLabel?.font = .awxFont(.caption2, weight: .medium)
-        view.setTitleColor(.awxTextSecondary, for: .normal)
+        view.setTitleColor(.awxColor(.textSecondary), for: .normal)
         view.isUserInteractionEnabled = false
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         return view
     }()
     
@@ -64,7 +64,7 @@ class ConfigActionView: UIView {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.body1)
-        view.textColor = .awxTextPrimary
+        view.textColor = .awxColor(.textPrimary)
         view.setContentHuggingPriority(.defaultLow - 10, for: .horizontal)
         view.setContentCompressionResistancePriority(.defaultHigh - 10, for: .horizontal)
         return view
@@ -74,7 +74,7 @@ class ConfigActionView: UIView {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.adjustsImageWhenHighlighted = false
-        view.setTitleColor(.awxIconLink, for: .normal)
+        view.setTitleColor(.awxColor(.iconLink), for: .normal)
         view.titleLabel?.font = .awxFont(.body1, weight: .medium)
         view.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         view.addTarget(self, action: #selector(onActionButtonTapped), for: .touchUpInside)
@@ -99,7 +99,7 @@ class ConfigActionView: UIView {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.caption2)
-        view.textColor = .awxTextPlaceholder
+        view.textColor = .awxColor(.textPlaceholder)
         view.numberOfLines = 0
         return view
     }()
@@ -126,10 +126,10 @@ class ConfigActionView: UIView {
         topLabel.setTitle(viewModel.configName, for: .normal)
         if let value = viewModel.configValue {
             mainLabel.text = value
-            mainLabel.textColor = .awxTextPrimary
+            mainLabel.textColor = .awxColor(.textPrimary)
         } else {
             mainLabel.text = viewModel.configName
-            mainLabel.textColor = .awxTextPlaceholder
+            mainLabel.textColor = .awxColor(.textPlaceholder)
         }
         captionLabel.text = viewModel.caption
         captionLabel.isHidden = (viewModel.caption ?? "").isEmpty
@@ -138,7 +138,7 @@ class ConfigActionView: UIView {
         
         let actionEnabled = viewModel.primaryAction != nil
         tapGesture.isEnabled = actionEnabled
-        mainLabel.textColor =  actionEnabled ? .awxTextPrimary : .awxTextPlaceholder
+        mainLabel.textColor =  actionEnabled ? .awxColor(.textPrimary) : .awxColor(.textPlaceholder)
         actionButton.isEnabled = viewModel.secondaryAction != nil
     }
     
@@ -149,11 +149,18 @@ class ConfigActionView: UIView {
     @objc func onActionButtonTapped() {
         viewModel?.secondaryAction?(self)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            boxView.layer.borderColor = UIColor.separator.cgColor
+        }
+    }
 }
 
 extension ConfigActionView {
     func setupViews() {
-        backgroundColor = .awxBackgroundPrimary
+        backgroundColor = .awxColor(.backgroundPrimary)
         addSubview(stack)
         do {
             container.addSubview(boxView)

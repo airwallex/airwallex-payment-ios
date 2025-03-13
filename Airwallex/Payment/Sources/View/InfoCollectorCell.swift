@@ -10,7 +10,8 @@ import UIKit
 import Combine
 
 protocol InfoCollectorCellConfiguring: InfoCollectorTextFieldConfiguring {
-    var triggerLayoutUpdate: () -> Void { get }
+    /// callback when cell height needs to change
+    var triggerLayoutUpdate: (() -> Void)? { get }
 }
 
 class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -39,7 +40,7 @@ class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
             .sink { [weak self] textField in
                 guard let self, let viewModel = self.viewModel else { return }
                 // this will be called after error hint update
-                viewModel.triggerLayoutUpdate()
+                viewModel.triggerLayoutUpdate?()
             }
             .store(in: &cancellables)
     }
@@ -48,8 +49,29 @@ class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var canBecomeFirstResponder: Bool {
+        field.canBecomeFirstResponder
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        field.becomeFirstResponder()
+    }
+    
+    @discardableResult
+    override func resignFirstResponder() -> Bool {
+        field.resignFirstResponder()
+    }
+    
+    override var canResignFirstResponder: Bool {
+        field.canResignFirstResponder
+    }
+    
+    override var isFirstResponder: Bool {
+        field.isFirstResponder
+    }
+    
     var viewModel: InfoCollectorTextFieldViewModel? {
-        field.viewModel
+        field.viewModel as? InfoCollectorTextFieldViewModel
     }
     
     func setup(_ viewModel: InfoCollectorTextFieldViewModel) {
