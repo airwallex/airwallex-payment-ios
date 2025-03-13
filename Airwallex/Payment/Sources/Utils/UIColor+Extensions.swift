@@ -80,7 +80,7 @@ public extension UIColor {
     }
 }
 
-fileprivate extension UIColor {
+extension UIColor {
     
     static var awxWhite: UIColor { UIColor.white }
     
