@@ -6,31 +6,13 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-class CountrySelectionViewModel: OptionSelectionViewConfiguring {
+class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionViewConfiguring {
     var country: AWXCountry? {
         didSet {
-            handleDidEndEditing()
+            text = country?.countryName
+            handleDidEndEditing(reconfigureIfNeeded: true)
         }
     }
-    
-    init(isEnabled: Bool = true,
-         country: AWXCountry? = nil,
-         handleUserInteraction: @escaping () -> Void) {
-        self.isEnabled = isEnabled
-        self.country = country
-        self.handleUserInteraction = handleUserInteraction
-        // don't give a error hint before user editing
-        self.errorHint = nil
-    }
-    
-    //  OptionSelectionViewConfiguring
-    var fieldName: String = "country"
-    
-    var isRequired: Bool = true
-    
-    var title: String? = nil
-    
-    var hideErrorHintLabel = true
     
     var icon: UIImage? {
         guard let country else { return nil }
@@ -45,37 +27,37 @@ class CountrySelectionViewModel: OptionSelectionViewConfiguring {
             )
     }
     
-    var text: String? {
-        country?.countryName
-    }
-    
-    var attributedText: NSAttributedString? = nil
-    
-    var isValid: Bool {
-        errorHint == nil
-    }
-    
-    var errorHint: String? = nil
-    
-    var textFieldType: AWXTextFieldType? = .country
-    
-    var placeholder: String? = NSLocalizedString("Select..", bundle: .payment, comment: "country selection view placeholder")
-    
-    var returnKeyType: UIReturnKeyType = .default
-    
-    var returnActionHandler: ((UITextField) -> Void)? = nil
-    
-    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
-        assert(false, "should never triggered")
-        return false
-    }
-    
-    func handleDidEndEditing() {
-        errorHint = (country != nil) ? nil : NSLocalizedString("Please enter your country", bundle: .payment, comment: "country selection view error hint")
-    }
-    
-    var isEnabled: Bool
-    
     var handleUserInteraction: () -> Void
     
+    init(isEnabled: Bool = true,
+         country: AWXCountry? = nil,
+         handleUserInteraction: @escaping () -> Void,
+         reconfigureHandler: @escaping ReconfigureHandler) {
+        self.country = country
+        self.handleUserInteraction = handleUserInteraction
+        super.init(
+            fieldName: "country",
+            isRequired: true,
+            isEnabled: isEnabled,
+            hideErrorHintLabel: true,
+            text: country?.countryName,
+            placeholder: NSLocalizedString("Select..", bundle: .payment, comment: "country selection view placeholder"),
+            reconfigureHandler: reconfigureHandler
+        )
+        inputValidator = BlockValidator { [weak self] _ in
+            guard let self else { return }
+            guard self.country != nil else {
+                throw NSLocalizedString(
+                    "Please enter your country",
+                    bundle: .payment,
+                    comment: "country selection view error hint"
+                ).asError()
+            }
+        }
+    }
+    
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        assert(false, "should never trigger")
+        return false
+    }
 }

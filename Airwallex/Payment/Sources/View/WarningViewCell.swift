@@ -41,7 +41,7 @@ class WarningViewCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(systemName: "exclamationmark.circle.fill")?
-            .withTintColor(.awxOrange50, renderingMode: .alwaysOriginal)
+            .withTintColor(.awxColor(.iconWarning), renderingMode: .alwaysOriginal)
         return view
     }()
        

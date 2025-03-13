@@ -56,6 +56,17 @@
     OCMVerify(times(1), [_tracker infoWithEventName:pageName extraInfo:dict]);
 }
 
+- (void)testLogPaymentView {
+    AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
+
+    [logger logPaymentMethodViewWithName:AWXCardKey];
+    OCMVerify(times(1), [_tracker infoWithEventName:AWXCardKey extraInfo:@{@"eventType": @"payment_method_view"}]);
+
+    [logger logPaymentMethodViewWithName:AWXCardKey additionalInfo:@{@"bank": @"ABC"}];
+    NSDictionary *dict = @{@"bank": @"ABC", @"eventType": @"payment_method_view"};
+    OCMVerify(times(1), [_tracker infoWithEventName:AWXCardKey extraInfo:dict]);
+}
+
 - (void)testLogError {
     AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
 

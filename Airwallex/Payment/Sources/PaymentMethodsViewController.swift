@@ -33,7 +33,11 @@ class PaymentMethodsViewController: AWXViewController {
     }
 
     deinit {
-        AWXUIContext.shared().paymentUIDismissAction = nil
+        if AWXUIContext.shared().paymentUIDismissAction != nil {
+            // user cancel payment by navigation stack interactions, like screen edge pan gesture
+            AWXUIContext.shared().paymentUIDismissAction = nil
+            AnalyticsLogger.log(action: .paymentCanceled)
+        }
     }
     
     private lazy var collectionViewManager: CollectionViewManager = {
@@ -64,14 +68,6 @@ class PaymentMethodsViewController: AWXViewController {
         getMethodList()
         cancellable = methodProvider.updatePublisher.sink {[weak self] type in
             self?.collectionViewManager.performUpdates()
-            switch type {
-            case let .methodSelected(name):
-                AWXAnalyticsLogger.shared().logAction(
-                    withName: "select_payment",
-                    additionalInfo: ["payment_method": name]
-                )
-            default: break
-            }
         }
     }
     
