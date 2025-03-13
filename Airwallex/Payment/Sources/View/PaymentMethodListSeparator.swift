@@ -11,7 +11,7 @@ class PaymentMethodListSeparator: UICollectionReusableView, ViewReusable {
     private let lineL: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .awxBorderDecorative
+        view.backgroundColor = .awxColor(.borderDecorative)
         view.setContentHuggingPriority(.defaultLow - 10, for: .horizontal)
         return view
     }()
@@ -19,7 +19,7 @@ class PaymentMethodListSeparator: UICollectionReusableView, ViewReusable {
     private let lineR: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .awxBorderDecorative
+        view.backgroundColor = .awxColor(.borderDecorative)
         view.setContentHuggingPriority(.defaultLow - 10, for: .horizontal)
         return view
     }()
@@ -27,8 +27,8 @@ class PaymentMethodListSeparator: UICollectionReusableView, ViewReusable {
     private let label: UIView = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .awxTextSecondary
-        view.font = .awxBody
+        view.textColor = .awxColor(.textSecondary)
+        view.font = .awxFont(.body2)
         view.text = NSLocalizedString("Or pay with", bundle: .payment, comment: "")
         return view
     }()

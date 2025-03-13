@@ -1,41 +1,45 @@
 //
-//  CountrySelectionViewModel.swift
-//  Airwallex
+//  BankSelectionViewModel.swift
+//  Core
 //
-//  Created by Weiping Li on 2025/1/8.
+//  Created by Weiping Li on 2025/1/14.
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-class CountrySelectionViewModel: OptionSelectionViewConfiguring {
-    var country: AWXCountry? {
+import Foundation
+
+class BankSelectionViewModel: OptionSelectionViewConfiguring {
+    
+    var bank: AWXBank? {
         didSet {
             handleDidEndEditing()
         }
     }
     
-    init(isEnabled: Bool = true,
-         country: AWXCountry? = nil,
+    private let errorMessage = NSLocalizedString("Please select a bank", bundle: .payment, comment: "bank selection view error hint")
+    
+    init(bank: AWXBank? = nil,
          handleUserInteraction: @escaping () -> Void) {
-        self.isEnabled = isEnabled
-        self.country = country
+        self.bank = bank
         self.handleUserInteraction = handleUserInteraction
-        // don't give a error hint before user editing
-        self.errorHint = nil
     }
     
-    //  OptionSelectionViewConfiguring
-    var fieldName: String = "country"
+    func validate() throws {
+        guard let bank else {
+            throw errorMessage.asError()
+        }
+    }
+    
+    // MARK: - OptionSelectionViewConfiguring
+    let fieldName: String = AWXField.Name.bankName
     
     var isRequired: Bool = true
     
-    var title: String? = nil
+    var title: String? = NSLocalizedString("Bank", bundle: .payment, comment: "")
     
-    var hideErrorHintLabel = true
+    var hideErrorHintLabel = false
     
-    var icon: UIImage? {
-        guard let country else { return nil }
-        return UIImage(named: country.countryCode, in: Bundle.resource())
-    }
+    var icon: UIImage? { nil }
     
     var indicator: UIImage? {
         UIImage(named: "down", in: Bundle.resource())?
@@ -45,8 +49,12 @@ class CountrySelectionViewModel: OptionSelectionViewConfiguring {
             )
     }
     
+    var handleUserInteraction: () -> Void
+    
+    var isEnabled: Bool = true
+    
     var text: String? {
-        country?.countryName
+        bank?.displayName
     }
     
     var attributedText: NSAttributedString? = nil
@@ -57,9 +65,9 @@ class CountrySelectionViewModel: OptionSelectionViewConfiguring {
     
     var errorHint: String? = nil
     
-    var textFieldType: AWXTextFieldType? = .country
+    var textFieldType: AWXTextFieldType? = .default
     
-    var placeholder: String? = NSLocalizedString("Select..", bundle: .payment, comment: "country selection view placeholder")
+    var placeholder: String? = NSLocalizedString("Select...", bundle: .payment, comment: "option selection view placeholder")
     
     var returnKeyType: UIReturnKeyType = .default
     
@@ -71,11 +79,6 @@ class CountrySelectionViewModel: OptionSelectionViewConfiguring {
     }
     
     func handleDidEndEditing() {
-        errorHint = (country != nil) ? nil : NSLocalizedString("Please enter your country", bundle: .payment, comment: "country selection view error hint")
+        errorHint = (bank != nil) ? nil : errorMessage
     }
-    
-    var isEnabled: Bool
-    
-    var handleUserInteraction: () -> Void
-    
 }

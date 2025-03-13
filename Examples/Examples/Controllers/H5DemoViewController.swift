@@ -65,7 +65,7 @@ class H5DemoViewController: UIViewController {
     }()
     
     private lazy var nextButton: UIButton = {
-        let view = UIButton(style: .primary, title: NSLocalizedString("Next", comment: localizationComment))
+        let view = AWXButton(style: .primary, title: NSLocalizedString("Next", comment: localizationComment))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onNextButtonTapped), for: .touchUpInside)
         return view
@@ -74,7 +74,7 @@ class H5DemoViewController: UIViewController {
     private lazy var bottomView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.awxBorderDecorative.cgColor
+        view.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
         view.layer.borderWidth = 1
         return view
     }()
@@ -132,7 +132,7 @@ class H5DemoViewController: UIViewController {
     
     private func setupViews() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(scrollView)
         scrollView.addSubview(stack)
         stack.addArrangedSubview(topView)
@@ -191,5 +191,12 @@ class H5DemoViewController: UIViewController {
         
         let webVC = WebViewController(url: url, referer: referrer)
         navigationController?.pushViewController(webVC, animated: true)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            bottomView.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+        }
     }
 }

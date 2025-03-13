@@ -47,7 +47,7 @@ class WeChatDemoViewController: UIViewController {
     }()
     
     private lazy var nextButton: UIButton = {
-        let view = UIButton(style: .primary, title: NSLocalizedString("Next", comment: "WeChat demo next action"))
+        let view = AWXButton(style: .primary, title: NSLocalizedString("Next", comment: "WeChat demo next action"))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onNextButtonTapped), for: .touchUpInside)
         return view
@@ -56,7 +56,7 @@ class WeChatDemoViewController: UIViewController {
     private lazy var bottomView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.awxBorderDecorative.cgColor
+        view.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
         view.layer.borderWidth = 1
         return view
     }()
@@ -114,7 +114,7 @@ class WeChatDemoViewController: UIViewController {
     
     private func setupViews() {
         customizeNavigationBackButton()
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(scrollView)
         scrollView.addSubview(stack)
         stack.addArrangedSubview(topView)
@@ -182,6 +182,13 @@ class WeChatDemoViewController: UIViewController {
         Task {
             let success = await WXApi.send(payReq)
             showAlert(message: success ? "WXApi.send(payReq) succeed" : "WXApi.send(payReq) failed")
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            bottomView.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
         }
     }
 }

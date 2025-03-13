@@ -127,8 +127,9 @@ struct DemoDataSource {
         ]
     }
     
-    static func createOrder(shipping: AWXPlaceDetails) -> PurchaseOrder {
-        PurchaseOrder(
+    static func createOrder(shipping: AWXPlaceDetails? = nil) -> PurchaseOrder {
+        let shipping = shipping ?? shippingAddress
+        let order = PurchaseOrder(
             products: products,
             shipping: .init(
                 firstName: shipping.firstName,
@@ -144,6 +145,7 @@ struct DemoDataSource {
             ),
             type: "physical_goods"
         )
+        return order
     }
     
     static let commentForLocalization = "Integration demo list"

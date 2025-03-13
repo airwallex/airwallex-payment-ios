@@ -23,7 +23,7 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = .radius_l
         view.clipsToBounds = true
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         return view
     }()
     
@@ -38,17 +38,17 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private let label: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = .awxBody
-        view.textColor = .awxTextPrimary
+        view.font = .awxFont(.body2)
+        view.textColor = .awxColor(.textPrimary)
         return view
     }()
     
     private lazy var button: UIButton = {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.tintColor = .awxIconLink
-        view.setTitleColor(.awxIconLink, for: .normal)
-        view.titleLabel?.font = .awxHeadline400
+        view.tintColor = .awxColor(.iconLink)
+        view.setTitleColor(.awxColor(.iconLink), for: .normal)
+        view.titleLabel?.font = .awxFont(.headline2, weight: .bold)
         view.addTarget(self, action: #selector(onActionButtonTapped), for: .touchUpInside)
         return view
     }()
@@ -65,13 +65,13 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     override var isHighlighted: Bool {
         didSet {
             guard let viewModel, viewModel.highlightable else {
-                roundedBG.backgroundColor = .awxBackgroundPrimary
+                roundedBG.backgroundColor = .awxColor(.backgroundPrimary)
                 return
             }
             if isHighlighted {
-                roundedBG.backgroundColor = .awxBackgroundHighlight
+                roundedBG.backgroundColor = .awxColor(.backgroundHighlight)
             } else {
-                roundedBG.backgroundColor = .awxBackgroundPrimary
+                roundedBG.backgroundColor = .awxColor(.backgroundPrimary)
             }
         }
     }

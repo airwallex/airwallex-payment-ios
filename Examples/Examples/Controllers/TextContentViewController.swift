@@ -15,7 +15,7 @@ class TextContentViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isEditable = false
         view.font = .awxFont(.body1)
-        view.textColor = .awxTextPrimary
+        view.textColor = .awxColor(.textPrimary)
         view.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         return view
     }()
@@ -41,7 +41,7 @@ class TextContentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .awxBackgroundPrimary
+        view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(topView)
         view.addSubview(textView)
         let constraints = [

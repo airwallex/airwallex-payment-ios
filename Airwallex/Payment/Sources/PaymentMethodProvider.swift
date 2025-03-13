@@ -2,33 +2,47 @@
 //  PaymentMethodProvider.swift
 //  Airwallex
 //
-//  Created by Weiping Li on 2024/12/12.
-//  Copyright © 2024 Airwallex. All rights reserved.
+//  Created by Weiping Li on 2025/2/26.
+//  Copyright © 2025 Airwallex. All rights reserved.
 //
 
 import Foundation
 import Combine
 
+enum PaymentMethodProviderUpdateType {
+    case listUpdated
+    case methodSelected(AWXPaymentMethodType)
+    case consentDeleted(AWXPaymentConsent)
+}
+
+/// A protocol that defines a provider responsible for managing payment methods.
 @MainActor
-final class PaymentMethodProvider {
-    private let provider: AWXPaymentMethodListViewModel
-    var session: AWXSession {
-        provider.session
-    }
+protocol PaymentMethodProvider: AnyObject {
     
-    let publisher = PassthroughSubject<Void, Never>()
-    var selectedMethod: AWXPaymentMethodType? {
-        didSet {
-            publisher.send()
-        }
-    }
+    /// The API client used for making network requests.
+    var apiClient: AWXAPIClient { get }
     
-    private(set) var methods = [AWXPaymentMethodType]()
-    private(set) var consents = [AWXPaymentConsent]()
+    /// The current payment session containing transaction details.
+    var session: AWXSession { get }
     
-    init(provider: AWXPaymentMethodListViewModel) {
-        self.provider = provider
-    }
+    /// A publisher that sends updates related to payment methods and consents.
+    var updatePublisher: PassthroughSubject<PaymentMethodProviderUpdateType, Never> { get }
+    
+    /// The currently selected payment method type.
+    var selectedMethod: AWXPaymentMethodType? { get set }
+    
+    /// A list of available payment methods.
+    var methods: [AWXPaymentMethodType] { get set }
+    
+    /// A list of available card payment consents.
+    var consents: [AWXPaymentConsent] { get set }
+    
+    /// Fetches the available payment method types.
+    /// - Throws: An error if the request fails.
+    func getPaymentMethodTypes() async throws
+}
+
+extension PaymentMethodProvider {
     
     var isApplePayAvailable: Bool {
         return methods.contains { $0.name == AWXApplePayKey }
@@ -36,50 +50,6 @@ final class PaymentMethodProvider {
     
     var applePayMethodType: AWXPaymentMethodType? {
         methods.first { $0.name == AWXApplePayKey }
-    }
-    
-    func fetchPaymentMethods() async throws {
-        let (methods, consents) = try await provider.fetchAvailablePaymentMethodsAndConsents()
-        // even if there is no paymmentMethods defined in session, we still need to
-        // make sure the payment methods and consents are unique
-        let availableMethods = session.filteredPaymentMethodTypes(methods)
-        var filteredConsents = [AWXPaymentConsent]()
-        var methodDict = Dictionary(
-            uniqueKeysWithValues: zip(
-                availableMethods.map { $0.name.lowercased() },
-                availableMethods
-            )
-        )
-        // filter methods
-        var set = Set<String>()
-        var filteredMethods = [AWXPaymentMethodType]()
-        if let predefinedMethods = session.paymentMethods, !predefinedMethods.isEmpty {
-            for predefined in predefinedMethods.map({ $0.lowercased() }) {
-                if let method = methodDict[predefined], !set.contains(predefined) {
-                    filteredMethods.append(method)
-                    set.insert(predefined)
-                }
-            }
-        } else {
-            for method in availableMethods {
-                if set.contains(method.name) { continue }
-                set.insert(method.name)
-                filteredMethods.append(method)
-            }
-        }
-        //  filter consents
-        set.removeAll()
-        filteredConsents = consents.filter { consent in
-            guard consent.paymentMethod?.card?.brand != nil,
-                  !set.contains(consent.id) else { return false }
-            set.insert(consent.id)
-            return true
-        }
-        
-        self.methods = filteredMethods
-        self.consents = filteredConsents
-        self.selectedMethod = filteredMethods.first { $0.name != AWXApplePayKey }
-        publisher.send()
     }
     
     func method(named name: String) -> AWXPaymentMethodType? {
@@ -90,16 +60,39 @@ final class PaymentMethodProvider {
         consents.first { $0.id == identifier }
     }
     
+    /// Revokes a payment consent.
+    /// - Parameter consent: The payment consent to be disabled.
     func disable(consent: AWXPaymentConsent) async throws {
         let request = AWXDisablePaymentConsentRequest()
         request.requestId = UUID().uuidString
         request.id = consent.id
-        let client = AWXAPIClient(configuration: .shared())
-        try await client.send(request)
+        try await apiClient.send(request)
         if let index = consents.firstIndex(where: { $0.id == consent.id }) {
-            consents.remove(at: index)
-            publisher.send()
+            let deleted = consents.remove(at: index)
+            updatePublisher.send(PaymentMethodProviderUpdateType.consentDeleted(deleted))
         }
     }
+    
+    /// Retrieves the payment method details for a payment method, typically used for LPM.
+    /// - Parameter name: The name of the payment method.
+    /// - Returns: A response containing the payment method details, including a list of `AWXSchema` objects.
+    func getPaymentMethodTypeDetails(name: String) async throws -> AWXGetPaymentMethodTypeResponse{
+        let request = AWXGetPaymentMethodTypeRequest()
+        request.name = name
+        request.transactionMode = session.transactionMode()
+        request.lang = session.lang
+        return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse
+    }
+    
+    /// Retrieves a list of available banks for certain online banking payment methods that require bank selection.
+    /// - Parameter name: The name of the payment method.
+    /// - Returns: A response containing the list of available banks.
+    func getBankList(name: String) async throws -> AWXGetAvailableBanksResponse {
+        let request = AWXGetAvailableBanksRequest()
+        request.paymentMethodType = name
+        request.countryCode = session.countryCode
+        request.lang = session.lang
+        let response = try await apiClient.send(request)
+        return response as! AWXGetAvailableBanksResponse
+    }
 }
-
