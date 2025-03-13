@@ -226,11 +226,9 @@ typedef enum {
         }
 
         strongSelf.paymentState = NotStarted;
-        if (session.paymentIntentId) {
-            [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet" additionalInfo:@{@"intentId": session.paymentIntentId}];
-        } else {
-            [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet"];
-        }
+        [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet" additionalInfo:@{
+            @"supported_networks": session.applePayOptions.supportedNetworks ?:@[]
+        }];
         [self log:@"Show apple pay"];
     }];
 }

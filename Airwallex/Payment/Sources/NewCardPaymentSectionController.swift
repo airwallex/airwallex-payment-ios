@@ -212,8 +212,6 @@ private extension NewCardPaymentSectionController {
             ]
         )
         
-        RiskLogger.log(.clickPaymentButton, screen: .createCard)
-        debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         do {
             let card = cardInfoViewModel.cardFromCollectedInfo()
             do {
@@ -231,6 +229,9 @@ private extension NewCardPaymentSectionController {
                     throw ErrorMessage(rawValue: error)
                 }
             }
+            
+            RiskLogger.log(.clickPaymentButton, screen: .createCard)
+            debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
             
             paymentSessionHandler = PaymentSessionHandler(
                 session: session,

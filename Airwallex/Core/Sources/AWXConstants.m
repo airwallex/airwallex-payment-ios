@@ -60,13 +60,10 @@ NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void) {
         PKPaymentNetworkChinaUnionPay,
         PKPaymentNetworkAmex,
         PKPaymentNetworkDiscover,
-        PKPaymentNetworkJCB
+        PKPaymentNetworkJCB,
+        PKPaymentNetworkMaestro
     ];
-    if (@available(iOS 12.0, *)) {
-        return [shared arrayByAddingObject:PKPaymentNetworkMaestro];
-    } else {
-        return shared;
-    }
+    return shared;
 }
 
 NSString *FormatAirwallexSDKMode(AirwallexSDKMode mode) {
