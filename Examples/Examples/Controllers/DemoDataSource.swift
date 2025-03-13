@@ -136,11 +136,11 @@ struct DemoDataSource {
                 lastName: shipping.lastName,
                 phoneNumber: shipping.phoneNumber,
                 address: .init(
-                    countryCode: shipping.address.countryCode,
-                    state: shipping.address.state,
-                    city: shipping.address.city,
-                    street: shipping.address.street,
-                    postcode: shipping.address.postcode
+                    countryCode: shipping.address?.countryCode,
+                    state: shipping.address?.state,
+                    city: shipping.address?.city,
+                    street: shipping.address?.street,
+                    postcode: shipping.address?.postcode
                 )
             ),
             type: "physical_goods"

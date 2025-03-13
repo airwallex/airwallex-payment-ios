@@ -39,10 +39,10 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
         self.handleUserInteraction = handleUserInteraction
         super.init(
             fieldName: AWXField.Name.bankName,
-            isRequired: true,
             title: NSLocalizedString("Bank", bundle: .payment, comment: ""),
             text: bank?.displayName,
             placeholder: NSLocalizedString("Select...", bundle: .payment, comment: "option selection view placeholder"),
+            isRequired: true,
             reconfigureHandler: reconfigureHandler
         )
         inputValidator = BlockValidator { [weak self] _ in

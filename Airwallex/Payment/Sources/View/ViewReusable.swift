@@ -30,3 +30,7 @@ extension ViewConfigurable {
         setup(viewModel)
     }
 }
+
+protocol ViewModelValidatable {
+    func validate() throws
+}

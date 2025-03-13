@@ -60,6 +60,8 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     
     var placeholder: String?
     
+    var clearButtonMode: UITextField.ViewMode
+    
     var returnKeyType: UIReturnKeyType
     
     var textFieldDelegate: (any UITextFieldDelegate)? {
@@ -68,16 +70,17 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     
     // MARK: -
     init(fieldName: String = "",
-         isRequired: Bool = true,
-         isEnabled: Bool = true,
-         hideErrorHintLabel: Bool = false,
-         isValid: Bool = true,
+         textFieldType: AWXTextFieldType = .default,
          title: String? = nil,
-         errorHint: String? = nil,
          text: String? = nil,
          attributedText: NSAttributedString? = nil,
-         textFieldType: AWXTextFieldType = .default,
          placeholder: String? = nil,
+         errorHint: String? = nil,
+         isRequired: Bool = true,
+         isEnabled: Bool = true,
+         isValid: Bool = true,
+         hideErrorHintLabel: Bool = false,
+         clearButtonMode: UITextField.ViewMode = .never,
          returnKeyType: UIReturnKeyType = .default,
          returnActionHandler: ((UITextField) -> Void)? = nil,
          customInputFormatter: UserInputFormatter? = nil,
@@ -95,6 +98,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
         self.isValid = isValid
         self.textFieldType = textFieldType
         self.placeholder = placeholder
+        self.clearButtonMode = clearButtonMode
         self.returnKeyType = returnKeyType
         self.returnActionHandler = returnActionHandler
         if let customInputValidator {
@@ -151,6 +155,7 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
             returnActionHandler(textField)
             return false
         } else {
+            textField.resignFirstResponder()
             return true
         }
     }
@@ -178,7 +183,7 @@ extension InfoCollectorTextFieldViewModel {
         try inputValidator.validateUserInput(attributedText?.string ?? text)
     }
     
-    func handleDidEndEditing(reconfigureIfNeeded: Bool = false) {
+    func handleDidEndEditing(reconfigureIfNeeded: Bool) {
         let isValidCheck = isValid
         let errorHintCheck = errorHint
         do {

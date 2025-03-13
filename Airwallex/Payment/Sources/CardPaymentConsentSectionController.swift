@@ -314,6 +314,7 @@ private extension CardPaymentConsentSectionController {
     }
     
     func checkout(consent: AWXPaymentConsent) {
+        context.endEditing()
         guard let viewController = context.viewController else {
             assert(false, "view controller not found")
             return

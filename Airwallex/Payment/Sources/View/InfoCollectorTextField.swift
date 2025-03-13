@@ -14,8 +14,6 @@ protocol InfoCollectorTextFieldConfiguring: BaseTextFieldConfiguring {
     var isRequired: Bool { get }
     /// The title displayed above the text field.
     var title: String? { get }
-    /// Error message for invalid input
-    var errorHint: String? { get }
     /// Determines whether the error hint label, displayed below the text field, should be hidden.
     var hideErrorHintLabel: Bool { get }
     /// Useful when you need to compose parameters from the view model.

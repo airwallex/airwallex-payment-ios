@@ -40,6 +40,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) AWXPlaceDetails *billing;
 
 /**
+ Specifies the required billing contact fields. Defaults to `AWXRequiredBillingContactFieldName`.
+ If `isBillingInformationRequired` is `false`, the getter for `requiredBillingContactFields` will check whether `AWXRequiredBillingContactFieldName` exists. If it does, it will return `AWXRequiredBillingContactFieldName`.
+ */
+@property (nonatomic, assign) AWXRequiredBillingContactFields requiredBillingContactFields;
+
+/**
  Apple Pay options.
  */
 @property (nonatomic, strong, nullable) AWXApplePayOptions *applePayOptions;

@@ -9,14 +9,6 @@
 import Foundation
 
 class BillingInfoCellViewModel {
-    var phoneConfigurer: InfoCollectorTextFieldViewModel!
-    
-    var emailConfigurer: InfoCollectorTextFieldViewModel!
-    
-    var firstNameConfigurer: InfoCollectorTextFieldViewModel!
-    
-    var lastNameConfigurer: InfoCollectorTextFieldViewModel!
-    
     var canReuseShippingAddress: Bool
     
     var shouldReuseShippingAddress: Bool
@@ -40,10 +32,6 @@ class BillingInfoCellViewModel {
             stateConfigurer,
             cityConfigurer,
             zipConfigurer,
-            firstNameConfigurer,
-            lastNameConfigurer,
-            phoneConfigurer,
-            emailConfigurer
         ]
         return arr.first { !$0.isValid && $0.errorHint != nil }?.errorHint
     }
@@ -60,7 +48,7 @@ class BillingInfoCellViewModel {
          reconfigureHandler: @escaping (BillingInfoCellViewModel, Bool) -> Void) {
         let reusingShippingInfo = (shippingInfo != nil) && reusingShippingInfo
         var country: AWXCountry?
-        if let countryCode = shippingInfo?.address.countryCode {
+        if let countryCode = shippingInfo?.address?.countryCode {
             country = AWXCountry(code: countryCode)
         }
         
@@ -70,8 +58,8 @@ class BillingInfoCellViewModel {
         self.reconfigureHandler = reconfigureHandler
         
         countryConfigurer = CountrySelectionViewModel(
-            isEnabled: !reusingShippingInfo,
             country: country,
+            isEnabled: !reusingShippingInfo,
             handleUserInteraction: countrySelectionHandler,
             reconfigureHandler: { [weak self] _, invalidateLayout in
                 guard let self else { return }
@@ -79,10 +67,10 @@ class BillingInfoCellViewModel {
             }
         )
         streetConfigurer = InfoCollectorTextFieldViewModel(
-            isEnabled: !reusingShippingInfo,
-            text: shippingInfo?.address.street,
             textFieldType: .street,
+            text: shippingInfo?.address?.street,
             placeholder: NSLocalizedString("Street", bundle: .payment, comment: "info in billing address"),
+            isEnabled: !reusingShippingInfo,
             returnKeyType: .next,
             reconfigureHandler: { [weak self] _, invalidateLayout in
                 guard let self else { return }
@@ -90,10 +78,10 @@ class BillingInfoCellViewModel {
             }
         )
         stateConfigurer = InfoCollectorTextFieldViewModel(
-            isEnabled: !reusingShippingInfo,
-            text: shippingInfo?.address.state,
             textFieldType: .state,
+            text: shippingInfo?.address?.state,
             placeholder: NSLocalizedString("State", bundle: .payment, comment: "info in billing address"),
+            isEnabled: !reusingShippingInfo,
             returnKeyType: .next,
             reconfigureHandler: { [weak self] _, invalidateLayout in
                 guard let self else { return }
@@ -101,10 +89,10 @@ class BillingInfoCellViewModel {
             }
         )
         cityConfigurer = InfoCollectorTextFieldViewModel(
-            isEnabled: !reusingShippingInfo,
-            text: shippingInfo?.address.city,
             textFieldType: .city,
+            text: shippingInfo?.address?.city,
             placeholder: NSLocalizedString("City", bundle: .payment, comment: "info in billing address"),
+            isEnabled: !reusingShippingInfo,
             returnKeyType: .next,
             reconfigureHandler: { [weak self] _, invalidateLayout in
                 guard let self else { return }
@@ -112,59 +100,11 @@ class BillingInfoCellViewModel {
             }
         )
         zipConfigurer = InfoCollectorTextFieldViewModel(
-            isRequired: false,
-            isEnabled: !reusingShippingInfo,
-            text: shippingInfo?.address.postcode,
             textFieldType: .zipcode,
-            placeholder: NSLocalizedString("Zip code (optional)", bundle: .payment, comment: "info in billing address"),
-            returnKeyType: .next,
-            reconfigureHandler: { [weak self] _, invalidateLayout in
-                guard let self else { return }
-                self.reconfigureHandler(self, invalidateLayout)
-            }
-        )
-        
-        firstNameConfigurer = InfoCollectorTextFieldViewModel(
+            text: shippingInfo?.address?.postcode,
+            placeholder: NSLocalizedString("Postal code", bundle: .payment, comment: "info in billing address"),
             isEnabled: !reusingShippingInfo,
-            text: shippingInfo?.firstName,
-            textFieldType: .firstName,
-            placeholder: NSLocalizedString("First name", bundle: .payment, comment: "info in billing address"),
             returnKeyType: .next,
-            reconfigureHandler: { [weak self] _, invalidateLayout in
-                guard let self else { return }
-                self.reconfigureHandler(self, invalidateLayout)
-            }
-        )
-        lastNameConfigurer = InfoCollectorTextFieldViewModel(
-            isEnabled: !reusingShippingInfo,
-            text: shippingInfo?.lastName,
-            textFieldType: .lastName,
-            placeholder: NSLocalizedString("Last name", bundle: .payment, comment: "info in billing address"),
-            returnKeyType: .next,
-            reconfigureHandler: { [weak self] _, invalidateLayout in
-                guard let self else { return }
-                self.reconfigureHandler(self, invalidateLayout)
-            }
-        )
-        phoneConfigurer = InfoCollectorTextFieldViewModel(
-            isRequired: false,
-            isEnabled: !reusingShippingInfo,
-            text: shippingInfo?.phoneNumber,
-            textFieldType: .phoneNumber,
-            placeholder: NSLocalizedString("Phone number (optional)", bundle: .payment, comment: "info in billing address"),
-            returnKeyType: .next,
-            reconfigureHandler: { [weak self] _, invalidateLayout in
-                guard let self else { return }
-                self.reconfigureHandler(self, invalidateLayout)
-            }
-        )
-        emailConfigurer = InfoCollectorTextFieldViewModel(
-            isRequired: false,
-            isEnabled: !reusingShippingInfo,
-            text: shippingInfo?.email,
-            textFieldType: .email,
-            placeholder: NSLocalizedString("Email (optional)", bundle: .payment, comment: "info in billing address"),
-            returnKeyType: .default,
             reconfigureHandler: { [weak self] _, invalidateLayout in
                 guard let self else { return }
                 self.reconfigureHandler(self, invalidateLayout)
@@ -172,47 +112,51 @@ class BillingInfoCellViewModel {
         )
     }
     
-    func billingFromCollectedInfo() -> AWXPlaceDetails {
-        let place = AWXPlaceDetails()
-        place.firstName = firstNameConfigurer.text ?? ""
-        place.lastName = lastNameConfigurer.text ?? ""
-        place.email = emailConfigurer.text
-        place.phoneNumber = phoneConfigurer.text
-        
+    func billingAddressFromCollectedInfo() -> AWXAddress {
         let address = AWXAddress()
         address.countryCode = selectedCountry?.countryCode
         address.state = stateConfigurer.text ?? ""
         address.city = cityConfigurer.text ?? ""
         address.street = streetConfigurer.text ?? ""
-        address.postcode = zipConfigurer.text ?? ""
-        
-        place.address = address
-        return place
+        address.postcode = zipConfigurer.text
+        return address
     }
     
     func updateValidStatusForCheckout() {
         let fieldConfigurers = [
-            firstNameConfigurer,
-            lastNameConfigurer,
+            countryConfigurer,
             streetConfigurer,
             stateConfigurer,
             cityConfigurer,
             zipConfigurer,
-            emailConfigurer,
-            phoneConfigurer
         ]
         for configurer in fieldConfigurers {
             //  force configurer to check valid status if user left this field untouched
-            configurer?.handleDidEndEditing()
+            configurer?.handleDidEndEditing(reconfigureIfNeeded: true)
         }
     }
     
     var selectedCountry: AWXCountry? {
         get {
-            (countryConfigurer as? CountrySelectionViewModel)?.country
+            countryConfigurer.country
         }
         set {
-            (countryConfigurer as? CountrySelectionViewModel)?.country = newValue
+            countryConfigurer.country = newValue
+        }
+    }
+}
+
+extension BillingInfoCellViewModel: ViewModelValidatable {
+    func validate() throws {
+        let fieldConfigurers = [
+            countryConfigurer,
+            streetConfigurer,
+            stateConfigurer,
+            cityConfigurer,
+            zipConfigurer,
+        ]
+        for configurer in fieldConfigurers {
+            try configurer?.validate()
         }
     }
 }

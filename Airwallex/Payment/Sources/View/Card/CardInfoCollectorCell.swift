@@ -61,12 +61,6 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         return view
     }()
     
-    private let nameTextField: InfoCollectorTextField = {
-        let view = InfoCollectorTextField<InfoCollectorTextFieldViewModel>()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private let vStack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -89,14 +83,8 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
             self?.cvcTextField.becomeFirstResponder()
         }
         expiresTextField.setup(viewModel.expireDataConfigurer)
-        
-        viewModel.cvcConfigurer.returnActionHandler = { [weak self] _ in
-            self?.nameTextField.becomeFirstResponder()
-        }
         cvcTextField.setup(viewModel.cvcConfigurer)
         hintLabel.text = viewModel.errorHintForCardFields
-        
-        nameTextField.setup(viewModel.nameOnCardConfigurer)
     }
     
     override init(frame: CGRect) {
@@ -139,19 +127,10 @@ private extension CardInfoCollectorCell {
             cvcTextField.textField.textDidBeginEditingPublisher,
             numberTextField.textField.textDidEndEditingPublisher,
             expiresTextField.textField.textDidEndEditingPublisher,
-            cvcTextField.textField.textDidEndEditingPublisher,
-            nameTextField.textField.textDidEndEditingPublisher
+            cvcTextField.textField.textDidEndEditingPublisher
         )
         .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
-        .sink { [weak self] notification in
-            guard let self,
-                  let viewModel = self.viewModel,
-                  let textField = notification.object as? UITextField,
-                  textField !== self.nameTextField.textField else {
-                return
-            }
-            updateLayering()
-        }
+        .sink { _ in updateLayering() }
         .store(in: &cancellables)
     }
     
@@ -165,8 +144,6 @@ private extension CardInfoCollectorCell {
             container.addSubview(cvcTextField)
             container.addSubview(hintLabel)
         }
-        
-        vStack.addArrangedSubview(nameTextField)
         
         let constraints = [
             titleLabel.topAnchor.constraint(equalTo: container.topAnchor),

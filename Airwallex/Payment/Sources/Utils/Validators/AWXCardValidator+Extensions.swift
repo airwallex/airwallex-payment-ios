@@ -13,6 +13,7 @@ extension AWXCardValidator {
         self.supportedSchemes = supportedSchemes
     }
     
+    
     func validate(card: AWXCard) throws {
         do {
             try Self.validate(number: card.number, supportedSchemes: supportedSchemes ?? [])
@@ -34,13 +35,13 @@ extension AWXCardValidator {
             throw NSLocalizedString("Invalid CVC / CVV", bundle: .payment, comment: "card validator error message").asError()
         }
         
-        do {
-            try Self.validate(nameOnCard: card.name)
-        } catch {
-            throw NSLocalizedString("Invalid name on card", bundle: .payment, comment: "card validator error message").asError()
-        }
+        // cardholder name can be nil if not required by session.requireBillingContactFields
+        //        do {
+        //            try Self.validate(nameOnCard: card.name)
+        //        } catch {
+        //            throw NSLocalizedString("Invalid name on card", bundle: .payment, comment: "card validator error message").asError()
+        //        }
     }
-    
     /// validate card number
     /// - Parameters:
     ///   - number: string composed of decimal digits
@@ -65,9 +66,9 @@ extension AWXCardValidator {
     }
     
     static func validate(expiryMonth: String?, expiryYear: String?) throws {
-        guard let expiryMonth = expiryMonth?.trimmingCharacters(in: .whitespacesAndNewlines),
+        guard let expiryMonth = expiryMonth?.trimmed,
               !expiryMonth.isEmpty,
-              let expiryYear = expiryYear?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let expiryYear = expiryYear?.trimmed,
               !expiryYear.isEmpty else {
             throw NSLocalizedString("Expiry date is required", bundle: .payment, comment: "card validator error message").asError()
         }

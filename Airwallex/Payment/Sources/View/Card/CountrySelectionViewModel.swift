@@ -29,19 +29,22 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
     
     var handleUserInteraction: () -> Void
     
-    init(isEnabled: Bool = true,
+    init(fieldName: String = "country",
+         title: String? = nil,
          country: AWXCountry? = nil,
+         isEnabled: Bool = true,
          handleUserInteraction: @escaping () -> Void,
          reconfigureHandler: @escaping ReconfigureHandler) {
         self.country = country
         self.handleUserInteraction = handleUserInteraction
         super.init(
-            fieldName: "country",
+            fieldName: fieldName,
+            title: title,
+            text: country?.countryName,
+            placeholder: NSLocalizedString("Select..", bundle: .payment, comment: "country selection view placeholder"),
             isRequired: true,
             isEnabled: isEnabled,
             hideErrorHintLabel: true,
-            text: country?.countryName,
-            placeholder: NSLocalizedString("Select..", bundle: .payment, comment: "country selection view placeholder"),
             reconfigureHandler: reconfigureHandler
         )
         inputValidator = BlockValidator { [weak self] _ in

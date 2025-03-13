@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Address object.
  */
-@property (nonatomic, copy) AWXAddress *address;
+@property (nonatomic, copy, nullable) AWXAddress *address;
 
 @end
 

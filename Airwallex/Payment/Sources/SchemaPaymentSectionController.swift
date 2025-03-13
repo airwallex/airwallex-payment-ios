@@ -146,8 +146,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                     //  create view model for UI fields
                     let viewModel = InfoCollectorTextFieldViewModel(
                         fieldName: field.name,
-                        title: field.displayName,
                         textFieldType: field.textFieldType,
+                        title: field.displayName,
                         reconfigureHandler: { [weak self] viewModel, invalidateLayout in
                             self?.context.reconfigure(
                                 items: [viewModel.fieldName],
@@ -160,6 +160,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         if let prefix = AWXField.phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
                            !prefix.isEmpty {
                             viewModel.text = prefix
+                            viewModel.inputValidator = PrefixPhoneNumberValidator(prefix: prefix)
                         }
                     }
                     
@@ -197,6 +198,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
 
 private extension SchemaPaymentSectionController {
     func checkout() {
+        context.endEditing()
         AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: name])
         guard let schema else {
             // check schema
@@ -247,13 +249,13 @@ private extension SchemaPaymentSectionController {
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)
             for viewModel in uiFieldViewModels {
-                viewModel.handleDidEndEditing()
+                viewModel.handleDidEndEditing(reconfigureIfNeeded: true)
             }
-            context.reload(sections: [section])
         }
     }
     
     func handleBankSelection() {
+        context.endEditing()
         guard let bankList = bankList else { return }
         let formMapping = AWXFormMapping()
         formMapping.title = NSLocalizedString("Select your Bank", bundle: .payment, comment: "")

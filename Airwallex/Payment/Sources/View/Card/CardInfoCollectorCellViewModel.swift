@@ -15,7 +15,6 @@ class CardInfoCollectorCellViewModel {
     var cardNumberConfigurer: CardNumberTextFieldViewModel!
     var expireDataConfigurer: InfoCollectorTextFieldViewModel!
     var cvcConfigurer: InfoCollectorTextFieldViewModel!
-    var nameOnCardConfigurer: InfoCollectorTextFieldViewModel!
     
     var errorHintForCardFields: String? {
         for configurer in [ cardNumberConfigurer, expireDataConfigurer, cvcConfigurer ] {
@@ -69,24 +68,13 @@ class CardInfoCollectorCellViewModel {
                 self.reconfigureHandler(self, layoutUpdate)
             }
         )
-        nameOnCardConfigurer = InfoCollectorTextFieldViewModel(
-            title: NSLocalizedString("Name on card", bundle: .payment, comment: ""),
-            textFieldType: .nameOnCard,
-            editingEventObserver: BeginEditingEventObserver {
-                RiskLogger.log(.inputCardHolderName, screen: .createCard)
-            },
-            reconfigureHandler: { [weak self] viewModel, layoutUpdates in
-                guard let self else { return }
-                self.reconfigureHandler(self, layoutUpdates)
-            }
-        )
     }
 }
 
 extension CardInfoCollectorCellViewModel {
     func cardFromCollectedInfo() -> AWXCard {
         let card = AWXCard(
-            name: nameOnCardConfigurer.text ?? "",
+            name: "",
             cardNumber: cardNumberConfigurer.text ?? "",
             expiry: expireDataConfigurer.text ?? "",
             cvc: cvcConfigurer.text ?? ""
@@ -95,10 +83,18 @@ extension CardInfoCollectorCellViewModel {
     }
     
     func updateValidStatusForCheckout() {
-        let arr: [InfoCollectorTextFieldViewModel] = [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer, nameOnCardConfigurer]
+        let arr: [InfoCollectorTextFieldViewModel] = [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer]
         for configurer in arr {
             //  force configurer to check valid status if user left this field untouched
-            configurer.handleDidEndEditing()
+            configurer.handleDidEndEditing(reconfigureIfNeeded: true)
+        }
+    }
+}
+
+extension CardInfoCollectorCellViewModel: ViewModelValidatable {
+    func validate() throws {
+        for configurer in [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer] {
+            try configurer?.validate()
         }
     }
 }

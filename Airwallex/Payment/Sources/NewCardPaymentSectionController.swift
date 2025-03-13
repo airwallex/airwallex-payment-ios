@@ -18,8 +18,14 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         case checkoutButton
         // display this item only when session is AWXOneOffSession && has customerId
         case saveCardToggle
-        case billingInfo
         case unionPayWarning
+        
+        // billing fields
+        case cardholderName
+        case billingFieldEmail
+        case billingFieldPhone
+        case billingFieldAddress
+        case billingFieldCountryCode
     }
     
     private var methodType: AWXPaymentMethodType
@@ -48,7 +54,11 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         return viewModel
     }()
     
-    private lazy var billingInfoViewModel = createBillingInfoViewModel(reuseBillingAddress: shouldReuseShippingAddress)
+    private(set) var viewModelForCardholderName: InfoCollectorTextFieldViewModel?
+    private(set) var viewModelForEmail: InfoCollectorTextFieldViewModel?
+    private(set) var viewModelForPhoneNumber: InfoCollectorTextFieldViewModel?
+    private(set) var viewModelForCountryCode: CountrySelectionViewModel?
+    private(set) var viewModelForBillingAddress: BillingInfoCellViewModel?
     
     init(cardPaymentMethod: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
@@ -62,6 +72,8 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         if let oneOffSession = methodProvider.session as? AWXOneOffSession {
             self.shouldSaveCard = oneOffSession.autoSaveCardForFuturePayments
         }
+        super.init()
+        createRequiredBillingFieldViewModel()
     }
     
     // MARK: - SectionController
@@ -74,8 +86,19 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             Item.cardInfo.rawValue,
         ]
         
-        if session.isBillingInformationRequired {
-            items.append(Item.billingInfo.rawValue)
+        if let viewModelForCardholderName {
+            items.append(Item.cardholderName.rawValue)
+        }
+        if let viewModelForEmail {
+            items.append(Item.billingFieldEmail.rawValue)
+        }
+        if let viewModelForPhoneNumber {
+            items.append(Item.billingFieldPhone.rawValue)
+        }
+        if let viewModelForBillingAddress {
+            items.append(Item.billingFieldAddress.rawValue)
+        } else if let viewModelForCountryCode {
+            items.append(Item.billingFieldCountryCode.rawValue)
         }
         
         if supportCardSaving {
@@ -114,9 +137,9 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             )
             cell.setup(viewModel)
             return cell
-        case .billingInfo:
+        case .billingFieldAddress:
             let cell = context.dequeueReusableCell(BillingInfoCell.self, for: item.rawValue, indexPath: indexPath)
-            cell.setup(billingInfoViewModel)
+            if let viewModelForBillingAddress { cell.setup(viewModelForBillingAddress) }
             return cell
         case .unionPayWarning:
             let cell = context.dequeueReusableCell(WarningViewCell.self, for: item.rawValue, indexPath: indexPath)
@@ -127,13 +150,29 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             )
             cell.setup(message)
             return cell
+        case .cardholderName:
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            if let viewModelForCardholderName { cell.setup(viewModelForCardholderName) }
+            return cell
+        case .billingFieldEmail:
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            if let viewModelForEmail { cell.setup(viewModelForEmail) }
+            return cell
+        case .billingFieldPhone:
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            if let viewModelForPhoneNumber { cell.setup(viewModelForPhoneNumber) }
+            return cell
+        case .billingFieldCountryCode:
+            let cell = context.dequeueReusableCell(CountrySelectionCell.self, for: item.rawValue, indexPath: indexPath)
+            if let viewModelForCountryCode { cell.setup(viewModelForCountryCode) }
+            return cell
         }
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let layoutSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(100)
+            heightDimension: .estimated(44)
         )
         let item = NSCollectionLayoutItem(layoutSize: layoutSize)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
@@ -204,6 +243,7 @@ private extension NewCardPaymentSectionController {
     }
     
     func checkout() {
+        context.endEditing()
         AnalyticsLogger.log(
             action: .tapPayButton,
             extraInfo: [
@@ -213,21 +253,73 @@ private extension NewCardPaymentSectionController {
         )
         
         do {
-            let card = cardInfoViewModel.cardFromCollectedInfo()
-            do {
-                try validator.validate(card: card)
-            } catch {
-                context.scroll(to: Item.cardInfo.rawValue, position: .bottom, animated: true)
-                throw error
+            // validate card info
+            let forCardValidation: [ViewModelValidatable?] = [
+                cardInfoViewModel,
+                viewModelForCardholderName
+            ]
+            for viewModel in forCardValidation {
+                try viewModel?.validate()
             }
+            
+            let card = cardInfoViewModel.cardFromCollectedInfo()
+            if let name = viewModelForCardholderName?.text?.trimmed {
+                card.name = name
+            }
+            try validator.validate(card: card)
+            
+            // validate billing info
+            let forBillingValidation: [ViewModelValidatable?] = [
+                viewModelForEmail,
+                viewModelForPhoneNumber,
+                viewModelForBillingAddress,
+                viewModelForCountryCode
+            ]
+            for viewModel in forBillingValidation {
+                try viewModel?.validate()
+            }
+            
             var billingInfo: AWXPlaceDetails?
             if session.isBillingInformationRequired {
-                billingInfo = billingInfoViewModel.billingFromCollectedInfo()
-                let error = billingInfo?.validate()
-                if let error {
-                    context.scroll(to: Item.billingInfo.rawValue, position: .bottom, animated: true)
-                    throw ErrorMessage(rawValue: error)
+                let object = AWXPlaceDetails()
+                // update name
+                if let name = viewModelForCardholderName?.text?.trimmed {
+                    let components = name.components(separatedBy: " ")
+                    object.firstName = components.first ?? ""
+                    if components.count > 1 {
+                        object.lastName = components.last ?? ""
+                    }
+                } else {
+                    // reuse contact info from shipping info
+                    if let firstName = session.billing?.firstName {
+                        object.firstName = firstName
+                    }
+                    if let lastName = session.billing?.lastName {
+                        object.lastName = lastName
+                    }
                 }
+                // update email
+                if let email = viewModelForEmail?.text?.trimmed {
+                    object.email = email
+                }
+                // update phone number
+                if let phoneNumber = viewModelForPhoneNumber?.text?.trimmed {
+                    object.phoneNumber = phoneNumber
+                }
+                // update address
+                object.address = session.billing?.address
+                if let address = viewModelForBillingAddress?.billingAddressFromCollectedInfo() {
+                    object.address = address
+                } else if let countryCode = viewModelForCountryCode?.country?.countryCode {
+                    if countryCode == object.address?.countryCode {
+                        // reuse address
+                    } else {
+                        let newAddress = AWXAddress()
+                        newAddress.countryCode = countryCode
+                        object.address = newAddress
+                    }
+                }
+                billingInfo = object
             }
             
             RiskLogger.log(.clickPaymentButton, screen: .createCard)
@@ -246,9 +338,18 @@ private extension NewCardPaymentSectionController {
             )
         } catch {
             cardInfoViewModel.updateValidStatusForCheckout()
-            billingInfoViewModel.updateValidStatusForCheckout()
-            context.reload(sections: [section])
+            viewModelForBillingAddress?.updateValidStatusForCheckout()
+            let otherViewModels: [InfoCollectorTextFieldViewModel?] = [
+                viewModelForCardholderName,
+                viewModelForEmail,
+                viewModelForPhoneNumber,
+                viewModelForCountryCode
+            ]
+            for viewModel in otherViewModels {
+                viewModel?.handleDidEndEditing(reconfigureIfNeeded: true)
+            }
             let message = error.localizedDescription
+            context.scroll(to: Item.cardInfo.rawValue, position: .top)
             context.viewController?.showAlert(message: message)
             
             AnalyticsLogger.log(
@@ -263,9 +364,10 @@ private extension NewCardPaymentSectionController {
     }
     
     func triggerCountrySelection() {
+        context.endEditing()
         let controller = AWXCountryListViewController(nibName: nil, bundle: nil)
         controller.delegate = self
-        controller.country = billingInfoViewModel.selectedCountry
+        controller.country = viewModelForBillingAddress?.selectedCountry ?? viewModelForCountryCode?.country
         let nav = UINavigationController(rootViewController: controller)
         context.viewController?.present(nav, animated: true)
     }
@@ -279,34 +381,12 @@ private extension NewCardPaymentSectionController {
             ]
         )
         shouldReuseShippingAddress = reuseBillingAddress
-        let viewModel = createBillingInfoViewModel(reuseBillingAddress: reuseBillingAddress)
-        billingInfoViewModel = viewModel
-        context.reconfigure(items: [ Item.billingInfo.rawValue ], invalidateLayout: true) { cell in
+        let viewModel = createBillingAddressViewModel(reuseBillingAddress: reuseBillingAddress)
+        viewModelForBillingAddress = viewModel
+        context.reconfigure(items: [ Item.billingFieldAddress.rawValue ], invalidateLayout: true) { cell in
             guard let cell = cell as? BillingInfoCell else { return }
             cell.setup(viewModel)
         }
-    }
-    
-    func createBillingInfoViewModel(reuseBillingAddress: Bool) -> BillingInfoCellViewModel {
-        BillingInfoCellViewModel(
-            shippingInfo: session.billing,
-            reusingShippingInfo: reuseBillingAddress,
-            countrySelectionHandler: { [weak self] in
-                self?.triggerCountrySelection()
-            },
-            toggleReuseSelection: { [weak self] in
-                guard let self else { return }
-                self.shouldReuseShippingAddress.toggle()
-                self.toggleReuseBillingAddress(self.shouldReuseShippingAddress)
-            },
-            reconfigureHandler: { [weak self] viewModel, invalidateLayout in
-                self?.context.reconfigure(
-                    items: [Item.billingInfo.rawValue],
-                    invalidateLayout: invalidateLayout,
-                    configurer: nil
-                )
-            }
-        )
     }
     
     func toggleCardSaving(_ shouldSaveCard: Bool) {
@@ -322,17 +402,125 @@ private extension NewCardPaymentSectionController {
             context.performUpdates(section)
         }
     }
+    
+    func createBillingAddressViewModel(reuseBillingAddress: Bool) -> BillingInfoCellViewModel {
+        BillingInfoCellViewModel(
+            shippingInfo: session.billing,
+            reusingShippingInfo: reuseBillingAddress,
+            countrySelectionHandler: { [weak self] in
+                self?.triggerCountrySelection()
+            },
+            toggleReuseSelection: { [weak self] in
+                guard let self else { return }
+                self.shouldReuseShippingAddress.toggle()
+                self.toggleReuseBillingAddress(self.shouldReuseShippingAddress)
+            },
+            reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                self?.context.reconfigure(
+                    items: [Item.billingFieldAddress.rawValue],
+                    invalidateLayout: invalidateLayout,
+                    configurer: nil
+                )
+            }
+        )
+    }
+    
+    func createRequiredBillingFieldViewModel() {
+        if session.requiredBillingContactFields.contains(.name) {
+            viewModelForCardholderName = InfoCollectorTextFieldViewModel(
+                fieldName: Item.cardholderName.rawValue,
+                textFieldType: .nameOnCard,
+                title: NSLocalizedString("Name on card", bundle: .payment, comment: "billing field"),
+                editingEventObserver: BeginEditingEventObserver {
+                    RiskLogger.log(.inputCardHolderName, screen: .createCard)
+                },
+                reconfigureHandler: { [weak self] viewModel, layoutUpdates in
+                    guard let self else { return }
+                    self.context.reconfigure(
+                        items: [viewModel.fieldName],
+                        invalidateLayout: layoutUpdates,
+                        configurer: nil
+                    )
+                }
+            )
+        }
+        if session.requiredBillingContactFields.contains(.email) {
+            viewModelForEmail = InfoCollectorTextFieldViewModel(
+                fieldName: Item.billingFieldEmail.rawValue,
+                textFieldType: .email,
+                title: NSLocalizedString("Email", bundle: .payment, comment: "billing field"),
+                reconfigureHandler: { [weak self] viewModel, layoutUpdates in
+                    guard let self else { return }
+                    self.context.reconfigure(
+                        items: [viewModel.fieldName],
+                        invalidateLayout: layoutUpdates,
+                        configurer: nil
+                    )
+                }
+            )
+        }
+        if session.requiredBillingContactFields.contains(.phone) {
+            viewModelForPhoneNumber = InfoCollectorTextFieldViewModel(
+                fieldName: Item.billingFieldPhone.rawValue,
+                textFieldType: .phoneNumber,
+                title: NSLocalizedString("Phone number", bundle: .payment, comment: "billing field"),
+                reconfigureHandler: { [weak self] viewModel, layoutUpdates in
+                    guard let self else { return }
+                    self.context.reconfigure(
+                        items: [viewModel.fieldName],
+                        invalidateLayout: layoutUpdates,
+                        configurer: nil
+                    )
+                }
+            )
+        }
+        
+        if session.requiredBillingContactFields.contains(.address) {
+            viewModelForBillingAddress = createBillingAddressViewModel(reuseBillingAddress: shouldReuseShippingAddress)
+        } else if session.requiredBillingContactFields.contains(.countryCode) {
+            var country: AWXCountry?
+            if let countryCode = session.billing?.address?.countryCode {
+                country = AWXCountry(code: countryCode)
+            }
+            viewModelForCountryCode = CountrySelectionViewModel(
+                fieldName: Item.billingFieldCountryCode.rawValue,
+                title: NSLocalizedString("Billing country or region", bundle: .payment, comment: "billing info"),
+                country: country,
+                handleUserInteraction: { [weak self] in
+                    self?.triggerCountrySelection()
+                },
+                reconfigureHandler: { [weak self] viewModel, layoutUpdates in
+                    guard let self else { return }
+                    self.context.reconfigure(
+                        items: [viewModel.fieldName],
+                        invalidateLayout: layoutUpdates,
+                        configurer: nil
+                    )
+                }
+            )
+        }
+    }
 }
 
 extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate {
     func countryListViewController(_ controller: AWXCountryListViewController, didSelect country: AWXCountry) {
         controller.dismiss(animated: true)
-        billingInfoViewModel.selectedCountry = country
-        context.reconfigure(
-            items: [ Item.billingInfo.rawValue ],
-            invalidateLayout: true,
-            configurer: nil
-        )
+        assert(viewModelForBillingAddress != nil || viewModelForCountryCode != nil, "one of the viewmodel should exist")
+        if let viewModelForBillingAddress {
+            viewModelForBillingAddress.selectedCountry = country
+            context.reconfigure(
+                items: [ Item.billingFieldAddress.rawValue ],
+                invalidateLayout: true,
+                configurer: nil
+            )
+        } else if let viewModelForCountryCode {
+            viewModelForCountryCode.country = country
+            context.reconfigure(
+                items: [ Item.billingFieldCountryCode.rawValue ],
+                invalidateLayout: true,
+                configurer: nil
+            )
+        }
     }
 }
 

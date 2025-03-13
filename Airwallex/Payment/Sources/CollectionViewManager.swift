@@ -333,6 +333,10 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         return collectionView.cellForItem(at: indexPath)
     }
     
+    func endEditing(_ force: Bool = true) {
+        collectionView.endEditing(force)
+    }
+    
     // MARK: - register reusable views
     
     private lazy var registeredCells = Set<String>()
