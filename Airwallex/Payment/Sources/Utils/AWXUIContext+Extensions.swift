@@ -10,6 +10,8 @@ import Foundation
 
 //  MARK: - Method List
 public extension AWXUIContext {
+    private static let subtypeDropin = "dropin"
+    private static let subtypeElement = "element"
     enum LaunchStyle {
         case push
         case present
@@ -46,13 +48,6 @@ public extension AWXUIContext {
                                   paymentResultDelegate: AWXPaymentResultDelegate,
                                   filterBy methodNames: [String]? = nil,
                                   style: LaunchStyle = .push) {
-        AWXAnalyticsLogger.shared().logAction(
-            withName: "payment_launched",
-            additionalInfo: [
-                "payment_method": "dropin",
-                "transaction_mode": session.transactionMode()
-            ]
-        )
         if let methodNames {
             session.paymentMethods = methodNames
             if let session = session as? AWXOneOffSession,
@@ -68,6 +63,8 @@ public extension AWXUIContext {
             paymentResultDelegate: paymentResultDelegate,
             style: style
         )
+        
+        AnalyticsLogger.log(action: .paymentLaunched, extraInfo: [.subtype: Self.subtypeDropin])
     }
 }
 
@@ -118,6 +115,7 @@ public extension AWXUIContext {
     /// Launches the Airwallex payment sheet for a specified payment method.
     /// - Parameters:
     ///   - name: The name of the payment method.
+    ///   API reference: https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get JSON Object field: items.name
     ///   - hostingVC: The view controller that presents the payment sheet.
     ///   - session: The current payment session containing transaction details.
     ///   - paymentResultDelegate: The delegate that handles payment result callbacks.
@@ -130,13 +128,7 @@ public extension AWXUIContext {
                                   supportedBrands: [AWXCardBrand]? = nil,
                                   style: LaunchStyle = .push) {
         let name = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        AWXAnalyticsLogger.shared().logAction(
-            withName: "payment_launched",
-            additionalInfo: [
-                "payment_method": name,
-                "transaction_mode": session.transactionMode()
-            ]
-        )
+        
         if name == AWXCardKey {
             assert(supportedBrands != nil && supportedBrands?.isEmpty == false, "Supported card brands are required for card payment.")
         }
@@ -152,6 +144,7 @@ public extension AWXUIContext {
             paymentResultDelegate: paymentResultDelegate,
             style: style
         )
+        AnalyticsLogger.log(action: .paymentLaunched, extraInfo: [.subtype: Self.subtypeElement, .paymentMethod: name])
     }
 }
 

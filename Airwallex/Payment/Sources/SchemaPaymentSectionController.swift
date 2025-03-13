@@ -5,13 +5,12 @@
 //  Created by Weiping Li on 2025/1/10.
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
-import AirwallexRisk
 
 /// This section controlelr is for schema payment
 class SchemaPaymentSectionController: NSObject, SectionController {
     
     struct Item {
-        static let bankSelection = "bankSelection"
+        static let bankName = AWXField.Name.bankName
         static let redirectReminder = "redirectReminder"
         static let checkoutButton = "checkoutButton"
     }
@@ -49,7 +48,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         var items = [String]()
         
         if let bankSelectionViewModel {
-            items.append(Item.bankSelection)
+            items.append(Item.bankName)
         }
         
         if let uiFields = schema?.uiFields {
@@ -83,7 +82,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             return cell
         case Item.redirectReminder:
             return context.dequeueReusableCell(SchemaPaymentReminderCell.self, for: itemIdentifier, indexPath: indexPath)
-        case Item.bankSelection:
+        case Item.bankName:
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: itemIdentifier, indexPath: indexPath)
             if let bankSelectionViewModel {
                 cell.setup(bankSelectionViewModel)
@@ -130,6 +129,13 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         bank: banks.count == 1 ? banks.first! : nil,
                         handleUserInteraction: { [weak self] in
                             self?.handleBankSelection()
+                        },
+                        reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                            self?.context.reconfigure(
+                                items: [viewModel.fieldName],
+                                invalidateLayout: invalidateLayout,
+                                configurer: nil
+                            )
                         }
                     )
                     bankList = banks
@@ -142,19 +148,18 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         fieldName: field.name,
                         title: field.displayName,
                         textFieldType: field.textFieldType,
-                        triggerLayoutUpdate: { [weak self] in
-                            self?.context.invalidateLayout(for: [field.name])
+                        reconfigureHandler: { [weak self] viewModel, invalidateLayout in
+                            self?.context.reconfigure(
+                                items: [viewModel.fieldName],
+                                invalidateLayout: invalidateLayout,
+                                configurer: nil
+                            )
                         }
                     )
                     if field.uiType == AWXField.UIType.phone {
                         if let prefix = AWXField.phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
                            !prefix.isEmpty {
                             viewModel.text = prefix
-                            viewModel.customInputValidator = { text in
-                                guard let text, text.count > prefix.count else {
-                                    throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "").asError()
-                                }
-                            }
                         }
                     }
                     
@@ -184,11 +189,15 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             }
         }
     }
+    
+    func sectionWillDisplay() {
+        AnalyticsLogger.log(paymentMethodView: name)
+    }
 }
 
 private extension SchemaPaymentSectionController {
     func checkout() {
-        AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button", additionalInfo: ["payment_method": name])
+        AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: name])
         guard let schema else {
             // check schema
             updateItemsIfNecessary()
@@ -202,7 +211,7 @@ private extension SchemaPaymentSectionController {
             // validate uiFields
             for viewModel in uiFieldViewModels {
                 do {
-                    try viewModel.validateUserInput(viewModel.text)
+                    try viewModel.validate()
                 } catch {
                     context.scroll(to: viewModel.fieldName, position: .bottom, animated: true)
                     throw error
@@ -237,7 +246,6 @@ private extension SchemaPaymentSectionController {
             debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)
-            bankSelectionViewModel?.handleDidEndEditing()
             for viewModel in uiFieldViewModels {
                 viewModel.handleDidEndEditing()
             }
@@ -270,9 +278,7 @@ extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
     func paymentFormViewController(_ paymentFormViewController: AWXPaymentFormViewController, didSelectOption optionKey: String) {
         guard let bank = bankList?.first(where: { $0.name == optionKey }) else { return }
         bankSelectionViewModel?.bank = bank
-        AWXAnalyticsLogger.shared().logAction(withName: "select_bank", additionalInfo: [ "bankName": optionKey ])
-        paymentFormViewController.dismiss(animated: true) {
-            self.context.reload(items: [ Item.bankSelection] )
-        }
+        AnalyticsLogger.log(action: .selectBank, extraInfo: [.bankName: optionKey])
+        paymentFormViewController.dismiss(animated: true)
     }
 }
