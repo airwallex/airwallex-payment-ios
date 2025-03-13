@@ -9,6 +9,15 @@
 import Foundation
 
 class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
+    var maxLengthGetter: () -> Int
+
+    init(maxLengthGetter: @escaping () -> Int,
+         returnKeyType: UIReturnKeyType = .default,
+         returnActionHandler: ((UITextField) -> Void)? = nil) {
+        self.maxLengthGetter = maxLengthGetter
+        self.returnKeyType = returnKeyType
+        self.returnActionHandler = returnActionHandler
+    }
     var isEnabled: Bool = true
     
     var errorHint: String? = nil
@@ -25,15 +34,18 @@ class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
     
     var placeholder: String? = "CVC"
     
-    var maxLengthGetter: () -> Int
-
-    init(maxLengthGetter: @escaping () -> Int) {
-        self.maxLengthGetter = maxLengthGetter
-    }
+    var returnKeyType: UIReturnKeyType
     
-    func handleTextDidUpdate(to userInput: String) -> Bool {
-        text = String(userInput.filterIllegalCharacters(in: .decimalDigits.inverted).prefix(maxLengthGetter()))
-        return text?.count == maxLengthGetter()
+    var returnActionHandler: ((UITextField) -> Void)?
+    
+    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool {
+        let cvcLength = maxLengthGetter()
+        var userInput = textField.text?.replacingCharacters(in: range, with: string).filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
+        text = String(userInput.prefix(cvcLength))
+        if text?.count == cvcLength {
+            returnActionHandler?(textField)
+        }
+        return false
     }
     
     func handleDidEndEditing() {
@@ -41,8 +53,7 @@ class CardCVCTextFieldViewModel: BaseTextFieldConfiguring {
             try AWXCardValidator.validate(cvc: text, requiredLength: maxLengthGetter())
             errorHint = nil
         } catch {
-            guard let error = error as? String else { return }
-            errorHint = error
+            errorHint = error.localizedDescription
         }
     }
 }

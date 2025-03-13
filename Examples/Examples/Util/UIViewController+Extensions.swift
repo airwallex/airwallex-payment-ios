@@ -19,7 +19,7 @@ extension UIViewController {
         let renderer = UIGraphicsImageRenderer(size: size)
         let newImage = renderer.image { context in
             image.draw(at: .init(x: offset, y: 0))
-        }.withTintColor(.awxTextPrimary, renderingMode: .alwaysOriginal)
+        }.withTintColor(.awxColor(.textPrimary), renderingMode: .alwaysOriginal)
         navigationController?.navigationBar.backIndicatorImage = newImage
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = newImage
     }

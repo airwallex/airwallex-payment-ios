@@ -15,38 +15,32 @@ class ApplePaySectionController: SectionController {
     let section = PaymentSectionType.applePay
     let session: AWXSession
     let methodType: AWXPaymentMethodType
-    let paymentSessionHandler: PaymentUISessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandler?
     private(set) var items: [String]
     
-    init(session: AWXSession, methodType: AWXPaymentMethodType, viewController: AWXViewController) {
+    init(session: AWXSession, methodType: AWXPaymentMethodType) {
         self.session = session
         self.methodType = methodType
         self.items = [ methodType.name ]
-        self.paymentSessionHandler = PaymentUISessionHandler(
-            session: session,
-            methodType: methodType,
-            viewController: viewController
-        )
-    }
-    
-    func registerReusableViews(to collectionView: UICollectionView) {
-        collectionView.registerReusableCell(ApplePayCell.self)
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
         self.context = context
     }
     
-    func cell(for collectionView: UICollectionView, item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ApplePayCell.reuseIdentifier,
-            for: indexPath
-        ) as! ApplePayCell
+    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = context.dequeueReusableCell(ApplePayCell.self, for: itemIdentifier, indexPath: indexPath)
         let viewModel = ApplePayViewModel { [weak self] in
-            guard let handler = self?.paymentSessionHandler else { return }
-            handler.startPayment()
+            guard let self , let viewController = self.context.viewController else { return }
+            AWXAnalyticsLogger.shared().logAction(withName: "tap_pay_button", additionalInfo: ["payment_method": methodType.name])
+            self.paymentSessionHandler = PaymentSessionHandler(
+                session: self.session,
+                viewController: viewController,
+                paymentResultDelegate: AWXUIContext.shared().delegate,
+                methodType: methodType
+            )
+            self.paymentSessionHandler?.startApplePay()
         }
-        
         cell.setup(viewModel)
         return cell
     }
@@ -64,7 +58,7 @@ class ApplePaySectionController: SectionController {
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .zero.top(.spacing_24).horizontal(.spacing_16)
+        section.contentInsets = .init(horizontal: 16)
         return section
     }
 }

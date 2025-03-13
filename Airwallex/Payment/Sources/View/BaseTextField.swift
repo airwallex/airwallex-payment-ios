@@ -9,19 +9,33 @@
 import Combine
 
 protocol BaseTextFieldConfiguring: AnyObject {
+    /// If user editing is enabled, the text color will change based on this setting.
     var isEnabled: Bool { get }
+    /// The text displayed in the embedded text field.
     var text: String? { get }
+    /// If this value is not nil, it will be displayed instead of  `text`.
     var attributedText: NSAttributedString? { get }
+    /// if the input text is valid
     var isValid: Bool { get }
+    /// error message for invalid input (will not displayed in `BaseTextField` but may be displayed in subclass)
     var errorHint: String? { get }
+    /// type of the text field
     var textFieldType: AWXTextFieldType? { get }
+    /// placeholder for text field
     var placeholder: String? { get }
-    
-    /// will be called in UITextField's `textField(_:shouldChangeCharactersIn:replacementString:) -> Bool` delegate to decide whether
-    /// we should let user continue input in `nextField`
-    /// - Parameter userInput: user input
-    /// - Returns: true means we have a valid input and we should make `nextFiled`  the first responder
-    func handleTextDidUpdate(to userInput: String) -> Bool
+    /// return key type of the text field
+    var returnKeyType: UIReturnKeyType { get set }
+    /// This will be called in `textFieldShouldReturn` and is intended to customize the return key action.
+    var returnActionHandler: ((UITextField) -> Void)? { get set }
+    /// Called in `textField(_:shouldChangeCharactersIn:replacementString:)`
+    /// - Parameters:
+    ///   - textField: The text field being edited.
+    ///   - range: The range of characters to be replaced, converted from `NSRange` to `Range<String.Index>`.
+    ///   - string: The replacement string entered by the user.
+    /// - Returns: A Boolean value indicating whether the user input should be updated naturally.
+    ///   If `false`, `BaseTextField` will be setup with the updated view model again.
+    func handleTextShouldChange(textField: UITextField, range: Range<String.Index>, replacementString string: String) -> Bool
+    /// will be called in `textFieldDidEndEditing`
     func handleDidEndEditing()
 }
 
@@ -30,8 +44,8 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     let textField: ContentInsetableTextField = {
         let view = ContentInsetableTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .awxTextPrimary
-        view.font = .awxBody
+        view.textColor = .awxColor(.textPrimary)
+        view.font = .awxFont(.body2)
         view.setContentHuggingPriority(.defaultLow - 50, for: .horizontal)
         view.setContentCompressionResistancePriority(.defaultHigh - 50, for: .horizontal)
         view.textInsets = UIEdgeInsets(top: .spacing_12, left: .spacing_16, bottom: .spacing_12, right: .spacing_16)
@@ -51,8 +65,8 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.borderWidth = 1
         view.layer.cornerRadius = .radius_l
-        view.layer.borderColor = UIColor.awxBorderDecorative.cgColor
-        view.backgroundColor = .awxBackgroundField
+        view.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+        view.backgroundColor = .awxColor(.backgroundField)
         return view
     }()
 
@@ -62,16 +76,6 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         stack.alignment = .center
         return stack
     }()
-    
-    weak var nextField: UIResponder? {
-        didSet {
-            if nextField != nil {
-                textField.returnKeyType = .next
-            } else {
-                textField.returnKeyType = .default
-            }
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -127,7 +131,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         }
         set {
             textField.isEnabled = newValue
-            textField.textColor = newValue ? .awxTextPrimary : .awxTextPlaceholder
+            textField.textColor = newValue ? .awxColor(.textPrimary) : .awxColor(.textPlaceholder)
         }
     }
     
@@ -152,14 +156,15 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
             textField.attributedPlaceholder = NSAttributedString(
                 string: placeholder,
                 attributes: [
-                    .foregroundColor: UIColor.awxTextPlaceholder,
-                    .font: UIFont.awxBody
+                    .foregroundColor: UIColor.awxColor(.textPlaceholder),
+                    .font: UIFont.awxFont(.body2)
                 ]
             )
         } else {
             textField.attributedPlaceholder = nil
         }
         isEnabled = viewModel.isEnabled
+        textField.returnKeyType = viewModel.returnKeyType
         
         updateBorderAppearance()
     }
@@ -167,21 +172,30 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     func updateBorderAppearance() {
         guard let viewModel else { return }
         if textField.isFirstResponder {
-            box.layer.borderColor = UIColor.awxBorderInterative.cgColor
+            box.layer.borderColor = UIColor.awxColor(.borderInteractive).cgColor
             box.layer.borderWidth = 2
         } else {
-            box.layer.borderColor = viewModel.isValid ? UIColor.awxBorderDecorative.cgColor : UIColor.awxBorderError.cgColor
+            box.layer.borderColor = viewModel.isValid ? UIColor.awxColor(.borderDecorative).cgColor : UIColor.awxColor(.borderError).cgColor
             box.layer.borderWidth = 1
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateBorderAppearance()
+        }
+    }
+
+    //  MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let nextField  {
-            nextField.becomeFirstResponder()
+        if let returnHandler = viewModel?.returnActionHandler  {
+            returnHandler(textField)
+            return false
         } else {
             resignFirstResponder()
+            return true
         }
-        return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -197,24 +211,33 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = textField.text ?? ""
-        if let range = Range(range, in: currentText) {
-            let text = currentText.replacingCharacters(in: range, with: string)
-            guard let viewModel else { return false }
-            let moveToNextField = viewModel.handleTextDidUpdate(to: text)
-            setup(viewModel)
-            if textField.isFirstResponder && moveToNextField {
-                nextField?.becomeFirstResponder()
-            }
+        guard let viewModel,
+              let range = Range(range, in: textField.text ?? "") else {
+            return false
         }
+        let shouldChange = viewModel.handleTextShouldChange(
+            textField: textField,
+            range: range,
+            replacementString: string
+        )
+        if shouldChange {
+            // text input not modified in viewModel
+            return true
+        }
+        // text or attributedText is changed
+        setup(viewModel)
         return false
     }
 }
 
 class ContentInsetableTextField: UITextField {
     
-    var textInsets: UIEdgeInsets
-
+    var textInsets: UIEdgeInsets {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
     init(textInsets: UIEdgeInsets = .zero) {
         self.textInsets = textInsets
         super.init(frame: .zero)
@@ -226,16 +249,34 @@ class ContentInsetableTextField: UITextField {
     
     // Rect for text already in the field
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: textInsets)
+        let textRect = super.textRect(forBounds: bounds)
+        let rect = bounds.inset(by: textInsets)
+        let result = textRect.intersection(rect)
+        guard !(result.isEmpty || result.isEmpty || result.isInfinite) else {
+            return rect
+        }
+        return result
     }
     
     // Rect for text when editing
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: textInsets)
+        let editingRect = super.editingRect(forBounds: bounds)
+        let rect = bounds.inset(by: textInsets)
+        let result = editingRect.intersection(rect)
+        guard !(result.isEmpty || result.isEmpty || result.isInfinite) else {
+            return rect
+        }
+        return result
     }
     
     // Optionally adjust the placeholder's rectangle
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: textInsets)
+        let placeholderRect = super.placeholderRect(forBounds: bounds)
+        let rect = bounds.inset(by: textInsets)
+        let result = placeholderRect.intersection(rect)
+        guard !(result.isEmpty || result.isEmpty || result.isInfinite) else {
+            return rect
+        }
+        return result
     }
 }

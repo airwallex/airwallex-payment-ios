@@ -17,7 +17,7 @@ extension UITextField {
         textContentType = .name
         switch fieldType {
         case .default:
-            textContentType = .name
+            textContentType = nil
         case .firstName:
             textContentType = .givenName
         case .lastName:
@@ -48,6 +48,7 @@ extension UITextField {
             textContentType = .postalCode
             keyboardType = .asciiCapableNumberPad
         case .cardNumber:
+            textContentType = .creditCardNumber
             keyboardType = .asciiCapableNumberPad
         case .expires:
             if #available(iOS 17.0, *) {
