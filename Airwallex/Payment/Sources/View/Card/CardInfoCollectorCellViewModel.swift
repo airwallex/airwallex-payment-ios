@@ -8,10 +8,9 @@
 
 import UIKit
 
-class CardInfoCollectorCellViewModel: ViewModelIdentifiable {
+class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
     
     var itemIdentifier: String
-    var reconfigureHandler: (CardInfoCollectorCellViewModel, Bool) -> Void
     
     var cardNumberConfigurer: CardNumberTextFieldViewModel!
     var expireDataConfigurer: InfoCollectorTextFieldViewModel!
@@ -31,19 +30,15 @@ class CardInfoCollectorCellViewModel: ViewModelIdentifiable {
     // MARK: -
     init(itemIdentifier: String,
          cardSchemes: [AWXCardScheme],
-         returnActionHandler: ((UIResponder, String) -> Bool)?,
-         reconfigureHandler: @escaping (CardInfoCollectorCellViewModel, Bool) -> Void) {
+         returnActionHandler: CellReturnActionHandler?,
+         reconfigureHandler: @escaping CellReconfigureHandler) {
         self.itemIdentifier = itemIdentifier
-        self.reconfigureHandler = reconfigureHandler
         cardNumberConfigurer = CardNumberTextFieldViewModel(
             supportedCardSchemes: cardSchemes,
             editingEventObserver: BeginEditingEventObserver {
                 RiskLogger.log(.inputCardNumber, screen: .createCard)
             },
-            reconfigureHandler: { [weak self] _, layoutUpdate in
-                guard let self else { return }
-                self.reconfigureHandler(self, layoutUpdate)
-            }
+            reconfigureHandler: { reconfigureHandler(itemIdentifier, $1) }
         )
         expireDataConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .expires,
@@ -53,10 +48,7 @@ class CardInfoCollectorCellViewModel: ViewModelIdentifiable {
             editingEventObserver: BeginEditingEventObserver {
                 RiskLogger.log(.inputCardExpiry, screen: .createCard)
             },
-            reconfigureHandler: { [weak self] _, layoutUpdate in
-                guard let self else { return }
-                self.reconfigureHandler(self, layoutUpdate)
-            }
+            reconfigureHandler: { reconfigureHandler(itemIdentifier, $1) }
         )
         
         cvcConfigurer = InfoCollectorTextFieldViewModel(
@@ -73,10 +65,7 @@ class CardInfoCollectorCellViewModel: ViewModelIdentifiable {
             editingEventObserver: BeginEditingEventObserver {
                 RiskLogger.log(.inputCardCVC, screen: .createCard)
             },
-            reconfigureHandler: { [weak self] _, layoutUpdate in
-                guard let self else { return }
-                self.reconfigureHandler(self, layoutUpdate)
-            }
+            reconfigureHandler: { reconfigureHandler(itemIdentifier, $1) }
         )
     }
 }

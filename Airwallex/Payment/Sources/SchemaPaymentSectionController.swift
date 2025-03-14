@@ -6,6 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import UIKit
+
 /// This section controlelr is for schema payment
 class SchemaPaymentSectionController: NSObject, SectionController {
     
@@ -125,17 +127,14 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                     guard !banks.isEmpty else {
                         throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "").asError()
                     }
-                    bankSelectionViewModel = BankSelectionViewModel(
+                    bankSelectionViewModel = BankSelectionCellViewModel(
+                        itemIdentifier: Item.bankName,
                         bank: banks.count == 1 ? banks.first! : nil,
                         handleUserInteraction: { [weak self] in
                             self?.handleBankSelection()
                         },
-                        reconfigureHandler: { [weak self] viewModel, invalidateLayout in
-                            self?.context.reconfigure(
-                                items: [viewModel.fieldName],
-                                invalidateLayout: invalidateLayout,
-                                configurer: nil
-                            )
+                        cellReconfigureHandler: { [weak self] in
+                            self?.context.reconfigure(items: [$0], invalidateLayout: $1)
                         }
                     )
                     bankList = banks
@@ -156,12 +155,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                             ) ?? false
                             return success
                         },
-                        reconfigureHandler: { [weak self] viewModel, invalidateLayout in
-                            self?.context.reconfigure(
-                                items: [viewModel.fieldName],
-                                invalidateLayout: invalidateLayout,
-                                configurer: nil
-                            )
+                        cellReconfigureHandler: { [weak self] in
+                            self?.context.reconfigure(items: [$0], invalidateLayout: $1)
                         }
                     )
                     if field.uiType == AWXField.UIType.phone {

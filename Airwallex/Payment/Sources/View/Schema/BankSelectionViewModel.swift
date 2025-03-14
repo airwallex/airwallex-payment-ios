@@ -56,3 +56,18 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
         return false
     }
 }
+
+class BankSelectionCellViewModel: BankSelectionViewModel, CellViewModelIdentifiable {
+    let itemIdentifier: String
+    init(itemIdentifier: String,
+         bank: AWXBank? = nil,
+         handleUserInteraction: @escaping () -> Void,
+         cellReconfigureHandler: @escaping CellReconfigureHandler) {
+        self.itemIdentifier = itemIdentifier
+        super.init(
+            bank: bank,
+            handleUserInteraction: handleUserInteraction,
+            reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
+        )
+    }
+}

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol CollectionViewSectionProvider: AnyObject {
     associatedtype SectionType: Hashable & Sendable
@@ -277,7 +278,7 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     ///   - animatingDifferences: A boolean indicating whether to animate changes.
     func reconfigure(items: [Item],
                      invalidateLayout: Bool,
-                     configurer: ((UICollectionViewCell) -> Void)?,
+                     configurer: ((UICollectionViewCell) -> Void)? = nil,
                      animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
         guard !items.isEmpty else { return }

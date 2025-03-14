@@ -242,18 +242,18 @@ class CardPaymentConsentSectionController: SectionController {
         
         if consent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
             selectedConsent = consent
-            cvcConfigurer = InfoCollectorTextFieldViewModel(
-                cvcValidator: CardCVCValidator(cardName: consent.paymentMethod?.card?.brand ?? ""),
+            let validator = CardCVCValidator(cardName: consent.paymentMethod?.card?.brand ?? "")
+            cvcConfigurer = InfoCollectorCellViewModel(
+                itemIdentifier: Items.cvcField,
+                textFieldType: .CVC,
+                placeholder: "CVC",
+                customInputFormatter: validator,
+                customInputValidator: validator,
                 editingEventObserver: BeginEditingEventObserver {
                     RiskLogger.log(.inputCardCVC, screen: .consent)
                 },
-                reconfigureHandler: { [weak self] _, invalidateLayout in
-                    guard let self else { return }
-                    self.context.reconfigure(
-                        items: [Items.cvcField],
-                        invalidateLayout: invalidateLayout,
-                        configurer: nil
-                    )
+                cellReconfigureHandler: { [weak self] in
+                    self?.context.reconfigure(items: [$0], invalidateLayout: $1)
                 }
             )
             context.performUpdates(section, forceReload: true)

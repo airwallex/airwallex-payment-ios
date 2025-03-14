@@ -226,9 +226,10 @@ typedef enum {
         }
 
         strongSelf.paymentState = NotStarted;
-        [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet" additionalInfo:@{
-            @"supported_networks": session.applePayOptions.supportedNetworks ?:@[]
-        }];
+        [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet"
+                                          additionalInfo:@{
+                                              @"supported_networks": session.applePayOptions.supportedNetworks ?: @[]
+                                          }];
         [self log:@"Show apple pay"];
     }];
 }

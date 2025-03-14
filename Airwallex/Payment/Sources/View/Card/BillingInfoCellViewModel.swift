@@ -8,7 +8,10 @@
 
 import Foundation
 
-class BillingInfoCellViewModel {
+class BillingInfoCellViewModel: CellViewModelIdentifiable {
+    
+    let itemIdentifier: String
+    
     var canReuseShippingAddress: Bool
     
     var shouldReuseShippingAddress: Bool
@@ -36,16 +39,15 @@ class BillingInfoCellViewModel {
         return arr.first { !$0.isValid && $0.errorHint != nil }?.errorHint
     }
     
-    var reconfigureHandler: (BillingInfoCellViewModel, Bool) -> Void
-    
     // MARK: -
     private var shippingInfo: AWXPlaceDetails?
     
-    init(shippingInfo: AWXPlaceDetails?,
+    init(itemIdentifier: String,
+         shippingInfo: AWXPlaceDetails?,
          reusingShippingInfo: Bool = true,
          countrySelectionHandler: @escaping () -> Void,
          toggleReuseSelection: @escaping () -> Void,
-         reconfigureHandler: @escaping (BillingInfoCellViewModel, Bool) -> Void) {
+         cellReconfigureHandler: @escaping CellReconfigureHandler) {
         let reusingShippingInfo = (shippingInfo != nil) && reusingShippingInfo
         var country: AWXCountry?
         if let countryCode = shippingInfo?.address?.countryCode {
@@ -55,16 +57,13 @@ class BillingInfoCellViewModel {
         canReuseShippingAddress = shippingInfo != nil
         shouldReuseShippingAddress = reusingShippingInfo
         self.toggleReuseSelection = toggleReuseSelection
-        self.reconfigureHandler = reconfigureHandler
+        self.itemIdentifier = itemIdentifier
         
         countryConfigurer = CountrySelectionViewModel(
             country: country,
             isEnabled: !reusingShippingInfo,
             handleUserInteraction: countrySelectionHandler,
-            reconfigureHandler: { [weak self] _, invalidateLayout in
-                guard let self else { return }
-                self.reconfigureHandler(self, invalidateLayout)
-            }
+            reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         streetConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .street,
@@ -72,10 +71,7 @@ class BillingInfoCellViewModel {
             placeholder: NSLocalizedString("Street", bundle: .payment, comment: "info in billing address"),
             isEnabled: !reusingShippingInfo,
             returnKeyType: .next,
-            reconfigureHandler: { [weak self] _, invalidateLayout in
-                guard let self else { return }
-                self.reconfigureHandler(self, invalidateLayout)
-            }
+            reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         stateConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .state,
@@ -83,10 +79,7 @@ class BillingInfoCellViewModel {
             placeholder: NSLocalizedString("State", bundle: .payment, comment: "info in billing address"),
             isEnabled: !reusingShippingInfo,
             returnKeyType: .next,
-            reconfigureHandler: { [weak self] _, invalidateLayout in
-                guard let self else { return }
-                self.reconfigureHandler(self, invalidateLayout)
-            }
+            reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         cityConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .city,
@@ -94,10 +87,7 @@ class BillingInfoCellViewModel {
             placeholder: NSLocalizedString("City", bundle: .payment, comment: "info in billing address"),
             isEnabled: !reusingShippingInfo,
             returnKeyType: .next,
-            reconfigureHandler: { [weak self] _, invalidateLayout in
-                guard let self else { return }
-                self.reconfigureHandler(self, invalidateLayout)
-            }
+            reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         zipConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .zipcode,
@@ -105,10 +95,7 @@ class BillingInfoCellViewModel {
             placeholder: NSLocalizedString("Postal code", bundle: .payment, comment: "info in billing address"),
             isEnabled: !reusingShippingInfo,
             returnKeyType: .next,
-            reconfigureHandler: { [weak self] _, invalidateLayout in
-                guard let self else { return }
-                self.reconfigureHandler(self, invalidateLayout)
-            }
+            reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
     }
     
