@@ -35,12 +35,7 @@ extension AWXCardValidator {
             throw NSLocalizedString("Invalid CVC / CVV", bundle: .payment, comment: "card validator error message").asError()
         }
         
-        // cardholder name can be nil if not required by session.requireBillingContactFields
-        //        do {
-        //            try Self.validate(nameOnCard: card.name)
-        //        } catch {
-        //            throw NSLocalizedString("Invalid name on card", bundle: .payment, comment: "card validator error message").asError()
-        //        }
+        // cardholder name can be nil if not required by session.requireBillingContactFields & no shipping info to reuse
     }
     /// validate card number
     /// - Parameters:
