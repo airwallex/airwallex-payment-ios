@@ -55,7 +55,7 @@ class InfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     }
     
     var viewModel: InfoCollectorTextFieldViewModel? {
-        field.viewModel as? InfoCollectorTextFieldViewModel
+        field.viewModel
     }
     
     func setup(_ viewModel: InfoCollectorTextFieldViewModel) {

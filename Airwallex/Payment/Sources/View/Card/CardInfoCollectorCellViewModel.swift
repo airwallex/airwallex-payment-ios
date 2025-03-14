@@ -8,15 +8,14 @@
 
 import UIKit
 
-class CardInfoCollectorCellViewModel {
+class CardInfoCollectorCellViewModel: ViewModelIdentifiable {
     
+    var itemIdentifier: String
     var reconfigureHandler: (CardInfoCollectorCellViewModel, Bool) -> Void
     
     var cardNumberConfigurer: CardNumberTextFieldViewModel!
     var expireDataConfigurer: InfoCollectorTextFieldViewModel!
     var cvcConfigurer: InfoCollectorTextFieldViewModel!
-    /// used to handle auto return action for last text field, CVC text field
-    var returnActionHandler: ((UITextField) -> Void)?
     
     var errorHintForCardFields: String? {
         for configurer in [ cardNumberConfigurer, expireDataConfigurer, cvcConfigurer ] {
@@ -30,10 +29,11 @@ class CardInfoCollectorCellViewModel {
         return nil
     }
     // MARK: -
-    init(cardSchemes: [AWXCardScheme],
-         returnActionHandler: ((UITextField) -> Void)?,
+    init(itemIdentifier: String,
+         cardSchemes: [AWXCardScheme],
+         returnActionHandler: ((UIResponder, String) -> Bool)?,
          reconfigureHandler: @escaping (CardInfoCollectorCellViewModel, Bool) -> Void) {
-        self.returnActionHandler = returnActionHandler
+        self.itemIdentifier = itemIdentifier
         self.reconfigureHandler = reconfigureHandler
         cardNumberConfigurer = CardNumberTextFieldViewModel(
             supportedCardSchemes: cardSchemes,
@@ -61,8 +61,10 @@ class CardInfoCollectorCellViewModel {
         
         cvcConfigurer = InfoCollectorTextFieldViewModel(
             returnActionHandler: { [weak self] textField in
-                guard let self, let handler = self.returnActionHandler else { return }
-                handler(textField)
+                guard let self, let returnActionHandler else {
+                    return false
+                }
+                return returnActionHandler(textField, self.itemIdentifier)
             },
             cvcValidator: CardCVCValidator { [weak self] in
                 guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }

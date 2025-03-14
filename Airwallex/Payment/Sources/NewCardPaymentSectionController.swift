@@ -42,17 +42,16 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     
     private lazy var cardInfoViewModel: CardInfoCollectorCellViewModel = {
         let viewModel = CardInfoCollectorCellViewModel(
+            itemIdentifier: Item.cardInfo.rawValue,
             cardSchemes: methodType.cardSchemes,
-            returnActionHandler: { [weak self] textField in
+            returnActionHandler: { [weak self] textField, identifier in
                 guard let self else {
-                    textField.resignFirstResponder()
-                    return
+                    return false
                 }
-                let success = self.context.activateNextRespondableCell(
+                return self.context.activateNextRespondableCell(
                     section: self.section,
                     itemIdentifier: Item.cardInfo.rawValue
                 )
-                if !success { textField.resignFirstResponder() }
             },
             reconfigureHandler: { [weak self] viewModel, invalidateLayout in
                 self?.context.reconfigure(
@@ -446,68 +445,54 @@ private extension NewCardPaymentSectionController {
     }
     
     func createRequiredBillingFieldViewModel() {
-        
-        let returnActionHandler: (UITextField, Item) -> Void = { [weak self] textField, item in
-            guard let self else {
-                textField.resignFirstResponder()
-                return
-            }
-            let success = self.context.activateNextRespondableCell(
+        let returnActionHandler: (UIResponder, Item) -> Bool = { [weak self] responder, item in
+            guard let self else { return false }
+            return self.context.activateNextRespondableCell(
                 section: self.section,
                 itemIdentifier: item.rawValue
             )
-            if !success { textField.resignFirstResponder() }
+        }
+        
+        let reconfigureHandler: (InfoCollectorTextFieldViewModel, Bool) -> Void = { [weak self] viewModel, layoutUpdates in
+            guard let self else { return }
+            self.context.reconfigure(
+                items: [viewModel.fieldName],
+                invalidateLayout: layoutUpdates,
+                configurer: nil
+            )
         }
         
         if session.requiredBillingContactFields.contains(.name) {
-            viewModelForCardholderName = InfoCollectorTextFieldViewModel(
-                fieldName: Item.cardholderName.rawValue,
+            viewModelForCardholderName = InfoCollectorCellViewModel(
+                itemIdentifier: Item.cardholderName,
                 textFieldType: .nameOnCard,
                 title: NSLocalizedString("Name on card", bundle: .payment, comment: "billing field"),
-                returnActionHandler: { returnActionHandler($0, Item.cardholderName) },
+                returnKeyType: .next,
+                returnActionHandler: returnActionHandler,
                 editingEventObserver: BeginEditingEventObserver {
                     RiskLogger.log(.inputCardHolderName, screen: .createCard)
                 },
-                reconfigureHandler: { [weak self] viewModel, layoutUpdates in
-                    guard let self else { return }
-                    self.context.reconfigure(
-                        items: [viewModel.fieldName],
-                        invalidateLayout: layoutUpdates,
-                        configurer: nil
-                    )
-                }
+                reconfigureHandler: reconfigureHandler
             )
         }
         if session.requiredBillingContactFields.contains(.email) {
-            viewModelForEmail = InfoCollectorTextFieldViewModel(
-                fieldName: Item.billingFieldEmail.rawValue,
+            viewModelForEmail = InfoCollectorCellViewModel(
+                itemIdentifier: Item.billingFieldEmail,
                 textFieldType: .email,
                 title: NSLocalizedString("Email", bundle: .payment, comment: "billing field"),
-                returnActionHandler: { returnActionHandler($0, Item.billingFieldEmail) },
-                reconfigureHandler: { [weak self] viewModel, layoutUpdates in
-                    guard let self else { return }
-                    self.context.reconfigure(
-                        items: [viewModel.fieldName],
-                        invalidateLayout: layoutUpdates,
-                        configurer: nil
-                    )
-                }
+                returnKeyType: .next,
+                returnActionHandler: returnActionHandler,
+                reconfigureHandler: reconfigureHandler
             )
         }
         if session.requiredBillingContactFields.contains(.phone) {
-            viewModelForPhoneNumber = InfoCollectorTextFieldViewModel(
-                fieldName: Item.billingFieldPhone.rawValue,
+            viewModelForPhoneNumber = InfoCollectorCellViewModel(
+                itemIdentifier: Item.billingFieldPhone,
                 textFieldType: .phoneNumber,
                 title: NSLocalizedString("Phone number", bundle: .payment, comment: "billing field"),
-                returnActionHandler: { returnActionHandler($0, Item.billingFieldPhone) },
-                reconfigureHandler: { [weak self] viewModel, layoutUpdates in
-                    guard let self else { return }
-                    self.context.reconfigure(
-                        items: [viewModel.fieldName],
-                        invalidateLayout: layoutUpdates,
-                        configurer: nil
-                    )
-                }
+                returnKeyType: .next,
+                returnActionHandler: returnActionHandler,
+                reconfigureHandler: reconfigureHandler
             )
         }
         
@@ -525,14 +510,7 @@ private extension NewCardPaymentSectionController {
                 handleUserInteraction: { [weak self] in
                     self?.triggerCountrySelection()
                 },
-                reconfigureHandler: { [weak self] viewModel, layoutUpdates in
-                    guard let self else { return }
-                    self.context.reconfigure(
-                        items: [viewModel.fieldName],
-                        invalidateLayout: layoutUpdates,
-                        configurer: nil
-                    )
-                }
+                reconfigureHandler: reconfigureHandler
             )
         }
     }

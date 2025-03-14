@@ -26,14 +26,15 @@ extension UserInputFormatter {
 
 class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguring {
     typealias ReconfigureHandler = (InfoCollectorTextFieldViewModel, Bool) -> Void
+    typealias ReturnActionHandler = (UIResponder) -> Bool
     
     var inputValidator: UserInputValidator
     
     var inputFormatter: UserInputFormatter?
     
-    var reconfigureHandler: ((InfoCollectorTextFieldViewModel, Bool) -> Void)
+    var reconfigureHandler: ReconfigureHandler
     
-    var returnActionHandler: ((UITextField) -> Void)?
+    var returnActionHandler: ReturnActionHandler?
     
     var editingEventObserver: UserEditingEventObserver?
     
@@ -82,7 +83,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
          hideErrorHintLabel: Bool = false,
          clearButtonMode: UITextField.ViewMode = .never,
          returnKeyType: UIReturnKeyType = .default,
-         returnActionHandler: ((UITextField) -> Void)? = nil,
+         returnActionHandler: ReturnActionHandler? = nil,
          customInputFormatter: UserInputFormatter? = nil,
          customInputValidator: UserInputValidator? = nil,
          editingEventObserver: UserEditingEventObserver? = nil,
@@ -139,7 +140,7 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
             
             // trigger return action if we have a valid input, and the cursor is at the end of the text field
             if let returnActionHandler, inputFormatter.automaticTriggerReturnAction(textField: textField) {
-                returnActionHandler(textField)
+                _ = returnActionHandler(textField)
             }
             return false
         } else {
@@ -152,12 +153,14 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let returnActionHandler  {
-            returnActionHandler(textField)
-            return false
+            let success = returnActionHandler(textField)
+            if !success {
+                textField.resignFirstResponder()
+            }
         } else {
             textField.resignFirstResponder()
-            return true
         }
+        return false
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -166,7 +169,7 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
 }
 
 extension InfoCollectorTextFieldViewModel {
-    convenience init(returnActionHandler: ((UITextField) -> Void)? = nil,
+    convenience init(returnActionHandler: ReturnActionHandler? = nil,
                      cvcValidator: CardCVCValidator,
                      editingEventObserver: UserEditingEventObserver,
                      reconfigureHandler: @escaping ReconfigureHandler) {

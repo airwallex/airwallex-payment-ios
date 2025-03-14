@@ -144,10 +144,18 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 
                 uiFieldViewModels = schema.uiFields.reduce(into: [InfoCollectorTextFieldViewModel](), { partialResult, field in
                     //  create view model for UI fields
-                    let viewModel = InfoCollectorTextFieldViewModel(
-                        fieldName: field.name,
+                    let viewModel = InfoCollectorCellViewModel(
+                        itemIdentifier: field.name,
                         textFieldType: field.textFieldType,
                         title: field.displayName,
+                        returnActionHandler: { [weak self] _, itemIdentifier in
+                            guard let self else { return false }
+                            let success = self.context.activateNextRespondableCell(
+                                section: self.section,
+                                itemIdentifier: itemIdentifier
+                            ) ?? false
+                            return success
+                        },
                         reconfigureHandler: { [weak self] viewModel, invalidateLayout in
                             self?.context.reconfigure(
                                 items: [viewModel.fieldName],
@@ -167,13 +175,6 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                     //  update return key and handler
                     if let last = partialResult.last {
                         last.returnKeyType = .next
-                        last.returnActionHandler = { [weak self] _ in
-                            guard let self else { return }
-                            self.context.scroll(to: field.name, position: .bottom, animated: true)
-                            if let cell = self.context.cellForItem(field.name) as? InfoCollectorCell {
-                                let _ = cell.becomeFirstResponder()
-                            }
-                        }
                     }
                     //  update partial result
                     partialResult.append(viewModel)

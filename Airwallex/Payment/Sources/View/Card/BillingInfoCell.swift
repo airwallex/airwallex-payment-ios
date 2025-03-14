@@ -123,17 +123,17 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         countrySelectionView.setup(viewModel.countryConfigurer)
         
         viewModel.streetConfigurer.returnActionHandler = { [weak self] _ in
-            self?.stateTextField.becomeFirstResponder()
+            self?.stateTextField.becomeFirstResponder() ?? false
         }
         streetTextField.setup(viewModel.streetConfigurer)
         
         viewModel.stateConfigurer.returnActionHandler = { [weak self] _ in
-            self?.cityTextField.becomeFirstResponder()
+            self?.cityTextField.becomeFirstResponder() ?? false
         }
         stateTextField.setup(viewModel.stateConfigurer)
         
         viewModel.cityConfigurer.returnActionHandler = { [weak self] _ in
-            self?.zipCodeTextField.becomeFirstResponder()
+            self?.zipCodeTextField.becomeFirstResponder()  ?? false
         }
         cityTextField.setup(viewModel.cityConfigurer)
         
@@ -146,6 +146,31 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     @objc func reuseButtonTapped() {
         reuseButton.isSelected = !reuseButton.isSelected
         viewModel?.toggleReuseSelection()
+    }
+    
+    var allFields: [UIResponder] {
+        [streetTextField, stateTextField, cityTextField, zipCodeTextField]
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        allFields.contains { $0.canBecomeFirstResponder }
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        allFields.first { $0.canBecomeFirstResponder }?.becomeFirstResponder() ?? false
+    }
+    
+    @discardableResult
+    override func resignFirstResponder() -> Bool {
+        endEditing(true)
+    }
+    
+    override var canResignFirstResponder: Bool {
+        allFields.contains { $0.canResignFirstResponder }
+    }
+    
+    override var isFirstResponder: Bool {
+        allFields.contains { $0.isFirstResponder }
     }
 }
 

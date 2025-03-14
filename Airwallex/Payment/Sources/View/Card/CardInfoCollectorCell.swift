@@ -75,12 +75,12 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         self.viewModel = viewModel
         
         viewModel.cardNumberConfigurer.returnActionHandler = { [weak self] _ in
-            self?.expiresTextField.becomeFirstResponder()
+            self?.expiresTextField.becomeFirstResponder() ?? false
         }
         numberTextField.setup(viewModel.cardNumberConfigurer)
         
         viewModel.expireDataConfigurer.returnActionHandler = { [weak self] _ in
-            self?.cvcTextField.becomeFirstResponder()
+            self?.cvcTextField.becomeFirstResponder() ?? false
         }
         expiresTextField.setup(viewModel.expireDataConfigurer)
         cvcTextField.setup(viewModel.cvcConfigurer)
@@ -98,6 +98,31 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     }
     
     private var cancellables = Set<AnyCancellable>()
+    
+    var allFields: [UIResponder] {
+        [numberTextField, expiresTextField, cvcTextField]
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        allFields.contains { $0.canBecomeFirstResponder }
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        allFields.first { $0.canBecomeFirstResponder }?.becomeFirstResponder() ?? false
+    }
+    
+    @discardableResult
+    override func resignFirstResponder() -> Bool {
+        endEditing(true)
+    }
+    
+    override var canResignFirstResponder: Bool {
+        allFields.contains { $0.canResignFirstResponder }
+    }
+    
+    override var isFirstResponder: Bool {
+        allFields.contains { $0.isFirstResponder }
+    }
 }
 
 private extension CardInfoCollectorCell {
