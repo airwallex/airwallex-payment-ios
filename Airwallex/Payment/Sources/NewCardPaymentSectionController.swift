@@ -342,7 +342,6 @@ private extension NewCardPaymentSectionController {
                 viewModel?.handleDidEndEditing(reconfigureIfNeeded: true)
             }
             let message = error.localizedDescription
-            context.scroll(to: Item.cardInfo.rawValue, position: .top)
             context.viewController?.showAlert(message: message)
             
             AnalyticsLogger.log(
@@ -376,7 +375,7 @@ private extension NewCardPaymentSectionController {
         shouldReuseShippingAddress = reuseBillingAddress
         let viewModel = createBillingAddressViewModel(reuseBillingAddress: reuseBillingAddress)
         viewModelForBillingAddress = viewModel
-        context.reconfigure(items: [ Item.billingFieldAddress.rawValue ], invalidateLayout: true) { cell in
+        context.reconfigure(items: [ viewModel.itemIdentifier ], invalidateLayout: true) { cell in
             guard let cell = cell as? BillingInfoCell else { return }
             cell.setup(viewModel)
         }
@@ -392,6 +391,7 @@ private extension NewCardPaymentSectionController {
         )
         self.shouldSaveCard = shouldSaveCard
         if viewModelForCardInfo.cardNumberConfigurer.currentBrand == .unionPay {
+            // show warning view for union pay card
             context.performUpdates(section)
         }
     }
@@ -419,13 +419,11 @@ private extension NewCardPaymentSectionController {
         viewModelForCardInfo = CardInfoCollectorCellViewModel(
             itemIdentifier: Item.cardInfo.rawValue,
             cardSchemes: methodType.cardSchemes,
-            returnActionHandler: { [weak self] textField, identifier in
-                guard let self else {
-                    return false
-                }
+            returnActionHandler: { [weak self] _, identifier in
+                guard let self else { return false }
                 return self.context.activateNextRespondableCell(
                     section: self.section,
-                    itemIdentifier: Item.cardInfo.rawValue
+                    itemIdentifier: identifier
                 )
             },
             reconfigureHandler: { [weak self] in
@@ -433,11 +431,11 @@ private extension NewCardPaymentSectionController {
             }
         )
         
-        let returnActionHandler: (UIResponder, String) -> Bool = { [weak self] responder, item in
+        let returnActionHandler: (UIResponder, String) -> Bool = { [weak self] responder, itemIdentifier in
             guard let self else { return false }
             return self.context.activateNextRespondableCell(
                 section: self.section,
-                itemIdentifier: item
+                itemIdentifier: itemIdentifier
             )
         }
         

@@ -27,7 +27,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     private var schema: AWXSchema?
     private var bankList: [AWXBank]?
     private var task: Task<Void, Never>?
-    private var bankSelectionViewModel: BankSelectionViewModel?
+    private var bankSelectionViewModel: BankSelectionCellViewModel?
     
     private var uiFieldViewModels = [InfoCollectorTextFieldViewModel]()
     private let name: String

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Combine
 
 protocol CollectionViewSectionProvider: AnyObject {
     associatedtype SectionType: Hashable & Sendable

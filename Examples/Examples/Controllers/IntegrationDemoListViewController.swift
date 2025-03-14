@@ -546,19 +546,19 @@ private extension IntegrationDemoListViewController {
             session.merchantTriggerReason = .scheduled
             paymentSession = session
         }
-        //  set this if you want to reuse shipping address for billing address
+        // update `paymentSession.billing` if you want to reuse shipping address for billing address
         paymentSession.billing = shippingAddress
         paymentSession.countryCode = ExamplesKeys.countryCode
         // setup options for applepay
         paymentSession.applePayOptions = DemoDataSource.applePayOptions
         // setup returnURL (schema or universalLink of your app) which is required for payments like wechat pay
         paymentSession.returnURL = ExamplesKeys.returnUrl
-        
-        customizeRequiredBillingContactFields(paymentSession)
+        // update required billing contact fields
+        updateRequiredBillingContactFields(paymentSession)
         return paymentSession
     }
     
-    func customizeRequiredBillingContactFields(_ session: AWXSession) {
+    func updateRequiredBillingContactFields(_ session: AWXSession) {
         var requiredBillingContactFields: RequiredBillingContactFields = []
         if ExamplesKeys.requiresName {
             requiredBillingContactFields.insert(.name)

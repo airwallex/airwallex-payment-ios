@@ -32,11 +32,11 @@ class BankSelectionCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var viewModel: BankSelectionViewModel? {
-        view.viewModel as? BankSelectionViewModel
+    var viewModel: BankSelectionCellViewModel? {
+        view.viewModel as? BankSelectionCellViewModel
     }
     
-    func setup(_ viewModel: BankSelectionViewModel) {
+    func setup(_ viewModel: BankSelectionCellViewModel) {
         view.setup(viewModel)
     }
 }

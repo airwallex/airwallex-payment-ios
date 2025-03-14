@@ -12,8 +12,7 @@ extension AWXCardValidator {
         self.init()
         self.supportedSchemes = supportedSchemes
     }
-    
-    
+        
     func validate(card: AWXCard) throws {
         do {
             try Self.validate(number: card.number, supportedSchemes: supportedSchemes ?? [])

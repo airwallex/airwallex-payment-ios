@@ -32,11 +32,11 @@ class CountrySelectionCell: UICollectionViewCell, ViewReusable, ViewConfigurable
         fatalError("init(coder:) has not been implemented")
     }
     
-    var viewModel: CountrySelectionViewModel? {
-        view.viewModel
+    var viewModel: CountrySelectionCellViewModel? {
+        view.viewModel as? CountrySelectionCellViewModel
     }
     
-    func setup(_ viewModel: CountrySelectionViewModel) {
+    func setup(_ viewModel: CountrySelectionCellViewModel) {
         view.setup(viewModel)
     }
 }
