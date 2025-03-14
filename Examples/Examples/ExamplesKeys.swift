@@ -58,10 +58,10 @@ struct ExamplesKeys {
     @OptionalStorage("customerId", byEnvironment: true)
     static var customerId: String?
     
-    @OptionalStorage("apiKey")
+    @OptionalStorage("apiKey", byEnvironment: true)
     static var apiKey: String?
     
-    @OptionalStorage("clientId")
+    @OptionalStorage("clientId", byEnvironment: true)
     static var clientId: String?
     
     @Storage("amount", defaultValue: "")
