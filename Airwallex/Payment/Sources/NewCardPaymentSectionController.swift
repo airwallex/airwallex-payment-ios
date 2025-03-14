@@ -43,6 +43,17 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     private lazy var cardInfoViewModel: CardInfoCollectorCellViewModel = {
         let viewModel = CardInfoCollectorCellViewModel(
             cardSchemes: methodType.cardSchemes,
+            returnActionHandler: { [weak self] textField in
+                guard let self else {
+                    textField.resignFirstResponder()
+                    return
+                }
+                let success = self.context.activateNextRespondableCell(
+                    section: self.section,
+                    itemIdentifier: Item.cardInfo.rawValue
+                )
+                if !success { textField.resignFirstResponder() }
+            },
             reconfigureHandler: { [weak self] viewModel, invalidateLayout in
                 self?.context.reconfigure(
                     items: [Item.cardInfo.rawValue],
@@ -435,11 +446,25 @@ private extension NewCardPaymentSectionController {
     }
     
     func createRequiredBillingFieldViewModel() {
+        
+        let returnActionHandler: (UITextField, Item) -> Void = { [weak self] textField, item in
+            guard let self else {
+                textField.resignFirstResponder()
+                return
+            }
+            let success = self.context.activateNextRespondableCell(
+                section: self.section,
+                itemIdentifier: item.rawValue
+            )
+            if !success { textField.resignFirstResponder() }
+        }
+        
         if session.requiredBillingContactFields.contains(.name) {
             viewModelForCardholderName = InfoCollectorTextFieldViewModel(
                 fieldName: Item.cardholderName.rawValue,
                 textFieldType: .nameOnCard,
                 title: NSLocalizedString("Name on card", bundle: .payment, comment: "billing field"),
+                returnActionHandler: { returnActionHandler($0, Item.cardholderName) },
                 editingEventObserver: BeginEditingEventObserver {
                     RiskLogger.log(.inputCardHolderName, screen: .createCard)
                 },
@@ -458,6 +483,7 @@ private extension NewCardPaymentSectionController {
                 fieldName: Item.billingFieldEmail.rawValue,
                 textFieldType: .email,
                 title: NSLocalizedString("Email", bundle: .payment, comment: "billing field"),
+                returnActionHandler: { returnActionHandler($0, Item.billingFieldEmail) },
                 reconfigureHandler: { [weak self] viewModel, layoutUpdates in
                     guard let self else { return }
                     self.context.reconfigure(
@@ -473,6 +499,7 @@ private extension NewCardPaymentSectionController {
                 fieldName: Item.billingFieldPhone.rawValue,
                 textFieldType: .phoneNumber,
                 title: NSLocalizedString("Phone number", bundle: .payment, comment: "billing field"),
+                returnActionHandler: { returnActionHandler($0, Item.billingFieldPhone) },
                 reconfigureHandler: { [weak self] viewModel, layoutUpdates in
                     guard let self else { return }
                     self.context.reconfigure(

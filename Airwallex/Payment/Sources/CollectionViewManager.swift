@@ -337,6 +337,23 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         collectionView.endEditing(force)
     }
     
+    func activateNextRespondableCell(section: Section, itemIdentifier: Item) -> Bool {
+        let snapshot = dataSource.snapshot()
+        guard let indexPath = dataSource.indexPath(for: itemIdentifier) else {
+            return false
+        }
+        let itemCount = snapshot.numberOfItems(inSection: section)
+        for index in (indexPath.item + 1)..<itemCount {
+            let nextIndexPath = IndexPath(item: index, section: indexPath.section)
+            guard let cell = collectionView.cellForItem(at: nextIndexPath),
+                  cell.canBecomeFirstResponder else {
+                continue
+            }
+            return cell.becomeFirstResponder()
+        }
+        return false
+    }
+    
     // MARK: - register reusable views
     
     private lazy var registeredCells = Set<String>()

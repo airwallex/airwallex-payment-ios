@@ -166,12 +166,14 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
 }
 
 extension InfoCollectorTextFieldViewModel {
-    convenience init(cvcValidator: CardCVCValidator,
+    convenience init(returnActionHandler: ((UITextField) -> Void)? = nil,
+                     cvcValidator: CardCVCValidator,
                      editingEventObserver: UserEditingEventObserver,
                      reconfigureHandler: @escaping ReconfigureHandler) {
         self.init(
             textFieldType: .CVC,
             placeholder: "CVC",
+            returnActionHandler: returnActionHandler,
             customInputFormatter: cvcValidator,
             customInputValidator: cvcValidator,
             editingEventObserver: editingEventObserver,

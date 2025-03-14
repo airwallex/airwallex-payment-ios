@@ -34,3 +34,8 @@ extension ViewConfigurable {
 protocol ViewModelValidatable {
     func validate() throws
 }
+
+protocol ViewModelIdentifiable {
+    associatedtype ItemType: Hashable & Sendable
+    var itemIdentifier: ItemType { get }
+}

@@ -597,6 +597,7 @@
 		D827371E2D362A9900AA41A6 /* AWXSchema+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXSchema+Extensions.swift"; sourceTree = "<group>"; };
 		D82737232D364D0800AA41A6 /* BankSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankSelectionViewModel.swift; sourceTree = "<group>"; };
 		D82737252D3654A900AA41A6 /* BankSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankSelectionCell.swift; sourceTree = "<group>"; };
+		D840B6FA2D83D6890081B073 /* InfoCollectorCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectorCellViewModel.swift; sourceTree = "<group>"; };
 		D84443812D30BF2800DF9762 /* SchemaPaymentSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentSectionController.swift; sourceTree = "<group>"; };
 		D84529AF2D30FA380032BE17 /* SchemaPaymentReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentReminderCell.swift; sourceTree = "<group>"; };
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
@@ -1328,6 +1329,7 @@
 				D8F67F002D2E2703004BAB26 /* OptionSelectionView.swift */,
 				D8F67EFC2D2CFBEA004BAB26 /* CheckBoxCell.swift */,
 				D8F67F022D2E669D004BAB26 /* InfoCollectorCell.swift */,
+				D840B6FA2D83D6890081B073 /* InfoCollectorCellViewModel.swift */,
 				D8BB45412D816D7A001F1B43 /* CountrySelectionCell.swift */,
 				D8F303352D1BF15600D29B49 /* BaseTextField.swift */,
 				D8F3031F2D1ABAAE00D29B49 /* InfoCollectorTextField.swift */,

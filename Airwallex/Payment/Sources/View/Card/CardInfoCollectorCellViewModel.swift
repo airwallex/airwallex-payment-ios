@@ -15,6 +15,8 @@ class CardInfoCollectorCellViewModel {
     var cardNumberConfigurer: CardNumberTextFieldViewModel!
     var expireDataConfigurer: InfoCollectorTextFieldViewModel!
     var cvcConfigurer: InfoCollectorTextFieldViewModel!
+    /// used to handle auto return action for last text field, CVC text field
+    var returnActionHandler: ((UITextField) -> Void)?
     
     var errorHintForCardFields: String? {
         for configurer in [ cardNumberConfigurer, expireDataConfigurer, cvcConfigurer ] {
@@ -29,7 +31,9 @@ class CardInfoCollectorCellViewModel {
     }
     // MARK: -
     init(cardSchemes: [AWXCardScheme],
+         returnActionHandler: ((UITextField) -> Void)?,
          reconfigureHandler: @escaping (CardInfoCollectorCellViewModel, Bool) -> Void) {
+        self.returnActionHandler = returnActionHandler
         self.reconfigureHandler = reconfigureHandler
         cardNumberConfigurer = CardNumberTextFieldViewModel(
             supportedCardSchemes: cardSchemes,
@@ -56,6 +60,10 @@ class CardInfoCollectorCellViewModel {
         )
         
         cvcConfigurer = InfoCollectorTextFieldViewModel(
+            returnActionHandler: { [weak self] textField in
+                guard let self, let handler = self.returnActionHandler else { return }
+                handler(textField)
+            },
             cvcValidator: CardCVCValidator { [weak self] in
                 guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
                 return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
