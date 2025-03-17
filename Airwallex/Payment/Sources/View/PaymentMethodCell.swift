@@ -56,7 +56,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     func setup(_ viewModel: PaymentMethodCellViewModel) {
         self.viewModel = viewModel
         if let URL = viewModel.imageURL {
-            viewModel.imageLoader.loadImage(URL, for: logo)
+            logo.loadImage(URL, imageLoader: viewModel.imageLoader)
         } else {
             logo.image = nil
         }

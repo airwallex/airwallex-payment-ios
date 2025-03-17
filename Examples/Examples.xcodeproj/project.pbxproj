@@ -38,6 +38,7 @@
 		D81EAF7D2D3F92D300B44784 /* ConfigActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */; };
 		D81EAF812D3FAAC600B44784 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF802D3FAABA00B44784 /* TopView.swift */; };
 		D81EAFA62D41DA1E00B44784 /* GetPaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */; };
+		D859655C2D88091C00532856 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D859655B2D88091C00532856 /* ImageLoader.swift */; };
 		D872B35A2D5DFA24007BC089 /* DemoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D872B3592D5DFA1A007BC089 /* DemoListView.swift */; };
 		D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */; };
 		D89C7AED2D423AD60042FC3B /* GetCardConsentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */; };
@@ -98,6 +99,7 @@
 		D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigActionView.swift; sourceTree = "<group>"; };
 		D81EAF802D3FAABA00B44784 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPaymentMethodsViewController.swift; sourceTree = "<group>"; };
+		D859655B2D88091C00532856 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		D872B3592D5DFA1A007BC089 /* DemoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoListView.swift; sourceTree = "<group>"; };
 		D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentViewController.swift; sourceTree = "<group>"; };
 		D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCardConsentsViewController.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				D81EAF682D3F474100B44784 /* UIViewController+Extensions.swift */,
 				1859F19C2C8A9EE90017FA4D /* NSError+Extensions.swift */,
 				D81EAF712D3F8B8F00B44784 /* KeyboardHandler.swift */,
+				D859655B2D88091C00532856 /* ImageLoader.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				D81EAF7D2D3F92D300B44784 /* ConfigActionView.swift in Sources */,
 				D81EAF782D3F8B8F00B44784 /* UIButton+Extension.swift in Sources */,
 				1859F1992C89AAB50017FA4D /* PaymentIntentRequest.swift in Sources */,
+				D859655C2D88091C00532856 /* ImageLoader.swift in Sources */,
 				D80F0E242D5C769100401BA6 /* PaymentResultViewController.swift in Sources */,
 				D80F0E312D5DC4BE00401BA6 /* AirwallexSDKMode+Extensions.swift in Sources */,
 				18ADC9992C8AACF900A775BB /* Customer.swift in Sources */,

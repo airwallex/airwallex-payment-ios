@@ -9,7 +9,7 @@ import Airwallex
 
 class GetPaymentMethodsViewController: UITableViewController {
     
-    private let imageCache = NSCache<NSURL, UIImage>()
+    private let imageLoader = ImageLoader()
     private let sectionIdentifier = "section"
     private lazy var dataSource: UITableViewDiffableDataSource = UITableViewDiffableDataSource<String, String>(tableView: tableView) { [weak self] tableView, indexPath, itemIdentifier in
         guard let self else { return UITableViewCell() }
@@ -27,36 +27,19 @@ class GetPaymentMethodsViewController: UITableViewController {
         cell.textLabel?.textColor = .awxColor(.textPrimary)
         cell.textLabel?.text = methodType.displayName
         cell.detailTextLabel?.text = methodType.transactionCurrencies.joined(separator: ", ")
+        guard let logoURL = methodType.resources.logoURL,
+              let imageView = cell.imageView else {
+            cell.imageView?.image = nil
+            cell.setNeedsLayout()
+            return
+        }
+        
         Task {
-            guard let logoURL = methodType.resources.logoURL else {
-                cell.imageView?.image = nil
+            if let image = await imageView.getImage(logoURL, imageLoader: imageLoader) {
+                imageView.image = image
                 cell.setNeedsLayout()
-                return
-            }
-            if let cachedImage = self.imageCache.object(forKey: logoURL as NSURL) {
-                // Use the cached image
-                await MainActor.run {
-                    cell.imageView?.image = cachedImage
-                    cell.setNeedsLayout()
-                }
-                return
-            }
-            
-            // Fetch image data asynchronously
-            do {
-                let (data, _) = try await URLSession.shared.data(from: logoURL)
-                if let image = UIImage(data: data) {
-                    // Cache the image for reuse
-                    self.imageCache.setObject(image, forKey: logoURL as NSURL)
-                    
-                    // Update the UI with the downloaded image
-                    await MainActor.run {
-                        cell.imageView?.image = image
-                        cell.setNeedsLayout()
-                    }
-                }
-            } catch {
-                print("Failed to fetch image: \(error.localizedDescription)")
+            } else {
+                imageView.image = nil
             }
         }
     }

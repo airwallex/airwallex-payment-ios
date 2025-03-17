@@ -1,6 +1,6 @@
 //
 //  ImageLoader.swift
-//  Airwallex
+//  Examples
 //
 //  Created by Weiping Li on 2025/3/17.
 //  Copyright © 2025 Airwallex. All rights reserved.
@@ -127,7 +127,7 @@ extension UIImageView {
                     let image = try await imageLoader.getImage(imageURL, for: self)
                     self.image = image
                 } catch {
-                    debugLog(error.localizedDescription)
+                    print(error.localizedDescription)
                 }
             }
         }
@@ -143,7 +143,6 @@ extension UIImageView {
             do {
                 return try await task.value
             } catch {
-                debugLog(error.localizedDescription)
                 return nil
             }
         }
