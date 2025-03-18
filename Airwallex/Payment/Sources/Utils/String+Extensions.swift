@@ -27,6 +27,10 @@ extension String {
         let e164Regex = #"^\+?[1-9]\d{1,14}$"#
         return NSPredicate(format: "SELF MATCHES %@", e164Regex).evaluate(with: self)
     }
+    
+    var trimmed: String {
+        trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }
 
 extension String {

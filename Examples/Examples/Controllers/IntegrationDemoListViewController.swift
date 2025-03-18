@@ -511,14 +511,21 @@ private extension IntegrationDemoListViewController {
         var paymentSession: AWXSession
         switch ExamplesKeys.checkoutMode {
         case .oneOff:
+            // create payment intent
             let paymentIntent = try await createPaymentIntent(force3DS: force3DS)
+            // update client secret
             AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
+            // create AWXOneOffSession
             let session = AWXOneOffSession()
             session.paymentIntent = paymentIntent
             session.autoCapture = ExamplesKeys.autoCapture
             paymentSession = session
         case .recurring:
-            AWXAPIClientConfiguration.shared().clientSecret = try await generateClientSecretForRecurringPayment()
+            // generate client secret
+            let clientSecret = try await generateClientSecretForRecurringPayment()
+            // update client secret
+            AWXAPIClientConfiguration.shared().clientSecret = clientSecret
+            // create AWXRecurringSession
             let session = AWXRecurringSession()
             session.setCurrency(ExamplesKeys.currency)
             session.setAmount(NSDecimalNumber(string: ExamplesKeys.amount))
@@ -527,8 +534,11 @@ private extension IntegrationDemoListViewController {
             session.merchantTriggerReason = .unscheduled
             paymentSession = session
         case .recurringWithIntent:
+            // create payment intent
             let paymentIntent = try await createPaymentIntent(force3DS: force3DS)
+            // update client secret
             AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
+            // create AWXRecurringWithIntentSession
             let session = AWXRecurringWithIntentSession()
             session.paymentIntent = paymentIntent
             session.nextTriggerByType = ExamplesKeys.nextTriggerByType
@@ -536,12 +546,36 @@ private extension IntegrationDemoListViewController {
             session.merchantTriggerReason = .scheduled
             paymentSession = session
         }
+        // update `paymentSession.billing` if you want to reuse shipping address for billing address
         paymentSession.billing = shippingAddress
         paymentSession.countryCode = ExamplesKeys.countryCode
+        // setup options for applepay
         paymentSession.applePayOptions = DemoDataSource.applePayOptions
+        // setup returnURL (schema or universalLink of your app) which is required for payments like wechat pay
         paymentSession.returnURL = ExamplesKeys.returnUrl
-        
+        // update required billing contact fields
+        updateRequiredBillingContactFields(paymentSession)
         return paymentSession
+    }
+    
+    func updateRequiredBillingContactFields(_ session: AWXSession) {
+        var requiredBillingContactFields: RequiredBillingContactFields = []
+        if ExamplesKeys.requiresName {
+            requiredBillingContactFields.insert(.name)
+        }
+        if ExamplesKeys.requiresEmail {
+            requiredBillingContactFields.insert(.email)
+        }
+        if ExamplesKeys.requiresPhone {
+            requiredBillingContactFields.insert(.phone)
+        }
+        if ExamplesKeys.requiresAddress {
+            requiredBillingContactFields.insert(.address)
+        }
+        if ExamplesKeys.requiresCountryCode {
+            requiredBillingContactFields.insert(.countryCode)
+        }
+        session.requiredBillingContactFields = requiredBillingContactFields
     }
 }
 

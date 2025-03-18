@@ -39,10 +39,10 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
         self.handleUserInteraction = handleUserInteraction
         super.init(
             fieldName: AWXField.Name.bankName,
-            isRequired: true,
             title: NSLocalizedString("Bank", bundle: .payment, comment: ""),
             text: bank?.displayName,
             placeholder: NSLocalizedString("Select...", bundle: .payment, comment: "option selection view placeholder"),
+            isRequired: true,
             reconfigureHandler: reconfigureHandler
         )
         inputValidator = BlockValidator { [weak self] _ in
@@ -54,5 +54,20 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         assert(false, "should never triggered")
         return false
+    }
+}
+
+class BankSelectionCellViewModel: BankSelectionViewModel, CellViewModelIdentifiable {
+    let itemIdentifier: String
+    init(itemIdentifier: String,
+         bank: AWXBank? = nil,
+         handleUserInteraction: @escaping () -> Void,
+         cellReconfigureHandler: @escaping CellReconfigureHandler) {
+        self.itemIdentifier = itemIdentifier
+        super.init(
+            bank: bank,
+            handleUserInteraction: handleUserInteraction,
+            reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
+        )
     }
 }

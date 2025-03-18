@@ -61,12 +61,6 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         return view
     }()
     
-    private let nameTextField: InfoCollectorTextField = {
-        let view = InfoCollectorTextField<InfoCollectorTextFieldViewModel>()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private let vStack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -81,22 +75,16 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         self.viewModel = viewModel
         
         viewModel.cardNumberConfigurer.returnActionHandler = { [weak self] _ in
-            self?.expiresTextField.becomeFirstResponder()
+            self?.expiresTextField.becomeFirstResponder() ?? false
         }
         numberTextField.setup(viewModel.cardNumberConfigurer)
         
         viewModel.expireDataConfigurer.returnActionHandler = { [weak self] _ in
-            self?.cvcTextField.becomeFirstResponder()
+            self?.cvcTextField.becomeFirstResponder() ?? false
         }
         expiresTextField.setup(viewModel.expireDataConfigurer)
-        
-        viewModel.cvcConfigurer.returnActionHandler = { [weak self] _ in
-            self?.nameTextField.becomeFirstResponder()
-        }
         cvcTextField.setup(viewModel.cvcConfigurer)
         hintLabel.text = viewModel.errorHintForCardFields
-        
-        nameTextField.setup(viewModel.nameOnCardConfigurer)
     }
     
     override init(frame: CGRect) {
@@ -110,6 +98,31 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     }
     
     private var cancellables = Set<AnyCancellable>()
+    
+    var allFields: [UIResponder] {
+        [numberTextField, expiresTextField, cvcTextField]
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        allFields.contains { $0.canBecomeFirstResponder }
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        allFields.first { $0.canBecomeFirstResponder }?.becomeFirstResponder() ?? false
+    }
+    
+    @discardableResult
+    override func resignFirstResponder() -> Bool {
+        endEditing(true)
+    }
+    
+    override var canResignFirstResponder: Bool {
+        allFields.contains { $0.canResignFirstResponder }
+    }
+    
+    override var isFirstResponder: Bool {
+        allFields.contains { $0.isFirstResponder }
+    }
 }
 
 private extension CardInfoCollectorCell {
@@ -139,19 +152,10 @@ private extension CardInfoCollectorCell {
             cvcTextField.textField.textDidBeginEditingPublisher,
             numberTextField.textField.textDidEndEditingPublisher,
             expiresTextField.textField.textDidEndEditingPublisher,
-            cvcTextField.textField.textDidEndEditingPublisher,
-            nameTextField.textField.textDidEndEditingPublisher
+            cvcTextField.textField.textDidEndEditingPublisher
         )
         .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
-        .sink { [weak self] notification in
-            guard let self,
-                  let viewModel = self.viewModel,
-                  let textField = notification.object as? UITextField,
-                  textField !== self.nameTextField.textField else {
-                return
-            }
-            updateLayering()
-        }
+        .sink { _ in updateLayering() }
         .store(in: &cancellables)
     }
     
@@ -165,8 +169,6 @@ private extension CardInfoCollectorCell {
             container.addSubview(cvcTextField)
             container.addSubview(hintLabel)
         }
-        
-        vStack.addArrangedSubview(nameTextField)
         
         let constraints = [
             titleLabel.topAnchor.constraint(equalTo: container.topAnchor),

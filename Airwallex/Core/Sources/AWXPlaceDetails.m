@@ -12,8 +12,8 @@
 
 - (NSDictionary *)encodeToJSON {
     NSMutableDictionary *json = [@{
-        @"first_name": self.firstName,
-        @"last_name": self.lastName,
+        @"first_name": self.firstName ?: @"",
+        @"last_name": self.lastName ?: @"",
         @"date_of_birth": self.dateOfBirth ?: @"",
         @"address": self.address.encodeToJSON
     } mutableCopy];

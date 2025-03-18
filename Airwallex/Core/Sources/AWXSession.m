@@ -22,18 +22,10 @@ static NSString *const recurring = @"recurring";
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.isBillingInformationRequired = YES;
+        self.requiredBillingContactFields = AWXRequiredBillingContactFieldName;
     }
 
     return self;
-}
-
-- (AWXPlaceDetails *)billing {
-    if (!self.isBillingInformationRequired) {
-        return nil;
-    }
-
-    return _billing;
 }
 
 - (NSString *)transactionMode {

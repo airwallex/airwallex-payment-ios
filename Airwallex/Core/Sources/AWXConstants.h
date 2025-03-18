@@ -31,6 +31,15 @@ extern AWXPaymentMethodFlow const AWXPaymentMethodFlowApp;
 extern AWXPaymentMethodFlow const AWXPaymentMethodFlowWeb;
 extern AWXPaymentMethodFlow const AWXPaymentMethodFlowQrcode;
 
+typedef NS_OPTIONS(NSUInteger, AWXRequiredBillingContactFields) {
+    AWXRequiredBillingContactFieldNone = 0,
+    AWXRequiredBillingContactFieldName = 1 << 0,
+    AWXRequiredBillingContactFieldEmail = 1 << 1,
+    AWXRequiredBillingContactFieldPhone = 1 << 2,
+    AWXRequiredBillingContactFieldAddress = 1 << 3,
+    AWXRequiredBillingContactFieldCountryCode = 1 << 4,
+} NS_SWIFT_NAME(RequiredBillingContactFields);
+
 typedef NS_CLOSED_ENUM(NSInteger, AirwallexSDKMode) {
     AirwallexSDKDemoMode,
     AirwallexSDKStagingMode,

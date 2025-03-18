@@ -277,7 +277,7 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     ///   - animatingDifferences: A boolean indicating whether to animate changes.
     func reconfigure(items: [Item],
                      invalidateLayout: Bool,
-                     configurer: ((UICollectionViewCell) -> Void)?,
+                     configurer: ((UICollectionViewCell) -> Void)? = nil,
                      animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
         guard !items.isEmpty else { return }
@@ -331,6 +331,27 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     func cellForItem(_ item: Item) -> UICollectionViewCell? {
         guard let indexPath = dataSource.indexPath(for: item) else { return nil }
         return collectionView.cellForItem(at: indexPath)
+    }
+    
+    func endEditing(_ force: Bool = true) {
+        collectionView.endEditing(force)
+    }
+    
+    func activateNextRespondableCell(section: Section, itemIdentifier: Item) -> Bool {
+        let snapshot = dataSource.snapshot()
+        guard let indexPath = dataSource.indexPath(for: itemIdentifier) else {
+            return false
+        }
+        let itemCount = snapshot.numberOfItems(inSection: section)
+        for index in (indexPath.item + 1)..<itemCount {
+            let nextIndexPath = IndexPath(item: index, section: indexPath.section)
+            guard let cell = collectionView.cellForItem(at: nextIndexPath),
+                  cell.canBecomeFirstResponder else {
+                continue
+            }
+            return cell.becomeFirstResponder()
+        }
+        return false
     }
     
     // MARK: - register reusable views

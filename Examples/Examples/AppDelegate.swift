@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WXApi.startLog(by: .normal) { log in
             print("WeChat Log: \(log)")
         }
+        UISwitch.appearance().onTintColor = UIColor.awxColor(.theme)
         return true
     }
     

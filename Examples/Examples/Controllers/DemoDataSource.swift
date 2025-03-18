@@ -91,6 +91,7 @@ struct DemoDataSource {
             "first_name": "Jason",
             "last_name": "Wang",
             "phone_number": "13800000000",
+            "email": "abc@123.com",
             "address": [
                 "country_code": "CN",
                 "state": "Shanghai",
@@ -136,11 +137,11 @@ struct DemoDataSource {
                 lastName: shipping.lastName,
                 phoneNumber: shipping.phoneNumber,
                 address: .init(
-                    countryCode: shipping.address.countryCode,
-                    state: shipping.address.state,
-                    city: shipping.address.city,
-                    street: shipping.address.street,
-                    postcode: shipping.address.postcode
+                    countryCode: shipping.address?.countryCode,
+                    state: shipping.address?.state,
+                    city: shipping.address?.city,
+                    street: shipping.address?.street,
+                    postcode: shipping.address?.postcode
                 )
             ),
             type: "physical_goods"
