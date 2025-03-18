@@ -30,18 +30,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *lang;
 
 /**
- Whether or not billing information is required for payments. When set to `NO`, any billing information will be ignored.
- */
-@property (nonatomic) BOOL isBillingInformationRequired;
-
-/**
  The billing address.
  */
 @property (nonatomic, strong, nullable) AWXPlaceDetails *billing;
 
 /**
  Specifies the required billing contact fields. Defaults to `AWXRequiredBillingContactFieldName`.
- If `isBillingInformationRequired` is `false`, the getter for `requiredBillingContactFields` will check whether `AWXRequiredBillingContactFieldName` exists. If it does, it will return `AWXRequiredBillingContactFieldName`.
  */
 @property (nonatomic, assign) AWXRequiredBillingContactFields requiredBillingContactFields;
 

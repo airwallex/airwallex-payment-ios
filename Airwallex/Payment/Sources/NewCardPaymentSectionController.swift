@@ -272,47 +272,43 @@ private extension NewCardPaymentSectionController {
                 try viewModel?.validate()
             }
             
-            var billingInfo: AWXPlaceDetails?
-            if session.isBillingInformationRequired {
-                let object = AWXPlaceDetails()
-                // update name
-                if let name = viewModelForCardholderName?.text?.trimmed {
-                    let components = name.components(separatedBy: " ")
-                    object.firstName = components.first ?? ""
-                    if components.count > 1 {
-                        object.lastName = components.last ?? ""
-                    }
+            let billingInfo = AWXPlaceDetails()
+            // update name
+            if let name = viewModelForCardholderName?.text?.trimmed {
+                let components = name.components(separatedBy: " ")
+                billingInfo.firstName = components.first ?? ""
+                if components.count > 1 {
+                    billingInfo.lastName = components.last ?? ""
+                }
+            } else {
+                // reuse contact info from shipping info
+                if let firstName = session.billing?.firstName {
+                    billingInfo.firstName = firstName
+                }
+                if let lastName = session.billing?.lastName {
+                    billingInfo.lastName = lastName
+                }
+            }
+            // update email
+            if let email = viewModelForEmail?.text?.trimmed {
+                billingInfo.email = email
+            }
+            // update phone number
+            if let phoneNumber = viewModelForPhoneNumber?.text?.trimmed {
+                billingInfo.phoneNumber = phoneNumber
+            }
+            // update address
+            billingInfo.address = session.billing?.address
+            if let address = viewModelForBillingAddress?.billingAddressFromCollectedInfo() {
+                billingInfo.address = address
+            } else if let countryCode = viewModelForCountryCode?.country?.countryCode {
+                if countryCode == billingInfo.address?.countryCode {
+                    // reuse address
                 } else {
-                    // reuse contact info from shipping info
-                    if let firstName = session.billing?.firstName {
-                        object.firstName = firstName
-                    }
-                    if let lastName = session.billing?.lastName {
-                        object.lastName = lastName
-                    }
+                    let newAddress = AWXAddress()
+                    newAddress.countryCode = countryCode
+                    billingInfo.address = newAddress
                 }
-                // update email
-                if let email = viewModelForEmail?.text?.trimmed {
-                    object.email = email
-                }
-                // update phone number
-                if let phoneNumber = viewModelForPhoneNumber?.text?.trimmed {
-                    object.phoneNumber = phoneNumber
-                }
-                // update address
-                object.address = session.billing?.address
-                if let address = viewModelForBillingAddress?.billingAddressFromCollectedInfo() {
-                    object.address = address
-                } else if let countryCode = viewModelForCountryCode?.country?.countryCode {
-                    if countryCode == object.address?.countryCode {
-                        // reuse address
-                    } else {
-                        let newAddress = AWXAddress()
-                        newAddress.countryCode = countryCode
-                        object.address = newAddress
-                    }
-                }
-                billingInfo = object
             }
             
             RiskLogger.log(.clickPaymentButton, screen: .createCard)
