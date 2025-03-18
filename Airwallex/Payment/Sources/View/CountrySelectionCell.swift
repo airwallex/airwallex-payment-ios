@@ -1,16 +1,16 @@
 //
-//  BankSelectionCell.swift
+//  CountrySelectionCell.swift
 //  Airwallex
 //
-//  Created by Weiping Li on 2025/1/14.
+//  Created by Weiping Li on 2025/3/12.
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-class BankSelectionCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
+class CountrySelectionCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private let view: OptionSelectionView = {
-        let view = OptionSelectionView<BankSelectionViewModel>()
+        let view = OptionSelectionView<CountrySelectionViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -32,11 +32,11 @@ class BankSelectionCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var viewModel: BankSelectionCellViewModel? {
-        view.viewModel as? BankSelectionCellViewModel
+    var viewModel: CountrySelectionCellViewModel? {
+        view.viewModel as? CountrySelectionCellViewModel
     }
     
-    func setup(_ viewModel: BankSelectionCellViewModel) {
+    func setup(_ viewModel: CountrySelectionCellViewModel) {
         view.setup(viewModel)
     }
 }

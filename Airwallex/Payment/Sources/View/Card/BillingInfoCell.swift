@@ -80,35 +80,7 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private let zipCodeTextField: BaseTextField = {
         let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.box.layer.maskedCorners = []
-        return view
-    }()
-    
-    private let firstNameTextField: BaseTextField = {
-        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.box.layer.maskedCorners = []
-        return view
-    }()
-    
-    private let lastNameTextField: BaseTextField = {
-        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.box.layer.maskedCorners = []
-        return view
-    }()
-    
-    private let phoneTextField: BaseTextField = {
-        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.box.layer.maskedCorners = []
-        return view
-    }()
-    
-    private let emailTextField: BaseTextField = {
-        let view = BaseTextField<InfoCollectorTextFieldViewModel>()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.box.layer.maskedCorners = [ .layerMinXMaxYCorner, .layerMaxXMaxYCorner ]
+        view.box.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         return view
     }()
     
@@ -151,41 +123,21 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         countrySelectionView.setup(viewModel.countryConfigurer)
         
         viewModel.streetConfigurer.returnActionHandler = { [weak self] _ in
-            self?.stateTextField.becomeFirstResponder()
+            self?.stateTextField.becomeFirstResponder() ?? false
         }
         streetTextField.setup(viewModel.streetConfigurer)
         
         viewModel.stateConfigurer.returnActionHandler = { [weak self] _ in
-            self?.cityTextField.becomeFirstResponder()
+            self?.cityTextField.becomeFirstResponder() ?? false
         }
         stateTextField.setup(viewModel.stateConfigurer)
         
         viewModel.cityConfigurer.returnActionHandler = { [weak self] _ in
-            self?.zipCodeTextField.becomeFirstResponder()
+            self?.zipCodeTextField.becomeFirstResponder()  ?? false
         }
         cityTextField.setup(viewModel.cityConfigurer)
         
-        viewModel.zipConfigurer.returnActionHandler = { [weak self] _ in
-            self?.firstNameTextField.becomeFirstResponder()
-        }
         zipCodeTextField.setup(viewModel.zipConfigurer)
-        
-        viewModel.firstNameConfigurer.returnActionHandler = { [weak self] _ in
-            self?.lastNameTextField.becomeFirstResponder()
-        }
-        firstNameTextField.setup(viewModel.firstNameConfigurer)
-        
-        viewModel.lastNameConfigurer.returnActionHandler = { [weak self] _ in
-            self?.phoneTextField.becomeFirstResponder()
-        }
-        lastNameTextField.setup(viewModel.lastNameConfigurer)
-        
-        viewModel.phoneConfigurer.returnActionHandler = { [weak self] _ in
-            self?.emailTextField.becomeFirstResponder()
-        }
-        phoneTextField.setup(viewModel.phoneConfigurer)
-        
-        emailTextField.setup(viewModel.emailConfigurer)
         
         hintLabel.text = viewModel.errorHintForBillingFields
         hintLabel.isHidden = (hintLabel.text ?? "").isEmpty
@@ -194,6 +146,31 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     @objc func reuseButtonTapped() {
         reuseButton.isSelected = !reuseButton.isSelected
         viewModel?.toggleReuseSelection()
+    }
+    
+    var allFields: [UIResponder] {
+        [streetTextField, stateTextField, cityTextField, zipCodeTextField]
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        allFields.contains { $0.canBecomeFirstResponder }
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        allFields.first { $0.canBecomeFirstResponder }?.becomeFirstResponder() ?? false
+    }
+    
+    @discardableResult
+    override func resignFirstResponder() -> Bool {
+        endEditing(true)
+    }
+    
+    override var canResignFirstResponder: Bool {
+        allFields.contains { $0.canResignFirstResponder }
+    }
+    
+    override var isFirstResponder: Bool {
+        allFields.contains { $0.isFirstResponder }
     }
 }
 
@@ -216,18 +193,7 @@ private extension BillingInfoCell {
         }
         
         stack.addArrangedSubview(zipCodeTextField)
-        
-        let nameSpacer = stack.addSpacer(40, priority: .defaultLow)
-        do {
-            // horizontal stack for first name and last name
-            stack.addSubview(firstNameTextField)
-            stack.addSubview(lastNameTextField)
-        }
-        
-        stack.addArrangedSubview(phoneTextField)
-        stack.addArrangedSubview(emailTextField)
-        
-        stack.setCustomSpacing(.spacing_4, after: emailTextField)
+        stack.setCustomSpacing(.spacing_4, after: zipCodeTextField)
         stack.addArrangedSubview(hintLabel)
         
         let constraints = [
@@ -235,14 +201,6 @@ private extension BillingInfoCell {
             stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            
-            nameSpacer.heightAnchor.constraint(equalTo: firstNameTextField.heightAnchor, multiplier: 1),
-            firstNameTextField.topAnchor.constraint(equalTo: nameSpacer.topAnchor),
-            firstNameTextField.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
-            firstNameTextField.trailingAnchor.constraint(equalTo: stack.centerXAnchor, constant: 1),
-            lastNameTextField.topAnchor.constraint(equalTo: nameSpacer.topAnchor),
-            lastNameTextField.leadingAnchor.constraint(equalTo: stack.centerXAnchor),
-            lastNameTextField.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
             
             countrySelectionView.widthAnchor.constraint(equalTo: stack.widthAnchor),
             streetTextField.widthAnchor.constraint(equalTo: stack.widthAnchor),
@@ -256,8 +214,6 @@ private extension BillingInfoCell {
             cityTextField.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
             
             zipCodeTextField.widthAnchor.constraint(equalTo: stack.widthAnchor),
-            emailTextField.widthAnchor.constraint(equalTo: stack.widthAnchor),
-            phoneTextField.widthAnchor.constraint(equalTo: stack.widthAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -267,11 +223,7 @@ private extension BillingInfoCell {
             streetTextField,
             stateTextField,
             cityTextField,
-            zipCodeTextField,
-            firstNameTextField,
-            lastNameTextField,
-            phoneTextField,
-            emailTextField
+            zipCodeTextField
         ]
         
         Publishers.MergeMany(fields.map { $0.textField.textDidBeginEditingPublisher } + fields.map { $0.textField.textDidEndEditingPublisher})

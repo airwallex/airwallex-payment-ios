@@ -6,6 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import UIKit
+
 /// This section controlelr is for schema payment
 class SchemaPaymentSectionController: NSObject, SectionController {
     
@@ -25,7 +27,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     private var schema: AWXSchema?
     private var bankList: [AWXBank]?
     private var task: Task<Void, Never>?
-    private var bankSelectionViewModel: BankSelectionViewModel?
+    private var bankSelectionViewModel: BankSelectionCellViewModel?
     
     private var uiFieldViewModels = [InfoCollectorTextFieldViewModel]()
     private let name: String
@@ -125,17 +127,14 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                     guard !banks.isEmpty else {
                         throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "").asError()
                     }
-                    bankSelectionViewModel = BankSelectionViewModel(
+                    bankSelectionViewModel = BankSelectionCellViewModel(
+                        itemIdentifier: Item.bankName,
                         bank: banks.count == 1 ? banks.first! : nil,
                         handleUserInteraction: { [weak self] in
                             self?.handleBankSelection()
                         },
-                        reconfigureHandler: { [weak self] viewModel, invalidateLayout in
-                            self?.context.reconfigure(
-                                items: [viewModel.fieldName],
-                                invalidateLayout: invalidateLayout,
-                                configurer: nil
-                            )
+                        cellReconfigureHandler: { [weak self] in
+                            self?.context.reconfigure(items: [$0], invalidateLayout: $1)
                         }
                     )
                     bankList = banks
@@ -144,35 +143,33 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 
                 uiFieldViewModels = schema.uiFields.reduce(into: [InfoCollectorTextFieldViewModel](), { partialResult, field in
                     //  create view model for UI fields
-                    let viewModel = InfoCollectorTextFieldViewModel(
-                        fieldName: field.name,
-                        title: field.displayName,
+                    let viewModel = InfoCollectorCellViewModel(
+                        itemIdentifier: field.name,
                         textFieldType: field.textFieldType,
-                        reconfigureHandler: { [weak self] viewModel, invalidateLayout in
-                            self?.context.reconfigure(
-                                items: [viewModel.fieldName],
-                                invalidateLayout: invalidateLayout,
-                                configurer: nil
-                            )
+                        title: field.displayName,
+                        returnActionHandler: { [weak self] _, itemIdentifier in
+                            guard let self else { return false }
+                            let success = self.context.activateNextRespondableCell(
+                                section: self.section,
+                                itemIdentifier: itemIdentifier
+                            ) ?? false
+                            return success
+                        },
+                        cellReconfigureHandler: { [weak self] in
+                            self?.context.reconfigure(items: [$0], invalidateLayout: $1)
                         }
                     )
                     if field.uiType == AWXField.UIType.phone {
                         if let prefix = AWXField.phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
                            !prefix.isEmpty {
                             viewModel.text = prefix
+                            viewModel.inputValidator = PrefixPhoneNumberValidator(prefix: prefix)
                         }
                     }
                     
                     //  update return key and handler
                     if let last = partialResult.last {
                         last.returnKeyType = .next
-                        last.returnActionHandler = { [weak self] _ in
-                            guard let self else { return }
-                            self.context.scroll(to: field.name, position: .bottom, animated: true)
-                            if let cell = self.context.cellForItem(field.name) as? InfoCollectorCell {
-                                let _ = cell.becomeFirstResponder()
-                            }
-                        }
                     }
                     //  update partial result
                     partialResult.append(viewModel)
@@ -197,6 +194,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
 
 private extension SchemaPaymentSectionController {
     func checkout() {
+        context.endEditing()
         AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: name])
         guard let schema else {
             // check schema
@@ -247,13 +245,13 @@ private extension SchemaPaymentSectionController {
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)
             for viewModel in uiFieldViewModels {
-                viewModel.handleDidEndEditing()
+                viewModel.handleDidEndEditing(reconfigureIfNeeded: true)
             }
-            context.reload(sections: [section])
         }
     }
     
     func handleBankSelection() {
+        context.endEditing()
         guard let bankList = bankList else { return }
         let formMapping = AWXFormMapping()
         formMapping.title = NSLocalizedString("Select your Bank", bundle: .payment, comment: "")

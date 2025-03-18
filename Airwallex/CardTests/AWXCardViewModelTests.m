@@ -48,13 +48,6 @@
     XCTAssertTrue(isUpdated);
 }
 
-- (void)testIsBillingInformationRequired {
-    AWXOneOffSession *session = [AWXOneOffSession new];
-    session.isBillingInformationRequired = false;
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL launchDirectly:NO];
-    XCTAssertFalse(viewModel.isBillingInformationRequired);
-}
-
 - (void)testIsCardSavingEnabledWhenOneOffSessionWithCustomerId {
     AWXOneOffSession *session = [AWXOneOffSession new];
     AWXPaymentIntent *intent = [AWXPaymentIntent new];
@@ -202,7 +195,6 @@
 - (void)testConfirmPaymentWithoutRequiredBillingDetails {
     NSString *error;
     AWXOneOffSession *session = [AWXOneOffSession new];
-    session.isBillingInformationRequired = YES;
     AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL launchDirectly:NO];
     [viewModel confirmPaymentWithProvider:[viewModel preparedProviderWithDelegate:nil]
                                   billing:nil
@@ -232,26 +224,6 @@
                    shouldStoreCardDetails:true
                                     error:&error];
     XCTAssertEqualObjects(error, @"Invalid card number");
-}
-
-- (void)testConfirmPaymentWithCardWithoutOptionalBilling {
-    NSString *error;
-    AWXOneOffSession *session = [AWXOneOffSession new];
-    session.isBillingInformationRequired = NO;
-    AWXCardViewModel *viewModel = [[AWXCardViewModel alloc] initWithSession:session supportedCardSchemes:NULL launchDirectly:NO];
-    AWXCard *card = [viewModel makeCardWithName:@"John Citizen"
-                                         number:@"5352342343140000"
-                                         expiry:@"08/25"
-                                            cvc:@"077"];
-    id cardProviderMock = OCMClassMock([AWXCardProvider class]);
-    OCMStub([cardProviderMock alloc]).andReturn(cardProviderMock);
-
-    [viewModel confirmPaymentWithProvider:cardProviderMock
-                                  billing:nil
-                                     card:card
-                   shouldStoreCardDetails:true
-                                    error:&error];
-    OCMVerify(times(1), [cardProviderMock confirmPaymentIntentWithCard:[OCMArg any] billing:[OCMArg isNil] saveCard:true]);
 }
 
 - (void)testConfirmPaymentWithBillingAndCard {

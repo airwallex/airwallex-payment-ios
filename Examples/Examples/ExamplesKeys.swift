@@ -37,16 +37,31 @@ struct ExamplesKeys {
     @RawRepresentableStorage("nextTriggerByType", defaultValue: AirwallexNextTriggerByType.customerType)
     static var nextTriggerByType: AirwallexNextTriggerByType
     
+    @Storage("requiresName", defaultValue: true)
+    static var requiresName: Bool
+    
+    @Storage("requiresEmail", defaultValue: false)
+    static var requiresEmail: Bool
+    
+    @Storage("requiresPhone", defaultValue: false)
+    static var requiresPhone: Bool
+    
+    @Storage("requiresAddress", defaultValue: true)
+    static var requiresAddress: Bool
+    
+    @Storage("requiresCountryCode", defaultValue: false)
+    static var requiresCountryCode: Bool
+    
     @Storage("autoCapture", defaultValue: false)
     static var autoCapture: Bool
     
     @OptionalStorage("customerId", byEnvironment: true)
     static var customerId: String?
     
-    @OptionalStorage("apiKey")
+    @OptionalStorage("apiKey", byEnvironment: true)
     static var apiKey: String?
     
-    @OptionalStorage("clientId")
+    @OptionalStorage("clientId", byEnvironment: true)
     static var clientId: String?
     
     @Storage("amount", defaultValue: "")
@@ -66,6 +81,11 @@ struct ExamplesKeys {
             AllSettings(
                 environment: ExamplesKeys.environment,
                 nextTriggerByType: ExamplesKeys.nextTriggerByType,
+                requiresName: ExamplesKeys.requiresName,
+                requiresEmail: ExamplesKeys.requiresEmail,
+                requiresPhone: ExamplesKeys.requiresPhone,
+                requiresAddress: ExamplesKeys.requiresAddress,
+                requiresCountryCode: ExamplesKeys.requiresCountryCode,
                 autoCapture: ExamplesKeys.autoCapture,
                 customerId: ExamplesKeys.customerId,
                 apiKey: ExamplesKeys.apiKey,
@@ -79,6 +99,11 @@ struct ExamplesKeys {
         set {
             ExamplesKeys.environment = newValue.environment
             ExamplesKeys.nextTriggerByType = newValue.nextTriggerByType
+            ExamplesKeys.requiresName = newValue.requiresName
+            ExamplesKeys.requiresEmail = newValue.requiresEmail
+            ExamplesKeys.requiresPhone = newValue.requiresPhone
+            ExamplesKeys.requiresAddress = newValue.requiresAddress
+            ExamplesKeys.requiresCountryCode = newValue.requiresCountryCode
             ExamplesKeys.autoCapture = newValue.autoCapture
             ExamplesKeys.customerId = newValue.customerId
             ExamplesKeys.apiKey = newValue.apiKey
@@ -93,6 +118,11 @@ struct ExamplesKeys {
     struct AllSettings: CustomStringConvertible {
         var environment: AirwallexSDKMode
         var nextTriggerByType: AirwallexNextTriggerByType
+        var requiresName: Bool
+        var requiresEmail: Bool
+        var requiresPhone: Bool
+        var requiresAddress: Bool
+        var requiresCountryCode: Bool
         var autoCapture: Bool
         var customerId: String?
         
@@ -108,6 +138,11 @@ struct ExamplesKeys {
                 🌍 AllSettings:
                 ├── Environment: \(environment.displayName)
                 ├── Next Trigger Type: \(nextTriggerByType.displayName)
+                ├── Requires Name: \(requiresName)
+                ├── Requires Email: \(requiresEmail)
+                ├── Requires Phone: \(requiresPhone)
+                ├── Requires Address: \(requiresAddress)
+                ├── Requires Country Code: \(requiresCountryCode)
                 ├── Auto Capture: \(autoCapture)
                 ├── Customer ID: \(customerId ?? "N/A")
                 ├── API Key: \(apiKey ?? "N/A")

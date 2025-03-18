@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *pageName;
 @property (nonatomic, copy, readonly) NSDictionary<NSString *, id> *additionalInfo;
 @property (nonatomic, readonly) BOOL isReusingShippingAsBillingInformation;
-@property (nonatomic, readonly) BOOL isBillingInformationRequired;
 @property (nonatomic, readonly) BOOL isCardSavingEnabled;
 @property (nonatomic, readonly) BOOL autoSaveCardForFuturePayments;
 @property (nonatomic, strong, readonly) AWXPlaceDetails *initialBilling;

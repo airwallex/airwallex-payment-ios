@@ -8,14 +8,13 @@
 
 import UIKit
 
-class CardInfoCollectorCellViewModel {
+class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
     
-    var reconfigureHandler: (CardInfoCollectorCellViewModel, Bool) -> Void
+    var itemIdentifier: String
     
     var cardNumberConfigurer: CardNumberTextFieldViewModel!
     var expireDataConfigurer: InfoCollectorTextFieldViewModel!
     var cvcConfigurer: InfoCollectorTextFieldViewModel!
-    var nameOnCardConfigurer: InfoCollectorTextFieldViewModel!
     
     var errorHintForCardFields: String? {
         for configurer in [ cardNumberConfigurer, expireDataConfigurer, cvcConfigurer ] {
@@ -29,18 +28,17 @@ class CardInfoCollectorCellViewModel {
         return nil
     }
     // MARK: -
-    init(cardSchemes: [AWXCardScheme],
-         reconfigureHandler: @escaping (CardInfoCollectorCellViewModel, Bool) -> Void) {
-        self.reconfigureHandler = reconfigureHandler
+    init(itemIdentifier: String,
+         cardSchemes: [AWXCardScheme],
+         returnActionHandler: CellReturnActionHandler?,
+         reconfigureHandler: @escaping CellReconfigureHandler) {
+        self.itemIdentifier = itemIdentifier
         cardNumberConfigurer = CardNumberTextFieldViewModel(
             supportedCardSchemes: cardSchemes,
             editingEventObserver: BeginEditingEventObserver {
                 RiskLogger.log(.inputCardNumber, screen: .createCard)
             },
-            reconfigureHandler: { [weak self] _, layoutUpdate in
-                guard let self else { return }
-                self.reconfigureHandler(self, layoutUpdate)
-            }
+            reconfigureHandler: { reconfigureHandler(itemIdentifier, $1) }
         )
         expireDataConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .expires,
@@ -50,13 +48,16 @@ class CardInfoCollectorCellViewModel {
             editingEventObserver: BeginEditingEventObserver {
                 RiskLogger.log(.inputCardExpiry, screen: .createCard)
             },
-            reconfigureHandler: { [weak self] _, layoutUpdate in
-                guard let self else { return }
-                self.reconfigureHandler(self, layoutUpdate)
-            }
+            reconfigureHandler: { reconfigureHandler(itemIdentifier, $1) }
         )
         
         cvcConfigurer = InfoCollectorTextFieldViewModel(
+            returnActionHandler: { [weak self] textField in
+                guard let self, let returnActionHandler else {
+                    return false
+                }
+                return returnActionHandler(textField, self.itemIdentifier)
+            },
             cvcValidator: CardCVCValidator { [weak self] in
                 guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
                 return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
@@ -64,21 +65,7 @@ class CardInfoCollectorCellViewModel {
             editingEventObserver: BeginEditingEventObserver {
                 RiskLogger.log(.inputCardCVC, screen: .createCard)
             },
-            reconfigureHandler: { [weak self] _, layoutUpdate in
-                guard let self else { return }
-                self.reconfigureHandler(self, layoutUpdate)
-            }
-        )
-        nameOnCardConfigurer = InfoCollectorTextFieldViewModel(
-            title: NSLocalizedString("Name on card", bundle: .payment, comment: ""),
-            textFieldType: .nameOnCard,
-            editingEventObserver: BeginEditingEventObserver {
-                RiskLogger.log(.inputCardHolderName, screen: .createCard)
-            },
-            reconfigureHandler: { [weak self] viewModel, layoutUpdates in
-                guard let self else { return }
-                self.reconfigureHandler(self, layoutUpdates)
-            }
+            reconfigureHandler: { reconfigureHandler(itemIdentifier, $1) }
         )
     }
 }
@@ -86,7 +73,7 @@ class CardInfoCollectorCellViewModel {
 extension CardInfoCollectorCellViewModel {
     func cardFromCollectedInfo() -> AWXCard {
         let card = AWXCard(
-            name: nameOnCardConfigurer.text ?? "",
+            name: "",
             cardNumber: cardNumberConfigurer.text ?? "",
             expiry: expireDataConfigurer.text ?? "",
             cvc: cvcConfigurer.text ?? ""
@@ -95,10 +82,18 @@ extension CardInfoCollectorCellViewModel {
     }
     
     func updateValidStatusForCheckout() {
-        let arr: [InfoCollectorTextFieldViewModel] = [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer, nameOnCardConfigurer]
+        let arr: [InfoCollectorTextFieldViewModel] = [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer]
         for configurer in arr {
             //  force configurer to check valid status if user left this field untouched
-            configurer.handleDidEndEditing()
+            configurer.handleDidEndEditing(reconfigureIfNeeded: true)
+        }
+    }
+}
+
+extension CardInfoCollectorCellViewModel: ViewModelValidatable {
+    func validate() throws {
+        for configurer in [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer] {
+            try configurer?.validate()
         }
     }
 }

@@ -173,9 +173,7 @@ typedef enum {
         [stackView addArrangedSubview:[self switchOfType:SaveCardSwitch isOn:self.saveCard]];
     }
 
-    if (self.viewModel.isBillingInformationRequired) {
-        [stackView addArrangedSubview:self.billingStackView];
-    }
+    [stackView addArrangedSubview:self.billingStackView];
 
     _confirmButton = [AWXActionButton new];
     _confirmButton.enabled = YES;

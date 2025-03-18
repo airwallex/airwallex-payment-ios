@@ -34,6 +34,8 @@ struct CardExpiryFormatter: UserInputFormatter {
         var expirationYear = userInput.dropFirst(2)
         if expirationMonth.count == 1 && expirationMonth != "0" && expirationMonth != "1" {
             expirationMonth = "0" + expirationMonth
+        } else if let month = Int(expirationMonth), month > 12 {
+            expirationMonth = "12"
         }
         
         let attributedText = formatedString(

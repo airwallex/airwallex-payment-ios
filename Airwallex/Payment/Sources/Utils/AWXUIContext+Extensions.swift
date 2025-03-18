@@ -127,7 +127,7 @@ public extension AWXUIContext {
                                   paymentResultDelegate: AWXPaymentResultDelegate,
                                   supportedBrands: [AWXCardBrand]? = nil,
                                   style: LaunchStyle = .push) {
-        let name = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let name = name.trimmed
         
         if name == AWXCardKey {
             assert(supportedBrands != nil && supportedBrands?.isEmpty == false, "Supported card brands are required for card payment.")
