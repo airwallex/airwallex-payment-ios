@@ -91,6 +91,7 @@ struct DemoDataSource {
             "first_name": "Jason",
             "last_name": "Wang",
             "phone_number": "13800000000",
+            "email": "abc@123.com",
             "address": [
                 "country_code": "CN",
                 "state": "Shanghai",

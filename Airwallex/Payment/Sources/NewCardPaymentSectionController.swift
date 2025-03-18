@@ -60,7 +60,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             self.shouldSaveCard = oneOffSession.autoSaveCardForFuturePayments
         }
         super.init()
-        createRequiredViewModels()
+        createViewModelForRequiredFields()
     }
     
     // MARK: - SectionController
@@ -272,44 +272,8 @@ private extension NewCardPaymentSectionController {
                 try viewModel?.validate()
             }
             
-            let billingInfo = AWXPlaceDetails()
-            // update name
-            if let name = viewModelForCardholderName?.text?.trimmed {
-                let components = name.components(separatedBy: " ")
-                billingInfo.firstName = components.first ?? ""
-                if components.count > 1 {
-                    billingInfo.lastName = components.last ?? ""
-                }
-            } else {
-                // reuse contact info from shipping info
-                if let firstName = session.billing?.firstName {
-                    billingInfo.firstName = firstName
-                }
-                if let lastName = session.billing?.lastName {
-                    billingInfo.lastName = lastName
-                }
-            }
-            // update email
-            if let email = viewModelForEmail?.text?.trimmed {
-                billingInfo.email = email
-            }
-            // update phone number
-            if let phoneNumber = viewModelForPhoneNumber?.text?.trimmed {
-                billingInfo.phoneNumber = phoneNumber
-            }
-            // update address
-            billingInfo.address = session.billing?.address
-            if let address = viewModelForBillingAddress?.billingAddressFromCollectedInfo() {
-                billingInfo.address = address
-            } else if let countryCode = viewModelForCountryCode?.country?.countryCode {
-                if countryCode == billingInfo.address?.countryCode {
-                    // reuse address
-                } else {
-                    let newAddress = AWXAddress()
-                    newAddress.countryCode = countryCode
-                    billingInfo.address = newAddress
-                }
-            }
+            // create billing info from required fields and session.billing
+            let billingInfo = createBillingInfo()
             
             RiskLogger.log(.clickPaymentButton, screen: .createCard)
             debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
@@ -349,6 +313,60 @@ private extension NewCardPaymentSectionController {
             )
             debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
         }
+    }
+    
+    func createBillingInfo() -> AWXPlaceDetails {
+        
+        let billingInfo = AWXPlaceDetails()
+        // update name
+        if let viewModelForCardholderName {
+            let name = viewModelForCardholderName.text?.trimmed ?? ""
+            let components = name.components(separatedBy: " ")
+            billingInfo.firstName = components.first ?? ""
+            if components.count > 1 {
+                billingInfo.lastName = String(name.dropFirst(billingInfo.firstName.count)).trimmed
+            }
+        } else {
+            // reuse from session.billing if not required
+            if let firstName = session.billing?.firstName {
+                billingInfo.firstName = firstName
+            }
+            if let lastName = session.billing?.lastName {
+                billingInfo.lastName = lastName
+            }
+        }
+        // update email
+        if let viewModelForEmail {
+            billingInfo.email = viewModelForEmail.text?.trimmed
+        } else {
+            // reuse from session.billing if not required
+            billingInfo.email = session.billing?.email
+        }
+        // update phone number
+        if let viewModelForPhoneNumber {
+            billingInfo.phoneNumber = viewModelForPhoneNumber.text?.trimmed
+        } else {
+            // reuse from session.billing if not required
+            billingInfo.phoneNumber = session.billing?.phoneNumber
+        }
+        // update address
+        if let address = viewModelForBillingAddress?.billingAddressFromCollectedInfo() {
+            billingInfo.address = address
+        } else if let countryCode = viewModelForCountryCode?.country?.countryCode {
+            if countryCode == billingInfo.address?.countryCode {
+                // reuse other info from session.billing
+                billingInfo.address = session.billing?.address
+            } else {
+                // new address if we have a different country code
+                let newAddress = AWXAddress()
+                newAddress.countryCode = countryCode
+                billingInfo.address = newAddress
+            }
+        } else {
+            // reuse from session.billing if not required
+            billingInfo.address = session.billing?.address
+        }
+        return billingInfo
     }
     
     func triggerCountrySelection() {
@@ -411,7 +429,7 @@ private extension NewCardPaymentSectionController {
         )
     }
     
-    func createRequiredViewModels() {
+    func createViewModelForRequiredFields() {
         viewModelForCardInfo = CardInfoCollectorCellViewModel(
             itemIdentifier: Item.cardInfo.rawValue,
             cardSchemes: methodType.cardSchemes,
@@ -436,10 +454,14 @@ private extension NewCardPaymentSectionController {
         }
         
         if session.requiredBillingContactFields.contains(.name) {
+            let firstName = session.billing?.firstName ?? ""
+            let lastName = session.billing?.lastName ?? ""
+            let text = (firstName + " " + lastName).trimmed
             viewModelForCardholderName = InfoCollectorCellViewModel(
                 itemIdentifier: Item.cardholderName.rawValue,
                 textFieldType: .nameOnCard,
                 title: NSLocalizedString("Name on card", bundle: .payment, comment: "billing field"),
+                text: text,
                 returnKeyType: .next,
                 returnActionHandler: returnActionHandler,
                 editingEventObserver: BeginEditingEventObserver {
@@ -455,6 +477,7 @@ private extension NewCardPaymentSectionController {
                 itemIdentifier: Item.billingFieldEmail.rawValue,
                 textFieldType: .email,
                 title: NSLocalizedString("Email", bundle: .payment, comment: "billing field"),
+                text: session.billing?.email,
                 returnKeyType: .next,
                 returnActionHandler: returnActionHandler,
                 cellReconfigureHandler: { [weak self] in
@@ -467,6 +490,7 @@ private extension NewCardPaymentSectionController {
                 itemIdentifier: Item.billingFieldPhone.rawValue,
                 textFieldType: .phoneNumber,
                 title: NSLocalizedString("Phone number", bundle: .payment, comment: "billing field"),
+                text: session.billing?.phoneNumber,
                 returnKeyType: .next,
                 returnActionHandler: returnActionHandler,
                 cellReconfigureHandler: { [weak self] in

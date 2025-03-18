@@ -26,7 +26,7 @@ class InfoCollectorCellViewModel<T: Hashable & Sendable>: InfoCollectorTextField
          isEnabled: Bool = true,
          isValid: Bool = true,
          hideErrorHintLabel: Bool = false,
-         clearButtonMode: UITextField.ViewMode = .never,
+         clearButtonMode: UITextField.ViewMode = .whileEditing,
          returnKeyType: UIReturnKeyType = .default,
          returnActionHandler: CellReturnActionHandler? = nil,
          customInputFormatter: UserInputFormatter? = nil,
