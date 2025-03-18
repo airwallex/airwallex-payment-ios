@@ -31,6 +31,7 @@ public struct Palette {
         case iconSecondary
         case iconLink
         case iconDisabled
+        case iconWarning
         
         // Text colors
         case textLink
@@ -39,6 +40,66 @@ public struct Palette {
         case textPlaceholder
         case textError
         case textInverse
+        
+        var color: UIColor {
+            switch self {
+                // Background Colors
+            case .backgroundPrimary:
+                return UIColor(dynamicLightColor: Palette.white, darkColor: Palette.gray100)
+            case .backgroundSecondary:
+                return UIColor(dynamicLightColor: Palette.gray10, darkColor: Palette.gray90)
+            case .backgroundField:
+                return UIColor(dynamicLightColor: Palette.gray5, darkColor: Palette.gray90)
+            case .backgroundHighlight:
+                return UIColor(dynamicLightColor: Palette.themeColor(by: .level5), darkColor: Palette.themeColor(by: .level90))
+            case .backgroundSelected:
+                return UIColor(dynamicLightColor: Palette.themeColor(by: .level20), darkColor: Palette.themeColor(by: .level80))
+            case .backgroundInteractive:
+                return UIColor(dynamicLightColor: Palette.themeColor(by: .level70), darkColor: Palette.themeColor(by: .level40))
+            case .backgroundWarning:
+                return Palette.yellow10
+                
+                // Border Colors
+            case .borderDecorative:
+                return UIColor(dynamicLightColor: Palette.gray20, darkColor: Palette.gray80)
+            case .borderPerceivable:
+                return UIColor(dynamicLightColor: Palette.gray50, darkColor: Palette.gray60)
+            case .borderInteractive:
+                return UIColor(dynamicLightColor: Palette.themeColor(by: .level70), darkColor: Palette.themeColor(by: .level40))
+            case .borderError:
+                return UIColor(dynamicLightColor: Palette.red50, darkColor: Palette.red60)
+                
+                // Icon Colors
+            case .iconPrimary:
+                return UIColor(dynamicLightColor: Palette.gray80, darkColor: Palette.gray30)
+            case .iconSecondary:
+                return UIColor(dynamicLightColor: Palette.gray50, darkColor: Palette.gray50)
+            case .iconLink:
+                return UIColor(dynamicLightColor: Palette.themeColor(by: .level70), darkColor: Palette.themeColor(by: .level40))
+            case .iconDisabled:
+                return UIColor(dynamicLightColor: Palette.gray40, darkColor: Palette.gray70)
+            case .iconWarning:
+                return Palette.orange50
+                
+                // Text Colors
+            case .textLink:
+                return UIColor(dynamicLightColor: Palette.themeColor(by: .level70), darkColor: Palette.themeColor(by: .level40))
+            case .textPrimary:
+                return UIColor(dynamicLightColor: Palette.gray100, darkColor: Palette.gray10)
+            case .textSecondary:
+                return UIColor(dynamicLightColor: Palette.gray60, darkColor: Palette.gray50)
+            case .textPlaceholder:
+                return UIColor(dynamicLightColor: Palette.gray50, darkColor: Palette.gray60)
+            case .textError:
+                return UIColor(dynamicLightColor: Palette.red60, darkColor: Palette.red40)
+            case .textInverse:
+                return UIColor(dynamicLightColor: Palette.white, darkColor: Palette.gray100)
+            }
+        }
+        
+        var cgColor: CGColor {
+            color.cgColor
+        }
     }
     
     enum Level: Int {

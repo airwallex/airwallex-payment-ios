@@ -52,7 +52,7 @@ class SettingsViewController: UIViewController {
     private lazy var bottomView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+        view.layer.borderColor = .awxCGColor(.borderDecorative)
         view.layer.borderWidth = 1
         return view
     }()
@@ -186,7 +186,7 @@ class SettingsViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            bottomView.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+            bottomView.layer.borderColor = .awxCGColor(.borderDecorative)
         }
     }
 }
