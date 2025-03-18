@@ -85,8 +85,8 @@ actor ImageFetcher {
             } catch {
                 throw ImageFetcherError.networkError(underlying: error)
             }
-            
         }
+        
         viewTasks.setObject(
             TaskWrapper(newTask, imageURL: imageURL),
             forKey: view
@@ -129,22 +129,6 @@ extension UIImageView {
                 } catch {
                     debugLog(error.localizedDescription)
                 }
-            }
-        }
-    }
-    
-    func getImage(_ imageURL: URL, imageLoader: ImageLoader, placeholder: UIImage? = nil) async -> UIImage? {
-        if let image = imageLoader.cachedImage(imageURL) {
-            return image
-        } else {
-            let task = Task {
-                return try await imageLoader.getImage(imageURL, for: self)
-            }
-            do {
-                return try await task.value
-            } catch {
-                debugLog(error.localizedDescription)
-                return nil
             }
         }
     }
