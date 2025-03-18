@@ -21,6 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("WeChat Log: \(log)")
         }
         UISwitch.appearance().onTintColor = UIColor.awxColor(.theme)
+        UIView.appearance().tintColor = UIColor.awxColor(.theme)
+        
+        //  initialize
+        ExamplesKeys.loadDefaultKeysIfNilOrEmpty()
+        Airwallex.setMode(ExamplesKeys.environment)
         return true
     }
     

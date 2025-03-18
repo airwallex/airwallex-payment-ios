@@ -9,10 +9,10 @@
 import Foundation
 
 //  MARK: - Method List
-public extension AWXUIContext {
+@objc public extension AWXUIContext {
     private static let subtypeDropin = "dropin"
     private static let subtypeElement = "element"
-    enum LaunchStyle {
+    @objc enum LaunchStyle: Int {
         case push
         case present
     }
@@ -69,7 +69,7 @@ public extension AWXUIContext {
 }
 
 //  MARK: - Single Payment Method
-public extension AWXUIContext {
+@objc public extension AWXUIContext {
     
     /// Launches the Airwallex card payment flow.
     /// - Parameters:

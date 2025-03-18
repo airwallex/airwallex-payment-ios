@@ -587,7 +587,7 @@ extension IntegrationDemoListViewController: AWXShippingViewControllerDelegate {
 }
 
 extension IntegrationDemoListViewController: AWXPaymentResultDelegate {
-    func paymentViewController(_ controller: UIViewController, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
+    func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
         switch status {
         case .success:
             showAlert(message: "Your payment has been charged", title: "Payment successful")
@@ -600,7 +600,7 @@ extension IntegrationDemoListViewController: AWXPaymentResultDelegate {
         }
     }
     
-    func paymentViewController(_ controller: UIViewController, didCompleteWithPaymentConsentId paymentConsentId: String) {
+    func paymentViewController(_ controller: UIViewController?, didCompleteWithPaymentConsentId paymentConsentId: String) {
         print("paymentViewController(_:didCompleteWithPaymentConsentId:) - \(paymentConsentId)")
     }
 }

@@ -37,6 +37,7 @@ class PaymentMethodsViewController: AWXViewController {
             // user cancel payment by navigation stack interactions, like screen edge pan gesture
             AWXUIContext.shared().paymentUIDismissAction = nil
             AnalyticsLogger.log(action: .paymentCanceled)
+            AWXUIContext.shared().delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
         }
     }
     
