@@ -12,6 +12,7 @@ struct PaymentMethodCellViewModel {
     let name: String
     let imageURL: URL?
     let isSelected: Bool
+    let imageLoader: ImageLoader
 }
 
 class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -55,7 +56,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     func setup(_ viewModel: PaymentMethodCellViewModel) {
         self.viewModel = viewModel
         if let URL = viewModel.imageURL {
-            logo.setImageURL(URL, placeholder: nil)
+            logo.loadImage(URL, imageLoader: viewModel.imageLoader)
         } else {
             logo.image = nil
         }
