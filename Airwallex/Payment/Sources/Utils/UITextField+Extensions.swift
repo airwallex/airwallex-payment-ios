@@ -35,7 +35,7 @@ extension UITextField {
             keyboardType = .emailAddress
         case .phoneNumber:
             textContentType = .telephoneNumber
-            keyboardType = .phonePad
+            keyboardType = .asciiCapableNumberPad
         case .country:
             textContentType = .countryName
         case .state:

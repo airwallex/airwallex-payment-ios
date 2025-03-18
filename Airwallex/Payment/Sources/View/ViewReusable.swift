@@ -30,3 +30,15 @@ extension ViewConfigurable {
         setup(viewModel)
     }
 }
+
+protocol ViewModelValidatable {
+    func validate() throws
+}
+
+protocol CellViewModelIdentifiable {
+    associatedtype ItemType: Hashable & Sendable
+    var itemIdentifier: ItemType { get }
+    
+    typealias CellReturnActionHandler = (UIResponder, ItemType) -> Bool
+    typealias CellReconfigureHandler = (ItemType, Bool) -> Void
+}

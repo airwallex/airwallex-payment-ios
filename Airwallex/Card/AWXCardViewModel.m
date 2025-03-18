@@ -25,7 +25,7 @@
     self = [super init];
     if (self) {
         _session = session;
-        _isReusingShippingAsBillingInformation = session.billing != nil && session.isBillingInformationRequired;
+        _isReusingShippingAsBillingInformation = session.billing != nil;
         _selectedCountry = [AWXCountry countryWithCode:session.billing.address.countryCode];
         _supportedCardSchemes = cardSchemes;
         _isLaunchedDirectly = launchDirectly;
@@ -51,10 +51,6 @@
         return cardScheme.name;
     }];
     return @{@"supportedSchemes": supportedSchemes};
-}
-
-- (BOOL)isBillingInformationRequired {
-    return self.session.isBillingInformationRequired;
 }
 
 - (BOOL)isCardSavingEnabled {
@@ -225,22 +221,21 @@
             shouldStoreCardDetails:(BOOL)storeCard
                              error:(NSString **)error {
     AWXPlaceDetails *validatedBilling;
-    if (self.isBillingInformationRequired && placeDetails == nil) {
+    if (placeDetails == nil) {
         if (error != NULL) {
             *error = NSLocalizedString(@"No billing address provided.", nil);
         }
 
         return NO;
-    } else if (self.isBillingInformationRequired) {
-        NSString *billingValidationError;
-        validatedBilling = [self validatedBillingDetails:placeDetails error:&billingValidationError];
-        if (validatedBilling == nil) {
-            if (error != NULL && billingValidationError != nil) {
-                *error = billingValidationError;
-            }
-
-            return NO;
+    }
+    NSString *billingValidationError;
+    validatedBilling = [self validatedBillingDetails:placeDetails error:&billingValidationError];
+    if (validatedBilling == nil) {
+        if (error != NULL && billingValidationError != nil) {
+            *error = billingValidationError;
         }
+
+        return NO;
     }
 
     NSString *cardValidationError;

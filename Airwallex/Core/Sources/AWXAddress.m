@@ -13,8 +13,8 @@
 - (NSDictionary *)encodeToJSON {
     return @{
         @"country_code": self.countryCode,
-        @"city": self.city,
-        @"street": self.street,
+        @"city": self.city ?: @"",
+        @"street": self.street ?: @"",
         @"state": self.state ?: @"",
         @"postcode": self.postcode ?: @""
     };

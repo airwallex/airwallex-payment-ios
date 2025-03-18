@@ -26,14 +26,15 @@ extension UserInputFormatter {
 
 class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguring {
     typealias ReconfigureHandler = (InfoCollectorTextFieldViewModel, Bool) -> Void
+    typealias ReturnActionHandler = (UIResponder) -> Bool
     
     var inputValidator: UserInputValidator
     
     var inputFormatter: UserInputFormatter?
     
-    var reconfigureHandler: ((InfoCollectorTextFieldViewModel, Bool) -> Void)
+    var reconfigureHandler: ReconfigureHandler
     
-    var returnActionHandler: ((UITextField) -> Void)?
+    var returnActionHandler: ReturnActionHandler?
     
     var editingEventObserver: UserEditingEventObserver?
     
@@ -60,6 +61,8 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     
     var placeholder: String?
     
+    var clearButtonMode: UITextField.ViewMode
+    
     var returnKeyType: UIReturnKeyType
     
     var textFieldDelegate: (any UITextFieldDelegate)? {
@@ -68,18 +71,19 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     
     // MARK: -
     init(fieldName: String = "",
-         isRequired: Bool = true,
-         isEnabled: Bool = true,
-         hideErrorHintLabel: Bool = false,
-         isValid: Bool = true,
+         textFieldType: AWXTextFieldType = .default,
          title: String? = nil,
-         errorHint: String? = nil,
          text: String? = nil,
          attributedText: NSAttributedString? = nil,
-         textFieldType: AWXTextFieldType = .default,
          placeholder: String? = nil,
+         errorHint: String? = nil,
+         isRequired: Bool = true,
+         isEnabled: Bool = true,
+         isValid: Bool = true,
+         hideErrorHintLabel: Bool = false,
+         clearButtonMode: UITextField.ViewMode = .never,
          returnKeyType: UIReturnKeyType = .default,
-         returnActionHandler: ((UITextField) -> Void)? = nil,
+         returnActionHandler: ReturnActionHandler? = nil,
          customInputFormatter: UserInputFormatter? = nil,
          customInputValidator: UserInputValidator? = nil,
          editingEventObserver: UserEditingEventObserver? = nil,
@@ -95,6 +99,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
         self.isValid = isValid
         self.textFieldType = textFieldType
         self.placeholder = placeholder
+        self.clearButtonMode = clearButtonMode
         self.returnKeyType = returnKeyType
         self.returnActionHandler = returnActionHandler
         if let customInputValidator {
@@ -135,7 +140,7 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
             
             // trigger return action if we have a valid input, and the cursor is at the end of the text field
             if let returnActionHandler, inputFormatter.automaticTriggerReturnAction(textField: textField) {
-                returnActionHandler(textField)
+                _ = returnActionHandler(textField)
             }
             return false
         } else {
@@ -148,11 +153,14 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let returnActionHandler  {
-            returnActionHandler(textField)
-            return false
+            let success = returnActionHandler(textField)
+            if !success {
+                textField.resignFirstResponder()
+            }
         } else {
-            return true
+            textField.resignFirstResponder()
         }
+        return false
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -161,12 +169,14 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
 }
 
 extension InfoCollectorTextFieldViewModel {
-    convenience init(cvcValidator: CardCVCValidator,
+    convenience init(returnActionHandler: ReturnActionHandler? = nil,
+                     cvcValidator: CardCVCValidator,
                      editingEventObserver: UserEditingEventObserver,
                      reconfigureHandler: @escaping ReconfigureHandler) {
         self.init(
             textFieldType: .CVC,
             placeholder: "CVC",
+            returnActionHandler: returnActionHandler,
             customInputFormatter: cvcValidator,
             customInputValidator: cvcValidator,
             editingEventObserver: editingEventObserver,
@@ -178,7 +188,7 @@ extension InfoCollectorTextFieldViewModel {
         try inputValidator.validateUserInput(attributedText?.string ?? text)
     }
     
-    func handleDidEndEditing(reconfigureIfNeeded: Bool = false) {
+    func handleDidEndEditing(reconfigureIfNeeded: Bool) {
         let isValidCheck = isValid
         let errorHintCheck = errorHint
         do {

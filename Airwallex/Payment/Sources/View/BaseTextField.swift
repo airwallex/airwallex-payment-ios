@@ -8,7 +8,7 @@
 
 import Combine
 
-protocol BaseTextFieldConfiguring: AnyObject {
+protocol BaseTextFieldConfiguring: AnyObject, ViewModelValidatable {
     /// If user editing is enabled, the text color will change based on this setting.
     var isEnabled: Bool { get }
     /// The text displayed in the embedded text field.
@@ -21,6 +21,8 @@ protocol BaseTextFieldConfiguring: AnyObject {
     var textFieldType: AWXTextFieldType? { get }
     /// placeholder for text field
     var placeholder: String? { get }
+    /// return key type of the text field
+    var clearButtonMode: UITextField.ViewMode { get set }
     /// return key type of the text field
     var returnKeyType: UIReturnKeyType { get set }
     /// delegate for the embeded text field
@@ -154,6 +156,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
             textField.attributedPlaceholder = nil
         }
         isEnabled = viewModel.isEnabled
+        textField.clearButtonMode = viewModel.clearButtonMode
         textField.returnKeyType = viewModel.returnKeyType
         textField.delegate = viewModel.textFieldDelegate
         
