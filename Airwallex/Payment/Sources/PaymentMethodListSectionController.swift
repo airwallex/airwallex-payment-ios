@@ -18,6 +18,7 @@ class PaymentMethodListSectionController: SectionController {
     private let methodProvider: PaymentMethodProvider
     
     private var methodTypes: [AWXPaymentMethodType]
+    private var imageLoader = ImageLoader()
     
     init(methodProvider: PaymentMethodProvider) {
         self.methodProvider = methodProvider
@@ -47,7 +48,8 @@ class PaymentMethodListSectionController: SectionController {
         let viewModel = PaymentMethodCellViewModel(
             name: methodType.displayName,
             imageURL: methodType.resources.logoURL,
-            isSelected: itemIdentifier == selectedMethod
+            isSelected: itemIdentifier == selectedMethod,
+            imageLoader: imageLoader
         )
         cell.setup(viewModel)
         return cell
