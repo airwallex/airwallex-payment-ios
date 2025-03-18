@@ -10,13 +10,12 @@
 The Airwallex iOS SDK is a framework for integrating easy, fast and secure payments inside your app with Airwallex. It provides simple functions to send sensitive credit card data directly to Airwallex, it also provides a powerful, customizable interface for collecting user payment details.
 
 <p align="left">
-<img src="https://github.com/user-attachments/assets/e1c3f540-6cbb-4711-b392-24bbbdb7b779" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/9ed00d30-fd45-4882-b6d0-e2171c64e0fb" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/0645ba1a-8cf1-4811-ba6f-c0b0f9589b98" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/6f7c2a32-b7fb-409d-bf40-06d276f57a51" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/121f98d8-9944-4254-80b6-9f39d945c4c8" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/9812c275-cb88-4835-a5e4-77bfa3b05319" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/c86b7f3f-d2bc-4326-b82e-145f52d35c72" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/eb6f0b38-d88b-4c27-b843-9948bc25c5a0" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/1de983a9-b062-4108-82f5-917e0fc0fb57" width="200" hspace="10">
 </p>
-
 Get started with our integration guide and example project.
 
 Table of contents
@@ -53,6 +52,7 @@ pod 'Airwallex'
 Optionally, you can also include the modules directly (This is recommended to ensure minimal dependency):
 
 ```ruby
+pod 'Airwallex/Payment'
 pod 'Airwallex/Core'
 pod 'Airwallex/Card'
 pod 'Airwallex/WechatPay'
@@ -77,6 +77,7 @@ Ensure you specify version 5.7.0 or later.
 #### Components Available for Integration
 You can add `Airwallex` to include all components, or selectively add the following components to your project, depending on your payment needs:
 
+- `AirwallexPayment`: For UI integration. 
 - `AirwallexApplePay`: For integrating Apple Pay.    
 - `AirwallexCard`: For card payments.
 - `AirwallexRedirect`: To support payments via url/deeplink redirection.
