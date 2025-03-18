@@ -95,16 +95,18 @@ actor ImageFetcher {
     }
 }
 
-class ImageLoader {
+public class ImageLoader {
     
-    private var cache = NSCache<NSURL, UIImage>()
+    private let cache = NSCache<NSURL, UIImage>()
     private let fetcher = ImageFetcher()
     
-    func cachedImage(_ imageURL: URL) -> UIImage? {
+    public init(){}
+    
+    public func cachedImage(_ imageURL: URL) -> UIImage? {
         cache.object(forKey: imageURL as NSURL)
     }
     
-    func getImage(_ imageURL: URL, for view: UIView) async throws -> UIImage {
+    public func getImage(_ imageURL: URL, for view: UIView) async throws -> UIImage {
         let key = imageURL as NSURL
         if let image = cache.object(forKey: key) {
             return image
@@ -116,7 +118,7 @@ class ImageLoader {
     }
 }
 
-extension UIImageView {
+public extension UIImageView {
     func loadImage(_ imageURL: URL, imageLoader: ImageLoader, placeholder: UIImage? = nil) {
         if let image = imageLoader.cachedImage(imageURL) {
             self.image = image
