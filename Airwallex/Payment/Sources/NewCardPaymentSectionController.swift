@@ -316,7 +316,6 @@ private extension NewCardPaymentSectionController {
     }
     
     func createBillingInfo() -> AWXPlaceDetails {
-        
         let billingInfo = AWXPlaceDetails()
         // update name
         if let viewModelForCardholderName {
@@ -326,45 +325,22 @@ private extension NewCardPaymentSectionController {
             if components.count > 1 {
                 billingInfo.lastName = String(name.dropFirst(billingInfo.firstName.count)).trimmed
             }
-        } else {
-            // reuse from session.billing if not required
-            if let firstName = session.billing?.firstName {
-                billingInfo.firstName = firstName
-            }
-            if let lastName = session.billing?.lastName {
-                billingInfo.lastName = lastName
-            }
         }
         // update email
         if let viewModelForEmail {
             billingInfo.email = viewModelForEmail.text?.trimmed
-        } else {
-            // reuse from session.billing if not required
-            billingInfo.email = session.billing?.email
         }
         // update phone number
         if let viewModelForPhoneNumber {
             billingInfo.phoneNumber = viewModelForPhoneNumber.text?.trimmed
-        } else {
-            // reuse from session.billing if not required
-            billingInfo.phoneNumber = session.billing?.phoneNumber
         }
         // update address
         if let address = viewModelForBillingAddress?.billingAddressFromCollectedInfo() {
             billingInfo.address = address
         } else if let countryCode = viewModelForCountryCode?.country?.countryCode {
-            if countryCode == billingInfo.address?.countryCode {
-                // reuse other info from session.billing
-                billingInfo.address = session.billing?.address
-            } else {
-                // new address if we have a different country code
-                let newAddress = AWXAddress()
-                newAddress.countryCode = countryCode
-                billingInfo.address = newAddress
-            }
-        } else {
-            // reuse from session.billing if not required
-            billingInfo.address = session.billing?.address
+            let address = AWXAddress()
+            address.countryCode = countryCode
+            billingInfo.address = address
         }
         return billingInfo
     }
