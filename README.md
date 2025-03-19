@@ -123,9 +123,10 @@ Airwallex.setDefaultBaseURL("Airwallex payment base URL")
 [Airwallex setDefaultBaseURL:[NSURL URLWithString:@”Airwallex payment base URL”]];
 ```
 
-- Create a payment intent
+#### Create payment intent
 
-When the customer wants to checkout an order, you should create a payment intent on your server-side and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
+> [!NOTE] For one-off and recurring-with-intent payment you should create **payment intent** on your server-side 
+> and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
 
 ``` swift
 // swift
@@ -139,8 +140,8 @@ id paymentIntent = "The payment intent created on your server"
 ```
 
 > [!NOTE]
-> When `checkoutMode` is `AirwallexCheckoutRecurringMode`, there is no need to create a payment intent. Instead, you'll need to generate a client secret with the 
-> customer id and pass it to `AWXAPIClientConfiguration`.
+> For recurring payment, there is no need to create a payment intent. Instead, you'll need to generate
+> a **client secret** with the customer id on your server-sideand pass it to `AWXAPIClientConfiguration`.
 
 ``` swift
 // swift
@@ -153,9 +154,9 @@ NSString *clientSecret = "The client secret generated with customer id on your s
 [AWXAPIClientConfiguration sharedConfiguration].clientSecret = clientSecret;
 ```
 
-- Create session
+#### Create payment session
 
-If you want to make a one-off payment, create a one-off session.
+- If you want to make a one-off payment, create a one-off session.
 ``` swift
 // swift
 let session = AWXOneOffSession()
@@ -179,7 +180,7 @@ session.hidePaymentConsents = "Whether the stored cards should be hidden on the 
 session.paymentMethods = "An array of payment method type names"; (Optional)
 ```
 
-If you want to make a recurring payment, create a recurring session.
+- If you want to make a recurring payment, create a recurring session.
 ``` swift
 // swift
 let session = AWXRecurringSession()
@@ -209,7 +210,7 @@ session.merchantTriggerReason = "Unscheduled or scheduled";
 session.paymentMethods = "An array of payment method type names"; (Optional)
 ```
 
-If you want to make a recurring with payment intent, create a recurring with intent session.
+- If you want to make a recurring with payment intent, create a recurring with intent session.
 
 ``` swift
 // swift
@@ -238,10 +239,13 @@ session.merchantTriggerReason = "Unscheduled or scheduled";
 session.paymentMethods = "An array of payment method type names" (Optional)
 ```
 
-### Airwallex UI Integration
+> [!IMPORTANT]
+> Make sure to generate a customerID in `SettingsViewController` first before continuing with recurring or recurring with intent checkouts.
 
-#### Launch Payment Method List
-> [!TIP]
+### UI Integration
+
+#### Launch Payment Sheet
+> [!NOTE]
 > This is **recommended usage**, it builds a complete user flow on top of your app with our prebuilt UI to collect payment details, billing details, and confirming the payment.
 
 Upon checkout, use `AWXUIContext` to present the payment flow where the user will be able to select the payment method.
@@ -249,9 +253,9 @@ swift
 ``` swift
 // swift
 AWXUIContext.launchPayment(
-    from: "hosting view controller which also handles AWXPaymentResultDelegate", 
+    from: "hosting view controller which also handles AWXPaymentResultDelegate",
+    session: "The session created above",
     filterBy: "An optional array of payment method names used to filter the payment methods returned by the server"
-    session: "The session created above"
 )
 ```
 ```objc
@@ -262,7 +266,7 @@ AWXUIContext.launchPayment(
                           style: "push/present"];
 ```
 
-#### Launch Card Payment 
+#### Launch Card Payment Directly
 ```swift
 // swift
 AWXUIContext.launchCardPayment(
@@ -278,10 +282,14 @@ AWXUIContext.launchCardPayment(
                     supportedBrands:"accepted card brands"
                               style:"push or present"]
 ```
+> [!Tip]
+> If you want to show card payment only but still want to be able to pay with saved cards, you can launch
+> payment sheet by passing [AWXCardKey] as parameter of `filterBy:`
 
-#### Launch payment method by name
+#### Launch Payment Method by Name
 > [!TIP]
 > all available payment method name can be found in [API reference](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)  - JSON Object field: items.name
+> 
 ```swift
 // swift
 AWXUIContext.launchPayment(
@@ -305,10 +313,11 @@ AWXUIContext.launchPayment(
 
 You can build your own entirely custom UI on top of our low-level APIs.
 
-> [!IMPORTANT]
-> You still need all the other steps in [Basic Integration](#basic-integration) section to set up configurations, intent and session, except the Airwallex UI Integration is replace by PaymentSessionHandler and low level API integration:
+> [!NOTE]
+> You still need all the other steps in [Basic Integration](#basic-integration) section to set up configurations, intent and session,
+> except the Airwallex UI Integration is replace by `PaymentSessionHandler` and low level API integration:
 
-#### Initialize PaymentSessionHandler 
+#### Create PaymentSessionHandler 
 
 ```swift
 // swift
@@ -316,64 +325,62 @@ let paymentSessionHandler = PaymentSessionHandler(
     session: "The session created above", 
     viewController: "hosting view controller which also handles AWXPaymentResultDelegate"
 )
-// After initialization, you will need to store the `paymentSessionHandler` in your view controller or class that is tied to your view's lifecycle
 self.paymentSessionHandler = paymentSessionHandler
 ```
 ```objc
 // objc
 PaymentSessionHandler *paymentSessionHandler = [[PaymentSessionHandler alloc] initWithSession:"The session created above"
-                                                                        viewController:"hosting view controller which also handles AWXPaymentResultDelegate" 
-                                                                            methodType:nil];
-// After initialization, you will need to store the `sessionHandler` in your view controller or class that is tied to your view's lifecycle
+                                                                               viewController:"hosting view controller which also handles AWXPaymentResultDelegate" 
+                                                                                   methodType:nil];
 self.paymentSessionHandler = paymentSessionHandler;
 ```
+> [!TIPS]
+> After initialization, you will need to store the `paymentSessionHandler` in your view controller or class that is tied to your view's lifecycle
+
 #### Pay with card
 ```swift
 // swift
 // Confirm intent with card and billing
 paymentSessionHandler.startCardPayment(
     with: "The AWXCard object collected by your custom UI",
-    billing: "Billing info collected by your custom UI"
+    billing: "The AWXPlaceDetails object collected by your custom UI"
 )
 ```
 ```objc
 // objc
 // Confirm intent with card and billing
-[sessionHandler startCardPaymentWith: "The AWXCard object collected by your custom UI" 
-                             billing: "The AWXPlaceDetails object collected by your custom UI" 
-                            saveCard: "Whether you want the card to be saved as payment consent for future payments"];
+[paymentSessionHandler startCardPaymentWith: "The AWXCard object collected by your custom UI" 
+                                    billing: "The AWXPlaceDetails object collected by your custom UI" 
+                                   saveCard: "Whether you want the card to be saved as payment consent for future payments"];
 ```
 #### Pay with saved card (consent)
 
-- Pay with available consent objects returned by "/api/v1/pa/payment_consents"
-
+- Pay with consent object - Confirm intent with a payment consent object AWXPaymentConsent)
 ``` swift
 // swift
-// Confirm intent with a payment consent object (AWXPaymentConsent)
-paymentSessionHandler.startConsentPayment(with: "paymentConsent")
+paymentSessionHandler.startConsentPayment(with: "payment consent")
 ```
 ```objc
 // objc
-// Confirm intent with a payment consent object (AWXPaymentConsent)
-[paymentSessionHandler startConsentPaymentWith:"payment consent object"];
+[paymentSessionHandler startConsentPaymentWith:"payment consent"];
 ``` 
 
-- Pay with consent ID - tokens
+- Pay with consent ID - Confirm intent with a valid payment consent ID only when the saved card is **network token**
 ``` swift
 // swift
-// Confirm intent with a valid payment consent ID only when the saved card is **network token**
 paymentSessionHandler.startConsentPayment(withId: "consent id")
 ```
 ```objc
 // objc
-// Confirm intent with a valid payment consent ID only when the saved card is **network token**
 [paymentSessionHandler startConsentPaymentWithId:"cst_xxxxxxxxxx"];
 ``` 
 
 #### Pay with Apple Pay
+> [!IMPORTANT]
+> make sure `session.applePayOptions` is setup correctly
+> [Set Up Apple Pay](#set-up-apple-pay) 
 ``` swift
 // swift
-// start apple pay flow
 paymentSessionHandler.startApplePay()
 ```
 ```objc
@@ -394,15 +401,14 @@ paymentSessionHandler.startSchemaPayment(
 [paymentSessionHandler startSchemaPaymentWith:"payment method name"
                                additionalInfo:"dictionary of all required information by this payment method"];
 ```
-> [!WARNING] 
+> [!IMPORTANT] 
 > you should provide info for all required fields defined in "/api/v1/pa/config/payment_method_types/${payment method name}"
 
-### Handle payment result
+### Handle Payment Result
 
-After the user completes the payment successfully or with error, you need to handle the payment result.
+After the user completes the payment successfully or with error, you need to handle the payment result call back of `AWXPaymentresultDelegate`.
 ``` swift
 // swift
-// MARK: - AWXPaymentresultDelegate
 func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
     // Status may be success/in progress/ failure / cancel
 }
@@ -410,11 +416,10 @@ func paymentViewController(_ controller: UIViewController?, didCompleteWith stat
 
 ```objc
 // objc
-#pragma mark - AWXPaymentResultDelegate
 - (void)paymentViewController:(UIViewController *_Nullable)controller 
         didCompleteWithStatus:(AirwallexPaymentStatus)status 
                         error:(nullable NSError *)error {
-// Status may be success/in progress/ failure / cancel
+    // Status may be success/in progress/ failure / cancel
 }
 ```
 
@@ -607,9 +612,6 @@ pod install
 - Build and run `Examples` schema
 
 If you didn't update the key file, you can use the in-app setting screen to update the keys.
-
-> [!IMPORTANT]
-> Make sure to tap `Generate customer` button first before continuing with recurring or recurring with intent checkouts.
 
 ## Contributing
 
