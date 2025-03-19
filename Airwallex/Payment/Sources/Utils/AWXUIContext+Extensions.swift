@@ -23,10 +23,10 @@ import Foundation
     ///   - session: The current payment session.
     ///   - methodNames: An optional array of payment method names used to filter the payment methods returned by the server.
     ///   - style: The presentation style of the payment sheet. Defaults to `.push`.
-    @MainActor func launchPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
-                                  session: AWXSession,
-                                  filterBy methodNames: [String]? = nil,
-                                  style: LaunchStyle = .push) {
+    @MainActor static func launchPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
+                                         session: AWXSession,
+                                         filterBy methodNames: [String]? = nil,
+                                         style: LaunchStyle = .push) {
         launchPayment(
             from: hostingVC,
             session: session,
@@ -43,11 +43,11 @@ import Foundation
     ///   - paymentResultDelegate: The delegate responsible for handling the payment result.
     ///   - methodNames: An optional array of payment method names used to filter the payment methods returned by the server.
     ///   - style: The presentation style of the payment sheet. Defaults to `.push`.
-    @MainActor func launchPayment(from hostingVC: UIViewController,
-                                  session: AWXSession,
-                                  paymentResultDelegate: AWXPaymentResultDelegate,
-                                  filterBy methodNames: [String]? = nil,
-                                  style: LaunchStyle = .push) {
+    @MainActor static func launchPayment(from hostingVC: UIViewController,
+                                         session: AWXSession,
+                                         paymentResultDelegate: AWXPaymentResultDelegate,
+                                         filterBy methodNames: [String]? = nil,
+                                         style: LaunchStyle = .push) {
         if let methodNames {
             session.paymentMethods = methodNames
             if let session = session as? AWXOneOffSession,
@@ -77,10 +77,10 @@ import Foundation
     ///   - session: The active payment session.
     ///   - supportedBrands: A list of supported card brands for the payment session.
     ///   - style: The presentation style of the payment sheet, which defaults to `.push`.
-    @MainActor func launchCardPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
-                                      session: AWXSession,
-                                      supportedBrands: [AWXCardBrand],
-                                      style: LaunchStyle = .push) {
+    @MainActor static func launchCardPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
+                                             session: AWXSession,
+                                             supportedBrands: [AWXCardBrand],
+                                             style: LaunchStyle = .push) {
         launchCardPayment(
             from: hostingVC,
             session: session,
@@ -96,11 +96,11 @@ import Foundation
     ///   - session: The active payment session.
     ///   - paymentResultDelegate: The delegate responsible for handling the payment result.
     ///   - style: The presentation style of the payment sheet, which defaults to `.push`.
-    @MainActor func launchCardPayment(from hostingVC: UIViewController,
-                                      session: AWXSession,
-                                      paymentResultDelegate: AWXPaymentResultDelegate,
-                                      supportedBrands: [AWXCardBrand],
-                                      style: LaunchStyle = .push) {
+    @MainActor static func launchCardPayment(from hostingVC: UIViewController,
+                                             session: AWXSession,
+                                             paymentResultDelegate: AWXPaymentResultDelegate,
+                                             supportedBrands: [AWXCardBrand],
+                                             style: LaunchStyle = .push) {
         assert(!supportedBrands.isEmpty, "supported brands should never be empty")
         launchPayment(
             name: AWXCardKey,
@@ -121,12 +121,12 @@ import Foundation
     ///   - paymentResultDelegate: The delegate that handles payment result callbacks.
     ///   - supportedBrands: A list of supported card brands for the payment method. Required for Card Payment
     ///   - style: The presentation style of the payment sheet. Defaults to `.push`.
-    @MainActor func launchPayment(name: String,
-                                  from hostingVC: UIViewController,
-                                  session: AWXSession,
-                                  paymentResultDelegate: AWXPaymentResultDelegate,
-                                  supportedBrands: [AWXCardBrand]? = nil,
-                                  style: LaunchStyle = .push) {
+    @MainActor static func launchPayment(name: String,
+                                         from hostingVC: UIViewController,
+                                         session: AWXSession,
+                                         paymentResultDelegate: AWXPaymentResultDelegate,
+                                         supportedBrands: [AWXCardBrand]? = nil,
+                                         style: LaunchStyle = .push) {
         let name = name.trimmed
         
         if name == AWXCardKey {
@@ -150,13 +150,13 @@ import Foundation
 
 private extension AWXUIContext {
     
-    @MainActor func launchPayment(from hostingVC: UIViewController,
-                                  session: AWXSession,
-                                  paymentMethodProvider: PaymentMethodProvider,
-                                  paymentResultDelegate: AWXPaymentResultDelegate,
-                                  style: LaunchStyle) {
-        self.session = session
-        self.delegate = paymentResultDelegate
+    @MainActor static func launchPayment(from hostingVC: UIViewController,
+                                         session: AWXSession,
+                                         paymentMethodProvider: PaymentMethodProvider,
+                                         paymentResultDelegate: AWXPaymentResultDelegate,
+                                         style: LaunchStyle) {
+        AWXUIContext.shared().session = session
+        AWXUIContext.shared().delegate = paymentResultDelegate
         let paymentVC = PaymentMethodsViewController(methodProvider: paymentMethodProvider)
         switch style {
         case .push:
