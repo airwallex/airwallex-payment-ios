@@ -31,17 +31,19 @@ Table of contents
     - [Swift Package Manager](#swift-package-manager)
       - [Components Available for Integration](#components-available-for-integration)
     - [Basic Integration](#basic-integration)
-    - [Airwallex UI Integration](#airwallex-ui-integration)
-      - [Launch Payment Method List](#launch-payment-method-list)
-      - [Launch Card Payment](#launch-card-payment)
-      - [Launch payment method by name](#launch-payment-method-by-name)
+      - [Create payment intent](#create-payment-intent)
+      - [Create payment session](#create-payment-session)
+    - [UI Integration](#ui-integration)
+      - [Launch Payment Sheet](#launch-payment-sheet)
+      - [Launch Card Payment Directly](#launch-card-payment-directly)
+      - [Launch Payment Method by Name](#launch-payment-method-by-name)
     - [Low-level API Integration](#low-level-api-integration)
-      - [Initialize PaymentSessionHandler](#initialize-paymentsessionhandler)
+      - [Create PaymentSessionHandler](#create-paymentsessionhandler)
       - [Pay with card](#pay-with-card)
       - [Pay with saved card (consent)](#pay-with-saved-card-consent)
       - [Pay with Apple Pay](#pay-with-apple-pay)
       - [Pay with Redirect](#pay-with-redirect)
-    - [Handle payment result](#handle-payment-result)
+    - [Handle Payment Result](#handle-payment-result)
     - [Set Up WeChat Pay](#set-up-wechat-pay)
     - [Set Up Apple Pay](#set-up-apple-pay)
       - [Customize Apple Pay](#customize-apple-pay)
@@ -316,6 +318,7 @@ You can build your own entirely custom UI on top of our low-level APIs.
 > [!NOTE]
 > You still need all the other steps in [Basic Integration](#basic-integration) section to set up configurations, intent and session,
 > except the Airwallex UI Integration is replace by `PaymentSessionHandler` and low level API integration:
+> you may find [Airwallex API Docs](https://www.airwallex.com/docs/api#/Payment_Acceptance) useful if you are using this integration style
 
 #### Create PaymentSessionHandler 
 
