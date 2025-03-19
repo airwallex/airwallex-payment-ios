@@ -11,7 +11,7 @@ The Airwallex iOS SDK is a framework for integrating easy, fast and secure payme
 
 <p align="left">
 <img src="https://github.com/user-attachments/assets/6f7c2a32-b7fb-409d-bf40-06d276f57a51" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/121f98d8-9944-4254-80b6-9f39d945c4c8" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/5556a6af-882d-4474-915e-2c9d5953aaa8" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/c86b7f3f-d2bc-4326-b82e-145f52d35c72" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/eb6f0b38-d88b-4c27-b843-9948bc25c5a0" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/1de983a9-b062-4108-82f5-917e0fc0fb57" width="200" hspace="10">
