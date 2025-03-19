@@ -39,7 +39,7 @@ class ApplePaySectionController: SectionController {
                 paymentResultDelegate: AWXUIContext.shared().delegate,
                 methodType: methodType
             )
-            self.paymentSessionHandler?.startApplePay()
+            self.paymentSessionHandler?.startApplePay(cancelPaymentOnDismiss: false)
         }
         cell.setup(viewModel)
         return cell

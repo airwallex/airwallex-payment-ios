@@ -64,18 +64,12 @@ public class PaymentSessionHandler: NSObject {
     }
 }
 
+/// expose for low-level API integration
 @objc public extension PaymentSessionHandler {
     /// Initiates an Apple Pay transaction.
     /// This method sets up and starts the Apple Pay payment flow.
     func startApplePay() {
-        assert(methodType == nil || methodType?.name == AWXApplePayKey)
-        let applePayProvider = AWXApplePayProvider(
-            delegate: self,
-            session: session,
-            paymentMethodType: methodType
-        )
-        actionProvider = applePayProvider
-        applePayProvider.startPayment()
+        startApplePay(cancelPaymentOnDismiss: true)
     }
     
     /// Initiates a card payment transaction.
@@ -123,7 +117,6 @@ public class PaymentSessionHandler: NSObject {
     /// Initiates a payment using a consent ID.
     /// - Parameter consentId: The previously generated consent identifier.
     func startConsentPayment(withId consentId: String) {
-        assert(consentId.hasPrefix("cst_"))
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -132,22 +125,6 @@ public class PaymentSessionHandler: NSObject {
         actionProvider = cardProvider
         // legacy implementation
         cardProvider.confirmPaymentIntent(withPaymentConsentId: consentId)
-    }
-    
-    /// Initiates a schema-based payment transaction.
-    /// This method processes a payment with schema-based payment methods such as digital wallets or bank transfers.
-    /// You should collect all information from your user before calling this api
-    /// - Parameters:
-    ///   - paymentMethod: The payment method details, pre-validated with all required information.
-    internal func startSchemaPayment(with paymentMethod: AWXPaymentMethod) {
-        assert(methodType == nil || methodType?.name == paymentMethod.type)
-        let schemaProvider = AWXSchemaProvider(
-            delegate: self,
-            session: session,
-            paymentMethodType: methodType
-        )
-        actionProvider = schemaProvider
-        schemaProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
     }
     
     /// Initiates a schema-based payment transaction.
@@ -164,6 +141,44 @@ public class PaymentSessionHandler: NSObject {
         )
         actionProvider = redirectAction
         redirectAction.confirmPaymentIntent(with: name, additionalInfo: additionalInfo)
+    }
+}
+
+extension PaymentSessionHandler {
+    /// Initiates an Apple Pay transaction.
+    /// - Parameter cancelPaymentOnDismiss: Determines the behavior when the Apple Pay sheet is dismissed.
+    ///   - If `true`, the standard Apple Pay flow is followed, and the payment result delegate
+    ///     receives a cancellation callback if the user dismisses the sheet.
+    ///   - If `false`, dismissing the Apple Pay sheet does not trigger a cancellation callback,
+    func startApplePay(cancelPaymentOnDismiss: Bool) {
+        assert(methodType == nil || methodType?.name == AWXApplePayKey)
+        let applePayProvider = AWXApplePayProvider(
+            delegate: self,
+            session: session,
+            paymentMethodType: methodType
+        )
+        actionProvider = applePayProvider
+        if cancelPaymentOnDismiss {
+            applePayProvider.startPayment()
+        } else {
+            applePayProvider.handleFlow()
+        }
+    }
+    
+    /// Initiates a schema-based payment transaction.
+    /// This method processes a payment with schema-based payment methods such as digital wallets or bank transfers.
+    /// You should collect all information from your user before calling this api
+    /// - Parameters:
+    ///   - paymentMethod: The payment method details, pre-validated with all required information.
+    func startSchemaPayment(with paymentMethod: AWXPaymentMethod) {
+        assert(methodType == nil || methodType?.name == paymentMethod.type)
+        let schemaProvider = AWXSchemaProvider(
+            delegate: self,
+            session: session,
+            paymentMethodType: methodType
+        )
+        actionProvider = schemaProvider
+        schemaProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
     }
 }
 
