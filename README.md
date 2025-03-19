@@ -99,17 +99,7 @@ You can add `Airwallex` to include all components, or selectively add the follow
 - `AirwallexRedirect`: To support payments via url/deeplink redirection.
 - `AirwallexWeChatpay`: For a native WeChat Pay experience.
 
-### Swift
-
-Even though `Airwallex` is written in objc, it can be used in Swift with no hassle. If you use [CocoaPods](https://cocoapods.org/),  add the following line to your [Podfile](https://guides.cocoapods.org/using/using-cocoapods.html):
-
-```ruby
-use_frameworks!
-```
-
 ### Basic Integration
-
-This is **recommended usage**, it builds a complete user flow on top of your app with our prebuilt UI to collect payment details, billing details, and confirming the payment.
 
 When your app starts, configure the SDK with `mode`.
 
@@ -231,8 +221,13 @@ session.paymentMethods = "An array of payment method type names" (Optional)
 ### Airwallex UI Integration
 
 #### Launch Payment Method List
+
+This is **recommended usage**, it builds a complete user flow on top of your app with our prebuilt UI to collect payment details, billing details, and confirming the payment.
+
 Upon checkout, use `AWXUIContext` to present the payment flow where the user will be able to select the payment method.
+swift
 ``` swift
+// swift
 AWXUIContext.shared().launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate", 
     filterBy: "An optional array of payment method names used to filter the payment methods returned by the server"
