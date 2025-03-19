@@ -219,9 +219,6 @@ public struct Palette {
                 with: .white,
                 fraction: CGFloat(base - level.rawValue) / CGFloat(base)
             )
-            
-            print(themeColor.toHex(), level, color.toHex())
-            
             return color
         } else if level.rawValue > base {
             return themeColor.interpolates(
