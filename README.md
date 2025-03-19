@@ -567,16 +567,16 @@ options.totalPriceLabel = @"COMPANY, INC.";
 
 > [!IMPORTANT]
 > Be aware that we currently support the following payment networks for Apple Pay:
-> - Visa
-> - MasterCard
-> - ChinaUnionPay
-> - Maestro (iOS 12+)
-> - Amex
-> - Discover
-> - JCB
->
-> Customers will only be able to select the cards of the above payment networks during Apple Pay.
->
+- Visa
+- MasterCard
+- ChinaUnionPay
+- Maestro (iOS 12+)
+- Amex
+- Discover
+- JCB
+
+Customers will only be able to select the cards of the above payment networks during Apple Pay.
+>[!IMPORTANT]
 > Coupon is also not supported at this stage.
 
 ### Theme Color
