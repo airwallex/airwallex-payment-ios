@@ -7,6 +7,7 @@
 
 - [Chinese Tutorial](README_zh_CN.md)
 
+## Overview
 The Airwallex iOS SDK is a framework for integrating easy, fast and secure payments inside your app with Airwallex. It provides simple functions to send sensitive credit card data directly to Airwallex, it also provides a powerful, customizable interface for collecting user payment details.
 
 <p align="left">
@@ -17,6 +18,9 @@ The Airwallex iOS SDK is a framework for integrating easy, fast and secure payme
 <img src="https://github.com/user-attachments/assets/eb6f0b38-d88b-4c27-b843-9948bc25c5a0" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/1de983a9-b062-4108-82f5-917e0fc0fb57" width="200" hspace="10">
 </p>
+
+## Getting Started
+Follow our integration guide and explore the example project to quickly set up payments using the Airwallex SDK.
 Get started with our integration guide and example project.
 
 Table of contents
@@ -24,17 +28,21 @@ Table of contents
 
 <!--ts-->
 - [Airwallex iOS SDK](#airwallex-ios-sdk)
+  - [Overview](#overview)
+  - [Getting Started](#getting-started)
 - [Table of contents](#table-of-contents)
   - [Requirements](#requirements)
-  - [Integration](#integration)
+  - [Installation](#installation)
     - [CocoaPods](#cocoapods)
     - [Swift Package Manager](#swift-package-manager)
       - [Components Available for Integration](#components-available-for-integration)
+  - [Integration](#integration)
     - [Basic Integration](#basic-integration)
-      - [Create payment intent](#create-payment-intent)
+      - [Customer ID (optional)](#customer-id-optional)
       - [Create payment session](#create-payment-session)
+      - [Create Payment Intent](#create-payment-intent)
     - [UI Integration](#ui-integration)
-      - [Launch Payment Sheet](#launch-payment-sheet)
+      - [Launch Payment Sheet (Recommended)](#launch-payment-sheet-recommended)
       - [Launch Card Payment Directly](#launch-card-payment-directly)
       - [Launch Payment Method by Name](#launch-payment-method-by-name)
     - [Low-level API Integration](#low-level-api-integration)
@@ -53,9 +61,10 @@ Table of contents
 <!--te-->
 
 ## Requirements
-The Airwallex iOS SDK supports iOS 13.0 and above. You need to upgrade to XCode 15.4 or above, otherwise please refer to our previous release [5.4.3](https://github.com/airwallex/airwallex-payment-ios/releases/tag/5.4.3).
+- iOS 13.0+
+- Xcode 15.4+ (For older Xcode versions, refer to release 5.4.3)
 
-## Integration
+## Installation
 
 ### CocoaPods
 
@@ -100,6 +109,7 @@ You can add `Airwallex` to include all components, or selectively add the follow
 - `AirwallexRedirect`: To support payments via url/deeplink redirection.
 - `AirwallexWeChatpay`: For a native WeChat Pay experience.
 
+## Integration
 ### Basic Integration
 
 When your app starts, configure the SDK with `mode`.
@@ -125,36 +135,13 @@ Airwallex.setDefaultBaseURL("Airwallex payment base URL")
 [Airwallex setDefaultBaseURL:[NSURL URLWithString:@”Airwallex payment base URL”]];
 ```
 
-#### Create payment intent
+#### Customer ID (optional)
+Generate or retrieve a customer ID for your user on your server-side. 
+Refer to the Airwallex API Documentation for details.
+[Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
 
-> [!NOTE] For one-off and recurring-with-intent payment you should create **payment intent** on your server-side 
-> and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
-
-``` swift
-// swift
-let paymentIntent = "The payment intent created on your server"
-AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
-```
-```objc
-// objc
-id paymentIntent = "The payment intent created on your server"
-[AWXAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
-```
-
-> [!NOTE]
-> For recurring payment, there is no need to create a payment intent. Instead, you'll need to generate
-> a **client secret** with the customer id on your server-sideand pass it to `AWXAPIClientConfiguration`.
-
-``` swift
-// swift
-let clientSecret = "The client secret generated with customer id on your server"
-AWXAPIClientConfiguration.shared().clientSecret = clientSecret
-```
-```objc
-// objc
-NSString *clientSecret = "The client secret generated with customer id on your server"
-[AWXAPIClientConfiguration sharedConfiguration].clientSecret = clientSecret;
-```
+> [!IMPORTANT]
+> customer ID is required for **recurring** or **recurring with intent** checkouts
 
 #### Create payment session
 
@@ -165,10 +152,6 @@ let session = AWXOneOffSession()
 session.countryCode = "Your country code"
 session.billing = "Your shipping address"
 session.returnURL = "App return url"
-session.paymentIntent = "Payment intent"
-session.autoCapture = "Whether the card payment will be captured automatically (Default YES)"
-session.hidePaymentConsents = "Whether the stored cards should be hidden on the list (Default NO)"
-session.paymentMethods = "An array of payment method type names" (Optional)
 ```
 ``` objc
 // objc
@@ -176,26 +159,20 @@ AWXOneOffSession *session = [AWXOneOffSession new];
 session.countryCode = "Your country code";
 session.billing = "Your shipping address";
 session.returnURL = "App return url";
-session.paymentIntent = "Payment intent";
-session.autoCapture = "Whether the card payment will be captured automatically (Default YES)";
-session.hidePaymentConsents = "Whether the stored cards should be hidden on the list (Default NO)";
-session.paymentMethods = "An array of payment method type names"; (Optional)
 ```
 
 - If you want to make a recurring payment, create a recurring session.
 ``` swift
 // swift
 let session = AWXRecurringSession()
-session.countryCode = "Your country code";
-session.billing = "Your shipping address";
-session.returnURL = "App return url";
-session.currency = "Currency code";
-session.amount = "Total amount";
-session.customerId = "Customer id";
+session.countryCode = "Your country code"
+session.billing = "Your shipping address"
+session.returnURL = "App return url"
+session.setCurrency("Currency code")
+session.setAmount("Total amount")
+session.setCustomerId("Customer ID")
 session.nextTriggerByType = "customer or merchant";
-session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
-session.paymentMethods = "An array of payment method type names" (Optional)
 ```
 ``` objc
 // objc
@@ -205,11 +182,9 @@ session.billing = "Your shipping address";
 session.returnURL = "App return url";
 session.currency = "Currency code";
 session.amount = "Total amount";
-session.customerId = "Customer id";
+session.customerId = "Customer ID";
 session.nextTriggerByType = "customer or merchant";
-session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
-session.paymentMethods = "An array of payment method type names"; (Optional)
 ```
 
 - If you want to make a recurring with payment intent, create a recurring with intent session.
@@ -220,12 +195,8 @@ let session = AWXRecurringWithIntentSession()
 session.countryCode = "Your country code"
 session.billing = "Your shipping address"
 session.returnURL = "App return url"
-session.paymentIntent = "Payment intent"
-session.autoCapture = "Whether the card payment will be captured automatically (Default YES)"
 session.nextTriggerByType = "customer or merchant"
-session.requiresCVC = "Whether it requires CVC (Default NO)"
 session.merchantTriggerReason = "Unscheduled or scheduled"
-session.paymentMethods = "An array of payment method type names" (Optional)
 ```
 ``` objc
 // objc
@@ -233,20 +204,53 @@ AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
 session.countryCode = "Your country code";
 session.billing = "Your shipping address";
 session.returnURL = "App return url";
-session.paymentIntent = "Payment intent";
-session.autoCapture = "Whether the card payment will be captured automatically (Default YES)";
 session.nextTriggerByType = "customer or merchant";
-session.requiresCVC = "Whether it requires CVC (Default NO)";
 session.merchantTriggerReason = "Unscheduled or scheduled";
-session.paymentMethods = "An array of payment method type names" (Optional)
+```
+> [!TIP] 
+> You only need to explicitly set the customer ID for a recurring session.
+> for **one-off** session and **recurring-with-intent** session, 
+> the customer ID is automatically retrieved from session.paymentIntent
+#### Create Payment Intent
+
+For **one-off** and **recurring-with-intent** payment you should create **payment intent** on your server-side 
+and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
+Refer to the Airwallex API Documentation for details.
+[Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
+
+``` swift
+// swift
+let paymentIntent = "The payment intent created on your server"
+// update session you created above
+session.paymentIntent = paymentIntent
+// update client secret
+AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
+```
+```objc
+// objc
+AWXPaymentIntent *paymentIntent = "The payment intent created on your server"
+// update session you created above
+session.paymentIntent = paymentIntent
+// update client secret
+[AWXAPIClientConfiguration sharedConfiguration].clientSecret = paymentIntent.clientSecret;
+```
+For **recurring payment**, there is no need to create a payment intent. Instead, you'll need to generate
+a **client secret** with the **customer ID** on your server-side and pass it to `AWXAPIClientConfiguration`.
+
+``` swift
+// swift
+let clientSecret = "The client secret generated with customer ID on your server"
+AWXAPIClientConfiguration.shared().clientSecret = clientSecret
+```
+```objc
+// objc
+NSString *clientSecret = "The client secret generated with customer ID on your server"
+[AWXAPIClientConfiguration sharedConfiguration].clientSecret = clientSecret;
 ```
 
-> [!IMPORTANT]
-> Make sure to generate a customerID in `SettingsViewController` first before continuing with recurring or recurring with intent checkouts.
-
+> [!NOTE] Once you've completed the basic integration, you can proceed with making actual payments using one of the integration styles outlined below.
 ### UI Integration
-
-#### Launch Payment Sheet
+#### Launch Payment Sheet (Recommended)
 > [!NOTE]
 > This is **recommended usage**, it builds a complete user flow on top of your app with our prebuilt UI to collect payment details, billing details, and confirming the payment.
 
@@ -371,7 +375,7 @@ paymentSessionHandler.startConsentPayment(with: "payment consent")
 - Pay with consent ID - Confirm intent with a valid payment consent ID only when the saved card is **network token**
 ``` swift
 // swift
-paymentSessionHandler.startConsentPayment(withId: "consent id")
+paymentSessionHandler.startConsentPayment(withId: "consent ID")
 ```
 ```objc
 // objc
@@ -427,17 +431,17 @@ func paymentViewController(_ controller: UIViewController?, didCompleteWith stat
 ```
 
 > [!TIP]
-> If the payment consent is created during payment process, you can implement this optional function to get the id of this payment consent for any further usage.
+> If the payment consent is created during payment process, you can implement this optional function to get the ID of this payment consent for any further usage.
 ```swift
 // swift
 func paymentViewController(_ controller: UIViewController?, didCompleteWithPaymentConsentId paymentConsentId: String) {
-    // To do anything with this id.
+    // To do anything with this ID.
 }
 ```
 ```objc
 // objc
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)Id {
-    // To do anything with this id.
+    // To do anything with this ID.
 }
 ```
 
@@ -458,7 +462,7 @@ After completing payment, WeChat will be redirected to the merchant's app and do
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        WXApi.registerApp("WeChat app id", universalLink: "universal link of your app")
+        WXApi.registerApp("WeChat app ID", universalLink: "universal link of your app")
         return true
     }
     
@@ -483,11 +487,11 @@ extension AppDelegate: WXApiDelegate {
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [WXApi registerApp:@"WeChat app id" universalLink:"universal link of your app"];
+    [WXApi registerApp:@"WeChat app ID" universalLink:"universal link of your app"];
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,ID> *)options {
     return [WXApi handleOpenURL:url delegate:self];
 }
 
