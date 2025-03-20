@@ -12,6 +12,7 @@ struct PaymentMethodCellViewModel {
     let name: String
     let imageURL: URL?
     let isSelected: Bool
+    let imageLoader: ImageLoader
 }
 
 class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -21,7 +22,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = .radius_l
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.awxColor(.borderInteractive).cgColor
+        view.layer.borderColor = .awxCGColor(.borderInteractive)
         view.backgroundColor = .awxColor(.backgroundPrimary)
         return view
     }()
@@ -55,15 +56,15 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     func setup(_ viewModel: PaymentMethodCellViewModel) {
         self.viewModel = viewModel
         if let URL = viewModel.imageURL {
-            logo.setImageURL(URL, placeholder: nil)
+            logo.loadImage(URL, imageLoader: viewModel.imageLoader)
         } else {
             logo.image = nil
         }
         label.text = viewModel.name
         label.font = viewModel.isSelected ? .awxFont(.caption2, weight: .bold) : .awxFont(.caption2)
         label.textColor = viewModel.isSelected ? .awxColor(.textLink) : .awxColor(.textPrimary)
-        roundedBG.layer.borderColor = viewModel.isSelected ? UIColor.awxColor(.borderInteractive).cgColor : UIColor.awxColor(.borderDecorative).cgColor
-        roundedBG.backgroundColor = viewModel.isSelected ? UIColor.awxColor(.backgroundHighlight) : .awxColor(.backgroundPrimary)
+        roundedBG.layer.borderColor = viewModel.isSelected ? .awxCGColor(.borderInteractive) : .awxCGColor(.borderDecorative)
+        roundedBG.backgroundColor = viewModel.isSelected ? .awxColor(.backgroundHighlight) : .awxColor(.backgroundPrimary)
     }
     
     override init(frame: CGRect) {
@@ -78,7 +79,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            roundedBG.layer.borderColor = (viewModel?.isSelected ?? false) ? UIColor.awxColor(.borderInteractive).cgColor : UIColor.awxColor(.borderDecorative).cgColor
+            roundedBG.layer.borderColor = (viewModel?.isSelected ?? false) ? .awxCGColor(.borderInteractive) : .awxCGColor(.borderDecorative)
         }
     }
 }

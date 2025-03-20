@@ -36,7 +36,7 @@ class AWXButton: UIButton {
         case .secondary:
             contentEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
             backgroundColor = .awxColor(.backgroundPrimary)
-            layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+            layer.borderColor = .awxCGColor(.borderDecorative)
             layer.cornerRadius = 8
             layer.borderWidth = 1
             titleLabel?.font = .awxFont(.headline1, weight: .bold)
@@ -46,7 +46,7 @@ class AWXButton: UIButton {
         case .mini:
             contentEdgeInsets = .init(top: 12, left: 12, bottom: 12, right: 12)
             backgroundColor = .awxColor(.backgroundPrimary)
-            layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+            layer.borderColor = .awxCGColor(.borderDecorative)
             layer.cornerRadius = 8
             layer.borderWidth = 1
             titleLabel?.font = .awxFont(.headline2, weight: .bold)
@@ -66,9 +66,9 @@ class AWXButton: UIButton {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             switch style {
             case .secondary:
-                layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+                layer.borderColor = .awxCGColor(.borderDecorative)
             case .mini:
-                layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+                layer.borderColor = .awxCGColor(.borderDecorative)
             default: break
             }
         }

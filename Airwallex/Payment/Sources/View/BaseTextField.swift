@@ -55,7 +55,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.borderWidth = 1
         view.layer.cornerRadius = .radius_l
-        view.layer.borderColor = UIColor.awxColor(.borderDecorative).cgColor
+        view.layer.borderColor = .awxCGColor(.borderDecorative)
         view.backgroundColor = .awxColor(.backgroundField)
         return view
     }()
@@ -166,10 +166,10 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     func updateBorderAppearance() {
         guard let viewModel else { return }
         if textField.isFirstResponder {
-            box.layer.borderColor = UIColor.awxColor(.borderInteractive).cgColor
+            box.layer.borderColor = .awxCGColor(.borderInteractive)
             box.layer.borderWidth = 2
         } else {
-            box.layer.borderColor = viewModel.isValid ? UIColor.awxColor(.borderDecorative).cgColor : UIColor.awxColor(.borderError).cgColor
+            box.layer.borderColor = viewModel.isValid ? .awxCGColor(.borderDecorative) : .awxCGColor(.borderError)
             box.layer.borderWidth = 1
         }
     }

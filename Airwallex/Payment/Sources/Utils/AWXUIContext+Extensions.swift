@@ -11,7 +11,7 @@ import Foundation
 //  MARK: - Method List
 @objc public extension AWXUIContext {
     private static let subtypeDropin = "dropin"
-    private static let subtypeElement = "element"
+    private static let subtypeElement = "component"
     @objc enum LaunchStyle: Int {
         case push
         case present

@@ -15,17 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        //  initialize
+        ExamplesKeys.loadDefaultKeysIfNilOrEmpty()
+        Airwallex.setMode(ExamplesKeys.environment)
+        
+        //  customize theme color of the payment UI by setting tintColor on AWXTheme
+//        AWXTheme.shared().tintColor = UIColor.red
         
         WXApi.registerApp("wx4c86d73fe4f82431", universalLink: "https://airwallex.com/")
         WXApi.startLog(by: .normal) { log in
             print("WeChat Log: \(log)")
         }
         UISwitch.appearance().onTintColor = UIColor.awxColor(.theme)
-        UIView.appearance().tintColor = UIColor.awxColor(.theme)
-        
-        //  initialize
-        ExamplesKeys.loadDefaultKeysIfNilOrEmpty()
-        Airwallex.setMode(ExamplesKeys.environment)
         return true
     }
     

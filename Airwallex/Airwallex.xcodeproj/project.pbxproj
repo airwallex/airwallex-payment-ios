@@ -594,6 +594,7 @@
 		CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D81985F72D719B88008008A3 /* DebugLoggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLoggable.swift; sourceTree = "<group>"; };
 		D81985F82D754FED008008A3 /* SectionDisplayHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDisplayHandler.swift; sourceTree = "<group>"; };
+		D81985F62D718B06008008A3 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		D81EAFA42D40F46600B44784 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D825DAA52D2F72EE005F725A /* AWXCardValidator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCardValidator+Extensions.swift"; sourceTree = "<group>"; };
 		D827371E2D362A9900AA41A6 /* AWXSchema+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXSchema+Extensions.swift"; sourceTree = "<group>"; };
@@ -612,6 +613,7 @@
 		D85A88492D6D8D580084F7FA /* SinglePaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePaymentMethodProvider.swift; sourceTree = "<group>"; };
 		D85A884B2D6D9B0B0084F7FA /* AWXCardBrand+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCardBrand+Extensions.swift"; sourceTree = "<group>"; };
 		D85A884E2D6EE53D0084F7FA /* PaymentMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodProvider.swift; sourceTree = "<group>"; };
+		D8731C522D87BE39003893FB /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		D888268E2D12D68B00115198 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
 		D888269F2D12D9E000115198 /* CollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewManager.swift; sourceTree = "<group>"; };
 		D88826B02D13E64500115198 /* ApplePaySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySectionController.swift; sourceTree = "<group>"; };
@@ -1362,6 +1364,7 @@
 				D88C3CE52D1D50E800E77FFD /* AWXCard+Extensions.swift */,
 				D88C3CE72D1E743500E77FFD /* UIStackView+Extensions.swift */,
 				D8F303262D1ABAB100D29B49 /* UIColor+Extensions.swift */,
+				D81985F62D718B06008008A3 /* Palette.swift */,
 				D88C3CE62D1E4D7A00E77FFD /* String+Extensions.swift */,
 				D81985F72D719B88008008A3 /* DebugLoggable.swift */,
 				D8F303272D1ABAB100D29B49 /* Font+Extensions.swift */,
@@ -1370,6 +1373,7 @@
 				D8F303292D1ABAB100D29B49 /* UIImage+Extensions.swift */,
 				D8F3032A2D1ABAB100D29B49 /* UITextField+Extensions.swift */,
 				D8F67EFB2D2CF77D004BAB26 /* NSLayoutConstraint+Extensions.swift */,
+				D8731C522D87BE39003893FB /* ImageLoader.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2252,6 +2256,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2309,6 +2314,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

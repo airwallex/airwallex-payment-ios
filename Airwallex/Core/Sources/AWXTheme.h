@@ -27,7 +27,11 @@
 - (UIColor *_Nonnull)shadowColor;
 
 /**
- Tint Color.
+ The primary tint color used for theming.
+
+ Internally, airwallex sdk resolves the color for the light interface style and uses it as the base tint color.
+ A corresponding set of colors is automatically generated to support both light and dark interface styles,
+ ensuring visual consistency across different appearances.
  */
 @property (nonatomic, copy, null_resettable) UIColor *tintColor;
 
