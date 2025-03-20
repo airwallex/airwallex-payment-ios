@@ -112,7 +112,7 @@ class PaymentMethodsViewController: AWXViewController {
         NSLayoutConstraint.activate(constraints)
     }
     
-    @objc public func onCloseButtonTapped() {
+    @objc func onCloseButtonTapped() {
         dismiss(animated: true) {
             AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
         }

@@ -349,7 +349,7 @@ private extension IntegrationDemoListViewController {
             do {
                 let session = try await createPaymentSession()
                 paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
-                paymentSessionHandler?.startSchemaPayment(
+                paymentSessionHandler?.startRedirectPayment(
                     with: "paypal",
                     additionalInfo: ["shopper_name": "Hector", "country_code": "CN"]
                 )

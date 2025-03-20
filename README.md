@@ -403,7 +403,7 @@ paymentSessionHandler.startApplePay()
 > [!IMPORTANT] 
 > You should provide all required fields defined in "/api/v1/pa/config/payment_method_types/${payment method name}" in `additionalInfo`
 ``` swift
-paymentSessionHandler.startSchemaPayment(
+paymentSessionHandler.startRedirectPayment(
     with: "payment method name",
     additionalInfo: "all required information"
 )

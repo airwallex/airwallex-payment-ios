@@ -133,7 +133,7 @@ public class PaymentSessionHandler: NSObject {
     /// - Parameters:
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
-    func startSchemaPayment(with name: String, additionalInfo: [String: String]?) {
+    func startRedirectPayment(with name: String, additionalInfo: [String: String]?) {
         assert(methodType == nil || methodType?.name == name)
         let redirectAction = AWXRedirectActionProvider(
             delegate: self,
@@ -170,7 +170,7 @@ extension PaymentSessionHandler {
     /// You should collect all information from your user before calling this api
     /// - Parameters:
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
-    func startSchemaPayment(with paymentMethod: AWXPaymentMethod) {
+    func startRedirectPayment(with paymentMethod: AWXPaymentMethod) {
         assert(methodType == nil || methodType?.name == paymentMethod.type)
         let schemaProvider = AWXSchemaProvider(
             delegate: self,

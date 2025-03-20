@@ -11,6 +11,7 @@ import UIKit
 public struct Palette {
     
     public enum SemanticColor {
+        case theme
         // Background colors
         case backgroundPrimary
         case backgroundSecondary
@@ -43,6 +44,8 @@ public struct Palette {
         
         var color: UIColor {
             switch self {
+            case .theme:
+                return themeColor(by: .level70)
                 // Background Colors
             case .backgroundPrimary:
                 return UIColor(dynamicLightColor: Palette.white, darkColor: Palette.gray100)
