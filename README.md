@@ -42,6 +42,7 @@ Table of contents
     - [Launch Payment Sheet (Recommended)](#launch-payment-sheet-recommended)
     - [Launch Card Payment Directly](#launch-card-payment-directly)
     - [Launch Payment Method by Name](#launch-payment-method-by-name)
+    - [Customize Theme Color (optional)](#customize-theme-color-optional)
   - [Low-level API Integration](#low-level-api-integration)
     - [Create PaymentSessionHandler](#create-paymentsessionhandler)
     - [Pay with card](#pay-with-card)
@@ -49,8 +50,6 @@ Table of contents
     - [Pay with Apple Pay](#pay-with-apple-pay)
     - [Pay with Redirect](#pay-with-redirect)
   - [Handle Payment Result](#handle-payment-result)
-- [Customization](#customization)
-  - [Theme Color](#theme-color)
 - [Contributing](#contributing)
 <!--te-->
 
@@ -84,8 +83,7 @@ pod install
 > [!TIP]
 >  Update key file (Optional)
 >
-> In the `Examples/Keys` folder, edit `Keys.json` with proper keys.
-
+- In the `Examples/Keys` folder, edit `Keys.json` with proper keys.
 - Build and run `Examples` schema
 
 If you didn't update the key file, you can use the in-app setting screen to update the keys.
@@ -198,7 +196,7 @@ session.merchantTriggerReason = "Unscheduled or scheduled"
 Create **payment intent** on your server-side and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
 
 Refer to the Airwallex API Documentation for details.
-[Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
+[Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Payment_Intents/)
 
 ``` swift
 let paymentIntent = "The payment intent created on your server"
@@ -216,7 +214,7 @@ AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
 a **client secret** with the **customer ID** on your server-side and pass it to `AWXAPIClientConfiguration`.
 
 Refer to the Airwallex API Documentation for details.
-[Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
+[Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/_api_v1_pa_customers__id__generate_client_secret/get/)
 
 ``` swift
 let clientSecret = "The client secret generated with customer ID on your server"
@@ -225,7 +223,6 @@ AWXAPIClientConfiguration.shared().clientSecret = clientSecret
 
 ### Optional Setup
 #### WeChat Pay
-After completing payment, WeChat will be redirected to the merchant's app and do a callback using `onResp()`, then it can retrieve the payment intent status after the merchant server is notified, so please keep listening to the notification.
 - make sure you add dependency for `AirwallexWeChatpay` (Swift package manager) or `Airwallex/WechatPay` (Cocoapods)
 - setup `WechatOpenSDK` following the [official integration document](https://developers.weixin.qq.com/doc/oplatform/en/Mobile_App/Access_Guide/iOS.html)
 
@@ -252,6 +249,7 @@ extension AppDelegate: WXApiDelegate {
     }
 }
 ```
+After completing payment, WeChat will be redirected to the merchant's app and do a callback using `onResp()`, then it can retrieve the payment intent status after the merchant server is notified, so please keep listening to the notification.
   
 > [!NOTE]
 > We use internal dynamic framework `WechatOpenSDKDynamic.xcframework` for WeChat Pay integration.
@@ -266,12 +264,14 @@ extension AppDelegate: WXApiDelegate {
 
 The Airwallex iOS SDK allows merchants to provide Apple Pay as a payment method to their customers. 
 
-- Make sure Apple Pay is set up correctly in the app. For more information, refer to Apple's official [doc](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay).
+- Make sure Apple Pay is set up correctly in the app. 
+  - For more information, refer to [Apple's official doc](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay).
 - Make sure Apple Pay is enabled on your Airwallex account.
 - Include the Apple Pay module when installing the SDK.
+  - `AirwallexWeChatpay` - Swift Package Manager
+  - `Airwallex/ApplePay` - CocoaPods
 - Prepare the [Merchant Identifier](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay) and configure `applePayOptions` on the payment session object.
 
-Apple Pay will now be presented as an option in the payment method sheet.
 ``` swift
 let session = AWXOneOffSession()
 //  configure other properties
@@ -334,6 +334,13 @@ AWXUIContext.launchCardPayment(
 > [!Tip]
 > If you want to show card payment only but still want to be able to pay with saved cards, you can launch
 > payment sheet by passing [AWXCardKey] as parameter of `filterBy:`
+``` swift
+AWXUIContext.launchPayment(
+    from: "hosting view controller which also handles AWXPaymentResultDelegate",
+    session: "The session created above",
+    filterBy: [AWXCardKey]
+)
+```
 
 #### Launch Payment Method by Name
 > [!TIP]
@@ -348,12 +355,19 @@ AWXUIContext.launchPayment(
 )
 ```
 
+#### Customize Theme Color (optional)
+
+You can customize theme color of the payment sheet
+``` swift
+AWXTheme.shared().tintColor = .red
+```
+
 ### Low-level API Integration
 
 You can build your own entirely custom UI on top of our low-level APIs.
 
 > [!NOTE]
-> You still need all required steps listed in [Basic Integration](#basic-integration) section above to set up configurations, intent and session, except the [UI Integration](#ui-integration) is replace by `PaymentSessionHandler` and [low-level API integration](#low-level-api-integration)
+> You still need all required steps listed in [Required Setup](#required-setup) section above to set up configurations, intent and session, except the [UI Integration](#ui-integration) is replace by `PaymentSessionHandler` and [low-level API integration](#low-level-api-integration)
 > 
 > you may find [Airwallex API Docs](https://www.airwallex.com/docs/api#/Payment_Acceptance) useful if you are using this integration style
 
@@ -394,7 +408,7 @@ paymentSessionHandler.startConsentPayment(withId: "consent ID")
 > [!IMPORTANT]
 > Make sure `session.applePayOptions` is setup correctly.
 > 
-> Refer to section [Set Up Apple Pay](#set-up-apple-pay) for more details.
+> Refer to section [Set Up Apple Pay](#Apple-Pay) for more details.
 ``` swift
 paymentSessionHandler.startApplePay()
 ```
@@ -424,13 +438,6 @@ func paymentViewController(_ controller: UIViewController?, didCompleteWith stat
 func paymentViewController(_ controller: UIViewController?, didCompleteWithPaymentConsentId paymentConsentId: String) {
     // To do anything with this ID.
 }
-```
-## Customization
-### Theme Color
-
-You can customize the theme color.
-``` swift
-AWXTheme.shared().tintColor = .red
 ```
 
 ## Contributing
