@@ -29,15 +29,15 @@ Table of contents
   - [Getting Started](#getting-started)
   - [Requirements](#requirements)
   - [Examples](#examples)
-  - [Installation](#installation)
-    - [Swift Package Manager](#swift-package-manager)
-    - [CocoaPods](#cocoapods)
   - [Integration](#integration)
+    - [Installation](#installation)
+      - [Swift Package Manager](#swift-package-manager)
+      - [CocoaPods](#cocoapods)
     - [Required Setup](#required-setup)
       - [Customer ID](#customer-id)
-      - [Create payment session](#create-payment-session)
-      - [Create Payment Intent](#create-payment-intent)
-      - [Update Client Secret](#update-client-secret)
+      - [Payment session](#payment-session)
+      - [Payment Intent](#payment-intent)
+      - [Client Secret](#client-secret)
     - [Optional Setup](#optional-setup)
       - [WeChat Pay](#wechat-pay)
       - [Apple Pay](#apple-pay)
@@ -58,13 +58,11 @@ Table of contents
 <!--te-->
 
 ## Getting Started
-Follow our integration guide and explore the [example project](#examples) to quickly set up payments using the Airwallex SDK.
-Get started with our integration guide and example project.
+Follow our [integration guide](#integration) and explore the [example project](#examples) to quickly set up payments using the Airwallex SDK.
 
 ## Requirements
 - iOS 13.0+
 - Xcode 15.4+ (For older Xcode versions, refer to release 5.4.3)
-- Compatible with Objective-C
 
 ## Examples
 
@@ -95,9 +93,11 @@ pod install
 
 If you didn't update the key file, you can use the in-app setting screen to update the keys.
 
-## Installation
+## Integration
 
-### Swift Package Manager
+### Installation
+
+#### Swift Package Manager
 Airwallex for iOS is available via Swift Package Manager. To integrate it into your project, follow these steps:
 1. Add the Package Dependency
 [Follow Apple's guide on how to add a package dependency in Xcode.](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
@@ -115,7 +115,7 @@ You can add `Airwallex` to include all components, or selectively add the follow
 - `AirwallexRedirect`: To support payments via url/deeplink redirection.
 - `AirwallexWeChatpay`: For a native WeChat Pay experience.
 
-### CocoaPods
+#### CocoaPods
 
 Airwallex for iOS is available through [CocoaPods](https://cocoapods.org/).
 
@@ -139,7 +139,6 @@ Run the following command:
 ```ruby
 pod install
 ```
-## Integration
 ### Required Setup
 
 When your app starts, configure the SDK with `mode`.
@@ -149,13 +148,15 @@ Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 ```
 #### Customer ID 
 > [!IMPORTANT]
-> customer ID is required for **recurring** or **recurring with intent** checkouts
-
+> Required for **recurring** or **recurring with intent** checkouts.
+> 
+> Optional for **one-off** payment
+>
 Generate or retrieve a customer ID for your user on your server-side. 
 Refer to the Airwallex API Documentation for details.
 [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
 
-#### Create payment session
+#### Payment session
 
 - If you want to make a one-off payment, create a one-off session.
 ``` swift
@@ -190,9 +191,14 @@ session.merchantTriggerReason = "Unscheduled or scheduled"
 > You only need to explicitly set the customer ID for a recurring session.
 > For **one-off** session and **recurring-with-intent** session, the customer ID is automatically retrieved from `session.paymentIntent`
 
-#### Create Payment Intent
+#### Payment Intent
+> [!IMPORTANT]
+> Required for **one-off** or **recurring with intent** checkouts.
+>
+> Not needed for **recurring** checkouts.
+> 
 
-For **one-off** or **recurring-with-intent** checkout, create **payment intent** on your server-side and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
+Create **payment intent** on your server-side and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
 
 Refer to the Airwallex API Documentation for details.
 [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
@@ -202,16 +208,14 @@ let paymentIntent = "The payment intent created on your server"
 // update session you created above
 session.paymentIntent = paymentIntent
 ```
-> [!NOTE]
-> For **recurring payment** there is no need to create a payment intent.
 
-#### Update Client Secret
-For **one-off** and **recurring-with-intent** payment, you can use `paymentIntent.clientSecret`
+#### Client Secret
+- For **one-off** and **recurring-with-intent** payment, use `paymentIntent.clientSecret`
 ``` swift
 AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
 ```
 
-For **recurring payment**, you'll need to generate
+- For **recurring payment**, you'll need to generate
 a **client secret** with the **customer ID** on your server-side and pass it to `AWXAPIClientConfiguration`.
 
 Refer to the Airwallex API Documentation for details.
@@ -410,7 +414,7 @@ paymentSessionHandler.startSchemaPayment(
 
 ### Handle Payment Result
 
-After the user completes the payment successfully or with error, you need to handle the payment result call back of `AWXPaymentresultDelegate`.
+After the user completes the payment successfully or with error, you need to handle the payment result call back of `AWXPaymentResultDelegate`.
 ``` swift
 func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
     // call back for status success/in progress/ failure / cancel
