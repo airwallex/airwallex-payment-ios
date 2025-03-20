@@ -21,44 +21,45 @@ Airwallex iOS SDK 是一个框架，用于在您的应用中集成简单、快�
 
 目录
 <!--ts-->
-- [入门指南](#入门指南)
+
+- [开始集成](#开始集成)
 - [要求](#要求)
-- [示例](#示例)
-- [集成](#集成)
-- [安装](#安装)
+- [示例项目](#示例项目)
+- [集成步骤](#集成步骤)
+  - [安装](#安装)
     - [Swift Package Manager](#swift-package-manager)
     - [CocoaPods](#cocoapods)
-- [必要设置](#必要设置)
+  - [必要设置](#必要设置)
     - [Customer ID](#customer-id)
     - [创建 `AWXSession`](#创建-awxsession)
     - [创建 `AWXPaymentIntent`](#创建-awxpaymentintent)
     - [设置客户端密钥](#设置客户端密钥)
-- [可选设置](#可选设置)
+  - [可选设置](#可选设置)
     - [微信支付](#微信支付)
     - [Apple Pay](#apple-pay)
-- [UI 集成](#ui-集成)
+  - [UI 集成](#ui-集成)
     - [启动完整支付列表（推荐）](#启动完整支付列表推荐)
     - [仅展示卡支付](#仅展示卡支付)
     - [按名称启动支付方式](#按名称启动支付方式)
     - [自定义主题色](#自定义主题色)
-- [Low-level API 集成](#low-level-api-集成)
-    - [创建 PaymentSessionHandler](#创建-paymentsessionhandler)
+  - [Low-level API 集成](#low-level-api-集成)
+    - [创建 PaymentSessionHandler](#创-paymentsessionhandler)
     - [使用卡支付](#使用卡支付)
     - [使用保存的卡支](#使用保存的卡支)
     - [使用 Apple Pay 支付](#使用-apple-pay-支付)
     - [使用跳转支付](#使用跳转支付)
-- [处理支付结果](#处理支付结果)
+  - [处理支付结果](#处理支付结果)
 - [贡献](#贡献)
 <!--te-->
 =================
-## 入门指南
+## 开始集成
 请按照我们的[集成指南](#integration)并探索[示例项目](#examples)，以快速使用 Airwallex SDK 设置支付功能。
 
 ## 要求
 - iOS 13.0+
 - Xcode 15.4+（对于旧版本的 Xcode，请参考 5.4.3 版本）
 
-## 示例
+## 示例项目
 
 示例可以在最新的 Xcode 上运行。要运行示例应用程序，请按照以下步骤操作。
 
@@ -82,11 +83,11 @@ pod install
 > 更新初始化设置文件（可选）
 >
 -  更新 `Examples/Keys` 文件夹中的 `Keys.json`。
-- 构建并运行 `Examples` 方案
+- 构建并运行 `Examples` 
 
 您也可以使用应用内设置页面更新设置
 
-## 集成
+## 集成步骤
 
 ### 安装
 
@@ -252,7 +253,7 @@ extension AppDelegate: WXApiDelegate {
 > 1. 从 SPM 目标 `AirwallexWeChatPay` 中删除不安全的 linker flag `-ObjC`、`-all_load`
 > 2. 删除现代应用程序不再需要的架构 `armv7` 和 `i386`。
 >
-> 有关更多详细信息请参阅：[微信g官方文档](https://developers.weixin.qq.com/doc/oplatform/en/Mobile_App/Access_Guide/iOS.html)
+> 有关更多详细信息请参阅：[微信官方文档](https://developers.weixin.qq.com/doc/oplatform/en/Mobile_App/Access_Guide/iOS.html)
 
 #### Apple Pay
 
@@ -306,7 +307,6 @@ options.totalPriceLabel = "COMPANY, INC."
 > 它在您的应用程序中使用我们预构建的 UI 收集支付详情、账单详情并确认支付。
 
 在结账时，使用 `AWXUIContext` 启动支付流程，用户能够通过支付列表选择您支持的支付方式。
-swift
 ``` swift
 AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
