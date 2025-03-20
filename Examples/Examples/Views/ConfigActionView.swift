@@ -56,7 +56,7 @@ class ConfigActionView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 8
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.separator.cgColor
+        view.layer.borderColor = .awxCGColor(.borderDecorative)
         return view
     }()
     
@@ -153,7 +153,7 @@ class ConfigActionView: UIView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            boxView.layer.borderColor = UIColor.separator.cgColor
+            boxView.layer.borderColor = .awxCGColor(.borderDecorative)
         }
     }
 }
