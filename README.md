@@ -66,8 +66,6 @@ The Examples can be run on the latest Xcode. To run the example app, you should 
 
 - Clone source code
 
-Run the following script to clone this project to your local disk.
-
 ```
 git clone git@github.com:airwallex/airwallex-payment-ios.git
 ```
@@ -80,13 +78,12 @@ Make sure you have installed Cocoapods and then run the following command in the
 pod install
 ```
 
-> [!TIP]
->  Update key file (Optional)
+> [!TIP] Update key file (Optional)
 >
-- In the `Examples/Keys` folder, edit `Keys.json` with proper keys.
-- Build and run `Examples` schema
-
-If you didn't update the key file, you can use the in-app setting screen to update the keys.
+>- In the `Examples/Keys` folder, edit `Keys.json` with proper keys.
+>- Build and run `Examples` schema
+>
+> Key file provides default value for settings, you can use the in-app setting screen to update the keys any time.
 
 ## Integration
 
@@ -109,7 +106,7 @@ You can add `Airwallex` to include all components, or selectively add the follow
 - `AirwallexCard`: For card payments.
 - `AirwallexRedirect`: To support payments via url/deeplink redirection.
 - `AirwallexWeChatpay`: For a native WeChat Pay experience.
-
+---
 #### CocoaPods
 
 Airwallex for iOS is available through [CocoaPods](https://cocoapods.org/).
@@ -134,6 +131,7 @@ Run the following command:
 ```ruby
 pod install
 ```
+
 ### Required Setup
 
 When your app starts, configure the SDK with `mode`.
@@ -141,6 +139,7 @@ When your app starts, configure the SDK with `mode`.
 ``` swift
 Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 ```
+---
 #### Customer ID 
 > [!IMPORTANT]
 > Required for **recurring** or **recurring with intent** checkouts.
@@ -148,9 +147,9 @@ Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 > Optional for **one-off** payment
 >
 Generate or retrieve a customer ID for your user on your server-side. 
-Refer to the Airwallex API Documentation for details.
-[Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
+Refer to the [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/) for more details
 
+---
 #### Payment session
 
 - If you want to make a one-off payment, create a one-off session.
@@ -186,6 +185,7 @@ session.merchantTriggerReason = "Unscheduled or scheduled"
 > You only need to explicitly set the customer ID for a recurring session.
 > For **one-off** session and **recurring-with-intent** session, the customer ID is automatically retrieved from `session.paymentIntent`
 
+---
 #### Payment Intent
 > [!IMPORTANT]
 > Required for **one-off** or **recurring with intent** checkouts.
@@ -195,8 +195,7 @@ session.merchantTriggerReason = "Unscheduled or scheduled"
 
 Create **payment intent** on your server-side and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
 
-Refer to the Airwallex API Documentation for details.
-[Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Payment_Intents/)
+Refer to the [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Payment_Intents/) for details
 
 ``` swift
 let paymentIntent = "The payment intent created on your server"
@@ -204,6 +203,7 @@ let paymentIntent = "The payment intent created on your server"
 session.paymentIntent = paymentIntent
 ```
 
+---
 #### Client Secret
 - For **one-off** and **recurring-with-intent** payment, use `paymentIntent.clientSecret`
 ``` swift
@@ -222,13 +222,13 @@ AWXAPIClientConfiguration.shared().clientSecret = clientSecret
 ```
 
 ### Optional Setup
+---
 #### WeChat Pay
 - make sure you add dependency for `AirwallexWeChatpay` (Swift package manager) or `Airwallex/WechatPay` (Cocoapods)
-- setup `WechatOpenSDK` following the [official integration document](https://developers.weixin.qq.com/doc/oplatform/en/Mobile_App/Access_Guide/iOS.html)
+- setup `WechatOpenSDK` following the [Wechat document](https://developers.weixin.qq.com/doc/oplatform/en/Mobile_App/Access_Guide/iOS.html)
 
 ``` swift
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         WXApi.registerApp("WeChat app ID", universalLink: "universal link of your app")
         return true
@@ -257,9 +257,8 @@ After completing payment, WeChat will be redirected to the merchant's app and do
 > By doing this, we can
 > 1. Remove unsafe flag `-ObjC`, `-all_load` from SPM target `AirwallexWeChatPay`
 > 2. Stripe architecture `armv7` and `i386` which is no longer needed for modern apps.
->
-> For more details please refer to: [Wechat document](https://developers.weixin.qq.com/doc/oplatform/en/Mobile_App/Access_Guide/iOS.html)
 
+---
 #### Apple Pay
 
 The Airwallex iOS SDK allows merchants to provide Apple Pay as a payment method to their customers. 
@@ -276,7 +275,7 @@ The Airwallex iOS SDK allows merchants to provide Apple Pay as a payment method 
 let session = AWXOneOffSession()
 //  configure other properties
 ...
-session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")
+session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")// required for Apple Pay
 ```
 You can customize the Apple Pay options to restrict it as well as provide extra context. For more information, please refer to the `AWXApplePayOptions.h` header file.
 ```swift
@@ -321,7 +320,7 @@ AWXUIContext.launchPayment(
     filterBy: "An optional array of payment method names used to filter the payment methods returned by the server"
 )
 ```
-
+---
 #### Launch Card Payment Directly
 ```swift
 AWXUIContext.launchCardPayment(
@@ -341,11 +340,8 @@ AWXUIContext.launchPayment(
     filterBy: [AWXCardKey]
 )
 ```
-
+---
 #### Launch Payment Method by Name
-> [!TIP]
-> Available payment method names can be found in [API reference](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)  
-> 
 ```swift
 AWXUIContext.launchPayment(
     name: "payment method name",
@@ -354,7 +350,10 @@ AWXUIContext.launchPayment(
     paymentResultDelegate: "object handles AWXPaymentResultDelegate"
 )
 ```
-
+> [!TIP]
+> Available payment method names can be found in [Airwallex API doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)  
+> 
+---
 #### Customize Theme Color (optional)
 
 You can customize theme color of the payment sheet
@@ -370,7 +369,7 @@ You can build your own entirely custom UI on top of our low-level APIs.
 > You still need all required steps listed in [Required Setup](#required-setup) section above to set up configurations, intent and session, except the [UI Integration](#ui-integration) is replace by `PaymentSessionHandler` and [low-level API integration](#low-level-api-integration)
 > 
 > you may find [Airwallex API Docs](https://www.airwallex.com/docs/api#/Payment_Acceptance) useful if you are using this integration style
-
+---
 #### Create PaymentSessionHandler 
 
 ```swift
@@ -378,12 +377,10 @@ let paymentSessionHandler = PaymentSessionHandler(
     session: "The session created above", 
     viewController: "hosting view controller which also handles AWXPaymentResultDelegate"
 )
+// store the `paymentSessionHandler` in your view controller or class that is tied to your view's lifecycle
 self.paymentSessionHandler = paymentSessionHandler
 ```
-
-> [!TIP]
-> After initialization, you will need to store the `paymentSessionHandler` in your view controller or class that is tied to your view's lifecycle
-
+---
 #### Pay with card
 ```swift
 // Confirm intent with card and billing
@@ -392,6 +389,7 @@ paymentSessionHandler.startCardPayment(
     billing: "The AWXPlaceDetails object collected by your custom UI"
 )
 ```
+---
 #### Pay with saved card (consent)
 
 - Pay with consent object - Confirm intent with a payment consent object AWXPaymentConsent)
@@ -403,7 +401,7 @@ paymentSessionHandler.startConsentPayment(with: "payment consent")
 ``` swift
 paymentSessionHandler.startConsentPayment(withId: "consent ID")
 ```
-
+---
 #### Pay with Apple Pay
 > [!IMPORTANT]
 > Make sure `session.applePayOptions` is setup correctly.
@@ -412,7 +410,7 @@ paymentSessionHandler.startConsentPayment(withId: "consent ID")
 ``` swift
 paymentSessionHandler.startApplePay()
 ```
-
+---
 #### Pay with Redirect
 > [!IMPORTANT] 
 > You should provide all required fields defined in "/api/v1/pa/config/payment_method_types/${payment method name}" in `additionalInfo`

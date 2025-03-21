@@ -65,8 +65,6 @@ Airwallex iOS SDK 是一个框架，用于在您的应用中集成简单、快�
 
 - 克隆源代码
 
-运行以下脚本将此项目克隆到本地磁盘。
-
 ```
 git clone git@github.com:airwallex/airwallex-payment-ios.git
 ```
@@ -79,13 +77,12 @@ git clone git@github.com:airwallex/airwallex-payment-ios.git
 pod install
 ```
 
-> [!TIP]
-> 更新初始化设置文件（可选）
+> [!TIP] 更新初始化设置文件（可选）
 >
--  更新 `Examples/Keys` 文件夹中的 `Keys.json`。
-- 构建并运行 `Examples` 
-
-您也可以使用应用内设置页面更新设置
+>- 更新 `Examples/Keys` 文件夹中的 `Keys.json`。
+>- 构建并运行 `Examples` 
+>
+> 您可以随时使用应用内的设置页面更改这些设置
 
 ## 集成步骤
 
@@ -108,7 +105,7 @@ https://github.com/airwallex/airwallex-payment-ios
 - `AirwallexCard`: 用于卡支付。
 - `AirwallexRedirect`: 支持通过 URL/deeplink 重定向支付。
 - `AirwallexWeChatpay`: 用于原生微信支付体验。
-
+---
 #### CocoaPods
 
 Airwallex iOS SDK 可以通过 [CocoaPods](https://cocoapods.org/) 获取。
@@ -140,6 +137,7 @@ pod install
 ``` swift
 Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 ```
+---
 #### Customer ID 
 > [!IMPORTANT]
 > **订阅支付**或**带intent订阅支付** 必须绑定 customer ID
@@ -149,6 +147,7 @@ Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 在您的服务器端为您的用户生成或检索 customer ID。
 相关接口信息，请参阅[Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
 
+---
 #### 创建 `AWXSession`
 
 - 如果您想进行一次性支付，请创建 `AWXOneOffSession`。
@@ -184,6 +183,7 @@ session.merchantTriggerReason = "Unscheduled or scheduled"
 > 您只需为订阅支付（`AWXRecurringSession`）显式设置客户 ID。
 > 对于**一次性支付**和**带 intent 的订阅支付**，会自动从 `session.paymentIntent` 中获取 customer ID。
 
+---
 #### 创建 `AWXPaymentIntent`
 > [!IMPORTANT]
 > **一次性支付**或**带 intent 订阅支付**结账前必须创建 `AWXPaymentIntent`。
@@ -200,6 +200,7 @@ let paymentIntent = "The payment intent created on your server"
 // 将 payment intent 和 session 绑定
 session.paymentIntent = paymentIntent
 ```
+---
 
 #### 设置客户端密钥
 - 对于**一次性支付**和**带 intent 的订阅支付**，使用 `paymentIntent` 中的 `clientSecret`
@@ -223,7 +224,6 @@ AWXAPIClientConfiguration.shared().clientSecret = clientSecret
 
 ``` swift
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         WXApi.registerApp("WeChat app ID", universalLink: "universal link of your app")
         return true
@@ -253,8 +253,7 @@ extension AppDelegate: WXApiDelegate {
 > 1. 从 SPM 目标 `AirwallexWeChatPay` 中删除不安全的 linker flag `-ObjC`、`-all_load`
 > 2. 删除现代应用程序不再需要的架构 `armv7` 和 `i386`。
 >
-> 有关更多详细信息请参阅：[微信官方文档](https://developers.weixin.qq.com/doc/oplatform/en/Mobile_App/Access_Guide/iOS.html)
-
+---
 #### Apple Pay
 
 Airwallex iOS SDK 支持 Apple Pay 支付方式。 
@@ -271,7 +270,7 @@ Airwallex iOS SDK 支持 Apple Pay 支付方式。
 let session = AWXOneOffSession()
 //  configure other properties
 ...
-session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")
+session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")// required for Apple Pay
 ```
 您可以自定义 Apple Pay 选项以对支付方式做出限制并且提供额外的交易信息。全部可配置项信息请参阅 `AWXApplePayOptions.h` 头文件。
 ```swift
@@ -314,7 +313,7 @@ AWXUIContext.launchPayment(
     filterBy: "An optional array of payment method names used to filter the payment methods returned by the server"
 )
 ```
-
+---
 #### 仅展示卡支付
 ```swift
 AWXUIContext.launchCardPayment(
@@ -333,10 +332,8 @@ AWXUIContext.launchPayment(
     filterBy: [AWXCardKey]
 )
 ```
+---
 #### 按名称启动支付方式
-> [!TIP]
-> 可用的支付方式名称可以在[Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)中找到  
-> 
 ```swift
 AWXUIContext.launchPayment(
     name: "payment method name",
@@ -345,7 +342,10 @@ AWXUIContext.launchPayment(
     paymentResultDelegate: "object handles AWXPaymentResultDelegate"
 )
 ```
+> [!TIP]
+> 可用的支付方式名称可以在[Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)中找到  
 
+---
 #### 自定义主题色
 
 您可以自定义 Airwallex UI 的主题色。
@@ -362,6 +362,7 @@ AWXTheme.shared().tintColor = .red
 > 
 > 如果您使用这种集成方式，您可能会需要使用[Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance)来获取自定义UI需要的各种信息
 
+---
 #### 创建 PaymentSessionHandler 
 
 ```swift
@@ -375,6 +376,7 @@ self.paymentSessionHandler = paymentSessionHandler
 > [!TIP]
 > 初始化后，您需要将 `paymentSessionHandler` 存储在与视图生命周期绑定的视图控制器或类中
 
+---
 #### 使用卡支付
 ```swift
 // Confirm intent with card and billing
@@ -383,6 +385,7 @@ paymentSessionHandler.startCardPayment(
     billing: "The AWXPlaceDetails object collected by your custom UI"
 )
 ```
+---
 #### 使用保存的卡支
 
 - 使用 `AWXPaymentConsent` 支付 
@@ -395,6 +398,7 @@ paymentSessionHandler.startConsentPayment(with: "payment consent")
 paymentSessionHandler.startConsentPayment(withId: "consent ID")
 ```
 
+---
 #### 使用 Apple Pay 支付
 > [!IMPORTANT]
 > 确保 `session.applePayOptions` 设置正确。
@@ -405,6 +409,7 @@ paymentSessionHandler.startConsentPayment(withId: "consent ID")
 paymentSessionHandler.startApplePay()
 ```
 
+---
 #### 使用跳转支付
 > [!IMPORTANT] 
 > 您应在 `additionalInfo` 中提供 "/api/v1/pa/config/payment_method_types/${payment method name}" 中指定的所有必填字段
