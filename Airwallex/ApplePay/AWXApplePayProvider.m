@@ -16,6 +16,7 @@
 #import "AWXPaymentMethod.h"
 #import "AWXSession+Request.h"
 #import "AWXSession.h"
+#import "NSBundle+ApplePay.h"
 #import "NSObject+Logging.h"
 #import "PKContact+Request.h"
 #import "PKPaymentToken+Request.h"
@@ -166,7 +167,7 @@ typedef enum {
 + (BOOL)canHandleSession:(AWXSession *)session errorMessage:(NSString *_Nullable *)error {
     if (session.applePayOptions == nil) {
         if (error) {
-            *error = NSLocalizedString(@"Missing Apple Pay options in session.", nil);
+            *error = NSLocalizedStringFromTableInBundle(@"Missing Apple Pay options in session.", nil, [NSBundle applePayBundle], nil);
         }
         return NO;
     }
@@ -181,7 +182,7 @@ typedef enum {
     }
 
     if (error && !canMakePayment) {
-        *error = NSLocalizedString(@"Payment not supported via Apple Pay.", nil);
+        *error = NSLocalizedStringFromTableInBundle(@"Payment not supported via Apple Pay.", nil, [NSBundle applePayBundle], nil);
     }
     return canMakePayment;
 }
@@ -199,7 +200,7 @@ typedef enum {
     PKPaymentAuthorizationController *controller = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
 
     if (!controller) {
-        NSString *description = NSLocalizedString(@"Failed to initialize Apple Pay Controller.", nil);
+        NSString *description = NSLocalizedStringFromTableInBundle(@"Failed to initialize Apple Pay Controller.", nil, [NSBundle applePayBundle], nil);
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: description}];
@@ -287,7 +288,7 @@ typedef enum {
         self.didHandlePresentationFail = YES;
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
-                                         userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)}];
+                                         userInfo:@{NSLocalizedDescriptionKey: NSLocalizedStringFromTableInBundle(@"Failed to present Apple Pay Controller.", nil, [NSBundle applePayBundle], nil)}];
         [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];

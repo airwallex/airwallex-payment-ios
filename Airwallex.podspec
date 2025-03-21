@@ -26,23 +26,35 @@ Pod::Spec.new do |s|
     plugin.source_files = 'Airwallex/WeChatPay/**/*.{h,m}'
     plugin.public_header_files = 'Airwallex/WeChatPay/*.h'
     plugin.vendored_frameworks = 'Frameworks/WechatOpenSDKDynamic.xcframework'
+    plugin.resource_bundle = {
+        'AirwallexWeChatPay' => 'Airwallex/WeChatPay/Resources/**/*'
+    }
   end
   
   s.subspec 'Card' do |plugin|
     plugin.dependency 'Airwallex/Core'
     plugin.source_files = ['Airwallex/Card/**/*.{swift,h,m}', 'Airwallex/Airwallex.h']
     plugin.public_header_files = ['Airwallex/Card/*.h', 'Airwallex/Airwallex.h']
+    plugin.resource_bundle = {
+        'AirwallexCard' => 'Airwallex/Card/Resources/**/*'
+    }
   end
   
   s.subspec 'Redirect' do |plugin|
     plugin.dependency 'Airwallex/Core'
     plugin.source_files = ['Airwallex/Redirect/**/*.{swift,h,m}', 'Airwallex/Airwallex.h']
     plugin.public_header_files = ['Airwallex/Redirect/*.h', 'Airwallex/Airwallex.h']
+    plugin.resource_bundle = {
+        'AirwallexRedirect' => 'Airwallex/Redirect/Resources/**/*'
+    }
   end
   
   s.subspec 'ApplePay' do |plugin|
     plugin.dependency 'Airwallex/Core'
     plugin.source_files = 'Airwallex/ApplePay/**/*.{h,m}'
     plugin.public_header_files = 'Airwallex/ApplePay/*.h'
+    plugin.resource_bundle = {
+        'AirwallexApplePay' => 'Airwallex/ApplePay/Resources/**/*'
+    }
   end
 end

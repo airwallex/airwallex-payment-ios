@@ -103,7 +103,7 @@
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
 
     UILabel *titleLabel = [UILabel new];
-    titleLabel.text = NSLocalizedString(@"Payment methods", @"Payment methods");
+    titleLabel.text = NSLocalizedStringFromTableInBundle(@"Payment methods", nil, [NSBundle resourceBundle], @"Payment methods");
     titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     titleLabel.font = [UIFont titleFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -266,7 +266,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NSLocalizedString(@"Delete", nil);
+    return NSLocalizedStringFromTableInBundle(@"Delete", nil, [NSBundle resourceBundle], nil);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -277,13 +277,13 @@
     AWXPaymentConsent *paymentConsent = self.availablePaymentConsents[indexPath.row];
 
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"Would you like to delete this card?", nil) preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil)
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedStringFromTableInBundle(@"Would you like to delete this card?", nil, [NSBundle resourceBundle], nil) preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Delete", nil, [NSBundle resourceBundle], nil)
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction *_Nonnull action) {
                                                               [self disablePaymentConsent:paymentConsent index:indexPath.row];
                                                           }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, [NSBundle resourceBundle], nil) style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
@@ -363,7 +363,7 @@
 - (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     Class class = ClassToHandleNextActionForType(nextAction);
     if (class == nil) {
-        [self showAlert:NSLocalizedString(@"No provider matched the next action.", nil)];
+        [self showAlert:NSLocalizedStringFromTableInBundle(@"No provider matched the next action.", nil, [NSBundle resourceBundle], nil)];
         return;
     }
 
@@ -398,7 +398,7 @@
 
 - (void)showAlert:(NSString *)message {
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-    [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Close", nil, [NSBundle resourceBundle], nil) style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:controller animated:YES completion:nil];
 }
 

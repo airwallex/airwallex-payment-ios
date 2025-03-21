@@ -9,6 +9,7 @@
 #import "AWXWebViewController.h"
 #import "AWXAPIClient.h"
 #import "AWXUtils.h"
+#import "NSBundle+Card.h"
 #import <WebKit/WebKit.h>
 
 @interface AWXWebViewController ()<WKNavigationDelegate>
@@ -55,7 +56,7 @@
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  if (self.webHandler) {
-                                     self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"User cancelled.", nil)}]);
+                                     self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedStringFromTableInBundle(@"User cancelled.", nil, [NSBundle cardBundle], nil)}]);
                                  }
                              }];
 }

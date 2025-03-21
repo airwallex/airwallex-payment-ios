@@ -12,6 +12,7 @@
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
+#import "NSBundle+Card.h"
 
 @interface AWXDCCViewController ()
 
@@ -29,7 +30,7 @@
 
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel") style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, [NSBundle cardBundle], @"Cancel") style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
 
     NSDictionary *flags = @{@"AED": @"AE",
                             @"AUD": @"AU",
@@ -75,14 +76,14 @@
                             @"VND": @"VN"};
 
     UILabel *titleLabel = [UILabel new];
-    titleLabel.text = NSLocalizedString(@"Select your currency", @"Select your currency");
+    titleLabel.text = NSLocalizedStringFromTableInBundle(@"Select your currency", nil, [NSBundle cardBundle], @"Select your currency");
     titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     titleLabel.font = [UIFont headlineFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:titleLabel];
 
     UILabel *subTitleLabel = [UILabel new];
-    subTitleLabel.text = NSLocalizedString(@"Select the currency you would like to pay with", @"Select the currency you would like to pay with");
+    subTitleLabel.text = NSLocalizedStringFromTableInBundle(@"Select the currency you would like to pay with", nil, [NSBundle cardBundle], @"Select the currency you would like to pay with");
     subTitleLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
     subTitleLabel.font = [UIFont subhead1Font];
     subTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -141,7 +142,7 @@
 
     _confirmButton = [AWXActionButton new];
     _confirmButton.enabled = YES;
-    [_confirmButton setTitle:NSLocalizedString(@"Confirm payment", @"Confirm payment") forState:UIControlStateNormal];
+    [_confirmButton setTitle:NSLocalizedStringFromTableInBundle(@"Confirm payment", nil, [NSBundle cardBundle], @"Confirm payment") forState:UIControlStateNormal];
     _confirmButton.titleLabel.font = [UIFont subhead2Font];
     [_confirmButton addTarget:self action:@selector(confirmPressed:) forControlEvents:UIControlEventTouchUpInside];
     _confirmButton.translatesAutoresizingMaskIntoConstraints = NO;

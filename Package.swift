@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "AirwallexPaymentSDK",
+    defaultLocalization: "en",
     platforms: [ .iOS(.v13) ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -63,6 +64,7 @@ let package = Package(
             name: "AirwallexApplePay",
             dependencies: [ "AirwallexCore" ],
             path: "Airwallex/ApplePay",
+            resources: [ .process("Resources")],
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")
@@ -72,6 +74,7 @@ let package = Package(
             name: "AirwallexCard",
             dependencies: [ "AirwallexCore" ],
             path: "Airwallex/Card",
+            resources: [ .process("Resources")],
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")
@@ -81,6 +84,7 @@ let package = Package(
             name: "AirwallexRedirect",
             dependencies: [ "AirwallexCore" ],
             path: "Airwallex/Redirect",
+            resources: [ .process("Resources")],
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")
@@ -93,6 +97,7 @@ let package = Package(
                 .target(name: "WechatOpenSDKDynamic")
             ],
             path: "Airwallex/WeChatPay",
+            resources: [ .process("Resources")],
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")

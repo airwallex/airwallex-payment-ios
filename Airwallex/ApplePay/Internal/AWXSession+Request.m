@@ -9,6 +9,7 @@
 #import "AWXPaymentIntent+Summary.h"
 #import "AWXPlaceDetails+PKContact.h"
 #import "AWXSession+Request.h"
+#import "NSBundle+ApplePay.h"
 
 @implementation AWXSession (Request)
 
@@ -18,7 +19,7 @@
         if (error) {
             *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                          code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing Apple Pay options in session.", nil)}];
+                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedStringFromTableInBundle(@"Missing Apple Pay options in session.", nil, [NSBundle applePayBundle], nil)}];
         }
         return nil;
     }
@@ -27,7 +28,7 @@
         if (error) {
             *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                          code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing merchant identifier in apple pay options.", nil)}];
+                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedStringFromTableInBundle(@"Missing merchant identifier in apple pay options.", nil, [NSBundle applePayBundle], nil)}];
         }
         return nil;
     }
@@ -70,7 +71,7 @@
 
 - (nullable NSString *)validateData {
     if (!self.countryCode) {
-        return NSLocalizedString(@"Missing country code in session.", nil);
+        return NSLocalizedStringFromTableInBundle(@"Missing country code in session.", nil, [NSBundle applePayBundle], nil);
     }
     if ([self isKindOfClass:[AWXOneOffSession class]]) {
         AWXOneOffSession *session = (AWXOneOffSession *)self;
@@ -79,10 +80,10 @@
     if ([self isKindOfClass:[AWXRecurringSession class]]) {
         AWXRecurringSession *session = (AWXRecurringSession *)self;
         if (!session.amount) {
-            return NSLocalizedString(@"Missing amount in RecurringSession.", nil);
+            return NSLocalizedStringFromTableInBundle(@"Missing amount in RecurringSession.", nil, [NSBundle applePayBundle], nil);
         }
         if (!session.currency || session.currency.length != 3) {
-            return NSLocalizedString(@"RecurringSession currency should be three-letter ISO 4217 currency code.", nil);
+            return NSLocalizedStringFromTableInBundle(@"RecurringSession currency should be three-letter ISO 4217 currency code.", nil, [NSBundle applePayBundle], nil);
         }
     }
     if ([self isKindOfClass:[AWXRecurringWithIntentSession class]]) {
@@ -94,18 +95,18 @@
 
 - (nullable NSString *)validatePaymentIntentData:(nullable AWXPaymentIntent *)paymentIntent {
     if (!paymentIntent) {
-        return NSLocalizedString(@"PaymentIntent cannot be nil.", nil);
+        return NSLocalizedStringFromTableInBundle(@"PaymentIntent cannot be nil.", nil, [NSBundle applePayBundle], nil);
     }
     if (!paymentIntent.amount) {
-        return NSLocalizedString(@"Missing amount in PaymentIntent.", nil);
+        return NSLocalizedStringFromTableInBundle(@"Missing amount in PaymentIntent.", nil, [NSBundle applePayBundle], nil);
     }
 
     if (!paymentIntent.currency || paymentIntent.currency.length != 3) {
-        return NSLocalizedString(@"PaymentIntent currency should be three-letter ISO 4217 currency code.", nil);
+        return NSLocalizedStringFromTableInBundle(@"PaymentIntent currency should be three-letter ISO 4217 currency code.", nil, [NSBundle applePayBundle], nil);
     }
 
     if (!paymentIntent.Id) {
-        return NSLocalizedString(@"Missing id in PaymentIntent.", nil);
+        return NSLocalizedStringFromTableInBundle(@"Missing id in PaymentIntent.", nil, [NSBundle applePayBundle], nil);
     }
 
     return nil;

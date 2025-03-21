@@ -228,6 +228,15 @@
 		C844DC7D2C3CE37F0099614C /* NSObject+Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */; };
 		C844DC7E2C3CE37F0099614C /* NSObject+Logging.h in Headers */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CA09778887CAF1A3CB3519E4 /* Pods_ApplePayTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 766C109E04EF1051D97CC9A3 /* Pods_ApplePayTests.framework */; };
+		D81FEA9A2D8D7D1A005FA874 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D81FEA982D8D7D1A005FA874 /* Localizable.strings */; };
+		D823EEA02D8D714200DF9CF5 /* NSBundle+Card.h in Headers */ = {isa = PBXBuildFile; fileRef = D823EE9E2D8D714200DF9CF5 /* NSBundle+Card.h */; };
+		D823EEA12D8D714200DF9CF5 /* NSBundle+Card.m in Sources */ = {isa = PBXBuildFile; fileRef = D823EE9F2D8D714200DF9CF5 /* NSBundle+Card.m */; };
+		D823EEA42D8D734300DF9CF5 /* NSBundle+WeChatPay.m in Sources */ = {isa = PBXBuildFile; fileRef = D823EEA32D8D734300DF9CF5 /* NSBundle+WeChatPay.m */; };
+		D823EEA52D8D734300DF9CF5 /* NSBundle+WeChatPay.h in Headers */ = {isa = PBXBuildFile; fileRef = D823EEA22D8D734300DF9CF5 /* NSBundle+WeChatPay.h */; };
+		D823EEA82D8D739C00DF9CF5 /* NSBundle+Redirect.h in Headers */ = {isa = PBXBuildFile; fileRef = D823EEA62D8D739C00DF9CF5 /* NSBundle+Redirect.h */; };
+		D823EEA92D8D739C00DF9CF5 /* NSBundle+Redirect.m in Sources */ = {isa = PBXBuildFile; fileRef = D823EEA72D8D739C00DF9CF5 /* NSBundle+Redirect.m */; };
+		D823EEAC2D8D743900DF9CF5 /* NSBundle+ApplePay.h in Headers */ = {isa = PBXBuildFile; fileRef = D823EEAA2D8D743900DF9CF5 /* NSBundle+ApplePay.h */; };
+		D823EEAD2D8D743900DF9CF5 /* NSBundle+ApplePay.m in Sources */ = {isa = PBXBuildFile; fileRef = D823EEAB2D8D743900DF9CF5 /* NSBundle+ApplePay.m */; };
 		D8B5996B2CF6F935005C3C1D /* AWXUIContext+Card.h in Headers */ = {isa = PBXBuildFile; fileRef = D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */; };
 		D8B5996C2CF6F935005C3C1D /* AWXUIContext+Card.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */; };
 		D8BD9E122D0191BF0045A892 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */; };
@@ -238,6 +247,12 @@
 		D8BD9E172D0191BF0045A892 /* Airwallex.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */; };
 		D8BD9E182D0191BF0045A892 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */; };
 		D8BD9E192D0191BF0045A892 /* CurrencyCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */; };
+		D8FFC5DE2D8D621000BA1779 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8FFC5DC2D8D621000BA1779 /* Localizable.strings */; };
+		D8FFC5DF2D8D621000BA1779 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8FFC5DC2D8D621000BA1779 /* Localizable.strings */; };
+		D8FFC5E62D8D647800BA1779 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D8FFC5E52D8D647800BA1779 /* Info.plist */; };
+		D8FFC5E92D8D65B500BA1779 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8FFC5E72D8D65B500BA1779 /* Localizable.strings */; };
+		D8FFC5EC2D8D65B500BA1779 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8FFC5EA2D8D65B500BA1779 /* Localizable.strings */; };
+		D8FFC5F92D8D6AC100BA1779 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8FFC5F72D8D6AC100BA1779 /* Localizable.strings */; };
 		EA34697AD30A2D71BD5C1D8A /* Pods_CardTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A358577D1CBCE19AB5E4572 /* Pods_CardTests.framework */; };
 		FB357E04D7E4A8E8C5F54146 /* Pods_RedirectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9DFB3C3391C7ABDA4375D4 /* Pods_RedirectTests.framework */; };
 /* End PBXBuildFile section */
@@ -585,12 +600,31 @@
 		C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Logging.h"; sourceTree = "<group>"; };
 		C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Logging.m"; sourceTree = "<group>"; };
 		CADC48837C89CE06D47DF8A8 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D81FEA992D8D7D1A005FA874 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D81FEA9B2D8D7D6B005FA874 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D823EE9E2D8D714200DF9CF5 /* NSBundle+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Card.h"; sourceTree = "<group>"; };
+		D823EE9F2D8D714200DF9CF5 /* NSBundle+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Card.m"; sourceTree = "<group>"; };
+		D823EEA22D8D734300DF9CF5 /* NSBundle+WeChatPay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+WeChatPay.h"; sourceTree = "<group>"; };
+		D823EEA32D8D734300DF9CF5 /* NSBundle+WeChatPay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+WeChatPay.m"; sourceTree = "<group>"; };
+		D823EEA62D8D739C00DF9CF5 /* NSBundle+Redirect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Redirect.h"; sourceTree = "<group>"; };
+		D823EEA72D8D739C00DF9CF5 /* NSBundle+Redirect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Redirect.m"; sourceTree = "<group>"; };
+		D823EEAA2D8D743900DF9CF5 /* NSBundle+ApplePay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBundle+ApplePay.h"; sourceTree = "<group>"; };
+		D823EEAB2D8D743900DF9CF5 /* NSBundle+ApplePay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+ApplePay.m"; sourceTree = "<group>"; };
 		D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXUIContext+Card.h"; sourceTree = "<group>"; };
 		D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXUIContext+Card.m"; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
 		D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
 		D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrencyCodes.json; sourceTree = "<group>"; };
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D8FFC5DD2D8D621000BA1779 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8FFC5E42D8D634300BA1779 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8FFC5E52D8D647800BA1779 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8FFC5E82D8D65B500BA1779 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8FFC5EB2D8D65B500BA1779 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8FFC5F52D8D6AC100BA1779 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8FFC5F62D8D6AC100BA1779 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8FFC5FC2D8D6AF800BA1779 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8FFC5FF2D8D6B0A00BA1779 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
 		F9330DB1F34C6DD83245F7CF /* Pods-RedirectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.release.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -937,10 +971,14 @@
 		3C99E78827EAF1A20074156C /* ApplePay */ = {
 			isa = PBXGroup;
 			children = (
+				D8FFC5FE2D8D6B0300BA1779 /* Resources */,
 				3C579F6B27F4124B00840A3B /* Internal */,
 				3C99E78927EAF1A20074156C /* ApplePay.h */,
+				D8FFC5E52D8D647800BA1779 /* Info.plist */,
 				3C99E7A227EAF2840074156C /* AWXApplePayProvider.h */,
 				3C99E7A327EAF2840074156C /* AWXApplePayProvider.m */,
+				D823EEAA2D8D743900DF9CF5 /* NSBundle+ApplePay.h */,
+				D823EEAB2D8D743900DF9CF5 /* NSBundle+ApplePay.m */,
 			);
 			path = ApplePay;
 			sourceTree = "<group>";
@@ -962,9 +1000,12 @@
 		5775CE6026E5D86100C6AFE3 /* WeChatPay */ = {
 			isa = PBXGroup;
 			children = (
+				D8FFC5F82D8D6AC100BA1779 /* Resources */,
 				3C579F6D27F4156400840A3B /* Internal */,
 				5775CF6326E5E27B00C6AFE3 /* AWXWeChatPayActionProvider.h */,
 				5775CF6426E5E27B00C6AFE3 /* AWXWeChatPayActionProvider.m */,
+				D823EEA22D8D734300DF9CF5 /* NSBundle+WeChatPay.h */,
+				D823EEA32D8D734300DF9CF5 /* NSBundle+WeChatPay.m */,
 				5775CE6226E5D86100C6AFE3 /* Info.plist */,
 				57CEC82426E5FE2A00695740 /* WeChatPay.h */,
 			);
@@ -982,6 +1023,7 @@
 		5775CE8626E5DDDE00C6AFE3 /* Card */ = {
 			isa = PBXGroup;
 			children = (
+				D8FFC5FA2D8D6AD400BA1779 /* Resources */,
 				3C579F6E27F4158C00840A3B /* Internal */,
 				57A3AD682758731400EFF0A1 /* AWX3DSActionProvider.h */,
 				D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */,
@@ -995,6 +1037,8 @@
 				5775CF6A26E5E28400C6AFE3 /* AWXCardViewController.m */,
 				5775CF7326E5E28400C6AFE3 /* AWXDccActionProvider.h */,
 				5775CF7926E5E28400C6AFE3 /* AWXDccActionProvider.m */,
+				D823EE9E2D8D714200DF9CF5 /* NSBundle+Card.h */,
+				D823EE9F2D8D714200DF9CF5 /* NSBundle+Card.m */,
 				5775CE8726E5DDDE00C6AFE3 /* Card.h */,
 				5775CE8826E5DDDE00C6AFE3 /* Info.plist */,
 			);
@@ -1019,6 +1063,9 @@
 				57E73718272AC043009905DC /* AWXSchemaProvider.m */,
 				5775CF9226E5E28D00C6AFE3 /* AWXRedirectActionProvider.h */,
 				5775CF9326E5E28D00C6AFE3 /* AWXRedirectActionProvider.m */,
+				D823EEA62D8D739C00DF9CF5 /* NSBundle+Redirect.h */,
+				D823EEA72D8D739C00DF9CF5 /* NSBundle+Redirect.m */,
+				D823EEAE2D8D797600DF9CF5 /* Resources */,
 				5775CEAD26E5DF3300C6AFE3 /* Redirect.h */,
 				5775CEAE26E5DF3300C6AFE3 /* Info.plist */,
 			);
@@ -1155,6 +1202,14 @@
 			path = ../Pods;
 			sourceTree = "<group>";
 		};
+		D823EEAE2D8D797600DF9CF5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D81FEA982D8D7D1A005FA874 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		D8BD9E112D0191BF0045A892 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1162,6 +1217,31 @@
 				D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */,
 				D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */,
 				D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */,
+				D8FFC5DC2D8D621000BA1779 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D8FFC5F82D8D6AC100BA1779 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D8FFC5F72D8D6AC100BA1779 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D8FFC5FA2D8D6AD400BA1779 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D8FFC5EA2D8D65B500BA1779 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D8FFC5FE2D8D6B0300BA1779 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D8FFC5E72D8D65B500BA1779 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1236,6 +1316,7 @@
 			files = (
 				3CE9BA272806D2A5005B70C3 /* PKContact+Request.h in Headers */,
 				3C5A37E727ED451600CFC2EF /* PKPaymentToken+Request.h in Headers */,
+				D823EEAC2D8D743900DF9CF5 /* NSBundle+ApplePay.h in Headers */,
 				3C5A37EB27ED491100CFC2EF /* AWXPaymentIntent+Summary.h in Headers */,
 				3C5A37E327ED443E00CFC2EF /* PKPaymentMethod+Request.h in Headers */,
 				3C5A37EF27ED4A0500CFC2EF /* AWXSession+Request.h in Headers */,
@@ -1249,7 +1330,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D823EEA52D8D734300DF9CF5 /* NSBundle+WeChatPay.h in Headers */,
 				5775CF6626E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.h in Headers */,
+				D823EEA02D8D714200DF9CF5 /* NSBundle+Card.h in Headers */,
 				5775CF6726E5E27B00C6AFE3 /* AWXWeChatPayActionProvider.h in Headers */,
 				571D10862796DE4D005DE2CA /* WeChatPay.h in Headers */,
 			);
@@ -1279,6 +1362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57E73719272AC043009905DC /* AWXSchemaProvider.h in Headers */,
+				D823EEA82D8D739C00DF9CF5 /* NSBundle+Redirect.h in Headers */,
 				5775CF9826E5E28D00C6AFE3 /* AWXRedirectActionProvider.h in Headers */,
 				5775CEBB26E5DF3300C6AFE3 /* Redirect.h in Headers */,
 				1803601B2873C878003EA943 /* AWXPaymentFormViewModel.h in Headers */,
@@ -1539,6 +1623,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 085BD3BE23CC62B4002E8F27;
 			productRefGroup = 085BD3C923CC62B4002E8F27 /* Products */;
@@ -1564,6 +1649,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8FFC5DF2D8D621000BA1779 /* Localizable.strings in Resources */,
 				D8BD9E122D0191BF0045A892 /* CountryCodes.json in Resources */,
 				D8BD9E132D0191BF0045A892 /* Airwallex.xcassets in Resources */,
 				D8BD9E142D0191BF0045A892 /* PrivacyInfo.xcprivacy in Resources */,
@@ -1584,6 +1670,7 @@
 				D8BD9E182D0191BF0045A892 /* PrivacyInfo.xcprivacy in Resources */,
 				D8BD9E192D0191BF0045A892 /* CurrencyCodes.json in Resources */,
 				0829FD0C2431D3A500557DB2 /* PaymentMethod.json in Resources */,
+				D8FFC5DE2D8D621000BA1779 /* Localizable.strings in Resources */,
 				0829FD002431D0DE00557DB2 /* Address.json in Resources */,
 				082442C52431AA5100D04A2C /* Card.json in Resources */,
 				183FB64A2BB6C46B00FFDF0E /* ConfirmPaymentIntent.json in Resources */,
@@ -1594,6 +1681,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8FFC5E62D8D647800BA1779 /* Info.plist in Resources */,
+				D8FFC5E92D8D65B500BA1779 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1608,6 +1697,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8FFC5F92D8D6AC100BA1779 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1622,6 +1712,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8FFC5EC2D8D65B500BA1779 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1636,6 +1727,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D81FEA9A2D8D7D1A005FA874 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1921,6 +2013,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D823EEAD2D8D743900DF9CF5 /* NSBundle+ApplePay.m in Sources */,
 				3C99E7A527EAF2840074156C /* AWXApplePayProvider.m in Sources */,
 				3C5A37E827ED451600CFC2EF /* PKPaymentToken+Request.m in Sources */,
 				3C5A37EC27ED491100CFC2EF /* AWXPaymentIntent+Summary.m in Sources */,
@@ -1951,7 +2044,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5775CF6826E5E27B00C6AFE3 /* AWXWeChatPayActionProvider.m in Sources */,
+				D823EEA12D8D714200DF9CF5 /* NSBundle+Card.m in Sources */,
 				5775CF6926E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.m in Sources */,
+				D823EEA42D8D734300DF9CF5 /* NSBundle+WeChatPay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1997,6 +2092,7 @@
 				5775CF9926E5E28D00C6AFE3 /* AWXRedirectActionProvider.m in Sources */,
 				57E7371A272AC043009905DC /* AWXSchemaProvider.m in Sources */,
 				1803601D2873CAE2003EA943 /* AWXPaymentFormViewModel.m in Sources */,
+				D823EEA92D8D739C00DF9CF5 /* NSBundle+Redirect.m in Sources */,
 				5775CF9626E5E28D00C6AFE3 /* AWXPaymentFormViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2062,12 +2158,61 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		D81FEA982D8D7D1A005FA874 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D81FEA992D8D7D1A005FA874 /* en */,
+				D81FEA9B2D8D7D6B005FA874 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		D8FFC5DC2D8D621000BA1779 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8FFC5DD2D8D621000BA1779 /* en */,
+				D8FFC5E42D8D634300BA1779 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		D8FFC5E72D8D65B500BA1779 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8FFC5E82D8D65B500BA1779 /* zh-Hans */,
+				D8FFC5FF2D8D6B0A00BA1779 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		D8FFC5EA2D8D65B500BA1779 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8FFC5EB2D8D65B500BA1779 /* zh-Hans */,
+				D8FFC5FC2D8D6AF800BA1779 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		D8FFC5F72D8D6AC100BA1779 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8FFC5F52D8D6AC100BA1779 /* en */,
+				D8FFC5F62D8D6AC100BA1779 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		085BD3DA23CC62B4002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C72E12728EC3EAA00F038E3 /* Airwallex.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2132,6 +2277,7 @@
 			baseConfigurationReference = 3C72E12728EC3EAA00F038E3 /* Airwallex.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2298,7 +2444,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ApplePay/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Airwallex. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2324,7 +2471,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ApplePay/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Airwallex. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (

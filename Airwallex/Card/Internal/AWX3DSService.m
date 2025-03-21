@@ -12,6 +12,7 @@
 #import "AWXPaymentIntentRequest.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXUtils.h"
+#import "NSBundle+Card.h"
 
 @interface AWX3DSService ()
 
@@ -82,7 +83,7 @@
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
         [self.delegate threeDSService:self.delegate shouldPresentViewController:navigationController];
     } else {
-        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid stage.", nil)}]];
+        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedStringFromTableInBundle(@"Invalid stage.", nil, [NSBundle cardBundle], nil)}]];
     }
 }
 

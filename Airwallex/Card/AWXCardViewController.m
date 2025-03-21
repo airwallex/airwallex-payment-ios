@@ -31,6 +31,7 @@
 #import "AWXUIContext.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
+#import "NSBundle+Card.h"
 #import "NSObject+Logging.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
 
@@ -105,7 +106,7 @@ typedef enum {
     [_scrollView.widthAnchor constraintEqualToAnchor:stackView.widthAnchor].active = YES;
 
     _titleLabel = [UILabel new];
-    _titleLabel.text = NSLocalizedString(@"Card", @"Card");
+    _titleLabel.text = NSLocalizedStringFromTableInBundle(@"Card", nil, [NSBundle cardBundle], @"Card");
     _titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     _titleLabel.font = [UIFont titleFont];
     _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -128,13 +129,13 @@ typedef enum {
     };
     _cardNoField.isRequired = YES;
     _cardNoField.placeholder = @"1234 1234 1234 1234";
-    _cardNoField.floatingText = NSLocalizedString(@"Card number", @"Card number");
+    _cardNoField.floatingText = NSLocalizedStringFromTableInBundle(@"Card number", nil, [NSBundle cardBundle], @"Card number");
     _cardNoField.delegate = self;
     [stackView addArrangedSubview:_cardNoField];
 
     _nameField = [AWXFloatingLabelTextField new];
     _nameField.fieldType = AWXTextFieldTypeNameOnCard;
-    _nameField.placeholder = NSLocalizedString(@"Name on card", @"Name on card");
+    _nameField.placeholder = NSLocalizedStringFromTableInBundle(@"Name on card", nil, [NSBundle cardBundle], @"Name on card");
     _cardNoField.nextTextField = _nameField;
     _nameField.isRequired = YES;
     _nameField.delegate = self;
@@ -150,7 +151,7 @@ typedef enum {
 
     _expiresField = [AWXFloatingLabelTextField new];
     _expiresField.fieldType = AWXTextFieldTypeExpires;
-    _expiresField.placeholder = NSLocalizedString(@"Expires MM / YY", @"Expires MM / YY");
+    _expiresField.placeholder = NSLocalizedStringFromTableInBundle(@"Expires MM / YY", nil, [NSBundle cardBundle], @"Expires MM / YY");
     _nameField.nextTextField = _expiresField;
     _expiresField.isRequired = YES;
     _expiresField.delegate = self;
@@ -161,7 +162,7 @@ typedef enum {
         return [weakSelf.viewModel validationMessageFromCvc:cvc];
     };
     _cvcField.maxLength = _viewModel.cvcLength;
-    _cvcField.placeholder = NSLocalizedString(@"CVC / CVV", @"CVC / CVV");
+    _cvcField.placeholder = NSLocalizedStringFromTableInBundle(@"CVC / CVV", nil, [NSBundle cardBundle], @"CVC / CVV");
     _expiresField.nextTextField = _cvcField;
     _cvcField.isRequired = YES;
     _cvcField.delegate = self;
@@ -216,12 +217,12 @@ typedef enum {
     UILabel *titleLabel = [UILabel new];
     switch (type) {
     case AddressSwitch:
-        titleLabel.text = NSLocalizedString(@"Same as shipping address", @"Same as shipping address");
+        titleLabel.text = NSLocalizedStringFromTableInBundle(@"Same as shipping address", nil, [NSBundle cardBundle], @"Same as shipping address");
         self.addressSwitch = switchButton;
         [switchButton addTarget:self action:@selector(addressSwitchChanged:) forControlEvents:UIControlEventValueChanged];
         break;
     case SaveCardSwitch:
-        titleLabel.text = NSLocalizedString(@"Save this card for future payments", @"Save this card for future payments");
+        titleLabel.text = NSLocalizedStringFromTableInBundle(@"Save this card for future payments", nil, [NSBundle cardBundle], @"Save this card for future payments");
         [switchButton addTarget:self action:@selector(saveCardSwitchChanged:) forControlEvents:UIControlEventValueChanged];
         self.saveCardSwitchContainer = container;
         break;
@@ -243,7 +244,7 @@ typedef enum {
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
 
     UILabel *billingLabel = [UILabel new];
-    billingLabel.text = NSLocalizedString(@"Billing info", @"Billing info");
+    billingLabel.text = NSLocalizedStringFromTableInBundle(@"Billing info", nil, [NSBundle cardBundle], @"Billing info");
     billingLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     billingLabel.font = [UIFont subhead2Font];
     [stackView addArrangedSubview:billingLabel];
@@ -252,19 +253,19 @@ typedef enum {
 
     _firstNameField = [AWXFloatingLabelTextField new];
     _firstNameField.fieldType = AWXTextFieldTypeFirstName;
-    _firstNameField.placeholder = NSLocalizedString(@"First name", @"First Name");
+    _firstNameField.placeholder = NSLocalizedStringFromTableInBundle(@"First name", nil, [NSBundle cardBundle], @"First Name");
     _firstNameField.isRequired = YES;
     [stackView addArrangedSubview:_firstNameField];
 
     _lastNameField = [AWXFloatingLabelTextField new];
     _lastNameField.fieldType = AWXTextFieldTypeLastName;
-    _lastNameField.placeholder = NSLocalizedString(@"Last name", @"Last Name");
+    _lastNameField.placeholder = NSLocalizedStringFromTableInBundle(@"Last name", nil, [NSBundle cardBundle], @"Last Name");
     _firstNameField.nextTextField = _lastNameField;
     _lastNameField.isRequired = YES;
     [stackView addArrangedSubview:_lastNameField];
 
     _countryView = [AWXFloatingLabelView new];
-    _countryView.placeholder = NSLocalizedString(@"Country / Region", @"Country / Region");
+    _countryView.placeholder = NSLocalizedStringFromTableInBundle(@"Country / Region", nil, [NSBundle cardBundle], @"Country / Region");
     [stackView addArrangedSubview:_countryView];
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectCountries:)];
@@ -272,40 +273,40 @@ typedef enum {
 
     _stateField = [AWXFloatingLabelTextField new];
     _stateField.fieldType = AWXTextFieldTypeState;
-    _stateField.placeholder = NSLocalizedString(@"State", @"State");
+    _stateField.placeholder = NSLocalizedStringFromTableInBundle(@"State", nil, [NSBundle cardBundle], @"State");
     _phoneNumberField.nextTextField = _stateField;
     _stateField.isRequired = YES;
     [stackView addArrangedSubview:_stateField];
 
     _cityField = [AWXFloatingLabelTextField new];
     _cityField.fieldType = AWXTextFieldTypeCity;
-    _cityField.placeholder = NSLocalizedString(@"City", @"City");
+    _cityField.placeholder = NSLocalizedStringFromTableInBundle(@"City", nil, [NSBundle cardBundle], @"City");
     _stateField.nextTextField = _cityField;
     _cityField.isRequired = YES;
     [stackView addArrangedSubview:_cityField];
 
     _streetField = [AWXFloatingLabelTextField new];
     _streetField.fieldType = AWXTextFieldTypeStreet;
-    _streetField.placeholder = NSLocalizedString(@"Street", @"Street");
+    _streetField.placeholder = NSLocalizedStringFromTableInBundle(@"Street", nil, [NSBundle cardBundle], @"Street");
     _cityField.nextTextField = _streetField;
     _streetField.isRequired = YES;
     [stackView addArrangedSubview:_streetField];
 
     _zipcodeField = [AWXFloatingLabelTextField new];
     _zipcodeField.fieldType = AWXTextFieldTypeZipcode;
-    _zipcodeField.placeholder = NSLocalizedString(@"Zip code (optional)", @"Zip code (optional)");
+    _zipcodeField.placeholder = NSLocalizedStringFromTableInBundle(@"Zip code (optional)", nil, [NSBundle cardBundle], @"Zip code (optional)");
     _streetField.nextTextField = _zipcodeField;
     [stackView addArrangedSubview:_zipcodeField];
 
     _emailField = [AWXFloatingLabelTextField new];
     _emailField.fieldType = AWXTextFieldTypeZipcode;
-    _emailField.placeholder = NSLocalizedString(@"Email (optional)", @"Email (optional)");
+    _emailField.placeholder = NSLocalizedStringFromTableInBundle(@"Email (optional)", nil, [NSBundle cardBundle], @"Email (optional)");
     _zipcodeField.nextTextField = _emailField;
     [stackView addArrangedSubview:_emailField];
 
     _phoneNumberField = [AWXFloatingLabelTextField new];
     _phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
-    _phoneNumberField.placeholder = NSLocalizedString(@"Phone number (optional)", @"Phone number (optional)");
+    _phoneNumberField.placeholder = NSLocalizedStringFromTableInBundle(@"Phone number (optional)", nil, [NSBundle cardBundle], @"Phone number (optional)");
     _emailField.nextTextField = _phoneNumberField;
     [stackView addArrangedSubview:_phoneNumberField];
 
@@ -390,7 +391,7 @@ typedef enum {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil
                                                                             message:error
                                                                      preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Close", nil, [NSBundle cardBundle], nil)
                                                        style:UIAlertActionStyleCancel
                                                      handler:^(UIAlertAction *_Nonnull action) {
                                                          sender.on = !sender.isOn;
@@ -429,7 +430,7 @@ typedef enum {
     } else {
         if (error.length > 0) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
-            [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Close", nil, [NSBundle cardBundle], nil) style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:controller animated:YES completion:nil];
 
             [[AWXAnalyticsLogger shared] logActionWithName:@"card_payment_validation" additionalInfo:@{@"message": error}];
@@ -511,8 +512,8 @@ typedef enum {
     [self log:@"provider:shouldHandleNextAction:  type:%@, stage: %@", nextAction.type, nextAction.stage];
     AWXDefaultActionProvider *actionProvider = [self.viewModel actionProviderForNextAction:nextAction withDelegate:self];
     if (actionProvider == nil) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedStringFromTableInBundle(@"No provider matched the next action.", nil, [NSBundle cardBundle], nil) preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Close", nil, [NSBundle cardBundle], nil) style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }

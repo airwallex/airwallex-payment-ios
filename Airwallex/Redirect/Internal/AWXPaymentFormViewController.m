@@ -16,6 +16,7 @@
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXWidgets.h"
+#import "NSBundle+Redirect.h"
 
 @interface AWXPaymentFormViewController ()
 
@@ -195,7 +196,7 @@
 
     if (error) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Close", nil, [NSBundle redirectBundle], nil) style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }

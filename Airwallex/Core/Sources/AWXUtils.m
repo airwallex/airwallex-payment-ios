@@ -122,7 +122,7 @@ static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
 
 - (NSDecimalNumber *)toIntegerCents {
     if (self == [NSDecimalNumber notANumber]) {
-        [[AWXLogger sharedLogger] logException:NSLocalizedString(@"NaN can't be convert to cents", nil)];
+        [[AWXLogger sharedLogger] logException:NSLocalizedStringFromTableInBundle(@"NaN can't be convert to cents", nil, [NSBundle resourceBundle], nil)];
     }
 
     NSDecimalNumberHandler *round = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain
@@ -136,7 +136,7 @@ static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
 
 - (NSString *)string {
     if (self == [NSDecimalNumber zero]) {
-        return NSLocalizedString(@"Free", nil);
+        return NSLocalizedStringFromTableInBundle(@"Free", nil, [NSBundle resourceBundle], nil);
     }
 
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
@@ -171,14 +171,14 @@ static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
 + (void)checkNotNil:(id)value
                name:(NSString *)name {
     if (value == nil) {
-        [[AWXLogger sharedLogger] logException:[NSString stringWithFormat:NSLocalizedString(@"%@ must not be nil", nil), name]];
+        [[AWXLogger sharedLogger] logException:[NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%@ must not be nil", nil, [NSBundle resourceBundle], nil), name]];
     }
 }
 
 + (void)checkNotNegative:(NSDecimalNumber *)value
                     name:(NSString *)name {
     if ([value compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
-        [[AWXLogger sharedLogger] logException:[NSString stringWithFormat:NSLocalizedString(@"%@ must not be negative", nil), name]];
+        [[AWXLogger sharedLogger] logException:[NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%@ must not be negative", nil, [NSBundle resourceBundle], nil), name]];
     }
 }
 

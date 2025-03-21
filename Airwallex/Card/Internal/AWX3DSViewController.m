@@ -10,6 +10,7 @@
 #import "AWXAnalyticsLogger.h"
 #import "AWXConstants.h"
 #import "AWXUtils.h"
+#import "NSBundle+Card.h"
 #import <WebKit/WebKit.h>
 
 @interface AWX3DSViewController ()<WKNavigationDelegate, WKUIDelegate>
@@ -74,7 +75,7 @@
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  if (self.webHandler) {
-                                     self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"3DS has been cancelled!", nil)}]);
+                                     self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedStringFromTableInBundle(@"3DS has been cancelled!", nil, [NSBundle cardBundle], nil)}]);
                                  }
                              }];
 }
@@ -103,11 +104,11 @@
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
     if (response.statusCode == 400) {
         if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
-            self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unknown issue.", nil)}]);
+            self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedStringFromTableInBundle(@"Unknown issue.", nil, [NSBundle cardBundle], nil)}]);
         } else {
             [self dismissViewControllerAnimated:YES
                                      completion:^{
-                                         self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unknown issue.", nil)}]);
+                                         self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedStringFromTableInBundle(@"Unknown issue.", nil, [NSBundle cardBundle], nil)}]);
                                      }];
         }
     }

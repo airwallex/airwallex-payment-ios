@@ -8,6 +8,7 @@
 
 #import "AWXNextActionHandler.h"
 #import "AWXDefaultActionProvider.h"
+#import "AWXUtils.h"
 
 @interface AWXNextActionHandler ()
 
@@ -34,8 +35,8 @@
     Class class = ClassToHandleNextActionForType(nextAction);
     AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:self.delegate session:self.session];
     if (actionProvider == nil) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedStringFromTableInBundle(@"No provider matched the next action.", nil, [NSBundle resourceBundle], nil) preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Close", nil, [NSBundle resourceBundle], nil) style:UIAlertActionStyleCancel handler:nil]];
         if ([self.delegate respondsToSelector:@selector(hostViewController)]) {
             [[self.delegate hostViewController] presentViewController:controller animated:YES completion:nil];
         } else {

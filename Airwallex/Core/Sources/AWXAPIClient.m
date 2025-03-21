@@ -139,7 +139,7 @@ static BOOL _localLogFileEnabled = NO;
 @implementation AWXRequest
 
 - (NSString *)path {
-    [[AWXLogger sharedLogger] logException:NSLocalizedString(@"path required", nil)];
+    [[AWXLogger sharedLogger] logException:NSLocalizedStringFromTableInBundle(@"path required", nil, [NSBundle resourceBundle], nil)];
     return nil;
 }
 
@@ -160,7 +160,7 @@ static BOOL _localLogFileEnabled = NO;
 }
 
 - (Class)responseClass {
-    [[AWXLogger sharedLogger] logEvent:NSLocalizedString(@"responseClass is not overridden, but is not required", nil)];
+    [[AWXLogger sharedLogger] logEvent:NSLocalizedStringFromTableInBundle(@"responseClass is not overridden, but is not required", nil, [NSBundle resourceBundle], nil)];
     return nil;
 }
 
@@ -181,7 +181,7 @@ static BOOL _localLogFileEnabled = NO;
 @implementation AWXResponse
 
 + (AWXResponse *)parse:(NSData *)data {
-    [[AWXLogger sharedLogger] logException:NSLocalizedString(@"parse method require override", nil)];
+    [[AWXLogger sharedLogger] logException:NSLocalizedStringFromTableInBundle(@"parse method require override", nil, [NSBundle resourceBundle], nil)];
     return nil;
 }
 
@@ -258,7 +258,7 @@ static BOOL _localLogFileEnabled = NO;
                                                                                          [[AWXAnalyticsLogger shared] logErrorWithName:[request eventName] url:urlRequest.URL response:[errorResponse updatedResponseWithStatusCode:result.statusCode Error:error]];
                                                                                          handler(nil, errorResponse.error);
                                                                                      } else {
-                                                                                         handler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Couldn't parse response.", nil)}]);
+                                                                                         handler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: NSLocalizedStringFromTableInBundle(@"Couldn't parse response.", nil, [NSBundle resourceBundle], nil)}]);
                                                                                      }
                                                                                  }
                                                                              });

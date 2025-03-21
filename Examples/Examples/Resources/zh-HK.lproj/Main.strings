@@ -1,0 +1,144 @@
+
+/* Class = "UILabel"; text = "Return URL"; ObjectID = "0po-GZ-hyq"; */
+"0po-GZ-hyq.text" = "Return URL";
+
+/* Class = "UILabel"; text = "package"; ObjectID = "2bO-y2-Mek"; */
+"2bO-y2-Mek.text" = "package";
+
+/* Class = "UILabel"; text = "Free engraving x 1"; ObjectID = "3Rw-H1-zCS"; */
+"3Rw-H1-zCS.text" = "Free engraving x 1";
+
+/* Class = "UILabel"; text = "Apple Pay Only"; ObjectID = "4O4-Bs-d1x"; */
+"4O4-Bs-d1x.text" = "Apple Pay Only";
+
+/* Class = "UILabel"; text = "nonceStr"; ObjectID = "4sB-q1-6fr"; */
+"4sB-q1-6fr.text" = "nonceStr";
+
+/* Class = "UILabel"; text = "Amount"; ObjectID = "5BH-xo-rjD"; */
+"5BH-xo-rjD.text" = "Amount";
+
+/* Class = "UITextField"; placeholder = "Referer"; ObjectID = "5oc-v0-fKZ"; */
+"5oc-v0-fKZ.placeholder" = "Referer";
+
+/* Class = "UILabel"; text = "Client ID"; ObjectID = "5p4-lS-mL2"; */
+"5p4-lS-mL2.text" = "Client ID";
+
+/* Class = "UILabel"; text = "prepayId"; ObjectID = "8Qd-2z-N6m"; */
+"8Qd-2z-N6m.text" = "prepayId";
+
+/* Class = "UILabel"; text = "appId"; ObjectID = "98O-Ym-l1r"; */
+"98O-Ym-l1r.text" = "appId";
+
+/* Class = "UIButton"; normalTitle = "Checkout with WeChat"; ObjectID = "Ag1-gb-xwT"; */
+"Ag1-gb-xwT.normalTitle" = "Checkout with WeChat";
+
+/* Class = "UILabel"; text = "Currency"; ObjectID = "Ap9-GE-PVt"; */
+"Ap9-GE-PVt.text" = "Currency";
+
+/* Class = "UINavigationItem"; title = "H5 Demo"; ObjectID = "ELM-p0-t0p"; */
+"ELM-p0-t0p.title" = "H5 Demo";
+
+/* Class = "UILabel"; text = "Card Only"; ObjectID = "GZs-fw-UVI"; */
+"GZs-fw-UVI.text" = "Card Only";
+
+/* Class = "UILabel"; text = "Environment"; ObjectID = "I3F-HC-rpy"; */
+"I3F-HC-rpy.text" = "Environment";
+
+/* Class = "UINavigationItem"; title = "WeChat Demo"; ObjectID = "Izd-X6-NRy"; */
+"Izd-X6-NRy.title" = "WeChat Demo";
+
+/* Class = "UILabel"; text = "API Key"; ObjectID = "J14-mn-E62"; */
+"J14-mn-E62.text" = "API Key";
+
+/* Class = "UITextField"; placeholder = "Web‘s url"; ObjectID = "JNL-Sa-Ann"; */
+"JNL-Sa-Ann.placeholder" = "Web‘s url";
+
+/* Class = "UILabel"; text = "App Version:"; ObjectID = "JTK-Dh-PCi"; */
+"JTK-Dh-PCi.text" = "App Version:";
+
+/* Class = "UILabel"; text = "Auto Capture"; ObjectID = "NPA-iV-tat"; */
+"NPA-iV-tat.text" = "Auto Capture";
+
+/* Class = "UILabel"; text = "partnerId"; ObjectID = "Spw-GV-9t0"; */
+"Spw-GV-9t0.text" = "partnerId";
+
+/* Class = "UILabel"; text = "sign"; ObjectID = "UOV-bw-6j4"; */
+"UOV-bw-6j4.text" = "sign";
+
+/* Class = "UIButton"; normalTitle = "Checkout"; ObjectID = "Uad-jD-BvN"; */
+"Uad-jD-BvN.normalTitle" = "Checkout";
+
+/* Class = "UILabel"; text = "Force 3DS"; ObjectID = "aGh-WX-bDl"; */
+"aGh-WX-bDl.text" = "Force 3DS";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "axE-HU-4dc"; */
+"axE-HU-4dc.text" = "Total";
+
+/* Class = "UILabel"; text = "Country Code"; ObjectID = "cTx-Ag-RWK"; */
+"cTx-Ag-RWK.text" = "Country Code";
+
+/* Class = "UILabel"; text = "Redirect Pay Only"; ObjectID = "dFW-5I-euS"; */
+"dFW-5I-euS.text" = "Redirect Pay Only";
+
+/* Class = "UILabel"; text = "My cart"; ObjectID = "emf-Qn-Zl3"; */
+"emf-Qn-Zl3.text" = "My cart";
+
+/* Class = "UILabel"; text = "Checkout Mode"; ObjectID = "faX-vN-ISh"; */
+"faX-vN-ISh.text" = "Checkout Mode";
+
+/* Class = "UIBarButtonItem"; title = "Reset"; ObjectID = "hcb-eB-hqs"; */
+"hcb-eB-hqs.title" = "Reset";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "iLW-z0-cq9"; */
+"iLW-z0-cq9.title" = "Settings";
+
+/* Class = "UILabel"; text = "WeChat Region:"; ObjectID = "iou-6j-t8u"; */
+"iou-6j-t8u.text" = "WeChat Region:";
+
+/* Class = "UILabel"; text = "$399.00"; ObjectID = "irC-v0-rxQ"; */
+"irC-v0-rxQ.text" = "$399.00";
+
+/* Class = "UIButton"; normalTitle = "Generate Customer"; ObjectID = "kI2-hN-PcJ"; */
+"kI2-hN-PcJ.normalTitle" = "Generate Customer";
+
+/* Class = "UILabel"; text = "Enter shipping information"; ObjectID = "kRL-Mh-vjv"; */
+"kRL-Mh-vjv.text" = "Enter shipping information";
+
+/* Class = "UILabel"; text = "AirPods Pro"; ObjectID = "nwS-kV-rcA"; */
+"nwS-kV-rcA.text" = "AirPods Pro";
+
+/* Class = "UIButton"; normalTitle = "Clear"; ObjectID = "oPD-sh-aXs"; */
+"oPD-sh-aXs.normalTitle" = "Clear";
+
+/* Class = "UILabel"; text = "Requires CVC"; ObjectID = "opR-BI-p6S"; */
+"opR-BI-p6S.text" = "Requires CVC";
+
+/* Class = "UILabel"; text = "Customer ID"; ObjectID = "pi4-md-Lm0"; */
+"pi4-md-Lm0.text" = "Customer ID";
+
+/* Class = "UIButton"; normalTitle = "Launch"; ObjectID = "qBM-wU-dJa"; */
+"qBM-wU-dJa.normalTitle" = "Launch";
+
+/* Class = "UILabel"; text = "$868.00"; ObjectID = "r9G-2V-mGn"; */
+"r9G-2V-mGn.text" = "$868.00";
+
+/* Class = "UILabel"; text = "$868.00"; ObjectID = "t5E-nF-vKe"; */
+"t5E-nF-vKe.text" = "$868.00";
+
+/* Class = "UILabel"; text = "Subtotal"; ObjectID = "uVR-Bl-NT8"; */
+"uVR-Bl-NT8.text" = "Subtotal";
+
+/* Class = "UILabel"; text = "Shipping"; ObjectID = "vh8-dj-yqR"; */
+"vh8-dj-yqR.text" = "Shipping";
+
+/* Class = "UITextField"; text = "wx4c86d73fe4f82431"; ObjectID = "wo6-Ql-fyB"; */
+"wo6-Ql-fyB.text" = "wx4c86d73fe4f82431";
+
+/* Class = "UILabel"; text = "Next trigger by"; ObjectID = "xdW-GS-XKJ"; */
+"xdW-GS-XKJ.text" = "Next trigger by";
+
+/* Class = "UIButton"; normalTitle = "Remove"; ObjectID = "yD2-fF-CeK"; */
+"yD2-fF-CeK.normalTitle" = "Remove";
+
+/* Class = "UILabel"; text = "timeStamp"; ObjectID = "zd9-eM-Dg1"; */
+"zd9-eM-Dg1.text" = "timeStamp";

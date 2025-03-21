@@ -10,6 +10,7 @@
 #import "AWXCard.h"
 #import "AWXCountry.h"
 #import "AWXSession.h"
+#import "NSBundle+Card.h"
 
 @interface AWXCardViewModel ()
 
@@ -36,9 +37,9 @@
 
 - (NSString *)ctaTitle {
     if ([_session isKindOfClass:[AWXRecurringSession class]]) {
-        return NSLocalizedString(@"Confirm", @"Confirm button title");
+        return NSLocalizedStringFromTableInBundle(@"Confirm", nil, [NSBundle cardBundle], @"Confirm button title");
     } else {
-        return NSLocalizedString(@"Pay", @"Pay button title");
+        return NSLocalizedStringFromTableInBundle(@"Pay", nil, [NSBundle cardBundle], @"Pay button title");
     }
 }
 
@@ -76,7 +77,7 @@
 - (BOOL)setReusesShippingAsBillingInformation:(BOOL)reusesShippingAsBillingInformation error:(NSString **)error {
     if (reusesShippingAsBillingInformation && self.session.billing == nil) {
         if (error != NULL) {
-            *error = NSLocalizedString(@"No shipping address configured.", nil);
+            *error = NSLocalizedStringFromTableInBundle(@"No shipping address configured.", nil, [NSBundle cardBundle], nil);
         }
 
         return NO;
@@ -188,11 +189,11 @@
                     return nil;
                 }
             }
-            return NSLocalizedString(@"Card not supported for payment", nil);
+            return NSLocalizedStringFromTableInBundle(@"Card not supported for payment", nil, [NSBundle cardBundle], nil);
         }
-        return NSLocalizedString(@"Card number is invalid", nil);
+        return NSLocalizedStringFromTableInBundle(@"Card number is invalid", nil, [NSBundle cardBundle], nil);
     }
-    return NSLocalizedString(@"Card number is required", nil);
+    return NSLocalizedStringFromTableInBundle(@"Card number is required", nil, [NSBundle cardBundle], nil);
 }
 
 - (nullable NSString *)validationMessageFromCvc:(NSString *)cvc {
@@ -200,9 +201,9 @@
         if (cvc.length == _cvcLength) {
             return nil;
         }
-        return NSLocalizedString(@"Security code is invalid", nil);
+        return NSLocalizedStringFromTableInBundle(@"Security code is invalid", nil, [NSBundle cardBundle], nil);
     }
-    return NSLocalizedString(@"Security code is required", nil);
+    return NSLocalizedStringFromTableInBundle(@"Security code is required", nil, [NSBundle cardBundle], nil);
 }
 
 #pragma mark Payment
@@ -227,7 +228,7 @@
     AWXPlaceDetails *validatedBilling;
     if (self.isBillingInformationRequired && placeDetails == nil) {
         if (error != NULL) {
-            *error = NSLocalizedString(@"No billing address provided.", nil);
+            *error = NSLocalizedStringFromTableInBundle(@"No billing address provided.", nil, [NSBundle cardBundle], nil);
         }
 
         return NO;
