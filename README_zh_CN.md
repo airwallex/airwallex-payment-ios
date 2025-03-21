@@ -54,6 +54,8 @@ Airwallex iOS SDK 是一个框架，用于在您的应用中集成简单、快�
 =================
 ## 开始集成
 请按照我们的[集成指南](#integration)并探索[示例项目](#examples)，以快速使用 Airwallex SDK 设置支付功能。
+> [!TIP] 
+> 从旧版 SDK 升级的相关改动可以参考我们的[迁移文档](MIGRATION.md)
 
 ## 要求
 - iOS 13.0+

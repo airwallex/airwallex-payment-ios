@@ -55,6 +55,8 @@ Table of contents
 
 ## Getting Started
 Follow our [integration guide](#integration) and explore the [example project](#examples) to quickly set up payments using the Airwallex SDK.
+> [!TIP] 
+> Updating to a newer version of the SDK? See our [migration guide](MIGRATION.md)
 
 ## Requirements
 - iOS 13.0+
