@@ -6,9 +6,19 @@ We have introduced a brand new UI for payments and a new set of APIs to launch p
 
 <img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
 
-The Objective-C APIs have been completely removed. Use the API in `AWXUIContext+Extensions.swift` to launch Airwallex Payment UI instead
+Use the API in `AWXUIContext+Extensions.swift` to launch Airwallex Payment UI instead
 
-
+#### Old:
+``` objc
+AWXUIContext *context = [AWXUIContext sharedContext];
+context.delegate = "The target to handle AWXPaymentResultDelegate protocol";
+context.session = "The session created above";
+//  Launch Payment Sheet
+[context presentEntirePaymentFlowFrom:self];
+// Launch Card Payment Directly
+[context presentCardPaymentFlowFrom:self cardSchemes:["available card schemes"]];
+```
+#### New:
 ``` swift
 //  Launch Payment Sheet
 AWXUIContext.launchPayment(
@@ -24,26 +34,31 @@ AWXUIContext.launchCardPayment(
     supportedBrands: "accepted card brands, should not be empty",
     style: "present or push"
 )
-// Launch Payment Method by Name
-AWXUIContext.launchPayment(
-    name: "payment method name",
-    from: "hosting view controller",
-    session: "The session created above",
-    paymentResultDelegate: "object that handles AWXPaymentResultDelegate",
-    style: "present or push"
-)
 ```
 >[!TIP]
-These new APIs update `session` and `delegate` on `AWXUIContext` in their implementation, so you don't need to explicitly update `session` and `delegate` on `AWXUIContext` anymore.
+You don't need to explicitly set `session` and `delegate` on `AWXUIContext` before you call `AWXUIContext.launchPayment`. 
 
 ### Low-level API Integration
 Replace providers with `PaymentSessionHandler`.
 
-You no longer need to interact with providers like `AWXCardProvider` or `AWXApplePayProvider`, which introduced unnecessary complexity and required you to handle `AWXProviderDelegate`, which mainly for internal usage.
+You no longer need to interact with providers like `AWXCardProvider` or `AWXApplePayProvider`, which introduced unnecessary complexity and required you to handle `AWXProviderDelegate`, which is mainly for internal usage.
 
-> [!NOTE] 
-> With `PaymentSessionHandler` you can handle the payment result using `AWXPaymentResultDelegate` just like UI Integration.
+#### Old:
+```objc
+AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:"The target to handle AWXProviderDelegate protocol" session:"The session created above"];
+// After initialization, you will need to store the provider in your view controller or class that is tied to your view's lifecycle
+self.provider = provider;
 
+// Confirm intent with card and billing
+[provider confirmPaymentIntentWithCard:"The AWXCard object collected by your custom UI" billing:"The AWXPlaceDetails object collected by your custom UI" saveCard:"Whether you want the card to be saved as payment consent for future payments"];
+
+// Confirm intent with a payment consent object (AWXPaymentConsent)
+[provider confirmPaymentIntentWithPaymentConsent:paymentConsent];
+
+// Confirm intent with a valid payment consent ID only when the saved card is **network token**
+[provider confirmPaymentIntentWithPaymentConsentId:@"cst_xxxxxxxxxx"];
+```
+#### New:
 ```swift
 let paymentSessionHandler = PaymentSessionHandler(
     session: "The session created above", 
@@ -73,3 +88,5 @@ paymentSessionHandler.startRedirectPayment(
     additionalInfo: "all required information"
 )
 ```
+> [!NOTE] 
+> With `PaymentSessionHandler` you can handle the payment result using `AWXPaymentResultDelegate` just like UI Integration.
