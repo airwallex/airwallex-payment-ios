@@ -239,7 +239,7 @@ private extension SchemaPaymentSectionController {
                 paymentResultDelegate: AWXUIContext.shared().delegate,
                 methodType: methodProvider.method(named: name)
             )
-            paymentSessionHandler?.startSchemaPayment(with: paymentMethod)
+            paymentSessionHandler?.startRedirectPayment(with: paymentMethod)
             
             debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         } catch {

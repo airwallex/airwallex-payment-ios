@@ -345,9 +345,6 @@ private extension CardPaymentConsentSectionController {
             viewController: viewController,
             paymentResultDelegate: AWXUIContext.shared().delegate
         )
-        paymentSessionHandler?.startConsentPayment(
-            with: consent,
-            paymentMethod: consent.paymentMethod!
-        )
+        paymentSessionHandler?.startConsentPayment(with: consent)
     }
 }

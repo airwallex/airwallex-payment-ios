@@ -14,7 +14,7 @@ class LabelCell: UICollectionViewCell, ViewReusable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.title2, weight: .bold)
         view.text = NSLocalizedString("Payment Methods", bundle: .payment, comment: "title for payment sheet")
-        view.textColor = AWXTheme.shared().primaryTextColor()
+        view.textColor = .awxColor(.textPrimary)
         return view
     }()
     

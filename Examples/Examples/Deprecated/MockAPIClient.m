@@ -8,6 +8,7 @@
 
 #import "MockAPIClient.h"
 #import <Airwallex/Core.h>
+@import Airwallex;
 
 @implementation MockAPIClient
 
