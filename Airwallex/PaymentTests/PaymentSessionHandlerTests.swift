@@ -6,10 +6,11 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import Core
 import UIKit
 import XCTest
+
 @testable import Payment
-import Core
 
 class PaymentSessionHandlerTests: XCTestCase {
 
@@ -17,7 +18,7 @@ class PaymentSessionHandlerTests: XCTestCase {
     private var mockViewController: UIViewController!
     private var mockSession: AWXSession!
     private var mockMethodType: AWXPaymentMethodType!
-    
+
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         mockPaymentResultDelegate = MockPaymentResultDelegate()
@@ -42,7 +43,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertEqual(handler.methodType, methodType)
         XCTAssertEqual(handler.session, session)
     }
-    
+
     func testConvenienceInit() {
         let session = AWXOneOffSession()
         let handler = PaymentSessionHandler(
@@ -55,8 +56,24 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertEqual(handler.session, session)
     }
 
-    
-    func test2() {
-        
+    // test start apple pay check if it throws as expected
+    func testStartApplePayAssertion() {
+        let handler = PaymentSessionHandler(
+            session: mockSession,
+            viewController: mockPaymentResultDelegate,
+            methodType: mockMethodType
+        )
+
+        XCTAssertThrowsError(
+            try handler.startApplePay(), "Expected startApplePay to throw an error"
+        ) { error in
+            // Additional checks on the error can be performed here
+//            XCTAssertEqual(
+//                error as? PaymentSessionHandler.ValidationFailure,
+//                PaymentSessionHandler.ValidationFailure("method type not matched"))
+        }
+        mockMethodType.name = AWXApplePayKey
+        XCTAssertThrowsError(try handler.startApplePay())
+        //        mockMethodType
     }
 }

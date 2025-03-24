@@ -59,6 +59,7 @@
 		188F72AC2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F72AB2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m */; };
 		188F72AF2B2AC80D005CBE9A /* PaymentMethodTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = 188F72AD2B2AB36E005CBE9A /* PaymentMethodTypes.json */; };
 		188F72B02B2AC80F005CBE9A /* PaymentConsents.json in Resources */ = {isa = PBXBuildFile; fileRef = 188F72AE2B2AC06D005CBE9A /* PaymentConsents.json */; };
+		189FE9A2C5F7A6C624D86D9A /* libPods-CardTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3B71245F28BEDF85AD0A1C /* libPods-CardTests.a */; };
 		18AC888329C4598A0028D66A /* AWXPageViewTrackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 18AC888229C4597E0028D66A /* AWXPageViewTrackable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18B9DE1B2B2832290011213F /* AWXPaymentMethodListViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B9DE192B2832290011213F /* AWXPaymentMethodListViewModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18B9DE1C2B2832290011213F /* AWXPaymentMethodListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B9DE1A2B2832290011213F /* AWXPaymentMethodListViewModel.m */; };
@@ -71,7 +72,7 @@
 		18E0571A29C9A7F20099388A /* AWXAPIErrorResponse+Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571829C9A7F20099388A /* AWXAPIErrorResponse+Update.m */; };
 		18E0571C29CA8AD70099388A /* AWXAnalyticsLoggerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571B29CA8AD70099388A /* AWXAnalyticsLoggerTest.m */; };
 		18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FA911528DD744A00F96D97 /* AWXCardViewModelTests.m */; };
-		2B622DDF0972633197AAC8DB /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */; };
+		2C1A5D8F1814F60427BFA46C /* libPods-CoreTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A224DF219C8725B52C72FCC1 /* libPods-CoreTests.a */; };
 		3C324F9027FC09AD00CF7315 /* AWXSession+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C324F8E27FC09AD00CF7315 /* AWXSession+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C324F9127FC09AD00CF7315 /* AWXSession+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C324F8F27FC09AD00CF7315 /* AWXSession+Internal.m */; };
 		3C324F9327FC0BF200CF7315 /* AWXSessionInternalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C324F9227FC0BF200CF7315 /* AWXSessionInternalTest.m */; };
@@ -224,7 +225,6 @@
 		710F53C102C07F757F107011 /* libPods-RedirectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A918084CBE180B132E6C24D4 /* libPods-RedirectTests.a */; };
 		C844DC7D2C3CE37F0099614C /* NSObject+Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */; };
 		C844DC7E2C3CE37F0099614C /* NSObject+Logging.h in Headers */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CA09778887CAF1A3CB3519E4 /* Pods_ApplePayTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 766C109E04EF1051D97CC9A3 /* Pods_ApplePayTests.framework */; };
 		D81983492D6F120B008008A3 /* Payment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D81983412D6F120B008008A3 /* Payment.framework */; };
 		D81983D62D6F12BD008008A3 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* Core.framework */; platformFilter = ios; };
 		D81983DB2D6F12D1008008A3 /* Card.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5775CE8526E5DDDE00C6AFE3 /* Card.framework */; platformFilter = ios; };
@@ -249,8 +249,6 @@
 		D8FAFB852D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */; };
 		D8FAFB862D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */; };
 		D8FAFB872D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */; };
-		EA34697AD30A2D71BD5C1D8A /* Pods_CardTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A358577D1CBCE19AB5E4572 /* Pods_CardTests.framework */; };
-		FB357E04D7E4A8E8C5F54146 /* Pods_RedirectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9DFB3C3391C7ABDA4375D4 /* Pods_RedirectTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -653,14 +651,13 @@
 		D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrencyCodes.json; sourceTree = "<group>"; };
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPaymentResultDelegate.swift; sourceTree = "<group>"; };
-		F087D6C1F1A19092F78A54AB /* Pods_CoreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
 		F9330DB1F34C6DD83245F7CF /* Pods-RedirectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.release.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.release.xcconfig"; sourceTree = "<group>"; };
 		FC522BD223B734E323755856 /* Pods-RedirectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.debug.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D81983542D6F120B008008A3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		D81983542D6F120B008008A3 /* Exceptions for "Payment" folder in "Payment" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
 				Payment.h,
@@ -670,8 +667,29 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D81983422D6F120B008008A3 /* Payment */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D81983542D6F120B008008A3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Payment; sourceTree = "<group>"; };
-		D819834C2D6F120B008008A3 /* PaymentTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PaymentTests; sourceTree = "<group>"; };
+		D81983422D6F120B008008A3 /* Payment */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D81983542D6F120B008008A3 /* Exceptions for "Payment" folder in "Payment" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		D819834C2D6F120B008008A3 /* PaymentTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = PaymentTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -690,7 +708,7 @@
 			files = (
 				180D6F952C5B902A00980400 /* AirwallexRisk.xcframework in Frameworks */,
 				085BD3D223CC62B4002E8F27 /* Core.framework in Frameworks */,
-				33FEF718C303676873537CCD /* libPods-CoreTests.a in Frameworks */,
+				2C1A5D8F1814F60427BFA46C /* libPods-CoreTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,7 +762,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5775CE8E26E5DDDF00C6AFE3 /* Card.framework in Frameworks */,
-				D03DB7ABB31A971C5BCAF70F /* libPods-CardTests.a in Frameworks */,
+				189FE9A2C5F7A6C624D86D9A /* libPods-CardTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1586,8 +1604,6 @@
 				D81983422D6F120B008008A3 /* Payment */,
 			);
 			name = Payment;
-			packageProductDependencies = (
-			);
 			productName = Payment;
 			productReference = D81983412D6F120B008008A3 /* Payment.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1609,8 +1625,6 @@
 				D819834C2D6F120B008008A3 /* PaymentTests */,
 			);
 			name = PaymentTests;
-			packageProductDependencies = (
-			);
 			productName = PaymentTests;
 			productReference = D81983482D6F120B008008A3 /* PaymentTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";

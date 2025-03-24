@@ -105,15 +105,12 @@ public class PaymentSessionHandler: NSObject {
     func startCardPayment(with card: AWXCard,
                           billing: AWXPlaceDetails?,
                           saveCard: Bool = false) throws {
-        guard (methodType == nil || methodType?.name == AWXCardKey) else {
-            throw ValidationFailure("method type not matched")
-        }
-        
-        if let methodType {
-            guard !methodType.cardSchemes.isEmpty else {
-                throw ValidationFailure("card schemes should not be empty")
-            }
-        }
+        try AWXCardProvider.validate(
+            session: session,
+            methodType: methodType,
+            card: card,
+            billing: billing
+        )
         
         let cardProvider = AWXCardProvider(
             delegate: self,
@@ -192,15 +189,7 @@ extension PaymentSessionHandler {
     ///     receives a cancellation callback if the user dismisses the sheet.
     ///   - If `false`, dismissing the Apple Pay sheet does not trigger a cancellation callback,
     func startApplePay(cancelPaymentOnDismiss: Bool) throws {
-        guard (methodType == nil || methodType?.name == AWXApplePayKey) else {
-            throw ValidationFailure("method type not matched")
-        }
-        do {
-            try AWXApplePayProvider.canHandle(session)
-        } catch {
-            throw ValidationFailure(error.localizedDescription)
-        }
-        
+        try AWXApplePayProvider.validate(session: session, methodType: methodType)
         let applePayProvider = AWXApplePayProvider(
             delegate: self,
             session: session,

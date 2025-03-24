@@ -18,7 +18,7 @@ extension AWXCardValidator {
         self.supportedSchemes = supportedSchemes
     }
         
-    func validate(card: AWXCard) throws {
+    func validate(card: AWXCard, nameRequired: Bool) throws {
         do {
             try Self.validate(number: card.number, supportedSchemes: supportedSchemes ?? [])
         } catch {
@@ -40,6 +40,14 @@ extension AWXCardValidator {
         }
         
         // cardholder name can be nil if not required by session.requireBillingContactFields & no shipping info to reuse
+        
+        if nameRequired {
+            do {
+                try Self.validate(nameOnCard: card.name)
+            } catch {
+                throw NSLocalizedString("Invalid name on card", bundle: .payment, comment: "card validator error message").asError()
+            }
+        }
     }
     /// validate card number
     /// - Parameters:

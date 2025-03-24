@@ -263,7 +263,6 @@ private extension NewCardPaymentSectionController {
             if let name = viewModelForCardholderName?.text?.trimmed {
                 card.name = name
             }
-            try validator.validate(card: card)
             
             // validate billing info
             let forBillingValidation: [ViewModelValidatable?] = [

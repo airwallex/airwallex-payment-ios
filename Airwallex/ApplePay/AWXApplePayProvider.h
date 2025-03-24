@@ -20,8 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)startPayment;
 
-+ (BOOL)canHandleSession:(AWXSession *)session error:(NSError *_Nullable *)error;
-
 @end
 
 NS_ASSUME_NONNULL_END
