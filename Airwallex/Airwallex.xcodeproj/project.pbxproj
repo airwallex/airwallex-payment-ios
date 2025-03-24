@@ -243,6 +243,11 @@
 		D8BD9E172D0191BF0045A892 /* Airwallex.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */; };
 		D8BD9E182D0191BF0045A892 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */; };
 		D8BD9E192D0191BF0045A892 /* CurrencyCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */; };
+		D8C3A00B2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */; };
+		D8C3A00C2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */; };
+		D8C3A00D2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */; };
+		D8C3A00E2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */; };
+		D8C3A00F2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */; };
 		D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
 		D8FAFB832D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */; };
 		D8FAFB842D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */; };
@@ -650,6 +655,7 @@
 		D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
 		D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrencyCodes.json; sourceTree = "<group>"; };
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProviderDelegate.swift; sourceTree = "<group>"; };
 		D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPaymentResultDelegate.swift; sourceTree = "<group>"; };
 		F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
 		F9330DB1F34C6DD83245F7CF /* Pods-RedirectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.release.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -657,7 +663,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D81983542D6F120B008008A3 /* Exceptions for "Payment" folder in "Payment" target */ = {
+		D81983542D6F120B008008A3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
 				Payment.h,
@@ -667,29 +673,8 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D81983422D6F120B008008A3 /* Payment */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				D81983542D6F120B008008A3 /* Exceptions for "Payment" folder in "Payment" target */,
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = Payment;
-			sourceTree = "<group>";
-		};
-		D819834C2D6F120B008008A3 /* PaymentTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = PaymentTests;
-			sourceTree = "<group>";
-		};
+		D81983422D6F120B008008A3 /* Payment */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D81983542D6F120B008008A3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Payment; sourceTree = "<group>"; };
+		D819834C2D6F120B008008A3 /* PaymentTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PaymentTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -982,6 +967,7 @@
 				3C5A37FA27F29DD200CFC2EF /* AWXProviderDelegateSpy.h */,
 				3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */,
 				D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */,
+				D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1973,6 +1959,7 @@
 				1862772329DFCE920002892A /* NSDataBase64Test.m in Sources */,
 				18E0571C29CA8AD70099388A /* AWXAnalyticsLoggerTest.m in Sources */,
 				188F72AC2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m in Sources */,
+				D8C3A00D2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */,
 				D8FAFB872D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */,
 				183FB6472BB6A74100FFDF0E /* AWXNextActionHandlerTest.m in Sources */,
 				0829FD022431D10800557DB2 /* AWXAddressTest.m in Sources */,
@@ -2017,6 +2004,7 @@
 				3C5A37F827ED677C00CFC2EF /* AWXSessionRequestTest.m in Sources */,
 				3C5A37F227ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m in Sources */,
 				3CE9BA302806E02F005B70C3 /* AWXPlaceDetailsPKContactTest.m in Sources */,
+				D8C3A00F2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */,
 				3CE9BA2A2806D923005B70C3 /* PKContactRequestTest.m in Sources */,
 				3C5A37FF27F2DDB400CFC2EF /* AWXProviderDelegateSpy.m in Sources */,
 				3C5A37F627ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m in Sources */,
@@ -2062,6 +2050,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8C3A00B2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */,
 				D8FAFB832D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */,
 				183FB6432BB6A31800FFDF0E /* AWXProviderDelegateSpy.m in Sources */,
 				18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */,
@@ -2089,6 +2078,7 @@
 				186277DB2A381A240002892A /* AWXSchemaProviderTests.m in Sources */,
 				D8FAFB862D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */,
 				1803601F2873D73A003EA943 /* AWXPaymentFormViewModelTests.m in Sources */,
+				D8C3A00E2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2103,6 +2093,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8C3A00C2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */,
 				D8FAFB842D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */,
 				D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */,
 			);

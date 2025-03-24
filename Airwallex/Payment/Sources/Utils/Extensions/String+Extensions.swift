@@ -29,7 +29,7 @@ extension String {
     }
     
     var isvalidCountryCode: Bool {
-        
+        NSLocale.isoCountryCodes.contains(self)
     }
     
     var trimmed: String {

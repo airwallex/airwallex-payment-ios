@@ -82,7 +82,7 @@ import Core
     ///   - style: The presentation style of the payment sheet, which defaults to `.push`.
     @MainActor static func launchCardPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
                                              session: AWXSession,
-                                             supportedBrands: [AWXCardBrand],
+                                             supportedBrands: [AWXCardBrand] = AWXCardBrand.all,
                                              style: LaunchStyle = .push) {
         launchCardPayment(
             from: hostingVC,
@@ -102,7 +102,7 @@ import Core
     @MainActor static func launchCardPayment(from hostingVC: UIViewController,
                                              session: AWXSession,
                                              paymentResultDelegate: AWXPaymentResultDelegate,
-                                             supportedBrands: [AWXCardBrand],
+                                             supportedBrands: [AWXCardBrand] = AWXCardBrand.all,
                                              style: LaunchStyle = .push) {
         assert(!supportedBrands.isEmpty, "supported brands should never be empty")
         launchPayment(

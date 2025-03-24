@@ -37,6 +37,9 @@ extension UIViewController {
         (view.viewWithTag(Self.tagForActivityIndicator) as? UIActivityIndicatorView)?.stopAnimating()
     }
     
+    var isLoading: Bool {
+        (view.viewWithTag(Self.tagForActivityIndicator) as? UIActivityIndicatorView)?.isAnimating ?? false
+    }
     
     func showAlert(
         title: String? = nil,

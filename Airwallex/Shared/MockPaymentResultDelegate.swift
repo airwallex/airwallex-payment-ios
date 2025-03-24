@@ -14,6 +14,7 @@ class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
     private(set) weak var viewController: UIViewController?
     private(set) var error: Error?
     private(set) var consentId: String?
+    private(set) var presentedViewControllerSpy: UIViewController?
  
     func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         self.status = status
@@ -24,5 +25,10 @@ class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
     func paymentViewController(_ controller: UIViewController?, didCompleteWithPaymentConsentId paymentConsentId: String) {
         self.viewController = controller
         self.consentId = paymentConsentId
+    }
+    
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+        presentedViewControllerSpy = viewControllerToPresent
     }
 }

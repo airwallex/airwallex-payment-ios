@@ -22,16 +22,6 @@ import Card
 
 public class PaymentSessionHandler: NSObject {
     
-    public struct ValidationFailure:  LocalizedError {
-        public var failureReason: String
-        init(_ reason: String) {
-            self.failureReason = reason
-        }
-        public var errorDescription: String? {
-            failureReason
-        }
-    }
-    
     let session: AWXSession
     
     private var actionProvider: AWXDefaultProvider!
@@ -127,9 +117,7 @@ public class PaymentSessionHandler: NSObject {
     ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
     ///   If The payment method details, which may require additional input such as a CVC for validation.
     func startConsentPayment(with consent: AWXPaymentConsent) throws {
-        guard !consent.id.isEmpty, consent.id.hasPrefix("cst_") else {
-            throw ValidationFailure("invalid consentId")
-        }
+        try AWXCardProvider.validate(session: session, methodType: methodType, consent: consent)
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -150,9 +138,7 @@ public class PaymentSessionHandler: NSObject {
     /// Initiates a payment using a consent ID.
     /// - Parameter consentId: The previously generated consent identifier.
     func startConsentPayment(withId consentId: String) throws {
-        guard !consentId.isEmpty, consentId.hasPrefix("cst_") else {
-            throw ValidationFailure("invalid consentId")
-        }
+        try AWXCardProvider.validate(session: session, methodType: methodType, consentId: consentId)
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -170,9 +156,7 @@ public class PaymentSessionHandler: NSObject {
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     func startRedirectPayment(with name: String, additionalInfo: [String: String]?) throws {
-        guard (methodType == nil || methodType?.name == name) else {
-            throw ValidationFailure("method type not matched")
-        }
+        try AWXRedirectActionProvider.validate(session: session, methodType: methodType, name: name)
         let redirectAction = AWXRedirectActionProvider(
             delegate: self,
             session: session
@@ -209,9 +193,7 @@ extension PaymentSessionHandler {
     /// - Parameters:
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
     func startRedirectPayment(with paymentMethod: AWXPaymentMethod) throws {
-        guard (methodType == nil || methodType?.name == paymentMethod.type) else {
-            throw ValidationFailure("method type not matched")
-        }
+        try AWXRedirectActionProvider.validate(session: session, methodType: methodType, name: paymentMethod.type)
         let schemaProvider = AWXSchemaProvider(
             delegate: self,
             session: session,
