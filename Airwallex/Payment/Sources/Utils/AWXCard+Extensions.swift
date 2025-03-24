@@ -17,7 +17,7 @@ extension AWXCard {
         self.cvc = cvc
     }
     
-    struct NumberType {
+    enum NumberType {
         /// for consent payment, NumberType.PAN requires CVC
         static let PAN = "PAN"
         /// for consent payment, we can checkout with this consent without CVC verification
