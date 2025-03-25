@@ -48,7 +48,7 @@ public struct Palette {
         var color: UIColor {
             switch self {
             case .theme:
-                return themeColor(by: .level70)
+                return UIColor(dynamicLightColor: themeColor(by: .level70), darkColor: themeColor(by: .level40))
                 // Background Colors
             case .backgroundPrimary:
                 return UIColor(dynamicLightColor: Palette.white, darkColor: Palette.gray100)

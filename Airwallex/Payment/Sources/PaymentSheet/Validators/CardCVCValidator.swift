@@ -41,7 +41,7 @@ struct CardCVCValidator: UserInputValidator, UserInputFormatter {
         let string = string.filterIllegalCharacters(in: .decimalDigits.inverted)
         var after = before.replacingCharacters(in: range, with: string)
         
-        textField.updateContentAndCusor(plainText: after, maxLength: maxLength)
+        textField.updateContentAndCursor(plainText: after, maxLength: maxLength)
     }
     
     func automaticTriggerReturnAction(textField: UITextField) -> Bool {

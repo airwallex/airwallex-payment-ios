@@ -48,7 +48,7 @@
 }
 
 + (UIColor *)airwallexUltraviolet40Color {
-    return [UIColor colorWithHex:0xB3AEFF];
+    return [UIColor colorWithHex:0xABA8FF];
 }
 
 + (UIColor *)airwallexUltraviolet70Color {

@@ -43,6 +43,6 @@ struct MaxLengthFormatter: UserInputFormatter {
     func handleUserInput(_ textField: UITextField, changeCharactersIn range: Range<String.Index>, replacementString string: String) {
         let before = textField.text ?? ""
         let after = before.replacingCharacters(in: range, with: string)
-        textField.updateContentAndCusor(plainText: after, maxLength: maxLength)
+        textField.updateContentAndCursor(plainText: after, maxLength: maxLength)
     }
 }

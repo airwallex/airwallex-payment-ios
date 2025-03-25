@@ -18,7 +18,7 @@ extension UITextField {
         keyboardType = .default
         autocapitalizationType = .sentences
         autocorrectionType = .default
-        textContentType = .name
+        textContentType = .none
         switch fieldType {
         case .default:
             textContentType = nil
@@ -27,6 +27,7 @@ extension UITextField {
         case .lastName:
             textContentType = .familyName
         case .nameOnCard:
+            autocapitalizationType = .words
             if #available(iOS 17.0, *) {
                 textContentType = .creditCardName
             } else {
@@ -55,9 +56,6 @@ extension UITextField {
             textContentType = .creditCardNumber
             keyboardType = .asciiCapableNumberPad
         case .expires:
-            if #available(iOS 17.0, *) {
-                textContentType = .creditCardExpiration
-            }
             keyboardType = .asciiCapableNumberPad
         case .CVC:
             if #available(iOS 17.0, *) {
@@ -89,7 +87,7 @@ extension UITextField {
         self.attributedText = after
         if before != attributedText {
             let cursorPosition = offset(from: beginningOfDocument, to: selectedRange.start)
-            var newCursorPosition = position(
+            let newCursorPosition = position(
                 from: beginningOfDocument,
                 offset: cursorPosition + (attributedText.length - before.length)
             )
@@ -107,7 +105,7 @@ extension UITextField {
         }
     }
     
-    func updateContentAndCusor(plainText: String,
+    func updateContentAndCursor(plainText: String,
                                maxLength: Int = Int.max) {
         let before = text ?? ""
         var after = plainText
@@ -121,7 +119,7 @@ extension UITextField {
         text = after
         if plainText != before {
             let cursorPosition = offset(from: beginningOfDocument, to: selectedRange.start)
-            var newCursorPosition = position(
+            let newCursorPosition = position(
                 from: beginningOfDocument,
                 offset: cursorPosition + (plainText.count - before.count)
             )
