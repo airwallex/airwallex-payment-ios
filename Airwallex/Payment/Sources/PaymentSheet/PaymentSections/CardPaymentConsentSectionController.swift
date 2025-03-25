@@ -343,12 +343,12 @@ private extension CardPaymentConsentSectionController {
         if mode == .payment {
             RiskLogger.log(.clickPaymentButton, screen: .consent)
         }
-        paymentSessionHandler = PaymentSessionHandler(
-            session: session,
-            viewController: viewController,
-            paymentResultDelegate: AWXUIContext.shared().delegate
-        )
         do {
+            paymentSessionHandler = try PaymentSessionHandler(
+                session: session,
+                viewController: viewController,
+                paymentResultDelegate: AWXUIContext.shared().delegate
+            )
             try paymentSessionHandler?.startConsentPayment(with: consent)
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)

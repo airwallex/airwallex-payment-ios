@@ -251,7 +251,7 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                AWXUIContext.launchPayment(from: self, session: session)
+                try AWXUIContext.launchPayment(from: self, session: session)
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -265,7 +265,7 @@ private extension IntegrationDemoListViewController {
             do {
                 let session = try await createPaymentSession()
                 //  custom payment methods by an array of payment method name
-                AWXUIContext.launchPayment(
+                try AWXUIContext.launchPayment(
                     from: self,
                     session: session,
                     filterBy: [ AWXApplePayKey, AWXCardKey, "alipaycn", "alipayhk" ]
@@ -282,7 +282,7 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                AWXUIContext.launchCardPayment(
+                try AWXUIContext.launchCardPayment(
                     from: self,
                     session: session,
                     supportedBrands: AWXCardBrand.all,

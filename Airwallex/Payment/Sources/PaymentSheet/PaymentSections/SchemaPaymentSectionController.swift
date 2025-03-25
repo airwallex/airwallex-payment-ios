@@ -239,13 +239,13 @@ private extension SchemaPaymentSectionController {
             // update hidden fields
             paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
             
-            paymentSessionHandler = PaymentSessionHandler(
-                session: session,
-                viewController: context.viewController!,
-                paymentResultDelegate: AWXUIContext.shared().delegate,
-                methodType: methodProvider.method(named: name)
-            )
             do {
+                paymentSessionHandler = try PaymentSessionHandler(
+                    session: session,
+                    viewController: context.viewController!,
+                    paymentResultDelegate: AWXUIContext.shared().delegate,
+                    methodType: methodProvider.method(named: name)
+                )
                 try paymentSessionHandler?.startRedirectPayment(with: paymentMethod)
             } catch {
                 context.viewController?.showAlert(message: error.localizedDescription)

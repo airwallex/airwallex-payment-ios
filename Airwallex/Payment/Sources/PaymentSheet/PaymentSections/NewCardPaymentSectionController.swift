@@ -281,13 +281,13 @@ private extension NewCardPaymentSectionController {
             RiskLogger.log(.clickPaymentButton, screen: .createCard)
             debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
             
-            paymentSessionHandler = PaymentSessionHandler(
-                session: session,
-                viewController: context.viewController!,
-                paymentResultDelegate: AWXUIContext.shared().delegate,
-                methodType: methodType
-            )
             do {
+                paymentSessionHandler = try PaymentSessionHandler(
+                    session: session,
+                    viewController: context.viewController!,
+                    paymentResultDelegate: AWXUIContext.shared().delegate,
+                    methodType: methodType
+                )
                 try paymentSessionHandler?.startCardPayment(
                     with: card,
                     billing: billingInfo,

@@ -35,11 +35,11 @@ import PassKit
 
 extension AWXApplePayProvider { 
     enum ValidationError: CustomNSError, LocalizedError {
-        case invalidMethodType
-        case applePayOptionNotFound
-        case paymentNetworkNotSupported
-        case merchantIdRequired
-        case applePayNotSupported
+        case invalidMethodType(String)
+        case applePayOptionNotFound(String)
+        case paymentNetworkNotSupported(String)
+        case merchantIdRequired(String)
+        case applePayNotSupported(String)
         
         // CustomNSError - for objc
         static var errorDomain: String {
@@ -53,16 +53,16 @@ extension AWXApplePayProvider {
         // LocalizedError - for error.localizedDescription
         var errorDescription: String {
             switch self {
-            case .invalidMethodType:
-                return NSLocalizedString("Invalid method type", bundle: .payment, comment: "")
-            case .applePayOptionNotFound:
-                return NSLocalizedString("Invalid apple pay options", bundle: .payment, comment: "")
-            case .paymentNetworkNotSupported:
-                return NSLocalizedString("Invalid payment network", bundle: .payment, comment: "")
-            case .applePayNotSupported:
-                return NSLocalizedString("Device can not make payments", bundle: .payment, comment: "")
-            case .merchantIdRequired:
-                return NSLocalizedString("Invalid merchant Identifier", bundle: .payment, comment: "")
+            case .invalidMethodType(let message):
+                return "Invalid method type: \(message)"
+            case .applePayOptionNotFound(let message):
+                return "Invalid apple pay options: \(message)"
+            case .paymentNetworkNotSupported(let message):
+                return "Invalid payment network: \(message)"
+            case .applePayNotSupported(let message):
+                return "Device can not make payments: \(message)"
+            case .merchantIdRequired(let message):
+                return "Invalid merchant Identifier: \(message)"
             }
         }
     }
@@ -70,32 +70,32 @@ extension AWXApplePayProvider {
     static func validate(session: AWXSession, methodType: AWXPaymentMethodType?) throws {
         if let methodType {
             guard methodType.name == AWXApplePayKey else {
-                throw ValidationError.invalidMethodType
+                throw ValidationError.invalidMethodType("Expected methodType.name to be \(AWXApplePayKey), but found \(methodType.name)")
             }
         }
         
         guard let options = session.applePayOptions else {
-            throw ValidationError.applePayOptionNotFound
+            throw ValidationError.applePayOptionNotFound("session.applePayOptions is required")
         }
         
         guard !options.merchantIdentifier.isEmpty else {
-            throw ValidationError.merchantIdRequired
+            throw ValidationError.merchantIdRequired("invalid merchant ID")
         }
         
         guard Set(options.supportedNetworks).isSubset(of: AWXApplePaySupportedNetworks()) else {
-            throw ValidationError.paymentNetworkNotSupported
+            throw ValidationError.paymentNetworkNotSupported("only payment networks in AWXApplePaySupportedNetworks are supported")
         }
         
         if #available(iOS 15.0, *) {
             guard PKPaymentAuthorizationController.canMakePayments() else {
-                throw ValidationError.applePayNotSupported
+                throw ValidationError.applePayNotSupported("canMakePayments return false")
             }
         } else {
             guard PKPaymentAuthorizationController.canMakePayments(
                 usingNetworks: options.supportedNetworks,
                 capabilities: options.merchantCapabilities
             ) else {
-                throw ValidationError.applePayNotSupported
+                throw ValidationError.applePayNotSupported("canMakePayments return false")
             }
         }
     }
@@ -106,7 +106,7 @@ extension AWXCardProvider {
     enum ValidationError: CustomNSError, LocalizedError {
         case invalidMethodType(String)
         case invalidCardSchemes(String)
-        case invalidCardInfo(String)
+        case invalidCardInfo(underlyingError: Error)
         case invalidBillingInfo(String)
         case invalidConsent(String)
         
@@ -123,15 +123,15 @@ extension AWXCardProvider {
         var errorDescription: String {
             switch self {
             case .invalidMethodType(let message):
-                return message
+                return "Invalid method type: \(message)"
             case .invalidCardSchemes(let message):
-                return message
-            case .invalidCardInfo(let message):
-                return message
+                return "Invalid card schemes: \(message)"
+            case .invalidCardInfo(underlyingError: let error):
+                return "Invalid card info: \(error.localizedDescription)"
             case .invalidBillingInfo(let message):
-                return message
+                return "Invalid billing info: \(message)"
             case .invalidConsent(let message):
-                return message
+                return "Invalid consent: \(message)"
             }
         }
     }
@@ -142,13 +142,11 @@ extension AWXCardProvider {
                          billing: AWXPlaceDetails?) throws {
         if let methodType {
             guard methodType.name == AWXCardKey else {
-                throw ValidationError.invalidMethodType("invalid method type name should be \(AWXCardKey)")
+                throw ValidationError.invalidMethodType("Invalid method type")
             }
-            guard !methodType.cardSchemes.isEmpty else {
-                throw ValidationError.invalidCardSchemes("card schemes should not be empty")
-            }
-            guard Set(methodType.cardSchemes.map { $0.name }).isSubset(of: AWXCardBrand.all.map { $0.rawValue }) else {
-                throw ValidationError.invalidCardSchemes("card scheme not supported")
+            guard !methodType.cardSchemes.isEmpty,
+                  Set(methodType.cardSchemes.map { $0.name }).isSubset(of: AWXCardBrand.all.map { $0.rawValue }) else {
+                throw ValidationError.invalidCardSchemes("Invalid card schemes")
             }
         }
         let cardSchemes = methodType?.cardSchemes ?? AWXCardScheme.allAvailable
@@ -156,52 +154,52 @@ extension AWXCardProvider {
         do {
             try validator.validate(card: card, nameRequired: session.requiredBillingContactFields.contains(.name))
         } catch {
-            throw ValidationError.invalidCardInfo(error.localizedDescription)
+            throw ValidationError.invalidCardInfo(underlyingError: error)
         }
         
         guard !session.requiredBillingContactFields.isEmpty else { return }
         
         guard let billing else {
-            throw ValidationError.invalidBillingInfo("Invalid billing info")
+            throw ValidationError.invalidBillingInfo("Invalid billing: N/A")
         }
         if session.requiredBillingContactFields.contains(.name) {
             guard !billing.firstName.isEmpty else {
-                throw ValidationError.invalidBillingInfo("Invalid name")
+                throw ValidationError.invalidBillingInfo("Invalid name: \(billing.firstName + "" + billing.lastName)")
             }
         }
         if session.requiredBillingContactFields.contains(.address) {
             guard let address = billing.address else {
-                throw ValidationError.invalidBillingInfo("Invalid address")
+                throw ValidationError.invalidBillingInfo("Invalid address: N/A")
             }
             guard let countryCode = address.countryCode, countryCode.isvalidCountryCode else {
-                throw ValidationError.invalidBillingInfo("Invalid country code")
+                throw ValidationError.invalidBillingInfo("Invalid country code: \(address.countryCode ?? "N/A")")
             }
             guard let state = address.state, !state.isEmpty else {
-                throw ValidationError.invalidBillingInfo("Invalid state")
+                throw ValidationError.invalidBillingInfo("Invalid state: \(address.state ?? "N/A")")
             }
             guard let city = address.city, !city.isEmpty else {
-                throw ValidationError.invalidBillingInfo("Invalid city")
+                throw ValidationError.invalidBillingInfo("Invalid city: \(address.city ?? "N/A")")
             }
             guard let street = address.street, !street.isEmpty else {
-                throw ValidationError.invalidBillingInfo("Invalid street")
+                throw ValidationError.invalidBillingInfo("Invalid street: \(address.street ?? "N/A")")
             }
             guard let postcode = address.postcode, !postcode.isEmpty else {
-                throw ValidationError.invalidBillingInfo("Invalid postcode")
+                throw ValidationError.invalidBillingInfo("Invalid postcode: \(address.postcode ?? "N/A")")
             }
         }
         if session.requiredBillingContactFields.contains(.email) {
             guard let email = billing.email, email.isValidEmail else {
-                throw ValidationError.invalidBillingInfo("Invalid email")
+                throw ValidationError.invalidBillingInfo("Invalid email: \(billing.email ?? "N/A")")
             }
         }
         if session.requiredBillingContactFields.contains(.phone) {
             guard let phoneNumber = billing.phoneNumber, phoneNumber.isValidE164PhoneNumber else {
-                throw ValidationError.invalidBillingInfo("Invalid phone number")
+                throw ValidationError.invalidBillingInfo("Invalid phone number: \(billing.phoneNumber ?? "N/A")")
             }
         }
         if session.requiredBillingContactFields.contains(.countryCode) {
             guard let countryCode = billing.address?.countryCode, countryCode.isvalidCountryCode else {
-                throw ValidationError.invalidBillingInfo("Invalid country code")
+                throw ValidationError.invalidBillingInfo("Invalid country code: \(billing.address?.countryCode ?? "N/A")")
             }
         }
     }
@@ -211,7 +209,7 @@ extension AWXCardProvider {
                          consent: AWXPaymentConsent) throws {
         if let methodType {
             guard methodType.name == AWXCardKey else {
-                throw ValidationError.invalidMethodType("Invalid method type: \(methodType.name)")
+                throw ValidationError.invalidMethodType("Invalid method type: \(methodType.name), \(AWXCardKey) expected")
             }
         }
         try validate(session: session, methodType: methodType, consentId: consent.id)
@@ -222,11 +220,11 @@ extension AWXCardProvider {
                          consentId: String) throws {
         if let methodType {
             guard methodType.name == AWXCardKey else {
-                throw ValidationError.invalidMethodType("Invalid method type: \(methodType.name)")
+                throw ValidationError.invalidMethodType("Invalid method type: \(methodType.name), \(AWXCardKey) expected")
             }
         }
         guard !consentId.isEmpty, consentId.hasPrefix("cst_") else {
-            throw ValidationError.invalidConsent("invalid consentId \(consentId)")
+            throw ValidationError.invalidConsent("invalid consentId: \(consentId)")
         }
     }
 }
@@ -257,13 +255,13 @@ extension AWXRedirectActionProvider {
                          methodType: AWXPaymentMethodType?,
                          name: String) throws {
         guard (methodType == nil || methodType?.name == name) else {
-            throw ValidationError.invalidMethodType("method type not matched")
+            throw ValidationError.invalidMethodType("method name: \(name) not equal to methodType.name: \(methodType?.name ?? "")")
         }
         guard name != AWXCardKey else {
-            throw ValidationError.invalidMethodType("use startCardPayment or startConsentPayment instead")
+            throw ValidationError.invalidMethodType("should never use AWXRedirectActionProvider for card payment")
         }
         guard name != AWXApplePayKey else {
-            throw ValidationError.invalidMethodType("use startApplePay() instead")
+            throw ValidationError.invalidMethodType("should never use AWXRedirectActionProvider for apple pay")
         }
     }
 }

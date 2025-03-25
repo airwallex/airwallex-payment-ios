@@ -20,6 +20,39 @@ import Core
         case present
     }
     
+    enum LaunchError: CustomNSError, LocalizedError {
+        case invalidCardBrand(String)
+        case invalidViewHierarchy(String)
+        case invalidMethodFilter(String)
+        case invalidClientSecret(String)
+        case invalidSession(underlyingError: Error)
+        
+        // CustomNSError - for objc
+        public static var errorDomain: String {
+            AWXSDKErrorDomain
+        }
+        
+        public var errorUserInfo: [String : Any] {
+            [NSLocalizedDescriptionKey: errorDescription]
+        }
+        
+        // LocalizedError - for error.localizedDescription
+        var errorDescription: String {
+            switch self {
+            case .invalidCardBrand(let message):
+                return "Invalid card brand: \(message)"
+            case .invalidViewHierarchy(let message):
+                return "Invalid view hierarchy: \(message)"
+            case .invalidMethodFilter(let message):
+                return "Invalid method filter: \(message)"
+            case .invalidSession(underlyingError: let error):
+                return "Invalid session: \(error.localizedDescription)"
+            case .invalidClientSecret(let message):
+                return "Client secret required: \(message)"
+            }
+        }
+    }
+        
     /// Launches the Airwallex payment sheet.
     /// - Parameters:
     ///   - hostingVC: The view controller that launch the payment sheet and also acts as the `AWXPaymentResultDelegate`.
@@ -29,8 +62,8 @@ import Core
     @MainActor static func launchPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
                                          session: AWXSession,
                                          filterBy methodNames: [String]? = nil,
-                                         style: LaunchStyle = .push) {
-        launchPayment(
+                                         style: LaunchStyle = .push) throws {
+        try launchPayment(
             from: hostingVC,
             session: session,
             paymentResultDelegate: hostingVC,
@@ -50,8 +83,11 @@ import Core
                                          session: AWXSession,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
                                          filterBy methodNames: [String]? = nil,
-                                         style: LaunchStyle = .push) {
+                                         style: LaunchStyle = .push) throws {
         if let methodNames {
+            guard !methodNames.isEmpty else {
+                throw LaunchError.invalidMethodFilter("filter should not be empty")
+            }
             session.paymentMethods = methodNames
             if let session = session as? AWXOneOffSession,
                !methodNames.contains(where: { $0 == AWXCardKey }) {
@@ -59,7 +95,7 @@ import Core
                 session.hidePaymentConsents = true
             }
         }
-        launchPayment(
+        try launchPayment(
             from: hostingVC,
             session: session,
             paymentMethodProvider: PaymentSheetMethodProvider(session: session),
@@ -83,8 +119,8 @@ import Core
     @MainActor static func launchCardPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
                                              session: AWXSession,
                                              supportedBrands: [AWXCardBrand] = AWXCardBrand.all,
-                                             style: LaunchStyle = .push) {
-        launchCardPayment(
+                                             style: LaunchStyle = .push) throws {
+        try launchCardPayment(
             from: hostingVC,
             session: session,
             paymentResultDelegate: hostingVC,
@@ -103,9 +139,8 @@ import Core
                                              session: AWXSession,
                                              paymentResultDelegate: AWXPaymentResultDelegate,
                                              supportedBrands: [AWXCardBrand] = AWXCardBrand.all,
-                                             style: LaunchStyle = .push) {
-        assert(!supportedBrands.isEmpty, "supported brands should never be empty")
-        launchPayment(
+                                             style: LaunchStyle = .push) throws {
+        try launchPayment(
             name: AWXCardKey,
             from: hostingVC,
             session: session,
@@ -129,18 +164,24 @@ import Core
                                          session: AWXSession,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
                                          supportedBrands: [AWXCardBrand]? = nil,
-                                         style: LaunchStyle = .push) {
+                                         style: LaunchStyle = .push) throws {
         let name = name.trimmed
         
         if name == AWXCardKey {
-            assert(supportedBrands != nil && supportedBrands?.isEmpty == false, "Supported card brands are required for card payment.")
+            guard let supportedBrands,
+                  !supportedBrands.isEmpty else {
+                throw LaunchError.invalidCardBrand("supportedBrands should not be empty for card payment")
+            }
+            guard Set(supportedBrands).isSubset(of: AWXCardBrand.all) else {
+                throw LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")
+            }
         }
         let methodProvider = SinglePaymentMethodProvider(
             session: session,
             name: name,
             supportedCardBrands: supportedBrands
         )
-        launchPayment(
+        try launchPayment(
             from: hostingVC,
             session: session,
             paymentMethodProvider: methodProvider,
@@ -157,15 +198,25 @@ private extension AWXUIContext {
                                          session: AWXSession,
                                          paymentMethodProvider: PaymentMethodProvider,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
-                                         style: LaunchStyle) {
+                                         style: LaunchStyle) throws {
+        do {
+            try AWXSession.validate(session: session)
+        } catch {
+            throw LaunchError.invalidSession(underlyingError: error)
+        }
+        
+        guard let secret = AWXAPIClientConfiguration.shared().clientSecret,
+              !secret.isEmpty else {
+            throw LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
+        }
+        
         AWXUIContext.shared().session = session
         AWXUIContext.shared().delegate = paymentResultDelegate
         let paymentVC = PaymentMethodsViewController(methodProvider: paymentMethodProvider)
         switch style {
         case .push:
             guard let nav = hostingVC.navigationController else {
-                assert(false, "unable to push payment sheet from a hostingVC not embeded in navigation stack")
-                fallthrough
+                throw LaunchError.invalidViewHierarchy("hossting view controller is not embeded in navigation controller")
             }
             nav.pushViewController(paymentVC, animated: true)
             AWXUIContext.shared().paymentUIDismissAction = { [weak hostingVC, weak nav] completion in
