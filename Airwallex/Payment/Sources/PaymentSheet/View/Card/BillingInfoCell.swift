@@ -178,9 +178,9 @@ private extension BillingInfoCell {
     func setupViews() {
         contentView.addSubview(stack)
         stack.addArrangedSubview(titleLabel)
-        stack.setCustomSpacing(.spacing_8, after: titleLabel)
+        stack.setCustomSpacing(8, after: titleLabel)
         stack.addArrangedSubview(reuseButton)
-        stack.setCustomSpacing(.spacing_12, after: reuseButton)
+        stack.setCustomSpacing(12, after: reuseButton)
         
         stack.addArrangedSubview(countrySelectionView)
         stack.addArrangedSubview(streetTextField)
@@ -193,7 +193,7 @@ private extension BillingInfoCell {
         }
         
         stack.addArrangedSubview(zipCodeTextField)
-        stack.setCustomSpacing(.spacing_4, after: zipCodeTextField)
+        stack.setCustomSpacing(4, after: zipCodeTextField)
         stack.addArrangedSubview(hintLabel)
         
         let constraints = [

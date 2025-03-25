@@ -31,9 +31,9 @@ class WarningViewCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
-        stack.spacing = .spacing_16
+        stack.spacing = 16
         stack.alignment = .center
-        stack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: .spacing_12, leading: .spacing_16, bottom: .spacing_12, trailing: .spacing_16)
+        stack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
         return stack
     }()
     
@@ -62,10 +62,10 @@ class WarningViewCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         stack.addArrangedSubview(label)
         
         let constraints = [
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: .spacing_16),
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacing_16),
-            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacing_16),
-            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.spacing_16),
+            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             
             icon.widthAnchor.constraint(equalToConstant: 24),
             icon.heightAnchor.constraint(equalToConstant: 24)

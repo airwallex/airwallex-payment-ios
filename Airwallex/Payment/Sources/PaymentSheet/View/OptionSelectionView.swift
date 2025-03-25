@@ -84,14 +84,14 @@ private extension OptionSelectionView {
     
     func setupViews() {
         iconWrapper.addSubview(icon)
-        horizontalStack.insertSpacer(.spacing_12, at: 0)
+        horizontalStack.insertSpacer(12, at: 0)
         horizontalStack.insertArrangedSubview(iconWrapper, at: 1)
         var insets = textField.textInsets
         insets.left = 0
         insets.right = 0
         textField.textInsets = insets
         horizontalStack.addArrangedSubview(indicator)
-        horizontalStack.addSpacer(.spacing_12)
+        horizontalStack.addSpacer(12)
 
         addSubview(cover)
         let constraints = [
@@ -102,7 +102,7 @@ private extension OptionSelectionView {
             
             icon.topAnchor.constraint(equalTo: iconWrapper.topAnchor),
             icon.leadingAnchor.constraint(equalTo: iconWrapper.leadingAnchor),
-            icon.trailingAnchor.constraint(equalTo: iconWrapper.trailingAnchor, constant: -.spacing_8),
+            icon.trailingAnchor.constraint(equalTo: iconWrapper.trailingAnchor, constant: -8),
             icon.bottomAnchor.constraint(equalTo: iconWrapper.bottomAnchor),
         ]
         NSLayoutConstraint.activate(constraints)

@@ -23,7 +23,7 @@ class CardNumberTextField: BaseTextField<CardNumberTextFieldViewModel> {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
-        stack.spacing = .spacing_4
+        stack.spacing = 4
         for _ in 0..<4 {
             let imageView = UIImageView()
             imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +39,7 @@ class CardNumberTextField: BaseTextField<CardNumberTextFieldViewModel> {
     override init(frame: CGRect) {
         super.init(frame: frame)
         horizontalStack.addArrangedSubview(logoStack)
-        horizontalStack.addSpacer(.spacing_16)
+        horizontalStack.addSpacer(16)
     }
     
     required init?(coder: NSCoder) {

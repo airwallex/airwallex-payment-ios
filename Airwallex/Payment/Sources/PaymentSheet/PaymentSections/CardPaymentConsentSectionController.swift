@@ -174,7 +174,7 @@ class CardPaymentConsentSectionController: SectionController {
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             let group = NSCollectionLayoutGroup.vertical(layoutSize: itemSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = .init(horizontal: .spacing_16)
+            section.contentInsets = .init(horizontal: 16)
             
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(32))
             let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -190,13 +190,13 @@ class CardPaymentConsentSectionController: SectionController {
                 heightDimension: .estimated(32)
             )
             let consentItem = NSCollectionLayoutItem(layoutSize: consentSize)
-            consentItem.contentInsets = .init().trailing(.spacing_16)
+            consentItem.contentInsets = .init().trailing(16)
             let cvcSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .estimated(40)
             )
             let cvcItem = NSCollectionLayoutItem(layoutSize: cvcSize)
-            cvcItem.contentInsets = .init().horizontal(.spacing_16)
+            cvcItem.contentInsets = .init().horizontal(16)
             let group1 = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
@@ -211,7 +211,7 @@ class CardPaymentConsentSectionController: SectionController {
                 heightDimension: .estimated(52)
             )
             let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
-            buttonItem.contentInsets = .init().horizontal(.spacing_16)
+            buttonItem.contentInsets = .init().horizontal(16)
             let group2 = NSCollectionLayoutGroup.vertical(
                 layoutSize: buttonSize,
                 subitems: [group1, buttonItem]

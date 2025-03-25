@@ -98,8 +98,8 @@ private extension PaymentMethodCell {
             logo.heightAnchor.constraint(equalToConstant: 20),
             
             stack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            stack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: .spacing_4),
-            stack.widthAnchor.constraint(lessThanOrEqualTo: contentView.widthAnchor, constant: -.spacing_16),
+            stack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 4),
+            stack.widthAnchor.constraint(lessThanOrEqualTo: contentView.widthAnchor, constant: -16),
         ]
         NSLayoutConstraint.activate(constraints)
     }

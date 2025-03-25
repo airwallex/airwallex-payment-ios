@@ -78,7 +78,7 @@ public class PaymentSessionHandler: NSObject {
                       paymentResultDelegate: AWXPaymentResultDelegate?,
                       methodType: AWXPaymentMethodType? = nil) throws {
         do {
-            try AWXSession.validate(session: session)
+            try session.validate()
         } catch {
             throw HandlerError.invalidSession(underlyingError: error)
         }

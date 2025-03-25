@@ -106,11 +106,11 @@ private extension CardConsentCell {
         let constraints = [
             logo.widthAnchor.constraint(equalToConstant: 30),
             logo.heightAnchor.constraint(equalToConstant: 20),
-            logo.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacing_16),
+            logo.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logo.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            label.leadingAnchor.constraint(equalTo: logo.trailingAnchor, constant: .spacing_16),
+            label.leadingAnchor.constraint(equalTo: logo.trailingAnchor, constant: 16),
             label.trailingAnchor.constraint(lessThanOrEqualTo: button.leadingAnchor),
             
             button.topAnchor.constraint(equalTo: contentView.topAnchor),

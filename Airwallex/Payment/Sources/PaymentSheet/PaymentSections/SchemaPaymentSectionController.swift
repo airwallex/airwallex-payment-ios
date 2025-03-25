@@ -77,8 +77,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         let item = NSCollectionLayoutItem(layoutSize: layoutSize)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(horizontal: .spacing_16)
-        section.interGroupSpacing = .spacing_24
+        section.contentInsets = .init(horizontal: 16)
+        section.interGroupSpacing = 24
         return section
     }
     

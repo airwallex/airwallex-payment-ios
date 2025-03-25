@@ -38,7 +38,7 @@ class PaymentMethodListSeparator: UICollectionReusableView, ViewReusable {
     private let stack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.spacing = .spacing_8
+        view.spacing = 8
         view.alignment = .center
         return view
     }()

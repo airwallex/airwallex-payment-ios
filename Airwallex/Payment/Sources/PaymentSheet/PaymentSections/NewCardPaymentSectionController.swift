@@ -174,8 +174,8 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         let item = NSCollectionLayoutItem(layoutSize: layoutSize)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(horizontal: .spacing_16).top(.spacing_8)
-        section.interGroupSpacing = .spacing_16
+        section.contentInsets = .init(horizontal: 16).top(8)
+        section.interGroupSpacing = 16
         
         if !methodProvider.consents.isEmpty {
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(32))

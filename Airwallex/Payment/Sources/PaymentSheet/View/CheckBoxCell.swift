@@ -47,7 +47,7 @@ class CheckBoxCell: UICollectionViewCell, ViewConfigurable, ViewReusable {
     private let stack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.spacing = .spacing_4
+        view.spacing = 4
         view.alignment = .leading
         view.axis = .vertical
         return view

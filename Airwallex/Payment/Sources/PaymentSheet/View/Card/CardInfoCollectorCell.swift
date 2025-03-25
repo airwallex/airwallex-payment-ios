@@ -49,7 +49,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.horizontalStack.addArrangedSubview(imageView)
-        view.horizontalStack.addSpacer(.spacing_8)
+        view.horizontalStack.addSpacer(8)
         return view
     }()
     
@@ -64,7 +64,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     private let vStack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.spacing = .spacing_16
+        view.spacing = 16
         view.axis = .vertical
         return view
     }()
@@ -174,7 +174,7 @@ private extension CardInfoCollectorCell {
             titleLabel.topAnchor.constraint(equalTo: container.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            numberTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacing_4),
+            numberTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             numberTextField.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             numberTextField.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             
@@ -187,7 +187,7 @@ private extension CardInfoCollectorCell {
             cvcTextField.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             cvcTextField.bottomAnchor.constraint(equalTo: expiresTextField.bottomAnchor),
             
-            hintLabel.topAnchor.constraint(equalTo: cvcTextField.bottomAnchor, constant: .spacing_4),
+            hintLabel.topAnchor.constraint(equalTo: cvcTextField.bottomAnchor, constant: 4),
             hintLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             hintLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             hintLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor),

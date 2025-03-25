@@ -46,7 +46,7 @@ class PaymentMethodsViewController: AWXViewController {
     
     private lazy var collectionViewManager: CollectionViewManager = {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
-        listConfiguration.interSectionSpacing = .spacing_16
+        listConfiguration.interSectionSpacing = 16
         let manager = CollectionViewManager(
             viewController: self,
             sectionProvider: self,

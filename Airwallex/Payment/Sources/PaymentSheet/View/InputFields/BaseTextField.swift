@@ -42,14 +42,14 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         view.font = .awxFont(.body2)
         view.setContentHuggingPriority(.defaultLow - 50, for: .horizontal)
         view.setContentCompressionResistancePriority(.defaultHigh - 50, for: .horizontal)
-        view.textInsets = UIEdgeInsets(top: .spacing_12, left: .spacing_16, bottom: .spacing_12, right: .spacing_16)
+        view.textInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
         return view
     }()
     
     let verticalStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.spacing = .spacing_4
+        stack.spacing = 4
         stack.axis = .vertical
         return stack
     }()

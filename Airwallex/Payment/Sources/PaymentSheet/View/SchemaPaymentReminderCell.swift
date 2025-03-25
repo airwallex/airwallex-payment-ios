@@ -32,7 +32,7 @@ class SchemaPaymentReminderCell: UICollectionViewCell, ViewReusable {
     private let stack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.spacing = .spacing_8
+        view.spacing = 8
         view.alignment = .center
         return view
     }()
@@ -44,10 +44,10 @@ class SchemaPaymentReminderCell: UICollectionViewCell, ViewReusable {
         stack.addArrangedSubview(label)
         
         let constraints = [
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: .spacing_8),
+            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.spacing_8),
+            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
         ]
         NSLayoutConstraint.activate(constraints)
     }

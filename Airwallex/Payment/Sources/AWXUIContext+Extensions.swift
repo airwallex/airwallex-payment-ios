@@ -200,7 +200,7 @@ private extension AWXUIContext {
                                          paymentResultDelegate: AWXPaymentResultDelegate,
                                          style: LaunchStyle) throws {
         do {
-            try AWXSession.validate(session: session)
+            try session.validate()
         } catch {
             throw LaunchError.invalidSession(underlyingError: error)
         }

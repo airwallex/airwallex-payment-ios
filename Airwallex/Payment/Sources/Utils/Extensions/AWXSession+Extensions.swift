@@ -31,18 +31,18 @@ extension AWXSession {
         //  LocalizedError
         var errorDescription: String {
             switch self {
-            case .invalidPaymentIntent:
-                return NSLocalizedString("Invalid payment intent", bundle: .payment, comment: "AWXSession.ValidationError")
-            case .invalidCustomerId:
-                return NSLocalizedString("Invalid customer ID", bundle: .payment, comment: "AWXSession.ValidationError")
-            case .invalidSessionType:
-                return NSLocalizedString("Invalid payment session", bundle: .payment, comment: "AWXSession.ValidationError")
+            case .invalidPaymentIntent(let message):
+                return "Invalid payment intent: \(message)"
+            case .invalidCustomerId(let message):
+                return "Invalid customer ID: \(message)"
+            case .invalidSessionType(let message):
+                return "Invalid session type: \(message)"
             }
         }
     }
     
-    static func validate(session: AWXSession) throws {
-        if let session = session as? AWXOneOffSession {
+    func validate() throws {
+        if let session = self as? AWXOneOffSession {
             guard let intent = session.paymentIntent else {
                 throw ValidationError.invalidPaymentIntent("payment intent required")
             }
@@ -52,7 +52,7 @@ extension AWXSession {
             guard !intent.clientSecret.isEmpty else {
                 throw ValidationError.invalidPaymentIntent("client secret required for intent: \(intent.id)")
             }
-        } else if let session = session as? AWXRecurringWithIntentSession {
+        } else if let session = self as? AWXRecurringWithIntentSession {
             guard let intent = session.paymentIntent else {
                 throw ValidationError.invalidPaymentIntent("payment intent required")
             }
@@ -65,7 +65,7 @@ extension AWXSession {
             guard let customerId = session.customerId(), !customerId.isEmpty else {
                 throw ValidationError.invalidCustomerId("customer ID required")
             }
-        } else if let session = session as? AWXRecurringSession {
+        } else if let session = self as? AWXRecurringSession {
             guard let customerId = session.customerId(), !customerId.isEmpty else {
                 throw ValidationError.invalidCustomerId("customer ID required")
             }

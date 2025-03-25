@@ -67,8 +67,8 @@ class PaymentMethodListSectionController: SectionController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: .spacing_24, leading: .spacing_16, bottom: .spacing_8, trailing: .spacing_16)
-        section.interGroupSpacing = .spacing_8
+        section.contentInsets = .init(top: 24, leading: 16, bottom: 8, trailing: 16)
+        section.interGroupSpacing = 8
         
         if methodProvider.isApplePayAvailable {
             let headerSize = NSCollectionLayoutSize(
