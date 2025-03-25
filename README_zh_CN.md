@@ -309,7 +309,7 @@ options.totalPriceLabel = "COMPANY, INC."
 
 在结账时，使用 `AWXUIContext` 启动支付流程，用户能够通过支付列表选择您支持的支付方式。
 ``` swift
-AWXUIContext.launchPayment(
+try AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
     filterBy: "An optional array of payment method names used to filter the payment methods returned by the server"
@@ -318,7 +318,7 @@ AWXUIContext.launchPayment(
 ---
 #### 仅展示卡支付
 ```swift
-AWXUIContext.launchCardPayment(
+try AWXUIContext.launchCardPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
     supportedBrands: "accepted card brands, should not be empty"
@@ -328,7 +328,7 @@ AWXUIContext.launchCardPayment(
 > [!Tip]
 > 如果您想仅展示卡支付并希望能够使用已保存的卡支付，可以启动完整支付列表并通过 `filterBy` 参数限制仅展示卡支付
 ``` swift
-AWXUIContext.launchPayment(
+try AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
     filterBy: [AWXCardKey]
@@ -337,7 +337,7 @@ AWXUIContext.launchPayment(
 ---
 #### 按名称启动支付方式
 ```swift
-AWXUIContext.launchPayment(
+try AWXUIContext.launchPayment(
     name: "payment method name",
     from: "hosting view controller",
     session: "The session created above",
@@ -368,7 +368,7 @@ AWXTheme.shared().tintColor = .red
 #### 创建 PaymentSessionHandler 
 
 ```swift
-let paymentSessionHandler = PaymentSessionHandler(
+let paymentSessionHandler = try PaymentSessionHandler(
     session: "The session created above", 
     viewController: "hosting view controller which also handles AWXPaymentResultDelegate"
 )
@@ -382,7 +382,7 @@ self.paymentSessionHandler = paymentSessionHandler
 #### 使用卡支付
 ```swift
 // Confirm intent with card and billing
-paymentSessionHandler.startCardPayment(
+try paymentSessionHandler.startCardPayment(
     with: "The AWXCard object collected by your custom UI",
     billing: "The AWXPlaceDetails object collected by your custom UI"
 )
@@ -392,12 +392,12 @@ paymentSessionHandler.startCardPayment(
 
 - 使用 `AWXPaymentConsent` 支付 
 ``` swift
-paymentSessionHandler.startConsentPayment(with: "payment consent")
+try paymentSessionHandler.startConsentPayment(with: "payment consent")
 ```
 
 - 使用 consent ID 支付 - 仅当保存的卡是**网络令牌**时使用这种支付方式
 ``` swift
-paymentSessionHandler.startConsentPayment(withId: "consent ID")
+try paymentSessionHandler.startConsentPayment(withId: "consent ID")
 ```
 
 ---
@@ -408,7 +408,7 @@ paymentSessionHandler.startConsentPayment(withId: "consent ID")
 > 详情请参阅[设置 Apple Pay](#Apple-Pay)部分对 apple pay 进行设置
 > 
 ``` swift
-paymentSessionHandler.startApplePay()
+try paymentSessionHandler.startApplePay()
 ```
 
 ---
@@ -416,7 +416,7 @@ paymentSessionHandler.startApplePay()
 > [!IMPORTANT] 
 > 您应在 `additionalInfo` 中提供 "/api/v1/pa/config/payment_method_types/${payment method name}" 中指定的所有必填字段
 ``` swift
-paymentSessionHandler.startRedirectPayment(
+try paymentSessionHandler.startRedirectPayment(
     with: "payment method name",
     additionalInfo: "all required information"
 )
