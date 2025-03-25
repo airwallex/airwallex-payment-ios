@@ -41,11 +41,11 @@ extension AWXSchema {
             }
         }
         // osType
-        if let osTypeField = fields.first(where: { $0.name == AWXField.Name.osType }) {
+        if fields.contains(where: { $0.name == AWXField.Name.osType }) {
             params[AWXField.Name.osType] = "ios"
         }
         // country_code
-        if let countryCodeField = fields.first(where: { $0.name == AWXField.Name.countryCode }) {
+        if fields.contains(where: { $0.name == AWXField.Name.countryCode }) {
             params[AWXField.Name.countryCode] = countryCode
         }
         
