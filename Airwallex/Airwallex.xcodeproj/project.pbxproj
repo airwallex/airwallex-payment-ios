@@ -232,16 +232,6 @@
 		D81983E82D6F1438008008A3 /* AirwallexRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; };
 		D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D8AD269A2D6862E5002DD3FD /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
-		D8B479602D9398D50046EBD6 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B4795F2D9398D50046EBD6 /* Bundle+Extensions.swift */; };
-		D8B479612D9398D50046EBD6 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B4795F2D9398D50046EBD6 /* Bundle+Extensions.swift */; };
-		D8B479622D9398D50046EBD6 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B4795F2D9398D50046EBD6 /* Bundle+Extensions.swift */; };
-		D8B479632D9398D50046EBD6 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B4795F2D9398D50046EBD6 /* Bundle+Extensions.swift */; };
-		D8B479642D9398D50046EBD6 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B4795F2D9398D50046EBD6 /* Bundle+Extensions.swift */; };
-		D8B47BF32D93E6CC0046EBD6 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B47BF22D93E6CC0046EBD6 /* MockURLProtocol.swift */; };
-		D8B47BF42D93E6CC0046EBD6 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B47BF22D93E6CC0046EBD6 /* MockURLProtocol.swift */; };
-		D8B47BF52D93E6CC0046EBD6 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B47BF22D93E6CC0046EBD6 /* MockURLProtocol.swift */; };
-		D8B47BF62D93E6CC0046EBD6 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B47BF22D93E6CC0046EBD6 /* MockURLProtocol.swift */; };
-		D8B47BF72D93E6CC0046EBD6 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B47BF22D93E6CC0046EBD6 /* MockURLProtocol.swift */; };
 		D8B5996B2CF6F935005C3C1D /* AWXUIContext+Card.h in Headers */ = {isa = PBXBuildFile; fileRef = D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */; };
 		D8B5996C2CF6F935005C3C1D /* AWXUIContext+Card.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */; };
 		D8BD9E122D0191BF0045A892 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */; };
@@ -252,17 +242,7 @@
 		D8BD9E172D0191BF0045A892 /* Airwallex.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */; };
 		D8BD9E182D0191BF0045A892 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */; };
 		D8BD9E192D0191BF0045A892 /* CurrencyCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */; };
-		D8C3A00B2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */; };
-		D8C3A00C2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */; };
-		D8C3A00D2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */; };
-		D8C3A00E2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */; };
-		D8C3A00F2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */; };
 		D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
-		D8FAFB832D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */; };
-		D8FAFB842D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */; };
-		D8FAFB852D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */; };
-		D8FAFB862D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */; };
-		D8FAFB872D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */; };
 		E33BC6AC2EF302F6063E7D31 /* Pods_CoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D35E69816E855630C8898ADE /* Pods_CoreTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -659,16 +639,12 @@
 		D81983EA2D6F1C70008008A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
 		D84E94DA2D684F0800CDC04C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D8B4795F2D9398D50046EBD6 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
-		D8B47BF22D93E6CC0046EBD6 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXUIContext+Card.h"; sourceTree = "<group>"; };
 		D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXUIContext+Card.m"; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
 		D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
 		D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrencyCodes.json; sourceTree = "<group>"; };
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProviderDelegate.swift; sourceTree = "<group>"; };
-		D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPaymentResultDelegate.swift; sourceTree = "<group>"; };
 		F645D9A6F3BD26FCB581FFF9 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
 		F9330DB1F34C6DD83245F7CF /* Pods-RedirectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.release.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.release.xcconfig"; sourceTree = "<group>"; };
 		FC522BD223B734E323755856 /* Pods-RedirectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedirectTests.debug.xcconfig"; path = "Target Support Files/Pods-RedirectTests/Pods-RedirectTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -978,10 +954,6 @@
 			children = (
 				3C5A37FA27F29DD200CFC2EF /* AWXProviderDelegateSpy.h */,
 				3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */,
-				D8FAFB822D8ACC6400147805 /* MockPaymentResultDelegate.swift */,
-				D8C3A00A2D9157E200F005D8 /* MockProviderDelegate.swift */,
-				D8B4795F2D9398D50046EBD6 /* Bundle+Extensions.swift */,
-				D8B47BF22D93E6CC0046EBD6 /* MockURLProtocol.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -2045,10 +2017,6 @@
 				1862772329DFCE920002892A /* NSDataBase64Test.m in Sources */,
 				18E0571C29CA8AD70099388A /* AWXAnalyticsLoggerTest.m in Sources */,
 				188F72AC2B2AAD61005CBE9A /* AWXPaymentMethodListViewModelTest.m in Sources */,
-				D8C3A00D2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */,
-				D8B479622D9398D50046EBD6 /* Bundle+Extensions.swift in Sources */,
-				D8B47BF52D93E6CC0046EBD6 /* MockURLProtocol.swift in Sources */,
-				D8FAFB872D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */,
 				183FB6472BB6A74100FFDF0E /* AWXNextActionHandlerTest.m in Sources */,
 				0829FD022431D10800557DB2 /* AWXAddressTest.m in Sources */,
 				3C324F9327FC0BF200CF7315 /* AWXSessionInternalTest.m in Sources */,
@@ -2087,14 +2055,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8FAFB852D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */,
 				3C5A37F427ED53F400CFC2EF /* PKPaymentTokenRequestTest.m in Sources */,
-				D8B479632D9398D50046EBD6 /* Bundle+Extensions.swift in Sources */,
-				D8B47BF42D93E6CC0046EBD6 /* MockURLProtocol.swift in Sources */,
 				3C5A37F827ED677C00CFC2EF /* AWXSessionRequestTest.m in Sources */,
 				3C5A37F227ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m in Sources */,
 				3CE9BA302806E02F005B70C3 /* AWXPlaceDetailsPKContactTest.m in Sources */,
-				D8C3A00F2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */,
 				3CE9BA2A2806D923005B70C3 /* PKContactRequestTest.m in Sources */,
 				3C5A37FF27F2DDB400CFC2EF /* AWXProviderDelegateSpy.m in Sources */,
 				3C5A37F627ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m in Sources */,
@@ -2140,11 +2104,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8B47BF72D93E6CC0046EBD6 /* MockURLProtocol.swift in Sources */,
-				D8C3A00B2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */,
-				D8FAFB832D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */,
 				183FB6432BB6A31800FFDF0E /* AWXProviderDelegateSpy.m in Sources */,
-				D8B479642D9398D50046EBD6 /* Bundle+Extensions.swift in Sources */,
 				18FA911628DD744B00F96D97 /* AWXCardViewModelTests.m in Sources */,
 				1829B8C4291B3B7000D0D2CA /* AWXCardProviderTests.m in Sources */,
 			);
@@ -2168,11 +2128,7 @@
 				18E0571629C95FDB0099388A /* AWXProviderDelegateSpy.m in Sources */,
 				18E0571529C95A6A0099388A /* AWXRedirectActionProviderTests.m in Sources */,
 				186277DB2A381A240002892A /* AWXSchemaProviderTests.m in Sources */,
-				D8FAFB862D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */,
 				1803601F2873D73A003EA943 /* AWXPaymentFormViewModelTests.m in Sources */,
-				D8C3A00E2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */,
-				D8B479602D9398D50046EBD6 /* Bundle+Extensions.swift in Sources */,
-				D8B47BF32D93E6CC0046EBD6 /* MockURLProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2187,10 +2143,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8B479612D9398D50046EBD6 /* Bundle+Extensions.swift in Sources */,
-				D8C3A00C2D9157E200F005D8 /* MockProviderDelegate.swift in Sources */,
-				D8B47BF62D93E6CC0046EBD6 /* MockURLProtocol.swift in Sources */,
-				D8FAFB842D8ACC6400147805 /* MockPaymentResultDelegate.swift in Sources */,
 				D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

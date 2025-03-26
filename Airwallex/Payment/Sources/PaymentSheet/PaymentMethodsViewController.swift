@@ -213,7 +213,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
             layout.contentInsets = .init(top: 32, leading: 16, bottom: 8, trailing: 16)
             
             let controller = SimpleSectionController(
-                section: .listTitle,
+                section: PaymentSectionType.listTitle,
                 item: "list_title",
                 layout: layout) { [weak self] context, item, indexPath in
                     guard let self else { return UICollectionViewCell() }
