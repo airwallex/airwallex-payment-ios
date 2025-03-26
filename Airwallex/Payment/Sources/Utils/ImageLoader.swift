@@ -9,7 +9,12 @@
 import UIKit
 
 actor ImageFetcher {
+    private var session: URLSession
     private var networkTasks = [URL: Task<Data, any Error>]()
+    
+    init(session: URLSession) {
+        self.session = session
+    }
     
     fileprivate func requestImageData(_ imageURL: URL) async throws -> Data {
 
@@ -21,7 +26,7 @@ actor ImageFetcher {
         
         // creat a new task
         let newTask = Task {
-            let (data, _) = try await URLSession.shared.data(from: imageURL)
+            let (data, _) = try await session.data(from: imageURL)
             return data
         }
         networkTasks[imageURL] = newTask
@@ -66,6 +71,7 @@ actor ImageFetcher {
         }
         // start a new task and bind it to the view
         let newTask = Task {
+            // Ensure task cleanup in case of early exit
             defer {
                 // cleanup `viewToTaskMap`
                 self.viewTasks.removeObject(forKey: view)
@@ -77,11 +83,13 @@ actor ImageFetcher {
                     // if the task is cancelled, don't set image to imageView
                     throw ImageFetcherError.cancelled
                 }
-                
-                guard let image = UIImage(data: data) else {
+                let scale = await UIScreen.main.scale
+                guard let image = UIImage(data: data, scale: scale) else {
                     throw ImageFetcherError.invalidData
                 }
                 return image
+            } catch ImageFetcherError.invalidData {
+                throw ImageFetcherError.invalidData
             } catch {
                 throw ImageFetcherError.networkError(underlying: error)
             }
@@ -98,15 +106,25 @@ actor ImageFetcher {
 public class ImageLoader {
     
     private let cache = NSCache<NSURL, UIImage>()
-    private let fetcher = ImageFetcher()
+    private let fetcher: ImageFetcher
     
-    public init(){}
+    public init(session: URLSession = URLSession.shared){
+        self.fetcher = ImageFetcher(session: session)
+    }
     
     public func cachedImage(_ imageURL: URL) -> UIImage? {
         cache.object(forKey: imageURL as NSURL)
     }
     
-    public func getImage(_ imageURL: URL, for view: UIView) async throws -> UIImage {
+    public func updateCache(_ image: UIImage?, imageURL: URL) {
+        if let image {
+            cache.setObject(image, forKey: imageURL as NSURL)
+        } else {
+            cache.removeObject(forKey: imageURL as NSURL)
+        }
+    }
+    
+    public func loadImage(_ imageURL: URL, for view: UIView) async throws -> UIImage {
         let key = imageURL as NSURL
         if let image = cache.object(forKey: key) {
             return image
@@ -126,7 +144,7 @@ public extension UIImageView {
             self.image = placeholder
             Task {
                 do {
-                    let image = try await imageLoader.getImage(imageURL, for: self)
+                    let image = try await imageLoader.loadImage(imageURL, for: self)
                     self.image = image
                 } catch {
                     debugLog(error.localizedDescription)

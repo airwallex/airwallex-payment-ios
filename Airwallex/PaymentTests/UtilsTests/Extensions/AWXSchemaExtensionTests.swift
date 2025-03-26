@@ -17,7 +17,7 @@ class AWXSchemaExtensionTests: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        mockSchema = Bundle.decode(file: "schema_test_online_banking")!
+        mockSchema = Bundle.decode(file: "online_banking_schema_payload")!
     }
     
     func testBankField() {
