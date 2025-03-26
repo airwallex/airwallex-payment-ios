@@ -15,7 +15,7 @@ extension AWXCard {
     convenience init(name: String, cardNumber: String, expiry: String, cvc: String) {
         self.init()
         self.name = name
-        self.number = cardNumber.filterIllegalCharacters(in: .whitespacesAndNewlines)
+        self.number = cardNumber.filterIllegalCharacters(in: .decimalDigits.inverted)
         self.expiryMonth = String(expiry.prefix(2))
         self.expiryYear = "20\(expiry.suffix(2))"
         self.cvc = cvc

@@ -144,30 +144,33 @@ class PaymentSessionHandlerTests: XCTestCase {
         }
         
         mockMethodType.name = AWXApplePayKey
+        mockSession.applePayOptions = AWXApplePayOptions(merchantIdentifier: "merchant_id")
+        XCTAssertNoThrow(try mockSessionHandler.startApplePay())
+        
+        mockSession.applePayOptions = nil
         XCTAssertThrowsError(try mockSessionHandler.startApplePay()) { error in
             guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
-                  case AWXApplePayProvider.ValidationError.applePayOptionNotFound = error else {
-                XCTFail("Expected AWXApplePayProvider.ValidationError.applePayOptionNotFound but got \(error)")
+                  case AWXApplePayProvider.ValidationError.invalidApplePayOptions(_) = error else {
+                XCTFail("Expected AWXApplePayProvider.ValidationError.invalidApplePayOptions but got \(error)")
                 return
             }
         }
         
-        let options = AWXApplePayOptions(merchantIdentifier: "")
-        mockSession.applePayOptions = options
+        mockSession.applePayOptions = AWXApplePayOptions(merchantIdentifier: "")
         XCTAssertThrowsError(try mockSessionHandler.startApplePay()) { error in
             guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
-                  case AWXApplePayProvider.ValidationError.merchantIdRequired = error else {
-                XCTFail("Expected AWXApplePayProvider.ValidationError.merchantIdRequired but got \(error)")
+                  case AWXApplePayProvider.ValidationError.invalidApplePayOptions = error else {
+                XCTFail("Expected AWXApplePayProvider.ValidationError.invalidApplePayOptions but got \(error)")
                 return
             }
         }
         
-        options.merchantIdentifier = "123"
-        options.supportedNetworks = options.supportedNetworks + [PKPaymentNetwork.eftpos]
+        mockSession.applePayOptions = AWXApplePayOptions(merchantIdentifier: "merchant_id")
+        mockSession.applePayOptions?.supportedNetworks = [PKPaymentNetwork.eftpos]
         XCTAssertThrowsError(try mockSessionHandler.startApplePay()) { error in
             guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
-                  case AWXApplePayProvider.ValidationError.paymentNetworkNotSupported = error else {
-                XCTFail("Expected AWXApplePayProvider.ValidationError.paymentNetworkNotSupported but got \(error)")
+                  case AWXApplePayProvider.ValidationError.invalidApplePayOptions = error else {
+                XCTFail("Expected AWXApplePayProvider.ValidationError.invalidApplePayOptions but got \(error)")
                 return
             }
         }

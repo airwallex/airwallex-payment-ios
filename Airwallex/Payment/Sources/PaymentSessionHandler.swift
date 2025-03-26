@@ -46,7 +46,7 @@ public class PaymentSessionHandler: NSObject {
     }
     let session: AWXSession
     
-    private var actionProvider: AWXDefaultProvider!
+    private(set) var actionProvider: AWXDefaultProvider!
     
     private weak var _viewController: UIViewController?
     
@@ -122,22 +122,17 @@ public class PaymentSessionHandler: NSObject {
     func startCardPayment(with card: AWXCard,
                           billing: AWXPlaceDetails?,
                           saveCard: Bool = false) throws {
-        do {
-            try AWXCardProvider.validate(
-                session: session,
-                methodType: methodType,
-                card: card,
-                billing: billing
-            )
-        } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
-        }
         
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
             paymentMethodType: methodType
         )
+        do {
+            try cardProvider.validate(card: card, billing: billing)
+        } catch {
+            throw HandlerError.invalidPayment(underlyingError: error)
+        }
         actionProvider = cardProvider
         cardProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
     }
@@ -148,16 +143,16 @@ public class PaymentSessionHandler: NSObject {
     ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
     ///   If The payment method details, which may require additional input such as a CVC for validation.
     func startConsentPayment(with consent: AWXPaymentConsent) throws {
-        do {
-            try AWXCardProvider.validate(session: session, methodType: methodType, consent: consent)
-        } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
-        }
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
             paymentMethodType: methodType
         )
+        do {
+            try cardProvider.validate(consent: consent)
+        } catch {
+            throw HandlerError.invalidPayment(underlyingError: error)
+        }
         actionProvider = cardProvider
         if let method = consent.paymentMethod,
            let card = method.card,
@@ -173,16 +168,16 @@ public class PaymentSessionHandler: NSObject {
     /// Initiates a payment using a consent ID.
     /// - Parameter consentId: The previously generated consent identifier.
     func startConsentPayment(withId consentId: String) throws {
-        do {
-            try AWXCardProvider.validate(session: session, methodType: methodType, consentId: consentId)
-        } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
-        }
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
             paymentMethodType: methodType
         )
+        do {
+            try cardProvider.validate(consentId: consentId)
+        } catch {
+            throw HandlerError.invalidPayment(underlyingError: error)
+        }
         actionProvider = cardProvider
         // legacy implementation
         cardProvider.confirmPaymentIntent(withPaymentConsentId: consentId)
@@ -195,15 +190,16 @@ public class PaymentSessionHandler: NSObject {
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     func startRedirectPayment(with name: String, additionalInfo: [String: String]?) throws {
+        let redirectAction = AWXRedirectActionProvider(
+            delegate: self,
+            session: session,
+            paymentMethodType: methodType
+        )
         do {
-            try AWXRedirectActionProvider.validate(session: session, methodType: methodType, name: name)
+            try redirectAction.validate(name: name)
         } catch {
             throw HandlerError.invalidPayment(underlyingError: error)
         }
-        let redirectAction = AWXRedirectActionProvider(
-            delegate: self,
-            session: session
-        )
         actionProvider = redirectAction
         redirectAction.confirmPaymentIntent(with: name, additionalInfo: additionalInfo)
     }
@@ -216,16 +212,16 @@ extension PaymentSessionHandler {
     ///     receives a cancellation callback if the user dismisses the sheet.
     ///   - If `false`, dismissing the Apple Pay sheet does not trigger a cancellation callback,
     func startApplePay(cancelPaymentOnDismiss: Bool) throws {
-        do {
-            try AWXApplePayProvider.validate(session: session, methodType: methodType)
-        } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
-        }
         let applePayProvider = AWXApplePayProvider(
             delegate: self,
             session: session,
             paymentMethodType: methodType
         )
+        do {
+            try applePayProvider.validate()
+        } catch {
+            throw HandlerError.invalidPayment(underlyingError: error)
+        }
         actionProvider = applePayProvider
         if cancelPaymentOnDismiss {
             applePayProvider.startPayment()
@@ -240,18 +236,18 @@ extension PaymentSessionHandler {
     /// - Parameters:
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
     func startRedirectPayment(with paymentMethod: AWXPaymentMethod) throws {
-        do {
-            try AWXRedirectActionProvider.validate(session: session, methodType: methodType, name: paymentMethod.type)
-        } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
-        }
-        let schemaProvider = AWXSchemaProvider(
+        let redirectAction = AWXRedirectActionProvider(
             delegate: self,
             session: session,
             paymentMethodType: methodType
         )
-        actionProvider = schemaProvider
-        schemaProvider.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
+        do {
+            try redirectAction.validate(name: paymentMethod.type)
+        } catch {
+            throw HandlerError.invalidPayment(underlyingError: error)
+        }
+        actionProvider = redirectAction
+        redirectAction.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
     }
 }
 

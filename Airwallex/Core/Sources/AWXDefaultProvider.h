@@ -110,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Original payment method response
  */
-@property (nonatomic, readonly) AWXPaymentMethodType *paymentMethodType;
+@property (nonatomic, readonly, nullable) AWXPaymentMethodType *paymentMethodType;
 
 /**
  A payment method.
