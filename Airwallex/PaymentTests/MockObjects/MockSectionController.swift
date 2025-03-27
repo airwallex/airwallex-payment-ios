@@ -17,8 +17,8 @@ class MockSectionController: SectionController {
     private(set) var didEndDisplaying: (UICollectionViewCell, ItemType, IndexPath)? = nil
     private(set) var willDisplaySupplementaryViewCalled: (UICollectionReusableView, IndexPath)? = nil
     private(set) var didEndDisplayingSupplementaryViewCalled: (UICollectionReusableView, IndexPath)? = nil
-    private(set) var sectionWillDisplayCalled: Bool = false
-    private(set) var sectionDidEndDisplayingCalled: Bool = false
+    var sectionWillDisplayCalled: Bool = false
+    var sectionDidEndDisplayingCalled: Bool = false
     private(set) var cellForItemAtIndexPathCalled: (String, IndexPath)? = nil
     private(set) var supplementaryViewForElementKindAtIndexPathCalled: (String, IndexPath)? = nil
     
