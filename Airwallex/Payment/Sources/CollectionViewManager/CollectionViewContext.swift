@@ -94,7 +94,6 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
                      invalidateLayout: Bool,
                      configurer: ((UICollectionViewCell) -> Void)? = nil,
                      animatingDifferences: Bool = false) {
-        var snapshot = dataSource.snapshot()
         guard !items.isEmpty else { return }
         for item in items {
             guard let cell = cellForItem(item) else {

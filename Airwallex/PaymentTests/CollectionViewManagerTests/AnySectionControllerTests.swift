@@ -57,9 +57,9 @@ class AnySectionControllerTests: XCTestCase {
 
         // Test didEndDisplaying(cell:itemIdentifier:at:)
         anySectionController.didEndDisplaying(cell: mockCell, itemIdentifier: "Item1", at: indexPath)
-        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.0, mockCell)
-        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.1, "Item1")
-        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.2, indexPath)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.0, mockCell)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.1, "Item1")
+        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.2, indexPath)
 
         // Test willDisplay(supplementaryView:at:)
         let mockSupplementaryView = UICollectionReusableView()

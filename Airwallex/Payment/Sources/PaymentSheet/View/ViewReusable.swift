@@ -14,7 +14,7 @@ protocol ViewReusable: UIView {
 
 extension ViewReusable {
     static var reuseIdentifier: String {
-        return String(String(describing: self))
+        return String(describing: self)
     }
 }
 

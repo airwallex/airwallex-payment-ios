@@ -56,9 +56,9 @@ final class SectionDisplayHandlerTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         sectionDisplayHandler.willDisplay(cell: mockCell, for: mockAnySectionController, itemIdentifier: "Item1", indexPath: indexPath)
         sectionDisplayHandler.didEndDisplaying(cell: mockCell, indexPath: indexPath)
-        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.0, mockCell)
-        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.1, "Item1")
-        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.2, indexPath)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.0, mockCell)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.1, "Item1")
+        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.2, indexPath)
     }
     
     @MainActor func testWillDisplaySupplementaryView() {

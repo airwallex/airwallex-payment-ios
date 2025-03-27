@@ -42,6 +42,12 @@ import XCTest
         XCTAssertEqual(snapshot.sectionIdentifiers, mockProvider.sections())
         XCTAssertEqual(snapshot.itemIdentifiers(inSection: Section.A), mockProvider.sectionControllerA.items)
         XCTAssertEqual(snapshot.itemIdentifiers(inSection: Section.B), mockProvider.sectionControllerB.items)
+        
+        let boundarySupplementaryItems = (mockManager.collectionView.collectionViewLayout as! UICollectionViewCompositionalLayout).configuration.boundarySupplementaryItems
+        XCTAssert(boundarySupplementaryItems.count == mockProvider.listBoundaryItemProviders()?.count)
+        
+        XCTAssertEqual(boundarySupplementaryItems.first?.elementKind, mockProvider.listBoundaryItemProviders()?.first?.elementKind)
+        XCTAssertEqual(boundarySupplementaryItems.first?.alignment, mockProvider.listBoundaryItemProviders()?.first?.layout.alignment)
     }
     
     func testAppendSection() async {
@@ -200,7 +206,7 @@ import XCTest
         XCTAssertTrue(mockProvider.sectionControllerA.sectionDisplaying)
         
         // Reset lifecycle tracking properties
-        mockProvider.sectionControllerA.didEndDisplayingCell = nil
+        mockProvider.sectionControllerA.didEndDisplayingCellCalled = nil
         mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
         
         // Perform updates with force reload
@@ -208,8 +214,8 @@ import XCTest
         mockManager.collectionView.layoutIfNeeded()
         
         // Verify didEndDisplaying was called (because of force reload)
-        XCTAssertNotNil(mockProvider.sectionControllerA.didEndDisplayingCell)
-        XCTAssertEqual(mockProvider.sectionControllerA.didEndDisplayingCell?.1, .A1) // First item in Section A
+        XCTAssertNotNil(mockProvider.sectionControllerA.didEndDisplayingCellCalled)
+        XCTAssertEqual(mockProvider.sectionControllerA.didEndDisplayingCellCalled?.1, .A1) // First item in Section A
         
         // check section displaying status not changed
         XCTAssertTrue(mockProvider.sectionControllerA.sectionDisplaying)
@@ -285,9 +291,9 @@ import XCTest
         XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items)
         
         // Reset lifecycle tracking properties for Section A and Section B
-        mockProvider.sectionControllerA.didEndDisplayingCell = nil
+        mockProvider.sectionControllerA.didEndDisplayingCellCalled = nil
         mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
-        mockProvider.sectionControllerB.didEndDisplayingCell = nil
+        mockProvider.sectionControllerB.didEndDisplayingCellCalled = nil
         mockProvider.sectionControllerB.cellForItemAtIndexPathCalled = nil
         
         // Perform updates on Section B with force reload
@@ -295,85 +301,15 @@ import XCTest
         mockManager.collectionView.layoutIfNeeded()
         
         // Verify Section A was not force reloaded
-        XCTAssertNil(mockProvider.sectionControllerA.didEndDisplayingCell)
+        XCTAssertNil(mockProvider.sectionControllerA.didEndDisplayingCellCalled)
         XCTAssertNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
         
         // Verify Section B was force reloaded
-        XCTAssertNotNil(mockProvider.sectionControllerB.didEndDisplayingCell)
+        XCTAssertNotNil(mockProvider.sectionControllerB.didEndDisplayingCellCalled)
         XCTAssertNotNil(mockProvider.sectionControllerB.cellForItemAtIndexPathCalled)
         
         // Verify section displaying status
         XCTAssertTrue(mockProvider.sectionControllerA.sectionDisplaying)
         XCTAssertTrue(mockProvider.sectionControllerB.sectionDisplaying)
-    }
-}
-
-fileprivate enum Section: CaseIterable {
-    case A
-    case B
-}
-
-fileprivate enum Item {
-    case A1
-    case A2
-    case B1
-    case B2
-}
-
-@MainActor
-fileprivate class MockSectionProvider: CollectionViewSectionProvider {
-    
-    enum Status {
-        case A
-        case B
-        case AB
-        case BA
-        case None
-    }
-    
-    var status = Status.A
-    
-    lazy var sectionControllerA: MockSectionController<Section, Item> = {
-        return MockSectionController(
-            section: Section.A,
-            items: [Item.A1, Item.A2]
-        )
-    }()
-    lazy var anySectionControllerA = sectionControllerA.anySectionController()
-    
-    lazy var sectionControllerB: MockSectionController<Section, Item> = {
-        return MockSectionController(
-            section: Section.B,
-            items: [Item.B1, Item.B2]
-        )
-    }()
-    lazy var anySectionControllerB = sectionControllerB.anySectionController()
-    
-    func sections() -> [Section] {
-        switch status {
-        case .A:
-            [.A]
-        case .B:
-            [.B]
-        case .AB:
-            [.A, .B]
-        case .BA:
-            [.B, .A]
-        case .None:
-            []
-        }
-    }
-    
-    func sectionController(for section: Section) -> AnySectionController<Section, Item> {
-        switch section {
-        case .A:
-            return anySectionControllerA
-        case .B:
-            return anySectionControllerB
-        }
-    }
-    
-    func listBoundaryItemProviders() -> [Payment.BoundarySupplementaryItemProvider]? {
-        return nil
     }
 }

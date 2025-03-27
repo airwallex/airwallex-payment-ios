@@ -14,12 +14,13 @@ class MockSectionController<SectionType: Hashable & Sendable, ItemType: Hashable
     var updateItemsIfNecessaryCalled: Bool = false
     var didSelectItemCalled: (ItemType, IndexPath)? = nil
     var willDisplayCellCalled: (UICollectionViewCell, ItemType, IndexPath)? = nil
-    var didEndDisplayingCell: (UICollectionViewCell, ItemType, IndexPath)? = nil
+    var didEndDisplayingCellCalled: (UICollectionViewCell, ItemType, IndexPath)? = nil
     var willDisplaySupplementaryViewCalled: (UICollectionReusableView, IndexPath)? = nil
     var didEndDisplayingSupplementaryViewCalled: (UICollectionReusableView, IndexPath)? = nil
     var sectionDisplaying: Bool = false
     var cellForItemAtIndexPathCalled: (ItemType, IndexPath)? = nil
     var supplementaryViewForElementKindAtIndexPathCalled: (String, IndexPath)? = nil
+    var sectionLayoutCalled: (any NSCollectionLayoutEnvironment)? = nil
     
     var context: Payment.CollectionViewContext<SectionType, ItemType>!
     
@@ -44,6 +45,8 @@ class MockSectionController<SectionType: Hashable & Sendable, ItemType: Hashable
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+        sectionLayoutCalled = environment
+        
         let size = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .absolute(100)
@@ -88,7 +91,7 @@ class MockSectionController<SectionType: Hashable & Sendable, ItemType: Hashable
     
     func didEndDisplaying(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath) {
         // store parameters in property for testing
-        didEndDisplayingCell = (cell, itemIdentifier, indexPath)
+        didEndDisplayingCellCalled = (cell, itemIdentifier, indexPath)
     }
     
     func willDisplay(supplementaryView: UICollectionReusableView, at indexPath: IndexPath) {
