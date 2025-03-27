@@ -12,7 +12,7 @@ import XCTest
 
 class AnySectionControllerTests: XCTestCase {
     var mockContext: MockCollectionViewContext!
-    var mockSectionController: MockSectionController!
+    var mockSectionController: MockSectionController<String, String>!
     
     @MainActor override func setUp() {
         super.setUp()
@@ -57,9 +57,9 @@ class AnySectionControllerTests: XCTestCase {
 
         // Test didEndDisplaying(cell:itemIdentifier:at:)
         anySectionController.didEndDisplaying(cell: mockCell, itemIdentifier: "Item1", at: indexPath)
-        XCTAssertEqual(mockSectionController.didEndDisplaying?.0, mockCell)
-        XCTAssertEqual(mockSectionController.didEndDisplaying?.1, "Item1")
-        XCTAssertEqual(mockSectionController.didEndDisplaying?.2, indexPath)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.0, mockCell)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.1, "Item1")
+        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.2, indexPath)
 
         // Test willDisplay(supplementaryView:at:)
         let mockSupplementaryView = UICollectionReusableView()
@@ -74,10 +74,10 @@ class AnySectionControllerTests: XCTestCase {
 
         // Test sectionWillDisplay
         anySectionController.sectionWillDisplay()
-        XCTAssertTrue(mockSectionController.sectionWillDisplayCalled)
+        XCTAssertTrue(mockSectionController.sectionDisplaying)
 
         // Test sectionDidEndDisplaying
         anySectionController.sectionDidEndDisplaying()
-        XCTAssertTrue(mockSectionController.sectionDidEndDisplayingCalled)
+        XCTAssertFalse(mockSectionController.sectionDisplaying)
     }
 }

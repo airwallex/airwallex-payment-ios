@@ -110,7 +110,7 @@ class SimpleSectionControllerTests: XCTestCase {
 }
 
 // Mock for NSCollectionLayoutEnvironment
-class NSCollectionLayoutEnvironmentMock: NSObject, NSCollectionLayoutEnvironment {
+private class NSCollectionLayoutEnvironmentMock: NSObject, NSCollectionLayoutEnvironment {
     var container: NSCollectionLayoutContainer {
         return NSCollectionLayoutContainerMock()
     }
@@ -120,7 +120,7 @@ class NSCollectionLayoutEnvironmentMock: NSObject, NSCollectionLayoutEnvironment
 }
 
 // Mock for NSCollectionLayoutContainer
-class NSCollectionLayoutContainerMock: NSObject, NSCollectionLayoutContainer {
+private class NSCollectionLayoutContainerMock: NSObject, NSCollectionLayoutContainer {
     var effectiveContentInsets: NSDirectionalEdgeInsets {
         return contentInsets
     }

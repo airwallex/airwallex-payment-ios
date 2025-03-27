@@ -43,7 +43,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         self.section = PaymentSectionType.schemaPayment(name)
         self.methodProvider = methodProvider
         super.init()
-        self.updateItemsIfNecessary()
+
     }
     
     // MARK: - SectionController
@@ -55,7 +55,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     var items: [String] {
         var items = [String]()
         
-        if let bankSelectionViewModel {
+        if bankSelectionViewModel != nil {
             items.append(Item.bankName)
         }
         
@@ -128,7 +128,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 
                 // update bank selection
                 var bankList: [AWXBank]?
-                if let bankField = schema.bankField {
+                if schema.bankField != nil {
                     let banks = try await methodProvider.getBankList(name: name).items
                     guard !banks.isEmpty else {
                         throw NSLocalizedString("Invalid schema", bundle: .payment, comment: "").asError()
@@ -195,6 +195,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     
     func sectionWillDisplay() {
         AnalyticsLogger.log(paymentMethodView: name)
+        // check schema data before displaying to user
+        updateItemsIfNecessary()
     }
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol CollectionViewSectionProvider: AnyObject {
+@MainActor protocol CollectionViewSectionProvider: AnyObject {
     associatedtype SectionType: Hashable & Sendable
     associatedtype ItemType: Hashable & Sendable
     func sections() -> [SectionType]
@@ -19,11 +19,11 @@ protocol CollectionViewSectionProvider: AnyObject {
 @MainActor
 class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable, SectionProvider: CollectionViewSectionProvider>: NSObject, UICollectionViewDelegate where SectionProvider.SectionType == SectionType, SectionProvider.ItemType == ItemType {
     
-    private weak var sectionDataSource: SectionProvider?
-    private var sections = [SectionType]()
-    private var sectionControllers = [SectionType: AnySectionController<SectionType, ItemType>]()
+    weak var sectionDataSource: SectionProvider?
+    private(set) var sections = [SectionType]()
+    private(set) var sectionControllers = [SectionType: AnySectionController<SectionType, ItemType>]()
     
-    private var diffableDataSource: UICollectionViewDiffableDataSource<SectionType, ItemType>!
+    private(set) var diffableDataSource: UICollectionViewDiffableDataSource<SectionType, ItemType>!
     private var context: CollectionViewContext<SectionType, ItemType>!
     private(set) var collectionView: UICollectionView!
     

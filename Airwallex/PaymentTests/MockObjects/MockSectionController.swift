@@ -9,41 +9,45 @@
 import UIKit
 @testable import Payment
 
-class MockSectionController: SectionController {
+class MockSectionController<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable>: SectionController {
     
-    private(set) var updateItemsIfNecessaryCalled: Bool = false
-    private(set) var didSelectItemCalled: (String, IndexPath)? = nil
-    private(set) var willDisplayCellCalled: (UICollectionViewCell, ItemType, IndexPath)? = nil
-    private(set) var didEndDisplaying: (UICollectionViewCell, ItemType, IndexPath)? = nil
-    private(set) var willDisplaySupplementaryViewCalled: (UICollectionReusableView, IndexPath)? = nil
-    private(set) var didEndDisplayingSupplementaryViewCalled: (UICollectionReusableView, IndexPath)? = nil
-    var sectionWillDisplayCalled: Bool = false
-    var sectionDidEndDisplayingCalled: Bool = false
-    private(set) var cellForItemAtIndexPathCalled: (String, IndexPath)? = nil
-    private(set) var supplementaryViewForElementKindAtIndexPathCalled: (String, IndexPath)? = nil
+    var updateItemsIfNecessaryCalled: Bool = false
+    var didSelectItemCalled: (ItemType, IndexPath)? = nil
+    var willDisplayCellCalled: (UICollectionViewCell, ItemType, IndexPath)? = nil
+    var didEndDisplayingCell: (UICollectionViewCell, ItemType, IndexPath)? = nil
+    var willDisplaySupplementaryViewCalled: (UICollectionReusableView, IndexPath)? = nil
+    var didEndDisplayingSupplementaryViewCalled: (UICollectionReusableView, IndexPath)? = nil
+    var sectionDisplaying: Bool = false
+    var cellForItemAtIndexPathCalled: (ItemType, IndexPath)? = nil
+    var supplementaryViewForElementKindAtIndexPathCalled: (String, IndexPath)? = nil
     
-    var context: Payment.CollectionViewContext<String, String>!
+    var context: Payment.CollectionViewContext<SectionType, ItemType>!
     
-    var section: String
+    var section: SectionType
     
-    var items: [String]
+    var items: [ItemType]
     
-    init(section: String, items: [String]) {
+    init(section: SectionType, items: [ItemType]) {
         self.section = section
         self.items = items
     }
     
-    func bind(context: Payment.CollectionViewContext<String, String>) {
+    func bind(context: Payment.CollectionViewContext<SectionType, ItemType>) {
         self.context = context
     }
     
-    func cell(for item: String, at indexPath: IndexPath) -> UICollectionViewCell {
+    func cell(for item: ItemType, at indexPath: IndexPath) -> UICollectionViewCell {
         cellForItemAtIndexPathCalled = (item, indexPath)
-        return UICollectionViewCell()
+        let cell = context.dequeueReusableCell(LabelCell.self, for: item, indexPath: indexPath)
+        cell.label.text = "\(section)-\(item)"
+        return cell
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let size = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(100)
+        )
         let mockSectionLayout = NSCollectionLayoutSection(
             group: NSCollectionLayoutGroup.horizontal(
                 layoutSize: size,
@@ -71,7 +75,7 @@ class MockSectionController: SectionController {
     func supplementaryView(for elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         supplementaryViewForElementKindAtIndexPathCalled = (elementKind, indexPath)
         // provide supplementary view in you concrete SectionController
-        return UICollectionReusableView()
+        return context.dequeueReusableSupplementaryView(ofKind: elementKind, viewClass: PaymentMethodListSeparator.self, indexPath: indexPath)
     }
     
     func collectionView(didSelectItem itemIdentifier: ItemType, at indexPath: IndexPath) {
@@ -84,7 +88,7 @@ class MockSectionController: SectionController {
     
     func didEndDisplaying(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath) {
         // store parameters in property for testing
-        didEndDisplaying = (cell, itemIdentifier, indexPath)
+        didEndDisplayingCell = (cell, itemIdentifier, indexPath)
     }
     
     func willDisplay(supplementaryView: UICollectionReusableView, at indexPath: IndexPath) {
@@ -96,10 +100,10 @@ class MockSectionController: SectionController {
     }
     
     func sectionWillDisplay() {
-        sectionWillDisplayCalled = true
+        sectionDisplaying = true
     }
     
     func sectionDidEndDisplaying() {
-        sectionDidEndDisplayingCalled = true
+        sectionDisplaying = false
     }
 }

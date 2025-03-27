@@ -12,7 +12,7 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     private(set) weak var viewController: UIViewController?
     private weak var collectionView: UICollectionView!
     private weak var layout: UICollectionViewCompositionalLayout!
-    private(set) var dataSource: UICollectionViewDiffableDataSource<Section, Item>
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>
     private var _performUpdates: (Bool, Bool) -> Void
     private var _performUpdatesForSection: (Section, Bool, Bool, Bool) -> Void
     
@@ -187,7 +187,7 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         registeredSupplementaryViews.insert(key)
     }
     
-    func dequeueReusableCell<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type, for item: String, indexPath: IndexPath) -> T {
+    func dequeueReusableCell<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type, for item: Item, indexPath: IndexPath) -> T {
         register(cellClass)
         return collectionView.dequeueReusableCell(withReuseIdentifier: cellClass.reuseIdentifier, for: indexPath) as! T
     }

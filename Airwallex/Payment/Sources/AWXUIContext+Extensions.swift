@@ -219,8 +219,8 @@ private extension AWXUIContext {
                 throw LaunchError.invalidViewHierarchy("hossting view controller is not embeded in navigation controller")
             }
             nav.pushViewController(paymentVC, animated: true)
-            AWXUIContext.shared().paymentUIDismissAction = { [weak hostingVC, weak nav] completion in
-                guard let hostingVC, let nav else {
+            AWXUIContext.shared().paymentUIDismissAction = { [weak paymentVC, weak nav] completion in
+                guard let paymentVC, let nav else {
                     completion?()
                     return
                 }
@@ -228,7 +228,13 @@ private extension AWXUIContext {
                 CATransaction.setCompletionBlock {
                     completion?()
                 }
-                nav.popToViewController(hostingVC, animated: true)
+                guard let index = nav.viewControllers.firstIndex(of: paymentVC),
+                      let targetVC = nav.viewControllers[safe: index - 1] else {
+                    nav.popViewController(animated: true)
+                    CATransaction.commit()
+                    return
+                }
+                nav.popToViewController(targetVC, animated: true)
                 CATransaction.commit()
             }
         case .present:

@@ -12,7 +12,7 @@ import XCTest
 final class SectionDisplayHandlerTests: XCTestCase {
     
     private var sectionDisplayHandler: SectionDisplayHandler<String, String>!
-    private var mockSectionController: MockSectionController!
+    private var mockSectionController: MockSectionController<String, String>!
     private var mockAnySectionController: AnySectionController<String, String>!
     private var mockCell: UICollectionViewCell!
     private var mockSupplementaryView: UICollectionReusableView!
@@ -56,9 +56,9 @@ final class SectionDisplayHandlerTests: XCTestCase {
         let indexPath = IndexPath(row: 0, section: 0)
         sectionDisplayHandler.willDisplay(cell: mockCell, for: mockAnySectionController, itemIdentifier: "Item1", indexPath: indexPath)
         sectionDisplayHandler.didEndDisplaying(cell: mockCell, indexPath: indexPath)
-        XCTAssertEqual(mockSectionController.didEndDisplaying?.0, mockCell)
-        XCTAssertEqual(mockSectionController.didEndDisplaying?.1, "Item1")
-        XCTAssertEqual(mockSectionController.didEndDisplaying?.2, indexPath)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.0, mockCell)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.1, "Item1")
+        XCTAssertEqual(mockSectionController.didEndDisplayingCell?.2, indexPath)
     }
     
     @MainActor func testWillDisplaySupplementaryView() {
@@ -79,34 +79,35 @@ final class SectionDisplayHandlerTests: XCTestCase {
     @MainActor func testSectionWillDisplay() {
         let indexPath = IndexPath(row: 0, section: 0)
         sectionDisplayHandler.willDisplay(cell: mockCell, for: mockAnySectionController, itemIdentifier: "Item1", indexPath: indexPath)
-        XCTAssertTrue(mockSectionController.sectionWillDisplayCalled)
+        XCTAssertTrue(mockSectionController.sectionDisplaying)
     }
     
     @MainActor func testSectionWillDisplaySupplementaryView() {
         let indexPath = IndexPath(row: 0, section: 0)
         sectionDisplayHandler.willDisplay(supplementaryView: mockSupplementaryView, for: mockAnySectionController, indexPath: indexPath)
-        XCTAssertTrue(mockSectionController.sectionWillDisplayCalled)
+        XCTAssertTrue(mockSectionController.sectionDisplaying)
     }
     
     @MainActor func testSectionWillDisplayMultipleViews() {
         let indexPath = IndexPath(row: 0, section: 0)
         sectionDisplayHandler.willDisplay(supplementaryView: mockSupplementaryView, for: mockAnySectionController, indexPath: indexPath)
-        XCTAssertTrue(mockSectionController.sectionWillDisplayCalled)
+        XCTAssertTrue(mockSectionController.sectionDisplaying)
         
-        mockSectionController.sectionWillDisplayCalled = false
+        mockSectionController.sectionDisplaying = false
         sectionDisplayHandler.willDisplay(cell: mockCell, for: mockAnySectionController, itemIdentifier: "Item1", indexPath: indexPath)
-        XCTAssertFalse(mockSectionController.sectionWillDisplayCalled)
+        XCTAssertFalse(mockSectionController.sectionDisplaying)
     }
     
     @MainActor func testSectionDidEndDisplaying() async {
         let indexPath = IndexPath(row: 0, section: 0)
         sectionDisplayHandler.willDisplay(cell: mockCell, for: mockAnySectionController, itemIdentifier: "Item1", indexPath: indexPath)
         sectionDisplayHandler.willDisplay(supplementaryView: mockSupplementaryView, for: mockAnySectionController, indexPath: indexPath)
+        XCTAssertTrue(mockSectionController.sectionDisplaying)
         sectionDisplayHandler.didEndDisplaying(cell: mockCell, indexPath: indexPath)
-        XCTAssertFalse(mockSectionController.sectionDidEndDisplayingCalled)
+        XCTAssertTrue(mockSectionController.sectionDisplaying)
         sectionDisplayHandler.didEndDisplaying(supplementaryView: mockSupplementaryView, indexPath: indexPath)
-        XCTAssertFalse(mockSectionController.sectionDidEndDisplayingCalled)
+        XCTAssertTrue(mockSectionController.sectionDisplaying)
         try? await Task.sleep(nanoseconds: 10)
-        XCTAssertTrue(mockSectionController.sectionDidEndDisplayingCalled)
+        XCTAssertFalse(mockSectionController.sectionDisplaying)
     }
 }

@@ -44,4 +44,12 @@ class MockCollectionViewContext: CollectionViewContext<String, String> {
     override func cellForItem(_ item: String) -> UICollectionViewCell? {
         return mockCell
     }
+    
+    override func dequeueReusableCell<T>(_ cellClass: T.Type, for item: String, indexPath: IndexPath) -> T where T : UICollectionViewCell, T : ViewReusable {
+        return T()
+    }
+    
+    override func dequeueReusableSupplementaryView<T>(ofKind elementKind: String, viewClass: T.Type, indexPath: IndexPath) -> T where T : UICollectionReusableView, T : ViewReusable {
+        return T()
+    }
 }
