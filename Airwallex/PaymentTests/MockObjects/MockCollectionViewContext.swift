@@ -10,8 +10,11 @@ import UIKit
 @testable import Payment
 
 class MockCollectionViewContext: CollectionViewContext<String, String> {
+    
+    private var mockCollectionView: UICollectionView
+    private var mockViewController: UIViewController
     init() {
-        let mockViewController = UIViewController()
+        mockViewController = UIViewController()
         let size = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .fractionalHeight(1)
@@ -23,7 +26,7 @@ class MockCollectionViewContext: CollectionViewContext<String, String> {
             )
         )
         let mockCollectionViewLayout = UICollectionViewCompositionalLayout(section: mockSectionLayout)
-        let mockCollectionView = UICollectionView(frame: .zero, collectionViewLayout: mockCollectionViewLayout)
+        mockCollectionView = UICollectionView(frame: .zero, collectionViewLayout: mockCollectionViewLayout)
         let mockDataSource = UICollectionViewDiffableDataSource<String, String>(collectionView: mockCollectionView) { _, _, _ in return nil }
         
         super.init(
