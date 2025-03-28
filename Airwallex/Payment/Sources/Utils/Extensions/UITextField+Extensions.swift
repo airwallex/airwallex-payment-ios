@@ -40,7 +40,7 @@ extension UITextField {
             keyboardType = .emailAddress
         case .phoneNumber:
             textContentType = .telephoneNumber
-            keyboardType = .asciiCapableNumberPad
+            keyboardType = .phonePad
         case .country:
             textContentType = .countryName
         case .state:

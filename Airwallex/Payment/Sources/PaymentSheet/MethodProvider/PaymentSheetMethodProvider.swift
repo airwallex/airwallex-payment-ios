@@ -86,4 +86,12 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider, DebugLoggable {
             throw ErrorMessage(rawValue: NSLocalizedString("No payment methods available for this transaction.", bundle: .payment, comment: ""))
         }
     }
+    
+    func getPaymentMethodTypeDetails(name: String) async throws -> AWXGetPaymentMethodTypeResponse {
+        let request = AWXGetPaymentMethodTypeRequest()
+        request.name = name
+        request.transactionMode = session.transactionMode()
+        request.lang = session.lang
+        return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse
+    }
 }

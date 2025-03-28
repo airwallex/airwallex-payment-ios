@@ -166,10 +166,29 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         }
                     )
                     if field.uiType == AWXField.UIType.phone {
-                        if let prefix = AWXField.phonePrefix(countryCode: session.countryCode, currencyCode: session.currency()),
-                           !prefix.isEmpty {
-                            viewModel.text = prefix
+                        let prefix = AWXField.phonePrefix(
+                            countryCode: session.countryCode,
+                            currencyCode: session.currency()
+                        )
+                        
+                        if let prefix, !prefix.isEmpty {
+                            // prefill with phone number in shipping address if it has the expected prefix
+                            if let phoneNumber = self.session.billing?.phoneNumber {
+                                if phoneNumber.hasPrefix(prefix) {
+                                    viewModel.text = phoneNumber
+                                } else {
+                                    viewModel.text = prefix
+                                }
+                            }
                             viewModel.inputValidator = PrefixPhoneNumberValidator(prefix: prefix)
+                        } else {
+                            viewModel.text = self.session.billing?.phoneNumber
+                        }
+                    } else if field.uiType == AWXField.UIType.email {
+                        viewModel.text = self.session.billing?.email
+                    } else if field.uiType == AWXField.UIType.text {
+                        if field.name == "shopper_name" {
+                            viewModel.text = self.session.billing?.fullName
                         }
                     }
                     

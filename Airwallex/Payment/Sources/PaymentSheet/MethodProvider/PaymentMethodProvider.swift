@@ -42,6 +42,11 @@ enum PaymentMethodProviderUpdateType {
     /// Fetches the available payment method types.
     /// - Throws: An error if the request fails.
     func getPaymentMethodTypes() async throws
+    
+    /// Retrieves the payment method details for a payment method, typically used for LPM.
+    /// - Parameter name: The name of the payment method.
+    /// - Returns: A response containing the payment method details, including a list of `AWXSchema` objects.
+    func getPaymentMethodTypeDetails(name: String) async throws -> AWXGetPaymentMethodTypeResponse
 }
 
 extension PaymentMethodProvider {
@@ -73,17 +78,6 @@ extension PaymentMethodProvider {
             let deleted = consents.remove(at: index)
             updatePublisher.send(PaymentMethodProviderUpdateType.consentDeleted(deleted))
         }
-    }
-    
-    /// Retrieves the payment method details for a payment method, typically used for LPM.
-    /// - Parameter name: The name of the payment method.
-    /// - Returns: A response containing the payment method details, including a list of `AWXSchema` objects.
-    func getPaymentMethodTypeDetails(name: String) async throws -> AWXGetPaymentMethodTypeResponse{
-        let request = AWXGetPaymentMethodTypeRequest()
-        request.name = name
-        request.transactionMode = session.transactionMode()
-        request.lang = session.lang
-        return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse
     }
     
     /// Retrieves a list of available banks for certain online banking payment methods that require bank selection.

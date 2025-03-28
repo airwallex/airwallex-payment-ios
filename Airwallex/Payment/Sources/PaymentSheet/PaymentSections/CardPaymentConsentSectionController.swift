@@ -298,7 +298,6 @@ private extension CardPaymentConsentSectionController {
                 Task {
                     do {
                         try await self.methodProvider.disable(consent: consent)
-                        self.context.delete(items: [ consent.id ])
                         self.debugLog("remove consent successfully. ID: \(consent.id)")
                     } catch {
                         self.context.viewController?.showAlert(message: error.localizedDescription)

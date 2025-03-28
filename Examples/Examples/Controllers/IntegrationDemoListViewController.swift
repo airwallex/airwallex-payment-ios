@@ -268,7 +268,7 @@ private extension IntegrationDemoListViewController {
                 try AWXUIContext.launchPayment(
                     from: self,
                     session: session,
-                    filterBy: [ AWXApplePayKey, AWXCardKey, "alipaycn", "alipayhk" ]
+                    filterBy: [ AWXApplePayKey, AWXCardKey, "alipaycn"]
                 )
             } catch {
                 showAlert(message: error.localizedDescription)

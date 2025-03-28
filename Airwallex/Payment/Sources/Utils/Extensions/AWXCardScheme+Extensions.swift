@@ -25,4 +25,25 @@ extension AWXCardScheme {
         self.init()
         self.name = name
     }
+    
+    var brandType: AWXBrandType {
+        switch name {
+        case AWXCardBrand.visa.rawValue:
+            return .visa
+        case AWXCardBrand.mastercard.rawValue:
+            return .mastercard
+        case AWXCardBrand.amex.rawValue:
+            return .amex
+        case AWXCardBrand.JCB.rawValue:
+            return .JCB
+        case AWXCardBrand.dinersClub.rawValue:
+            return .dinersClub
+        case AWXCardBrand.discover.rawValue:
+            return .discover
+        case AWXCardBrand.unionPay.rawValue:
+            return .unionPay
+        default:
+            return .unknown
+        }
+    }
 }

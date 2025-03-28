@@ -45,6 +45,7 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
     let apiClient = AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
     
     private var methodTypeDetails: AWXGetPaymentMethodTypeResponse?
+    private var task: Task<AWXGetPaymentMethodTypeResponse, Error>?
     
     func getPaymentMethodTypes() async throws {
         let response = try await getPaymentMethodTypeDetails(name: name)
@@ -71,17 +72,23 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
         updatePublisher.send(.listUpdated)
     }
     
-    /// Override default implementation in protocol extension
-    /// - Parameter name: name of the payment method
-    /// - Returns: Details (schema) of the payment method
-    func getPaymentMethodTypeDetails(name: String? = nil) async throws -> AWXGetPaymentMethodTypeResponse {
+    func getPaymentMethodTypeDetails(name: String) async throws -> AWXGetPaymentMethodTypeResponse {
         if let methodTypeDetails, name == self.name {
             return methodTypeDetails
         }
-        let request = AWXGetPaymentMethodTypeRequest()
-        request.name = name ?? self.name
-        request.transactionMode = session.transactionMode()
-        request.lang = session.lang
-        return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse
+        guard let task, !task.isCancelled else {
+            let request = AWXGetPaymentMethodTypeRequest()
+            request.name = name
+            request.transactionMode = session.transactionMode()
+            request.lang = session.lang
+            let task = Task {
+                return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse
+            }
+            self.task = task
+            let response = try await task.value
+            self.task = nil
+            return response
+        }
+        return try await task.value
     }
 }

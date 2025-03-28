@@ -163,8 +163,16 @@ extension PaymentMethodsViewController: AWXPageViewTrackable {
 
 extension PaymentMethodsViewController: CollectionViewSectionProvider {
     
-    private var singleNonApplePayPaymentMethodAvailable: Bool {
-        !methodProvider.isApplePayAvailable && methodProvider.methods.count == 1
+    private var listTitle: String {
+        let defaultTitle = NSLocalizedString("Payment Methods", bundle: .payment, comment: "title for payment sheet")
+        guard methodProvider.methods.count == 1 else {
+            return defaultTitle
+        }
+        if methodProvider.isApplePayAvailable {
+            return methodProvider.applePayMethodType?.displayName ?? defaultTitle
+        } else {
+            return methodProvider.selectedMethod?.displayName ?? defaultTitle
+        }
     }
     
     private var displayMethodList: Bool {
@@ -218,11 +226,7 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
                 layout: layout) { [weak self] context, item, indexPath in
                     guard let self else { return UICollectionViewCell() }
                     let cell = context.dequeueReusableCell(LabelCell.self, for: item, indexPath: indexPath)
-                    if self.singleNonApplePayPaymentMethodAvailable {
-                        cell.label.text = self.methodProvider.selectedMethod?.displayName
-                    } else {
-                        cell.label.text = NSLocalizedString("Payment Methods", bundle: .payment, comment: "title for payment sheet")
-                    }
+                    cell.label.text = self.listTitle
                     return cell
                 }
             return controller.anySectionController()

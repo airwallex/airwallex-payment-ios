@@ -12,8 +12,7 @@ import Core
 #endif
 
 class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardNumberTextFieldConfiguring {
-    let supportedBrands = AWXBrandType.supportedBrands
-    
+    let supportedBrands: [AWXBrandType]
     var currentBrand: AWXBrandType {
         return formatter.currentBrand
     }
@@ -23,6 +22,7 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardNumberT
     init(supportedCardSchemes: [AWXCardScheme],
          editingEventObserver: UserEditingEventObserver?,
          reconfigureHandler: @escaping ReconfigureHandler) {
+        supportedBrands = supportedCardSchemes.map { $0.brandType }
         super.init(
             textFieldType: .cardNumber,
             placeholder: "1234 1234 1234 1234",
