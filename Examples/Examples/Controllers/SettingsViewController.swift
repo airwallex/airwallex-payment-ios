@@ -69,31 +69,13 @@ class SettingsViewController: UIViewController {
         return view
     }()
     
-    private lazy var switchForName: ConfigSwitchView = {
-        let view = ConfigSwitchView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var switchForEmail: ConfigSwitchView = {
         let view = ConfigSwitchView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var switchForPhone: ConfigSwitchView = {
-        let view = ConfigSwitchView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var switchForAddress: ConfigSwitchView = {
-        let view = ConfigSwitchView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var switchForCountryCode: ConfigSwitchView = {
         let view = ConfigSwitchView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -235,11 +217,8 @@ private extension SettingsViewController {
         
         stack.addArrangedSubview(optionForEnvironment)
         stack.addArrangedSubview(optionForNextTrigger)
-        stack.addArrangedSubview(switchForName)
         stack.addArrangedSubview(switchForEmail)
-        stack.addArrangedSubview(switchForPhone)
         stack.addArrangedSubview(switchForAddress)
-        stack.addArrangedSubview(switchForCountryCode)
         stack.addArrangedSubview(switchForAutoCapture)
         stack.addArrangedSubview(fieldForCustomerId)
         
@@ -313,6 +292,8 @@ private extension SettingsViewController {
                     self.settings.environment = environment
                     //  customerId are stored by environment
                     self.settings.customerId = ExamplesKeys.readValue("customerId", environment: environment)
+                    self.settings.clientId = ExamplesKeys.readValue("clientId", environment: environment)
+                    self.settings.apiKey = ExamplesKeys.readValue("apiKey", environment: environment)
                     self.reloadData()
                 }
             }
@@ -353,15 +334,6 @@ private extension SettingsViewController {
     }
     
     func setupSwitches() {
-        switchForName.setup(
-            ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires Name", comment: pageName),
-                isOn: settings.requiresName,
-                action: { [weak self] isOn in
-                    self?.settings.requiresName = isOn
-                }
-            )
-        )
         switchForEmail.setup(
             ConfigSwitchViewModel(
                 title: NSLocalizedString("Requires Email", comment: pageName),
@@ -371,30 +343,12 @@ private extension SettingsViewController {
                 }
             )
         )
-        switchForPhone.setup(
-            ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires Phone", comment: pageName),
-                isOn: settings.requiresPhone,
-                action: { [weak self] isOn in
-                    self?.settings.requiresPhone = isOn
-                }
-            )
-        )
         switchForAddress.setup(
             ConfigSwitchViewModel(
                 title: NSLocalizedString("Requires Address", comment: pageName),
                 isOn: settings.requiresAddress,
                 action: { [weak self] isOn in
                     self?.settings.requiresAddress = isOn
-                }
-            )
-        )
-        switchForCountryCode.setup(
-            ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires Country Code", comment: pageName),
-                isOn: settings.requiresCountryCode,
-                action: { [weak self] isOn in
-                    self?.settings.requiresCountryCode = isOn
                 }
             )
         )
@@ -536,6 +490,7 @@ private extension SettingsViewController {
         
         let env = ExamplesKeys.environment
         ExamplesKeys.allSettings = settings
+        print(settings)
         // exit if needed
         guard env == ExamplesKeys.environment else {
             showAlert(message: "Relaunch (manually) required for the new environment to take effect.", buttonTitle: "Exit") {
@@ -543,7 +498,6 @@ private extension SettingsViewController {
             }
             return
         }
-        print(settings)
         showAlert(message: "Settings saved", buttonTitle: "Close") {
             self.navigationController?.popViewController(animated: true)
         }

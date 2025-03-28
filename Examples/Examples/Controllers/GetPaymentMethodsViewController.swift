@@ -35,7 +35,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         }
         
         Task {
-            if let image = try? await imageLoader.getImage(logoURL, for: imageView) {
+            if let image = try? await imageLoader.loadImage(logoURL, for: imageView) {
                 imageView.image = image
                 cell.setNeedsLayout()
             } else {

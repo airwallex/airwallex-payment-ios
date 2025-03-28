@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("WeChat Log: \(log)")
         }
         //  customize theme color of the payment UI by setting tintColor on AWXTheme
-        AWXTheme.shared().tintColor = UIColor.systemBrown
+//        AWXTheme.shared().tintColor = UIColor.systemBrown
         UISwitch.appearance().onTintColor = .awxColor(.theme)
         UIView.appearance().tintColor = .awxColor(.theme)
         return true

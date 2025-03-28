@@ -316,7 +316,7 @@ private extension IntegrationDemoListViewController {
             do {
                 let card = try await confirmCardInfo(testCard)
                 let session = try await createPaymentSession(force3DS: force3DS)
-                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler = try PaymentSessionHandler(session: session, viewController: self)
                 try paymentSessionHandler?.startCardPayment(
                     with: card,
                     billing: DemoDataSource.shippingAddress,
@@ -334,7 +334,7 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler = try PaymentSessionHandler(session: session, viewController: self)
                 try paymentSessionHandler?.startApplePay()
             } catch {
                 showAlert(message: error.localizedDescription)
@@ -348,7 +348,7 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler = try PaymentSessionHandler(session: session, viewController: self)
                 try paymentSessionHandler?.startRedirectPayment(
                     with: "paypal",
                     additionalInfo: ["shopper_name": "Hector", "country_code": "CN"]
@@ -559,21 +559,16 @@ private extension IntegrationDemoListViewController {
     }
     
     func updateRequiredBillingContactFields(_ session: AWXSession) {
-        var requiredBillingContactFields: RequiredBillingContactFields = []
-        if ExamplesKeys.requiresName {
-            requiredBillingContactFields.insert(.name)
-        }
+        var requiredBillingContactFields: RequiredBillingContactFields = session.requiredBillingContactFields
         if ExamplesKeys.requiresEmail {
             requiredBillingContactFields.insert(.email)
-        }
-        if ExamplesKeys.requiresPhone {
-            requiredBillingContactFields.insert(.phone)
+        } else {
+            requiredBillingContactFields.remove(.email)
         }
         if ExamplesKeys.requiresAddress {
             requiredBillingContactFields.insert(.address)
-        }
-        if ExamplesKeys.requiresCountryCode {
-            requiredBillingContactFields.insert(.countryCode)
+        } else {
+            requiredBillingContactFields.remove(.address)
         }
         session.requiredBillingContactFields = requiredBillingContactFields
     }
