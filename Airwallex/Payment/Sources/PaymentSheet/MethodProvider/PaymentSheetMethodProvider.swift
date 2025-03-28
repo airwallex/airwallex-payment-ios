@@ -12,7 +12,7 @@ import Combine
 import Core
 #endif
 
-final class PaymentSheetMethodProvider: PaymentMethodProvider, DebugLoggable {
+final class PaymentSheetMethodProvider: PaymentMethodProvider {
     
     private let provider: AWXPaymentMethodListViewModel
     var session: AWXSession {

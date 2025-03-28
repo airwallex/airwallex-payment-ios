@@ -10,7 +10,7 @@ import UIKit
 
 /// this protocol is designed to work with `CollectionViewManager`
 /// SectionController  define the behavior of a section in a UICollectionView
-@MainActor protocol SectionController: DebugLoggable  {
+@MainActor protocol SectionController  {
     associatedtype SectionType: Hashable, Sendable
     associatedtype ItemType: Hashable, Sendable
     

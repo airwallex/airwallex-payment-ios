@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable>: DebugLoggable {
+class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable> {
     private(set) weak var viewController: UIViewController?
     private weak var collectionView: UICollectionView!
     private weak var layout: UICollectionViewCompositionalLayout!

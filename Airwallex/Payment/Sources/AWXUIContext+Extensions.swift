@@ -86,7 +86,9 @@ import Core
                                          style: LaunchStyle = .push) throws {
         if let methodNames {
             guard !methodNames.isEmpty else {
-                throw LaunchError.invalidMethodFilter("filter should not be empty")
+                let error = LaunchError.invalidMethodFilter("filter should not be empty")
+                debugLog(error.localizedDescription)
+                throw error
             }
             session.paymentMethods = methodNames
             if let session = session as? AWXOneOffSession,
@@ -170,10 +172,14 @@ import Core
         if name == AWXCardKey {
             guard let supportedBrands,
                   !supportedBrands.isEmpty else {
-                throw LaunchError.invalidCardBrand("supportedBrands should not be empty for card payment")
+                let error = LaunchError.invalidCardBrand("supportedBrands should not be empty for card payment")
+                debugLog(error.localizedDescription)
+                throw error
             }
             guard Set(supportedBrands).isSubset(of: AWXCardBrand.all) else {
-                throw LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")
+                let error = LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")
+                debugLog(error.localizedDescription)
+                throw error
             }
         }
         let methodProvider = SinglePaymentMethodProvider(
@@ -202,12 +208,16 @@ private extension AWXUIContext {
         do {
             try session.validate()
         } catch {
-            throw LaunchError.invalidSession(underlyingError: error)
+            let error = LaunchError.invalidSession(underlyingError: error)
+            debugLog(error.localizedDescription)
+            throw error
         }
         
         guard let secret = AWXAPIClientConfiguration.shared().clientSecret,
               !secret.isEmpty else {
-            throw LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
+            let error = LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
+            debugLog(error.localizedDescription)
+            throw error
         }
         
         AWXUIContext.shared().session = session
@@ -216,7 +226,9 @@ private extension AWXUIContext {
         switch style {
         case .push:
             guard let nav = hostingVC.navigationController else {
-                throw LaunchError.invalidViewHierarchy("hossting view controller is not embeded in navigation controller")
+                let error = LaunchError.invalidViewHierarchy("hossting view controller is not embeded in navigation controller")
+                debugLog(error.localizedDescription)
+                throw error
             }
             nav.pushViewController(paymentVC, animated: true)
             AWXUIContext.shared().paymentUIDismissAction = { [weak paymentVC, weak nav] completion in

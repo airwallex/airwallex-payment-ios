@@ -80,7 +80,9 @@ public class PaymentSessionHandler: NSObject {
         do {
             try session.validate()
         } catch {
-            throw HandlerError.invalidSession(underlyingError: error)
+            let error = HandlerError.invalidSession(underlyingError: error)
+            debugLog(error.localizedDescription)
+            throw error
         }
         self.session = session
         self._viewController = viewController
@@ -131,7 +133,9 @@ public class PaymentSessionHandler: NSObject {
         do {
             try cardProvider.validate(card: card, billing: billing)
         } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
+            let error = HandlerError.invalidPayment(underlyingError: error)
+            debugLog(error.localizedDescription)
+            throw error
         }
         actionProvider = cardProvider
         cardProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
@@ -151,7 +155,9 @@ public class PaymentSessionHandler: NSObject {
         do {
             try cardProvider.validate(consent: consent)
         } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
+            let error = HandlerError.invalidPayment(underlyingError: error)
+            debugLog(error.localizedDescription)
+            throw error
         }
         actionProvider = cardProvider
         if let method = consent.paymentMethod,
@@ -176,7 +182,9 @@ public class PaymentSessionHandler: NSObject {
         do {
             try cardProvider.validate(consentId: consentId)
         } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
+            let error = HandlerError.invalidPayment(underlyingError: error)
+            debugLog(error.localizedDescription)
+            throw error
         }
         actionProvider = cardProvider
         // legacy implementation
@@ -198,7 +206,9 @@ public class PaymentSessionHandler: NSObject {
         do {
             try redirectAction.validate(name: name)
         } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
+            let error = HandlerError.invalidPayment(underlyingError: error)
+            debugLog(error.localizedDescription)
+            throw error
         }
         actionProvider = redirectAction
         redirectAction.confirmPaymentIntent(with: name, additionalInfo: additionalInfo)
@@ -220,7 +230,9 @@ extension PaymentSessionHandler {
         do {
             try applePayProvider.validate()
         } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
+            let error = HandlerError.invalidPayment(underlyingError: error)
+            debugLog(error.localizedDescription)
+            throw error
         }
         actionProvider = applePayProvider
         if cancelPaymentOnDismiss {
@@ -244,7 +256,9 @@ extension PaymentSessionHandler {
         do {
             try redirectAction.validate(name: paymentMethod.type)
         } catch {
-            throw HandlerError.invalidPayment(underlyingError: error)
+            let error = HandlerError.invalidPayment(underlyingError: error)
+            debugLog(error.localizedDescription)
+            throw error
         }
         actionProvider = redirectAction
         redirectAction.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
