@@ -298,10 +298,10 @@ private extension CardPaymentConsentSectionController {
                 Task {
                     do {
                         try await self.methodProvider.disable(consent: consent)
-                        self.debugLog("remove consent successfully. ID: \(consent.id)")
+                        debugLog("remove consent successfully. ID: \(consent.id)")
                     } catch {
                         self.context.viewController?.showAlert(message: error.localizedDescription)
-                        self.debugLog("removing consent failed. ID: \(consent.id)")
+                        debugLog("removing consent failed. ID: \(consent.id)")
                     }
                     self.context.viewController?.stopLoading()
                 }
@@ -343,12 +343,12 @@ private extension CardPaymentConsentSectionController {
             RiskLogger.log(.clickPaymentButton, screen: .consent)
         }
         do {
-            paymentSessionHandler = try PaymentSessionHandler(
+            paymentSessionHandler = PaymentSessionHandler(
                 session: session,
                 viewController: viewController,
                 paymentResultDelegate: AWXUIContext.shared().delegate
             )
-            try paymentSessionHandler?.startConsentPayment(with: consent)
+            try paymentSessionHandler?.confirmConsentPayment(with: consent)
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)
         }

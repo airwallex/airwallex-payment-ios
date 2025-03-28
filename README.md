@@ -316,7 +316,7 @@ Customers will only be able to select the cards of the above payment networks du
 Upon checkout, use `AWXUIContext` to present the payment flow where the user will be able to select the payment method.
 swift
 ``` swift
-try AWXUIContext.launchPayment(
+AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
     filterBy: "An optional array of payment method names used to filter the payment methods returned by the server"
@@ -325,7 +325,7 @@ try AWXUIContext.launchPayment(
 ---
 #### Launch Card Payment Directly
 ```swift
-try AWXUIContext.launchCardPayment(
+AWXUIContext.launchCardPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
     supportedBrands: "accepted card brands, should not be empty"
@@ -336,7 +336,7 @@ try AWXUIContext.launchCardPayment(
 > If you want to show card payment only but still want to be able to pay with saved cards, you can launch
 > payment sheet by passing [AWXCardKey] as parameter of `filterBy:`
 ``` swift
-try AWXUIContext.launchPayment(
+AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
     filterBy: [AWXCardKey]
@@ -345,7 +345,7 @@ try AWXUIContext.launchPayment(
 ---
 #### Launch Payment Method by Name
 ```swift
-try AWXUIContext.launchPayment(
+AWXUIContext.launchPayment(
     name: "payment method name",
     from: "hosting view controller",
     session: "The session created above",
@@ -386,7 +386,7 @@ self.paymentSessionHandler = paymentSessionHandler
 #### Pay with card
 ```swift
 // Confirm intent with card and billing
-try paymentSessionHandler.startCardPayment(
+paymentSessionHandler.startCardPayment(
     with: "The AWXCard object collected by your custom UI",
     billing: "The AWXPlaceDetails object collected by your custom UI"
 )
@@ -396,12 +396,12 @@ try paymentSessionHandler.startCardPayment(
 
 - Pay with consent object - Confirm intent with a payment consent object AWXPaymentConsent)
 ``` swift
-try paymentSessionHandler.startConsentPayment(with: "payment consent")
+paymentSessionHandler.startConsentPayment(with: "payment consent")
 ```
 
 - Pay with consent ID - Confirm intent with a valid payment consent ID only when the saved card is **network token**
 ``` swift
-try paymentSessionHandler.startConsentPayment(withId: "consent ID")
+paymentSessionHandler.startConsentPayment(withId: "consent ID")
 ```
 ---
 #### Pay with Apple Pay
@@ -410,14 +410,14 @@ try paymentSessionHandler.startConsentPayment(withId: "consent ID")
 > 
 > Refer to section [Set Up Apple Pay](#Apple-Pay) for more details.
 ``` swift
-try paymentSessionHandler.startApplePay()
+paymentSessionHandler.startApplePay()
 ```
 ---
 #### Pay with Redirect
 > [!IMPORTANT] 
 > You should provide all required fields defined in "/api/v1/pa/config/payment_method_types/${payment method name}" in `additionalInfo`
 ``` swift
-try paymentSessionHandler.startRedirectPayment(
+paymentSessionHandler.startRedirectPayment(
     with: "payment method name",
     additionalInfo: "all required information"
 )

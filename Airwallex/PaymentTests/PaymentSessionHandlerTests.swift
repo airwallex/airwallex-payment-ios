@@ -97,7 +97,7 @@ class PaymentSessionHandlerTests: XCTestCase {
             )
         }
         XCTAssertThrowsError(try test1()) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidSession(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidSession(underlyingError: error) = error,
                   case AWXSession.ValidationError.invalidSessionType(_) = error else {
                 XCTFail("Expected AWXSession.ValidationError.invalidSessionType but got \(error)")
                 return
@@ -111,7 +111,7 @@ class PaymentSessionHandlerTests: XCTestCase {
             )
         }
         XCTAssertThrowsError(try test2()) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidSession(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidSession(underlyingError: error) = error,
                   case AWXSession.ValidationError.invalidPaymentIntent(_) = error else {
                 XCTFail("Expected AWXSession.ValidationError.invalidPaymentIntent but got \(error)")
                 return
@@ -125,7 +125,7 @@ class PaymentSessionHandlerTests: XCTestCase {
             )
         }
         XCTAssertThrowsError(try test3()) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidSession(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidSession(underlyingError: error) = error,
                   case AWXSession.ValidationError.invalidCustomerId(_) = error else {
                 XCTFail("Expected AWXSession.ValidationError.invalidCustomerId but got \(error)")
                 return
@@ -136,7 +136,7 @@ class PaymentSessionHandlerTests: XCTestCase {
     // test start apple pay check if it throws as expected
     func testStartApplePay() {
         XCTAssertThrowsError(try mockSessionHandler.startApplePay()) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXApplePayProvider.ValidationError.invalidMethodType = error else {
                 XCTFail("Expected AWXApplePayProvider.ValidationError.InvalidMethodType but got \(error)")
                 return
@@ -149,7 +149,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         
         mockSession.applePayOptions = nil
         XCTAssertThrowsError(try mockSessionHandler.startApplePay()) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXApplePayProvider.ValidationError.invalidApplePayOptions(_) = error else {
                 XCTFail("Expected AWXApplePayProvider.ValidationError.invalidApplePayOptions but got \(error)")
                 return
@@ -158,7 +158,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         
         mockSession.applePayOptions = AWXApplePayOptions(merchantIdentifier: "")
         XCTAssertThrowsError(try mockSessionHandler.startApplePay()) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXApplePayProvider.ValidationError.invalidApplePayOptions = error else {
                 XCTFail("Expected AWXApplePayProvider.ValidationError.invalidApplePayOptions but got \(error)")
                 return
@@ -168,7 +168,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         mockSession.applePayOptions = AWXApplePayOptions(merchantIdentifier: "merchant_id")
         mockSession.applePayOptions?.supportedNetworks = [PKPaymentNetwork.eftpos]
         XCTAssertThrowsError(try mockSessionHandler.startApplePay()) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXApplePayProvider.ValidationError.invalidApplePayOptions = error else {
                 XCTFail("Expected AWXApplePayProvider.ValidationError.invalidApplePayOptions but got \(error)")
                 return
@@ -183,7 +183,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // test invalid method type
         mockMethodType.name = AWXApplePayKey
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: nil)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidMethodType = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidMethodType but got \(error)")
                 return
@@ -192,7 +192,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // test empty card scheme
         mockMethodType.name = AWXCardKey
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: nil)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidCardSchemes = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardSchemes but got \(error)")
                 return
@@ -201,7 +201,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // test invalid card scheme with "unknown"
         mockMethodType.cardSchemes = AWXCardScheme.allAvailable + [AWXCardScheme(name: "unknown")]
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: nil)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidCardSchemes = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardSchemes but got \(error)")
                 return
@@ -210,7 +210,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // test invalid card number
         mockMethodType.cardSchemes = AWXCardScheme.allAvailable
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: nil)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidCardInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardInfo but got \(error)")
                 return
@@ -220,7 +220,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         card.number = "4111111111111111"
         mockSession.requiredBillingContactFields = [.name]
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: nil)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidCardInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardInfo but got \(error)")
                 return
@@ -229,7 +229,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // test no billing info
         card.name = "John Citizen"
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: nil)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardBilling but got \(error)")
                 return
@@ -238,7 +238,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // test invalid name in billing info
         let billing = AWXPlaceDetails()
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: billing)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardBilling but got \(error)")
                 return
@@ -247,7 +247,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // test invalid address in billing info
         mockSession.requiredBillingContactFields = [.name, .address]
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: billing)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardBilling but got \(error)")
                 return
@@ -262,7 +262,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         billing.address?.street = "123 Main St"
         billing.address?.postcode = "12345"
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: billing)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidBillingInfo but got \(error)")
                 return
@@ -273,7 +273,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         billing.address?.state = "NY"
         billing.address?.city = ""
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: billing)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidBillingInfo but got \(error)")
                 return
@@ -284,7 +284,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         billing.address?.city = "New York"
         billing.address?.countryCode = "INVALID"
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: billing)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidBillingInfo but got \(error)")
                 return
@@ -295,7 +295,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         billing.address?.street = ""
         billing.address?.countryCode = "US"
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: billing)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidBillingInfo but got \(error)")
                 return
@@ -306,7 +306,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         billing.address?.street = "123 Main St"
         billing.address?.postcode = ""
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: billing)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidBillingInfo but got \(error)")
                 return
@@ -319,7 +319,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         billing.phoneNumber = "INVALID"
         mockSession.requiredBillingContactFields = [.name, .address, .phone]
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: billing)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidBillingInfo but got \(error)")
                 return
@@ -331,7 +331,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         billing.email = "invalid-email"
         mockSession.requiredBillingContactFields = [.name, .address, .phone, .email]
         XCTAssertThrowsError(try mockSessionHandler.startCardPayment(with: card, billing: billing)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidBillingInfo but got \(error)")
                 return
@@ -344,7 +344,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // Test for invalid consent
         consent.id = ""
         XCTAssertThrowsError(try mockSessionHandler.startConsentPayment(with: consent)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidConsent = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidConsent but got \(error)")
                 return
@@ -355,7 +355,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         consent.id = "cst_123"
         mockMethodType.name = "invalid"
         XCTAssertThrowsError(try mockSessionHandler.startConsentPayment(with: consent)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidMethodType = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidConsent but got \(error)")
                 return
@@ -367,7 +367,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // Test for invalid consent ID
         var consentId = "invalid_id"
         XCTAssertThrowsError(try mockSessionHandler.startConsentPayment(withId: consentId)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidConsent = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidConsent but got \(error)")
                 return
@@ -378,7 +378,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         consentId = "cst_123"
         mockMethodType.name = "invalid"
         XCTAssertThrowsError(try mockSessionHandler.startConsentPayment(withId: consentId)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXCardProvider.ValidationError.invalidMethodType = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidConsent but got \(error)")
                 return
@@ -389,7 +389,7 @@ class PaymentSessionHandlerTests: XCTestCase {
     func testStartRedirectPayment() {
         // Test for invalid method type
         XCTAssertThrowsError(try mockSessionHandler.startRedirectPayment(with: AWXCardKey, additionalInfo: nil)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
                 XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(error)")
                 return
@@ -397,7 +397,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         }
         mockMethodType.name = AWXApplePayKey
         XCTAssertThrowsError(try mockSessionHandler.startRedirectPayment(with: AWXCardKey, additionalInfo: nil)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
                 XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(error)")
                 return
@@ -405,7 +405,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         }
         mockMethodType.name = AWXApplePayKey
         XCTAssertThrowsError(try mockSessionHandler.startRedirectPayment(with: AWXApplePayKey, additionalInfo: nil)) { error in
-            guard case let PaymentSessionHandler.HandlerError.invalidPayment(underlyingError: error) = error,
+            guard case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
                   case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
                 XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(error)")
                 return

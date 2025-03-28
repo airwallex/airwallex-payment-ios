@@ -23,6 +23,7 @@ enum AnalyticEvent {
         case bankName = "bankName"
         case message = "message"
         case value = "value"
+        case eventType = "eventType"
     }
     
     enum PageView: String {
@@ -49,6 +50,11 @@ enum AnalyticEvent {
         case paymentLaunched = "payment_launched"
         case paymentCanceled = "payment_canceled"
     }
+}
+
+protocol ErrorLoggable: LocalizedError, CustomNSError {
+    var eventName: String { get }
+    var eventType: String? { get }
 }
 
 extension AnalyticsLogger {
@@ -93,6 +99,19 @@ extension AnalyticsLogger {
         } else {
             shared().logPaymentMethodView(withName: name.rawValue)
         }
+    }
+    
+    static func log(error: ErrorLoggable, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+        var dict = [String: Any]()
+        dict[AnalyticEvent.Fields.message.rawValue] = error.localizedDescription
+        
+        _ = extraInfo?.reduce(into: dict) { partialResult, keyValuePair in
+            partialResult[keyValuePair.key.rawValue] = keyValuePair.value
+        }
+        shared().logError(
+            withName: error.eventName,
+            additionalInfo: dict
+        )
     }
 }
 

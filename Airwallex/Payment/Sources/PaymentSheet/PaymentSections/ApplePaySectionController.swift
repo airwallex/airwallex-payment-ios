@@ -37,13 +37,13 @@ class ApplePaySectionController: SectionController {
             guard let self , let viewController = self.context.viewController else { return }
             AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
             do {
-                try self.paymentSessionHandler = PaymentSessionHandler(
+                self.paymentSessionHandler = PaymentSessionHandler(
                     session: self.session,
                     viewController: viewController,
                     paymentResultDelegate: AWXUIContext.shared().delegate,
                     methodType: methodType
                 )
-                try self.paymentSessionHandler?.startApplePay(cancelPaymentOnDismiss: false)
+                try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
             } catch {
                 self.context.viewController?.showAlert(message: error.localizedDescription)
             }

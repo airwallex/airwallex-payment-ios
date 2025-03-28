@@ -282,13 +282,13 @@ private extension NewCardPaymentSectionController {
             debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
             
             do {
-                paymentSessionHandler = try PaymentSessionHandler(
+                paymentSessionHandler = PaymentSessionHandler(
                     session: session,
                     viewController: context.viewController!,
                     paymentResultDelegate: AWXUIContext.shared().delegate,
                     methodType: methodType
                 )
-                try paymentSessionHandler?.startCardPayment(
+                try paymentSessionHandler?.confirmCardPayment(
                     with: card,
                     billing: billingInfo,
                     saveCard: shouldSaveCard

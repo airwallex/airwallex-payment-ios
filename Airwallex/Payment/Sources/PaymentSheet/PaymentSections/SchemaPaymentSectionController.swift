@@ -261,13 +261,13 @@ private extension SchemaPaymentSectionController {
             paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
             
             do {
-                paymentSessionHandler = try PaymentSessionHandler(
+                paymentSessionHandler = PaymentSessionHandler(
                     session: session,
                     viewController: context.viewController!,
                     paymentResultDelegate: AWXUIContext.shared().delegate,
                     methodType: methodProvider.method(named: name)
                 )
-                try paymentSessionHandler?.startRedirectPayment(with: paymentMethod)
+                try paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
             } catch {
                 context.viewController?.showAlert(message: error.localizedDescription)
             }

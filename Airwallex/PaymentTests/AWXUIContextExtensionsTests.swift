@@ -41,142 +41,174 @@ class AWXUIContextExtensionsTests: XCTestCase {
     }
     
     @MainActor func testLaunchPaymentViewHierarchyAssertion() {
-        XCTAssertThrowsError(
-            try AWXUIContext.launchPayment(
-                from: mockViewController,
-                session: mockOneoffSession,
-                style: .push
-            )
-        ) { error in
-            guard case AWXUIContext.LaunchError.invalidViewHierarchy = error else {
-                XCTFail("Expected AWXUIContext.LaunchError.invalidViewHierarchy, but get \(error)")
-                return
-            }
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            style: .push
+        )
+        
+        guard let error = mockViewController.error else {
+            XCTFail("error not validated")
+            return
+        }
+        guard case AWXUIContext.LaunchError.invalidViewHierarchy = error else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidViewHierarchy, but get \(error)")
+            return
         }
     }
     
-    @MainActor func testLaunchPaymentPaymentIntentAssertion() {
+    @MainActor func testLaunchPaymentPaymentIntentAssertionOneOffSession() {
         mockOneoffSession.paymentIntent = nil
-        XCTAssertThrowsError(
-            try AWXUIContext.launchPayment(
-                from: mockViewController,
-                session: mockOneoffSession,
-                style: .push
-            )
-        ) { error in
-            guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
-                  case AWXSession.ValidationError.invalidPaymentIntent(_) = underlyingError else {
-                XCTFail("Expected AWXUIContext.LaunchError.invalidPaymentIntent, but get \(error)")
-                return
-            }
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            style: .push
+        )
+        
+        guard let error = mockViewController.error else {
+            XCTFail("error not validated")
+            return
         }
         
-        XCTAssertThrowsError(
-            try AWXUIContext.launchPayment(
-                from: mockViewController,
-                session: AWXRecurringWithIntentSession(),
-                style: .push
-            )
-        ) { error in
-            guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
-                  case AWXSession.ValidationError.invalidPaymentIntent(_) = underlyingError else {
-                XCTFail("Expected AWXUIContext.LaunchError.invalidPaymentIntent, but get \(error)")
-                return
-            }
+        guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
+              case AWXSession.ValidationError.invalidPaymentIntent(_) = underlyingError else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidPaymentIntent, but get \(error)")
+            return
         }
     }
     
-    @MainActor func testLaunchPaymentCustomerIdAssertion() {
-        // check recurring session
-        XCTAssertThrowsError(
-            try AWXUIContext.launchPayment(
-                from: mockViewController,
-                session: AWXRecurringSession(),
-                style: .push
-            )
-        ) { error in
-            guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
-                  case AWXSession.ValidationError.invalidCustomerId(_) = underlyingError else {
-                XCTFail("Expected AWXUIContext.LaunchError.invalidCustomerId, but get \(error)")
-                return
-            }
+    @MainActor func testLaunchPaymentPaymentIntentAssertionRecurringWithIntentSession() {
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: AWXRecurringWithIntentSession(),
+            style: .push
+        )
+        
+        guard let error = mockViewController.error else {
+            XCTFail("error not validated")
+            return
         }
+        
+        guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
+              case AWXSession.ValidationError.invalidPaymentIntent(_) = underlyingError else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidPaymentIntent, but get \(error)")
+            return
+        }
+    }
+    
+    @MainActor func testLaunchPaymentCustomerIdAssertionRecurringSession() {
+        // check recurring session
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: AWXRecurringSession(),
+            style: .push
+        )
+        
+        guard let error = mockViewController.error else {
+            XCTFail("error not validated")
+            return
+        }
+        
+        guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
+              case AWXSession.ValidationError.invalidCustomerId(_) = underlyingError else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidCustomerId, but get \(error)")
+            return
+        }
+    }
+    
+    @MainActor func testLaunchPaymentCustomerIdAssertionRecurringWithIntentSession() {
         // check recurring with intent session
         let recurringWithIntentSession = AWXRecurringWithIntentSession()
         mockPaymentIntent.customerId = nil
         recurringWithIntentSession.paymentIntent = mockPaymentIntent
-        XCTAssertThrowsError(
-            try AWXUIContext.launchPayment(
-                from: mockViewController,
-                session: recurringWithIntentSession,
-                style: .push
-            )
-        ) { error in
-            guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
-                  case AWXSession.ValidationError.invalidCustomerId(_) = underlyingError else {
-                XCTFail("Expected AWXUIContext.LaunchError.invalidCustomerId, but get \(error)")
-                return
-            }
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: recurringWithIntentSession,
+            style: .push
+        )
+        
+        guard let error = mockViewController.error else {
+            XCTFail("error not validated")
+            return
+        }
+        
+        guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
+              case AWXSession.ValidationError.invalidCustomerId(_) = underlyingError else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidCustomerId, but get \(error)")
+            return
         }
     }
     
     @MainActor func testLaunchPaymentClientSecretAssertion() {
         AWXAPIClientConfiguration.shared().clientSecret = nil
-        XCTAssertThrowsError(
-            try AWXUIContext.launchPayment(
-                from: mockViewController,
-                session: mockOneoffSession,
-                style: .push
-            )
-        ) { error in
-            guard case AWXUIContext.LaunchError.invalidClientSecret = error else {
-                XCTFail("Expected AWXUIContext.LaunchError.invalidClientSecret, but get \(error)")
-                return
-            }
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            style: .push
+        )
+        
+        guard let error = mockViewController.error else {
+            XCTFail("error not validated")
+            return
+        }
+        
+        guard case AWXUIContext.LaunchError.invalidClientSecret = error else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidClientSecret, but get \(error)")
+            return
         }
     }
     
     @MainActor func testLaunchPaymentInvalidCardBrandAssertion() {
-        XCTAssertThrowsError(
-            try AWXUIContext.launchCardPayment(
-                from: mockViewController,
-                session: mockOneoffSession,
-                supportedBrands: [],
-                style: .present
-            )
-        ) { error in
-            guard case AWXUIContext.LaunchError.invalidCardBrand = error else {
-                XCTFail("Expected AWXUIContext.LaunchError.invalidCardBrand, but get \(error)")
-                return
-            }
+        AWXUIContext.launchCardPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            supportedBrands: [],
+            style: .present
+        )
+        
+        guard let error = mockViewController.error else {
+            XCTFail("error not validated")
+            return
+        }
+        
+        guard case AWXUIContext.LaunchError.invalidCardBrand = error else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidCardBrand, but get \(error)")
+            return
         }
     }
     
     @MainActor func testLaunchPaymentInvalidMethodFilterAssertion() {
-        XCTAssertThrowsError(
-            try AWXUIContext.launchPayment(
-                from: mockViewController,
-                session: mockOneoffSession,
-                filterBy: [],
-                style: .present
-            )
-        ) { error in
-            guard case AWXUIContext.LaunchError.invalidMethodFilter = error else {
-                XCTFail("Expected AWXUIContext.LaunchError.invalidMethodFilter, but get \(error)")
-                return
-            }
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            filterBy: [],
+            style: .present
+        )
+        
+        guard let error = mockViewController.error else {
+            XCTFail("error not validated")
+            return
+        }
+        
+        guard case AWXUIContext.LaunchError.invalidMethodFilter = error else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidMethodFilter, but get \(error)")
+            return
         }
     }
     
     @MainActor func testLaunchPayment() {
-        XCTAssertNoThrow(
-            try AWXUIContext.launchPayment(
-                from: mockViewController,
-                session: mockOneoffSession,
-                filterBy: [AWXApplePayKey],
-                style: .present
-            )
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            filterBy: [AWXApplePayKey],
+            style: .present
         )
+        
+        guard mockViewController.error == nil else {
+            XCTFail("unexpected error: \(mockViewController.error!)")
+            return
+        }
+        
         XCTAssert(AWXUIContext.shared().delegate === mockViewController)
         XCTAssert(AWXUIContext.shared().session === mockOneoffSession)
         XCTAssertTrue(mockOneoffSession.hidePaymentConsents)
@@ -184,13 +216,17 @@ class AWXUIContextExtensionsTests: XCTestCase {
     }
     
     @MainActor func testLaunchCardPayment() {
-        XCTAssertNoThrow(
-            try AWXUIContext.launchCardPayment(
-                from: mockViewController,
-                session: mockOneoffSession,
-                style: .present
-            )
+        AWXUIContext.launchCardPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            style: .present
         )
+        
+        guard mockViewController.error == nil else {
+            XCTFail("unexpected error: \(mockViewController.error!)")
+            return
+        }
+        
         XCTAssert(AWXUIContext.shared().delegate === mockViewController)
         XCTAssert(AWXUIContext.shared().session === mockOneoffSession)
         XCTAssertNil(mockOneoffSession.paymentMethods)

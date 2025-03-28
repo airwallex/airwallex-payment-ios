@@ -251,7 +251,7 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                try AWXUIContext.launchPayment(from: self, session: session)
+                AWXUIContext.launchPayment(from: self, session: session)
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -265,7 +265,7 @@ private extension IntegrationDemoListViewController {
             do {
                 let session = try await createPaymentSession()
                 //  custom payment methods by an array of payment method name
-                try AWXUIContext.launchPayment(
+                AWXUIContext.launchPayment(
                     from: self,
                     session: session,
                     filterBy: [ AWXApplePayKey, AWXCardKey, "alipaycn"]
@@ -282,7 +282,7 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                try AWXUIContext.launchCardPayment(
+                AWXUIContext.launchCardPayment(
                     from: self,
                     session: session,
                     supportedBrands: AWXCardBrand.all,
@@ -316,8 +316,8 @@ private extension IntegrationDemoListViewController {
             do {
                 let card = try await confirmCardInfo(testCard)
                 let session = try await createPaymentSession(force3DS: force3DS)
-                paymentSessionHandler = try PaymentSessionHandler(session: session, viewController: self)
-                try paymentSessionHandler?.startCardPayment(
+                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler?.startCardPayment(
                     with: card,
                     billing: DemoDataSource.shippingAddress,
                     saveCard: saveCard
@@ -334,8 +334,8 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                paymentSessionHandler = try PaymentSessionHandler(session: session, viewController: self)
-                try paymentSessionHandler?.startApplePay()
+                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler?.startApplePay()
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -348,8 +348,8 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                paymentSessionHandler = try PaymentSessionHandler(session: session, viewController: self)
-                try paymentSessionHandler?.startRedirectPayment(
+                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
+                paymentSessionHandler?.startRedirectPayment(
                     with: "paypal",
                     additionalInfo: ["shopper_name": "Hector", "country_code": "CN"]
                 )
