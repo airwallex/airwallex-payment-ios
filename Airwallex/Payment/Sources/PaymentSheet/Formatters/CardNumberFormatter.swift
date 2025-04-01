@@ -15,16 +15,11 @@ class CardNumberFormatter: UserInputFormatter {
     
     private(set) var currentBrand: AWXBrandType = .unknown
     
-    func automaticTriggerReturnAction(textField: UITextField) -> Bool {
-        guard let selectedRange = textField.selectedTextRange else {
-            return false
-        }
-        let text = textField.text ?? ""
-        let maxLength = AWXCardValidator.shared().maxLength(forCardNumber: text)
-        return selectedRange.end == textField.endOfDocument && text.count >= maxLength
-    }
+    private(set) var maxLength: Int = AWXCardValidator.shared().maxLength(forCardNumber: "")
     
-    func handleUserInput(_ textField: UITextField, changeCharactersIn range: Range<String.Index>, replacementString string: String) {
+    func formatUserInput(_ textField: UITextField,
+                         changeCharactersIn range: Range<String.Index>,
+                         replacementString string: String) -> NSAttributedString {
         let before = textField.text ?? ""
         let string = string.filterIllegalCharacters(in: .decimalDigits.inverted)
         let after = before.replacingCharacters(in: range, with: string)
@@ -35,21 +30,19 @@ class CardNumberFormatter: UserInputFormatter {
         }
         currentBrand = cardBrandType
         
-        let maxLength = AWXCardValidator.shared().maxLength(forCardNumber: after)
+        maxLength = AWXCardValidator.shared().maxLength(forCardNumber: after)
         let attributedText = formatText(
             after,
             brand: cardBrandType,
             attributes: textField.defaultTextAttributes
         )
-        textField.updateContentAndCursor(
-            attributedText: attributedText,
-            maxLength: maxLength
-        )
+        let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
+        return attributedText.attributedSubstring(from: range)
     }
     
-    func formatText(_ text: String,
-                    brand: AWXBrandType,
-                    attributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
+    private func formatText(_ text: String,
+                            brand: AWXBrandType,
+                            attributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(
             string: text,
             attributes: attributes
@@ -69,7 +62,6 @@ class CardNumberFormatter: UserInputFormatter {
                     attributedString.addAttribute(.kern, value: 5, range: NSRange(location: index, length: 1))
                 } else {
                     attributedString.addAttribute(.kern, value: 0, range: NSRange(location: index, length: 1))
-                    
                 }
                 index += 1
                 segmentIndex += 1

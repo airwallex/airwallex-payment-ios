@@ -10,18 +10,11 @@ import UIKit
 
 struct CardExpiryFormatter: UserInputFormatter {
     
-    private let maxLength = 5
-    func automaticTriggerReturnAction(textField: UITextField) -> Bool {
-        guard let selectedRange = textField.selectedTextRange else {
-            return false
-        }
-        let text = textField.text ?? ""
-        return selectedRange.end == textField.endOfDocument && text.count >= maxLength
-    }
+    let maxLength = 5
     
-    func handleUserInput(_ textField: UITextField,
+    func formatUserInput(_ textField: UITextField,
                          changeCharactersIn range: Range<String.Index>,
-                         replacementString string: String) {
+                         replacementString string: String) -> NSAttributedString {
         var userInput = textField.text?.replacingCharacters(in: range, with: string)
             .filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         if let text = textField.text,
@@ -43,16 +36,13 @@ struct CardExpiryFormatter: UserInputFormatter {
             year: String(expirationYear),
             attributes: textField.defaultTextAttributes
         )
-        
-        textField.updateContentAndCursor(
-            attributedText: attributedText,
-            maxLength: maxLength
-        )
+        let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
+        return attributedText.attributedSubstring(from: range)
     }
     
-    func formatedString(month: String?,
-                        year: String?,
-                        attributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
+    private func formatedString(month: String?,
+                                year: String?,
+                                attributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
         guard let month, !month.isEmpty else { return NSAttributedString() }
         guard let year, !year.isEmpty else {
             return NSAttributedString(

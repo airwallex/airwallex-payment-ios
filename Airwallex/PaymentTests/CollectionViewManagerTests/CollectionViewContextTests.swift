@@ -247,4 +247,225 @@ import XCTest
         XCTAssertNil(mockProvider.sectionControllerA.willDisplayCellCalled)
         XCTAssertNotNil(mockProvider.sectionControllerA.sectionLayoutCalled)
     }
+
+    func testRemoveItem() {
+        // Start with status A
+        mockProvider.status = .A
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Get context from sectionControllerA
+        guard let context = mockProvider.sectionControllerA.context else {
+            XCTFail("Context should not be nil")
+            return
+        }
+
+        // Reset tracking variables
+        mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
+        mockProvider.sectionControllerA.didEndDisplayingCellCalled = nil
+        mockProvider.sectionControllerA.willDisplayCellCalled = nil
+        mockProvider.sectionControllerA.sectionLayoutCalled = nil
+
+        // Remove item A1
+        context.delete(items: [.A1])
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Verify that the item was removed
+        let snapshot = context.currentSnapshot()
+        XCTAssertFalse(snapshot.itemIdentifiers.contains(.A1))
+        XCTAssertEqual(snapshot.itemIdentifiers, [.A2])
+
+        // Verify values stored in tuples
+        XCTAssertEqual(mockProvider.sectionControllerA.didEndDisplayingCellCalled?.1, Item.A1)
+        XCTAssertEqual(mockProvider.sectionControllerA.didEndDisplayingCellCalled?.2, IndexPath(item: 0, section: 0))
+        XCTAssertNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
+        XCTAssertNil(mockProvider.sectionControllerA.willDisplayCellCalled)
+        XCTAssertNotNil(mockProvider.sectionControllerA.sectionLayoutCalled)
+    }
+
+    func testPerformUpdates() {
+        // Start from status A
+        mockProvider.status = .A
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check the status of the current snapshot
+        var snapshot = mockManager.diffableDataSource.snapshot()
+        XCTAssertEqual(snapshot.sectionIdentifiers, [.A])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), [.A1, .A2])
+
+        // Change to status AB
+        mockProvider.status = .AB
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check if the status was updated
+        snapshot = mockManager.diffableDataSource.snapshot()
+        XCTAssertEqual(snapshot.sectionIdentifiers, [.A, .B])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), [.A1, .A2])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), [.B1, .B2])
+    }
+
+    func testPerformUpdatesWithForceReload() {
+        // Start from status A
+        mockProvider.status = .A
+        mockProvider.sectionControllerA.items = [.A1]
+        mockManager.performUpdates(forceReload: true)
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check the status of the current snapshot
+        var snapshot = mockManager.diffableDataSource.snapshot()
+        XCTAssertEqual(snapshot.sectionIdentifiers, [.A])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), [.A1])
+
+        // reset status on section A
+        mockProvider.sectionControllerA.resetMethodCalledStatus()
+        
+        // Change to status AB with force reload
+        mockProvider.status = .AB
+        mockProvider.sectionControllerB.items = [.B1]
+        mockManager.performUpdates(forceReload: true)
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check if the status was updated
+        snapshot = mockManager.diffableDataSource.snapshot()
+        XCTAssertEqual(snapshot.sectionIdentifiers, [.A, .B])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), [.A1])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), [.B1])
+
+        // Verify that sectionControllerA was force reloaded again
+        XCTAssertNotNil(mockProvider.sectionControllerA.sectionLayoutCalled)
+        XCTAssertEqual(mockProvider.sectionControllerA.didEndDisplayingCellCalled?.item, Item.A1)
+        XCTAssertEqual(mockProvider.sectionControllerA.willDisplayCellCalled?.item, Item.A1)
+    }
+
+    func testPerformUpdatesForSection() {
+        // Start from status AB
+        mockProvider.status = .AB
+        mockProvider.sectionControllerA.items = [.A1]
+        mockProvider.sectionControllerB.items = [.B1]
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check the initial status of the current snapshot
+        var snapshot = mockManager.diffableDataSource.snapshot()
+        XCTAssertEqual(snapshot.sectionIdentifiers, [.A, .B])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), [.A1])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), [.B1])
+
+        // Update items in section A to [B1, B2]
+        mockProvider.sectionControllerA.items = [.A2]
+        mockProvider.sectionControllerB.items = [.B2]
+        mockManager.performUpdates(section: .A)
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check the updated status of the snapshot
+        snapshot = mockManager.diffableDataSource.snapshot()
+        XCTAssertEqual(snapshot.sectionIdentifiers, [.A, .B])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), [.A2])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), [.B1]) // Ensure section B is not changed
+    }
+    
+    func testPerformUpdatesForSectionAndReload() {
+        // Start from status AB
+        mockProvider.status = .AB
+        mockProvider.sectionControllerA.items = [.A1]
+        mockProvider.sectionControllerB.items = [.B1]
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check the initial status of the current snapshot
+        var snapshot = mockManager.diffableDataSource.snapshot()
+        XCTAssertEqual(snapshot.sectionIdentifiers, [.A, .B])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), [.A1])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), [.B1])
+
+        // Reset tracking variables for section A and B
+        mockProvider.sectionControllerA.resetMethodCalledStatus()
+        mockProvider.sectionControllerB.resetMethodCalledStatus()
+
+        // Update items in section A and perform updates with reload
+        mockManager.performUpdates(section: .A, forceReload: true)
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check the updated status of the snapshot
+        snapshot = mockManager.diffableDataSource.snapshot()
+        XCTAssertEqual(snapshot.sectionIdentifiers, [.A, .B])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), [.A1])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), [.B1]) // Ensure section B is not changed
+
+        // Verify methods called on section A
+        XCTAssertNotNil(mockProvider.sectionControllerA.sectionLayoutCalled)
+        XCTAssertEqual(mockProvider.sectionControllerA.didEndDisplayingCellCalled?.item, Item.A1)
+        XCTAssertEqual(mockProvider.sectionControllerA.willDisplayCellCalled?.item, Item.A1)
+        XCTAssertEqual(mockProvider.sectionControllerA.willDisplayCellCalled?.item, Item.A1)
+        
+        // Verify methods not called on section B
+        XCTAssertNil(mockProvider.sectionControllerB.didEndDisplayingCellCalled)
+        XCTAssertNil(mockProvider.sectionControllerB.willDisplayCellCalled)
+        XCTAssertNil(mockProvider.sectionControllerB.cellForItemAtIndexPathCalled)
+    }
+    
+    func testPerformUpdatesForSectionAndUpdateItems() {
+        // Start from status A
+        mockProvider.status = .A
+        mockProvider.sectionControllerA.items = [.A1]
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check the initial status of the current snapshot
+        var snapshot = mockManager.diffableDataSource.snapshot()
+        XCTAssertEqual(snapshot.sectionIdentifiers, [.A])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), [.A1])
+
+        // Reset tracking variables for section A
+        mockProvider.sectionControllerA.resetMethodCalledStatus()
+
+        // Update items in section A and perform updates
+        mockProvider.sectionControllerA.items = [.A2]
+        mockManager.performUpdates(section: .A, updateItems: true)
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check the updated status of the snapshot
+        snapshot = mockManager.diffableDataSource.snapshot()
+        XCTAssertEqual(snapshot.sectionIdentifiers, [.A])
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), [.A2])
+
+        // Verify methods called on section A
+        XCTAssertNotNil(mockProvider.sectionControllerA.sectionLayoutCalled)
+        XCTAssertEqual(mockProvider.sectionControllerA.didEndDisplayingCellCalled?.item, Item.A1)
+        XCTAssertEqual(mockProvider.sectionControllerA.willDisplayCellCalled?.item, Item.A2)
+        XCTAssertTrue(mockProvider.sectionControllerA.updateItemsIfNecessaryCalled)
+    }
+    
+    func testCellForItem() {
+        // Start with status A
+        mockProvider.status = .A
+        mockProvider.sectionControllerA.items = [.A1]
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Get context from sectionControllerA
+        guard let context = mockProvider.sectionControllerA.context else {
+            XCTFail("Context should not be nil")
+            return
+        }
+
+        // Get cell from sectionControllerA by indexPath
+        let indexPath = IndexPath(item: 0, section: 0)
+        guard let cell = mockProvider.sectionControllerA.willDisplayCellCalled?.cell else {
+            XCTFail("cell not found")
+            return
+        }
+
+        // Get cell from context by indexPath
+        let cellFromCollectionViewByIndexPath = context.cellForItem(.A1)
+
+        // Get cell from context by identifier
+        let cellFromContextByIdentifier = mockManager.collectionView.cellForItem(at: indexPath)
+
+        // Verify that all cells are the same
+        XCTAssertEqual(cell, cellFromCollectionViewByIndexPath)
+        XCTAssertEqual(cell, cellFromContextByIdentifier)
+    }
 }

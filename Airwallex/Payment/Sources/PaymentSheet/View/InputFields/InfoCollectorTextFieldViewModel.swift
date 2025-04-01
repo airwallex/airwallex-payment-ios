@@ -16,18 +16,23 @@ protocol UserInputValidator {
 }
 
 protocol UserInputFormatter {
-    func automaticTriggerReturnAction(textField: UITextField) -> Bool
-    
-    func handleUserInput(_ textField: UITextField,
+    var maxLength: Int { get }
+    func formatUserInput(_ textField: UITextField,
                          changeCharactersIn range: Range<String.Index>,
-                         replacementString string: String)
+                         replacementString string: String) -> NSAttributedString
+}
+
+extension UserInputFormatter {
+    func shouldAutomaticTriggerReturnAction(textField: UITextField) -> Bool {
+        guard let selectedRange = textField.selectedTextRange else {
+            return false
+        }
+        let text = textField.text ?? ""
+        return selectedRange.end == textField.endOfDocument && text.count >= maxLength
+    }
 }
 
 protocol UserEditingEventObserver: UITextFieldDelegate {}
-
-extension UserInputFormatter {
-    func automaticTriggerReturnAction(textField: UITextField) -> Bool { return false }
-}
 
 class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguring {
     typealias ReconfigureHandler = (InfoCollectorTextFieldViewModel, Bool) -> Void
@@ -135,16 +140,18 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
         }
         
         if let inputFormatter {
-            inputFormatter.handleUserInput(
+            let formated = inputFormatter.formatUserInput(
                 textField,
                 changeCharactersIn: range,
                 replacementString: string
             )
+            
+            textField.updateContentAndCursor(attributedText: formated)
             attributedText = textField.attributedText
             text = attributedText?.string
             
             // trigger return action if we have a valid input, and the cursor is at the end of the text field
-            if let returnActionHandler, inputFormatter.automaticTriggerReturnAction(textField: textField) {
+            if let returnActionHandler, inputFormatter.shouldAutomaticTriggerReturnAction(textField: textField) {
                 _ = returnActionHandler(textField)
             }
             return false

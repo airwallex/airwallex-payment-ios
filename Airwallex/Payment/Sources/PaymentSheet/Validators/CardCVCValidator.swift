@@ -35,21 +35,16 @@ struct CardCVCValidator: UserInputValidator, UserInputFormatter {
         try AWXCardValidator.validate(cvc: text, requiredLength: cvcLength)
     }
     
-    func handleUserInput(_ textField: UITextField, changeCharactersIn range: Range<String.Index>, replacementString string: String) {
+    func formatUserInput(_ textField: UITextField,
+                         changeCharactersIn range: Range<String.Index>,
+                         replacementString string: String) -> NSAttributedString {
         let cvcLength = maxLength
         let before = textField.text ?? ""
         let string = string.filterIllegalCharacters(in: .decimalDigits.inverted)
         var after = before.replacingCharacters(in: range, with: string)
-        
-        textField.updateContentAndCursor(plainText: after, maxLength: maxLength)
-    }
-    
-    func automaticTriggerReturnAction(textField: UITextField) -> Bool {
-        guard let selectedRange = textField.selectedTextRange else {
-            return false
-        }
-        let text = textField.text ?? ""
-        return selectedRange.end == textField.endOfDocument && text.count >= maxLength
+        let attributedText = NSAttributedString(string: after, attributes: textField.defaultTextAttributes)
+        let range = NSRange(location: 0, length: min(cvcLength, attributedText.length))
+        return attributedText.attributedSubstring(from: range)
     }
 }
 

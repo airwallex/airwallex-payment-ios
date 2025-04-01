@@ -12,14 +12,14 @@ import UIKit
 class MockSectionController<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable>: SectionController {
     
     var updateItemsIfNecessaryCalled: Bool = false
-    var didSelectItemCalled: (ItemType, IndexPath)? = nil
-    var willDisplayCellCalled: (UICollectionViewCell, ItemType, IndexPath)? = nil
-    var didEndDisplayingCellCalled: (UICollectionViewCell, ItemType, IndexPath)? = nil
-    var willDisplaySupplementaryViewCalled: (UICollectionReusableView, IndexPath)? = nil
-    var didEndDisplayingSupplementaryViewCalled: (UICollectionReusableView, IndexPath)? = nil
+    var didSelectItemCalled: (item: ItemType, indexPath: IndexPath)? = nil
+    var willDisplayCellCalled: (cell: UICollectionViewCell, item: ItemType, indexPath: IndexPath)? = nil
+    var didEndDisplayingCellCalled: (cell: UICollectionViewCell, item: ItemType, indexPath: IndexPath)? = nil
+    var willDisplaySupplementaryViewCalled: (view: UICollectionReusableView, indexPath: IndexPath)? = nil
+    var didEndDisplayingSupplementaryViewCalled: (view: UICollectionReusableView, indexPath: IndexPath)? = nil
     var sectionDisplaying: Bool = false
-    var cellForItemAtIndexPathCalled: (ItemType, IndexPath)? = nil
-    var supplementaryViewForElementKindAtIndexPathCalled: (String, IndexPath)? = nil
+    var cellForItemAtIndexPathCalled: (item: ItemType, indexPath: IndexPath)? = nil
+    var supplementaryViewForElementKindAtIndexPathCalled: (elementKind: String, indexPath: IndexPath)? = nil
     var sectionLayoutCalled: (any NSCollectionLayoutEnvironment)? = nil
     
     var context: Payment.CollectionViewContext<SectionType, ItemType>!
@@ -108,5 +108,17 @@ class MockSectionController<SectionType: Hashable & Sendable, ItemType: Hashable
     
     func sectionDidEndDisplaying() {
         sectionDisplaying = false
+    }
+    
+    func resetMethodCalledStatus() {
+        updateItemsIfNecessaryCalled = false
+        didSelectItemCalled = nil
+        willDisplayCellCalled = nil
+        didEndDisplayingCellCalled = nil
+        willDisplaySupplementaryViewCalled = nil
+        didEndDisplayingSupplementaryViewCalled = nil
+        cellForItemAtIndexPathCalled = nil
+        supplementaryViewForElementKindAtIndexPathCalled = nil
+        sectionLayoutCalled = nil
     }
 }

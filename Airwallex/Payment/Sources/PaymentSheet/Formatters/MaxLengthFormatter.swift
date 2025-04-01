@@ -40,9 +40,13 @@ struct MaxLengthFormatter: UserInputFormatter {
         return selectedRange.end == textField.endOfDocument && text.count >= maxLength
     }
     
-    func handleUserInput(_ textField: UITextField, changeCharactersIn range: Range<String.Index>, replacementString string: String) {
+    func formatUserInput(_ textField: UITextField,
+                         changeCharactersIn range: Range<String.Index>,
+                         replacementString string: String) -> NSAttributedString {
         let before = textField.text ?? ""
         let after = before.replacingCharacters(in: range, with: string)
-        textField.updateContentAndCursor(plainText: after, maxLength: maxLength)
+        let attributedText = NSAttributedString(string: after, attributes: textField.defaultTextAttributes)
+        let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
+        return attributedText.attributedSubstring(from: range)
     }
 }

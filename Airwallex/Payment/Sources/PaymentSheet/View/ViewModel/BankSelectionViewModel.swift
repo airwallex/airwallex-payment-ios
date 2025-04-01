@@ -50,7 +50,7 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
         )
         inputValidator = BlockValidator { [weak self] _ in
             guard let self else { return }
-            guard let bank else { throw self.errorMessage.asError() }
+            guard self.bank != nil else { throw self.errorMessage.asError() }
         }
     }
     
