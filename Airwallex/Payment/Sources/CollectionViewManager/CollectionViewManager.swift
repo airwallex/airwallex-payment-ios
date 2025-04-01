@@ -173,9 +173,14 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                         willDisplaySupplementaryView view: UICollectionReusableView,
                         forElementKind elementKind: String,
                         at indexPath: IndexPath) {
+        if indexPath.indices.count == 1 {
+            // list boundary item displayed
+            // just ignore for now
+            return
+        }
         guard let section = sections[safe: indexPath.section],
               let sectionController = sectionControllers[section] else {
-            assert(false, "section for found for element of kind: \(elementKind), at indexPath: \(indexPath)")
+            assert(false, "section not found for element of kind: \(elementKind), at indexPath: \(indexPath)")
             return
         }
         

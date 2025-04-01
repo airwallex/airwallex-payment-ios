@@ -240,16 +240,16 @@ private extension AWXUIContext {
         
         AWXUIContext.shared().session = session
         AWXUIContext.shared().delegate = paymentResultDelegate
-        let paymentVC = PaymentMethodsViewController(methodProvider: paymentMethodProvider)
         switch style {
         case .push:
             guard let nav = hostingVC.navigationController else {
                 handleLaunchFailure(
                     paymentResultDelegate,
-                    LaunchError.invalidViewHierarchy("hossting view controller is not embeded in navigation controller")
+                    LaunchError.invalidViewHierarchy("hosting view controller is not embeded in navigation controller")
                 )
                 return
             }
+            let paymentVC = PaymentMethodsViewController(methodProvider: paymentMethodProvider)
             nav.pushViewController(paymentVC, animated: true)
             AWXUIContext.shared().paymentUIDismissAction = { [weak paymentVC, weak nav] completion in
                 guard let paymentVC, let nav else {
@@ -270,6 +270,7 @@ private extension AWXUIContext {
                 CATransaction.commit()
             }
         case .present:
+            let paymentVC = PaymentMethodsViewController(methodProvider: paymentMethodProvider)
             let nav = UINavigationController(rootViewController: paymentVC)
             let appearance = UINavigationBarAppearance()
             appearance.configureWithDefaultBackground()

@@ -10,11 +10,11 @@ import UIKit
 import Core
 
 class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
-    private(set) var status = AirwallexPaymentStatus.notStarted
-    private(set) weak var viewController: UIViewController?
-    private(set) var error: Error?
-    private(set) var consentId: String?
-    private(set) var presentedViewControllerSpy: UIViewController?
+    var status = AirwallexPaymentStatus.notStarted
+    weak var viewController: UIViewController?
+    var error: Error?
+    var consentId: String?
+    var presentedViewControllerSpy: UIViewController?
  
     func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         self.status = status

@@ -9,8 +9,12 @@
 #import "AWXCodable.h"
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface AWXCardScheme : NSObject<AWXJSONDecodable>
 
 @property (nonatomic, copy) NSString *name;
 
 @end
+
+NS_ASSUME_NONNULL_END

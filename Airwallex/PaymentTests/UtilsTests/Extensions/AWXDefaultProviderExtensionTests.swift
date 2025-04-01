@@ -49,7 +49,13 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         mockSession.paymentIntent = mockPaymentIntent
         mockSession.applePayOptions = mockApplePayOptions
         
-        mockValidCard = AWXCard(name: "John Doe", cardNumber: "4111111111111111", expiry: "12/2030", cvc: "123")
+        mockValidCard = AWXCard(
+            name: "John Doe",
+            cardNumber: "4111111111111111",
+            expiryMonth: "12",
+            expiryYear: "2030",
+            cvc: "123"
+        )
         let billing = AWXPlaceDetails()
         let address = AWXAddress()
         address.street = "street"
@@ -126,38 +132,78 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
                 return
             }
         }
-        
+    }
+    
+    func testCardProviderValidationWithInvalidCardNubmer() {
         // Test invalid card number
-        mockMethodType.name = AWXCardKey
-        let invalidCard = AWXCard(name: "John Doe", cardNumber: "123", expiry: "12/2030", cvc: "123")
-        XCTAssertThrowsError(try provider.validate(card: invalidCard, billing: mockValidBilling)) { error in
+        let provider = AWXCardProvider(delegate: mockProviderDelegate, session: mockSession, paymentMethodType: mockMethodType)
+        mockValidCard.number = "123"
+        XCTAssertThrowsError(try provider.validate(card: mockValidCard, billing: mockValidBilling)) { error in
             guard case AWXCardProvider.ValidationError.invalidCardInfo(_) = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardInfo, but got \(error)")
                 return
             }
         }
-        
+    }
+    
+    func testCardProviderValidationWithInvalidCVC() {
         // Test invalid card cvc
-        let invalidCardCVC = AWXCard(name: "John Doe", cardNumber: "4111111111111111", expiry: "12/2030", cvc: "1111")
-        XCTAssertThrowsError(try provider.validate(card: invalidCardCVC, billing: mockValidBilling)) { error in
+        let provider = AWXCardProvider(delegate: mockProviderDelegate, session: mockSession, paymentMethodType: mockMethodType)
+        mockValidCard.cvc = "1111"
+        XCTAssertThrowsError(try provider.validate(card: mockValidCard, billing: mockValidBilling)) { error in
             guard case AWXCardProvider.ValidationError.invalidCardInfo(_) = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardInfo, but got \(error)")
                 return
             }
         }
-        
+    }
+    func testCardProviderValidationWithInvalidExpiry() {
         // Test invalid card expiry
-        let invalidCardExpiry = AWXCard(name: "John Doe", cardNumber: "4111111111111111", expiry: "", cvc: "111")
-        XCTAssertThrowsError(try provider.validate(card: invalidCardExpiry, billing: mockValidBilling)) { error in
+        let provider = AWXCardProvider(delegate: mockProviderDelegate, session: mockSession, paymentMethodType: mockMethodType)
+        mockValidCard.expiryMonth = "13"
+        XCTAssertThrowsError(try provider.validate(card: mockValidCard, billing: mockValidBilling)) { error in
             guard case AWXCardProvider.ValidationError.invalidCardInfo(_) = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardInfo, but got \(error)")
                 return
             }
         }
         
+        mockValidCard.expiryMonth = "0"
+        XCTAssertThrowsError(try provider.validate(card: mockValidCard, billing: mockValidBilling)) { error in
+            guard case AWXCardProvider.ValidationError.invalidCardInfo(_) = error else {
+                XCTFail("Expected AWXCardProvider.ValidationError.invalidCardInfo, but got \(error)")
+                return
+            }
+        }
+        
+        let components = Calendar.current.dateComponents(
+            Set([Calendar.Component.month, Calendar.Component.year]),
+            from: Date()
+        )
+        var month = (components.month ?? 0)
+        var year = components.year ?? 25
+        if month == 0 {
+            month = 12
+            year -= 1
+        } else {
+            month -= 1
+        }
+        mockValidCard.expiryMonth = "\(month)"
+        mockValidCard.expiryYear = "\(year)"
+        XCTAssertThrowsError(try provider.validate(card: mockValidCard, billing: mockValidBilling)) { error in
+            guard case AWXCardProvider.ValidationError.invalidCardInfo(_) = error else {
+                XCTFail("Expected AWXCardProvider.ValidationError.invalidCardInfo, but got \(error)")
+                return
+            }
+        }
+    }
+    
+    func testEmptyCardHolderName() {
         // Test invalid card holder name
-        let invalidCardHolder = AWXCard(name: "", cardNumber: "4111111111111111", expiry: "", cvc: "111")
-        XCTAssertThrowsError(try provider.validate(card: invalidCardHolder, billing: mockValidBilling)) { error in
+        let provider = AWXCardProvider(delegate: mockProviderDelegate, session: mockSession, paymentMethodType: mockMethodType)
+        mockSession.requiredBillingContactFields = [.name]
+        mockValidCard.name = ""
+        XCTAssertThrowsError(try provider.validate(card: mockValidCard, billing: mockValidBilling)) { error in
             guard case AWXCardProvider.ValidationError.invalidCardInfo(_) = error else {
                 XCTFail("Expected AWXCardProvider.ValidationError.invalidCardInfo, but got \(error)")
                 return
@@ -301,17 +347,6 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         let validConsent = AWXPaymentConsent()
         validConsent.id = "cst_validConsentId"
         XCTAssertNoThrow(try provider.validate(consent: validConsent))
-        
-        // Test invalid consent ID
-        mockMethodType.name = AWXCardKey
-        let invalidConsent = AWXPaymentConsent()
-        invalidConsent.id = "invalidConsentId"
-        XCTAssertThrowsError(try provider.validate(consent: invalidConsent)) { error in
-            guard case AWXCardProvider.ValidationError.invalidConsent(_) = error else {
-                XCTFail("Expected AWXCardProvider.ValidationError.invalidConsent, but got \(error)")
-                return
-            }
-        }
     }
 
     func testRedirectActionProviderValidate() {

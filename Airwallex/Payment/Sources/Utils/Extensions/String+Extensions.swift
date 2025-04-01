@@ -28,7 +28,7 @@ extension String {
         return NSPredicate(format: "SELF MATCHES %@", e164Regex).evaluate(with: self)
     }
     
-    var isvalidCountryCode: Bool {
+    var isValidCountryCode: Bool {
         NSLocale.isoCountryCodes.contains(self)
     }
     

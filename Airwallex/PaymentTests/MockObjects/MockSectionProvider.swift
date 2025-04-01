@@ -35,20 +35,17 @@ class MockSectionProvider: CollectionViewSectionProvider {
     
     var status = Status.A
     
-    lazy var sectionControllerA: MockSectionController<Section, Item> = {
-        return MockSectionController(
-            section: Section.A,
-            items: [Item.A1, Item.A2]
-        )
-    }()
+    lazy var sectionControllerA: MockSectionController<Section, Item> = MockSectionController(
+        section: Section.A,
+        items: [Item.A1, Item.A2]
+    )
+    
     lazy var anySectionControllerA = sectionControllerA.anySectionController()
     
-    lazy var sectionControllerB: MockSectionController<Section, Item> = {
-        return MockSectionController(
-            section: Section.B,
-            items: [Item.B1, Item.B2]
-        )
-    }()
+    lazy var sectionControllerB: MockSectionController<Section, Item> = MockSectionController(
+        section: Section.B,
+        items: [Item.B1, Item.B2]
+    )
     lazy var anySectionControllerB = sectionControllerB.anySectionController()
     
     func sections() -> [Section] {

@@ -9,13 +9,19 @@
 import UIKit
 import XCTest
 @testable import Payment
+import Core
 
 class UIColorExtensionTests: XCTestCase {
     
+    override class func setUp() {
+        super.setUp()
+        AWXTheme.shared().tintColor = nil
+    }
+    
     func testAwxColor() {
         let primaryColor = UIColor.awxColor(.theme)
-        XCTAssertEqual(primaryColor.resolvedColor(with: .init(userInterfaceStyle: .light)), UIColor(hex: "#612FFF"))
-        XCTAssertEqual(primaryColor.resolvedColor(with: .init(userInterfaceStyle: .dark)), UIColor(hex: "#ABA8FF"))
+        XCTAssertEqual(primaryColor.resolvedColor(with: .init(userInterfaceStyle: .light)).toHex(), "#612FFF")
+        XCTAssertEqual(primaryColor.resolvedColor(with: .init(userInterfaceStyle: .dark)).toHex(), "#ABA8FF")
         
         let backgroundPrimaryColor = UIColor.awxColor(.backgroundPrimary)
         XCTAssertEqual(backgroundPrimaryColor.resolvedColor(with: .init(userInterfaceStyle: .light)), UIColor.white)

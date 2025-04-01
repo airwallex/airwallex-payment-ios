@@ -27,7 +27,7 @@ class UITextFieldExtensionsTests: XCTestCase {
         XCTAssertEqual(textField.textContentType, .emailAddress)
         
         textField.update(for: .phoneNumber)
-        XCTAssertEqual(textField.keyboardType, .asciiCapableNumberPad)
+        XCTAssertEqual(textField.keyboardType, .phonePad)
         XCTAssertEqual(textField.textContentType, .telephoneNumber)
         XCTAssertEqual(textField.autocapitalizationType, .sentences)
         XCTAssertEqual(textField.autocorrectionType, .default)

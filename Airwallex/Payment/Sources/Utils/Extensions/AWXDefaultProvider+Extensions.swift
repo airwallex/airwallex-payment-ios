@@ -190,7 +190,7 @@ extension AWXCardProvider {
                     NSLocalizedString("Billing address required", bundle: .payment, comment: localizationComment)
                 )
             }
-            guard let countryCode = address.countryCode, countryCode.isvalidCountryCode else {
+            guard let countryCode = address.countryCode, countryCode.isValidCountryCode else {
                 throw ValidationError.invalidBillingInfo(
                     NSLocalizedString("Billing country required", bundle: .payment, comment: localizationComment)
                 )
@@ -231,7 +231,7 @@ extension AWXCardProvider {
             }
         }
         if session.requiredBillingContactFields.contains(.countryCode) {
-            guard let countryCode = billing.address?.countryCode, countryCode.isvalidCountryCode else {
+            guard let countryCode = billing.address?.countryCode, countryCode.isValidCountryCode else {
                 throw ValidationError.invalidBillingInfo(
                     NSLocalizedString("Billing country required", bundle: .payment, comment: localizationComment)
                 )
@@ -259,6 +259,20 @@ extension AWXCardProvider {
                 let localizedString = NSLocalizedString("Invalid payment method name %@ for card payment", bundle: .payment, comment: localizationComment)
                 let message = String(format: localizedString, methodType.name)
                 throw ValidationError.invalidMethodType(message)
+            }
+            guard !methodType.cardSchemes.isEmpty else {
+                throw ValidationError.invalidCardSchemes(
+                    NSLocalizedString("No valid card schemes for payment", bundle: .payment, comment: localizationComment)
+                )
+            }
+            
+            let allAvailable = Set(AWXCardBrand.all.map { $0.rawValue })
+            for name in methodType.cardSchemes.map({ $0.name }) {
+                guard allAvailable.contains(name) else {
+                    let localizedString = NSLocalizedString("Card scheme %@ not support for payment", bundle: .payment, comment: localizationComment)
+                    let message = String(format: localizedString, name)
+                    throw ValidationError.invalidCardSchemes(message)
+                }
             }
         }
         do {

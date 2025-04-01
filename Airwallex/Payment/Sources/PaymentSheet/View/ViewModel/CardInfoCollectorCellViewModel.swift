@@ -78,7 +78,8 @@ extension CardInfoCollectorCellViewModel {
         let card = AWXCard(
             name: "",
             cardNumber: cardNumberConfigurer.text ?? "",
-            expiry: expireDataConfigurer.text ?? "",
+            expiryMonth: String(expireDataConfigurer.text?.prefix(2) ?? ""),
+            expiryYear: String(expireDataConfigurer.text?.suffix(2) ?? ""),
             cvc: cvcConfigurer.text ?? ""
         )
         return card

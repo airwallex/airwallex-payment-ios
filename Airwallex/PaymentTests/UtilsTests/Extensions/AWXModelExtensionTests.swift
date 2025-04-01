@@ -20,14 +20,21 @@ class AWXModelExtensionTests: XCTestCase {
     func testAWXCardInitializer() {
         let name = "John Doe"
         let cardNumber = "4111 1111 1111 1111"
-        let expiry = "12/25"
+        let expiryMonth = "4"
+        let expiryYear = "2025"
         let cvc = "123"
         
-        let card = AWXCard(name: name, cardNumber: cardNumber, expiry: expiry, cvc: cvc)
+        let card = AWXCard(
+            name: name,
+            cardNumber: cardNumber,
+            expiryMonth: expiryMonth,
+            expiryYear: expiryYear,
+            cvc: cvc
+        )
         
         XCTAssertEqual(card.name, name, "Card name does not match.")
         XCTAssertEqual(card.number, "4111111111111111", "Card number does not match.")
-        XCTAssertEqual(card.expiryMonth, "12", "Expiry month does not match.")
+        XCTAssertEqual(card.expiryMonth, "4", "Expiry month does not match.")
         XCTAssertEqual(card.expiryYear, "2025", "Expiry year does not match.")
         XCTAssertEqual(card.cvc, cvc, "CVC does not match.")
     }

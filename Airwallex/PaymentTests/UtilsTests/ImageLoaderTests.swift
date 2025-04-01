@@ -133,7 +133,7 @@ class ImageLoaderTests: XCTestCase {
             XCTFail("expected error thrown")
         } catch {
             guard case ImageFetcher.ImageFetcherError.cancelled = error else {
-                XCTFail()
+                XCTFail("Expected ImageFetcher.ImageFetcherError.cancelled but get \(String(describing: error))")
                 return
             }
         }

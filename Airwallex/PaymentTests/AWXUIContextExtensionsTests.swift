@@ -47,12 +47,9 @@ class AWXUIContextExtensionsTests: XCTestCase {
             style: .push
         )
         
-        guard let error = mockViewController.error else {
-            XCTFail("error not validated")
-            return
-        }
-        guard case AWXUIContext.LaunchError.invalidViewHierarchy = error else {
-            XCTFail("Expected AWXUIContext.LaunchError.invalidViewHierarchy, but get \(error)")
+        guard let error = mockViewController.error,
+              case AWXUIContext.LaunchError.invalidViewHierarchy = error else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidViewHierarchy, but get \(String(describing: mockViewController.error))")
             return
         }
     }

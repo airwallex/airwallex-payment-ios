@@ -76,23 +76,26 @@ actor ImageFetcher {
                 // cleanup `viewToTaskMap`
                 self.viewTasks.removeObject(forKey: view)
             }
+            var data: Data?
             do {
-                let data = try await requestImageData(imageURL)
-                
+                data = try await requestImageData(imageURL)
+            } catch {
                 guard !Task.isCancelled else {
                     // if the task is cancelled, don't set image to imageView
                     throw ImageFetcherError.cancelled
                 }
-                let scale = await UIScreen.main.scale
-                guard let image = UIImage(data: data, scale: scale) else {
-                    throw ImageFetcherError.invalidData
-                }
-                return image
-            } catch ImageFetcherError.invalidData {
-                throw ImageFetcherError.invalidData
-            } catch {
                 throw ImageFetcherError.networkError(underlying: error)
             }
+            guard !Task.isCancelled else {
+                // if the task is cancelled, don't set image to imageView
+                throw ImageFetcherError.cancelled
+            }
+
+            let scale = await UIScreen.main.scale
+            guard let data, let image = UIImage(data: data, scale: scale) else {
+                throw ImageFetcherError.invalidData
+            }
+            return image
         }
         
         viewTasks.setObject(

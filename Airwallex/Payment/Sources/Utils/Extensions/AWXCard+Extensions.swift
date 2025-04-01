@@ -12,12 +12,16 @@ import Card
 
 extension AWXCard {
     // convert this into an init method in swift
-    convenience init(name: String, cardNumber: String, expiry: String, cvc: String) {
+    convenience init(name: String,
+                     cardNumber: String,
+                     expiryMonth: String,
+                     expiryYear: String,
+                     cvc: String) {
         self.init()
         self.name = name
         self.number = cardNumber.filterIllegalCharacters(in: .decimalDigits.inverted)
-        self.expiryMonth = String(expiry.prefix(2))
-        self.expiryYear = "20\(expiry.suffix(2))"
+        self.expiryMonth = expiryMonth
+        self.expiryYear = "20\(expiryYear.suffix(2))"
         self.cvc = cvc
     }
     

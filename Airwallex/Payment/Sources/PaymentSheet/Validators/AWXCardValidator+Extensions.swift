@@ -87,7 +87,7 @@ extension AWXCardValidator {
         
         let calendar = Calendar(identifier: .gregorian)
         let date = Date()
-        let currentYear = calendar.component(.year, from: date) % 100
+        let currentYear = calendar.component(.year, from: date)
         let currentMonth = calendar.component(.month, from: date)
          
         guard (year == currentYear && month >= currentMonth) || year > currentYear else {

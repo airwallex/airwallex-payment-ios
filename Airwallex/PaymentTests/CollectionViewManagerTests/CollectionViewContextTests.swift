@@ -246,6 +246,5 @@ import XCTest
         XCTAssertNil(mockProvider.sectionControllerA.didEndDisplayingCellCalled)
         XCTAssertNil(mockProvider.sectionControllerA.willDisplayCellCalled)
         XCTAssertNotNil(mockProvider.sectionControllerA.sectionLayoutCalled)
-        
     }
 }

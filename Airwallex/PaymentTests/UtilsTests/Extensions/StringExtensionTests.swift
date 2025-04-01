@@ -40,10 +40,10 @@ class StringExtensionTests: XCTestCase {
     }
 
     func testIsValidCountryCode() {
-        XCTAssertTrue("US".isvalidCountryCode)
-        XCTAssertTrue("CN".isvalidCountryCode)
-        XCTAssertFalse("XX".isvalidCountryCode)
-        XCTAssertFalse("USA".isvalidCountryCode)
+        XCTAssertTrue("US".isValidCountryCode)
+        XCTAssertTrue("CN".isValidCountryCode)
+        XCTAssertFalse("XX".isValidCountryCode)
+        XCTAssertFalse("USA".isValidCountryCode)
     }
 
     func testTrimmed() {
