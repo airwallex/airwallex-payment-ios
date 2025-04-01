@@ -38,9 +38,9 @@ public class PaymentSessionHandler: NSObject {
         var errorDescription: String {
             switch self {
             case let .invalidSession(underlyingError: error):
-                return "Invalid session: \(error.localizedDescription)"
+                return error.localizedDescription
             case let .invalidPayment(underlyingError: error):
-                return "Invalid payment: \(error.localizedDescription)"
+                return error.localizedDescription
             }
         }
         

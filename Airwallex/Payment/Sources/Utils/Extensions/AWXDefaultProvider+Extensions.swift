@@ -33,7 +33,9 @@ import AirwallexRedirect
 
 import PassKit
 
-extension AWXApplePayProvider { 
+private let localizationComment = "provider validation"
+
+extension AWXApplePayProvider {
     enum ValidationError: CustomNSError, LocalizedError {
         case invalidMethodType(String)
         case invalidSession(underlyingError: Error)
@@ -53,13 +55,13 @@ extension AWXApplePayProvider {
         var errorDescription: String {
             switch self {
             case .invalidMethodType(let message):
-                return "Invalid method type: \(message)"
+                return message
             case .invalidSession(let error):
-                return "Invalid session: \(error.localizedDescription)"
+                return error.localizedDescription
             case .invalidApplePayOptions(let message):
-                return "Invalid apple pay options: \(message)"
+                return message
             case .applePayNotSupported(let message):
-                return "Device can not make payments: \(message)"
+                return message
             }
         }
     }
@@ -67,7 +69,9 @@ extension AWXApplePayProvider {
     func validate() throws {
         if let methodType = paymentMethodType {
             guard methodType.name == AWXApplePayKey else {
-                throw ValidationError.invalidMethodType("Expected methodType.name to be \(AWXApplePayKey), but found \(methodType.name)")
+                let localizedString = NSLocalizedString("Invalid payment method name %@ for apple pay", bundle: .payment, comment: localizationComment)
+                let message = String(format: localizedString, methodType.name)
+                throw ValidationError.invalidMethodType(message)
             }
         }
         
@@ -78,27 +82,40 @@ extension AWXApplePayProvider {
         }
         
         guard let options = session.applePayOptions else {
-            throw ValidationError.invalidApplePayOptions("session.applePayOptions is required")
+            throw ValidationError.invalidApplePayOptions(
+                NSLocalizedString("Apple pay options required", bundle: .payment, comment: localizationComment)
+            )
         }
         
         guard !options.merchantIdentifier.isEmpty else {
-            throw ValidationError.invalidApplePayOptions("invalid merchant ID")
+            throw ValidationError.invalidApplePayOptions(
+                NSLocalizedString("Merchant ID required", bundle: .payment, comment: localizationComment)
+            )
         }
         
-        guard Set(options.supportedNetworks).isSubset(of: AWXApplePaySupportedNetworks()) else {
-            throw ValidationError.invalidApplePayOptions("only payment networks in AWXApplePaySupportedNetworks are supported")
+        let networks = Set(AWXApplePaySupportedNetworks())
+        for network in options.supportedNetworks {
+            if !networks.contains(network) {
+                let localizedString = NSLocalizedString("Payment network %@ not supported", comment: localizationComment)
+                let message = String(format: localizedString, network.rawValue)
+                throw ValidationError.invalidApplePayOptions(message)
+            }
         }
         
         if #available(iOS 15.0, *) {
             guard PKPaymentAuthorizationController.canMakePayments() else {
-                throw ValidationError.applePayNotSupported("canMakePayments return false")
+                throw ValidationError.applePayNotSupported(
+                    NSLocalizedString("Apple Pay not available on current device.", bundle: .payment, comment: localizationComment)
+                )
             }
         } else {
             guard PKPaymentAuthorizationController.canMakePayments(
                 usingNetworks: options.supportedNetworks,
                 capabilities: options.merchantCapabilities
             ) else {
-                throw ValidationError.applePayNotSupported("canMakePayments return false")
+                throw ValidationError.applePayNotSupported(
+                    NSLocalizedString("Apple Pay not available on current device.", bundle: .payment, comment: localizationComment)
+                )
             }
         }
     }
@@ -127,17 +144,17 @@ extension AWXCardProvider {
         var errorDescription: String {
             switch self {
             case .invalidMethodType(let message):
-                return "Invalid method type: \(message)"
+                return message
             case .invalidSession(underlyingError: let error):
-                return "Invalid session: \(error.localizedDescription)"
+                return error.localizedDescription
             case .invalidCardSchemes(let message):
-                return "Invalid card schemes: \(message)"
+                return message
             case .invalidCardInfo(underlyingError: let error):
-                return "Invalid card info: \(error.localizedDescription)"
+                return error.localizedDescription
             case .invalidBillingInfo(let message):
-                return "Invalid billing info: \(message)"
+                return message
             case .invalidConsent(let message):
-                return "Invalid consent: \(message)"
+                return message
             }
         }
     }
@@ -156,46 +173,68 @@ extension AWXCardProvider {
         guard !session.requiredBillingContactFields.isEmpty else { return }
         
         guard let billing else {
-            throw ValidationError.invalidBillingInfo("Invalid billing: N/A")
+            throw ValidationError.invalidBillingInfo(
+                NSLocalizedString("Billing info required", bundle: .payment, comment: localizationComment)
+            )
         }
         if session.requiredBillingContactFields.contains(.name) {
             guard !billing.firstName.isEmpty else {
-                throw ValidationError.invalidBillingInfo("Invalid name: \(billing.firstName + "" + billing.lastName)")
+                throw ValidationError.invalidBillingInfo(
+                    NSLocalizedString("Billing name required", bundle: .payment, comment: localizationComment)
+                )
             }
         }
         if session.requiredBillingContactFields.contains(.address) {
             guard let address = billing.address else {
-                throw ValidationError.invalidBillingInfo("Invalid address: N/A")
+                throw ValidationError.invalidBillingInfo(
+                    NSLocalizedString("Billing address required", bundle: .payment, comment: localizationComment)
+                )
             }
             guard let countryCode = address.countryCode, countryCode.isvalidCountryCode else {
-                throw ValidationError.invalidBillingInfo("Invalid country code: \(address.countryCode ?? "N/A")")
+                throw ValidationError.invalidBillingInfo(
+                    NSLocalizedString("Billing country required", bundle: .payment, comment: localizationComment)
+                )
             }
             guard let state = address.state, !state.isEmpty else {
-                throw ValidationError.invalidBillingInfo("Invalid state: \(address.state ?? "N/A")")
+                throw ValidationError.invalidBillingInfo(
+                    NSLocalizedString("Billing state required", bundle: .payment, comment: localizationComment)
+                )
             }
             guard let city = address.city, !city.isEmpty else {
-                throw ValidationError.invalidBillingInfo("Invalid city: \(address.city ?? "N/A")")
+                throw ValidationError.invalidBillingInfo(
+                    NSLocalizedString("Billing city required", bundle: .payment, comment: localizationComment)
+                )
             }
             guard let street = address.street, !street.isEmpty else {
-                throw ValidationError.invalidBillingInfo("Invalid street: \(address.street ?? "N/A")")
+                throw ValidationError.invalidBillingInfo(
+                    NSLocalizedString("Billing street required", bundle: .payment, comment: localizationComment)
+                )
             }
             guard let postcode = address.postcode, !postcode.isEmpty else {
-                throw ValidationError.invalidBillingInfo("Invalid postcode: \(address.postcode ?? "N/A")")
+                throw ValidationError.invalidBillingInfo(
+                    NSLocalizedString("Billing postcode required", bundle: .payment, comment: localizationComment)
+                )
             }
         }
         if session.requiredBillingContactFields.contains(.email) {
             guard let email = billing.email, email.isValidEmail else {
-                throw ValidationError.invalidBillingInfo("Invalid email: \(billing.email ?? "N/A")")
+                throw ValidationError.invalidBillingInfo(
+                    NSLocalizedString("Billing email required", bundle: .payment, comment: localizationComment)
+                )
             }
         }
         if session.requiredBillingContactFields.contains(.phone) {
             guard let phoneNumber = billing.phoneNumber, phoneNumber.isValidE164PhoneNumber else {
-                throw ValidationError.invalidBillingInfo("Invalid phone number: \(billing.phoneNumber ?? "N/A")")
+                throw ValidationError.invalidBillingInfo(
+                    NSLocalizedString("Billing phone number required", bundle: .payment, comment: localizationComment)
+                )
             }
         }
         if session.requiredBillingContactFields.contains(.countryCode) {
             guard let countryCode = billing.address?.countryCode, countryCode.isvalidCountryCode else {
-                throw ValidationError.invalidBillingInfo("Invalid country code: \(billing.address?.countryCode ?? "N/A")")
+                throw ValidationError.invalidBillingInfo(
+                    NSLocalizedString("Billing country required", bundle: .payment, comment: localizationComment)
+                )
             }
         }
     }
@@ -207,15 +246,19 @@ extension AWXCardProvider {
     
     func validate(consentId: String) throws {
         try validateMethodTypeAndSession()
-        guard !consentId.isEmpty, consentId.hasPrefix("cst_") else {
-            throw ValidationError.invalidConsent("invalid consentId: \(consentId)")
+        guard !consentId.isEmpty else {
+            throw ValidationError.invalidConsent(
+                NSLocalizedString("Consent ID required", bundle: .payment, comment: localizationComment)
+            )
         }
     }
     
     private func validateMethodTypeAndSession() throws {
         if let methodType = paymentMethodType {
             guard methodType.name == AWXCardKey else {
-                throw ValidationError.invalidMethodType("Invalid method type: \(methodType.name), \(AWXCardKey) expected")
+                let localizedString = NSLocalizedString("Invalid payment method name %@ for card payment", bundle: .payment, comment: localizationComment)
+                let message = String(format: localizedString, methodType.name)
+                throw ValidationError.invalidMethodType(message)
             }
         }
         do {
@@ -244,28 +287,27 @@ extension AWXRedirectActionProvider {
         var errorDescription: String {
             switch self {
             case .invalidMethodType(let message):
-                return "Invalid method type: \(message)"
+                return message
             case .invalidSession(underlyingError: let error):
-                return "Invalid session: \(error.localizedDescription)"
+                return error.localizedDescription
             }
         }
     }
     
     func validate(name: String) throws {
-        guard (paymentMethodType == nil || paymentMethodType?.name == name) else {
-            throw ValidationError.invalidMethodType("method name: \(name) not equal to methodType.name: \(paymentMethodType?.name ?? "")")
+        if let paymentMethodType {
+            guard paymentMethodType.name == name,
+                  name != AWXCardKey,
+                  name != AWXApplePayKey else {
+                let localizedString = NSLocalizedString("Invalid payment method name %@", bundle: .payment, comment: localizationComment)
+                let message = String(format: localizedString, name)
+                throw ValidationError.invalidMethodType(message)
+            }
         }
         do {
             try session.validate()
         } catch {
             throw ValidationError.invalidSession(underlyingError: error)
-        }
-        
-        guard name != AWXCardKey else {
-            throw ValidationError.invalidMethodType("should never use AWXRedirectActionProvider for card payment")
-        }
-        guard name != AWXApplePayKey else {
-            throw ValidationError.invalidMethodType("should never use AWXRedirectActionProvider for apple pay")
         }
     }
 }
