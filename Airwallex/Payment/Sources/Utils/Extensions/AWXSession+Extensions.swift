@@ -13,6 +13,8 @@ import Core
 import AirwallexCore
 #endif
 
+fileprivate let localizationComment = "session validation"
+
 extension AWXSession {
     enum ValidationError: LocalizedError, CustomNSError {
         case invalidPaymentIntent(String)
@@ -32,11 +34,11 @@ extension AWXSession {
         var errorDescription: String {
             switch self {
             case .invalidPaymentIntent(let message):
-                return "Invalid payment intent: \(message)"
+                return message
             case .invalidCustomerId(let message):
-                return "Invalid customer ID: \(message)"
+                return message
             case .invalidSessionType(let message):
-                return "Invalid session type: \(message)"
+                return message
             }
         }
     }
@@ -44,33 +46,50 @@ extension AWXSession {
     func validate() throws {
         if let session = self as? AWXOneOffSession {
             guard let intent = session.paymentIntent else {
-                throw ValidationError.invalidPaymentIntent("payment intent required")
+                throw ValidationError.invalidPaymentIntent(
+                    NSLocalizedString("Payment intent required", bundle: .payment, comment: localizationComment)
+                )
             }
             guard !intent.id.isEmpty else {
-                throw ValidationError.invalidPaymentIntent("payment intent id required")
+                throw ValidationError.invalidPaymentIntent(
+                    NSLocalizedString("Intent id required", bundle: .payment, comment: localizationComment)
+                )
             }
             guard !intent.clientSecret.isEmpty else {
-                throw ValidationError.invalidPaymentIntent("client secret required for intent: \(intent.id)")
+                throw ValidationError.invalidPaymentIntent(
+                    NSLocalizedString("Client secret required", bundle: .payment, comment: localizationComment))
             }
         } else if let session = self as? AWXRecurringWithIntentSession {
             guard let intent = session.paymentIntent else {
-                throw ValidationError.invalidPaymentIntent("payment intent required")
+                throw ValidationError.invalidPaymentIntent(
+                    NSLocalizedString("Payment intent required", bundle: .payment, comment: localizationComment)
+                )
             }
             guard !intent.id.isEmpty else {
-                throw ValidationError.invalidPaymentIntent("payment intent id required")
+                throw ValidationError.invalidPaymentIntent(
+                    NSLocalizedString("Intent id required", bundle: .payment, comment: localizationComment)
+                )
             }
             guard !intent.clientSecret.isEmpty else {
-                throw ValidationError.invalidPaymentIntent("client secret required for intent: \(intent.id)")
+                throw ValidationError.invalidPaymentIntent(
+                    NSLocalizedString("Client secret required", bundle: .payment, comment: localizationComment)
+                )
             }
             guard let customerId = session.customerId(), !customerId.isEmpty else {
-                throw ValidationError.invalidCustomerId("customer ID required")
+                throw ValidationError.invalidCustomerId(
+                    NSLocalizedString("Customer ID required", bundle: .payment, comment: localizationComment)
+                )
             }
         } else if let session = self as? AWXRecurringSession {
             guard let customerId = session.customerId(), !customerId.isEmpty else {
-                throw ValidationError.invalidCustomerId("customer ID required")
+                throw ValidationError.invalidCustomerId(
+                    NSLocalizedString("Customer ID required", bundle: .payment, comment: localizationComment)
+                )
             }
         } else {
-            throw ValidationError.invalidSessionType("session should be one of AWXOneOffSession/AWXRecurringSession/AWXRecurringWithIntentSession")
+            throw ValidationError.invalidSessionType(
+                NSLocalizedString("Invalid session type", bundle: .payment, comment: localizationComment)
+            )
         }
     }
 }
