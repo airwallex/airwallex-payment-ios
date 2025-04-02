@@ -111,7 +111,7 @@ class CardPaymentConsentSectionController: SectionController {
             }
                         
             var viewModel: CardConsentCellViewModel
-            if let selectedConsent {
+            if selectedConsent != nil {
                 viewModel = CardConsentCellViewModel(
                     image: image,
                     text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
@@ -230,7 +230,7 @@ class CardPaymentConsentSectionController: SectionController {
         }
         
         guard let consent = consents[safe: indexPath.item],
-              let viewController = context.viewController else {
+              context.viewController != nil else {
             assert(false, "view controller not found")
             return
         }

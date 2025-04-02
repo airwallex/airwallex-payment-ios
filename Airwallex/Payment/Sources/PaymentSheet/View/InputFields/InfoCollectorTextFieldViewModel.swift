@@ -105,7 +105,12 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
         self.title = title
         self.errorHint = errorHint
         self.text = text
-        self.attributedText = attributedText
+        if let attributedText {
+            self.attributedText = attributedText
+            self.text = attributedText.string
+        } else if let text {
+            self.text = text
+        }
         self.isValid = isValid
         self.textFieldType = textFieldType
         self.placeholder = placeholder
