@@ -186,7 +186,7 @@ extension PaymentSessionHandler {
             try session.validate()
         } catch {
             let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         let applePayProvider = AWXApplePayProvider(
@@ -198,7 +198,7 @@ extension PaymentSessionHandler {
             try applePayProvider.validate()
         } catch {
             let error = ValidationError.invalidPayment(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         actionProvider = applePayProvider
@@ -222,7 +222,7 @@ extension PaymentSessionHandler {
             try session.validate()
         } catch {
             let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         let cardProvider = AWXCardProvider(
@@ -234,7 +234,7 @@ extension PaymentSessionHandler {
             try cardProvider.validate(card: card, billing: billing)
         } catch {
             let error = ValidationError.invalidPayment(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         actionProvider = cardProvider
@@ -251,7 +251,7 @@ extension PaymentSessionHandler {
             try session.validate()
         } catch {
             let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         let cardProvider = AWXCardProvider(
@@ -263,7 +263,7 @@ extension PaymentSessionHandler {
             try cardProvider.validate(consent: consent)
         } catch {
             let error = ValidationError.invalidPayment(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         actionProvider = cardProvider
@@ -285,7 +285,7 @@ extension PaymentSessionHandler {
             try session.validate()
         } catch {
             let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         let cardProvider = AWXCardProvider(
@@ -297,7 +297,7 @@ extension PaymentSessionHandler {
             try cardProvider.validate(consentId: consentId)
         } catch {
             let error = ValidationError.invalidPayment(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         actionProvider = cardProvider
@@ -316,7 +316,7 @@ extension PaymentSessionHandler {
             try session.validate()
         } catch {
             let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         let redirectAction = AWXRedirectActionProvider(
@@ -328,7 +328,7 @@ extension PaymentSessionHandler {
             try redirectAction.validate(name: name)
         } catch {
             let error = ValidationError.invalidPayment(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         actionProvider = redirectAction
@@ -345,7 +345,7 @@ extension PaymentSessionHandler {
             try session.validate()
         } catch {
             let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         let redirectAction = AWXRedirectActionProvider(
@@ -357,7 +357,7 @@ extension PaymentSessionHandler {
             try redirectAction.validate(name: paymentMethod.type)
         } catch {
             let error = ValidationError.invalidPayment(underlyingError: error)
-            debugLog(error.localizedDescription)
+            debugLog("\(error)")
             throw error
         }
         actionProvider = redirectAction

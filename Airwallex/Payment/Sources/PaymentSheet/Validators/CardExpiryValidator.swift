@@ -18,6 +18,6 @@ struct CardExpiryValidator: UserInputValidator {
         }
         let components = text.components(separatedBy: "/")
         let expiryYear = "20\(components.last?.suffix(2) ?? "00")"
-        try AWXCardValidator.validate(expiryMonth: components.first, expiryYear: components.last)
+        try AWXCardValidator.validate(expiryMonth: components.first, expiryYear: expiryYear)
     }
 }

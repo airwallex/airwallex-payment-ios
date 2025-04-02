@@ -150,7 +150,7 @@ public extension UIImageView {
                     let image = try await imageLoader.loadImage(imageURL, for: self)
                     self.image = image
                 } catch {
-                    debugLog(error.localizedDescription)
+                    debugLog("\(error)")
                 }
             }
         }

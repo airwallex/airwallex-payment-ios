@@ -28,7 +28,7 @@ struct InfoCollectorDefaultValidator: UserInputValidator {
         if !isRequired && (text == nil || text?.isEmpty == true) {
             return
         }
-        var defaultErrorMessage = NSLocalizedString("Invalid \(title ?? "input")", bundle: .payment, comment: "")
+        let defaultErrorMessage = NSLocalizedString("Invalid \(title ?? "input")", bundle: .payment, comment: "")
         
         switch fieldType {
         case .firstName:

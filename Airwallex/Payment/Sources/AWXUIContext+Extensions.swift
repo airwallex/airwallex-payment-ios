@@ -300,7 +300,7 @@ private extension AWXUIContext {
     static func handleLaunchFailure(_ paymentResultDelegate: AWXPaymentResultDelegate,
                                     _ error: LaunchError) {
         paymentResultDelegate.paymentViewController(nil, didCompleteWith: .failure, error: error)
-        debugLog(error.localizedDescription)
+        debugLog("\(error)")
         AnalyticsLogger.log(error: error)
     }
 }
