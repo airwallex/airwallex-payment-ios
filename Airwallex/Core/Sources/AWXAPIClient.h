@@ -122,6 +122,9 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, strong, nullable, readonly) NSString *accountID;
 
+/// Optional session configuration
+@property (nonatomic, strong, nullable) NSURLSessionConfiguration *sessionConfiguration;
+
 /**
  Convenience constructor for a configuration.
 

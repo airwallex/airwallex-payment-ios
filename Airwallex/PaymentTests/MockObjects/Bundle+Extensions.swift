@@ -15,12 +15,19 @@ fileprivate class BundleProvider {
 
 extension Bundle {
     static func decode<T: AWXJSONDecodable>(file: String, withExtension: String? = "json") -> T? {
-        guard let file = BundleProvider.bundle.url(forResource: file, withExtension: withExtension),
-              let data = try? Data(contentsOf: file),
+        guard let data = Bundle.dataOfFile(file, withExtension: withExtension),
               let object = try? JSONSerialization.jsonObject(with: data) as? [AnyHashable : Any],
               let model = T.decode(fromJSON: object) else {
             return nil
         }
         return model as? T
+    }
+    
+    static func dataOfFile(_ file: String, withExtension: String? = "json") -> Data? {
+        guard let file = BundleProvider.bundle.url(forResource: file, withExtension: withExtension),
+              let data = try? Data(contentsOf: file) else {
+            return nil
+        }
+        return data
     }
 }

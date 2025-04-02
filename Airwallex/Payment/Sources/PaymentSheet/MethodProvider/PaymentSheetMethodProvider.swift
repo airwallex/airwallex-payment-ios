@@ -30,13 +30,15 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
     
     var methods = [AWXPaymentMethodType]()
     var consents = [AWXPaymentConsent]()
-    let apiClient = AWXAPIClient(configuration: .shared())
+    let apiClient: AWXAPIClient
     
-    init(session: AWXSession) {
+    init(session: AWXSession,
+         apiClient: AWXAPIClient = AWXAPIClient.init(configuration: .shared())) {
         provider = AWXPaymentMethodListViewModel(
             session: session,
             apiClient: apiClient
         )
+        self.apiClient = apiClient
     }
     
     func getPaymentMethodTypes() async throws {
@@ -45,7 +47,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
         // make sure the payment methods and consents are unique
         let availableMethods = session.filteredPaymentMethodTypes(methods)
         var filteredConsents = [AWXPaymentConsent]()
-        var methodDict = Dictionary(
+        let methodDict = Dictionary(
             uniqueKeysWithValues: zip(
                 availableMethods.map { $0.name.lowercased() },
                 availableMethods

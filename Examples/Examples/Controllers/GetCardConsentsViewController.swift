@@ -56,7 +56,7 @@ class GetPaymentConsentsViewController: UITableViewController {
     }
     
     private lazy var storeAPIClient = Airwallex.apiClient
-    private lazy var awxClient = AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
+    private lazy var awxClient = AWXAPIClient(configuration: .shared())
     private lazy var items = [AWXPaymentConsent]()
     
     private let reuseIdentifier = "reuseIdentifier"

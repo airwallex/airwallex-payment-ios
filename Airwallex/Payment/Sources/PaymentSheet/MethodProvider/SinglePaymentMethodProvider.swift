@@ -42,7 +42,7 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
     
     let session: AWXSession
     
-    let apiClient = AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
+    var apiClient = AWXAPIClient(configuration: .shared())
     
     private var methodTypeDetails: AWXGetPaymentMethodTypeResponse?
     private var task: Task<AWXGetPaymentMethodTypeResponse, Error>?
@@ -64,7 +64,8 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
         method.displayName = response.displayName
         method.resources = resources
         method.transactionMode = session.transactionMode()
-        if name == AWXCardKey, let brands = supportedCardBrands, !brands.isEmpty {
+        if name == AWXCardKey {
+            let brands = supportedCardBrands ?? AWXCardBrand.all
             method.cardSchemes = brands.map { AWXCardScheme(name: $0.rawValue) }
         }
         methods = [method]
