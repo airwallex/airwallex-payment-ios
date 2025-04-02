@@ -17,6 +17,9 @@ struct CardExpiryValidator: UserInputValidator {
             throw NSLocalizedString("Expiry date is required", bundle: .payment, comment: "").asError()
         }
         let components = text.components(separatedBy: "/")
+        guard text.count == 5, components.count == 2 else {
+            throw NSLocalizedString("Card’s expiration date is invalid", bundle: .payment, comment: "").asError()
+        }
         let expiryYear = "20\(components.last?.suffix(2) ?? "00")"
         try AWXCardValidator.validate(expiryMonth: components.first, expiryYear: expiryYear)
     }
