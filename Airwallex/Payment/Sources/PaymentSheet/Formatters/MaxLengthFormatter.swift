@@ -32,21 +32,21 @@ struct MaxLengthFormatter: UserInputFormatter {
         self.characterSet = characterSet
     }
     
-    func automaticTriggerReturnAction(textField: UITextField) -> Bool {
-        guard let selectedRange = textField.selectedTextRange else {
-            return false
-        }
-        let text = textField.text ?? ""
-        return selectedRange.end == textField.endOfDocument && text.count >= maxLength
-    }
-    
     func formatUserInput(_ textField: UITextField,
                          changeCharactersIn range: Range<String.Index>,
                          replacementString string: String) -> NSAttributedString {
-        let before = textField.text ?? ""
-        let after = before.replacingCharacters(in: range, with: string)
-        let attributedText = NSAttributedString(string: after, attributes: textField.defaultTextAttributes)
-        let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
-        return attributedText.attributedSubstring(from: range)
+        var userInput = (textField.text ?? "").replacingCharacters(in: range, with: string)
+        if let characterSet {
+            userInput = userInput.filterIllegalCharacters(in: characterSet.inverted)
+        }
+        let attributedText = NSAttributedString(
+            string: userInput,
+            attributes: textField.defaultTextAttributes
+        )
+        guard maxLength >= attributedText.length else {
+            let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
+            return attributedText.attributedSubstring(from: range)
+        }
+        return attributedText
     }
 }

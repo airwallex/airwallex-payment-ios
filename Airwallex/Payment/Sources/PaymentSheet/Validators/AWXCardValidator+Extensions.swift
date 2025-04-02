@@ -72,9 +72,9 @@ extension AWXCardValidator {
     }
     
     static func validate(expiryMonth: String?, expiryYear: String?) throws {
-        guard let expiryMonth = expiryMonth?.trimmed,
+        guard let expiryMonth,
               !expiryMonth.isEmpty,
-              let expiryYear = expiryYear?.trimmed,
+              let expiryYear,
               !expiryYear.isEmpty else {
             throw NSLocalizedString("Expiry date is required", bundle: .payment, comment: "card validator error message").asError()
         }

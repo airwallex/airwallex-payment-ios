@@ -13,11 +13,11 @@ struct PrefixPhoneNumberValidator: UserInputValidator {
     let prefix: String?
     
     func validateUserInput(_ text: String?) throws {
-        guard let text = text?.trimmed, text.isValidE164PhoneNumber else {
+        guard let text, text.isValidE164PhoneNumber else {
             throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "").asError()
         }
         
-        if let prefix = prefix?.trimmed, text.hasPrefix(prefix) {
+        if let prefix, text.hasPrefix(prefix) {
             guard text.count > prefix.count else {
                 throw NSLocalizedString("Invalid phone number", bundle: .payment, comment: "").asError()
             }

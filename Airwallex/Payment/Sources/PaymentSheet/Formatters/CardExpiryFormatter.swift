@@ -36,8 +36,11 @@ struct CardExpiryFormatter: UserInputFormatter {
             year: String(expirationYear),
             attributes: textField.defaultTextAttributes
         )
-        let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
-        return attributedText.attributedSubstring(from: range)
+        guard maxLength >= attributedText.length else {
+            let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
+            return attributedText.attributedSubstring(from: range)
+        }
+        return attributedText
     }
     
     private func formatedString(month: String?,

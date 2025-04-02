@@ -20,24 +20,27 @@ class CardNumberFormatter: UserInputFormatter {
     func formatUserInput(_ textField: UITextField,
                          changeCharactersIn range: Range<String.Index>,
                          replacementString string: String) -> NSAttributedString {
-        let before = textField.text ?? ""
-        let string = string.filterIllegalCharacters(in: .decimalDigits.inverted)
-        let after = before.replacingCharacters(in: range, with: string)
+        let userInput = textField.text?
+            .replacingCharacters(in: range, with: string)
+            .filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         
         var cardBrandType: AWXBrandType = .unknown
-        if !after.isEmpty, let brand = AWXCardValidator.shared().brand(forCardNumber: after) {
+        if !userInput.isEmpty, let brand = AWXCardValidator.shared().brand(forCardNumber: userInput) {
             cardBrandType = brand.type
         }
         currentBrand = cardBrandType
         
-        maxLength = AWXCardValidator.shared().maxLength(forCardNumber: after)
+        maxLength = AWXCardValidator.shared().maxLength(forCardNumber: userInput)
         let attributedText = formatText(
-            after,
+            userInput,
             brand: cardBrandType,
             attributes: textField.defaultTextAttributes
         )
-        let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
-        return attributedText.attributedSubstring(from: range)
+        guard maxLength >= attributedText.length else {
+            let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
+            return attributedText.attributedSubstring(from: range)
+        }
+        return attributedText
     }
     
     private func formatText(_ text: String,
