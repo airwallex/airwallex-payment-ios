@@ -231,7 +231,10 @@
 
     [provider handleFlow];
 
-    OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet" additionalInfo:@{@"intentId": @"PaymentIntentId"}]);
+    OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet"
+                                      additionalInfo:@{
+                                          @"supported_networks": session.applePayOptions.supportedNetworks ?: @[]
+                                      }]);
 
     OCMVerify(times(1), [providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(id obj) {
                                          AWXPaymentMethod *method = (AWXPaymentMethod *)obj;
@@ -281,7 +284,9 @@
 
     [provider handleFlow];
 
-    OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet"]);
+    OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet" additionalInfo:@{
+        @"supported_networks": session.applePayOptions.supportedNetworks ?: @[]
+    }]);
 
     OCMVerify(times(1), [providerSpy createPaymentConsentAndConfirmIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(id obj) {
                                          AWXPaymentMethod *method = (AWXPaymentMethod *)obj;
