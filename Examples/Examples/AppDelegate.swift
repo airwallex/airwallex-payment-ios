@@ -8,6 +8,9 @@
 
 import UIKit
 import Airwallex
+#if canImport(WechatOpenSDK)
+import WechatOpenSDK
+#endif
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,11 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ExamplesKeys.loadDefaultKeysIfNilOrEmpty()
         Airwallex.setMode(ExamplesKeys.environment)
         
-        
+#if canImport(WechatOpenSDK)
         WXApi.registerApp("wx4c86d73fe4f82431", universalLink: "https://airwallex.com/")
         WXApi.startLog(by: .normal) { log in
             print("WeChat Log: \(log)")
         }
+#endif
         //  customize theme color of the payment UI by setting tintColor on AWXTheme
 //        AWXTheme.shared().tintColor = UIColor.systemBrown
         UISwitch.appearance().onTintColor = .awxColor(.theme)
@@ -33,10 +37,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         NotificationCenter.default.post(name: PaymentResultViewController.paymentResultNotification, object: nil)
+#if canImport(WechatOpenSDK)
         return WXApi.handleOpen(url, delegate: self)
+#else
+        return true
+#endif
     }
 }
 
+#if canImport(WechatOpenSDK)
 extension AppDelegate: WXApiDelegate {
     
     func onResp(_ resp: BaseResp) {
@@ -61,3 +70,4 @@ extension AppDelegate: WXApiDelegate {
         }
     }
 }
+#endif
