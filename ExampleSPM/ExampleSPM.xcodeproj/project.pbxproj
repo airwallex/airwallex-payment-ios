@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D8320E832D9E7F4500FC067A /* ExamplesKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8320E822D9E7F4500FC067A /* ExamplesKeys.swift */; };
 		D8B38C1E2D9E5E9500909ADD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8B38C182D9E5E9500909ADD /* Assets.xcassets */; };
 		D8B38C1F2D9E5E9500909ADD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8B38C1C2D9E5E9500909ADD /* Main.storyboard */; };
 		D8B38C202D9E5E9500909ADD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8B38C172D9E5E9500909ADD /* PrivacyInfo.xcprivacy */; };
@@ -36,7 +37,6 @@
 		D8B38C6B2D9E5F6C00909ADD /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B38C282D9E5F6C00909ADD /* Customer.swift */; };
 		D8B38C6C2D9E5F6C00909ADD /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B38C362D9E5F6C00909ADD /* WebViewController.swift */; };
 		D8B38C6D2D9E5F6C00909ADD /* HomePageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B38C522D9E5F6C00909ADD /* HomePageTitleView.swift */; };
-		D8B38C6E2D9E5F6C00909ADD /* ExamplesKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B38C3D2D9E5F6C00909ADD /* ExamplesKeys.swift */; };
 		D8B38C6F2D9E5F6C00909ADD /* CustomerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B38C292D9E5F6C00909ADD /* CustomerRequest.swift */; };
 		D8B38C702D9E5F6C00909ADD /* DirectAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B38C392D9E5F6C00909ADD /* DirectAPIClient.swift */; };
 		D8B38C712D9E5F6C00909ADD /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B38C542D9E5F6C00909ADD /* UIButton+Extension.swift */; };
@@ -53,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D8320E822D9E7F4500FC067A /* ExamplesKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExamplesKeys.swift; path = ../Examples/Examples/ExamplesKeys.swift; sourceTree = SOURCE_ROOT; };
 		D8B38B832D9E5C7500909ADD /* ExampleSPM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleSPM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8B38BBD2D9E5DDD00909ADD /* ExampleSPM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ExampleSPM.entitlements; sourceTree = "<group>"; };
 		D8B38C142D9E5E9500909ADD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../Examples/Examples/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -80,7 +81,6 @@
 		D8B38C392D9E5F6C00909ADD /* DirectAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectAPIClient.swift; sourceTree = "<group>"; };
 		D8B38C3A2D9E5F6C00909ADD /* MockAPIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockAPIClient.h; sourceTree = "<group>"; };
 		D8B38C3B2D9E5F6C00909ADD /* MockAPIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockAPIClient.m; sourceTree = "<group>"; };
-		D8B38C3D2D9E5F6C00909ADD /* ExamplesKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesKeys.swift; sourceTree = "<group>"; };
 		D8B38C3E2D9E5F6C00909ADD /* Keys.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Keys.json; sourceTree = "<group>"; };
 		D8B38C402D9E5F6C00909ADD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D8B38C412D9E5F6C00909ADD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -133,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				D8B38BBD2D9E5DDD00909ADD /* ExampleSPM.entitlements */,
+				D8320E822D9E7F4500FC067A /* ExamplesKeys.swift */,
 				D8B38C142D9E5E9500909ADD /* AppDelegate.swift */,
 				D8B38C2C2D9E5F6C00909ADD /* API */,
 				D8B38C382D9E5F6C00909ADD /* Controllers */,
@@ -205,7 +206,6 @@
 		D8B38C3F2D9E5F6C00909ADD /* Keys */ = {
 			isa = PBXGroup;
 			children = (
-				D8B38C3D2D9E5F6C00909ADD /* ExamplesKeys.swift */,
 				D8B38C3E2D9E5F6C00909ADD /* Keys.json */,
 			);
 			name = Keys;
@@ -349,6 +349,7 @@
 				D8B38C5F2D9E5F6C00909ADD /* AirwallexSDKMode+Extensions.swift in Sources */,
 				D8B38C602D9E5F6C00909ADD /* MockAPIClient.m in Sources */,
 				D8B38C612D9E5F6C00909ADD /* PaymentIntentRequest.swift in Sources */,
+				D8320E832D9E7F4500FC067A /* ExamplesKeys.swift in Sources */,
 				D8B38C622D9E5F6C00909ADD /* GetCardConsentsViewController.swift in Sources */,
 				D8B38C632D9E5F6C00909ADD /* HomeViewController.swift in Sources */,
 				D8B38C642D9E5F6C00909ADD /* DemoDataSource.swift in Sources */,
@@ -361,7 +362,6 @@
 				D8B38C6B2D9E5F6C00909ADD /* Customer.swift in Sources */,
 				D8B38C6C2D9E5F6C00909ADD /* WebViewController.swift in Sources */,
 				D8B38C6D2D9E5F6C00909ADD /* HomePageTitleView.swift in Sources */,
-				D8B38C6E2D9E5F6C00909ADD /* ExamplesKeys.swift in Sources */,
 				D8B38C6F2D9E5F6C00909ADD /* CustomerRequest.swift in Sources */,
 				D8B38C702D9E5F6C00909ADD /* DirectAPIClient.swift in Sources */,
 				D8B38C712D9E5F6C00909ADD /* UIButton+Extension.swift in Sources */,
