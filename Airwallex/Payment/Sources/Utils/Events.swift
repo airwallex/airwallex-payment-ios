@@ -10,6 +10,8 @@ import Foundation
 import AirwallexRisk
 #if canImport(Core)
 import Core
+#elseif canImport(AirwallexCore)
+import AirwallexCore
 #endif
 
 enum AnalyticEvent {

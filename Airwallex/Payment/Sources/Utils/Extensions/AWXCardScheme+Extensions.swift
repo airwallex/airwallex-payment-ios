@@ -10,6 +10,8 @@ import Foundation
 
 #if canImport(Card)
 import Card
+#elseif canImport(AirwallexCore)
+import AirwallexCore
 #endif
 
 extension AWXCardScheme {

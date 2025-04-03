@@ -10,6 +10,8 @@ import UIKit
 import Combine
 #if canImport(Core)
 import Core
+#elseif canImport(AirwallexCore)
+import AirwallexCore
 #endif
 
 class InfoCollectorCellViewModel<T: Hashable & Sendable>: InfoCollectorTextFieldViewModel, CellViewModelIdentifiable {

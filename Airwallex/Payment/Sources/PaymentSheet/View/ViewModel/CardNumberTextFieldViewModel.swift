@@ -9,6 +9,8 @@
 import Foundation
 #if canImport(Core)
 import Core
+#elseif canImport(AirwallexCore)
+import AirwallexCore
 #endif
 
 class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardNumberTextFieldConfiguring {

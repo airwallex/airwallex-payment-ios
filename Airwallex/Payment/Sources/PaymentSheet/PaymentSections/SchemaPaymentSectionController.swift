@@ -9,9 +9,14 @@
 import UIKit
 #if canImport(Core)
 import Core
+#elseif canImport(AirwallexCore)
+import AirwallexCore
 #endif
+
 #if canImport(Redirect)
 import Redirect
+#elseif canImport(AirwallexRedirect)
+import AirwallexRedirect
 #endif
 
 /// This section controlelr is for schema payment

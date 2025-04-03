@@ -7,18 +7,31 @@
 //
 
 import UIKit
-#if canImport(Core)
-import Core
-#endif
+
 #if canImport(ApplePay)
 import ApplePay
+#elseif canImport(AirwallexApplePay)
+import AirwallexApplePay
 #endif
-#if canImport(Redirect)
-import Redirect
-#endif
+
 #if canImport(Card)
 import Card
+#elseif canImport(AirwallexCard)
+import AirwallexCard
 #endif
+
+#if canImport(Core)
+import Core
+#elseif canImport(AirwallexCore)
+import AirwallexCore
+#endif
+
+#if canImport(Redirect)
+import Redirect
+#elseif canImport(AirwallexRedirect)
+import AirwallexRedirect
+#endif
+
 
 public class PaymentSessionHandler: NSObject {
     enum ValidationError: ErrorLoggable {

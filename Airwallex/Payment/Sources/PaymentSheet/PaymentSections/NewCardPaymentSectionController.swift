@@ -11,6 +11,8 @@ import Combine
 import AirwallexRisk
 #if canImport(Core)
 import Core
+#elseif canImport(AirwallexCore)
+import AirwallexCore
 #endif
 
 class NewCardPaymentSectionController: NSObject, SectionController {
@@ -153,15 +155,6 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         case .billingFieldCountryCode:
             let cell = context.dequeueReusableCell(CountrySelectionCell.self, for: item.rawValue, indexPath: indexPath)
             if let viewModelForCountryCode { cell.setup(viewModelForCountryCode) }
-            return cell
-        case .unionPayWarning:
-            let cell = context.dequeueReusableCell(WarningViewCell.self, for: item.rawValue, indexPath: indexPath)
-            let message = NSLocalizedString(
-                "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.",
-                bundle: .payment,
-                comment: ""
-            )
-            cell.setup(message)
             return cell
         }
     }

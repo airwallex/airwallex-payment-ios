@@ -9,6 +9,8 @@
 import UIKit
 #if canImport(Core)
 import Core
+#elseif canImport(AirwallexCore)
+import AirwallexCore
 #endif
 
 extension AWXCardValidator {

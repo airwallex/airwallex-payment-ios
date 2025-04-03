@@ -11,8 +11,8 @@ import Foundation
 import ApplePay
 #elseif canImport(AirwallexApplePay)
 import AirwallexApplePay
-
 #endif
+
 #if canImport(Card)
 import Card
 #elseif canImport(AirwallexCard)
@@ -21,7 +21,7 @@ import AirwallexCard
 
 #if canImport(Core)
 import Core
-    #elseif canImport(AirwallexCore)
+#elseif canImport(AirwallexCore)
 import AirwallexCore
 #endif
 
