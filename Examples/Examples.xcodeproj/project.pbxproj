@@ -21,7 +21,6 @@
 		1859F19F2C8AA6700017FA4D /* CustomerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F19E2C8AA6700017FA4D /* CustomerRequest.swift */; };
 		18ADC9992C8AACF900A775BB /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADC9982C8AACF900A775BB /* Customer.swift */; };
 		2A5C95D788B54AB0183DB8DB /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF31448D8EBB7C65D0E025C5 /* Pods_Examples.framework */; };
-		57DCD642269428C800705D5C /* Keys in Resources */ = {isa = PBXBuildFile; fileRef = 57DCD641269428C800705D5C /* Keys */; };
 		D80F0E222D5C6CF200401BA6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E212D5C6CF200401BA6 /* WebViewController.swift */; };
 		D80F0E242D5C769100401BA6 /* PaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E232D5C769100401BA6 /* PaymentResultViewController.swift */; };
 		D80F0E292D5C856600401BA6 /* ExamplesKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E282D5C856600401BA6 /* ExamplesKeys.swift */; };
@@ -79,7 +78,6 @@
 		57CEC83126E6007C00695740 /* Card.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Card.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC83326E6007F00695740 /* Redirect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Redirect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC83526E6008100695740 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		57DCD641269428C800705D5C /* Keys */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Keys; sourceTree = "<group>"; };
 		5A137125BEE47684577890C6 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 		AF31448D8EBB7C65D0E025C5 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D80F0E212D5C6CF200401BA6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +101,7 @@
 		D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCardConsentsViewController.swift; sourceTree = "<group>"; };
 		D89C7AF22D424C890042FC3B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D89C7AF42D432D900042FC3B /* ConfigSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigSwitchView.swift; sourceTree = "<group>"; };
+		D8B38C252D9E5F2B00909ADD /* Keys.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Keys.json; sourceTree = "<group>"; };
 		D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H5DemoViewController.swift; sourceTree = "<group>"; };
 		D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTitleView.swift; sourceTree = "<group>"; };
@@ -143,9 +142,9 @@
 			isa = PBXGroup;
 			children = (
 				3C5A37D427EAF68F00CFC2EF /* Examples.entitlements */,
-				57DCD641269428C800705D5C /* Keys */,
-				D80F0E282D5C856600401BA6 /* ExamplesKeys.swift */,
+				D8B38C262D9E5F2B00909ADD /* Keys */,
 				D8EB80892D67067200C2F975 /* AppDelegate.swift */,
+				D80F0E282D5C856600401BA6 /* ExamplesKeys.swift */,
 				D81EAF792D3F8BB100B44784 /* Views */,
 				D872B35B2D5EDB43007BC089 /* Controllers */,
 				D872B35C2D5EDB5B007BC089 /* Util */,
@@ -265,6 +264,14 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		D8B38C262D9E5F2B00909ADD /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				D8B38C252D9E5F2B00909ADD /* Keys.json */,
+			);
+			path = Keys;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -330,7 +337,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8193D5C2D01B8F8008C8DA8 /* PrivacyInfo.xcprivacy in Resources */,
-				57DCD642269428C800705D5C /* Keys in Resources */,
 				085BD3FE23CC64B9002E8F27 /* LaunchScreen.storyboard in Resources */,
 				085BD3FB23CC64B9002E8F27 /* Assets.xcassets in Resources */,
 				085BD3F923CC64B6002E8F27 /* Main.storyboard in Resources */,

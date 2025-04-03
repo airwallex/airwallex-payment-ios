@@ -7,7 +7,12 @@
 //
 
 import Foundation
+#if canImport(Airwallex)
 import Airwallex
+#elseif canImport(AirwallexPayment)
+import AirwallexPayment
+import AirwallexCore
+#endif
 
 extension UIViewController {
     
