@@ -18,7 +18,6 @@ PODS:
 
 DEPENDENCIES:
   - Airwallex/Payment (from `./`)
-  - Airwallex/WeChatPay (from `./`)
   - OCMock
 
 SPEC REPOS:
@@ -33,6 +32,6 @@ SPEC CHECKSUMS:
   Airwallex: 2850f37031c2e4fb8d0379f5c1954328bc49dbd8
   OCMock: 9491e4bec59e0b267d52a9184ff5605995e74be8
 
-PODFILE CHECKSUM: da69e133556ebfb1e38d11f054dc9fadba01e2d1
+PODFILE CHECKSUM: 1930e10b88aa72de4c200a7bcb195e20e0af0ed9
 
 COCOAPODS: 1.15.2

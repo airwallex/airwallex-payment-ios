@@ -200,6 +200,12 @@ static BOOL _localLogFileEnabled = NO;
 
 @end
 
+@interface AWXAPIClient ()
+
+@property (nonatomic, strong) NSURLSession *session;
+
+@end
+
 @implementation AWXAPIClient
 
 - (instancetype)init {
@@ -210,6 +216,11 @@ static BOOL _localLogFileEnabled = NO;
     self = [super init];
     if (self) {
         _configuration = configuration;
+        if (configuration.sessionConfiguration) {
+            _session = [NSURLSession sessionWithConfiguration:configuration.sessionConfiguration];
+        } else {
+            _session = [NSURLSession sharedSession];
+        }
         [self log:@"Current connected domain:%@", Airwallex.defaultBaseURL];
     }
     return self;
@@ -245,32 +256,32 @@ static BOOL _localLogFileEnabled = NO;
         urlRequest.HTTPBody = request.postData;
     }
 
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:urlRequest
-                                                                 completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
-                                                                     if (handler) {
-                                                                         NSHTTPURLResponse *result = (NSHTTPURLResponse *)response;
-                                                                         if (data && request.responseClass != nil) {
-                                                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                 if (result.statusCode >= 200 && result.statusCode < 300 && [request.responseClass respondsToSelector:@selector(parse:)]) {
-                                                                                     id response = [request.responseClass performSelector:@selector(parse:) withObject:data];
-                                                                                     handler(response, error);
-                                                                                 } else {
-                                                                                     AWXAPIErrorResponse *errorResponse = [request.responseClass performSelector:@selector(parseError:) withObject:data];
-                                                                                     if (errorResponse) {
-                                                                                         [[AWXAnalyticsLogger shared] logErrorWithName:[request eventName] url:urlRequest.URL response:[errorResponse updatedResponseWithStatusCode:result.statusCode Error:error]];
-                                                                                         handler(nil, errorResponse.error);
-                                                                                     } else {
-                                                                                         handler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Couldn't parse response.", nil)}]);
-                                                                                     }
-                                                                                 }
-                                                                             });
-                                                                         } else {
-                                                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                 handler(nil, error);
-                                                                             });
-                                                                         }
+    NSURLSessionDataTask *task = [self.session dataTaskWithRequest:urlRequest
+                                                 completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
+                                                     if (handler) {
+                                                         NSHTTPURLResponse *result = (NSHTTPURLResponse *)response;
+                                                         if (data && request.responseClass != nil) {
+                                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                                 if (result.statusCode >= 200 && result.statusCode < 300 && [request.responseClass respondsToSelector:@selector(parse:)]) {
+                                                                     id response = [request.responseClass performSelector:@selector(parse:) withObject:data];
+                                                                     handler(response, error);
+                                                                 } else {
+                                                                     AWXAPIErrorResponse *errorResponse = [request.responseClass performSelector:@selector(parseError:) withObject:data];
+                                                                     if (errorResponse) {
+                                                                         [[AWXAnalyticsLogger shared] logErrorWithName:[request eventName] url:urlRequest.URL response:[errorResponse updatedResponseWithStatusCode:result.statusCode Error:error]];
+                                                                         handler(nil, errorResponse.error);
+                                                                     } else {
+                                                                         handler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Couldn't parse response.", nil)}]);
                                                                      }
-                                                                 }];
+                                                                 }
+                                                             });
+                                                         } else {
+                                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                                 handler(nil, error);
+                                                             });
+                                                         }
+                                                     }
+                                                 }];
     [task resume];
 }
 

@@ -110,7 +110,9 @@ FOUNDATION_EXPORT NSString *const AWXThreeDSValidate;
 FOUNDATION_EXPORT NSString *const AWXThreeDSContinue;
 FOUNDATION_EXPORT NSString *const AWXDCC;
 
+FOUNDATION_EXPORT NSString *const AWXWeChatPayKey;
 FOUNDATION_EXPORT NSString *const AWXApplePayKey;
+
 FOUNDATION_EXPORT NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void);
 
 FOUNDATION_EXPORT NSArray *AWXCardSupportedBrands(void);
@@ -118,8 +120,8 @@ FOUNDATION_EXPORT NSArray *AWXCardSupportedBrands(void);
 FOUNDATION_EXPORT NSString *FormatAirwallexSDKMode(AirwallexSDKMode mode);
 FOUNDATION_EXPORT NSString *FormatNextTriggerByType(AirwallexNextTriggerByType type);
 FOUNDATION_EXPORT AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType);
-FOUNDATION_EXPORT NSString *FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason);
-FOUNDATION_EXPORT Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type);
+FOUNDATION_EXPORT NSString *_Nullable FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason);
+FOUNDATION_EXPORT _Nullable Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type);
 FOUNDATION_EXPORT Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction);
 
 NS_ASSUME_NONNULL_END

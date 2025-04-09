@@ -7,8 +7,13 @@
 //
 
 import UIKit
-import Airwallex
 import Combine
+#if canImport(Airwallex)
+import Airwallex
+#elseif canImport(AirwallexPayment)
+import AirwallexPayment
+import AirwallexCore
+#endif
 
 class H5DemoViewController: UIViewController {
     private let localizationComment = "H5 demo view controller"

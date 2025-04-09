@@ -39,6 +39,13 @@
         "identifier" : "5775CE8C26E5DDDF00C6AFE3",
         "name" : "CardTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
+        "identifier" : "D81983472D6F120B008008A3",
+        "name" : "PaymentTests"
+      }
     }
   ],
   "version" : 1

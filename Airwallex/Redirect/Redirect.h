@@ -14,5 +14,7 @@ FOUNDATION_EXPORT double RedirectVersionNumber;
 //! Project version string for Redirect.
 FOUNDATION_EXPORT const unsigned char RedirectVersionString[];
 
+#import "AWXPaymentFormViewController.h"
+#import "AWXPaymentFormViewModel.h"
 #import "AWXRedirectActionProvider.h"
 #import "AWXSchemaProvider.h"

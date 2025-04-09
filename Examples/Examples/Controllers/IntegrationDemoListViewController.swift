@@ -7,7 +7,12 @@
 //
 
 import UIKit
+#if canImport(Airwallex)
 import Airwallex
+#elseif canImport(AirwallexPayment)
+import AirwallexPayment
+import AirwallexCore
+#endif
 import Combine
 
 class IntegrationDemoListViewController: UIViewController {
@@ -268,7 +273,7 @@ private extension IntegrationDemoListViewController {
                 AWXUIContext.launchPayment(
                     from: self,
                     session: session,
-                    filterBy: [ AWXApplePayKey, AWXCardKey, "alipaycn", "alipayhk" ]
+                    filterBy: [ AWXApplePayKey, AWXCardKey, "alipaycn"]
                 )
             } catch {
                 showAlert(message: error.localizedDescription)
@@ -559,21 +564,16 @@ private extension IntegrationDemoListViewController {
     }
     
     func updateRequiredBillingContactFields(_ session: AWXSession) {
-        var requiredBillingContactFields: RequiredBillingContactFields = []
-        if ExamplesKeys.requiresName {
-            requiredBillingContactFields.insert(.name)
-        }
+        var requiredBillingContactFields: RequiredBillingContactFields = session.requiredBillingContactFields
         if ExamplesKeys.requiresEmail {
             requiredBillingContactFields.insert(.email)
-        }
-        if ExamplesKeys.requiresPhone {
-            requiredBillingContactFields.insert(.phone)
+        } else {
+            requiredBillingContactFields.remove(.email)
         }
         if ExamplesKeys.requiresAddress {
             requiredBillingContactFields.insert(.address)
-        }
-        if ExamplesKeys.requiresCountryCode {
-            requiredBillingContactFields.insert(.countryCode)
+        } else {
+            requiredBillingContactFields.remove(.address)
         }
         session.requiredBillingContactFields = requiredBillingContactFields
     }
