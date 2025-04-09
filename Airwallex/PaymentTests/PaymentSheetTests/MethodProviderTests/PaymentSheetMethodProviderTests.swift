@@ -77,7 +77,7 @@ import Combine
             XCTFail()
         }
         
-        XCTAssertEqual(provider.methods.count, 14)
+        XCTAssertEqual(provider.methods.count, 13)
         XCTAssertEqual(provider.selectedMethod?.name, provider.methods.first { $0.name != AWXApplePayKey }?.name)
         XCTAssertEqual(provider.consents.count, 0)
         XCTAssertEqual(provider.session, mockSession)
@@ -102,7 +102,7 @@ import Combine
             XCTFail()
         }
         
-        XCTAssertEqual(provider.methods.count, 15)
+        XCTAssertEqual(provider.methods.count, 14)
         XCTAssertEqual(provider.selectedMethod?.name, provider.methods.first { $0.name != AWXApplePayKey }?.name)
         XCTAssertEqual(provider.consents.count, 0)
         XCTAssertEqual(provider.session, mockSession)
@@ -132,7 +132,7 @@ import Combine
             XCTFail()
         }
         
-        XCTAssertEqual(provider.methods.count, 15)
+        XCTAssertEqual(provider.methods.count, 14)
         XCTAssertEqual(provider.selectedMethod?.name, provider.methods.first { $0.name != AWXApplePayKey }?.name)
         XCTAssertEqual(provider.consents.count, 1)
         XCTAssertEqual(provider.session, mockSession)

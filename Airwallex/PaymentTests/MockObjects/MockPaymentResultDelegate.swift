@@ -10,7 +10,7 @@ import UIKit
 import Core
 
 class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
-    var status = AirwallexPaymentStatus.notStarted
+    var status: AirwallexPaymentStatus? = nil
     weak var viewController: UIViewController?
     var error: Error?
     var consentId: String?

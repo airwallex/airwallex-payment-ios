@@ -177,7 +177,7 @@ import AirwallexCore
                                          from hostingVC: UIViewController,
                                          session: AWXSession,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
-                                         supportedBrands: [AWXCardBrand]? = nil,
+                                         supportedBrands: [AWXCardBrand]? = AWXCardBrand.all,
                                          style: LaunchStyle = .push) {
         let name = name.trimmed
         

@@ -597,8 +597,6 @@ extension IntegrationDemoListViewController: AWXPaymentResultDelegate {
             showAlert(message: error?.localizedDescription ?? "There was an error while processing your payment. Please try again.", title: "Payment failed")
         case .cancel:
             showAlert(message: "Your payment has been cancelled", title: "Payment cancelled")
-        case .notStarted:
-            break
         }
     }
     

@@ -106,10 +106,12 @@ extension AnalyticsLogger {
     static func log(error: ErrorLoggable, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
         var dict = [String: Any]()
         dict[AnalyticEvent.Fields.message.rawValue] = error.localizedDescription
-        
-        _ = extraInfo?.reduce(into: dict) { partialResult, keyValuePair in
-            partialResult[keyValuePair.key.rawValue] = keyValuePair.value
+        if let extraInfo {
+            for keyValuePair in extraInfo {
+                dict[keyValuePair.key.rawValue] = keyValuePair.value
+            }
         }
+        
         shared().logError(
             withName: error.eventName,
             additionalInfo: dict

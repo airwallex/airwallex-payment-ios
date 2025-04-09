@@ -521,7 +521,7 @@ class PaymentSessionHandlerTests: XCTestCase {
     }
 
     func testProviderDidCompleteWithStatus() {
-        let allCases: [AirwallexPaymentStatus] = [.notStarted, .cancel, .failure, .inProgress, .success]
+        let allCases: [AirwallexPaymentStatus] = [.cancel, .failure, .inProgress, .success]
         for status in allCases {
             mockSessionHandler.provider(mockProvider, didCompleteWith: status, error: nil)
             XCTAssertEqual(mockPaymentResultDelegate.status, status)
