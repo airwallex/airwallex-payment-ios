@@ -417,6 +417,12 @@ extension PaymentSessionHandler: AWXProviderDelegate {
         }
         debugLog("stauts: \(status), error: \(error?.localizedDescription ?? "N/A")")
         if let action = AWXUIContext.shared().paymentUIDismissAction {
+            if let methodType, methodType.name == AWXApplePayKey, status == .inProgress {
+                // Remain in PaymentViewController when the Apple Pay status is .inProgress for UI integration
+                // This status typically occurs when the user forcefully dismisses the PKPaymentAuthorizationController—
+                // for example, by backgrounding the app—after successfully authorizing the payment.
+                return
+            }
             action {
                 self.paymentResultDelegate?.paymentViewController(self.viewController, didCompleteWith: status, error: error)
             }
