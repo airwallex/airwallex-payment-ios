@@ -60,7 +60,8 @@ class AccordionSectionController: SectionController  {
     }
     
     func cell(for item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = context.dequeueReusableCell(AccordionPaymentMethodCell.self, for: item, indexPath: indexPath)
+        var cellClass = (item == AWXCardKey ? AccordionCardMethodCell.self : AccordionPaymentMethodCell.self)
+        let cell = context.dequeueReusableCell(cellClass, for: item, indexPath: indexPath)
         if let viewModel = viewModels[safe: indexPath.item] {
             cell.setup(viewModel)
         }
@@ -127,7 +128,8 @@ class AccordionSectionController: SectionController  {
                 name: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: false,
-                imageLoader: imageLoader
+                imageLoader: imageLoader,
+                supportedBrands: methodType.cardSchemes.map { $0.brandType }
             )
         }
     }

@@ -29,9 +29,9 @@ import AirwallexCore
         public var displayName: String {
             switch self {
             case .accordion:
-                "Accordion"
+                "accordion"
             case .tab:
-                "Tab"
+                "tab"
             }
         }
     }
@@ -150,19 +150,16 @@ import AirwallexCore
     ///   - session: The active payment session.
     ///   - supportedBrands: A list of supported card brands for the payment session.
     ///   - launchStyle: The presentation style of the payment sheet, which defaults to `.push`.
-    ///   - layout: layout of payment sheet
     @MainActor static func launchCardPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
                                              session: AWXSession,
                                              supportedBrands: [AWXCardBrand] = AWXCardBrand.all,
-                                             launchStyle: LaunchStyle = .push,
-                                             layout: PaymentLayout = .tab) {
+                                             launchStyle: LaunchStyle = .push) {
         launchCardPayment(
             from: hostingVC,
             session: session,
             paymentResultDelegate: hostingVC,
             supportedBrands: supportedBrands,
-            launchStyle: launchStyle,
-            layout: layout
+            launchStyle: launchStyle
         )
     }
     /// Launches the Airwallex card payment flow.
@@ -172,21 +169,18 @@ import AirwallexCore
     ///   - session: The active payment session.
     ///   - paymentResultDelegate: The delegate responsible for handling the payment result.
     ///   - launchStyle: The presentation style of the payment sheet, which defaults to `.push`.
-    ///   - layout: layout of payment sheet
     @MainActor static func launchCardPayment(from hostingVC: UIViewController,
                                              session: AWXSession,
                                              paymentResultDelegate: AWXPaymentResultDelegate,
                                              supportedBrands: [AWXCardBrand] = AWXCardBrand.all,
-                                             launchStyle: LaunchStyle = .push,
-                                             layout: PaymentLayout = .tab) {
+                                             launchStyle: LaunchStyle = .push) {
         launchPayment(
             name: AWXCardKey,
             from: hostingVC,
             session: session,
             paymentResultDelegate: paymentResultDelegate,
             supportedBrands: supportedBrands,
-            launchStyle: launchStyle,
-            layout: layout
+            launchStyle: launchStyle
         )
     }
     
@@ -199,14 +193,12 @@ import AirwallexCore
     ///   - paymentResultDelegate: The delegate that handles payment result callbacks.
     ///   - supportedBrands: A list of supported card brands for the payment method. Required for Card Payment
     ///   - launchStyle: The presentation style of the payment sheet. Defaults to `.push`.
-    ///   - layout: layout of payment sheet
     @MainActor static func launchPayment(name: String,
                                          from hostingVC: UIViewController,
                                          session: AWXSession,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
                                          supportedBrands: [AWXCardBrand]? = AWXCardBrand.all,
-                                         launchStyle: LaunchStyle = .push,
-                                         layout: PaymentLayout = .tab) {
+                                         launchStyle: LaunchStyle = .push) {
         let name = name.trimmed
         
         if name == AWXCardKey {
@@ -236,8 +228,7 @@ import AirwallexCore
             session: session,
             paymentMethodProvider: methodProvider,
             paymentResultDelegate: paymentResultDelegate,
-            launchStyle: launchStyle,
-            layout: layout
+            launchStyle: launchStyle
         )
         AnalyticsLogger.log(action: .paymentLaunched, extraInfo: [.subtype: Self.subtypeElement, .paymentMethod: name])
     }

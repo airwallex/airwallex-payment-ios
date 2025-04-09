@@ -53,7 +53,8 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         name: methodType.displayName,
         imageURL: methodType.resources.logoURL,
         isSelected: true,
-        imageLoader: imageLoader
+        imageLoader: imageLoader,
+        supportedBrands: []
     )
     
     private lazy var viewModelForConsentToggle = CardPaymentSectionHeaderViewModel(

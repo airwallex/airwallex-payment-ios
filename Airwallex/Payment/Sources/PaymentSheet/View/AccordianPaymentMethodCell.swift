@@ -36,6 +36,7 @@ class AccordionPaymentMethodCell: UICollectionViewCell, ViewConfigurable, ViewRe
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alignment = .center
+        view.spacing = 8
         return view
     }()
     
@@ -79,7 +80,6 @@ class AccordionPaymentMethodCell: UICollectionViewCell, ViewConfigurable, ViewRe
         contentView.addSubview(stack)
         stack.batchAddArrangedSubView([icon, logo, label])
         stack.setCustomSpacing(16, after: icon)
-        stack.setCustomSpacing(8, after: logo)
         
         let constraints = [
             stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -103,7 +103,6 @@ class AccordionSelectedMethodCell: AccordionPaymentMethodCell {
         contentView.addSubview(stack)
         stack.batchAddArrangedSubView([icon, logo, label])
         stack.setCustomSpacing(16, after: icon)
-        stack.setCustomSpacing(8, after: logo)
         
         let constraints = [
             stack.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -119,5 +118,42 @@ class AccordionSelectedMethodCell: AccordionPaymentMethodCell {
         ]
         
         NSLayoutConstraint.activate(constraints)
+    }
+}
+
+class AccordionCardMethodCell: AccordionPaymentMethodCell {
+    
+    let cardBrandView: CardBrandView = {
+        let view = CardBrandView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    override func setupViews() {
+        contentView.addSubview(stack)
+        stack.batchAddArrangedSubView([icon, logo, label, cardBrandView])
+        stack.setCustomSpacing(16, after: icon)
+        label.setContentHuggingPriority(.defaultLow - 50, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultHigh - 50, for: .horizontal)
+        
+        let constraints = [
+            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).priority(.required - 1),
+            
+            icon.widthAnchor.constraint(equalToConstant: 16),
+            icon.heightAnchor.constraint(equalToConstant: 16),
+            
+            logo.widthAnchor.constraint(equalToConstant: 35),
+            logo.heightAnchor.constraint(equalToConstant: 24),
+        ]
+        
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    override func setup(_ viewModel: PaymentMethodCellViewModel) {
+        super.setup(viewModel)
+        cardBrandView.setup(viewModel)
     }
 }

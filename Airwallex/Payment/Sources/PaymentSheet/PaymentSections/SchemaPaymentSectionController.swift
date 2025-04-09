@@ -121,7 +121,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 name: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: true,
-                imageLoader: imageLoader
+                imageLoader: imageLoader,
+                supportedBrands: []
             )
             cell.setup(viewModel)
             return cell

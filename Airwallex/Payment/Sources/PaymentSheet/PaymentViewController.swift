@@ -186,7 +186,11 @@ extension PaymentViewController: CollectionViewSectionProvider {
     }
     
     private var displayMethodList: Bool {
-        return layout == .tab && methodProvider.methods.count > 1
+        return layout == .tab && methodProvider.methods.count > 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
+    }
+    
+    private var fallbackToTabLayout: Bool {
+        methodProvider.methods.count <= 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
     }
     
     func sections() -> [PaymentSectionType] {
@@ -280,7 +284,7 @@ extension PaymentViewController: CollectionViewSectionProvider {
             let controller = CardPaymentConsentSectionController(
                 methodType: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
-                layout: layout,
+                layout: fallbackToTabLayout ? .tab : layout,
                 imageLoader: imageLoader,
                 addNewCardAction: { [weak self] in
                     guard let self else { return }
@@ -293,7 +297,7 @@ extension PaymentViewController: CollectionViewSectionProvider {
             let controller = NewCardPaymentSectionController(
                 cardPaymentMethod: methodProvider.selectedMethod!,
                 methodProvider: methodProvider,
-                layout: layout,
+                layout: fallbackToTabLayout ? .tab : layout,
                 imageLoader: imageLoader,
                 switchToConsentPaymentAction: { [weak self] in
                     guard let self else { return }
@@ -306,7 +310,7 @@ extension PaymentViewController: CollectionViewSectionProvider {
             let controller = SchemaPaymentSectionController(
                 methodType: methodProvider.method(named: name)!,
                 methodProvider: methodProvider,
-                layout: layout,
+                layout: fallbackToTabLayout ? .tab : layout,
                 imageLoader: imageLoader
             ).anySectionController()
             return controller

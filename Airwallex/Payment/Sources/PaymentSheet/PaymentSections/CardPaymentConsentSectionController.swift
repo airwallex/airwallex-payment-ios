@@ -58,7 +58,8 @@ class CardPaymentConsentSectionController: SectionController {
         name: methodType.displayName,
         imageURL: methodType.resources.logoURL,
         isSelected: true,
-        imageLoader: imageLoader
+        imageLoader: imageLoader,
+        supportedBrands: []
     )
     
     private lazy var viewModelForConsentToggle = CardPaymentSectionHeaderViewModel(
@@ -91,6 +92,11 @@ class CardPaymentConsentSectionController: SectionController {
         self.methodProvider = methodProvider
         self.addNewCardAction = addNewCardAction
         self.consents = methodProvider.consents.filter { $0.paymentMethod != nil }
+        if consents.count == 1,
+           let consent = consents.first,
+           consent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
+            self.selectedConsent = consent
+        }
         self.layout = layout
     }
     
@@ -185,16 +191,17 @@ class CardPaymentConsentSectionController: SectionController {
                 )
             } else {
                 cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
+                let consentTitle = "\(brand.capitalized) •••• \(card.last4 ?? "")"
                 viewModel = CardConsentCellViewModel(
                     image: image,
-                    text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
+                    text: consentTitle,
                     highlightable: true,
                     actionTitle: nil,
                     actionIcon: UIImage(systemName: "ellipsis")?
                         .rotate(degrees: 90)?
                         .withTintColor(.awxColor(.iconLink), renderingMode: .alwaysOriginal),
                     buttonAction: { [weak self] in
-                        self?.showAlertForDelete(consent, indexPath: indexPath)
+                        self?.showAlertForDelete(consent, consentDescription: consentTitle)
                     }
                 )
             }
@@ -339,14 +346,15 @@ class CardPaymentConsentSectionController: SectionController {
  
 private extension CardPaymentConsentSectionController {
     // actions
-    func showAlertForDelete(_ consent: AWXPaymentConsent, indexPath: IndexPath) {
+    func showAlertForDelete(_ consent: AWXPaymentConsent, consentDescription: String) {
+        let title = "Remove %@?"
         let alert = AWXAlertController(
-            title: nil,
-            message: NSLocalizedString("Would you like to delete this card?", bundle: .payment, comment: ""),
+            title: String(format: NSLocalizedString(title, bundle: .payment, comment: "alert for delete consent"), consentDescription),
+            message: NSLocalizedString("This option will be permanently removed from your saved payment methods.", bundle: .payment, comment: "message for delete consent"),
             preferredStyle: .alert
         )
         let deleteAction = UIAlertAction(
-            title: NSLocalizedString("Delete", comment: "delete consent"),
+            title: NSLocalizedString("Remove", bundle: .payment, comment: "confirm delete consent"),
             style: .destructive) { [weak self] _ in
                 guard let self else { return }
                 self.context.viewController?.startLoading()

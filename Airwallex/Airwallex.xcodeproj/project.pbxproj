@@ -243,6 +243,7 @@
 		D8BD9E172D0191BF0045A892 /* Airwallex.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */; };
 		D8BD9E182D0191BF0045A892 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */; };
 		D8BD9E192D0191BF0045A892 /* CurrencyCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */; };
+		D8CD019B2DA672D6001BDCC6 /* CardBrandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CD019A2DA672D6001BDCC6 /* CardBrandView.swift */; };
 		D8D4110E2DA37AD2004601FD /* AccordianSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D4110D2DA37AD2004601FD /* AccordianSectionController.swift */; };
 		D8D411102DA3828C004601FD /* CellSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D4110F2DA3828C004601FD /* CellSeparator.swift */; };
 		D8D411122DA384E4004601FD /* RoundedCornerDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D411112DA384E4004601FD /* RoundedCornerDecorationView.swift */; };
@@ -782,6 +783,7 @@
 		D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
 		D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrencyCodes.json; sourceTree = "<group>"; };
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D8CD019A2DA672D6001BDCC6 /* CardBrandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrandView.swift; sourceTree = "<group>"; };
 		D8D4110D2DA37AD2004601FD /* AccordianSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordianSectionController.swift; sourceTree = "<group>"; };
 		D8D4110F2DA3828C004601FD /* CellSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSeparator.swift; sourceTree = "<group>"; };
 		D8D411112DA384E4004601FD /* RoundedCornerDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerDecorationView.swift; sourceTree = "<group>"; };
@@ -1624,6 +1626,7 @@
 				D8EC87552D9E335900D082EC /* ViewReusable.swift */,
 				D8EC87562D9E335900D082EC /* WarningViewCell.swift */,
 				D8320E842D9E82BC00FC067A /* AccordianPaymentMethodCell.swift */,
+				D8CD019A2DA672D6001BDCC6 /* CardBrandView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2773,6 +2776,7 @@
 				D8EC87922D9E335900D082EC /* InfoCollectorDefaultValidator.swift in Sources */,
 				D8EC87932D9E335900D082EC /* PrefixPhoneNumberValidator.swift in Sources */,
 				D8EC87942D9E335900D082EC /* BillingInfoCell.swift in Sources */,
+				D8CD019B2DA672D6001BDCC6 /* CardBrandView.swift in Sources */,
 				D8EC87952D9E335900D082EC /* CardConsentCell.swift in Sources */,
 				D8EC87962D9E335900D082EC /* CardInfoCollectorCell.swift in Sources */,
 				D8EC87972D9E335900D082EC /* CardNumberTextField.swift in Sources */,
