@@ -17,7 +17,11 @@ class CardPaymentConsentSectionController: SectionController {
     
     static let subType = "consent"
     
-    private struct Items {
+    enum Items {
+        /// for accordion layout
+        static let accordionKey = "consnetAccordionKey"
+        /// for addNewCardToggle
+        static let addNewCardToggle = "addNewCardToggle"
         /// checkout button for payment mode
         static let checkoutButton: String = "checkoutButton"
         /// cvc field if required for payment mode
@@ -30,19 +34,6 @@ class CardPaymentConsentSectionController: SectionController {
         /// display selected consent for checkout
         case payment
     }
-    
-    var items: [String] {
-        if let selectedConsent {
-            return [
-                selectedConsent.id,
-                Items.cvcField,
-                Items.checkoutButton
-            ]
-        } else {
-            return consents.map { $0.id }
-        }
-    }
-    
     private var consents: [AWXPaymentConsent]
     
     private var session: AWXSession {
@@ -60,12 +51,47 @@ class CardPaymentConsentSectionController: SectionController {
     private var mode: Mode {
         selectedConsent == nil ? .list : .payment
     }
+    private let layout: AWXUIContext.PaymentLayout
     
-    init(methodProvider: PaymentMethodProvider,
+    private lazy var viewModelForAccordionKey = PaymentMethodCellViewModel(
+        itemIdentifier: Items.accordionKey,
+        name: methodType.displayName,
+        imageURL: methodType.resources.logoURL,
+        isSelected: true,
+        imageLoader: imageLoader
+    )
+    
+    private lazy var viewModelForConsentToggle = CardPaymentSectionHeaderViewModel(
+        title: NSLocalizedString("Choose a card", comment: ""),
+        actionTitle: NSLocalizedString("Add new", bundle: .payment, comment: ""),
+        buttonAction: { [weak self] in
+            guard let self else { return }
+            self.addNewCardAction()
+            
+            AnalyticsLogger.log(
+                action: .selectPayment,
+                extraInfo: [
+                    .paymentMethod: AWXCardKey,
+                    .subtype: NewCardPaymentSectionController.subType
+                ]
+            )
+        }
+    )
+    
+    private let methodType: AWXPaymentMethodType
+    private let imageLoader: ImageLoader
+    
+    init(methodType: AWXPaymentMethodType,
+         methodProvider: PaymentMethodProvider,
+         layout: AWXUIContext.PaymentLayout,
+         imageLoader: ImageLoader,
          addNewCardAction: @escaping () -> Void) {
+        self.methodType = methodType
+        self.imageLoader = imageLoader
         self.methodProvider = methodProvider
         self.addNewCardAction = addNewCardAction
-        self.consents = methodProvider.consents
+        self.consents = methodProvider.consents.filter { $0.paymentMethod != nil }
+        self.layout = layout
     }
     
     // MARK: - SectionController
@@ -74,12 +100,41 @@ class CardPaymentConsentSectionController: SectionController {
     
     let section = PaymentSectionType.cardPaymentConsent
     
+    var items: [String] {
+        var items = [String]()
+        if layout == .accordion {
+            items.append(Items.accordionKey)
+        }
+        
+        if let selectedConsent {
+            // payment mode
+            items += [
+                selectedConsent.id,
+                Items.cvcField,
+                Items.checkoutButton
+            ]
+        } else {
+            // list mode
+            items.append(Items.addNewCardToggle)
+            items += consents.map { $0.id }
+        }
+        return items
+    }
+    
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
         self.context = context
     }
     
     func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
         switch itemIdentifier {
+        case Items.accordionKey:
+            let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: itemIdentifier, indexPath: indexPath)
+            cell.setup(viewModelForAccordionKey)
+            return cell
+        case Items.addNewCardToggle:
+            let cell = context.dequeueReusableCell(CardPaymentSectionHeader.self, for: itemIdentifier, indexPath: indexPath)
+            cell.setup(viewModelForConsentToggle)
+            return cell
         case Items.checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel { [weak self] in
@@ -98,13 +153,12 @@ class CardPaymentConsentSectionController: SectionController {
             }
             return cell
         default:
-            let cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
             
-            guard let consent = selectedConsent ?? consents[safe: indexPath.item],
+            guard let consent = selectedConsent ?? consents.first(where: { $0.id == itemIdentifier }),
                   let card = consent.paymentMethod?.card,
                   let brand = card.brand else {
                 assert(false, "invalid card consent")
-                return cell
+                return UICollectionViewCell()
             }
             
             var image: UIImage? = nil
@@ -113,7 +167,9 @@ class CardPaymentConsentSectionController: SectionController {
             }
                         
             var viewModel: CardConsentCellViewModel
+            var cell: CardConsentCell
             if selectedConsent != nil {
+                cell = context.dequeueReusableCell(CardSelectedConsentCell.self, for: itemIdentifier, indexPath: indexPath)
                 viewModel = CardConsentCellViewModel(
                     image: image,
                     text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
@@ -128,12 +184,15 @@ class CardPaymentConsentSectionController: SectionController {
                     }
                 )
             } else {
+                cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
                 viewModel = CardConsentCellViewModel(
                     image: image,
                     text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
                     highlightable: true,
                     actionTitle: nil,
-                    actionIcon: UIImage(systemName: "ellipsis")?.rotate(degrees: 90),
+                    actionIcon: UIImage(systemName: "ellipsis")?
+                        .rotate(degrees: 90)?
+                        .withTintColor(.awxColor(.iconLink), renderingMode: .alwaysOriginal),
                     buttonAction: { [weak self] in
                         self?.showAlertForDelete(consent, indexPath: indexPath)
                     }
@@ -144,94 +203,88 @@ class CardPaymentConsentSectionController: SectionController {
         }
     }
     
-    func supplementaryView(for elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = context.dequeueReusableSupplementaryView(ofKind: elementKind, viewClass: CardPaymentSectionHeader.self, indexPath: indexPath)
-        let viewModel = CardPaymentSectionHeaderViewModel(
-            title: NSLocalizedString("Choose a card", comment: ""),
-            actionTitle: NSLocalizedString("Add new", bundle: .payment, comment: ""),
-            buttonAction: { [weak self] in
-                guard let self else { return }
-                self.addNewCardAction()
-                
-                AnalyticsLogger.log(
-                    action: .selectPayment,
-                    extraInfo: [
-                        .paymentMethod: AWXCardKey,
-                        .subtype: NewCardPaymentSectionController.subType
-                    ]
-                )
-            }
-        )
-        header.setup(viewModel)
-        return header
-    }
-    
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        switch mode {
-        case .list:
-            let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(56)
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(32)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        switch layout {
+        case .tab:
+            let group = NSCollectionLayoutGroup.vertical(
+                layoutSize: itemSize,
+                subitems: [item]
             )
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: itemSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
+            section.interGroupSpacing = 16
             section.contentInsets = .init(horizontal: 16)
-            
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(32))
-            let header = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerSize,
-                elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top
-            )
-            section.boundarySupplementaryItems = [header]
             return section
-        case .payment:
-            let consentSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(32)
-            )
-            let consentItem = NSCollectionLayoutItem(layoutSize: consentSize)
-            consentItem.contentInsets = .init().trailing(16)
-            let cvcSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(40)
-            )
-            let cvcItem = NSCollectionLayoutItem(layoutSize: cvcSize)
-            cvcItem.contentInsets = .init().horizontal(16)
-            let group1 = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(
+        case .accordion:
+            let section: NSCollectionLayoutSection
+            if mode == .list {
+                let group = NSCollectionLayoutGroup.vertical(
+                    layoutSize: itemSize,
+                    subitems: [item]
+                )
+                section = NSCollectionLayoutSection(group: group)
+                section.interGroupSpacing = 16
+                section.contentInsets = .init(top: 16, leading: 40, bottom: 24, trailing: 40)
+            } else {
+                let items: [NSCollectionLayoutItem] = (0..<3).map { _ in
+                    NSCollectionLayoutItem(layoutSize: itemSize)
+                }
+                
+                let buttonSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(100)
-                ),
-                subitems: [consentItem, cvcItem]
-            )
-            group1.interItemSpacing = NSCollectionLayoutSpacing.fixed(16)
+                    heightDimension: .absolute(52)
+                )
+                let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
+                
+                let innerGroup = NSCollectionLayoutGroup.vertical(
+                    layoutSize: NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(100)
+                    ),
+                    subitems: items
+                )
+                innerGroup.interItemSpacing = .fixed(16)
+                
+                let outerGroup = NSCollectionLayoutGroup.vertical(
+                    layoutSize: NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(120)
+                    ),
+                    subitems: [innerGroup, buttonItem]
+                )
+                outerGroup.interItemSpacing = .fixed(24)
+                section = NSCollectionLayoutSection(group: outerGroup)
+                section.contentInsets = .init(top: 16, leading: 40, bottom: 32, trailing: 40)
+            }
             
-            let buttonSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(52)
+            // Layout for decoration - rounded corner
+            let elementKind = AccordionSectionController.backgroundElementKind
+            context.register(
+                RoundedCornerDecorationView.self,
+                forDecorationViewOfKind: elementKind
             )
-            let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
-            buttonItem.contentInsets = .init().horizontal(16)
-            let group2 = NSCollectionLayoutGroup.vertical(
-                layoutSize: buttonSize,
-                subitems: [group1, buttonItem]
-            )
-            group2.interItemSpacing = .fixed(24)
-            let section = NSCollectionLayoutSection(group: group2)
+            let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
+            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+            section.decorationItems = [sectionBackgroundDecoration]
             return section
         }
     }
     
     func collectionView(didSelectItem itemIdentifier: String, at indexPath: IndexPath) {
-        if mode == .payment {
+        guard mode == .list else {
             // do nothing if consent is already selected
-            // use needs to select change button in section header to go back to consent list
+            // user needs to select change button in section header to go back to consent list
             return
         }
         
-        guard let consent = consents[safe: indexPath.item],
+        guard ![Items.accordionKey, Items.addNewCardToggle].contains(itemIdentifier) else {
+            return
+        }
+        guard let consent = consents.first(where: { $0.id == itemIdentifier }) ,
               context.viewController != nil else {
             assert(false, "view controller not found")
             return

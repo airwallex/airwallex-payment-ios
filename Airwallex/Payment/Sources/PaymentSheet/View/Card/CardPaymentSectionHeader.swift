@@ -14,7 +14,7 @@ struct CardPaymentSectionHeaderViewModel {
     let buttonAction: () -> Void
 }
 
-class CardPaymentSectionHeader: UICollectionReusableView, ViewReusable, ViewConfigurable {
+class CardPaymentSectionHeader: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let label: UILabel = {
         let view = UILabel()
@@ -35,16 +35,16 @@ class CardPaymentSectionHeader: UICollectionReusableView, ViewReusable, ViewConf
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(label)
-        addSubview(actionButton)
+        contentView.addSubview(label)
+        contentView.addSubview(actionButton)
         
         let constraints = [
-            label.leadingAnchor.constraint(equalTo: leadingAnchor),
-            label.centerYAnchor.constraint(equalTo: centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            actionButton.topAnchor.constraint(equalTo: topAnchor),
-            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-            actionButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+            actionButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            actionButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            actionButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             actionButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 32),
         ]
         

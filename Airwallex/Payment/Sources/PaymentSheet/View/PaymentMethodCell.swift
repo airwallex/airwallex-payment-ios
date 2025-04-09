@@ -9,7 +9,8 @@
 import UIKit
 import Combine
 
-struct PaymentMethodCellViewModel {
+struct PaymentMethodCellViewModel: CellViewModelIdentifiable {
+    let itemIdentifier: String
     let name: String
     let imageURL: URL?
     let isSelected: Bool

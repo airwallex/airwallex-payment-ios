@@ -23,6 +23,7 @@ import AirwallexRedirect
 class SchemaPaymentSectionController: NSObject, SectionController {
     
     struct Item {
+        static let accordionKey = "schemaPaymentAccordionKey"
         static let bankName = AWXField.Name.bankName
         static let redirectReminder = "redirectReminder"
         static let checkoutButton = "checkoutButton"
@@ -42,13 +43,22 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     
     private var uiFieldViewModels = [InfoCollectorTextFieldViewModel]()
     private let name: String
+    private let imageLoader: ImageLoader
     
-    init(name: String, methodProvider: PaymentMethodProvider) {
-        self.name = name
+    let layout: AWXUIContext.PaymentLayout
+    private let methodType: AWXPaymentMethodType
+    
+    init(methodType: AWXPaymentMethodType,
+         methodProvider: PaymentMethodProvider,
+         layout: AWXUIContext.PaymentLayout,
+         imageLoader: ImageLoader) {
+        assert(methodType.name != AWXCardKey && methodType.name != AWXApplePayKey && methodType.hasSchema)
+        self.methodType = methodType
+        self.name = methodType.name
         self.section = PaymentSectionType.schemaPayment(name)
         self.methodProvider = methodProvider
-        super.init()
-
+        self.layout = layout
+        self.imageLoader = imageLoader
     }
     
     // MARK: - SectionController
@@ -59,6 +69,10 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     
     var items: [String] {
         var items = [String]()
+        
+        if layout == .accordion {
+            items.append(Item.accordionKey)
+        }
         
         if bankSelectionViewModel != nil {
             items.append(Item.bankName)
@@ -80,15 +94,37 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
         let item = NSCollectionLayoutItem(layoutSize: layoutSize)
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(horizontal: 16)
+        let paymentGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: paymentGroup)
         section.interGroupSpacing = 24
+        switch layout {
+        case .tab:
+            section.contentInsets = .init(horizontal: 16)
+        case .accordion:
+            section.contentInsets = .init(top: 16, leading: 40, bottom: 32, trailing: 40)
+            
+            // Layout for decoration - rounded corner
+            context.register(RoundedCornerDecorationView.self, forDecorationViewOfKind: AccordionSectionController.backgroundElementKind)
+            let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: AccordionSectionController.backgroundElementKind)
+            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+            section.decorationItems = [sectionBackgroundDecoration]
+        }
         return section
     }
     
     func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
         switch itemIdentifier {
+        case Item.accordionKey:
+            let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: itemIdentifier, indexPath: indexPath)
+            let viewModel = PaymentMethodCellViewModel(
+                itemIdentifier: itemIdentifier,
+                name: methodType.displayName,
+                imageURL: methodType.resources.logoURL,
+                isSelected: true,
+                imageLoader: imageLoader
+            )
+            cell.setup(viewModel)
+            return cell
         case Item.checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
             cell.setup(CheckoutButtonCellViewModel(checkoutAction: checkout))

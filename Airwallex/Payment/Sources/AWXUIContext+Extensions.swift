@@ -22,6 +22,20 @@ import AirwallexCore
         case present
     }
     
+    @objc enum PaymentLayout: Int, CaseIterable {
+        case accordion
+        case tab
+        
+        public var displayName: String {
+            switch self {
+            case .accordion:
+                "Accordion"
+            case .tab:
+                "Tab"
+            }
+        }
+    }
+    
     enum LaunchError: ErrorLoggable {
         case invalidCardBrand(String)
         case invalidViewHierarchy(String)
@@ -68,17 +82,20 @@ import AirwallexCore
     ///   - hostingVC: The view controller that launch the payment sheet and also acts as the `AWXPaymentResultDelegate`.
     ///   - session: The current payment session.
     ///   - methodNames: An optional array of payment method names used to filter the payment methods returned by the server.
-    ///   - style: The presentation style of the payment sheet. Defaults to `.push`.
+    ///   - launchStyle: The presentation style of the payment sheet. Defaults to `.push`.
+    ///   - layout: layout of payment sheet
     @MainActor static func launchPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
                                          session: AWXSession,
                                          filterBy methodNames: [String]? = nil,
-                                         style: LaunchStyle = .push) {
+                                         launchStyle: LaunchStyle = .push,
+                                         layout: PaymentLayout = .tab) {
         launchPayment(
             from: hostingVC,
             session: session,
             paymentResultDelegate: hostingVC,
             filterBy: methodNames,
-            style: style
+            launchStyle: launchStyle,
+            layout: layout
         )
     }
     
@@ -88,12 +105,14 @@ import AirwallexCore
     ///   - session: The current payment session.
     ///   - paymentResultDelegate: The delegate responsible for handling the payment result.
     ///   - methodNames: An optional array of payment method names used to filter the payment methods returned by the server.
-    ///   - style: The presentation style of the payment sheet. Defaults to `.push`.
+    ///   - launchStyle: The presentation style of the payment sheet. Defaults to `.push`.
+    ///   - layout: layout of payment sheet
     @MainActor static func launchPayment(from hostingVC: UIViewController,
                                          session: AWXSession,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
                                          filterBy methodNames: [String]? = nil,
-                                         style: LaunchStyle = .push) {
+                                         launchStyle: LaunchStyle = .push,
+                                         layout: PaymentLayout = .tab) {
         if let methodNames {
             guard !methodNames.isEmpty else {
                 handleLaunchFailure(
@@ -114,7 +133,8 @@ import AirwallexCore
             session: session,
             paymentMethodProvider: PaymentSheetMethodProvider(session: session),
             paymentResultDelegate: paymentResultDelegate,
-            style: style
+            launchStyle: launchStyle,
+            layout: layout
         )
         
         AnalyticsLogger.log(action: .paymentLaunched, extraInfo: [.subtype: Self.subtypeDropin])
@@ -129,17 +149,20 @@ import AirwallexCore
     ///   - hostingVC: The view controller that presents the payment sheet and acts as the `AWXPaymentResultDelegate`.
     ///   - session: The active payment session.
     ///   - supportedBrands: A list of supported card brands for the payment session.
-    ///   - style: The presentation style of the payment sheet, which defaults to `.push`.
+    ///   - launchStyle: The presentation style of the payment sheet, which defaults to `.push`.
+    ///   - layout: layout of payment sheet
     @MainActor static func launchCardPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
                                              session: AWXSession,
                                              supportedBrands: [AWXCardBrand] = AWXCardBrand.all,
-                                             style: LaunchStyle = .push) {
+                                             launchStyle: LaunchStyle = .push,
+                                             layout: PaymentLayout = .tab) {
         launchCardPayment(
             from: hostingVC,
             session: session,
             paymentResultDelegate: hostingVC,
             supportedBrands: supportedBrands,
-            style: style
+            launchStyle: launchStyle,
+            layout: layout
         )
     }
     /// Launches the Airwallex card payment flow.
@@ -148,19 +171,22 @@ import AirwallexCore
     ///   - supportedBrands: A list of supported card brands for the payment session.
     ///   - session: The active payment session.
     ///   - paymentResultDelegate: The delegate responsible for handling the payment result.
-    ///   - style: The presentation style of the payment sheet, which defaults to `.push`.
+    ///   - launchStyle: The presentation style of the payment sheet, which defaults to `.push`.
+    ///   - layout: layout of payment sheet
     @MainActor static func launchCardPayment(from hostingVC: UIViewController,
                                              session: AWXSession,
                                              paymentResultDelegate: AWXPaymentResultDelegate,
                                              supportedBrands: [AWXCardBrand] = AWXCardBrand.all,
-                                             style: LaunchStyle = .push) {
+                                             launchStyle: LaunchStyle = .push,
+                                             layout: PaymentLayout = .tab) {
         launchPayment(
             name: AWXCardKey,
             from: hostingVC,
             session: session,
             paymentResultDelegate: paymentResultDelegate,
             supportedBrands: supportedBrands,
-            style: style
+            launchStyle: launchStyle,
+            layout: layout
         )
     }
     
@@ -172,13 +198,15 @@ import AirwallexCore
     ///   - session: The current payment session containing transaction details.
     ///   - paymentResultDelegate: The delegate that handles payment result callbacks.
     ///   - supportedBrands: A list of supported card brands for the payment method. Required for Card Payment
-    ///   - style: The presentation style of the payment sheet. Defaults to `.push`.
+    ///   - launchStyle: The presentation style of the payment sheet. Defaults to `.push`.
+    ///   - layout: layout of payment sheet
     @MainActor static func launchPayment(name: String,
                                          from hostingVC: UIViewController,
                                          session: AWXSession,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
                                          supportedBrands: [AWXCardBrand]? = AWXCardBrand.all,
-                                         style: LaunchStyle = .push) {
+                                         launchStyle: LaunchStyle = .push,
+                                         layout: PaymentLayout = .tab) {
         let name = name.trimmed
         
         if name == AWXCardKey {
@@ -208,7 +236,8 @@ import AirwallexCore
             session: session,
             paymentMethodProvider: methodProvider,
             paymentResultDelegate: paymentResultDelegate,
-            style: style
+            launchStyle: launchStyle,
+            layout: layout
         )
         AnalyticsLogger.log(action: .paymentLaunched, extraInfo: [.subtype: Self.subtypeElement, .paymentMethod: name])
     }
@@ -220,7 +249,8 @@ private extension AWXUIContext {
                                          session: AWXSession,
                                          paymentMethodProvider: PaymentMethodProvider,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
-                                         style: LaunchStyle) {
+                                         launchStyle: LaunchStyle,
+                                         layout: PaymentLayout = .tab) {
         do {
             try session.validate()
         } catch {
@@ -242,7 +272,7 @@ private extension AWXUIContext {
         
         AWXUIContext.shared().session = session
         AWXUIContext.shared().delegate = paymentResultDelegate
-        switch style {
+        switch launchStyle {
         case .push:
             guard let nav = hostingVC.navigationController else {
                 handleLaunchFailure(
@@ -251,7 +281,10 @@ private extension AWXUIContext {
                 )
                 return
             }
-            let paymentVC = PaymentMethodsViewController(methodProvider: paymentMethodProvider)
+            let paymentVC = PaymentViewController(
+                methodProvider: paymentMethodProvider,
+                layout: layout
+            )
             nav.pushViewController(paymentVC, animated: true)
             AWXUIContext.shared().paymentUIDismissAction = { [weak paymentVC, weak nav] completion in
                 guard let paymentVC, let nav else {
@@ -272,7 +305,10 @@ private extension AWXUIContext {
                 CATransaction.commit()
             }
         case .present:
-            let paymentVC = PaymentMethodsViewController(methodProvider: paymentMethodProvider)
+            let paymentVC = PaymentViewController(
+                methodProvider: paymentMethodProvider,
+                layout: layout
+            )
             let nav = UINavigationController(rootViewController: paymentVC)
             let appearance = UINavigationBarAppearance()
             appearance.configureWithDefaultBackground()

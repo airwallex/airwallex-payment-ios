@@ -9,6 +9,13 @@
 import UIKit
 
 extension UIStackView {
+    
+    func batchAddArrangedSubView(_ subViews: [UIView]) {
+        for view in subViews {
+            addArrangedSubview(view)
+        }
+    }
+    
     @discardableResult
     func insertSpacer(_ space: CGFloat,
                       at index: Int,

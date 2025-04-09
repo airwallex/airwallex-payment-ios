@@ -15,19 +15,25 @@ import AirwallexCore
 
 class ApplePaySectionController: SectionController {
     
-    private(set) var context: CollectionViewContext<PaymentSectionType, String>!
-
-    let section = PaymentSectionType.applePay
     let session: AWXSession
     let methodType: AWXPaymentMethodType
     private var paymentSessionHandler: PaymentSessionHandler?
-    private(set) var items: [String]
+    private let methodProvider: PaymentMethodProvider
     
-    init(session: AWXSession, methodType: AWXPaymentMethodType) {
+    init(session: AWXSession,
+         methodType: AWXPaymentMethodType,
+         methodProvider: PaymentMethodProvider) {
         self.session = session
         self.methodType = methodType
         self.items = [ methodType.name ]
+        self.methodProvider = methodProvider
     }
+    
+    let section = PaymentSectionType.applePay
+    
+    private(set) var items: [String]
+    
+    private(set) var context: CollectionViewContext<PaymentSectionType, String>!
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
         self.context = context
@@ -54,6 +60,15 @@ class ApplePaySectionController: SectionController {
         return cell
     }
     
+    func supplementaryView(for elementKind: String,
+                           at indexPath: IndexPath) -> UICollectionReusableView {
+        context.dequeueReusableSupplementaryView(
+            ofKind: elementKind,
+            viewClass: PaymentMethodListSeparator.self,
+            indexPath: indexPath
+        )
+    }
+    
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -67,7 +82,21 @@ class ApplePaySectionController: SectionController {
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(horizontal: 16)
+        var contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+        if methodProvider.methods.contains(where: { $0.name != AWXApplePayKey }) {
+            contentInsets.bottom = 16
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(22)
+            )
+            let header = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .bottom
+            )
+            section.boundarySupplementaryItems = [header]
+        }
+        section.contentInsets = contentInsets
         return section
     }
     

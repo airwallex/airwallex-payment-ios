@@ -13,7 +13,7 @@ import Core
 import AirwallexCore
 #endif
 
-class PaymentMethodListSectionController: SectionController {
+class PaymentMethodTabSectionController: SectionController {
     
     private var session: AWXSession {
         methodProvider.session
@@ -23,12 +23,14 @@ class PaymentMethodListSectionController: SectionController {
     private let methodProvider: PaymentMethodProvider
     
     private var methodTypes: [AWXPaymentMethodType]
-    private var imageLoader = ImageLoader()
+    private let imageLoader: ImageLoader
     
-    init(methodProvider: PaymentMethodProvider) {
+    init(methodProvider: PaymentMethodProvider,
+         imageLoader: ImageLoader) {
         self.methodProvider = methodProvider
-        methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
-        selectedMethod = methodProvider.selectedMethod?.name ?? ""
+        self.methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
+        self.selectedMethod = methodProvider.selectedMethod?.name ?? ""
+        self.imageLoader = imageLoader
     }
     
     // MARK: - SectionController
@@ -51,6 +53,7 @@ class PaymentMethodListSectionController: SectionController {
             return cell
         }
         let viewModel = PaymentMethodCellViewModel(
+            itemIdentifier: methodType.name,
             name: methodType.displayName,
             imageURL: methodType.resources.logoURL,
             isSelected: itemIdentifier == selectedMethod,
@@ -69,31 +72,9 @@ class PaymentMethodListSectionController: SectionController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(top: 24, leading: 16, bottom: 8, trailing: 16)
+        section.contentInsets = .init(horizontal: 16).bottom(8)
         section.interGroupSpacing = 8
-        
-        if methodProvider.isApplePayAvailable {
-            let headerSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(22)
-            )
-            let header = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerSize,
-                elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top
-            )
-            section.boundarySupplementaryItems = [header]
-        }
         return section
-    }
-    
-    func supplementaryView(for elementKind: String,
-                           at indexPath: IndexPath) -> UICollectionReusableView {
-        context.dequeueReusableSupplementaryView(
-            ofKind: elementKind,
-            viewClass: PaymentMethodListSeparator.self,
-            indexPath: indexPath
-        )
     }
 
     func collectionView(didSelectItem itemIdentifier: String, at indexPath: IndexPath) {
@@ -102,12 +83,11 @@ class PaymentMethodListSectionController: SectionController {
             return
         }
         guard selected.name != selectedMethod else {
-            debugLog("select same method")
             return
         }
         AnalyticsLogger.log(action: .selectPayment, extraInfo: [.paymentMethod: itemIdentifier])
         
-        var itemsToReload = [ selected.name, selectedMethod ]
+        let itemsToReload = [ selected.name, selectedMethod ]
         selectedMethod = selected.name
         methodProvider.selectedMethod = selected
         context.reload(items: itemsToReload)
