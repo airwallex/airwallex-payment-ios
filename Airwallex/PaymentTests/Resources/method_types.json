@@ -1,0 +1,561 @@
+{
+  "has_more": false,
+  "items": [
+    {
+      "name": "card",
+      "display_name": "Card",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "*"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "card_schemes": [
+        {
+          "name": "unionpay",
+          "display_name": "Union Pay",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/unionpay.8394343.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/unionPay.efebdbd9.svg"
+            }
+          }
+        },
+        {
+          "name": "jcb",
+          "display_name": "JCB",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/jcb.20230511083200.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/jcb.20230511083200.svg"
+            }
+          }
+        },
+        {
+          "name": "visa",
+          "display_name": "Visa",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/visa.823439.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/visa.745a6485.svg"
+            }
+          }
+        },
+        {
+          "name": "mastercard",
+          "display_name": "Mastercard",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/mastercard.823272.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/mastercard.262f85fc.svg"
+            }
+          }
+        },
+        {
+          "name": "amex",
+          "display_name": "AMEX",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/amex.2210191546.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/amex.f6c1eb25db0f19a0aada.svg"
+            }
+          }
+        }
+      ],
+      "resources": {
+        "has_schema": false,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/cardPlaceholder.abcb5ee7.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/cardPlaceholder.abcb5ee7.svg"
+        }
+      }
+    },
+    {
+      "name": "axs_kiosk",
+      "display_name": "AXS Kiosk",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/axs_kiosk.919064.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/axs_kiosk.7fdd7aaf.svg"
+        }
+      }
+    },
+    {
+      "name": "airwallex_pay",
+      "display_name": "AirwallexPay",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "DKK",
+        "PLN",
+        "ILS",
+        "CNY",
+        "CHF",
+        "NOK",
+        "KRW",
+        "MXN",
+        "NZD",
+        "JPY",
+        "USD",
+        "AUD",
+        "SEK",
+        "ZAR",
+        "HUF",
+        "EUR",
+        "HKD",
+        "RON",
+        "THB",
+        "CZK",
+        "SGD",
+        "GBP",
+        "CAD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": false,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/airwallex_pay.123.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/airwallex_pay.123.svg"
+        }
+      }
+    },
+    {
+      "name": "alipaycn",
+      "display_name": "Alipay",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "CNY",
+        "USD",
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/alipaycn.857642.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/alipaycn.32c11f62.svg"
+        }
+      }
+    },
+    {
+      "name": "alipayhk",
+      "display_name": "AlipayHK",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "HKD",
+        "USD",
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/alipayhk.984401.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/alipayhk.6a629046.svg"
+        }
+      }
+    },
+    {
+      "name": "applepay",
+      "display_name": "Apple Pay",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "*"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "card_schemes": [
+        {
+          "name": "unionpay",
+          "display_name": "Union Pay",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/unionpay.8394343.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/unionPay.efebdbd9.svg"
+            }
+          }
+        },
+        {
+          "name": "jcb",
+          "display_name": "JCB",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/jcb.20230511083200.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/jcb.20230511083200.svg"
+            }
+          }
+        },
+        {
+          "name": "visa",
+          "display_name": "Visa",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/visa.823439.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/visa.745a6485.svg"
+            }
+          }
+        },
+        {
+          "name": "mastercard",
+          "display_name": "Mastercard",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/mastercard.823272.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/mastercard.262f85fc.svg"
+            }
+          }
+        },
+        {
+          "name": "amex",
+          "display_name": "AMEX",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/amex.2210191546.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/amex.f6c1eb25db0f19a0aada.svg"
+            }
+          }
+        }
+      ],
+      "resources": {
+        "has_schema": false,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/applepay.a77ea704f31cd3fafad1.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/applepay.a77ea704f31cd3fafad1.svg"
+        }
+      }
+    },
+    {
+      "name": "atome",
+      "display_name": "Atome - 3 interest-free installments",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "MYR",
+        "IDR",
+        "HKD",
+        "THB",
+        "SGD",
+        "PHP"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout.airwallex.com/static/media/atome.070048.png",
+          "svg": "https://checkout.airwallex.com/static/media/atome.035024.svg"
+        }
+      }
+    },
+    {
+      "name": "dana",
+      "display_name": "DANA",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "IDR",
+        "USD",
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/dana.879652.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/dana.a658de8f.svg"
+        }
+      }
+    },
+    {
+      "name": "gcash",
+      "display_name": "GCash",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "USD",
+        "SGD",
+        "PHP"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/gcash.880677.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/gcash.7bc5a488.svg"
+        }
+      }
+    },
+    {
+      "name": "googlepay",
+      "display_name": "Google Pay",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "*"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "card_schemes": [
+        {
+          "name": "jcb",
+          "display_name": "JCB",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/jcb.20230511083200.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/jcb.20230511083200.svg"
+            }
+          }
+        },
+        {
+          "name": "visa",
+          "display_name": "Visa",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/visa.823439.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/visa.745a6485.svg"
+            }
+          }
+        },
+        {
+          "name": "mastercard",
+          "display_name": "Mastercard",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/mastercard.823272.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/mastercard.262f85fc.svg"
+            }
+          }
+        },
+        {
+          "name": "amex",
+          "display_name": "AMEX",
+          "resources": {
+            "logos": {
+              "png": "https://checkout-demo.airwallex.com/static/media/amex.2210191546.png",
+              "svg": "https://checkout-demo.airwallex.com/static/media/amex.f6c1eb25db0f19a0aada.svg"
+            }
+          }
+        }
+      ],
+      "resources": {
+        "has_schema": false,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/googlepay.04201800.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/googlepay.04201805.svg"
+        }
+      }
+    },
+    {
+      "name": "grabpay",
+      "display_name": "GrabPay",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/grabpay.854113.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/grabpay.472b615d.svg"
+        }
+      }
+    },
+    {
+      "name": "pay_now",
+      "display_name": "PayNow",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/pay_now.343243.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/pay_now.778788.svg"
+        }
+      }
+    },
+    {
+      "name": "paypal",
+      "display_name": "PayPal",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "DKK",
+        "PLN",
+        "NOK",
+        "CHF",
+        "MXN",
+        "RUB",
+        "NZD",
+        "JPY",
+        "BRL",
+        "USD",
+        "AUD",
+        "SEK",
+        "HUF",
+        "EUR",
+        "PHP",
+        "TWD",
+        "MYR",
+        "HKD",
+        "THB",
+        "CZK",
+        "SGD",
+        "CAD",
+        "GBP"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/paypal.889404.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/paypal.e896de44.svg"
+        }
+      },
+      "express_checkout_enabled": false
+    },
+    {
+      "name": "sam_kiosk",
+      "display_name": "SAM Kiosk",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/sam_kiosk.893603.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/sam_kiosk.e10cfe8b.svg"
+        }
+      }
+    },
+    {
+      "name": "tng",
+      "display_name": "Touch 'n Go",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "MYR",
+        "USD",
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/tng.966082.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/tng.6718b7cf.svg"
+        }
+      }
+    },
+    {
+      "name": "truemoney",
+      "display_name": "TrueMoney",
+      "transaction_mode": "oneoff",
+      "flows": [],
+      "transaction_currencies": [
+        "THB",
+        "USD",
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/truemoney.883253.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/truemoney.e0c74e22.svg"
+        }
+      }
+    },
+    {
+      "name": "wechatpay",
+      "display_name": "WeChat Pay",
+      "transaction_mode": "oneoff",
+      "flows": [
+        "miniprog",
+        "jsapi",
+        "webqr",
+        "mweb",
+        "inapp"
+      ],
+      "transaction_currencies": [
+        "CNY",
+        "USD",
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/wechatpay.915224.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/wechatpay.983c8eed.svg"
+        }
+      }
+    }
+  ]
+}

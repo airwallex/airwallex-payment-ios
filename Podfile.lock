@@ -11,13 +11,10 @@ PODS:
     - Airwallex/Redirect
   - Airwallex/Redirect (5.7.0):
     - Airwallex/Core
-  - Airwallex/WeChatPay (5.7.0):
-    - Airwallex/Core
   - OCMock (3.9.4)
 
 DEPENDENCIES:
   - Airwallex/Payment (from `./`)
-  - Airwallex/WeChatPay (from `./`)
   - OCMock
 
 SPEC REPOS:
@@ -29,9 +26,9 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  Airwallex: eabcb4da34644800dfd7e5c1fd7f975e742e7abf
+  Airwallex: ce3e1274568ddb24ca5299fe7b0db0127de53867
   OCMock: 589f2c84dacb1f5aaf6e4cec1f292551fe748e74
 
-PODFILE CHECKSUM: da69e133556ebfb1e38d11f054dc9fadba01e2d1
+PODFILE CHECKSUM: 1930e10b88aa72de4c200a7bcb195e20e0af0ed9
 
 COCOAPODS: 1.15.2

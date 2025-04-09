@@ -5,7 +5,12 @@
 //  Created by Weiping Li on 2025/1/23.
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
+#if canImport(Airwallex)
 import Airwallex
+#elseif canImport(AirwallexPayment)
+import AirwallexPayment
+import AirwallexCore
+#endif
 
 class GetPaymentMethodsViewController: UITableViewController {
     
@@ -35,7 +40,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         }
         
         Task {
-            if let image = try? await imageLoader.getImage(logoURL, for: imageView) {
+            if let image = try? await imageLoader.loadImage(logoURL, for: imageView) {
                 imageView.image = image
                 cell.setNeedsLayout()
             } else {
@@ -45,7 +50,7 @@ class GetPaymentMethodsViewController: UITableViewController {
     }
     
     private lazy var storeAPIClient = Airwallex.apiClient
-    private lazy var awxClient = AWXAPIClient(configuration: AWXAPIClientConfiguration.shared())
+    private lazy var awxClient = AWXAPIClient(configuration: .shared())
     private lazy var items = [AWXPaymentMethodType]()
     
     private let reuseIdentifier = "reuseIdentifier"

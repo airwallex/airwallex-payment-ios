@@ -7,7 +7,12 @@
 //
 
 import UIKit
+#if canImport(Airwallex)
 import Airwallex
+#elseif canImport(AirwallexPayment)
+import AirwallexPayment
+import AirwallexCore
+#endif
 
 class HomePageTitleView: UIView {
     private let logo: UIImageView = {

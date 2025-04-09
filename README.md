@@ -375,7 +375,7 @@ You can build your own entirely custom UI on top of our low-level APIs.
 #### Create PaymentSessionHandler 
 
 ```swift
-let paymentSessionHandler = PaymentSessionHandler(
+let paymentSessionHandler = try PaymentSessionHandler(
     session: "The session created above", 
     viewController: "hosting view controller which also handles AWXPaymentResultDelegate"
 )

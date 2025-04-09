@@ -7,7 +7,12 @@
 //
 
 import UIKit
+#if canImport(Airwallex)
 import Airwallex
+#elseif canImport(AirwallexPayment)
+import AirwallexPayment
+import AirwallexCore
+#endif
 
 class WeChatDemoViewController: UIViewController {
     
@@ -170,6 +175,7 @@ class WeChatDemoViewController: UIViewController {
             showAlert(message: NSLocalizedString("Please fill in all the fields", comment: "wechat demo"))
             return
         }
+#if canImport(WechatOpenSDK)
         let payReq = PayReq()
         payReq.partnerId = fields[FieldKey.partnerId]!
         payReq.prepayId = fields[FieldKey.prepayId]!
@@ -183,6 +189,9 @@ class WeChatDemoViewController: UIViewController {
             let success = await WXApi.send(payReq)
             showAlert(message: success ? "WXApi.send(payReq) succeed" : "WXApi.send(payReq) failed")
         }
+#else
+        showAlert(message: "Please add dependency for WeChatPay(cocoapods)/AirwallexWeChatPay(SPM)")
+#endif
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
