@@ -35,6 +35,7 @@ NSString *const AWXThreeDSValidate = @"3dsValidate";
 NSString *const AWXThreeDSContinue = @"3ds_continue";
 NSString *const AWXDCC = @"dcc";
 
+NSString *const AWXWeChatPayKey = @"wechatpay";
 NSString *const AWXApplePayKey = @"applepay";
 
 AWXCardBrand const AWXCardBrandVisa = @"visa";
@@ -95,7 +96,7 @@ AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType) {
     return AWXTextFieldTypeDefault;
 }
 
-NSString *FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason) {
+NSString *_Nullable FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason) {
     switch (reason) {
     case AirwallexMerchantTriggerReasonUndefined:
         return nil;
@@ -106,7 +107,7 @@ NSString *FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason) {
     }
 }
 
-Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type) {
+_Nullable Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type) {
     if ([type.name isEqualToString:AWXCardKey]) {
         return NSClassFromString(@"AWXCardProvider");
     } else if ([type.name isEqualToString:AWXApplePayKey]) {

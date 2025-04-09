@@ -6,7 +6,12 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+#if canImport(Airwallex)
 import Airwallex
+#elseif canImport(AirwallexPayment)
+import AirwallexPayment
+import AirwallexCore
+#endif
 
 class Customer: NSObject, AWXJSONDecodable {
     @objc let id: String

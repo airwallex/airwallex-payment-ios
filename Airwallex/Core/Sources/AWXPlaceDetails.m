@@ -14,14 +14,16 @@
     NSMutableDictionary *json = [@{
         @"first_name": self.firstName ?: @"",
         @"last_name": self.lastName ?: @"",
-        @"date_of_birth": self.dateOfBirth ?: @"",
-        @"address": self.address.encodeToJSON
+        @"date_of_birth": self.dateOfBirth ?: @""
     } mutableCopy];
     if (self.email && self.email.length > 0) {
         json[@"email"] = self.email;
     }
     if (self.phoneNumber && self.phoneNumber.length > 0) {
         json[@"phone_number"] = self.phoneNumber;
+    }
+    if (self.address && self.address.countryCode.length > 0) {
+        json[@"address"] = self.address.encodeToJSON ?: @"";
     }
     return json;
 }

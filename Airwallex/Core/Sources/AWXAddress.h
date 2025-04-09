@@ -24,20 +24,20 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  City of the address.
  */
-@property (nonatomic, copy) NSString *city;
+@property (nonatomic, copy, nullable) NSString *city;
 
 /**
  Street of the address.
  */
-@property (nonatomic, copy) NSString *street;
+@property (nonatomic, copy, nullable) NSString *street;
 
 /**
- State or province of the address, optional.
+ State or province of the address.
  */
 @property (nonatomic, copy, nullable) NSString *state;
 
 /**
- Postcode of the address, optional.
+ Postcode of the address.
  */
 @property (nonatomic, copy, nullable) NSString *postcode;
 

@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
  Launch Apple Pay sheet to confirm the payment intent.
  */
 - (void)startPayment;
+
 @end
 
 NS_ASSUME_NONNULL_END

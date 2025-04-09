@@ -6,8 +6,13 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
+import UIKit
+#if canImport(Airwallex)
 import Airwallex
+#elseif canImport(AirwallexPayment)
+import AirwallexPayment
+import AirwallexCore
+#endif
 
 class AWXButton: UIButton {
     

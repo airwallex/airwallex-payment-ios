@@ -10,7 +10,11 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Airwallex",
-            targets: [ "AirwallexCore", "AirwallexApplePay", "AirwallexCard", "AirwallexRedirect", "AirwallexWeChatPay" ]
+            targets: [ "AirwallexPayment", "AirwallexWeChatpay" ]
+        ),
+        .library(
+            name: "AirwallexPayment",
+            targets: [ "AirwallexPayment" ]
         ),
         .library(
             name: "AirwallexCore",
@@ -45,6 +49,18 @@ let package = Package(
         .binaryTarget(
             name: "WechatOpenSDKDynamic",
             path: "Frameworks/WechatOpenSDKDynamic.xcframework"
+        ),
+        .target(
+            name: "AirwallexPayment",
+            dependencies: [
+                .target(name: "AirwallexCore"),
+                .target(name: "AirwallexApplePay"),
+                .target(name: "AirwallexCard"),
+                .target(name: "AirwallexRedirect"),
+            ],
+            path: "Airwallex/Payment",
+            sources: [ "Sources" ],
+            resources: [ .process("Resources")]
         ),
         .target(
             name: "AirwallexCore",

@@ -7,6 +7,7 @@
 //
 
 #import "AWXDefaultProvider.h"
+#import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 #import "AWXSession+Internal.h"
 
@@ -26,6 +27,12 @@
         // If no provider is available or if the provider is not able to handle the particular session,
         // then we should filter this method out.
         if (class == Nil || ![class canHandleSession:self paymentMethod:item]) {
+            return NO;
+        }
+
+        if ([item.name isEqualToString:AWXWeChatPayKey] && NSClassFromString(@"AWXWeChatPayActionProvider") == nil) {
+            // temporary solution - use AWXWeChatPayActionProvider to check if
+            // payment(cocoapods)/AirwallexWeChatpay(SPM) is integrated
             return NO;
         }
 
