@@ -10,7 +10,11 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Airwallex",
-            targets: [ "AirwallexPayment", "AirwallexWeChatpay" ]
+            targets: [ "Airwallex" ]
+        ),
+        .library(
+            name: "AirwallexPaymentSheet",
+            targets: [ "AirwallexPaymentSheet" ]
         ),
         .library(
             name: "AirwallexPayment",
@@ -39,18 +43,35 @@ let package = Package(
             path: "Frameworks/WechatOpenSDK.xcframework"
         ),
         .target(
+            name: "Airwallex",
+            dependencies: [
+                .target(name: "AirwallexPaymentSheet")
+            ],
+            path: "Airwallex/Airwallex",
+            sources: [ "Airwallex_Export.swift" ]
+        ),
+        .target(
+            name: "AirwallexPaymentSheet",
+            dependencies: [
+                .target(name: "AirwallexPayment")
+            ],
+            path: "Airwallex/AirwallexPaymentSheet",
+            sources: [ "Sources" ],
+            resources: [ .process("Resources")]
+        ),
+        .target(
             name: "AirwallexPayment",
             dependencies: [
                 .target(name: "AirwallexCore")
             ],
-            path: "Airwallex/Payment",
+            path: "Airwallex/AirwallexPayment",
             sources: [ "Sources" ],
             resources: [ .process("Resources")]
         ),
         .target(
             name: "AirwallexCore",
             dependencies: [ "AirwallexRisk", "AirTracker" ],
-            path: "Airwallex/Core",
+            path: "Airwallex/AirwallexCore",
             exclude: [ "Sources/Empty.swift" ],
             sources: [ "Sources" ],
             resources: [ .process("Resources")],
@@ -66,7 +87,7 @@ let package = Package(
                 "AirwallexCore",
                 "WechatOpenSDK"
             ],
-            path: "Airwallex/WeChatPay",
+            path: "Airwallex/AirwallexWeChatpay",
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")

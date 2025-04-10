@@ -13,13 +13,15 @@ fileprivate class BundleProvider {
 }
 
 extension Bundle {
-#if !SWIFT_PACKAGE
     static var paymentSheet: Bundle {
+#if SWIFT_PACKAGE
+        return .module
+#else
         guard let url = BundleProvider.bundle.url(forResource: "AirwallexPaymentSheet", withExtension: "bundle"),
               let bundle = Bundle(url: url) else {
             return BundleProvider.bundle
         }
         return bundle
-    }
 #endif
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  WeChatPay.h
+//  AirwallexWeChatPay.h
 //  Airwallex
 //
 //  Created by Victor Zhu on 2021/9/6.
@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 //! Project version number for WeChatPay.
-FOUNDATION_EXPORT double WeChatPayVersionNumber;
+FOUNDATION_EXPORT double AirwallexWeChatPayVersionNumber;
 
 //! Project version string for WeChatPay.
-FOUNDATION_EXPORT const unsigned char WeChatPayVersionString[];
+FOUNDATION_EXPORT const unsigned char AirwallexWeChatPayVersionString[];
 
 #import "AWXWeChatPayActionProvider.h"

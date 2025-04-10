@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target   = '13.0'
   s.static_framework        = true
   s.swift_versions          = '5.0'
+  s.default_subspec         = 'AirwallexPaymentSheet'
   
   s.subspec 'AirwallexPaymentSheet' do |plugin|
     plugin.source_files = 'Airwallex/AirwallexPaymentSheet/Sources/**/*.{swift,h,m}'
@@ -30,9 +31,9 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'AirwallexCore' do |plugin|
-    plugin.source_files = [ 'Airwallex/Airwallex.h', 'Airwallex/AirwallexCore/Sources/**/*.{swift,h,m}']
+    plugin.source_files = [ 'Airwallex/Airwallex/Airwallex.h', 'Airwallex/AirwallexCore/Sources/**/*.{swift,h,m}']
     plugin.public_header_files = [
-      'Airwallex/Airwallex.h',
+      'Airwallex/Airwallex/Airwallex.h',
       'Airwallex/AirwallexCore/Sources/*.h',
       'Airwallex/AirwallexCore/Sources/Card/*.h',
       'Airwallex/AirwallexCore/Sources/Redirect/*.h',

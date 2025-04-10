@@ -749,6 +749,7 @@
 		D85042732DA79FFB0074BA7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D85042752DA79FFF0074BA7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D88E34B42DA7E4B600183A49 /* Bundle+PaymentSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+PaymentSheet.swift"; sourceTree = "<group>"; };
+		D88E34B82DA7E93100183A49 /* Airwallex_Export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airwallex_Export.swift; sourceTree = "<group>"; };
 		D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXUIContext+Card.h"; sourceTree = "<group>"; };
 		D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXUIContext+Card.m"; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
@@ -1024,7 +1025,7 @@
 		085BD3BE23CC62B4002E8F27 = {
 			isa = PBXGroup;
 			children = (
-				1820C9682C7C22B3006B18C4 /* Airwallex.h */,
+				D88E34B72DA7E91C00183A49 /* Airwallex */,
 				3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */,
 				3C72E12828EC4BDD00F038E3 /* Configurations */,
 				3C5A37F927F29DB000CFC2EF /* Shared */,
@@ -1116,15 +1117,6 @@
 			path = Internal;
 			sourceTree = "<group>";
 		};
-		3C579F6D27F4156400840A3B /* Internal */ = {
-			isa = PBXGroup;
-			children = (
-				5775CF6226E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.h */,
-				5775CF6526E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.m */,
-			);
-			path = Internal;
-			sourceTree = "<group>";
-		};
 		3C579F6E27F4158C00840A3B /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -1194,7 +1186,8 @@
 		5775CE6026E5D86100C6AFE3 /* AirwallexWeChatPay */ = {
 			isa = PBXGroup;
 			children = (
-				3C579F6D27F4156400840A3B /* Internal */,
+				5775CF6226E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.h */,
+				5775CF6526E5E27B00C6AFE3 /* AWXWeChatPaySDKResponse.m */,
 				D85041F62DA79D380074BA7F /* AWXWeChatPayActionProvider.h */,
 				D85041F72DA79D380074BA7F /* AWXWeChatPayActionProvider.m */,
 				D85041FA2DA79D490074BA7F /* AirwallexWeChatPay.h */,
@@ -1482,6 +1475,15 @@
 				D8EC87722D9E335900D082EC /* Palette.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		D88E34B72DA7E91C00183A49 /* Airwallex */ = {
+			isa = PBXGroup;
+			children = (
+				1820C9682C7C22B3006B18C4 /* Airwallex.h */,
+				D88E34B82DA7E93100183A49 /* Airwallex_Export.swift */,
+			);
+			path = Airwallex;
 			sourceTree = "<group>";
 		};
 		D8BD9E112D0191BF0045A892 /* Resources */ = {

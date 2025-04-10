@@ -1,5 +1,5 @@
 //
-//  Core.h
+//  AirwallexCore.h
 //  Airwallex
 //
 //  Created by Victor Zhu on 2021/8/24.
@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 //! Project version number for Airwallex.
-FOUNDATION_EXPORT double CoreVersionNumber;
+FOUNDATION_EXPORT double AirwallexCoreVersionNumber;
 
 //! Project version string for Airwallex.
-FOUNDATION_EXPORT const unsigned char CoreVersionString[];
+FOUNDATION_EXPORT const unsigned char AirwallexCoreVersionString[];
 
 #import "AWXAPIClient.h"
 #import "AWXAPIResponse.h"
@@ -37,6 +37,8 @@ FOUNDATION_EXPORT const unsigned char CoreVersionString[];
 #import "AWXNextActionHandler.h"
 #import "AWXPageViewTrackable.h"
 #import "AWXPaymentConsent.h"
+#import "AWXPaymentConsentRequest.h"
+#import "AWXPaymentConsentResponse.h"
 #import "AWXPaymentFormViewController.h"
 #import "AWXPaymentFormViewModel.h"
 #import "AWXPaymentIntent.h"
