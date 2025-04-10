@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "AirwallexPaymentSDK",
+    name: "Airwallex",
     platforms: [ .iOS(.v13) ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -19,18 +19,6 @@ let package = Package(
         .library(
             name: "AirwallexCore",
             targets: ["AirwallexCore"]
-        ),
-        .library(
-            name: "AirwallexApplePay",
-            targets: ["AirwallexApplePay"]
-        ),
-        .library(
-            name: "AirwallexCard",
-            targets: ["AirwallexCard"]
-        ),
-        .library(
-            name: "AirwallexRedirect",
-            targets: ["AirwallexRedirect"]
         ),
         .library(
             name: "AirwallexWeChatpay",
@@ -53,10 +41,7 @@ let package = Package(
         .target(
             name: "AirwallexPayment",
             dependencies: [
-                .target(name: "AirwallexCore"),
-                .target(name: "AirwallexApplePay"),
-                .target(name: "AirwallexCard"),
-                .target(name: "AirwallexRedirect"),
+                .target(name: "AirwallexCore")
             ],
             path: "Airwallex/Payment",
             sources: [ "Sources" ],
@@ -73,33 +58,6 @@ let package = Package(
             cSettings: [
                 .headerSearchPath("Sources/Internal"),
                 .headerSearchPath("Sources/Internal/Extensions")
-            ]
-        ),
-        .target(
-            name: "AirwallexApplePay",
-            dependencies: [ "AirwallexCore" ],
-            path: "Airwallex/ApplePay",
-            publicHeadersPath: "",
-            cSettings: [
-                .headerSearchPath("Internal")
-            ]
-        ),
-        .target(
-            name: "AirwallexCard",
-            dependencies: [ "AirwallexCore" ],
-            path: "Airwallex/Card",
-            publicHeadersPath: "",
-            cSettings: [
-                .headerSearchPath("Internal")
-            ]
-        ),
-        .target(
-            name: "AirwallexRedirect",
-            dependencies: [ "AirwallexCore" ],
-            path: "Airwallex/Redirect",
-            publicHeadersPath: "",
-            cSettings: [
-                .headerSearchPath("Internal")
             ]
         ),
         .target(

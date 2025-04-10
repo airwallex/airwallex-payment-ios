@@ -6,4 +6,4 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-#import "Core.h"
+#import "AirwallexCore.h"

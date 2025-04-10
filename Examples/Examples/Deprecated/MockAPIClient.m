@@ -8,11 +8,7 @@
 
 #import "MockAPIClient.h"
 
-#if __has_include(<Airwallex/Core.h>)
 @import Airwallex;
-#else
-@import AirwallexCore;
-#endif
 
 @implementation MockAPIClient
 

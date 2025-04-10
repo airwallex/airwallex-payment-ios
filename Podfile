@@ -6,28 +6,13 @@ inhibit_all_warnings!
 
 workspace 'Airwallex.xcworkspace'
 
-target 'CoreTests' do
-  project './Airwallex/Airwallex.xcodeproj'
-  pod 'OCMock'
-end
-
-target 'CardTests' do
-  project './Airwallex/Airwallex.xcodeproj'
-  pod 'OCMock'
-end
-
-target 'ApplePayTests' do
-  project './Airwallex/Airwallex.xcodeproj'
-  pod 'OCMock'
-end
-
-target 'RedirectTests' do
+target 'AirwallexCoreTests' do
   project './Airwallex/Airwallex.xcodeproj'
   pod 'OCMock'
 end
 
 target 'Examples' do
   project './Examples/Examples.xcodeproj'
-  pod 'Airwallex', :path => './', :subspecs => ['Payment']
-#  pod 'Airwallex', :path => './'
+#  pod 'Airwallex', :path => './', :subspecs => ['AirwallexPaymentSheet']
+  pod 'Airwallex', :path => './'
 end
