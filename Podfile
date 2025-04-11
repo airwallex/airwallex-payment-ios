@@ -13,6 +13,7 @@ end
 
 target 'Examples' do
   project './Examples/Examples.xcodeproj'
+  # if you need to support wechatpay, you will need to include AirwallexWeChatPay explicitly
   pod 'Airwallex', :path => './', :subspecs => ['AirwallexPaymentSheet', "AirwallexWeChatPay"]
 #  pod 'Airwallex', :path => './'
 end
