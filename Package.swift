@@ -39,8 +39,8 @@ let package = Package(
             path: "Frameworks/AirTracker.xcframework"
         ),
         .binaryTarget(
-            name: "WechatOpenSDK",
-            path: "Frameworks/WechatOpenSDK.xcframework"
+            name: "WechatOpenSDKDynamic",
+            path: "Frameworks/WechatOpenSDKDynamic.xcframework"
         ),
         .target(
             name: "Airwallex",
@@ -85,18 +85,12 @@ let package = Package(
             name: "AirwallexWeChatpay",
             dependencies: [
                 "AirwallexCore",
-                "WechatOpenSDK"
+                .target(name: "WechatOpenSDKDynamic")
             ],
             path: "Airwallex/AirwallexWeChatpay",
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")
-            ],
-            linkerSettings: [
-                .linkedLibrary("z"),        // Links libz (zlib)
-                .linkedLibrary("sqlite3"),  // Links libsqlite3
-                .linkedLibrary("c++"),       // Links libc++
-                .unsafeFlags(["-ObjC", "-all_load"]),
             ]
         ),
         .testTarget(
