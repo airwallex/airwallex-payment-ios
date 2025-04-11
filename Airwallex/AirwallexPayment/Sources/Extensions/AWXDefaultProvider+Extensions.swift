@@ -245,7 +245,7 @@ extension AWXCardProvider {
                 )
             }
             
-            let allAvailable = Set(AWXCardBrand.all.map { $0.rawValue })
+            let allAvailable = Set(AWXCardBrand.allAvailable.map { $0.rawValue })
             for name in methodType.cardSchemes.map({ $0.name }) {
                 guard allAvailable.contains(name) else {
                     let localizedString = NSLocalizedString("Card scheme %@ not support for payment", bundle: .payment, comment: localizationComment)

@@ -69,7 +69,7 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
         method.resources = resources
         method.transactionMode = session.transactionMode()
         if name == AWXCardKey {
-            let brands = supportedCardBrands ?? AWXCardBrand.all
+            let brands = supportedCardBrands ?? AWXCardBrand.allAvailable
             method.cardSchemes = brands.map { AWXCardScheme(name: $0.rawValue) }
         }
         methods = [method]

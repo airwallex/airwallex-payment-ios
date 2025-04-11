@@ -122,6 +122,6 @@ FOUNDATION_EXPORT NSString *FormatNextTriggerByType(AirwallexNextTriggerByType t
 FOUNDATION_EXPORT AWXTextFieldType GetTextFieldTypeByUIType(NSString *uiType);
 FOUNDATION_EXPORT NSString *_Nullable FormatMerchantTriggerReason(AirwallexMerchantTriggerReason reason);
 FOUNDATION_EXPORT _Nullable Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type);
-FOUNDATION_EXPORT Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction);
+FOUNDATION_EXPORT _Nullable Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction);
 
 NS_ASSUME_NONNULL_END

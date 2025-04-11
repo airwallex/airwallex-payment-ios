@@ -297,7 +297,7 @@ private extension IntegrationDemoListViewController {
                 AWXUIContext.launchCardPayment(
                     from: self,
                     session: session,
-                    supportedBrands: AWXCardBrand.all,
+                    supportedBrands: AWXCardBrand.allAvailable,
                     launchStyle: launchStyle
                 )
             } catch {

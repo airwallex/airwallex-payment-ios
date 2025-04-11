@@ -59,6 +59,7 @@ class PaymentSessionHandlerTests: XCTestCase {
     override class func tearDown() {
         super.tearDown()
         AWXAPIClientConfiguration.shared().clientSecret = nil
+        AWXUIContext.shared().paymentUIDismissAction = nil
     }
 
     func testInit() {
@@ -443,9 +444,7 @@ class PaymentSessionHandlerTests: XCTestCase {
 
     func testStartConsentPaymentWithInvalidID() {
         // Test for invalid consent ID
-        let consent = AWXPaymentConsent()
-        consent.id = ""
-        mockSessionHandler.startConsentPayment(with: consent)
+        mockSessionHandler.startConsentPayment(withId: "")
         guard let error = mockPaymentResultDelegate.error,
               case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
               case AWXCardProvider.ValidationError.invalidConsent = error else {
@@ -488,6 +487,39 @@ class PaymentSessionHandlerTests: XCTestCase {
         }
     }
     
+    func testConfirmRedirectPaymentWithInconsistentPaymentMethod() {
+        mockMethodType.name = "paypal"
+        let method = AWXPaymentMethod()
+        method.type = "wechatpay"
+        XCTAssertThrowsError(try mockSessionHandler.confirmRedirectPayment(with: method)) { error in
+            guard case PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: let error) = error,
+                  case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
+                XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(String(describing: mockPaymentResultDelegate.error))")
+                return
+            }
+        }
+    }
+    
+    func testConfirmRedirectPaymentWithInvalidPaymentMethod() {
+        let method = AWXPaymentMethod()
+        method.type = AWXCardKey
+        XCTAssertThrowsError(try mockSessionHandler.confirmRedirectPayment(with: method)) { error in
+            guard case PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: let error) = error,
+                  case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
+                XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(String(describing: mockPaymentResultDelegate.error))")
+                return
+            }
+        }
+        
+        method.type = AWXApplePayKey
+        XCTAssertThrowsError(try mockSessionHandler.confirmRedirectPayment(with: method)) { error in
+            guard case PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: let error) = error,
+                  case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
+                XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(String(describing: mockPaymentResultDelegate.error))")
+                return
+            }
+        }
+    }
     
     // add test cases for AWXProviderDelegate
     func testProviderDidStartRequest() {
@@ -522,10 +554,28 @@ class PaymentSessionHandlerTests: XCTestCase {
             mockSessionHandler.provider(mockProvider, didCompleteWith: status, error: nil)
             XCTAssertEqual(mockPaymentResultDelegate.status, status)
         }
+        for status in allCases {
+            AWXUIContext.shared().paymentUIDismissAction = { $0?() }
+            mockSessionHandler.provider(mockProvider, didCompleteWith: status, error: nil)
+            XCTAssertEqual(mockPaymentResultDelegate.status, status)
+        }
+    }
+    
+    func testProviderDidCompleteWithApplePayInProgress() {
+        AWXUIContext.shared().paymentUIDismissAction = { $0?() }
+        mockMethodType.name = AWXApplePayKey
+        mockSessionHandler.provider(mockProvider, didCompleteWith: .inProgress, error: nil)
+        XCTAssertNil(mockPaymentResultDelegate.status)
     }
 
     func testProviderShouldHandleNextAction() {
         let nextAction = AWXConfirmPaymentNextAction()
+        mockSessionHandler.provider(mockProvider, shouldHandle: nextAction)
+        XCTAssertEqual(mockPaymentResultDelegate.status, .failure)
+    }
+
+    func testProviderHandleNotExistingCallSDKAction() {
+        let nextAction = AWXConfirmPaymentNextAction.decode(fromJSON: ["type" : "call_sdk"]) as! AWXConfirmPaymentNextAction
         mockSessionHandler.provider(mockProvider, shouldHandle: nextAction)
         XCTAssertEqual(mockPaymentResultDelegate.status, .failure)
     }
@@ -542,5 +592,17 @@ class PaymentSessionHandlerTests: XCTestCase {
         mockSessionHandler.provider(mockProvider, shouldPresent: controller, forceToDismiss: false, withAnimation: false)
         XCTAssertEqual(mockSessionHandler.hostViewController(), mockPaymentResultDelegate)
         XCTAssertEqual(mockPaymentResultDelegate.presentedViewControllerSpy, controller)
+    }
+    
+    func testProviderShouldPresentController_ForceDismiss() {
+        let controller = UIViewController()
+        mockPaymentResultDelegate.presentedViewControllerSpy = controller
+        mockSessionHandler.provider(mockProvider, shouldPresent: nil, forceToDismiss: true, withAnimation: false)
+        XCTAssertNil(mockPaymentResultDelegate.presentedViewControllerSpy)
+        
+        mockPaymentResultDelegate.presentedViewControllerSpy = controller
+        let controller2 = UIViewController()
+        mockSessionHandler.provider(mockProvider, shouldPresent: controller2, forceToDismiss: true, withAnimation: false)
+        XCTAssertEqual(controller2, mockPaymentResultDelegate.presentedViewControllerSpy)
     }
 }
