@@ -13,6 +13,6 @@ end
 
 target 'Examples' do
   project './Examples/Examples.xcodeproj'
-#  pod 'Airwallex', :path => './', :subspecs => ['AirwallexPaymentSheet']
-  pod 'Airwallex', :path => './'
+  pod 'Airwallex', :path => './', :subspecs => ['AirwallexPaymentSheet', "AirwallexWeChatPay"]
+#  pod 'Airwallex', :path => './'
 end
