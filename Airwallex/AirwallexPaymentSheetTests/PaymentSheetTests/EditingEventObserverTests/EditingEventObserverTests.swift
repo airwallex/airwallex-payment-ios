@@ -13,7 +13,7 @@ import XCTest
 
 class EditingEventObserverTests: XCTestCase {
 
-    func testBeginEditingEventObserver() {
+    func testEditingEventObserver() {
         var count = 0
         let observer = BeginEditingEventObserver {
             count += 1

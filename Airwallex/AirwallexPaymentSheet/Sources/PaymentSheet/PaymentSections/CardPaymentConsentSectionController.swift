@@ -21,7 +21,7 @@ class CardPaymentConsentSectionController: SectionController {
     
     enum Items {
         /// for accordion layout
-        static let accordionKey = "consnetAccordionKey"
+        static let accordionKey = "consentAccordionKey"
         /// for addNewCardToggle
         static let addNewCardToggle = "addNewCardToggle"
         /// checkout button for payment mode

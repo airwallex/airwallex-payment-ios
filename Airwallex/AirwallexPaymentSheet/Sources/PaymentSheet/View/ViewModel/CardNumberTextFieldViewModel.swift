@@ -27,7 +27,7 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardBrandVi
     private let formatter = CardNumberFormatter()
     
     init(supportedCardSchemes: [AWXCardScheme],
-         editingEventObserver: UserEditingEventObserver?,
+         editingEventObserver: EditingEventObserver?,
          reconfigureHandler: @escaping ReconfigureHandler) {
         supportedBrands = supportedCardSchemes.map { $0.brandType }
         super.init(

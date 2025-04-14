@@ -118,6 +118,7 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
         XCTAssertEqual(mockManager.sections, [PaymentSectionType.cardPaymentNew])
+        XCTAssertFalse(mockSectionProvider.preferConsentPayment)
     }
     
     func testCheckoutValidation() {

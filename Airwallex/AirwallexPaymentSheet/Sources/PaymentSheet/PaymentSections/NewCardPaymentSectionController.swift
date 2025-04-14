@@ -9,11 +9,9 @@
 import UIKit
 import Combine
 import AirwallexRisk
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
 import Combine
 #if canImport(AirwallexPayment)
+import AirwallexCore
 @_spi(AWX) import AirwallexPayment
 #endif
 
@@ -48,7 +46,6 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     private let switchToConsentPaymentAction: () -> Void
     private var shouldSaveCard = false
     private var shouldReuseShippingAddress: Bool
-    private let validator: AWXCardValidator
     
     private lazy var viewModelForAccordionKey = PaymentMethodCellViewModel(
         itemIdentifier: Item.accordionKey.rawValue,
@@ -94,7 +91,6 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         self.methodType = cardPaymentMethod
         self.methodProvider = methodProvider
         self.switchToConsentPaymentAction = switchToConsentPaymentAction
-        self.validator = AWXCardValidator(cardPaymentMethod.cardSchemes)
         self.shouldReuseShippingAddress = methodProvider.session.billing?.address?.isComplete ?? false
         if let oneOffSession = methodProvider.session as? AWXOneOffSession {
             self.shouldSaveCard = oneOffSession.autoSaveCardForFuturePayments
@@ -404,16 +400,16 @@ private extension NewCardPaymentSectionController {
         context.viewController?.present(nav, animated: true)
     }
     
-    func toggleReuseBillingAddress(_ reuseBillingAddress: Bool) {
+    func toggleReuseShippingAddress() {
+        shouldReuseShippingAddress.toggle()
         AnalyticsLogger.log(
             action: .toggleBillingAddress,
             extraInfo: [
-                .value: reuseBillingAddress,
+                .value: shouldReuseShippingAddress,
                 .subtype: Self.subType
             ]
         )
-        shouldReuseShippingAddress = reuseBillingAddress
-        let viewModel = createBillingAddressViewModel(reuseBillingAddress: reuseBillingAddress)
+        let viewModel = createBillingAddressViewModel(reuseShippingAddress: shouldReuseShippingAddress)
         viewModelForBillingAddress = viewModel
         context.reconfigure(items: [ viewModel.itemIdentifier ], invalidateLayout: true) { cell in
             guard let cell = cell as? BillingInfoCell else { return }
@@ -436,18 +432,17 @@ private extension NewCardPaymentSectionController {
         }
     }
     
-    func createBillingAddressViewModel(reuseBillingAddress: Bool) -> BillingInfoCellViewModel {
+    func createBillingAddressViewModel(reuseShippingAddress: Bool) -> BillingInfoCellViewModel {
         BillingInfoCellViewModel(
             itemIdentifier: Item.billingFieldAddress.rawValue,
-            billingAddress: session.billing?.address,
-            reusingShippingInfo: reuseBillingAddress,
+            shippingAddress: session.billing?.address,
+            reusingShippingInfo: reuseShippingAddress,
             countrySelectionHandler: { [weak self] in
                 self?.triggerCountrySelection()
             },
             toggleReuseSelection: { [weak self] in
                 guard let self else { return }
-                self.shouldReuseShippingAddress.toggle()
-                self.toggleReuseBillingAddress(self.shouldReuseShippingAddress)
+                self.toggleReuseShippingAddress()
             },
             cellReconfigureHandler: { [weak self] in
                 self?.context.reconfigure(items: [$0], invalidateLayout: $1)
@@ -468,6 +463,10 @@ private extension NewCardPaymentSectionController {
             },
             reconfigureHandler: { [weak self] in
                 self?.context.reconfigure(items: [$0], invalidateLayout: $1)
+            },
+            cardNumberDidEndEditing: { [weak self] in
+                guard let self else { return }
+                self.context.performUpdates(self.section)
             }
         )
         
@@ -526,7 +525,7 @@ private extension NewCardPaymentSectionController {
         }
         
         if session.requiredBillingContactFields.contains(.address) {
-            viewModelForBillingAddress = createBillingAddressViewModel(reuseBillingAddress: shouldReuseShippingAddress)
+            viewModelForBillingAddress = createBillingAddressViewModel(reuseShippingAddress: shouldReuseShippingAddress)
         } else if session.requiredBillingContactFields.contains(.countryCode) {
             var country: AWXCountry?
             if let countryCode = session.billing?.address?.countryCode {

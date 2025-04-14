@@ -9,9 +9,10 @@
 import UIKit
 import XCTest
 @testable import AirwallexPaymentSheet
+import AirwallexCore
 
 @MainActor class BasePaymentSectionControllerTests: XCTestCase {
-
+    var mockShippingInfo: AWXPlaceDetails!
     var mockManager: CollectionViewManager<PaymentSectionType, String, MockPaymentSectionProvider>!
     var mockSectionProvider: MockPaymentSectionProvider!
     var mockMethodProvider: MockMethodProvider!
@@ -30,6 +31,21 @@ import XCTest
         collectionView?.frame = mockViewController.view.bounds
         mockViewController.view.addSubview(mockManager.collectionView)
         collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        let shipping = AWXPlaceDetails()
+        shipping.firstName = "John"
+        shipping.lastName = "Appleseed"
+        shipping.phoneNumber = "1234567890"
+        shipping.email = "abc@123.com"
+        let address = AWXAddress()
+        address.countryCode = "AU"
+        address.postcode = "postcode"
+        address.street = "street"
+        address.state = "state"
+        address.city = "city"
+        shipping.address = address
+        mockShippingInfo = shipping
+        mockMethodProvider.session.billing = shipping
     }
     
 }

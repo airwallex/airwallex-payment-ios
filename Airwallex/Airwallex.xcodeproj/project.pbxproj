@@ -438,6 +438,8 @@
 		D8BD9E192D0191BF0045A892 /* CurrencyCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */; };
 		D8C05A0C2DACF06F002BED34 /* AccordionPaymentSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A0B2DACF06F002BED34 /* AccordionPaymentSectionControllerTests.swift */; };
 		D8C05A0E2DACF123002BED34 /* CardPaymentConsentSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A0D2DACF123002BED34 /* CardPaymentConsentSectionControllerTests.swift */; };
+		D8C05A102DAD0FE2002BED34 /* NewCardPaymentSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A0F2DAD0FE2002BED34 /* NewCardPaymentSectionControllerTests.swift */; };
+		D8C05A162DAE0F81002BED34 /* UserEditingEventObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A152DAE0F81002BED34 /* UserEditingEventObserver.swift */; };
 		D8DD6B4D2DA7BCDC0047E450 /* AirwallexPayment.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D8DD6B4C2DA7BCDC0047E450 /* AirwallexPayment.xctestplan */; };
 		D8EC87792D9E335900D082EC /* AirwallexPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D8EC87772D9E335900D082EC /* AirwallexPayment.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8EC87CA2D9E335900D082EC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87172D9E335900D082EC /* PrivacyInfo.xcprivacy */; };
@@ -772,6 +774,8 @@
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		D8C05A0B2DACF06F002BED34 /* AccordionPaymentSectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionPaymentSectionControllerTests.swift; sourceTree = "<group>"; };
 		D8C05A0D2DACF123002BED34 /* CardPaymentConsentSectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentConsentSectionControllerTests.swift; sourceTree = "<group>"; };
+		D8C05A0F2DAD0FE2002BED34 /* NewCardPaymentSectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCardPaymentSectionControllerTests.swift; sourceTree = "<group>"; };
+		D8C05A152DAE0F81002BED34 /* UserEditingEventObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditingEventObserver.swift; sourceTree = "<group>"; };
 		D8CD019A2DA672D6001BDCC6 /* CardBrandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrandView.swift; sourceTree = "<group>"; };
 		D8D4110D2DA37AD2004601FD /* AccordionSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionSectionController.swift; sourceTree = "<group>"; };
 		D8D4110F2DA3828C004601FD /* CellSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSeparator.swift; sourceTree = "<group>"; };
@@ -1503,6 +1507,7 @@
 				D8C05A0B2DACF06F002BED34 /* AccordionPaymentSectionControllerTests.swift */,
 				D88BFBD92DACA3830047C787 /* BasePaymentSectionControllerTests.swift */,
 				D8C05A0D2DACF123002BED34 /* CardPaymentConsentSectionControllerTests.swift */,
+				D8C05A0F2DAD0FE2002BED34 /* NewCardPaymentSectionControllerTests.swift */,
 			);
 			path = PaymentSections;
 			sourceTree = "<group>";
@@ -1553,6 +1558,7 @@
 			isa = PBXGroup;
 			children = (
 				D8EC87212D9E335900D082EC /* BeginEditingEventObserver.swift */,
+				D8C05A152DAE0F81002BED34 /* UserEditingEventObserver.swift */,
 			);
 			path = EditingEventObserver;
 			sourceTree = "<group>";
@@ -2576,6 +2582,7 @@
 				D85042222DA79DF40074BA7F /* CardPaymentToggleCell.swift in Sources */,
 				D85042232DA79DF40074BA7F /* BaseTextField.swift in Sources */,
 				D85042242DA79DF40074BA7F /* ContentInsetableTextField.swift in Sources */,
+				D8C05A162DAE0F81002BED34 /* UserEditingEventObserver.swift in Sources */,
 				D85042252DA79DF40074BA7F /* InfoCollectorTextField.swift in Sources */,
 				D85042262DA79DF40074BA7F /* InfoCollectorTextFieldViewModel.swift in Sources */,
 				D85042272DA79DF40074BA7F /* BankSelectionViewModel.swift in Sources */,
@@ -2643,6 +2650,7 @@
 				D880458F2DA7B41D008308C7 /* ImageLoaderTests.swift in Sources */,
 				D88045902DA7B41D008308C7 /* UIImageExtensionTests.swift in Sources */,
 				D88045912DA7B41D008308C7 /* AWXAlertControllerTests.swift in Sources */,
+				D8C05A102DAD0FE2002BED34 /* NewCardPaymentSectionControllerTests.swift in Sources */,
 				D88045762DA7B3DA008308C7 /* SectionDisplayHandlerTests.swift in Sources */,
 				D88045712DA7B28A008308C7 /* AWXProviderDelegateSpy.m in Sources */,
 				D880456D2DA7B281008308C7 /* MockABSectionProvider.swift in Sources */,

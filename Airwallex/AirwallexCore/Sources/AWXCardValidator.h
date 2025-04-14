@@ -81,6 +81,8 @@ typedef NS_ENUM(NSUInteger, AWXBrandType) {
 + (NSArray<NSNumber *> *)cardNumberFormatForBrand:(AWXBrandType)type;
 + (NSInteger)cvcLengthForBrand:(AWXBrandType)type;
 
+- (nullable AWXBrand *)mostSpecificCardBrandForNumber:(NSString *)cardNumber supportedBrandTypes:(NSArray *)brandTypes;
+
 @end
 
 NS_ASSUME_NONNULL_END

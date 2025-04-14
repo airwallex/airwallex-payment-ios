@@ -8,12 +8,18 @@
 
 import UIKit
 
-class BeginEditingEventObserver: NSObject, UserEditingEventObserver {
+class BeginEditingEventObserver: EditingEventObserver {
     private let block: () -> Void
     init(block: @escaping () -> Void) {
         self.block = block
     }
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        block()
+    
+    func handleEditingEvent(event: UIControl.Event, for textField: UITextField) {
+        switch event {
+        case .editingDidBegin:
+            block()
+        default:
+            break
+        }
     }
 }

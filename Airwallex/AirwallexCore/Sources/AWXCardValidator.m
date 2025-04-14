@@ -365,6 +365,19 @@
     return brandsfilteredByPrefix.firstObject;
 }
 
+- (nullable AWXBrand *)mostSpecificCardBrandForNumber:(NSString *)cardNumber supportedBrandTypes:(NSArray *)brandTypes {
+    __block AWXBrand *result = defaultBrand;
+    NSArray *filteredBrands = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
+        AWXBrand *brand = (AWXBrand *)evaluatedObject;
+        BOOL check = brand.type != AWXBrandTypeUnknown && [brand matchesPrefix:cardNumber] && [brandTypes containsObject:@(brand.type)];
+        if (check && brand.rangeStart.length > result.rangeStart.length) {
+            result = brand;
+        }
+        return check;
+    }]];
+    return result;
+}
+
 - (AWXBrand *)brandForCardName:(NSString *)name {
     NSArray *filtered = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
                                          AWXBrand *brand = (AWXBrand *)evaluatedObject;

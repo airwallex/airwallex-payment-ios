@@ -34,7 +34,7 @@ class InfoCollectorCellViewModel<T: Hashable & Sendable>: InfoCollectorTextField
          returnActionHandler: CellReturnActionHandler? = nil,
          customInputFormatter: UserInputFormatter? = nil,
          customInputValidator: UserInputValidator? = nil,
-         editingEventObserver: UserEditingEventObserver? = nil,
+         editingEventObserver: EditingEventObserver? = nil,
          cellReconfigureHandler: @escaping CellReconfigureHandler) {
         self.itemIdentifier = itemIdentifier
         let fieldName = !fieldName.isEmpty ? fieldName : String(describing: itemIdentifier)
