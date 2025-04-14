@@ -70,7 +70,7 @@ class UITextFieldExtensionsTests: XCTestCase {
         XCTAssertEqual(textField.autocorrectionType, .default)
         
         textField.update(for: .zipcode)
-        XCTAssertEqual(textField.keyboardType, .asciiCapableNumberPad)
+        XCTAssertEqual(textField.keyboardType, .asciiCapable)
         XCTAssertEqual(textField.textContentType, .postalCode)
         
         textField.update(for: .cardNumber)

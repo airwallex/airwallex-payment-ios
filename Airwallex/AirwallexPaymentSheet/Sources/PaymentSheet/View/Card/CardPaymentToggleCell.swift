@@ -1,5 +1,5 @@
 //
-//  CardPaymentSectionHeader.swift
+//  CardPaymentToggleCell.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/17.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-struct CardPaymentSectionHeaderViewModel {
+struct CardPaymentToggleCellViewModel {
     let title: String
     let actionTitle: String
     let buttonAction: () -> Void
 }
 
-class CardPaymentSectionHeader: UICollectionViewCell, ViewReusable, ViewConfigurable {
+class CardPaymentToggleCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let label: UILabel = {
         let view = UILabel()
@@ -55,9 +55,9 @@ class CardPaymentSectionHeader: UICollectionViewCell, ViewReusable, ViewConfigur
         fatalError("init(coder:) has not been implemented")
     }
     
-    private(set) var viewModel: CardPaymentSectionHeaderViewModel?
+    private(set) var viewModel: CardPaymentToggleCellViewModel?
     
-    func setup(_ viewModel: CardPaymentSectionHeaderViewModel) {
+    func setup(_ viewModel: CardPaymentToggleCellViewModel) {
         self.viewModel = viewModel
         label.text = viewModel.title
         actionButton.setTitle(viewModel.actionTitle, for: .normal)

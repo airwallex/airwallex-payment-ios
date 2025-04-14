@@ -1,5 +1,5 @@
 //
-//  MockSectionProvider.swift
+//  MockABSectionProvider.swift
 //  PaymentTests
 //
 //  Created by Weiping Li on 2025/3/27.
@@ -25,7 +25,7 @@ enum Item {
     case B2
 }
 
-class MockSectionProvider: CollectionViewSectionProvider {
+class MockABSectionProvider: CollectionViewSectionProvider {
     
     enum Status {
         case A

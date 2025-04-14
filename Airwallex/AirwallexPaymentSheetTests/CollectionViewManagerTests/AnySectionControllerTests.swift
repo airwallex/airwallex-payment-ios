@@ -25,6 +25,8 @@ class AnySectionControllerTests: XCTestCase {
         let anySectionController = mockSectionController.anySectionController()
         anySectionController.bind(context: mockContext)
         
+        XCTAssert(mockSectionController === anySectionController.embededSectionController)
+        
         XCTAssertEqual(anySectionController.section, "TestSection")
         XCTAssertEqual(anySectionController.items, ["Item1", "Item2"])
         XCTAssert(anySectionController.context === mockSectionController.context)

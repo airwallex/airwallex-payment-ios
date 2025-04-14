@@ -10,7 +10,7 @@ import UIKit
 
 /// this protocol is designed to work with `CollectionViewManager`
 /// SectionController  define the behavior of a section in a UICollectionView
-@MainActor protocol SectionController  {
+@MainActor protocol SectionController: AnyObject  {
     associatedtype SectionType: Hashable, Sendable
     associatedtype ItemType: Hashable, Sendable
     
@@ -142,6 +142,7 @@ extension SectionController {
 /// Type erasor for SectionController
 class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable>: SectionController {
     
+    let embededSectionController: any SectionController
     private let _cellProvider: (ItemType, IndexPath) -> UICollectionViewCell
     private let _layoutProvider: (NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection
     private let _supplementaryViewProvider: (String, IndexPath) -> UICollectionReusableView
@@ -163,6 +164,7 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
     var items: [ItemType] { _items() }
     
     init<SC: SectionController>(_ sectionController: SC) where SC.SectionType == SectionType, SC.ItemType == ItemType {
+        self.embededSectionController = sectionController
         self._cellProvider = sectionController.cell(for:at:)
         self._layoutProvider = sectionController.layout(environment:)
         self._supplementaryViewProvider = sectionController.supplementaryView(for:at:)

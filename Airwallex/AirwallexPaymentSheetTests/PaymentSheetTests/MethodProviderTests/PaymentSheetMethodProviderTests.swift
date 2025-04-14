@@ -135,7 +135,7 @@ import Combine
         
         XCTAssertEqual(provider.methods.count, 14)
         XCTAssertEqual(provider.selectedMethod?.name, provider.methods.first { $0.name != AWXApplePayKey }?.name)
-        XCTAssertEqual(provider.consents.count, 1)
+        XCTAssertEqual(provider.consents.count, 2)
         XCTAssertEqual(provider.session, mockSession)
         XCTAssertEqual(provider.selectedMethod?.transactionMode, mockSession.transactionMode())
         XCTAssertEqual(provider.selectedMethod?.transactionMode, provider.session.transactionMode())

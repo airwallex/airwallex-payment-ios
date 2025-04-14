@@ -64,7 +64,7 @@ class AccordionSectionController: SectionController  {
     }
     
     func cell(for item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        var cellClass = (item == AWXCardKey ? AccordionCardMethodCell.self : AccordionPaymentMethodCell.self)
+        let cellClass = (item == AWXCardKey ? AccordionCardMethodCell.self : AccordionPaymentMethodCell.self)
         let cell = context.dequeueReusableCell(cellClass, for: item, indexPath: indexPath)
         if let viewModel = viewModels[safe: indexPath.item] {
             cell.setup(viewModel)

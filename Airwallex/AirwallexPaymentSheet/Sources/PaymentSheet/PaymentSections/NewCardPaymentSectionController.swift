@@ -59,7 +59,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         supportedBrands: []
     )
     
-    private lazy var viewModelForConsentToggle = CardPaymentSectionHeaderViewModel(
+    private lazy var viewModelForConsentToggle = CardPaymentToggleCellViewModel(
         title: NSLocalizedString("Add new", bundle: .paymentSheet, comment: ""),
         actionTitle: NSLocalizedString("Keep using saved cards", bundle: .paymentSheet, comment: ""),
         buttonAction: { [weak self] in
@@ -157,7 +157,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             cell.setup(viewModelForAccordionKey)
             return cell
         case .consentToggle:
-            let cell = context.dequeueReusableCell(CardPaymentSectionHeader.self, for: itemIdentifier, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CardPaymentToggleCell.self, for: itemIdentifier, indexPath: indexPath)
             cell.setup(viewModelForConsentToggle)
             return cell
         case .cardInfo:

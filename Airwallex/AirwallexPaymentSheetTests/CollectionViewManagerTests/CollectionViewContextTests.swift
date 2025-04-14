@@ -12,14 +12,14 @@ import XCTest
 
 @MainActor class CollectionViewContextTests: XCTestCase {
 
-    private var mockManager: CollectionViewManager<Section, Item, MockSectionProvider>!
-    private var mockProvider: MockSectionProvider!
+    private var mockManager: CollectionViewManager<Section, Item, MockABSectionProvider>!
+    private var mockProvider: MockABSectionProvider!
     var mockViewController: UIViewController!
     
     override func setUp() {
         super.setUp()
         mockViewController = UIViewController()
-        mockProvider = MockSectionProvider()
+        mockProvider = MockABSectionProvider()
         mockManager = CollectionViewManager(
             viewController: mockViewController,
             sectionProvider: mockProvider
