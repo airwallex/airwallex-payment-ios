@@ -39,8 +39,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "085BD3D023CC62B4002E8F27"
-               BuildableName = "CoreTests.xctest"
-               BlueprintName = "CoreTests"
+               BuildableName = "AirwallexCoreTests.xctest"
+               BlueprintName = "AirwallexCoreTests"
                ReferencedContainer = "container:../Airwallex/Airwallex.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -60,9 +60,20 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D81983472D6F120B008008A3"
-               BuildableName = "PaymentTests.xctest"
-               BlueprintName = "PaymentTests"
+               BuildableName = "AirwallexPaymentTests.xctest"
+               BlueprintName = "AirwallexPaymentTests"
                ReferencedContainer = "container:../Airwallex/Airwallex.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D866FA5E2DA7BAA20062BC5A"
+               BuildableName = "AirwallexPaymentTests.xctest"
+               BlueprintName = "AirwallexPaymentTests"
+               ReferencedContainer = "container:Examples.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

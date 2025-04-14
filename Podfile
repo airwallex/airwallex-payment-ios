@@ -6,28 +6,14 @@ inhibit_all_warnings!
 
 workspace 'Airwallex.xcworkspace'
 
-target 'CoreTests' do
-  project './Airwallex/Airwallex.xcodeproj'
-  pod 'OCMock'
-end
-
-target 'CardTests' do
-  project './Airwallex/Airwallex.xcodeproj'
-  pod 'OCMock'
-end
-
-target 'ApplePayTests' do
-  project './Airwallex/Airwallex.xcodeproj'
-  pod 'OCMock'
-end
-
-target 'RedirectTests' do
+target 'AirwallexCoreTests' do
   project './Airwallex/Airwallex.xcodeproj'
   pod 'OCMock'
 end
 
 target 'Examples' do
   project './Examples/Examples.xcodeproj'
-  pod 'Airwallex', :path => './', :subspecs => ['Payment']
+  # if you need to support wechatpay, you will need to include AirwallexWeChatPay explicitly
+  pod 'Airwallex', :path => './', :subspecs => ['AirwallexPaymentSheet', "AirwallexWeChatPay"]
 #  pod 'Airwallex', :path => './'
 end

@@ -6,12 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-#if canImport(Airwallex)
+import Foundation
 import Airwallex
-#elseif canImport(AirwallexPayment)
-import AirwallexPayment
-import AirwallexCore
-#endif
 
 protocol APIClient {
     func createPaymentIntent(request: PaymentIntentRequest, completion: @escaping (Result<AWXPaymentIntent, Error>) -> Void)

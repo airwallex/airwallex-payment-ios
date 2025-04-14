@@ -7,11 +7,7 @@
 //
 
 import Foundation
-#if canImport(Airwallex)
 import Airwallex
-#elseif canImport(AirwallexPayment)
-import AirwallexPayment
-#endif
 
 enum CheckoutMode: Int, CaseIterable {
     case oneOff
