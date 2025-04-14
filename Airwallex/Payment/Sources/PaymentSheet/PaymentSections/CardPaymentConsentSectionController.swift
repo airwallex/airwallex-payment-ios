@@ -342,7 +342,7 @@ class CardPaymentConsentSectionController: SectionController {
         let viewModel = InfoCollectorCellViewModel(
             itemIdentifier: Items.cvcField,
             textFieldType: .CVC,
-            placeholder: "CVC",
+            placeholder: NSLocalizedString("CVC", bundle: .payment, comment: ""),
             customInputFormatter: validator,
             customInputValidator: validator,
             editingEventObserver: BeginEditingEventObserver {
