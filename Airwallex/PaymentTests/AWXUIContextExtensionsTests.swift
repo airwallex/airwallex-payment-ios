@@ -44,7 +44,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: mockOneoffSession,
-            style: .push
+            launchStyle: .push
         )
         
         guard let error = mockViewController.error,
@@ -59,7 +59,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: mockOneoffSession,
-            style: .push
+            launchStyle: .push
         )
         
         guard let error = mockViewController.error else {
@@ -78,7 +78,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: AWXRecurringWithIntentSession(),
-            style: .push
+            launchStyle: .push
         )
         
         guard let error = mockViewController.error else {
@@ -98,7 +98,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: AWXRecurringSession(),
-            style: .push
+            launchStyle: .push
         )
         
         guard let error = mockViewController.error else {
@@ -121,7 +121,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: recurringWithIntentSession,
-            style: .push
+            launchStyle: .push
         )
         
         guard let error = mockViewController.error else {
@@ -141,7 +141,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: mockOneoffSession,
-            style: .push
+            launchStyle: .push
         )
         
         guard let error = mockViewController.error else {
@@ -160,7 +160,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
             from: mockViewController,
             session: mockOneoffSession,
             supportedBrands: [],
-            style: .present
+            launchStyle: .present
         )
         
         guard let error = mockViewController.error else {
@@ -179,7 +179,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
             from: mockViewController,
             session: mockOneoffSession,
             filterBy: [],
-            style: .present
+            launchStyle: .present
         )
         
         guard let error = mockViewController.error else {
@@ -198,7 +198,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
             from: mockViewController,
             session: mockOneoffSession,
             filterBy: [AWXApplePayKey],
-            style: .present
+            launchStyle: .present
         )
         
         guard mockViewController.error == nil else {
@@ -216,7 +216,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         AWXUIContext.launchCardPayment(
             from: mockViewController,
             session: mockOneoffSession,
-            style: .present
+            launchStyle: .present
         )
         
         guard mockViewController.error == nil else {

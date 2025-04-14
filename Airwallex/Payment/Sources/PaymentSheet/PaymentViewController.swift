@@ -1,5 +1,5 @@
 //
-//  PaymentMethodsViewController.swift
+//  PaymentViewController.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2024/12/10.
@@ -21,14 +21,19 @@ enum PaymentSectionType: Hashable {
     case cardPaymentConsent
     case cardPaymentNew
     case schemaPayment(String)
+    case accordion(AccordionSectionController.Position)
 }
 
-class PaymentMethodsViewController: AWXViewController {
+class PaymentViewController: AWXViewController {
     
     let methodProvider: PaymentMethodProvider
     
-    init(methodProvider: PaymentMethodProvider) {
+    private(set) var layout: AWXUIContext.PaymentLayout
+    
+    init(methodProvider: PaymentMethodProvider,
+         layout: AWXUIContext.PaymentLayout = .tab) {
         self.methodProvider = methodProvider
+        self.layout = layout
         super.init(nibName: nil, bundle: nil)
         self.session = methodProvider.session
     }
@@ -36,7 +41,7 @@ class PaymentMethodsViewController: AWXViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     deinit {
         if AWXUIContext.shared().paymentUIDismissAction != nil {
             // user cancel payment by navigation stack interactions, like screen edge pan gesture
@@ -68,12 +73,15 @@ class PaymentMethodsViewController: AWXViewController {
     
     private var preferConsentPayment = true
     
+    private lazy var imageLoader = ImageLoader()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         getMethodList()
         cancellable = methodProvider.updatePublisher.sink {[weak self] type in
-            self?.collectionViewManager.performUpdates()
+            let animating = self?.layout == .accordion
+            self?.collectionViewManager.performUpdates(animatingDifferences: animating)
         }
     }
     
@@ -157,13 +165,13 @@ class PaymentMethodsViewController: AWXViewController {
 }
 
 
-extension PaymentMethodsViewController: AWXPageViewTrackable {
+extension PaymentViewController: AWXPageViewTrackable {
     var pageName: String! {
         "payment_method_list"
     }
 }
 
-extension PaymentMethodsViewController: CollectionViewSectionProvider {
+extension PaymentViewController: CollectionViewSectionProvider {
     
     private var listTitle: String {
         let defaultTitle = NSLocalizedString("Payment Methods", bundle: .payment, comment: "title for payment sheet")
@@ -178,7 +186,11 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
     }
     
     private var displayMethodList: Bool {
-        return methodProvider.methods.count > 1
+        return layout == .tab && methodProvider.methods.count > 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
+    }
+    
+    private var fallbackToTabLayout: Bool {
+        methodProvider.methods.count <= 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
     }
     
     func sections() -> [PaymentSectionType] {
@@ -189,22 +201,44 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
         if methodProvider.isApplePayAvailable {
             sections.append(.applePay)
         }
-
-        if displayMethodList {
-            // horizontal list
-            sections.append(.methodList)
-        }
         
-        //  display selected payment method
-        if let selectedMethodType = methodProvider.selectedMethod {
-            if selectedMethodType.name == AWXCardKey {
-                if preferConsentPayment && !methodProvider.consents.isEmpty {
-                    sections.append(.cardPaymentConsent)
-                } else {
-                    sections.append(.cardPaymentNew)
+        switch layout {
+        case .tab:
+            if displayMethodList {
+                // horizontal list
+                sections.append(.methodList)
+            }
+            //  display selected payment method
+            if let selectedMethodType = methodProvider.selectedMethod {
+                if selectedMethodType.name == AWXCardKey {
+                    if preferConsentPayment && !methodProvider.consents.isEmpty {
+                        sections.append(.cardPaymentConsent)
+                    } else {
+                        sections.append(.cardPaymentNew)
+                    }
+                } else if selectedMethodType.hasSchema {
+                    sections.append(.schemaPayment(selectedMethodType.name))
                 }
-            } else if selectedMethodType.hasSchema {
-                sections.append(.schemaPayment(selectedMethodType.name))
+            }
+        case .accordion:
+            if !methodProvider.methodsForAccordionPosition(.top).isEmpty {
+                sections.append(.accordion(.top))
+            }
+            
+            if let selectedMethodType = methodProvider.selectedMethod {
+                if selectedMethodType.name == AWXCardKey {
+                    if preferConsentPayment && !methodProvider.consents.isEmpty {
+                        sections.append(.cardPaymentConsent)
+                    } else {
+                        sections.append(.cardPaymentNew)
+                    }
+                } else if selectedMethodType.hasSchema {
+                    sections.append(.schemaPayment(selectedMethodType.name))
+                }
+            }
+            
+            if !methodProvider.methodsForAccordionPosition(.bottom).isEmpty {
+                sections.append(.accordion(.bottom))
             }
         }
         return sections
@@ -219,33 +253,39 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
             )
             let item = NSCollectionLayoutItem(layoutSize: layoutSize)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
-            let layout = NSCollectionLayoutSection(group: group)
-            layout.contentInsets = .init(top: 32, leading: 16, bottom: 8, trailing: 16)
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = .init(top: 32, leading: 16, bottom: 8, trailing: 16)
             
             let controller = SimpleSectionController(
                 section: PaymentSectionType.listTitle,
                 item: "list_title",
-                layout: layout) { [weak self] context, item, indexPath in
-                    guard let self else { return UICollectionViewCell() }
-                    let cell = context.dequeueReusableCell(LabelCell.self, for: item, indexPath: indexPath)
-                    cell.label.text = self.listTitle
-                    return cell
-                }
+                layout: section
+            ) { [weak self] context, item, indexPath in
+                guard let self else { return UICollectionViewCell() }
+                let cell = context.dequeueReusableCell(LabelCell.self, for: item, indexPath: indexPath)
+                cell.label.text = self.listTitle
+                return cell
+            }
             return controller.anySectionController()
         case .applePay:
             let controller = ApplePaySectionController(
                 session: methodProvider.session,
-                methodType: methodProvider.applePayMethodType!
+                methodType: methodProvider.applePayMethodType!,
+                methodProvider: methodProvider
             )
             return controller.anySectionController()
         case .methodList:
-            let controller = PaymentMethodListSectionController(
-                methodProvider: methodProvider
+            let controller = PaymentMethodTabSectionController(
+                methodProvider: methodProvider,
+                imageLoader: imageLoader
             )
             return controller.anySectionController()
         case .cardPaymentConsent:
             let controller = CardPaymentConsentSectionController(
+                methodType: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
+                layout: fallbackToTabLayout ? .tab : layout,
+                imageLoader: imageLoader,
                 addNewCardAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = false
@@ -257,6 +297,8 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
             let controller = NewCardPaymentSectionController(
                 cardPaymentMethod: methodProvider.selectedMethod!,
                 methodProvider: methodProvider,
+                layout: fallbackToTabLayout ? .tab : layout,
+                imageLoader: imageLoader,
                 switchToConsentPaymentAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = true
@@ -266,10 +308,18 @@ extension PaymentMethodsViewController: CollectionViewSectionProvider {
             return controller
         case .schemaPayment(let name):
             let controller = SchemaPaymentSectionController(
-                name: name,
-                methodProvider: methodProvider
+                methodType: methodProvider.method(named: name)!,
+                methodProvider: methodProvider,
+                layout: fallbackToTabLayout ? .tab : layout,
+                imageLoader: imageLoader
             ).anySectionController()
             return controller
+        case .accordion(let position):
+            return AccordionSectionController(
+                position: position,
+                methodProvider: methodProvider,
+                imageLoader: imageLoader
+            ).anySectionController()
         }
     }
     

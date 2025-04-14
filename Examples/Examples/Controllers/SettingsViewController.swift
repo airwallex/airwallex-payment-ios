@@ -74,6 +74,12 @@ class SettingsViewController: UIViewController {
         return view
     }()
     
+    private lazy var optionForPaymentLayout: ConfigActionView = {
+        let view = ConfigActionView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var switchForEmail: ConfigSwitchView = {
         let view = ConfigSwitchView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -222,6 +228,8 @@ private extension SettingsViewController {
         
         stack.addArrangedSubview(optionForEnvironment)
         stack.addArrangedSubview(optionForNextTrigger)
+        stack.addArrangedSubview(optionForPaymentLayout)
+        
         stack.addArrangedSubview(switchForEmail)
         stack.addArrangedSubview(switchForAddress)
         stack.addArrangedSubview(switchForAutoCapture)
@@ -270,6 +278,7 @@ private extension SettingsViewController {
     func reloadData() {
         setupOptionForEnvironment()
         setupOptionForNextTrigger()
+        setupOptionForPaymentLayout()
         setupSwitches()
         setupCustomerIDGenerator()
         setupFields()
@@ -336,6 +345,28 @@ private extension SettingsViewController {
             )
             optionForNextTrigger.setup(viewModel)
         }
+    }
+    
+    func setupOptionForPaymentLayout() {
+        let option = settings.paymentLayout
+        let options = AWXUIContext.PaymentLayout.allCases
+        
+        let viewModel = ConfigActionViewModel(
+            configName: NSLocalizedString("Payment Layout", comment: pageName),
+            configValue: option.displayName,
+            primaryAction: { [weak self] optionView in
+                guard let self else { return }
+                self.showOptions(options.map { $0.displayName }, sender: optionView) { index, _ in
+                    guard let newValue = AWXUIContext.PaymentLayout(rawValue: index),
+                          option != newValue else {
+                        return
+                    }
+                    self.settings.paymentLayout = newValue
+                    self.setupOptionForPaymentLayout()
+                }
+            }
+        )
+        optionForPaymentLayout.setup(viewModel)
     }
     
     func setupSwitches() {

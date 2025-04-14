@@ -147,6 +147,17 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         return collectionView.cellForItem(at: indexPath)
     }
     
+    func supplementaryView(forElementKind elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView? {
+        let snapshot = currentSnapshot()
+        guard 0 <= indexPath.section,
+              indexPath.section < snapshot.numberOfSections,
+              0 <= indexPath.item,
+              indexPath.item < snapshot.numberOfItems(inSection: snapshot.sectionIdentifiers[indexPath.section]) else {
+            return nil
+        }
+        return collectionView.supplementaryView(forElementKind: elementKind, at: indexPath)
+    }
+    
     func endEditing(_ force: Bool = true) {
         collectionView.endEditing(force)
     }
@@ -172,6 +183,7 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     
     private lazy var registeredCells = Set<String>()
     private lazy var registeredSupplementaryViews = Set<String>()
+    private lazy var registeredDecorationViews = Set<String>()
     
     func register<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type) {
         guard !registeredCells.contains(cellClass.reuseIdentifier) else { return }
@@ -184,6 +196,13 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         guard !registeredSupplementaryViews.contains(key) else { return }
         collectionView.register(viewClass, forSupplementaryViewOfKind: elementKind, withReuseIdentifier: viewClass.reuseIdentifier)
         registeredSupplementaryViews.insert(key)
+    }
+    
+    func register<T: UICollectionReusableView>(_ viewClass: T.Type, forDecorationViewOfKind elementKind: String) {
+        let key = elementKind + String(describing: viewClass)
+        guard !registeredDecorationViews.contains(key) else { return }
+        collectionView.collectionViewLayout.register(viewClass, forDecorationViewOfKind: elementKind)
+        registeredDecorationViews.insert(key)
     }
     
     func dequeueReusableCell<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type, for item: Item, indexPath: IndexPath) -> T {

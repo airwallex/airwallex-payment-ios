@@ -20,6 +20,8 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     static let subType = "card"
     
     enum Item: String {
+        case accordionKey = "newCardAccordionKey"
+        case consentToggle
         case cardInfo
         case checkoutButton
         // display this item only when session is AWXOneOffSession && has customerId
@@ -46,6 +48,31 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     private var shouldReuseShippingAddress: Bool
     private let validator: AWXCardValidator
     
+    private lazy var viewModelForAccordionKey = PaymentMethodCellViewModel(
+        itemIdentifier: Item.accordionKey.rawValue,
+        name: methodType.displayName,
+        imageURL: methodType.resources.logoURL,
+        isSelected: true,
+        imageLoader: imageLoader,
+        supportedBrands: []
+    )
+    
+    private lazy var viewModelForConsentToggle = CardPaymentSectionHeaderViewModel(
+        title: NSLocalizedString("Add new", bundle: .payment, comment: ""),
+        actionTitle: NSLocalizedString("Keep using saved cards", bundle: .payment, comment: ""),
+        buttonAction: { [weak self] in
+            guard let self else { return }
+            self.switchToConsentPaymentAction()
+            
+            AnalyticsLogger.log(
+                action: .selectPayment,
+                extraInfo: [
+                    .paymentMethod: AWXCardKey,
+                    .subtype: CardPaymentConsentSectionController.subType
+                ]
+            )
+        }
+    )
     private var viewModelForCardInfo: CardInfoCollectorCellViewModel!
     private(set) var viewModelForCardholderName: InfoCollectorCellViewModel<String>?
     private(set) var viewModelForEmail: InfoCollectorCellViewModel<String>?
@@ -53,8 +80,13 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     private(set) var viewModelForCountryCode: CountrySelectionCellViewModel?
     private(set) var viewModelForBillingAddress: BillingInfoCellViewModel?
     
+    private let layout: AWXUIContext.PaymentLayout
+    private let imageLoader: ImageLoader
+    
     init(cardPaymentMethod: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
+         layout: AWXUIContext.PaymentLayout,
+         imageLoader: ImageLoader,
          switchToConsentPaymentAction: @escaping () -> Void) {
         assert(cardPaymentMethod.name == AWXCardKey, "invalid method")
         self.methodType = cardPaymentMethod
@@ -65,6 +97,8 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         if let oneOffSession = methodProvider.session as? AWXOneOffSession {
             self.shouldSaveCard = oneOffSession.autoSaveCardForFuturePayments
         }
+        self.layout = layout
+        self.imageLoader = imageLoader
         super.init()
         createViewModelForRequiredFields()
     }
@@ -76,6 +110,13 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     
     var items: [String] {
         var items = [String]()
+        if layout == .accordion {
+            items.append(Item.accordionKey.rawValue)
+        }
+        
+        if !methodProvider.consents.isEmpty {
+            items.append(Item.consentToggle.rawValue)
+        }
         
         let viewModels: [(any CellViewModelIdentifiable)?] = [
             viewModelForCardInfo,
@@ -109,6 +150,14 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
         guard let item = Item(rawValue: itemIdentifier) else { fatalError("Invalid item") }
         switch item {
+        case .accordionKey:
+            let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: itemIdentifier, indexPath: indexPath)
+            cell.setup(viewModelForAccordionKey)
+            return cell
+        case .consentToggle:
+            let cell = context.dequeueReusableCell(CardPaymentSectionHeader.self, for: itemIdentifier, indexPath: indexPath)
+            cell.setup(viewModelForConsentToggle)
+            return cell
         case .cardInfo:
             let cell = context.dequeueReusableCell(CardInfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
             cell.setup(viewModelForCardInfo)
@@ -167,45 +216,24 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         let item = NSCollectionLayoutItem(layoutSize: layoutSize)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(horizontal: 16).top(8)
         section.interGroupSpacing = 16
-        
-        if !methodProvider.consents.isEmpty {
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(32))
-            let header = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerSize,
-                elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top
+        switch layout {
+        case .tab:
+            section.contentInsets = .init(horizontal: 16)
+        case .accordion:
+            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 40, bottom: 32, trailing: 40)
+            
+            // Layout for decoration - rounded corner
+            let elementKind = AccordionSectionController.backgroundElementKind
+            context.register(
+                RoundedCornerDecorationView.self,
+                forDecorationViewOfKind: elementKind
             )
-            section.boundarySupplementaryItems = [header]
+            let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
+            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+            section.decorationItems = [sectionBackgroundDecoration]
         }
         return section
-    }
-    
-    func supplementaryView(for elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let view = context.dequeueReusableSupplementaryView(
-            ofKind: elementKind,
-            viewClass: CardPaymentSectionHeader.self,
-            indexPath: indexPath
-        )
-        let viewModel = CardPaymentSectionHeaderViewModel(
-            title: NSLocalizedString("Add new", comment: ""),
-            actionTitle: "Keep using saved cards",
-            buttonAction: { [weak self] in
-                guard let self else { return }
-                self.switchToConsentPaymentAction()
-                
-                AnalyticsLogger.log(
-                    action: .selectPayment,
-                    extraInfo: [
-                        .paymentMethod: AWXCardKey,
-                        .subtype: CardPaymentConsentSectionController.subType
-                    ]
-                )
-            }
-        )
-        view.setup(viewModel)
-        return view
     }
     
     func sectionWillDisplay() {

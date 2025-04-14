@@ -93,4 +93,11 @@ extension PaymentMethodProvider {
         let response = try await apiClient.send(request)
         return response as! AWXGetAvailableBanksResponse
     }
+    
+    /// Select payment method by name
+    /// - Parameter name: name of the payment method
+    func selectPaymentMethod(byName name: String) {
+        let method = method(named: name)
+        self.selectedMethod = method
+    }
 }
