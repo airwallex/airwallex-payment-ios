@@ -95,7 +95,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         self.methodProvider = methodProvider
         self.switchToConsentPaymentAction = switchToConsentPaymentAction
         self.validator = AWXCardValidator(cardPaymentMethod.cardSchemes)
-        self.shouldReuseShippingAddress = methodProvider.session.billing != nil
+        self.shouldReuseShippingAddress = methodProvider.session.billing?.address?.isComplete ?? false
         if let oneOffSession = methodProvider.session as? AWXOneOffSession {
             self.shouldSaveCard = oneOffSession.autoSaveCardForFuturePayments
         }
@@ -180,7 +180,11 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             return cell
         case .billingFieldAddress:
             let cell = context.dequeueReusableCell(BillingInfoCell.self, for: item.rawValue, indexPath: indexPath)
-            if let viewModelForBillingAddress { cell.setup(viewModelForBillingAddress) }
+            if let viewModelForBillingAddress {
+                cell.setup(viewModelForBillingAddress)
+            } else {
+                assert(false)
+            }
             return cell
         case .unionPayWarning:
             let cell = context.dequeueReusableCell(WarningViewCell.self, for: item.rawValue, indexPath: indexPath)
@@ -193,19 +197,35 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             return cell
         case .cardholderName:
             let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
-            if let viewModelForCardholderName { cell.setup(viewModelForCardholderName) }
+            if let viewModelForCardholderName {
+                cell.setup(viewModelForCardholderName)
+            } else {
+                assert(false)
+            }
             return cell
         case .billingFieldEmail:
             let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
-            if let viewModelForEmail { cell.setup(viewModelForEmail) }
+            if let viewModelForEmail {
+                cell.setup(viewModelForEmail)
+            } else {
+                assert(false)
+            }
             return cell
         case .billingFieldPhone:
             let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
-            if let viewModelForPhoneNumber { cell.setup(viewModelForPhoneNumber) }
+            if let viewModelForPhoneNumber {
+                cell.setup(viewModelForPhoneNumber)
+            } else {
+                assert(false)
+            }
             return cell
         case .billingFieldCountryCode:
             let cell = context.dequeueReusableCell(CountrySelectionCell.self, for: item.rawValue, indexPath: indexPath)
-            if let viewModelForCountryCode { cell.setup(viewModelForCountryCode) }
+            if let viewModelForCountryCode {
+                cell.setup(viewModelForCountryCode)
+            } else {
+                assert(false)
+            }
             return cell
         }
     }
@@ -419,7 +439,7 @@ private extension NewCardPaymentSectionController {
     func createBillingAddressViewModel(reuseBillingAddress: Bool) -> BillingInfoCellViewModel {
         BillingInfoCellViewModel(
             itemIdentifier: Item.billingFieldAddress.rawValue,
-            shippingInfo: session.billing,
+            billingAddress: session.billing?.address,
             reusingShippingInfo: reuseBillingAddress,
             countrySelectionHandler: { [weak self] in
                 self?.triggerCountrySelection()
