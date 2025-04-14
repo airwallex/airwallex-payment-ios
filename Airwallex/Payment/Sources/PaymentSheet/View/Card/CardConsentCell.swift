@@ -19,7 +19,7 @@ struct CardConsentCellViewModel {
 
 class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
-    private let roundedBG: UIView = {
+    let roundedBG: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = .radius_l
@@ -28,7 +28,7 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return view
     }()
     
-    private let logo: UIImageView = {
+    let logo: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = .radius_m
@@ -36,7 +36,7 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return view
     }()
     
-    private let label: UILabel = {
+    let label: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.body2)
@@ -44,7 +44,7 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return view
     }()
     
-    private lazy var button: UIButton = {
+    private(set) lazy var button: UIButton = {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.tintColor = .awxColor(.iconLink)
@@ -91,9 +91,7 @@ class CardConsentCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     @objc func onActionButtonTapped() {
         viewModel?.buttonAction()
     }
-}
-
-private extension CardConsentCell {
+    
     func setupViews() {
         backgroundView = roundedBG
         contentView.addSubview(logo)
@@ -116,7 +114,38 @@ private extension CardConsentCell {
             button.topAnchor.constraint(equalTo: contentView.topAnchor),
             button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            button.widthAnchor.constraint(greaterThanOrEqualTo: button.heightAnchor)
+            button.widthAnchor.constraint(greaterThanOrEqualTo: button.heightAnchor).priority(.required - 1),
+            button.heightAnchor.constraint(equalToConstant: 52).priority(.required - 1)
+        ]
+        
+        NSLayoutConstraint.activate(constraints)
+    }
+}
+
+class CardSelectedConsentCell: CardConsentCell {
+    override func setupViews() {
+        backgroundView = roundedBG
+        contentView.addSubview(logo)
+        contentView.addSubview(label)
+        contentView.addSubview(button)
+        
+        label.setContentCompressionResistancePriority(.defaultHigh - 10, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+        
+        let constraints = [
+            logo.widthAnchor.constraint(equalToConstant: 30),
+            logo.heightAnchor.constraint(equalToConstant: 20),
+            logo.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            logo.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: logo.trailingAnchor, constant: 16),
+            label.trailingAnchor.constraint(lessThanOrEqualTo: button.leadingAnchor, constant: -16),
+            
+            button.topAnchor.constraint(equalTo: contentView.topAnchor),
+            button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            button.widthAnchor.constraint(greaterThanOrEqualTo: button.heightAnchor).priority(.required - 1)
         ]
         
         NSLayoutConstraint.activate(constraints)

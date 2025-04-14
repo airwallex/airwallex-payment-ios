@@ -31,7 +31,13 @@ class IntegrationDemoListViewController: UIViewController {
         ActionViewModel(
             title: NSLocalizedString("Launch default payments list", comment: DemoDataSource.commentForLocalization),
             action: { [weak self] in
-                self?.launchDefaultPaymentsList()
+                self?.launchDefaultPaymentsList(launchStyle: .push)
+            }
+        ),
+        ActionViewModel(
+            title: NSLocalizedString("Launch default payments list (dialog)", comment: DemoDataSource.commentForLocalization),
+            action: { [weak self] in
+                self?.launchDefaultPaymentsList(launchStyle: .present)
             }
         ),
         ActionViewModel(
@@ -43,13 +49,13 @@ class IntegrationDemoListViewController: UIViewController {
         ActionViewModel(
             title: NSLocalizedString("Launch card payment", comment: DemoDataSource.commentForLocalization),
             action: { [weak self] in
-                self?.launchCardPayment(style: .push)
+                self?.launchCardPayment(launchStyle: .push)
             }
         ),
         ActionViewModel(
             title: NSLocalizedString("Launch card payment (dialog)", comment: DemoDataSource.commentForLocalization),
             action: { [weak self] in
-                self?.launchCardPayment(style: .present)
+                self?.launchCardPayment(launchStyle: .present)
             }
         ),
         ActionViewModel(
@@ -251,12 +257,17 @@ private extension IntegrationDemoListViewController {
 //  MARK:  UI Integration actions
 private extension IntegrationDemoListViewController {
     
-    func launchDefaultPaymentsList() {
+    func launchDefaultPaymentsList(launchStyle: AWXUIContext.LaunchStyle) {
         Task {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                AWXUIContext.launchPayment(from: self, session: session)
+                AWXUIContext.launchPayment(
+                    from: self,
+                    session: session,
+                    launchStyle: launchStyle,
+                    layout: ExamplesKeys.paymentLayout
+                )
             } catch {
                 showAlert(message: error.localizedDescription)
             }
@@ -273,7 +284,8 @@ private extension IntegrationDemoListViewController {
                 AWXUIContext.launchPayment(
                     from: self,
                     session: session,
-                    filterBy: [ AWXApplePayKey, AWXCardKey, "alipaycn"]
+                    filterBy: [ AWXApplePayKey, AWXCardKey],
+                    layout: ExamplesKeys.paymentLayout
                 )
             } catch {
                 showAlert(message: error.localizedDescription)
@@ -282,7 +294,7 @@ private extension IntegrationDemoListViewController {
         }
     }
     
-    func launchCardPayment(style: AWXUIContext.LaunchStyle) {
+    func launchCardPayment(launchStyle: AWXUIContext.LaunchStyle) {
         Task {
             startLoading()
             do {
@@ -291,7 +303,7 @@ private extension IntegrationDemoListViewController {
                     from: self,
                     session: session,
                     supportedBrands: AWXCardBrand.all,
-                    style: style
+                    launchStyle: launchStyle
                 )
             } catch {
                 showAlert(message: error.localizedDescription)
