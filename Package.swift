@@ -33,8 +33,8 @@ let package = Package(
             targets: ["AirwallexRedirect"]
         ),
         .library(
-            name: "AirwallexWeChatpay",
-            targets: ["AirwallexWeChatpay"]
+            name: "AirwallexWeChatPay",
+            targets: ["AirwallexWeChatPay"]
         )
     ],
     targets: [
@@ -47,8 +47,20 @@ let package = Package(
             path: "Frameworks/AirTracker.xcframework"
         ),
         .binaryTarget(
-            name: "WechatOpenSDK",
-            path: "Frameworks/WechatOpenSDK.xcframework"
+            name: "WechatOpenSDKDynamic",
+            path: "Frameworks/WechatOpenSDKDynamic.xcframework"
+        ),
+        .target(
+            name: "AirwallexPayment",
+            dependencies: [
+                .target(name: "AirwallexCore"),
+                .target(name: "AirwallexApplePay"),
+                .target(name: "AirwallexCard"),
+                .target(name: "AirwallexRedirect"),
+            ],
+            path: "Airwallex/Payment",
+            sources: [ "Sources" ],
+            resources: [ .process("Resources")]
         ),
         .target(
             name: "AirwallexPayment",
@@ -103,21 +115,15 @@ let package = Package(
             ]
         ),
         .target(
-            name: "AirwallexWeChatpay",
+            name: "AirwallexWeChatPay",
             dependencies: [
                 "AirwallexCore",
-                "WechatOpenSDK"
+                .target(name: "WechatOpenSDKDynamic")
             ],
             path: "Airwallex/WeChatPay",
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")
-            ],
-            linkerSettings: [
-                .linkedLibrary("z"),        // Links libz (zlib)
-                .linkedLibrary("sqlite3"),  // Links libsqlite3
-                .linkedLibrary("c++"),       // Links libc++
-                .unsafeFlags(["-ObjC", "-all_load"]),
             ]
         ),
         .testTarget(
