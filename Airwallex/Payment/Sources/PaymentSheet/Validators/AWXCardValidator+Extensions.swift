@@ -55,15 +55,15 @@ extension AWXCardValidator {
     ///   - number: string composed of decimal digits
     ///   - supportedSchemes: supported scheme return from server
     static func validate(number: String?, supportedSchemes: [AWXCardScheme]) throws {
-        // Ensure the card number contains only decimal digits
-        guard number?.allSatisfy({ $0.isASCII && $0.isNumber }) == true else {
-            throw NSLocalizedString("Card number must contain only digits", bundle: .payment, comment: "card validator error message").asError()
-        }
-        
         guard let number, !number.isEmpty else {
             throw NSLocalizedString("Card number is required", bundle: .payment, comment: "card validator error message").asError()
         }
 
+        // Ensure the card number contains only decimal digits
+        guard number.allSatisfy({ $0.isASCII && $0.isNumber }) else {
+            throw NSLocalizedString("Card number must contain only digits", bundle: .payment, comment: "card validator error message").asError()
+        }
+        
         guard AWXCardValidator.shared().isValidCardLength(number) else {
             throw NSLocalizedString("Card number is invalid", bundle: .payment, comment: "card validator error message").asError()
         }
@@ -104,14 +104,14 @@ extension AWXCardValidator {
     }
     
     static func validate(cvc: String?, requiredLength: Int) throws {
-        // Ensure the card number contains only decimal digits
-        guard cvc?.allSatisfy({ $0.isASCII && $0.isNumber }) == true else {
-            throw NSLocalizedString("Security code must contain only digits", bundle: .payment, comment: "card validator error message").asError()
-        }
-        
         guard let cvc, !cvc.isEmpty else {
             throw NSLocalizedString("Security code is required", bundle: .payment, comment: "card validator error message").asError()
         }
+        // Ensure the card number contains only decimal digits
+        guard cvc.allSatisfy({ $0.isASCII && $0.isNumber }) else {
+            throw NSLocalizedString("Security code must contain only digits", bundle: .payment, comment: "card validator error message").asError()
+        }
+        
         guard cvc.count == requiredLength else {
             throw NSLocalizedString("Security code is invalid", bundle: .payment, comment: "card validator error message").asError()
         }

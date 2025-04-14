@@ -7,6 +7,11 @@
 //
 
 import Foundation
+#if canImport(Airwallex)
+import Airwallex
+#elseif canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 enum CheckoutMode: Int, CaseIterable {
     case oneOff
@@ -69,6 +74,9 @@ struct ExamplesKeys {
     
     @Storage("returnUrl", defaultValue: "")
     static var returnUrl: String
+    
+    @RawRepresentableStorage("paymentLayout", defaultValue: AWXUIContext.PaymentLayout.tab)
+    static var paymentLayout: AWXUIContext.PaymentLayout
         
     static var allSettings: AllSettings {
         get {
@@ -84,7 +92,8 @@ struct ExamplesKeys {
                 amount: ExamplesKeys.amount,
                 currency: ExamplesKeys.currency,
                 countryCode: ExamplesKeys.countryCode,
-                returnUrl: ExamplesKeys.returnUrl
+                returnUrl: ExamplesKeys.returnUrl,
+                paymentLayout: ExamplesKeys.paymentLayout
             )
         }
         set {
@@ -101,6 +110,7 @@ struct ExamplesKeys {
             ExamplesKeys.currency = newValue.currency
             ExamplesKeys.countryCode = newValue.countryCode
             ExamplesKeys.returnUrl = newValue.returnUrl
+            ExamplesKeys.paymentLayout = newValue.paymentLayout
         }
     }
     
@@ -119,6 +129,8 @@ struct ExamplesKeys {
         var countryCode: String
         var returnUrl: String
         
+        var paymentLayout: AWXUIContext.PaymentLayout
+        
         var description: String {
                 """
                 🌍 AllSettings:
@@ -133,6 +145,7 @@ struct ExamplesKeys {
                 ├── Amount: \(amount) \(currency)
                 ├── Country Code: \(countryCode)
                 ├── Return URL: \(returnUrl)
+                ├── Payment Layout: \(paymentLayout)
                 """
         }
     }

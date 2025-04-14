@@ -65,7 +65,7 @@ class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
             },
             cvcValidator: CardCVCValidator { [weak self] in
                 guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
-                return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
+                return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand ?? .unknown)
             },
             editingEventObserver: BeginEditingEventObserver {
                 RiskLogger.log(.inputCardCVC, screen: .createCard)

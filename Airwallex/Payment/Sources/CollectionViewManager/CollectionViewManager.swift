@@ -45,7 +45,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                 guard let self,
                       let sectionType = self.sections[safe: index],
                       let controller = self.sectionControllers[sectionType] else {
-                    assert(false, "invalid section index")
+                    assert(false, "invalid section index: \(index), sections: \(String(describing: self?.sectionControllers))")
                     return nil
                 }
                 return controller.layout(environment: environment)

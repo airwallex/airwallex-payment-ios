@@ -149,7 +149,7 @@ public class PaymentSessionHandler: NSObject {
         }
     }
     
-    /// Initiates a payment using AWXpaymentConsent
+    /// Initiates a payment using AWXPaymentConsent
     /// This method processes a payment using a previously obtained payment consent, which may require additional input such as a CVC.
     /// - Parameters:
     ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
@@ -254,7 +254,7 @@ extension PaymentSessionHandler {
         cardProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
     }
     
-    /// Initiates a payment using AWXpaymentConsent
+    /// Initiates a payment using AWXPaymentConsent
     /// This method processes a payment using a previously obtained payment consent, which may require additional input such as a CVC.
     /// - Parameters:
     ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
