@@ -169,7 +169,6 @@ extension PaymentMethodProvider {
                 return []
             }
         }
-        var result = [AWXPaymentMethodType]()
         let methodSlice = (position == .top) ? methods[..<index] : methods[(index+1)...]
         return Array(methodSlice.filter { $0.name != AWXApplePayKey })
     }
