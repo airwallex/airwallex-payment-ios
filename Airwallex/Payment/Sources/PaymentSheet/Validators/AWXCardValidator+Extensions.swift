@@ -60,7 +60,7 @@ extension AWXCardValidator {
         }
 
         // Ensure the card number contains only decimal digits
-        guard number.allSatisfy({ $0.isASCII && $0.isNumber }) == true else {
+        guard number.allSatisfy({ $0.isASCII && $0.isNumber }) else {
             throw NSLocalizedString("Card number must contain only digits", bundle: .payment, comment: "card validator error message").asError()
         }
         
@@ -108,7 +108,7 @@ extension AWXCardValidator {
             throw NSLocalizedString("Security code is required", bundle: .payment, comment: "card validator error message").asError()
         }
         // Ensure the card number contains only decimal digits
-        guard cvc.allSatisfy({ $0.isASCII && $0.isNumber }) == true else {
+        guard cvc.allSatisfy({ $0.isASCII && $0.isNumber }) else {
             throw NSLocalizedString("Security code must contain only digits", bundle: .payment, comment: "card validator error message").asError()
         }
         
