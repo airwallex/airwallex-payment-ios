@@ -40,7 +40,7 @@
     id mockViewController = OCMClassMock([UIViewController class]);
     delegate.hostVC = mockViewController;
     AWXOneOffSession *session = [AWXOneOffSession new];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"redirect", @"type", nil];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"call_sdk", @"type", nil];
     AWXConfirmPaymentNextAction *nextAction = [AWXConfirmPaymentNextAction decodeFromJSON:dict];
 
     AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:delegate session:session];

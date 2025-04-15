@@ -7,29 +7,14 @@
 //
 
 #import "AWXConstants.h"
+#import "AWXApplePayProvider.h"
+#import "AWXCardProvider.h"
 #import "AWXDefaultProvider.h"
 #import "AWXPaymentMethod.h"
+#import "AWXSchemaProvider.h"
 #import <XCTest/XCTest.h>
 
 #pragma mark - Sample providers for test purposes
-
-@interface AWXApplePayProvider : AWXDefaultProvider
-@end
-
-@implementation AWXApplePayProvider
-@end
-
-@interface AWXCardProvider : AWXDefaultProvider
-@end
-
-@implementation AWXCardProvider
-@end
-
-@interface AWXSchemaProvider : AWXDefaultProvider
-@end
-
-@implementation AWXSchemaProvider
-@end
 
 @interface AWXConstantsTest : XCTestCase
 

@@ -156,7 +156,15 @@ class CardPaymentConsentSectionController: SectionController {
             return cell
         case Items.cvcField:
             let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
+            guard let selectedConsent else {
+                assert(false, "expected selected consent")
+                return cell
+            }
             if let cvcConfigurer {
+                cell.setup(cvcConfigurer)
+            } else {
+                let cvcConfigurer = createCVCConfigurer(consent: selectedConsent)
+                self.cvcConfigurer = cvcConfigurer
                 cell.setup(cvcConfigurer)
             }
             return cell
@@ -309,20 +317,6 @@ class CardPaymentConsentSectionController: SectionController {
         
         if consent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
             selectedConsent = consent
-            let validator = CardCVCValidator(cardName: consent.paymentMethod?.card?.brand ?? "")
-            cvcConfigurer = InfoCollectorCellViewModel(
-                itemIdentifier: Items.cvcField,
-                textFieldType: .CVC,
-                placeholder: "CVC",
-                customInputFormatter: validator,
-                customInputValidator: validator,
-                editingEventObserver: BeginEditingEventObserver {
-                    RiskLogger.log(.inputCardCVC, screen: .consent)
-                },
-                cellReconfigureHandler: { [weak self] in
-                    self?.context.reconfigure(items: [$0], invalidateLayout: $1)
-                }
-            )
             context.performUpdates(section, forceReload: true)
             
             RiskLogger.log(.showConsent, screen: .consent)
@@ -343,6 +337,24 @@ class CardPaymentConsentSectionController: SectionController {
                 .subtype: Self.subType
             ]
         )
+    }
+    
+    private func createCVCConfigurer(consent: AWXPaymentConsent) -> InfoCollectorCellViewModel<String> {
+        let validator = CardCVCValidator(cardName: consent.paymentMethod?.card?.brand ?? "")
+        let viewModel = InfoCollectorCellViewModel(
+            itemIdentifier: Items.cvcField,
+            textFieldType: .CVC,
+            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: ""),
+            customInputFormatter: validator,
+            customInputValidator: validator,
+            editingEventObserver: BeginEditingEventObserver {
+                RiskLogger.log(.inputCardCVC, screen: .consent)
+            },
+            cellReconfigureHandler: { [weak self] in
+                self?.context.reconfigure(items: [$0], invalidateLayout: $1)
+            }
+        )
+        return viewModel
     }
 }
  

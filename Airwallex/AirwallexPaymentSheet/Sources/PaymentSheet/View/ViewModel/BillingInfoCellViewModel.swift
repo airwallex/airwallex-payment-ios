@@ -46,18 +46,18 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
     private var shippingInfo: AWXPlaceDetails?
     
     init(itemIdentifier: String,
-         shippingInfo: AWXPlaceDetails?,
+         billingAddress: AWXAddress?,
          reusingShippingInfo: Bool = true,
          countrySelectionHandler: @escaping () -> Void,
          toggleReuseSelection: @escaping () -> Void,
          cellReconfigureHandler: @escaping CellReconfigureHandler) {
-        let reusingShippingInfo = (shippingInfo != nil) && reusingShippingInfo
+        let reusingShippingInfo = (billingAddress != nil) && reusingShippingInfo
         var country: AWXCountry?
-        if let countryCode = shippingInfo?.address?.countryCode {
+        if let countryCode = billingAddress?.countryCode {
             country = AWXCountry(code: countryCode)
         }
         
-        canReuseShippingAddress = shippingInfo != nil
+        canReuseShippingAddress = billingAddress?.isComplete ?? false
         shouldReuseShippingAddress = reusingShippingInfo
         self.toggleReuseSelection = toggleReuseSelection
         self.itemIdentifier = itemIdentifier
@@ -70,7 +70,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         )
         streetConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .street,
-            text: shippingInfo?.address?.street,
+            text: billingAddress?.street,
             placeholder: NSLocalizedString("Street", bundle: .paymentSheet, comment: "info in billing address"),
             isEnabled: !reusingShippingInfo,
             returnKeyType: .next,
@@ -78,7 +78,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         )
         stateConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .state,
-            text: shippingInfo?.address?.state,
+            text: billingAddress?.state,
             placeholder: NSLocalizedString("State", bundle: .paymentSheet, comment: "info in billing address"),
             isEnabled: !reusingShippingInfo,
             returnKeyType: .next,
@@ -86,7 +86,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         )
         cityConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .city,
-            text: shippingInfo?.address?.city,
+            text: billingAddress?.city,
             placeholder: NSLocalizedString("City", bundle: .paymentSheet, comment: "info in billing address"),
             isEnabled: !reusingShippingInfo,
             returnKeyType: .next,
@@ -94,7 +94,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         )
         zipConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .zipcode,
-            text: shippingInfo?.address?.postcode,
+            text: billingAddress?.postcode,
             placeholder: NSLocalizedString("Postal code", bundle: .paymentSheet, comment: "info in billing address"),
             isEnabled: !reusingShippingInfo,
             returnKeyType: .next,

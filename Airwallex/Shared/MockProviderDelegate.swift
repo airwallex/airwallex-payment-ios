@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Airwallex
+import AirwallexCore
 
 class MockProviderDelegate: NSObject, AWXProviderDelegate {
     func providerDidStartRequest(_ provider: AWXDefaultProvider) {
