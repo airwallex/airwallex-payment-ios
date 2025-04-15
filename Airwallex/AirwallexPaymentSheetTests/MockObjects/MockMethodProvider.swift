@@ -14,7 +14,14 @@ import Combine
 class MockMethodProvider: PaymentMethodProvider {
     var apiClient = AWXAPIClient(configuration: .shared())
     
-    var session: AWXSession = AWXOneOffSession()
+    var session: AWXSession = {
+        let session =  AWXOneOffSession()
+        session.paymentIntent = AWXPaymentIntent()
+        session.paymentIntent?.clientSecret = "client_secret"
+        session.paymentIntent?.id = "intent_id"
+        session.paymentIntent?.customerId = "customer_id"
+        return session
+    }()
     
     var updatePublisher = PassthroughSubject<PaymentMethodProviderUpdateType, Never>()
     

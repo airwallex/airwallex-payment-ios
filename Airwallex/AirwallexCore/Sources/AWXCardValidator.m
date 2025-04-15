@@ -365,17 +365,27 @@
     return brandsfilteredByPrefix.firstObject;
 }
 
-- (nullable AWXBrand *)mostSpecificCardBrandForNumber:(NSString *)cardNumber supportedBrandTypes:(NSArray *)brandTypes {
+- (nullable AWXBrand *)mostSpecificCardBrandForNumber:(NSString *)cardNumber {
     __block AWXBrand *result = defaultBrand;
-    NSArray *filteredBrands = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
-        AWXBrand *brand = (AWXBrand *)evaluatedObject;
-        BOOL check = brand.type != AWXBrandTypeUnknown && [brand matchesPrefix:cardNumber] && [brandTypes containsObject:@(brand.type)];
-        if (check && brand.rangeStart.length > result.rangeStart.length) {
+    for (AWXBrand *brand in self.brands) {
+        BOOL check = brand.type != AWXBrandTypeUnknown && brand.rangeStart.length > result.rangeStart.length && [brand matchesPrefix:cardNumber];
+
+        if (check) {
             result = brand;
         }
-        return check;
-    }]];
+    }
     return result;
+}
+
+- (NSArray<NSNumber *> *)possibleBrandTypesForCardNumber:(NSString *)cardNumber {
+    NSMutableArray *results = [NSMutableArray array];
+    for (AWXBrand *brand in self.brands) {
+        BOOL check = brand.type != AWXBrandTypeUnknown && [brand matchesPrefix:cardNumber];
+        if (check && ![results containsObject:@(brand.type)]) {
+            [results addObject:@(brand.type)];
+        }
+    }
+    return results;
 }
 
 - (AWXBrand *)brandForCardName:(NSString *)name {

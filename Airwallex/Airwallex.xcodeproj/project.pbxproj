@@ -161,7 +161,6 @@
 		D81983492D6F120B008008A3 /* AirwallexPayment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D81983412D6F120B008008A3 /* AirwallexPayment.framework */; };
 		D81983D62D6F12BD008008A3 /* AirwallexCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* AirwallexCore.framework */; platformFilter = ios; };
 		D81983E82D6F1438008008A3 /* AirwallexRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; };
-		D837D9752DACD77C00E59548 /* AWXAddress+PaymentSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837D9742DACD77B00E59548 /* AWXAddress+PaymentSheet.swift */; };
 		D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D85041C82DA7957A0074BA7F /* AirwallexPaymentSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */; };
 		D85041D42DA79A0B0074BA7F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85041D32DA79A0B0074BA7F /* Security.framework */; };
@@ -744,7 +743,6 @@
 		D81983EA2D6F1C70008008A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D8320E842D9E82BC00FC067A /* AccordionPaymentMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionPaymentMethodCell.swift; sourceTree = "<group>"; };
 		D8352B4D2DA640B10025BE9E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		D837D9742DACD77B00E59548 /* AWXAddress+PaymentSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXAddress+PaymentSheet.swift"; sourceTree = "<group>"; };
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
 		D85040752DA794020074BA7F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AirwallexPaymentSheet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1494,7 +1492,6 @@
 				D8EC87612D9E335900D082EC /* AWXSchema+Extensions.swift */,
 				D8EC87642D9E335900D082EC /* CGFloat+Extensions.swift */,
 				D8EC876A2D9E335900D082EC /* UIStackView+Extensions.swift */,
-				D837D9742DACD77B00E59548 /* AWXAddress+PaymentSheet.swift */,
 				D8EC87722D9E335900D082EC /* Palette.swift */,
 			);
 			path = Utils;
@@ -2550,7 +2547,6 @@
 				D85042022DA79DF40074BA7F /* UITextField+Extensions.swift in Sources */,
 				D85042042DA79DF40074BA7F /* AWXAlertController.swift in Sources */,
 				D85042772DA7A3740074BA7F /* Font+Extensions.swift in Sources */,
-				D837D9752DACD77C00E59548 /* AWXAddress+PaymentSheet.swift in Sources */,
 				D85042052DA79DF40074BA7F /* ImageLoader.swift in Sources */,
 				D85042062DA79DF40074BA7F /* AWXSchema+Extensions.swift in Sources */,
 				D85042072DA79DF40074BA7F /* CGFloat+Extensions.swift in Sources */,

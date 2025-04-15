@@ -9,14 +9,18 @@
 import UIKit
 import XCTest
 @testable import AirwallexPaymentSheet
+@testable @_spi(AWX) import AirwallexPayment
 import AirwallexCore
 
 class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
+    
+    var mockCard: AWXCard!
     
     override func setUp() {
         super.setUp()
         let methodType = AWXPaymentMethodType()
         methodType.name = AWXCardKey
+        methodType.cardSchemes = AWXCardScheme.allAvailable
         mockMethodProvider.methods = [methodType]
         mockMethodProvider.selectedMethod = methodType
         
@@ -28,6 +32,14 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         }
         mockMethodProvider.consents = response.items
         mockSectionProvider.preferConsentPayment = false
+        // setup valid card info
+        mockCard = AWXCard(
+            name: "John Appleseed",
+            cardNumber: "4100111111111111",
+            expiryMonth: "12",
+            expiryYear: "2099",
+            cvc: "333"
+        )
     }
     
     private func getCardSectionController() -> NewCardPaymentSectionController? {
@@ -175,19 +187,40 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
     }
     
     func testSaveCardToggle_toggleUnionPay() {
+        let session = AWXOneOffSession()
+        session.paymentIntent = AWXPaymentIntent()
+        session.paymentIntent?.customerId = "customer_id"
+        session.requiredBillingContactFields = []
+        mockMethodProvider.session = session
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
+        
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
         let itemIdentifier = NewCardPaymentSectionController.Item.saveCardToggle.rawValue
-        XCTAssertFalse(sectionController.items.contains(itemIdentifier))
-        guard let cell = sectionController.context.cellForItem(itemIdentifier) as? CheckBoxCell else {
+        XCTAssertTrue(sectionController.items.contains(itemIdentifier))
+        guard let toggleCell = sectionController.context.cellForItem(itemIdentifier) as? CheckBoxCell else {
             XCTFail()
             return
         }
-        XCTAssert(cell.viewModel?.isSelected == true)
-        cell.viewModel?.toggleSelection()
-        XCTAssert(cell.viewModel?.isSelected == false)
-//        sectionController.
+        XCTAssert(toggleCell.viewModel?.isSelected == true)
+        toggleCell.viewModel?.toggleSelection()
+        XCTAssert(toggleCell.viewModel?.isSelected == false)
+        toggleCell.viewModel?.toggleSelection()
+        
+        let cardIdentifier = NewCardPaymentSectionController.Item.cardInfo.rawValue
+        guard let cardInfoCell = sectionController.context.cellForItem(cardIdentifier) as? CardInfoCollectorCell else {
+            XCTFail()
+            return
+        }
+        let textField = UITextField()
+        _ = cardInfoCell.viewModel?.cardNumberConfigurer.textField(
+            textField,
+            shouldChangeCharactersIn: NSRange(location: 0, length: 0),
+            replacementString: "62"
+        )
+        let unionPayWarningItem = NewCardPaymentSectionController.Item.unionPayWarning.rawValue
+        (cardInfoCell.allFields.first as? CardNumberTextField)?.editingDidEnd(textField)
+        XCTAssertTrue(sectionController.items.contains(unionPayWarningItem))
     }
     
     func testReuseShippingInfo_All() {
@@ -289,5 +322,190 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssert(addressCell.viewModel?.canReuseShippingAddress == true)
         XCTAssert(addressCell.viewModel?.shouldReuseShippingAddress == false)
     }
+        
+    func testCheckoutValidation_InvalidCardInfo() {
+        mockMethodProvider.session.requiredBillingContactFields = []
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+        guard let sectionController = getCardSectionController() else { XCTFail(); return }
+        let cardIdentifier = NewCardPaymentSectionController.Item.cardInfo.rawValue
+        guard let cardInfoCell = sectionController.context.cellForItem(cardIdentifier) as? CardInfoCollectorCell else {
+            XCTFail()
+            return
+        }
+        
+        let checkoutButtonIdentifier = NewCardPaymentSectionController.Item.checkoutButton.rawValue
+        guard let checkoutButtonCell = sectionController.context.cellForItem(checkoutButtonIdentifier) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertNoThrow(try AWXCardValidator.validate(
+            card: mockCard,
+            nameRequired: false,
+            supportedSchemes: AWXCardScheme.allAvailable
+        ))
+        // invalid card number
+        cardInfoCell.viewModel?.cardNumberConfigurer.text = "4111"
+        cardInfoCell.viewModel?.expireDataConfigurer.text = "\(mockCard.expiryMonth)/\(mockCard.expiryYear.suffix(2))"
+        cardInfoCell.viewModel?.cvcConfigurer.text = mockCard.cvc
+        checkoutButtonCell.viewModel?.checkoutAction()
+        XCTAssertNotNil(mockViewController.presentedViewControllerSpy)
+        XCTAssert(mockViewController.presentedViewControllerSpy is AWXAlertController)
+        
+        // invalid expiry
+        mockViewController.presentedViewControllerSpy = nil
+        cardInfoCell.viewModel?.cardNumberConfigurer.text = mockCard.number
+        cardInfoCell.viewModel?.expireDataConfigurer.text = "12/23"
+        cardInfoCell.viewModel?.cvcConfigurer.text = mockCard.cvc
+        checkoutButtonCell.viewModel?.checkoutAction()
+        XCTAssertNotNil(mockViewController.presentedViewControllerSpy)
+        XCTAssert(mockViewController.presentedViewControllerSpy is AWXAlertController)
+        
+        // invalid cvc
+        mockViewController.presentedViewControllerSpy = nil
+        cardInfoCell.viewModel?.cardNumberConfigurer.text = mockCard.number
+        cardInfoCell.viewModel?.expireDataConfigurer.text = "\(mockCard.expiryMonth)/\(mockCard.expiryYear.suffix(2))"
+        cardInfoCell.viewModel?.cvcConfigurer.text = "11"
+        checkoutButtonCell.viewModel?.checkoutAction()
+        XCTAssertNotNil(mockViewController.presentedViewControllerSpy)
+        XCTAssert(mockViewController.presentedViewControllerSpy is AWXAlertController)
+    }
     
+    func testCheckoutValidation_InvalidBillingInfo() {
+        mockMethodProvider.session.requiredBillingContactFields = [.name, .email, .phone, .address]
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+        guard let sectionController = getCardSectionController() else { XCTFail(); return }
+        
+        let checkoutButtonIdentifier = NewCardPaymentSectionController.Item.checkoutButton.rawValue
+        guard let checkoutButtonCell = sectionController.context.cellForItem(checkoutButtonIdentifier) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+        
+        let mockProvider = AWXCardProvider(
+            delegate: MockProviderDelegate(),
+            session: mockMethodProvider.session,
+            paymentMethodType: mockMethodProvider.selectedMethod
+        )
+        let cardIdentifier = NewCardPaymentSectionController.Item.cardInfo.rawValue
+        guard let cardInfoCell = sectionController.context.cellForItem(cardIdentifier) as? CardInfoCollectorCell else {
+            XCTFail()
+            return
+        }
+        cardInfoCell.viewModel?.cardNumberConfigurer.text = mockCard.number
+        cardInfoCell.viewModel?.expireDataConfigurer.text = "\(mockCard.expiryMonth)/\(mockCard.expiryYear.suffix(2))"
+        cardInfoCell.viewModel?.cvcConfigurer.text = mockCard.cvc
+        guard let card = cardInfoCell.viewModel?.cardFromCollectedInfo() else {
+            XCTFail()
+            return
+        }
+        card.name = mockShippingInfo.fullName
+        XCTAssertNoThrow(try mockProvider.validate(card: card, billing: mockShippingInfo))
+        
+        do {
+            // invalid name
+            let nameItem = NewCardPaymentSectionController.Item.cardholderName.rawValue
+            guard let nameCell = sectionController.context.cellForItem(nameItem) as? InfoCollectorCell else {
+                XCTFail()
+                return
+            }
+            nameCell.viewModel?.text = nil
+            checkoutButtonCell.viewModel?.checkoutAction()
+            XCTAssertNotNil(mockViewController.presentedViewControllerSpy)
+            XCTAssert(mockViewController.presentedViewControllerSpy is AWXAlertController)
+            nameCell.viewModel?.text = mockCard.name
+        }
+        
+        do {// invalid email
+            mockViewController.presentedViewControllerSpy = nil
+            let emailItem = NewCardPaymentSectionController.Item.billingFieldEmail.rawValue
+            guard let emailCell = sectionController.context.cellForItem(emailItem) as? InfoCollectorCell else {
+                XCTFail()
+                return
+            }
+            emailCell.viewModel?.text = nil
+            checkoutButtonCell.viewModel?.checkoutAction()
+            XCTAssertNotNil(mockViewController.presentedViewControllerSpy)
+            XCTAssert(mockViewController.presentedViewControllerSpy is AWXAlertController)
+            emailCell.viewModel?.text = mockShippingInfo.email
+        }
+        
+        do {// invalid phone
+            mockViewController.presentedViewControllerSpy = nil
+            let phoneItem = NewCardPaymentSectionController.Item.billingFieldPhone.rawValue
+            guard let phoneCell = sectionController.context.cellForItem(phoneItem) as? InfoCollectorCell else {
+                XCTFail()
+                return
+            }
+            phoneCell.viewModel?.text = nil
+            checkoutButtonCell.viewModel?.checkoutAction()
+            XCTAssertNotNil(mockViewController.presentedViewControllerSpy)
+            XCTAssert(mockViewController.presentedViewControllerSpy is AWXAlertController)
+            phoneCell.viewModel?.text = mockShippingInfo.phoneNumber
+        }
+        
+        do {// invalid address
+            mockViewController.presentedViewControllerSpy = nil
+            let addressItem = NewCardPaymentSectionController.Item.billingFieldAddress.rawValue
+            guard let addressCell = sectionController.context.cellForItem(addressItem) as? BillingInfoCell else {
+                XCTFail()
+                return
+            }
+            addressCell.viewModel?.zipConfigurer.text = nil
+            checkoutButtonCell.viewModel?.checkoutAction()
+            XCTAssertNotNil(mockViewController.presentedViewControllerSpy)
+            XCTAssert(mockViewController.presentedViewControllerSpy is AWXAlertController)
+            addressCell.viewModel?.zipConfigurer.text = mockShippingInfo.address?.postcode
+        }
+    }
+    
+    func testCheckoutValidation_InvalidCountryCode() {
+        mockMethodProvider.session.requiredBillingContactFields = [.countryCode]
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+        guard let sectionController = getCardSectionController() else { XCTFail(); return }
+        
+        let checkoutButtonIdentifier = NewCardPaymentSectionController.Item.checkoutButton.rawValue
+        guard let checkoutButtonCell = sectionController.context.cellForItem(checkoutButtonIdentifier) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+        
+        let mockProvider = AWXCardProvider(
+            delegate: MockProviderDelegate(),
+            session: mockMethodProvider.session,
+            paymentMethodType: mockMethodProvider.selectedMethod
+        )
+        let cardIdentifier = NewCardPaymentSectionController.Item.cardInfo.rawValue
+        guard let cardInfoCell = sectionController.context.cellForItem(cardIdentifier) as? CardInfoCollectorCell else {
+            XCTFail()
+            return
+        }
+        cardInfoCell.viewModel?.cardNumberConfigurer.text = mockCard.number
+        cardInfoCell.viewModel?.expireDataConfigurer.text = "\(mockCard.expiryMonth)/\(mockCard.expiryYear.suffix(2))"
+        cardInfoCell.viewModel?.cvcConfigurer.text = mockCard.cvc
+        guard let card = cardInfoCell.viewModel?.cardFromCollectedInfo() else {
+            XCTFail()
+            return
+        }
+        XCTAssertNoThrow(try mockProvider.validate(card: card, billing: mockShippingInfo))
+        
+        let countryCodeItem = NewCardPaymentSectionController.Item.billingFieldCountryCode.rawValue
+        guard let countryCodeCell = sectionController.context.cellForItem(countryCodeItem) as? CountrySelectionCell else {
+            XCTFail()
+            return
+        }
+        print(sectionController.items)
+        countryCodeCell.viewModel?.country = nil
+        checkoutButtonCell.viewModel?.checkoutAction()
+        XCTAssertNotNil(mockViewController.presentedViewControllerSpy)
+        XCTAssert(mockViewController.presentedViewControllerSpy is AWXAlertController)
+        countryCodeCell.viewModel?.text = mockCard.name
+        mockViewController.presentedViewControllerSpy = nil
+        
+        countryCodeCell.viewModel?.handleUserInteraction()
+        XCTAssert(mockViewController.presentedViewControllerSpy is UINavigationController)
+    }
 }

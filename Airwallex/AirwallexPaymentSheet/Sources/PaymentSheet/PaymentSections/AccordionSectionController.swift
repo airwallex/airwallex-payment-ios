@@ -133,7 +133,7 @@ class AccordionSectionController: SectionController  {
                 imageURL: methodType.resources.logoURL,
                 isSelected: false,
                 imageLoader: imageLoader,
-                supportedBrands: methodType.cardSchemes.map { $0.brandType }
+                cardBrands: methodType.cardSchemes.map { $0.brandType }
             )
         }
     }

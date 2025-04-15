@@ -68,4 +68,23 @@
     XCTAssertEqual([AWXCardValidator cvcLengthForBrand:AWXBrandTypeUnknown], 3);
 }
 
+- (void)testMostSpecificCardBrandForNumber {
+    AWXBrand *brand = [AWXCardValidator.sharedCardValidator mostSpecificCardBrandForNumber:@"499"];
+    XCTAssertEqual(brand.type, AWXBrandTypeVisa);
+    XCTAssertEqual(brand.length, 16);
+    brand = [AWXCardValidator.sharedCardValidator mostSpecificCardBrandForNumber:@"49"];
+    XCTAssertEqual(brand.type, AWXBrandTypeVisa);
+    XCTAssertEqual(brand.length, 13);
+}
+
+- (void)testPossibleBrandTypesForCardNumber {
+    NSArray<NSNumber *> *candidates = [AWXCardValidator.sharedCardValidator possibleBrandTypesForCardNumber:@"6"];
+    XCTAssertEqual(candidates.count, 3);
+    candidates = [AWXCardValidator.sharedCardValidator possibleBrandTypesForCardNumber:@"60"];
+    XCTAssertEqual(candidates.count, 1);
+    XCTAssertEqual(candidates.firstObject.unsignedIntValue, AWXBrandTypeDiscover);
+    candidates = [AWXCardValidator.sharedCardValidator possibleBrandTypesForCardNumber:@""];
+    XCTAssertEqual(candidates.count, 7);
+}
+
 @end

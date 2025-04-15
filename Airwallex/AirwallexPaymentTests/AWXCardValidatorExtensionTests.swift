@@ -83,9 +83,6 @@ class AWXCardValidatorExtensionTests: XCTestCase {
     }
     
     func testValidateCard() {
-        let validator = AWXCardValidator([visaScheme])
-        XCTAssertNotNil(validator)
-        
         let validCard = AWXCard(name: "John Doe", cardNumber: "4111111111111111", expiryMonth: "12", expiryYear: "2030", cvc: "123")
         let invalidSchema = AWXCard(name: "John Doe", cardNumber: "34111111111111111", expiryMonth: "12", expiryYear: "2030", cvc: "123")
         let invalidCardNumber = AWXCard(name: "John Doe", cardNumber: "4111111111111", expiryMonth: "12", expiryYear: "2030", cvc: "123")
@@ -94,23 +91,67 @@ class AWXCardValidatorExtensionTests: XCTestCase {
         let invalidName = AWXCard(name: "", cardNumber: "4111111111111111", expiryMonth: "12", expiryYear: "2030", cvc: "123")
         
         // Valid card
-        XCTAssertNoThrow(try validator.validate(card: validCard, nameRequired: true))
-        XCTAssertThrowsError(try validator.validate(card: invalidSchema, nameRequired: true))
+        XCTAssertNoThrow(try AWXCardValidator.validate(
+            card: validCard,
+            nameRequired: true,
+            supportedSchemes: [visaScheme])
+        )
+        XCTAssertThrowsError(try AWXCardValidator.validate(
+            card: invalidSchema,
+            nameRequired: true,
+            supportedSchemes: [visaScheme])
+        )
         
         // Invalid card number
-        XCTAssertThrowsError(try validator.validate(card: invalidCardNumber, nameRequired: true))
+        XCTAssertThrowsError(try AWXCardValidator.validate(
+            card: invalidCardNumber,
+            nameRequired: true,
+            supportedSchemes: [visaScheme])
+        )
         
         // Invalid expiry
-        XCTAssertThrowsError(try validator.validate(card: invalidExpiry, nameRequired: true))
+        XCTAssertThrowsError(try AWXCardValidator.validate(
+            card: invalidExpiry,
+            nameRequired: true,
+            supportedSchemes: [visaScheme])
+        )
         
         // Invalid CVC
-        XCTAssertThrowsError(try validator.validate(card: invalidCVC, nameRequired: true))
+        XCTAssertThrowsError(try AWXCardValidator.validate(
+            card: invalidCVC,
+            nameRequired: true,
+            supportedSchemes: [visaScheme])
+        )
         
         // Invalid name on card
-        XCTAssertThrowsError(try validator.validate(card: invalidName, nameRequired: true))
+        XCTAssertThrowsError(try AWXCardValidator.validate(
+            card: invalidName,
+            nameRequired: true,
+            supportedSchemes: [visaScheme])
+        )
         
         // Valid card without name required
-        XCTAssertNoThrow(try validator.validate(card: validCard, nameRequired: false))
-        XCTAssertNoThrow(try validator.validate(card: invalidName, nameRequired: false))
+        XCTAssertNoThrow(try AWXCardValidator.validate(
+            card: validCard,
+            nameRequired: false,
+            supportedSchemes: [visaScheme])
+        )
+        XCTAssertNoThrow(try AWXCardValidator.validate(
+            card: invalidName,
+            nameRequired: false,
+            supportedSchemes: [visaScheme])
+        )
+    }
+    
+    func testPossibleBrandTypesForCardNumber() {
+        var candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: "6")
+        XCTAssertEqual(candidates.count, 3)
+        candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: "60")
+        XCTAssertEqual(candidates.count, 1)
+        XCTAssertEqual(candidates.first, AWXBrandType.discover)
+        candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: nil)
+        XCTAssertEqual(candidates.count, 7)
+        candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: "")
+        XCTAssertEqual(candidates.count, 7)
     }
 }

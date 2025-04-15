@@ -14,9 +14,6 @@ import AirwallexCore
 class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardBrandViewConfiguring {
     let supportedBrands: [AWXBrandType]
     var currentBrand: AWXBrandType? {
-        guard let text, !text.isEmpty else {
-            return nil
-        }
         if supportedBrands.contains(formatter.currentBrand) {
             return formatter.currentBrand
         } else {
@@ -24,12 +21,17 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardBrandVi
         }
     }
     
-    private let formatter = CardNumberFormatter()
+    var cardBrands: [AWXBrandType] {
+        formatter.candidates.filter { supportedBrands.contains($0) }
+    }
+    
+    private let formatter: CardNumberFormatter
     
     init(supportedCardSchemes: [AWXCardScheme],
          editingEventObserver: EditingEventObserver?,
          reconfigureHandler: @escaping ReconfigureHandler) {
         supportedBrands = supportedCardSchemes.map { $0.brandType }
+        formatter = CardNumberFormatter(candidates: supportedBrands)
         super.init(
             textFieldType: .cardNumber,
             placeholder: "1234 1234 1234 1234",

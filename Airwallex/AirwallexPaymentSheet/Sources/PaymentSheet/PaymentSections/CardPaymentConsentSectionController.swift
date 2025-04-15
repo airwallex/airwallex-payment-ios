@@ -61,7 +61,7 @@ class CardPaymentConsentSectionController: SectionController {
         imageURL: methodType.resources.logoURL,
         isSelected: true,
         imageLoader: imageLoader,
-        supportedBrands: []
+        cardBrands: []
     )
     
     private lazy var viewModelForConsentToggle = CardPaymentToggleCellViewModel(

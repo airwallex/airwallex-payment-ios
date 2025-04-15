@@ -7,19 +7,24 @@
 //
 
 import UIKit
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
 import Combine
 #if canImport(AirwallexPayment)
+import AirwallexCore
 @_spi(AWX) import AirwallexPayment
 #endif
 
 class CardNumberFormatter: UserInputFormatter {
     
     private(set) var currentBrand: AWXBrandType = .unknown
+    private(set) var candidates: [AWXBrandType]
     
     private(set) var maxLength: Int = AWXCardValidator.shared().maxLength(forCardNumber: "")
+    
+    init(currentBrand: AWXBrandType = .unknown,
+         candidates: [AWXBrandType] = AWXBrandType.allAvailable) {
+        self.currentBrand = currentBrand
+        self.candidates = candidates
+    }
     
     func formatUserInput(_ textField: UITextField,
                          changeCharactersIn range: Range<String.Index>,
@@ -28,16 +33,12 @@ class CardNumberFormatter: UserInputFormatter {
             .replacingCharacters(in: range, with: string)
             .filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         
-        var cardBrandType: AWXBrandType = .unknown
-        if !userInput.isEmpty, let brand = AWXCardValidator.shared().brand(forCardNumber: userInput) {
-            cardBrandType = brand.type
-        }
-        currentBrand = cardBrandType
-        
+        candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: userInput)
+        currentBrand = AWXCardValidator.shared().mostSpecificCardBrand(forNumber: userInput)?.type ?? .unknown
         maxLength = AWXCardValidator.shared().maxLength(forCardNumber: userInput)
         let attributedText = formatText(
             userInput,
-            brand: cardBrandType,
+            brand: currentBrand,
             attributes: textField.defaultTextAttributes
         )
         guard maxLength >= attributedText.length else {
@@ -54,11 +55,7 @@ class CardNumberFormatter: UserInputFormatter {
             string: text,
             attributes: attributes
         )
-        var type: AWXBrandType = .unknown
-        if !text.isEmpty, let brand = AWXCardValidator.shared().brand(forCardNumber: text) {
-            type = brand.type
-        }
-        let cardNumberFormat = AWXCardValidator.cardNumberFormat(for: type)
+        let cardNumberFormat = AWXCardValidator.cardNumberFormat(for: brand)
         var index = 0
         outerLoop: for number in cardNumberFormat {
             let segmentLength = number.intValue
