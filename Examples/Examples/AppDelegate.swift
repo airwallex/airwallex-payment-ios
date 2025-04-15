@@ -7,15 +7,10 @@
 //
 
 import UIKit
-#if canImport(Airwallex)
 import Airwallex
-#elseif canImport(AirwallexPayment)
-import AirwallexPayment
-import AirwallexCore
-#endif
 
-#if canImport(WechatOpenSDK)
-import WechatOpenSDK
+#if canImport(WechatOpenSDKDynamic)
+import WechatOpenSDKDynamic
 #endif
 
 @main
@@ -28,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ExamplesKeys.loadDefaultKeysIfNilOrEmpty()
         Airwallex.setMode(ExamplesKeys.environment)
         
-#if canImport(WechatOpenSDK)
+#if canImport(WechatOpenSDKDynamic)
         WXApi.registerApp("wx4c86d73fe4f82431", universalLink: "https://airwallex.com/")
         WXApi.startLog(by: .normal) { log in
             print("WeChat Log: \(log)")
@@ -43,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         NotificationCenter.default.post(name: PaymentResultViewController.paymentResultNotification, object: nil)
-#if canImport(WechatOpenSDK)
+#if canImport(WechatOpenSDKDynamic)
         return WXApi.handleOpen(url, delegate: self)
 #else
         return true
@@ -51,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-#if canImport(WechatOpenSDK)
+#if canImport(WechatOpenSDKDynamic)
 extension AppDelegate: WXApiDelegate {
     
     func onResp(_ resp: BaseResp) {

@@ -15,36 +15,22 @@
     {
       "target" : {
         "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
-        "identifier" : "085BD3D023CC62B4002E8F27",
-        "name" : "CoreTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
-        "identifier" : "3C99E78D27EAF1A20074156C",
-        "name" : "ApplePayTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
-        "identifier" : "5775CEB226E5DF3300C6AFE3",
-        "name" : "RedirectTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
-        "identifier" : "5775CE8C26E5DDDF00C6AFE3",
-        "name" : "CardTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
         "identifier" : "D81983472D6F120B008008A3",
-        "name" : "PaymentTests"
+        "name" : "AirwallexPaymentTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
+        "identifier" : "D85041C32DA7957A0074BA7F",
+        "name" : "AirwallexPaymentSheetTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Airwallex\/Airwallex.xcodeproj",
+        "identifier" : "085BD3D023CC62B4002E8F27",
+        "name" : "AirwallexCoreTests"
       }
     }
   ],

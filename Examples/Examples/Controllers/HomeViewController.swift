@@ -7,12 +7,7 @@
 //
 
 import UIKit
-#if canImport(Airwallex)
 import Airwallex
-#elseif canImport(AirwallexPayment)
-import AirwallexPayment
-import AirwallexCore
-#endif
 
 class HomeViewController: UIViewController {
 

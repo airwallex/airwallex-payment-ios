@@ -6,7 +6,7 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Combine
 
 /// adjust scrollview content inset base on keyboard frame and how much they overlap

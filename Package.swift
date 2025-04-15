@@ -4,13 +4,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "AirwallexPaymentSDK",
+    name: "Airwallex",
     platforms: [ .iOS(.v13) ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Airwallex",
-            targets: [ "AirwallexPayment", "AirwallexWeChatpay" ]
+            targets: [ "Airwallex" ]
+        ),
+        .library(
+            name: "AirwallexPaymentSheet",
+            targets: [ "AirwallexPaymentSheet" ]
         ),
         .library(
             name: "AirwallexPayment",
@@ -21,20 +25,8 @@ let package = Package(
             targets: ["AirwallexCore"]
         ),
         .library(
-            name: "AirwallexApplePay",
-            targets: ["AirwallexApplePay"]
-        ),
-        .library(
-            name: "AirwallexCard",
-            targets: ["AirwallexCard"]
-        ),
-        .library(
-            name: "AirwallexRedirect",
-            targets: ["AirwallexRedirect"]
-        ),
-        .library(
-            name: "AirwallexWeChatPay",
-            targets: ["AirwallexWeChatPay"]
+            name: "AirwallexWeChatpay",
+            targets: ["AirwallexWeChatpay"]
         )
     ],
     targets: [
@@ -51,21 +43,35 @@ let package = Package(
             path: "Frameworks/WechatOpenSDKDynamic.xcframework"
         ),
         .target(
+            name: "Airwallex",
+            dependencies: [
+                .target(name: "AirwallexPaymentSheet")
+            ],
+            path: "Airwallex/Airwallex",
+            sources: [ "Airwallex_Export.swift" ]
+        ),
+        .target(
+            name: "AirwallexPaymentSheet",
+            dependencies: [
+                .target(name: "AirwallexPayment")
+            ],
+            path: "Airwallex/AirwallexPaymentSheet",
+            sources: [ "Sources" ],
+            resources: [ .process("Resources")]
+        ),
+        .target(
             name: "AirwallexPayment",
             dependencies: [
-                .target(name: "AirwallexCore"),
-                .target(name: "AirwallexApplePay"),
-                .target(name: "AirwallexCard"),
-                .target(name: "AirwallexRedirect"),
+                .target(name: "AirwallexCore")
             ],
-            path: "Airwallex/Payment",
+            path: "Airwallex/AirwallexPayment",
             sources: [ "Sources" ],
             resources: [ .process("Resources")]
         ),
         .target(
             name: "AirwallexCore",
             dependencies: [ "AirwallexRisk", "AirTracker" ],
-            path: "Airwallex/Core",
+            path: "Airwallex/AirwallexCore",
             exclude: [ "Sources/Empty.swift" ],
             sources: [ "Sources" ],
             resources: [ .process("Resources")],
@@ -76,39 +82,12 @@ let package = Package(
             ]
         ),
         .target(
-            name: "AirwallexApplePay",
-            dependencies: [ "AirwallexCore" ],
-            path: "Airwallex/ApplePay",
-            publicHeadersPath: "",
-            cSettings: [
-                .headerSearchPath("Internal")
-            ]
-        ),
-        .target(
-            name: "AirwallexCard",
-            dependencies: [ "AirwallexCore" ],
-            path: "Airwallex/Card",
-            publicHeadersPath: "",
-            cSettings: [
-                .headerSearchPath("Internal")
-            ]
-        ),
-        .target(
-            name: "AirwallexRedirect",
-            dependencies: [ "AirwallexCore" ],
-            path: "Airwallex/Redirect",
-            publicHeadersPath: "",
-            cSettings: [
-                .headerSearchPath("Internal")
-            ]
-        ),
-        .target(
-            name: "AirwallexWeChatPay",
+            name: "AirwallexWeChatpay",
             dependencies: [
                 "AirwallexCore",
                 .target(name: "WechatOpenSDKDynamic")
             ],
-            path: "Airwallex/WeChatPay",
+            path: "Airwallex/AirwallexWeChatpay",
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")
