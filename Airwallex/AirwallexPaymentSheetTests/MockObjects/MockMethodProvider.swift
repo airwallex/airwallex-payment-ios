@@ -31,6 +31,7 @@ class MockMethodProvider: PaymentMethodProvider {
     
     var consents: [AWXPaymentConsent]
     
+    var mockSchemaDetails: AWXGetPaymentMethodTypeResponse?
     init(methods: [AWXPaymentMethodType], consents: [AWXPaymentConsent]) {
         self.methods = methods
         self.consents = consents
@@ -42,6 +43,9 @@ class MockMethodProvider: PaymentMethodProvider {
     }
     
     func getPaymentMethodTypeDetails(name: String) async throws -> AWXGetPaymentMethodTypeResponse {
+        if let mockSchemaDetails {
+            return mockSchemaDetails
+        }
         fatalError()
     }
 }
