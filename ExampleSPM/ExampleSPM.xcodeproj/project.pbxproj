@@ -47,6 +47,7 @@
 		D8B38C792D9E5F6C00909ADD /* Keys.json in Resources */ = {isa = PBXBuildFile; fileRef = D8B38C3E2D9E5F6C00909ADD /* Keys.json */; };
 		D8B38C7A2D9E5F6C00909ADD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8B38C442D9E5F6C00909ADD /* Main.storyboard */; };
 		D8B38C7D2D9E5FA200909ADD /* Airwallex in Frameworks */ = {isa = PBXBuildFile; productRef = D8B38C7C2D9E5FA200909ADD /* Airwallex */; };
+		D8B42F3E2DA8C537005799F2 /* AirwallexWeChatpay in Frameworks */ = {isa = PBXBuildFile; productRef = D8B42F3D2DA8C537005799F2 /* AirwallexWeChatpay */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8B38C7D2D9E5FA200909ADD /* Airwallex in Frameworks */,
+				D8B42F3E2DA8C537005799F2 /* AirwallexWeChatpay in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				D8B38BC42D9E5DDD00909ADD /* ExampleSPM */,
+				D8B42F3C2DA8C537005799F2 /* Frameworks */,
 				D8B38B842D9E5C7500909ADD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -235,6 +238,13 @@
 			path = ../Examples/Examples/Views;
 			sourceTree = SOURCE_ROOT;
 		};
+		D8B42F3C2DA8C537005799F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -253,6 +263,7 @@
 			name = ExampleSPM;
 			packageProductDependencies = (
 				D8B38C7C2D9E5FA200909ADD /* Airwallex */,
+				D8B42F3D2DA8C537005799F2 /* AirwallexWeChatpay */,
 			);
 			productName = ExampleSPM;
 			productReference = D8B38B832D9E5C7500909ADD /* ExampleSPM.app */;
@@ -599,6 +610,11 @@
 		D8B38C7C2D9E5FA200909ADD /* Airwallex */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Airwallex;
+		};
+		D8B42F3D2DA8C537005799F2 /* AirwallexWeChatpay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D8B38C7B2D9E5FA200909ADD /* XCLocalSwiftPackageReference "../../airwallex-payment-ios" */;
+			productName = AirwallexWeChatpay;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

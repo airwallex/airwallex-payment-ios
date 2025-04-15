@@ -7,13 +7,8 @@
 //
 
 import UIKit
-#if canImport(Airwallex)
-import Airwallex
-#elseif canImport(AirwallexPayment)
-import AirwallexPayment
-import AirwallexCore
-#endif
 import Combine
+import Airwallex
 
 class SettingsViewController: UIViewController {
     

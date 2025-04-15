@@ -6,6 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import Airwallex
+
 extension AirwallexSDKMode {
     var displayName: String {
         switch self {

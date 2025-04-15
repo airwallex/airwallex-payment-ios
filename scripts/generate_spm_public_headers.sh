@@ -7,7 +7,7 @@ if [ -n "$CI" ]; then
     exit 0
 fi
 
-AIRWALLEX_CORE_PUBLIC_HEADER_PATH="${SRCROOT}/../Airwallex/Core/include"
+AIRWALLEX_CORE_PUBLIC_HEADER_PATH="${SRCROOT}/../Airwallex/AirwallexCore/include"
 AIRWALLEX_CORE_SOURCE_RELATIVE_PATH="../Sources"
 
 rm -rf $AIRWALLEX_CORE_PUBLIC_HEADER_PATH/*.*
