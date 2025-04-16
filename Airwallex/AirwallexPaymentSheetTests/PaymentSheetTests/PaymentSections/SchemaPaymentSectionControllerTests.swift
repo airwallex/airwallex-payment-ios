@@ -32,12 +32,45 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockMethodProvider.selectedMethod = mockSchemaMethod
     }
     
-    func testInit() {
+    private func getSchemaPaymentSectionController() -> SchemaPaymentSectionController? {
+        guard let sectionController = mockManager.sectionControllers[.schemaPayment("axs_kiosk")]?.embededSectionController as? SchemaPaymentSectionController else {
+            XCTFail()
+            return nil
+        }
+        return sectionController
+    }
+    
+    func testInit() async {
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
-        guard let sectionController = mockManager.sectionControllers[.schemaPayment("axs_kiosk")] else {
+        guard let sectionController = getSchemaPaymentSectionController() else { return }
+        XCTAssertEqual(sectionController.section, .schemaPayment("axs_kiosk"))
+        XCTAssertEqual(sectionController.layout, .tab)
+        try? await Task.sleep(nanoseconds: 10_000)
+        XCTAssert(sectionController.items.contains("shopper_name"))
+        XCTAssert(sectionController.items.contains("shopper_email"))
+        XCTAssert(sectionController.items.contains("shopper_phone"))
+        mockViewController.view.layoutIfNeeded()
+        guard let cell = sectionController.context.cellForItem("shopper_name") else {
             XCTFail()
             return
         }
+    }
+    
+    func testInit_Accordionlayout() async {
+        mockSectionProvider.layout = .accordion
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+        guard let sectionController = getSchemaPaymentSectionController() else { return }
+        XCTAssertEqual(sectionController.section, .schemaPayment("axs_kiosk"))
+        XCTAssertEqual(sectionController.layout, .accordion)
+        try? await Task.sleep(nanoseconds: 10_000)
+        XCTAssert(sectionController.items.contains(SchemaPaymentSectionController.Item.accordionKey))
+        mockViewController.view.layoutIfNeeded()
+        guard let cell = sectionController.context.cellForItem(SchemaPaymentSectionController.Item.accordionKey) as? AccordionPaymentMethodCell else {
+            XCTFail()
+            return
+        }
+        XCTAssert(cell.viewModel?.isSelected == true)
     }
 }
