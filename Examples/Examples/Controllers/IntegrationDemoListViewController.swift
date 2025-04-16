@@ -571,16 +571,21 @@ private extension IntegrationDemoListViewController {
     }
     
     func updateRequiredBillingContactFields(_ session: AWXSession) {
-        var requiredBillingContactFields: RequiredBillingContactFields = session.requiredBillingContactFields
+        var requiredBillingContactFields: RequiredBillingContactFields = []
+        if ExamplesKeys.requiresName {
+            requiredBillingContactFields.insert(.name)
+        }
         if ExamplesKeys.requiresEmail {
             requiredBillingContactFields.insert(.email)
-        } else {
-            requiredBillingContactFields.remove(.email)
+        }
+        if ExamplesKeys.requiresPhone {
+            requiredBillingContactFields.insert(.phone)
         }
         if ExamplesKeys.requiresAddress {
             requiredBillingContactFields.insert(.address)
-        } else {
-            requiredBillingContactFields.remove(.address)
+        }
+        if ExamplesKeys.requiresCountryCode {
+            requiredBillingContactFields.insert(.countryCode)
         }
         session.requiredBillingContactFields = requiredBillingContactFields
     }

@@ -75,21 +75,22 @@ class SettingsViewController: UIViewController {
         return view
     }()
     
-    private lazy var switchForEmail: ConfigSwitchView = {
-        let view = ConfigSwitchView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var switchForAddress: ConfigSwitchView = {
-        let view = ConfigSwitchView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var switchForAutoCapture: ConfigSwitchView = {
         let view = ConfigSwitchView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var requiredBillingFieldsEntry: ConfigEntryView = {
+        let view = ConfigEntryView()
+        let viewModel = ConfigEntryViewModel(
+            text: NSLocalizedString("Required billing fields", comment: pageName)
+        ) { [weak self] in
+            guard let self else { return }
+            let vc = BillingFieldsSettingViewController(settings: self.settings)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        view.setup(viewModel)
         return view
     }()
     
@@ -225,8 +226,7 @@ private extension SettingsViewController {
         stack.addArrangedSubview(optionForNextTrigger)
         stack.addArrangedSubview(optionForPaymentLayout)
         
-        stack.addArrangedSubview(switchForEmail)
-        stack.addArrangedSubview(switchForAddress)
+        stack.addArrangedSubview(requiredBillingFieldsEntry)
         stack.addArrangedSubview(switchForAutoCapture)
         stack.addArrangedSubview(fieldForCustomerId)
         
@@ -365,24 +365,6 @@ private extension SettingsViewController {
     }
     
     func setupSwitches() {
-        switchForEmail.setup(
-            ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires Email", comment: pageName),
-                isOn: settings.requiresEmail,
-                action: { [weak self] isOn in
-                    self?.settings.requiresEmail = isOn
-                }
-            )
-        )
-        switchForAddress.setup(
-            ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires Address", comment: pageName),
-                isOn: settings.requiresAddress,
-                action: { [weak self] isOn in
-                    self?.settings.requiresAddress = isOn
-                }
-            )
-        )
         switchForAutoCapture.setup(
             ConfigSwitchViewModel(
                 title: NSLocalizedString("Auto capture", comment: pageName),
