@@ -18,7 +18,8 @@ class AWXSchemaExtensionTests: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        mockSchema = Bundle.decode(file: "method_type_online_banking")!
+        let response = AWXGetPaymentMethodTypeResponse.parse(Bundle.dataOfFile("method_type_online_banking")!) as! AWXGetPaymentMethodTypeResponse
+        mockSchema = response.schemas.first!
     }
     
     func testBankField() {
