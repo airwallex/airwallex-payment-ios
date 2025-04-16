@@ -1,1 +1,1 @@
-../Sources/AWXCardScheme.h
+../Sources/Model/AWXCardScheme.h

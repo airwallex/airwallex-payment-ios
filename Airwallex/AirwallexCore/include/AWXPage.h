@@ -1,1 +1,1 @@
-../Sources/AWXPage.h
+../Sources/Model/AWXPage.h

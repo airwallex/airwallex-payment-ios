@@ -1,1 +1,1 @@
-../Sources/NSObject+Logging.h
+../Sources/Logging/NSObject+Logging.h

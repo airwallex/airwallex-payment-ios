@@ -1,1 +1,1 @@
-../Sources/AWXCodable.h
+../Sources/Model/AWXCodable.h

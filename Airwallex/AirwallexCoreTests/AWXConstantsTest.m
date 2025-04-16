@@ -11,7 +11,6 @@
 #import "AWXCardProvider.h"
 #import "AWXDefaultProvider.h"
 #import "AWXPaymentMethod.h"
-#import "AWXSchemaProvider.h"
 #import <XCTest/XCTest.h>
 
 #pragma mark - Sample providers for test purposes
@@ -65,7 +64,7 @@
     resources.hasSchema = YES;
     type.resources = resources;
 
-    XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXSchemaProvider class]);
+    XCTAssertEqualObjects(ClassToHandleFlowForPaymentMethodType(type), [AWXDefaultProvider class]);
 }
 
 - (void)testClassToHandleFlowForPaymentMethodTypeDefault {

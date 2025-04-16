@@ -1,1 +1,1 @@
-../Sources/AWXPaymentConsentRequest.h
+../Sources/Network/AWXPaymentConsentRequest.h

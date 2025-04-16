@@ -108,7 +108,6 @@ FOUNDATION_EXPORT NSString *const AWXThreeDSWatingDeviceDataCollection;
 FOUNDATION_EXPORT NSString *const AWXThreeDSWaitingUserInfoInput;
 FOUNDATION_EXPORT NSString *const AWXThreeDSValidate;
 FOUNDATION_EXPORT NSString *const AWXThreeDSContinue;
-FOUNDATION_EXPORT NSString *const AWXDCC;
 
 FOUNDATION_EXPORT NSString *const AWXWeChatPayKey;
 FOUNDATION_EXPORT NSString *const AWXApplePayKey;

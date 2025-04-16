@@ -18,7 +18,7 @@ cd $AIRWALLEX_CORE_PUBLIC_HEADER_PATH
 public_headers_list=$(
     find "$AIRWALLEX_CORE_SOURCE_RELATIVE_PATH" \
         -type f -name "*.[h]" \
-        -not -path "$AIRWALLEX_CORE_SOURCE_RELATIVE_PATH/Internal/*" \
+        -not -path "$AIRWALLEX_CORE_SOURCE_RELATIVE_PATH/**/Internal/*" \
         | sed "s| \([^/]\)|:\1|g"
 )
 

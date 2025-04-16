@@ -6,8 +6,8 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
+#import "AWXCardCVCViewController.h"
 #import "AWXCardProvider.h"
-#import "AWXCardViewController.h"
 #import "AWXDevice.h"
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
@@ -15,7 +15,6 @@
 #import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
-#import "AWXPaymentViewController.h"
 #import "AWXProviderDelegateSpy.h"
 #import "AWXSession.h"
 #import <OCMock/OCMock.h>
@@ -55,23 +54,6 @@
 - (void)testCanHandleSessionWhenCardSchemesIsEmpty {
     _paymentMethod.cardSchemes = [NSArray new];
     XCTAssertFalse([AWXCardProvider canHandleSession:_session paymentMethod:_paymentMethod]);
-}
-
-- (void)testHandleFlowWhenLaunchDirectly {
-    id spy = OCMClassMock([AWXProviderDelegateSpy class]);
-    AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
-    session.autoCapture = YES;
-    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session paymentMethodType:paymentMethod];
-    provider.showPaymentDirectly = YES;
-    [provider handleFlow];
-    OCMVerify(times(1), [spy provider:provider
-                            shouldPresentViewController:[OCMArg checkWithBlock:^BOOL(id obj) {
-                                XCTAssertTrue([obj isKindOfClass:AWXCardViewController.class]);
-                                return true;
-                            }]
-                                         forceToDismiss:NO
-                                          withAnimation:YES]);
 }
 
 - (void)testHandleFlowWhenNotLaunchDirectly {
@@ -176,7 +158,7 @@
     id mockDelegate = OCMClassMock([AWXProviderDelegateSpy class]);
     AWXOneOffSession *session = [AWXOneOffSession new];
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:mockDelegate session:session];
-    AWXPaymentViewController *paymentVC = [[AWXPaymentViewController alloc] initWithNibName:nil bundle:nil];
+    AWXCardCVCViewController *paymentVC = [[AWXCardCVCViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:paymentVC];
 
     // Set up the mock to return a hostViewController

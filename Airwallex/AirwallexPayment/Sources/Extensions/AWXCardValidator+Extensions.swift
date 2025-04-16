@@ -28,7 +28,7 @@ import AirwallexCore
         
         do {
             // it's safe to force-unwrap here since `validate(number: card.number)` passed
-            let brand = AWXCardValidator.shared().brand(forCardNumber: card.number)!
+            let brand = AWXCardValidator.shared().brand(forCardNumber: card.number)
             try validate(cvc: card.cvc, requiredLength: Self.cvcLength(for: brand.type))
         } catch {
             throw NSLocalizedString("Invalid CVC / CVV", bundle: .payment, comment: "card validator error message").asError()
@@ -63,7 +63,7 @@ import AirwallexCore
         
         let brand = AWXCardValidator.shared().brand(forCardNumber: number)
         
-        guard let brand else {
+        guard brand.type != .unknown else {
             throw NSLocalizedString("Card not supported for payment", bundle: .payment, comment: "card validator error message").asError()
         }
         

@@ -69,10 +69,10 @@
 }
 
 - (void)testMostSpecificCardBrandForNumber {
-    AWXBrand *brand = [AWXCardValidator.sharedCardValidator mostSpecificCardBrandForNumber:@"499"];
+    AWXBrand *brand = [AWXCardValidator.sharedCardValidator brandForCardNumber:@"499"];
     XCTAssertEqual(brand.type, AWXBrandTypeVisa);
     XCTAssertEqual(brand.length, 16);
-    brand = [AWXCardValidator.sharedCardValidator mostSpecificCardBrandForNumber:@"49"];
+    brand = [AWXCardValidator.sharedCardValidator brandForCardNumber:@"49"];
     XCTAssertEqual(brand.type, AWXBrandTypeVisa);
     XCTAssertEqual(brand.length, 13);
 }

@@ -34,7 +34,7 @@ class CardNumberFormatter: UserInputFormatter {
             .filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
         
         candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: userInput)
-        currentBrand = AWXCardValidator.shared().mostSpecificCardBrand(forNumber: userInput)?.type ?? .unknown
+        currentBrand = AWXCardValidator.shared().brand(forCardNumber: userInput).type
         maxLength = AWXCardValidator.shared().maxLength(forCardNumber: userInput)
         let attributedText = formatText(
             userInput,

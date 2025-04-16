@@ -1,1 +1,1 @@
-../Sources/AWXDevice.h
+../Sources/Model/AWXDevice.h
