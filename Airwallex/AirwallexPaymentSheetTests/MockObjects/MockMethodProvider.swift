@@ -8,11 +8,19 @@
 
 import Foundation
 @testable import AirwallexPaymentSheet
+@testable @_spi(AWX) import AirwallexPayment
 import AirwallexCore
 import Combine
 
 class MockMethodProvider: PaymentMethodProvider {
-    var apiClient = AWXAPIClient(configuration: .shared())
+    var apiClient: AWXAPIClient = {
+        let sessionConfiguration = URLSessionConfiguration.ephemeral
+        sessionConfiguration.protocolClasses = [MockURLProtocol.self]
+        let clientConfiguration = AWXAPIClientConfiguration()
+        clientConfiguration.sessionConfiguration = sessionConfiguration
+        let client = AWXAPIClient(configuration: clientConfiguration)
+        return client
+    }()
     
     var session: AWXSession = {
         let session =  AWXOneOffSession()

@@ -23,15 +23,7 @@ import AirwallexCore
         mockViewController = MockPaymentResultDelegate()
         mockMethodProvider = MockMethodProvider(methods: [], consents: [])
         mockSectionProvider = MockPaymentSectionProvider(methodProvider: mockMethodProvider)
-        mockManager = CollectionViewManager(
-            viewController: mockViewController,
-            sectionProvider: mockSectionProvider
-        )
-        let collectionView = mockManager.collectionView
-        collectionView?.frame = mockViewController.view.bounds
-        mockViewController.view.addSubview(mockManager.collectionView)
-        collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
+      
         let shipping = AWXPlaceDetails()
         shipping.firstName = "John"
         shipping.lastName = "Appleseed"
@@ -46,6 +38,16 @@ import AirwallexCore
         shipping.address = address
         mockShippingInfo = shipping
         mockMethodProvider.session.billing = shipping
+
+        mockManager = CollectionViewManager(
+            viewController: mockViewController,
+            sectionProvider: mockSectionProvider
+        )
+        let collectionView = mockManager.collectionView
+        collectionView?.frame = mockViewController.view.bounds
+        mockViewController.view.addSubview(mockManager.collectionView)
+        collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
     }
     
 }

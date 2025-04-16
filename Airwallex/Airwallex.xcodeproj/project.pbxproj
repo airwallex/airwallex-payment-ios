@@ -153,10 +153,9 @@
 		C844DC7E2C3CE37F0099614C /* NSObject+Logging.h in Headers */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D801BDE12DA7BE2A0025D913 /* AWXSchemaExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87F32D9E335D00D082EC /* AWXSchemaExtensionTests.swift */; };
 		D80E28AC2DA7C0AB00DC4383 /* AirwallexPaymentSheet.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D80E28AB2DA7C0AB00DC4383 /* AirwallexPaymentSheet.xctestplan */; };
-		D80E28AD2DA7C53000DC4383 /* method_type_axs_kiosk.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EB2D9E335D00D082EC /* method_type_axs_kiosk.json */; };
+		D80E28AD2DA7C53000DC4383 /* method_type_online_banking.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EB2D9E335D00D082EC /* method_type_online_banking.json */; };
 		D80E28AE2DA7C5CB00DC4383 /* method_types.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87ED2D9E335D00D082EC /* method_types.json */; };
 		D80E28AF2DA7C5CB00DC4383 /* method_type_card.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EC2D9E335D00D082EC /* method_type_card.json */; };
-		D80E28B02DA7C5CB00DC4383 /* online_banking_schema_payload.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EE2D9E335D00D082EC /* online_banking_schema_payload.json */; };
 		D80E28B12DA7C5CB00DC4383 /* payment_consents.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EF2D9E335D00D082EC /* payment_consents.json */; };
 		D81983492D6F120B008008A3 /* AirwallexPayment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D81983412D6F120B008008A3 /* AirwallexPayment.framework */; };
 		D81983D62D6F12BD008008A3 /* AirwallexCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* AirwallexCore.framework */; platformFilter = ios; };
@@ -427,6 +426,7 @@
 		D88E34B32DA7E35A00183A49 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D85040752DA794020074BA7F /* PrivacyInfo.xcprivacy */; };
 		D88E34B52DA7E4B600183A49 /* Bundle+PaymentSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88E34B42DA7E4B600183A49 /* Bundle+PaymentSheet.swift */; };
 		D8A599A22DAE71250045BFEC /* SchemaPaymentSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A599A12DAE71250045BFEC /* SchemaPaymentSectionControllerTests.swift */; };
+		D8A599A72DAF7A2D0045BFEC /* bank_list.json in Resources */ = {isa = PBXBuildFile; fileRef = D8A599A62DAF7A2D0045BFEC /* bank_list.json */; };
 		D8AD269A2D6862E5002DD3FD /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D8BD9E122D0191BF0045A892 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */; };
 		D8BD9E132D0191BF0045A892 /* Airwallex.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */; };
@@ -450,10 +450,9 @@
 		D8EC88272D9E335D00D082EC /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87F82D9E335D00D082EC /* StringExtensionTests.swift */; };
 		D8EC882E2D9E335D00D082EC /* ErrorMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC88002D9E335D00D082EC /* ErrorMessageTests.swift */; };
 		D8EC88322D9E335D00D082EC /* PaymentSessionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC88052D9E335D00D082EC /* PaymentSessionHandlerTests.swift */; };
-		D8EC88332D9E335D00D082EC /* method_type_axs_kiosk.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EB2D9E335D00D082EC /* method_type_axs_kiosk.json */; };
+		D8EC88332D9E335D00D082EC /* method_type_online_banking.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EB2D9E335D00D082EC /* method_type_online_banking.json */; };
 		D8EC88342D9E335D00D082EC /* method_type_card.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EC2D9E335D00D082EC /* method_type_card.json */; };
 		D8EC88352D9E335D00D082EC /* method_types.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87ED2D9E335D00D082EC /* method_types.json */; };
-		D8EC88362D9E335D00D082EC /* online_banking_schema_payload.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EE2D9E335D00D082EC /* online_banking_schema_payload.json */; };
 		D8EC88372D9E335D00D082EC /* payment_consents.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EF2D9E335D00D082EC /* payment_consents.json */; };
 		D8F2FAFD2DA8F9C300209602 /* EventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2FAFC2DA8F9C300209602 /* EventsTests.swift */; };
 		D8F2FAFF2DA9054900209602 /* AWXCardSchemeExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2FAFE2DA9054900209602 /* AWXCardSchemeExtensionTests.swift */; };
@@ -757,6 +756,7 @@
 		D88E34B42DA7E4B600183A49 /* Bundle+PaymentSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+PaymentSheet.swift"; sourceTree = "<group>"; };
 		D88E34B82DA7E93100183A49 /* Airwallex_Export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airwallex_Export.swift; sourceTree = "<group>"; };
 		D8A599A12DAE71250045BFEC /* SchemaPaymentSectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentSectionControllerTests.swift; sourceTree = "<group>"; };
+		D8A599A62DAF7A2D0045BFEC /* bank_list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = bank_list.json; sourceTree = "<group>"; };
 		D8B599692CF6F935005C3C1D /* AWXUIContext+Card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWXUIContext+Card.h"; sourceTree = "<group>"; };
 		D8B5996A2CF6F935005C3C1D /* AWXUIContext+Card.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AWXUIContext+Card.m"; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
@@ -879,10 +879,9 @@
 		D8EC87E62D9E335D00D082EC /* CardNumberValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberValidatorTests.swift; sourceTree = "<group>"; };
 		D8EC87E72D9E335D00D082EC /* InfoCollectorDefaultValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectorDefaultValidatorTests.swift; sourceTree = "<group>"; };
 		D8EC87E82D9E335D00D082EC /* PrefixPhoneNumberValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefixPhoneNumberValidatorTests.swift; sourceTree = "<group>"; };
-		D8EC87EB2D9E335D00D082EC /* method_type_axs_kiosk.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = method_type_axs_kiosk.json; sourceTree = "<group>"; };
+		D8EC87EB2D9E335D00D082EC /* method_type_online_banking.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = method_type_online_banking.json; sourceTree = "<group>"; };
 		D8EC87EC2D9E335D00D082EC /* method_type_card.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = method_type_card.json; sourceTree = "<group>"; };
 		D8EC87ED2D9E335D00D082EC /* method_types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = method_types.json; sourceTree = "<group>"; };
-		D8EC87EE2D9E335D00D082EC /* online_banking_schema_payload.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = online_banking_schema_payload.json; sourceTree = "<group>"; };
 		D8EC87EF2D9E335D00D082EC /* payment_consents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = payment_consents.json; sourceTree = "<group>"; };
 		D8EC87F12D9E335D00D082EC /* AWXDefaultProviderExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXDefaultProviderExtensionTests.swift; sourceTree = "<group>"; };
 		D8EC87F22D9E335D00D082EC /* AWXModelExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXModelExtensionTests.swift; sourceTree = "<group>"; };
@@ -1774,10 +1773,10 @@
 		D8EC87F02D9E335D00D082EC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D8EC87EB2D9E335D00D082EC /* method_type_axs_kiosk.json */,
+				D8EC87EB2D9E335D00D082EC /* method_type_online_banking.json */,
+				D8A599A62DAF7A2D0045BFEC /* bank_list.json */,
 				D8EC87EC2D9E335D00D082EC /* method_type_card.json */,
 				D8EC87ED2D9E335D00D082EC /* method_types.json */,
-				D8EC87EE2D9E335D00D082EC /* online_banking_schema_payload.json */,
 				D8EC87EF2D9E335D00D082EC /* payment_consents.json */,
 			);
 			path = Resources;
@@ -2221,10 +2220,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8DD6B4D2DA7BCDC0047E450 /* AirwallexPayment.xctestplan in Resources */,
-				D8EC88332D9E335D00D082EC /* method_type_axs_kiosk.json in Resources */,
+				D8EC88332D9E335D00D082EC /* method_type_online_banking.json in Resources */,
 				D8EC88342D9E335D00D082EC /* method_type_card.json in Resources */,
 				D8EC88352D9E335D00D082EC /* method_types.json in Resources */,
-				D8EC88362D9E335D00D082EC /* online_banking_schema_payload.json in Resources */,
 				D8EC88372D9E335D00D082EC /* payment_consents.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2242,10 +2240,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D80E28AC2DA7C0AB00DC4383 /* AirwallexPaymentSheet.xctestplan in Resources */,
-				D80E28AD2DA7C53000DC4383 /* method_type_axs_kiosk.json in Resources */,
+				D80E28AD2DA7C53000DC4383 /* method_type_online_banking.json in Resources */,
 				D80E28AE2DA7C5CB00DC4383 /* method_types.json in Resources */,
+				D8A599A72DAF7A2D0045BFEC /* bank_list.json in Resources */,
 				D80E28AF2DA7C5CB00DC4383 /* method_type_card.json in Resources */,
-				D80E28B02DA7C5CB00DC4383 /* online_banking_schema_payload.json in Resources */,
 				D80E28B12DA7C5CB00DC4383 /* payment_consents.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

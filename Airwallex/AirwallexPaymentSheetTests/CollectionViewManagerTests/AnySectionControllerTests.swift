@@ -11,17 +11,17 @@ import XCTest
 @testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
 
-class AnySectionControllerTests: XCTestCase {
+@MainActor class AnySectionControllerTests: XCTestCase {
     var mockContext: MockCollectionViewContext!
     var mockSectionController: MockSectionController<String, String>!
     
-    @MainActor override func setUp() {
+    override func setUp() {
         super.setUp()
         mockContext = MockCollectionViewContext()
         mockSectionController = MockSectionController(section: "TestSection", items: ["Item1", "Item2"])
     }
 
-    @MainActor func testSectionControllerProtocolMethods() {
+    func testSectionControllerProtocolMethods() {
         let anySectionController = mockSectionController.anySectionController()
         anySectionController.bind(context: mockContext)
         
@@ -82,5 +82,10 @@ class AnySectionControllerTests: XCTestCase {
         // Test sectionDidEndDisplaying
         anySectionController.sectionDidEndDisplaying()
         XCTAssertFalse(mockSectionController.sectionDisplaying)
+    }
+    
+    func testEmbededSectionController() {
+        let anySectionController = mockSectionController.anySectionController()
+        XCTAssert(anySectionController.embededSectionController === mockSectionController)
     }
 }

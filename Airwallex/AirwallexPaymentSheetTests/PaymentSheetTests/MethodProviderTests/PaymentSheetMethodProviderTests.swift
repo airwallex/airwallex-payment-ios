@@ -21,7 +21,6 @@ import Combine
     var mockAPIClient: AWXAPIClient!
     var mockMethodTypesData: Data!
     var mockConsentsData: Data!
-    var mockAXSKioskData: Data!
     var mockSession: AWXSession!
     var updates: [PaymentMethodProviderUpdateType]!
     var cancellable: AnyCancellable?
@@ -52,7 +51,6 @@ import Combine
         
         mockMethodTypesData = Bundle.dataOfFile("method_types")!
         mockConsentsData = Bundle.dataOfFile("payment_consents")!
-        mockAXSKioskData = Bundle.dataOfFile("method_type_axs_kiosk")
         
         provider = PaymentSheetMethodProvider(
             session: mockSession,
