@@ -486,7 +486,7 @@ private extension IntegrationDemoListViewController {
     
     func createPaymentIntent(force3DS: Bool = false) async throws -> AWXPaymentIntent {
         let request = PaymentIntentRequest(
-            amount: Decimal(string: ExamplesKeys.amount)!,
+            amount: Decimal(string: ExamplesKeys.amount) ?? 0,
             currency: ExamplesKeys.currency,
             order: DemoDataSource.createOrder(shipping: shippingAddress),
             metadata: ["id": 1],
