@@ -423,7 +423,8 @@ private extension CardPaymentConsentSectionController {
             paymentSessionHandler = PaymentSessionHandler(
                 session: session,
                 viewController: viewController,
-                paymentResultDelegate: AWXUIContext.shared().delegate
+                paymentResultDelegate: AWXUIContext.shared.delegate,
+                dismissAction: AWXUIContext.shared.dismissAction
             )
             try paymentSessionHandler?.confirmConsentPayment(with: consent)
         } catch {

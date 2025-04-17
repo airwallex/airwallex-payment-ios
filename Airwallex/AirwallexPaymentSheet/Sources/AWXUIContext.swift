@@ -1,30 +1,28 @@
 //
-//  AWXUIContext+extension.swift
-//  Airwallex
+//  AWXUIContext.swift
+//  AirwallexPaymentSheet
 //
-//  Created by Weiping Li on 2024/12/10.
-//  Copyright © 2024 Airwallex. All rights reserved.
+//  Created by Weiping Li on 2025/4/17.
+//  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import Foundation
 import UIKit
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
-import Combine
 #if canImport(AirwallexPayment)
+import AirwallexCore
 @_spi(AWX) import AirwallexPayment
 #endif
 
-//  MARK: - Method List
-@objc public extension AWXUIContext {
+@MainActor
+@objc public class AWXUIContext: NSObject {
     private static let subtypeDropin = "dropin"
     private static let subtypeElement = "component"
-    @objc enum LaunchStyle: Int {
+    @objc public enum LaunchStyle: Int {
         case push
         case present
     }
     
-    @objc enum PaymentLayout: Int, CaseIterable {
+    @objc public enum PaymentLayout: Int, CaseIterable {
         case accordion
         case tab
         
@@ -38,7 +36,7 @@ import Combine
         }
     }
     
-    enum LaunchError: ErrorLoggable {
+    public enum LaunchError: ErrorLoggable {
         case invalidCardBrand(String)
         case invalidViewHierarchy(String)
         case invalidMethodFilter(String)
@@ -78,7 +76,20 @@ import Combine
             "payment_validation_failure"
         }
     }
-        
+    
+    weak var delegate: AWXPaymentResultDelegate?
+    
+    /// One-time dismiss action, will be set every time `launchPayment(from:style:)` is called
+    /// and consumed in `PaymentSessionHandler` after payment success/failure/cancellation.
+    var dismissAction: PaymentSessionHandler.DismissActionBlock?
+    
+    @objc public static let shared = AWXUIContext()
+    private override init() {}
+}
+
+@objc public extension AWXUIContext {
+    // MARK: Launch Payment Sheet
+    
     /// Launches the Airwallex payment sheet.
     /// - Parameters:
     ///   - hostingVC: The view controller that launch the payment sheet and also acts as the `AWXPaymentResultDelegate`.
@@ -141,10 +152,7 @@ import Combine
         
         AnalyticsLogger.log(action: .paymentLaunched, extraInfo: [.subtype: Self.subtypeDropin])
     }
-}
-
-//  MARK: - Single Payment Method
-@objc public extension AWXUIContext {
+    //  MARK: - Launch by Payment Method
     
     /// Launches the Airwallex card payment flow.
     /// - Parameters:
@@ -263,8 +271,8 @@ private extension AWXUIContext {
             return
         }
         
-        AWXUIContext.shared().session = session
-        AWXUIContext.shared().delegate = paymentResultDelegate
+        AnalyticsLogger.shared().session = session
+        AWXUIContext.shared.delegate = paymentResultDelegate
         switch launchStyle {
         case .push:
             guard let nav = hostingVC.navigationController else {
@@ -279,14 +287,14 @@ private extension AWXUIContext {
                 layout: layout
             )
             nav.pushViewController(paymentVC, animated: true)
-            AWXUIContext.shared().paymentUIDismissAction = { [weak paymentVC, weak nav] completion in
+            AWXUIContext.shared.dismissAction = { [weak paymentVC, weak nav] completion in
                 guard let paymentVC, let nav else {
-                    completion?()
+                    completion()
                     return
                 }
                 CATransaction.begin()
                 CATransaction.setCompletionBlock {
-                    completion?()
+                    completion()
                 }
                 guard let index = nav.viewControllers.firstIndex(of: paymentVC),
                       let targetVC = nav.viewControllers[safe: index - 1] else {
@@ -316,13 +324,13 @@ private extension AWXUIContext {
                 nav.navigationBar.compactScrollEdgeAppearance = appearance
             }
             hostingVC.present(nav, animated: true)
-            AWXUIContext.shared().paymentUIDismissAction = { [weak nav] completion in
+            AWXUIContext.shared.dismissAction = { [weak nav] completion in
                 guard let nav else {
-                    completion?()
+                    completion()
                     return
                 }
                 nav.dismiss(animated: true) {
-                    completion?()
+                    completion()
                 }
             }
         }

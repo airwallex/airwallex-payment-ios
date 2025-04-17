@@ -17,7 +17,6 @@
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
-#import "AWXUIContext.h"
 #import "AWXUtils.h"
 #import "NSObject+Logging.h"
 

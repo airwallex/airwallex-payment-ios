@@ -7,7 +7,7 @@
 //
 
 #import "AWXDefaultProvider.h"
-#import "AWXUIContext.h"
+#import "AWXPaymentResultDelegate.h"
 #import "AWXViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN

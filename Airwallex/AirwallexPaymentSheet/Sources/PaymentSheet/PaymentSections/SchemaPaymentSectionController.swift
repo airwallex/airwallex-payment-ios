@@ -302,8 +302,9 @@ private extension SchemaPaymentSectionController {
                 paymentSessionHandler = PaymentSessionHandler(
                     session: session,
                     viewController: context.viewController!,
-                    paymentResultDelegate: AWXUIContext.shared().delegate,
-                    methodType: methodProvider.method(named: name)
+                    paymentResultDelegate: AWXUIContext.shared.delegate,
+                    methodType: methodProvider.method(named: name),
+                    dismissAction: AWXUIContext.shared.dismissAction
                 )
                 try paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
             } catch {

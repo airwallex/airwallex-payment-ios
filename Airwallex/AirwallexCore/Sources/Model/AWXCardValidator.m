@@ -384,7 +384,7 @@
 
 - (BOOL)isValidCardLength:(NSString *)cardNumber {
     AWXBrand *brand = [self brandForCardNumber:cardNumber];
-    if (brand) {
+    if (brand && brand.type != AWXBrandTypeUnknown) {
         return brand.length == cardNumber.length;
     }
     return NO;
