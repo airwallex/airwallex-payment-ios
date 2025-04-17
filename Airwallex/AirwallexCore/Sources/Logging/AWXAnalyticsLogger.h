@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class AWXAPIErrorResponse;
+@class AWXAPIErrorResponse, AWXSession;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +17,7 @@ NS_SWIFT_NAME(AnalyticsLogger)
 
 /// Defaults to `false`, will print all events to console if set to true
 @property (nonatomic, assign) BOOL verbose;
+@property (nonatomic, strong) AWXSession *session;
 
 + (instancetype)shared;
 

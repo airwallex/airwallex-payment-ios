@@ -48,22 +48,6 @@ static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
 
 @end
 
-@implementation NSUserDefaults (Utils)
-
-+ (NSUserDefaults *)awxUserDefaults {
-    return [[NSUserDefaults alloc] initWithSuiteName:kSDKSuiteName];
-}
-
-- (void)reset {
-    NSDictionary *keys = self.dictionaryRepresentation;
-    for (id key in keys) {
-        [self removeObjectForKey:key];
-    }
-    [self synchronize];
-}
-
-@end
-
 @implementation NSString (Utils)
 
 - (NSDictionary *)convertToDictionary {

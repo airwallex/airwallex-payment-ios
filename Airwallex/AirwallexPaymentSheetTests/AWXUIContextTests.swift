@@ -1,5 +1,5 @@
 //
-//  AWXUIContextExtensionsTests.swift
+//  AWXUIContextTests.swift
 //  PaymentTests
 //
 //  Created by Weiping Li on 2025/3/24.
@@ -13,7 +13,7 @@ import AirwallexCore
 @testable import AirwallexPaymentSheet
 import XCTest
 
-class AWXUIContextExtensionsTests: XCTestCase {
+@MainActor class AWXUIContextTests: XCTestCase {
     
     private var mockOneoffSession: AWXOneOffSession!
     private var mockViewController: MockPaymentResultDelegate!
@@ -39,9 +39,10 @@ class AWXUIContextExtensionsTests: XCTestCase {
     override class func tearDown() {
         super.tearDown()
         AWXAPIClientConfiguration.shared().clientSecret = nil
+        AWXUIContext.shared.dismissAction = nil
     }
     
-    @MainActor func testLaunchPaymentViewHierarchyAssertion() {
+    func testLaunchPaymentViewHierarchyAssertion() {
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: mockOneoffSession,
@@ -55,7 +56,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         }
     }
     
-    @MainActor func testLaunchPaymentPaymentIntentAssertionOneOffSession() {
+    func testLaunchPaymentPaymentIntentAssertionOneOffSession() {
         mockOneoffSession.paymentIntent = nil
         AWXUIContext.launchPayment(
             from: mockViewController,
@@ -75,7 +76,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         }
     }
     
-    @MainActor func testLaunchPaymentPaymentIntentAssertionRecurringWithIntentSession() {
+    func testLaunchPaymentPaymentIntentAssertionRecurringWithIntentSession() {
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: AWXRecurringWithIntentSession(),
@@ -94,7 +95,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         }
     }
     
-    @MainActor func testLaunchPaymentCustomerIdAssertionRecurringSession() {
+    func testLaunchPaymentCustomerIdAssertionRecurringSession() {
         // check recurring session
         AWXUIContext.launchPayment(
             from: mockViewController,
@@ -114,7 +115,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         }
     }
     
-    @MainActor func testLaunchPaymentCustomerIdAssertionRecurringWithIntentSession() {
+    func testLaunchPaymentCustomerIdAssertionRecurringWithIntentSession() {
         // check recurring with intent session
         let recurringWithIntentSession = AWXRecurringWithIntentSession()
         mockPaymentIntent.customerId = nil
@@ -137,7 +138,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         }
     }
     
-    @MainActor func testLaunchPaymentClientSecretAssertion() {
+    func testLaunchPaymentClientSecretAssertion() {
         AWXAPIClientConfiguration.shared().clientSecret = nil
         AWXUIContext.launchPayment(
             from: mockViewController,
@@ -156,7 +157,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         }
     }
     
-    @MainActor func testLaunchPaymentInvalidCardBrandAssertion() {
+    func testLaunchPaymentInvalidCardBrandAssertion() {
         AWXUIContext.launchCardPayment(
             from: mockViewController,
             session: mockOneoffSession,
@@ -175,7 +176,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         }
     }
     
-    @MainActor func testLaunchPaymentInvalidMethodFilterAssertion() {
+    func testLaunchPaymentInvalidMethodFilterAssertion() {
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: mockOneoffSession,
@@ -194,7 +195,7 @@ class AWXUIContextExtensionsTests: XCTestCase {
         }
     }
     
-    @MainActor func testLaunchPayment() {
+    func testLaunchPayment() {
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: mockOneoffSession,
@@ -207,13 +208,13 @@ class AWXUIContextExtensionsTests: XCTestCase {
             return
         }
         
-        XCTAssert(AWXUIContext.shared().delegate === mockViewController)
-        XCTAssert(AWXUIContext.shared().session === mockOneoffSession)
+        XCTAssert(AWXUIContext.shared.delegate === mockViewController)
+        XCTAssert(AnalyticsLogger.shared().session === mockOneoffSession)
         XCTAssertTrue(mockOneoffSession.hidePaymentConsents)
         XCTAssert(mockOneoffSession.paymentMethods?.count == 1 && mockOneoffSession.paymentMethods?.first == AWXApplePayKey)
     }
     
-    @MainActor func testLaunchCardPayment() {
+    func testLaunchCardPayment() {
         AWXUIContext.launchCardPayment(
             from: mockViewController,
             session: mockOneoffSession,
@@ -225,8 +226,8 @@ class AWXUIContextExtensionsTests: XCTestCase {
             return
         }
         
-        XCTAssert(AWXUIContext.shared().delegate === mockViewController)
-        XCTAssert(AWXUIContext.shared().session === mockOneoffSession)
+        XCTAssert(AWXUIContext.shared.delegate === mockViewController)
+        XCTAssert(AnalyticsLogger.shared().session === mockOneoffSession)
         XCTAssertNil(mockOneoffSession.paymentMethods)
         XCTAssertFalse(mockOneoffSession.hidePaymentConsents)
     }

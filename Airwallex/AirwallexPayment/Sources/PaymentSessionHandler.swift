@@ -94,6 +94,22 @@ public class PaymentSessionHandler: NSObject {
             methodType: methodType
         )
     }
+    
+    // UI Integration support
+    @_spi(AWX) public typealias DismissActionBlock = (@escaping () -> Void) -> Void
+    var dismissAction: DismissActionBlock? = nil
+    
+    @_spi(AWX) public init(session: AWXSession,
+                           viewController: UIViewController,
+                           paymentResultDelegate: AWXPaymentResultDelegate?,
+                           methodType: AWXPaymentMethodType? = nil,
+                           dismissAction: DismissActionBlock? = nil) {
+        self.session = session
+        self._viewController = viewController
+        self.methodType = methodType
+        self.paymentResultDelegate = paymentResultDelegate
+        self.dismissAction = dismissAction
+    }
 }
 
 /// expose for low-level API integration
@@ -349,17 +365,17 @@ extension PaymentSessionHandler: AWXProviderDelegate {
             AnalyticsLogger.log(action: .paymentCanceled)
         }
         debugLog("stauts: \(status), error: \(error?.localizedDescription ?? "N/A")")
-        if let action = AWXUIContext.shared().paymentUIDismissAction {
+        if let dismissAction {
             if let methodType, methodType.name == AWXApplePayKey, status == .inProgress {
                 // Remain in PaymentViewController when the Apple Pay status is .inProgress for UI integration
                 // This status typically occurs when the user forcefully dismisses the PKPaymentAuthorizationController—
                 // for example, by backgrounding the app—after successfully authorizing the payment.
                 return
             }
-            action {
+            dismissAction {
                 self.paymentResultDelegate?.paymentViewController(self.viewController, didCompleteWith: status, error: error)
             }
-            AWXUIContext.shared().paymentUIDismissAction = nil
+            self.dismissAction = nil
         } else {
             paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
         }
