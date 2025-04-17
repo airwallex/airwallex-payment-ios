@@ -45,7 +45,7 @@ class BillingFieldsSettingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires Name", comment: pageName),
+                title: NSLocalizedString("Name", comment: pageName),
                 isOn: settings.requiresName,
                 action: { [weak self] isOn in
                     self?.settings.requiresName = isOn
@@ -60,7 +60,7 @@ class BillingFieldsSettingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires Email", comment: pageName),
+                title: NSLocalizedString("Email", comment: pageName),
                 isOn: settings.requiresEmail,
                 action: { [weak self] isOn in
                     self?.settings.requiresEmail = isOn
@@ -75,7 +75,7 @@ class BillingFieldsSettingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires Phone", comment: pageName),
+                title: NSLocalizedString("Phone Number", comment: pageName),
                 isOn: settings.requiresPhone,
                 action: { [weak self] isOn in
                     self?.settings.requiresPhone = isOn
@@ -90,7 +90,7 @@ class BillingFieldsSettingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires Address", comment: pageName),
+                title: NSLocalizedString("Address", comment: pageName),
                 isOn: settings.requiresAddress,
                 action: { [weak self] isOn in
                     self?.settings.requiresAddress = isOn
@@ -105,7 +105,7 @@ class BillingFieldsSettingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Requires Country Code", comment: pageName),
+                title: NSLocalizedString("Country Code", comment: pageName),
                 isOn: settings.requiresCountryCode,
                 action: { [weak self] isOn in
                     self?.settings.requiresCountryCode = isOn
