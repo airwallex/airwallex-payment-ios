@@ -75,7 +75,7 @@ import Combine
         }
         
         public var eventType: String? {
-            "validation_failure"
+            "payment_validation_failure"
         }
     }
         
@@ -154,7 +154,7 @@ import Combine
     ///   - launchStyle: The presentation style of the payment sheet, which defaults to `.push`.
     @MainActor static func launchCardPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
                                              session: AWXSession,
-                                             supportedBrands: [AWXCardBrand] = AWXCardBrand.all,
+                                             supportedBrands: [AWXCardBrand] = AWXCardBrand.allAvailable,
                                              launchStyle: LaunchStyle = .push) {
         launchCardPayment(
             from: hostingVC,
@@ -174,7 +174,7 @@ import Combine
     @MainActor static func launchCardPayment(from hostingVC: UIViewController,
                                              session: AWXSession,
                                              paymentResultDelegate: AWXPaymentResultDelegate,
-                                             supportedBrands: [AWXCardBrand] = AWXCardBrand.all,
+                                             supportedBrands: [AWXCardBrand] = AWXCardBrand.allAvailable,
                                              launchStyle: LaunchStyle = .push) {
         launchPayment(
             name: AWXCardKey,
@@ -199,7 +199,7 @@ import Combine
                                          from hostingVC: UIViewController,
                                          session: AWXSession,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
-                                         supportedBrands: [AWXCardBrand]? = AWXCardBrand.all,
+                                         supportedBrands: [AWXCardBrand]? = AWXCardBrand.allAvailable,
                                          launchStyle: LaunchStyle = .push) {
         let name = name.trimmed
         
@@ -212,7 +212,7 @@ import Combine
                 )
                 return
             }
-            guard Set(supportedBrands).isSubset(of: AWXCardBrand.all) else {
+            guard Set(supportedBrands).isSubset(of: AWXCardBrand.allAvailable) else {
                 handleLaunchFailure(
                     paymentResultDelegate,
                     LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")

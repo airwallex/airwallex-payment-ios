@@ -1,0 +1,73 @@
+{
+  "name": "online_banking",
+  "display_name": "Online Banking",
+  "logos": {
+    "png": "https://checkout-demo.airwallex.com/static/media/online_banking.883438.png",
+    "svg": "https://checkout-demo.airwallex.com/static/media/online_banking.6c5f36c0.svg"
+  },
+  "has_schema": true,
+  "field_schemas": [
+    {
+      "transaction_mode": "oneoff",
+      "fields": [
+        {
+          "name": "shopper_name",
+          "display_name": "Name",
+          "ui_type": "text",
+          "type": "string",
+          "hidden": false
+        },
+        {
+          "name": "shopper_email",
+          "display_name": "Email",
+          "ui_type": "email",
+          "type": "string",
+          "hidden": false
+        },
+        {
+          "name": "shopper_phone",
+          "display_name": "Phone Number",
+          "ui_type": "phone",
+          "type": "string",
+          "hidden": false
+        },
+        {
+          "name": "country_code",
+          "display_name": "Country",
+          "ui_type": "list",
+          "type": "enum",
+          "hidden": true,
+          "candidates": [
+            {
+              "display_name": "Estonia",
+              "value": "EE"
+            },
+            {
+              "display_name": "Lithuania",
+              "value": "LT"
+            },
+            {
+              "display_name": "Latvia",
+              "value": "LV"
+            },
+            {
+              "display_name": "Thailand",
+              "value": "TH"
+            },
+            {
+              "display_name": "Philippine",
+              "value": "PH"
+            }
+          ]
+        },
+        {
+          "name": "bank_name",
+          "display_name": "Bank",
+          "ui_type": "logo_list",
+          "type": "banks",
+          "hidden": false
+        }
+      ]
+    }
+  ]
+}

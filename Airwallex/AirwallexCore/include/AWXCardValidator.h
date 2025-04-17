@@ -1,1 +1,1 @@
-../Sources/AWXCardValidator.h
+../Sources/Model/AWXCardValidator.h

@@ -8,8 +8,7 @@
 
 #import "AWXCardProvider.h"
 #import "AWXAPIClient.h"
-#import "AWXCardViewController.h"
-#import "AWXCardViewModel.h"
+#import "AWXCardCVCViewController.h"
 #import "AWXDevice.h"
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
@@ -17,9 +16,9 @@
 #import "AWXPaymentMethodOptions.h"
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
-#import "AWXPaymentViewController.h"
 #import "AWXSession.h"
 #import "AWXUIContext.h"
+#import "AWXUtils.h"
 #import "NSObject+Logging.h"
 
 @implementation AWXCardProvider
@@ -35,18 +34,6 @@
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session paymentMethodType:(AWXPaymentMethodType *)paymentMethodType {
     self = [super initWithDelegate:delegate session:session paymentMethodType:paymentMethodType];
     return self;
-}
-
-- (void)handleFlow {
-    AWXCardViewController *controller = [[AWXCardViewController alloc] initWithNibName:nil bundle:nil];
-    controller.session = self.session;
-    controller.viewModel = [[AWXCardViewModel alloc] initWithSession:self.session supportedCardSchemes:self.paymentMethodType.cardSchemes launchDirectly:self.showPaymentDirectly];
-    if (self.showPaymentDirectly) {
-        [self.delegate provider:self shouldPresentViewController:controller forceToDismiss:NO withAnimation:YES];
-    } else {
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
-        [self.delegate provider:self shouldPresentViewController:navController forceToDismiss:NO withAnimation:YES];
-    }
 }
 
 - (void)confirmPaymentIntentWithCard:(AWXCard *)card
@@ -100,7 +87,7 @@
 
     // Check payment method type
     if ([paymentConsent.paymentMethod.card.numberType isEqualToString:@"PAN"]) {
-        AWXPaymentViewController *controller = [[AWXPaymentViewController alloc] initWithNibName:nil bundle:nil];
+        AWXCardCVCViewController *controller = [[AWXCardCVCViewController alloc] initWithNibName:nil bundle:nil];
         controller.session = self.session;
         controller.paymentConsent = paymentConsent;
         controller.delegate = self;
@@ -130,7 +117,7 @@
 
         if ([navController isKindOfClass:[UINavigationController class]]) {
             NSInteger index = [navController.viewControllers indexOfObjectPassingTest:^BOOL(__kindof UIViewController *_Nonnull obj, NSUInteger idx, BOOL *_Nonnull stop) {
-                return [obj isKindOfClass:[AWXPaymentViewController class]];
+                return [obj isKindOfClass:[AWXCardCVCViewController class]];
             }];
 
             if (index != NSNotFound) {

@@ -12,15 +12,10 @@ import AirwallexCore
 #endif
 
 @_spi(AWX) public extension AWXCardValidator {
-    
-    convenience init(_ supportedSchemes: [AWXCardScheme]?) {
-        self.init()
-        self.supportedSchemes = supportedSchemes
-    }
         
-    func validate(card: AWXCard, nameRequired: Bool) throws {
+    static func validate(card: AWXCard, nameRequired: Bool, supportedSchemes: [AWXCardScheme] = []) throws {
         do {
-            try Self.validate(number: card.number, supportedSchemes: supportedSchemes ?? [])
+            try Self.validate(number: card.number, supportedSchemes: supportedSchemes)
         } catch {
             throw NSLocalizedString("Invalid card number", bundle: .payment, comment: "card validator error message").asError()
         }
@@ -33,8 +28,8 @@ import AirwallexCore
         
         do {
             // it's safe to force-unwrap here since `validate(number: card.number)` passed
-            let brand = brand(forCardNumber: card.number)!
-            try Self.validate(cvc: card.cvc, requiredLength: Self.cvcLength(for: brand.type))
+            let brand = AWXCardValidator.shared().brand(forCardNumber: card.number)
+            try validate(cvc: card.cvc, requiredLength: Self.cvcLength(for: brand.type))
         } catch {
             throw NSLocalizedString("Invalid CVC / CVV", bundle: .payment, comment: "card validator error message").asError()
         }
@@ -42,7 +37,7 @@ import AirwallexCore
         // cardholder name can be nil or empty if not required by session.requireBillingContactFields
         if nameRequired {
             do {
-                try Self.validate(nameOnCard: card.name)
+                try validate(nameOnCard: card.name)
             } catch {
                 throw NSLocalizedString("Invalid name on card", bundle: .payment, comment: "card validator error message").asError()
             }
@@ -68,7 +63,7 @@ import AirwallexCore
         
         let brand = AWXCardValidator.shared().brand(forCardNumber: number)
         
-        guard let brand else {
+        guard brand.type != .unknown else {
             throw NSLocalizedString("Card not supported for payment", bundle: .payment, comment: "card validator error message").asError()
         }
         
@@ -119,5 +114,10 @@ import AirwallexCore
         guard let nameOnCard, !nameOnCard.isEmpty else {
             throw NSLocalizedString("Please enter your card name", bundle: .payment, comment: "card validator error message").asError()
         }
+    }
+    
+    static func possibleBrandTypes(forCardNumber number: String?) -> [AWXBrandType] {
+        let results = AWXCardValidator.shared().possibleBrandTypes(forCardNumber: number ?? "")
+        return results.compactMap { AWXBrandType(rawValue: $0.uintValue)}
     }
 }

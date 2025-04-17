@@ -1,1 +1,1 @@
-../Sources/AWXViewController.h
+../Sources/UI/AWXViewController.h

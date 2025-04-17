@@ -1,1 +1,1 @@
-../Sources/AWXPlaceDetails.h
+../Sources/Model/AWXPlaceDetails.h

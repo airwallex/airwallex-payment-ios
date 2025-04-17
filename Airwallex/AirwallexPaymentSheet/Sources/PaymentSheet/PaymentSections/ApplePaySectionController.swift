@@ -17,14 +17,15 @@ import Combine
 
 class ApplePaySectionController: SectionController {
     
-    let session: AWXSession
-    let methodType: AWXPaymentMethodType
+    private let session: AWXSession
+    private let methodType: AWXPaymentMethodType
     private var paymentSessionHandler: PaymentSessionHandler?
     private let methodProvider: PaymentMethodProvider
     
     init(session: AWXSession,
          methodType: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider) {
+        assert(methodType.name == AWXApplePayKey)
         self.session = session
         self.methodType = methodType
         self.items = [ methodType.name ]
@@ -93,7 +94,7 @@ class ApplePaySectionController: SectionController {
             )
             let header = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize,
-                elementKind: UICollectionView.elementKindSectionHeader,
+                elementKind: UICollectionView.elementKindSectionFooter,
                 alignment: .bottom
             )
             section.boundarySupplementaryItems = [header]

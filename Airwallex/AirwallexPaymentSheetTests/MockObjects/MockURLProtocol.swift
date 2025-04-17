@@ -51,7 +51,7 @@ class MockURLProtocol: URLProtocol {
             if let data = data {
                 client?.urlProtocol(self, didLoad: data)
             }
-            try? await Task.sleep(nanoseconds: UInt64.random(in: 100_000_000...1_000_000_000))
+            try? await Task.sleep(nanoseconds: UInt64.random(in: 1_000...2_000))
             if let error = error {
                 client?.urlProtocol(self, didFailWithError: error)
             }

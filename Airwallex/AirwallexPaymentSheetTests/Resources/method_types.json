@@ -556,6 +556,34 @@
           "svg": "https://checkout-demo.airwallex.com/static/media/wechatpay.983c8eed.svg"
         }
       }
+    },
+    {
+      "name": "test_recurring",
+      "display_name": "Test Recurring",
+      "transaction_mode": "recurring",
+      "flows": [
+        "miniprog",
+        "jsapi",
+        "webqr",
+        "mweb",
+        "inapp"
+      ],
+      "transaction_currencies": [
+        "CNY",
+        "USD",
+        "SGD"
+      ],
+      "country_codes": [
+        "*"
+      ],
+      "active": true,
+      "resources": {
+        "has_schema": true,
+        "logos": {
+          "png": "https://checkout-demo.airwallex.com/static/media/wechatpay.915224.png",
+          "svg": "https://checkout-demo.airwallex.com/static/media/wechatpay.983c8eed.svg"
+        }
+      }
     }
   ]
 }

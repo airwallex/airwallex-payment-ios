@@ -1,1 +1,1 @@
-../Sources/AWXPaymentMethodResponse.h
+../Sources/Network/AWXPaymentMethodResponse.h

@@ -27,8 +27,17 @@ class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
         self.consentId = paymentConsentId
     }
     
+    override var presentedViewController: UIViewController? {
+        return self
+    }
+    
     override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
-        super.present(viewControllerToPresent, animated: flag, completion: completion)
         presentedViewControllerSpy = viewControllerToPresent
+        completion?()
+    }
+    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        presentedViewControllerSpy = nil
+        completion?()
     }
 }

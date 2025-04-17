@@ -33,7 +33,6 @@ NSString *const AWXThreeDSWaitingUserInfoInput = @"WAITING_USER_INFO_INPUT";
 
 NSString *const AWXThreeDSValidate = @"3dsValidate";
 NSString *const AWXThreeDSContinue = @"3ds_continue";
-NSString *const AWXDCC = @"dcc";
 
 NSString *const AWXWeChatPayKey = @"wechatpay";
 NSString *const AWXApplePayKey = @"applepay";
@@ -113,7 +112,7 @@ _Nullable Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type
     } else if ([type.name isEqualToString:AWXApplePayKey]) {
         return NSClassFromString(@"AWXApplePayProvider");
     } else if (type.hasSchema) {
-        return NSClassFromString(@"AWXSchemaProvider");
+        return NSClassFromString(@"AWXDefaultProvider");
     } else {
         return Nil;
     }
@@ -126,8 +125,6 @@ Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction) {
         return NSClassFromString(@"AWX3DSActionProvider");
     } else if ([nextAction.type isEqualToString:@"redirect"]) {
         return NSClassFromString(@"AWXRedirectActionProvider");
-    } else if ([nextAction.type isEqualToString:@"dcc"]) {
-        return NSClassFromString(@"AWXDccActionProvider");
     } else {
         return NSClassFromString(@"AWXDefaultActionProvider");
     }

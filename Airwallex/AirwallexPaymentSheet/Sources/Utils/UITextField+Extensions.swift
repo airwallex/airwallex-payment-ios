@@ -51,7 +51,7 @@ extension UITextField {
             textContentType = .fullStreetAddress
         case .zipcode:
             textContentType = .postalCode
-            keyboardType = .asciiCapableNumberPad
+            keyboardType = .asciiCapable
         case .cardNumber:
             textContentType = .creditCardNumber
             keyboardType = .asciiCapableNumberPad

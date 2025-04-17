@@ -1,1 +1,1 @@
-../Sources/AWXPaymentMethodOptions.h
+../Sources/Model/AWXPaymentMethodOptions.h

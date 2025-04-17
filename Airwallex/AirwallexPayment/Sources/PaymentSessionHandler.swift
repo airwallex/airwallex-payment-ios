@@ -13,7 +13,6 @@ import AirwallexCore
 
 public class PaymentSessionHandler: NSObject {
     enum ValidationError: ErrorLoggable {
-        case invalidSession(underlyingError: Error)
         case invalidPayment(underlyingError: Error)
         
         // CustomNSError - for objc
@@ -28,8 +27,6 @@ public class PaymentSessionHandler: NSObject {
         // LocalizedError - for error.localizedDescription
         var errorDescription: String {
             switch self {
-            case let .invalidSession(underlyingError: error):
-                return error.localizedDescription
             case let .invalidPayment(underlyingError: error):
                 return error.localizedDescription
             }
@@ -40,7 +37,7 @@ public class PaymentSessionHandler: NSObject {
         }
         
         var eventType: String? {
-            return "payment_validation"
+            return "payment_validation_failure"
         }
     }
     let session: AWXSession
@@ -173,13 +170,6 @@ public class PaymentSessionHandler: NSObject {
     ///     receives a cancellation callback if the user dismisses the sheet.
     ///   - If `false`, dismissing the Apple Pay sheet does not trigger a cancellation callback,
     func confirmApplePay(cancelPaymentOnDismiss: Bool) throws {
-        do {
-            try session.validate()
-        } catch {
-            let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog("\(error)")
-            throw error
-        }
         let applePayProvider = AWXApplePayProvider(
             delegate: self,
             session: session,
@@ -209,13 +199,6 @@ public class PaymentSessionHandler: NSObject {
     func confirmCardPayment(with card: AWXCard,
                           billing: AWXPlaceDetails?,
                           saveCard: Bool = false) throws {
-        do {
-            try session.validate()
-        } catch {
-            let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog("\(error)")
-            throw error
-        }
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -238,13 +221,6 @@ public class PaymentSessionHandler: NSObject {
     ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
     ///   If The payment method details, which may require additional input such as a CVC for validation.
     func confirmConsentPayment(with consent: AWXPaymentConsent) throws {
-        do {
-            try session.validate()
-        } catch {
-            let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog("\(error)")
-            throw error
-        }
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -272,13 +248,6 @@ public class PaymentSessionHandler: NSObject {
     /// Initiates a payment using a consent ID.
     /// - Parameter consentId: The previously generated consent identifier.
     func confirmConsentPayment(withId consentId: String) throws {
-        do {
-            try session.validate()
-        } catch {
-            let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog("\(error)")
-            throw error
-        }
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -303,13 +272,6 @@ public class PaymentSessionHandler: NSObject {
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     func confirmRedirectPayment(with name: String, additionalInfo: [String: String]?) throws {
-        do {
-            try session.validate()
-        } catch {
-            let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog("\(error)")
-            throw error
-        }
         let redirectAction = AWXRedirectActionProvider(
             delegate: self,
             session: session,
@@ -332,13 +294,6 @@ public class PaymentSessionHandler: NSObject {
     /// - Parameters:
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
     func confirmRedirectPayment(with paymentMethod: AWXPaymentMethod) throws {
-        do {
-            try session.validate()
-        } catch {
-            let error = ValidationError.invalidSession(underlyingError: error)
-            debugLog("\(error)")
-            throw error
-        }
         let redirectAction = AWXRedirectActionProvider(
             delegate: self,
             session: session,

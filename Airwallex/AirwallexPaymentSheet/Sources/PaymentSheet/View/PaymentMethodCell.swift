@@ -19,9 +19,7 @@ struct PaymentMethodCellViewModel: CellViewModelIdentifiable, CardBrandViewConfi
     let imageURL: URL?
     let isSelected: Bool
     let imageLoader: ImageLoader
-    
-    let currentBrand: AWXBrandType? = nil
-    let supportedBrands: [AWXBrandType]
+    let cardBrands: [AWXBrandType]
 }
 
 class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {

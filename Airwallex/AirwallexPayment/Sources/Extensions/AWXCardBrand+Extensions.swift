@@ -12,7 +12,7 @@ import AirwallexCore
 #endif
 
 public extension AWXCardBrand {
-    static var all: [AWXCardBrand] {
+    static var allAvailable: [AWXCardBrand] {
         [
             AWXCardBrand.visa,
             AWXCardBrand.mastercard,
@@ -22,5 +22,26 @@ public extension AWXCardBrand {
             AWXCardBrand.discover,
             AWXCardBrand.unionPay
         ]
+    }
+    
+    var brandType: AWXBrandType {
+        switch self {
+        case AWXCardBrand.visa:
+            return .visa
+        case AWXCardBrand.mastercard:
+            return .mastercard
+        case AWXCardBrand.amex:
+            return .amex
+        case AWXCardBrand.JCB:
+            return .JCB
+        case AWXCardBrand.dinersClub:
+            return .dinersClub
+        case AWXCardBrand.discover:
+            return .discover
+        case AWXCardBrand.unionPay:
+            return .unionPay
+        default:
+            return .unknown
+        }
     }
 }

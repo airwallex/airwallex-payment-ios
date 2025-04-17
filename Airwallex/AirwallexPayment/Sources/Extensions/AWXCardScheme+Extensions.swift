@@ -13,7 +13,7 @@ import AirwallexCore
 
 public extension AWXCardScheme {
     static var allAvailable: [AWXCardScheme] {
-        AWXCardBrand.all.map {
+        AWXCardBrand.allAvailable.map {
             let scheme = AWXCardScheme()
             scheme.name = $0.rawValue
             return scheme

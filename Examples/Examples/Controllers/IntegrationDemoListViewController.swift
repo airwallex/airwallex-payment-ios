@@ -297,7 +297,7 @@ private extension IntegrationDemoListViewController {
                 AWXUIContext.launchCardPayment(
                     from: self,
                     session: session,
-                    supportedBrands: AWXCardBrand.all,
+                    supportedBrands: AWXCardBrand.allAvailable,
                     launchStyle: launchStyle
                 )
             } catch {
@@ -571,16 +571,21 @@ private extension IntegrationDemoListViewController {
     }
     
     func updateRequiredBillingContactFields(_ session: AWXSession) {
-        var requiredBillingContactFields: RequiredBillingContactFields = session.requiredBillingContactFields
+        var requiredBillingContactFields: RequiredBillingContactFields = []
+        if ExamplesKeys.requiresName {
+            requiredBillingContactFields.insert(.name)
+        }
         if ExamplesKeys.requiresEmail {
             requiredBillingContactFields.insert(.email)
-        } else {
-            requiredBillingContactFields.remove(.email)
+        }
+        if ExamplesKeys.requiresPhone {
+            requiredBillingContactFields.insert(.phone)
         }
         if ExamplesKeys.requiresAddress {
             requiredBillingContactFields.insert(.address)
-        } else {
-            requiredBillingContactFields.remove(.address)
+        }
+        if ExamplesKeys.requiresCountryCode {
+            requiredBillingContactFields.insert(.countryCode)
         }
         session.requiredBillingContactFields = requiredBillingContactFields
     }

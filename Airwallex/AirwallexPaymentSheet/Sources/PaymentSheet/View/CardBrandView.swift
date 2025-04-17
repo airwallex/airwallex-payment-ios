@@ -12,8 +12,7 @@ import AirwallexCore
 #endif
 
 protocol CardBrandViewConfiguring {
-    var supportedBrands: [AWXBrandType] { get }
-    var currentBrand: AWXBrandType? { get }
+    var cardBrands: [AWXBrandType] { get }
 }
 
 class CardBrandView: UIView, ViewConfigurable {
@@ -57,11 +56,7 @@ class CardBrandView: UIView, ViewConfigurable {
     
     func setup(_ viewModel: CardBrandViewConfiguring) {
         self.viewModel = viewModel
-        if let currentBrand = viewModel.currentBrand {
-            updateLogos(brands: [currentBrand])
-        } else {
-            updateLogos(brands: viewModel.supportedBrands)
-        }
+        updateLogos(brands: viewModel.cardBrands)
     }
     
     private var timer: Timer?
@@ -101,8 +96,9 @@ class CardBrandView: UIView, ViewConfigurable {
     
     func setupTimer() {
         invalidateTimer()
-        guard let viewModel, viewModel.currentBrand == nil, window != nil else { return }
-        let animatingBrands = viewModel.supportedBrands[(logoStack.arrangedSubviews.count-1)...]
+        guard let viewModel, !viewModel.cardBrands.isEmpty, window != nil else { return }
+        guard viewModel.cardBrands.count > logoStack.arrangedSubviews.count else { return }
+        let animatingBrands = viewModel.cardBrands[(logoStack.arrangedSubviews.count-1)...]
         //  animatingBrands.count > 1 means there are more brands than logo stack's arranged subview,
         //  we need to display them 1 by 1 at the last position of the logo stack
         guard animatingBrands.count > 1 else { return }
