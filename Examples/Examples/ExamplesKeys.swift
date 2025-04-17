@@ -211,7 +211,7 @@ struct ExamplesKeys {
     static func loadDefaultKeysIfNilOrEmpty() {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        guard let url = Bundle.main.url(forResource: "Keys", withExtension: "json", subdirectory: "Keys"),
+        guard let url = Bundle.main.url(forResource: "Keys", withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let keys = try? decoder.decode(DefaultKeys.self, from: data) else {
             return
