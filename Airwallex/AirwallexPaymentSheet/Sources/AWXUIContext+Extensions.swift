@@ -75,7 +75,7 @@ import Combine
         }
         
         public var eventType: String? {
-            "validation_failure"
+            "payment_validation_failure"
         }
     }
         
