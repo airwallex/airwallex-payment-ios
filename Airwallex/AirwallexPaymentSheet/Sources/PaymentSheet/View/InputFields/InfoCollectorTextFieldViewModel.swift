@@ -32,8 +32,6 @@ extension UserInputFormatter {
     }
 }
 
-protocol UserEditingEventObserver: UITextFieldDelegate {}
-
 class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguring {
     typealias ReconfigureHandler = (InfoCollectorTextFieldViewModel, Bool) -> Void
     typealias ReturnActionHandler = (UIResponder) -> Bool
@@ -46,7 +44,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     
     var returnActionHandler: ReturnActionHandler?
     
-    var editingEventObserver: UserEditingEventObserver?
+    var editingEventObserver: EditingEventObserver?
     
     // MARK: InfoCollectorTextFieldConfiguring
     var fieldName: String
@@ -96,7 +94,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
          returnActionHandler: ReturnActionHandler? = nil,
          customInputFormatter: UserInputFormatter? = nil,
          customInputValidator: UserInputValidator? = nil,
-         editingEventObserver: UserEditingEventObserver? = nil,
+         editingEventObserver: EditingEventObserver? = nil,
          reconfigureHandler: @escaping ReconfigureHandler) {
         self.fieldName = fieldName
         self.isRequired = isRequired
@@ -134,10 +132,6 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
 
 // MARK: - UITextFieldDelegate
 extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        editingEventObserver?.textFieldDidBeginEditing?(textField)
-    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let range = Range(range, in: textField.text ?? "") else {
@@ -188,7 +182,7 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
 extension InfoCollectorTextFieldViewModel {
     convenience init(returnActionHandler: ReturnActionHandler? = nil,
                      cvcValidator: CardCVCValidator,
-                     editingEventObserver: UserEditingEventObserver,
+                     editingEventObserver: EditingEventObserver,
                      reconfigureHandler: @escaping ReconfigureHandler) {
         self.init(
             textFieldType: .CVC,

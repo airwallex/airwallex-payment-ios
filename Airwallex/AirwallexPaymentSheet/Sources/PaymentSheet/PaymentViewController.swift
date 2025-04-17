@@ -53,7 +53,7 @@ class PaymentViewController: AWXViewController {
         }
     }
     
-    private lazy var collectionViewManager: CollectionViewManager = {
+    private(set) lazy var collectionViewManager: CollectionViewManager = {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         listConfiguration.interSectionSpacing = 16
         let manager = CollectionViewManager(

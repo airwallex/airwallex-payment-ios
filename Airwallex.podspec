@@ -37,7 +37,11 @@ Pod::Spec.new do |s|
       'Airwallex/AirwallexCore/Sources/*.h',
       'Airwallex/AirwallexCore/Sources/Card/*.h',
       'Airwallex/AirwallexCore/Sources/Redirect/*.h',
-      'Airwallex/AirwallexCore/Sources/ApplePay/*.h'
+      'Airwallex/AirwallexCore/Sources/ApplePay/*.h',
+      'Airwallex/AirwallexCore/Sources/UI/*.h',
+      'Airwallex/AirwallexCore/Sources/Model/*.h',
+      'Airwallex/AirwallexCore/Sources/Logging/*.h',
+      'Airwallex/AirwallexCore/Sources/Network/*.h'
     ]
     plugin.resource_bundle = {
         'AirwallexCore' => 'Airwallex/AirwallexCore/Resources/**/*'

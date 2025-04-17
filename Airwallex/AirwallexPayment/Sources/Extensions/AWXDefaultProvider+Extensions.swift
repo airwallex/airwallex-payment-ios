@@ -143,8 +143,12 @@ extension AWXCardProvider {
         do {
             // if paymentMethodType is nil, means it's comes from low level API integration
             let cardSchemes = paymentMethodType?.cardSchemes ?? AWXCardScheme.allAvailable
-            let validator = AWXCardValidator(cardSchemes)
-            try validator.validate(card: card, nameRequired: session.requiredBillingContactFields.contains(.name))
+            
+            try AWXCardValidator.validate(
+                card: card,
+                nameRequired: session.requiredBillingContactFields.contains(.name),
+                supportedSchemes: cardSchemes
+            )
         } catch {
             throw ValidationError.invalidCardInfo(underlyingError: error)
         }
@@ -245,7 +249,7 @@ extension AWXCardProvider {
                 )
             }
             
-            let allAvailable = Set(AWXCardBrand.all.map { $0.rawValue })
+            let allAvailable = Set(AWXCardBrand.allAvailable.map { $0.rawValue })
             for name in methodType.cardSchemes.map({ $0.name }) {
                 guard allAvailable.contains(name) else {
                     let localizedString = NSLocalizedString("Card scheme %@ not support for payment", bundle: .payment, comment: localizationComment)

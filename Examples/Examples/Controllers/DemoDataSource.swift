@@ -82,7 +82,7 @@ struct DemoDataSource {
         case .demoMode:
             "merchant.demo.com.airwallex.paymentacceptance"
         case .productionMode:
-            "merchant.com.airwallex.paymentacceptance"
+            "merchant.prod.com.airwallex.paymentacceptance"
         }
     }
     

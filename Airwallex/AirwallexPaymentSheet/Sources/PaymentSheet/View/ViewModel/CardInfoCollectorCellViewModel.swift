@@ -7,12 +7,10 @@
 //
 
 import UIKit
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
 import Combine
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
+import AirwallexCore
 #endif
 
 class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
@@ -38,12 +36,20 @@ class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
     init(itemIdentifier: String,
          cardSchemes: [AWXCardScheme],
          returnActionHandler: CellReturnActionHandler?,
-         reconfigureHandler: @escaping CellReconfigureHandler) {
+         reconfigureHandler: @escaping CellReconfigureHandler,
+         cardNumberDidEndEditing: @escaping () -> Void) {
         self.itemIdentifier = itemIdentifier
         cardNumberConfigurer = CardNumberTextFieldViewModel(
             supportedCardSchemes: cardSchemes,
-            editingEventObserver: BeginEditingEventObserver {
-                RiskLogger.log(.inputCardNumber, screen: .createCard)
+            editingEventObserver: UserEditingEventObserver { event, _ in
+                switch event {
+                case .editingDidBegin:
+                    RiskLogger.log(.inputCardNumber, screen: .createCard)
+                case .editingDidEnd:
+                    cardNumberDidEndEditing()
+                default:
+                    break
+                }
             },
             reconfigureHandler: { reconfigureHandler(itemIdentifier, $1) }
         )

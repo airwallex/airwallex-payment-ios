@@ -1,1 +1,1 @@
-../Sources/AWXPaymentIntent.h
+../Sources/Model/AWXPaymentIntent.h

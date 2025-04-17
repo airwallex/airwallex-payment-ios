@@ -52,7 +52,7 @@ import Combine
         provider = SinglePaymentMethodProvider(
             session: mockSession,
             name: AWXCardKey,
-            supportedCardBrands: AWXCardBrand.all
+            supportedCardBrands: AWXCardBrand.allAvailable
         )
         provider.apiClient = mockAPIClient
         updates = [PaymentMethodProviderUpdateType]()

@@ -60,7 +60,7 @@ class PaymentMethodTabSectionController: SectionController {
             imageURL: methodType.resources.logoURL,
             isSelected: itemIdentifier == selectedMethod,
             imageLoader: imageLoader,
-            supportedBrands: []
+            cardBrands: []
         )
         cell.setup(viewModel)
         return cell

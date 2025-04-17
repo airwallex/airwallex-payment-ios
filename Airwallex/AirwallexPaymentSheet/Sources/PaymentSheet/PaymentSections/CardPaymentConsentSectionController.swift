@@ -21,7 +21,7 @@ class CardPaymentConsentSectionController: SectionController {
     
     enum Items {
         /// for accordion layout
-        static let accordionKey = "consnetAccordionKey"
+        static let accordionKey = "consentAccordionKey"
         /// for addNewCardToggle
         static let addNewCardToggle = "addNewCardToggle"
         /// checkout button for payment mode
@@ -30,7 +30,7 @@ class CardPaymentConsentSectionController: SectionController {
         static let cvcField: String = "cvcField"
     }
     
-    private enum Mode {
+    enum Mode {
         /// display all consents in a list
         case consentList
         /// display selected consent for checkout
@@ -50,7 +50,7 @@ class CardPaymentConsentSectionController: SectionController {
     
     private var selectedConsent: AWXPaymentConsent?
     private var cvcConfigurer: InfoCollectorTextFieldViewModel?
-    private var mode: Mode {
+    var mode: Mode {
         selectedConsent == nil ? .consentList : .consentPayment
     }
     private let layout: AWXUIContext.PaymentLayout
@@ -61,10 +61,10 @@ class CardPaymentConsentSectionController: SectionController {
         imageURL: methodType.resources.logoURL,
         isSelected: true,
         imageLoader: imageLoader,
-        supportedBrands: []
+        cardBrands: []
     )
     
-    private lazy var viewModelForConsentToggle = CardPaymentSectionHeaderViewModel(
+    private lazy var viewModelForConsentToggle = CardPaymentToggleCellViewModel(
         title: NSLocalizedString("Choose a card", comment: ""),
         actionTitle: NSLocalizedString("Add new", bundle: .paymentSheet, comment: ""),
         buttonAction: { [weak self] in
@@ -140,7 +140,7 @@ class CardPaymentConsentSectionController: SectionController {
             cell.setup(viewModelForAccordionKey)
             return cell
         case Items.addNewCardToggle:
-            let cell = context.dequeueReusableCell(CardPaymentSectionHeader.self, for: itemIdentifier, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CardPaymentToggleCell.self, for: itemIdentifier, indexPath: indexPath)
             cell.setup(viewModelForConsentToggle)
             return cell
         case Items.checkoutButton:

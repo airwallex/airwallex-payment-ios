@@ -1,1 +1,1 @@
-../Sources/AWXAnalyticsLogger.h
+../Sources/Logging/AWXAnalyticsLogger.h

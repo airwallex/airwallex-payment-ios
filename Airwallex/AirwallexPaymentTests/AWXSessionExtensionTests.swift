@@ -38,7 +38,43 @@ class AWXSessionExtensionTests: XCTestCase {
     func testValidateOneOffSessionWithoutPaymentIntent() {
         let session = AWXOneOffSession()
         XCTAssertThrowsError(try session.validate()) { error in
-            guard case AWXSession.ValidationError.invalidPaymentIntent(_) = error else {
+            guard case AWXSession.ValidationError.invalidPaymentIntent(let message) = error,
+                  message == error.localizedDescription else {
+                XCTFail(error.localizedDescription)
+                return
+            }
+        }
+        session.paymentIntent = mockPaymentIntent
+        mockPaymentIntent.id = ""
+        XCTAssertThrowsError(try session.validate()) { error in
+            guard case AWXSession.ValidationError.invalidPaymentIntent(let message) = error,
+                  message == error.localizedDescription else {
+                XCTFail(error.localizedDescription)
+                return
+            }
+        }
+    }
+    
+    func testValidateOneOffSessionWithInvalidIntentId() {
+        let session = AWXOneOffSession()
+        session.paymentIntent = mockPaymentIntent
+        mockPaymentIntent.id = ""
+        XCTAssertThrowsError(try session.validate()) { error in
+            guard case AWXSession.ValidationError.invalidPaymentIntent(let message) = error,
+                  message == error.localizedDescription else {
+                XCTFail(error.localizedDescription)
+                return
+            }
+        }
+    }
+    
+    func testValidateOneOffSessionWithinvalidClientSecret() {
+        let session = AWXOneOffSession()
+        session.paymentIntent = mockPaymentIntent
+        mockPaymentIntent.clientSecret = ""
+        XCTAssertThrowsError(try session.validate()) { error in
+            guard case AWXSession.ValidationError.invalidPaymentIntent(let message) = error,
+                  message == error.localizedDescription else {
                 XCTFail(error.localizedDescription)
                 return
             }
@@ -58,6 +94,43 @@ class AWXSessionExtensionTests: XCTestCase {
         
         XCTAssertThrowsError(try session.validate()) { error in
             guard case AWXSession.ValidationError.invalidCustomerId(_) = error else {
+                XCTFail(error.localizedDescription)
+                return
+            }
+        }
+    }
+    
+    func testValidateRecurringWithIntentSessionWithoutPaymentIntent() {
+        let session = AWXRecurringWithIntentSession()
+        XCTAssertThrowsError(try session.validate()) { error in
+            guard case AWXSession.ValidationError.invalidPaymentIntent(let message) = error,
+                  message == error.localizedDescription else {
+                XCTFail(error.localizedDescription)
+                return
+            }
+        }
+    }
+    
+    func testValidateRecurringWithIntentSessionWithInvalidIntentId() {
+        let session = AWXRecurringWithIntentSession()
+        mockPaymentIntent.id = ""
+        session.paymentIntent = mockPaymentIntent
+        XCTAssertThrowsError(try session.validate()) { error in
+            guard case AWXSession.ValidationError.invalidPaymentIntent(let message) = error,
+                  message == error.localizedDescription else {
+                XCTFail(error.localizedDescription)
+                return
+            }
+        }
+    }
+    
+    func testValidateRecurringWithIntentSessionWithInvalidClientSecret() {
+        let session = AWXRecurringWithIntentSession()
+        mockPaymentIntent.clientSecret = ""
+        session.paymentIntent = mockPaymentIntent
+        XCTAssertThrowsError(try session.validate()) { error in
+            guard case AWXSession.ValidationError.invalidPaymentIntent(let message) = error,
+                  message == error.localizedDescription else {
                 XCTFail(error.localizedDescription)
                 return
             }

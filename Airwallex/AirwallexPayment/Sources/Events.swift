@@ -59,29 +59,13 @@ public protocol ErrorLoggable: LocalizedError, CustomNSError {
 
 @_spi(AWX) public extension AnalyticsLogger {
     static func log(pageView name: AnalyticEvent.PageView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
-        if let extraInfo {
-            shared().logPageView(
-                withName: name.rawValue,
-                additionalInfo: extraInfo.reduce(into: [String: Any]()) { partialResult, keyValuePair in
-                    partialResult[keyValuePair.key.rawValue] = keyValuePair.value
-                }
-            )
-        } else {
-            shared().logPageView(withName: name.rawValue)
-        }
+        let (name, additionalInfo) = processEventInfo(event: name, extraInfo: extraInfo)
+        shared().logPageView(withName: name, additionalInfo: additionalInfo)
     }
     
     static func log(action name: AnalyticEvent.Action, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
-        if let extraInfo {
-            shared().logAction(
-                withName: name.rawValue,
-                additionalInfo: extraInfo.reduce(into: [String: Any]()) { partialResult, keyValuePair in
-                    partialResult[keyValuePair.key.rawValue] = keyValuePair.value
-                }
-            )
-        } else {
-            shared().logAction(withName: name.rawValue)
-        }
+        let (name, additionalInfo) = processEventInfo(event: name, extraInfo: extraInfo)
+        shared().logAction(withName: name, additionalInfo: additionalInfo)
     }
     
     static func log(paymentMethodView name: String, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
@@ -89,31 +73,35 @@ public protocol ErrorLoggable: LocalizedError, CustomNSError {
     }
     
     static func log(paymentMethodView name: AnalyticEvent.PaymentMethodView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
-        if let extraInfo {
-            shared().logPaymentMethodView(
-                withName: name.rawValue,
-                additionalInfo: extraInfo.reduce(into: [String: Any]()) { partialResult, keyValuePair in
-                    partialResult[keyValuePair.key.rawValue] = keyValuePair.value
-                }
-            )
-        } else {
-            shared().logPaymentMethodView(withName: name.rawValue)
-        }
+        let (name, additionalInfo) = processEventInfo(event: name, extraInfo: extraInfo)
+        shared().logPaymentMethodView(withName: name, additionalInfo: additionalInfo)
     }
     
     static func log(error: ErrorLoggable, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+        let (name, additionalInfo) = processErrorInfo(error: error, extraInfo: extraInfo)
+        shared().logError(withName: name, additionalInfo: additionalInfo)
+    }
+    
+    static func processEventInfo<T: RawRepresentable<String>>(event: T, extraInfo: [AnalyticEvent.Fields: Any]?) -> (String, [String: Any]) {
+        var processedInfo = [String: Any]()
+        if let extraInfo {
+            for (k, v) in extraInfo {
+                processedInfo[k.rawValue] = v
+            }
+        }
+        return (event.rawValue, processedInfo)
+    }
+    
+    static func processErrorInfo(error: ErrorLoggable, extraInfo: [AnalyticEvent.Fields: Any]?) -> (String, [String: Any]) {
         var dict = [String: Any]()
         dict[AnalyticEvent.Fields.message.rawValue] = error.localizedDescription
+        dict[AnalyticEvent.Fields.eventType.rawValue] = error.eventType
         if let extraInfo {
             for keyValuePair in extraInfo {
                 dict[keyValuePair.key.rawValue] = keyValuePair.value
             }
         }
-        
-        shared().logError(
-            withName: error.eventName,
-            additionalInfo: dict
-        )
+        return (error.eventName, dict)
     }
 }
 

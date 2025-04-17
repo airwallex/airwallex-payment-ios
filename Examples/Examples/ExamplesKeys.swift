@@ -38,8 +38,14 @@ struct ExamplesKeys {
     @RawRepresentableStorage("nextTriggerByType", defaultValue: AirwallexNextTriggerByType.customerType)
     static var nextTriggerByType: AirwallexNextTriggerByType
     
+    @Storage("requiresName", defaultValue: false)
+    static var requiresName: Bool
+    
     @Storage("requiresEmail", defaultValue: false)
     static var requiresEmail: Bool
+    
+    @Storage("requiresPhone", defaultValue: false)
+    static var requiresPhone: Bool
     
     @Storage("requiresAddress", defaultValue: true)
     static var requiresAddress: Bool
@@ -79,8 +85,11 @@ struct ExamplesKeys {
             AllSettings(
                 environment: ExamplesKeys.environment,
                 nextTriggerByType: ExamplesKeys.nextTriggerByType,
+                requiresName: ExamplesKeys.requiresName,
                 requiresEmail: ExamplesKeys.requiresEmail,
+                requiresPhone: ExamplesKeys.requiresPhone,
                 requiresAddress: ExamplesKeys.requiresAddress,
+                requiresCountryCode: ExamplesKeys.requiresCountryCode,
                 autoCapture: ExamplesKeys.autoCapture,
                 customerId: ExamplesKeys.customerId,
                 apiKey: ExamplesKeys.apiKey,
@@ -96,8 +105,11 @@ struct ExamplesKeys {
             ExamplesKeys.environment = newValue.environment
             Airwallex.setMode(newValue.environment)
             ExamplesKeys.nextTriggerByType = newValue.nextTriggerByType
+            ExamplesKeys.requiresName = newValue.requiresName
             ExamplesKeys.requiresEmail = newValue.requiresEmail
+            ExamplesKeys.requiresPhone = newValue.requiresPhone
             ExamplesKeys.requiresAddress = newValue.requiresAddress
+            ExamplesKeys.requiresCountryCode = newValue.requiresCountryCode
             ExamplesKeys.autoCapture = newValue.autoCapture
             ExamplesKeys.customerId = newValue.customerId
             ExamplesKeys.apiKey = newValue.apiKey
@@ -110,11 +122,14 @@ struct ExamplesKeys {
         }
     }
     
-    struct AllSettings: CustomStringConvertible {
+    class AllSettings: CustomStringConvertible {
         var environment: AirwallexSDKMode
         var nextTriggerByType: AirwallexNextTriggerByType
+        var requiresName: Bool
         var requiresEmail: Bool
+        var requiresPhone: Bool
         var requiresAddress: Bool
+        var requiresCountryCode: Bool
         var autoCapture: Bool
         var customerId: String?
         
@@ -127,13 +142,50 @@ struct ExamplesKeys {
         
         var paymentLayout: AWXUIContext.PaymentLayout
         
+        init(environment: AirwallexSDKMode,
+             nextTriggerByType: AirwallexNextTriggerByType,
+             requiresName: Bool,
+             requiresEmail: Bool,
+             requiresPhone: Bool,
+             requiresAddress: Bool,
+             requiresCountryCode: Bool,
+             autoCapture: Bool,
+             customerId: String? = nil,
+             apiKey: String? = nil,
+             clientId: String? = nil,
+             amount: String,
+             currency: String,
+             countryCode: String,
+             returnUrl: String,
+             paymentLayout: AWXUIContext.PaymentLayout) {
+            self.environment = environment
+            self.nextTriggerByType = nextTriggerByType
+            self.requiresName = requiresName
+            self.requiresEmail = requiresEmail
+            self.requiresPhone = requiresPhone
+            self.requiresAddress = requiresAddress
+            self.requiresCountryCode = requiresCountryCode
+            self.autoCapture = autoCapture
+            self.customerId = customerId
+            self.apiKey = apiKey
+            self.clientId = clientId
+            self.amount = amount
+            self.currency = currency
+            self.countryCode = countryCode
+            self.returnUrl = returnUrl
+            self.paymentLayout = paymentLayout
+        }
+        
         var description: String {
                 """
                 🌍 AllSettings:
                 ├── Environment: \(environment.displayName)
                 ├── Next Trigger Type: \(nextTriggerByType.displayName)
+                ├── Requires Name: \(requiresName)
                 ├── Requires Email: \(requiresEmail)
+                ├── Requires Phone: \(requiresPhone)
                 ├── Requires Address: \(requiresAddress)
+                ├── Requires Country Code: \(requiresCountryCode)
                 ├── Auto Capture: \(autoCapture)
                 ├── Customer ID: \(customerId ?? "N/A")
                 ├── API Key: \(apiKey ?? "N/A")

@@ -1,1 +1,1 @@
-../Sources/AWXApplePayOptions.h
+../Sources/ApplePay/AWXApplePayOptions.h
