@@ -59,7 +59,6 @@ class PaymentSessionHandlerTests: XCTestCase {
     override class func tearDown() {
         super.tearDown()
         AWXAPIClientConfiguration.shared().clientSecret = nil
-        AWXUIContext.shared().paymentUIDismissAction = nil
     }
 
     func testInit() {
@@ -555,14 +554,14 @@ class PaymentSessionHandlerTests: XCTestCase {
             XCTAssertEqual(mockPaymentResultDelegate.status, status)
         }
         for status in allCases {
-            AWXUIContext.shared().paymentUIDismissAction = { $0?() }
+            mockSessionHandler.dismissAction = { $0() }
             mockSessionHandler.provider(mockProvider, didCompleteWith: status, error: nil)
             XCTAssertEqual(mockPaymentResultDelegate.status, status)
         }
     }
     
     func testProviderDidCompleteWithApplePayInProgress() {
-        AWXUIContext.shared().paymentUIDismissAction = { $0?() }
+        mockSessionHandler.dismissAction = { $0() }
         mockMethodType.name = AWXApplePayKey
         mockSessionHandler.provider(mockProvider, didCompleteWith: .inProgress, error: nil)
         XCTAssertNil(mockPaymentResultDelegate.status)

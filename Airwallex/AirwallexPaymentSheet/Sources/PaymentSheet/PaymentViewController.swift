@@ -45,11 +45,13 @@ class PaymentViewController: AWXViewController {
     }
     
     deinit {
-        if AWXUIContext.shared().paymentUIDismissAction != nil {
-            // user cancel payment by navigation stack interactions, like screen edge pan gesture
-            AWXUIContext.shared().paymentUIDismissAction = nil
-            AnalyticsLogger.log(action: .paymentCanceled)
-            AWXUIContext.shared().delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
+        Task { @MainActor in
+            if AWXUIContext.shared.dismissAction != nil {
+                // user cancel payment by navigation stack interactions, like screen edge pan gesture
+                AWXUIContext.shared.dismissAction = nil
+                AnalyticsLogger.log(action: .paymentCanceled)
+                AWXUIContext.shared.delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
+            }
         }
     }
     
@@ -129,7 +131,7 @@ class PaymentViewController: AWXViewController {
     
     @objc func onCloseButtonTapped() {
         dismiss(animated: true) {
-            AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+            AWXUIContext.shared.delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
         }
     }
     
@@ -148,13 +150,13 @@ class PaymentViewController: AWXViewController {
                     guard self.methodProvider.methods.isEmpty else {
                         return
                     }
-                    if let action = AWXUIContext.shared().paymentUIDismissAction {
+                    if let action = AWXUIContext.shared.dismissAction {
                         action {
-                            AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
+                            AWXUIContext.shared.delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
                         }
-                        AWXUIContext.shared().paymentUIDismissAction = nil
+                        AWXUIContext.shared.dismissAction = nil
                     } else {
-                        AWXUIContext.shared().delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
+                        AWXUIContext.shared.delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
                     }
                 }
             }

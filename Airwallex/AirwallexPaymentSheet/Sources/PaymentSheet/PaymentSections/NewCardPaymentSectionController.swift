@@ -92,13 +92,13 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         self.methodProvider = methodProvider
         self.switchToConsentPaymentAction = switchToConsentPaymentAction
         self.shouldReuseShippingAddress = methodProvider.session.billing?.address?.isComplete ?? false
-        if let oneOffSession = methodProvider.session as? AWXOneOffSession {
-            self.shouldSaveCard = oneOffSession.autoSaveCardForFuturePayments
-        }
         self.layout = layout
         self.imageLoader = imageLoader
         super.init()
         createViewModelForRequiredFields()
+        if let oneOffSession = methodProvider.session as? AWXOneOffSession {
+            self.shouldSaveCard = supportCardSaving && oneOffSession.autoSaveCardForFuturePayments
+        }
     }
     
     // MARK: - SectionController
@@ -324,8 +324,9 @@ private extension NewCardPaymentSectionController {
                 paymentSessionHandler = PaymentSessionHandler(
                     session: session,
                     viewController: context.viewController!,
-                    paymentResultDelegate: AWXUIContext.shared().delegate,
-                    methodType: methodType
+                    paymentResultDelegate: AWXUIContext.shared.delegate,
+                    methodType: methodType,
+                    dismissAction: AWXUIContext.shared.dismissAction
                 )
                 try paymentSessionHandler?.confirmCardPayment(
                     with: card,
