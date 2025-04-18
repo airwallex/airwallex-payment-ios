@@ -106,8 +106,8 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     func performUpdates(forceReload: Bool = false, animatingDifferences: Bool = false) {
         guard let sectionDataSource else { return }
         sections = sectionDataSource.sections()
-        var snapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
-        snapshot.appendSections(sections)
+        var newSnapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
+        newSnapshot.appendSections(sections)
         for section in sections {
             var controller = sectionControllers[section]
             if controller == nil {
@@ -119,12 +119,16 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                 controller?.updateItemsIfNecessary()
             }
             let items = controller?.items ?? []
-            snapshot.appendItems(items, toSection: section)
+            newSnapshot.appendItems(items, toSection: section)
         }
         if forceReload {
-            snapshot.reloadSections(sections)
+            let existingItems = Set(diffableDataSource.snapshot().itemIdentifiers)
+            let toReload = newSnapshot.itemIdentifiers.reduce(into: [ItemType]()) { partialResult, item in
+                if existingItems.contains(item) { partialResult.append(item) }
+            }
+            newSnapshot.reloadItems(toReload)
         }
-        diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+        diffableDataSource.apply(newSnapshot, animatingDifferences: animatingDifferences)
     }
     
     func performUpdates(section: SectionType, updateItems: Bool = true, forceReload: Bool = false, animatingDifferences: Bool = false) {
@@ -138,7 +142,11 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
         let newItems = controller.items
         snapshot.appendItems(newItems, toSection: section)
         if forceReload {
-            snapshot.reloadSections([section])
+            let existingItems = Set(items)
+            let toReload = newItems.reduce(into: [ItemType]()) { partialResult, item in
+                if existingItems.contains(item) { partialResult.append(item) }
+            }
+            snapshot.reloadItems(toReload)
         }
         diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
