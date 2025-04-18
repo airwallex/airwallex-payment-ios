@@ -105,7 +105,7 @@ You can add `Airwallex` for a comprehensive integration that includes everything
 
 - `AirwallexPaymentSheet`: For UI integration. 
 - `AirwallexPayment`: For low-level API integration.
-- `AirwallexWeChatpay`: Required for WeChat Pay integration.
+- `AirwallexWeChatPay`: Required for WeChat Pay integration.
 #### CocoaPods
 
 Airwallex for iOS is available via [CocoaPods](https://cocoapods.org/).
@@ -119,7 +119,7 @@ Alternatively, you can selectively add specific products to your project for a m
 ```ruby
 pod 'Airwallex/AirwallexPaymentSheet' # For UI integration. 
 pod 'Airwallex/AirwallexPayment' # For low-level API integration
-pod 'Airwallex/AirwallexWeChatpay' # Required for WeChat Pay integration
+pod 'Airwallex/AirwallexWeChatPay' # Required for WeChat Pay integration
 ```
 
 Run the following command:
@@ -218,7 +218,7 @@ AWXAPIClientConfiguration.shared().clientSecret = clientSecret
 ### Optional Setup
 ---
 #### WeChat Pay
-- make sure you add dependency for `AirwallexWeChatpay` (Swift package manager) or `Airwallex/AirwallexWechatPay` (Cocoapods)
+- make sure you add dependency for `AirwallexWeChatPay` (Swift package manager) or `Airwallex/AirwallexWechatPay` (Cocoapods)
 - setup `WechatOpenSDK` following the [Wechat document](https://developers.weixin.qq.com/doc/oplatform/en/Mobile_App/Access_Guide/iOS.html)
 
 ``` swift
@@ -361,7 +361,7 @@ Make sure you add dependency for `AirwallexPayment`
 You can build your own entirely custom UI on top of our low-level APIs.
 
 > [!NOTE]
-> You still need all required steps listed in [Required Setup](#required-setup) section above to set up configurations, intent and session, except the [UI Integration](#ui-integration) is replace by `PaymentSessionHandler` and [low-level API integration](#low-level-api-integration)
+> You still need all required steps listed in [Required Setup](#required-setup) section above to set up configurations, intent and session, except the `AWXUIContext` and [UI Integration](#ui-integration) is replace by `PaymentSessionHandler` and [low-level API integration](#low-level-api-integration)
 > 
 > you may find [Airwallex API Docs](https://www.airwallex.com/docs/api#/Payment_Acceptance) useful if you are using this integration style
 ---
@@ -418,7 +418,7 @@ paymentSessionHandler.startRedirectPayment(
 
 ### Handle Payment Result
 
-After the user completes the payment successfully or with error, you need to handle the payment result call back of `AWXPaymentResultDelegate`.
+Regardless of whether you choose UI Integration or Low-Level API Integration, after the user completes the payment successfully or with an error, you need to handle the payment result callback of `AWXPaymentResultDelegate`.
 ``` swift
 func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
     // call back for status success/in progress/ failure / cancel

@@ -52,7 +52,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
             
             if methodType.name == AWXWeChatPayKey, NSClassFromString("AWXWeChatPayActionProvider") == nil {
                 // temporary solution - use AWXWeChatPayActionProvider to check if
-                // payment(cocoapods)/AirwallexWeChatpay(SPM) is integrated
+                // payment(cocoapods)/AirwallexWeChatPay(SPM) is integrated
                 return false
             }
             return true
