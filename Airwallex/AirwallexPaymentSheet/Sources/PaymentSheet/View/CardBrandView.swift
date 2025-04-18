@@ -56,7 +56,7 @@ class CardBrandView: UIView, ViewConfigurable {
     
     func setup(_ viewModel: CardBrandViewConfiguring) {
         self.viewModel = viewModel
-        updateLogos(brands: viewModel.cardBrands)
+        updateLogos(brands: viewModel.cardBrands.isEmpty ? [.unknown] : viewModel.cardBrands)
     }
     
     private var timer: Timer?

@@ -132,8 +132,12 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     }
     
     func performUpdates(section: SectionType, updateItems: Bool = true, forceReload: Bool = false, animatingDifferences: Bool = false) {
-        guard let controller = sectionControllers[section] else { return }
         var snapshot = diffableDataSource.snapshot()
+        guard snapshot.sectionIdentifiers.contains(section) else {
+            // section may not exist if multiple updates happened at the same time
+            return
+        }
+        guard let controller = sectionControllers[section] else { return }
         if updateItems {
             controller.updateItemsIfNecessary()
         }

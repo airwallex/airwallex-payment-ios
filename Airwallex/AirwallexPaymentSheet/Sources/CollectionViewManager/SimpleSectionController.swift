@@ -49,6 +49,10 @@ class SimpleSectionController<SectionType: Hashable & Sendable, ItemType: Hashab
     
     func collectionView(didSelectItem item: ItemType, at indexPath: IndexPath) {
         guard let cell = context.cellForItem(item) else { return }
-        selectionHandler?(item, indexPath, cell)
+        if let selectionHandler {
+            selectionHandler(item, indexPath, cell)
+        } else {
+            context.endEditing()
+        }
     }
 }

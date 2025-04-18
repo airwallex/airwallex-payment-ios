@@ -85,8 +85,8 @@ class CardNumberFormatterTests: XCTestCase {
             changeCharactersIn: "".startIndex..<"".endIndex,
             replacementString: longCardNumber
         )
-        mockTextField.updateContentAndCursor(attributedText: attributedString)
-        XCTAssertEqual(attributedString.string, String(longCardNumber.prefix(formatter.maxLength)))
+        mockTextField.updateContentAndCursor(attributedText: attributedString, maxLength: formatter.maxLength)
+        XCTAssertEqual(mockTextField.text, String(longCardNumber.prefix(formatter.maxLength)))
         
         XCTAssertTrue(formatter.shouldAutomaticTriggerReturnAction(textField: mockTextField))
     }

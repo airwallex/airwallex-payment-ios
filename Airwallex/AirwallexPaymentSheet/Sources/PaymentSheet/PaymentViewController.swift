@@ -127,6 +127,11 @@ class PaymentViewController: AWXViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
+        
+        // dismiss keyboard when user tap on empty space in collection view
+        let tap = UITapGestureRecognizer(target: self, action: #selector(onTapGesture))
+        tap.delegate = self
+        collectionView.addGestureRecognizer(tap)
     }
     
     @objc func onCloseButtonTapped() {
@@ -332,3 +337,19 @@ extension PaymentViewController: CollectionViewSectionProvider {
     }
 }
 
+extension PaymentViewController: UIGestureRecognizerDelegate {
+    
+    @objc func onTapGesture() {
+        collectionViewManager.collectionView.endEditing(false)
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        let location = gestureRecognizer.location(in: collectionViewManager.collectionView)
+        guard let indexPath = collectionViewManager.collectionView.indexPathForItem(at: location) else  {
+            // not on a cell, begin gesture
+            return true
+        }
+        // Tapped on a cell, do nothing
+        return false
+    }
+}
