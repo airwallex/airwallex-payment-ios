@@ -1,7 +1,11 @@
 # Migration Guides
 ## Migrating from versions < 6.0.0
 
-We have introduced a brand new UI for payments and a new set of APIs to launch payments.
+### Dependency optimization
+1. UI Integration and Low-level Integration are now separated
+2. We don't support WeChat Pay by default, you need to explicitly add Dependency for `AirwallexWeChatPay` if you need to support WeChat Pay
+3. Consistent naming in SPM and Cocoapods
+For more details please refer to [README - Integration](README.md#integration)
 ### UI Integration
 
 <img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
@@ -25,14 +29,15 @@ AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
     filterBy: "An optional array of payment method names used to filter the payment methods returned by the server",
-    style: "present or push"
+    launchStyle: "present or push",
+    layout: "tab/accordion"
 )
 // Launch Card Payment Directly
 AWXUIContext.launchCardPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
     supportedBrands: "accepted card brands, should not be empty",
-    style: "present or push"
+    launchStyle: "present or push"
 )
 ```
 >[!TIP]
