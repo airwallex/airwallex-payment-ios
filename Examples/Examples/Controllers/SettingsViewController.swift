@@ -524,6 +524,7 @@ private extension SettingsViewController {
         } else {
             // generate new customerId
             self.startLoading()
+            self.view.endEditing(true)
             let request = CustomerRequest(
                 firstName: "Jason",
                 lastName: "Wang",
