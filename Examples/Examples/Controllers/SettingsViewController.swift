@@ -321,7 +321,7 @@ private extension SettingsViewController {
             optionForNextTrigger.setup(viewModel)
         } else {
             let option = settings.nextTriggerByType
-            let options = [ AirwallexNextTriggerByType.customerType, AirwallexNextTriggerByType.customerType ]
+            let options = [ AirwallexNextTriggerByType.customerType, AirwallexNextTriggerByType.merchantType ]
 
             let viewModel = ConfigActionViewModel(
                 configName: NSLocalizedString("Next trigger by", comment: pageName),
