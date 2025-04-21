@@ -75,6 +75,12 @@ class SettingsViewController: UIViewController {
         return view
     }()
     
+    private lazy var switchForForce3DS: ConfigSwitchView = {
+        let view = ConfigSwitchView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var switchForAutoCapture: ConfigSwitchView = {
         let view = ConfigSwitchView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -227,6 +233,7 @@ private extension SettingsViewController {
         stack.addArrangedSubview(optionForPaymentLayout)
         
         stack.addArrangedSubview(requiredBillingFieldsEntry)
+        stack.addArrangedSubview(switchForForce3DS)
         stack.addArrangedSubview(switchForAutoCapture)
         stack.addArrangedSubview(fieldForCustomerId)
         
@@ -365,6 +372,16 @@ private extension SettingsViewController {
     }
     
     func setupSwitches() {
+        
+        switchForForce3DS.setup(
+            ConfigSwitchViewModel(
+                title: NSLocalizedString("Force 3DS", comment: pageName),
+                isOn: settings.force3DS,
+                action: { [weak self] isOn in
+                    self?.settings.force3DS = isOn
+                })
+        )
+        
         switchForAutoCapture.setup(
             ConfigSwitchViewModel(
                 title: NSLocalizedString("Auto capture", comment: pageName),
