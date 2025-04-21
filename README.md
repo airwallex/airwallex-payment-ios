@@ -404,7 +404,7 @@ paymentSessionHandler.startConsentPayment(withId: "consent ID")
 ---
 #### Pay with Apple Pay
 > [!IMPORTANT]
-> Make sure you have [Set Up Apple Pay](#Apple-Pay).
+> Make sure you have [Set Up Apple Pay](#Apple-Pay) correctly.
 ``` swift
 paymentSessionHandler.startApplePay()
 ```
