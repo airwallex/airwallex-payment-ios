@@ -12,7 +12,7 @@ The Airwallex iOS SDK is a framework for integrating easy, fast and secure payme
 
 <p align="left">
 <img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/b7af014b-a4bf-41e2-b165-a6c6b438dc0b" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/c86b7f3f-d2bc-4326-b82e-145f52d35c72" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/938e6101-edb2-4fcf-89fa-07936e4af5a9" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/5556a6af-882d-4474-915e-2c9d5953aaa8" width="200" hspace="10">
@@ -320,7 +320,7 @@ We provide two layout styles for our payment sheet
 
 - accordion layout
 
-<img src="https://github.com/user-attachments/assets/b7af014b-a4bf-41e2-b165-a6c6b438dc0b" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200" hspace="10">
 
 ---
 #### Launch Card Payment Directly
