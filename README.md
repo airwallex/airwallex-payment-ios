@@ -81,8 +81,8 @@ Make sure you have installed Cocoapods and then run the following command in the
 pod install
 ```
 
-> [!TIP] Update key file (Optional)
->
+> [!TIP] 
+> Update key file (Optional)
 >- In the `Examples/Keys` folder, edit `Keys.json` with proper keys.
 >- Build and run `Examples` schema
 >
@@ -290,9 +290,7 @@ options.totalPriceLabel = "COMPANY, INC."
 >- Amex
 >- Discover
 >- JCB
-
-Customers will only be able to select the cards of the above payment networks during Apple Pay.
->[!IMPORTANT]
+>
 > Coupon is also not supported at this stage.
 
 
@@ -302,9 +300,9 @@ Customers will only be able to select the cards of the above payment networks du
 > [!NOTE]
 > This is **recommended usage**, it builds a complete user flow on top of your app with our prebuilt UI to collect payment details, billing details, and confirming the payment.
 
-Make sure you add dependency for `AirwallexPaymentSheet`
+Make sure you add dependency for `Airwallex` or `AirwallexPaymentSheet`.
 Upon checkout, use `AWXUIContext` to present the payment flow where the user will be able to select the payment method.
-swift
+
 ``` swift
 AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
@@ -314,6 +312,16 @@ AWXUIContext.launchPayment(
     layout: ".tab/.accordion"
 )
 ```
+
+We provide two layout styles for our payment sheet
+- tab ayout
+
+<img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
+
+- accordion layout
+
+<img src="https://github.com/user-attachments/assets/b7af014b-a4bf-41e2-b165-a6c6b438dc0b" width="200" hspace="10">
+
 ---
 #### Launch Card Payment Directly
 ```swift
@@ -326,7 +334,7 @@ AWXUIContext.launchCardPayment(
 
 > [!Tip]
 > If you want to show card payment only but still want to be able to pay with saved cards, you can launch
-> payment sheet by passing [AWXCardKey] as parameter of `filterBy:`
+> payment sheet by passing `[AWXCardKey]` as parameter of `filterBy:`
 ``` swift
 AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
@@ -357,18 +365,18 @@ AWXTheme.shared().tintColor = .red
 
 ### Low-level API Integration
 
-Make sure you add dependency for `AirwallexPayment`
+Make sure you add dependency for `Airwallex` or `AirwallexPayment`.
 You can build your own entirely custom UI on top of our low-level APIs.
 
 > [!NOTE]
-> You still need all required steps listed in [Required Setup](#required-setup) section above to set up configurations, intent and session, except the `AWXUIContext` and [UI Integration](#ui-integration) is replace by `PaymentSessionHandler` and [low-level API integration](#low-level-api-integration)
+> You still need all required steps listed in [Required Setup](#required-setup) section above to set up configurations, payment intent and payment session.
 > 
 > you may find [Airwallex API Docs](https://www.airwallex.com/docs/api#/Payment_Acceptance) useful if you are using this integration style
 ---
 #### Create PaymentSessionHandler 
 
 ```swift
-let paymentSessionHandler = try PaymentSessionHandler(
+let paymentSessionHandler = PaymentSessionHandler(
     session: "The session created above", 
     viewController: "hosting view controller which also handles AWXPaymentResultDelegate"
 )
@@ -387,21 +395,19 @@ paymentSessionHandler.startCardPayment(
 ---
 #### Pay with saved card (consent)
 
-- Pay with consent object - Confirm intent with a payment consent object AWXPaymentConsent)
+- Pay with consent object - Confirm intent with a payment consent object `AWXPaymentConsent`)
 ``` swift
 paymentSessionHandler.startConsentPayment(with: "payment consent")
 ```
 
-- Pay with consent ID - Confirm intent with a valid payment consent ID only when the saved card is **network token**
+- Pay with consent ID - Confirm intent with a valid payment consent ID only when the card is save as **network token**
 ``` swift
 paymentSessionHandler.startConsentPayment(withId: "consent ID")
 ```
 ---
 #### Pay with Apple Pay
 > [!IMPORTANT]
-> Make sure `session.applePayOptions` is setup correctly.
-> 
-> Refer to section [Set Up Apple Pay](#Apple-Pay) for more details.
+> Make sure you have [Set Up Apple Pay](#Apple-Pay).
 ``` swift
 paymentSessionHandler.startApplePay()
 ```
@@ -418,7 +424,7 @@ paymentSessionHandler.startRedirectPayment(
 
 ### Handle Payment Result
 
-Regardless of whether you choose UI Integration or Low-Level API Integration, after the user completes the payment successfully or with an error, you need to handle the payment result callback of `AWXPaymentResultDelegate`.
+Regardless of what kind of integration style you choose, you need to handle the payment result in the callback of `AWXPaymentResultDelegate`.
 ``` swift
 func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
     // call back for status success/in progress/ failure / cancel
