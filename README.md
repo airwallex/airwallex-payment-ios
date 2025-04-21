@@ -137,9 +137,11 @@ Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 ---
 #### Customer ID 
 > [!IMPORTANT]
-> Required for **recurring** or **recurring with intent** checkouts.
-> 
-> Optional for **one-off** payment
+> - **Required** for **recurring** payment
+> - **Required** for **recurring with intent** payment
+> - For **one-off** payment
+>   - **Required** for card saving payment
+>   - **Optional** for other cases
 >
 Generate or retrieve a customer ID for your user on your server-side. 
 Refer to the [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/) for more details
@@ -183,10 +185,9 @@ session.merchantTriggerReason = "Unscheduled or scheduled"
 ---
 #### Payment Intent
 > [!IMPORTANT]
-> Required for **one-off** or **recurring with intent** checkouts.
->
-> Not needed for **recurring** checkouts.
-> 
+> **Required** for **one-off** payemnt
+> **Required** for **recurring with intent** payment
+> **Not needed** for **recurring** checkouts.
 
 Create payment intent on your **server-side** and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
 
@@ -262,12 +263,6 @@ The Airwallex iOS SDK allows merchants to provide Apple Pay as a payment method 
 - Make sure Apple Pay is enabled on your Airwallex account.
 - Prepare the [Merchant Identifier](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay) and configure `applePayOptions` on the payment session object.
 
-``` swift
-let session = AWXOneOffSession()
-//  configure other properties
-...
-session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")// required for Apple Pay
-```
 You can customize the Apple Pay options to restrict it as well as provide extra context. For more information, please refer to the `AWXApplePayOptions.h` header file.
 ```swift
 let options = AWXApplePayOptions(merchantIdentifier: applePayMerchantId)
@@ -279,6 +274,11 @@ options.merchantCapabilities = [.threeDSecure, .debit]
 options.requiredBillingContactFields = [.postalAddress]
 options.supportedCountries = ["AU"]
 options.totalPriceLabel = "COMPANY, INC."
+
+let session = AWXOneOffSession()
+//  configure other properties
+...
+session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")// required for Apple Pay
 ```
 
 > [!IMPORTANT]
