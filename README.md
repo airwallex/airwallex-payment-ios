@@ -313,14 +313,11 @@ AWXUIContext.launchPayment(
 )
 ```
 
-We provide two layout styles for our payment sheet
-- tab ayout
-
-<img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
-
-- accordion layout
-
-<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200" hspace="10">
+We provide `tab` and `accordian` styles for our payment sheet:
+<p align="left">
+<img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200">
+<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200">
+</p>
 
 ---
 #### Launch Card Payment Directly
