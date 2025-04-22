@@ -159,7 +159,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         
         let request = AWXGetPaymentMethodTypesRequest()
         request.transactionCurrency = ExamplesKeys.currency
-        request.transactionMode = (ExamplesKeys.checkoutMode == .oneOff) ? "oneoff" : "recurring"
+        request.transactionMode = (ExamplesKeys.checkoutMode == .oneOff) ? AWXPaymentTransactionModeOneOff : AWXPaymentTransactionModeRecurring
         request.countryCode = ExamplesKeys.countryCode
         request.pageNum = 0
         request.pageSize = 1000

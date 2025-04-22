@@ -59,25 +59,30 @@ public protocol ErrorLoggable: LocalizedError, CustomNSError {
 
 @_spi(AWX) public extension AnalyticsLogger {
     static func log(pageView name: AnalyticEvent.PageView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+        guard !ProcessInfo.isRunningUnitTest else { return }
         let (name, additionalInfo) = processEventInfo(event: name, extraInfo: extraInfo)
         shared().logPageView(withName: name, additionalInfo: additionalInfo)
     }
     
     static func log(action name: AnalyticEvent.Action, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+        guard !ProcessInfo.isRunningUnitTest else { return }
         let (name, additionalInfo) = processEventInfo(event: name, extraInfo: extraInfo)
         shared().logAction(withName: name, additionalInfo: additionalInfo)
     }
     
     static func log(paymentMethodView name: String, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+        guard !ProcessInfo.isRunningUnitTest else { return }
         log(paymentMethodView: AnalyticEvent.PaymentMethodView(rawValue: name), extraInfo: extraInfo)
     }
     
     static func log(paymentMethodView name: AnalyticEvent.PaymentMethodView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+        guard !ProcessInfo.isRunningUnitTest else { return }
         let (name, additionalInfo) = processEventInfo(event: name, extraInfo: extraInfo)
         shared().logPaymentMethodView(withName: name, additionalInfo: additionalInfo)
     }
     
     static func log(error: ErrorLoggable, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+        guard !ProcessInfo.isRunningUnitTest else { return }
         let (name, additionalInfo) = processErrorInfo(error: error, extraInfo: extraInfo)
         shared().logError(withName: name, additionalInfo: additionalInfo)
     }
@@ -124,6 +129,14 @@ public protocol ErrorLoggable: LocalizedError, CustomNSError {
 @_spi(AWX) public enum RiskLogger {
     @_spi(AWX) public
     static func log(_ event: RiskEvent, screen: RiskEvent.Page?) {
+        guard !ProcessInfo.isRunningUnitTest else { return }
         Risk.log(event: event.rawValue, screen: screen?.rawValue)
     }
 }
+
+extension ProcessInfo {
+    static var isRunningUnitTest: Bool {
+        processInfo.environment["XCTestConfigurationFilePath"] != nil
+    }
+}
+    

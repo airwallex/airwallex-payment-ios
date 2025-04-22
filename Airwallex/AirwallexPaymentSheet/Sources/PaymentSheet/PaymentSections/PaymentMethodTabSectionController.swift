@@ -86,6 +86,7 @@ class PaymentMethodTabSectionController: SectionController {
             return
         }
         guard selected.name != selectedMethod else {
+            context.endEditing()
             return
         }
         AnalyticsLogger.log(action: .selectPayment, extraInfo: [.paymentMethod: itemIdentifier])

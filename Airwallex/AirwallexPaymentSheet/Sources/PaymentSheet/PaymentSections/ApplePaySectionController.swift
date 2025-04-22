@@ -64,6 +64,10 @@ class ApplePaySectionController: SectionController {
         return cell
     }
     
+    func collectionView(didSelectItem item: String, at indexPath: IndexPath) {
+        context.endEditing()
+    }
+    
     func supplementaryView(for elementKind: String,
                            at indexPath: IndexPath) -> UICollectionReusableView {
         context.dequeueReusableSupplementaryView(

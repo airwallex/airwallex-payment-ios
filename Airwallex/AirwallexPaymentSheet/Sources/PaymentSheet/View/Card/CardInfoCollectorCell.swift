@@ -20,12 +20,6 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         return view
     }()
     
-    private let container: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private let numberTextField: CardNumberTextField = {
         let view = CardNumberTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -58,14 +52,6 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .awxColor(.textError)
         view.font = .awxFont(.caption2)
-        return view
-    }()
-    
-    private let vStack: UIStackView = {
-        let view = UIStackView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.spacing = 16
-        view.axis = .vertical
         return view
     }()
     
@@ -138,11 +124,11 @@ private extension CardInfoCollectorCell {
             
             for (view, isValid, _) in arr {
                 if !isValid {
-                    self.container.bringSubviewToFront(view)
+                    self.contentView.bringSubviewToFront(view)
                 }
             }
             if let editingField = arr.first(where: { $0.isFirstResponder })?.view {
-                self.container.bringSubviewToFront(editingField)
+                self.contentView.bringSubviewToFront(editingField)
             }
         }
         
@@ -160,42 +146,33 @@ private extension CardInfoCollectorCell {
     }
     
     func setupViews() {
-        contentView.addSubview(vStack)
-        vStack.addArrangedSubview(container)
-        do {
-            container.addSubview(titleLabel)
-            container.addSubview(numberTextField)
-            container.addSubview(expiresTextField)
-            container.addSubview(cvcTextField)
-            container.addSubview(hintLabel)
-        }
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(numberTextField)
+        contentView.addSubview(expiresTextField)
+        contentView.addSubview(cvcTextField)
+        contentView.addSubview(hintLabel)
         
         let constraints = [
-            titleLabel.topAnchor.constraint(equalTo: container.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             numberTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            numberTextField.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            numberTextField.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            numberTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            numberTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
             expiresTextField.topAnchor.constraint(equalTo: numberTextField.bottomAnchor, constant: -1),
-            expiresTextField.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            expiresTextField.trailingAnchor.constraint(equalTo: container.centerXAnchor),
+            expiresTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            expiresTextField.trailingAnchor.constraint(equalTo: contentView.centerXAnchor),
             
             cvcTextField.topAnchor.constraint(equalTo: numberTextField.bottomAnchor, constant: -1),
-            cvcTextField.leadingAnchor.constraint(equalTo: container.centerXAnchor, constant: -1),
-            cvcTextField.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            cvcTextField.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: -1),
+            cvcTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             cvcTextField.bottomAnchor.constraint(equalTo: expiresTextField.bottomAnchor),
             
             hintLabel.topAnchor.constraint(equalTo: cvcTextField.bottomAnchor, constant: 4),
-            hintLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            hintLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            hintLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-            
-            vStack.topAnchor.constraint(equalTo: contentView.topAnchor),
-            vStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            vStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            vStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            hintLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            hintLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            hintLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ]
         
         NSLayoutConstraint.activate(constraints)

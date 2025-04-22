@@ -81,6 +81,8 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         super.init(frame: frame)
     
         textField.tintColor = .awxColor(.textLink)
+        textField.setContentHuggingPriority(.defaultLow - 15, for: .horizontal)
+        textField.setContentCompressionResistancePriority(.defaultHigh - 15, for: .horizontal)
         addSubview(verticalStack)
         verticalStack.addArrangedSubview(box)
         box.addSubview(horizontalStack)
