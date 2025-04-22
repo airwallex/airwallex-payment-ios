@@ -141,6 +141,16 @@
 		D81983492D6F120B008008A3 /* AirwallexPayment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D81983412D6F120B008008A3 /* AirwallexPayment.framework */; };
 		D81983D62D6F12BD008008A3 /* AirwallexCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* AirwallexCore.framework */; platformFilter = ios; };
 		D81983E82D6F1438008008A3 /* AirwallexRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; };
+		D8269FB22DB7701300E179EB /* AWXApplePayProviderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37D527EAFD9F00CFC2EF /* AWXApplePayProviderTest.m */; };
+		D8269FB32DB7701300E179EB /* PKContactRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9BA292806D923005B70C3 /* PKContactRequestTest.m */; };
+		D8269FB42DB7701300E179EB /* AWXPaymentIntentSummaryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */; };
+		D8269FB52DB7701300E179EB /* AWXSessionRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F727ED677C00CFC2EF /* AWXSessionRequestTest.m */; };
+		D8269FB62DB7701300E179EB /* PKPaymentMethodRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F127ED4EB600CFC2EF /* PKPaymentMethodRequestTest.m */; };
+		D8269FB72DB7701300E179EB /* AWXPlaceDetailsPKContactTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9BA2F2806E02F005B70C3 /* AWXPlaceDetailsPKContactTest.m */; };
+		D8269FB82DB7701300E179EB /* PKPaymentTokenRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F327ED53F400CFC2EF /* PKPaymentTokenRequestTest.m */; };
+		D8269FB92DB7701E00E179EB /* AWXPaymentFormViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */; };
+		D8269FBA2DB7701E00E179EB /* AWXRedirectActionProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */; };
+		D8269FBB2DB7702400E179EB /* AWXCardProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */; };
 		D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D85041C82DA7957A0074BA7F /* AirwallexPaymentSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */; };
 		D85041D42DA79A0B0074BA7F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85041D32DA79A0B0074BA7F /* Security.framework */; };
@@ -2210,9 +2220,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2350,6 +2364,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C5A380027F2DDB500CFC2EF /* AWXProviderDelegateSpy.m in Sources */,
+				D8269FB22DB7701300E179EB /* AWXApplePayProviderTest.m in Sources */,
+				D8269FB32DB7701300E179EB /* PKContactRequestTest.m in Sources */,
+				D8269FB42DB7701300E179EB /* AWXPaymentIntentSummaryTest.m in Sources */,
+				D8269FB52DB7701300E179EB /* AWXSessionRequestTest.m in Sources */,
+				D8269FB62DB7701300E179EB /* PKPaymentMethodRequestTest.m in Sources */,
+				D8269FB72DB7701300E179EB /* AWXPlaceDetailsPKContactTest.m in Sources */,
+				D8269FB82DB7701300E179EB /* PKPaymentTokenRequestTest.m in Sources */,
+				D8269FB92DB7701E00E179EB /* AWXPaymentFormViewModelTests.m in Sources */,
+				D8269FBA2DB7701E00E179EB /* AWXRedirectActionProviderTests.m in Sources */,
 				0829FD1A2432019E00557DB2 /* AWXCardValidatorTest.m in Sources */,
 				1862772329DFCE920002892A /* NSDataBase64Test.m in Sources */,
 				18E0571C29CA8AD70099388A /* AWXAnalyticsLoggerTest.m in Sources */,
@@ -2361,6 +2384,7 @@
 				082442CC2431C00E00D04A2C /* AWXCardTest.m in Sources */,
 				572D1BEE26DF4D06001EBDAA /* AWXSessionTest.m in Sources */,
 				0829FD082431D25800557DB2 /* AWXBillingTest.m in Sources */,
+				D8269FBB2DB7702400E179EB /* AWXCardProviderTests.m in Sources */,
 				3C99E74727E9A6B70074156C /* AWXApplePayOptionsTest.m in Sources */,
 				183FB64D2BB6C62400FFDF0E /* AWXProviderDelegateEmpty.m in Sources */,
 				0829FD132431E11E00557DB2 /* AWXAPIClientTest.m in Sources */,

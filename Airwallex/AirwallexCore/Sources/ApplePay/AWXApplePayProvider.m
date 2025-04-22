@@ -66,7 +66,7 @@ typedef enum {
     } else {
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
-                                         userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
+                                         userInfo:@{NSLocalizedDescriptionKey: errorMessage ?: @""}];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }
@@ -168,18 +168,6 @@ typedef enum {
 #pragma mark - Private methods
 
 + (BOOL)canHandleSession:(AWXSession *)session errorMessage:(NSString *_Nullable *)error {
-    if ([session isKindOfClass:[AWXRecurringSession class]]) {
-        AWXRecurringSession *recurringSession = (AWXRecurringSession *)session;
-        if ([recurringSession.transactionMode isEqual:AWXPaymentTransactionModeRecurring] && recurringSession.nextTriggerByType == AirwallexNextTriggerByCustomerType) {
-            return NO;
-        }
-    }
-    if ([session isKindOfClass:[AWXRecurringWithIntentSession class]]) {
-        AWXRecurringWithIntentSession *recurringSession = (AWXRecurringWithIntentSession *)session;
-        if ([recurringSession.transactionMode isEqual:AWXPaymentTransactionModeRecurring] && recurringSession.nextTriggerByType == AirwallexNextTriggerByCustomerType) {
-            return NO;
-        }
-    }
     if (session.applePayOptions == nil) {
         if (error) {
             *error = NSLocalizedString(@"Missing Apple Pay options in session.", nil);
@@ -197,7 +185,28 @@ typedef enum {
     }
 
     if (error && !canMakePayment) {
-        *error = NSLocalizedString(@"Payment not supported via Apple Pay.", nil);
+        if (error) {
+            *error = NSLocalizedString(@"Payment not supported via Apple Pay.", nil);
+        }
+    }
+
+    if ([session isKindOfClass:[AWXRecurringSession class]]) {
+        AWXRecurringSession *recurringSession = (AWXRecurringSession *)session;
+        if ([recurringSession.transactionMode isEqual:AWXPaymentTransactionModeRecurring] && recurringSession.nextTriggerByType == AirwallexNextTriggerByCustomerType) {
+            if (error) {
+                *error = NSLocalizedString(@"CIT not supported by Apple Pay", nil);
+            }
+            return NO;
+        }
+    }
+    if ([session isKindOfClass:[AWXRecurringWithIntentSession class]]) {
+        AWXRecurringWithIntentSession *recurringSession = (AWXRecurringWithIntentSession *)session;
+        if ([recurringSession.transactionMode isEqual:AWXPaymentTransactionModeRecurring] && recurringSession.nextTriggerByType == AirwallexNextTriggerByCustomerType) {
+            if (error) {
+                *error = NSLocalizedString(@"CIT not supported by Apple Pay", nil);
+            }
+            return NO;
+        }
     }
     return canMakePayment;
 }

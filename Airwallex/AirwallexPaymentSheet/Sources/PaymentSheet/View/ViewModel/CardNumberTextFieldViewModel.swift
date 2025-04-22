@@ -17,12 +17,15 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardBrandVi
         if supportedBrands.contains(formatter.currentBrand) {
             return formatter.currentBrand
         } else {
-            return .unknown
+            return cardBrands.isEmpty ? .unknown : cardBrands.first
         }
     }
     
     var cardBrands: [AWXBrandType] {
-        formatter.candidates.filter { supportedBrands.contains($0) }
+        if (text ?? "").isEmpty {
+            return supportedBrands
+        }
+        return formatter.candidates.filter { supportedBrands.contains($0) }
     }
     
     private let formatter: CardNumberFormatter

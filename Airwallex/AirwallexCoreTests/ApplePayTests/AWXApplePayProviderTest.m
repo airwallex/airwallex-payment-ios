@@ -71,12 +71,38 @@
     XCTAssertTrue([self canHandleSession:session]);
 }
 
-- (void)testCanHandleSessionShouldReturnYESWithRecurringSession {
-    AWXSession *session = [AWXRecurringSession new];
+- (void)testCanHandleSessionShouldReturnYESWithRecurringSession_MIT {
+    AWXRecurringSession *session = [AWXRecurringSession new];
     session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
+    session.nextTriggerByType = AirwallexNextTriggerByMerchantType;
     [self mockPKCanMakePayments:YES];
 
     XCTAssertTrue([self canHandleSession:session]);
+}
+
+- (void)testCanHandleSessionShouldReturnYESWithRecurringWithIntentSession_MIT {
+    AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
+    session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
+    session.nextTriggerByType = AirwallexNextTriggerByMerchantType;
+    [self mockPKCanMakePayments:YES];
+
+    XCTAssertTrue([self canHandleSession:session]);
+}
+
+- (void)testCanHandleSessionShouldReturnFalseWithRecurringSession_CIT {
+    AWXRecurringSession *session = [AWXRecurringSession new];
+    session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
+    [self mockPKCanMakePayments:YES];
+    session.nextTriggerByType = AirwallexNextTriggerByCustomerType;
+    XCTAssertFalse([self canHandleSession:session]);
+}
+
+- (void)testCanHandleSessionShouldReturnFalseWithRecurringWithIntentSession_CIT {
+    AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
+    session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
+    [self mockPKCanMakePayments:YES];
+    session.nextTriggerByType = AirwallexNextTriggerByCustomerType;
+    XCTAssertFalse([self canHandleSession:session]);
 }
 
 - (void)testHandleFlowWithNoApplePayOptions {
