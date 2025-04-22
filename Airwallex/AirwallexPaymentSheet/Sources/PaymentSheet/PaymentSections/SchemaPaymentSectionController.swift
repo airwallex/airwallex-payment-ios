@@ -146,6 +146,10 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         }
     }
     
+    func collectionView(didSelectItem item: String, at indexPath: IndexPath) {
+        context.endEditing()
+    }
+    
     func updateItemsIfNecessary() {
         guard schema == nil && task == nil else {
             // don't send request again if we already have schema info

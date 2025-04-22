@@ -226,6 +226,10 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         }
     }
     
+    func collectionView(didSelectItem item: String, at indexPath: IndexPath) {
+        context.endEditing()
+    }
+    
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let layoutSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),

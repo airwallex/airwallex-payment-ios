@@ -86,7 +86,12 @@ extension UITextField {
         }
         self.attributedText = after
         if before != attributedText {
-            let cursorPosition = offset(from: beginningOfDocument, to: selectedRange.start)
+            var cursorPosition: Int
+            if attributedText.length >= before.length {
+                cursorPosition = offset(from: beginningOfDocument, to: selectedRange.start)
+            } else {
+                cursorPosition = offset(from: beginningOfDocument, to: selectedRange.end)
+            }
             let newCursorPosition = position(
                 from: beginningOfDocument,
                 offset: cursorPosition + (attributedText.length - before.length)

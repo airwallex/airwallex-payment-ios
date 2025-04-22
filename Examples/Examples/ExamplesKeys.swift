@@ -53,6 +53,9 @@ struct ExamplesKeys {
     @Storage("requiresCountryCode", defaultValue: false)
     static var requiresCountryCode: Bool
     
+    @Storage("force3DS", defaultValue: false)
+    static var force3DS: Bool
+    
     @Storage("autoCapture", defaultValue: false)
     static var autoCapture: Bool
     
@@ -90,6 +93,7 @@ struct ExamplesKeys {
                 requiresPhone: ExamplesKeys.requiresPhone,
                 requiresAddress: ExamplesKeys.requiresAddress,
                 requiresCountryCode: ExamplesKeys.requiresCountryCode,
+                force3DS: ExamplesKeys.force3DS,
                 autoCapture: ExamplesKeys.autoCapture,
                 customerId: ExamplesKeys.customerId,
                 apiKey: ExamplesKeys.apiKey,
@@ -110,6 +114,7 @@ struct ExamplesKeys {
             ExamplesKeys.requiresPhone = newValue.requiresPhone
             ExamplesKeys.requiresAddress = newValue.requiresAddress
             ExamplesKeys.requiresCountryCode = newValue.requiresCountryCode
+            ExamplesKeys.force3DS = newValue.force3DS
             ExamplesKeys.autoCapture = newValue.autoCapture
             ExamplesKeys.customerId = newValue.customerId
             ExamplesKeys.apiKey = newValue.apiKey
@@ -130,6 +135,7 @@ struct ExamplesKeys {
         var requiresPhone: Bool
         var requiresAddress: Bool
         var requiresCountryCode: Bool
+        var force3DS: Bool
         var autoCapture: Bool
         var customerId: String?
         
@@ -149,6 +155,7 @@ struct ExamplesKeys {
              requiresPhone: Bool,
              requiresAddress: Bool,
              requiresCountryCode: Bool,
+             force3DS: Bool,
              autoCapture: Bool,
              customerId: String? = nil,
              apiKey: String? = nil,
@@ -165,6 +172,7 @@ struct ExamplesKeys {
             self.requiresPhone = requiresPhone
             self.requiresAddress = requiresAddress
             self.requiresCountryCode = requiresCountryCode
+            self.force3DS = force3DS
             self.autoCapture = autoCapture
             self.customerId = customerId
             self.apiKey = apiKey
@@ -186,6 +194,7 @@ struct ExamplesKeys {
                 ├── Requires Phone: \(requiresPhone)
                 ├── Requires Address: \(requiresAddress)
                 ├── Requires Country Code: \(requiresCountryCode)
+                ├── Force 3DS: \(force3DS)
                 ├── Auto Capture: \(autoCapture)
                 ├── Customer ID: \(customerId ?? "N/A")
                 ├── API Key: \(apiKey ?? "N/A")

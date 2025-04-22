@@ -168,6 +168,18 @@ typedef enum {
 #pragma mark - Private methods
 
 + (BOOL)canHandleSession:(AWXSession *)session errorMessage:(NSString *_Nullable *)error {
+    if ([session isKindOfClass:[AWXRecurringSession class]]) {
+        AWXRecurringSession *recurringSession = (AWXRecurringSession *)session;
+        if ([recurringSession.transactionMode isEqual:AWXPaymentTransactionModeRecurring] && recurringSession.nextTriggerByType == AirwallexNextTriggerByCustomerType) {
+            return NO;
+        }
+    }
+    if ([session isKindOfClass:[AWXRecurringWithIntentSession class]]) {
+        AWXRecurringWithIntentSession *recurringSession = (AWXRecurringWithIntentSession *)session;
+        if ([recurringSession.transactionMode isEqual:AWXPaymentTransactionModeRecurring] && recurringSession.nextTriggerByType == AirwallexNextTriggerByCustomerType) {
+            return NO;
+        }
+    }
     if (session.applePayOptions == nil) {
         if (error) {
             *error = NSLocalizedString(@"Missing Apple Pay options in session.", nil);

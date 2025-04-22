@@ -295,10 +295,12 @@ class CardPaymentConsentSectionController: SectionController {
         guard mode == .consentList else {
             // do nothing if consent is already selected
             // user needs to select change button in section header to go back to consent list
+            context.endEditing()
             return
         }
         
         guard ![Items.accordionKey, Items.addNewCardToggle].contains(itemIdentifier) else {
+            context.endEditing()
             return
         }
         guard let consent = consents.first(where: { $0.id == itemIdentifier }) ,

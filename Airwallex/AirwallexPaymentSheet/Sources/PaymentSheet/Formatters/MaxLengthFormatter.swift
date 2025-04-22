@@ -47,10 +47,6 @@ struct MaxLengthFormatter: UserInputFormatter {
             string: userInput,
             attributes: textField.defaultTextAttributes
         )
-        guard maxLength >= attributedText.length else {
-            let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
-            return attributedText.attributedSubstring(from: range)
-        }
         return attributedText
     }
 }

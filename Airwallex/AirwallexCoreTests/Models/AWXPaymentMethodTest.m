@@ -29,7 +29,7 @@
     AWXPaymentMethodType *paymentMethodType = [AWXPaymentMethodType decodeFromJSON:[AWXTestUtils jsonNamed:@"PaymentMethodType"]];
     XCTAssertEqualObjects(paymentMethodType.name, @"card");
     XCTAssertEqualObjects(paymentMethodType.displayName, @"Card");
-    XCTAssertEqualObjects(paymentMethodType.transactionMode, @"oneoff");
+    XCTAssertEqualObjects(paymentMethodType.transactionMode, AWXPaymentTransactionModeOneOff);
     XCTAssertEqual(paymentMethodType.flows, [NSArray new]);
     NSArray *currencies = @[@"CHF", @"MXN", @"*", @"NOK", @"EGP"];
     XCTAssertEqualObjects(paymentMethodType.transactionCurrencies, currencies);

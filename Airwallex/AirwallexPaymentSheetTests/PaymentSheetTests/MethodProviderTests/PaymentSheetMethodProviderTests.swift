@@ -164,7 +164,6 @@ import Combine
     func testFetchPaymentMethodWithApplePayOptionsAndCustomerId() async {
         MockURLProtocol.mockResponseQueue = [(mockMethodTypesData, mockSuccessResponse, nil), (mockConsentsData, mockSuccessResponse, nil)]
         mockOneOffSession.applePayOptions = AWXApplePayOptions(merchantIdentifier: "123")
-        let intent = AWXPaymentIntent()
         mockOneOffSession.paymentIntent = mockPaymentIntent
         do {
             try await provider.getPaymentMethodTypes()

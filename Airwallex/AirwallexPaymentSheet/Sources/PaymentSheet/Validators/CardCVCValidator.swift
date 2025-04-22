@@ -46,8 +46,7 @@ struct CardCVCValidator: UserInputValidator, UserInputFormatter {
             .replacingCharacters(in: range, with: string)
             .filterIllegalCharacters(in: .decimalDigits.inverted)
         let attributedText = NSAttributedString(string: userInput, attributes: textField.defaultTextAttributes)
-        let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
-        return attributedText.attributedSubstring(from: range)
+        return attributedText
     }
 }
 

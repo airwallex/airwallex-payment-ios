@@ -52,7 +52,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
             
             if methodType.name == AWXWeChatPayKey, NSClassFromString("AWXWeChatPayActionProvider") == nil {
                 // temporary solution - use AWXWeChatPayActionProvider to check if
-                // payment(cocoapods)/AirwallexWeChatPay(SPM) is integrated
+                // AirwallexWeChatpay is integrated
                 return false
             }
             return true
@@ -133,6 +133,11 @@ private extension PaymentSheetMethodProvider {
               let oneOffSession = session as? AWXOneOffSession,
               !oneOffSession.hidePaymentConsents else {
             return []
+        }
+        if let predefinedMethods = oneOffSession.paymentMethods {
+            guard predefinedMethods.contains(where: { $0.lowercased() == AWXCardKey }) else {
+                return []
+            }
         }
         let request = AWXGetPaymentConsentsRequest()
         request.customerId = customerId

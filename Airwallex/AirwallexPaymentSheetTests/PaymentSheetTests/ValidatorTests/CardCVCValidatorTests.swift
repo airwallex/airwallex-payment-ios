@@ -61,7 +61,8 @@ class CardCVCValidatorTests: XCTestCase {
             changeCharactersIn: textField.text!.endIndex..<textField.text!.endIndex,
             replacementString: "5"
         )
-        XCTAssertEqual(result2.string, "123", "Formatted input should not exceed maxLength")
+        textField.updateContentAndCursor(attributedText: result2, maxLength: mockValidator.maxLength)
+        XCTAssertEqual(textField.text, "123", "Formatted input should not exceed maxLength")
         
         // Test case 3: Input with illegal characters
         textField.text = "12a"
