@@ -12,6 +12,7 @@ The Airwallex iOS SDK is a framework for integrating easy, fast and secure payme
 
 <p align="left">
 <img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/c86b7f3f-d2bc-4326-b82e-145f52d35c72" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/938e6101-edb2-4fcf-89fa-07936e4af5a9" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/5556a6af-882d-4474-915e-2c9d5953aaa8" width="200" hspace="10">
@@ -80,12 +81,12 @@ Make sure you have installed Cocoapods and then run the following command in the
 pod install
 ```
 
-> [!TIP] Update key file (Optional)
->
+> [!TIP] 
+> Update key file (Optional)
 >- In the `Examples/Keys` folder, edit `Keys.json` with proper keys.
 >- Build and run `Examples` schema
 >
-> Key file provides default value for settings, you can use the in-app setting screen to update the keys any time.
+> The key file provides default values for settings. You can update these settings anytime using the in-app settings screen.
 
 ## Integration
 
@@ -93,40 +94,32 @@ pod install
 
 #### Swift Package Manager
 Airwallex for iOS is available via Swift Package Manager. To integrate it into your project, follow these steps:
-1. Add the Package Dependency
-[Follow Apple's guide on how to add a package dependency in Xcode.](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
-2. Repository URL
-Use the following URL for the Airwallex package:
+1. Follow [Apple's guide](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app) on how to add a package dependency in Xcode.
+
+2. Use the following URL for the Airwallex package:
 https://github.com/airwallex/airwallex-payment-ios
-3. Version Requirement
-Ensure you specify version 5.7.0 or later.
 
-You can add `Airwallex` to include all components, or selectively add the following components to your project, depending on your payment needs:
+3. Ensure you specify version 6.0.0 or later.
 
-- `AirwallexPayment`: For UI integration. 
-- `AirwallexApplePay`: For integrating Apple Pay.    
-- `AirwallexCard`: For card payments.
-- `AirwallexRedirect`: To support payments via url/deeplink redirection.
-- `AirwallexWeChatpay`: For a native WeChat Pay experience.
----
+You can add `Airwallex` for a comprehensive integration that includes everything except WeChat Pay. Alternatively, you can selectively add specific products to your project for a more modular setup, depending on your payment needs:
+
+- `AirwallexPaymentSheet`: For UI integration. 
+- `AirwallexPayment`: For low-level API integration.
+- `AirwallexWeChatPay`: Required for WeChat Pay integration.
 #### CocoaPods
 
-Airwallex for iOS is available through [CocoaPods](https://cocoapods.org/).
+Airwallex for iOS is available via [CocoaPods](https://cocoapods.org/).
 
-Add this line to your `Podfile`:
+You can add `Airwallex` for a comprehensive integration that includes everything except WeChat Pay:
 ```ruby
 pod 'Airwallex'
 ```
 
-Optionally, you can also include the modules directly (This is recommended to ensure minimal dependency):
-
+Alternatively, you can selectively add specific products to your project for a more modular setup, depending on your payment needs:
 ```ruby
-pod 'Airwallex/Payment'
-pod 'Airwallex/Core'
-pod 'Airwallex/Card'
-pod 'Airwallex/WechatPay'
-pod 'Airwallex/Redirect'
-pod 'Airwallex/ApplePay'
+pod 'Airwallex/AirwallexPaymentSheet' # For UI integration. 
+pod 'Airwallex/AirwallexPayment' # For low-level API integration
+pod 'Airwallex/AirwallexWeChatPay' # Required for WeChat Pay integration
 ```
 
 Run the following command:
@@ -144,9 +137,11 @@ Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 ---
 #### Customer ID 
 > [!IMPORTANT]
-> Required for **recurring** or **recurring with intent** checkouts.
-> 
-> Optional for **one-off** payment
+> - **Required** for **recurring** payment
+> - **Required** for **recurring with intent** payment
+> - For **one-off** payment
+>   - **Required** for card saving payment
+>   - **Optional** for other cases
 >
 Generate or retrieve a customer ID for your user on your server-side. 
 Refer to the [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/) for more details
@@ -154,7 +149,7 @@ Refer to the [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acc
 ---
 #### Payment session
 
-- If you want to make a one-off payment, create a one-off session.
+- If you want to make a **one-off** payment, create a **one-off** session.
 ``` swift
 let session = AWXOneOffSession()
 session.countryCode = "Your country code"
@@ -173,7 +168,7 @@ session.setCustomerId("Customer ID")
 session.nextTriggerByType = "customer or merchant";
 session.merchantTriggerReason = "Unscheduled or scheduled";
 ```
-- If you want to make a recurring with payment intent, create a recurring with intent session.
+- If you want to make a recurring payment with intent, create a recurring with intent session.
 
 ``` swift
 let session = AWXRecurringWithIntentSession()
@@ -190,12 +185,11 @@ session.merchantTriggerReason = "Unscheduled or scheduled"
 ---
 #### Payment Intent
 > [!IMPORTANT]
-> Required for **one-off** or **recurring with intent** checkouts.
->
-> Not needed for **recurring** checkouts.
-> 
+> **Required** for **one-off** payemnt
+> **Required** for **recurring with intent** payment
+> **Not needed** for **recurring** checkouts.
 
-Create **payment intent** on your server-side and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
+Create payment intent on your **server-side** and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
 
 Refer to the [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Payment_Intents/) for details
 
@@ -212,8 +206,7 @@ session.paymentIntent = paymentIntent
 AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
 ```
 
-- For **recurring payment**, you'll need to generate
-a **client secret** with the **customer ID** on your server-side and pass it to `AWXAPIClientConfiguration`.
+- For **recurring payment**, you'll need to generate client secret with customer ID on your **server-side** and pass it to `AWXAPIClientConfiguration`.
 
 Refer to the Airwallex API Documentation for details.
 [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/_api_v1_pa_customers__id__generate_client_secret/get/)
@@ -226,7 +219,7 @@ AWXAPIClientConfiguration.shared().clientSecret = clientSecret
 ### Optional Setup
 ---
 #### WeChat Pay
-- make sure you add dependency for `AirwallexWeChatpay` (Swift package manager) or `Airwallex/WechatPay` (Cocoapods)
+- make sure you add dependency for `AirwallexWeChatPay` (Swift package manager) or `Airwallex/AirwallexWechatPay` (Cocoapods)
 - setup `WechatOpenSDK` following the [Wechat document](https://developers.weixin.qq.com/doc/oplatform/en/Mobile_App/Access_Guide/iOS.html)
 
 ``` swift
@@ -255,7 +248,7 @@ After completing payment, WeChat will be redirected to the merchant's app and do
   
 > [!NOTE]
 > We use internal dynamic framework `WechatOpenSDKDynamic.xcframework` for WeChat Pay integration.
-> `WechatOpenSDKDynamic.xcframework` is a dynamic framework build from original `WechatOpenSDK.xcframework`  2.0.4.
+> which is a dynamic framework build from original `WechatOpenSDK.xcframework`  2.0.4.
 > By doing this, we can
 > 1. Remove unsafe flag `-ObjC`, `-all_load` from SPM target `AirwallexWeChatPay`
 > 2. Stripe architecture `armv7` and `i386` which is no longer needed for modern apps.
@@ -268,17 +261,8 @@ The Airwallex iOS SDK allows merchants to provide Apple Pay as a payment method 
 - Make sure Apple Pay is set up correctly in the app. 
   - For more information, refer to [Apple's official doc](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay).
 - Make sure Apple Pay is enabled on your Airwallex account.
-- Include the Apple Pay module when installing the SDK.
-  - `AirwallexWeChatpay` - Swift Package Manager
-  - `Airwallex/ApplePay` - CocoaPods
 - Prepare the [Merchant Identifier](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay) and configure `applePayOptions` on the payment session object.
 
-``` swift
-let session = AWXOneOffSession()
-//  configure other properties
-...
-session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")// required for Apple Pay
-```
 You can customize the Apple Pay options to restrict it as well as provide extra context. For more information, please refer to the `AWXApplePayOptions.h` header file.
 ```swift
 let options = AWXApplePayOptions(merchantIdentifier: applePayMerchantId)
@@ -290,6 +274,11 @@ options.merchantCapabilities = [.threeDSecure, .debit]
 options.requiredBillingContactFields = [.postalAddress]
 options.supportedCountries = ["AU"]
 options.totalPriceLabel = "COMPANY, INC."
+
+let session = AWXOneOffSession()
+//  configure other properties
+...
+session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")// required for Apple Pay
 ```
 
 > [!IMPORTANT]
@@ -297,13 +286,11 @@ options.totalPriceLabel = "COMPANY, INC."
 >- Visa
 >- MasterCard
 >- ChinaUnionPay
->- Maestro (iOS 12+)
+>- Maestro
 >- Amex
 >- Discover
 >- JCB
-
-Customers will only be able to select the cards of the above payment networks during Apple Pay.
->[!IMPORTANT]
+>
 > Coupon is also not supported at this stage.
 
 
@@ -313,15 +300,25 @@ Customers will only be able to select the cards of the above payment networks du
 > [!NOTE]
 > This is **recommended usage**, it builds a complete user flow on top of your app with our prebuilt UI to collect payment details, billing details, and confirming the payment.
 
+Make sure you add dependency for `Airwallex` or `AirwallexPaymentSheet`.
 Upon checkout, use `AWXUIContext` to present the payment flow where the user will be able to select the payment method.
-swift
+
 ``` swift
 AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
-    filterBy: "An optional array of payment method names used to filter the payment methods returned by the server"
+    filterBy: "An optional array of payment method names used to filter the payment methods returned by the server",
+    launchStyle: ".push/.present",
+    layout: ".tab/.accordion"
 )
 ```
+
+We provide `tab` and `accordian` styles for our payment sheet:
+<p align="left">
+<img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200">
+<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200">
+</p>
+
 ---
 #### Launch Card Payment Directly
 ```swift
@@ -334,7 +331,7 @@ AWXUIContext.launchCardPayment(
 
 > [!Tip]
 > If you want to show card payment only but still want to be able to pay with saved cards, you can launch
-> payment sheet by passing [AWXCardKey] as parameter of `filterBy:`
+> payment sheet by passing `[AWXCardKey]` as parameter of `filterBy:`
 ``` swift
 AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
@@ -365,17 +362,18 @@ AWXTheme.shared().tintColor = .red
 
 ### Low-level API Integration
 
+Make sure you add dependency for `Airwallex` or `AirwallexPayment`.
 You can build your own entirely custom UI on top of our low-level APIs.
 
 > [!NOTE]
-> You still need all required steps listed in [Required Setup](#required-setup) section above to set up configurations, intent and session, except the [UI Integration](#ui-integration) is replace by `PaymentSessionHandler` and [low-level API integration](#low-level-api-integration)
+> You still need all required steps listed in [Required Setup](#required-setup) section above to set up configurations, payment intent and payment session.
 > 
 > you may find [Airwallex API Docs](https://www.airwallex.com/docs/api#/Payment_Acceptance) useful if you are using this integration style
 ---
 #### Create PaymentSessionHandler 
 
 ```swift
-let paymentSessionHandler = try PaymentSessionHandler(
+let paymentSessionHandler = PaymentSessionHandler(
     session: "The session created above", 
     viewController: "hosting view controller which also handles AWXPaymentResultDelegate"
 )
@@ -394,21 +392,19 @@ paymentSessionHandler.startCardPayment(
 ---
 #### Pay with saved card (consent)
 
-- Pay with consent object - Confirm intent with a payment consent object AWXPaymentConsent)
+- Pay with consent object - Confirm intent with a payment consent object `AWXPaymentConsent`)
 ``` swift
 paymentSessionHandler.startConsentPayment(with: "payment consent")
 ```
 
-- Pay with consent ID - Confirm intent with a valid payment consent ID only when the saved card is **network token**
+- Pay with consent ID - Confirm intent with a valid payment consent ID only when the card is save as **network token**
 ``` swift
 paymentSessionHandler.startConsentPayment(withId: "consent ID")
 ```
 ---
 #### Pay with Apple Pay
 > [!IMPORTANT]
-> Make sure `session.applePayOptions` is setup correctly.
-> 
-> Refer to section [Set Up Apple Pay](#Apple-Pay) for more details.
+> Make sure you have [Set Up Apple Pay](#Apple-Pay) correctly.
 ``` swift
 paymentSessionHandler.startApplePay()
 ```
@@ -425,7 +421,7 @@ paymentSessionHandler.startRedirectPayment(
 
 ### Handle Payment Result
 
-After the user completes the payment successfully or with error, you need to handle the payment result call back of `AWXPaymentResultDelegate`.
+Regardless of what kind of integration style you choose, you need to handle the payment result in the callback of `AWXPaymentResultDelegate`.
 ``` swift
 func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
     // call back for status success/in progress/ failure / cancel

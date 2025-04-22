@@ -8,10 +8,11 @@
 
 ## 概述
 
-Airwallex iOS SDK 是一个框架，用于在您的应用中集成简单、快速和安全的支付功能。它提供了简单的功能，可以将敏感的信用卡数据直接发送到 Airwallex，同时还提供了一个强大且可定制的界面，用于收集用户的支付详情。
+Airwallex iOS SDK 可以满足您在应用中集成简单、快速和安全的支付功能的需求。它提供了简单易用的 API 将敏感的信用卡数据直接发送到 Airwallex，同时还提供了一个强大且可定制的界面，用于收集用户的支付详情。
 
 <p align="left">
 <img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
+<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/c86b7f3f-d2bc-4326-b82e-145f52d35c72" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/938e6101-edb2-4fcf-89fa-07936e4af5a9" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/5556a6af-882d-4474-915e-2c9d5953aaa8" width="200" hspace="10">
@@ -53,7 +54,7 @@ Airwallex iOS SDK 是一个框架，用于在您的应用中集成简单、快�
 <!--te-->
 =================
 ## 开始集成
-请按照我们的[集成指南](#integration)并探索[示例项目](#examples)，以快速使用 Airwallex SDK 设置支付功能。
+请按照我们的[集成指南](#integration)并探索[示例项目](#examples)，以快速使用 Airwallex iOS SDK 设置支付功能。
 > [!TIP] 
 > 从旧版 SDK 升级的相关改动可以参考我们的[迁移文档](MIGRATION.md)
 
@@ -63,7 +64,7 @@ Airwallex iOS SDK 是一个框架，用于在您的应用中集成简单、快�
 
 ## 示例项目
 
-示例可以在最新的 Xcode 上运行。要运行示例应用程序，请按照以下步骤操作。
+示例代码(Examples)可以在最新的 Xcode 上运行。请按照以下步骤操作。
 
 - 克隆源代码
 
@@ -79,40 +80,34 @@ git clone git@github.com:airwallex/airwallex-payment-ios.git
 pod install
 ```
 
-> [!TIP] 更新初始化设置文件（可选）
->
+> [!TIP] 
+> 更新初始化设置文件（可选）
 >- 更新 `Examples/Keys` 文件夹中的 `Keys.json`。
 >- 构建并运行 `Examples` 
 >
-> 您可以随时使用应用内的设置页面更改这些设置
+> `Keys.json`用于提供 Examples 项目的一些默认设置，您可以随时使用应用内的设置页面更改这些设置
 
 ## 集成步骤
 
 ### 安装
 
 #### Swift Package Manager
-Airwallex iOS SDK 支持 Swift Package Manager 。要将其集成到您的项目中，请按照以下步骤操作：
-1. 添加包依赖
-[按照 Apple 的指南添加包依赖。](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
-2. 代码仓库 URL
-使用以下 URL 获取 Airwallex 包：
-https://github.com/airwallex/airwallex-payment-ios
-3. 版本要求
-确保指定 5.7.0 或更高版本。
+Airwallex iOS SDK 支持通过 Swift Package Manager 集成。要将其集成到您的项目中，请按照以下步骤操作：
+1. [按照 Apple 的指南添加包依赖。](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
+2. 使用以下 URL 获取 Airwallex 包 https://github.com/airwallex/airwallex-payment-ios
+3. 使用 6.0.0 或更高版本。
 
-您可以添加 `Airwallex` 以包含所有组件，或者根据您的支付需求选择性地将以下组件添加到您的项目中：
+您可以通过添加 `Airwallex` 集成除微信支付外的所有组件。您也可以根据您的支付需求选择性的添加组件：
 
-- `AirwallexPayment`: 用于 UI 集成。
-- `AirwallexApplePay`: 用于集成 Apple Pay。
-- `AirwallexCard`: 用于卡支付。
-- `AirwallexRedirect`: 支持通过 URL/deeplink 重定向支付。
-- `AirwallexWeChatpay`: 用于原生微信支付体验。
+- `AirwallexPaymentSheet`: 提供 UI 集成
+- `AirwallexPayment`: 提供 low-level API 集成
+- `AirwallexWeChatPay`: 集成微信支付，如果您需要支持微信支付请务必添加此依赖
 ---
 #### CocoaPods
 
-Airwallex iOS SDK 可以通过 [CocoaPods](https://cocoapods.org/) 获取。
+Airwallex iOS SDK 支持通过 [CocoaPods](https://cocoapods.org/)集成。
 
-在您的 `Podfile` 中添加以下行：
+您可以通过添加 `Airwallex` 集成除微信支付外的所有组件。您也可以根据您的支付需求选择性的添加组件：
 ```ruby
 pod 'Airwallex'
 ```
@@ -120,12 +115,9 @@ pod 'Airwallex'
 您也可以直接指定 `subspec` 来避免引入不需要的依赖：
 
 ```ruby
-pod 'Airwallex/Payment'
-pod 'Airwallex/Core'
-pod 'Airwallex/Card'
-pod 'Airwallex/WechatPay'
-pod 'Airwallex/Redirect'
-pod 'Airwallex/ApplePay'
+pod 'Airwallex/AirwallexPaymentSheet' # 提供 UI 集成 
+pod 'Airwallex/AirwallexPayment' # 提供 low-level API 集
+pod 'Airwallex/AirwallexWeChatPay' # 集成微信支付，如果您需要支持微信支付请务必添加此依赖
 ```
 
 运行以下命令：
@@ -142,11 +134,13 @@ Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 ---
 #### Customer ID 
 > [!IMPORTANT]
-> **订阅支付**或**带intent订阅支付** 必须绑定 customer ID
-> 
-> **一次性支付** 可以不绑定 customer ID
->
-在您的服务器端为您的用户生成或检索 customer ID。
+> - **订阅支付**： **必须**绑定 customer ID
+> - **带intent订阅支付**： **必须**绑定 customer ID
+> - **一次性支付**：
+>   - 保存银行卡：**必须**绑定 customer ID
+>   - 不保存银行卡： **可选**
+
+请在您的服务器端为您的用户生成或检索 customer ID。
 相关接口信息，请参阅[Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
 
 ---
@@ -188,9 +182,9 @@ session.merchantTriggerReason = "Unscheduled or scheduled"
 ---
 #### 创建 `AWXPaymentIntent`
 > [!IMPORTANT]
-> **一次性支付**或**带 intent 订阅支付**结账前必须创建 `AWXPaymentIntent`。
->
-> **订阅支付**不需要创建`AWXPaymentIntent`。
+> **一次性支付**: **必须**创建 `AWXPaymentIntent`
+> **带 intent 订阅支付**: **必须**创建 `AWXPaymentIntent`
+> **订阅支付** **不需要**创建 `AWXPaymentIntent`。
 > 
 
 在您的服务器端创建**payment intent**，然后将payment intent返回到移动端。
@@ -221,7 +215,7 @@ AWXAPIClientConfiguration.shared().clientSecret = clientSecret
 
 ### 可选设置
 #### 微信支付
-- 确保添加 `AirwallexWeChatpay`（Swift package manager）或 `Airwallex/WechatPay`（Cocoapods）的依赖
+- 确保添加 `AirwallexWeChatPay`（Swift package manager）或 `Airwallex/AirwallexWechatPay`（Cocoapods）的依赖
 - 按照[微信官方集成文档](https://developers.weixin.qq.com/doc/oplatform/en/Mobile_App/Access_Guide/iOS.html)设置 `WechatOpenSDK`
 
 ``` swift
@@ -246,14 +240,14 @@ extension AppDelegate: WXApiDelegate {
     }
 }
 ```
-完成支付后，微信将调转回商户应用并回调到 `onResp()`函数。
+完成支付后，微信将跳转回商户应用并回调到 `onResp()`函数。
 微信 SDK 会在商户的服务端获取到获取到支付状态后更新对应 payment intent 的状态，所以请持续监听 `onResp()` 的回调
   
 > [!NOTE]
-> 我们使用基于 `WechatOpenSDK.xcframework` 2.0.4 版本重新构建的动态框架 `WechatOpenSDKDynamic.xcframework` 进行微信支付集成。
-> 通过这样做，我们可以
-> 1. 从 SPM 目标 `AirwallexWeChatPay` 中删除不安全的 linker flag `-ObjC`、`-all_load`
-> 2. 删除现代应用程序不再需要的架构 `armv7` 和 `i386`。
+> 我们使用基于 `WechatOpenSDK` 2.0.4 版本重新构建的动态框架 `WechatOpenSDKDynamic.xcframework` 进行微信支付集成。
+> 通过使用重新构建的动态框架我们达到以下两个目的：
+> 1. 从 SPM Target `AirwallexWeChatPay` 中移除不安全的 linker flag `-ObjC`、`-all_load`
+> 2. 去除现代应用程序不再需要的 `armv7` 和 `i386` 架构。
 >
 ---
 #### Apple Pay
@@ -263,18 +257,9 @@ Airwallex iOS SDK 支持 Apple Pay 支付方式。
 - 请确保您的应用已正确设置 Apple Pay。
   - 具体步骤请参阅 Apple 的官方[文档](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay)。
 - 确保您的 Airwallex 账户中已启用 Apple Pay。
-- 集成 SDK 时包含 Apple Pay 模块 
-  - `AirwallexWeChatpay` - Swift Package Manager
-  - `Airwallex/ApplePay` - CocoaPods
-- 准备[商户标识符](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay)并在支付会话对象上配置 `applePayOptions`。
+- 使用您的[商户标识符](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay) 创建 `AWXApplePayOptions` 并更新到 `session.applePayOptions` 上
 
-``` swift
-let session = AWXOneOffSession()
-//  configure other properties
-...
-session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")// required for Apple Pay
-```
-您可以自定义 Apple Pay 选项以对支付方式做出限制并且提供额外的交易信息。全部可配置项信息请参阅 `AWXApplePayOptions.h` 头文件。
+您可以自定义 Apple Pay 选项以对支付方式做出限制或提供额外的交易信息。全部可配置项信息请参阅 `AWXApplePayOptions.h` 头文件。
 ```swift
 let options = AWXApplePayOptions(merchantIdentifier: applePayMerchantId)
 options.additionalPaymentSummaryItems = [
@@ -285,6 +270,11 @@ options.merchantCapabilities = [.threeDSecure, .debit]
 options.requiredBillingContactFields = [.postalAddress]
 options.supportedCountries = ["AU"]
 options.totalPriceLabel = "COMPANY, INC."
+
+let session = AWXOneOffSession()
+//  configure other properties
+...
+session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")// required for Apple Pay
 ```
 
 > [!IMPORTANT]
@@ -292,33 +282,41 @@ options.totalPriceLabel = "COMPANY, INC."
 >- Visa
 >- MasterCard
 >- ChinaUnionPay
->- Maestro (iOS 12+)
+>- Maestro
 >- Amex
 >- Discover
 >- JCB
-
->[!IMPORTANT]
-> 目前不支持 Coupon
+>
+> 且当前版本不支持 Coupon
 
 
 ### UI 集成
 
 #### 启动完整支付列表（推荐）
 > [!NOTE]
-> 它在您的应用程序中使用我们预构建的 UI 收集支付详情、账单详情并确认支付。
+> 通过UI集成您可以在您的app中使用我们预构建的 UI 收集支付详情、账单详情并确认支付。
 
-在结账时，使用 `AWXUIContext` 启动支付流程，用户能够通过支付列表选择您支持的支付方式。
+请确保您已经添加对 `Airwallex` 或 `AirwallexPaymentSheet` 的依赖。 在结账时使用 `AWXUIContext` 启动支付流程，用户能够通过支付列表选择您支持的支付方式。
 ``` swift
-try AWXUIContext.launchPayment(
+AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
-    filterBy: "An optional array of payment method names used to filter the payment methods returned by the server"
+    filterBy: "An optional array of payment method names used to filter the payment methods returned by the server",
+    launchStyle: ".push/.present",
+    layout: ".tab/.accordion"
 )
 ```
+
+我们提供了 `tab` 和 `accordian` 两种风格的支付列表:
+<p align="left">
+<img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200">
+<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200">
+</p>
+
 ---
 #### 仅展示卡支付
 ```swift
-try AWXUIContext.launchCardPayment(
+AWXUIContext.launchCardPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
     supportedBrands: "accepted card brands, should not be empty"
@@ -328,7 +326,7 @@ try AWXUIContext.launchCardPayment(
 > [!Tip]
 > 如果您想仅展示卡支付并希望能够使用已保存的卡支付，可以启动完整支付列表并通过 `filterBy` 参数限制仅展示卡支付
 ``` swift
-try AWXUIContext.launchPayment(
+AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
     filterBy: [AWXCardKey]
@@ -337,7 +335,7 @@ try AWXUIContext.launchPayment(
 ---
 #### 按名称启动支付方式
 ```swift
-try AWXUIContext.launchPayment(
+AWXUIContext.launchPayment(
     name: "payment method name",
     from: "hosting view controller",
     session: "The session created above",
@@ -345,7 +343,7 @@ try AWXUIContext.launchPayment(
 )
 ```
 > [!TIP]
-> 可用的支付方式名称可以在[Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)中找到  
+> 可用的支付方式名称可以通过[Airwallex API](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)获取  
 
 ---
 #### 自定义主题色
@@ -357,18 +355,19 @@ AWXTheme.shared().tintColor = .red
 
 ### Low-level API 集成
 
-您可以向用户提供自定义UI，然后基于 Low-level API 向客户提供支付功能
-
+您也可以基于 Low-level API 构建您自己的UI并向客户提供支付功能。
+ 
 > [!NOTE]
-> 您仍然需要完成[必要设置](#必要设置)中列出的所有步骤。[UI 集成](#UI-集成)的部分将被 `PaymentSessionHandler` 和[Low-level API 集成](#Low-level-API-集成)替换
+> 1. 请确保您已添加对 `Airwallex` 或 `AirwallexPayment` 的依赖。
+> 2. 您仍然需要完成[必要设置](#必要设置)中列出的所有步骤。
 > 
-> 如果您使用这种集成方式，您可能会需要使用[Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance)来获取自定义UI需要的各种信息
+> 您可以通过[Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance)来获取自定义UI需要的各种信息
 
 ---
 #### 创建 PaymentSessionHandler 
 
 ```swift
-let paymentSessionHandler = try PaymentSessionHandler(
+let paymentSessionHandler = PaymentSessionHandler(
     session: "The session created above", 
     viewController: "hosting view controller which also handles AWXPaymentResultDelegate"
 )
@@ -382,7 +381,7 @@ self.paymentSessionHandler = paymentSessionHandler
 #### 使用卡支付
 ```swift
 // Confirm intent with card and billing
-try paymentSessionHandler.startCardPayment(
+paymentSessionHandler.startCardPayment(
     with: "The AWXCard object collected by your custom UI",
     billing: "The AWXPlaceDetails object collected by your custom UI"
 )
@@ -392,23 +391,21 @@ try paymentSessionHandler.startCardPayment(
 
 - 使用 `AWXPaymentConsent` 支付 
 ``` swift
-try paymentSessionHandler.startConsentPayment(with: "payment consent")
+paymentSessionHandler.startConsentPayment(with: "payment consent")
 ```
 
-- 使用 consent ID 支付 - 仅当保存的卡是**网络令牌**时使用这种支付方式
+- 使用 consent ID 支付 - 仅当卡以**网络令牌**形式保存时使用这种支付方式
 ``` swift
-try paymentSessionHandler.startConsentPayment(withId: "consent ID")
+paymentSessionHandler.startConsentPayment(withId: "consent ID")
 ```
 
 ---
 #### 使用 Apple Pay 支付
 > [!IMPORTANT]
-> 确保 `session.applePayOptions` 设置正确。
-> 
-> 详情请参阅[设置 Apple Pay](#Apple-Pay)部分对 apple pay 进行设置
+> 请确保您已正确[设置 Apple Pay](#Apple-Pay)
 > 
 ``` swift
-try paymentSessionHandler.startApplePay()
+paymentSessionHandler.startApplePay()
 ```
 
 ---
@@ -416,7 +413,7 @@ try paymentSessionHandler.startApplePay()
 > [!IMPORTANT] 
 > 您应在 `additionalInfo` 中提供 "/api/v1/pa/config/payment_method_types/${payment method name}" 中指定的所有必填字段
 ``` swift
-try paymentSessionHandler.startRedirectPayment(
+paymentSessionHandler.startRedirectPayment(
     with: "payment method name",
     additionalInfo: "all required information"
 )
@@ -424,7 +421,7 @@ try paymentSessionHandler.startRedirectPayment(
 
 ### 处理支付结果
 
-在用户完成/取消支付后，您可以在 `AWXPaymentResultDelegate` 的回调中处理支付结果。
+您可以统一在 `AWXPaymentResultDelegate` 的回调中处理 UI集成 或 Low-Level API集成支付的结果。
 ``` swift
 func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
     // call back for status success/in progress/ failure / cancel
@@ -432,7 +429,7 @@ func paymentViewController(_ controller: UIViewController?, didCompleteWith stat
 ```
 
 > [!TIP]
-> 如果在支付过程中创建了 consent，您可以实现此可选函数以获取 consent ID 以供进一步使用。
+> 如果在支付过程中创建了 consent，您可以通过此可选函数以获取 consent ID 以供后续使用。
 ```swift
 func paymentViewController(_ controller: UIViewController?, didCompleteWithPaymentConsentId paymentConsentId: String) {
     // To do anything with this ID.
