@@ -49,6 +49,9 @@ AWXPaymentMethodFlow const AWXPaymentMethodFlowApp = @"inapp";
 AWXPaymentMethodFlow const AWXPaymentMethodFlowWeb = @"mweb";
 AWXPaymentMethodFlow const AWXPaymentMethodFlowQrcode = @"webqr";
 
+NSString *const AWXPaymentTransactionModeOneOff = @"oneoff";
+NSString *const AWXPaymentTransactionModeRecurring = @"recurring";
+
 NSArray *AWXCardSupportedBrands(void) {
     return @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex), @(AWXBrandTypeUnionPay), @(AWXBrandTypeJCB), @(AWXBrandTypeDinersClub), @(AWXBrandTypeDiscover)];
 };
