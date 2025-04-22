@@ -25,8 +25,8 @@ let package = Package(
             targets: ["AirwallexCore"]
         ),
         .library(
-            name: "AirwallexWeChatpay",
-            targets: ["AirwallexWeChatpay"]
+            name: "AirwallexWeChatPay",
+            targets: ["AirwallexWeChatPay"]
         )
     ],
     targets: [
@@ -78,12 +78,12 @@ let package = Package(
             publicHeadersPath: "include"
         ),
         .target(
-            name: "AirwallexWeChatpay",
+            name: "AirwallexWeChatPay",
             dependencies: [
                 "AirwallexCore",
                 .target(name: "WechatOpenSDKDynamic")
             ],
-            path: "Airwallex/AirwallexWeChatpay",
+            path: "Airwallex/AirwallexWeChatPay",
             publicHeadersPath: "",
             cSettings: [
                 .headerSearchPath("Internal")
