@@ -198,7 +198,7 @@
         self.textField.textContentType = UITextContentTypeFullStreetAddress;
         break;
     case AWXTextFieldTypeZipcode:
-        self.textField.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+        self.textField.keyboardType = UIKeyboardTypeASCIICapable;
         self.textField.textContentType = UITextContentTypePostalCode;
         break;
     case AWXTextFieldTypeCardNumber:
