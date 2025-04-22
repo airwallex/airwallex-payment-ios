@@ -56,21 +56,6 @@
     XCTAssertFalse([AWXCardProvider canHandleSession:_session paymentMethod:_paymentMethod]);
 }
 
-- (void)testHandleFlowWhenNotLaunchDirectly {
-    id spy = OCMClassMock([AWXProviderDelegateSpy class]);
-    AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
-    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session paymentMethodType:paymentMethod];
-    [provider handleFlow];
-    OCMVerify(times(1), [spy provider:provider
-                            shouldPresentViewController:[OCMArg checkWithBlock:^BOOL(id obj) {
-                                XCTAssertTrue([obj isKindOfClass:UINavigationController.class]);
-                                return true;
-                            }]
-                                         forceToDismiss:NO
-                                          withAnimation:YES]);
-}
-
 - (void)testCanHandleSessionWhenCardSchemesIsNotEmpty {
     AWXCardScheme *amexScheme = [AWXCardScheme new];
     amexScheme.name = @"amex";

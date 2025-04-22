@@ -81,7 +81,7 @@ class IntegrationDemoListViewController: UIViewController {
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("Pay with Apple Pay", comment: DemoDataSource.commentForLocalization),
+            title: DemoDataSource.titleForPayWithApplePay,
             action: { [weak self] in
                 self?.payWithApplePay()
             }
@@ -206,6 +206,9 @@ private extension IntegrationDemoListViewController {
                             title == DemoDataSource.titleForPayAndSaveCard ||
                             title == DemoDataSource.titleForPayByRedirect
                         )
+                        if title == DemoDataSource.titleForPayWithApplePay {
+                            view.isHidden = (ExamplesKeys.nextTriggerByType == .customerType)
+                        }
                     }
                     
                     // 3DS in production is not controlled by api parameters or card numbers
