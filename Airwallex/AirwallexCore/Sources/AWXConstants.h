@@ -112,6 +112,9 @@ FOUNDATION_EXPORT NSString *const AWXThreeDSContinue;
 FOUNDATION_EXPORT NSString *const AWXWeChatPayKey;
 FOUNDATION_EXPORT NSString *const AWXApplePayKey;
 
+FOUNDATION_EXPORT NSString *const AWXPaymentTransactionModeOneOff;
+FOUNDATION_EXPORT NSString *const AWXPaymentTransactionModeRecurring;
+
 FOUNDATION_EXPORT NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void);
 
 FOUNDATION_EXPORT NSArray *AWXCardSupportedBrands(void);

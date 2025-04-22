@@ -518,7 +518,7 @@ private extension IntegrationDemoListViewController {
         return secret
     }
     
-    func createPaymentSession(force3DS: Bool = false) async throws -> AWXSession {
+    func createPaymentSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
         // create payment session
         var paymentSession: AWXSession
         switch ExamplesKeys.checkoutMode {

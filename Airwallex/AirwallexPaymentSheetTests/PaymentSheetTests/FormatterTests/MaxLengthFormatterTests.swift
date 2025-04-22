@@ -33,7 +33,8 @@ class MaxLengthFormatterTests: XCTestCase {
         textField.text = "12345"
         let range = textField.text!.endIndex..<textField.text!.endIndex
         let result = formatter.formatUserInput(textField, changeCharactersIn: range, replacementString: "678")
-        XCTAssertEqual(result.string, "12345")
+        textField.updateContentAndCursor(plainText: result.string, maxLength: formatter.maxLength)
+        XCTAssertEqual(textField.text, "12345")
     }
 
     func testFormatUserInput_withCharacterSet() {
@@ -51,7 +52,8 @@ class MaxLengthFormatterTests: XCTestCase {
         textField.text = "12"
         let range = textField.text!.endIndex..<textField.text!.endIndex
         let result = formatter.formatUserInput(textField, changeCharactersIn: range, replacementString: "345")
-        XCTAssertEqual(result.string, "123")
+        textField.updateContentAndCursor(plainText: result.string, maxLength: formatter.maxLength)
+        XCTAssertEqual(textField.text, "123")
     }
 
     func testFormatUserInput_emptyInput() {

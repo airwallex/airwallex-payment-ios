@@ -145,7 +145,10 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
                 replacementString: string
             )
             
-            textField.updateContentAndCursor(attributedText: formated)
+            textField.updateContentAndCursor(
+                attributedText: formated,
+                maxLength: inputFormatter.maxLength
+            )
             attributedText = textField.attributedText
             text = attributedText?.string
             

@@ -19,13 +19,18 @@ struct CardExpiryFormatter: UserInputFormatter {
     func formatUserInput(_ textField: UITextField,
                          changeCharactersIn range: Range<String.Index>,
                          replacementString string: String) -> NSAttributedString {
-        var userInput = textField.text?.replacingCharacters(in: range, with: string)
-            .filterIllegalCharacters(in: .decimalDigits.inverted) ?? ""
-        if let text = textField.text,
-           text[range] == "/",
-           string != "/" {
-            // when user deleting "/", delete all content behind "/"
-            userInput = String(text[text.startIndex..<range.lowerBound])
+        var userInput = textField.text ?? ""
+        if string == "", userInput.distance(from: range.lowerBound, to: range.upperBound) > 0 {
+            // deleting, update selectedTextRange as we will remove all characters after current cusor position
+            textField.selectedTextRange = textField.textRange(
+                from: textField.selectedTextRange?.start ?? textField.beginningOfDocument,
+                to: textField.endOfDocument
+            )
+            userInput = String(userInput[..<range.lowerBound])
+                .filterIllegalCharacters(in: .decimalDigits.inverted)
+        } else {
+            userInput = userInput.replacingCharacters(in: range, with: string)
+                .filterIllegalCharacters(in: .decimalDigits.inverted)
         }
         var expirationMonth = userInput.prefix(2)
         let expirationYear = userInput.dropFirst(2)
@@ -40,10 +45,6 @@ struct CardExpiryFormatter: UserInputFormatter {
             year: String(expirationYear),
             attributes: textField.defaultTextAttributes
         )
-        guard maxLength >= attributedText.length else {
-            let range = NSRange(location: 0, length: min(maxLength, attributedText.length))
-            return attributedText.attributedSubstring(from: range)
-        }
         return attributedText
     }
     
