@@ -12,8 +12,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout project
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # 3.6.0
         
-      - uses: michaelhenry/deploy-to-cocoapods-github-action@1.0.10
+      - uses: michaelhenry/deploy-to-cocoapods-github-action@745686ab065f90596e0d5cfcf97bb2416d94262 #1.0.10
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
