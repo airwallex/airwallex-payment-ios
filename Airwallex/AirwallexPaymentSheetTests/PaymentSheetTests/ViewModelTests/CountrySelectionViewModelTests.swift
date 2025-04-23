@@ -73,7 +73,7 @@ class CountrySelectionViewModelTests: XCTestCase {
         )
         
         XCTAssertTrue(cellViewModel.isValid)
-        cellViewModel.handleDidEndEditing(reconfigurePolicy: .never)
+        cellViewModel.handleDidEndEditing(reconfigureStrategy: .never)
         XCTAssertFalse(cellViewModel.isValid)
         XCTAssertNotNil(cellViewModel.errorHint)
         

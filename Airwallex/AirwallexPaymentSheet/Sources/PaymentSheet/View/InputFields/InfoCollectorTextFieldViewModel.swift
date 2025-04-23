@@ -36,7 +36,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     typealias ReconfigureHandler = (InfoCollectorTextFieldViewModel, Bool) -> Void
     typealias ReturnActionHandler = (UIResponder) -> Bool
     
-    enum ReconfigurePolicy {
+    enum ReconfigureStrategy {
         case never
         case always
         case automatic
@@ -184,7 +184,7 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        handleDidEndEditing(reconfigurePolicy: .automatic)
+        handleDidEndEditing(reconfigureStrategy: .automatic)
     }
 }
 
@@ -208,7 +208,7 @@ extension InfoCollectorTextFieldViewModel {
         try inputValidator.validateUserInput(attributedText?.string ?? text)
     }
     
-    func handleDidEndEditing(reconfigurePolicy: ReconfigurePolicy) {
+    func handleDidEndEditing(reconfigureStrategy: ReconfigureStrategy) {
         let isValidCheck = isValid
         let errorHintCheck = errorHint
         do {
@@ -220,7 +220,7 @@ extension InfoCollectorTextFieldViewModel {
             errorHint = error.localizedDescription
         }
         
-        switch reconfigurePolicy {
+        switch reconfigureStrategy {
         case .never: return
         case .always:
             reconfigureHandler(self, true)

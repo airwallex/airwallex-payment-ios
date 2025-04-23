@@ -68,13 +68,13 @@ class InfoCollectorTextFieldViewModelTests: XCTestCase {
             reconfigureHandler: mockReconfigureHandler
         )
         
-        viewModel.handleDidEndEditing(reconfigurePolicy: .never)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .never)
         XCTAssertFalse(viewModel.isValid)
         XCTAssertNotNil(viewModel.errorHint)
         XCTAssertThrowsError(try viewModel.validate())
         
         viewModel.text = "foo"
-        viewModel.handleDidEndEditing(reconfigurePolicy: .never)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .never)
         XCTAssertTrue(viewModel.isValid)
         XCTAssertNil(viewModel.errorHint)
         XCTAssertNoThrow(try viewModel.validate())
@@ -94,7 +94,7 @@ class InfoCollectorTextFieldViewModelTests: XCTestCase {
         XCTAssertNil(viewModel.errorHint)
         // action
         XCTAssertThrowsError(try viewModel.validate())
-        viewModel.handleDidEndEditing(reconfigurePolicy: .never)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .never)
         // assertion
         XCTAssertFalse(viewModel.isValid)
         XCTAssertEqual(viewModel.errorHint, errorMessage)
@@ -151,18 +151,18 @@ class InfoCollectorTextFieldViewModelTests: XCTestCase {
             reconfigureHandler: reconfigureHandler
         )
         XCTAssertTrue(viewModel.isValid)
-        viewModel.handleDidEndEditing(reconfigurePolicy: .never)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .never)
         XCTAssertFalse(viewModel.isValid)
         XCTAssertFalse(reconfigureCalled)
         
         reconfigureCalled = false
-        viewModel.handleDidEndEditing(reconfigurePolicy: .never)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .never)
         XCTAssertFalse(viewModel.isValid)
         XCTAssertFalse(reconfigureCalled)
         
         reconfigureCalled = false
         viewModel.text = "text"
-        viewModel.handleDidEndEditing(reconfigurePolicy: .never)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .never)
         XCTAssertTrue(viewModel.isValid)
         XCTAssertFalse(reconfigureCalled)
     }
@@ -176,18 +176,18 @@ class InfoCollectorTextFieldViewModelTests: XCTestCase {
             reconfigureHandler: reconfigureHandler
         )
         XCTAssertTrue(viewModel.isValid)
-        viewModel.handleDidEndEditing(reconfigurePolicy: .always)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .always)
         XCTAssertFalse(viewModel.isValid)
         XCTAssertTrue(reconfigureCalled)
         
         reconfigureCalled = false
-        viewModel.handleDidEndEditing(reconfigurePolicy: .always)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .always)
         XCTAssertFalse(viewModel.isValid)
         XCTAssertTrue(reconfigureCalled)
         
         reconfigureCalled = false
         viewModel.text = "text"
-        viewModel.handleDidEndEditing(reconfigurePolicy: .always)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .always)
         XCTAssertTrue(viewModel.isValid)
         XCTAssertTrue(reconfigureCalled)
     }
@@ -201,18 +201,18 @@ class InfoCollectorTextFieldViewModelTests: XCTestCase {
             reconfigureHandler: reconfigureHandler
         )
         XCTAssertTrue(viewModel.isValid)
-        viewModel.handleDidEndEditing(reconfigurePolicy: .automatic)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .automatic)
         XCTAssertFalse(viewModel.isValid)
         XCTAssertTrue(reconfigureCalled)
         
         reconfigureCalled = false
-        viewModel.handleDidEndEditing(reconfigurePolicy: .automatic)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .automatic)
         XCTAssertFalse(viewModel.isValid)
         XCTAssertFalse(reconfigureCalled)
         
         reconfigureCalled = false
         viewModel.text = "text"
-        viewModel.handleDidEndEditing(reconfigurePolicy: .automatic)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .automatic)
         XCTAssertTrue(viewModel.isValid)
         XCTAssertTrue(reconfigureCalled)
     }

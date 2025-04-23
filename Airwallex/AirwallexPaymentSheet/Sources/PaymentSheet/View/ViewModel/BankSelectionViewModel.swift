@@ -17,7 +17,7 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
     var bank: AWXBank? {
         didSet {
             text = bank?.displayName
-            handleDidEndEditing(reconfigurePolicy: .always)
+            handleDidEndEditing(reconfigureStrategy: .always)
         }
     }
     
