@@ -7,12 +7,9 @@
 //
 
 import Foundation
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
-import Combine
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
+import AirwallexCore
 #endif
 
 class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionViewConfiguring {
@@ -20,7 +17,7 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
     var bank: AWXBank? {
         didSet {
             text = bank?.displayName
-            handleDidEndEditing(reconfigureIfNeeded: true)
+            handleDidEndEditing(reconfigurePolicy: .always)
         }
     }
     
@@ -66,8 +63,8 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
 
 class BankSelectionCellViewModel: BankSelectionViewModel, CellViewModelIdentifiable {
     let itemIdentifier: String
-    init(itemIdentifier: String,
-         bank: AWXBank? = nil,
+    init(bank: AWXBank? = nil,
+         itemIdentifier: String,
          handleUserInteraction: @escaping () -> Void,
          cellReconfigureHandler: @escaping CellReconfigureHandler) {
         self.itemIdentifier = itemIdentifier

@@ -7,15 +7,10 @@
 //
 
 import Foundation
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
-import Combine
-#if canImport(AirwallexCore)
 import Combine
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
-#endif
+import AirwallexCore
 #endif
 
 class AccordionSectionController: SectionController  {

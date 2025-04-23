@@ -13,11 +13,11 @@ import AirwallexCore
 
 class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardBrandViewConfiguring {
     let supportedBrands: [AWXBrandType]
-    var currentBrand: AWXBrandType? {
+    var currentBrand: AWXBrandType {
         if supportedBrands.contains(formatter.currentBrand) {
             return formatter.currentBrand
         } else {
-            return cardBrands.isEmpty ? .unknown : cardBrands.first
+            return .unknown
         }
     }
     

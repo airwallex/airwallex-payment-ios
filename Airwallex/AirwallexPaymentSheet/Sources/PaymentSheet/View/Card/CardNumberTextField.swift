@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Combine
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif

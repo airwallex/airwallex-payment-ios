@@ -234,8 +234,8 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
             XCTFail()
             return
         }
-        XCTAssert(addressCell.viewModel?.canReuseShippingAddress == true)
-        XCTAssert(addressCell.viewModel?.shouldReuseShippingAddress == true)
+        XCTAssert(addressCell.viewModel?.canReusePrefilledAddress == true)
+        XCTAssert(addressCell.viewModel?.shouldReusePrefilledAddress == true)
         XCTAssertEqual(addressCell.viewModel?.countryConfigurer.country?.countryCode, mockShippingInfo.address?.countryCode)
         XCTAssertEqual(addressCell.viewModel?.stateConfigurer.text, mockShippingInfo.address?.state)
         XCTAssertEqual(addressCell.viewModel?.cityConfigurer.text, mockShippingInfo.address?.city)
@@ -293,8 +293,8 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
             XCTFail()
             return
         }
-        XCTAssert(addressCell.viewModel?.canReuseShippingAddress == false)
-        XCTAssert(addressCell.viewModel?.shouldReuseShippingAddress == false)
+        XCTAssert(addressCell.viewModel?.canReusePrefilledAddress == false)
+        XCTAssert(addressCell.viewModel?.shouldReusePrefilledAddress == false)
         // can not fully reuse incomplete address info - the reuse toggle is invisible
         // but will still prefill with shipping info
         XCTAssertEqual(addressCell.viewModel?.countryConfigurer.country?.countryCode, mockShippingInfo.address?.countryCode)
@@ -314,13 +314,13 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
             XCTFail()
             return
         }
-        XCTAssert(addressCell.viewModel?.canReuseShippingAddress == true)
-        XCTAssert(addressCell.viewModel?.shouldReuseShippingAddress == true)
+        XCTAssert(addressCell.viewModel?.canReusePrefilledAddress == true)
+        XCTAssert(addressCell.viewModel?.shouldReusePrefilledAddress == true)
         
         addressCell.viewModel?.toggleReuseSelection()
         mockViewController.view.layoutIfNeeded()
-        XCTAssert(addressCell.viewModel?.canReuseShippingAddress == true)
-        XCTAssert(addressCell.viewModel?.shouldReuseShippingAddress == false)
+        XCTAssert(addressCell.viewModel?.canReusePrefilledAddress == true)
+        XCTAssert(addressCell.viewModel?.shouldReusePrefilledAddress == false)
     }
         
     func testCheckoutValidation_InvalidCardInfo() {

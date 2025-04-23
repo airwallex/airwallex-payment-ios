@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Combine
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
@@ -26,7 +25,7 @@ protocol BaseTextFieldConfiguring: AnyObject, ViewModelValidatable {
     /// if the input text is valid
     var isValid: Bool { get }
     /// type of the text field
-    var textFieldType: AWXTextFieldType? { get }
+    var textFieldType: AWXTextFieldType { get }
     /// placeholder for text field
     var placeholder: String? { get }
     /// return key type of the text field
@@ -149,7 +148,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     
     func setup(_ viewModel: T) {
         self.viewModel = viewModel
-        textField.update(for: viewModel.textFieldType ?? .default)
+        textField.update(for: viewModel.textFieldType)
         if let attributedText = viewModel.attributedText {
             textField.attributedText = attributedText
         } else if let text = viewModel.text {

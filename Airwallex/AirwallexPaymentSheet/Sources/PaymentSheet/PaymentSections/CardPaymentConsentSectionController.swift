@@ -7,12 +7,9 @@
 //
 
 import UIKit
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
-import Combine
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
+import AirwallexCore
 #endif
 
 class CardPaymentConsentSectionController: SectionController {
@@ -409,7 +406,7 @@ private extension CardPaymentConsentSectionController {
             ]
         )
         if let cvcConfigurer {
-            cvcConfigurer.handleDidEndEditing(reconfigureIfNeeded: true)
+            cvcConfigurer.handleDidEndEditing(reconfigurePolicy: .ifNeeded)
             do {
                 try cvcConfigurer.validate()
                 consent.paymentMethod?.card?.cvc = cvcConfigurer.text

@@ -36,6 +36,12 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     typealias ReconfigureHandler = (InfoCollectorTextFieldViewModel, Bool) -> Void
     typealias ReturnActionHandler = (UIResponder) -> Bool
     
+    enum ReconfigurePolicy {
+        case never
+        case always
+        case ifNeeded
+    }
+    
     var inputValidator: UserInputValidator
     
     var inputFormatter: UserInputFormatter?
@@ -65,7 +71,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     
     var isValid: Bool
     
-    var textFieldType: AWXTextFieldType?
+    var textFieldType: AWXTextFieldType
     
     var placeholder: String?
     
@@ -178,7 +184,7 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        handleDidEndEditing(reconfigureIfNeeded: true)
+        handleDidEndEditing(reconfigurePolicy: .ifNeeded)
     }
 }
 
@@ -189,7 +195,7 @@ extension InfoCollectorTextFieldViewModel {
                      reconfigureHandler: @escaping ReconfigureHandler) {
         self.init(
             textFieldType: .CVC,
-            placeholder:  NSLocalizedString("CVC", bundle: .paymentSheet, comment: ""),
+            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: ""),
             returnActionHandler: returnActionHandler,
             customInputFormatter: cvcValidator,
             customInputValidator: cvcValidator,
@@ -202,7 +208,7 @@ extension InfoCollectorTextFieldViewModel {
         try inputValidator.validateUserInput(attributedText?.string ?? text)
     }
     
-    func handleDidEndEditing(reconfigureIfNeeded: Bool) {
+    func handleDidEndEditing(reconfigurePolicy: ReconfigurePolicy) {
         let isValidCheck = isValid
         let errorHintCheck = errorHint
         do {
@@ -214,9 +220,14 @@ extension InfoCollectorTextFieldViewModel {
             errorHint = error.localizedDescription
         }
         
-        let needReconfigure = (isValidCheck != isValid || errorHintCheck != errorHint)
-        if needReconfigure && reconfigureIfNeeded {
+        switch reconfigurePolicy {
+        case .never: return
+        case .always:
             reconfigureHandler(self, true)
+        case .ifNeeded:
+            if isValidCheck != isValid || errorHintCheck != errorHint {
+                reconfigureHandler(self, true)
+            }
         }
     }
 }

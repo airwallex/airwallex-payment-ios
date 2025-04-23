@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Combine
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
 #endif

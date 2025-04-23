@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Combine
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
 import AirwallexCore
@@ -69,11 +68,11 @@ class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
                 guard let self, let returnActionHandler else {
                     return false
                 }
-                return returnActionHandler(textField, self.itemIdentifier)
+                return returnActionHandler(self.itemIdentifier, textField)
             },
             cvcValidator: CardCVCValidator { [weak self] in
                 guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
-                return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand ?? .unknown)
+                return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
             },
             editingEventObserver: BeginEditingEventObserver {
                 RiskLogger.log(.inputCardCVC, screen: .createCard)
@@ -99,7 +98,7 @@ extension CardInfoCollectorCellViewModel {
         let arr: [InfoCollectorTextFieldViewModel] = [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer]
         for configurer in arr {
             //  force configurer to check valid status if user left this field untouched
-            configurer.handleDidEndEditing(reconfigureIfNeeded: true)
+            configurer.handleDidEndEditing(reconfigurePolicy: .ifNeeded)
         }
     }
 }

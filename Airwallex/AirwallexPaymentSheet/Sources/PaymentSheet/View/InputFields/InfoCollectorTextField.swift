@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Combine
 
 protocol InfoCollectorTextFieldConfiguring: BaseTextFieldConfiguring {
     /// Indicates whether this information is required.

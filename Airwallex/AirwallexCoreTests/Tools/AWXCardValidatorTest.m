@@ -75,6 +75,8 @@
     brand = [AWXCardValidator.sharedCardValidator brandForCardNumber:@"49"];
     XCTAssertEqual(brand.type, AWXBrandTypeVisa);
     XCTAssertEqual(brand.length, 13);
+    brand = [AWXCardValidator.sharedCardValidator brandForCardNumber:@""];
+    XCTAssertEqual(brand.type, AWXBrandTypeUnknown);
 }
 
 - (void)testPossibleBrandTypesForCardNumber {
