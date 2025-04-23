@@ -39,7 +39,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     enum ReconfigurePolicy {
         case never
         case always
-        case ifNeeded
+        case automatic
     }
     
     var inputValidator: UserInputValidator
@@ -184,7 +184,7 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        handleDidEndEditing(reconfigurePolicy: .ifNeeded)
+        handleDidEndEditing(reconfigurePolicy: .automatic)
     }
 }
 
@@ -224,7 +224,7 @@ extension InfoCollectorTextFieldViewModel {
         case .never: return
         case .always:
             reconfigureHandler(self, true)
-        case .ifNeeded:
+        case .automatic:
             if isValidCheck != isValid || errorHintCheck != errorHint {
                 reconfigureHandler(self, true)
             }

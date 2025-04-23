@@ -328,7 +328,12 @@ private extension NewCardPaymentSectionController {
                     viewController: context.viewController!,
                     paymentResultDelegate: AWXUIContext.shared.delegate,
                     methodType: methodType,
-                    dismissAction: AWXUIContext.shared.dismissAction
+                    dismissAction: { completion in
+                        AWXUIContext.shared.dismissAction?(completion)
+                        // clear dismissAction block here so the user cancel detection
+                        // in AWXPaymentViewController.deinit() can work as expected
+                        AWXUIContext.shared.dismissAction = nil
+                    }
                 )
                 try paymentSessionHandler?.confirmCardPayment(
                     with: card,
@@ -348,7 +353,7 @@ private extension NewCardPaymentSectionController {
                 viewModelForCountryCode
             ]
             for viewModel in otherViewModels {
-                viewModel?.handleDidEndEditing(reconfigurePolicy: .ifNeeded)
+                viewModel?.handleDidEndEditing(reconfigurePolicy: .automatic)
             }
             let message = error.localizedDescription
             context.viewController?.showAlert(message: message)

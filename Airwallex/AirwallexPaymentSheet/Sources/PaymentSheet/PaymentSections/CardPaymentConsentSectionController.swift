@@ -406,7 +406,7 @@ private extension CardPaymentConsentSectionController {
             ]
         )
         if let cvcConfigurer {
-            cvcConfigurer.handleDidEndEditing(reconfigurePolicy: .ifNeeded)
+            cvcConfigurer.handleDidEndEditing(reconfigurePolicy: .automatic)
             do {
                 try cvcConfigurer.validate()
                 consent.paymentMethod?.card?.cvc = cvcConfigurer.text
@@ -423,7 +423,12 @@ private extension CardPaymentConsentSectionController {
                 session: session,
                 viewController: viewController,
                 paymentResultDelegate: AWXUIContext.shared.delegate,
-                dismissAction: AWXUIContext.shared.dismissAction
+                dismissAction: { completion in
+                    AWXUIContext.shared.dismissAction?(completion)
+                    // clear dismissAction block here so the user cancel detection
+                    // in AWXPaymentViewController.deinit() can work as expected
+                    AWXUIContext.shared.dismissAction = nil
+                }
             )
             try paymentSessionHandler?.confirmConsentPayment(with: consent)
         } catch {

@@ -308,7 +308,12 @@ private extension SchemaPaymentSectionController {
                     viewController: context.viewController!,
                     paymentResultDelegate: AWXUIContext.shared.delegate,
                     methodType: methodProvider.method(named: name),
-                    dismissAction: AWXUIContext.shared.dismissAction
+                    dismissAction: { completion in
+                        AWXUIContext.shared.dismissAction?(completion)
+                        // clear dismissAction block here so the user cancel detection
+                        // in AWXPaymentViewController.deinit() can work as expected
+                        AWXUIContext.shared.dismissAction = nil
+                    }
                 )
                 try paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
             } catch {
@@ -319,7 +324,7 @@ private extension SchemaPaymentSectionController {
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)
             for viewModel in uiFieldViewModels {
-                viewModel.handleDidEndEditing(reconfigurePolicy: .ifNeeded)
+                viewModel.handleDidEndEditing(reconfigurePolicy: .automatic)
             }
         }
     }

@@ -50,7 +50,12 @@ class ApplePaySectionController: SectionController {
                     viewController: viewController,
                     paymentResultDelegate: AWXUIContext.shared.delegate,
                     methodType: methodType,
-                    dismissAction: AWXUIContext.shared.dismissAction
+                    dismissAction: { completion in
+                        AWXUIContext.shared.dismissAction?(completion)
+                        // clear dismissAction block here so the user cancel detection
+                        // in AWXPaymentViewController.deinit() can work as expected
+                        AWXUIContext.shared.dismissAction = nil
+                    }
                 )
                 try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
             } catch {
