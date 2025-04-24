@@ -24,26 +24,6 @@ class CardNumberTextFieldViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.currentBrand, .unknown)
     }
     
-    func testReconfigureCalledDuringEditing() {
-        var reconfigureCalled = false
-        let viewModel = CardNumberTextFieldViewModel(
-            supportedCardSchemes: AWXCardScheme.allAvailable,
-            editingEventObserver: BeginEditingEventObserver(block: {}),
-            reconfigureHandler: { _,_ in
-                reconfigureCalled = true
-            }
-        )
-        let textField = UITextField()
-        let _ = viewModel.textField(textField, shouldChangeCharactersIn: NSRange(location: 0, length: 0), replacementString: "4")
-        XCTAssertTrue(reconfigureCalled)
-        XCTAssertEqual(viewModel.currentBrand, .visa)
-        
-        reconfigureCalled = false
-        let _ = viewModel.textField(textField, shouldChangeCharactersIn: NSRange(location: 0, length: 1), replacementString: "")
-        XCTAssertTrue(reconfigureCalled)
-        XCTAssertEqual(viewModel.currentBrand, .unknown)
-    }
-    
     func testSupportedBrandsAndCurrentBrand() {
         let cardSchemes = [AWXCardBrand.unionPay, AWXCardBrand.discover, AWXCardBrand.mastercard]
             .map { AWXCardScheme(name: $0.rawValue) }

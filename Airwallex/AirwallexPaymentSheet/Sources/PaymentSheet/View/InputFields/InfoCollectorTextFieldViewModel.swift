@@ -164,8 +164,12 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
                 changeCharactersIn: range,
                 replacementString: string
             )
-            
-            DispatchQueue.main.async {
+            let inputText = textField.text ?? ""
+            let mayBeAutoFill = (inputText.isEmpty == true &&
+                                 range.lowerBound == inputText.startIndex &&
+                                 range.isEmpty &&
+                                 string.count > 1)
+            let action = {
                 // Delay to the next run loop to ensure that the formatted text set by the formatter
                 // is not immediately overwritten by an autofill event.
                 textField.updateContentAndCursor(
@@ -181,6 +185,11 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
                     _ = returnActionHandler(textField)
                 }
                 self.editingEventObserver?.handleEditingEvent(event: .editingChanged, for: textField)
+            }
+            if mayBeAutoFill {
+                DispatchQueue.main.async { action() }
+            } else {
+                action()
             }
             return false
         } else {
