@@ -130,7 +130,17 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
                 title: title
             )
         }
-        self.inputFormatter = customInputFormatter
+        if let customInputFormatter {
+            self.inputFormatter = customInputFormatter
+        } else if textFieldType == .phoneNumber {
+            // Use a formatter to remove invalid characters from user input,
+            // making it easier for the phone number to satisfy E.164 regex validation.
+            // This is especially helpful when the phone number is updated via autofill.
+            self.inputFormatter = MaxLengthFormatter(
+                maxLength: Int.max,
+                characterSet: CharacterSet(charactersIn: "+0123456789")
+            )
+        }
         self.editingEventObserver = editingEventObserver
         self.reconfigureHandler = reconfigureHandler
     }
@@ -138,6 +148,10 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
 
 // MARK: - UITextFieldDelegate
 extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        editingEventObserver?.handleEditingEvent(event: .editingDidBegin, for: textField)
+    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let range = Range(range, in: textField.text ?? "") else {
@@ -151,22 +165,29 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
                 replacementString: string
             )
             
-            textField.updateContentAndCursor(
-                attributedText: formated,
-                maxLength: inputFormatter.maxLength
-            )
-            attributedText = textField.attributedText
-            text = attributedText?.string
-            
-            // trigger return action if we have a valid input, and the cursor is at the end of the text field
-            if let returnActionHandler, inputFormatter.shouldAutomaticTriggerReturnAction(textField: textField) {
-                _ = returnActionHandler(textField)
+            DispatchQueue.main.async {
+                // Delay to the next run loop to ensure that the formatted text set by the formatter
+                // is not immediately overwritten by an autofill event.
+                textField.updateContentAndCursor(
+                    attributedText: formated,
+                    maxLength: inputFormatter.maxLength
+                )
+                self.attributedText = textField.attributedText
+                self.text = textField.attributedText?.string
+                
+                // trigger return action if we have a valid input, and the cursor is at the end of the text field
+                if let returnActionHandler = self.returnActionHandler,
+                   inputFormatter.shouldAutomaticTriggerReturnAction(textField: textField) {
+                    _ = returnActionHandler(textField)
+                }
+                self.editingEventObserver?.handleEditingEvent(event: .editingChanged, for: textField)
             }
             return false
         } else {
             let userInput = textField.text?.replacingCharacters(in: range, with: string)
             text = userInput
             attributedText = nil
+            editingEventObserver?.handleEditingEvent(event: .editingChanged, for: textField)
             return true
         }
     }
@@ -185,6 +206,7 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         handleDidEndEditing(reconfigureStrategy: .automatic)
+        editingEventObserver?.handleEditingEvent(event: .editingDidEnd, for: textField)
     }
 }
 

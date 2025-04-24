@@ -46,6 +46,8 @@ class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
                     RiskLogger.log(.inputCardNumber, screen: .createCard)
                 case .editingDidEnd:
                     cardNumberDidEndEditing()
+                case .editingChanged:
+                    reconfigureHandler(itemIdentifier, false)
                 default:
                     break
                 }

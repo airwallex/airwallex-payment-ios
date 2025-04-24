@@ -34,8 +34,6 @@ protocol BaseTextFieldConfiguring: AnyObject, ViewModelValidatable {
     var returnKeyType: UIReturnKeyType { get set }
     /// delegate for the embeded text field
     var textFieldDelegate: UITextFieldDelegate? { get }
-    /// observe .editingDidBegin, .editingDidEnd, .editingChanged events
-    var editingEventObserver: EditingEventObserver? { get }
 }
 
 class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITextFieldDelegate {
@@ -105,7 +103,6 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
 
         textField.addTarget(self, action: #selector(editingDidBegin(_:)), for: UITextField.Event.editingDidBegin)
         textField.addTarget(self, action: #selector(editingDidEnd(_:)), for: UITextField.Event.editingDidEnd)
-        textField.addTarget(self, action: #selector(editingChanged(_:)), for: UITextField.Event.editingDidEnd)
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -197,16 +194,9 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
     //  MARK: - UITextField.Event
     @objc func editingDidBegin(_ textField: UITextField) {
         updateBorderAppearance()
-        viewModel?.editingEventObserver?.handleEditingEvent(event: .editingDidBegin, for: textField)
     }
     
     @objc func editingDidEnd(_ textField: UITextField) {
         updateBorderAppearance()
-        viewModel?.editingEventObserver?.handleEditingEvent(event: .editingDidEnd, for: textField)
-    }
-    
-    @objc func editingChanged(_ textField: UITextField) {
-        updateBorderAppearance()
-        viewModel?.editingEventObserver?.handleEditingEvent(event: .editingChanged, for: textField)
     }
 }
