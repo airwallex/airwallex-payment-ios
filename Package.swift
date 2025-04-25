@@ -75,7 +75,15 @@ let package = Package(
             exclude: [ "Sources/Empty.swift" ],
             sources: [ "Sources" ],
             resources: [ .process("Resources")],
-            publicHeadersPath: "include"
+            publicHeadersPath: "include",
+            cSettings: [
+                .headerSearchPath("Sources/ApplePay/Internal"),
+                .headerSearchPath("Sources/Card/Internal"),
+                .headerSearchPath("Sources/Logging/Internal"),
+                .headerSearchPath("Sources/Model/Internal"),
+                .headerSearchPath("Sources/Network/Internal"),
+                .headerSearchPath("Sources/UI/Internal"),
+            ]
         ),
         .target(
             name: "AirwallexWeChatPay",
