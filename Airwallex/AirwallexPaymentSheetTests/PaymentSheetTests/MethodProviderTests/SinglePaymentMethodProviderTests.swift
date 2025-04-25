@@ -63,8 +63,7 @@ import Combine
     
     override class func tearDown() {
         super.tearDown()
-        MockURLProtocol.mockResponse = nil
-        MockURLProtocol.mockResponseMap = nil
+        MockURLProtocol.resetMockResponses()
     }
     
     func testNilForSupportedCardBrand() async {
@@ -129,7 +128,6 @@ import Combine
 
     func testfetchPaymentMethodDetailsMultipleTimes() async {
         MockURLProtocol.mockResponse = (mockData, mockSuccessResponse, nil)
-        MockURLProtocol.mockResponseQueue = [(mockData, mockSuccessResponse, nil)]
         do {
             async let methodDetail1 = provider.getPaymentMethodTypeDetails(name: provider.name)
             async let methodDetail2 = provider.getPaymentMethodTypeDetails(name: provider.name)

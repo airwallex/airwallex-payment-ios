@@ -11,13 +11,11 @@ import Foundation
 
 class MockURLProtocol: URLProtocol {
     static var mockResponse: (Data?, URLResponse?, Error?)?
-    static var mockResponseMap: [URL: (Data?, URLResponse?, Error?)]?
-    static var mockResponseQueue: [(Data?, URLResponse?, Error?)]?
+    static var mockResponseMap: [String: (Data?, URLResponse?, Error?)]?
     
     static func resetMockResponses() {
         mockResponse = nil
         mockResponseMap = nil
-        mockResponseQueue = nil
     }
     
     override class func canInit(with request: URLRequest) -> Bool {
@@ -31,15 +29,8 @@ class MockURLProtocol: URLProtocol {
     override func startLoading() {
         if let (data, response, error) = Self.mockResponse {
             communicateClient(data, response, error)
-        } else if let url = request.url, let (data, response, error) = Self.mockResponseMap?[url] {
+        } else if let url = request.url, let (data, response, error) = Self.mockResponseMap?[url.path] {
             communicateClient(data, response, error)
-        } else if let responseQueue = Self.mockResponseQueue {
-            if responseQueue.isEmpty {
-                communicateClient(nil, nil, "unexpected requrest".asError())
-            } else {
-                let (data, response, error) = Self.mockResponseQueue!.removeFirst()
-                communicateClient(data, response, error)
-            }
         }
     }
     

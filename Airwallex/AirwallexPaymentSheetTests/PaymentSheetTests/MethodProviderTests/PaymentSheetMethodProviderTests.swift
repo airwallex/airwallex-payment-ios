@@ -75,7 +75,10 @@ import Combine
     }
     
     func testFetchPaymentMethod() async {
-        MockURLProtocol.mockResponseQueue = [(mockMethodTypesData, mockSuccessResponse, nil), (mockConsentsData, mockSuccessResponse, nil)]
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
+            AWXGetPaymentConsentsRequest().path(): (mockConsentsData, mockSuccessResponse, nil)
+        ]
         do {
             try await provider.getPaymentMethodTypes()
         } catch {
@@ -108,7 +111,10 @@ import Combine
     func testMethodFilterOnSession() async {
         mockOneOffSession.paymentMethods = ["alipaycn", "alipayhk", "card"]
         mockOneOffSession.paymentIntent = mockPaymentIntent
-        MockURLProtocol.mockResponseQueue = [(mockMethodTypesData, mockSuccessResponse, nil), (mockConsentsData, mockSuccessResponse, nil)]
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
+            AWXGetPaymentConsentsRequest().path(): (mockConsentsData, mockSuccessResponse, nil)
+        ]
         do {
             try await provider.getPaymentMethodTypes()
         } catch {
@@ -123,7 +129,10 @@ import Combine
     
     func testMethodFilterOnSession_withoutNoCard() async {
         mockOneOffSession.paymentMethods = ["alipayhk", "atome", "alipaycn"]
-        MockURLProtocol.mockResponseQueue = [(mockMethodTypesData, mockSuccessResponse, nil), (mockConsentsData, mockSuccessResponse, nil)]
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
+            AWXGetPaymentConsentsRequest().path(): (mockConsentsData, mockSuccessResponse, nil)
+        ]
         do {
             try await provider.getPaymentMethodTypes()
         } catch {
@@ -137,7 +146,10 @@ import Combine
     }
     
     func testFetchPaymentMethodWithApplePayOptions() async {
-        MockURLProtocol.mockResponseQueue = [(mockMethodTypesData, mockSuccessResponse, nil), (mockConsentsData, mockSuccessResponse, nil)]
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
+            AWXGetPaymentConsentsRequest().path(): (mockConsentsData, mockSuccessResponse, nil)
+        ]
         mockOneOffSession.applePayOptions = AWXApplePayOptions(merchantIdentifier: "123")
         do {
             try await provider.getPaymentMethodTypes()
@@ -162,7 +174,10 @@ import Combine
     }
     
     func testFetchPaymentMethodWithApplePayOptionsAndCustomerId() async {
-        MockURLProtocol.mockResponseQueue = [(mockMethodTypesData, mockSuccessResponse, nil), (mockConsentsData, mockSuccessResponse, nil)]
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
+            AWXGetPaymentConsentsRequest().path(): (mockConsentsData, mockSuccessResponse, nil)
+        ]
         mockOneOffSession.applePayOptions = AWXApplePayOptions(merchantIdentifier: "123")
         mockOneOffSession.paymentIntent = mockPaymentIntent
         do {
@@ -188,7 +203,10 @@ import Combine
     }
     
     func testChangeSelectedMethod() async {
-        MockURLProtocol.mockResponseQueue = [(mockMethodTypesData, mockSuccessResponse, nil), (mockConsentsData, mockSuccessResponse, nil)]
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
+            AWXGetPaymentConsentsRequest().path(): (mockConsentsData, mockSuccessResponse, nil)
+        ]
         do {
             try await provider.getPaymentMethodTypes()
         } catch {

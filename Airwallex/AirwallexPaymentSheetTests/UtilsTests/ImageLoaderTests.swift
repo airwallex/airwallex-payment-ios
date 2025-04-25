@@ -46,7 +46,7 @@ class ImageLoaderTests: XCTestCase {
         imageLoader = nil
         mockURL = nil
         mockImage = nil
-        MockURLProtocol.mockResponse = nil
+        MockURLProtocol.resetMockResponses()
         super.tearDown()
     }
     
