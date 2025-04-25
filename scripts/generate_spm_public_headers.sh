@@ -7,7 +7,7 @@ if [ -n "$CI" ]; then
     exit 0
 fi
 
-AIRWALLEX_CORE_PUBLIC_HEADER_PATH="${SRCROOT}/../Airwallex/Core/include"
+AIRWALLEX_CORE_PUBLIC_HEADER_PATH="${SRCROOT}/../Airwallex/AirwallexCore/include"
 AIRWALLEX_CORE_SOURCE_RELATIVE_PATH="../Sources"
 
 rm -rf $AIRWALLEX_CORE_PUBLIC_HEADER_PATH/*.*
@@ -18,7 +18,7 @@ cd $AIRWALLEX_CORE_PUBLIC_HEADER_PATH
 public_headers_list=$(
     find "$AIRWALLEX_CORE_SOURCE_RELATIVE_PATH" \
         -type f -name "*.[h]" \
-        -not -path "$AIRWALLEX_CORE_SOURCE_RELATIVE_PATH/Internal/*" \
+        -not -path "$AIRWALLEX_CORE_SOURCE_RELATIVE_PATH/**/Internal/*" \
         | sed "s| \([^/]\)|:\1|g"
 )
 

@@ -1,9 +1,9 @@
 {
-  "api_key": "",
-  "client_id": "",
-  "base_url": "https://airwallex.com/",
-  "amount": "0.10",
-  "currency": "HKD",
-  "country_code": "CN",
-  "return_url": "airwallexcheckout://com.airwallex.paymentacceptance"
+    "api_key": null,
+    "client_id": null,
+    "base_url": "https://airwallex.com/",
+    "amount": "1",
+    "currency": "HKD",
+    "country_code": "CN",
+    "return_url": "airwallexcheckout://com.airwallex.paymentacceptance"
 }
