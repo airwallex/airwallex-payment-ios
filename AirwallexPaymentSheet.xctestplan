@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "B6C5201C-60AA-4CA4-A762-D0C3F87CBF9D",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Airwallex.xcodeproj",
+        "identifier" : "D85041C32DA7957A0074BA7F",
+        "name" : "AirwallexPaymentSheetTests"
+      }
+    }
+  ],
+  "version" : 1
+}

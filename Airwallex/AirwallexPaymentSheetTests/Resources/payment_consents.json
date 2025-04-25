@@ -1,0 +1,95 @@
+{
+    "has_more": false,
+    "items": [
+        {
+            "id": "cst_hkdmkbln4h6eoud0ua4",
+            "request_id": "659F03C2-7D87-4317-AE9D-28F385379E98",
+            "customer_id": "cus_hkdmfsn96h5vft0gz56",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmt279gh6eoucvj19",
+                "card": {
+                    "expiry_month": "12",
+                    "expiry_year": "2033",
+                    "name": "Jason Wang",
+                    "bin": "41111111",
+                    "last4": "1111",
+                    "brand": "visa",
+                    "issuer_country_code": "US",
+                    "card_type": "DEBIT",
+                    "fingerprint": "RZIQ1oT3j70T7OtvANY8YIz7FKM=",
+                    "billing": {
+                        "first_name": "Jason",
+                        "last_name": "Wang",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "CONOTOXIA SP. Z O.O",
+                    "is_commercial": false,
+                    "number_type": "PAN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmt279gh6eotpxp3b",
+            "next_triggered_by": "customer",
+            "status": "VERIFIED",
+            "created_at": "2025-04-14T02:18:19+0000",
+            "updated_at": "2025-04-14T02:18:19+0000",
+            "mandate": {
+                "payment_amount_type": "VARIABLE"
+            },
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmthfj5h5w3sjiytw",
+            "request_id": "4DCF969E-8F59-4ABF-A3EB-D74797221B1E",
+            "customer_id": "cus_hkdmfsn96h5vft0gz56",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmthfj5h5w3sjdo8q",
+                "card": {
+                    "expiry_month": "12",
+                    "expiry_year": "2029",
+                    "name": "John Citizen",
+                    "bin": "40120003",
+                    "last4": "0005",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "xNOo7vdlLMPrcWcAhUQj/Xx1Vt0=",
+                    "billing": {
+                        "first_name": "Jason",
+                        "last_name": "Wang",
+                        "email": "abc@123.com",
+                        "phone_number": "13800000000",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "VISA PRODUCTION SUPPORT CLIENT BID 1",
+                    "is_commercial": false,
+                    "number_type": "PAN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmngfmqh5w3sj8l21",
+            "next_triggered_by": "customer",
+            "status": "VERIFIED",
+            "created_at": "2025-03-28T05:45:22+0000",
+            "updated_at": "2025-03-28T05:45:22+0000",
+            "mandate": {
+                "payment_amount_type": "VARIABLE"
+            },
+            "purpose": "recurring"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+  "has_more": false,
+  "items": [
+    {
+      "bank_name": "bpi",
+      "display_name": "BPI",
+      "resources": {
+        "logos": {
+          "png": "https://checkout.airwallex.com/static/media/bpi.8889344.png",
+          "svg": "https://checkout.airwallex.com/static/media/bpi.8889344.svg"
+        },
+        "logo_url": "https://checkout.airwallex.com/static/media/bpi.8889344.svg"
+      }
+    }
+  ]
+}

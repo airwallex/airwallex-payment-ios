@@ -6,6 +6,7 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
+import Foundation
 import Airwallex
 
 protocol APIClient {
@@ -14,6 +15,17 @@ protocol APIClient {
     func generateClientSecret(customerID: String, apiKey: String?, clientID: String?, completion: @escaping (Result<String, Error>) -> Void)
     
     func createCustomer(request: CustomerRequest, completion: @escaping (Result<Customer, Error>) -> Void)
+}
+
+extension Airwallex {
+    static var apiClient: APIClient {
+        switch Airwallex.mode() {
+        case .demoMode, .stagingMode:
+            return DemoStoreAPIClient()
+        case .productionMode:
+            return DirectAPIClient()
+        }
+    }
 }
 
 @objc protocol CustomerFetchable {
@@ -30,7 +42,12 @@ protocol APIClient {
     )
 }
 
-
+/// For demo/staging environment if clientId/apiKey is not set, airwallex demo/staging server will use default value configured on server
+/// If you configure it in on client side it will override default configuration on server
+///
+/// `DirectAPIClient` is for debugging purpose in production environment.
+///  For your app, you are recommended to config clientId/apiKey on your own server and let your server
+///  and let your server do the token creation and other communitation with airwallex service for your app
 class DemoStoreAPIClient: APIClient, CustomerFetchable {
     private var demoStoreBaseUrl: String? {
         switch Airwallex.mode() {

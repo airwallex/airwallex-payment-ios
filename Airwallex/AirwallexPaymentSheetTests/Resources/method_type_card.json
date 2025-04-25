@@ -1,0 +1,10 @@
+{
+  "name": "card",
+  "display_name": "Card",
+  "logos": {
+    "png": "https://checkout-demo.airwallex.com/static/media/cardPlaceholder.abcb5ee7.png",
+    "svg": "https://checkout-demo.airwallex.com/static/media/cardPlaceholder.abcb5ee7.svg"
+  },
+  "has_schema": false,
+  "field_schemas": []
+}

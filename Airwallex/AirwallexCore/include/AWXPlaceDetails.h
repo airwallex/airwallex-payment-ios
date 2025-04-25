@@ -1,0 +1,1 @@
+../Sources/Model/AWXPlaceDetails.h
