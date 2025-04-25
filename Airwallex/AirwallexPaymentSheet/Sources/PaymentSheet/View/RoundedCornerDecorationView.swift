@@ -18,4 +18,11 @@ class RoundedCornerDecorationView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("not implemented")
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            layer.borderColor = .awxCGColor(.borderDecorative)
+        }
+    }
 }

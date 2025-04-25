@@ -7,12 +7,9 @@
 //
 
 import UIKit
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
-import Combine
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
+import AirwallexCore
 #endif
 
 class CardPaymentConsentSectionController: SectionController {
@@ -409,7 +406,7 @@ private extension CardPaymentConsentSectionController {
             ]
         )
         if let cvcConfigurer {
-            cvcConfigurer.handleDidEndEditing(reconfigureIfNeeded: true)
+            cvcConfigurer.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             do {
                 try cvcConfigurer.validate()
                 consent.paymentMethod?.card?.cvc = cvcConfigurer.text
@@ -426,7 +423,12 @@ private extension CardPaymentConsentSectionController {
                 session: session,
                 viewController: viewController,
                 paymentResultDelegate: AWXUIContext.shared.delegate,
-                dismissAction: AWXUIContext.shared.dismissAction
+                dismissAction: { completion in
+                    AWXUIContext.shared.dismissAction?(completion)
+                    // clear dismissAction block here so the user cancel detection
+                    // in AWXPaymentViewController.deinit() can work as expected
+                    AWXUIContext.shared.dismissAction = nil
+                }
             )
             try paymentSessionHandler?.confirmConsentPayment(with: consent)
         } catch {

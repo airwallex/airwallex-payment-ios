@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import Combine
 import AirwallexRisk
-import Combine
 #if canImport(AirwallexPayment)
 import AirwallexCore
 @_spi(AWX) import AirwallexPayment
@@ -330,7 +328,12 @@ private extension NewCardPaymentSectionController {
                     viewController: context.viewController!,
                     paymentResultDelegate: AWXUIContext.shared.delegate,
                     methodType: methodType,
-                    dismissAction: AWXUIContext.shared.dismissAction
+                    dismissAction: { completion in
+                        AWXUIContext.shared.dismissAction?(completion)
+                        // clear dismissAction block here so the user cancel detection
+                        // in AWXPaymentViewController.deinit() can work as expected
+                        AWXUIContext.shared.dismissAction = nil
+                    }
                 )
                 try paymentSessionHandler?.confirmCardPayment(
                     with: card,
@@ -350,7 +353,7 @@ private extension NewCardPaymentSectionController {
                 viewModelForCountryCode
             ]
             for viewModel in otherViewModels {
-                viewModel?.handleDidEndEditing(reconfigureIfNeeded: true)
+                viewModel?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             }
             let message = error.localizedDescription
             context.viewController?.showAlert(message: message)
@@ -440,8 +443,8 @@ private extension NewCardPaymentSectionController {
     func createBillingAddressViewModel(reuseShippingAddress: Bool) -> BillingInfoCellViewModel {
         BillingInfoCellViewModel(
             itemIdentifier: Item.billingFieldAddress.rawValue,
-            shippingAddress: session.billing?.address,
-            reusingShippingInfo: reuseShippingAddress,
+            prefilledAddress: session.billing?.address,
+            reusePrefilledAddress: reuseShippingAddress,
             countrySelectionHandler: { [weak self] in
                 self?.triggerCountrySelection()
             },
@@ -459,7 +462,7 @@ private extension NewCardPaymentSectionController {
         viewModelForCardInfo = CardInfoCollectorCellViewModel(
             itemIdentifier: Item.cardInfo.rawValue,
             cardSchemes: methodType.cardSchemes,
-            returnActionHandler: { [weak self] _, identifier in
+            returnActionHandler: { [weak self] identifier, _ in
                 guard let self else { return false }
                 return self.context.activateNextRespondableCell(
                     section: self.section,
@@ -471,11 +474,12 @@ private extension NewCardPaymentSectionController {
             },
             cardNumberDidEndEditing: { [weak self] in
                 guard let self else { return }
+                // perform updates to hide or show unionpay warning view if necessary
                 self.context.performUpdates(self.section)
             }
         )
         
-        let returnActionHandler: (UIResponder, String) -> Bool = { [weak self] responder, itemIdentifier in
+        let returnActionHandler: (String, UIResponder) -> Bool = { [weak self] itemIdentifier, responder in
             guard let self else { return false }
             return self.context.activateNextRespondableCell(
                 section: self.section,
@@ -537,9 +541,9 @@ private extension NewCardPaymentSectionController {
                 country = AWXCountry(code: countryCode)
             }
             viewModelForCountryCode = CountrySelectionCellViewModel(
+                country: country,
                 itemIdentifier: Item.billingFieldCountryCode.rawValue,
                 title: NSLocalizedString("Billing country or region", bundle: .paymentSheet, comment: "billing info"),
-                country: country,
                 handleUserInteraction: { [weak self] in
                     self?.triggerCountrySelection()
                 },
@@ -557,10 +561,8 @@ extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate 
         assert(viewModelForBillingAddress != nil || viewModelForCountryCode != nil, "one of the viewmodel should exist")
         if let viewModelForBillingAddress {
             viewModelForBillingAddress.selectedCountry = country
-            context.reconfigure(items: [ viewModelForBillingAddress.itemIdentifier ], invalidateLayout: true)
         } else if let viewModelForCountryCode {
             viewModelForCountryCode.country = country
-            context.reconfigure(items: [ viewModelForCountryCode.itemIdentifier ], invalidateLayout: true)
         }
     }
 }

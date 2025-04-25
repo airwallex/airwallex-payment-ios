@@ -12,15 +12,7 @@
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
-
 NSErrorDomain const AWXSDKErrorDomain = @"com.airwallex.error";
-
-#else
-
-NSString *const AWXSDKErrorDomain = @"com.airwallex.error";
-
-#endif
 
 NSString *const AWXThreatMatrixOrganizationID = @"w2txo5aa";
 NSString *const AWXThreatMatrixFingerprintServer = @"imgs.signifyd.com";
@@ -51,10 +43,6 @@ AWXPaymentMethodFlow const AWXPaymentMethodFlowQrcode = @"webqr";
 
 NSString *const AWXPaymentTransactionModeOneOff = @"oneoff";
 NSString *const AWXPaymentTransactionModeRecurring = @"recurring";
-
-NSArray *AWXCardSupportedBrands(void) {
-    return @[@(AWXBrandTypeVisa), @(AWXBrandTypeMastercard), @(AWXBrandTypeAmex), @(AWXBrandTypeUnionPay), @(AWXBrandTypeJCB), @(AWXBrandTypeDinersClub), @(AWXBrandTypeDiscover)];
-};
 
 NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void) {
     NSArray<PKPaymentNetwork> *shared = @[

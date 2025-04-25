@@ -514,7 +514,7 @@ private extension SettingsViewController {
         }
         
         guard NSLocale.isoCurrencyCodes.contains(where: { $0 == settings.currency }) else {
-            showAlert(message: "invalid currency code \(settings.countryCode)")
+            showAlert(message: "invalid currency code \(settings.currency)")
             return
         }
         
@@ -554,6 +554,14 @@ private extension SettingsViewController {
                 apiKey: settings.apiKey,
                 clientID: settings.clientId
             )
+            
+            if settings.environment == .productionMode {
+                // apiKey and clientId may not have been saved yet
+                // update them manually
+                MockAPIClient.shared().apiKey = settings.apiKey
+                MockAPIClient.shared().clientID = settings.clientId
+            }
+            
             self.customerFetcher.createCustomer(
                 request: request) { result in
                     Task {

@@ -39,6 +39,6 @@ protocol CellViewModelIdentifiable {
     associatedtype ItemType: Hashable & Sendable
     var itemIdentifier: ItemType { get }
     
-    typealias CellReturnActionHandler = (UIResponder, ItemType) -> Bool
+    typealias CellReturnActionHandler = (ItemType, UIResponder) -> Bool
     typealias CellReconfigureHandler = (ItemType, Bool) -> Void
 }

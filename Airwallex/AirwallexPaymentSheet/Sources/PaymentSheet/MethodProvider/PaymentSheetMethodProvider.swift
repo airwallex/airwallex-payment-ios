@@ -8,12 +8,9 @@
 
 import Foundation
 import Combine
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
-import Combine
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
+import AirwallexCore
 #endif
 
 final class PaymentSheetMethodProvider: PaymentMethodProvider {

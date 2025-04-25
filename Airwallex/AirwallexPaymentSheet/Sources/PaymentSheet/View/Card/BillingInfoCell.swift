@@ -117,8 +117,8 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     func setup(_ viewModel: BillingInfoCellViewModel) {
         self.viewModel = viewModel
-        reuseButton.isHidden = !viewModel.canReuseShippingAddress
-        reuseButton.isSelected = viewModel.shouldReuseShippingAddress
+        reuseButton.isHidden = !viewModel.canReusePrefilledAddress
+        reuseButton.isSelected = viewModel.shouldReusePrefilledAddress
         
         countrySelectionView.setup(viewModel.countryConfigurer)
         

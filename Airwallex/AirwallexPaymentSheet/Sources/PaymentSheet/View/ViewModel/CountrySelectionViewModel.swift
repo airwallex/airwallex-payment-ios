@@ -7,19 +7,16 @@
 //
 
 import UIKit
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
-import Combine
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
+import AirwallexCore
 #endif
 
 class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionViewConfiguring {
     var country: AWXCountry? {
         didSet {
             text = country?.countryName
-            handleDidEndEditing(reconfigureIfNeeded: true)
+            handleDidEndEditing(reconfigureStrategy: .always)
         }
     }
     
@@ -38,10 +35,11 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
     
     var handleUserInteraction: () -> Void
     
-    init(fieldName: String = "country",
+    init(country: AWXCountry?,
+         fieldName: String = "country",
          title: String? = nil,
-         country: AWXCountry? = nil,
          isEnabled: Bool = true,
+         hideErrorHintLabel: Bool = true,
          handleUserInteraction: @escaping () -> Void,
          reconfigureHandler: @escaping ReconfigureHandler) {
         self.country = country
@@ -53,7 +51,7 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
             placeholder: NSLocalizedString("Select..", bundle: .paymentSheet, comment: "country selection view placeholder"),
             isRequired: true,
             isEnabled: isEnabled,
-            hideErrorHintLabel: true,
+            hideErrorHintLabel: hideErrorHintLabel,
             reconfigureHandler: reconfigureHandler
         )
         inputValidator = BlockValidator { [weak self] _ in
@@ -77,19 +75,20 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
 class CountrySelectionCellViewModel: CountrySelectionViewModel, CellViewModelIdentifiable {
     let itemIdentifier: String
     
-    init(itemIdentifier: String,
+    init(country: AWXCountry?,
+         itemIdentifier: String,
          fieldName: String = "country",
          title: String? = nil,
-         country: AWXCountry? = nil,
          isEnabled: Bool = true,
          handleUserInteraction: @escaping () -> Void,
          cellReconfigureHandler: @escaping CellReconfigureHandler) {
         self.itemIdentifier = itemIdentifier
         super.init(
+            country: country,
             fieldName: fieldName,
             title: title,
-            country: country,
             isEnabled: isEnabled,
+            hideErrorHintLabel: false,
             handleUserInteraction: handleUserInteraction,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
