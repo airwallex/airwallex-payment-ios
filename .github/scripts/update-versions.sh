@@ -7,7 +7,7 @@ if [ -z "${VERSION}" ]; then
 fi
 
 echo "Updating version to $VERSION."
-sed -i '' 's/\(AIRWALLEX_VERSION (@"\)[^"]*/\1'"$VERSION"'/g' ./Airwallex/Core/Sources/AWXConstants.h
+sed -i '' 's/\(AIRWALLEX_VERSION (@"\)[^"]*/\1'"$VERSION"'/g' ./Airwallex/AirwallexCore/Sources/AWXConstants.h
 sed -i '' 's/\(s.version *= *"\)[^"]*/\1'"$VERSION"'/g' ./Airwallex.podspec
 sed -i '' 's/\(AIRWALLEX_VERSION *= *\).*/\1'"$VERSION"'/g' ./Airwallex/Airwallex.xcconfig
 

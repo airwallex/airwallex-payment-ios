@@ -7,7 +7,12 @@
 //
 
 #import "MockAPIClient.h"
-#import <Airwallex/Core.h>
+
+#if __has_include("Airwallex.h")
+@import Airwallex;
+#else
+@import AirwallexCore;
+#endif
 
 @implementation MockAPIClient
 
@@ -104,7 +109,7 @@
 
                                              AWXPaymentIntent *paymentIntent = [AWXPaymentIntent decodeFromJSON:json];
                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                 completionHandler(paymentIntent, anError);
+                                                 completionHandler(anError ? nil : paymentIntent, anError);
                                              });
                                              return;
                                          }
@@ -145,7 +150,7 @@
                                                  anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
                                              }
                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                 completionHandler(json, anError);
+                                                 completionHandler(anError ? nil : json, anError);
                                              });
                                              return;
                                          }
@@ -185,7 +190,7 @@
                                                  anError = [NSError errorWithDomain:@"com.airwallex.paymentacceptance" code:-1 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
                                              }
                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                 completionHandler(json, anError);
+                                                 completionHandler(anError ? nil : json, anError);
                                              });
                                              return;
                                          }

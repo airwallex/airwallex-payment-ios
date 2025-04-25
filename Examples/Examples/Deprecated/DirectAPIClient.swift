@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import Airwallex
 
 class DirectAPIClient: APIClient {
     init() {
         let client = MockAPIClient.shared()
-        client.apiKey = AirwallexExamplesKeys.shared().apiKey;
-        client.clientID = AirwallexExamplesKeys.shared().clientId;
+        client.apiKey = ExamplesKeys.apiKey;
+        client.clientID = ExamplesKeys.clientId;
     }
     
     func createPaymentIntent(request: PaymentIntentRequest, completion: @escaping (Result<AWXPaymentIntent, Error>) -> Void) {

@@ -6,8 +6,8 @@
 	<string>development</string>
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
-		<string>merchant.com.airwallex.paymentacceptance</string>
 		<string>merchant.demo.com.airwallex.paymentacceptance</string>
+		<string>merchant.prod.com.airwallex.paymentacceptance</string>
 	</array>
 </dict>
 </plist>
