@@ -352,6 +352,9 @@
 }
 
 - (AWXBrand *)brandForCardNumber:(NSString *)cardNumber {
+    if (!cardNumber || cardNumber.length == 0) {
+        return defaultBrand;
+    }
     __block AWXBrand *result = defaultBrand;
     for (AWXBrand *brand in self.brands) {
         BOOL check = brand.type != AWXBrandTypeUnknown && brand.rangeStart.length > result.rangeStart.length && [brand matchesPrefix:cardNumber];

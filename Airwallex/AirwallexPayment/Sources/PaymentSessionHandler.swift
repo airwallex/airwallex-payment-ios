@@ -213,8 +213,8 @@ public class PaymentSessionHandler: NSObject {
     ///   - billing: Billing information for the transaction (optional).
     ///   - saveCard: A boolean indicating whether to save the card for future transactions (default is `false`).
     func confirmCardPayment(with card: AWXCard,
-                          billing: AWXPlaceDetails?,
-                          saveCard: Bool = false) throws {
+                            billing: AWXPlaceDetails?,
+                            saveCard: Bool = false) throws {
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,

@@ -141,6 +141,8 @@
 		D81983492D6F120B008008A3 /* AirwallexPayment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D81983412D6F120B008008A3 /* AirwallexPayment.framework */; };
 		D81983D62D6F12BD008008A3 /* AirwallexCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* AirwallexCore.framework */; platformFilter = ios; };
 		D81983E82D6F1438008008A3 /* AirwallexRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; };
+		D820B1CB2DB768A4004B41B8 /* CardNumberTextFieldViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820B1CA2DB768A4004B41B8 /* CardNumberTextFieldViewModelTests.swift */; };
+		D8239E5B2DB7889700105F23 /* CardInfoCollectorCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8239E5A2DB7889700105F23 /* CardInfoCollectorCellViewModelTests.swift */; };
 		D8269FB22DB7701300E179EB /* AWXApplePayProviderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37D527EAFD9F00CFC2EF /* AWXApplePayProviderTest.m */; };
 		D8269FB32DB7701300E179EB /* PKContactRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9BA292806D923005B70C3 /* PKContactRequestTest.m */; };
 		D8269FB42DB7701300E179EB /* AWXPaymentIntentSummaryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */; };
@@ -151,6 +153,8 @@
 		D8269FB92DB7701E00E179EB /* AWXPaymentFormViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */; };
 		D8269FBA2DB7701E00E179EB /* AWXRedirectActionProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */; };
 		D8269FBB2DB7702400E179EB /* AWXCardProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */; };
+		D845F2952DB6401400DFA6ED /* UserEditingEventObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845F2942DB6401400DFA6ED /* UserEditingEventObserverTests.swift */; };
+		D845F2982DB64E3400DFA6ED /* InfoCollectorTextFieldViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845F2972DB64E3400DFA6ED /* InfoCollectorTextFieldViewModelTests.swift */; };
 		D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D85041C82DA7957A0074BA7F /* AirwallexPaymentSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */; };
 		D85041D42DA79A0B0074BA7F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85041D32DA79A0B0074BA7F /* Security.framework */; };
@@ -376,6 +380,8 @@
 		D88045932DA7B663008308C7 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D42D9E335D00D082EC /* MockProviderDelegate.swift */; };
 		D88045942DA7B6C5008308C7 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D12D9E335D00D082EC /* Bundle+Extensions.swift */; };
 		D88045952DA7B742008308C7 /* AirwallexCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* AirwallexCore.framework */; };
+		D8890ABF2DB893BB00F94F68 /* BankSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8890ABE2DB893BB00F94F68 /* BankSelectionViewModelTests.swift */; };
+		D8890AC12DB8985B00F94F68 /* BillingInfoCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8890AC02DB8985B00F94F68 /* BillingInfoCellViewModelTests.swift */; };
 		D88BFBD22DA916D20047C787 /* ApplePaySectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88BFBD12DA916D20047C787 /* ApplePaySectionControllerTests.swift */; };
 		D88BFBD62DA925D50047C787 /* MockMethodProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88BFBD52DA925D50047C787 /* MockMethodProvider.swift */; };
 		D88BFBD82DA928A70047C787 /* MockPaymentSectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88BFBD72DA928A70047C787 /* MockPaymentSectionProvider.swift */; };
@@ -387,6 +393,7 @@
 		D8A599B52DAF9DF20045BFEC /* AWXShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8A599B42DAF9DF20045BFEC /* AWXShippingViewController.m */; };
 		D8A599B62DAF9DF20045BFEC /* AWXShippingViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D8A599B32DAF9DF20045BFEC /* AWXShippingViewController.h */; };
 		D8AD269A2D6862E5002DD3FD /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
+		D8B8B8DC2DB79EB00071704F /* CountrySelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B8DB2DB79EB00071704F /* CountrySelectionViewModelTests.swift */; };
 		D8BD9E122D0191BF0045A892 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */; };
 		D8BD9E132D0191BF0045A892 /* Airwallex.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */; };
 		D8BD9E142D0191BF0045A892 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */; };
@@ -657,8 +664,12 @@
 		D81983412D6F120B008008A3 /* AirwallexPayment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AirwallexPayment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81983482D6F120B008008A3 /* AirwallexPaymentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexPaymentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81983EA2D6F1C70008008A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D820B1CA2DB768A4004B41B8 /* CardNumberTextFieldViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberTextFieldViewModelTests.swift; sourceTree = "<group>"; };
+		D8239E5A2DB7889700105F23 /* CardInfoCollectorCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfoCollectorCellViewModelTests.swift; sourceTree = "<group>"; };
 		D8320E842D9E82BC00FC067A /* AccordionPaymentMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionPaymentMethodCell.swift; sourceTree = "<group>"; };
 		D8352B4D2DA640B10025BE9E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D845F2942DB6401400DFA6ED /* UserEditingEventObserverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditingEventObserverTests.swift; sourceTree = "<group>"; };
+		D845F2972DB64E3400DFA6ED /* InfoCollectorTextFieldViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectorTextFieldViewModelTests.swift; sourceTree = "<group>"; };
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
 		D85040752DA794020074BA7F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AirwallexPaymentSheet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -674,6 +685,8 @@
 		D85041FC2DA79D7A0074BA7F /* AirwallexPaymentSheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexPaymentSheet.h; sourceTree = "<group>"; };
 		D85042732DA79FFB0074BA7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D85042752DA79FFF0074BA7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8890ABE2DB893BB00F94F68 /* BankSelectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankSelectionViewModelTests.swift; sourceTree = "<group>"; };
+		D8890AC02DB8985B00F94F68 /* BillingInfoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillingInfoCellViewModelTests.swift; sourceTree = "<group>"; };
 		D88BFBD12DA916D20047C787 /* ApplePaySectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySectionControllerTests.swift; sourceTree = "<group>"; };
 		D88BFBD52DA925D50047C787 /* MockMethodProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMethodProvider.swift; sourceTree = "<group>"; };
 		D88BFBD72DA928A70047C787 /* MockPaymentSectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPaymentSectionProvider.swift; sourceTree = "<group>"; };
@@ -684,6 +697,7 @@
 		D8A599A62DAF7A2D0045BFEC /* bank_list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = bank_list.json; sourceTree = "<group>"; };
 		D8A599B32DAF9DF20045BFEC /* AWXShippingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXShippingViewController.h; sourceTree = "<group>"; };
 		D8A599B42DAF9DF20045BFEC /* AWXShippingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXShippingViewController.m; sourceTree = "<group>"; };
+		D8B8B8DB2DB79EB00071704F /* CountrySelectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectionViewModelTests.swift; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
 		D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
 		D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrencyCodes.json; sourceTree = "<group>"; };
@@ -1224,6 +1238,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D845F2962DB64DB800DFA6ED /* ViewModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				D845F2972DB64E3400DFA6ED /* InfoCollectorTextFieldViewModelTests.swift */,
+				D820B1CA2DB768A4004B41B8 /* CardNumberTextFieldViewModelTests.swift */,
+				D8239E5A2DB7889700105F23 /* CardInfoCollectorCellViewModelTests.swift */,
+				D8B8B8DB2DB79EB00071704F /* CountrySelectionViewModelTests.swift */,
+				D8890ABE2DB893BB00F94F68 /* BankSelectionViewModelTests.swift */,
+				D8890AC02DB8985B00F94F68 /* BillingInfoCellViewModelTests.swift */,
+			);
+			path = ViewModelTests;
+			sourceTree = "<group>";
+		};
 		D85040722DA793D70074BA7F /* AirwallexPaymentSheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -1676,6 +1703,7 @@
 			isa = PBXGroup;
 			children = (
 				D8EC87D92D9E335D00D082EC /* EditingEventObserverTests.swift */,
+				D845F2942DB6401400DFA6ED /* UserEditingEventObserverTests.swift */,
 			);
 			path = EditingEventObserverTests;
 			sourceTree = "<group>";
@@ -1715,6 +1743,7 @@
 		D8EC87EA2D9E335D00D082EC /* PaymentSheetTests */ = {
 			isa = PBXGroup;
 			children = (
+				D845F2962DB64DB800DFA6ED /* ViewModelTests */,
 				D8EC87DA2D9E335D00D082EC /* EditingEventObserverTests */,
 				D8EC87DE2D9E335D00D082EC /* FormatterTests */,
 				D8EC87E12D9E335D00D082EC /* MethodProviderTests */,
@@ -2220,13 +2249,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2516,12 +2541,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8B8B8DC2DB79EB00071704F /* CountrySelectionViewModelTests.swift in Sources */,
 				D8C05A0E2DACF123002BED34 /* CardPaymentConsentSectionControllerTests.swift in Sources */,
 				D880456A2DA7B281008308C7 /* MockProviderDelegate.swift in Sources */,
 				D880457E2DA7B402008308C7 /* SinglePaymentMethodProviderTests.swift in Sources */,
 				D880457F2DA7B402008308C7 /* PaymentSheetMethodProviderTests.swift in Sources */,
 				D880456B2DA7B281008308C7 /* Bundle+Extensions.swift in Sources */,
 				D880456C2DA7B281008308C7 /* MockSectionController.swift in Sources */,
+				D845F2952DB6401400DFA6ED /* UserEditingEventObserverTests.swift in Sources */,
 				D88BFBD62DA925D50047C787 /* MockMethodProvider.swift in Sources */,
 				D88045722DA7B3DA008308C7 /* SimpleSectionControllerTests.swift in Sources */,
 				D88045732DA7B3DA008308C7 /* AnySectionControllerTests.swift in Sources */,
@@ -2532,6 +2559,7 @@
 				D88045742DA7B3DA008308C7 /* CollectionViewContextTests.swift in Sources */,
 				D88045752DA7B3DA008308C7 /* CollectionViewManagerTests.swift in Sources */,
 				D88045872DA7B41D008308C7 /* FontExtensionTests.swift in Sources */,
+				D8890AC12DB8985B00F94F68 /* BillingInfoCellViewModelTests.swift in Sources */,
 				D8A599A22DAE71250045BFEC /* SchemaPaymentSectionControllerTests.swift in Sources */,
 				D88045882DA7B41D008308C7 /* UIStackViewExtensionTests.swift in Sources */,
 				D88045892DA7B41D008308C7 /* CGFloatExtensionTests.swift in Sources */,
@@ -2543,11 +2571,13 @@
 				D880458E2DA7B41D008308C7 /* AWXUIContextTests.swift in Sources */,
 				D880458F2DA7B41D008308C7 /* ImageLoaderTests.swift in Sources */,
 				D88045902DA7B41D008308C7 /* UIImageExtensionTests.swift in Sources */,
+				D8890ABF2DB893BB00F94F68 /* BankSelectionViewModelTests.swift in Sources */,
 				D88045912DA7B41D008308C7 /* AWXAlertControllerTests.swift in Sources */,
 				D8C05A102DAD0FE2002BED34 /* NewCardPaymentSectionControllerTests.swift in Sources */,
 				D88045762DA7B3DA008308C7 /* SectionDisplayHandlerTests.swift in Sources */,
 				D88045712DA7B28A008308C7 /* AWXProviderDelegateSpy.m in Sources */,
 				D880456D2DA7B281008308C7 /* MockABSectionProvider.swift in Sources */,
+				D8239E5B2DB7889700105F23 /* CardInfoCollectorCellViewModelTests.swift in Sources */,
 				D88045772DA7B3E7008308C7 /* EditingEventObserverTests.swift in Sources */,
 				D88045802DA7B40A008308C7 /* PrefixPhoneNumberValidatorTests.swift in Sources */,
 				D88045812DA7B40A008308C7 /* BlockValidatorTests.swift in Sources */,
@@ -2555,10 +2585,12 @@
 				D88045832DA7B40A008308C7 /* InfoCollectorDefaultValidatorTests.swift in Sources */,
 				D88045842DA7B40A008308C7 /* CardExpiryValicatorTests.swift in Sources */,
 				D88BFBDA2DACA3830047C787 /* BasePaymentSectionControllerTests.swift in Sources */,
+				D845F2982DB64E3400DFA6ED /* InfoCollectorTextFieldViewModelTests.swift in Sources */,
 				D88045852DA7B40A008308C7 /* CardCVCValidatorTests.swift in Sources */,
 				D880456E2DA7B281008308C7 /* MockPaymentResultDelegate.swift in Sources */,
 				D880456F2DA7B281008308C7 /* MockCollectionViewContext.swift in Sources */,
 				D88BFBD22DA916D20047C787 /* ApplePaySectionControllerTests.swift in Sources */,
+				D820B1CB2DB768A4004B41B8 /* CardNumberTextFieldViewModelTests.swift in Sources */,
 				D88045702DA7B281008308C7 /* MockURLProtocol.swift in Sources */,
 				D801BDE12DA7BE2A0025D913 /* AWXSchemaExtensionTests.swift in Sources */,
 			);

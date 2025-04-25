@@ -7,12 +7,9 @@
 //
 
 import UIKit
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
-import Combine
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
+import AirwallexCore
 #endif
 
 /// This section controlelr is for schema payment
@@ -179,8 +176,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         throw NSLocalizedString("Invalid schema", bundle: .paymentSheet, comment: "").asError()
                     }
                     bankSelectionViewModel = BankSelectionCellViewModel(
-                        itemIdentifier: Item.bankName,
                         bank: banks.count == 1 ? banks.first! : nil,
+                        itemIdentifier: Item.bankName,
                         handleUserInteraction: { [weak self] in
                             self?.handleBankSelection()
                         },
@@ -198,7 +195,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         itemIdentifier: field.name,
                         textFieldType: field.textFieldType,
                         title: field.displayName,
-                        returnActionHandler: { [weak self] _, itemIdentifier in
+                        returnActionHandler: { [weak self] itemIdentifier, _ in
                             guard let self else { return false }
                             let success = self.context.activateNextRespondableCell(
                                 section: self.section,
@@ -311,7 +308,12 @@ private extension SchemaPaymentSectionController {
                     viewController: context.viewController!,
                     paymentResultDelegate: AWXUIContext.shared.delegate,
                     methodType: methodProvider.method(named: name),
-                    dismissAction: AWXUIContext.shared.dismissAction
+                    dismissAction: { completion in
+                        AWXUIContext.shared.dismissAction?(completion)
+                        // clear dismissAction block here so the user cancel detection
+                        // in AWXPaymentViewController.deinit() can work as expected
+                        AWXUIContext.shared.dismissAction = nil
+                    }
                 )
                 try paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
             } catch {
@@ -322,7 +324,7 @@ private extension SchemaPaymentSectionController {
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)
             for viewModel in uiFieldViewModels {
-                viewModel.handleDidEndEditing(reconfigureIfNeeded: true)
+                viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             }
         }
     }

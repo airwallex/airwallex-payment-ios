@@ -87,15 +87,7 @@ typedef NS_ENUM(NSUInteger, AWXTextFieldType) {
     AWXTextFieldTypeCVC
 };
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
-
 FOUNDATION_EXPORT NSErrorDomain const AWXSDKErrorDomain;
-
-#else
-
-FOUNDATION_EXPORT NSString *const AWXSDKErrorDomain;
-
-#endif
 
 FOUNDATION_EXPORT NSString *const AWXThreatMatrixOrganizationID;
 FOUNDATION_EXPORT NSString *const AWXThreatMatrixFingerprintServer;
@@ -116,8 +108,6 @@ FOUNDATION_EXPORT NSString *const AWXPaymentTransactionModeOneOff;
 FOUNDATION_EXPORT NSString *const AWXPaymentTransactionModeRecurring;
 
 FOUNDATION_EXPORT NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void);
-
-FOUNDATION_EXPORT NSArray *AWXCardSupportedBrands(void);
 
 FOUNDATION_EXPORT NSString *FormatAirwallexSDKMode(AirwallexSDKMode mode);
 FOUNDATION_EXPORT NSString *FormatNextTriggerByType(AirwallexNextTriggerByType type);

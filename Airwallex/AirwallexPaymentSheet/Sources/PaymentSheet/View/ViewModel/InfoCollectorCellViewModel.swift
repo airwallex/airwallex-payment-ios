@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Combine
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
@@ -57,11 +56,11 @@ class InfoCollectorCellViewModel<T: Hashable & Sendable>: InfoCollectorTextField
             editingEventObserver: editingEventObserver,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
-        self.returnActionHandler = { [weak self] responder in
-            guard let self, let returnActionHandler else {
+        self.returnActionHandler = { responder in
+            guard let returnActionHandler else {
                 return false
             }
-            return returnActionHandler(responder, itemIdentifier)
+            return returnActionHandler(itemIdentifier, responder)
         }
     }
 }

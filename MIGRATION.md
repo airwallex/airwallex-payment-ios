@@ -9,6 +9,56 @@
 - Consistent Naming:
   - Module/Subspec names are now consistent across both Swift Package Manager (SPM) and CocoaPods.
 
+#### Dependency Graph - New:
+```
+Airwallex
+└── AirwallexPaymentSheet
+    └── AirwallexPayment
+        └── AirwallexCore
+            ├── AirwallexRisk (binary target)
+            └── AirTracker (binary target)
+
+AirwallexWeChatPay
+│── AirwallexCore
+│    ├── AirwallexRisk (binary target)
+│    └── AirTracker (binary target)
+└── WechatOpenSDKDynamic (binary target)
+```
+#### Dependency Graph - Old:
+- Swift Package manager:
+```
+Airwallex
+├── AirwallexCore
+│   ├── AirwallexRisk (binary target)
+│   └── AirTracker (binary target)
+├── AirwallexApplePay
+│   └── AirwallexCore
+├── AirwallexCard
+│   └── AirwallexCore
+├── AirwallexRedirect
+│   └── AirwallexCore
+└── AirwallexWeChatPay
+    ├── AirwallexCore
+    │   ├── AirwallexRisk (binary target)
+    │   └── AirTracker (binary target)
+    └── WechatOpenSDKDynamic (binary target)
+```
+- CocoaPods:
+```
+Airwallex
+├── Core
+│   ├── AirTracker.xcframework (vendored framework)
+│   └── AirwallexRisk.xcframework (vendored framework)
+├── WeChatPay
+│   ├── Core
+│   └── WechatOpenSDKDynamic.xcframework (vendored framework)
+├── Card
+│   └── Core
+├── Redirect
+│   └── Core
+└── ApplePay
+    └── Core
+```
 For more details please refer to [README - Integration](README.md#integration)
 ### UI Integration
 Use the API in `AWXUIContext` to launch Airwallex Payment Sheet

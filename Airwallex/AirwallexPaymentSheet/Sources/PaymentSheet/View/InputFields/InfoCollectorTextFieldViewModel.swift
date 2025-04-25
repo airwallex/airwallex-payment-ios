@@ -36,6 +36,12 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     typealias ReconfigureHandler = (InfoCollectorTextFieldViewModel, Bool) -> Void
     typealias ReturnActionHandler = (UIResponder) -> Bool
     
+    enum ReconfigureStrategy {
+        case never
+        case always
+        case onValidationChange
+    }
+    
     var inputValidator: UserInputValidator
     
     var inputFormatter: UserInputFormatter?
@@ -65,7 +71,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
     
     var isValid: Bool
     
-    var textFieldType: AWXTextFieldType?
+    var textFieldType: AWXTextFieldType
     
     var placeholder: String?
     
@@ -124,7 +130,17 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
                 title: title
             )
         }
-        self.inputFormatter = customInputFormatter
+        if let customInputFormatter {
+            self.inputFormatter = customInputFormatter
+        } else if textFieldType == .phoneNumber {
+            // Use a formatter to remove invalid characters from user input,
+            // making it easier for the phone number to satisfy E.164 regex validation.
+            // This is especially helpful when the phone number is updated via autofill.
+            self.inputFormatter = MaxLengthFormatter(
+                maxLength: Int.max,
+                characterSet: CharacterSet(charactersIn: "+0123456789")
+            )
+        }
         self.editingEventObserver = editingEventObserver
         self.reconfigureHandler = reconfigureHandler
     }
@@ -132,6 +148,10 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
 
 // MARK: - UITextFieldDelegate
 extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        editingEventObserver?.handleEditingEvent(event: .editingDidBegin, for: textField)
+    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let range = Range(range, in: textField.text ?? "") else {
@@ -144,23 +164,39 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
                 changeCharactersIn: range,
                 replacementString: string
             )
-            
-            textField.updateContentAndCursor(
-                attributedText: formated,
-                maxLength: inputFormatter.maxLength
-            )
-            attributedText = textField.attributedText
-            text = attributedText?.string
-            
-            // trigger return action if we have a valid input, and the cursor is at the end of the text field
-            if let returnActionHandler, inputFormatter.shouldAutomaticTriggerReturnAction(textField: textField) {
-                _ = returnActionHandler(textField)
+            let currentText = textField.text ?? ""
+            let mayBeAutoFill = (currentText.isEmpty &&
+                                 range.lowerBound == currentText.startIndex &&
+                                 range.isEmpty &&
+                                 string.count > 1)
+            let action = {
+                // Delay to the next run loop to ensure that the formatted text set by the formatter
+                // is not immediately overwritten by an autofill event.
+                textField.updateContentAndCursor(
+                    attributedText: formated,
+                    maxLength: inputFormatter.maxLength
+                )
+                self.attributedText = textField.attributedText
+                self.text = textField.attributedText?.string
+                
+                // trigger return action if we have a valid input, and the cursor is at the end of the text field
+                if let returnActionHandler = self.returnActionHandler,
+                   inputFormatter.shouldAutomaticTriggerReturnAction(textField: textField) {
+                    _ = returnActionHandler(textField)
+                }
+                self.editingEventObserver?.handleEditingEvent(event: .editingChanged, for: textField)
+            }
+            if mayBeAutoFill {
+                DispatchQueue.main.async { action() }
+            } else {
+                action()
             }
             return false
         } else {
             let userInput = textField.text?.replacingCharacters(in: range, with: string)
             text = userInput
             attributedText = nil
+            editingEventObserver?.handleEditingEvent(event: .editingChanged, for: textField)
             return true
         }
     }
@@ -178,7 +214,8 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        handleDidEndEditing(reconfigureIfNeeded: true)
+        handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+        editingEventObserver?.handleEditingEvent(event: .editingDidEnd, for: textField)
     }
 }
 
@@ -189,7 +226,7 @@ extension InfoCollectorTextFieldViewModel {
                      reconfigureHandler: @escaping ReconfigureHandler) {
         self.init(
             textFieldType: .CVC,
-            placeholder:  NSLocalizedString("CVC", bundle: .paymentSheet, comment: ""),
+            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: ""),
             returnActionHandler: returnActionHandler,
             customInputFormatter: cvcValidator,
             customInputValidator: cvcValidator,
@@ -202,7 +239,7 @@ extension InfoCollectorTextFieldViewModel {
         try inputValidator.validateUserInput(attributedText?.string ?? text)
     }
     
-    func handleDidEndEditing(reconfigureIfNeeded: Bool) {
+    func handleDidEndEditing(reconfigureStrategy: ReconfigureStrategy) {
         let isValidCheck = isValid
         let errorHintCheck = errorHint
         do {
@@ -214,9 +251,14 @@ extension InfoCollectorTextFieldViewModel {
             errorHint = error.localizedDescription
         }
         
-        let needReconfigure = (isValidCheck != isValid || errorHintCheck != errorHint)
-        if needReconfigure && reconfigureIfNeeded {
+        switch reconfigureStrategy {
+        case .never: return
+        case .always:
             reconfigureHandler(self, true)
+        case .onValidationChange:
+            if isValidCheck != isValid || errorHintCheck != errorHint {
+                reconfigureHandler(self, true)
+            }
         }
     }
 }

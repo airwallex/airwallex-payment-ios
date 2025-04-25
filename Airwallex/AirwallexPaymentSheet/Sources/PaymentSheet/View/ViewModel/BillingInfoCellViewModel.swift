@@ -15,9 +15,10 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
     
     let itemIdentifier: String
     
-    var canReuseShippingAddress: Bool
-    
-    var shouldReuseShippingAddress: Bool
+    /// determin if we should display reuse toggle to user
+    var canReusePrefilledAddress: Bool
+    /// if determin the value of the reuse toggle
+    var shouldReusePrefilledAddress: Bool
     
     var toggleReuseSelection: () -> Void
     
@@ -43,60 +44,59 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
     }
     
     // MARK: -
-    private var shippingInfo: AWXPlaceDetails?
     
     init(itemIdentifier: String,
-         shippingAddress: AWXAddress?,
-         reusingShippingInfo: Bool = true,
+         prefilledAddress: AWXAddress?,
+         reusePrefilledAddress: Bool = true,
          countrySelectionHandler: @escaping () -> Void,
          toggleReuseSelection: @escaping () -> Void,
          cellReconfigureHandler: @escaping CellReconfigureHandler) {
-        let reusingShippingInfo = (shippingAddress?.isComplete ?? false) && reusingShippingInfo
+        let reusePrefilledAddress = (prefilledAddress?.isComplete ?? false) && reusePrefilledAddress
         var country: AWXCountry?
-        if let countryCode = shippingAddress?.countryCode {
+        if let countryCode = prefilledAddress?.countryCode {
             country = AWXCountry(code: countryCode)
         }
         
-        canReuseShippingAddress = shippingAddress?.isComplete ?? false
-        shouldReuseShippingAddress = reusingShippingInfo
+        canReusePrefilledAddress = prefilledAddress?.isComplete ?? false
+        shouldReusePrefilledAddress = reusePrefilledAddress
         self.toggleReuseSelection = toggleReuseSelection
         self.itemIdentifier = itemIdentifier
         
         countryConfigurer = CountrySelectionViewModel(
             country: country,
-            isEnabled: !reusingShippingInfo,
+            isEnabled: !reusePrefilledAddress,
             handleUserInteraction: countrySelectionHandler,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         streetConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .street,
-            text: shippingAddress?.street,
+            text: prefilledAddress?.street,
             placeholder: NSLocalizedString("Street", bundle: .paymentSheet, comment: "info in billing address"),
-            isEnabled: !reusingShippingInfo,
+            isEnabled: !reusePrefilledAddress,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         stateConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .state,
-            text: shippingAddress?.state,
+            text: prefilledAddress?.state,
             placeholder: NSLocalizedString("State", bundle: .paymentSheet, comment: "info in billing address"),
-            isEnabled: !reusingShippingInfo,
+            isEnabled: !reusePrefilledAddress,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         cityConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .city,
-            text: shippingAddress?.city,
+            text: prefilledAddress?.city,
             placeholder: NSLocalizedString("City", bundle: .paymentSheet, comment: "info in billing address"),
-            isEnabled: !reusingShippingInfo,
+            isEnabled: !reusePrefilledAddress,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         zipConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .zipcode,
-            text: shippingAddress?.postcode,
+            text: prefilledAddress?.postcode,
             placeholder: NSLocalizedString("Postal code", bundle: .paymentSheet, comment: "info in billing address"),
-            isEnabled: !reusingShippingInfo,
+            isEnabled: !reusePrefilledAddress,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
@@ -122,7 +122,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         ]
         for configurer in fieldConfigurers {
             //  force configurer to check valid status if user left this field untouched
-            configurer?.handleDidEndEditing(reconfigureIfNeeded: true)
+            configurer?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
         }
     }
     
