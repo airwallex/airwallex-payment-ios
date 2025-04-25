@@ -100,7 +100,7 @@ extension CardInfoCollectorCellViewModel {
         let arr: [InfoCollectorTextFieldViewModel] = [cardNumberConfigurer, expireDataConfigurer, cvcConfigurer]
         for configurer in arr {
             //  force configurer to check valid status if user left this field untouched
-            configurer.handleDidEndEditing(reconfigureStrategy: .automatic)
+            configurer.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
         }
     }
 }

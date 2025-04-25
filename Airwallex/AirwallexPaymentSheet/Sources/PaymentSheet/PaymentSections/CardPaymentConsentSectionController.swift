@@ -406,7 +406,7 @@ private extension CardPaymentConsentSectionController {
             ]
         )
         if let cvcConfigurer {
-            cvcConfigurer.handleDidEndEditing(reconfigureStrategy: .automatic)
+            cvcConfigurer.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             do {
                 try cvcConfigurer.validate()
                 consent.paymentMethod?.card?.cvc = cvcConfigurer.text

@@ -353,7 +353,7 @@ private extension NewCardPaymentSectionController {
                 viewModelForCountryCode
             ]
             for viewModel in otherViewModels {
-                viewModel?.handleDidEndEditing(reconfigureStrategy: .automatic)
+                viewModel?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             }
             let message = error.localizedDescription
             context.viewController?.showAlert(message: message)

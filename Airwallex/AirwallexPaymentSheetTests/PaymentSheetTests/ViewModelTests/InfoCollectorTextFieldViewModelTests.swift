@@ -201,18 +201,18 @@ class InfoCollectorTextFieldViewModelTests: XCTestCase {
             reconfigureHandler: reconfigureHandler
         )
         XCTAssertTrue(viewModel.isValid)
-        viewModel.handleDidEndEditing(reconfigureStrategy: .automatic)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
         XCTAssertFalse(viewModel.isValid)
         XCTAssertTrue(reconfigureCalled)
         
         reconfigureCalled = false
-        viewModel.handleDidEndEditing(reconfigureStrategy: .automatic)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
         XCTAssertFalse(viewModel.isValid)
         XCTAssertFalse(reconfigureCalled)
         
         reconfigureCalled = false
         viewModel.text = "text"
-        viewModel.handleDidEndEditing(reconfigureStrategy: .automatic)
+        viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
         XCTAssertTrue(viewModel.isValid)
         XCTAssertTrue(reconfigureCalled)
     }

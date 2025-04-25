@@ -139,7 +139,7 @@ class CardInfoCollectorCellViewModelTests: XCTestCase {
             replacementString: ""
         )
         XCTAssertNil(handlerCalled)
-        viewModel.expireDataConfigurer.handleDidEndEditing(reconfigureStrategy: .automatic)
+        viewModel.expireDataConfigurer.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
         XCTAssertEqual(handlerCalled?.0, itemIdentifier)
         XCTAssertEqual(handlerCalled?.1, true)
         
@@ -155,7 +155,7 @@ class CardInfoCollectorCellViewModelTests: XCTestCase {
             replacementString: ""
         )
         XCTAssertNil(handlerCalled)
-        viewModel.cvcConfigurer.handleDidEndEditing(reconfigureStrategy: .automatic)
+        viewModel.cvcConfigurer.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
         XCTAssertEqual(handlerCalled?.0, itemIdentifier)
         XCTAssertEqual(handlerCalled?.1, true)
     }

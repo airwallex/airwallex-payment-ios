@@ -324,7 +324,7 @@ private extension SchemaPaymentSectionController {
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)
             for viewModel in uiFieldViewModels {
-                viewModel.handleDidEndEditing(reconfigureStrategy: .automatic)
+                viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             }
         }
     }

@@ -122,7 +122,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         ]
         for configurer in fieldConfigurers {
             //  force configurer to check valid status if user left this field untouched
-            configurer?.handleDidEndEditing(reconfigureStrategy: .automatic)
+            configurer?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
         }
     }
     
