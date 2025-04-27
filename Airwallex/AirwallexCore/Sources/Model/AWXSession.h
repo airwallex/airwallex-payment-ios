@@ -103,6 +103,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)requiresCVC __deprecated_msg("requiresCVC will be determined by consent returned by server (numberType), passing requiresCVC as a parameter is no longer needed");
 
+- (nullable NSString *)validateData;
+
 @end
 
 /**

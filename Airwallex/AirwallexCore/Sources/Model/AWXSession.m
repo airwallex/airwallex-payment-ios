@@ -8,6 +8,7 @@
 
 #import "AWXSession.h"
 #import "AWXPaymentIntentRequest.h"
+#import "AWXUtils.h"
 
 @interface AWXSession ()
 
@@ -135,6 +136,49 @@
         return session.requiresCVC;
     }
     return NO;
+}
+
+- (nullable NSString *)validateData {
+    if (!self.countryCode) {
+        return @"Missing country code in session.";
+    }
+    if ([self isKindOfClass:[AWXOneOffSession class]]) {
+        AWXOneOffSession *session = (AWXOneOffSession *)self;
+        return [self validatePaymentIntentData:session.paymentIntent];
+    }
+    if ([self isKindOfClass:[AWXRecurringSession class]]) {
+        AWXRecurringSession *session = (AWXRecurringSession *)self;
+        if (!session.amount) {
+            return @"Missing amount in RecurringSession.";
+        }
+        if (!session.currency || session.currency.length != 3) {
+            return @"RecurringSession currency should be three-letter ISO 4217 currency code.";
+        }
+    }
+    if ([self isKindOfClass:[AWXRecurringWithIntentSession class]]) {
+        AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self;
+        return [self validatePaymentIntentData:session.paymentIntent];
+    }
+    return nil;
+}
+
+- (nullable NSString *)validatePaymentIntentData:(nullable AWXPaymentIntent *)paymentIntent {
+    if (!paymentIntent) {
+        return @"PaymentIntent cannot be nil.";
+    }
+    if (!paymentIntent.amount) {
+        return @"Missing amount in PaymentIntent.";
+    }
+
+    if (!paymentIntent.currency || paymentIntent.currency.length != 3) {
+        return @"PaymentIntent currency should be three-letter ISO 4217 currency code.";
+    }
+
+    if (!paymentIntent.Id) {
+        return @"Missing id in PaymentIntent.";
+    }
+
+    return nil;
 }
 
 @end
