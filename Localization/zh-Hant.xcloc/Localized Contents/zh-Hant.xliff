@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="AirwallexCore/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="zh-Hant">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.3" build-num="16E140"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" translate="no" xml:space="preserve">
+        <source>AirwallexCore</source>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="AirwallexCore/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="zh-Hant">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.3" build-num="16E140"/>
+    </header>
+    <body>
+      <trans-unit id="CVC / CVV" xml:space="preserve">
+        <source>CVC / CVV</source>
+        <note>CVC / CVV placeholder</note>
+      </trans-unit>
+      <trans-unit id="City" xml:space="preserve">
+        <source>City</source>
+        <note>Shiping field placeholder - City</note>
+      </trans-unit>
+      <trans-unit id="Close" xml:space="preserve">
+        <source>Close</source>
+        <note>close button for UIAlertController
+close button for alert
+close button on navigation bar</note>
+      </trans-unit>
+      <trans-unit id="Country / Region" xml:space="preserve">
+        <source>Country / Region</source>
+        <note>Shiping field placeholder - Country / Region</note>
+      </trans-unit>
+      <trans-unit id="Email (optional)" xml:space="preserve">
+        <source>Email (optional)</source>
+        <note>Shiping field placeholder - Email (optional)</note>
+      </trans-unit>
+      <trans-unit id="Enter CVC/CVV for&#10;%@" xml:space="preserve">
+        <source>Enter CVC/CVV for
+%@</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="First name" xml:space="preserve">
+        <source>First name</source>
+        <note>Shiping field placeholder - First Name</note>
+      </trans-unit>
+      <trans-unit id="Free" xml:space="preserve">
+        <source>Free</source>
+        <note>string description when decimal number is zero</note>
+      </trans-unit>
+      <trans-unit id="Last name" xml:space="preserve">
+        <source>Last name</source>
+        <note>Shiping field placeholder - Last Name</note>
+      </trans-unit>
+      <trans-unit id="Pay now" xml:space="preserve">
+        <source>Pay now</source>
+        <note>Pay now - pay button</note>
+      </trans-unit>
+      <trans-unit id="Phone number (optional)" xml:space="preserve">
+        <source>Phone number (optional)</source>
+        <note>Shiping field placeholder - Phone number (optional)</note>
+      </trans-unit>
+      <trans-unit id="Save" xml:space="preserve">
+        <source>Save</source>
+        <note>save button on navigation bar</note>
+      </trans-unit>
+      <trans-unit id="Shipping" xml:space="preserve">
+        <source>Shipping</source>
+        <note>title of shipping view controller</note>
+      </trans-unit>
+      <trans-unit id="State" xml:space="preserve">
+        <source>State</source>
+        <note>Shiping field placeholder - State</note>
+      </trans-unit>
+      <trans-unit id="Street" xml:space="preserve">
+        <source>Street</source>
+        <note>Shiping field placeholder - Street</note>
+      </trans-unit>
+      <trans-unit id="Total %@" xml:space="preserve">
+        <source>Total %@</source>
+        <note>total amount of payment session</note>
+      </trans-unit>
+      <trans-unit id="Zip code (optional)" xml:space="preserve">
+        <source>Zip code (optional)</source>
+        <note>Shiping field placeholder - Zip code (optional)</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="AirwallexPayment/InfoPlist.xcstrings" source-language="en" target-language="zh-Hant" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.3" build-num="16E140"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" translate="no" xml:space="preserve">
+        <source>AirwallexPayment</source>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="AirwallexPayment/Localizable.xcstrings" source-language="en" target-language="zh-Hant" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.3" build-num="16E140"/>
+    </header>
+    <body>
+      <trans-unit id="Card not supported for payment" xml:space="preserve">
+        <source>Card not supported for payment</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Card number is invalid" xml:space="preserve">
+        <source>Card number is invalid</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Card number is required" xml:space="preserve">
+        <source>Card number is required</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Card number must contain only digits" xml:space="preserve">
+        <source>Card number must contain only digits</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Card’s expiration date is invalid" xml:space="preserve">
+        <source>Card’s expiration date is invalid</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Expiry date is required" xml:space="preserve">
+        <source>Expiry date is required</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Invalid CVC / CVV" xml:space="preserve">
+        <source>Invalid CVC / CVV</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Invalid card number" xml:space="preserve">
+        <source>Invalid card number</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Invalid expires date" xml:space="preserve">
+        <source>Invalid expires date</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Invalid name on card" xml:space="preserve">
+        <source>Invalid name on card</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Please enter your card name" xml:space="preserve">
+        <source>Please enter your card name</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Security code is invalid" xml:space="preserve">
+        <source>Security code is invalid</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Security code is required" xml:space="preserve">
+        <source>Security code is required</source>
+        <note>card validator error message</note>
+      </trans-unit>
+      <trans-unit id="Security code must contain only digits" xml:space="preserve">
+        <source>Security code must contain only digits</source>
+        <note>card validator error message</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="AirwallexPaymentSheet/InfoPlist.xcstrings" source-language="en" target-language="zh-Hant" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.3" build-num="16E140"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" translate="no" xml:space="preserve">
+        <source>AirwallexPaymentSheet</source>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="AirwallexPaymentSheet/Localizable.xcstrings" source-language="en" target-language="zh-Hant" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.3" build-num="16E140"/>
+    </header>
+    <body>
+      <trans-unit id="Add new" xml:space="preserve">
+        <source>Add new</source>
+        <note>add card section - section title
+consent section - add a new card</note>
+      </trans-unit>
+      <trans-unit id="Bank" xml:space="preserve">
+        <source>Bank</source>
+        <note>title for bank selection</note>
+      </trans-unit>
+      <trans-unit id="Billing Address" xml:space="preserve">
+        <source>Billing Address</source>
+        <note>Billing Address - title</note>
+      </trans-unit>
+      <trans-unit id="Billing country or region" xml:space="preserve">
+        <source>Billing country or region</source>
+        <note>add card section - billing info</note>
+      </trans-unit>
+      <trans-unit id="CVC" xml:space="preserve">
+        <source>CVC</source>
+        <note>consent section - cvc field placeholder
+user input - cvc placeholder</note>
+      </trans-unit>
+      <trans-unit id="Cancel" xml:space="preserve">
+        <source>Cancel</source>
+        <note>consent section - alert cancel button to delete a consent</note>
+      </trans-unit>
+      <trans-unit id="Card Information" xml:space="preserve">
+        <source>Card Information</source>
+        <note>Card Info Cell - title</note>
+      </trans-unit>
+      <trans-unit id="Card’s expiration date is invalid" xml:space="preserve">
+        <source>Card’s expiration date is invalid</source>
+        <note>user input validation</note>
+      </trans-unit>
+      <trans-unit id="Change" xml:space="preserve">
+        <source>Change</source>
+        <note>consent section - unselect consent and go back to consent list</note>
+      </trans-unit>
+      <trans-unit id="Choose a card" xml:space="preserve">
+        <source>Choose a card</source>
+        <note>consent section - choose a saved card</note>
+      </trans-unit>
+      <trans-unit id="City" xml:space="preserve">
+        <source>City</source>
+        <note>billing city placeholder</note>
+      </trans-unit>
+      <trans-unit id="Close" xml:space="preserve">
+        <source>Close</source>
+        <note>close button for alert</note>
+      </trans-unit>
+      <trans-unit id="Email" xml:space="preserve">
+        <source>Email</source>
+        <note>add card section - billing field</note>
+      </trans-unit>
+      <trans-unit id="Expiry date is required" xml:space="preserve">
+        <source>Expiry date is required</source>
+        <note>user input validation</note>
+      </trans-unit>
+      <trans-unit id="For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use." xml:space="preserve">
+        <source>For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.</source>
+        <note>add card section - UnionPay warning message</note>
+      </trans-unit>
+      <trans-unit id="Invalid email" xml:space="preserve">
+        <source>Invalid email</source>
+        <note>user input validation</note>
+      </trans-unit>
+      <trans-unit id="Invalid phone number" xml:space="preserve">
+        <source>Invalid phone number</source>
+        <note>user input validation</note>
+      </trans-unit>
+      <trans-unit id="Invalid schema" xml:space="preserve">
+        <source>Invalid schema</source>
+        <note>schema section - invalid schema data</note>
+      </trans-unit>
+      <trans-unit id="Invalid state" xml:space="preserve">
+        <source>Invalid state</source>
+        <note>user input validation</note>
+      </trans-unit>
+      <trans-unit id="Keep using saved cards" xml:space="preserve">
+        <source>Keep using saved cards</source>
+        <note>add card section - button to switch to consent list</note>
+      </trans-unit>
+      <trans-unit id="Name on card" xml:space="preserve">
+        <source>Name on card</source>
+        <note>add card section - billing field</note>
+      </trans-unit>
+      <trans-unit id="Or pay with" xml:space="preserve">
+        <source>Or pay with</source>
+        <note>payment section separator</note>
+      </trans-unit>
+      <trans-unit id="Pay" xml:space="preserve">
+        <source>Pay</source>
+        <note>checkout button title</note>
+      </trans-unit>
+      <trans-unit id="Payment Methods" xml:space="preserve">
+        <source>Payment Methods</source>
+        <note>title for payment sheet</note>
+      </trans-unit>
+      <trans-unit id="Phone number" xml:space="preserve">
+        <source>Phone number</source>
+        <note>add card section - billing field</note>
+      </trans-unit>
+      <trans-unit id="Please enter your city" xml:space="preserve">
+        <source>Please enter your city</source>
+        <note>user input validation</note>
+      </trans-unit>
+      <trans-unit id="Please enter your country" xml:space="preserve">
+        <source>Please enter your country</source>
+        <note>country selection view error hint
+user input validation</note>
+      </trans-unit>
+      <trans-unit id="Please enter your first name" xml:space="preserve">
+        <source>Please enter your first name</source>
+        <note>user input validation</note>
+      </trans-unit>
+      <trans-unit id="Please enter your last name" xml:space="preserve">
+        <source>Please enter your last name</source>
+        <note>user input validation</note>
+      </trans-unit>
+      <trans-unit id="Please enter your name on card" xml:space="preserve">
+        <source>Please enter your name on card</source>
+        <note>user input validation</note>
+      </trans-unit>
+      <trans-unit id="Please enter your street" xml:space="preserve">
+        <source>Please enter your street</source>
+        <note>user input validation</note>
+      </trans-unit>
+      <trans-unit id="Please select a bank" xml:space="preserve">
+        <source>Please select a bank</source>
+        <note>user input validation - bank selection view error hint</note>
+      </trans-unit>
+      <trans-unit id="Postal code" xml:space="preserve">
+        <source>Postal code</source>
+        <note>billing postal code placeholder</note>
+      </trans-unit>
+      <trans-unit id="Remove" xml:space="preserve">
+        <source>Remove</source>
+        <note>consent section - alert confirm button to remove a consent</note>
+      </trans-unit>
+      <trans-unit id="Same as shipping address" xml:space="preserve">
+        <source>Same as shipping address</source>
+        <note>Billing Address - reuse toggle</note>
+      </trans-unit>
+      <trans-unit id="Save my card for future payments" xml:space="preserve">
+        <source>Save my card for future payments</source>
+        <note>add card section - toggle for card saving</note>
+      </trans-unit>
+      <trans-unit id="Select your Bank" xml:space="preserve">
+        <source>Select your Bank</source>
+        <note>schema section - title of Bank Selection form</note>
+      </trans-unit>
+      <trans-unit id="Select..." xml:space="preserve">
+        <source>Select...</source>
+        <note>bank selection placeholder
+country selection view placeholder</note>
+      </trans-unit>
+      <trans-unit id="State" xml:space="preserve">
+        <source>State</source>
+        <note>billing state placeholder</note>
+      </trans-unit>
+      <trans-unit id="Street" xml:space="preserve">
+        <source>Street</source>
+        <note>billing street placeholder</note>
+      </trans-unit>
+      <trans-unit id="This option will be permanently removed from your saved payment methods." xml:space="preserve">
+        <source>This option will be permanently removed from your saved payment methods.</source>
+        <note>consent section - alert message for delete a consent</note>
+      </trans-unit>
+      <trans-unit id="You will be redirected to complete your payment upon confirmation." xml:space="preserve">
+        <source>You will be redirected to complete your payment upon confirmation.</source>
+        <note>schema payment redirect reminder</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="AirwallexWeChatPay/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="zh-Hant">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.3" build-num="16E140"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" translate="no" xml:space="preserve">
+        <source>AirwallexWeChatPay</source>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

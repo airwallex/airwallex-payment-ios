@@ -1,83 +1,82 @@
-file,id,source(en),target(en),note
-AirwallexCore/en.lproj/Localizable.strings,CVC / CVV,CVC / CVV,CVC / CVV,CVC / CVV placeholder
-AirwallexCore/en.lproj/Localizable.strings,City,City,City,Shiping field placeholder - City
-AirwallexCore/en.lproj/Localizable.strings,Close,Close,Close,"close button for UIAlertController
+file,id,target(de),target(en),target(es),target(fr),target(ja),target(ko),target(pt-BR),target(pt-PT),target(ru),target(th),target(zh-Hans),target(zh-Hant),note
+AirwallexCore/en.lproj/Localizable.strings,CVC / CVV,,CVC / CVV,,,,,,,,,,,CVC / CVV placeholder
+AirwallexCore/en.lproj/Localizable.strings,City,,City,,,,,,,,,,,Shiping field placeholder - City
+AirwallexCore/en.lproj/Localizable.strings,Close,,Close,,,,,,,,,,,"close button for UIAlertController
 close button for alert
 close button on navigation bar"
-AirwallexCore/en.lproj/Localizable.strings,Country / Region,Country / Region,Country / Region,Shiping field placeholder - Country / Region
-AirwallexCore/en.lproj/Localizable.strings,Email (optional),Email (optional),Email (optional),Shiping field placeholder - Email (optional)
+AirwallexCore/en.lproj/Localizable.strings,Country / Region,,Country / Region,,,,,,,,,,,Shiping field placeholder - Country / Region
+AirwallexCore/en.lproj/Localizable.strings,Email (optional),,Email (optional),,,,,,,,,,,Shiping field placeholder - Email (optional)
 AirwallexCore/en.lproj/Localizable.strings,"Enter CVC/CVV for
-%@","Enter CVC/CVV for
-%@","Enter CVC/CVV for
-%@",No comment provided by engineer.
-AirwallexCore/en.lproj/Localizable.strings,First name,First name,First name,Shiping field placeholder - First Name
-AirwallexCore/en.lproj/Localizable.strings,Free,Free,Free,string description when decimal number is zero
-AirwallexCore/en.lproj/Localizable.strings,Last name,Last name,Last name,Shiping field placeholder - Last Name
-AirwallexCore/en.lproj/Localizable.strings,Pay now,Pay now,Pay now,Pay now - pay button
-AirwallexCore/en.lproj/Localizable.strings,Phone number (optional),Phone number (optional),Phone number (optional),Shiping field placeholder - Phone number (optional)
-AirwallexCore/en.lproj/Localizable.strings,Save,Save,Save,save button on navigation bar
-AirwallexCore/en.lproj/Localizable.strings,Shipping,Shipping,Shipping,title of shipping view controller
-AirwallexCore/en.lproj/Localizable.strings,State,State,State,Shiping field placeholder - State
-AirwallexCore/en.lproj/Localizable.strings,Street,Street,Street,Shiping field placeholder - Street
-AirwallexCore/en.lproj/Localizable.strings,Total %@,Total %@,Total %@,total amount of payment session
-AirwallexCore/en.lproj/Localizable.strings,Zip code (optional),Zip code (optional),Zip code (optional),Shiping field placeholder - Zip code (optional)
-AirwallexPayment/Localizable.xcstrings,Card not supported for payment,Card not supported for payment,Card not supported for payment,card validator error message
-AirwallexPayment/Localizable.xcstrings,Card number is invalid,Card number is invalid,Card number is invalid,card validator error message
-AirwallexPayment/Localizable.xcstrings,Card number is required,Card number is required,Card number is required,card validator error message
-AirwallexPayment/Localizable.xcstrings,Card number must contain only digits,Card number must contain only digits,Card number must contain only digits,card validator error message
-AirwallexPayment/Localizable.xcstrings,Card’s expiration date is invalid,Card’s expiration date is invalid,Card’s expiration date is invalid,card validator error message
-AirwallexPayment/Localizable.xcstrings,Expiry date is required,Expiry date is required,Expiry date is required,card validator error message
-AirwallexPayment/Localizable.xcstrings,Invalid CVC / CVV,Invalid CVC / CVV,Invalid CVC / CVV,card validator error message
-AirwallexPayment/Localizable.xcstrings,Invalid card number,Invalid card number,Invalid card number,card validator error message
-AirwallexPayment/Localizable.xcstrings,Invalid expires date,Invalid expires date,Invalid expires date,card validator error message
-AirwallexPayment/Localizable.xcstrings,Invalid name on card,Invalid name on card,Invalid name on card,card validator error message
-AirwallexPayment/Localizable.xcstrings,Please enter your card name,Please enter your card name,Please enter your card name,card validator error message
-AirwallexPayment/Localizable.xcstrings,Security code is invalid,Security code is invalid,Security code is invalid,card validator error message
-AirwallexPayment/Localizable.xcstrings,Security code is required,Security code is required,Security code is required,card validator error message
-AirwallexPayment/Localizable.xcstrings,Security code must contain only digits,Security code must contain only digits,Security code must contain only digits,card validator error message
-AirwallexPaymentSheet/Localizable.xcstrings,Add new,Add new,Add new,"add card section - section title
+%@",,"Enter CVC/CVV for
+%@",,,,,,,,,,,No comment provided by engineer.
+AirwallexCore/en.lproj/Localizable.strings,First name,,First name,,,,,,,,,,,Shiping field placeholder - First Name
+AirwallexCore/en.lproj/Localizable.strings,Free,,Free,,,,,,,,,,,string description when decimal number is zero
+AirwallexCore/en.lproj/Localizable.strings,Last name,,Last name,,,,,,,,,,,Shiping field placeholder - Last Name
+AirwallexCore/en.lproj/Localizable.strings,Pay now,,Pay now,,,,,,,,,,,Pay now - pay button
+AirwallexCore/en.lproj/Localizable.strings,Phone number (optional),,Phone number (optional),,,,,,,,,,,Shiping field placeholder - Phone number (optional)
+AirwallexCore/en.lproj/Localizable.strings,Save,,Save,,,,,,,,,,,save button on navigation bar
+AirwallexCore/en.lproj/Localizable.strings,Shipping,,Shipping,,,,,,,,,,,title of shipping view controller
+AirwallexCore/en.lproj/Localizable.strings,State,,State,,,,,,,,,,,Shiping field placeholder - State
+AirwallexCore/en.lproj/Localizable.strings,Street,,Street,,,,,,,,,,,Shiping field placeholder - Street
+AirwallexCore/en.lproj/Localizable.strings,Total %@,,Total %@,,,,,,,,,,,total amount of payment session
+AirwallexCore/en.lproj/Localizable.strings,Zip code (optional),,Zip code (optional),,,,,,,,,,,Shiping field placeholder - Zip code (optional)
+AirwallexPayment/Localizable.xcstrings,Card not supported for payment,,Card not supported for payment,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Card number is invalid,,Card number is invalid,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Card number is required,,Card number is required,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Card number must contain only digits,,Card number must contain only digits,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Card’s expiration date is invalid,,Card’s expiration date is invalid,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Expiry date is required,,Expiry date is required,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Invalid CVC / CVV,,Invalid CVC / CVV,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Invalid card number,,Invalid card number,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Invalid expires date,,Invalid expires date,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Invalid name on card,,Invalid name on card,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Please enter your card name,,Please enter your card name,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Security code is invalid,,Security code is invalid,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Security code is required,,Security code is required,,,,,,,,,,,card validator error message
+AirwallexPayment/Localizable.xcstrings,Security code must contain only digits,,Security code must contain only digits,,,,,,,,,,,card validator error message
+AirwallexPaymentSheet/Localizable.xcstrings,Add new,,Add new,,,,,,,,,,,"add card section - section title
 consent section - add a new card"
-AirwallexPaymentSheet/Localizable.xcstrings,Bank,Bank,Bank,title for bank selection
-AirwallexPaymentSheet/Localizable.xcstrings,Billing Address,Billing Address,Billing Address,Billing Address - title
-AirwallexPaymentSheet/Localizable.xcstrings,Billing country or region,Billing country or region,Billing country or region,add card section - billing info
-AirwallexPaymentSheet/Localizable.xcstrings,CVC,CVC,CVC,"consent section - cvc field placeholder
+AirwallexPaymentSheet/Localizable.xcstrings,Bank,,Bank,,,,,,,,,,,title for bank selection
+AirwallexPaymentSheet/Localizable.xcstrings,Billing Address,,Billing Address,,,,,,,,,,,Billing Address - title
+AirwallexPaymentSheet/Localizable.xcstrings,Billing country or region,,Billing country or region,,,,,,,,,,,add card section - billing info
+AirwallexPaymentSheet/Localizable.xcstrings,CVC,,CVC,,,,,,,,,,,"consent section - cvc field placeholder
 user input - cvc placeholder"
-AirwallexPaymentSheet/Localizable.xcstrings,Cancel,Cancel,Cancel,consent section - alert cancel button to delete a consent
-AirwallexPaymentSheet/Localizable.xcstrings,Card Information,Card Information,Card Information,Card Info Cell - title
-AirwallexPaymentSheet/Localizable.xcstrings,Card’s expiration date is invalid,Card’s expiration date is invalid,Card’s expiration date is invalid,user input validation
-AirwallexPaymentSheet/Localizable.xcstrings,Change,Change,Change,consent section - unselect consent and go back to consent list
-AirwallexPaymentSheet/Localizable.xcstrings,Choose a card,Choose a card,Choose a card,consent section - choose a saved card
-AirwallexPaymentSheet/Localizable.xcstrings,City,City,City,billing city placeholder
-AirwallexPaymentSheet/Localizable.xcstrings,Close,Close,Close,close button for alert
-AirwallexPaymentSheet/Localizable.xcstrings,Email,Email,Email,add card section - billing field
-AirwallexPaymentSheet/Localizable.xcstrings,Expiry date is required,Expiry date is required,Expiry date is required,user input validation
-AirwallexPaymentSheet/Localizable.xcstrings,"For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.","For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.","For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.",add card section - UnionPay warning message
-AirwallexPaymentSheet/Localizable.xcstrings,Invalid email,Invalid email,Invalid email,user input validation
-AirwallexPaymentSheet/Localizable.xcstrings,Invalid phone number,Invalid phone number,Invalid phone number,user input validation
-AirwallexPaymentSheet/Localizable.xcstrings,Invalid schema,Invalid schema,Invalid schema,schema section - invalid schema data
-AirwallexPaymentSheet/Localizable.xcstrings,Invalid state,Invalid state,Invalid state,user input validation
-AirwallexPaymentSheet/Localizable.xcstrings,Keep using saved cards,Keep using saved cards,Keep using saved cards,add card section - button to switch to consent list
-AirwallexPaymentSheet/Localizable.xcstrings,Name on card,Name on card,Name on card,add card section - billing field
-AirwallexPaymentSheet/Localizable.xcstrings,Or pay with,Or pay with,Or pay with,payment section separator
-AirwallexPaymentSheet/Localizable.xcstrings,Pay,Pay,Pay,checkout button title
-AirwallexPaymentSheet/Localizable.xcstrings,Payment Methods,Payment Methods,Payment Methods,title for payment sheet
-AirwallexPaymentSheet/Localizable.xcstrings,Phone number,Phone number,Phone number,add card section - billing field
-AirwallexPaymentSheet/Localizable.xcstrings,Please enter your city,Please enter your city,Please enter your city,user input validation
-AirwallexPaymentSheet/Localizable.xcstrings,Please enter your country,Please enter your country,Please enter your country,"country selection view error hint
+AirwallexPaymentSheet/Localizable.xcstrings,Cancel,,Cancel,,,,,,,,,,,consent section - alert cancel button to delete a consent
+AirwallexPaymentSheet/Localizable.xcstrings,Card Information,,Card Information,,,,,,,,,,,Card Info Cell - title
+AirwallexPaymentSheet/Localizable.xcstrings,Card’s expiration date is invalid,,Card’s expiration date is invalid,,,,,,,,,,,user input validation
+AirwallexPaymentSheet/Localizable.xcstrings,Change,,Change,,,,,,,,,,,consent section - unselect consent and go back to consent list
+AirwallexPaymentSheet/Localizable.xcstrings,Choose a card,,Choose a card,,,,,,,,,,,consent section - choose a saved card
+AirwallexPaymentSheet/Localizable.xcstrings,City,,City,,,,,,,,,,,billing city placeholder
+AirwallexPaymentSheet/Localizable.xcstrings,Close,,Close,,,,,,,,,,,close button for alert
+AirwallexPaymentSheet/Localizable.xcstrings,Email,,Email,,,,,,,,,,,add card section - billing field
+AirwallexPaymentSheet/Localizable.xcstrings,Expiry date is required,,Expiry date is required,,,,,,,,,,,user input validation
+AirwallexPaymentSheet/Localizable.xcstrings,"For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.",,"For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.",,,,,,,,,,,add card section - UnionPay warning message
+AirwallexPaymentSheet/Localizable.xcstrings,Invalid email,,Invalid email,,,,,,,,,,,user input validation
+AirwallexPaymentSheet/Localizable.xcstrings,Invalid phone number,,Invalid phone number,,,,,,,,,,,user input validation
+AirwallexPaymentSheet/Localizable.xcstrings,Invalid schema,,Invalid schema,,,,,,,,,,,schema section - invalid schema data
+AirwallexPaymentSheet/Localizable.xcstrings,Invalid state,,Invalid state,,,,,,,,,,,user input validation
+AirwallexPaymentSheet/Localizable.xcstrings,Keep using saved cards,,Keep using saved cards,,,,,,,,,,,add card section - button to switch to consent list
+AirwallexPaymentSheet/Localizable.xcstrings,Name on card,,Name on card,,,,,,,,,,,add card section - billing field
+AirwallexPaymentSheet/Localizable.xcstrings,Or pay with,,Or pay with,,,,,,,,,,,payment section separator
+AirwallexPaymentSheet/Localizable.xcstrings,Pay,,Pay,,,,,,,,,,,checkout button title
+AirwallexPaymentSheet/Localizable.xcstrings,Payment Methods,,Payment Methods,,,,,,,,,,,title for payment sheet
+AirwallexPaymentSheet/Localizable.xcstrings,Phone number,,Phone number,,,,,,,,,,,add card section - billing field
+AirwallexPaymentSheet/Localizable.xcstrings,Please enter your city,,Please enter your city,,,,,,,,,,,user input validation
+AirwallexPaymentSheet/Localizable.xcstrings,Please enter your country,,Please enter your country,,,,,,,,,,,"country selection view error hint
 user input validation"
-AirwallexPaymentSheet/Localizable.xcstrings,Please enter your first name,Please enter your first name,Please enter your first name,user input validation
-AirwallexPaymentSheet/Localizable.xcstrings,Please enter your last name,Please enter your last name,Please enter your last name,user input validation
-AirwallexPaymentSheet/Localizable.xcstrings,Please enter your name on card,Please enter your name on card,Please enter your name on card,user input validation
-AirwallexPaymentSheet/Localizable.xcstrings,Please enter your street,Please enter your street,Please enter your street,user input validation
-AirwallexPaymentSheet/Localizable.xcstrings,Please select a bank,Please select a bank,Please select a bank,user input validation - bank selection view error hint
-AirwallexPaymentSheet/Localizable.xcstrings,Postal code,Postal code,Postal code,billing postal code placeholder
-AirwallexPaymentSheet/Localizable.xcstrings,Remove,Remove,Remove,consent section - alert confirm button to remove a consent
-AirwallexPaymentSheet/Localizable.xcstrings,Same as shipping address,Same as shipping address,Same as shipping address,Billing Address - reuse toggle
-AirwallexPaymentSheet/Localizable.xcstrings,Save my card for future payments,Save my card for future payments,Save my card for future payments,add card section - toggle for card saving
-AirwallexPaymentSheet/Localizable.xcstrings,Select your Bank,Select your Bank,Select your Bank,schema section - title of Bank Selection form
-AirwallexPaymentSheet/Localizable.xcstrings,Select...,Select...,Select...,"bank selection placeholder
+AirwallexPaymentSheet/Localizable.xcstrings,Please enter your first name,,Please enter your first name,,,,,,,,,,,user input validation
+AirwallexPaymentSheet/Localizable.xcstrings,Please enter your last name,,Please enter your last name,,,,,,,,,,,user input validation
+AirwallexPaymentSheet/Localizable.xcstrings,Please enter your name on card,,Please enter your name on card,,,,,,,,,,,user input validation
+AirwallexPaymentSheet/Localizable.xcstrings,Please enter your street,,Please enter your street,,,,,,,,,,,user input validation
+AirwallexPaymentSheet/Localizable.xcstrings,Please select a bank,,Please select a bank,,,,,,,,,,,user input validation - bank selection view error hint
+AirwallexPaymentSheet/Localizable.xcstrings,Postal code,,Postal code,,,,,,,,,,,billing postal code placeholder
+AirwallexPaymentSheet/Localizable.xcstrings,Remove,,Remove,,,,,,,,,,,consent section - alert confirm button to remove a consent
+AirwallexPaymentSheet/Localizable.xcstrings,Same as shipping address,,Same as shipping address,,,,,,,,,,,Billing Address - reuse toggle
+AirwallexPaymentSheet/Localizable.xcstrings,Save my card for future payments,,Save my card for future payments,,,,,,,,,,,add card section - toggle for card saving
+AirwallexPaymentSheet/Localizable.xcstrings,Select your Bank,,Select your Bank,,,,,,,,,,,schema section - title of Bank Selection form
+AirwallexPaymentSheet/Localizable.xcstrings,Select...,,Select...,,,,,,,,,,,"bank selection placeholder
 country selection view placeholder"
-AirwallexPaymentSheet/Localizable.xcstrings,State,State,State,billing state placeholder
-AirwallexPaymentSheet/Localizable.xcstrings,Street,Street,Street,billing street placeholder
-AirwallexPaymentSheet/Localizable.xcstrings,This option will be permanently removed from your saved payment methods.,This option will be permanently removed from your saved payment methods.,This option will be permanently removed from your saved payment methods.,consent section - alert message for delete a consent
-AirwallexPaymentSheet/Localizable.xcstrings,You will be redirected to complete your payment upon confirmation.,You will be redirected to complete your payment upon confirmation.,You will be redirected to complete your payment upon confirmation.,schema payment redirect reminder
+AirwallexPaymentSheet/Localizable.xcstrings,State,,State,,,,,,,,,,,billing state placeholder
+AirwallexPaymentSheet/Localizable.xcstrings,Street,,Street,,,,,,,,,,,billing street placeholder
+AirwallexPaymentSheet/Localizable.xcstrings,This option will be permanently removed from your saved payment methods.,,This option will be permanently removed from your saved payment methods.,,,,,,,,,,,consent section - alert message for delete a consent
+AirwallexPaymentSheet/Localizable.xcstrings,You will be redirected to complete your payment upon confirmation.,,You will be redirected to complete your payment upon confirmation.,,,,,,,,,,,schema payment redirect reminder

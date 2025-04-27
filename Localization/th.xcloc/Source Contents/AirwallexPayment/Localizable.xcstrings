@@ -1,0 +1,48 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Card not supported for payment" : {
+      "comment" : "card validator error message"
+    },
+    "Card number is invalid" : {
+      "comment" : "card validator error message"
+    },
+    "Card number is required" : {
+      "comment" : "card validator error message"
+    },
+    "Card number must contain only digits" : {
+      "comment" : "card validator error message"
+    },
+    "Card’s expiration date is invalid" : {
+      "comment" : "card validator error message"
+    },
+    "Expiry date is required" : {
+      "comment" : "card validator error message"
+    },
+    "Invalid card number" : {
+      "comment" : "card validator error message"
+    },
+    "Invalid CVC / CVV" : {
+      "comment" : "card validator error message"
+    },
+    "Invalid expires date" : {
+      "comment" : "card validator error message"
+    },
+    "Invalid name on card" : {
+      "comment" : "card validator error message"
+    },
+    "Please enter your card name" : {
+      "comment" : "card validator error message"
+    },
+    "Security code is invalid" : {
+      "comment" : "card validator error message"
+    },
+    "Security code is required" : {
+      "comment" : "card validator error message"
+    },
+    "Security code must contain only digits" : {
+      "comment" : "card validator error message"
+    }
+  },
+  "version" : "1.0"
+}

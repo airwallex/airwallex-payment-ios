@@ -1,0 +1,132 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Add new" : {
+      "comment" : "add card section - section title\nconsent section - add a new card"
+    },
+    "Bank" : {
+      "comment" : "title for bank selection"
+    },
+    "Billing Address" : {
+      "comment" : "Billing Address - title"
+    },
+    "Billing country or region" : {
+      "comment" : "add card section - billing info"
+    },
+    "Cancel" : {
+      "comment" : "consent section - alert cancel button to delete a consent"
+    },
+    "Card Information" : {
+      "comment" : "Card Info Cell - title"
+    },
+    "Card’s expiration date is invalid" : {
+      "comment" : "user input validation"
+    },
+    "Change" : {
+      "comment" : "consent section - unselect consent and go back to consent list"
+    },
+    "Choose a card" : {
+      "comment" : "consent section - choose a saved card"
+    },
+    "City" : {
+      "comment" : "billing city placeholder"
+    },
+    "Close" : {
+      "comment" : "close button for alert"
+    },
+    "CVC" : {
+      "comment" : "consent section - cvc field placeholder\nuser input - cvc placeholder"
+    },
+    "Email" : {
+      "comment" : "add card section - billing field"
+    },
+    "Expiry date is required" : {
+      "comment" : "user input validation"
+    },
+    "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use." : {
+      "comment" : "add card section - UnionPay warning message"
+    },
+    "Invalid email" : {
+      "comment" : "user input validation"
+    },
+    "Invalid phone number" : {
+      "comment" : "user input validation"
+    },
+    "Invalid schema" : {
+      "comment" : "schema section - invalid schema data"
+    },
+    "Invalid state" : {
+      "comment" : "user input validation"
+    },
+    "Keep using saved cards" : {
+      "comment" : "add card section - button to switch to consent list"
+    },
+    "Name on card" : {
+      "comment" : "add card section - billing field"
+    },
+    "Or pay with" : {
+      "comment" : "payment section separator"
+    },
+    "Pay" : {
+      "comment" : "checkout button title"
+    },
+    "Payment Methods" : {
+      "comment" : "title for payment sheet"
+    },
+    "Phone number" : {
+      "comment" : "add card section - billing field"
+    },
+    "Please enter your city" : {
+      "comment" : "user input validation"
+    },
+    "Please enter your country" : {
+      "comment" : "country selection view error hint\nuser input validation"
+    },
+    "Please enter your first name" : {
+      "comment" : "user input validation"
+    },
+    "Please enter your last name" : {
+      "comment" : "user input validation"
+    },
+    "Please enter your name on card" : {
+      "comment" : "user input validation"
+    },
+    "Please enter your street" : {
+      "comment" : "user input validation"
+    },
+    "Please select a bank" : {
+      "comment" : "user input validation - bank selection view error hint"
+    },
+    "Postal code" : {
+      "comment" : "billing postal code placeholder"
+    },
+    "Remove" : {
+      "comment" : "consent section - alert confirm button to remove a consent"
+    },
+    "Same as shipping address" : {
+      "comment" : "Billing Address - reuse toggle"
+    },
+    "Save my card for future payments" : {
+      "comment" : "add card section - toggle for card saving"
+    },
+    "Select your Bank" : {
+      "comment" : "schema section - title of Bank Selection form"
+    },
+    "Select..." : {
+      "comment" : "bank selection placeholder\ncountry selection view placeholder"
+    },
+    "State" : {
+      "comment" : "billing state placeholder"
+    },
+    "Street" : {
+      "comment" : "billing street placeholder"
+    },
+    "This option will be permanently removed from your saved payment methods." : {
+      "comment" : "consent section - alert message for delete a consent"
+    },
+    "You will be redirected to complete your payment upon confirmation." : {
+      "comment" : "schema payment redirect reminder"
+    }
+  },
+  "version" : "1.0"
+}

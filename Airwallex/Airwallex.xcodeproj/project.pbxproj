@@ -2113,6 +2113,16 @@
 				en,
 				Base,
 				"zh-Hans",
+				"zh-Hant",
+				ko,
+				ja,
+				de,
+				fr,
+				"pt-PT",
+				es,
+				th,
+				ru,
+				"pt-BR",
 			);
 			mainGroup = 085BD3BE23CC62B4002E8F27;
 			productRefGroup = 085BD3C923CC62B4002E8F27 /* Products */;
