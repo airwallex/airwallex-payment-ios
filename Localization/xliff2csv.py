@@ -2,18 +2,15 @@ import xml.etree.ElementTree as ET
 import csv
 import os
 
-
-csv_file = 'output.csv'
-
+export_dir = 'exported'
+csv_file = 'translations.csv'
 xliff_files = []
 
 # find xliff file in current directory
-for file in os.listdir('.'):
+for file in os.listdir(export_dir):
     if file.endswith('.xcloc'):
         code = file.split('.')[0]
-        xliff_files.append((code, file + f'/Localized Contents/{code}.xliff'))
-
-# print(xliff_files)
+        xliff_files.append((code, export_dir + '/' + file + f'/Localized Contents/{code}.xliff'))
 
 header = [
     'file',
@@ -32,7 +29,12 @@ header.append('note')
 
 # print(header)
 # create csv file
-namespaces = {'ns': 'urn:oasis:names:tc:xliff:document:1.2'}
+
+def extract_default_namespace(element):
+    if element.tag[0] == '{':
+        return element.tag[1:].split('}')[0]
+    return ''
+
 with open(csv_file, mode='w', encoding='utf-8', newline='') as f:
     writer = csv.writer(f)
     writer.writerow(header)
@@ -40,7 +42,8 @@ with open(csv_file, mode='w', encoding='utf-8', newline='') as f:
     xliff_file = xliff_files[0][1]
     tree = ET.parse(xliff_file)
     root = tree.getroot()
-
+    namespace = extract_default_namespace(root)
+    namespaces = {'ns': namespace}
     # Define namespace map
 
     # We'll only use the language codes from the *first* file element for the column headers
