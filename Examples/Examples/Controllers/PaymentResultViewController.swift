@@ -17,7 +17,7 @@ class PaymentResultViewController: UIViewController {
         let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
         let viewModel = TopViewModel(
-            title: NSLocalizedString("Payment Result", comment: "")
+            title: "Payment Result"
         )
         view.setup(viewModel)
         return view
