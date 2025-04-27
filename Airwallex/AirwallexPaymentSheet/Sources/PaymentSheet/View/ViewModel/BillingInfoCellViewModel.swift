@@ -71,7 +71,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         streetConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .street,
             text: prefilledAddress?.street,
-            placeholder: NSLocalizedString("Street", bundle: .paymentSheet, comment: "info in billing address"),
+            placeholder: NSLocalizedString("Street", bundle: .paymentSheet, comment: "billing street placeholder"),
             isEnabled: !reusePrefilledAddress,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
@@ -79,7 +79,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         stateConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .state,
             text: prefilledAddress?.state,
-            placeholder: NSLocalizedString("State", bundle: .paymentSheet, comment: "info in billing address"),
+            placeholder: NSLocalizedString("State", bundle: .paymentSheet, comment: "billing state placeholder"),
             isEnabled: !reusePrefilledAddress,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
@@ -87,7 +87,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         cityConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .city,
             text: prefilledAddress?.city,
-            placeholder: NSLocalizedString("City", bundle: .paymentSheet, comment: "info in billing address"),
+            placeholder: NSLocalizedString("City", bundle: .paymentSheet, comment: "billing city placeholder"),
             isEnabled: !reusePrefilledAddress,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
@@ -95,7 +95,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         zipConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .zipcode,
             text: prefilledAddress?.postcode,
-            placeholder: NSLocalizedString("Postal code", bundle: .paymentSheet, comment: "info in billing address"),
+            placeholder: NSLocalizedString("Postal code", bundle: .paymentSheet, comment: "billing postal code placeholder"),
             isEnabled: !reusePrefilledAddress,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }

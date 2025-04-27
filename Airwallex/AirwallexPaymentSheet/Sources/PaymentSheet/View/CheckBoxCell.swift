@@ -56,7 +56,6 @@ class CheckBoxCell: UICollectionViewCell, ViewConfigurable, ViewReusable {
     private lazy var button: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(NSLocalizedString("Save my card for future payments", bundle: .paymentSheet, comment: ""), for: .normal)
         button.setTitleColor(.awxColor(.textPrimary), for: .normal)
         button.titleLabel?.font = .awxFont(.caption2)
         

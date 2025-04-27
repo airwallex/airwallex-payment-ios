@@ -164,7 +164,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 //  check schema
                 let schema = response.schemas.first { $0.transactionMode == session.transactionMode() }
                 guard let schema, !schema.fields.isEmpty else {
-                    throw NSLocalizedString("Invalid schema", bundle: .paymentSheet, comment: "").asError()
+                    throw NSLocalizedString("Invalid schema", bundle: .paymentSheet, comment: "schema section - invalid schema data").asError()
                 }
                 self.schema = schema
                 
@@ -173,7 +173,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 if schema.bankField != nil {
                     let banks = try await methodProvider.getBankList(name: name).items
                     guard !banks.isEmpty else {
-                        throw NSLocalizedString("Invalid schema", bundle: .paymentSheet, comment: "").asError()
+                        throw NSLocalizedString("Invalid schema", bundle: .paymentSheet, comment: "schema section - invalid schema data").asError()
                     }
                     bankSelectionViewModel = BankSelectionCellViewModel(
                         bank: banks.count == 1 ? banks.first! : nil,
@@ -333,7 +333,7 @@ private extension SchemaPaymentSectionController {
         context.endEditing()
         guard let bankList = bankList else { return }
         let formMapping = AWXFormMapping()
-        formMapping.title = NSLocalizedString("Select your Bank", bundle: .paymentSheet, comment: "")
+        formMapping.title = NSLocalizedString("Select your Bank", bundle: .paymentSheet, comment: "schema section - title of Bank Selection form")
         formMapping.forms = bankList.map { bank in
             let form = AWXForm.init(key: bank.name, type: .listCell, title: bank.displayName, logo: bank.resources.logoURL)
             return form

@@ -62,13 +62,13 @@ extension AWXApplePayProvider {
         
         guard let options = session.applePayOptions else {
             throw ValidationError.invalidApplePayOptions(
-                NSLocalizedString("Apple pay options required", bundle: .payment, comment: localizationComment)
+                NSLocalizedString("Missing Apple Pay options in session.", bundle: .payment, comment: localizationComment)
             )
         }
         
         guard !options.merchantIdentifier.isEmpty else {
             throw ValidationError.invalidApplePayOptions(
-                NSLocalizedString("Merchant ID required", bundle: .payment, comment: localizationComment)
+                NSLocalizedString("Apple Pay Merchant ID required", bundle: .payment, comment: localizationComment)
             )
         }
         
@@ -84,7 +84,7 @@ extension AWXApplePayProvider {
         if #available(iOS 15.0, *) {
             guard PKPaymentAuthorizationController.canMakePayments() else {
                 throw ValidationError.applePayNotSupported(
-                    NSLocalizedString("Apple Pay not available on current device.", bundle: .payment, comment: localizationComment)
+                    NSLocalizedString("Payment not supported via Apple Pay.", bundle: .payment, comment: localizationComment)
                 )
             }
         } else {
@@ -93,8 +93,24 @@ extension AWXApplePayProvider {
                 capabilities: options.merchantCapabilities
             ) else {
                 throw ValidationError.applePayNotSupported(
-                    NSLocalizedString("Apple Pay not available on current device.", bundle: .payment, comment: localizationComment)
+                    NSLocalizedString("Payment not supported via Apple Pay.", bundle: .payment, comment: localizationComment)
                 )
+            }
+        }
+        
+        if session.transactionMode() == AWXPaymentTransactionModeRecurring {
+            if let session = session as? AWXRecurringSession {
+                guard session.nextTriggerByType != .customerType else {
+                    throw ValidationError.applePayNotSupported(
+                        NSLocalizedString("CIT not supported by Apple Pay", bundle: .payment, comment: localizationComment)
+                    )
+                }
+            } else if let session = session as? AWXRecurringWithIntentSession {
+                guard session.nextTriggerByType != .customerType else {
+                    throw ValidationError.applePayNotSupported(
+                        NSLocalizedString("CIT not supported by Apple Pay", bundle: .payment, comment: localizationComment)
+                    )
+                }
             }
         }
     }

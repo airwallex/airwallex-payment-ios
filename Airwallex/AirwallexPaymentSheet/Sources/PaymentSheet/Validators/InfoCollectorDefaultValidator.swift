@@ -14,6 +14,7 @@ import AirwallexCore
 
 struct InfoCollectorDefaultValidator: UserInputValidator {
     
+    private let commentForLocalization = "user input validation"
     let fieldType: AWXTextFieldType
     let isRequired: Bool
     let title: String?
@@ -29,44 +30,44 @@ struct InfoCollectorDefaultValidator: UserInputValidator {
         if !isRequired && (text == nil || text?.trimmed.isEmpty == true) {
             return
         }
-        let defaultErrorMessage = NSLocalizedString("Invalid \(title ?? "input")", bundle: .paymentSheet, comment: "")
+        let defaultErrorMessage = NSLocalizedString("Invalid \(title ?? "input")", bundle: .paymentSheet, comment: commentForLocalization)
         
         switch fieldType {
         case .firstName:
             guard let text = text?.trimmed, !text.isEmpty else {
-                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your first name", bundle: .paymentSheet, comment: ""))
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your first name", bundle: .paymentSheet, comment: commentForLocalization))
             }
         case .lastName:
             guard let text = text?.trimmed, !text.isEmpty else {
-                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your last name", bundle: .paymentSheet, comment: ""))
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your last name", bundle: .paymentSheet, comment: commentForLocalization))
             }
         case .country:
             guard let text = text?.trimmed, !text.isEmpty else {
-                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your country", bundle: .paymentSheet, comment: ""))
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your country", bundle: .paymentSheet, comment: commentForLocalization))
             }
         case .state:
             guard let text = text?.trimmed, !text.isEmpty else {
-                throw ErrorMessage(rawValue: NSLocalizedString("Invalid state", bundle: .paymentSheet, comment: ""))
+                throw ErrorMessage(rawValue: NSLocalizedString("Invalid state", bundle: .paymentSheet, comment: commentForLocalization))
             }
         case .city:
             guard let text = text?.trimmed, !text.isEmpty else {
-                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your city", bundle: .paymentSheet, comment: ""))
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your city", bundle: .paymentSheet, comment: commentForLocalization))
             }
         case .street:
             guard let text = text?.trimmed, !text.isEmpty else {
-                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your street", bundle: .paymentSheet, comment: ""))
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your street", bundle: .paymentSheet, comment: commentForLocalization))
             }
         case .nameOnCard:
             guard let text = text?.trimmed, !text.isEmpty else {
-                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your name on card", bundle: .paymentSheet, comment: ""))
+                throw ErrorMessage(rawValue: NSLocalizedString("Please enter your name on card", bundle: .paymentSheet, comment: commentForLocalization))
             }
         case .email:
             guard let text = text?.trimmed, text.isValidEmail else {
-                throw NSLocalizedString("Invalid email", bundle: .paymentSheet, comment: "").asError()
+                throw NSLocalizedString("Invalid email", bundle: .paymentSheet, comment: commentForLocalization).asError()
             }
         case .phoneNumber:
             guard let text, text.isValidE164PhoneNumber else {
-                throw NSLocalizedString("Invalid phone number", bundle: .paymentSheet, comment: "").asError()
+                throw NSLocalizedString("Invalid phone number", bundle: .paymentSheet, comment: commentForLocalization).asError()
             }
         default:
             guard let text = text?.trimmed, !text.isEmpty else {

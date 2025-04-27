@@ -16,7 +16,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.body2)
         view.textColor = .awxColor(.textPrimary)
-        view.text = NSLocalizedString("Card Information", comment: "")
+        view.text = NSLocalizedString("Card Information", bundle: .paymentSheet, comment: "Card Info Cell - title")
         return view
     }()
     
