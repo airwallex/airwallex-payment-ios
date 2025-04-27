@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 import csv
 
-xliff_file = 'en.xliff'
+xliff_file = 'Airwallex Localizations/en.xcloc/Localized Contents/en.xliff'
 csv_file = 'output.csv'
 
 tree = ET.parse(xliff_file)
@@ -31,6 +31,8 @@ with open(csv_file, mode='w', encoding='utf-8', newline='') as f:
     # For each file block
     for file_elem in root.iterfind('.//{}file'.format(namespace)):
         file_name = file_elem.attrib.get('original', '')
+        if file_name.endswith('InfoPlist.strings') or file_name.endswith('InfoPlist.xcstrings'):
+            continue
         for tu in file_elem.iterfind('.//{}trans-unit'.format(namespace)):
             tu_id = tu.attrib.get('id', '')
             source = tu.find('{}source'.format(namespace))
