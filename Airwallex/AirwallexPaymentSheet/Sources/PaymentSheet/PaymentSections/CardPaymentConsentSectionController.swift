@@ -360,9 +360,9 @@ class CardPaymentConsentSectionController: SectionController {
 private extension CardPaymentConsentSectionController {
     // actions
     func showAlertForDelete(_ consent: AWXPaymentConsent, consentDescription: String) {
-        let title = "Remove %@?"
+        let title = NSLocalizedString("Remove %@?", bundle: .paymentSheet, comment: "consent section - alert title for delete a consent")
         let alert = AWXAlertController(
-            title: String(format: NSLocalizedString(title, bundle: .paymentSheet, comment: "consent section - alert title for delete a consent"), consentDescription),
+            title: String(format: title, consentDescription),
             message: NSLocalizedString("This option will be permanently removed from your saved payment methods.", bundle: .paymentSheet, comment: "consent section - alert message for delete a consent"),
             preferredStyle: .alert
         )

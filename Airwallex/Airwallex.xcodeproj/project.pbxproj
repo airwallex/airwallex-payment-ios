@@ -133,6 +133,9 @@
 		C844DC7E2C3CE37F0099614C /* NSObject+Logging.h in Headers */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D801BDE12DA7BE2A0025D913 /* AWXSchemaExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87F32D9E335D00D082EC /* AWXSchemaExtensionTests.swift */; };
 		D805CC852DB0EF8100693929 /* AWXPaymentResultDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D805CC842DB0EF8100693929 /* AWXPaymentResultDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D809709C2DC9DA380051B5CA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D809709B2DC9DA380051B5CA /* Localizable.xcstrings */; };
+		D809709E2DC9DA380051B5CA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D809709D2DC9DA380051B5CA /* Localizable.xcstrings */; };
+		D80970A52DC9E09E0051B5CA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D80970A32DC9E09E0051B5CA /* Localizable.strings */; };
 		D80E28AC2DA7C0AB00DC4383 /* AirwallexPaymentSheet.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D80E28AB2DA7C0AB00DC4383 /* AirwallexPaymentSheet.xctestplan */; };
 		D80E28AD2DA7C53000DC4383 /* method_type_online_banking.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EB2D9E335D00D082EC /* method_type_online_banking.json */; };
 		D80E28AE2DA7C5CB00DC4383 /* method_types.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87ED2D9E335D00D082EC /* method_types.json */; };
@@ -660,6 +663,19 @@
 		C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Logging.h"; sourceTree = "<group>"; };
 		C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Logging.m"; sourceTree = "<group>"; };
 		D805CC842DB0EF8100693929 /* AWXPaymentResultDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXPaymentResultDelegate.h; sourceTree = "<group>"; };
+		D809709B2DC9DA380051B5CA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = AirwallexPayment/Resources/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
+		D809709D2DC9DA380051B5CA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = AirwallexPaymentSheet/Resources/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
+		D80970A42DC9E09E0051B5CA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D80970A72DC9E0D40051B5CA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D80970A82DC9E0DC0051B5CA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D80970A92DC9E0E40051B5CA /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D80970AA2DC9E0EC0051B5CA /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D80970AB2DC9E0F40051B5CA /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D80970AC2DC9E0FB0051B5CA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D80970AD2DC9E1030051B5CA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D80970AE2DC9E10C0051B5CA /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D80970AF2DC9E1150051B5CA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D80970B02DC9E11B0051B5CA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D80E28AB2DA7C0AB00DC4383 /* AirwallexPaymentSheet.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = AirwallexPaymentSheet.xctestplan; path = ../AirwallexPaymentSheet.xctestplan; sourceTree = SOURCE_ROOT; };
 		D81983412D6F120B008008A3 /* AirwallexPayment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AirwallexPayment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81983482D6F120B008008A3 /* AirwallexPaymentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexPaymentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -697,6 +713,7 @@
 		D8A599A62DAF7A2D0045BFEC /* bank_list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = bank_list.json; sourceTree = "<group>"; };
 		D8A599B32DAF9DF20045BFEC /* AWXShippingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXShippingViewController.h; sourceTree = "<group>"; };
 		D8A599B42DAF9DF20045BFEC /* AWXShippingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXShippingViewController.m; sourceTree = "<group>"; };
+		D8ADC8E72DCA0982008E9AF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D8B8B8DB2DB79EB00071704F /* CountrySelectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectionViewModelTests.swift; sourceTree = "<group>"; };
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
 		D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
@@ -1265,6 +1282,7 @@
 			isa = PBXGroup;
 			children = (
 				D85040752DA794020074BA7F /* PrivacyInfo.xcprivacy */,
+				D809709D2DC9DA380051B5CA /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1476,6 +1494,7 @@
 				D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */,
 				D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */,
 				D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */,
+				D80970A32DC9E09E0051B5CA /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1484,6 +1503,7 @@
 			isa = PBXGroup;
 			children = (
 				D8EC87172D9E335900D082EC /* PrivacyInfo.xcprivacy */,
+				D809709B2DC9DA380051B5CA /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2146,6 +2166,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D80970A52DC9E09E0051B5CA /* Localizable.strings in Resources */,
 				D8BD9E122D0191BF0045A892 /* CountryCodes.json in Resources */,
 				D8BD9E132D0191BF0045A892 /* Airwallex.xcassets in Resources */,
 				D8BD9E142D0191BF0045A892 /* PrivacyInfo.xcprivacy in Resources */,
@@ -2190,6 +2211,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D809709C2DC9DA380051B5CA /* Localizable.xcstrings in Resources */,
 				D8EC87CA2D9E335900D082EC /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2210,6 +2232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D809709E2DC9DA380051B5CA /* Localizable.xcstrings in Resources */,
 				D88E34B32DA7E35A00183A49 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2674,6 +2697,28 @@
 			targetProxy = D85041D12DA795B00074BA7F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D80970A32DC9E09E0051B5CA /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8ADC8E72DCA0982008E9AF6 /* en */,
+				D80970A42DC9E09E0051B5CA /* de */,
+				D80970A72DC9E0D40051B5CA /* es */,
+				D80970A82DC9E0DC0051B5CA /* fr */,
+				D80970A92DC9E0E40051B5CA /* ja */,
+				D80970AA2DC9E0EC0051B5CA /* ko */,
+				D80970AB2DC9E0F40051B5CA /* pt-BR */,
+				D80970AC2DC9E0FB0051B5CA /* pt-PT */,
+				D80970AD2DC9E1030051B5CA /* ru */,
+				D80970AE2DC9E10C0051B5CA /* th */,
+				D80970AF2DC9E1150051B5CA /* zh-Hans */,
+				D80970B02DC9E11B0051B5CA /* zh-Hant */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		085BD3DA23CC62B4002E8F27 /* Debug */ = {
