@@ -89,14 +89,4 @@
     XCTAssertEqual(candidates.count, 7);
 }
 
-- (void)testPossibleBrandTypesForCardNumber_dummy {
-    NSArray<NSNumber *> *candidates = [AWXCardValidator.sharedCardValidator possibleBrandTypesForCardNumber:@"6"];
-    XCTAssertEqual(candidates.count, 3);
-    candidates = [AWXCardValidator.sharedCardValidator possibleBrandTypesForCardNumber:@"60"];
-    XCTAssertEqual(candidates.count, 1);
-    XCTAssertEqual(candidates.firstObject.unsignedIntValue, AWXBrandTypeDiscover);
-    candidates = [AWXCardValidator.sharedCardValidator possibleBrandTypesForCardNumber:@""];
-    XCTAssertEqual(candidates.count, 7);
-}
-
 @end
