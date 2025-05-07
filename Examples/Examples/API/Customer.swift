@@ -11,8 +11,8 @@ import Airwallex
 class Customer: NSObject, AWXJSONDecodable {
     @objc let id: String
     
-    static func decode(fromJSON json: [AnyHashable : Any]) -> Any? {
-        if let id = json["id"] as? String {
+    static func decode(fromJSON json: [AnyHashable : Any]?) -> Any? {
+        if let id = json?["id"] as? String {
             return Customer(id: id)
         }
         return nil

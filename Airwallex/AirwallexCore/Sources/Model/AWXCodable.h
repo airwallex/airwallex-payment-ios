@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol AWXJSONDecodable<NSObject>
 
-+ (id)decodeFromJSON:(NSDictionary *_Nullable)json;
++ (id _Nullable)decodeFromJSON:(NSDictionary *_Nullable)json;
 
 @end
 
