@@ -76,7 +76,10 @@
 }
 
 - (void)handleRedirectionFail:(NSURL *)url {
-    NSDictionary *info = @{NSLocalizedDescriptionKey: @"Redirect to app failed."};
+    NSDictionary *info = @{
+        NSLocalizedDescriptionKey: @"Redirect to app failed.",
+        NSURLErrorKey: url.absoluteString
+    };
     NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                          code:-1
                                      userInfo:info];
