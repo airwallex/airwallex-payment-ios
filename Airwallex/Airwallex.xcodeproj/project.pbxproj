@@ -394,7 +394,7 @@
 		D8A599A22DAE71250045BFEC /* SchemaPaymentSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A599A12DAE71250045BFEC /* SchemaPaymentSectionControllerTests.swift */; };
 		D8A599A72DAF7A2D0045BFEC /* bank_list.json in Resources */ = {isa = PBXBuildFile; fileRef = D8A599A62DAF7A2D0045BFEC /* bank_list.json */; };
 		D8A599B52DAF9DF20045BFEC /* AWXShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8A599B42DAF9DF20045BFEC /* AWXShippingViewController.m */; };
-		D8A599B62DAF9DF20045BFEC /* AWXShippingViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D8A599B32DAF9DF20045BFEC /* AWXShippingViewController.h */; };
+		D8A599B62DAF9DF20045BFEC /* AWXShippingViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D8A599B32DAF9DF20045BFEC /* AWXShippingViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8AD269A2D6862E5002DD3FD /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D8B8B8DC2DB79EB00071704F /* CountrySelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B8B8DB2DB79EB00071704F /* CountrySelectionViewModelTests.swift */; };
 		D8BD9E122D0191BF0045A892 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */; };
@@ -1890,6 +1890,7 @@
 				5775CF5B26E5DF5000C6AFE3 /* AWXPaymentIntentRequest.h in Headers */,
 				D805CC852DB0EF8100693929 /* AWXPaymentResultDelegate.h in Headers */,
 				5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */,
+				D8A599B62DAF9DF20045BFEC /* AWXShippingViewController.h in Headers */,
 				5775CF3926E5DF4F00C6AFE3 /* AWXPaymentConsentResponse.h in Headers */,
 				5775CF2726E5DF4F00C6AFE3 /* AWXLogger.h in Headers */,
 				184169DE29C4381500B02D96 /* NSData+Base64.h in Headers */,
@@ -1898,7 +1899,6 @@
 				1820C9702C85A1C0006B18C4 /* AWXFloatingCvcTextField.h in Headers */,
 				18E0571929C9A7F20099388A /* AWXAPIErrorResponse+Update.h in Headers */,
 				D85042462DA79E650074BA7F /* PKPaymentMethod+Request.h in Headers */,
-				D8A599B62DAF9DF20045BFEC /* AWXShippingViewController.h in Headers */,
 				D85042482DA79E650074BA7F /* PKPaymentToken+Request.h in Headers */,
 				D850424A2DA79E650074BA7F /* AWXPaymentIntent+Summary.h in Headers */,
 				D850424C2DA79E650074BA7F /* AWXSession+Request.h in Headers */,
@@ -2283,9 +2283,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
