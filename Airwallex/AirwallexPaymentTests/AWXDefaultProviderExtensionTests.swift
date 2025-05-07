@@ -39,12 +39,15 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         mockPaymentIntent = AWXPaymentIntent()
         mockPaymentIntent.id = mockIntentId
         mockPaymentIntent.clientSecret = mockClientSecret
+        mockPaymentIntent.amount = NSDecimalNumber(string: "99")
+        mockPaymentIntent.currency = "AUD"
         
         mockApplePayOptions = AWXApplePayOptions(merchantIdentifier: "merchant_id")
 
         mockSession = AWXOneOffSession()
         mockSession.paymentIntent = mockPaymentIntent
         mockSession.applePayOptions = mockApplePayOptions
+        mockSession.countryCode = "AU"
         
         mockValidCard = AWXCard(
             name: "John Doe",

@@ -45,7 +45,12 @@ public extension AWXSession {
     }
     
     func validate() throws {
-       
+        if !(self is AWXOneOffSession || self is AWXRecurringSession || self is AWXRecurringWithIntentSession) {
+            throw ValidationError.invalidSessionType(
+                "Invalid session type: \(type(of: self))"
+            )
+        }
+        
         if let errorMessage = validateData() {
             // utilize this objc implementation to check nil for nonnull properties
             throw ValidationError.invalidData(errorMessage)
@@ -53,6 +58,12 @@ public extension AWXSession {
         guard NSLocale.isoCountryCodes.contains(countryCode) else {
             throw ValidationError.invalidData(
                 "invalid country code: \(String(describing: countryCode))"
+            )
+        }
+        
+        guard NSLocale.isoCurrencyCodes.contains(currency()) else {
+            throw ValidationError.invalidData(
+                "Invalid currency code: \(String(describing: currency())), ISO 4217 currency code required"
             )
         }
         
@@ -71,10 +82,6 @@ public extension AWXSession {
                     "Customer ID required"
                 )
             }
-        } else {
-            throw ValidationError.invalidSessionType(
-                "Invalid session type: \(type(of: self))"
-            )
         }
     }
     
@@ -90,23 +97,10 @@ public extension AWXSession {
             )
         }
         
-        guard NSLocale.isoCurrencyCodes.contains(paymentIntent.currency) else {
-            throw ValidationError.invalidData(
-                "Invalid currency code: \(String(describing: countryCode)), ISO 4217 currency code required"
-            )
-        }
-        
         guard !paymentIntent.clientSecret.isEmpty else {
             throw ValidationError.invalidPaymentIntent(
                 "Client secret required"
             )
-        }
-        if self is AWXRecurringWithIntentSession {
-            guard let customerId = paymentIntent.customerId, !customerId.isEmpty else {
-                throw ValidationError.invalidPaymentIntent(
-                    "Client secret required"
-                )
-            }
         }
     }
 }
