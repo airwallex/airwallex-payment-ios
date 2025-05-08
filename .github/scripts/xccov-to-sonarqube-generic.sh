@@ -1,45 +1,38 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-function convert_xccov_to_xml {
-  sed -n                                                                                       \
-      -e '/:$/s/&/\&amp;/g;s/^\(.*\):$/  <file path="\1">/p'                                   \
-      -e 's/^ *\([0-9][0-9]*\): 0.*$/    <lineToCover lineNumber="\1" covered="false"\/>/p'    \
-      -e 's/^ *\([0-9][0-9]*\): [1-9].*$/    <lineToCover lineNumber="\1" covered="true"\/>/p' \
-      -e 's/^$/  <\/file>/p'
+function convert_file {
+  local xccovarchive_file="$1"
+  local file_path="$2"
+  local file_name=`echo $file_path | sed 's/.*airwallex-ios-app\///'`
+
+  local xccov_options="$3"
+  echo "  <file path=\"$file_name\">"
+  xcrun xccov view $xccov_options --file "$file_path" "$xccovarchive_file" | \
+    sed -n '
+    s/^ *\([0-9][0-9]*\): 0.*$/    <lineToCover lineNumber="\1" covered="false"\/>/p;
+    s/^ *\([0-9][0-9]*\): [1-9].*$/    <lineToCover lineNumber="\1" covered="true"\/>/p
+    '
+  echo '  </file>'
 }
 
 function xccov_to_generic {
-  local xcresult="$1"
-
   echo '<coverage version="1">'
-  xcrun xccov view --archive "$xcresult" | convert_xccov_to_xml
+  for xccovarchive_file in "$@"; do
+    if [[ ! -d $xccovarchive_file ]]
+    then
+      echo "Coverage FILE NOT FOUND AT PATH: $xccovarchive_file" 1>&2;
+      exit 1
+    fi
+    local xccov_options=""
+    if [[ $xccovarchive_file == *".xcresult"* ]]; then
+      xccov_options="--archive"
+    fi
+    xcrun xccov view $xccov_options --file-list "$xccovarchive_file" | while read -r file_path; do
+      convert_file "$xccovarchive_file" "$file_path" "$xccov_options"
+    done
+  done
   echo '</coverage>'
 }
 
-function check_xcode_version() {
-  local major=${1:-0} minor=${2:-0}
-  return $(( (major >= 14) || (major == 13 && minor >= 3) ))
-}
-
-if ! xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode \([0-9.]*\)$/\1/p')"; then
-  echo 'Failed to get Xcode version' 1>&2
-  exit 1
-elif check_xcode_version ${xcode_version//./ }; then
-  echo "Xcode version '$xcode_version' not supported, version 13.3 or above is required" 1>&2;
-  exit 1
-fi
-
-xcresult="$1"
-if [[ $# -ne 1 ]]; then
-  echo "Invalid number of arguments. Expecting 1 path matching '*.xcresult'"
-  exit 1
-elif [[ ! -d $xcresult ]]; then
-  echo "Path not found: $xcresult" 1>&2;
-  exit 1
-elif [[ $xcresult != *".xcresult"* ]]; then
-  echo "Expecting input to match '*.xcresult', got: $xcresult" 1>&2;
-  exit 1
-fi
-
-xccov_to_generic "$xcresult"
+xccov_to_generic "$@"
