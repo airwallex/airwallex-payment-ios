@@ -42,17 +42,17 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Next trigger By type.
  */
-@property (nonatomic) AirwallexNextTriggerByType nextTriggerByType;
+@property (nonatomic, assign) AirwallexNextTriggerByType nextTriggerByType;
 
 /**
  Whether it requires CVC.
  */
-@property (nonatomic) BOOL requiresCVC;
+@property (nonatomic, assign) BOOL requiresCVC;
 
 /**
  Merchant trigger reason
  */
-@property (nonatomic) AirwallexMerchantTriggerReason merchantTriggerReason;
+@property (nonatomic, assign) AirwallexMerchantTriggerReason merchantTriggerReason;
 
 @end
 

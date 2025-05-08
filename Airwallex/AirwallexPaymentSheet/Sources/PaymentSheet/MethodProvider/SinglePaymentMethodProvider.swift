@@ -53,7 +53,7 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
         methodTypeDetails = response
         
         guard response.name == AWXCardKey || response.name == AWXApplePayKey || response.hasSchema else {
-            throw NSLocalizedString("Invalid payment method", bundle: .paymentSheet, comment: "").asError()
+            throw "Invalid payment method".asError()
         }
         
         let resources = AWXResources()

@@ -25,7 +25,7 @@ class SchemaPaymentReminderCell: UICollectionViewCell, ViewReusable {
         view.font = .awxFont(.body2)
         view.textColor = .awxColor(.textPrimary)
         view.numberOfLines = 0
-        view.text = NSLocalizedString("You will be redirected to complete your payment upon confirmation.", bundle: .paymentSheet, comment: "schema redirect reminder")
+        view.text = NSLocalizedString("You will be redirected to complete your payment upon confirmation.", bundle: .paymentSheet, comment: "schema payment redirect reminder")
         return view
     }()
     

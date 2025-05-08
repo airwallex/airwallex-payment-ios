@@ -25,6 +25,7 @@ import XCTest
     override func setUpWithError() throws {
         try super.setUpWithError()
         mockOneoffSession = AWXOneOffSession()
+        mockOneoffSession.countryCode = "AU"
         mockPaymentIntent = AWXPaymentIntent()
         mockViewController = MockPaymentResultDelegate()
         
@@ -32,6 +33,8 @@ import XCTest
         mockPaymentIntent.customerId = mockCustomerId
         mockPaymentIntent.clientSecret = mockClientSecret
         mockPaymentIntent.id = mockIntentId
+        mockPaymentIntent.currency = "AUD"
+        mockPaymentIntent.amount = NSDecimalNumber(value: 1)
         
         AWXAPIClientConfiguration.shared().clientSecret = mockClientSecret
     }
@@ -70,16 +73,18 @@ import XCTest
         }
         
         guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
-              case AWXSession.ValidationError.invalidPaymentIntent(_) = underlyingError else {
+              case AWXSession.ValidationError.invalidData(_) = underlyingError else {
             XCTFail("Expected AWXUIContext.LaunchError.invalidPaymentIntent, but get \(error)")
             return
         }
     }
     
     func testLaunchPaymentPaymentIntentAssertionRecurringWithIntentSession() {
+        let session = AWXRecurringWithIntentSession()
+        session.countryCode = "AUD"
         AWXUIContext.launchPayment(
             from: mockViewController,
-            session: AWXRecurringWithIntentSession(),
+            session: session,
             launchStyle: .push
         )
         
@@ -89,17 +94,19 @@ import XCTest
         }
         
         guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
-              case AWXSession.ValidationError.invalidPaymentIntent(_) = underlyingError else {
+              case AWXSession.ValidationError.invalidData(_) = underlyingError else {
             XCTFail("Expected AWXUIContext.LaunchError.invalidPaymentIntent, but get \(error)")
             return
         }
     }
     
     func testLaunchPaymentCustomerIdAssertionRecurringSession() {
+        let session = AWXRecurringWithIntentSession()
+        session.countryCode = "AUD"
         // check recurring session
         AWXUIContext.launchPayment(
             from: mockViewController,
-            session: AWXRecurringSession(),
+            session: session,
             launchStyle: .push
         )
         
@@ -109,7 +116,7 @@ import XCTest
         }
         
         guard case AWXUIContext.LaunchError.invalidSession(underlyingError: let underlyingError) = error,
-              case AWXSession.ValidationError.invalidCustomerId(_) = underlyingError else {
+              case AWXSession.ValidationError.invalidData(_) = underlyingError else {
             XCTFail("Expected AWXUIContext.LaunchError.invalidCustomerId, but get \(error)")
             return
         }
@@ -119,6 +126,7 @@ import XCTest
         // check recurring with intent session
         let recurringWithIntentSession = AWXRecurringWithIntentSession()
         mockPaymentIntent.customerId = nil
+        recurringWithIntentSession.countryCode = "AU"
         recurringWithIntentSession.paymentIntent = mockPaymentIntent
         AWXUIContext.launchPayment(
             from: mockViewController,

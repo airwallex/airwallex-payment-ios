@@ -1,0 +1,53 @@
+/* Shiping field placeholder - City */
+"City" = "Stadt";
+
+/* close button for UIAlertController
+close button for alert
+close button on navigation bar */
+"Close" = "Schließen";
+
+/* Shiping field placeholder - Country / Region */
+"Country / Region" = "Land / Region";
+
+/* CVC / CVV placeholder */
+"CVC / CVV" = "CVC / CVV";
+
+/* Shiping field placeholder - Email (optional) */
+"Email (optional)" = "E-Mail (optional)";
+
+/* No comment provided by engineer. */
+"Enter CVC/CVV for\n%@" = "CVC/CVV für\n%@ eingeben";
+
+/* Shiping field placeholder - First Name */
+"First name" = "Vorname";
+
+/* string description when decimal number is zero */
+"Free" = "Kostenlos";
+
+/* Shiping field placeholder - Last Name */
+"Last name" = "Nachname";
+
+/* Pay now - pay button */
+"Pay now" = "Jetzt bezahlen";
+
+/* Shiping field placeholder - Phone number (optional) */
+"Phone number (optional)" = "Telefonnummer (optional)";
+
+/* save button on navigation bar */
+"Save" = "Speichern";
+
+/* title of shipping view controller */
+"Shipping" = "Versand";
+
+/* Shiping field placeholder - State */
+"State" = "Bundesland";
+
+/* Shiping field placeholder - Street */
+"Street" = "Straße";
+
+/* total amount of payment session */
+"Total %@" = "Gesamt %@";
+
+/* Shiping field placeholder - Zip code (optional) */
+"Zip code (optional)" = "Postleitzahl (optional)";
+

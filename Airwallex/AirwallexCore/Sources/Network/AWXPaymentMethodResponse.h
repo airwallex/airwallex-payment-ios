@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  has_schema
  */
-@property (nonatomic) BOOL hasSchema;
+@property (nonatomic, assign) BOOL hasSchema;
 
 /**
  Field schemas

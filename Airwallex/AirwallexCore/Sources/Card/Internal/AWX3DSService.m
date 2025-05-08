@@ -82,7 +82,7 @@
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
         [self.delegate threeDSService:self.delegate shouldPresentViewController:navigationController];
     } else {
-        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid stage.", nil)}]];
+        [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Invalid stage."}]];
     }
 }
 

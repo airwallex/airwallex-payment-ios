@@ -97,7 +97,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
         selectedMethod = selectedMethod ?? filteredMethods.first { $0.name != AWXApplePayKey }
         updatePublisher.send(.listUpdated)
         guard !self.methods.isEmpty else {
-            throw ErrorMessage(rawValue: NSLocalizedString("No payment methods available for this transaction.", bundle: .paymentSheet, comment: ""))
+            throw ErrorMessage(rawValue: "No payment methods available for this transaction.")
         }
     }
     

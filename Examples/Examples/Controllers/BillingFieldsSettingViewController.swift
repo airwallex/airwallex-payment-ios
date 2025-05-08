@@ -14,12 +14,11 @@ class BillingFieldsSettingViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let pageName: String = "Required Billing Fields Setting"
     private lazy var topView: TopView = {
         let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
         let viewModel = TopViewModel(
-            title: NSLocalizedString("Required Billing Fields", comment: pageName)
+            title: "Required Billing Fields"
         )
         view.setup(viewModel)
         return view
@@ -45,7 +44,7 @@ class BillingFieldsSettingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Name", comment: pageName),
+                title: "Name",
                 isOn: settings.requiresName,
                 action: { [weak self] isOn in
                     self?.settings.requiresName = isOn
@@ -60,7 +59,7 @@ class BillingFieldsSettingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Email", comment: pageName),
+                title: "Email",
                 isOn: settings.requiresEmail,
                 action: { [weak self] isOn in
                     self?.settings.requiresEmail = isOn
@@ -75,7 +74,7 @@ class BillingFieldsSettingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Phone Number", comment: pageName),
+                title: "Phone Number",
                 isOn: settings.requiresPhone,
                 action: { [weak self] isOn in
                     self?.settings.requiresPhone = isOn
@@ -90,7 +89,7 @@ class BillingFieldsSettingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Address", comment: pageName),
+                title: "Address",
                 isOn: settings.requiresAddress,
                 action: { [weak self] isOn in
                     self?.settings.requiresAddress = isOn
@@ -105,7 +104,7 @@ class BillingFieldsSettingViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Country Code", comment: pageName),
+                title: "Country Code",
                 isOn: settings.requiresCountryCode,
                 action: { [weak self] isOn in
                     self?.settings.requiresCountryCode = isOn

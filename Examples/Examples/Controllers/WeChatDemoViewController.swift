@@ -25,7 +25,7 @@ class WeChatDemoViewController: UIViewController {
         let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
         let viewModel = TopViewModel(
-            title: NSLocalizedString("Launch WeChat demo", comment: "WeChat demo")
+            title: "Launch WeChat demo"
         )
         view.setup(viewModel)
         return view
@@ -47,7 +47,7 @@ class WeChatDemoViewController: UIViewController {
     }()
     
     private lazy var nextButton: UIButton = {
-        let view = AWXButton(style: .primary, title: NSLocalizedString("Next", comment: "WeChat demo next action"))
+        let view = AWXButton(style: .primary, title: "Next")
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onNextButtonTapped), for: .touchUpInside)
         return view
@@ -65,32 +65,32 @@ class WeChatDemoViewController: UIViewController {
     
     private lazy var fieldViewModels: [ConfigTextFieldViewModel] = [
         ConfigTextFieldViewModel(
-            displayName: NSLocalizedString("WeChat App ID", comment: "wechat demo"),
+            displayName: "WeChat App ID",
             fieldKey: FieldKey.appId,
             text: "wx4c86d73fe4f82431"
         ),
         ConfigTextFieldViewModel(
-            displayName: NSLocalizedString("Partner ID", comment: "wechat demo"),
+            displayName: "Partner ID",
             fieldKey: FieldKey.partnerId
         ),
         ConfigTextFieldViewModel(
-            displayName: NSLocalizedString("Prepay ID", comment: "wechat demo"),
+            displayName: "Prepay ID",
             fieldKey: FieldKey.prepayId
         ),
         ConfigTextFieldViewModel(
-            displayName: NSLocalizedString("Package", comment: "wechat demo"),
+            displayName: "Package",
             fieldKey: FieldKey.package
         ),
         ConfigTextFieldViewModel(
-            displayName: NSLocalizedString("NonceStr", comment: "wechat demo"),
+            displayName: "NonceStr",
             fieldKey: FieldKey.nonceStr
         ),
         ConfigTextFieldViewModel(
-            displayName: NSLocalizedString("Time Stamp", comment: "wechat demo"),
+            displayName: "Time Stamp",
             fieldKey: FieldKey.timeStamp
         ),
         ConfigTextFieldViewModel(
-            displayName: NSLocalizedString("Sign", comment: "wechat demo"),
+            displayName: "Sign",
             fieldKey: FieldKey.sign
         ),
     ]
@@ -167,7 +167,7 @@ class WeChatDemoViewController: UIViewController {
         })
         
         guard fields.count == fieldViewModels.count else {
-            showAlert(message: NSLocalizedString("Please fill in all the fields", comment: "wechat demo"))
+            showAlert(message: "Please fill in all the fields")
             return
         }
 #if canImport(WechatOpenSDK)
