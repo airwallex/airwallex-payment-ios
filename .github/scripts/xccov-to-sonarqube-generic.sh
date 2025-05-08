@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# https://github.com/SonarSource/sonar-scanning-examples/blob/3b6474491e6e91b4d916ea4c189cd5516c21598b/swift-coverage/swift-coverage-example/xccov-to-sonarqube-generic.sh
 set -euo pipefail
 
 function convert_xccov_to_xml {
