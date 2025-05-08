@@ -10,6 +10,8 @@
 
 Airwallex iOS SDK 可以满足您在应用中集成简单、快速和安全的支付功能的需求。它提供了简单易用的 API 将敏感的信用卡数据直接发送到 Airwallex，同时还提供了一个强大且可定制的界面，用于收集用户的支付详情。
 
+我们支持以下本地化语言：英语、简体中文、繁体中文、法语、德语、日语、韩语、葡萄牙语（葡萄牙）、葡萄牙语（巴西）、俄语、西班牙语、泰语。
+
 <p align="left">
 <img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200" hspace="10">
