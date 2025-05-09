@@ -34,7 +34,7 @@ extension UIImage {
             imageName = "unknown_card"
         }
         guard let imageName else { return nil }
-        return UIImage(named: imageName, in: Bundle.resource(), compatibleWith: nil)
+        return UIImage(named: imageName, in: .paymentSheet, compatibleWith: nil)
     }
     
     func rotate(degrees: CGFloat) -> UIImage? {

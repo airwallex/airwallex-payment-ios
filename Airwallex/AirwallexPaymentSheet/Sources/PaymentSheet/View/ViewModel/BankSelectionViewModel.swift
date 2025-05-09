@@ -27,7 +27,7 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
     var icon: UIImage? { nil }
     
     var indicator: UIImage? {
-        UIImage(named: "down", in: Bundle.resource())?
+        UIImage(named: "down", in: Bundle.paymentSheet)?
             .withTintColor(
                 isEnabled ? .awxColor(.iconSecondary) : .awxColor(.iconDisabled),
                 renderingMode: .alwaysOriginal

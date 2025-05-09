@@ -343,6 +343,7 @@
 		D85042DA2DA7A46D0074BA7F /* AWXWidgets.h in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEEA26E5DF4E00C6AFE3 /* AWXWidgets.h */; };
 		D85042DC2DA7A46D0074BA7F /* AWXFloatingCvcTextField.h in Sources */ = {isa = PBXBuildFile; fileRef = 1820C96E2C85A1C0006B18C4 /* AWXFloatingCvcTextField.h */; };
 		D85042DD2DA7A46D0074BA7F /* NSObject+Logging.h in Sources */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; };
+		D86710192DCD9D2C001D5A74 /* Airwallex.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D86710182DCD9D2C001D5A74 /* Airwallex.xcassets */; };
 		D880456A2DA7B281008308C7 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D42D9E335D00D082EC /* MockProviderDelegate.swift */; };
 		D880456B2DA7B281008308C7 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D12D9E335D00D082EC /* Bundle+Extensions.swift */; };
 		D880456C2DA7B281008308C7 /* MockSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D52D9E335D00D082EC /* MockSectionController.swift */; };
@@ -701,6 +702,7 @@
 		D85041FC2DA79D7A0074BA7F /* AirwallexPaymentSheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexPaymentSheet.h; sourceTree = "<group>"; };
 		D85042732DA79FFB0074BA7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D85042752DA79FFF0074BA7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D86710182DCD9D2C001D5A74 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
 		D8890ABE2DB893BB00F94F68 /* BankSelectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankSelectionViewModelTests.swift; sourceTree = "<group>"; };
 		D8890AC02DB8985B00F94F68 /* BillingInfoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillingInfoCellViewModelTests.swift; sourceTree = "<group>"; };
 		D88BFBD12DA916D20047C787 /* ApplePaySectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySectionControllerTests.swift; sourceTree = "<group>"; };
@@ -1281,6 +1283,7 @@
 		D85040732DA793EA0074BA7F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D86710182DCD9D2C001D5A74 /* Airwallex.xcassets */,
 				D85040752DA794020074BA7F /* PrivacyInfo.xcprivacy */,
 				D809709D2DC9DA380051B5CA /* Localizable.xcstrings */,
 			);
@@ -2233,6 +2236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D809709E2DC9DA380051B5CA /* Localizable.xcstrings in Resources */,
+				D86710192DCD9D2C001D5A74 /* Airwallex.xcassets in Resources */,
 				D88E34B32DA7E35A00183A49 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2283,13 +2287,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
