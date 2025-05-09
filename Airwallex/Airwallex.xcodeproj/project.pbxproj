@@ -1283,6 +1283,8 @@
 		D85040732DA793EA0074BA7F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */,
+				D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */,
 				D86710182DCD9D2C001D5A74 /* Airwallex.xcassets */,
 				D85040752DA794020074BA7F /* PrivacyInfo.xcprivacy */,
 				D809709D2DC9DA380051B5CA /* Localizable.xcstrings */,
@@ -1494,8 +1496,6 @@
 			isa = PBXGroup;
 			children = (
 				D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */,
-				D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */,
-				D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */,
 				D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */,
 				D80970A32DC9E09E0051B5CA /* Localizable.strings */,
 			);
