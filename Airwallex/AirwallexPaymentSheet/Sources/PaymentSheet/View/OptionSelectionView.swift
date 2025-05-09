@@ -40,7 +40,7 @@ class OptionSelectionView<T: OptionSelectionViewConfiguring>: InfoCollectorTextF
     private lazy var indicator: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.image = UIImage(named: "down", in: Bundle.resource())?
+        view.image = UIImage(named: "down", in: .paymentSheet)?
             .withTintColor(.awxColor(.iconSecondary), renderingMode: .alwaysOriginal)
         return view
     }()
