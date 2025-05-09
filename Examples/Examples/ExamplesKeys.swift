@@ -17,11 +17,11 @@ enum CheckoutMode: Int, CaseIterable {
     var localizedDescription: String {
         switch self {
         case .oneOff:
-            return NSLocalizedString("One-off payment", comment: "SDK demo checkout mode")
+            return "One-off payment"
         case .recurring:
-            return NSLocalizedString("Recurring", comment: "SDK demo checkout mode")
+            return "Recurring"
         case .recurringWithIntent:
-            return NSLocalizedString("Recurring with intent", comment: "SDK demo checkout mode")
+            return "Recurring with intent"
         }
     }
 }

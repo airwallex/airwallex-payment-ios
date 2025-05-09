@@ -20,7 +20,7 @@
 		1859F19D2C8A9EE90017FA4D /* NSError+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F19C2C8A9EE90017FA4D /* NSError+Extensions.swift */; };
 		1859F19F2C8AA6700017FA4D /* CustomerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1859F19E2C8AA6700017FA4D /* CustomerRequest.swift */; };
 		18ADC9992C8AACF900A775BB /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADC9982C8AACF900A775BB /* Customer.swift */; };
-		38B8C7BA5C85C0D3850E8281 /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0971769A3612FBF5C3A8B897 /* Pods_Examples.framework */; };
+		624A55DF282EE70E4D58E3E1 /* Pods_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 996C9E5BE5128DD2B08093BE /* Pods_Examples.framework */; };
 		D805CC882DB0FED600693929 /* MockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D805CC872DB0FED600693929 /* MockViewController.m */; };
 		D80F0E222D5C6CF200401BA6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E212D5C6CF200401BA6 /* WebViewController.swift */; };
 		D80F0E242D5C769100401BA6 /* PaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F0E232D5C769100401BA6 /* PaymentResultViewController.swift */; };
@@ -74,8 +74,6 @@
 		088F3E8123CEB7FF005AE40F /* MockAPIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockAPIClient.h; sourceTree = "<group>"; };
 		088F3E8223CEB7FF005AE40F /* MockAPIClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockAPIClient.m; sourceTree = "<group>"; };
 		08B55E372421D8C60054E254 /* Airwallex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Airwallex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0971769A3612FBF5C3A8B897 /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		135518A71FBEAC42C835D713 /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
 		182F1CDF2C8F09F1000B993D /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		182F1CE42C903747000B993D /* DirectAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectAPIClient.swift; sourceTree = "<group>"; };
 		182F1CE62C903B18000B993D /* Encodable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extensions.swift"; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 		18ADC9982C8AACF900A775BB /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		18ADC99C2C8ACCA000A775BB /* Examples-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Examples-Bridging-Header.h"; sourceTree = "<group>"; };
 		3C5A37D427EAF68F00CFC2EF /* Examples.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Examples.entitlements; sourceTree = "<group>"; };
-		531177607FE826EADF1DC652 /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
 		57CEC82526E6005000695740 /* Card.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Card.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC82726E6005400695740 /* Redirect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Redirect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC82926E6005700695740 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +94,10 @@
 		57CEC83126E6007C00695740 /* Card.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Card.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC83326E6007F00695740 /* Redirect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Redirect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57CEC83526E6008100695740 /* WeChatPay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WeChatPay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6491D65B6ED750880767C7FC /* Pods-Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.release.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.release.xcconfig"; sourceTree = "<group>"; };
+		996C9E5BE5128DD2B08093BE /* Pods_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD2A5440429742B88AB2C21D /* Pods-Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples.debug.xcconfig"; path = "Target Support Files/Pods-Examples/Pods-Examples.debug.xcconfig"; sourceTree = "<group>"; };
+		D801CB832DCA163900D2BD27 /* AirwallexPayment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AirwallexPayment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D805CC862DB0FED600693929 /* MockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockViewController.h; sourceTree = "<group>"; };
 		D805CC872DB0FED600693929 /* MockViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockViewController.m; sourceTree = "<group>"; };
 		D80F0E212D5C6CF200401BA6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -134,7 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38B8C7BA5C85C0D3850E8281 /* Pods_Examples.framework in Frameworks */,
+				624A55DF282EE70E4D58E3E1 /* Pods_Examples.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +148,7 @@
 				085BD3ED23CC64B6002E8F27 /* Examples */,
 				085BD3EC23CC64B6002E8F27 /* Products */,
 				A124BE0DCF06F969177C95C3 /* Frameworks */,
-				8EF6B127EF50D10D08501D8E /* Pods */,
+				916A726B300D4DD424727734 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -213,11 +214,11 @@
 			path = Deprecated;
 			sourceTree = "<group>";
 		};
-		8EF6B127EF50D10D08501D8E /* Pods */ = {
+		916A726B300D4DD424727734 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				135518A71FBEAC42C835D713 /* Pods-Examples.debug.xcconfig */,
-				531177607FE826EADF1DC652 /* Pods-Examples.release.xcconfig */,
+				CD2A5440429742B88AB2C21D /* Pods-Examples.debug.xcconfig */,
+				6491D65B6ED750880767C7FC /* Pods-Examples.release.xcconfig */,
 			);
 			name = Pods;
 			path = ../Pods;
@@ -226,6 +227,7 @@
 		A124BE0DCF06F969177C95C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D801CB832DCA163900D2BD27 /* AirwallexPayment.framework */,
 				57CEC83526E6008100695740 /* WeChatPay.framework */,
 				57CEC83326E6007F00695740 /* Redirect.framework */,
 				57CEC83126E6007C00695740 /* Card.framework */,
@@ -236,7 +238,7 @@
 				57CEC82726E6005400695740 /* Redirect.framework */,
 				57CEC82526E6005000695740 /* Card.framework */,
 				08B55E372421D8C60054E254 /* Airwallex.framework */,
-				0971769A3612FBF5C3A8B897 /* Pods_Examples.framework */,
+				996C9E5BE5128DD2B08093BE /* Pods_Examples.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -304,15 +306,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */;
 			buildPhases = (
-				A12C5D6DE02CB4E1E597F987 /* [CP] Check Pods Manifest.lock */,
+				9386CD168F30B04867D5EF44 /* [CP] Check Pods Manifest.lock */,
 				085BD3E723CC64B6002E8F27 /* Sources */,
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
 				C52EE7B32865394100F966DD /* Run clang-format */,
 				D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */,
 				D866FA6D2DA7BAA20062BC5A /* Embed Frameworks */,
-				B66E8A8C9B7DFE112F59EC48 /* [CP] Embed Pods Frameworks */,
-				75D66D854078A2C34DBF3BB6 /* [CP] Copy Pods Resources */,
+				D062F25C7773C7FA8DC5AB60 /* [CP] Embed Pods Frameworks */,
+				99FABC6B0AD46FEDAB0677DC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -346,6 +348,17 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
+				fr,
+				de,
+				ja,
+				ko,
+				"pt-BR",
+				"pt-PT",
+				es,
+				ru,
+				th,
 			);
 			mainGroup = 085BD3E223CC64B6002E8F27;
 			productRefGroup = 085BD3EC23CC64B6002E8F27 /* Products */;
@@ -373,24 +386,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		75D66D854078A2C34DBF3BB6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A12C5D6DE02CB4E1E597F987 /* [CP] Check Pods Manifest.lock */ = {
+		9386CD168F30B04867D5EF44 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -412,21 +408,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B66E8A8C9B7DFE112F59EC48 /* [CP] Embed Pods Frameworks */ = {
+		99FABC6B0AD46FEDAB0677DC /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C52EE7B32865394100F966DD /* Run clang-format */ = {
@@ -447,6 +443,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ -n \"$CI\" ]; then\n    echo \"Skip - clang-format for CI.\"\n    exit 0\nfi\n\nif test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which clang-format >/dev/null; then\n  find \"${PROJECT_DIR}/../Airwallex\" -type f -name \"*.[mh]\" | xargs clang-format -i -style=file\n  find \"${PROJECT_DIR}/../Examples\" -type f -name \"*.[mh]\" | xargs clang-format -i -style=file\nelse\n  echo \"warning: clang-format not found. Install using Homebrew to automatically format Objective-C code.\"\nfi\n";
+		};
+		D062F25C7773C7FA8DC5AB60 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -654,7 +667,7 @@
 		};
 		085BD40523CC64B9002E8F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 135518A71FBEAC42C835D713 /* Pods-Examples.debug.xcconfig */;
+			baseConfigurationReference = CD2A5440429742B88AB2C21D /* Pods-Examples.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -679,7 +692,7 @@
 		};
 		085BD40623CC64B9002E8F27 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 531177607FE826EADF1DC652 /* Pods-Examples.release.xcconfig */;
+			baseConfigurationReference = 6491D65B6ED750880767C7FC /* Pods-Examples.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

@@ -378,13 +378,13 @@
                 isValidYear = year.integerValue > currentYear;
             }
             if (!(isValidYear && isValidMonth)) {
-                errorMessage = NSLocalizedString(@"Card’s expiration date is invalid", nil);
+                errorMessage = @"Card’s expiration date is invalid";
             }
         } else {
-            errorMessage = NSLocalizedString(@"Card’s expiration date is invalid", nil);
+            errorMessage = @"Card’s expiration date is invalid";
         }
     } else {
-        errorMessage = NSLocalizedString(@"Expiry date is required", nil);
+        errorMessage = @"Expiry date is required";
     }
     self.errorText = errorMessage;
 }
@@ -398,10 +398,10 @@
     case AWXTextFieldTypePhoneNumber:
         textField.text = [[textField.text componentsSeparatedByCharactersInSet:NSCharacterSet.whitespaceCharacterSet] componentsJoinedByString:@""];
     case AWXTextFieldTypeFirstName:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your first name", nil);
+        self.errorText = textField.text.length > 0 ? nil : @"Please enter your first name";
         break;
     case AWXTextFieldTypeLastName:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your last name", nil);
+        self.errorText = textField.text.length > 0 ? nil : @"Please enter your last name";
         break;
     case AWXTextFieldTypeEmail:
         if (textField.text.length > 0) {
@@ -411,19 +411,19 @@
         }
         break;
     case AWXTextFieldTypeCountry:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your country", nil);
+        self.errorText = textField.text.length > 0 ? nil : @"Please enter your country";
         break;
     case AWXTextFieldTypeState:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Invalid state", nil);
+        self.errorText = textField.text.length > 0 ? nil : @"Invalid state";
         break;
     case AWXTextFieldTypeCity:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your state", nil);
+        self.errorText = textField.text.length > 0 ? nil : @"Please enter your state";
         break;
     case AWXTextFieldTypeStreet:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your street", nil);
+        self.errorText = textField.text.length > 0 ? nil : @"Please enter your street";
         break;
     case AWXTextFieldTypeNameOnCard:
-        self.errorText = textField.text.length > 0 ? nil : NSLocalizedString(@"Please enter your card name", nil);
+        self.errorText = textField.text.length > 0 ? nil : @"Please enter your card name";
         break;
     case AWXTextFieldTypeExpires:
         [self validateExpires:textField.text];

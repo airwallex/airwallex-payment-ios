@@ -39,7 +39,7 @@ extension UIViewController {
                    action: (() -> Void)? = nil) {
         guard title != nil || message != nil else { return }
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let closeAction = UIAlertAction(title: NSLocalizedString(buttonTitle, comment: "SDK DEMO"), style: .cancel) { _ in
+        let closeAction = UIAlertAction(title: buttonTitle, style: .cancel) { _ in
             action?()
         }
         alert.addAction(closeAction)
@@ -58,7 +58,7 @@ extension UIViewController {
             )
             alertController.addAction(action)
         }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "SDK Demo"), style: .cancel)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(cancelAction)
         
         alertController.popoverPresentationController?.sourceView = sender

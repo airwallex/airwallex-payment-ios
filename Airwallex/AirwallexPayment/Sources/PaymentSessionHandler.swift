@@ -391,7 +391,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
                 domain: AWXSDKErrorDomain,
                 code: -1,
                 userInfo: [
-                    NSLocalizedDescriptionKey: NSLocalizedString("No provider matched the next action.", bundle: .payment, comment: "")
+                    NSLocalizedDescriptionKey: "No provider matched the next action."
                 ]
             )
             paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: .failure, error: error)

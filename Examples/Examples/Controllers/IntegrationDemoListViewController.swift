@@ -24,37 +24,37 @@ class IntegrationDemoListViewController: UIViewController {
     
     private lazy var viewModelsForUIIntegration: [ActionViewModel] = [
         ActionViewModel(
-            title: NSLocalizedString("Launch default payments list", comment: DemoDataSource.commentForLocalization),
+            title: "Launch default payments list",
             action: { [weak self] in
                 self?.launchDefaultPaymentsList(launchStyle: .push)
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("Launch default payments list (dialog)", comment: DemoDataSource.commentForLocalization),
+            title: "Launch default payments list (dialog)",
             action: { [weak self] in
                 self?.launchDefaultPaymentsList(launchStyle: .present)
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("Launch custom payments list", comment: DemoDataSource.commentForLocalization),
+            title: "Launch custom payments list",
             action: { [weak self] in
                 self?.launchCustomPaymentsList()
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("Launch card payment", comment: DemoDataSource.commentForLocalization),
+            title: "Launch card payment",
             action: { [weak self] in
                 self?.launchCardPayment(launchStyle: .push)
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("Launch card payment (dialog)", comment: DemoDataSource.commentForLocalization),
+            title: "Launch card payment (dialog)",
             action: { [weak self] in
                 self?.launchCardPayment(launchStyle: .present)
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("Launch shipping address (dialog)", comment: DemoDataSource.commentForLocalization),
+            title: "Launch shipping address (dialog)",
             action: { [weak self] in
                 self?.launchShippingAddressDialog()
             }
@@ -63,7 +63,7 @@ class IntegrationDemoListViewController: UIViewController {
     
     private lazy var viewModelsForAPIIntegration: [ActionViewModel] = [
         ActionViewModel(
-            title: NSLocalizedString("Pay with card", comment: DemoDataSource.commentForLocalization),
+            title: "Pay with card",
             action: { [weak self] in
                 self?.payWithCard()
             }
@@ -93,13 +93,13 @@ class IntegrationDemoListViewController: UIViewController {
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("Get payment methods", comment: DemoDataSource.commentForLocalization),
+            title: "Get payment methods",
             action: { [weak self] in
                 self?.getPaymentMethods()
             }
         ),
         ActionViewModel(
-            title: NSLocalizedString("Get saved card methods", comment: DemoDataSource.commentForLocalization),
+            title: "Get saved card methods",
             action: { [weak self] in
                 self?.getSavedCardMethods()
             }
@@ -166,8 +166,8 @@ private extension IntegrationDemoListViewController {
     }
     
     func setupTitle() {
-        let title = integrationType == .UI ? NSLocalizedString("Integrate with Airwallex UI", comment: DemoDataSource.commentForLocalization)
-        : NSLocalizedString("Integrate with low-level API", comment: "UI integration demo")
+        let title = integrationType == .UI ? "Integrate with Airwallex UI"
+        : "Integrate with low-level API"
         
         let viewModel = TopViewModel(
             title: title,
@@ -181,7 +181,7 @@ private extension IntegrationDemoListViewController {
     
     func setupCheckoutMode() {
         let viewModel = ConfigActionViewModel(
-            configName: NSLocalizedString("Payment type", comment: "mobile SDK demo"),
+            configName: "Payment type",
             configValue: ExamplesKeys.checkoutMode.localizedDescription,
             primaryAction: { [weak self] _ in
                 self?.handleUserTapOptionSelectView()

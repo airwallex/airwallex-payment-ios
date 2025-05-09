@@ -12,9 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXForm : NSObject
 
-@property (nonatomic) AWXFormType type;
+@property (nonatomic, assign) AWXFormType type;
 @property (nonatomic, strong) NSString *key;
-@property (nonatomic) AWXTextFieldType textFieldType;
+@property (nonatomic, assign) AWXTextFieldType textFieldType;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong, nullable) NSURL *logo;
 

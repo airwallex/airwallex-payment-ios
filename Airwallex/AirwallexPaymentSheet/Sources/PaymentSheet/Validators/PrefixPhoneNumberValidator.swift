@@ -17,12 +17,12 @@ struct PrefixPhoneNumberValidator: UserInputValidator {
     
     func validateUserInput(_ text: String?) throws {
         guard let text, text.isValidE164PhoneNumber else {
-            throw NSLocalizedString("Invalid phone number", bundle: .paymentSheet, comment: "").asError()
+            throw NSLocalizedString("Invalid phone number", bundle: .paymentSheet, comment: "user input validation").asError()
         }
         
         if let prefix, text.hasPrefix(prefix) == true {
             guard text.count > prefix.count else {
-                throw NSLocalizedString("Invalid phone number", bundle: .paymentSheet, comment: "").asError()
+                throw NSLocalizedString("Invalid phone number", bundle: .paymentSheet, comment: "user input validation").asError()
             }
         }
     }

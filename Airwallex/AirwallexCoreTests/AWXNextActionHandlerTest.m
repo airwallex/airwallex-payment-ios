@@ -45,7 +45,9 @@
 
     AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:delegate session:session];
     [handler handleNextAction:nextAction];
-    OCMVerify(times(1), [mockViewController presentViewController:[OCMArg isKindOfClass:[UIAlertController class]] animated:YES completion:nil]);
+    XCTAssertEqual(delegate.providerDidCompleteWithStatusCount, 1);
+    XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusFailure);
+    XCTAssertNotNil(delegate.lastStatusError);
 }
 
 @end

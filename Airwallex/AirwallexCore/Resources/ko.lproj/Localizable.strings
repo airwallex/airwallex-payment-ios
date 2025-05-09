@@ -1,0 +1,53 @@
+/* Shiping field placeholder - City */
+"City" = "도시";
+
+/* close button for UIAlertController
+close button for alert
+close button on navigation bar */
+"Close" = "닫기";
+
+/* Shiping field placeholder - Country / Region */
+"Country / Region" = "국가 / 지역";
+
+/* CVC / CVV placeholder */
+"CVC / CVV" = "CVC / CVV";
+
+/* Shiping field placeholder - Email (optional) */
+"Email (optional)" = "이메일(선택 사항)";
+
+/* No comment provided by engineer. */
+"Enter CVC/CVV for\n%@" = "%@의 CVC/CVV를 입력하세요";
+
+/* Shiping field placeholder - First Name */
+"First name" = "이름";
+
+/* string description when decimal number is zero */
+"Free" = "무료";
+
+/* Shiping field placeholder - Last Name */
+"Last name" = "성";
+
+/* Pay now - pay button */
+"Pay now" = "지금 결제";
+
+/* Shiping field placeholder - Phone number (optional) */
+"Phone number (optional)" = "전화번호(선택 사항)";
+
+/* save button on navigation bar */
+"Save" = "저장";
+
+/* title of shipping view controller */
+"Shipping" = "배송";
+
+/* Shiping field placeholder - State */
+"State" = "주";
+
+/* Shiping field placeholder - Street */
+"Street" = "주소";
+
+/* total amount of payment session */
+"Total %@" = "총액 %@";
+
+/* Shiping field placeholder - Zip code (optional) */
+"Zip code (optional)" = "우편번호(선택 사항)";
+

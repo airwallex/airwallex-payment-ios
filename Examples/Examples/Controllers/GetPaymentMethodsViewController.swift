@@ -55,7 +55,7 @@ class GetPaymentMethodsViewController: UITableViewController {
     private lazy var topView: TopView = {
         let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        let viewModel = TopViewModel(title: NSLocalizedString("Get payment methods", comment: "DEMO"))
+        let viewModel = TopViewModel(title: "Get payment methods")
         view.setup(viewModel)
         return view
     }()

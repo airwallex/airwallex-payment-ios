@@ -9,6 +9,7 @@
 #import "AWXRedirectActionProvider.h"
 #import "AWXAnalyticsLogger.h"
 #import "AWXPaymentIntentResponse.h"
+#import "AWXUtils.h"
 #import "NSObject+Logging.h"
 
 @implementation AWXRedirectActionProvider
@@ -75,7 +76,10 @@
 }
 
 - (void)handleRedirectionFail:(NSURL *)url {
-    NSDictionary *info = @{NSLocalizedDescriptionKey: NSLocalizedString(@"Redirect to app failed.", nil), NSURLErrorKey: url.absoluteString};
+    NSDictionary *info = @{
+        NSLocalizedDescriptionKey: @"Redirect to app failed.",
+        NSURLErrorKey: url.absoluteString
+    };
     NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                          code:-1
                                      userInfo:info];

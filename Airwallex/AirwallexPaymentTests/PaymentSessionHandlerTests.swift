@@ -30,6 +30,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         mockPaymentResultDelegate = MockPaymentResultDelegate()
         mockSession = AWXOneOffSession()
+        mockSession.countryCode = "AU"
         mockMethodType = AWXPaymentMethodType()
         mockMethodType.name = AWXCardKey
         mockMethodType.cardSchemes = AWXCardScheme.allAvailable
@@ -37,6 +38,8 @@ class PaymentSessionHandlerTests: XCTestCase {
         mockPaymentIntent = AWXPaymentIntent()
         mockPaymentIntent.id = mockIntentId
         mockPaymentIntent.clientSecret = mockClientSecret
+        mockPaymentIntent.amount = NSDecimalNumber(value: 1)
+        mockPaymentIntent.currency = "AUD"
         mockSession.paymentIntent = mockPaymentIntent
 
         mockAddress = AWXAddress()

@@ -64,14 +64,14 @@
     [contentView addSubview:_titleLabel];
 
     _totalLabel = [UILabel autoLayoutView];
-    _totalLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Total %@", nil), [self.session.amount stringWithCurrencyCode:self.session.currency]];
+    _totalLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Total %@", nil, [NSBundle resourceBundle], "total amount of payment session"), [self.session.amount stringWithCurrencyCode:self.session.currency]];
     _totalLabel.textColor = [AWXTheme sharedTheme].secondaryTextColor;
     _totalLabel.font = [UIFont subhead1Font];
     [contentView addSubview:_totalLabel];
 
     _requiredCvcLength = [AWXCardValidator cvcLengthForBrand:[[AWXCardValidator sharedCardValidator] brandForCardName:self.paymentConsent.paymentMethod.card.brand].type];
     _cvcField = [AWXFloatingCvcTextField autoLayoutView];
-    _cvcField.placeholder = NSLocalizedString(@"CVC / CVV", @"CVC / CVV");
+    _cvcField.placeholder = NSLocalizedStringFromTableInBundle(@"CVC / CVV", nil, [NSBundle resourceBundle], @"CVC / CVV placeholder");
     _cvcField.maxLength = _requiredCvcLength;
     __weak __typeof(self) weakSelf = self;
     _cvcField.textDidChangeCallback = ^(NSString *cvc) {
@@ -82,7 +82,7 @@
 
     _confirmButton = [AWXActionButton autoLayoutView];
     _confirmButton.enabled = YES;
-    [_confirmButton setTitle:NSLocalizedString(@"Pay now", @"Pay now") forState:UIControlStateNormal];
+    [_confirmButton setTitle:NSLocalizedStringFromTableInBundle(@"Pay now", nil, [NSBundle resourceBundle], @"Pay now - pay button") forState:UIControlStateNormal];
     _confirmButton.titleLabel.font = [UIFont headlineFont];
     [_confirmButton addTarget:self action:@selector(payPressed:) forControlEvents:UIControlEventTouchUpInside];
     _confirmButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -107,7 +107,7 @@
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[cvcField]" options:0 metrics:metrics views:views]];
 
     if (self.paymentConsent.paymentMethod.card != nil) {
-        _titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Enter CVC/CVV for\n%@", nil), [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4]];
+        _titleLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Enter CVC/CVV for\n%@", nil, [NSBundle resourceBundle], nil), [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4]];
         _cvcField.hidden = NO;
     } else {
         _titleLabel.text = self.paymentConsent.paymentMethod.type.capitalizedString;
@@ -193,13 +193,6 @@
 - (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     [self log:@"provider:shouldHandleNextAction:  type:%@, stage: %@", nextAction.type, nextAction.stage];
     Class class = ClassToHandleNextActionForType(nextAction);
-    if (class == nil) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:controller animated:YES completion:nil];
-        return;
-    }
-
     AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:self session:self.session];
     [actionProvider handleNextAction:nextAction];
     self.provider = actionProvider;

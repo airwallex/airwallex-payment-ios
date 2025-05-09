@@ -16,6 +16,7 @@
 #import "AWXPaymentMethod.h"
 #import "AWXSession+Request.h"
 #import "AWXSession.h"
+#import "AWXUtils.h"
 #import "NSObject+Logging.h"
 #import "PKContact+Request.h"
 #import "PKPaymentToken+Request.h"
@@ -170,7 +171,7 @@ typedef enum {
 + (BOOL)canHandleSession:(AWXSession *)session errorMessage:(NSString *_Nullable *)error {
     if (session.applePayOptions == nil) {
         if (error) {
-            *error = NSLocalizedString(@"Missing Apple Pay options in session.", nil);
+            *error = @"Missing Apple Pay options in session.";
         }
         return NO;
     }
@@ -186,7 +187,7 @@ typedef enum {
 
     if (error && !canMakePayment) {
         if (error) {
-            *error = NSLocalizedString(@"Payment not supported via Apple Pay.", nil);
+            *error = @"Payment not supported via Apple Pay.";
         }
     }
 
@@ -194,7 +195,7 @@ typedef enum {
         AWXRecurringSession *recurringSession = (AWXRecurringSession *)session;
         if ([recurringSession.transactionMode isEqual:AWXPaymentTransactionModeRecurring] && recurringSession.nextTriggerByType == AirwallexNextTriggerByCustomerType) {
             if (error) {
-                *error = NSLocalizedString(@"CIT not supported by Apple Pay", nil);
+                *error = @"CIT not supported by Apple Pay";
             }
             return NO;
         }
@@ -203,7 +204,7 @@ typedef enum {
         AWXRecurringWithIntentSession *recurringSession = (AWXRecurringWithIntentSession *)session;
         if ([recurringSession.transactionMode isEqual:AWXPaymentTransactionModeRecurring] && recurringSession.nextTriggerByType == AirwallexNextTriggerByCustomerType) {
             if (error) {
-                *error = NSLocalizedString(@"CIT not supported by Apple Pay", nil);
+                *error = @"CIT not supported by Apple Pay";
             }
             return NO;
         }
@@ -224,7 +225,7 @@ typedef enum {
     PKPaymentAuthorizationController *controller = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
 
     if (!controller) {
-        NSString *description = NSLocalizedString(@"Failed to initialize Apple Pay Controller.", nil);
+        NSString *description = @"Failed to initialize Apple Pay Controller.";
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: description}];
@@ -311,7 +312,7 @@ typedef enum {
         self.didHandlePresentationFail = YES;
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
-                                         userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)}];
+                                         userInfo:@{NSLocalizedDescriptionKey: @"Failed to present Apple Pay Controller."}];
         [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];

@@ -38,7 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A customized text field for inputing
  */
-@interface AWXFloatingLabelTextField : AWXView
+__deprecated
+    @interface AWXFloatingLabelTextField : AWXView
 
 @property (weak, nonatomic, nullable) id<AWXFloatingLabelTextFieldDelegate> delegate;
 @property (strong, nonatomic) AWXView *borderView;

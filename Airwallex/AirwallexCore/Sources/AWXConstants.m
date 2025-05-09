@@ -9,6 +9,7 @@
 #import "AWXConstants.h"
 #import "AWXAPIClient.h"
 #import "AWXCardValidator.h"
+#import "AWXDefaultActionProvider.h"
 #import "AWXPaymentIntentResponse.h"
 #import "AWXPaymentMethod.h"
 
@@ -110,13 +111,13 @@ _Nullable Class ClassToHandleFlowForPaymentMethodType(AWXPaymentMethodType *type
 }
 
 Class ClassToHandleNextActionForType(AWXConfirmPaymentNextAction *nextAction) {
+    Class providerClass = nil;
     if ([nextAction.type isEqualToString:@"call_sdk"]) {
-        return NSClassFromString(@"AWXWeChatPayActionProvider");
+        providerClass = NSClassFromString(@"AWXWeChatPayActionProvider");
     } else if ([nextAction.type isEqualToString:@"redirect_form"]) {
-        return NSClassFromString(@"AWX3DSActionProvider");
+        providerClass = NSClassFromString(@"AWX3DSActionProvider");
     } else if ([nextAction.type isEqualToString:@"redirect"]) {
-        return NSClassFromString(@"AWXRedirectActionProvider");
-    } else {
-        return NSClassFromString(@"AWXDefaultActionProvider");
+        providerClass = NSClassFromString(@"AWXRedirectActionProvider");
     }
+    return providerClass ?: AWXDefaultActionProvider.class;
 }

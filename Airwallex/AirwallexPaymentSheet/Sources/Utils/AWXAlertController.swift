@@ -30,7 +30,7 @@ extension UIViewController {
         let alert = AWXAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(
             UIAlertAction(
-                title: NSLocalizedString("Close", bundle: .paymentSheet, comment: ""),
+                title: NSLocalizedString("Close", bundle: .paymentSheet, comment: "close button for alert"),
                 style: .cancel,
                 handler: action
             )

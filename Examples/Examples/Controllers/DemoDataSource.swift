@@ -149,9 +149,8 @@ struct DemoDataSource {
         return order
     }
     
-    static let commentForLocalization = "Integration demo list"
-    static let titleForPayAndSaveCard = NSLocalizedString("Pay with card and save card", comment: commentForLocalization)
-    static let titleForForceCard3DS = NSLocalizedString("Pay with card and trigger 3DS", comment: commentForLocalization)
-    static let titleForPayByRedirect = NSLocalizedString("Pay with Redirect", comment: commentForLocalization)
-    static let titleForPayWithApplePay = NSLocalizedString("Pay with Apple Pay", comment: commentForLocalization)
+    static let titleForPayAndSaveCard = "Pay with card and save card"
+    static let titleForForceCard3DS = "Pay with card and trigger 3DS"
+    static let titleForPayByRedirect = "Pay with Redirect"
+    static let titleForPayWithApplePay = "Pay with Apple Pay"
 }

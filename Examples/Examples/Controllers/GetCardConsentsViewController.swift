@@ -64,7 +64,7 @@ class GetPaymentConsentsViewController: UITableViewController {
     private lazy var topView: TopView = {
         let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        let viewModel = TopViewModel(title: NSLocalizedString("Get saved card methods", comment: "DEMO"))
+        let viewModel = TopViewModel(title: "Get saved card methods")
         view.setup(viewModel)
         return view
     }()

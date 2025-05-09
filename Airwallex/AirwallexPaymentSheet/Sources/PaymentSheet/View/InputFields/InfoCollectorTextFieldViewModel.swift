@@ -226,7 +226,7 @@ extension InfoCollectorTextFieldViewModel {
                      reconfigureHandler: @escaping ReconfigureHandler) {
         self.init(
             textFieldType: .CVC,
-            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: ""),
+            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: "user input - cvc placeholder"),
             returnActionHandler: returnActionHandler,
             customInputFormatter: cvcValidator,
             customInputValidator: cvcValidator,

@@ -74,7 +74,7 @@
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  if (self.webHandler) {
-                                     self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"3DS has been cancelled!", nil)}]);
+                                     self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"3DS has been cancelled!"}]);
                                  }
                              }];
 }
@@ -103,11 +103,11 @@
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
     if (response.statusCode == 400) {
         if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
-            self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unknown issue.", nil)}]);
+            self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unknown issue."}]);
         } else {
             [self dismissViewControllerAnimated:YES
                                      completion:^{
-                                         self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unknown issue.", nil)}]);
+                                         self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unknown issue."}]);
                                      }];
         }
     }

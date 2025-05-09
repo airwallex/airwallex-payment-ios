@@ -48,7 +48,7 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
             fieldName: fieldName,
             title: title,
             text: country?.countryName,
-            placeholder: NSLocalizedString("Select..", bundle: .paymentSheet, comment: "country selection view placeholder"),
+            placeholder: NSLocalizedString("Select...", bundle: .paymentSheet, comment: "country selection view placeholder"),
             isRequired: true,
             isEnabled: isEnabled,
             hideErrorHintLabel: hideErrorHintLabel,

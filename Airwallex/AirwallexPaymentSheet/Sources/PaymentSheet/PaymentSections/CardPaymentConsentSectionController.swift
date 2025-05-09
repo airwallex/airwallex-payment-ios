@@ -62,8 +62,8 @@ class CardPaymentConsentSectionController: SectionController {
     )
     
     private lazy var viewModelForConsentToggle = CardPaymentToggleCellViewModel(
-        title: NSLocalizedString("Choose a card", comment: ""),
-        actionTitle: NSLocalizedString("Add new", bundle: .paymentSheet, comment: ""),
+        title: NSLocalizedString("Choose a card", bundle: .paymentSheet, comment: "consent section - choose a saved card"),
+        actionTitle: NSLocalizedString("Add new", bundle: .paymentSheet, comment: "consent section - add a new card"),
         buttonAction: { [weak self] in
             guard let self else { return }
             self.addNewCardAction()
@@ -187,7 +187,7 @@ class CardPaymentConsentSectionController: SectionController {
                     image: image,
                     text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
                     highlightable: false,
-                    actionTitle: NSLocalizedString("Change", bundle: .paymentSheet, comment: "unselect card payment consent and back to consent list"),
+                    actionTitle: NSLocalizedString("Change", bundle: .paymentSheet, comment: "consent section - unselect consent and go back to consent list"),
                     actionIcon: nil,
                     buttonAction: { [weak self] in
                         guard let self else { return }
@@ -343,7 +343,7 @@ class CardPaymentConsentSectionController: SectionController {
         let viewModel = InfoCollectorCellViewModel(
             itemIdentifier: Items.cvcField,
             textFieldType: .CVC,
-            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: ""),
+            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: "consent section - cvc field placeholder"),
             customInputFormatter: validator,
             customInputValidator: validator,
             editingEventObserver: BeginEditingEventObserver {
@@ -360,14 +360,14 @@ class CardPaymentConsentSectionController: SectionController {
 private extension CardPaymentConsentSectionController {
     // actions
     func showAlertForDelete(_ consent: AWXPaymentConsent, consentDescription: String) {
-        let title = "Remove %@?"
+        let title = NSLocalizedString("Remove %@?", bundle: .paymentSheet, comment: "consent section - alert title for delete a consent")
         let alert = AWXAlertController(
-            title: String(format: NSLocalizedString(title, bundle: .paymentSheet, comment: "alert for delete consent"), consentDescription),
-            message: NSLocalizedString("This option will be permanently removed from your saved payment methods.", bundle: .paymentSheet, comment: "message for delete consent"),
+            title: String(format: title, consentDescription),
+            message: NSLocalizedString("This option will be permanently removed from your saved payment methods.", bundle: .paymentSheet, comment: "consent section - alert message for delete a consent"),
             preferredStyle: .alert
         )
         let deleteAction = UIAlertAction(
-            title: NSLocalizedString("Remove", bundle: .paymentSheet, comment: "confirm delete consent"),
+            title: NSLocalizedString("Remove", bundle: .paymentSheet, comment: "consent section - alert confirm button to remove a consent"),
             style: .destructive) { [weak self] _ in
                 guard let self else { return }
                 self.context.viewController?.startLoading()
@@ -384,7 +384,7 @@ private extension CardPaymentConsentSectionController {
         }
         alert.addAction(deleteAction)
         let cancelAction = UIAlertAction(
-            title: NSLocalizedString("Cancel", bundle: .paymentSheet, comment: "cancel delete consent"),
+            title: NSLocalizedString("Cancel", bundle: .paymentSheet, comment: "consent section - alert cancel button to delete a consent"),
             style: .cancel
         )
         alert.addAction(cancelAction)

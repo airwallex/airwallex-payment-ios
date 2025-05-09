@@ -57,7 +57,7 @@
 
 @interface AWXGetPaymentConsentsResponse ()
 
-@property (nonatomic, readwrite) BOOL hasMore;
+@property (nonatomic, readwrite, assign) BOOL hasMore;
 @property (nonatomic, copy, readwrite) NSArray<AWXPaymentConsent *> *items;
 
 @end

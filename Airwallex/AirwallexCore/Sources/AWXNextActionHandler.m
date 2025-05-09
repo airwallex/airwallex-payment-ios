@@ -8,6 +8,7 @@
 
 #import "AWXNextActionHandler.h"
 #import "AWXDefaultActionProvider.h"
+#import "AWXUtils.h"
 
 @interface AWXNextActionHandler ()
 
@@ -33,18 +34,6 @@
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     Class class = ClassToHandleNextActionForType(nextAction);
     AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:self.delegate session:self.session];
-    if (actionProvider == nil) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"No provider matched the next action.", nil) preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
-        if ([self.delegate respondsToSelector:@selector(hostViewController)]) {
-            [[self.delegate hostViewController] presentViewController:controller animated:YES completion:nil];
-        } else {
-            if ([self.delegate respondsToSelector:@selector(provider:shouldPresentViewController:forceToDismiss:withAnimation:)]) {
-                [self.delegate provider:[[AWXDefaultProvider alloc] initWithDelegate:_delegate session:_session] shouldPresentViewController:controller forceToDismiss:YES withAnimation:YES];
-            }
-        }
-        return;
-    }
     [actionProvider handleNextAction:nextAction];
     self.provider = actionProvider;
 }
