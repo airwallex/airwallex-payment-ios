@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "tick.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "tick@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
