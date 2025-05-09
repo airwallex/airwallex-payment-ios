@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "IR.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "IR@2x.png",
       "idiom" : "universal",
       "scale" : "2x"

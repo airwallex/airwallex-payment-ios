@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "GQ.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "GQ@2x.png",
       "idiom" : "universal",
       "scale" : "2x"

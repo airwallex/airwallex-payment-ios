@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "GB-WLS.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "GB-WLS@2x.png",
       "idiom" : "universal",
       "scale" : "2x"

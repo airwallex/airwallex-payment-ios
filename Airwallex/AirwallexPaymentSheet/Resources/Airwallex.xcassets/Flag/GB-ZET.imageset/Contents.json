@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "GB-ZET.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "GB-ZET@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
