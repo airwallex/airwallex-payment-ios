@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "VC.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "VC@2x.png",
       "idiom" : "universal",
       "scale" : "2x"

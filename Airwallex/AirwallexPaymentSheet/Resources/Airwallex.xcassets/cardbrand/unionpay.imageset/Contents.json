@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "unionpay.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "unionpay@2x.png",
       "idiom" : "universal",
       "scale" : "2x"

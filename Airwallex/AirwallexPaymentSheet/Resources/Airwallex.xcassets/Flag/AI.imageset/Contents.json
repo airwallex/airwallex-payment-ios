@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "AI.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "AI@2x.png",
       "idiom" : "universal",
       "scale" : "2x"

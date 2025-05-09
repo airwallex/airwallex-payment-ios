@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "KY.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "KY@2x.png",
       "idiom" : "universal",
       "scale" : "2x"

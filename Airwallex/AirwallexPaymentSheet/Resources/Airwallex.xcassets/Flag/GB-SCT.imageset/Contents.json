@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "GB-SCT.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "filename" : "GB-SCT@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
