@@ -1,6 +1,10 @@
 {
   "images" : [
     {
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
       "filename" : "SA@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
