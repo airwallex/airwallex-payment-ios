@@ -343,6 +343,7 @@
 		D85042DA2DA7A46D0074BA7F /* AWXWidgets.h in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEEA26E5DF4E00C6AFE3 /* AWXWidgets.h */; };
 		D85042DC2DA7A46D0074BA7F /* AWXFloatingCvcTextField.h in Sources */ = {isa = PBXBuildFile; fileRef = 1820C96E2C85A1C0006B18C4 /* AWXFloatingCvcTextField.h */; };
 		D85042DD2DA7A46D0074BA7F /* NSObject+Logging.h in Sources */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; };
+		D86710192DCD9D2C001D5A74 /* Airwallex.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D86710182DCD9D2C001D5A74 /* Airwallex.xcassets */; };
 		D880456A2DA7B281008308C7 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D42D9E335D00D082EC /* MockProviderDelegate.swift */; };
 		D880456B2DA7B281008308C7 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D12D9E335D00D082EC /* Bundle+Extensions.swift */; };
 		D880456C2DA7B281008308C7 /* MockSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D52D9E335D00D082EC /* MockSectionController.swift */; };
@@ -409,6 +410,8 @@
 		D8C05A0E2DACF123002BED34 /* CardPaymentConsentSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A0D2DACF123002BED34 /* CardPaymentConsentSectionControllerTests.swift */; };
 		D8C05A102DAD0FE2002BED34 /* NewCardPaymentSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A0F2DAD0FE2002BED34 /* NewCardPaymentSectionControllerTests.swift */; };
 		D8C05A162DAE0F81002BED34 /* UserEditingEventObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A152DAE0F81002BED34 /* UserEditingEventObserver.swift */; };
+		D8C6ECF92DD199790036ED39 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */; };
+		D8C6ECFA2DD1997B0036ED39 /* CurrencyCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */; };
 		D8DD6B4D2DA7BCDC0047E450 /* AirwallexPayment.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D8DD6B4C2DA7BCDC0047E450 /* AirwallexPayment.xctestplan */; };
 		D8DE3F742DB0E19D009D9C0C /* AWXUIContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE3F732DB0E19D009D9C0C /* AWXUIContext.swift */; };
 		D8EC87792D9E335900D082EC /* AirwallexPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D8EC87772D9E335900D082EC /* AirwallexPayment.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -701,6 +704,7 @@
 		D85041FC2DA79D7A0074BA7F /* AirwallexPaymentSheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexPaymentSheet.h; sourceTree = "<group>"; };
 		D85042732DA79FFB0074BA7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D85042752DA79FFF0074BA7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D86710182DCD9D2C001D5A74 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
 		D8890ABE2DB893BB00F94F68 /* BankSelectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankSelectionViewModelTests.swift; sourceTree = "<group>"; };
 		D8890AC02DB8985B00F94F68 /* BillingInfoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillingInfoCellViewModelTests.swift; sourceTree = "<group>"; };
 		D88BFBD12DA916D20047C787 /* ApplePaySectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySectionControllerTests.swift; sourceTree = "<group>"; };
@@ -1281,6 +1285,9 @@
 		D85040732DA793EA0074BA7F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */,
+				D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */,
+				D86710182DCD9D2C001D5A74 /* Airwallex.xcassets */,
 				D85040752DA794020074BA7F /* PrivacyInfo.xcprivacy */,
 				D809709D2DC9DA380051B5CA /* Localizable.xcstrings */,
 			);
@@ -1491,8 +1498,6 @@
 			isa = PBXGroup;
 			children = (
 				D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */,
-				D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */,
-				D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */,
 				D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */,
 				D80970A32DC9E09E0051B5CA /* Localizable.strings */,
 			);
@@ -2233,6 +2238,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D809709E2DC9DA380051B5CA /* Localizable.xcstrings in Resources */,
+				D8C6ECF92DD199790036ED39 /* CountryCodes.json in Resources */,
+				D8C6ECFA2DD1997B0036ED39 /* CurrencyCodes.json in Resources */,
+				D86710192DCD9D2C001D5A74 /* Airwallex.xcassets in Resources */,
 				D88E34B32DA7E35A00183A49 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

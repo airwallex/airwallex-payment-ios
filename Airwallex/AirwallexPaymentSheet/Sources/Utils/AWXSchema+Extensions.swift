@@ -93,7 +93,7 @@ extension AWXField {
         
         if let countryCode {
             do {
-                guard let url = Bundle.resource().url(forResource: "CountryCodes", withExtension: "json") else {
+                guard let url = Bundle.paymentSheet.url(forResource: "CountryCodes", withExtension: "json") else {
                     throw ErrorMessage(rawValue: "no data for country code")
                 }
                 let data = try Data(contentsOf: url)
@@ -108,7 +108,7 @@ extension AWXField {
         
         if let currencyCode {
             do {
-                guard let url = Bundle.resource().url(forResource: "CurrencyCodes", withExtension: "json") else {
+                guard let url = Bundle.paymentSheet.url(forResource: "CurrencyCodes", withExtension: "json") else {
                     throw ErrorMessage(rawValue:"no data for currency code")
                 }
                 let data = try Data(contentsOf: url)

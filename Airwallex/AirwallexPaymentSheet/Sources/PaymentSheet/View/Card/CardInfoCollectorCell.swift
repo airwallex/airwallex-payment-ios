@@ -39,7 +39,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMaxXMaxYCorner
         
-        let image = UIImage(named: "cvc", in: .resource(), compatibleWith: nil)
+        let image = UIImage(named: "cvc", in: .paymentSheet, compatibleWith: nil)
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.horizontalStack.addArrangedSubview(imageView)

@@ -13,7 +13,7 @@ class SchemaPaymentReminderCell: UICollectionViewCell, ViewReusable {
     private let imageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.image = UIImage(named: "redirect", in: .resource())
+        view.image = UIImage(named: "redirect", in: .paymentSheet)
         view.setContentHuggingPriority(.defaultLow + 10, for: .horizontal)
         view.setContentCompressionResistancePriority(.defaultHigh + 10, for: .horizontal)
         return view

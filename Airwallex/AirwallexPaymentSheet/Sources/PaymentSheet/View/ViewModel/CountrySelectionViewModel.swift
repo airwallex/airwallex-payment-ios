@@ -22,11 +22,11 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
     
     var icon: UIImage? {
         guard let country else { return nil }
-        return UIImage(named: country.countryCode, in: Bundle.resource())
+        return UIImage(named: country.countryCode, in: .paymentSheet)
     }
     
     var indicator: UIImage? {
-        UIImage(named: "down", in: Bundle.resource())?
+        UIImage(named: "down", in: .paymentSheet)?
             .withTintColor(
                 isEnabled ? .awxColor(.iconSecondary) : .awxColor(.iconDisabled),
                 renderingMode: .alwaysOriginal
