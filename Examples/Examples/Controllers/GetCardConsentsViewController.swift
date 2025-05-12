@@ -52,7 +52,7 @@ class GetPaymentConsentsViewController: UITableViewController {
             imageName = nil
         }
         guard let imageName else { return nil }
-        return UIImage(named: imageName, in: Bundle.paymentSheet, compatibleWith: nil)
+        return UIImage(named: imageName)
     }
     
     private lazy var storeAPIClient = Airwallex.apiClient

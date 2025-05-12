@@ -13,7 +13,7 @@ fileprivate class BundleProvider {
 }
 
 extension Bundle {
-    public static var paymentSheet: Bundle {
+    static var paymentSheet: Bundle {
 #if SWIFT_PACKAGE
         return .module
 #else
