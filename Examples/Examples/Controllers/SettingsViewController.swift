@@ -12,13 +12,12 @@ import Airwallex
 
 class SettingsViewController: UIViewController {
     
-    private let pageName: String = "SDK Demo Setting"
     private lazy var topView: TopView = {
         let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
         let viewModel = TopViewModel(
-            title: NSLocalizedString("Settings", comment: pageName),
-            actionTitle: NSLocalizedString("Reset", comment: pageName),
+            title: "Settings",
+            actionTitle: "Reset",
             actionHandler: { [weak self] in
                 self?.onResetButtonTapped()
             }
@@ -43,7 +42,7 @@ class SettingsViewController: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        let view = AWXButton(style: .primary, title: NSLocalizedString("Save", comment: pageName))
+        let view = AWXButton(style: .primary, title: "Save")
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onSaveButtonTapped), for: .touchUpInside)
         return view
@@ -90,7 +89,7 @@ class SettingsViewController: UIViewController {
     private lazy var requiredBillingFieldsEntry: ConfigEntryView = {
         let view = ConfigEntryView()
         let viewModel = ConfigEntryViewModel(
-            text: NSLocalizedString("Required billing fields", comment: pageName)
+            text: "Required billing fields"
         ) { [weak self] in
             guard let self else { return }
             let vc = BillingFieldsSettingViewController(settings: self.settings)
@@ -297,9 +296,9 @@ private extension SettingsViewController {
         let optionTitle = env.displayName
         
         let viewModel = ConfigActionViewModel(
-            configName: NSLocalizedString("Environment", comment: pageName),
+            configName: "Environment",
             configValue: optionTitle,
-            caption: NSLocalizedString("If you switch environment, you will need to restart the app for it to take effect. ", comment: pageName),
+            caption: "If you switch environment, you will need to restart the app for it to take effect. ",
             primaryAction: { [weak self] optionView in
                 guard let self else { return }
                 self.showOptions(environmentOptions.map { $0.displayName }, sender: optionView) { index, _ in
@@ -321,7 +320,7 @@ private extension SettingsViewController {
         
         if ExamplesKeys.checkoutMode == .oneOff {
             let viewModel = ConfigActionViewModel(
-                configName: NSLocalizedString("Next trigger by", comment: pageName),
+                configName: "Next trigger by",
                 configValue: AirwallexNextTriggerByType.customerType.displayName,
                 primaryAction: nil
             )
@@ -331,7 +330,7 @@ private extension SettingsViewController {
             let options = [ AirwallexNextTriggerByType.customerType, AirwallexNextTriggerByType.merchantType ]
 
             let viewModel = ConfigActionViewModel(
-                configName: NSLocalizedString("Next trigger by", comment: pageName),
+                configName: "Next trigger by",
                 configValue: option.displayName,
                 primaryAction: { [weak self] optionView in
                     guard let self else { return }
@@ -354,7 +353,7 @@ private extension SettingsViewController {
         let options = AWXUIContext.PaymentLayout.allCases
         
         let viewModel = ConfigActionViewModel(
-            configName: NSLocalizedString("Payment Layout", comment: pageName),
+            configName: "Payment Layout",
             configValue: option.displayName,
             primaryAction: { [weak self] optionView in
                 guard let self else { return }
@@ -375,7 +374,7 @@ private extension SettingsViewController {
         
         switchForForce3DS.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Force 3DS", comment: pageName),
+                title: "Force 3DS",
                 isOn: settings.force3DS,
                 action: { [weak self] isOn in
                     self?.settings.force3DS = isOn
@@ -384,7 +383,7 @@ private extension SettingsViewController {
         
         switchForAutoCapture.setup(
             ConfigSwitchViewModel(
-                title: NSLocalizedString("Auto capture", comment: pageName),
+                title: "Auto capture",
                 isOn: settings.autoCapture,
                 action: { [weak self] isOn in
                     self?.settings.autoCapture = isOn
@@ -418,7 +417,7 @@ private extension SettingsViewController {
             customerIdActionButton.setTitle(nil, for: .normal)
         } else {
             customerIdActionButton.setTitle(
-                NSLocalizedString("Generate", comment: pageName),
+                "Generate",
                 for: .normal
             )
             customerIdActionButton.setImage(nil, for: .normal)

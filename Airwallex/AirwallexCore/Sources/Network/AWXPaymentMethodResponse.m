@@ -12,7 +12,7 @@
 
 @interface AWXGetPaymentMethodsResponse ()
 
-@property (nonatomic, readwrite) BOOL hasMore;
+@property (nonatomic, assign, readwrite) BOOL hasMore;
 @property (nonatomic, copy, readwrite) NSArray<AWXPaymentMethod *> *items;
 
 @end
@@ -39,7 +39,7 @@
 
 @interface AWXGetPaymentMethodTypesResponse ()
 
-@property (nonatomic, readwrite) BOOL hasMore;
+@property (nonatomic, assign, readwrite) BOOL hasMore;
 @property (nonatomic, copy, readwrite) NSArray<AWXPaymentMethodType *> *items;
 
 @end
@@ -97,7 +97,7 @@
 
 @interface AWXGetAvailableBanksResponse ()
 
-@property (nonatomic, readwrite) BOOL hasMore;
+@property (nonatomic, assign, readwrite) BOOL hasMore;
 @property (nonatomic, copy, readwrite) NSArray<AWXBank *> *items;
 
 @end

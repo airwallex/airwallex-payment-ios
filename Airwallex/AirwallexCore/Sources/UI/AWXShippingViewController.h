@@ -30,7 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXShippingViewController` provides a form to edit shipping address.
  */
-@interface AWXShippingViewController : AWXViewController
+__deprecated
+    @interface AWXShippingViewController : AWXViewController
 
 /**
  A delegate which handles saved shipping.

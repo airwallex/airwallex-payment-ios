@@ -11,13 +11,12 @@ import Combine
 import Airwallex
 
 class H5DemoViewController: UIViewController {
-    private let localizationComment = "H5 demo view controller"
     
     private lazy var topView: TopView = {
         let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
         let viewModel = TopViewModel(
-            title: NSLocalizedString("Launch HTML 5 demo", comment: localizationComment)
+            title: "Launch HTML 5 demo"
         )
         view.setup(viewModel)
         return view
@@ -65,7 +64,7 @@ class H5DemoViewController: UIViewController {
     }()
     
     private lazy var nextButton: UIButton = {
-        let view = AWXButton(style: .primary, title: NSLocalizedString("Next", comment: localizationComment))
+        let view = AWXButton(style: .primary, title: "Next")
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onNextButtonTapped), for: .touchUpInside)
         return view
@@ -175,7 +174,7 @@ class H5DemoViewController: UIViewController {
         guard url.isEmpty == false,
               let referrer = referrerURLField.textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
               !referrer.isEmpty else {
-            showAlert(message: NSLocalizedString("Please fill in all the fields", comment: localizationComment))
+            showAlert(message: "Please fill in all the fields")
             return
         }
         

@@ -48,6 +48,7 @@ FOUNDATION_EXPORT const unsigned char AirwallexCoreVersionString[];
 #import "AWXPlaceDetails.h"
 #import "AWXRedirectActionProvider.h"
 #import "AWXSession.h"
+#import "AWXShippingViewController.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
 #import "AWXViewController.h"

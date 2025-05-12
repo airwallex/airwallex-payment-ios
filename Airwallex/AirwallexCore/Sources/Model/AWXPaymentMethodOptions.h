@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Should capture automatically when confirm. Default to false. The payment intent will be captured automatically if it is true, and authorized only if it is false.
  */
-@property (nonatomic) BOOL autoCapture;
+@property (nonatomic, assign) BOOL autoCapture;
 
 /**
  ThreeDs object.

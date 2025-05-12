@@ -24,10 +24,13 @@ class MockMethodProvider: PaymentMethodProvider {
     
     var session: AWXSession = {
         let session =  AWXOneOffSession()
+        session.countryCode = "AU"
         session.paymentIntent = AWXPaymentIntent()
         session.paymentIntent?.clientSecret = "client_secret"
         session.paymentIntent?.id = "intent_id"
         session.paymentIntent?.customerId = "customer_id"
+        session.paymentIntent?.amount = NSDecimalNumber(value: 1)
+        session.paymentIntent?.currency = "AUD"
         return session
     }()
     

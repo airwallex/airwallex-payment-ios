@@ -17,7 +17,7 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private lazy var button: UIButton = {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.setTitle(NSLocalizedString("Pay", comment: "checkout button"), for: .normal)
+        view.setTitle(NSLocalizedString("Pay", bundle: .paymentSheet, comment: "checkout button title"), for: .normal)
         view.addTarget(self, action: #selector(onButtonTapped), for: .touchUpInside)
         
         view.setTitleColor(.awxColor(.textInverse), for: .normal)

@@ -1,0 +1,53 @@
+/* Shiping field placeholder - City */
+"City" = "城市";
+
+/* close button for UIAlertController
+close button for alert
+close button on navigation bar */
+"Close" = "關閉";
+
+/* Shiping field placeholder - Country / Region */
+"Country / Region" = "國家／地區";
+
+/* CVC / CVV placeholder */
+"CVC / CVV" = "CVC / CVV";
+
+/* Shiping field placeholder - Email (optional) */
+"Email (optional)" = "電子郵件（選填）";
+
+/* No comment provided by engineer. */
+"Enter CVC/CVV for\n%@" = "請輸入%@的CVC/CVV";
+
+/* Shiping field placeholder - First Name */
+"First name" = "名字";
+
+/* string description when decimal number is zero */
+"Free" = "免費";
+
+/* Shiping field placeholder - Last Name */
+"Last name" = "姓氏";
+
+/* Pay now - pay button */
+"Pay now" = "立即付款";
+
+/* Shiping field placeholder - Phone number (optional) */
+"Phone number (optional)" = "電話號碼（選填）";
+
+/* save button on navigation bar */
+"Save" = "儲存";
+
+/* title of shipping view controller */
+"Shipping" = "運送";
+
+/* Shiping field placeholder - State */
+"State" = "州／省";
+
+/* Shiping field placeholder - Street */
+"Street" = "街道";
+
+/* total amount of payment session */
+"Total %@" = "總計 %@";
+
+/* Shiping field placeholder - Zip code (optional) */
+"Zip code (optional)" = "郵遞區號（選填）";
+

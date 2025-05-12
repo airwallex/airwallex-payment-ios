@@ -52,7 +52,7 @@ class GetPaymentConsentsViewController: UITableViewController {
             imageName = nil
         }
         guard let imageName else { return nil }
-        return UIImage(named: imageName, in: Bundle.resource(), compatibleWith: nil)
+        return UIImage(named: imageName)
     }
     
     private lazy var storeAPIClient = Airwallex.apiClient
@@ -64,7 +64,7 @@ class GetPaymentConsentsViewController: UITableViewController {
     private lazy var topView: TopView = {
         let view = TopView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        let viewModel = TopViewModel(title: NSLocalizedString("Get saved card methods", comment: "DEMO"))
+        let viewModel = TopViewModel(title: "Get saved card methods")
         view.setup(viewModel)
         return view
     }()

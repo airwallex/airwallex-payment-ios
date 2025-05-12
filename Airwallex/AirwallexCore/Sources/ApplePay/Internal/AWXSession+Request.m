@@ -9,6 +9,7 @@
 #import "AWXPaymentIntent+Summary.h"
 #import "AWXPlaceDetails+PKContact.h"
 #import "AWXSession+Request.h"
+#import "AWXUtils.h"
 
 @implementation AWXSession (Request)
 
@@ -18,7 +19,7 @@
         if (error) {
             *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                          code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing Apple Pay options in session.", nil)}];
+                                     userInfo:@{NSLocalizedDescriptionKey: @"Missing Apple Pay options in session."}];
         }
         return nil;
     }
@@ -27,7 +28,7 @@
         if (error) {
             *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                          code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Missing merchant identifier in apple pay options.", nil)}];
+                                     userInfo:@{NSLocalizedDescriptionKey: @"Missing merchant identifier in apple pay options."}];
         }
         return nil;
     }
@@ -66,49 +67,6 @@
     request.supportedNetworks = options.supportedNetworks;
 
     return request;
-}
-
-- (nullable NSString *)validateData {
-    if (!self.countryCode) {
-        return NSLocalizedString(@"Missing country code in session.", nil);
-    }
-    if ([self isKindOfClass:[AWXOneOffSession class]]) {
-        AWXOneOffSession *session = (AWXOneOffSession *)self;
-        return [self validatePaymentIntentData:session.paymentIntent];
-    }
-    if ([self isKindOfClass:[AWXRecurringSession class]]) {
-        AWXRecurringSession *session = (AWXRecurringSession *)self;
-        if (!session.amount) {
-            return NSLocalizedString(@"Missing amount in RecurringSession.", nil);
-        }
-        if (!session.currency || session.currency.length != 3) {
-            return NSLocalizedString(@"RecurringSession currency should be three-letter ISO 4217 currency code.", nil);
-        }
-    }
-    if ([self isKindOfClass:[AWXRecurringWithIntentSession class]]) {
-        AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self;
-        return [self validatePaymentIntentData:session.paymentIntent];
-    }
-    return nil;
-}
-
-- (nullable NSString *)validatePaymentIntentData:(nullable AWXPaymentIntent *)paymentIntent {
-    if (!paymentIntent) {
-        return NSLocalizedString(@"PaymentIntent cannot be nil.", nil);
-    }
-    if (!paymentIntent.amount) {
-        return NSLocalizedString(@"Missing amount in PaymentIntent.", nil);
-    }
-
-    if (!paymentIntent.currency || paymentIntent.currency.length != 3) {
-        return NSLocalizedString(@"PaymentIntent currency should be three-letter ISO 4217 currency code.", nil);
-    }
-
-    if (!paymentIntent.Id) {
-        return NSLocalizedString(@"Missing id in PaymentIntent.", nil);
-    }
-
-    return nil;
 }
 
 - (PKPaymentSummaryItem *)paymentSummaryItemWithTotalPriceLabel:(nullable NSString *)label {

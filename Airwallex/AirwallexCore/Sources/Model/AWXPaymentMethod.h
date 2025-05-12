@@ -103,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Whether payment method is active.
  */
-@property (nonatomic) BOOL active;
+@property (nonatomic, assign) BOOL active;
 
 /**
  Resources
@@ -167,7 +167,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  hidden.
  */
-@property (nonatomic) BOOL hidden;
+@property (nonatomic, assign) BOOL hidden;
 
 /**
  candidates.

@@ -44,12 +44,12 @@ typedef NS_ENUM(NSUInteger, AWXBrandType) {
 /**
  The length of  card No.
  */
-@property (nonatomic) NSInteger length;
+@property (nonatomic, assign) NSInteger length;
 
 /**
  The brand type.
  */
-@property (nonatomic) AWXBrandType type;
+@property (nonatomic, assign) AWXBrandType type;
 
 - (instancetype)initWithName:(NSString *)name
                   rangeStart:(NSString *)rangeStart

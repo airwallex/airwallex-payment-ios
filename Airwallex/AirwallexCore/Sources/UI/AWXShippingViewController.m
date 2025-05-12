@@ -37,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Save", @"Save") style:UIBarButtonItemStylePlain target:self action:@selector(savePressed:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Save", nil, [NSBundle resourceBundle], @"save button on navigation bar") style:UIBarButtonItemStylePlain target:self action:@selector(savePressed:)];
     if (self.navigationController.viewControllers.firstObject == self) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle]] style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
     }
@@ -53,7 +53,7 @@
     [_scrollView addSubview:contentView];
 
     UILabel *titleLabel = [UILabel new];
-    titleLabel.text = NSLocalizedString(@"Shipping", @"Shipping");
+    titleLabel.text = NSLocalizedStringFromTableInBundle(@"Shipping", nil, [NSBundle resourceBundle], @"title of shipping view controller");
     titleLabel.textColor = [AWXTheme sharedTheme].primaryTextColor;
     titleLabel.font = [UIFont titleFont];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -79,19 +79,19 @@
 
     _firstNameField = [AWXFloatingLabelTextField new];
     _firstNameField.fieldType = AWXTextFieldTypeFirstName;
-    _firstNameField.placeholder = NSLocalizedString(@"First name", @"First Name");
+    _firstNameField.placeholder = NSLocalizedStringFromTableInBundle(@"First name", nil, [NSBundle resourceBundle], @"Shiping field placeholder - First Name");
     _firstNameField.isRequired = YES;
     [stackView addArrangedSubview:_firstNameField];
 
     _lastNameField = [AWXFloatingLabelTextField new];
     _lastNameField.fieldType = AWXTextFieldTypeLastName;
-    _lastNameField.placeholder = NSLocalizedString(@"Last name", @"Last Name");
+    _lastNameField.placeholder = NSLocalizedStringFromTableInBundle(@"Last name", nil, [NSBundle resourceBundle], @"Shiping field placeholder - Last Name");
     _firstNameField.nextTextField = _lastNameField;
     _lastNameField.isRequired = YES;
     [stackView addArrangedSubview:_lastNameField];
 
     _countryView = [AWXFloatingLabelView new];
-    _countryView.placeholder = NSLocalizedString(@"Country / Region", @"Country / Region");
+    _countryView.placeholder = NSLocalizedStringFromTableInBundle(@"Country / Region", nil, [NSBundle resourceBundle], @"Shiping field placeholder - Country / Region");
     [stackView addArrangedSubview:_countryView];
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectCountries:)];
@@ -99,40 +99,40 @@
 
     _stateField = [AWXFloatingLabelTextField new];
     _stateField.fieldType = AWXTextFieldTypeState;
-    _stateField.placeholder = NSLocalizedString(@"State", @"State");
+    _stateField.placeholder = NSLocalizedStringFromTableInBundle(@"State", nil, [NSBundle resourceBundle], @"Shiping field placeholder - State");
     _lastNameField.nextTextField = _stateField;
     _stateField.isRequired = YES;
     [stackView addArrangedSubview:_stateField];
 
     _cityField = [AWXFloatingLabelTextField new];
     _cityField.fieldType = AWXTextFieldTypeCity;
-    _cityField.placeholder = NSLocalizedString(@"City", @"City");
+    _cityField.placeholder = NSLocalizedStringFromTableInBundle(@"City", nil, [NSBundle resourceBundle], @"Shiping field placeholder - City");
     _stateField.nextTextField = _cityField;
     _cityField.isRequired = YES;
     [stackView addArrangedSubview:_cityField];
 
     _streetField = [AWXFloatingLabelTextField new];
     _streetField.fieldType = AWXTextFieldTypeStreet;
-    _streetField.placeholder = NSLocalizedString(@"Street", @"Street");
+    _streetField.placeholder = NSLocalizedStringFromTableInBundle(@"Street", nil, [NSBundle resourceBundle], @"Shiping field placeholder - Street");
     _cityField.nextTextField = _streetField;
     _streetField.isRequired = YES;
     [stackView addArrangedSubview:_streetField];
 
     _zipcodeField = [AWXFloatingLabelTextField new];
     _zipcodeField.fieldType = AWXTextFieldTypeZipcode;
-    _zipcodeField.placeholder = NSLocalizedString(@"Zip code (optional)", @"Zip code (optional)");
+    _zipcodeField.placeholder = NSLocalizedStringFromTableInBundle(@"Zip code (optional)", nil, [NSBundle resourceBundle], @"Shiping field placeholder - Zip code (optional)");
     _streetField.nextTextField = _zipcodeField;
     [stackView addArrangedSubview:_zipcodeField];
 
     _emailField = [AWXFloatingLabelTextField new];
     _emailField.fieldType = AWXTextFieldTypeEmail;
-    _emailField.placeholder = NSLocalizedString(@"Email (optional)", @"Email (optional)");
+    _emailField.placeholder = NSLocalizedStringFromTableInBundle(@"Email (optional)", nil, [NSBundle resourceBundle], @"Shiping field placeholder - Email (optional)");
     _zipcodeField.nextTextField = _emailField;
     [stackView addArrangedSubview:_emailField];
 
     _phoneNumberField = [AWXFloatingLabelTextField new];
     _phoneNumberField.fieldType = AWXTextFieldTypePhoneNumber;
-    _phoneNumberField.placeholder = NSLocalizedString(@"Phone number (optional)", @"Phone number (optional)");
+    _phoneNumberField.placeholder = NSLocalizedStringFromTableInBundle(@"Phone number (optional)", nil, [NSBundle resourceBundle], @"Shiping field placeholder - Phone number (optional)");
     _emailField.nextTextField = _phoneNumberField;
     [stackView addArrangedSubview:_phoneNumberField];
 
@@ -187,7 +187,7 @@
     NSString *error = [shipping validate];
     if (error) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:error preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Close", nil, [NSBundle resourceBundle], @"close button for UIAlertController") style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:controller animated:YES completion:nil];
         return;
     }

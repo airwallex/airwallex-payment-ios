@@ -21,13 +21,13 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
         }
     }
     
-    private let errorMessage = NSLocalizedString("Please select a bank", bundle: .paymentSheet, comment: "bank selection view error hint")
+    private let errorMessage = NSLocalizedString("Please select a bank", bundle: .paymentSheet, comment: "user input validation - bank selection view error hint")
     
     // MARK: - OptionSelectionViewConfiguring
     var icon: UIImage? { nil }
     
     var indicator: UIImage? {
-        UIImage(named: "down", in: Bundle.resource())?
+        UIImage(named: "down", in: Bundle.paymentSheet)?
             .withTintColor(
                 isEnabled ? .awxColor(.iconSecondary) : .awxColor(.iconDisabled),
                 renderingMode: .alwaysOriginal
@@ -43,9 +43,9 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
         self.handleUserInteraction = handleUserInteraction
         super.init(
             fieldName: AWXField.Name.bankName,
-            title: NSLocalizedString("Bank", bundle: .paymentSheet, comment: ""),
+            title: NSLocalizedString("Bank", bundle: .paymentSheet, comment: "title for bank selection"),
             text: bank?.displayName,
-            placeholder: NSLocalizedString("Select...", bundle: .paymentSheet, comment: "option selection view placeholder"),
+            placeholder: NSLocalizedString("Select...", bundle: .paymentSheet, comment: "bank selection placeholder"),
             isRequired: true,
             reconfigureHandler: reconfigureHandler
         )

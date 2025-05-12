@@ -16,7 +16,7 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font  = .awxFont(.body2)
         view.textColor = .awxColor(.textPrimary)
-        view.text = NSLocalizedString("Billing Address", bundle: .paymentSheet, comment: "")
+        view.text = NSLocalizedString("Billing Address", bundle: .paymentSheet, comment: "Billing Address - title")
         return view
     }()
     
@@ -24,7 +24,7 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(
-            NSLocalizedString("Same as shipping address", bundle: .paymentSheet, comment: "checkbox in checkout view"),
+            NSLocalizedString("Same as shipping address", bundle: .paymentSheet, comment: "Billing Address - reuse toggle"),
             for: .normal
         )
         button.setTitleColor(.awxColor(.textPrimary), for: .normal)

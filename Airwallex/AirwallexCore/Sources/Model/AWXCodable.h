@@ -11,9 +11,11 @@
 #ifndef AWXCodable_h
 #define AWXCodable_h
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol AWXJSONDecodable<NSObject>
 
-+ (id)decodeFromJSON:(NSDictionary *)json;
++ (id _Nullable)decodeFromJSON:(NSDictionary *_Nullable)json;
 
 @end
 
@@ -22,5 +24,7 @@
 - (NSDictionary *)encodeToJSON;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* AWXCodable_h */

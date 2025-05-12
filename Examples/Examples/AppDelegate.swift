@@ -55,15 +55,15 @@ extension AppDelegate: WXApiDelegate {
 
             switch response.errCode {
             case WXSuccess.rawValue:
-                message = NSLocalizedString("Succeed to pay", comment: "")
+                message = "Succeed to pay"
             case WXErrCodeUserCancel.rawValue:
-                message = NSLocalizedString("User cancelled.", comment: "")
+                message = "User cancelled."
             default:
-                message = NSLocalizedString("Failed to pay", comment: "")
+                message = "Failed to pay"
             }
 
             let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: ""), style: .cancel, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Close", style: .cancel))
 
             if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
                 rootViewController.present(alertController, animated: true, completion: nil)

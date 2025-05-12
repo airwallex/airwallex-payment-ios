@@ -55,8 +55,8 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     )
     
     private lazy var viewModelForConsentToggle = CardPaymentToggleCellViewModel(
-        title: NSLocalizedString("Add new", bundle: .paymentSheet, comment: ""),
-        actionTitle: NSLocalizedString("Keep using saved cards", bundle: .paymentSheet, comment: ""),
+        title: NSLocalizedString("Add new", bundle: .paymentSheet, comment: "add card section - section title"),
+        actionTitle: NSLocalizedString("Keep using saved cards", bundle: .paymentSheet, comment: "add card section - button to switch to consent list"),
         buttonAction: { [weak self] in
             guard let self else { return }
             self.switchToConsentPaymentAction()
@@ -167,7 +167,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             let viewModel = CheckBoxCellViewModel(
                 isSelected: shouldSaveCard,
                 title: nil,
-                boxInfo: NSLocalizedString("Save my card for future payments", comment: "checkbox in checkout view"),
+                boxInfo: NSLocalizedString("Save my card for future payments", bundle: .paymentSheet, comment: "add card section - toggle for card saving"),
                 selectionDidChanged: toggleCardSaving
             )
             cell.setup(viewModel)
@@ -185,7 +185,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             let message = NSLocalizedString(
                 "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.",
                 bundle: .paymentSheet,
-                comment: ""
+                comment: "add card section - UnionPay warning message"
             )
             cell.setup(message)
             return cell
@@ -494,7 +494,7 @@ private extension NewCardPaymentSectionController {
             viewModelForCardholderName = InfoCollectorCellViewModel(
                 itemIdentifier: Item.cardholderName.rawValue,
                 textFieldType: .nameOnCard,
-                title: NSLocalizedString("Name on card", bundle: .paymentSheet, comment: "billing field"),
+                title: NSLocalizedString("Name on card", bundle: .paymentSheet, comment: "add card section - billing field"),
                 text: text,
                 returnKeyType: .next,
                 returnActionHandler: returnActionHandler,
@@ -510,7 +510,7 @@ private extension NewCardPaymentSectionController {
             viewModelForEmail = InfoCollectorCellViewModel(
                 itemIdentifier: Item.billingFieldEmail.rawValue,
                 textFieldType: .email,
-                title: NSLocalizedString("Email", bundle: .paymentSheet, comment: "billing field"),
+                title: NSLocalizedString("Email", bundle: .paymentSheet, comment: "add card section - billing field"),
                 text: session.billing?.email,
                 returnKeyType: .next,
                 returnActionHandler: returnActionHandler,
@@ -523,7 +523,7 @@ private extension NewCardPaymentSectionController {
             viewModelForPhoneNumber = InfoCollectorCellViewModel(
                 itemIdentifier: Item.billingFieldPhone.rawValue,
                 textFieldType: .phoneNumber,
-                title: NSLocalizedString("Phone number", bundle: .paymentSheet, comment: "billing field"),
+                title: NSLocalizedString("Phone number", bundle: .paymentSheet, comment: "add card section - billing field"),
                 text: session.billing?.phoneNumber,
                 returnKeyType: .next,
                 returnActionHandler: returnActionHandler,
@@ -543,7 +543,7 @@ private extension NewCardPaymentSectionController {
             viewModelForCountryCode = CountrySelectionCellViewModel(
                 country: country,
                 itemIdentifier: Item.billingFieldCountryCode.rawValue,
-                title: NSLocalizedString("Billing country or region", bundle: .paymentSheet, comment: "billing info"),
+                title: NSLocalizedString("Billing country or region", bundle: .paymentSheet, comment: "add card section - billing info"),
                 handleUserInteraction: { [weak self] in
                     self?.triggerCountrySelection()
                 },

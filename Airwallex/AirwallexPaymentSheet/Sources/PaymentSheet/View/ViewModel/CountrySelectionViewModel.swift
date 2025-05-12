@@ -22,11 +22,11 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
     
     var icon: UIImage? {
         guard let country else { return nil }
-        return UIImage(named: country.countryCode, in: Bundle.resource())
+        return UIImage(named: country.countryCode, in: .paymentSheet)
     }
     
     var indicator: UIImage? {
-        UIImage(named: "down", in: Bundle.resource())?
+        UIImage(named: "down", in: .paymentSheet)?
             .withTintColor(
                 isEnabled ? .awxColor(.iconSecondary) : .awxColor(.iconDisabled),
                 renderingMode: .alwaysOriginal
@@ -48,7 +48,7 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
             fieldName: fieldName,
             title: title,
             text: country?.countryName,
-            placeholder: NSLocalizedString("Select..", bundle: .paymentSheet, comment: "country selection view placeholder"),
+            placeholder: NSLocalizedString("Select...", bundle: .paymentSheet, comment: "country selection view placeholder"),
             isRequired: true,
             isEnabled: isEnabled,
             hideErrorHintLabel: hideErrorHintLabel,

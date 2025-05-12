@@ -10,6 +10,8 @@
 
 Airwallex iOS SDK 可以满足您在应用中集成简单、快速和安全的支付功能的需求。它提供了简单易用的 API 将敏感的信用卡数据直接发送到 Airwallex，同时还提供了一个强大且可定制的界面，用于收集用户的支付详情。
 
+我们支持以下本地化语言：英语、简体中文、繁体中文、法语、德语、日语、韩语、葡萄牙语（葡萄牙）、葡萄牙语（巴西）、俄语、西班牙语、泰语。
+
 <p align="left">
 <img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
 <img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200" hspace="10">
@@ -102,6 +104,19 @@ Airwallex iOS SDK 支持通过 Swift Package Manager 集成。要将其集成到
 - `AirwallexPaymentSheet`: 提供 UI 集成
 - `AirwallexPayment`: 提供 low-level API 集成
 - `AirwallexWeChatPay`: 集成微信支付，如果您需要支持微信支付请务必添加此依赖
+  
+
+**Size Impact**
+
+| 集成方式| 包含的组件 | IPA 包增加的大小 |
+|-----------------|----------------------|------------------:|
+| Low-Level API 集成| AirwallexCore <br> AirwallexPayment | 1.20 MB  |
+| UI 集成| AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 2.74 MB |
+| 全部组件 | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 3.53 MB |
+
+> The IPA size increases shown above reflect the additional archive size when integrating the Airwallex SDK using Swift Package Manager (SPM) into an otherwise empty project, measured for each integration style.
+> 上述 IPA 体积的增长是在一个空项目中，通过 Swift Package Manager (SPM) 使用不同方式集成 Airwallex SDK 后，归档 IPA 文件增加的大小。
+
 ---
 #### CocoaPods
 
