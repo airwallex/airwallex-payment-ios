@@ -410,6 +410,8 @@
 		D8C05A0E2DACF123002BED34 /* CardPaymentConsentSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A0D2DACF123002BED34 /* CardPaymentConsentSectionControllerTests.swift */; };
 		D8C05A102DAD0FE2002BED34 /* NewCardPaymentSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A0F2DAD0FE2002BED34 /* NewCardPaymentSectionControllerTests.swift */; };
 		D8C05A162DAE0F81002BED34 /* UserEditingEventObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A152DAE0F81002BED34 /* UserEditingEventObserver.swift */; };
+		D8C6ECF92DD199790036ED39 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */; };
+		D8C6ECFA2DD1997B0036ED39 /* CurrencyCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */; };
 		D8DD6B4D2DA7BCDC0047E450 /* AirwallexPayment.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D8DD6B4C2DA7BCDC0047E450 /* AirwallexPayment.xctestplan */; };
 		D8DE3F742DB0E19D009D9C0C /* AWXUIContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE3F732DB0E19D009D9C0C /* AWXUIContext.swift */; };
 		D8EC87792D9E335900D082EC /* AirwallexPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D8EC87772D9E335900D082EC /* AirwallexPayment.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2236,6 +2238,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D809709E2DC9DA380051B5CA /* Localizable.xcstrings in Resources */,
+				D8C6ECF92DD199790036ED39 /* CountryCodes.json in Resources */,
+				D8C6ECFA2DD1997B0036ED39 /* CurrencyCodes.json in Resources */,
 				D86710192DCD9D2C001D5A74 /* Airwallex.xcassets in Resources */,
 				D88E34B32DA7E35A00183A49 /* PrivacyInfo.xcprivacy in Resources */,
 			);
@@ -2287,9 +2291,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
