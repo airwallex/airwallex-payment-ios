@@ -150,7 +150,6 @@
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
     AWXPaymentConsent *consent = [AWXPaymentConsent new];
     consent.Id = paymentConsentId;
-    request.requestId = NSUUID.UUID.UUIDString;
     request.intentId = self.session.paymentIntentId;
     request.customerId = self.session.customerId;
     request.device = [AWXDevice deviceWithRiskSessionId];
@@ -181,7 +180,6 @@
 - (void)createPaymentMethod:(AWXPaymentMethod *)paymentMethod
                  completion:(AWXRequestHandler)completion {
     AWXCreatePaymentMethodRequest *request = [AWXCreatePaymentMethodRequest new];
-    request.requestId = NSUUID.UUID.UUIDString;
     request.paymentMethod = paymentMethod;
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];

@@ -31,7 +31,10 @@ NS_SWIFT_NAME(AnalyticsLogger)
 
 - (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
 
-- (void)logErrorWithName:(NSString *)eventName url:(NSURL *)url response:(AWXAPIErrorResponse *)errorResponse;
+- (void)logErrorWithName:(NSString *)eventName
+                     url:(NSURL *)url
+                response:(AWXAPIErrorResponse *)errorResponse
+          additionalInfo:(NSDictionary<NSString *, id> *_Nullable)additionalInfo;
 
 - (void)logError:(NSError *)error withEventName:(NSString *)eventName;
 

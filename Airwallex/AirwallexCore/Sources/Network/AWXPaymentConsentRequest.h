@@ -23,10 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AWXCreatePaymentConsentRequest : AWXRequest
 
 /**
- Request ID.
- */
-@property (nonatomic, copy) NSString *requestId;
-/**
  Customer ID.
  */
 @property (nonatomic, copy, nullable) NSString *customerId;
@@ -60,11 +56,6 @@ NS_ASSUME_NONNULL_BEGIN
  `AWXVerifyPaymentConsentRequest` includes the request of verifying payment consent.
  */
 @interface AWXVerifyPaymentConsentRequest : AWXRequest
-
-/**
- Request ID.
- */
-@property (nonatomic, copy) NSString *requestId;
 
 /**
  A currency code.
@@ -104,11 +95,6 @@ NS_ASSUME_NONNULL_BEGIN
  Consent ID.
  */
 @property (nonatomic, copy) NSString *consentId;
-
-/**
- Request ID.
- */
-@property (nonatomic, copy) NSString *requestId;
 
 @end
 
