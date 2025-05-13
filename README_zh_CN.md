@@ -97,7 +97,7 @@ pod install
 Airwallex iOS SDK 支持通过 Swift Package Manager 集成。要将其集成到您的项目中，请按照以下步骤操作：
 1. [按照 Apple 的指南添加包依赖。](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
 2. 使用以下 URL 获取 Airwallex 包 https://github.com/airwallex/airwallex-payment-ios
-3. 使用 6.1.0 或更高版本。
+3. 使用 6.1.1 或更高版本。
 
 您可以通过添加 `Airwallex` 集成除微信支付外的所有组件。您也可以根据您的支付需求选择性的添加组件：
 
@@ -124,7 +124,7 @@ Airwallex iOS SDK 支持通过 [CocoaPods](https://cocoapods.org/)集成。
 
 您可以通过添加 `Airwallex` 集成除微信支付外的所有组件。您也可以根据您的支付需求选择性的添加组件：
 ```ruby
-pod 'Airwallex', '~> 6.1.0'
+pod 'Airwallex', '~> 6.1.1'
 ```
 
 您也可以直接指定 `subspec` 来避免引入不需要的依赖：
