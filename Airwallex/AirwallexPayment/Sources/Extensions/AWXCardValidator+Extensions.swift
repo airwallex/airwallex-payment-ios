@@ -57,10 +57,6 @@ import AirwallexCore
             throw NSLocalizedString("Card number must contain only digits", bundle: .payment, comment: "card validator error message").asError()
         }
         
-        guard AWXCardValidator.shared().isValidCardLength(number) else {
-            throw NSLocalizedString("Card number is invalid", bundle: .payment, comment: "card validator error message").asError()
-        }
-        
         let brand = AWXCardValidator.shared().brand(forCardNumber: number)
         
         guard brand.type != .unknown else {
@@ -69,6 +65,10 @@ import AirwallexCore
         
         guard supportedSchemes.contains(where: { $0.name.lowercased() == brand.name.lowercased() }) else {
             throw NSLocalizedString("Card not supported for payment", bundle: .payment, comment: "card validator error message").asError()
+        }
+        
+        guard AWXCardValidator.shared().isValidCardLength(number) else {
+            throw NSLocalizedString("Card number is invalid", bundle: .payment, comment: "card validator error message").asError()
         }
     }
     

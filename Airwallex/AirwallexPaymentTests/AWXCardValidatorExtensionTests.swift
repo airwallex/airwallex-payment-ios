@@ -85,7 +85,7 @@ class AWXCardValidatorExtensionTests: XCTestCase {
     func testValidateCard() {
         let validCard = AWXCard(name: "John Doe", cardNumber: "4111111111111111", expiryMonth: "12", expiryYear: "2030", cvc: "123")
         let invalidSchema = AWXCard(name: "John Doe", cardNumber: "34111111111111111", expiryMonth: "12", expiryYear: "2030", cvc: "123")
-        let invalidCardNumber = AWXCard(name: "John Doe", cardNumber: "4111111111111", expiryMonth: "12", expiryYear: "2030", cvc: "123")
+        let invalidCardNumber = AWXCard(name: "John Doe", cardNumber: "4111111122223", expiryMonth: "12", expiryYear: "2030", cvc: "123")
         let invalidExpiry = AWXCard(name: "John Doe", cardNumber: "4111111111111111", expiryMonth: "13", expiryYear: "2030", cvc: "123")
         let invalidCVC = AWXCard(name: "John Doe", cardNumber: "4111111111111111", expiryMonth: "12", expiryYear: "2030", cvc: "12")
         let invalidName = AWXCard(name: "", cardNumber: "4111111111111111", expiryMonth: "12", expiryYear: "2030", cvc: "123")
