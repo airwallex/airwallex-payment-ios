@@ -101,7 +101,7 @@ Airwallex for iOS is available via Swift Package Manager. To integrate it into y
 2. Use the following URL for the Airwallex package:
 https://github.com/airwallex/airwallex-payment-ios
 
-3. Ensure you specify version 6.1.0 or later.
+3. Ensure you specify version 6.1.1 or later.
 
 You can add `Airwallex` for a comprehensive integration that includes everything except WeChat Pay. Alternatively, you can selectively add specific products to your project for a more modular setup, depending on your payment needs:
 
@@ -124,7 +124,7 @@ Airwallex for iOS is available via [CocoaPods](https://cocoapods.org/).
 
 You can add `Airwallex` for a comprehensive integration that includes everything except WeChat Pay:
 ```ruby
-pod 'Airwallex', '~> 6.1.0'
+pod 'Airwallex', '~> 6.1.1'
 ```
 
 Alternatively, you can selectively add specific products to your project for a more modular setup, depending on your payment needs:
