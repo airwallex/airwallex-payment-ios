@@ -386,11 +386,13 @@
 }
 
 - (BOOL)isValidCardLength:(NSString *)cardNumber {
+    // find the most specific card number
     AWXBrand *brand = [self brandForCardNumber:cardNumber];
-    if (brand && brand.type != AWXBrandTypeUnknown) {
-        return brand.length == cardNumber.length;
-    }
-    return NO;
+    // find brand model with same brandType and matched length requirement
+    NSArray *array = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(AWXBrand *evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
+                                      return evaluatedObject.type == brand.type && evaluatedObject.length == cardNumber.length;
+                                  }]];
+    return array.count > 0;
 }
 
 + (NSArray<NSNumber *> *)cardNumberFormatForBrand:(AWXBrandType)type {
