@@ -140,6 +140,13 @@ static BOOL _localLogFileEnabled = NO;
 
 @implementation AWXRequest
 
+- (NSString *)requestId {
+    if (!_requestId) {
+        _requestId = NSUUID.UUID.UUIDString;
+    }
+    return _requestId;
+}
+
 - (NSString *)path {
     [[AWXLogger sharedLogger] logException:@"path required"];
     return nil;
@@ -268,7 +275,7 @@ static BOOL _localLogFileEnabled = NO;
                                                                  } else {
                                                                      AWXAPIErrorResponse *errorResponse = [request.responseClass performSelector:@selector(parseError:) withObject:data];
                                                                      if (errorResponse) {
-                                                                         [[AWXAnalyticsLogger shared] logErrorWithName:[request eventName] url:urlRequest.URL response:[errorResponse updatedResponseWithStatusCode:result.statusCode Error:error]];
+                                                                         [[AWXAnalyticsLogger shared] logErrorWithName:[request eventName] url:urlRequest.URL response:[errorResponse updatedResponseWithStatusCode:result.statusCode Error:error] additionalInfo:@{@"request_id": request.requestId}];
                                                                          handler(nil, errorResponse.error);
                                                                      } else {
                                                                          handler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:result.statusCode userInfo:@{NSLocalizedDescriptionKey: @"Couldn't parse response."}]);

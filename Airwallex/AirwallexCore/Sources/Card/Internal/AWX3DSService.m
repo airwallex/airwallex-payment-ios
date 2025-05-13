@@ -90,7 +90,6 @@
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
 
     AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
-    request.requestId = NSUUID.UUID.UUIDString;
     request.intentId = self.intentId;
     request.type = AWXThreeDSContinue;
     request.acsResponse = acsResponse;

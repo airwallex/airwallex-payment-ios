@@ -81,8 +81,8 @@
 
     NSURL *url = [NSURL URLWithString:@"http://airwallex.com"];
     AWXAPIErrorResponse *response = [[AWXAPIErrorResponse alloc] initWithMessage:@"abc" code:@"invalid_key"];
-    [logger logErrorWithName:eventName url:url response:response];
-    NSDictionary *errorDict = @{@"message": @"abc", @"code": @"invalid_key", @"eventType": @"pa_api_request", @"url": @"http://airwallex.com"};
+    [logger logErrorWithName:eventName url:url response:response additionalInfo:@{@"requestId": @"123456"}];
+    NSDictionary *errorDict = @{@"message": @"abc", @"code": @"invalid_key", @"eventType": @"pa_api_request", @"url": @"http://airwallex.com", @"requestId": @"123456"};
     OCMVerify(times(1), [_tracker errorWithEventName:eventName extraInfo:errorDict]);
 }
 

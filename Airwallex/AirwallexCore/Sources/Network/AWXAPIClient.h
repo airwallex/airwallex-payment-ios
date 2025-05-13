@@ -86,6 +86,9 @@ typedef enum : NSUInteger {
 
 @interface AWXRequest : NSObject
 
+/// lazy initialized UUID
+@property (nonatomic, copy) NSString *requestId;
+
 - (NSString *)path;
 - (AWXHTTPMethod)method;
 - (nullable NSDictionary *)parameters;
