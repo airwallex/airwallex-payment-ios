@@ -391,7 +391,10 @@
     if (brand.type == AWXBrandTypeUnknown) {
         return NO;
     }
-    // find brand model with same brandType and matched length requirement
+    if (brand.length == cardNumber.length) {
+        return YES;
+    }
+    // Some brand types may accept card numbers with different lengths that are within the same number range.
     NSArray *array = [self.brands filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(AWXBrand *evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
                                       return evaluatedObject.type == brand.type && [evaluatedObject matchesPrefix:cardNumber] && evaluatedObject.length == cardNumber.length;
                                   }]];
