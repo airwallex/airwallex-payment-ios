@@ -15,15 +15,12 @@ import AirwallexCore
 class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionViewConfiguring {
     var country: AWXCountry? {
         didSet {
-            text = country?.countryName
+            text = country?.countryDescription
             handleDidEndEditing(reconfigureStrategy: .always)
         }
     }
     
-    var icon: UIImage? {
-        guard let country else { return nil }
-        return UIImage(named: country.countryCode, in: .paymentSheet)
-    }
+    var icon: UIImage? = nil
     
     var indicator: UIImage? {
         UIImage(named: "down", in: .paymentSheet)?
@@ -47,7 +44,7 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
         super.init(
             fieldName: fieldName,
             title: title,
-            text: country?.countryName,
+            text: country?.countryDescription,
             placeholder: NSLocalizedString("Select...", bundle: .paymentSheet, comment: "country selection view placeholder"),
             isRequired: true,
             isEnabled: isEnabled,
@@ -69,6 +66,16 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         assert(false, "should never trigger")
         return false
+    }
+}
+
+fileprivate extension AWXCountry {
+    var countryDescription: String {
+        if let flag = String.flagEmoji(countryCode: countryCode) {
+            return flag + " " + countryName
+        } else {
+            return countryName
+        }
     }
 }
 

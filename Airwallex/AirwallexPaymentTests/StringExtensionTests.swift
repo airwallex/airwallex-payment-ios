@@ -60,4 +60,21 @@ class StringExtensionTests: XCTestCase {
         XCTAssertEqual(error.rawValue, message)
         XCTAssertEqual(ErrorMessage(rawValue: message).localizedDescription, error.localizedDescription)
     }
+    
+    func testFlagEmoji() {
+        XCTAssertEqual(String.flagEmoji(countryCode: "CN"), "🇨🇳")
+        XCTAssertEqual(String.flagEmoji(countryCode: "US"), "🇺🇸")
+        XCTAssertEqual(String.flagEmoji(countryCode: "AU"), "🇦🇺")
+        XCTAssertEqual(String.flagEmoji(countryCode: "SG"), "🇸🇬")
+        XCTAssertEqual(String.flagEmoji(countryCode: "FR"), "🇫🇷")
+        XCTAssertEqual(String.flagEmoji(countryCode: "JP"), "🇯🇵")
+        XCTAssertEqual(String.flagEmoji(countryCode: "KR"), "🇰🇷")
+        XCTAssertEqual(String.flagEmoji(countryCode: "BR"), "🇧🇷")
+        XCTAssertEqual(String.flagEmoji(countryCode: "PT"), "🇵🇹")
+        XCTAssertEqual(String.flagEmoji(countryCode: "RU"), "🇷🇺")
+        XCTAssertEqual(String.flagEmoji(countryCode: "TH"), "🇹🇭")
+        
+        XCTAssertNil(String.flagEmoji(countryCode: "JPN"))
+        XCTAssertNil(String.flagEmoji(countryCode: "AAA"))
+    }
 }
