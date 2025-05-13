@@ -31,11 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *intentId;
 
 /**
- Request ID.
- */
-@property (nonatomic, copy) NSString *requestId;
-
-/**
  Customer ID.
  */
 @property (nonatomic, copy, nullable) NSString *customerId;
@@ -76,11 +71,6 @@ NS_ASSUME_NONNULL_BEGIN
  Intent ID.
  */
 @property (nonatomic, copy) NSString *intentId;
-
-/**
- Request ID.
- */
-@property (nonatomic, copy) NSString *requestId;
 
 /**
  Confirm type.

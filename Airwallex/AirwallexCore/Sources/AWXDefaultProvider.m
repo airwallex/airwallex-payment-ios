@@ -271,7 +271,6 @@
                        autoCapture:(BOOL)autoCapture
                         completion:(AWXRequestHandler)completion {
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    request.requestId = NSUUID.UUID.UUIDString;
     request.intentId = paymentIntentId;
     request.customerId = customerId;
     request.paymentMethod = paymentMethod;
@@ -305,7 +304,6 @@
                         merchantTriggerReason:(AirwallexMerchantTriggerReason)merchantTriggerReason
                                    completion:(AWXRequestHandler)completion {
     AWXCreatePaymentConsentRequest *request = [AWXCreatePaymentConsentRequest new];
-    request.requestId = NSUUID.UUID.UUIDString;
     request.paymentMethod = paymentMethod;
     request.customerId = customerId;
     request.currency = currency;
@@ -335,7 +333,6 @@
                                     returnURL:(NSString *)returnURL
                                    completion:(AWXRequestHandler)completion {
     AWXVerifyPaymentConsentRequest *request = [AWXVerifyPaymentConsentRequest new];
-    request.requestId = NSUUID.UUID.UUIDString;
     request.options = paymentMethod;
     request.consent = paymentConsent;
     request.currency = currency;

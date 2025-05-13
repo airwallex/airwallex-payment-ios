@@ -71,7 +71,6 @@ extension PaymentMethodProvider {
     /// - Parameter consent: The payment consent to be disabled.
     func disable(consent: AWXPaymentConsent) async throws {
         let request = AWXDisablePaymentConsentRequest()
-        request.requestId = UUID().uuidString
         request.id = consent.id
         try await apiClient.send(request)
         if let index = consents.firstIndex(where: { $0.id == consent.id }) {

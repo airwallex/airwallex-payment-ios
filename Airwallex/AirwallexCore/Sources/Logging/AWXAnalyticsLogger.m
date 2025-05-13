@@ -81,7 +81,10 @@
     [_tracker errorWithEventName:eventName extraInfo:extraInfo];
 }
 
-- (void)logErrorWithName:(NSString *)eventName url:(NSURL *)url response:(AWXAPIErrorResponse *)errorResponse {
+- (void)logErrorWithName:(NSString *)eventName
+                     url:(NSURL *)url
+                response:(AWXAPIErrorResponse *)errorResponse
+          additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
     NSMutableDictionary *extraInfo = @{@"eventType": @"pa_api_request"}.mutableCopy;
     if (url.absoluteString.length > 0) {
         extraInfo[@"url"] = url.absoluteString;
@@ -91,6 +94,11 @@
     }
     if (errorResponse.message.length > 0) {
         extraInfo[@"message"] = errorResponse.message;
+    }
+    if (additionalInfo) {
+        for (NSString *key in additionalInfo) {
+            extraInfo[key] = additionalInfo[key];
+        }
     }
     [extraInfo addInfoFromPaymentSession:self.session];
     [_tracker errorWithEventName:eventName extraInfo:extraInfo];
