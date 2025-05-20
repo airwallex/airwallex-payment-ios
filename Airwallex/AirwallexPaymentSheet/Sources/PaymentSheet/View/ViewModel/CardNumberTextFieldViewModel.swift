@@ -51,7 +51,7 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardBrandVi
     init(supportedCardSchemes: [AWXCardScheme],
          editingEventObserver: EditingEventObserver?,
          reconfigureHandler: @escaping ReconfigureHandler) {
-        supportedBrands = supportedCardSchemes.map { $0.brandType }
+        supportedBrands = supportedCardSchemes.compactMap { $0.brandType == .unknown ? nil : $0.brandType }
         formatter = CardNumberFormatter(candidates: supportedBrands)
         super.init(
             textFieldType: .cardNumber,
