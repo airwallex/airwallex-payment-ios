@@ -60,7 +60,7 @@ class CardBrandView: UIView, ViewConfigurable {
     }
     
     private var timer: Timer?
-    private var counter = 1
+    private var counter = 0
     
     override func didMoveToWindow() {
         super.didMoveToWindow()
