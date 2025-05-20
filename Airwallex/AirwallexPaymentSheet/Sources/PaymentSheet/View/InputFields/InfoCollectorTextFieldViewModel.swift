@@ -153,6 +153,11 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
         editingEventObserver?.handleEditingEvent(event: .editingDidBegin, for: textField)
     }
     
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        let range = NSRange(location: 0, length: textField.text?.count ?? 0)
+        return self.textField(textField, shouldChangeCharactersIn: range, replacementString: "")
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let range = Range(range, in: textField.text ?? "") else {
             return false
