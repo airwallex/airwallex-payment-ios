@@ -401,7 +401,7 @@ private extension SettingsViewController {
                     self?.updateCustomerIDGeneratorActionButton()
                 },
                 textDidEndEditing: { [weak self] text in
-                    self?.settings.customerId = text
+                    self?.settings.customerId = text?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
                 }
             )
         )

@@ -116,7 +116,7 @@ struct ExamplesKeys {
             ExamplesKeys.requiresCountryCode = newValue.requiresCountryCode
             ExamplesKeys.force3DS = newValue.force3DS
             ExamplesKeys.autoCapture = newValue.autoCapture
-            ExamplesKeys.customerId = newValue.customerId
+            ExamplesKeys.customerId = newValue.customerId?.nilIfEmpty
             ExamplesKeys.apiKey = newValue.apiKey
             ExamplesKeys.clientId = newValue.clientId
             ExamplesKeys.amount = newValue.amount
