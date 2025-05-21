@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "646E9225-0B80-465E-9900-FB2EF9653BAD",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Examples.xcodeproj",
+        "identifier" : "D8F268B22DDADDE000E84D64",
+        "name" : "ExamplesUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

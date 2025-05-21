@@ -59,6 +59,7 @@ class SettingsViewController: UIViewController {
     private lazy var optionForEnvironment: ConfigActionView = {
         let view = ConfigActionView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = AccessibilityIdentifiers.environmentOptionButton
         return view
     }()
     

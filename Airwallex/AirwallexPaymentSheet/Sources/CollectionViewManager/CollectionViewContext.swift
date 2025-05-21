@@ -207,7 +207,9 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     
     func dequeueReusableCell<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type, for item: Item, indexPath: IndexPath) -> T {
         register(cellClass)
-        return collectionView.dequeueReusableCell(withReuseIdentifier: cellClass.reuseIdentifier, for: indexPath) as! T
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellClass.reuseIdentifier, for: indexPath) as! T
+        cell.accessibilityIdentifier = String(describing: item)
+        return cell
     }
     
     func dequeueReusableSupplementaryView<T: UICollectionReusableView & ViewReusable>(ofKind elementKind: String, viewClass: T.Type, indexPath: IndexPath) -> T {
