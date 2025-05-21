@@ -109,6 +109,7 @@ class IntegrationDemoListViewController: UIViewController {
     private lazy var listView: DemoListView = {
         let view = DemoListView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.optionView.accessibilityIdentifier = AccessibilityIdentifiers.paymentTypeOptionButton
         return view
     }()
     
@@ -494,7 +495,7 @@ private extension IntegrationDemoListViewController {
             order: DemoDataSource.createOrder(shipping: shippingAddress),
             metadata: ["id": 1],
             returnUrl: ExamplesKeys.returnUrl,
-            customerID: ExamplesKeys.customerId,
+            customerID: ExamplesKeys.customerId?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty,
             paymentMethodOptions: force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,
             apiKey: ExamplesKeys.apiKey,
             clientID: ExamplesKeys.clientId

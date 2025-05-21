@@ -9,23 +9,6 @@
 import Foundation
 import Airwallex
 
-enum CheckoutMode: Int, CaseIterable {
-    case oneOff
-    case recurring
-    case recurringWithIntent
-    
-    var localizedDescription: String {
-        switch self {
-        case .oneOff:
-            return "One-off payment"
-        case .recurring:
-            return "Recurring"
-        case .recurringWithIntent:
-            return "Recurring with intent"
-        }
-    }
-}
-
 struct ExamplesKeys {
     static let storagePrefix = "airwallexExamples-"
     
@@ -116,7 +99,7 @@ struct ExamplesKeys {
             ExamplesKeys.requiresCountryCode = newValue.requiresCountryCode
             ExamplesKeys.force3DS = newValue.force3DS
             ExamplesKeys.autoCapture = newValue.autoCapture
-            ExamplesKeys.customerId = newValue.customerId?.nilIfEmpty
+            ExamplesKeys.customerId = newValue.customerId?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
             ExamplesKeys.apiKey = newValue.apiKey
             ExamplesKeys.clientId = newValue.clientId
             ExamplesKeys.amount = newValue.amount
@@ -261,6 +244,29 @@ struct ExamplesKeys {
         let key = ExamplesKeys.storagePrefix + name + "-\(environment.rawValue)"
         guard let value = UserDefaults.standard.object(forKey: key) as? T.RawValue else { return nil }
         return T(rawValue: value)
+    }
+    
+    static func loadValuesForUITestingFromEnvironment() {
+        // update value for UI Testing
+        guard ProcessInfo.processInfo.environment["UI_TESTING"] == "1" else  {
+            return
+        }
+        
+        if let envValue = ProcessInfo.processInfo.environment["ENVIRONMENT"],
+           let intValue = Int(envValue),
+           let environment = AirwallexSDKMode(rawValue: intValue) {
+            self.environment = environment
+        }
+        
+        if let envValue = ProcessInfo.processInfo.environment["CHECKOUT_MODE"],
+           let intValue = Int(envValue),
+           let checkoutMode = CheckoutMode(rawValue: intValue) {
+            self.checkoutMode = checkoutMode
+        }
+        
+        if let envValue = ProcessInfo.processInfo.environment["CUSTOMER_ID"] {
+            customerId = envValue.nilIfEmpty
+        }
     }
 }
 
