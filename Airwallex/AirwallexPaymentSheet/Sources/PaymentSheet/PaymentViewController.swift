@@ -81,8 +81,12 @@ class PaymentViewController: AWXViewController {
         setupUI()
         getMethodList()
         cancellable = methodProvider.updatePublisher.sink {[weak self] type in
-            let animating = self?.layout == .accordion
-            self?.collectionViewManager.performUpdates(animatingDifferences: animating)
+            guard let self else { return }
+            var animating = self.layout == .accordion
+            if case PaymentMethodProviderUpdateType.consentDeleted(_) = type {
+                animating = true
+            }
+            self.collectionViewManager.performUpdates(animatingDifferences: animating)
         }
     }
     
