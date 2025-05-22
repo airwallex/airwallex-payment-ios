@@ -16,6 +16,12 @@ class DirectAPIClient: APIClient {
         client.clientID = ExamplesKeys.clientId;
     }
     
+    init(apiKey: String?, clientID: String?) {
+        let client = MockAPIClient.shared()
+        client.apiKey = apiKey;
+        client.clientID = clientID;
+    }
+    
     func createPaymentIntent(request: PaymentIntentRequest, completion: @escaping (Result<AWXPaymentIntent, Error>) -> Void) {
         MockAPIClient.shared().createAuthenticationToken { error in
             if let error {
