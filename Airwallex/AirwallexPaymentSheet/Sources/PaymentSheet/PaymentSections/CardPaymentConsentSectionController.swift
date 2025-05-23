@@ -92,8 +92,7 @@ class CardPaymentConsentSectionController: SectionController {
         self.addNewCardAction = addNewCardAction
         self.consents = methodProvider.consents.filter { $0.paymentMethod != nil }
         if consents.count == 1,
-           let consent = consents.first,
-           consent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
+           let consent = consents.first {
             self.selectedConsent = consent
         }
         self.layout = layout
@@ -113,11 +112,11 @@ class CardPaymentConsentSectionController: SectionController {
         
         if let selectedConsent {
             // payment mode
-            items += [
-                selectedConsent.id,
-                Items.cvcField,
-                Items.checkoutButton
-            ]
+            items.append(selectedConsent.id)
+            if selectedConsent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
+                items.append(Items.cvcField)
+            }
+            items.append(Items.checkoutButton)
         } else {
             // list mode
             items.append(Items.addNewCardToggle)
@@ -222,68 +221,77 @@ class CardPaymentConsentSectionController: SectionController {
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(32)
         )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        switch layout {
-        case .tab:
+        
+        switch mode {
+        case .consentList:
+            let listItem = NSCollectionLayoutItem(layoutSize: itemSize)
             let group = NSCollectionLayoutGroup.vertical(
                 layoutSize: itemSize,
-                subitems: [item]
+                subitems: [listItem]
             )
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = 16
-            section.contentInsets = .init(horizontal: 16)
-            return section
-        case .accordion:
-            let section: NSCollectionLayoutSection
-            if mode == .consentList {
-                let group = NSCollectionLayoutGroup.vertical(
-                    layoutSize: itemSize,
-                    subitems: [item]
-                )
-                section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = 16
+            switch layout {
+            case .accordion:
                 section.contentInsets = .init(top: 16, leading: 40, bottom: 24, trailing: 40)
-            } else {
-                let items: [NSCollectionLayoutItem] = (0..<3).map { _ in
-                    NSCollectionLayoutItem(layoutSize: itemSize)
-                }
-                
-                let buttonSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(52)
+                // Layout for decoration - rounded corner
+                let elementKind = AccordionSectionController.backgroundElementKind
+                context.register(
+                    RoundedCornerDecorationView.self,
+                    forDecorationViewOfKind: elementKind
                 )
-                let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
-                
-                let innerGroup = NSCollectionLayoutGroup.vertical(
-                    layoutSize: NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(100)
-                    ),
-                    subitems: items
-                )
-                innerGroup.interItemSpacing = .fixed(16)
-                
-                let outerGroup = NSCollectionLayoutGroup.vertical(
-                    layoutSize: NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(120)
-                    ),
-                    subitems: [innerGroup, buttonItem]
-                )
-                outerGroup.interItemSpacing = .fixed(24)
-                section = NSCollectionLayoutSection(group: outerGroup)
-                section.contentInsets = .init(top: 16, leading: 40, bottom: 32, trailing: 40)
+                let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
+                sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+                section.decorationItems = [sectionBackgroundDecoration]
+            case .tab:
+                section.contentInsets = .init(horizontal: 16)
+            }
+            return section
+        case .consentPayment:
+            let items: [NSCollectionLayoutItem] = (1..<items.count).map { _ in
+                NSCollectionLayoutItem(layoutSize: itemSize)
             }
             
-            // Layout for decoration - rounded corner
-            let elementKind = AccordionSectionController.backgroundElementKind
-            context.register(
-                RoundedCornerDecorationView.self,
-                forDecorationViewOfKind: elementKind
+            let innerGroup = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(100)
+                ),
+                subitems: items
             )
-            let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
-            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
-            section.decorationItems = [sectionBackgroundDecoration]
+            innerGroup.interItemSpacing = .fixed(16)
+            
+            let buttonSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(52)
+            )
+            let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
+            
+            let outerGroup = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(300)
+                ),
+                subitems: [innerGroup, buttonItem]
+            )
+            outerGroup.interItemSpacing = .fixed(24)
+            
+            let section = NSCollectionLayoutSection(group: outerGroup)
+            switch layout {
+            case .accordion:
+                section.contentInsets = .init(top: 16, leading: 40, bottom: 32, trailing: 40)
+                // Layout for decoration - rounded corner
+                let elementKind = AccordionSectionController.backgroundElementKind
+                context.register(
+                    RoundedCornerDecorationView.self,
+                    forDecorationViewOfKind: elementKind
+                )
+                let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
+                sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+                section.decorationItems = [sectionBackgroundDecoration]
+            case .tab:
+                section.contentInsets = .init(horizontal: 16)
+            }
             return section
         }
     }
@@ -314,15 +322,10 @@ class CardPaymentConsentSectionController: SectionController {
             ]
         )
         
-        if consent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
-            selectedConsent = consent
-            context.performUpdates(section, forceReload: true)
-            
-            RiskLogger.log(.showConsent, screen: .consent)
-        } else {
-            //  CVC not required, checkout directly
-            checkout(consent: consent)
-        }
+        selectedConsent = consent
+        context.performUpdates(section, forceReload: true)
+        
+        RiskLogger.log(.showConsent, screen: .consent)
     }
     
     func updateItemsIfNecessary() {
