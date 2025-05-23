@@ -169,25 +169,28 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 self.schema = schema
                 
                 // update bank selection
-                var bankList: [AWXBank]?
                 if schema.bankField != nil {
                     let banks = try await methodProvider.getBankList(name: name).items
-                    guard !banks.isEmpty else {
-                        throw NSLocalizedString("Invalid schema", bundle: .paymentSheet, comment: "schema section - invalid schema data").asError()
+                    if banks.isEmpty {
+                        bankList = nil
+                        bankSelectionViewModel = nil
+                    } else {
+                        bankList = banks
+                        bankSelectionViewModel = BankSelectionCellViewModel(
+                            bank: banks.count == 1 ? banks.first! : nil,
+                            itemIdentifier: Item.bankName,
+                            handleUserInteraction: { [weak self] in
+                                self?.handleBankSelection()
+                            },
+                            cellReconfigureHandler: { [weak self] in
+                                self?.context.reconfigure(items: [$0], invalidateLayout: $1)
+                            }
+                        )
                     }
-                    bankSelectionViewModel = BankSelectionCellViewModel(
-                        bank: banks.count == 1 ? banks.first! : nil,
-                        itemIdentifier: Item.bankName,
-                        handleUserInteraction: { [weak self] in
-                            self?.handleBankSelection()
-                        },
-                        cellReconfigureHandler: { [weak self] in
-                            self?.context.reconfigure(items: [$0], invalidateLayout: $1)
-                        }
-                    )
-                    bankList = banks
+                } else {
+                    self.bankList = bankList
+                    self.bankSelectionViewModel = nil
                 }
-                self.bankList = bankList
                 
                 uiFieldViewModels = schema.uiFields.reduce(into: [InfoCollectorTextFieldViewModel](), { partialResult, field in
                     //  create view model for UI fields

@@ -184,8 +184,6 @@ class SettingsViewController: UIViewController {
     
     private lazy var keyboardHandler = KeyboardHandler()
     
-    private lazy var customerFetcher = Airwallex.apiClient
-    
     private var cancellables = [AnyCancellable]()
     
     private lazy var settings = ExamplesKeys.allSettings
@@ -561,7 +559,19 @@ private extension SettingsViewController {
                 MockAPIClient.shared().clientID = settings.clientId
             }
             
-            self.customerFetcher.createCustomer(
+            var customerFetcher: APIClient
+            switch settings.environment {
+            case .demoMode, .stagingMode:
+                let baseURL = DemoStoreAPIClient.baseURLForEnvironment(settings.environment)
+                customerFetcher = DemoStoreAPIClient(baseURL: baseURL)
+            case .productionMode:
+                customerFetcher = DirectAPIClient(
+                    apiKey: settings.apiKey,
+                    clientID: settings.clientId
+                )
+            }
+            
+            customerFetcher.createCustomer(
                 request: request) { result in
                     Task {
                         self.stopLoading()
