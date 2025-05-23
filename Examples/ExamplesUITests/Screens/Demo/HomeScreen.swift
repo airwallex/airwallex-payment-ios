@@ -18,7 +18,7 @@ enum HomeScreen {
     static let buttonForUIIntegration: XCUIElement = app.buttons["Integrate with Airwallex UI"]
     static let buttonForAPIIntegration: XCUIElement = app.buttons["Integrate with low-level API"]
     
-    static func pushUIIntegrationDemos() {
+    static func openUIIntegrationDemos() {
         XCTAssert(buttonForUIIntegration.exists)
         buttonForUIIntegration.tap()
     }

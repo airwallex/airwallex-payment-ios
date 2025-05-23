@@ -59,7 +59,7 @@ class SettingsViewController: UIViewController {
     private lazy var optionForEnvironment: ConfigActionView = {
         let view = ConfigActionView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.accessibilityIdentifier = AccessibilityIdentifiers.environmentOptionButton
+        view.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.optionButtonForEnvironment
         return view
     }()
     
@@ -72,12 +72,14 @@ class SettingsViewController: UIViewController {
     private lazy var optionForPaymentLayout: ConfigActionView = {
         let view = ConfigActionView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.optionButtonForLayout
         return view
     }()
     
     private lazy var switchForForce3DS: ConfigSwitchView = {
         let view = ConfigSwitchView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.optionSwitch.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.toggleFor3DS
         return view
     }()
     
@@ -108,6 +110,7 @@ class SettingsViewController: UIViewController {
         button.sizeToFit()
         view.textField.rightView = button
         view.textField.rightViewMode = .always
+        view.textField.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.textFieldForCustomerID
         return view
     }()
     
@@ -119,6 +122,7 @@ class SettingsViewController: UIViewController {
         view.titleLabel?.font = .awxFont(.body1, weight: .medium)
         view.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         view.addTarget(self, action: #selector(onCustomerIdActionButtonTapped), for: .touchUpInside)
+        view.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.actionButtonForCustomerID
         return view
     }()
     

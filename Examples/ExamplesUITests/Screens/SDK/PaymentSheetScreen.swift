@@ -16,7 +16,7 @@ enum PaymentSheetScreen {
     static let closeButton = app.navigationBars.firstMatch.buttons["close"]
     
     static func validate() {
-        XCTAssertTrue(title.exists)
+        XCTAssertTrue(title.waitForExistence(timeout: .animationTimeout))
     }
     
     static func cancelPayment() {
@@ -27,7 +27,8 @@ enum PaymentSheetScreen {
         if closeButton.exists {
             closeButton.tap()
         }
-        title.waitForNonExistence(timeout: 5)
+        title.waitForNonExistence(timeout: .animationTimeout)
+        UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
     }
 }
 

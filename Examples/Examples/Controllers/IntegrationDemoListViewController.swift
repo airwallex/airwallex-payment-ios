@@ -109,7 +109,7 @@ class IntegrationDemoListViewController: UIViewController {
     private lazy var listView: DemoListView = {
         let view = DemoListView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.optionView.accessibilityIdentifier = AccessibilityIdentifiers.paymentTypeOptionButton
+        view.optionView.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.optionButtonForPaymentType
         return view
     }()
     

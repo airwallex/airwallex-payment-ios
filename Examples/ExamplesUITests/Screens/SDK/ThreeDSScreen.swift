@@ -14,10 +14,14 @@ enum ThreeDSScreen {
     static let title = app.webViews.firstMatch.staticTexts["Purchase Authentication"]
     static let textField = app.webViews.firstMatch.textFields.firstMatch
     static let submitButton = app.webViews.firstMatch.buttons["Submit"]
-    static let closeButton = app.navigationBars.firstMatch.buttons["close"]
+    static let closeButton = app.buttons["close"]
+    
+    static var exists: Bool {
+        title.waitForExistence(timeout: .networkRequestTimeout)
+    }
     
     static func validate() {
-        XCTAssertTrue(title.exists)
+        XCTAssertTrue(title.waitForExistence(timeout: .networkRequestTimeout))
         XCTAssertTrue(textField.exists)
         XCTAssertTrue(submitButton.exists)
         XCTAssert(closeButton.exists)
@@ -29,12 +33,13 @@ enum ThreeDSScreen {
         title.tap()// dismiss keyboard
         XCTAssertTrue(submitButton.isEnabled)
         submitButton.tap()
-        title.waitForNonExistence(timeout: 5)
+        title.waitForNonExistence(timeout: .networkRequestTimeout)
     }
     
     static func cancelThreeDS() {
         XCTAssert(closeButton.exists)
-        closeButton.isEnabled
-        title.waitForNonExistence(timeout: 5)
+        XCTAssertTrue(closeButton.isEnabled)
+        closeButton.tap()
+        title.waitForNonExistence(timeout: .animationTimeout)
     }
 }

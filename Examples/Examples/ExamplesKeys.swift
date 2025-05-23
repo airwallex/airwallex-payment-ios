@@ -248,23 +248,11 @@ struct ExamplesKeys {
     
     static func loadValuesForUITestingFromEnvironment() {
         // update value for UI Testing
-        guard ProcessInfo.processInfo.environment["UI_TESTING"] == "1" else  {
+        guard ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.isUITesting] == "1" else  {
             return
         }
         
-        if let envValue = ProcessInfo.processInfo.environment["ENVIRONMENT"],
-           let intValue = Int(envValue),
-           let environment = AirwallexSDKMode(rawValue: intValue) {
-            self.environment = environment
-        }
-        
-        if let envValue = ProcessInfo.processInfo.environment["CHECKOUT_MODE"],
-           let intValue = Int(envValue),
-           let checkoutMode = CheckoutMode(rawValue: intValue) {
-            self.checkoutMode = checkoutMode
-        }
-        
-        if let envValue = ProcessInfo.processInfo.environment["CUSTOMER_ID"] {
+        if let envValue = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.customerID] {
             customerId = envValue.nilIfEmpty
         }
     }

@@ -195,6 +195,7 @@ class CardPaymentConsentSectionController: SectionController {
                         self.context.performUpdates(section, forceReload: true, animatingDifferences: false)
                     }
                 )
+                cell.accessibilityIdentifier = "consentSelected"
             } else {
                 cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
                 let consentTitle = "\(brand.capitalized) •••• \(card.last4 ?? "")"
@@ -210,6 +211,8 @@ class CardPaymentConsentSectionController: SectionController {
                         self?.showAlertForDelete(consent, consentDescription: consentTitle)
                     }
                 )
+                let consentIndex = consents.firstIndex { $0.id == itemIdentifier } ?? 0
+                cell.accessibilityIdentifier = "consentListed"
             }
             cell.setup(viewModel)
             return cell

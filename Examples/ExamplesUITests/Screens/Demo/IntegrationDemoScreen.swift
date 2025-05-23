@@ -15,7 +15,7 @@ enum UIIntegrationDemoScreen {
     static let buttonForDefaultPaymentList: XCUIElement = app.buttons["Launch default payments list"]
     static let settingsButton = app.buttons["gear"]
     static let backButton = app.buttons["Back"]
-    static let paymentOptionView = app.otherElements[AccessibilityIdentifiers.paymentTypeOptionButton]
+    static let paymentOptionView = app.otherElements[AccessibilityIdentifiers.SettingsScreen.optionButtonForPaymentType]
     
     static let alert = app.alerts.firstMatch
     
@@ -23,14 +23,13 @@ enum UIIntegrationDemoScreen {
         XCTAssert(title.exists)
         XCTAssertTrue(buttonForDefaultPaymentList.exists)
         XCTAssertTrue(settingsButton.exists)
-        XCTAssertTrue(backButton.exists)
         XCTAssertTrue(paymentOptionView.exists)
     }
     
-    static func launchDefaultPaymentList() {
+    static func openDefaultPaymentList() {
         XCTAssert(buttonForDefaultPaymentList.exists)
         buttonForDefaultPaymentList.tap()
-        title.waitForNonExistence(timeout: 5)
+        title.waitForNonExistence(timeout: .networkRequestTimeout)
     }
     
     static func ensureCheckoutMode(_ mode: CheckoutMode) {
@@ -46,17 +45,35 @@ enum UIIntegrationDemoScreen {
         XCTAssertTrue(paymentOptionView.staticTexts[mode.localizedDescription].exists)
     }
     
-    static func verifyPaymentStatusAlert(title: String?, message: String?) {
+    enum PaymentStatus {
+        case success
+        case failure(String?)
+        case cancel
+    }
+    
+    static func verifyAlertForPaymentStatus(_ status: PaymentStatus) {
         XCTAssert(alert.exists)
         
-        if let title {
-            XCTAssert(alert.staticTexts[title].exists)
-        }
-        if let message {
-            XCTAssert(alert.staticTexts[message].exists)
+        switch status {
+        case .success:
+            XCTAssert(alert.staticTexts["Payment successful"].exists)
+            XCTAssert(alert.staticTexts["Your payment has been charged"].exists)
+        case .failure(let message):
+            XCTAssert(alert.staticTexts["Payment failed"].exists)
+            XCTAssert(alert.staticTexts[message ?? "There was an error while processing your payment. Please try again."].exists)
+        case .cancel:
+            XCTAssert(alert.staticTexts["Payment cancelled"].exists)
+            XCTAssert(alert.staticTexts["Your payment has been cancelled"].exists)
         }
         
         alert.buttons["OK"].tap()
-        alert.waitForNonExistence(timeout: 5)
+        // retrieve payment intent status
+        alert.waitForNonExistence(timeout: .animationTimeout)
+    }
+    
+    static func openSettings() {
+        XCTAssert(settingsButton.exists && settingsButton.isEnabled)
+        settingsButton.tap()
+        XCTAssertTrue(title.waitForNonExistence(timeout: .animationTimeout))
     }
 }
