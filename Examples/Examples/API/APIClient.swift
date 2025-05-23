@@ -49,8 +49,13 @@ extension Airwallex {
 ///  For your app, you are recommended to config clientId/apiKey on your own server and let your server
 ///  and let your server do the token creation and other communitation with airwallex service for your app
 class DemoStoreAPIClient: APIClient, CustomerFetchable {
-    private var demoStoreBaseUrl: String? {
-        switch Airwallex.mode() {
+    
+    init(baseURL: String? = nil) {
+        demoStoreBaseUrl = baseURL ?? Self.baseURLForEnvironment(Airwallex.mode())
+    }
+    
+    static func baseURLForEnvironment(_ environment: AirwallexSDKMode) -> String? {
+        switch environment {
         case .demoMode:
             "https://demo-pacheckoutdemo.airwallex.com"
         case .stagingMode:
@@ -60,6 +65,8 @@ class DemoStoreAPIClient: APIClient, CustomerFetchable {
             nil
         }
     }
+    
+    private var demoStoreBaseUrl: String?
     
     func createPaymentIntent(request: PaymentIntentRequest, completion: @escaping (Result<AWXPaymentIntent, Error>) -> Void) {
         post(path: "/api/v1/pa/payment_intents/create", encodable: request, completion: completion)
