@@ -66,7 +66,7 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         SettingsScreen.ensureForce3DS(false)
         SettingsScreen.save()
         UIIntegrationDemoScreen.openDefaultPaymentList()
-        PaymentSheetScreen.validate()
+        PaymentSheetScreen.waitForExistence()
         CardPaymentScreen.payWithCard(
             cardNumber: cardNumber,
             canSaveCard: false
@@ -85,7 +85,7 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         HomeScreen.validate()
         HomeScreen.openUIIntegrationDemos()
         UIIntegrationDemoScreen.openDefaultPaymentList()
-        PaymentSheetScreen.validate()
+        PaymentSheetScreen.waitForExistence()
         PaymentSheetScreen.cancelPayment()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
     }
@@ -96,7 +96,7 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         HomeScreen.validate()
         HomeScreen.openUIIntegrationDemos()
         UIIntegrationDemoScreen.openDefaultPaymentList()
-        PaymentSheetScreen.validate()
+        PaymentSheetScreen.waitForExistence()
         CardPaymentScreen.payWithCard(
             cardNumber: TestCards.visa3DS,
             canSaveCard: false

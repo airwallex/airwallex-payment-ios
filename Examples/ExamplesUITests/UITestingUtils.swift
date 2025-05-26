@@ -10,7 +10,7 @@ import Foundation
 
 extension TimeInterval {
     static let animationTimeout: TimeInterval = 2
-    static let networkRequestTimeout: TimeInterval = 6
+    static let networkRequestTimeout: TimeInterval = 10
     
     static let shortTimeout: TimeInterval = 1
     static let mediumTimeout: TimeInterval = 5

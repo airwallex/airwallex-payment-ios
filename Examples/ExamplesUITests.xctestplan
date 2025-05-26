@@ -17,10 +17,6 @@
   "defaultOptions" : {
     "environmentVariableEntries" : [
       {
-        "key" : "UI_TESTING_CUSTOMER_ID",
-        "value" : "cus_hkdmfsn96h5vft0gz56"
-      },
-      {
         "key" : "IS_UI_TESTING",
         "value" : "1"
       }
