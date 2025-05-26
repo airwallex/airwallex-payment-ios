@@ -18,6 +18,7 @@ enum ThreeDSScreen {
     
     static func waitForExistence(_ timeout: TimeInterval = .longTimeout) {
         XCTAssertTrue(title.waitForExistence(timeout: .longLongTimeout))
+        validate()
     }
     
     static func waitForNonExistence(_ timeout: TimeInterval = .longTimeout) {
@@ -32,7 +33,6 @@ enum ThreeDSScreen {
     }
     
     static func handleThreeDS() {
-        waitForExistence()
         textField.tap()
         textField.typeText("1234")
         title.tap()// dismiss keyboard

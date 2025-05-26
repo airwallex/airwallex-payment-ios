@@ -101,7 +101,7 @@ final class CardGuestUserCheckoutTests: XCTestCase {
             cardNumber: TestCards.visa3DS,
             canSaveCard: false
         )
-        ThreeDSScreen.validate()
+        ThreeDSScreen.waitForExistence(.longLongTimeout)
         ThreeDSScreen.cancelThreeDS()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.failure)
     }

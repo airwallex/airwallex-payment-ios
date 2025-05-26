@@ -25,6 +25,7 @@ enum UIIntegrationDemoScreen {
     
     static func waitForExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
         XCTAssertTrue(title.waitForExistence(timeout: timeout))
+        validate()
     }
     
     static func validate() {
@@ -35,7 +36,6 @@ enum UIIntegrationDemoScreen {
     }
     
     static func openDefaultPaymentList() {
-        validate()
         buttonForDefaultPaymentList.tap()
         title.waitForNonExistence(timeout: .networkRequestTimeout)
     }
