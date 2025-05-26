@@ -58,24 +58,31 @@ enum SettingsScreen {
             // do nothing
         } else {
             if currentText.isEmpty || currentText == placeholder {
-                customerIDTextField.tap()
-                customerIDTextField.typeText(customerID)
+                if !customerID.isEmpty {
+                    customerIDTextField.tap()
+                    customerIDTextField.typeText(customerID)
+                }
             } else {
                 customerIDActionButton.tap()
                 activityIndicator.waitForNonExistence(timeout: .networkRequestTimeout)
                 customerIDTextField.tap()
                 customerIDTextField.typeText(customerID)
             }
-            app.keyboards.buttons["done"].tap()
+            if app.keyboards.buttons["done"].exists {
+                app.keyboards.buttons["done"].tap()
+                app.keyboards.firstMatch.waitForNonExistence(timeout: .animationTimeout)
+            }
         }
     }
     
     static func ensureForce3DS(_ force3DS: Bool) {
         XCTAssertTrue(toggleFor3DS.exists)
-        if toggleFor3DS.isSelected != force3DS {
+        var isOn = (toggleFor3DS.value as? String) == "1"
+        if isOn != force3DS {
             toggleFor3DS.tap()
         }
-        XCTAssertEqual(toggleFor3DS.isSelected, force3DS)
+        isOn = (toggleFor3DS.value as? String) == "1"
+        XCTAssertEqual(isOn, force3DS)
     }
     
     static func ensureLayoutMode(useTabLayout: Bool) {

@@ -364,7 +364,6 @@
 				D8F268AF2DDADDE000E84D64 /* Sources */,
 				D8F268B02DDADDE000E84D64 /* Frameworks */,
 				D8F268B12DDADDE000E84D64 /* Resources */,
-				D85164192DDD803E00B29912 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -534,24 +533,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		D85164192DDD803E00B29912 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ndefaults write com.apple.iphonesimulator \"ConnectHardwareKeyboard\" -bool false\nkillall Simulator\n";
 		};
 		D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */ = {
 			isa = PBXShellScriptBuildPhase;

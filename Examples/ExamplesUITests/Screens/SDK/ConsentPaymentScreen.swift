@@ -66,15 +66,18 @@ enum ConsentPaymentScreen {
     }
     
     static func deleteAllConsents() {
+        validate()
         if isConsentSelected {
             changeToListButton.tap()
         }
         while allConsentCells.count > 0 {
             deleteFirstConsent()
         }
+        XCTAssertTrue(addNewCardToggle.waitForNonExistence(timeout: .animationTimeout))
     }
     
     static func payWithFirstConsent() {
+        validate()
         if !isConsentSelected {
             allConsentCells.firstMatch.tap()
         }
@@ -89,13 +92,6 @@ enum ConsentPaymentScreen {
         }
         checkoutButton.tap()
         XCTAssertTrue(activityIndicator.exists)
-        if ThreeDSScreen.exists {
-            ThreeDSScreen.validate()
-            ThreeDSScreen.handleThreeDS()
-        }
-        selectedConsent.waitForNonExistence(timeout: .networkRequestTimeout)
-        UIIntegrationDemoScreen.validate()
-        UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
     }
     
     static func validateConsentIcons() {

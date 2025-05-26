@@ -27,8 +27,15 @@ enum PaymentSheetScreen {
         if closeButton.exists {
             closeButton.tap()
         }
-        title.waitForNonExistence(timeout: .animationTimeout)
-        UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
+        waitForNonExistence(.animationTimeout)
+    }
+    
+    static func waitForNonExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
+        XCTAssertTrue(title.waitForNonExistence(timeout: timeout))
+    }
+    
+    static func waitForExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
+        XCTAssertTrue(title.waitForExistence(timeout: timeout))
     }
 }
 

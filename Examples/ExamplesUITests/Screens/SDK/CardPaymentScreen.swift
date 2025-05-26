@@ -31,10 +31,11 @@ enum CardPaymentScreen {
     }
     
     static func payWithCard(cardNumber: String,
+                            canSaveCard: Bool,
+                            shouldSave: Bool = true,
                             expiry: String = "03/33",
-                            cvc: String = "333",
-                            checkoutMode: CheckoutMode = .oneOff,
-                            save: Bool = true) {
+                            cvc: String = "333") {
+        validate()
         cardNumberField.tap()
         cardNumberField.typeText(cardNumber)
         cardExpiryField.tap()
@@ -53,21 +54,14 @@ enum CardPaymentScreen {
             cardInfoCell.swipeUp()
         }
         
-        if checkoutMode == .oneOff {
-            if  saveCardToggle.isSelected != save {
+        if canSaveCard {
+            if saveCardToggle.isSelected != shouldSave {
                 saveCardToggle.tap()
-                XCTAssert(saveCardToggle.isSelected == save)
+                XCTAssert(saveCardToggle.isSelected == shouldSave)
             }
         }
         
         checkoutButton.tap()
         XCTAssertTrue(activityIndicator.exists)
-        if ThreeDSScreen.exists {
-            ThreeDSScreen.validate()
-            ThreeDSScreen.handleThreeDS()
-        }
-        
-        UIIntegrationDemoScreen.validate()
-        UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
     }
 }

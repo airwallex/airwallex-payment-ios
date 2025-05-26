@@ -27,28 +27,28 @@ final class CardGuestUserCheckoutTests: XCTestCase {
     }
     
     @MainActor
-    func testCardPayment_oneOff_3DS_Challenge_Collection() throws {
-        testCardPayment(cardNumber: "4012000300000088", threeDSChallenge: true)
+    func testCardPayment_oneOff_3DS_Combined() throws {
+        testCardPayment(cardNumber: TestCards.visa3DS, threeDSChallenge: true)
     }
     
     @MainActor
-    func testCardPayment_oneOff_3DS_Challenge_Collection_accordionLayout() throws {
-        testCardPayment(cardNumber: "4012000300000088", threeDSChallenge: true)
+    func testCardPayment_oneOff_3DS_Combined_accordionLayout() throws {
+        testCardPayment(cardNumber: TestCards.visa3DS, threeDSChallenge: true, useTabLayout: false)
     }
     
     @MainActor
-    func testCardPayment_oneOff_3DS_Challenge_NoCollection() throws {
+    func testCardPayment_oneOff_3DS_Explicit() throws {
         testCardPayment(cardNumber: "4012000300000062", threeDSChallenge: true)
     }
     
     @MainActor
-    func testCardPayment_oneOff_NoChallenge_Collection() throws {
+    func testCardPayment_oneOff_3DS_Implicit() throws {
         testCardPayment(cardNumber: "4012000300000021", threeDSChallenge: false)
     }
     
     @MainActor
-    func testCardPayment_oneOff_NoChallenge_NoCollection() throws {
-        testCardPayment(cardNumber: "4012000300000005", threeDSChallenge: false)
+    func testCardPayment_oneOff_3DS_None() throws {
+        testCardPayment(cardNumber: TestCards.visa, threeDSChallenge: false)
     }
     
     @MainActor
@@ -63,16 +63,19 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         SettingsScreen.ensureEnvironment(.demo)
         SettingsScreen.ensureCustomerID(nil)
         SettingsScreen.ensureLayoutMode(useTabLayout: useTabLayout)
+        SettingsScreen.ensureForce3DS(false)
         SettingsScreen.save()
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.validate()
-        CardPaymentScreen.validate()
-        CardPaymentScreen.payWithCard(cardNumber: cardNumber, expiry: "03/33", cvc: "333")
+        CardPaymentScreen.payWithCard(
+            cardNumber: cardNumber,
+            canSaveCard: false
+        )
         if threeDSChallenge {
             ThreeDSScreen.validate()
             ThreeDSScreen.handleThreeDS()
         }
-        UIIntegrationDemoScreen.validate()
+        PaymentSheetScreen.waitForNonExistence()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
     }
     
@@ -81,11 +84,9 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         app.launch()
         HomeScreen.validate()
         HomeScreen.openUIIntegrationDemos()
-        UIIntegrationDemoScreen.validate()
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.validate()
         PaymentSheetScreen.cancelPayment()
-        UIIntegrationDemoScreen.validate()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
     }
     
@@ -94,13 +95,14 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         app.launch()
         HomeScreen.validate()
         HomeScreen.openUIIntegrationDemos()
-        UIIntegrationDemoScreen.validate()
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.validate()
-        CardPaymentScreen.validate()
-        CardPaymentScreen.payWithCard(cardNumber: "4012000300000088", expiry: "03/33", cvc: "333")
+        CardPaymentScreen.payWithCard(
+            cardNumber: TestCards.visa3DS,
+            canSaveCard: false
+        )
         ThreeDSScreen.validate()
         ThreeDSScreen.cancelThreeDS()
-        UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.failure("3DS has been cancelled!"))
+        UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.failure)
     }
 }

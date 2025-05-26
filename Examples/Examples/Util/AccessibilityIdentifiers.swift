@@ -25,10 +25,3 @@ enum UITestingEnvironmentVariable {
     static let isUITesting = "IS_UI_TESTING"
     static let customerID = "UI_TESTING_CUSTOMER_ID"
 }
-
-enum ThreeDSChallengeStyle {
-    case none// no challenge
-    case explicit// UI challenge
-    case implicit// Collect device info
-    case combined// UI chanlenge and collect device info
-}

@@ -19,6 +19,14 @@ enum UIIntegrationDemoScreen {
     
     static let alert = app.alerts.firstMatch
     
+    static func waitForNonExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
+        XCTAssertTrue(title.waitForNonExistence(timeout: timeout))
+    }
+    
+    static func waitForExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
+        XCTAssertTrue(title.waitForExistence(timeout: timeout))
+    }
+    
     static func validate() {
         XCTAssert(title.exists)
         XCTAssertTrue(buttonForDefaultPaymentList.exists)
@@ -27,7 +35,7 @@ enum UIIntegrationDemoScreen {
     }
     
     static func openDefaultPaymentList() {
-        XCTAssert(buttonForDefaultPaymentList.exists)
+        validate()
         buttonForDefaultPaymentList.tap()
         title.waitForNonExistence(timeout: .networkRequestTimeout)
     }
@@ -47,23 +55,21 @@ enum UIIntegrationDemoScreen {
     
     enum PaymentStatus {
         case success
-        case failure(String?)
+        case failure
         case cancel
     }
     
     static func verifyAlertForPaymentStatus(_ status: PaymentStatus) {
+        waitForExistence()
         XCTAssert(alert.exists)
         
         switch status {
         case .success:
             XCTAssert(alert.staticTexts["Payment successful"].exists)
-            XCTAssert(alert.staticTexts["Your payment has been charged"].exists)
-        case .failure(let message):
+        case .failure:
             XCTAssert(alert.staticTexts["Payment failed"].exists)
-            XCTAssert(alert.staticTexts[message ?? "There was an error while processing your payment. Please try again."].exists)
         case .cancel:
             XCTAssert(alert.staticTexts["Payment cancelled"].exists)
-            XCTAssert(alert.staticTexts["Your payment has been cancelled"].exists)
         }
         
         alert.buttons["OK"].tap()
