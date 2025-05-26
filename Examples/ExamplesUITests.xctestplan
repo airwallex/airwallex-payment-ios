@@ -4,6 +4,12 @@
       "id" : "646E9225-0B80-465E-9900-FB2EF9653BAD",
       "name" : "Test Scheme Action",
       "options" : {
+        "environmentVariableEntries" : [
+          {
+            "key" : "IS_UI_TESTING",
+            "value" : "1"
+          }
+        ],
         "language" : "en"
       }
     }

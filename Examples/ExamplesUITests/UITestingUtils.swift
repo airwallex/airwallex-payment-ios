@@ -23,10 +23,3 @@ enum TestCards {
     static let visa3DS = "4012000300000088"
     static let unionPay = "6262000000000000"
 }
-//
-//enum ThreeDSChallengeStyle {
-//    case none// no challenge
-//    case explicit// UI challenge
-//    case implicit// Collect device info
-//    case combined// UI chanlenge and collect device info
-//}
