@@ -9,13 +9,13 @@
 import Foundation
 
 extension TimeInterval {
-    static let animationTimeout: TimeInterval = 2
-    static let networkRequestTimeout: TimeInterval = 10
+    static let animationTimeout: TimeInterval = 1
+    static let networkRequestTimeout: TimeInterval = 12
     
     static let shortTimeout: TimeInterval = 1
-    static let mediumTimeout: TimeInterval = 5
-    static let longTimeout: TimeInterval = 10
-    static let longLongTimeout: TimeInterval = 15
+    static let mediumTimeout: TimeInterval = 6
+    static let longTimeout: TimeInterval = 12
+    static let longLongTimeout: TimeInterval = 24
 }
 
 enum TestCards {

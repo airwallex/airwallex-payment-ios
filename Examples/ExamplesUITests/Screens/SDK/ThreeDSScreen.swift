@@ -17,7 +17,7 @@ enum ThreeDSScreen {
     static let closeButton = app.buttons["close"]
     
     static func waitForExistence(_ timeout: TimeInterval = .longTimeout) {
-        XCTAssertTrue(title.waitForExistence(timeout: .networkRequestTimeout))
+        XCTAssertTrue(title.waitForExistence(timeout: .longLongTimeout))
     }
     
     static func waitForNonExistence(_ timeout: TimeInterval = .longTimeout) {
@@ -25,7 +25,7 @@ enum ThreeDSScreen {
     }
     
     static func validate() {
-        XCTAssertTrue(title.waitForExistence(timeout: .networkRequestTimeout))
+        XCTAssertTrue(title.exists)
         XCTAssertTrue(textField.exists)
         XCTAssertTrue(submitButton.exists)
         XCTAssert(closeButton.exists)
