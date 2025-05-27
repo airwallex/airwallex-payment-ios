@@ -8,9 +8,18 @@
           {
             "key" : "IS_UI_TESTING",
             "value" : "1"
+          },
+          {
+            "key" : "UI_TESTING_CUSTOMER_ID",
+            "value" : "$(UI_TESTING_CUSTOMER_ID)"
           }
         ],
-        "language" : "en"
+        "language" : "en",
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:Examples.xcodeproj",
+          "identifier" : "D8F268B22DDADDE000E84D64",
+          "name" : "ExamplesUITests"
+        }
       }
     }
   ],
