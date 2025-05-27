@@ -16,13 +16,13 @@ enum ThreeDSScreen {
     static let submitButton = app.webViews.firstMatch.buttons["Submit"]
     static let closeButton = app.buttons["close"]
     
-    static func waitForExistence(_ timeout: TimeInterval = .longTimeout) {
-        XCTAssertTrue(title.waitForExistence(timeout: .longLongTimeout))
+    static func waitForExistence(_ timeout: TimeInterval = .longLongTimeout) {
+        XCTAssertTrue(title.waitForExistence(timeout: timeout))
         validate()
     }
     
-    static func waitForNonExistence(_ timeout: TimeInterval = .longTimeout) {
-        XCTAssertTrue(title.waitForNonExistence(timeout: .networkRequestTimeout))
+    static func waitForNonExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
+        XCTAssertTrue(title.waitForNonExistence(timeout: timeout))
     }
     
     static func validate() {
@@ -33,6 +33,7 @@ enum ThreeDSScreen {
     }
     
     static func handleThreeDS() {
+        ThreeDSScreen.waitForExistence()
         textField.tap()
         textField.typeText("1234")
         title.tap()// dismiss keyboard

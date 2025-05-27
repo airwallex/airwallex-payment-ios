@@ -72,7 +72,6 @@ final class CardGuestUserCheckoutTests: XCTestCase {
             canSaveCard: false
         )
         if threeDSChallenge {
-            ThreeDSScreen.validate()
             ThreeDSScreen.handleThreeDS()
         }
         PaymentSheetScreen.waitForNonExistence()
