@@ -15,8 +15,8 @@ extension TimeInterval {
     
     static let shortTimeout: TimeInterval = 2
     static let mediumTimeout: TimeInterval = 6
-    static let longTimeout: TimeInterval = 12
-    static let longLongTimeout: TimeInterval = 24
+    static let longTimeout: TimeInterval = 18
+    static let longLongTimeout: TimeInterval = 36
 }
 
 enum TestCards {

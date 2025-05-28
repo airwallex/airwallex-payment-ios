@@ -32,7 +32,11 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
     
     @MainActor
     func testOneOffPayment_noSave() throws {
-        launchAppAndEnsureSettings(app, checkoutMode: .oneOff, customerID: customerId)
+        launchAppAndEnsureSettings(
+            app,
+            checkoutMode: .oneOff,
+            customerID: customerId
+        )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         if ConsentPaymentScreen.exists {
@@ -141,7 +145,11 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
     @MainActor
     private func testRecurringPayemnt(withIntent: Bool) {
         // delete saved consent if exists
-        launchAppAndEnsureSettings(app, checkoutMode: .oneOff)
+        launchAppAndEnsureSettings(
+            app,
+            checkoutMode: .oneOff,
+            customerID: customerId
+        )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         if ConsentPaymentScreen.exists {
