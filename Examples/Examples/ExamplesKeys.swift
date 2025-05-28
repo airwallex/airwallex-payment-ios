@@ -245,17 +245,6 @@ struct ExamplesKeys {
         guard let value = UserDefaults.standard.object(forKey: key) as? T.RawValue else { return nil }
         return T(rawValue: value)
     }
-    
-    static func loadValuesForUITestingFromEnvironment() {
-        // update value for UI Testing
-        guard ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.isUITesting] == "1" else  {
-            return
-        }
-        
-        if let envValue = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.customerID] {
-            customerId = envValue.nilIfEmpty
-        }
-    }
 }
 
 @propertyWrapper

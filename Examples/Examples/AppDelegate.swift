@@ -22,9 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //  initialize
         ExamplesKeys.loadDefaultKeysIfNilOrEmpty()
         Airwallex.setMode(ExamplesKeys.environment)
-                
-        // update value for UI Testing
-        ExamplesKeys.loadValuesForUITestingFromEnvironment()
         
 #if canImport(WechatOpenSDKDynamic)
         WXApi.registerApp("wx4c86d73fe4f82431", universalLink: "https://airwallex.com/")
