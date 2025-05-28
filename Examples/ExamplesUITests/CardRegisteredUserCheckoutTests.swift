@@ -11,12 +11,14 @@ import XCTest
 final class CardRegisteredUserCheckoutTests: XCTestCase {
     
     var app: XCUIApplication!
+    private var customerId: String? = nil
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         app = XCUIApplication()
         app.launchEnvironment[UITestingEnvironmentVariable.isUITesting] = "1"
-        // wpdebug set this in bitrise intead
+        customerId = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.customerID]
+        
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
 
@@ -30,7 +32,7 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
     
     @MainActor
     func testOneOffPayment_noSave() throws {
-        launchAppAndEnsureSettings(checkoutMode: .oneOff)
+        launchAppAndEnsureSettings(app, checkoutMode: .oneOff, customerID: customerId)
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         if ConsentPaymentScreen.exists {
@@ -64,7 +66,12 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
     @MainActor
     private func testOneOffPayment_saveCard(useTabLayout: Bool) throws {
         // first card payment
-        launchAppAndEnsureSettings(checkoutMode: .oneOff, useTabLayout: useTabLayout)
+        launchAppAndEnsureSettings(
+            app,
+            checkoutMode: .oneOff,
+            customerID: customerId,
+            useTabLayout: useTabLayout
+        )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         if ConsentPaymentScreen.exists {
@@ -133,9 +140,8 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
     
     @MainActor
     private func testRecurringPayemnt(withIntent: Bool) {
-        let checkoutMode: CheckoutMode = withIntent ? .recurringWithIntent : .recurring
         // delete saved consent if exists
-        launchAppAndEnsureSettings(checkoutMode: .oneOff)
+        launchAppAndEnsureSettings(app, checkoutMode: .oneOff)
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         if ConsentPaymentScreen.exists {
@@ -145,6 +151,7 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
         
         // card payment with recurring mode
+        let checkoutMode: CheckoutMode = withIntent ? .recurringWithIntent : .recurring
         UIIntegrationDemoScreen.ensureCheckoutMode(checkoutMode)
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
@@ -170,33 +177,5 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         CardPaymentScreen.validate()
         PaymentSheetScreen.cancelPayment()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
-    }
-}
-
-@MainActor
-private extension CardRegisteredUserCheckoutTests {
-    
-    func launchAppAndEnsureSettings(checkoutMode: CheckoutMode,
-                                    env: SettingsScreen.Environment = .demo,
-                                    customerID: String? = nil,
-                                    useTabLayout: Bool = true) {
-        app.launch()
-        HomeScreen.validate()
-        HomeScreen.openUIIntegrationDemos()
-        UIIntegrationDemoScreen.validate()
-        UIIntegrationDemoScreen.ensureCheckoutMode(checkoutMode)
-        UIIntegrationDemoScreen.openSettings()
-        SettingsScreen.validate()
-        SettingsScreen.ensureEnvironment(.demo)
-        if let customerID {
-            SettingsScreen.ensureCustomerID(customerID)
-        } else {
-            let customerID = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.customerID]
-            SettingsScreen.ensureCustomerID(customerID)
-        }
-        SettingsScreen.ensureForce3DS(false)
-        SettingsScreen.ensureLayoutMode(useTabLayout: useTabLayout)
-        SettingsScreen.save()
-        UIIntegrationDemoScreen.validate()
     }
 }

@@ -6,12 +6,12 @@
       "options" : {
         "environmentVariableEntries" : [
           {
-            "key" : "IS_UI_TESTING",
-            "value" : "1"
-          },
-          {
             "key" : "UI_TESTING_CUSTOMER_ID",
             "value" : "$(UI_TESTING_CUSTOMER_ID)"
+          },
+          {
+            "key" : "UI_TESTING_MOCK_APPLEPAY_TOKEN",
+            "value" : "$(UI_TESTING_MOCK_APPLEPAY_TOKEN)"
           }
         ],
         "language" : "en",
@@ -25,10 +25,7 @@
   ],
   "defaultOptions" : {
     "environmentVariableEntries" : [
-      {
-        "key" : "IS_UI_TESTING",
-        "value" : "1"
-      }
+
     ]
   },
   "testTargets" : [
