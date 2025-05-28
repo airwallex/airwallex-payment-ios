@@ -187,22 +187,26 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         PaymentSheetScreen.waitForNonExistence()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
-        // pay with consent
+        // check consent
         UIIntegrationDemoScreen.ensureCheckoutMode(.oneOff)
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.payWithFirstConsent()
-        PaymentSheetScreen.waitForNonExistence()
-        UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
-        // delete all consents
         if nextTriggerByCustomer {
+            // pay with consent
+            ConsentPaymentScreen.payWithFirstConsent()
+            PaymentSheetScreen.waitForNonExistence()
+            UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
+            // delete all consents
             UIIntegrationDemoScreen.openDefaultPaymentList()
             PaymentSheetScreen.waitForExistence()
             ConsentPaymentScreen.deleteAllConsents()
             CardPaymentScreen.validate()
-            PaymentSheetScreen.cancelPayment()
-            UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
+        } else {
+            // no consent exists
+            CardPaymentScreen.validate()
         }
+        PaymentSheetScreen.cancelPayment()
+        UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
     }
 }
