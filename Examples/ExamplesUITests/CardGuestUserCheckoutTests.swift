@@ -53,18 +53,13 @@ final class CardGuestUserCheckoutTests: XCTestCase {
     
     @MainActor
     private func testCardPayment(cardNumber: String, threeDSChallenge: Bool, useTabLayout: Bool = true) {
-        app.launch()
-        HomeScreen.validate()
-        HomeScreen.openUIIntegrationDemos()
-        UIIntegrationDemoScreen.validate()
-        UIIntegrationDemoScreen.ensureCheckoutMode(.oneOff)
-        UIIntegrationDemoScreen.openSettings()
-        SettingsScreen.validate()
-        SettingsScreen.ensureEnvironment(.demo)
-        SettingsScreen.ensureCustomerID(nil)
-        SettingsScreen.ensureLayoutMode(useTabLayout: useTabLayout)
-        SettingsScreen.ensureForce3DS(false)
-        SettingsScreen.save()
+        launchAppAndEnsureSettings(
+            app,
+            checkoutMode: .oneOff,
+            customerID: "",
+            useTabLayout: useTabLayout,
+            force3DS: false
+        )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         CardPaymentScreen.payWithCard(
@@ -80,9 +75,7 @@ final class CardGuestUserCheckoutTests: XCTestCase {
     
     @MainActor
     func testPaymentCancelled() throws {
-        app.launch()
-        HomeScreen.validate()
-        HomeScreen.openUIIntegrationDemos()
+        launchAppAndEnsureSettings(app, checkoutMode: .oneOff)
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         PaymentSheetScreen.cancelPayment()
@@ -91,9 +84,7 @@ final class CardGuestUserCheckoutTests: XCTestCase {
     
     @MainActor
     func test3DSCancelled() throws {
-        app.launch()
-        HomeScreen.validate()
-        HomeScreen.openUIIntegrationDemos()
+        launchAppAndEnsureSettings(app, checkoutMode: .oneOff)
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         CardPaymentScreen.payWithCard(

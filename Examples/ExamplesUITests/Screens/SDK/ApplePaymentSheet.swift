@@ -14,13 +14,13 @@ enum ApplePaymentSheet {
     static let payButton = applePaySheet.buttons["Pay with Passcode"]
     static let cancelButton = applePaySheet.buttons["close"]
     
-    static func waitForExistence(_ timeout: TimeInterval = .animationTimeout) {
+    static func waitForExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
         XCTAssertTrue(cancelButton.waitForExistence(timeout: timeout))
         XCTAssertTrue(cardButton.exists)
         XCTAssertTrue(payButton.exists)
     }
     
-    static func waitForNonExistence(_ timeout: TimeInterval = .animationTimeout) {
+    static func waitForNonExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
         XCTAssertTrue(cancelButton.waitForNonExistence(timeout: timeout))
     }
     

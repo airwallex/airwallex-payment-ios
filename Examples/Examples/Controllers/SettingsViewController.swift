@@ -66,6 +66,7 @@ class SettingsViewController: UIViewController {
     private lazy var optionForNextTrigger: ConfigActionView = {
         let view = ConfigActionView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.optionButtonForNextTriggerBy
         return view
     }()
     

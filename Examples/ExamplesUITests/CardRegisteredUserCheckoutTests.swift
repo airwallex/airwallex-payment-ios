@@ -11,13 +11,13 @@ import XCTest
 final class CardRegisteredUserCheckoutTests: XCTestCase {
     
     var app: XCUIApplication!
-    private var customerId: String? = nil
+    private var customerId: String = ""
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         app = XCUIApplication()
         app.launchEnvironment[UITestingEnvironmentVariable.isUITesting] = "1"
-        customerId = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.customerID]
+        customerId = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.customerID] ?? ""
         
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
@@ -133,17 +133,27 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
     }
     
     @MainActor
-    func testRecurringPayment() throws {
-        testRecurringPayemnt(withIntent: false)
+    func testRecurringPayment_triggerByCustomer() throws {
+        testRecurringPayemnt(withIntent: false, nextTriggerByCustomer: true)
     }
     
     @MainActor
-    func testRecurringWithIntentPayment() throws {
-        testRecurringPayemnt(withIntent: true)
+    func testRecurringPayment_triggerByMerchant() throws {
+        testRecurringPayemnt(withIntent: false, nextTriggerByCustomer: false)
     }
     
     @MainActor
-    private func testRecurringPayemnt(withIntent: Bool) {
+    func testRecurringWithIntentPayment_triggerByCustomer() throws {
+        testRecurringPayemnt(withIntent: true, nextTriggerByCustomer: true)
+    }
+    
+    @MainActor
+    func testRecurringWithIntentPayment_triggerByMerchant() throws {
+        testRecurringPayemnt(withIntent: true, nextTriggerByCustomer: false)
+    }
+    
+    @MainActor
+    private func testRecurringPayemnt(withIntent: Bool, nextTriggerByCustomer: Bool) {
         // delete saved consent if exists
         launchAppAndEnsureSettings(
             app,
@@ -161,12 +171,19 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         // card payment with recurring mode
         let checkoutMode: CheckoutMode = withIntent ? .recurringWithIntent : .recurring
         UIIntegrationDemoScreen.ensureCheckoutMode(checkoutMode)
+        UIIntegrationDemoScreen.openSettings()
+        SettingsScreen.ensureNextTriggerByCustomer(nextTriggerByCustomer)
+        SettingsScreen.save()
+        
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         CardPaymentScreen.payWithCard(
             cardNumber: TestCards.visa,
             canSaveCard: false
         )
+        if !nextTriggerByCustomer {
+            ThreeDSScreen.handleThreeDS()
+        }
         PaymentSheetScreen.waitForNonExistence()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
@@ -179,11 +196,13 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
         // delete all consents
-        UIIntegrationDemoScreen.openDefaultPaymentList()
-        PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.deleteAllConsents()
-        CardPaymentScreen.validate()
-        PaymentSheetScreen.cancelPayment()
-        UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
+        if nextTriggerByCustomer {
+            UIIntegrationDemoScreen.openDefaultPaymentList()
+            PaymentSheetScreen.waitForExistence()
+            ConsentPaymentScreen.deleteAllConsents()
+            CardPaymentScreen.validate()
+            PaymentSheetScreen.cancelPayment()
+            UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
+        }
     }
 }

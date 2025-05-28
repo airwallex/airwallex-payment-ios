@@ -12,6 +12,7 @@ enum AccessibilityIdentifiers {
     enum SettingsScreen {
         static let optionButtonForPaymentType = "optionButtonForPaymentType"
         static let optionButtonForEnvironment = "optionButtonForEnvironment"
+        static let optionButtonForNextTriggerBy = "optionButtonForNextTriggerBy"
         static let optionButtonForLayout = "optionButtonForLayout"
         static let textFieldForCustomerID = "textFieldForCustomerID"
         static let actionButtonForCustomerID = "actionButtonForCustomerID"

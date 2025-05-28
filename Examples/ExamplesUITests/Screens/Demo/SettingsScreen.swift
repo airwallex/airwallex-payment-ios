@@ -21,7 +21,8 @@ enum SettingsScreen {
     static let titleLabel = app.staticTexts["Settings"]
     static let saveButton = app.buttons["Save"]
     static let backButton = app.buttons["Back"]
-    static let environmentOptionView = app.otherElements[AccessibilityIdentifiers.SettingsScreen.optionButtonForEnvironment]
+    static let optionViewForEnvironment = app.otherElements[AccessibilityIdentifiers.SettingsScreen.optionButtonForEnvironment]
+    static let optionViewForNextTriggerBy = app.otherElements[AccessibilityIdentifiers.SettingsScreen.optionButtonForNextTriggerBy]
     static let optionViewForLayout = app.otherElements[AccessibilityIdentifiers.SettingsScreen.optionButtonForLayout]
     static let customerIDTextField = app.textFields[AccessibilityIdentifiers.SettingsScreen.textFieldForCustomerID]
     static let customerIDActionButton = app.buttons[AccessibilityIdentifiers.SettingsScreen.actionButtonForCustomerID]
@@ -36,16 +37,16 @@ enum SettingsScreen {
     }
     
     static func ensureEnvironment(_ env: Environment) {
-        XCTAssertTrue(environmentOptionView.exists)
-        guard !environmentOptionView.staticTexts[env.rawValue].exists else {
+        XCTAssertTrue(optionViewForEnvironment.exists)
+        guard !optionViewForEnvironment.staticTexts[env.rawValue].exists else {
             // no need to update payment type
             return
         }
         
-        environmentOptionView.tap()
+        optionViewForEnvironment.tap()
         XCTAssertTrue(app.sheets.buttons[env.rawValue].exists)
         app.sheets.buttons[env.rawValue].tap()
-        XCTAssertTrue(environmentOptionView.staticTexts[env.rawValue].exists)
+        XCTAssertTrue(optionViewForEnvironment.staticTexts[env.rawValue].exists)
     }
     
     static func ensureCustomerID(_ customerID: String?) {
@@ -89,7 +90,7 @@ enum SettingsScreen {
         XCTAssertTrue(optionViewForLayout.exists)
         let layoutName = useTabLayout ? "tab" : "accordion"
         guard !optionViewForLayout.staticTexts[layoutName].exists else {
-            // no need to update payment type
+            // no need to update layout
             return
         }
         
@@ -97,6 +98,20 @@ enum SettingsScreen {
         XCTAssertTrue(app.sheets.buttons[layoutName].exists)
         app.sheets.buttons[layoutName].tap()
         XCTAssertTrue(optionViewForLayout.staticTexts[layoutName].waitForExistence(timeout: .animationTimeout))
+    }
+    
+    static func ensureNextTriggerByCustomer(_ isTriggerByCustomer: Bool) {
+        XCTAssertTrue(optionViewForNextTriggerBy.exists)
+        let triggerName = isTriggerByCustomer ? "Customer" : "Merchant"
+        guard !optionViewForNextTriggerBy.staticTexts[triggerName].exists else {
+            // no need to update trigger
+            return
+        }
+        
+        optionViewForNextTriggerBy.tap()
+        XCTAssertTrue(app.sheets.buttons[triggerName].exists)
+        app.sheets.buttons[triggerName].tap()
+        XCTAssertTrue(optionViewForNextTriggerBy.staticTexts[triggerName].waitForExistence(timeout: .animationTimeout))
     }
     
     static func close() {

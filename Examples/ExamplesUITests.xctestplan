@@ -12,6 +12,16 @@
           {
             "key" : "UI_TESTING_MOCK_APPLEPAY_TOKEN",
             "value" : "$(UI_TESTING_MOCK_APPLEPAY_TOKEN)"
+          },
+          {
+            "enabled" : false,
+            "key" : "UI_TESTING_CUSTOMER_ID",
+            "value" : ""
+          },
+          {
+            "enabled" : false,
+            "key" : "UI_TESTING_MOCK_APPLEPAY_TOKEN",
+            "value" : ""
           }
         ],
         "language" : "en",
@@ -19,7 +29,8 @@
           "containerPath" : "container:Examples.xcodeproj",
           "identifier" : "D8F268B22DDADDE000E84D64",
           "name" : "ExamplesUITests"
-        }
+        },
+        "testTimeoutsEnabled" : true
       }
     }
   ],

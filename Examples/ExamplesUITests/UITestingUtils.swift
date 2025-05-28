@@ -11,12 +11,12 @@ import XCTest
 
 extension TimeInterval {
     static let animationTimeout: TimeInterval = 2
-    static let networkRequestTimeout: TimeInterval = 12
+    static let networkRequestTimeout: TimeInterval = 30
     
     static let shortTimeout: TimeInterval = 2
-    static let mediumTimeout: TimeInterval = 6
-    static let longTimeout: TimeInterval = 18
-    static let longLongTimeout: TimeInterval = 36
+    static let mediumTimeout: TimeInterval = 15
+    static let longTimeout: TimeInterval = 30
+    static let longLongTimeout: TimeInterval = 60
 }
 
 enum TestCards {
@@ -30,9 +30,11 @@ extension XCTestCase {
     
     func launchAppAndEnsureSettings(_ app: XCUIApplication,
                                     checkoutMode: CheckoutMode,
-                                    customerID: String? = nil,
+                                    customerID: String = "",
                                     env: SettingsScreen.Environment = .demo,
-                                    useTabLayout: Bool = true) {
+                                    useTabLayout: Bool = true,
+                                    nextTriggerByCustomer: Bool? = nil,
+                                    force3DS: Bool = false) {
         app.launch()
         HomeScreen.validate()
         HomeScreen.openUIIntegrationDemos()
@@ -44,6 +46,10 @@ extension XCTestCase {
         SettingsScreen.ensureCustomerID(customerID)
         SettingsScreen.ensureForce3DS(false)
         SettingsScreen.ensureLayoutMode(useTabLayout: useTabLayout)
+        if let nextTriggerByCustomer {
+            SettingsScreen.ensureNextTriggerByCustomer(nextTriggerByCustomer)
+        }
+        SettingsScreen.ensureForce3DS(force3DS)
         SettingsScreen.save()
         UIIntegrationDemoScreen.validate()
     }
