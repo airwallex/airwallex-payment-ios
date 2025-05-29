@@ -13,7 +13,7 @@ import AirwallexCore
 #endif
 
 struct CheckoutButtonCellViewModel {
-    let payWithIntent: Bool
+    let shouldShowPayAsCta: Bool
     let checkoutAction: () -> Void
 }
 
@@ -22,7 +22,7 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     private lazy var button: UIButton = {
         let view = UIButton(type: .custom)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.setTitle(NSLocalizedString("Pay", bundle: .paymentSheet, comment: "checkout button title"), for: .normal)
+        view.setTitle("Pay", for: .normal)
         view.addTarget(self, action: #selector(onButtonTapped), for: .touchUpInside)
         
         view.setTitleColor(.awxColor(.textInverse), for: .normal)
@@ -55,7 +55,7 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     func setup(_ viewModel: CheckoutButtonCellViewModel) {
         self.viewModel = viewModel
-        let title = viewModel.payWithIntent ? NSLocalizedString("Pay", bundle: .paymentSheet, comment: "checkout button title for one-off payment") : NSLocalizedString("Confirm", bundle: .paymentSheet, comment: "checkout button title for recurring payment")
+        let title = viewModel.shouldShowPayAsCta ? NSLocalizedString("Pay", bundle: .paymentSheet, comment: "checkout button title for one-off payment") : NSLocalizedString("Confirm", bundle: .paymentSheet, comment: "checkout button title for recurring payment")
         button.setTitle(title, for: .normal)
     }
     

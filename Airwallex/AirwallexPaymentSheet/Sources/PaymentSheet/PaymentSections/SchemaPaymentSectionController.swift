@@ -122,7 +122,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         case Item.checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
-                payWithIntent: session.paymentIntentId() != nil,
+                shouldShowPayAsCta: !session.isKind(of: AWXRecurringSession.self),
                 checkoutAction: checkout
             )
             cell.setup(viewModel)
