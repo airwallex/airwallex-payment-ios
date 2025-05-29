@@ -83,8 +83,8 @@ class AccordionPaymentMethodCell: UICollectionViewCell, ViewConfigurable, ViewRe
         
         let constraints = [
             stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).priority(.required - 1),
             
             icon.widthAnchor.constraint(equalToConstant: 16),
@@ -138,8 +138,8 @@ class AccordionCardMethodCell: AccordionPaymentMethodCell {
         
         let constraints = [
             stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).priority(.required - 1),
             
             icon.widthAnchor.constraint(equalToConstant: 16),
