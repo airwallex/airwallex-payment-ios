@@ -7,8 +7,13 @@
 //
 
 import UIKit
+#if canImport(AirwallexPayment)
+import AirwallexCore
+@_spi(AWX) import AirwallexPayment
+#endif
 
 struct CheckoutButtonCellViewModel {
+    let transactionMode: String
     let checkoutAction: () -> Void
 }
 
@@ -50,6 +55,8 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     func setup(_ viewModel: CheckoutButtonCellViewModel) {
         self.viewModel = viewModel
+        let title = viewModel.transactionMode == AWXPaymentTransactionModeRecurring ? NSLocalizedString("Confirm", bundle: .paymentSheet, comment: "checkout button title for recurring payment") : NSLocalizedString("Pay", bundle: .paymentSheet, comment: "checkout button title for one-off payment")
+        button.setTitle(title, for: .normal)
     }
     
     @objc func onButtonTapped() {

@@ -121,7 +121,11 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             return cell
         case Item.checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
-            cell.setup(CheckoutButtonCellViewModel(checkoutAction: checkout))
+            let viewModel = CheckoutButtonCellViewModel(
+                transactionMode: session.transactionMode(),
+                checkoutAction: checkout
+            )
+            cell.setup(viewModel)
             return cell
         case Item.redirectReminder:
             return context.dequeueReusableCell(SchemaPaymentReminderCell.self, for: itemIdentifier, indexPath: indexPath)
