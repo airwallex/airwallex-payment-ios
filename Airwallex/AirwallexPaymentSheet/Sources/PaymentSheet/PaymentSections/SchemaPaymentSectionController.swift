@@ -122,7 +122,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         case Item.checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
-                transactionMode: session.transactionMode(),
+                payWithIntent: session.paymentIntentId() != nil,
                 checkoutAction: checkout
             )
             cell.setup(viewModel)

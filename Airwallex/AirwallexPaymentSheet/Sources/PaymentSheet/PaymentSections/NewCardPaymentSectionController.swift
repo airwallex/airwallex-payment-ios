@@ -161,7 +161,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         case .checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: item.rawValue, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
-                transactionMode: session.transactionMode(),
+                payWithIntent: session.paymentIntentId() != nil,
                 checkoutAction: checkout
             )
             cell.setup(viewModel)
