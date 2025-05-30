@@ -14,7 +14,7 @@ enum CardPaymentScreen {
     static let cardNumberField = app.cells["cardInfo"].textFields["cardNumberTextField"]
     static let cardExpiryField = app.cells["cardInfo"].textFields["cardExpiryTextField"]
     static let cardCVCField = app.cells["cardInfo"].textFields["cardCVCTextField"]
-    static let checkoutButton = app.buttons["Pay"]
+    static let checkoutButton = app.cells["checkoutButton"].buttons.firstMatch
     static let activityIndicator = app.activityIndicators.firstMatch
     static let cardInfoCell = app.cells["cardInfo"]
     static let consentToggle = app.cells["consentToggle"].buttons["Keep using saved cards"]
