@@ -24,6 +24,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         let view = CardNumberTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        view.textField.accessibilityIdentifier = "cardNumberTextField"
         return view
     }()
     
@@ -31,6 +32,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         let view = BaseTextField<InfoCollectorTextFieldViewModel>()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMinXMaxYCorner
+        view.textField.accessibilityIdentifier = "cardExpiryTextField"
         return view
     }()
     
@@ -44,6 +46,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.horizontalStack.addArrangedSubview(imageView)
         view.horizontalStack.addSpacer(8)
+        view.textField.accessibilityIdentifier = "cardCVCTextField"
         return view
     }()
     

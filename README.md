@@ -451,3 +451,4 @@ func paymentViewController(_ controller: UIViewController?, didCompleteWithPayme
 ## Contributing
 
 We welcome contributions of any kind including new features, bug fixes, and documentation improvements. The best way to contribute is by submitting a pull request – we'll do our best to respond to your patch as soon as possible. You can also submit an issue if you find bugs or have any questions.
+
