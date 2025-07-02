@@ -117,6 +117,9 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     func setup(_ viewModel: BillingInfoCellViewModel) {
         self.viewModel = viewModel
+        viewModel.updateFieldsLayeringForErrorStatus = { [weak self] in
+            self?.validateInputAndUpdateLayering()
+        }
         reuseButton.isHidden = !viewModel.canReusePrefilledAddress
         reuseButton.isSelected = viewModel.shouldReusePrefilledAddress
         
@@ -218,32 +221,36 @@ private extension BillingInfoCell {
         NSLayoutConstraint.activate(constraints)
     }
     
-    func setupObservation() {
-        let fields = [
+    var stackedTextFields: [BaseTextField<InfoCollectorTextFieldViewModel>] {
+        [
             streetTextField,
             stateTextField,
             cityTextField,
             zipCodeTextField
         ]
-        
-        Publishers.MergeMany(fields.map { $0.textField.textDidBeginEditingPublisher } + fields.map { $0.textField.textDidEndEditingPublisher})
+    }
+    
+    func setupObservation() {
+        Publishers.MergeMany(stackedTextFields.map { $0.textField.textDidBeginEditingPublisher } + stackedTextFields.map { $0.textField.textDidEndEditingPublisher})
             .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.validateInputAndUpdateLayering(fields)
+                self?.validateInputAndUpdateLayering()
             }
             .store(in: &cancellables)
     }
     
-    func validateInputAndUpdateLayering(_ fields: [BaseTextField<InfoCollectorTextFieldViewModel>]) {
-        for view in fields {
+    func validateInputAndUpdateLayering() {
+        for view in stackedTextFields {
             guard let viewModel = view.viewModel else { continue }
             if !viewModel.isValid {
                 stack.bringSubviewToFront(view)
             }
         }
-        if let editingField = fields.first(where: { $0.isFirstResponder }) {
+        if countrySelectionView.viewModel?.isValid == false {
+            stack.bringSubviewToFront(countrySelectionView)
+        }
+        if let editingField = stackedTextFields.first(where: { $0.isFirstResponder }) {
             stack.bringSubviewToFront(editingField)
         }
     }
-
 }
