@@ -8,6 +8,7 @@
 
 #import "AWXPaymentIntentRequest.h"
 #import "AWXDevice.h"
+#import "AWXPaymentConsent.h"
 #import <XCTest/XCTest.h>
 
 @interface AWXPaymentIntentRequestTest : XCTestCase
@@ -34,6 +35,13 @@
 - (void)testContinueRequestParameter {
     AWXConfirmThreeDSRequest *request = [AWXConfirmThreeDSRequest new];
     request.device = _device;
+    XCTAssertEqualObjects(request.parameters[@"device_data"], _device.encodeToJSON);
+}
+
+- (void)testConfirmRequestParametersMIT2CITConversion {
+    AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
+    AWXPaymentConsent *consent = [[AWXPaymentConsent alloc] init];
+
     XCTAssertEqualObjects(request.parameters[@"device_data"], _device.encodeToJSON);
 }
 

@@ -85,10 +85,16 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
         if filteredMethods.contains(where: { $0.name.lowercased() == AWXCardKey }) {
             //  filter consents
             set.removeAll()
-            let filteredConsents = try await consents.filter { consent in
+            let citConsents = try await consents.filter { $0.nextTriggeredBy == FormatNextTriggerByType(.customerType) }
+            let mitConsents = try await consents.filter { $0.nextTriggeredBy == FormatNextTriggerByType(.merchantType) }
+            
+            let filteredConsents = (citConsents + mitConsents).filter { consent in
                 guard consent.paymentMethod?.card?.brand != nil,
-                      !set.contains(consent.id) else { return false }
-                set.insert(consent.id)
+                      let fingerPrint = consent.paymentMethod?.card?.fingerprint,
+                      !set.contains(fingerPrint) else {
+                    return false
+                }
+                set.insert(fingerPrint)
                 return true
             }
             
@@ -139,7 +145,7 @@ private extension PaymentSheetMethodProvider {
         let request = AWXGetPaymentConsentsRequest()
         request.customerId = customerId
         request.status = "VERIFIED"
-        request.nextTriggeredBy = FormatNextTriggerByType(AirwallexNextTriggerByType.customerType)
+//        request.nextTriggeredBy = FormatNextTriggerByType(AirwallexNextTriggerByType.customerType)
         request.pageNum = 0
         request.pageSize = 1000
         let response = try await apiClient.send(request) as! AWXGetPaymentConsentsResponse

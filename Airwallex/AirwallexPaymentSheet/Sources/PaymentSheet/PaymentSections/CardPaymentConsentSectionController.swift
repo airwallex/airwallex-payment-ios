@@ -180,11 +180,12 @@ class CardPaymentConsentSectionController: SectionController {
                         
             var viewModel: CardConsentCellViewModel
             var cell: CardConsentCell
+            let prefix = consent.nextTriggeredBy == FormatNextTriggerByType(.merchantType) ? "MIT " : "CIT "
             if selectedConsent != nil {
                 cell = context.dequeueReusableCell(CardSelectedConsentCell.self, for: itemIdentifier, indexPath: indexPath)
                 viewModel = CardConsentCellViewModel(
                     image: image,
-                    text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
+                    text: prefix + "\(brand.capitalized) •••• \(card.last4 ?? "")",
                     highlightable: false,
                     actionTitle: NSLocalizedString("Change", bundle: .paymentSheet, comment: "consent section - unselect consent and go back to consent list"),
                     actionIcon: nil,
@@ -198,7 +199,7 @@ class CardPaymentConsentSectionController: SectionController {
                 cell.accessibilityIdentifier = "consentSelected"
             } else {
                 cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
-                let consentTitle = "\(brand.capitalized) •••• \(card.last4 ?? "")"
+                let consentTitle = prefix +  "\(brand.capitalized) •••• \(card.last4 ?? "")"
                 viewModel = CardConsentCellViewModel(
                     image: image,
                     text: consentTitle,

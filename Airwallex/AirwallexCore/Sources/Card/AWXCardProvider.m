@@ -84,8 +84,10 @@
                                      userInfo:nil];
     }
 
-    // Check payment method type
-    if ([paymentConsent.paymentMethod.card.numberType isEqualToString:@"PAN"]) {
+    // CVC required if numberType is PAN
+    if ([paymentConsent.paymentMethod.card.numberType isEqualToString:@"PAN"] &&
+        (paymentConsent.paymentMethod.card.cvc == nil ||
+         paymentConsent.paymentMethod.card.cvc.length == 0)) {
         AWXCardCVCViewController *controller = [[AWXCardCVCViewController alloc] initWithNibName:nil bundle:nil];
         controller.session = self.session;
         controller.paymentConsent = paymentConsent;
@@ -101,7 +103,10 @@
         navigationController.modalInPresentation = YES;
         [hostViewController presentViewController:navigationController animated:YES completion:nil];
     } else {
-        [self confirmPaymentIntentWithPaymentConsentId:paymentConsent.Id];
+        [self confirmPaymentIntentWithPaymentConsent:paymentConsent
+                                          completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+                                              [self completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
+                                          }];
     }
 }
 
@@ -136,25 +141,28 @@
     [self log:@"Delegate: %@, providerDidStartRequest:", self.delegate.class];
 
     __weak __typeof(self) weakSelf = self;
-    [self confirmPaymentIntentWithPaymentConsentId:paymentConsentId
-                                        completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
-                                            __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                            [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
-                                        }];
+    AWXPaymentConsent *consent = [AWXPaymentConsent new];
+    consent.Id = paymentConsentId;
+    [self confirmPaymentIntentWithPaymentConsent:consent
+                                      completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
+                                          __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                          [strongSelf completeWithResponse:(AWXConfirmPaymentIntentResponse *)response error:error];
+                                      }];
 }
 
 #pragma mark - Internal Actions
 
-- (void)confirmPaymentIntentWithPaymentConsentId:(NSString *)paymentConsentId
-                                      completion:(AWXRequestHandler)completion {
+- (void)confirmPaymentIntentWithPaymentConsent:(AWXPaymentConsent *)consent
+                                    completion:(AWXRequestHandler)completion {
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
-    AWXPaymentConsent *consent = [AWXPaymentConsent new];
-    consent.Id = paymentConsentId;
     request.intentId = self.session.paymentIntentId;
     request.customerId = self.session.customerId;
     request.device = [AWXDevice deviceWithRiskSessionId];
     request.paymentConsent = consent;
     request.returnURL = AWXThreeDSReturnURL;
+    if ([consent.nextTriggeredBy isEqualToString:FormatNextTriggerByType(AirwallexNextTriggerByMerchantType)]) {
+        request.handleConsentConversion = true;
+    }
 
     if ([self.session respondsToSelector:@selector(autoCapture)]) {
         AWXCardOptions *cardOptions = [AWXCardOptions new];

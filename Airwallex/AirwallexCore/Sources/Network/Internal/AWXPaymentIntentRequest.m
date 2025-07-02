@@ -26,6 +26,14 @@
     return AWXHTTPMethodPOST;
 }
 
+- (BOOL)canBeConvertedFromMIT2CITConsent {
+    return (self.paymentConsent &&
+            self.paymentConsent.Id &&
+            [self.paymentMethod.type isEqualToString:AWXCardKey] &&
+            [self.paymentConsent.nextTriggeredBy isEqualToString:FormatNextTriggerByType(AirwallexNextTriggerByMerchantType)] &&
+            self.paymentConsent.paymentMethod.Id);
+}
+
 - (nullable NSDictionary *)parameters {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
@@ -33,7 +41,15 @@
         parameters[@"customer_id"] = self.customerId;
     }
 
-    if (self.paymentConsent && self.paymentConsent.Id) {
+    if (self.handleConsentConversion && [self canBeConvertedFromMIT2CITConsent]) {
+        //  this parameter will convert MIT consent to CIT consent
+        parameters[@"payment_consent"] = @{
+            @"next_triggered_by": FormatNextTriggerByType(AirwallexNextTriggerByCustomerType)
+        };
+        parameters[@"payment_method"] = @{
+            @"id": self.paymentConsent.paymentMethod.Id
+        };
+    } else if (self.paymentConsent && self.paymentConsent.Id) {
         NSMutableDictionary *consentParams = @{
             @"id": self.paymentConsent.Id,
         }

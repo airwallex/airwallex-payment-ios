@@ -253,15 +253,7 @@ public class PaymentSessionHandler: NSObject {
             throw error
         }
         actionProvider = cardProvider
-        if let method = consent.paymentMethod,
-           let card = method.card,
-           card.numberType == AWXCard.NumberType.PAN,
-           (card.cvc ?? "").isEmpty == false {
-            cardProvider.confirmPaymentIntent(with: method, paymentConsent: consent)
-        } else {
-            // legacy implementation
-            cardProvider.confirmPaymentIntent(with: consent)
-        }
+        cardProvider.confirmPaymentIntent(with: consent)
     }
     
     /// Initiates a payment using a consent ID.

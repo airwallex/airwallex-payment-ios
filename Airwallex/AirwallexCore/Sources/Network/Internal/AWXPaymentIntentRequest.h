@@ -60,6 +60,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong, nullable) AWXDevice *device;
 
+/// should be set to `YES` if try to process one-off payment with MIT consent
+/// default to `NO`
+@property (nonatomic, assign) BOOL handleConsentConversion;
+
 @end
 
 /**
