@@ -20,6 +20,7 @@ public extension AWXPlaceDetails {
 public extension AWXAddress {
     var isComplete: Bool {
         guard let countryCode, !countryCode.trimmed.isEmpty,
+              countryCode.trimmed.isValidCountryCode,
               let postcode, !postcode.trimmed.isEmpty,
               let street, !street.trimmed.isEmpty,
               let city, !city.trimmed.isEmpty,
