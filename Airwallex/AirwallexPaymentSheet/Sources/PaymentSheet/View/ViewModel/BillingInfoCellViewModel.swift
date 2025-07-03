@@ -43,6 +43,8 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         return arr.first { !$0.isValid && $0.errorHint != nil }?.errorHint
     }
     
+    var updateFieldsLayeringForErrorStatus: (() -> Void)?
+    
     // MARK: -
     
     init(itemIdentifier: String,
@@ -123,6 +125,9 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         for configurer in fieldConfigurers {
             //  force configurer to check valid status if user left this field untouched
             configurer?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+        }
+        if let updateFieldsLayeringForErrorStatus {
+            updateFieldsLayeringForErrorStatus()
         }
     }
     
