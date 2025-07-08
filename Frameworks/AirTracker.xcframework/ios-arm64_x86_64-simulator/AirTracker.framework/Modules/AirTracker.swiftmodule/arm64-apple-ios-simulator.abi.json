@@ -984,55 +984,55 @@
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/APIClient.swift",
       "kind": "StringLiteral",
       "offset": 644,
-      "length": 54,
-      "value": "\"https:\/\/api\""
+      "length": 53,
+      "value": "\"https:\/\/o11y\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/APIClient.swift",
       "kind": "StringLiteral",
-      "offset": 665,
+      "offset": 666,
       "length": 1,
-      "value": "\".airwallex.com\/papluginlogs\/logs\""
+      "value": "\".airwallex.com\/airtracker\/logs\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/APIClient.swift",
       "kind": "StringLiteral",
-      "offset": 739,
+      "offset": 738,
       "length": 22,
       "value": "\"Unable to unwrap URL\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/APIClient.swift",
       "kind": "IntegerLiteral",
-      "offset": 874,
+      "offset": 873,
       "length": 1,
       "value": "2"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/APIClient.swift",
       "kind": "StringLiteral",
-      "offset": 1647,
+      "offset": 1646,
       "length": 6,
       "value": "\"POST\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/APIClient.swift",
       "kind": "StringLiteral",
-      "offset": 1711,
+      "offset": 1710,
       "length": 18,
       "value": "\"application\/json\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/APIClient.swift",
       "kind": "StringLiteral",
-      "offset": 1751,
+      "offset": 1750,
       "length": 14,
       "value": "\"Content-Type\""
     },
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/APIClient.swift",
       "kind": "IntegerLiteral",
-      "offset": 2070,
+      "offset": 2069,
       "length": 3,
       "value": "500"
     },
