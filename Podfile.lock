@@ -1,10 +1,10 @@
 PODS:
-  - Airwallex/AirwallexCore (6.1.5)
-  - Airwallex/AirwallexPayment (6.1.5):
+  - Airwallex/AirwallexCore (6.1.6)
+  - Airwallex/AirwallexPayment (6.1.6):
     - Airwallex/AirwallexCore
-  - Airwallex/AirwallexPaymentSheet (6.1.5):
+  - Airwallex/AirwallexPaymentSheet (6.1.6):
     - Airwallex/AirwallexPayment
-  - Airwallex/AirwallexWeChatPay (6.1.5):
+  - Airwallex/AirwallexWeChatPay (6.1.6):
     - Airwallex/AirwallexCore
   - OCMock (3.9.4)
 
@@ -22,7 +22,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  Airwallex: c94e1b4c043a7a1b7f825409d337036624cead5e
+  Airwallex: a8e744ede69e1095905226ec65fde31a76ced05d
   OCMock: 589f2c84dacb1f5aaf6e4cec1f292551fe748e74
 
 PODFILE CHECKSUM: 5892010fc0b398d43001fed8ad3d3aa4d0e38525
