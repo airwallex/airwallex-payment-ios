@@ -144,10 +144,10 @@ class PaymentViewController: AWXViewController {
     
     @objc private func getMethodList(_ sender: UIRefreshControl? = nil) {
         Task {
-            startAnimating()
+            startLoading()
             do {
                 try await methodProvider.getPaymentMethodTypes()
-                stopAnimating()
+                stopLoading()
                 if let sender {
                     sender.endRefreshing()
                 }

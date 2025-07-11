@@ -269,7 +269,6 @@
 		D85042702DA79E650074BA7F /* AWXRedirectActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5775CF9226E5E28D00C6AFE3 /* AWXRedirectActionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D85042772DA7A3740074BA7F /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87652D9E335900D082EC /* Font+Extensions.swift */; };
 		D85042782DA7A37B0074BA7F /* AWXCardValidator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87312D9E335900D082EC /* AWXCardValidator+Extensions.swift */; };
-		D85042792DA7A3B60074BA7F /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC876C2D9E335900D082EC /* UIViewController+Extensions.swift */; };
 		D850427C2DA7A46D0074BA7F /* PKPaymentMethod+Request.h in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37E127ED443E00CFC2EF /* PKPaymentMethod+Request.h */; };
 		D850427D2DA7A46D0074BA7F /* PKPaymentMethod+Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37E227ED443E00CFC2EF /* PKPaymentMethod+Request.m */; };
 		D850427E2DA7A46D0074BA7F /* PKPaymentToken+Request.h in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37E527ED451600CFC2EF /* PKPaymentToken+Request.h */; };
@@ -427,6 +426,8 @@
 		D8EC88342D9E335D00D082EC /* method_type_card.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EC2D9E335D00D082EC /* method_type_card.json */; };
 		D8EC88352D9E335D00D082EC /* method_types.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87ED2D9E335D00D082EC /* method_types.json */; };
 		D8EC88372D9E335D00D082EC /* payment_consents.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EF2D9E335D00D082EC /* payment_consents.json */; };
+		D8EFAB2F2E20E1A6009D4B4C /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFAB2D2E20E1A6009D4B4C /* UIViewController+Extensions.swift */; };
+		D8EFAB302E20E1A6009D4B4C /* SpinnerActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFAB2C2E20E1A6009D4B4C /* SpinnerActivityIndicatorView.swift */; };
 		D8F2FAFD2DA8F9C300209602 /* EventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2FAFC2DA8F9C300209602 /* EventsTests.swift */; };
 		D8F2FAFF2DA9054900209602 /* AWXCardSchemeExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2FAFE2DA9054900209602 /* AWXCardSchemeExtensionTests.swift */; };
 		D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
@@ -806,7 +807,6 @@
 		D8EC87692D9E335900D082EC /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		D8EC876A2D9E335900D082EC /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
 		D8EC876B2D9E335900D082EC /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
-		D8EC876C2D9E335900D082EC /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D8EC876E2D9E335900D082EC /* AWXAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXAlertController.swift; sourceTree = "<group>"; };
 		D8EC876F2D9E335900D082EC /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		D8EC87702D9E335900D082EC /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
@@ -862,6 +862,8 @@
 		D8EC88022D9E335D00D082EC /* PaletteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteTests.swift; sourceTree = "<group>"; };
 		D8EC88042D9E335D00D082EC /* AWXUIContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXUIContextTests.swift; sourceTree = "<group>"; };
 		D8EC88052D9E335D00D082EC /* PaymentSessionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSessionHandlerTests.swift; sourceTree = "<group>"; };
+		D8EFAB2C2E20E1A6009D4B4C /* SpinnerActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerActivityIndicatorView.swift; sourceTree = "<group>"; };
+		D8EFAB2D2E20E1A6009D4B4C /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D8F2FAFC2DA8F9C300209602 /* EventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTests.swift; sourceTree = "<group>"; };
 		D8F2FAFE2DA9054900209602 /* AWXCardSchemeExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXCardSchemeExtensionTests.swift; sourceTree = "<group>"; };
 		EE2CC5A246D6BB2D92970009 /* Pods-AirwallexCoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirwallexCoreTests.debug.xcconfig"; path = "Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1671,7 +1673,6 @@
 				D8EC87602D9E335900D082EC /* AWXPlaceDetails+Extensions.swift */,
 				D8EC87622D9E335900D082EC /* AWXSession+Extensions.swift */,
 				D8EC87632D9E335900D082EC /* Bundle+Extensions.swift */,
-				D8EC876C2D9E335900D082EC /* UIViewController+Extensions.swift */,
 				D8EC87672D9E335900D082EC /* String+Extensions.swift */,
 			);
 			path = Extensions;
@@ -1684,6 +1685,7 @@
 				D8EC876D2D9E335900D082EC /* Extensions */,
 				D8EC876F2D9E335900D082EC /* ErrorMessage.swift */,
 				D8EC87702D9E335900D082EC /* Events.swift */,
+				D8EFAB2E2E20E1A6009D4B4C /* UI */,
 				D8EC87752D9E335900D082EC /* PaymentSessionHandler.swift */,
 			);
 			path = Sources;
@@ -1832,6 +1834,15 @@
 				D8EC88052D9E335D00D082EC /* PaymentSessionHandlerTests.swift */,
 			);
 			path = AirwallexPaymentTests;
+			sourceTree = "<group>";
+		};
+		D8EFAB2E2E20E1A6009D4B4C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				D8EFAB2C2E20E1A6009D4B4C /* SpinnerActivityIndicatorView.swift */,
+				D8EFAB2D2E20E1A6009D4B4C /* UIViewController+Extensions.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		F8DA62FE18BA7B42BEFFACDB /* Pods */ = {
@@ -2654,9 +2665,10 @@
 				D85041EF2DA79C790074BA7F /* Bundle+Extensions.swift in Sources */,
 				D85041F12DA79C790074BA7F /* String+Extensions.swift in Sources */,
 				D85041F22DA79C790074BA7F /* ErrorMessage.swift in Sources */,
-				D85042792DA7A3B60074BA7F /* UIViewController+Extensions.swift in Sources */,
 				D85041F32DA79C790074BA7F /* Events.swift in Sources */,
 				D85041F42DA79C790074BA7F /* PaymentSessionHandler.swift in Sources */,
+				D8EFAB2F2E20E1A6009D4B4C /* UIViewController+Extensions.swift in Sources */,
+				D8EFAB302E20E1A6009D4B4C /* SpinnerActivityIndicatorView.swift in Sources */,
 				D85041F52DA79C790074BA7F /* AirwallexPayment.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
