@@ -427,7 +427,7 @@
 		D8EC88352D9E335D00D082EC /* method_types.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87ED2D9E335D00D082EC /* method_types.json */; };
 		D8EC88372D9E335D00D082EC /* payment_consents.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EF2D9E335D00D082EC /* payment_consents.json */; };
 		D8EFAB2F2E20E1A6009D4B4C /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFAB2D2E20E1A6009D4B4C /* UIViewController+Extensions.swift */; };
-		D8EFAB302E20E1A6009D4B4C /* SpinnerActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFAB2C2E20E1A6009D4B4C /* SpinnerActivityIndicatorView.swift */; };
+		D8EFAB9E2E274CBA009D4B4C /* LoadingSpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFAB9D2E274CBA009D4B4C /* LoadingSpinnerView.swift */; };
 		D8F2FAFD2DA8F9C300209602 /* EventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2FAFC2DA8F9C300209602 /* EventsTests.swift */; };
 		D8F2FAFF2DA9054900209602 /* AWXCardSchemeExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2FAFE2DA9054900209602 /* AWXCardSchemeExtensionTests.swift */; };
 		D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
@@ -862,8 +862,8 @@
 		D8EC88022D9E335D00D082EC /* PaletteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteTests.swift; sourceTree = "<group>"; };
 		D8EC88042D9E335D00D082EC /* AWXUIContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXUIContextTests.swift; sourceTree = "<group>"; };
 		D8EC88052D9E335D00D082EC /* PaymentSessionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSessionHandlerTests.swift; sourceTree = "<group>"; };
-		D8EFAB2C2E20E1A6009D4B4C /* SpinnerActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerActivityIndicatorView.swift; sourceTree = "<group>"; };
 		D8EFAB2D2E20E1A6009D4B4C /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		D8EFAB9D2E274CBA009D4B4C /* LoadingSpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinnerView.swift; sourceTree = "<group>"; };
 		D8F2FAFC2DA8F9C300209602 /* EventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTests.swift; sourceTree = "<group>"; };
 		D8F2FAFE2DA9054900209602 /* AWXCardSchemeExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXCardSchemeExtensionTests.swift; sourceTree = "<group>"; };
 		EE2CC5A246D6BB2D92970009 /* Pods-AirwallexCoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirwallexCoreTests.debug.xcconfig"; path = "Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1839,7 +1839,7 @@
 		D8EFAB2E2E20E1A6009D4B4C /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				D8EFAB2C2E20E1A6009D4B4C /* SpinnerActivityIndicatorView.swift */,
+				D8EFAB9D2E274CBA009D4B4C /* LoadingSpinnerView.swift */,
 				D8EFAB2D2E20E1A6009D4B4C /* UIViewController+Extensions.swift */,
 			);
 			path = UI;
@@ -2302,9 +2302,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2656,6 +2660,7 @@
 				D85041E72DA79C790074BA7F /* Array+Extensions.swift in Sources */,
 				D85041E82DA79C790074BA7F /* AWXBrandType+Extensions.swift in Sources */,
 				D85041E92DA79C790074BA7F /* AWXCard+Extensions.swift in Sources */,
+				D8EFAB9E2E274CBA009D4B4C /* LoadingSpinnerView.swift in Sources */,
 				D85041EA2DA79C790074BA7F /* AWXCardBrand+Extensions.swift in Sources */,
 				D85041EB2DA79C790074BA7F /* AWXCardScheme+Extensions.swift in Sources */,
 				D85041EC2DA79C790074BA7F /* AWXDefaultProvider+Extensions.swift in Sources */,
@@ -2668,7 +2673,6 @@
 				D85041F32DA79C790074BA7F /* Events.swift in Sources */,
 				D85041F42DA79C790074BA7F /* PaymentSessionHandler.swift in Sources */,
 				D8EFAB2F2E20E1A6009D4B4C /* UIViewController+Extensions.swift in Sources */,
-				D8EFAB302E20E1A6009D4B4C /* SpinnerActivityIndicatorView.swift in Sources */,
 				D85041F52DA79C790074BA7F /* AirwallexPayment.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,5 +1,5 @@
 //
-//  SpinnerActivityIndicatorView.swift
+//  LoadingSpinnerView.swift
 //  AirwallexPayment
 //
 //  Created by Weiping Li on 11/7/25.
@@ -12,7 +12,7 @@ import UIKit
 import AirwallexCore
 #endif
 
-class SpinnerActivityIndicatorView: UIView {
+class LoadingSpinnerView: UIView {
     enum Style {
         case small
         case medium
