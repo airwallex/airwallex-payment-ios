@@ -35,7 +35,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         // setup valid card info
         mockCard = AWXCard(
             name: "John Appleseed",
-            cardNumber: "4100111111111111",
+            cardNumber: "4111111111111111",
             expiryMonth: "12",
             expiryYear: "2099",
             cvc: "333"
