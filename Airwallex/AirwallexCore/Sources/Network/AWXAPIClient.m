@@ -10,7 +10,6 @@
 #import "AWXAPIErrorResponse+Update.h"
 #import "AWXAPIResponse.h"
 #import "AWXAnalyticsLogger.h"
-#import "AWXLogger.h"
 #import "AWXUtils.h"
 #import "NSData+Base64.h"
 #import "NSObject+Logging.h"
@@ -148,7 +147,9 @@ static BOOL _localLogFileEnabled = NO;
 }
 
 - (NSString *)path {
-    [[AWXLogger sharedLogger] logException:@"path required"];
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"path required"
+                                 userInfo:nil];
     return nil;
 }
 
@@ -169,7 +170,7 @@ static BOOL _localLogFileEnabled = NO;
 }
 
 - (Class)responseClass {
-    [[AWXLogger sharedLogger] logEvent:@"responseClass is not overridden, but is not required"];
+    [self log:@"responseClass is not overridden, but is not required"];
     return nil;
 }
 
@@ -190,7 +191,9 @@ static BOOL _localLogFileEnabled = NO;
 @implementation AWXResponse
 
 + (AWXResponse *)parse:(NSData *)data {
-    [[AWXLogger sharedLogger] logException:@"parse method require override"];
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"parse method require override"
+                                 userInfo:nil];
     return nil;
 }
 

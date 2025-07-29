@@ -9,7 +9,6 @@
 #import "AWXUtils.h"
 #import "AWXAPIClient.h"
 #import "AWXConstants.h"
-#import "AWXLogger.h"
 
 static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
 
@@ -104,20 +103,6 @@ static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
 
 @implementation NSDecimalNumber (Utils)
 
-- (NSDecimalNumber *)toIntegerCents {
-    if (self == [NSDecimalNumber notANumber]) {
-        [[AWXLogger sharedLogger] logException:@"NaN can't be convert to cents"];
-    }
-
-    NSDecimalNumberHandler *round = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain
-                                                                                           scale:0
-                                                                                raiseOnExactness:YES
-                                                                                 raiseOnOverflow:YES
-                                                                                raiseOnUnderflow:YES
-                                                                             raiseOnDivideByZero:YES];
-    return [self decimalNumberByMultiplyingByPowerOf10:2 withBehavior:round];
-}
-
 - (NSString *)string {
     if (self == [NSDecimalNumber zero]) {
         return NSLocalizedStringFromTableInBundle(@"Free", nil, [NSBundle resourceBundle], @"string description when decimal number is zero");
@@ -146,24 +131,6 @@ static NSString *const kSDKSuiteName = @"com.airwallex.sdk";
         return @"$";
     }
     return formatter.currencySymbol;
-}
-
-@end
-
-@implementation AWXValidationUtils
-
-+ (void)checkNotNil:(id)value
-               name:(NSString *)name {
-    if (value == nil) {
-        [[AWXLogger sharedLogger] logException:[NSString stringWithFormat:@"%@ must not be nil", name]];
-    }
-}
-
-+ (void)checkNotNegative:(NSDecimalNumber *)value
-                    name:(NSString *)name {
-    if ([value compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
-        [[AWXLogger sharedLogger] logException:[NSString stringWithFormat:@"%@ must not be negative", name]];
-    }
 }
 
 @end
