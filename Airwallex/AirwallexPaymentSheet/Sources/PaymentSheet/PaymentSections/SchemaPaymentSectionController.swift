@@ -240,6 +240,9 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                             viewModel.text = self.session.billing?.fullName
                         }
                     }
+                    if let validator = SchemaFieldValidator(field: field) {
+                        viewModel.inputValidator = validator
+                    }
                     
                     //  update return key and handler
                     if let last = partialResult.last {
