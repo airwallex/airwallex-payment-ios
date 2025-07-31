@@ -49,7 +49,7 @@ struct SchemaFieldValidator: UserInputValidator {
                 guard fullMatch else {
                     if let displayName {
                         let localizedFormat = NSLocalizedString("Invalid %@", bundle: .paymentSheet, comment: "user input validation")
-                        throw String(format: localizedFormat, displayName).asError()
+                        throw String(format: localizedFormat, displayName.lowercased()).asError()
                     } else {
                         throw NSLocalizedString("Invalid user input", bundle: .paymentSheet, comment: "invalid user input").asError()
                     }
