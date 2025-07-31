@@ -147,9 +147,7 @@ static BOOL _localLogFileEnabled = NO;
 }
 
 - (NSString *)path {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:@"path required"
-                                 userInfo:nil];
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"path required" userInfo:nil];
     return nil;
 }
 
@@ -191,9 +189,7 @@ static BOOL _localLogFileEnabled = NO;
 @implementation AWXResponse
 
 + (AWXResponse *)parse:(NSData *)data {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:@"parse method require override"
-                                 userInfo:nil];
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"parse method require override" userInfo:nil];
     return nil;
 }
 

@@ -210,11 +210,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                         didEndDisplayingSupplementaryView view: UICollectionReusableView,
                         forElementOfKind elementKind: String,
                         at indexPath: IndexPath) {
-        guard indexPath.indices.count == 2 else {
-            // list boundary item displayed
-            // just ignore for now
-            return
-        }
+        guard indexPath.indices.count == 2 else { return }
         displayHandler.didEndDisplaying(supplementaryView: view, indexPath: indexPath)
     }
 }
