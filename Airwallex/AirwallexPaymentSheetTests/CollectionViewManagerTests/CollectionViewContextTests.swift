@@ -91,6 +91,33 @@ import XCTest
         XCTAssertEqual(appliedSnapshot.itemIdentifiers(inSection: .A), [.A1, .A2, .B1, .B2])
     }
     
+    func testInvalidateLayoutForItems() {
+        // Start from status AB
+        mockProvider.status = .AB
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Get context from sectionControllerA
+        guard let context = mockProvider.sectionControllerA.context else {
+            XCTFail("Context should not be nil")
+            return
+        }
+        // reset status
+        mockProvider.sectionControllerA.sectionLayoutCalled = nil
+        mockProvider.sectionControllerB.sectionLayoutCalled = nil
+        mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
+        mockProvider.sectionControllerB.cellForItemAtIndexPathCalled = nil
+        
+        // Invalidate layout for specific items
+        context.invalidateLayout(for: [.B2])
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Verify that the layout invalidation was triggered
+        XCTAssertNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
+        XCTAssertNil(mockProvider.sectionControllerB.cellForItemAtIndexPathCalled)
+        XCTAssertNotNil(mockProvider.sectionControllerB.sectionLayoutCalled)
+    }
+    
     func testReloadSections() {
         // Start from status A
         mockProvider.status = .A
