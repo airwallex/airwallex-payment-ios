@@ -40,28 +40,6 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences, completion: completion)
     }
     
-    func invalidateLayout(for items: [Item], animated: Bool = false) {
-        var indexPaths = [IndexPath]()
-        for item in items {
-            guard let indexPath = dataSource.indexPath(for: item) else { continue }
-            indexPaths.append(indexPath)
-        }
-        invalidateLayout(at: indexPaths, animated: animated)
-    }
-    
-    func invalidateLayout(at indexPaths: [IndexPath], animated: Bool = false) {
-        let invalidationContext = UICollectionViewLayoutInvalidationContext()
-        invalidationContext.invalidateItems(at: indexPaths)
-        layout.invalidateLayout(with: invalidationContext)
-        if animated {
-            collectionView.performBatchUpdates(nil)
-        } else {
-            UIView.performWithoutAnimation {
-                collectionView.performBatchUpdates(nil)
-            }
-        }
-    }
-    
     func reload(sections: [Section], animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
         let existingSections = Set(snapshot.sectionIdentifiers)
@@ -110,7 +88,7 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
             }
         }
         if invalidateLayout {
-            self.invalidateLayout(for: items)
+            layout.invalidateLayout()
         }
         // TODO: Update to `snapshot.reconfigureItems(items)` once the deployment target is iOS 15.0 or later.
         //            snapshot.reconfigureItems(items)
