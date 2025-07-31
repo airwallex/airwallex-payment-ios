@@ -104,8 +104,6 @@ class LoadingSpinnerView: UIView {
     }
     
     func startAnimating() {
-        isHidden = false
-        alpha = 0
         guard shapeLayer.animation(forKey: animationKey) == nil else {
             return
         }
@@ -115,6 +113,8 @@ class LoadingSpinnerView: UIView {
         anim.duration = 1.0
         anim.repeatCount = .infinity
         shapeLayer.add(anim, forKey: animationKey)
+        isHidden = false
+        alpha = 0
         UIView.animate(withDuration: 0.3) {
             self.alpha = 1
         }
