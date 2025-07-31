@@ -28,7 +28,7 @@ enum SettingsScreen {
     static let customerIDActionButton = app.buttons[AccessibilityIdentifiers.SettingsScreen.actionButtonForCustomerID]
     static let toggleFor3DS = app.switches[AccessibilityIdentifiers.SettingsScreen.toggleFor3DS]
     static let alert = app.alerts.firstMatch
-    static let activityIndicator = app.activityIndicators.firstMatch
+    static let activityIndicator = app.otherElements["loadingSpinnerView"].firstMatch
     
     static func validate() {
         XCTAssertTrue(titleLabel.exists)

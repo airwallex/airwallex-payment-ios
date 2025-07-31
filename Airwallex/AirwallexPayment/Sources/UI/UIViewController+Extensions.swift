@@ -25,6 +25,7 @@ import UIKit
             ])
             
             activityIndicator.startAnimating()
+            activityIndicator.accessibilityIdentifier = "loadingSpinnerView"
             return
         }
         view.bringSubviewToFront(indicator)
