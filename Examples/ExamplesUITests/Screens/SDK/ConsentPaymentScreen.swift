@@ -11,7 +11,7 @@ import XCTest
 
 enum ConsentPaymentScreen {
     static let app = XCUIApplication()
-    static let activityIndicator = app.activityIndicators.firstMatch
+    static let activityIndicator = app.otherElements["loadingSpinnerView"].firstMatch
 
     // consent list
     static let addNewCardToggle = app.cells["addNewCardToggle"].buttons["Add new"]

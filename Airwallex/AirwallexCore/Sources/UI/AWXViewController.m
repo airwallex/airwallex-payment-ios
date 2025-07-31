@@ -8,11 +8,11 @@
 
 #import "AWXViewController.h"
 #import "AWXAnalyticsLogger.h"
-#import "AWXLogger.h"
 #import "AWXPageViewTrackable.h"
 #import "AWXPaymentIntent.h"
 #import "AWXTheme.h"
 #import "AWXUtils.h"
+#import "NSObject+Logging.h"
 
 @interface AWXViewController ()<UIGestureRecognizerDelegate>
 
@@ -174,7 +174,7 @@
 }
 
 - (void)dealloc {
-    [[AWXLogger sharedLogger] logEvent:[NSString stringWithFormat:@"%@ dealloc", NSStringFromClass(self.class)]];
+    [self log:@"%@ dealloc", NSStringFromClass(self.class)];
 }
 
 #pragma mark - UIGestureRecognizerDelegate

@@ -40,20 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSDecimalNumber (Utils)
 
-- (NSDecimalNumber *)toIntegerCents;
 - (NSString *)string;
 - (NSString *)stringWithCurrencyCode:(NSString *)currencyCode;
 - (NSString *)currencySymbol:(NSString *)currencyCode;
-
-@end
-
-@interface AWXValidationUtils : NSObject
-
-+ (void)checkNotNil:(id)value
-               name:(NSString *)name;
-
-+ (void)checkNotNegative:(NSDecimalNumber *)value
-                    name:(NSString *)name;
 
 @end
 

@@ -40,26 +40,19 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences, completion: completion)
     }
     
-    func invalidateLayout(for items: [Item], animated: Bool = false) {
+    func invalidateLayout(for items: [Item]) {
         var indexPaths = [IndexPath]()
         for item in items {
             guard let indexPath = dataSource.indexPath(for: item) else { continue }
             indexPaths.append(indexPath)
         }
-        invalidateLayout(at: indexPaths, animated: animated)
+        invalidateLayout(at: indexPaths)
     }
     
-    func invalidateLayout(at indexPaths: [IndexPath], animated: Bool = false) {
+    func invalidateLayout(at indexPaths: [IndexPath]) {
         let invalidationContext = UICollectionViewLayoutInvalidationContext()
         invalidationContext.invalidateItems(at: indexPaths)
         layout.invalidateLayout(with: invalidationContext)
-        if animated {
-            collectionView.performBatchUpdates(nil)
-        } else {
-            UIView.performWithoutAnimation {
-                collectionView.performBatchUpdates(nil)
-            }
-        }
     }
     
     func reload(sections: [Section], animatingDifferences: Bool = false) {
@@ -89,11 +82,9 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     ///     - If no closure is provided, the method attempts to cast the cell to `ViewConfigurable` and call `reconfigure`,
     ///       which updates the cell using the current `viewModel` without replacing it.
     ///     - `Important!` If you need to configure the cell with a new `viewModel`, you should provide a `configurer` block and update the cell in the block
-    ///   - animatingDifferences: A boolean indicating whether to animate changes.
     func reconfigure(items: [Item],
                      invalidateLayout: Bool,
-                     configurer: ((UICollectionViewCell) -> Void)? = nil,
-                     animatingDifferences: Bool = false) {
+                     configurer: ((UICollectionViewCell) -> Void)? = nil) {
         guard !items.isEmpty else { return }
         for item in items {
             guard let cell = cellForItem(item) else {

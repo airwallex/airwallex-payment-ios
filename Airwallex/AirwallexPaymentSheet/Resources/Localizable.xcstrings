@@ -1635,7 +1635,7 @@
       }
     },
     "Pay" : {
-      "comment" : "checkout button title\ncheckout button title for one-off payment",
+      "comment" : "checkout button title for one-off payment",
       "localizations" : {
         "de" : {
           "stringUnit" : {

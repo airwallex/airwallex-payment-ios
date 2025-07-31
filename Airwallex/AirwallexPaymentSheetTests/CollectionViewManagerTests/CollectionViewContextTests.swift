@@ -79,7 +79,7 @@ import XCTest
         var snapshot = context.currentSnapshot()
 
         // Insert section B and item B1
-        snapshot.appendItems([.A2, .B1, .B2], toSection: .A)
+        snapshot.appendItems([.B1, .B2], toSection: .A)
 
         // Apply the modified snapshot to the context
         context.applySnapshot(snapshot)

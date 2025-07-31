@@ -70,6 +70,11 @@ import AirwallexCore
         guard AWXCardValidator.shared().isValidCardLength(number) else {
             throw NSLocalizedString("Card number is invalid", bundle: .payment, comment: "card validator error message").asError()
         }
+        
+        // Validate card number using Luhn algorithm
+        guard isValidLuhn(cardNumber: number) else {
+            throw NSLocalizedString("Card number is invalid", bundle: .payment, comment: "card validator error message").asError()
+        }
     }
     
     static func validate(expiryMonth: String?, expiryYear: String?) throws {
@@ -119,5 +124,32 @@ import AirwallexCore
     static func possibleBrandTypes(forCardNumber number: String?) -> [AWXBrandType] {
         let results = AWXCardValidator.shared().possibleBrandTypes(forCardNumber: number ?? "")
         return results.compactMap { AWXBrandType(rawValue: $0.uintValue)}
+    }
+    
+    /// Validates a card number using the Luhn algorithm
+    /// - Parameter cardNumber: The card number to validate
+    /// - Returns: True if the card number passes Luhn validation, false otherwise
+    private static func isValidLuhn(cardNumber: String) -> Bool {
+        // Convert string to array of integers
+        let digits = cardNumber.compactMap { Int(String($0)) }
+        
+        guard digits.count == cardNumber.count else {
+            return false
+        }
+        
+        // Starting from the right, double every second digit
+        var sum = 0
+        for (index, digit) in digits.enumerated().reversed() {
+            // If index is even (from the right), use the digit as is
+            // If index is odd (from the right), double the digit
+            let isOdd = (digits.count - 1 - index) % 2 == 1
+            let value = isOdd ? digit * 2 : digit
+            
+            // If doubling results in a two-digit number, add those digits together
+            sum += value > 9 ? value - 9 : value
+        }
+        
+        // If the sum is divisible by 10, the card number is valid
+        return sum % 10 == 0
     }
 }
