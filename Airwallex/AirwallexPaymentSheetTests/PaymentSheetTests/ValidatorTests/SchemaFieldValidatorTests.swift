@@ -110,7 +110,7 @@ class SchemaFieldValidatorTests: XCTestCase {
         XCTAssertThrowsError(try validator.validateUserInput("Invalid123")) { error in
             // Verify error message
             if let errorMessage = error as? ErrorMessage {
-                XCTAssertEqual(errorMessage.rawValue, "Invalid Letters Only")
+                XCTAssertEqual(errorMessage.rawValue, "Invalid letters only")
             } else {
                 XCTFail("Expected ErrorMessage type")
             }
@@ -209,7 +209,7 @@ class SchemaFieldValidatorTests: XCTestCase {
         // Test error message includes field display name
         XCTAssertThrowsError(try validator.validateUserInput("123")) { error in
             if let errorMessage = error as? ErrorMessage {
-                XCTAssertEqual(errorMessage.rawValue, "Invalid Custom Field")
+                XCTAssertEqual(errorMessage.rawValue, "Invalid custom field")
             } else {
                 XCTFail("Expected ErrorMessage type")
             }

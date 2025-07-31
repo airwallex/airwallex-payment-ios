@@ -30,7 +30,7 @@ struct InfoCollectorDefaultValidator: UserInputValidator {
             return
         }
         var defaultErrorMessage = if let title {
-            String(format: NSLocalizedString("Invalid %@", bundle: .paymentSheet, comment: "user input validation"), title)
+            String(format: NSLocalizedString("Invalid %@", bundle: .paymentSheet, comment: "user input validation"), title.lowercased())
         } else {
             NSLocalizedString("Invalid user input", bundle: .paymentSheet, comment: "user input validation")
         }
