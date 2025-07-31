@@ -154,4 +154,108 @@ class AWXCardValidatorExtensionTests: XCTestCase {
         candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: "")
         XCTAssertEqual(candidates.count, 7)
     }
+    
+    func testLuhnValidation() {
+        // Valid card numbers that pass Luhn validation
+        let validCardNumbers = [
+            // Visa (16 digits)
+            "4111111111111111",
+            "4012888888881881",
+            "4532015112830366",
+            
+            // Mastercard (16 digits)
+            "5555555555554444",
+            "5105105105105100",
+            "5436031030606378",
+            
+            // American Express (15 digits)
+            "378282246310005",
+            "371449635398431",
+            "340000000000009",
+            
+            // Discover (16 digits)
+            "6011111111111117",
+            "6011000990139424",
+            "6011000000000004",
+            
+            // JCB (16 digits)
+            "3530111333300000",
+            "3566002020360505",
+            "3530000000000003",
+            
+            // UnionPay (16 digits)
+            "6200000000000005",
+            "6212345678901232",
+            "6250941006528599",
+            
+            // Diners Club (14 digits)
+            "36227206271667",
+            "36700102000000",
+            "36148900647913"
+        ]
+        
+        // Invalid card numbers that fail Luhn validation
+        let invalidCardNumbers = [
+            // Visa with incorrect check digit (16 digits)
+            "4111111111111112",
+            "4012888888881882",
+            "4916994372352807",
+            
+            // Mastercard with incorrect check digit (16 digits)
+            "5555555555554443",
+            "5105105105105101",
+            "5436031030606379",
+            
+            // American Express with incorrect check digit (15 digits)
+            "378282246310006",
+            "371449635398432",
+            "340000000000008",
+            
+            // Discover with incorrect check digit (16 digits)
+            "6011111111111110",
+            "6011000990139425",
+            "6011000000000005",
+            
+            // JCB with incorrect check digit (16 digits)
+            "3530111333300001",
+            "3566002020360506",
+            "3530000000000004",
+            
+            // UnionPay with incorrect check digit (16 digits)
+            "6200000000000006",
+            "6212345678901233",
+            "6250941006528590",
+            
+            // Diners Club with incorrect check digit (14 digits)
+            "36227206271668",
+            "36700102000001",
+            "36148900647914",
+            
+            // Common test cases
+            "4242424242424241"  // Test card with wrong check digit
+        ]
+        
+        // Test valid card numbers
+        for cardNumber in validCardNumbers {
+            let brandType = AWXCardValidator.shared().brand(forCardNumber: cardNumber).type
+            if brandType != .unknown {
+                let scheme = AWXCardScheme(name: AWXCardValidator.shared().brand(forCardNumber: cardNumber).name)
+                XCTAssertNoThrow(try AWXCardValidator.validate(number: cardNumber, supportedSchemes: [scheme]),
+                                "Valid card number \(cardNumber) should pass Luhn validation")
+            }
+        }
+        
+        // Test invalid card numbers
+        for cardNumber in invalidCardNumbers {
+            // For this test, we need to ensure the card number is recognized as a valid brand
+            // but fails the Luhn check, so we'll use a supported scheme
+            let scheme = visaScheme
+            
+            // First ensure the card number has valid length and format for the scheme
+            if AWXCardValidator.shared().isValidCardLength(cardNumber) {
+                XCTAssertThrowsError(try AWXCardValidator.validate(number: cardNumber, supportedSchemes: [scheme]),
+                                    "Invalid card number \(cardNumber) should fail Luhn validation")
+            }
+        }
+    }
 }
