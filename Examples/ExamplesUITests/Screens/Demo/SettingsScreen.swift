@@ -29,6 +29,7 @@ enum SettingsScreen {
     static let toggleFor3DS = app.switches[AccessibilityIdentifiers.SettingsScreen.toggleFor3DS]
     static let alert = app.alerts.firstMatch
     static let activityIndicator = app.otherElements["loadingSpinnerView"].firstMatch
+    static let keyboard = app.keyboards.firstMatch
     
     static func validate() {
         XCTAssertTrue(titleLabel.exists)
@@ -69,10 +70,7 @@ enum SettingsScreen {
                 customerIDTextField.tap()
                 customerIDTextField.typeText(customerID)
             }
-            if app.keyboards.buttons["done"].exists {
-                app.keyboards.buttons["done"].tap()
-                app.keyboards.firstMatch.waitForNonExistence(timeout: .animationTimeout)
-            }
+            dismissKeyboardIfExist()
         }
     }
     
@@ -121,13 +119,20 @@ enum SettingsScreen {
     }
     
     static func save() {
-        if app.keyboards.firstMatch.exists {
-            app.keyboards.buttons["done"].tap()
-            app.keyboards.firstMatch.waitForNonExistence(timeout: .animationTimeout)
-        }
+        dismissKeyboardIfExist()
         saveButton.tap()
         XCTAssertTrue(alert.waitForExistence(timeout: .animationTimeout))
         alert.buttons["Close"].tap()
         XCTAssertTrue(titleLabel.waitForNonExistence(timeout: .animationTimeout))
+    }
+    
+    static func dismissKeyboardIfExist() {
+        if app.staticTexts["Speed up your typing by sliding your finger across the letters to compose a word."].exists {
+            app.staticTexts["Continue"].tap()
+        }
+        if keyboard.exists {
+            keyboard.buttons["done"].tap()
+            keyboard.waitForNonExistence(timeout: .animationTimeout)
+        }
     }
 }
