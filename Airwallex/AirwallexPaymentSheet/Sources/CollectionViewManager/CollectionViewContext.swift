@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(iOS 13.0, *)
 class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable> {
     private(set) weak var viewController: UIViewController?
     private weak var collectionView: UICollectionView!

@@ -13,6 +13,7 @@ import Combine
 import AirwallexCore
 #endif
 
+@available(iOS 13.0, *)
 class SinglePaymentMethodProvider: PaymentMethodProvider {
     
     let name: String

@@ -23,6 +23,7 @@ enum PaymentSectionType: Hashable {
     case accordion(AccordionSectionController.Position)
 }
 
+@available(iOS 13.0, *)
 class PaymentViewController: AWXViewController {
     
     let methodProvider: PaymentMethodProvider

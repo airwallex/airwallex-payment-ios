@@ -13,6 +13,7 @@ struct ApplePayViewModel {
     var onPaymentButtonTapped: () -> Void
 }
 
+@available(iOS 13.0, *)
 class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     override init(frame: CGRect) {
         super.init(frame: frame)

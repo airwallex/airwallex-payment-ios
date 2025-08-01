@@ -11,6 +11,7 @@ import UIKit
 @_spi(AWX) import AirwallexPayment
 #endif
 
+@available(iOS 13.0, *)
 @MainActor protocol CollectionViewSectionProvider: AnyObject {
     associatedtype SectionType: Hashable & Sendable
     associatedtype ItemType: Hashable & Sendable
@@ -20,6 +21,7 @@ import UIKit
 }
 
 @MainActor
+@available(iOS 13.0, *)
 class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable, SectionProvider: CollectionViewSectionProvider>: NSObject, UICollectionViewDelegate where SectionProvider.SectionType == SectionType, SectionProvider.ItemType == ItemType {
     
     weak var sectionDataSource: SectionProvider?

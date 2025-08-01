@@ -11,6 +11,7 @@ import UIKit
 import AirwallexCore
 #endif
 
+@available(iOS 13.0, *)
 public class PaymentSessionHandler: NSObject {
     enum ValidationError: ErrorLoggable {
         case invalidPayment(underlyingError: Error)

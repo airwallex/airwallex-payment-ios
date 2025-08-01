@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(iOS 13.0, *)
 class RoundedCornerDecorationView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)

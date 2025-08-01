@@ -21,6 +21,7 @@ struct PaymentMethodCellViewModel: CellViewModelIdentifiable, CardBrandViewConfi
     let cardBrands: [AWXBrandType]
 }
 
+@available(iOS 13.0, *)
 class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     private let roundedBG: UIView = {

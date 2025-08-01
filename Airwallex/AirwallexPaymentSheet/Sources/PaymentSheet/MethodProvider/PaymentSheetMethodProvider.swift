@@ -13,6 +13,7 @@ import Combine
 import AirwallexCore
 #endif
 
+@available(iOS 13.0, *)
 final class PaymentSheetMethodProvider: PaymentMethodProvider {
     
     let session: AWXSession

@@ -36,6 +36,7 @@ protocol BaseTextFieldConfiguring: AnyObject, ViewModelValidatable {
     var textFieldDelegate: UITextFieldDelegate? { get }
 }
 
+@available(iOS 13.0, *)
 class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITextFieldDelegate {
     
     let textField: ContentInsetableTextField = {

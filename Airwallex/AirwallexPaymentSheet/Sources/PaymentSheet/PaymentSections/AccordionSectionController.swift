@@ -13,6 +13,7 @@ import Combine
 import AirwallexCore
 #endif
 
+@available(iOS 13.0, *)
 class AccordionSectionController: SectionController  {
     
     static let separatorElementKind = "acordian-folded-item-separator"
