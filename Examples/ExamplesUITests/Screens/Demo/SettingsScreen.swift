@@ -30,6 +30,7 @@ enum SettingsScreen {
     static let alert = app.alerts.firstMatch
     static let activityIndicator = app.activityIndicators.firstMatch
     static let keyboard = app.keyboards.firstMatch
+    static let versionlabel = app.staticTexts[AccessibilityIdentifiers.SettingsScreen.versionLabel]
     
     static func validate() {
         XCTAssertTrue(titleLabel.exists)
@@ -134,5 +135,11 @@ enum SettingsScreen {
             keyboard.buttons["done"].tap()
             keyboard.waitForNonExistence(timeout: .animationTimeout)
         }
+        if keyboard.exists {
+            app.swipeUp(velocity: .fast)
+            XCTAssertTrue(versionlabel.exists && versionlabel.isHittable)
+            versionlabel.tap()
+        }
+        XCTAssertTrue(keyboard.waitForNonExistence(timeout: .mediumTimeout))
     }
 }

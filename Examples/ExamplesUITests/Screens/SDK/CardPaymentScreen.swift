@@ -68,6 +68,7 @@ enum CardPaymentScreen {
         
         checkoutButton.tap()
         XCTAssertTrue(activityIndicator.exists)
+        activityIndicator.waitForNonExistence(timeout: .networkRequestTimeout)
     }
     
     static func dismissKeyboard() {
