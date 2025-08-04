@@ -12,7 +12,7 @@ import XCTest
 enum ThreeDSScreen {
     static let app = XCUIApplication()
     static let title = app.webViews.firstMatch.staticTexts["Purchase Authentication"]
-    static let textField = app.webViews.firstMatch.textFields.firstMatch
+    static let textField = app.webViews.firstMatch.textFields["Enter Code Here"].firstMatch
     static let submitButton = app.webViews.firstMatch.buttons["Submit"]
     static let closeButton = app.buttons["close"]
     

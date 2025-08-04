@@ -131,8 +131,6 @@
 		C844DC7E2C3CE37F0099614C /* NSObject+Logging.h in Headers */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D801BDE12DA7BE2A0025D913 /* AWXSchemaExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87F32D9E335D00D082EC /* AWXSchemaExtensionTests.swift */; };
 		D805CC852DB0EF8100693929 /* AWXPaymentResultDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D805CC842DB0EF8100693929 /* AWXPaymentResultDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D809709C2DC9DA380051B5CA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D809709B2DC9DA380051B5CA /* Localizable.xcstrings */; };
-		D809709E2DC9DA380051B5CA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D809709D2DC9DA380051B5CA /* Localizable.xcstrings */; };
 		D80970A52DC9E09E0051B5CA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D80970A32DC9E09E0051B5CA /* Localizable.strings */; };
 		D80E28AC2DA7C0AB00DC4383 /* AirwallexPaymentSheet.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D80E28AB2DA7C0AB00DC4383 /* AirwallexPaymentSheet.xctestplan */; };
 		D80E28AD2DA7C53000DC4383 /* method_type_online_banking.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EB2D9E335D00D082EC /* method_type_online_banking.json */; };
@@ -408,6 +406,8 @@
 		D8C05A162DAE0F81002BED34 /* UserEditingEventObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C05A152DAE0F81002BED34 /* UserEditingEventObserver.swift */; };
 		D8C6ECF92DD199790036ED39 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */; };
 		D8C6ECFA2DD1997B0036ED39 /* CurrencyCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */; };
+		D8D4B67A2E408C25000B3A4A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8D4B6782E408C25000B3A4A /* Localizable.strings */; };
+		D8D4B6882E408CC3000B3A4A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8D4B6862E408CC3000B3A4A /* Localizable.strings */; };
 		D8DD6B4D2DA7BCDC0047E450 /* AirwallexPayment.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D8DD6B4C2DA7BCDC0047E450 /* AirwallexPayment.xctestplan */; };
 		D8DE3F742DB0E19D009D9C0C /* AWXUIContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE3F732DB0E19D009D9C0C /* AWXUIContext.swift */; };
 		D8EC87792D9E335900D082EC /* AirwallexPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D8EC87772D9E335900D082EC /* AirwallexPayment.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -662,8 +662,6 @@
 		C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Logging.h"; sourceTree = "<group>"; };
 		C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Logging.m"; sourceTree = "<group>"; };
 		D805CC842DB0EF8100693929 /* AWXPaymentResultDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXPaymentResultDelegate.h; sourceTree = "<group>"; };
-		D809709B2DC9DA380051B5CA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = AirwallexPayment/Resources/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
-		D809709D2DC9DA380051B5CA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = AirwallexPaymentSheet/Resources/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
 		D80970A42DC9E09E0051B5CA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D80970A72DC9E0D40051B5CA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D80970A82DC9E0DC0051B5CA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -727,6 +725,30 @@
 		D8D4110D2DA37AD2004601FD /* AccordionSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordionSectionController.swift; sourceTree = "<group>"; };
 		D8D4110F2DA3828C004601FD /* CellSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSeparator.swift; sourceTree = "<group>"; };
 		D8D411112DA384E4004601FD /* RoundedCornerDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerDecorationView.swift; sourceTree = "<group>"; };
+		D8D4B6792E408C25000B3A4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B67B2E408C49000B3A4A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B67C2E408C6E000B3A4A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B67D2E408C75000B3A4A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B67E2E408C7D000B3A4A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B67F2E408C83000B3A4A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B6802E408C89000B3A4A /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8D4B6812E408C8F000B3A4A /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8D4B6822E408C94000B3A4A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B6832E408C99000B3A4A /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B6842E408C9E000B3A4A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8D4B6852E408CA2000B3A4A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8D4B6872E408CC3000B3A4A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B6892E408CC7000B3A4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B68A2E408CCC000B3A4A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B68B2E408CD2000B3A4A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B68C2E408CD7000B3A4A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B68D2E408CDC000B3A4A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B68E2E408CE6000B3A4A /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8D4B68F2E408CEC000B3A4A /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8D4B6902E408CF1000B3A4A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B6912E408CF6000B3A4A /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D8D4B6922E408CFB000B3A4A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D8D4B6932E408D00000B3A4A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D8DD6B4C2DA7BCDC0047E450 /* AirwallexPayment.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = AirwallexPayment.xctestplan; path = ../AirwallexPayment.xctestplan; sourceTree = SOURCE_ROOT; };
 		D8DE3F732DB0E19D009D9C0C /* AWXUIContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXUIContext.swift; sourceTree = "<group>"; };
 		D8EC87172D9E335900D082EC /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -1282,11 +1304,11 @@
 		D85040732DA793EA0074BA7F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */,
 				D8BD9E0F2D0191BF0045A892 /* CurrencyCodes.json */,
+				D8D4B6782E408C25000B3A4A /* Localizable.strings */,
+				D8BD9E0E2D0191BF0045A892 /* CountryCodes.json */,
 				D86710182DCD9D2C001D5A74 /* Airwallex.xcassets */,
 				D85040752DA794020074BA7F /* PrivacyInfo.xcprivacy */,
-				D809709D2DC9DA380051B5CA /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1502,8 +1524,8 @@
 		D8EC87182D9E335900D082EC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D8D4B6862E408CC3000B3A4A /* Localizable.strings */,
 				D8EC87172D9E335900D082EC /* PrivacyInfo.xcprivacy */,
-				D809709B2DC9DA380051B5CA /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2219,8 +2241,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D809709C2DC9DA380051B5CA /* Localizable.xcstrings in Resources */,
 				D8EC87CA2D9E335900D082EC /* PrivacyInfo.xcprivacy in Resources */,
+				D8D4B6882E408CC3000B3A4A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2240,7 +2262,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D809709E2DC9DA380051B5CA /* Localizable.xcstrings in Resources */,
+				D8D4B67A2E408C25000B3A4A /* Localizable.strings in Resources */,
 				D8C6ECF92DD199790036ED39 /* CountryCodes.json in Resources */,
 				D8C6ECFA2DD1997B0036ED39 /* CurrencyCodes.json in Resources */,
 				D86710192DCD9D2C001D5A74 /* Airwallex.xcassets in Resources */,
@@ -2724,6 +2746,44 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		D8D4B6782E408C25000B3A4A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8D4B6792E408C25000B3A4A /* en */,
+				D8D4B67B2E408C49000B3A4A /* de */,
+				D8D4B67C2E408C6E000B3A4A /* es */,
+				D8D4B67D2E408C75000B3A4A /* fr */,
+				D8D4B67E2E408C7D000B3A4A /* ja */,
+				D8D4B67F2E408C83000B3A4A /* ko */,
+				D8D4B6802E408C89000B3A4A /* pt-BR */,
+				D8D4B6812E408C8F000B3A4A /* pt-PT */,
+				D8D4B6822E408C94000B3A4A /* ru */,
+				D8D4B6832E408C99000B3A4A /* th */,
+				D8D4B6842E408C9E000B3A4A /* zh-Hans */,
+				D8D4B6852E408CA2000B3A4A /* zh-Hant */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		D8D4B6862E408CC3000B3A4A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8D4B6892E408CC7000B3A4A /* en */,
+				D8D4B6872E408CC3000B3A4A /* de */,
+				D8D4B68A2E408CCC000B3A4A /* es */,
+				D8D4B68B2E408CD2000B3A4A /* fr */,
+				D8D4B68C2E408CD7000B3A4A /* ja */,
+				D8D4B68D2E408CDC000B3A4A /* ko */,
+				D8D4B68E2E408CE6000B3A4A /* pt-BR */,
+				D8D4B68F2E408CEC000B3A4A /* pt-PT */,
+				D8D4B6902E408CF1000B3A4A /* ru */,
+				D8D4B6912E408CF6000B3A4A /* th */,
+				D8D4B6922E408CFB000B3A4A /* zh-Hans */,
+				D8D4B6932E408D00000B3A4A /* zh-Hant */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -3067,7 +3127,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -3112,7 +3172,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -3209,7 +3269,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -3252,7 +3312,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
