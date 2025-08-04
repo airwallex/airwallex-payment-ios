@@ -139,6 +139,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// validation returned for AWXField
+@interface AWXFieldValidation : NSObject<AWXJSONDecodable>
+
+/// regex validation
+@property (nonatomic, copy, nullable) NSString *regex;
+
+/// max length validation
+@property (nonatomic, assign) NSInteger max;
+
+@end
+
 /**
  `AWXField` includes the field of schema.
  */
@@ -173,6 +184,9 @@ NS_ASSUME_NONNULL_BEGIN
  candidates.
  */
 @property (nonatomic, strong) NSArray<AWXCandidate *> *candidates;
+
+/// Validations of schema field
+@property (nonatomic, strong, nullable) AWXFieldValidation *validations;
 
 @end
 
