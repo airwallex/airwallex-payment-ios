@@ -37,18 +37,18 @@ enum ThreeDSScreen {
     
     static func handleThreeDS() {
         ThreeDSScreen.waitForExistence()
-        textField.tap()
+        textField.robustTap()
         textField.typeText("1234")
-        title.tap()// dismiss keyboard
+        title.robustTap()// dismiss keyboard
         XCTAssertTrue(submitButton.isEnabled)
-        submitButton.tap()
+        submitButton.robustTap()
         waitForNonExistence()
     }
     
     static func cancelThreeDS() {
         XCTAssert(closeButton.exists)
         XCTAssertTrue(closeButton.isEnabled)
-        closeButton.tap()
+        closeButton.robustTap()
         waitForNonExistence(.animationTimeout)
     }
 }

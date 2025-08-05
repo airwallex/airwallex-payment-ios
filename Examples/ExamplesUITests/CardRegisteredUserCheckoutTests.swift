@@ -104,9 +104,9 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         if ConsentPaymentScreen.isConsentSelected {
-            ConsentPaymentScreen.changeToListButton.tap()
+            ConsentPaymentScreen.changeToListButton.robustTap()
         }
-        ConsentPaymentScreen.addNewCardToggle.tap()
+        ConsentPaymentScreen.addNewCardToggle.robustTap()
         CardPaymentScreen.payWithCard(
             cardNumber: TestCards.unionPay,
             canSaveCard: true,

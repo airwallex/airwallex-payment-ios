@@ -21,6 +21,6 @@ enum HomeScreen {
     
     static func openUIIntegrationDemos() {
         XCTAssert(buttonForUIIntegration.exists)
-        buttonForUIIntegration.tap()
+        buttonForUIIntegration.robustTap()
     }
 }

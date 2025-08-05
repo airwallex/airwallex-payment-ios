@@ -36,7 +36,7 @@ enum UIIntegrationDemoScreen {
     }
     
     static func openDefaultPaymentList() {
-        buttonForDefaultPaymentList.tap()
+        buttonForDefaultPaymentList.robustTap()
         title.waitForNonExistence(timeout: .networkRequestTimeout)
     }
     
@@ -47,9 +47,9 @@ enum UIIntegrationDemoScreen {
             return
         }
         
-        paymentOptionView.tap()
+        paymentOptionView.robustTap()
         XCTAssertTrue(app.buttons[mode.localizedDescription].waitForExistence(timeout: .animationTimeout))
-        app.buttons[mode.localizedDescription].tap()
+        app.buttons[mode.localizedDescription].robustTap()
         XCTAssertTrue(paymentOptionView.staticTexts[mode.localizedDescription].exists)
     }
     
@@ -72,14 +72,14 @@ enum UIIntegrationDemoScreen {
             XCTAssert(alert.staticTexts["Payment cancelled"].exists)
         }
         
-        alert.buttons["OK"].tap()
+        alert.buttons["OK"].robustTap()
         // retrieve payment intent status
         alert.waitForNonExistence(timeout: .animationTimeout)
     }
     
     static func openSettings() {
         XCTAssert(settingsButton.exists && settingsButton.isEnabled)
-        settingsButton.tap()
+        settingsButton.robustTap()
         XCTAssertTrue(title.waitForNonExistence(timeout: .animationTimeout))
     }
 }

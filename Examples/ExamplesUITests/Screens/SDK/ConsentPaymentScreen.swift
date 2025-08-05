@@ -49,17 +49,17 @@ enum ConsentPaymentScreen {
     
     static func deleteFirstConsent() {
         if isConsentSelected {
-            changeToListButton.tap()
+            changeToListButton.robustTap()
         }
         let count  = allConsentCells.count
         guard count > 0 else {
             return
         }
         XCTAssert(consentActionButton.exists)
-        consentActionButton.tap()
+        consentActionButton.robustTap()
         XCTAssertTrue(alertForRemove.waitForExistence(timeout: .animationTimeout))
         XCTAssertTrue(alertForRemove.staticTexts["This option will be permanently removed from your saved payment methods."].exists)
-        alertForRemove.buttons["Remove"].tap()
+        alertForRemove.buttons["Remove"].robustTap()
         _ = alertForRemove.waitForNonExistence(timeout: .animationTimeout)
         _ = activityIndicator.waitForNonExistence(timeout: .networkRequestTimeout)
         XCTAssertEqual(count, allConsentCells.count + 1)
@@ -68,7 +68,7 @@ enum ConsentPaymentScreen {
     static func deleteAllConsents() {
         validate()
         if isConsentSelected {
-            changeToListButton.tap()
+            changeToListButton.robustTap()
         }
         while allConsentCells.count > 0 {
             deleteFirstConsent()
@@ -79,18 +79,18 @@ enum ConsentPaymentScreen {
     static func payWithFirstConsent() {
         validate()
         if !isConsentSelected {
-            allConsentCells.firstMatch.tap()
+            allConsentCells.firstMatch.robustTap()
         }
         XCTAssertTrue(isConsentSelected)
         if cvcField.exists {
-            cvcField.tap()
+            cvcField.robustTap()
             cvcField.typeText("333")
-            selectedConsent.tap()
+            selectedConsent.robustTap()
         }
         if checkoutButton.exists {
             selectedConsent.swipeUp()
         }
-        checkoutButton.tap()
+        checkoutButton.robustTap()
         XCTAssertTrue(activityIndicator.exists)
     }
     
