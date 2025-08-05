@@ -46,8 +46,8 @@ enum SettingsScreen {
         }
         
         optionViewForEnvironment.tap()
-        XCTAssertTrue(app.sheets.buttons[env.rawValue].exists)
-        app.sheets.buttons[env.rawValue].tap()
+        XCTAssertTrue(app.buttons[env.rawValue].exists)
+        app.buttons[env.rawValue].tap()
         XCTAssertTrue(optionViewForEnvironment.staticTexts[env.rawValue].exists)
     }
     
@@ -94,8 +94,8 @@ enum SettingsScreen {
         }
         
         optionViewForLayout.tap()
-        XCTAssertTrue(app.sheets.buttons[layoutName].exists)
-        app.sheets.buttons[layoutName].tap()
+        XCTAssertTrue(app.buttons[layoutName].exists)
+        app.buttons[layoutName].tap()
         XCTAssertTrue(optionViewForLayout.staticTexts[layoutName].waitForExistence(timeout: .animationTimeout))
     }
     
@@ -108,8 +108,8 @@ enum SettingsScreen {
         }
         
         optionViewForNextTriggerBy.tap()
-        XCTAssertTrue(app.sheets.buttons[triggerName].exists)
-        app.sheets.buttons[triggerName].tap()
+        XCTAssertTrue(app.buttons[triggerName].exists)
+        app.buttons[triggerName].tap()
         XCTAssertTrue(optionViewForNextTriggerBy.staticTexts[triggerName].waitForExistence(timeout: .animationTimeout))
     }
     
@@ -121,6 +121,8 @@ enum SettingsScreen {
     
     static func save() {
         dismissKeyboardIfExist()
+        app.swipeUp(velocity: .fast)
+        XCTAssertTrue(saveButton.waitForExistence(timeout: .animationTimeout))
         saveButton.tap()
         XCTAssertTrue(alert.waitForExistence(timeout: .animationTimeout))
         alert.buttons["Close"].tap()

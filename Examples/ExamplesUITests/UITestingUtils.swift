@@ -10,10 +10,10 @@ import Foundation
 import XCTest
 
 extension TimeInterval {
-    static let animationTimeout: TimeInterval = 2
+    static let animationTimeout: TimeInterval = 5
     static let networkRequestTimeout: TimeInterval = 30
     
-    static let shortTimeout: TimeInterval = 2
+    static let shortTimeout: TimeInterval = 5
     static let mediumTimeout: TimeInterval = 15
     static let longTimeout: TimeInterval = 30
     static let longLongTimeout: TimeInterval = 60
@@ -35,8 +35,10 @@ extension XCTestCase {
                                     useTabLayout: Bool = true,
                                     nextTriggerByCustomer: Bool? = nil,
                                     force3DS: Bool = false) {
+        app.launchEnvironment[UITestingEnvironmentVariable.isUITesting] = "1"
+        app.launchEnvironment[UITestingEnvironmentVariable.mockApplePayToken] = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.mockApplePayToken]
         app.launch()
-        HomeScreen.validate()
+        HomeScreen.waitForExistence(.longTimeout)
         HomeScreen.openUIIntegrationDemos()
         UIIntegrationDemoScreen.validate()
         UIIntegrationDemoScreen.ensureCheckoutMode(checkoutMode)

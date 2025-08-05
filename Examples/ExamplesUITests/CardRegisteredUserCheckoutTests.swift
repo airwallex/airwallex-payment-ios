@@ -16,7 +16,7 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         app = XCUIApplication()
-        app.launchEnvironment[UITestingEnvironmentVariable.isUITesting] = "1"
+        
         customerId = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.customerID] ?? ""
         
         // In UI tests it is usually best to stop immediately when a failure occurs.

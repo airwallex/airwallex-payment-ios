@@ -48,8 +48,8 @@ enum UIIntegrationDemoScreen {
         }
         
         paymentOptionView.tap()
-        XCTAssertTrue(app.sheets.buttons[mode.localizedDescription].exists)
-        app.sheets.buttons[mode.localizedDescription].tap()
+        XCTAssertTrue(app.buttons[mode.localizedDescription].waitForExistence(timeout: .animationTimeout))
+        app.buttons[mode.localizedDescription].tap()
         XCTAssertTrue(paymentOptionView.staticTexts[mode.localizedDescription].exists)
     }
     
