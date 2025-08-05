@@ -185,6 +185,11 @@ class SettingsViewController: UIViewController {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
         view.text = "App Version: v\(version) (\(build))"
+        view.accessibilityLabel = AccessibilityIdentifiers.SettingsScreen.versionLabel
+        view.isUserInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onVersionLabelTapped))
+        view.addGestureRecognizer(tapGesture)
         return view
     }()
     
@@ -591,5 +596,9 @@ private extension SettingsViewController {
                     }
                 }
         }
+    }
+    
+    @objc func onVersionLabelTapped() {
+        self.scrollView.endEditing(true)
     }
 }

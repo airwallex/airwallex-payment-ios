@@ -19,6 +19,8 @@ enum CardPaymentScreen {
     static let cardInfoCell = app.cells["cardInfo"]
     static let consentToggle = app.cells["consentToggle"].buttons["Keep using saved cards"]
     static let saveCardToggle = app.cells["saveCardToggle"].buttons.firstMatch
+    static let alertMessage = app.alerts.firstMatch
+    static let cardInformationLabel = app.staticTexts["Card Information"].firstMatch
     
     static var exists: Bool {
         cardInfoCell.exists
@@ -36,6 +38,9 @@ enum CardPaymentScreen {
                             expiry: String = "03/33",
                             cvc: String = "333") {
         validate()
+        
+        testCardInfoValidation()
+        
         cardNumberField.tap()
         cardNumberField.typeText(cardNumber)
         cardExpiryField.tap()
@@ -50,8 +55,8 @@ enum CardPaymentScreen {
             app.staticTexts["Card Information"].swipeUp()
         }
         
-        if !checkoutButton.exists {
-            cardInfoCell.swipeUp()
+        while !checkoutButton.exists {
+            cardInfoCell.swipeUp(velocity: .slow)
         }
         
         if canSaveCard {
@@ -63,5 +68,30 @@ enum CardPaymentScreen {
         
         checkoutButton.tap()
         XCTAssertTrue(activityIndicator.exists)
+        activityIndicator.waitForNonExistence(timeout: .networkRequestTimeout)
+    }
+    
+    static func dismissKeyboard() {
+        XCTAssertTrue(cardInformationLabel.exists)
+        cardInformationLabel.tap()
+    }
+    
+    static func testCardInfoValidation() {
+        
+        while !checkoutButton.exists {
+            cardInfoCell.swipeUp(velocity: .slow)
+        }
+        
+        checkoutButton.tap()
+        XCTAssertFalse(activityIndicator.exists)
+        XCTAssertTrue(alertMessage.waitForExistence(timeout: .animationTimeout))
+        XCTAssertTrue(alertMessage.staticTexts["Card number is required"].exists)
+        alertMessage.buttons["Close"].tap()
+        alertMessage.waitForNonExistence(timeout: .shortTimeout)
+        XCTAssertTrue(app.staticTexts["Card number is required"].exists)
+        
+        while !cardInformationLabel.exists {
+            cardInfoCell.swipeDown(velocity: .slow)
+        }
     }
 }
