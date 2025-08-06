@@ -33,6 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        AWXTheme.shared().tintColor = UIColor.systemBrown
         UISwitch.appearance().onTintColor = .awxColor(.theme)
         UIView.appearance().tintColor = .awxColor(.theme)
+        
+        disableAnimationForUITesting()
         return true
     }
     
@@ -43,6 +45,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #else
         return true
 #endif
+    }
+    
+    fileprivate func disableAnimationForUITesting() {
+        if ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.isUITesting] == "1" {
+            // disable animation for robust UI testing
+            UIView.setAnimationsEnabled(false)
+            UIWindow.appearance().layer.speed = 100
+            CATransaction.setAnimationDuration(0)
+            UIApplication.shared.keyWindow?.layer.speed = 100
+        }
     }
 }
 

@@ -17,8 +17,6 @@ final class ApplePayTests: XCTestCase {
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         app = XCUIApplication()
-        app.launchEnvironment[UITestingEnvironmentVariable.isUITesting] = "1"
-        app.launchEnvironment[UITestingEnvironmentVariable.mockApplePayToken] = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.mockApplePayToken]
 
         customerId = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.customerID] ?? ""
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
@@ -43,7 +41,7 @@ final class ApplePayTests: XCTestCase {
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence(.animationTimeout)
         XCTAssertTrue(PaymentSheetScreen.applePayButton.exists)
-        PaymentSheetScreen.applePayButton.tap()
+        PaymentSheetScreen.applePayButton.robustTap()
         ApplePaymentSheet.waitForExistence(.animationTimeout)
         ApplePaymentSheet.cancelPayment()
         PaymentSheetScreen.validate()
@@ -77,7 +75,7 @@ final class ApplePayTests: XCTestCase {
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence(.animationTimeout)
         XCTAssertTrue(PaymentSheetScreen.applePayButton.exists)
-        PaymentSheetScreen.applePayButton.tap()
+        PaymentSheetScreen.applePayButton.robustTap()
         ApplePaymentSheet.waitForExistence()
         ApplePaymentSheet.confirmPayment()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)

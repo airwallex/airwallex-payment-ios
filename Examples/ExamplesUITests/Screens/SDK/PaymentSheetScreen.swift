@@ -24,10 +24,10 @@ enum PaymentSheetScreen {
     static func cancelPayment() {
         XCTAssertTrue(backButton.exists || closeButton.exists)
         if backButton.exists {
-            backButton.tap()
+            backButton.robustTap()
         }
         if closeButton.exists {
-            closeButton.tap()
+            closeButton.robustTap()
         }
         waitForNonExistence(.animationTimeout)
     }

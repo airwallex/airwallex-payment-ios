@@ -375,8 +375,9 @@ extension PaymentSessionHandler: AWXProviderDelegate {
                 // for example, by backgrounding the app—after successfully authorizing the payment.
                 return
             }
+            let viewController = self.viewController
             dismissAction {
-                self.paymentResultDelegate?.paymentViewController(self.viewController, didCompleteWith: status, error: error)
+                self.paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
             }
             self.dismissAction = nil
         } else {

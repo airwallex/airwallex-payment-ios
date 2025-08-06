@@ -10,16 +10,17 @@ import Foundation
 import XCTest
 
 enum HomeScreen {
-    static func validate() {
-        XCTAssertTrue(buttonForUIIntegration.exists)
-        XCTAssertTrue(buttonForAPIIntegration.exists)
-    }
     static let app = XCUIApplication()
     static let buttonForUIIntegration: XCUIElement = app.buttons["Integrate with Airwallex UI"]
     static let buttonForAPIIntegration: XCUIElement = app.buttons["Integrate with low-level API"]
     
+    static func waitForExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
+        XCTAssertTrue(buttonForUIIntegration.waitForExistence(timeout: timeout))
+        XCTAssertTrue(buttonForAPIIntegration.waitForExistence(timeout: timeout))
+    }
+    
     static func openUIIntegrationDemos() {
         XCTAssert(buttonForUIIntegration.exists)
-        buttonForUIIntegration.tap()
+        buttonForUIIntegration.robustTap()
     }
 }

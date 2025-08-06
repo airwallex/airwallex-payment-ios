@@ -45,9 +45,9 @@ enum SettingsScreen {
             return
         }
         
-        optionViewForEnvironment.tap()
-        XCTAssertTrue(app.sheets.buttons[env.rawValue].exists)
-        app.sheets.buttons[env.rawValue].tap()
+        optionViewForEnvironment.robustTap()
+        XCTAssertTrue(app.buttons[env.rawValue].exists)
+        app.buttons[env.rawValue].robustTap()
         XCTAssertTrue(optionViewForEnvironment.staticTexts[env.rawValue].exists)
     }
     
@@ -62,13 +62,13 @@ enum SettingsScreen {
         } else {
             if currentText.isEmpty || currentText == placeholder {
                 if !customerID.isEmpty {
-                    customerIDTextField.tap()
+                    customerIDTextField.robustTap()
                     customerIDTextField.typeText(customerID)
                 }
             } else {
-                customerIDActionButton.tap()
+                customerIDActionButton.robustTap()
                 activityIndicator.waitForNonExistence(timeout: .networkRequestTimeout)
-                customerIDTextField.tap()
+                customerIDTextField.robustTap()
                 customerIDTextField.typeText(customerID)
             }
             dismissKeyboardIfExist()
@@ -79,7 +79,7 @@ enum SettingsScreen {
         XCTAssertTrue(toggleFor3DS.exists)
         var isOn = (toggleFor3DS.value as? String) == "1"
         if isOn != force3DS {
-            toggleFor3DS.tap()
+            toggleFor3DS.robustTap()
         }
         isOn = (toggleFor3DS.value as? String) == "1"
         XCTAssertEqual(isOn, force3DS)
@@ -93,9 +93,9 @@ enum SettingsScreen {
             return
         }
         
-        optionViewForLayout.tap()
-        XCTAssertTrue(app.sheets.buttons[layoutName].exists)
-        app.sheets.buttons[layoutName].tap()
+        optionViewForLayout.robustTap()
+        XCTAssertTrue(app.buttons[layoutName].exists)
+        app.buttons[layoutName].robustTap()
         XCTAssertTrue(optionViewForLayout.staticTexts[layoutName].waitForExistence(timeout: .animationTimeout))
     }
     
@@ -107,38 +107,40 @@ enum SettingsScreen {
             return
         }
         
-        optionViewForNextTriggerBy.tap()
-        XCTAssertTrue(app.sheets.buttons[triggerName].exists)
-        app.sheets.buttons[triggerName].tap()
+        optionViewForNextTriggerBy.robustTap()
+        XCTAssertTrue(app.buttons[triggerName].exists)
+        app.buttons[triggerName].robustTap()
         XCTAssertTrue(optionViewForNextTriggerBy.staticTexts[triggerName].waitForExistence(timeout: .animationTimeout))
     }
     
     static func close() {
         XCTAssertTrue(backButton.exists)
-        backButton.tap()
+        backButton.robustTap()
         XCTAssertTrue(titleLabel.waitForNonExistence(timeout: .animationTimeout))
     }
     
     static func save() {
         dismissKeyboardIfExist()
-        saveButton.tap()
+        app.swipeUp(velocity: .fast)
+        XCTAssertTrue(saveButton.waitForExistence(timeout: .animationTimeout))
+        saveButton.robustTap()
         XCTAssertTrue(alert.waitForExistence(timeout: .animationTimeout))
-        alert.buttons["Close"].tap()
+        alert.buttons["Close"].robustTap()
         XCTAssertTrue(titleLabel.waitForNonExistence(timeout: .animationTimeout))
     }
     
     static func dismissKeyboardIfExist() {
         if app.staticTexts["Speed up your typing by sliding your finger across the letters to compose a word."].exists {
-            app.staticTexts["Continue"].tap()
+            app.staticTexts["Continue"].robustTap()
         }
         if keyboard.exists {
-            keyboard.buttons["done"].tap()
+            keyboard.buttons["done"].robustTap()
             keyboard.waitForNonExistence(timeout: .animationTimeout)
         }
         if keyboard.exists {
             app.swipeUp(velocity: .fast)
             XCTAssertTrue(versionlabel.exists && versionlabel.isHittable)
-            versionlabel.tap()
+            versionlabel.robustTap()
         }
         XCTAssertTrue(keyboard.waitForNonExistence(timeout: .mediumTimeout))
     }

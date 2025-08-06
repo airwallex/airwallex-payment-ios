@@ -41,15 +41,15 @@ enum CardPaymentScreen {
         
         testCardInfoValidation()
         
-        cardNumberField.tap()
+        cardNumberField.robustTap()
         cardNumberField.typeText(cardNumber)
-        cardExpiryField.tap()
+        cardExpiryField.robustTap()
         cardExpiryField.typeText(expiry)
-        cardCVCField.tap()
+        cardCVCField.robustTap()
         cardCVCField.typeText(cvc)
         
         // dismiss keyboard
-        app.staticTexts["Card Information"].tap()
+        app.staticTexts["Card Information"].robustTap()
         
         if !checkoutButton.exists {
             app.staticTexts["Card Information"].swipeUp()
@@ -61,19 +61,19 @@ enum CardPaymentScreen {
         
         if canSaveCard {
             if saveCardToggle.isSelected != shouldSave {
-                saveCardToggle.tap()
+                saveCardToggle.robustTap()
                 XCTAssert(saveCardToggle.isSelected == shouldSave)
             }
         }
         
-        checkoutButton.tap()
+        checkoutButton.robustTap()
         XCTAssertTrue(activityIndicator.exists)
         activityIndicator.waitForNonExistence(timeout: .networkRequestTimeout)
     }
     
     static func dismissKeyboard() {
         XCTAssertTrue(cardInformationLabel.exists)
-        cardInformationLabel.tap()
+        cardInformationLabel.robustTap()
     }
     
     static func testCardInfoValidation() {
@@ -82,11 +82,11 @@ enum CardPaymentScreen {
             cardInfoCell.swipeUp(velocity: .slow)
         }
         
-        checkoutButton.tap()
+        checkoutButton.robustTap()
         XCTAssertFalse(activityIndicator.exists)
         XCTAssertTrue(alertMessage.waitForExistence(timeout: .animationTimeout))
         XCTAssertTrue(alertMessage.staticTexts["Card number is required"].exists)
-        alertMessage.buttons["Close"].tap()
+        alertMessage.buttons["Close"].robustTap()
         alertMessage.waitForNonExistence(timeout: .shortTimeout)
         XCTAssertTrue(app.staticTexts["Card number is required"].exists)
         

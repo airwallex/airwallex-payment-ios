@@ -29,7 +29,7 @@ class SettingsViewController: UIViewController {
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.keyboardDismissMode = .interactive
+        view.keyboardDismissMode = .onDrag
         return view
     }()
     
