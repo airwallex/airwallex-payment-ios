@@ -35,8 +35,10 @@ extension XCTestCase {
                                     useTabLayout: Bool = true,
                                     nextTriggerByCustomer: Bool? = nil,
                                     force3DS: Bool = false) {
+        app.launchEnvironment[UITestingEnvironmentVariable.isUITesting] = "1"
+        app.launchEnvironment[UITestingEnvironmentVariable.mockApplePayToken] = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.mockApplePayToken]
         app.launch()
-        HomeScreen.validate()
+        HomeScreen.waitForExistence(.longTimeout)
         HomeScreen.openUIIntegrationDemos()
         UIIntegrationDemoScreen.validate()
         UIIntegrationDemoScreen.ensureCheckoutMode(checkoutMode)
@@ -52,5 +54,27 @@ extension XCTestCase {
         SettingsScreen.ensureForce3DS(force3DS)
         SettingsScreen.save()
         UIIntegrationDemoScreen.validate()
+    }
+}
+
+extension XCUIElement {
+    
+    func robustTap() {
+        let expectation = XCTNSPredicateExpectation(predicate: NSPredicate(format: "hittable == true"), object: self)
+        _ = XCTWaiter().wait(for: [expectation], timeout: .shortTimeout)
+        
+        if #available(iOS 18.0, *) {
+            tap()
+        } else if #available(iOS 17.0, *) {
+            sleep(1)
+            coordinateTap()
+        } else {
+            tap()
+        }
+    }
+    
+    func coordinateTap() {
+        let coordinate = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        coordinate.tap()
     }
 }

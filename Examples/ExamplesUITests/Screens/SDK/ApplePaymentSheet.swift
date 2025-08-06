@@ -25,12 +25,12 @@ enum ApplePaymentSheet {
     }
     
     static func cancelPayment() {
-        cancelButton.tap()
+        cancelButton.robustTap()
         waitForNonExistence()
     }
     
     static func confirmPayment() {
-        payButton.tap()
+        payButton.robustTap()
         waitForNonExistence(.networkRequestTimeout)
     }
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -51,6 +51,18 @@
 		D8BDF8682D3E1E3E00C9AE72 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */; };
 		D8BDF8702D3E206700C9AE72 /* H5DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */; };
 		D8BDF8802D3F3B4B00C9AE72 /* HomePageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */; };
+		D8D506472E3CB7060098CACD /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506372E3CB7060098CACD /* HomeScreen.swift */; };
+		D8D506482E3CB7060098CACD /* IntegrationDemoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506382E3CB7060098CACD /* IntegrationDemoScreen.swift */; };
+		D8D506492E3CB7060098CACD /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506392E3CB7060098CACD /* SettingsScreen.swift */; };
+		D8D5064A2E3CB7060098CACD /* ApplePaymentSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063B2E3CB7060098CACD /* ApplePaymentSheet.swift */; };
+		D8D5064B2E3CB7060098CACD /* CardPaymentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063C2E3CB7060098CACD /* CardPaymentScreen.swift */; };
+		D8D5064C2E3CB7060098CACD /* ConsentPaymentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063D2E3CB7060098CACD /* ConsentPaymentScreen.swift */; };
+		D8D5064D2E3CB7060098CACD /* PaymentSheetScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063E2E3CB7060098CACD /* PaymentSheetScreen.swift */; };
+		D8D5064E2E3CB7060098CACD /* ThreeDSScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063F2E3CB7060098CACD /* ThreeDSScreen.swift */; };
+		D8D5064F2E3CB7060098CACD /* ApplePayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506422E3CB7060098CACD /* ApplePayTests.swift */; };
+		D8D506502E3CB7060098CACD /* CardGuestUserCheckoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506432E3CB7060098CACD /* CardGuestUserCheckoutTests.swift */; };
+		D8D506512E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506442E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift */; };
+		D8D506522E3CB7060098CACD /* UITestingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506452E3CB7060098CACD /* UITestingUtils.swift */; };
 		D8EB808A2D67067200C2F975 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EB80892D67067200C2F975 /* AppDelegate.swift */; };
 		D8F84B852DDC1BDC0020C73F /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F84B842DDC1BDC0020C73F /* AccessibilityIdentifiers.swift */; };
 		D8F84B862DDC1DD70020C73F /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F84B842DDC1BDC0020C73F /* AccessibilityIdentifiers.swift */; };
@@ -142,24 +154,22 @@
 		D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H5DemoViewController.swift; sourceTree = "<group>"; };
 		D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTitleView.swift; sourceTree = "<group>"; };
+		D8D506372E3CB7060098CACD /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		D8D506382E3CB7060098CACD /* IntegrationDemoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationDemoScreen.swift; sourceTree = "<group>"; };
+		D8D506392E3CB7060098CACD /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		D8D5063B2E3CB7060098CACD /* ApplePaymentSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaymentSheet.swift; sourceTree = "<group>"; };
+		D8D5063C2E3CB7060098CACD /* CardPaymentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentScreen.swift; sourceTree = "<group>"; };
+		D8D5063D2E3CB7060098CACD /* ConsentPaymentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentPaymentScreen.swift; sourceTree = "<group>"; };
+		D8D5063E2E3CB7060098CACD /* PaymentSheetScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSheetScreen.swift; sourceTree = "<group>"; };
+		D8D5063F2E3CB7060098CACD /* ThreeDSScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDSScreen.swift; sourceTree = "<group>"; };
+		D8D506422E3CB7060098CACD /* ApplePayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayTests.swift; sourceTree = "<group>"; };
+		D8D506432E3CB7060098CACD /* CardGuestUserCheckoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGuestUserCheckoutTests.swift; sourceTree = "<group>"; };
+		D8D506442E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRegisteredUserCheckoutTests.swift; sourceTree = "<group>"; };
+		D8D506452E3CB7060098CACD /* UITestingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingUtils.swift; sourceTree = "<group>"; };
 		D8EB80892D67067200C2F975 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8F268B32DDADDE000E84D64 /* ExamplesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExamplesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8F84B842DDC1BDC0020C73F /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		D8F268B42DDADDE000E84D64 /* ExamplesUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = ExamplesUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		085BD3E823CC64B6002E8F27 /* Frameworks */ = {
@@ -184,7 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				085BD3ED23CC64B6002E8F27 /* Examples */,
-				D8F268B42DDADDE000E84D64 /* ExamplesUITests */,
+				D8D506462E3CB7060098CACD /* ExamplesUITests */,
 				085BD3EC23CC64B6002E8F27 /* Products */,
 				A124BE0DCF06F969177C95C3 /* Frameworks */,
 				916A726B300D4DD424727734 /* Pods */,
@@ -341,6 +351,49 @@
 			path = Keys;
 			sourceTree = "<group>";
 		};
+		D8D5063A2E3CB7060098CACD /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				D8D506372E3CB7060098CACD /* HomeScreen.swift */,
+				D8D506382E3CB7060098CACD /* IntegrationDemoScreen.swift */,
+				D8D506392E3CB7060098CACD /* SettingsScreen.swift */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
+		D8D506402E3CB7060098CACD /* SDK */ = {
+			isa = PBXGroup;
+			children = (
+				D8D5063B2E3CB7060098CACD /* ApplePaymentSheet.swift */,
+				D8D5063C2E3CB7060098CACD /* CardPaymentScreen.swift */,
+				D8D5063D2E3CB7060098CACD /* ConsentPaymentScreen.swift */,
+				D8D5063E2E3CB7060098CACD /* PaymentSheetScreen.swift */,
+				D8D5063F2E3CB7060098CACD /* ThreeDSScreen.swift */,
+			);
+			path = SDK;
+			sourceTree = "<group>";
+		};
+		D8D506412E3CB7060098CACD /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				D8D5063A2E3CB7060098CACD /* Demo */,
+				D8D506402E3CB7060098CACD /* SDK */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		D8D506462E3CB7060098CACD /* ExamplesUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D8D506412E3CB7060098CACD /* Screens */,
+				D8D506422E3CB7060098CACD /* ApplePayTests.swift */,
+				D8D506432E3CB7060098CACD /* CardGuestUserCheckoutTests.swift */,
+				D8D506442E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift */,
+				D8D506452E3CB7060098CACD /* UITestingUtils.swift */,
+			);
+			path = ExamplesUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -379,9 +432,6 @@
 			);
 			dependencies = (
 				D8F268BA2DDADDE000E84D64 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				D8F268B42DDADDE000E84D64 /* ExamplesUITests */,
 			);
 			name = ExamplesUITests;
 			productName = ExamplesUITests;
@@ -611,6 +661,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8F84B862DDC1DD70020C73F /* AccessibilityIdentifiers.swift in Sources */,
+				D8D506472E3CB7060098CACD /* HomeScreen.swift in Sources */,
+				D8D506482E3CB7060098CACD /* IntegrationDemoScreen.swift in Sources */,
+				D8D506492E3CB7060098CACD /* SettingsScreen.swift in Sources */,
+				D8D5064A2E3CB7060098CACD /* ApplePaymentSheet.swift in Sources */,
+				D8D5064B2E3CB7060098CACD /* CardPaymentScreen.swift in Sources */,
+				D8D5064C2E3CB7060098CACD /* ConsentPaymentScreen.swift in Sources */,
+				D8D5064D2E3CB7060098CACD /* PaymentSheetScreen.swift in Sources */,
+				D8D5064E2E3CB7060098CACD /* ThreeDSScreen.swift in Sources */,
+				D8D5064F2E3CB7060098CACD /* ApplePayTests.swift in Sources */,
+				D8D506502E3CB7060098CACD /* CardGuestUserCheckoutTests.swift in Sources */,
+				D8D506512E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift in Sources */,
+				D8D506522E3CB7060098CACD /* UITestingUtils.swift in Sources */,
 				D823D8E12DDC36F400B27CA1 /* CheckoutMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -821,7 +883,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.ExamplesUITests;
@@ -847,7 +909,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.airwallex.ExamplesUITests;

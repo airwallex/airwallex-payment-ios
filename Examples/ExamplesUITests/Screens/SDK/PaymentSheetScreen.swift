@@ -15,6 +15,7 @@ enum PaymentSheetScreen {
     static let backButton = app.navigationBars.firstMatch.buttons["Back"]
     static let closeButton = app.navigationBars.firstMatch.buttons["close"]
     static let applePayButton = app.cells["applepay"].firstMatch.buttons.firstMatch
+    static let checkoutButton = app.cells["checkoutButton"].buttons.firstMatch
     
     static func validate() {
         XCTAssertTrue(title.exists)
@@ -23,16 +24,17 @@ enum PaymentSheetScreen {
     static func cancelPayment() {
         XCTAssertTrue(backButton.exists || closeButton.exists)
         if backButton.exists {
-            backButton.tap()
+            backButton.robustTap()
         }
         if closeButton.exists {
-            closeButton.tap()
+            closeButton.robustTap()
         }
         waitForNonExistence(.animationTimeout)
     }
     
     static func waitForNonExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
         XCTAssertTrue(title.waitForNonExistence(timeout: timeout))
+        XCTAssertTrue(checkoutButton.waitForNonExistence(timeout: timeout))
     }
     
     static func waitForExistence(_ timeout: TimeInterval = .networkRequestTimeout) {

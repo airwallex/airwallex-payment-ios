@@ -19,6 +19,8 @@ enum CardPaymentScreen {
     static let cardInfoCell = app.cells["cardInfo"]
     static let consentToggle = app.cells["consentToggle"].buttons["Keep using saved cards"]
     static let saveCardToggle = app.cells["saveCardToggle"].buttons.firstMatch
+    static let alertMessage = app.alerts.firstMatch
+    static let cardInformationLabel = app.staticTexts["Card Information"].firstMatch
     
     static var exists: Bool {
         cardInfoCell.exists
@@ -36,32 +38,60 @@ enum CardPaymentScreen {
                             expiry: String = "03/33",
                             cvc: String = "333") {
         validate()
-        cardNumberField.tap()
+        
+        testCardInfoValidation()
+        
+        cardNumberField.robustTap()
         cardNumberField.typeText(cardNumber)
-        cardExpiryField.tap()
+        cardExpiryField.robustTap()
         cardExpiryField.typeText(expiry)
-        cardCVCField.tap()
+        cardCVCField.robustTap()
         cardCVCField.typeText(cvc)
         
         // dismiss keyboard
-        app.staticTexts["Card Information"].tap()
+        app.staticTexts["Card Information"].robustTap()
         
         if !checkoutButton.exists {
             app.staticTexts["Card Information"].swipeUp()
         }
         
-        if !checkoutButton.exists {
-            cardInfoCell.swipeUp()
+        while !checkoutButton.exists {
+            cardInfoCell.swipeUp(velocity: .slow)
         }
         
         if canSaveCard {
             if saveCardToggle.isSelected != shouldSave {
-                saveCardToggle.tap()
+                saveCardToggle.robustTap()
                 XCTAssert(saveCardToggle.isSelected == shouldSave)
             }
         }
         
-        checkoutButton.tap()
+        checkoutButton.robustTap()
         XCTAssertTrue(activityIndicator.exists)
+        activityIndicator.waitForNonExistence(timeout: .networkRequestTimeout)
+    }
+    
+    static func dismissKeyboard() {
+        XCTAssertTrue(cardInformationLabel.exists)
+        cardInformationLabel.robustTap()
+    }
+    
+    static func testCardInfoValidation() {
+        
+        while !checkoutButton.exists {
+            cardInfoCell.swipeUp(velocity: .slow)
+        }
+        
+        checkoutButton.robustTap()
+        XCTAssertFalse(activityIndicator.exists)
+        XCTAssertTrue(alertMessage.waitForExistence(timeout: .animationTimeout))
+        XCTAssertTrue(alertMessage.staticTexts["Card number is required"].exists)
+        alertMessage.buttons["Close"].robustTap()
+        alertMessage.waitForNonExistence(timeout: .shortTimeout)
+        XCTAssertTrue(app.staticTexts["Card number is required"].exists)
+        
+        while !cardInformationLabel.exists {
+            cardInfoCell.swipeDown(velocity: .slow)
+        }
     }
 }
