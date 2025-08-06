@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                    = "Airwallex"
-  s.version                 = "6.1.7"
+  s.version                 = "6.1.8"
   s.summary                 = "Integrate Airwallex into your iOS app"
   s.license                 = { :type => 'MIT', :file => 'LICENSE' }
   s.homepage                = "https://www.airwallex.com/docs/#overview"
