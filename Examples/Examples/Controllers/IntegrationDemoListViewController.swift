@@ -488,25 +488,6 @@ private extension IntegrationDemoListViewController {
 // MARK: Session & Requests
 private extension IntegrationDemoListViewController {
     
-    func createPaymentIntent(force3DS: Bool = false) async throws -> AWXPaymentIntent {
-        let request = PaymentIntentRequest(
-            amount: Decimal(string: ExamplesKeys.amount) ?? 0,
-            currency: ExamplesKeys.currency,
-            order: DemoDataSource.createOrder(shipping: shippingAddress),
-            metadata: ["id": 1],
-            returnUrl: ExamplesKeys.returnUrl,
-            customerID: ExamplesKeys.customerId?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty,
-            paymentMethodOptions: force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,
-            apiKey: ExamplesKeys.apiKey,
-            clientID: ExamplesKeys.clientId
-        )
-        
-        let paymentIntent = try await withCheckedThrowingContinuation { continuation in
-            Airwallex.apiClient.createPaymentIntent(request: request) { continuation.resume(with: $0) }
-        }
-        return paymentIntent
-    }
-    
     func generateClientSecretForRecurringPayment() async throws -> String {
         guard let customerId = ExamplesKeys.customerId else {
             throw NSError.airwallexError(localizedMessage: "Customer ID is not set")
@@ -528,7 +509,7 @@ private extension IntegrationDemoListViewController {
         switch ExamplesKeys.checkoutMode {
         case .oneOff:
             // create payment intent
-            let paymentIntent = try await createPaymentIntent(force3DS: force3DS)
+            let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(force3DS: force3DS)
             // update client secret
             AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
             // create AWXOneOffSession
@@ -551,7 +532,7 @@ private extension IntegrationDemoListViewController {
             paymentSession = session
         case .recurringWithIntent:
             // create payment intent
-            let paymentIntent = try await createPaymentIntent(force3DS: force3DS)
+            let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(force3DS: force3DS)
             // update client secret
             AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
             // create AWXRecurringWithIntentSession

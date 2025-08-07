@@ -113,20 +113,6 @@ class GetPaymentMethodsViewController: UITableViewController {
         }
     }
     
-    private func createPaymentIntentRequest() -> PaymentIntentRequest {
-        PaymentIntentRequest(
-            amount: Decimal(string: ExamplesKeys.amount)!,
-            currency: ExamplesKeys.currency,
-            order: DemoDataSource.createOrder(),
-            metadata: ["id": 1],
-            returnUrl: ExamplesKeys.returnUrl,
-            customerID: ExamplesKeys.customerId,
-            paymentMethodOptions: nil,
-            apiKey: ExamplesKeys.apiKey?.nilIfEmpty,
-            clientID: ExamplesKeys.clientId?.nilIfEmpty
-        )
-    }
-    
     private func requestPaymentMethods() async throws -> AWXGetPaymentMethodTypesResponse {
         
         // we need client secret to generate this API
@@ -134,11 +120,7 @@ class GetPaymentMethodsViewController: UITableViewController {
             let checkoutMode = ExamplesKeys.checkoutMode
             switch checkoutMode {
             case .oneOff, .recurringWithIntent:
-                let intent = try await withCheckedThrowingContinuation { continuation in
-                    storeAPIClient.createPaymentIntent(request: createPaymentIntentRequest()) { result in
-                        continuation.resume(with: result)
-                    }
-                }
+                let intent = try await storeAPIClient.createPaymentIntent()
                 AWXAPIClientConfiguration.shared().clientSecret = intent.clientSecret
             case .recurring:
                 guard let customerId = ExamplesKeys.customerId else {

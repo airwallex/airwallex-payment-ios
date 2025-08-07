@@ -41,10 +41,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         NotificationCenter.default.post(name: PaymentResultViewController.paymentResultNotification, object: nil)
 #if canImport(WechatOpenSDKDynamic)
-        return WXApi.handleOpen(url, delegate: self)
+        if WXApi.handleOpen(url, delegate: self) {
+            return true
+        } else {
+            return handleAirwallexDemoSchema(url)
+        }
 #else
-        return true
+        return handleSchemaURL(url)
 #endif
+    }
+    
+    private func handleAirwallexDemoSchema(_ url: URL) -> Bool {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              components.scheme == String.demoAppScheme,
+              components.host == String.demoAppHost,
+              let type = components.queryItems?.first(where: { $0.name == "type"})?.value else {
+            return false
+        }
+        switch type {
+        case "SUCCESS_URL":
+            let intentId = components.queryItems?.first(where: { $0.name == "id"})?.value ?? "Not Found"
+            window?.rootViewController?.showAlert(message: "intentId: \(intentId)", title: "Payment Success")
+        default:
+            window?.rootViewController?.showAlert(message: url.absoluteString, title: type)
+        }
+        return true
     }
     
     fileprivate func disableAnimationForUITesting() {

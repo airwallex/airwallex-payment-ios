@@ -45,6 +45,20 @@ class HomeViewController: UIViewController {
         return view
     }()
     
+    private lazy var openHPPButton: UIButton = {
+        let view = AWXButton(style: .secondary, title: "Open HPP (Hosted Payment Page)")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addTarget(self, action: #selector(nativeHPPButtonTapped), for: .touchUpInside)
+        return view
+    }()
+    
+    private lazy var hppHandler: HPPDemoController = {
+        let handler = HPPDemoController()
+        handler.webView.translatesAutoresizingMaskIntoConstraints = false
+        handler.viewController = self
+        return handler
+    }()
+    
     private lazy var stack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -73,6 +87,7 @@ class HomeViewController: UIViewController {
         stack.addArrangedSubview(lowLevelAPIButton)
         stack.addArrangedSubview(html5DemoButton)
         stack.addArrangedSubview(WeChatDemoButton)
+        stack.addArrangedSubview(openHPPButton)
         
         let constraints = [
             topView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -122,5 +137,25 @@ extension HomeViewController {
     @objc func weChatDemoButtonTapped() {
         navigationController?.pushViewController(WeChatDemoViewController(), animated: true)
     }
-        
+    
+    @objc func nativeHPPButtonTapped() {
+        startLoading()
+        Task {
+            do {
+                let intent = try await Airwallex.apiClient.createPaymentIntent()
+                let url = try await hppHandler.getURLForHPP(
+                    intentId: intent.id,
+                    clientSecret: intent.clientSecret,
+                    currency: intent.currency,
+                    countryCode: ExamplesKeys.countryCode,
+                    returnURL: ExamplesKeys.returnUrl
+                )
+                print("URL for hpp: \(url)")
+                await UIApplication.shared.open(url)
+            } catch {
+                print(error.localizedDescription)
+            }
+            stopLoading()
+        }
+    }
 }
