@@ -17,6 +17,28 @@ protocol APIClient {
     func createCustomer(request: CustomerRequest, completion: @escaping (Result<Customer, Error>) -> Void)
 }
 
+extension APIClient {
+    
+    func createPaymentIntent(force3DS: Bool = false) async throws -> AWXPaymentIntent {
+        let request = PaymentIntentRequest(
+            amount: Decimal(string: ExamplesKeys.amount) ?? 0,
+            currency: ExamplesKeys.currency,
+            order: DemoDataSource.createOrder(),
+            metadata: ["id": 1],
+            returnUrl: ExamplesKeys.returnUrl,
+            customerID: ExamplesKeys.customerId?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty,
+            paymentMethodOptions: force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,
+            apiKey: ExamplesKeys.apiKey,
+            clientID: ExamplesKeys.clientId
+        )
+        
+        let paymentIntent = try await withCheckedThrowingContinuation { continuation in
+            createPaymentIntent(request: request) { continuation.resume(with: $0) }
+        }
+        return paymentIntent
+    }
+}
+
 extension Airwallex {
     static var apiClient: APIClient {
         switch Airwallex.mode() {

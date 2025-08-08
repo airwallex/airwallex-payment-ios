@@ -1,0 +1,57 @@
+<!-- 
+  hpp.html
+  Airwallex Payment Demo - Static HTML.  Created by Charlie Lang and Josie Ku.
+
+  @airwallex/components-sdk Hosted Payment Page integration in Static HTML
+  Comments with "Example" demonstrate how states can be integrated
+  with the element, they can be removed.
+
+  Detailed guidance here: https://github.com/airwallex/airwallex-payment-demo/blob/master/docs/components-sdk/hpp.md
+ -->
+
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Airwallex Checkout Playground</title>
+  <script src="https://static.airwallex.com/components/sdk/v1/index.js"></script>
+</head>
+
+<body>
+  <script async>
+    const mode = 'payment'; // Should be one of ['payment', 'recurring']
+    (async () => {
+      // STEP #2: Initialize the Airwallex package with the appropriate environment
+      const { payments } = await window.AirwallexComponentsSDK.init({
+        env: 'demo', // Setup which Airwallex env('staging' | 'demo' | 'prod') to integrate with
+        enabledElements: ['payments'],
+      })
+      window.redirectHppForCheckout = () => {
+        // Get the latest values from the window object
+        const intent_id = window.intent_id;
+        const client_secret = window.client_secret;
+        const currency = window.currency;
+        const country_code = window.country_code;
+        const return_url = window.return_url
+        
+        return payments.redirectToCheckout({
+          env: 'demo',
+          mode: 'payment',
+          currency: currency, // Required, must provide currency
+          intent_id: intent_id, // Required, must provide intent details
+          client_secret: client_secret, // Required
+          disableAutoRedirect: true, // Optional, default is false
+          applePayRequestOptions: { "countryCode": country_code }, // required if you need apple pay
+          successUrl: return_url,
+          failUrl: return_url,
+        });
+      }
+    })();
+
+  </script>
+</body>
+
+</html>

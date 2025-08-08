@@ -126,40 +126,6 @@ class GetPaymentConsentsViewController: UITableViewController {
         }
     }
     
-    private func createPaymentIntentRequest(customerID: String) -> PaymentIntentRequest {
-        PaymentIntentRequest(
-            amount: Decimal(string: ExamplesKeys.amount)!,
-            currency: ExamplesKeys.currency,
-            order: .init(
-                products: [
-                    .init(
-                        type: "Free engraving",
-                        code: "123",
-                        name: "AirPods Pro",
-                        sku: "piece",
-                        quantity: 1,
-                        unitPrice: 399,
-                        desc: "Buy AirPods Pro, per month with trade-in",
-                        url: "www.aircross.com"
-                    ),
-                ],
-                shipping: .init(
-                    firstName: "Jason",
-                    lastName: "Wang",
-                    phoneNumber: "13800000000",
-                    address: .init(countryCode: "CN", state: "Shanghai", city: "Shanghai", street: "Pudong District", postcode: "100000")
-                ),
-                type: "physical_goods"
-            ),
-            metadata: ["id": 1],
-            returnUrl: ExamplesKeys.returnUrl,
-            customerID: customerID,
-            paymentMethodOptions: nil,
-            apiKey: ExamplesKeys.apiKey?.nilIfEmpty,
-            clientID: ExamplesKeys.clientId?.nilIfEmpty
-        )
-    }
-    
     private func requestCardConsents() async throws -> AWXGetPaymentConsentsResponse {
         
         guard let customerId = ExamplesKeys.customerId else {
@@ -168,11 +134,7 @@ class GetPaymentConsentsViewController: UITableViewController {
         
         // check client secret before request consents
         if AWXAPIClientConfiguration.shared().clientSecret == nil {
-            let intent = try await withCheckedThrowingContinuation { continuation in
-                storeAPIClient.createPaymentIntent(request: createPaymentIntentRequest(customerID: customerId)) { result in
-                    continuation.resume(with: result)
-                }
-            }
+            let intent = try await storeAPIClient.createPaymentIntent()
             AWXAPIClientConfiguration.shared().clientSecret = intent.clientSecret
         }
         
