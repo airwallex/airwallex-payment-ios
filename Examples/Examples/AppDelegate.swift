@@ -61,7 +61,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch type {
         case "SUCCESS_URL":
             let intentId = components.queryItems?.first(where: { $0.name == "id"})?.value ?? "Not Found"
-            window?.rootViewController?.showAlert(message: "intentId: \(intentId)", title: "Payment Success")
+            window?.rootViewController?.showAlert(message: "intentId: \(intentId)", title: "Payment Success") {
+                UIPasteboard.general.string = intentId
+            }
+        case "FAIL_URL":
+            let intentId = components.queryItems?.first(where: { $0.name == "id"})?.value ?? "Not Found"
+            let error = components.queryItems?.first(where: { $0.name == "error"})?.value ?? "Not Found"
+            window?.rootViewController?.showAlert(message: "error: \(error), intentId: \(intentId)", title: "Payment Failed") {
+                UIPasteboard.general.string = intentId
+            }
         default:
             window?.rootViewController?.showAlert(message: url.absoluteString, title: type)
         }
