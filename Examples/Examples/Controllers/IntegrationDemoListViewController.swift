@@ -104,7 +104,20 @@ class IntegrationDemoListViewController: UIViewController {
                 self?.getSavedCardMethods()
             }
         ),
+        ActionViewModel(
+            title: "Open HPP (Hosted Payment Page)",
+            action: { [weak self] in
+                self?.nativeHPPButtonTapped()
+            }
+        ),
     ]
+    
+    private lazy var hppHandler: HPPDemoController = {
+        let handler = HPPDemoController()
+        handler.webView.translatesAutoresizingMaskIntoConstraints = false
+        handler.viewController = self
+        return handler
+    }()
     
     private lazy var listView: DemoListView = {
         let view = DemoListView()
@@ -483,29 +496,31 @@ private extension IntegrationDemoListViewController {
             self.present(alertController, animated: true)
         }
     }
+    
+    @objc func nativeHPPButtonTapped() {
+        startLoading()
+        Task {
+            do {
+                let intent = try await Airwallex.apiClient.createPaymentIntent()
+                let url = try await hppHandler.getURLForHPP(
+                    intentId: intent.id,
+                    clientSecret: intent.clientSecret,
+                    currency: intent.currency,
+                    countryCode: ExamplesKeys.countryCode,
+                    returnURL: ExamplesKeys.returnUrl
+                )
+                print("URL for hpp: \(url)")
+                await UIApplication.shared.open(url)
+            } catch {
+                print(error.localizedDescription)
+            }
+            stopLoading()
+        }
+    }
 }
 
 // MARK: Session & Requests
 private extension IntegrationDemoListViewController {
-    
-    func createPaymentIntent(force3DS: Bool = false) async throws -> AWXPaymentIntent {
-        let request = PaymentIntentRequest(
-            amount: Decimal(string: ExamplesKeys.amount) ?? 0,
-            currency: ExamplesKeys.currency,
-            order: DemoDataSource.createOrder(shipping: shippingAddress),
-            metadata: ["id": 1],
-            returnUrl: ExamplesKeys.returnUrl,
-            customerID: ExamplesKeys.customerId?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty,
-            paymentMethodOptions: force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,
-            apiKey: ExamplesKeys.apiKey,
-            clientID: ExamplesKeys.clientId
-        )
-        
-        let paymentIntent = try await withCheckedThrowingContinuation { continuation in
-            Airwallex.apiClient.createPaymentIntent(request: request) { continuation.resume(with: $0) }
-        }
-        return paymentIntent
-    }
     
     func generateClientSecretForRecurringPayment() async throws -> String {
         guard let customerId = ExamplesKeys.customerId else {
@@ -528,7 +543,7 @@ private extension IntegrationDemoListViewController {
         switch ExamplesKeys.checkoutMode {
         case .oneOff:
             // create payment intent
-            let paymentIntent = try await createPaymentIntent(force3DS: force3DS)
+            let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(force3DS: force3DS)
             // update client secret
             AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
             // create AWXOneOffSession
@@ -551,7 +566,7 @@ private extension IntegrationDemoListViewController {
             paymentSession = session
         case .recurringWithIntent:
             // create payment intent
-            let paymentIntent = try await createPaymentIntent(force3DS: force3DS)
+            let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(force3DS: force3DS)
             // update client secret
             AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
             // create AWXRecurringWithIntentSession
