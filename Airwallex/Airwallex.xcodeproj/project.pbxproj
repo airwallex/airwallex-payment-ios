@@ -425,6 +425,8 @@
 		D8EC88372D9E335D00D082EC /* payment_consents.json in Resources */ = {isa = PBXBuildFile; fileRef = D8EC87EF2D9E335D00D082EC /* payment_consents.json */; };
 		D8EFAB2F2E20E1A6009D4B4C /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFAB2D2E20E1A6009D4B4C /* UIViewController+Extensions.swift */; };
 		D8EFAB9E2E274CBA009D4B4C /* LoadingSpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFAB9D2E274CBA009D4B4C /* LoadingSpinnerView.swift */; };
+		D8EFAD012E39FA7B009D4B4C /* SchemaFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFAD002E39FA7B009D4B4C /* SchemaFieldValidator.swift */; };
+		D8EFAD392E3A1E3F009D4B4C /* SchemaFieldValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EFAD382E3A1E3F009D4B4C /* SchemaFieldValidatorTests.swift */; };
 		D8F2FAFD2DA8F9C300209602 /* EventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2FAFC2DA8F9C300209602 /* EventsTests.swift */; };
 		D8F2FAFF2DA9054900209602 /* AWXCardSchemeExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F2FAFE2DA9054900209602 /* AWXCardSchemeExtensionTests.swift */; };
 		D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
@@ -881,6 +883,8 @@
 		D8EC88052D9E335D00D082EC /* PaymentSessionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSessionHandlerTests.swift; sourceTree = "<group>"; };
 		D8EFAB2D2E20E1A6009D4B4C /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D8EFAB9D2E274CBA009D4B4C /* LoadingSpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinnerView.swift; sourceTree = "<group>"; };
+		D8EFAD002E39FA7B009D4B4C /* SchemaFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaFieldValidator.swift; sourceTree = "<group>"; };
+		D8EFAD382E3A1E3F009D4B4C /* SchemaFieldValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaFieldValidatorTests.swift; sourceTree = "<group>"; };
 		D8F2FAFC2DA8F9C300209602 /* EventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTests.swift; sourceTree = "<group>"; };
 		D8F2FAFE2DA9054900209602 /* AWXCardSchemeExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXCardSchemeExtensionTests.swift; sourceTree = "<group>"; };
 		EE2CC5A246D6BB2D92970009 /* Pods-AirwallexCoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirwallexCoreTests.debug.xcconfig"; path = "Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1462,7 +1466,6 @@
 		D8A599BA2DAFA1B60045BFEC /* Logging */ = {
 			isa = PBXGroup;
 			children = (
-				D8A599C42DAFBF200045BFEC /* Internal */,
 				1839054D29C01AE900FE8069 /* AWXAnalyticsLogger.h */,
 				C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */,
 				C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */,
@@ -1500,13 +1503,6 @@
 			children = (
 				184169DC29C4381500B02D96 /* NSData+Base64.h */,
 				184169DD29C4381500B02D96 /* NSData+Base64.m */,
-			);
-			path = Internal;
-			sourceTree = "<group>";
-		};
-		D8A599C42DAFBF200045BFEC /* Internal */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -1595,6 +1591,7 @@
 				D8EC87352D9E335900D082EC /* CardNumberValidator.swift */,
 				D8EC87362D9E335900D082EC /* InfoCollectorDefaultValidator.swift */,
 				D8EC87372D9E335900D082EC /* PrefixPhoneNumberValidator.swift */,
+				D8EFAD002E39FA7B009D4B4C /* SchemaFieldValidator.swift */,
 			);
 			path = Validators;
 			sourceTree = "<group>";
@@ -1773,6 +1770,7 @@
 			isa = PBXGroup;
 			children = (
 				D8EC87E32D9E335D00D082EC /* BlockValidatorTests.swift */,
+				D8EFAD382E3A1E3F009D4B4C /* SchemaFieldValidatorTests.swift */,
 				D8EC87E42D9E335D00D082EC /* CardCVCValidatorTests.swift */,
 				D8EC87E52D9E335D00D082EC /* CardExpiryValicatorTests.swift */,
 				D8EC87E62D9E335D00D082EC /* CardNumberValidatorTests.swift */,
@@ -2533,6 +2531,7 @@
 				D85042022DA79DF40074BA7F /* UITextField+Extensions.swift in Sources */,
 				D85042042DA79DF40074BA7F /* AWXAlertController.swift in Sources */,
 				D85042772DA7A3740074BA7F /* Font+Extensions.swift in Sources */,
+				D8EFAD012E39FA7B009D4B4C /* SchemaFieldValidator.swift in Sources */,
 				D85042052DA79DF40074BA7F /* ImageLoader.swift in Sources */,
 				D85042062DA79DF40074BA7F /* AWXSchema+Extensions.swift in Sources */,
 				D85042072DA79DF40074BA7F /* CGFloat+Extensions.swift in Sources */,
@@ -2628,6 +2627,7 @@
 				D8A599A22DAE71250045BFEC /* SchemaPaymentSectionControllerTests.swift in Sources */,
 				D88045882DA7B41D008308C7 /* UIStackViewExtensionTests.swift in Sources */,
 				D88045892DA7B41D008308C7 /* CGFloatExtensionTests.swift in Sources */,
+				D8EFAD392E3A1E3F009D4B4C /* SchemaFieldValidatorTests.swift in Sources */,
 				D8C05A0C2DACF06F002BED34 /* AccordionPaymentSectionControllerTests.swift in Sources */,
 				D880458A2DA7B41D008308C7 /* UITextFieldExtensionsTests.swift in Sources */,
 				D880458B2DA7B41D008308C7 /* PaletteTests.swift in Sources */,
