@@ -23,6 +23,15 @@ class CardNumberTextField: BaseTextField<CardNumberTextFieldViewModel> {
         super.init(frame: frame)
         horizontalStack.addArrangedSubview(cardBrandView)
         horizontalStack.addSpacer(16)
+        
+        if #available(iOS 15.0, *) {
+            let toolbar = UIToolbar()
+            let captureAction = UIAction.captureTextFromCamera(responder: textField, identifier: nil)
+            let scanButton = UIBarButtonItem(primaryAction: captureAction)
+            toolbar.items = [scanButton]
+            toolbar.sizeToFit()
+            textField.inputAccessoryView = toolbar
+        }
     }
     
     required init?(coder: NSCoder) {

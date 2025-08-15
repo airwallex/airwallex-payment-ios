@@ -94,5 +94,7 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to scan credit card details.</string>
 </dict>
 </plist>

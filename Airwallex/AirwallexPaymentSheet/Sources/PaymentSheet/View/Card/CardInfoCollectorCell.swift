@@ -33,6 +33,15 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         view.translatesAutoresizingMaskIntoConstraints = false
         view.box.layer.maskedCorners = .layerMinXMaxYCorner
         view.textField.accessibilityIdentifier = "cardExpiryTextField"
+        
+        if #available(iOS 15.0, *) {
+            let toolbar = UIToolbar()
+            let captureAction = UIAction.captureTextFromCamera(responder: view.textField, identifier: nil)
+            let scanButton = UIBarButtonItem(primaryAction: captureAction)
+            toolbar.items = [scanButton]
+            toolbar.sizeToFit()
+            view.textField.inputAccessoryView = toolbar
+        }
         return view
     }()
     
@@ -47,6 +56,15 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         view.horizontalStack.addArrangedSubview(imageView)
         view.horizontalStack.addSpacer(8)
         view.textField.accessibilityIdentifier = "cardCVCTextField"
+        
+        if #available(iOS 15.0, *) {
+            let toolbar = UIToolbar()
+            let captureAction = UIAction.captureTextFromCamera(responder: view.textField, identifier: nil)
+            let scanButton = UIBarButtonItem(primaryAction: captureAction)
+            toolbar.items = [scanButton]
+            toolbar.sizeToFit()
+            view.textField.inputAccessoryView = toolbar
+        }
         return view
     }()
     
