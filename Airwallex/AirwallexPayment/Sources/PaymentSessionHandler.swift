@@ -218,6 +218,20 @@ public class PaymentSessionHandler: NSObject {
     func confirmCardPayment(with card: AWXCard,
                             billing: AWXPlaceDetails?,
                             saveCard: Bool = false) throws {
+        if let newSession = session as? Session {
+            let cardProvider = CardPaymentProvider(
+                delegate: self,
+                session: newSession,
+                paymentMethodType: methodType
+            )
+            actionProvider = cardProvider
+            cardProvider.confirmIntent(
+                with: card,
+                billing: billing,
+                saveCard: saveCard
+            )
+            return
+        }
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,

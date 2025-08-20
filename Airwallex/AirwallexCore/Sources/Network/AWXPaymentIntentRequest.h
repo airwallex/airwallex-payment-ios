@@ -38,17 +38,17 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Save payment method.
  */
-@property (nonatomic) BOOL savePaymentMethod;
+@property (nonatomic) BOOL savePaymentMethod __deprecated_msg("Not used anymore");
 
 /**
  Payment method object.
  */
-@property (nonatomic, strong) AWXPaymentMethod *paymentMethod;
+@property (nonatomic, strong, nullable) AWXPaymentMethod *paymentMethod;
 
 /**
  PaymentConsent method object.
  */
-@property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
+@property (nonatomic, strong, nullable) AWXPaymentConsent *paymentConsent;
 
 /**
  Options object.
@@ -59,6 +59,10 @@ NS_ASSUME_NONNULL_BEGIN
  Device object.
  */
 @property (nonatomic, strong, nullable) AWXDevice *device;
+
+/// object for simplified consent flow
+/// info for The associated PaymentConsent to set up along with the PaymentIntent.
+@property (nonatomic, strong, nullable) NSDictionary *consentOptions;
 
 @end
 

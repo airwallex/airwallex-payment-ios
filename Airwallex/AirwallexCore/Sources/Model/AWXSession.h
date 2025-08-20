@@ -71,12 +71,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Return all of customer payment consents
  */
-- (NSArray *)customerPaymentConsents;
+- (NSArray *)customerPaymentConsents __deprecated;
 
 /**
  Return all of customer payment methods
  */
-- (NSArray *)customerPaymentMethods;
+- (NSArray *)customerPaymentMethods __deprecated;
 
 /**
  Return customer id

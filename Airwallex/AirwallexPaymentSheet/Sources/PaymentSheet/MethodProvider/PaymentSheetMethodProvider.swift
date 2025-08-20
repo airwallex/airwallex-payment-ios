@@ -127,11 +127,20 @@ private extension PaymentSheetMethodProvider {
     
     func getAllConsents() async throws -> [AWXPaymentConsent] {
         guard let customerId = session.customerId(),
-              let oneOffSession = session as? AWXOneOffSession,
-              !oneOffSession.hidePaymentConsents else {
+              session.transactionMode() == AWXPaymentTransactionModeOneOff else {
+            // TODO: support consent creation from existing consent
             return []
         }
-        if let predefinedMethods = oneOffSession.paymentMethods {
+        switch session {
+        case let session as Session where session.hidePaymentConsents:
+            return []
+        case let session as AWXOneOffSession where session.hidePaymentConsents:
+            return []
+        default:
+            break
+        }
+        
+        if let predefinedMethods = session.paymentMethods {
             guard predefinedMethods.contains(where: { $0.lowercased() == AWXCardKey }) else {
                 return []
             }

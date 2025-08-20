@@ -1,0 +1,84 @@
+//
+//  PaymentProvider.swift
+//  AirwallexPayment
+//
+//  Created by Weiping Li on 18/8/25.
+//  Copyright © 2025 Airwallex. All rights reserved.
+//
+
+#if canImport(AirwallexCore)
+import AirwallexCore
+#endif
+import UIKit
+
+@_spi(AWX) public class PaymentProvider: AWXDefaultProvider {
+    
+    var unifiedSession: Session {
+        session as! Session
+    }
+    
+    public init(delegate: any AWXProviderDelegate,
+                session: Session,
+                paymentMethodType: AWXPaymentMethodType? = nil) {
+        super.init(delegate: delegate, session: session, paymentMethodType: paymentMethodType)
+    }
+    
+    fileprivate func createPaymentMethodOptions(_ paymentMethod: AWXPaymentMethod) -> AWXPaymentMethodOptions? {
+        guard [AWXApplePayKey, AWXCardKey].contains(paymentMethod.type) else {
+            return nil
+        }
+        let cardOptions = AWXCardOptions()
+        cardOptions.autoCapture = unifiedSession.autoCapture
+        if paymentMethod.type == AWXCardKey {
+            let threeDS = AWXThreeDs()
+            threeDS.returnURL = AWXThreeDSReturnURL
+            cardOptions.threeDs = threeDS
+        }
+        
+        let options = AWXPaymentMethodOptions()
+        options.cardOptions = cardOptions
+        return options
+    }
+    
+    func confirmInitialTransaction(_ method: AWXPaymentMethod) {
+        let request = AWXConfirmPaymentIntentRequest()
+        request.intentId = unifiedSession.paymentIntent.id
+        request.customerId = unifiedSession.paymentIntent.customerId
+        request.paymentMethod = method
+        request.device = AWXDevice.withRiskSessionId()
+        request.consentOptions = unifiedSession.recurringOptions?.encodeToJSON()
+        request.returnURL = AWXThreeDSReturnURL
+        request.options = createPaymentMethodOptions(method)
+        Task { @MainActor in
+            do {
+                let response: AWXConfirmPaymentIntentResponse = try await sendRequest(request)
+                complete(with: response, error: nil)
+            } catch {
+                complete(with: nil, error: error)
+            }
+        }
+    }
+    
+    func confirmSubsequentTransaction() {
+        // TODO: wpdebug
+    }
+    
+    func confirmConsentConversion() {
+        // TODO: wpdebug
+    }
+    
+    func sendRequest<Req: AWXRequest, Res: AWXResponse>(_ request: Req) async throws -> Res {
+        let apiClient = AWXAPIClient(configuration: .shared())
+        guard let response = try await apiClient.send(request) as? Res else {
+            throw NSError(
+                domain: AWXSDKErrorDomain,
+                code: -1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "failed to parse response",
+                    NSURLErrorFailingURLErrorKey: request.path()
+                ]
+            )
+        }
+        return response
+    }
+}

@@ -71,6 +71,10 @@
     }
     parameters[@"integration_data"] = @{@"type": @"mobile_sdk",
                                         @"version": [NSString stringWithFormat:@"ios-%@-%@", @"release", AIRWALLEX_VERSION]};
+    //  for simplified consent flow
+    if (self.consentOptions) {
+        parameters[@"payment_consent"] = self.consentOptions;
+    }
     return parameters;
 }
 
