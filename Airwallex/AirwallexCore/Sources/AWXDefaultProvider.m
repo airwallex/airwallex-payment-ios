@@ -35,7 +35,7 @@
 @implementation AWXDefaultProvider
 
 + (BOOL)canHandleSession:(AWXSession *)session paymentMethod:(AWXPaymentMethodType *)paymentMethod {
-    return YES;
+    return paymentMethod.name == AWXCardKey || paymentMethod.name == AWXApplePayKey || paymentMethod.hasSchema;
 }
 
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session {
@@ -213,12 +213,6 @@
             }
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
             [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu", self.delegate.class, AirwallexPaymentStatusSuccess];
-
-            if (_paymentMethod.type.length > 0) {
-                [[AWXAnalyticsLogger shared] logActionWithName:@"payment_success" additionalInfo:@{@"paymentMethod": _paymentMethod.type}];
-            } else {
-                [[AWXAnalyticsLogger shared] logActionWithName:@"payment_success"];
-            }
         }
     } else {
         [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];

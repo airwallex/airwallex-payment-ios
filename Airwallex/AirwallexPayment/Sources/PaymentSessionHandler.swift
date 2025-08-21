@@ -42,7 +42,7 @@ public class PaymentSessionHandler: NSObject {
     }
     let session: AWXSession
     
-    private(set) var actionProvider: AWXDefaultProvider!
+    private(set) var actionProvider: AWXDefaultProvider?
     
     private weak var _viewController: UIViewController?
     
@@ -189,6 +189,16 @@ public class PaymentSessionHandler: NSObject {
     ///     receives a cancellation callback if the user dismisses the sheet.
     ///   - If `false`, dismissing the Apple Pay sheet does not trigger a cancellation callback,
     func confirmApplePay(cancelPaymentOnDismiss: Bool) throws {
+        if let unifiedSession = session as? Session {
+            let applePayProvider = ApplePayProvider(
+                delegate: self,
+                session: unifiedSession,
+                methodType: methodType
+            )
+            actionProvider = applePayProvider
+            applePayProvider.startPayment(cancelPaymentOnDismiss: cancelPaymentOnDismiss)
+            return
+        }
         let applePayProvider = AWXApplePayProvider(
             delegate: self,
             session: session,
@@ -219,10 +229,10 @@ public class PaymentSessionHandler: NSObject {
                             billing: AWXPlaceDetails?,
                             saveCard: Bool = false) throws {
         if let unifiedSession = session as? Session {
-            let cardProvider = CardPaymentProvider(
+            let cardProvider = CardProvider(
                 delegate: self,
                 session: unifiedSession,
-                paymentMethodType: methodType
+                methodType: methodType
             )
             actionProvider = cardProvider
             cardProvider.confirmIntentWithCard(
@@ -255,10 +265,10 @@ public class PaymentSessionHandler: NSObject {
     ///   If The payment method details, which may require additional input such as a CVC for validation.
     func confirmConsentPayment(with consent: AWXPaymentConsent) throws {
         if let unifiedSession = session as? Session {
-            let cardProvider = CardPaymentProvider(
+            let cardProvider = CardProvider(
                 delegate: self,
                 session: unifiedSession,
-                paymentMethodType: methodType
+                methodType: methodType
             )
             actionProvider = cardProvider
             cardProvider.confirmIntentWithConsent(consent)
@@ -292,10 +302,10 @@ public class PaymentSessionHandler: NSObject {
     /// - Parameter consentId: The previously generated consent identifier.
     func confirmConsentPayment(withId consentId: String) throws {
         if let unifiedSession = session as? Session {
-            let cardProvider = CardPaymentProvider(
+            let cardProvider = CardProvider(
                 delegate: self,
                 session: unifiedSession,
-                paymentMethodType: methodType
+                methodType: methodType
             )
             actionProvider = cardProvider
             cardProvider.confirmIntentWithConsent(consentId)
@@ -417,6 +427,18 @@ extension PaymentSessionHandler: AWXProviderDelegate {
         } else {
             paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
         }
+        // log success
+        if status == .success {
+            if let name = methodType?.name {
+                AnalyticsLogger.log(
+                    action: .paymentSuccess,
+                    extraInfo: [.paymentMethod : name]
+                )
+            } else {
+                AnalyticsLogger.log(action: .paymentSuccess)
+            }
+            
+        }
         AnalyticsLogger.shared().session = nil
     }
     
@@ -425,6 +447,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     }
     
     public func provider(_ provider: AWXDefaultProvider, shouldHandle nextAction: AWXConfirmPaymentNextAction) {
+        debugLog("nextAction: \(nextAction.debugDescription)")
         guard let actionProviderClass = ClassToHandleNextActionForType(nextAction) as? AWXDefaultActionProvider.Type else {
             let error = NSError(
                 domain: AWXSDKErrorDomain,
@@ -442,13 +465,18 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     }
     
     public func provider(_ provider: AWXDefaultProvider, shouldInsert controller: UIViewController) {
+        debugLog()
         viewController.addChild(controller)
         controller.view.frame = viewController.view.frame.insetBy(dx: 0, dy: viewController.view.frame.maxY)
         viewController.view.addSubview(controller.view)
         controller.didMove(toParent: viewController)
     }
     
-    public func provider(_ provider: AWXDefaultProvider, shouldPresent controller: UIViewController?, forceToDismiss: Bool, withAnimation: Bool) {
+    public func provider(_ provider: AWXDefaultProvider,
+                         shouldPresent controller: UIViewController?,
+                         forceToDismiss: Bool,
+                         withAnimation: Bool) {
+        debugLog()
         guard let controller else {
             if forceToDismiss {
                 viewController.presentedViewController?.dismiss(animated: withAnimation)

@@ -274,6 +274,7 @@ private extension IntegrationDemoListViewController {
             startLoading()
             do {
                 let session = try await createUnifiedSession()
+//                let session = try await createPaymentSession()
                 AWXUIContext.launchPayment(
                     from: self,
                     session: session,

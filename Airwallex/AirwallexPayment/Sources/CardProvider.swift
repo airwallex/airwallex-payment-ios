@@ -11,10 +11,14 @@ import AirwallexCore
 #endif
 import Foundation
 
-@_spi(AWX) public class CardPaymentProvider: PaymentProvider {
+class CardProvider: AWXDefaultProvider {
     
-    public override class func canHandle(_ session: AWXSession, paymentMethod: AWXPaymentMethodType) -> Bool {
-        paymentMethod.cardSchemes.count != 0
+    override class func canHandle(_ session: AWXSession, paymentMethod: AWXPaymentMethodType) -> Bool {
+        paymentMethod.cardSchemes.count > 0
+    }
+    
+    init(delegate: any AWXProviderDelegate, session: Session, methodType: AWXPaymentMethodType?) {
+        super.init(delegate: delegate, session: session, paymentMethodType: methodType)
     }
     
     func confirmIntentWithCard(_ card: AWXCard,

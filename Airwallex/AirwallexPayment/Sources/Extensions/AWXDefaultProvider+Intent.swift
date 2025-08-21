@@ -1,5 +1,5 @@
 //
-//  PaymentProvider.swift
+//  AWXDefaultProvider+Intent.swift
 //  AirwallexPayment
 //
 //  Created by Weiping Li on 18/8/25.
@@ -11,16 +11,10 @@ import AirwallexCore
 #endif
 import UIKit
 
-@_spi(AWX) public class PaymentProvider: AWXDefaultProvider {
+extension AWXDefaultProvider {
     
     var unifiedSession: Session {
         session as! Session
-    }
-    
-    public init(delegate: any AWXProviderDelegate,
-                session: Session,
-                paymentMethodType: AWXPaymentMethodType? = nil) {
-        super.init(delegate: delegate, session: session, paymentMethodType: paymentMethodType)
     }
     
     private func createPaymentMethodOptions(_ paymentMethod: AWXPaymentMethod) -> AWXPaymentMethodOptions? {
@@ -40,7 +34,8 @@ import UIKit
         return options
     }
     
-    private func confirmIntent(method: AWXPaymentMethod? = nil, consent: AWXPaymentConsent? = nil) {
+    func confirmIntent(method: AWXPaymentMethod? = nil,
+                       consent: AWXPaymentConsent? = nil) async throws -> AWXConfirmPaymentIntentResponse {
         let request = AWXConfirmPaymentIntentRequest()
         request.intentId = unifiedSession.paymentIntent.id
         request.customerId = unifiedSession.paymentIntent.customerId
@@ -52,21 +47,19 @@ import UIKit
         if let method {
             request.options = createPaymentMethodOptions(method)
         }
-        Task { @MainActor in
-            delegate?.providerDidStartRequest(self)
-            do {
-                let response: AWXConfirmPaymentIntentResponse = try await sendRequest(request)
-                delegate?.providerDidEndRequest(self)
-                complete(with: response, error: nil)
-            } catch {
-                delegate?.providerDidEndRequest(self)
-                complete(with: nil, error: error)
-            }
-        }
+        return try await sendRequest(request)
     }
     
     func confirmInitialTransaction(_ method: AWXPaymentMethod) {
-        confirmIntent(method: method)
+        Task { @MainActor in
+            self.delegate?.providerDidStartRequest(self)
+            do {
+                let response = try await confirmIntent(method: method)
+                complete(with: response, error: nil)
+            } catch {
+                complete(with: nil, error: error)
+            }
+        }
     }
     
     func confirmSubsequentTransaction(consentId: String, cvc: String?) {
@@ -75,7 +68,15 @@ import UIKit
         let method = AWXPaymentMethod()
         method.card = AWXCard()
         method.card?.cvc = cvc
-        confirmIntent(method: method, consent: consent)
+        Task { @MainActor in
+            self.delegate?.providerDidStartRequest(self)
+            do {
+                let response = try await confirmIntent(method: method, consent: consent)
+                complete(with: response, error: nil)
+            } catch {
+                complete(with: nil, error: error)
+            }
+        }
     }
     
     func confirmConsentConversion(methodId: String, cvc: String?) {

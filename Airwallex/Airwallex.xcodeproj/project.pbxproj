@@ -852,8 +852,28 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D893C47F2E530E2E0065D8DC /* Sources */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Sources; sourceTree = "<group>"; };
-		D893C4E62E531E2A0065D8DC /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
+		D893C47F2E530E2E0065D8DC /* Sources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		D893C4E62E531E2A0065D8DC /* Models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1055,25 +1075,6 @@
 			path = AirwallexCoreTests;
 			sourceTree = "<group>";
 		};
-		3C579F6B27F4124B00840A3B /* Internal */ = {
-			isa = PBXGroup;
-			children = (
-				3C5A37E127ED443E00CFC2EF /* PKPaymentMethod+Request.h */,
-				3C5A37E227ED443E00CFC2EF /* PKPaymentMethod+Request.m */,
-				3C5A37E527ED451600CFC2EF /* PKPaymentToken+Request.h */,
-				3C5A37E627ED451600CFC2EF /* PKPaymentToken+Request.m */,
-				3C5A37E927ED491100CFC2EF /* AWXPaymentIntent+Summary.h */,
-				3C5A37EA27ED491100CFC2EF /* AWXPaymentIntent+Summary.m */,
-				3C5A37ED27ED4A0500CFC2EF /* AWXSession+Request.h */,
-				3C5A37EE27ED4A0500CFC2EF /* AWXSession+Request.m */,
-				3CE9BA252806D2A5005B70C3 /* PKContact+Request.h */,
-				3CE9BA262806D2A5005B70C3 /* PKContact+Request.m */,
-				3CE9BA2B2806DE74005B70C3 /* AWXPlaceDetails+PKContact.h */,
-				3CE9BA2C2806DE74005B70C3 /* AWXPlaceDetails+PKContact.m */,
-			);
-			path = Internal;
-			sourceTree = "<group>";
-		};
 		3C579F6E27F4158C00840A3B /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -1115,9 +1116,20 @@
 		3C99E78827EAF1A20074156C /* ApplePay */ = {
 			isa = PBXGroup;
 			children = (
-				3C579F6B27F4124B00840A3B /* Internal */,
 				3C99E73A27E9A0730074156C /* AWXApplePayOptions.h */,
 				3C99E73B27E9A0730074156C /* AWXApplePayOptions.m */,
+				3C5A37E127ED443E00CFC2EF /* PKPaymentMethod+Request.h */,
+				3C5A37E227ED443E00CFC2EF /* PKPaymentMethod+Request.m */,
+				3C5A37E527ED451600CFC2EF /* PKPaymentToken+Request.h */,
+				3C5A37E627ED451600CFC2EF /* PKPaymentToken+Request.m */,
+				3C5A37E927ED491100CFC2EF /* AWXPaymentIntent+Summary.h */,
+				3C5A37EA27ED491100CFC2EF /* AWXPaymentIntent+Summary.m */,
+				3C5A37ED27ED4A0500CFC2EF /* AWXSession+Request.h */,
+				3C5A37EE27ED4A0500CFC2EF /* AWXSession+Request.m */,
+				3CE9BA252806D2A5005B70C3 /* PKContact+Request.h */,
+				3CE9BA262806D2A5005B70C3 /* PKContact+Request.m */,
+				3CE9BA2B2806DE74005B70C3 /* AWXPlaceDetails+PKContact.h */,
+				3CE9BA2C2806DE74005B70C3 /* AWXPlaceDetails+PKContact.m */,
 				3C99E7A227EAF2840074156C /* AWXApplePayProvider.h */,
 				3C99E7A327EAF2840074156C /* AWXApplePayProvider.m */,
 			);
@@ -2252,13 +2264,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
