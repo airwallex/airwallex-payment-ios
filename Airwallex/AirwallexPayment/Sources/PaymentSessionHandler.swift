@@ -218,15 +218,15 @@ public class PaymentSessionHandler: NSObject {
     func confirmCardPayment(with card: AWXCard,
                             billing: AWXPlaceDetails?,
                             saveCard: Bool = false) throws {
-        if let newSession = session as? Session {
+        if let unifiedSession = session as? Session {
             let cardProvider = CardPaymentProvider(
                 delegate: self,
-                session: newSession,
+                session: unifiedSession,
                 paymentMethodType: methodType
             )
             actionProvider = cardProvider
-            cardProvider.confirmIntent(
-                with: card,
+            cardProvider.confirmIntentWithCard(
+                card,
                 billing: billing,
                 saveCard: saveCard
             )
@@ -254,6 +254,16 @@ public class PaymentSessionHandler: NSObject {
     ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
     ///   If The payment method details, which may require additional input such as a CVC for validation.
     func confirmConsentPayment(with consent: AWXPaymentConsent) throws {
+        if let unifiedSession = session as? Session {
+            let cardProvider = CardPaymentProvider(
+                delegate: self,
+                session: unifiedSession,
+                paymentMethodType: methodType
+            )
+            actionProvider = cardProvider
+            cardProvider.confirmIntentWithConsent(consent)
+            return
+        }
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,
@@ -281,6 +291,16 @@ public class PaymentSessionHandler: NSObject {
     /// Initiates a payment using a consent ID.
     /// - Parameter consentId: The previously generated consent identifier.
     func confirmConsentPayment(withId consentId: String) throws {
+        if let unifiedSession = session as? Session {
+            let cardProvider = CardPaymentProvider(
+                delegate: self,
+                session: unifiedSession,
+                paymentMethodType: methodType
+            )
+            actionProvider = cardProvider
+            cardProvider.confirmIntentWithConsent(consentId)
+            return
+        }
         let cardProvider = AWXCardProvider(
             delegate: self,
             session: session,

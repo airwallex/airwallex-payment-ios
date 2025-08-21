@@ -23,7 +23,7 @@ import UIKit
         super.init(delegate: delegate, session: session, paymentMethodType: paymentMethodType)
     }
     
-    fileprivate func createPaymentMethodOptions(_ paymentMethod: AWXPaymentMethod) -> AWXPaymentMethodOptions? {
+    private func createPaymentMethodOptions(_ paymentMethod: AWXPaymentMethod) -> AWXPaymentMethodOptions? {
         guard [AWXApplePayKey, AWXCardKey].contains(paymentMethod.type) else {
             return nil
         }
@@ -40,30 +40,45 @@ import UIKit
         return options
     }
     
-    func confirmInitialTransaction(_ method: AWXPaymentMethod) {
+    private func confirmIntent(method: AWXPaymentMethod? = nil, consent: AWXPaymentConsent? = nil) {
         let request = AWXConfirmPaymentIntentRequest()
         request.intentId = unifiedSession.paymentIntent.id
         request.customerId = unifiedSession.paymentIntent.customerId
         request.paymentMethod = method
+        request.paymentConsent = consent
         request.device = AWXDevice.withRiskSessionId()
         request.consentOptions = unifiedSession.recurringOptions?.encodeToJSON()
         request.returnURL = AWXThreeDSReturnURL
-        request.options = createPaymentMethodOptions(method)
+        if let method {
+            request.options = createPaymentMethodOptions(method)
+        }
         Task { @MainActor in
+            delegate?.providerDidStartRequest(self)
             do {
                 let response: AWXConfirmPaymentIntentResponse = try await sendRequest(request)
+                delegate?.providerDidEndRequest(self)
                 complete(with: response, error: nil)
             } catch {
+                delegate?.providerDidEndRequest(self)
                 complete(with: nil, error: error)
             }
         }
     }
     
-    func confirmSubsequentTransaction() {
-        // TODO: wpdebug
+    func confirmInitialTransaction(_ method: AWXPaymentMethod) {
+        confirmIntent(method: method)
     }
     
-    func confirmConsentConversion() {
+    func confirmSubsequentTransaction(consentId: String, cvc: String?) {
+        let consent = AWXPaymentConsent()
+        consent.id = consentId
+        let method = AWXPaymentMethod()
+        method.card = AWXCard()
+        method.card?.cvc = cvc
+        confirmIntent(method: method, consent: consent)
+    }
+    
+    func confirmConsentConversion(methodId: String, cvc: String?) {
         // TODO: wpdebug
     }
     

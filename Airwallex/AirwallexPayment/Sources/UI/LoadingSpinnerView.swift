@@ -114,19 +114,11 @@ class LoadingSpinnerView: UIView {
         anim.repeatCount = .infinity
         shapeLayer.add(anim, forKey: animationKey)
         isHidden = false
-        alpha = 0
-        UIView.animate(withDuration: 0.3) {
-            self.alpha = 1
-        }
     }
 
     func stopAnimating() {
-        UIView.animate(withDuration: 0.3) {
-            self.alpha = 0
-        } completion: { _ in
-            self.isHidden = true
-            self.shapeLayer.removeAnimation(forKey: self.animationKey)
-        }
+        self.isHidden = true
+        self.shapeLayer.removeAnimation(forKey: self.animationKey)
     }
     
     var isAnimating: Bool {

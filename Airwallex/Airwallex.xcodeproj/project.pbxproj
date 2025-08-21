@@ -852,28 +852,8 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D893C47F2E530E2E0065D8DC /* Sources */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
-		D893C4E62E531E2A0065D8DC /* Models */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
+		D893C47F2E530E2E0065D8DC /* Sources */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Sources; sourceTree = "<group>"; };
+		D893C4E62E531E2A0065D8DC /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1101,8 +1081,6 @@
 				57A3AD6D27589BEF00EFF0A1 /* AWX3DSService.m */,
 				57D4A44D2785AF4500487E1C /* AWX3DSViewController.h */,
 				57D4A44E2785AF4500487E1C /* AWX3DSViewController.m */,
-				5775CF0C26E5DF4F00C6AFE3 /* AWXCardCVCViewController.h */,
-				5775CECD26E5DF4D00C6AFE3 /* AWXCardCVCViewController.m */,
 				57A3AD682758731400EFF0A1 /* AWX3DSActionProvider.h */,
 				57A3AD692758731400EFF0A1 /* AWX3DSActionProvider.m */,
 			);
@@ -1187,6 +1165,8 @@
 				3C579F6E27F4158C00840A3B /* Internal */,
 				5775CF7226E5E28400C6AFE3 /* AWXCardProvider.h */,
 				5775CF7626E5E28400C6AFE3 /* AWXCardProvider.m */,
+				5775CF0C26E5DF4F00C6AFE3 /* AWXCardCVCViewController.h */,
+				5775CECD26E5DF4D00C6AFE3 /* AWXCardCVCViewController.m */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -2272,9 +2252,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
