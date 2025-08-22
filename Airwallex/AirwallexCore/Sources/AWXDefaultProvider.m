@@ -35,7 +35,9 @@
 @implementation AWXDefaultProvider
 
 + (BOOL)canHandleSession:(AWXSession *)session paymentMethod:(AWXPaymentMethodType *)paymentMethod {
-    return paymentMethod.name == AWXCardKey || paymentMethod.name == AWXApplePayKey || paymentMethod.hasSchema;
+    return paymentMethod.name != AWXCardKey &&
+           paymentMethod.name != AWXApplePayKey &&
+           paymentMethod.hasSchema;
 }
 
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session {

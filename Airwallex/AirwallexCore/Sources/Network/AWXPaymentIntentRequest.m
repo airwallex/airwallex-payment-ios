@@ -46,16 +46,7 @@
             @"payment_consent_reference": consentParams
         }];
     } else {
-        if (self.paymentMethod.Id) {
-            [parameters addEntriesFromDictionary:@{
-                @"payment_method_reference": @{
-                    @"id": self.paymentMethod.Id,
-                    @"cvc": self.paymentMethod.card.cvc ?: @""
-                }
-            }];
-        } else {
-            parameters[@"payment_method"] = self.paymentMethod.encodeToJSON;
-        }
+        parameters[@"payment_method"] = self.paymentMethod.encodeToJSON;
     }
 
     if (self.options) {

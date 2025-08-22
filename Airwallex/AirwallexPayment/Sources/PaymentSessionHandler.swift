@@ -179,6 +179,45 @@ public class PaymentSessionHandler: NSObject {
             handleFailure(paymentResultDelegate, error)
         }
     }
+    
+    class func canHandle(methodType: AWXPaymentMethodType, session: AWXSession) -> Bool {
+        guard session.transactionMode() == methodType.transactionMode,
+              !methodType.displayName.isEmpty,
+              !methodType.name.isEmpty else {
+            return false
+        }
+        if let session = session as? Session {
+            switch methodType.name {
+            case AWXCardKey:
+                return CardProvider.canHandle(session, paymentMethod: methodType)
+            case AWXApplePayKey:
+                return ApplePayProvider.canHandle(session, paymentMethod: methodType)
+            case AWXWeChatPayKey:
+#if canImport(WechatOpenSDKDynamic)
+                return true
+#else
+                return false
+#endif
+            default:
+                return AWXDefaultProvider.canHandle(session, paymentMethod: methodType)
+            }
+        } else {
+            guard let providerClass = ClassToHandleFlowForPaymentMethodType(methodType),
+                  providerClass.canHandle(session, paymentMethod: methodType) else {
+                return false
+            }
+            
+            if methodType.name == AWXWeChatPayKey {
+                
+#if canImport(WechatOpenSDKDynamic)
+                return true
+#else
+                return false
+#endif
+            }
+            return true
+        }
+    }
 }
 
 // for internal usage

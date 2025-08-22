@@ -25,9 +25,6 @@ import Foundation
     /// Default: YES
     public let autoCapture: Bool
 
-    /// Whether show stored card.
-    public let hidePaymentConsents: Bool
-
     /// Indicates whether card saving is enabled by default.
     /// Defaults to YES.
     public let autoSaveCardForFuturePayments: Bool
@@ -62,11 +59,11 @@ import Foundation
         self.paymentIntent = paymentIntent
         self.recurringOptions = recurringOptions
         self.autoCapture = autoCapture
-        self.hidePaymentConsents = hidePaymentConsents
         self.autoSaveCardForFuturePayments = autoSaveCardForFuturePayments
         
         super.init()
         self.countryCode = countryCode
+        self.hidePaymentConsents = hidePaymentConsents
         self.returnURL = returnURL
         self.lang = lang
         self.billing = billing

@@ -26,8 +26,20 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
     }
     
     var methods = [AWXPaymentMethodType]()
-    var consents = [AWXPaymentConsent]()
+    var consents: [AWXPaymentConsent] {
+        var set = Set<String>()
+        return (citConsents + mitConsents).reduce(into: [AWXPaymentConsent]()) { partialResult, consent in
+            guard let methodId = consent.paymentMethod?.id else { return }
+            if !set.contains(methodId) {
+                partialResult.append(consent)
+                set.insert(methodId)
+            }
+        }
+    }
     let apiClient: AWXAPIClient
+    
+    private var mitConsents = [AWXPaymentConsent]()
+    private var citConsents = [AWXPaymentConsent]()
     
     init(session: AWXSession,
          apiClient: AWXAPIClient = AWXAPIClient.init(configuration: .shared())) {
@@ -36,23 +48,10 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
     }
     
     func getPaymentMethodTypes() async throws {
-        async let methods = getAllMethodTypes()
-        async let consents = getAllConsents()
+        let methodsResult = try await getAllMethodTypes()
         
-        let availableMethods = try await methods.filter { methodType in
-            guard !methodType.displayName.isEmpty,
-                  let providerClass = ClassToHandleFlowForPaymentMethodType(methodType),
-                  providerClass.canHandle(session, paymentMethod: methodType),
-                  methodType.transactionMode == session.transactionMode() else {
-                return false
-            }
-            
-            if methodType.name == AWXWeChatPayKey, NSClassFromString("AWXWeChatPayActionProvider") == nil {
-                // temporary solution - use AWXWeChatPayActionProvider to check if
-                // AirwallexWeChatpay is integrated
-                return false
-            }
-            return true
+        let availableMethods = methodsResult.filter { method in
+            PaymentSessionHandler.canHandle(methodType: method, session: session)
         }
         
         // even if there is no paymmentMethods defined in session, we still need to
@@ -81,18 +80,38 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
             }
         }
         self.methods = filteredMethods
-            
+        
+        // Only fetch consents if AWXCardKey in the filtered methods
+        citConsents.removeAll()
+        mitConsents.removeAll()
         if filteredMethods.contains(where: { $0.name.lowercased() == AWXCardKey }) {
+            let consentsResult = try await getAllConsents()
             //  filter consents
             set.removeAll()
-            let filteredConsents = try await consents.filter { consent in
-                guard consent.paymentMethod?.card?.brand != nil,
-                      !set.contains(consent.id) else { return false }
-                set.insert(consent.id)
-                return true
+            var citSet = Set<String>()
+            var mitSet = Set<String>()
+            for consent in consentsResult {
+                guard let method = consent.paymentMethod,
+                      method.type == AWXCardKey,
+                      method.card != nil,
+                      let methodId = method.id else {
+                    continue
+                }
+                switch consent.nextTriggeredBy {
+                case FormatNextTriggerByType(.customerType):
+                    if !citSet.contains(consent.id) {
+                        citSet.insert(consent.id)
+                        citConsents.append(consent)
+                    }
+                case FormatNextTriggerByType(.merchantType):
+                    if !mitSet.contains(methodId) {
+                        mitSet.insert(methodId)
+                        mitConsents.append(consent)
+                    }
+                default:
+                    break
+                }
             }
-            
-            self.consents = filteredConsents
         }
         selectedMethod = selectedMethod ?? filteredMethods.first { $0.name != AWXApplePayKey }
         updatePublisher.send(.listUpdated)
@@ -107,6 +126,18 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
         request.transactionMode = session.transactionMode()
         request.lang = session.lang
         return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse
+    }
+    
+    func removeConsent(consentId: String) -> Bool {
+        if let index = citConsents.firstIndex(where: { $0.id == consentId }) {
+            citConsents.remove(at: index)
+            return true
+        }
+        if let index = mitConsents.firstIndex(where: { $0.id == consentId }) {
+            mitConsents.remove(at: index)
+            return true
+        }
+        return false
     }
 }
 
@@ -127,17 +158,8 @@ private extension PaymentSheetMethodProvider {
     
     func getAllConsents() async throws -> [AWXPaymentConsent] {
         guard let customerId = session.customerId(),
-              session.transactionMode() == AWXPaymentTransactionModeOneOff else {
-            // TODO: support consent creation from existing consent
+              !session.hidePaymentConsents else {
             return []
-        }
-        switch session {
-        case let session as Session where session.hidePaymentConsents:
-            return []
-        case let session as AWXOneOffSession where session.hidePaymentConsents:
-            return []
-        default:
-            break
         }
         
         if let predefinedMethods = session.paymentMethods {
@@ -148,7 +170,6 @@ private extension PaymentSheetMethodProvider {
         let request = AWXGetPaymentConsentsRequest()
         request.customerId = customerId
         request.status = "VERIFIED"
-        request.nextTriggeredBy = FormatNextTriggerByType(AirwallexNextTriggerByType.customerType)
         request.pageNum = 0
         request.pageSize = 1000
         let response = try await apiClient.send(request) as! AWXGetPaymentConsentsResponse

@@ -17,23 +17,6 @@ extension AWXDefaultProvider {
         session as! Session
     }
     
-    private func createPaymentMethodOptions(_ paymentMethod: AWXPaymentMethod) -> AWXPaymentMethodOptions? {
-        guard [AWXApplePayKey, AWXCardKey].contains(paymentMethod.type) else {
-            return nil
-        }
-        let cardOptions = AWXCardOptions()
-        cardOptions.autoCapture = unifiedSession.autoCapture
-        if paymentMethod.type == AWXCardKey {
-            let threeDS = AWXThreeDs()
-            threeDS.returnURL = AWXThreeDSReturnURL
-            cardOptions.threeDs = threeDS
-        }
-        
-        let options = AWXPaymentMethodOptions()
-        options.cardOptions = cardOptions
-        return options
-    }
-    
     func confirmIntent(method: AWXPaymentMethod? = nil,
                        consent: AWXPaymentConsent? = nil) async throws -> AWXConfirmPaymentIntentResponse {
         let request = AWXConfirmPaymentIntentRequest()
@@ -51,36 +34,68 @@ extension AWXDefaultProvider {
     }
     
     func confirmInitialTransaction(_ method: AWXPaymentMethod) {
-        Task { @MainActor in
-            self.delegate?.providerDidStartRequest(self)
-            do {
-                let response = try await confirmIntent(method: method)
-                complete(with: response, error: nil)
-            } catch {
-                complete(with: nil, error: error)
-            }
-        }
+        confirmIntent(method: method)
     }
     
     func confirmSubsequentTransaction(consentId: String, cvc: String?) {
         let consent = AWXPaymentConsent()
         consent.id = consentId
+        // for now all subsequent transactions's type are card
         let method = AWXPaymentMethod()
-        method.card = AWXCard()
-        method.card?.cvc = cvc
+        method.type = AWXCardKey
+        if let cvc {
+            method.card = AWXCard()
+            method.card?.cvc = cvc
+        }
+        confirmIntent(method: method, consent: consent)
+    }
+    
+    func confirmConsentConversion(methodId: String?, cvc: String?) {
+        // for now all conversion transactions's type are card
+        let method = AWXPaymentMethod()
+        method.id = methodId
+        method.type = AWXCardKey
+        if let cvc {
+            method.card = AWXCard()
+            method.card?.cvc = cvc
+        }
+        confirmIntent(method: method)
+    }
+}
+
+fileprivate extension AWXDefaultProvider {
+    
+    func createPaymentMethodOptions(_ paymentMethod: AWXPaymentMethod) -> AWXPaymentMethodOptions? {
+        guard [AWXApplePayKey, AWXCardKey].contains(paymentMethod.type) else {
+            return nil
+        }
+        let cardOptions = AWXCardOptions()
+        cardOptions.autoCapture = unifiedSession.autoCapture
+        if paymentMethod.type == AWXCardKey {
+            let threeDS = AWXThreeDs()
+            threeDS.returnURL = AWXThreeDSReturnURL
+            cardOptions.threeDs = threeDS
+        }
+        
+        let options = AWXPaymentMethodOptions()
+        options.cardOptions = cardOptions
+        return options
+    }
+    
+    func confirmIntent(method: AWXPaymentMethod? = nil,
+                               consent: AWXPaymentConsent? = nil) {
         Task { @MainActor in
-            self.delegate?.providerDidStartRequest(self)
             do {
-                let response = try await confirmIntent(method: method, consent: consent)
+                self.delegate?.providerDidStartRequest(self)
+                let response: AWXConfirmPaymentIntentResponse = try await confirmIntent(
+                    method: method,
+                    consent: consent
+                )
                 complete(with: response, error: nil)
             } catch {
                 complete(with: nil, error: error)
             }
         }
-    }
-    
-    func confirmConsentConversion(methodId: String, cvc: String?) {
-        // TODO: wpdebug
     }
     
     func sendRequest<Req: AWXRequest, Res: AWXResponse>(_ request: Req) async throws -> Res {

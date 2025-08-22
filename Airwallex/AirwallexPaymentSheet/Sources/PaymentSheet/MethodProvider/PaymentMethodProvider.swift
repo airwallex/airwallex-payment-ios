@@ -34,10 +34,10 @@ enum PaymentMethodProviderUpdateType {
     var selectedMethod: AWXPaymentMethodType? { get set }
     
     /// A list of available payment methods.
-    var methods: [AWXPaymentMethodType] { get set }
+    var methods: [AWXPaymentMethodType] { get }
     
     /// A list of available card payment consents.
-    var consents: [AWXPaymentConsent] { get set }
+    var consents: [AWXPaymentConsent] { get }
     
     /// Fetches the available payment method types.
     /// - Throws: An error if the request fails.
@@ -47,6 +47,11 @@ enum PaymentMethodProviderUpdateType {
     /// - Parameter name: The name of the payment method.
     /// - Returns: A response containing the payment method details, including a list of `AWXSchema` objects.
     func getPaymentMethodTypeDetails(name: String) async throws -> AWXGetPaymentMethodTypeResponse
+    
+    /// Remove consent from provider
+    /// - Parameter consentId: id of the consent to be removed
+    /// - Returns: if the consent is successfully removed
+    func removeConsent(consentId: String) -> Bool
 }
 
 extension PaymentMethodProvider {
@@ -73,9 +78,8 @@ extension PaymentMethodProvider {
         let request = AWXDisablePaymentConsentRequest()
         request.id = consent.id
         try await apiClient.send(request)
-        if let index = consents.firstIndex(where: { $0.id == consent.id }) {
-            let deleted = consents.remove(at: index)
-            updatePublisher.send(PaymentMethodProviderUpdateType.consentDeleted(deleted))
+        if removeConsent(consentId: consent.id) {
+            updatePublisher.send(PaymentMethodProviderUpdateType.consentDeleted(consent))
         }
     }
     

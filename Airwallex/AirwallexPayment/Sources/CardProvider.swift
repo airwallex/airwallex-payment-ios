@@ -14,7 +14,7 @@ import Foundation
 class CardProvider: AWXDefaultProvider {
     
     override class func canHandle(_ session: AWXSession, paymentMethod: AWXPaymentMethodType) -> Bool {
-        paymentMethod.cardSchemes.count > 0
+        paymentMethod.name == AWXCardKey && paymentMethod.cardSchemes.count > 0
     }
     
     init(delegate: any AWXProviderDelegate, session: Session, methodType: AWXPaymentMethodType?) {
@@ -37,35 +37,67 @@ class CardProvider: AWXDefaultProvider {
         confirmInitialTransaction(method)
     }
     
+    // MARK: - Payment Consent Confirmation
+    
+    /// Confirms a payment intent using an existing payment consent
+    /// - Parameter consent: The payment consent to use for confirmation
     func confirmIntentWithConsent(_ consent: AWXPaymentConsent) {
-        do {
-            guard let card = consent.paymentMethod?.card else {
-                throw "card information required".asError()
-            }
-            if card.numberType == "PAN" {
-                guard let cvc = card.cvc, !cvc.isEmpty else {
-                    let controller = AWXCardCVCViewController(nibName: nil, bundle: nil)
-                    controller.session = session
-                    controller.paymentConsent = consent
-                    controller.cvcCallback = { cvc, cancelled in
-                        if cancelled {
-                            self.delegate?.provider(self, didCompleteWith: .cancel, error: nil)
-                        } else {
-                            self.confirmSubsequentTransaction(consentId: consent.id, cvc: cvc)
-                        }
-                    }
-                    guard let hostVC = delegate?.hostViewController?() else {
-                        throw "hostVC not found".asError()
-                    }
-                    let nav = UINavigationController(rootViewController: controller)
-                    nav.isModalInPresentation = true
-                    hostVC.present(nav, animated: true)
-                    return
+        // Create a task that can be cancelled if needed
+        Task { @MainActor in
+            do {
+                let methodId = consent.paymentMethod?.id
+                var cvc = consent.paymentMethod?.card?.cvc
+                // Collect CVC if needed for PAN cards
+                if let card = consent.paymentMethod?.card,
+                   card.numberType == "PAN" && (cvc ?? "").isEmpty {
+                    cvc = try await collectCVC(for:consent)
+                }
+                if let options = unifiedSession.recurringOptions {
+                    // Create consent & confirm payment with existing payment method
+                    confirmConsentConversion(methodId: methodId, cvc: cvc)
+                } else if consent.nextTriggeredBy == FormatNextTriggerByType(.merchantType) {
+                    // CIT transaction with MIT consent
+                    unifiedSession.recurringOptions = RecurringOptions(nextTriggeredBy: .customerType)
+                    confirmConsentConversion(methodId: methodId, cvc: cvc)
+                } else {
+                    // CIT transaction with CIT consent
+                    confirmSubsequentTransaction(consentId: consent.id, cvc: cvc)
+                }
+            } catch {
+                if Task.isCancelled {
+                    delegate?.provider(self, didCompleteWith: .cancel, error: nil)
+                } else {
+                    delegate?.provider(self, didCompleteWith: .failure, error: error)
                 }
             }
-            confirmSubsequentTransaction(consentId: consent.id, cvc: card.cvc)
-        } catch {
-            delegate?.provider(self, didCompleteWith: .failure, error: error)
+        }
+    }
+    
+    /// Collects CVC for a card that requires it
+    /// - Parameters:
+    ///   - card: The card to collect CVC for
+    ///   - consent: The associated payment consent
+    @MainActor private func collectCVC(for consent: AWXPaymentConsent) async throws -> String {
+        guard let hostVC = delegate?.hostViewController?() else {
+            throw "Host view controller not found".asError()
+        }
+        
+        let (cvc, cancelled) = await withCheckedContinuation { continuation in
+            let controller = AWXCardCVCViewController(nibName: nil, bundle: nil)
+            controller.session = session
+            controller.paymentConsent = consent
+            controller.cvcCallback = { cvc, cancelled in
+                continuation.resume(returning: (cvc, cancelled))
+            }
+            let nav = UINavigationController(rootViewController: controller)
+            nav.isModalInPresentation = true
+            hostVC.present(nav, animated: true)
+        }
+        
+        if cancelled {
+            throw CancellationError()
+        } else {
+            return cvc
         }
     }
     
