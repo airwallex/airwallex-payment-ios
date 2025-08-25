@@ -45,7 +45,7 @@ public extension AWXSession {
     }
     
     func validate() throws {
-        if !(self is AWXOneOffSession || self is AWXRecurringSession || self is AWXRecurringWithIntentSession) {
+        if !(self is AWXOneOffSession || self is AWXRecurringSession || self is AWXRecurringWithIntentSession || self is Session) {
             throw ValidationError.invalidSessionType(
                 "Invalid session type: \(type(of: self))"
             )

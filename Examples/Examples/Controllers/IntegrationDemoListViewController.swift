@@ -273,7 +273,8 @@ private extension IntegrationDemoListViewController {
         Task {
             startLoading()
             do {
-                let session = try await createPaymentSession()
+                let session = try await createUnifiedSession()
+//                let session = try await createPaymentSession()
                 AWXUIContext.launchPayment(
                     from: self,
                     session: session,
@@ -537,6 +538,34 @@ private extension IntegrationDemoListViewController {
         return secret
     }
     
+    func createUnifiedSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> Session {
+        // Create payment intent
+        let amount = ExamplesKeys.checkoutMode == .recurring ? 0 : (Decimal(string: ExamplesKeys.amount) ?? 0)
+        let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(
+            amount: amount,
+            force3DS: force3DS
+        )
+        // Update client secret
+        AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
+        let session = Session(
+            countryCode: ExamplesKeys.countryCode,
+            paymentIntent: paymentIntent,
+            returnURL: ExamplesKeys.returnUrl,
+            applePayOptions: DemoDataSource.applePayOptions,
+            autoCapture: ExamplesKeys.autoCapture,
+            autoSaveCardForFuturePayments: true,
+            billing: shippingAddress,
+            hidePaymentConsents: false,
+            paymentMethods: nil,
+            recurringOptions: (ExamplesKeys.checkoutMode == .oneOff) ? nil : RecurringOptions(
+                nextTriggeredBy: ExamplesKeys.nextTriggerByType,
+                merchantTriggerReason: .scheduled
+            ),
+            requiredBillingContactFields: getRequiredBillingContactFields()
+        )
+        return session
+    }
+    
     func createPaymentSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
         // create payment session
         var paymentSession: AWXSession
@@ -585,11 +614,11 @@ private extension IntegrationDemoListViewController {
         // setup returnURL (schema or universalLink of your app) which is required for payments like wechat pay
         paymentSession.returnURL = ExamplesKeys.returnUrl
         // update required billing contact fields
-        updateRequiredBillingContactFields(paymentSession)
+        paymentSession.requiredBillingContactFields = getRequiredBillingContactFields()
         return paymentSession
     }
     
-    func updateRequiredBillingContactFields(_ session: AWXSession) {
+    func getRequiredBillingContactFields() -> RequiredBillingContactFields {
         var requiredBillingContactFields: RequiredBillingContactFields = []
         if ExamplesKeys.requiresName {
             requiredBillingContactFields.insert(.name)
@@ -606,7 +635,7 @@ private extension IntegrationDemoListViewController {
         if ExamplesKeys.requiresCountryCode {
             requiredBillingContactFields.insert(.countryCode)
         }
-        session.requiredBillingContactFields = requiredBillingContactFields
+        return requiredBillingContactFields
     }
 }
 

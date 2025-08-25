@@ -56,6 +56,7 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardBrandVi
         super.init(
             textFieldType: .cardNumber,
             placeholder: "1234 1234 1234 1234",
+            clearButtonMode: .whileEditing,
             customInputFormatter: formatter,
             customInputValidator: CardNumberValidator(supportedCardSchemes: supportedCardSchemes),
             editingEventObserver: editingEventObserver,

@@ -57,6 +57,7 @@ class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
         expireDataConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .expires,
             placeholder: "MM / YY",
+            clearButtonMode: .whileEditing,
             customInputFormatter: CardExpiryFormatter(),
             customInputValidator: CardExpiryValidator(),
             editingEventObserver: BeginEditingEventObserver {

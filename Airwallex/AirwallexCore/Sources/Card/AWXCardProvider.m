@@ -89,45 +89,19 @@
         AWXCardCVCViewController *controller = [[AWXCardCVCViewController alloc] initWithNibName:nil bundle:nil];
         controller.session = self.session;
         controller.paymentConsent = paymentConsent;
-        controller.delegate = self;
-
-        UIImage *image = [UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle] compatibleWithTraitCollection:nil];
-        if (image) {
-            UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(close)];
-            controller.navigationItem.leftBarButtonItem = leftBarButtonItem;
-        }
-
+        controller.cvcCallback = ^(NSString *_Nonnull cvc, BOOL cancelled) {
+            if (cancelled) {
+                [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+            } else {
+                paymentConsent.paymentMethod.card.cvc = cvc;
+                [self confirmPaymentIntentWithPaymentMethod:paymentConsent.paymentMethod paymentConsent:paymentConsent];
+            }
+        };
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
         navigationController.modalInPresentation = YES;
         [hostViewController presentViewController:navigationController animated:YES completion:nil];
     } else {
         [self confirmPaymentIntentWithPaymentConsentId:paymentConsent.Id];
-    }
-}
-
-- (void)close {
-    UIViewController *hostVC = nil;
-    if ([self.delegate respondsToSelector:@selector(hostViewController)]) {
-        hostVC = [self.delegate hostViewController];
-    }
-
-    if (hostVC) {
-        UINavigationController *navController = (UINavigationController *)hostVC.presentedViewController;
-
-        if ([navController isKindOfClass:[UINavigationController class]]) {
-            NSInteger index = [navController.viewControllers indexOfObjectPassingTest:^BOOL(__kindof UIViewController *_Nonnull obj, NSUInteger idx, BOOL *_Nonnull stop) {
-                return [obj isKindOfClass:[AWXCardCVCViewController class]];
-            }];
-
-            if (index != NSNotFound) {
-                [navController dismissViewControllerAnimated:YES
-                                                  completion:^{
-                                                      if ([self.delegate respondsToSelector:@selector(provider:didCompleteWithStatus:error:)]) {
-                                                          [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
-                                                      }
-                                                  }];
-            }
-        }
     }
 }
 
@@ -184,23 +158,6 @@
 
     AWXAPIClient *client = [[AWXAPIClient alloc] initWithConfiguration:[AWXAPIClientConfiguration sharedConfiguration]];
     [client send:request withCompletionHandler:completion];
-}
-
-// MARK: AWXPaymentResultDelegate
-
-- (void)paymentViewController:(UIViewController *)controller didCompleteWithStatus:(AirwallexPaymentStatus)status error:(NSError *)error {
-    [controller dismissViewControllerAnimated:YES
-                                   completion:^{
-                                       if ([self.delegate respondsToSelector:@selector(provider:didCompleteWithStatus:error:)]) {
-                                           [self.delegate provider:self didCompleteWithStatus:status error:error];
-                                       }
-                                   }];
-}
-
-- (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)paymentConsentId {
-    if ([self.delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
-        [self.delegate provider:self didCompleteWithPaymentConsentId:paymentConsentId];
-    }
 }
 
 @end

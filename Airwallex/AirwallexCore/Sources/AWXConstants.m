@@ -95,6 +95,8 @@ NSString *_Nullable FormatMerchantTriggerReason(AirwallexMerchantTriggerReason r
         return @"unscheduled";
     case AirwallexMerchantTriggerReasonScheduled:
         return @"scheduled";
+    case AirwallexMerchantTriggerReasonInstallments:
+        return @"installments";
     }
 }
 
