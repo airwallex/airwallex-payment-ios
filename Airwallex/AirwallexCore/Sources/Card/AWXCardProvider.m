@@ -93,6 +93,7 @@
             if (cancelled) {
                 [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
             } else {
+                paymentConsent.paymentMethod.card.cvc = cvc;
                 [self confirmPaymentIntentWithPaymentMethod:paymentConsent.paymentMethod paymentConsent:paymentConsent];
             }
         };

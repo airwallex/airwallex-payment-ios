@@ -35,4 +35,60 @@ import Foundation
     var trimmed: String {
         trimmingCharacters(in: .whitespacesAndNewlines)
     }
+    
+    enum JWTError: Error, LocalizedError {
+        case invalidFormat
+        case invalidBase64
+        case invalidJSON
+        
+        public var errorDescription: String? {
+                switch self {
+                case .invalidFormat:
+                    return "The JWT is not in a valid format."
+                case .invalidBase64:
+                    return "The JWT contains invalid base64."
+                case .invalidJSON:
+                    return "The JWT payload contains invalid JSON."
+                }
+            }
+    }
+    
+    func payloadOfJWT() throws -> [String: Any] {
+        // JWT format: header.payload.signature
+        let components = self.components(separatedBy: ".")
+        
+        guard components.count >= 2 else {
+            throw JWTError.invalidFormat
+        }
+        
+        // Get the payload (second part)
+        let payload = components[1]
+        
+        // Base64Url decode the payload
+        var base64 = payload
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+        
+        // Add padding if needed
+        let paddingLength = 4 - (base64.count % 4)
+        if paddingLength < 4 {
+            base64 += String(repeating: "=", count: paddingLength)
+        }
+        
+        // Decode base64
+        guard let data = Data(base64Encoded: base64) else {
+            throw JWTError.invalidBase64
+        }
+        
+        // Parse JSON
+        do {
+            if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                return json
+            } else {
+                throw JWTError.invalidJSON
+            }
+        } catch {
+            throw JWTError.invalidJSON
+        }
+    }
 }

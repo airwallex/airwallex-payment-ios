@@ -55,7 +55,7 @@ class CardProvider: AWXDefaultProvider {
                 if let options = unifiedSession.recurringOptions {
                     // Create consent & confirm payment with existing payment method
                     confirmConsentConversion(methodId: methodId, cvc: cvc)
-                } else if consent.nextTriggeredBy == FormatNextTriggerByType(.merchantType) {
+                } else if consent.isMITConsent {
                     // CIT transaction with MIT consent
                     unifiedSession.recurringOptions = RecurringOptions(nextTriggeredBy: .customerType)
                     confirmConsentConversion(methodId: methodId, cvc: cvc)
@@ -82,26 +82,43 @@ class CardProvider: AWXDefaultProvider {
             throw "Host view controller not found".asError()
         }
         
-        let (cvc, cancelled) = await withCheckedContinuation { continuation in
+        let cvc: String = try await withCheckedThrowingContinuation { continuation in
             let controller = AWXCardCVCViewController(nibName: nil, bundle: nil)
             controller.session = session
             controller.paymentConsent = consent
             controller.cvcCallback = { cvc, cancelled in
-                continuation.resume(returning: (cvc, cancelled))
+                if cancelled {
+                    continuation.resume(throwing: CancellationError())
+                } else {
+                    continuation.resume(returning: cvc)
+                }
             }
             let nav = UINavigationController(rootViewController: controller)
             nav.isModalInPresentation = true
             hostVC.present(nav, animated: true)
         }
         
-        if cancelled {
-            throw CancellationError()
-        } else {
-            return cvc
-        }
+        return cvc
     }
     
-    func confirmIntentWithConsent(_ consentId: String) {
-        confirmSubsequentTransaction(consentId: consentId, cvc: nil)
+    func confirmIntentWithConsent(_ consentId: String, requiresCVC: Bool = false) {
+        if requiresCVC {
+            Task { @MainActor in
+                do {
+                    let consent = AWXPaymentConsent()
+                    consent.id = consentId
+                    let cvc = try await collectCVC(for: consent)
+                    confirmSubsequentTransaction(consentId: consentId, cvc: cvc)
+                } catch {
+                    if Task.isCancelled {
+                        delegate?.provider(self, didCompleteWith: .cancel, error: nil)
+                    } else {
+                        delegate?.provider(self, didCompleteWith: .failure, error: error)
+                    }
+                }
+            }
+        } else {
+            confirmSubsequentTransaction(consentId: consentId, cvc: nil)
+        }
     }
 }

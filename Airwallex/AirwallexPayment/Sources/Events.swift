@@ -60,6 +60,10 @@ public protocol ErrorLoggable: LocalizedError, CustomNSError {
     var eventType: String? { get }
 }
 
+extension ErrorLoggable {
+    var eventType: String? { return nil }
+}
+
 @_spi(AWX) public extension AnalyticsLogger {
     static func log(pageView name: AnalyticEvent.PageView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
@@ -90,15 +94,24 @@ public protocol ErrorLoggable: LocalizedError, CustomNSError {
         shared().logError(withName: name, additionalInfo: additionalInfo)
     }
     
-    static func log(errorMessage: String, name: String, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+    static func log(errorName: String,
+                    errorType: String? = nil,
+                    errorMessage: String? = nil,
+                    extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
-        var additionalInfo: [String: Any] = [AnalyticEvent.Fields.message.rawValue: errorMessage]
+        var infoDict = [String: Any]()
+        if let errorType {
+            infoDict[AnalyticEvent.Fields.eventType.rawValue] = errorType
+        }
+        if let errorMessage {
+            infoDict[AnalyticEvent.Fields.message.rawValue] = errorMessage
+        }
         if let extraInfo {
-            for (k, v) in extraInfo {
-                additionalInfo[k.rawValue] = v
+            for keyValuePair in extraInfo {
+                infoDict[keyValuePair.key.rawValue] = keyValuePair.value
             }
         }
-        shared().logError(withName: name, additionalInfo: additionalInfo)
+        shared().logError(withName: errorName, additionalInfo: infoDict)
     }
     
     static func processEventInfo<T: RawRepresentable<String>>(event: T, extraInfo: [AnalyticEvent.Fields: Any]?) -> (String, [String: Any]) {

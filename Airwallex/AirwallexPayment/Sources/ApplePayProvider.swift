@@ -142,10 +142,7 @@ class ApplePayProvider: AWXDefaultProvider {
         if !didHandlePresentationFail {
             didHandlePresentationFail = true
             let error = "Failed to present Apple Pay Controller.".asError()
-            AnalyticsLogger.log(
-                errorMessage: error.rawValue,
-                name: "apple_pay_sheet"
-            )
+            AnalyticsLogger.log(errorName: "apple_pay_sheet", errorMessage: error.rawValue)
             delegate?.provider(self, didCompleteWith: .failure, error: error)
         }
     }
