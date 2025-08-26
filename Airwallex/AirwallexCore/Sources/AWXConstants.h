@@ -60,6 +60,7 @@ typedef NS_CLOSED_ENUM(NSUInteger, AirwallexNextTriggerByType) {
 
 typedef NS_CLOSED_ENUM(NSUInteger, AirwallexMerchantTriggerReason) {
     AirwallexMerchantTriggerReasonUndefined,
+    AirwallexMerchantTriggerReasonInstallments,
     AirwallexMerchantTriggerReasonUnscheduled,
     AirwallexMerchantTriggerReasonScheduled
 };

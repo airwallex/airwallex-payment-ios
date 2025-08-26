@@ -55,6 +55,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *returnURL;
 
 /**
+ Whether show stored card.
+ */
+@property (nonatomic) BOOL hidePaymentConsents;
+
+/**
  Return transaction mode.
  */
 - (NSString *)transactionMode;
@@ -71,12 +76,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Return all of customer payment consents
  */
-- (NSArray *)customerPaymentConsents;
+- (NSArray *)customerPaymentConsents __deprecated;
 
 /**
  Return all of customer payment methods
  */
-- (NSArray *)customerPaymentMethods;
+- (NSArray *)customerPaymentMethods __deprecated;
 
 /**
  Return customer id
@@ -122,11 +127,6 @@ NS_ASSUME_NONNULL_BEGIN
  Default: YES
  */
 @property (nonatomic) BOOL autoCapture;
-
-/**
- Whether show stored card.
- */
-@property (nonatomic) BOOL hidePaymentConsents;
 
 /// Indicates whether card saving is enabled by default. Defaults to YES.
 @property (nonatomic, assign) BOOL autoSaveCardForFuturePayments;

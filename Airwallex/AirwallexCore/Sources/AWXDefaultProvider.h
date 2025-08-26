@@ -120,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  whether should show this payment directly.
  */
-@property (nonatomic) BOOL showPaymentDirectly;
+@property (nonatomic) BOOL showPaymentDirectly __deprecated_msg("not used anymore");
 
 /**
  Indicating whether the provider can handle a particular session. Default implementation returns YES. Subclasses can override to

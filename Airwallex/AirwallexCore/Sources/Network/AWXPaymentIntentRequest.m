@@ -46,16 +46,7 @@
             @"payment_consent_reference": consentParams
         }];
     } else {
-        if (self.paymentMethod.Id) {
-            [parameters addEntriesFromDictionary:@{
-                @"payment_method_reference": @{
-                    @"id": self.paymentMethod.Id,
-                    @"cvc": self.paymentMethod.card.cvc ?: @""
-                }
-            }];
-        } else {
-            parameters[@"payment_method"] = self.paymentMethod.encodeToJSON;
-        }
+        parameters[@"payment_method"] = self.paymentMethod.encodeToJSON;
     }
 
     if (self.options) {
@@ -71,6 +62,10 @@
     }
     parameters[@"integration_data"] = @{@"type": @"mobile_sdk",
                                         @"version": [NSString stringWithFormat:@"ios-%@-%@", @"release", AIRWALLEX_VERSION]};
+    //  for simplified consent flow
+    if (self.consentOptions) {
+        parameters[@"payment_consent"] = self.consentOptions;
+    }
     return parameters;
 }
 

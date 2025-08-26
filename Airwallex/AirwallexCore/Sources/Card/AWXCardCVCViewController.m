@@ -27,7 +27,7 @@
 #import "AWXWidgets.h"
 #import "NSObject+Logging.h"
 
-@interface AWXCardCVCViewController ()<AWXFloatingLabelTextFieldDelegate, AWXProviderDelegate>
+@interface AWXCardCVCViewController ()<AWXFloatingLabelTextFieldDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -43,6 +43,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIImage *image = [UIImage imageNamed:@"close" inBundle:[NSBundle resourceBundle] compatibleWithTraitCollection:nil];
+    if (image) {
+        UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(close:)];
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem;
+    }
+
     [self enableTapToEndEditing];
 
     self.view.backgroundColor = [AWXTheme sharedTheme].primaryBackgroundColor;
@@ -110,7 +116,11 @@
         _titleLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Enter CVC/CVV for\n%@", nil, [NSBundle resourceBundle], nil), [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4]];
         _cvcField.hidden = NO;
     } else {
-        _titleLabel.text = self.paymentConsent.paymentMethod.type.capitalizedString;
+        if (self.paymentConsent == nil) {
+            _titleLabel.text = NSLocalizedStringFromTableInBundle(@"Enter CVC/CVV", nil, [NSBundle resourceBundle], nil);
+        } else {
+            _titleLabel.text = self.paymentConsent.paymentMethod.type.capitalizedString;
+        }
         _cvcField.hidden = YES;
     }
 
@@ -156,66 +166,18 @@
 }
 
 - (void)payPressed:(id)sender {
-    self.paymentConsent.paymentMethod.card.cvc = _cvcField.text;
-
-    AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:self session:self.session];
-    [provider confirmPaymentIntentWithPaymentMethod:self.paymentConsent.paymentMethod paymentConsent:self.paymentConsent];
-    self.provider = provider;
-}
-
-#pragma mark - AWXProviderDelegate
-
-- (void)providerDidStartRequest:(AWXDefaultProvider *)provider {
-    [self log:@"providerDidStartRequest:"];
-    [self startAnimating];
-}
-
-- (void)providerDidEndRequest:(AWXDefaultProvider *)provider {
-    [self log:@"providerDidEndRequest:"];
-    [self stopAnimating];
-}
-
-- (void)provider:(AWXDefaultProvider *)provider didCompleteWithStatus:(AirwallexPaymentStatus)status error:(nullable NSError *)error {
-    [_delegate paymentViewController:self didCompleteWithStatus:status error:error];
-}
-
-- (void)provider:(AWXDefaultProvider *)provider didCompleteWithPaymentConsentId:(nonnull NSString *)paymentConsentId {
-    if ([_delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
-        [_delegate paymentViewController:self didCompleteWithPaymentConsentId:paymentConsentId];
+    if (self.cvcCallback) {
+        self.cvcCallback(_cvcField.text, false);
     }
+    [self close:sender];
 }
 
-- (void)provider:(AWXDefaultProvider *)provider didInitializePaymentIntentId:(NSString *)paymentIntentId {
-    [self.session updateInitialPaymentIntentId:paymentIntentId];
-    [self log:@"provider:didInitializePaymentIntentId:  %@", paymentIntentId];
-}
-
-- (void)provider:(AWXDefaultProvider *)provider shouldHandleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
-    [self log:@"provider:shouldHandleNextAction:  type:%@, stage: %@", nextAction.type, nextAction.stage];
-    Class class = ClassToHandleNextActionForType(nextAction);
-    AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:self session:self.session];
-    [actionProvider handleNextAction:nextAction];
-    self.provider = actionProvider;
-}
-
-- (void)provider:(AWXDefaultProvider *)provider shouldPresentViewController:(UIViewController *)controller forceToDismiss:(BOOL)forceToDismiss withAnimation:(BOOL)withAnimation {
-    if (forceToDismiss) {
-        [self.presentedViewController dismissViewControllerAnimated:YES
-                                                         completion:^{
-                                                             if (controller) {
-                                                                 [self presentViewController:controller animated:withAnimation completion:nil];
-                                                             }
-                                                         }];
-    } else if (controller) {
-        [self presentViewController:controller animated:withAnimation completion:nil];
+// override
+- (void)close:(id)sender {
+    [super close:sender];
+    if (self.cvcCallback) {
+        self.cvcCallback(_cvcField.text, true);
     }
-}
-
-- (void)provider:(AWXDefaultProvider *)provider shouldInsertViewController:(UIViewController *)controller {
-    [self addChildViewController:controller];
-    controller.view.frame = CGRectInset(self.view.frame, 0, CGRectGetMaxY(self.view.bounds));
-    [self.view addSubview:controller.view];
-    [controller didMoveToParentViewController:self];
 }
 
 @end
