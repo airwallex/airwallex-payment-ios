@@ -53,7 +53,6 @@ class ApplePayProvider: AWXDefaultProvider {
             return false
         }
         guard let session = session as? Session else {
-            // TODO: backward compatibility
             return false
         }
         do {
@@ -100,40 +99,34 @@ class ApplePayProvider: AWXDefaultProvider {
     }
     
     /// Launch Apple Pay sheet to confirm the payment intent
-    func startPayment(cancelPaymentOnDismiss: Bool = true) {
+    func startPayment(cancelPaymentOnDismiss: Bool = true) throws {
         paymentState = .notPresented
         didHandlePresentationFail = false
         self.cancelPaymentOnDismiss = cancelPaymentOnDismiss
-        do {
-            try ApplePayProvider.validate(session: unifiedSession)
-            
-            let request = try unifiedSession.makePaymentRequestOrError()
-            let controller = PKPaymentAuthorizationController(paymentRequest: request)
-            controller.delegate = self
-            
-            
-            Task { @MainActor in
-                delegate?.providerDidStartRequest(self)
-                let presented = await controller.present()
-                guard presented else {
-                    handlePresentationFail()
-                    return
-                }
-                
-                // Log risk event
-                RiskLogger.log(.showApplePay, screen: .applePay)
-                debugLog("Show apple pay")
-                paymentState = .notStarted
-                AnalyticsLogger.log(
-                    pageView: .applePaySheet,
-                    extraInfo: [
-                        .supportedNetworks : unifiedSession.applePayOptions?.supportedNetworks ?? []
-                    ]
-                )
+        try ApplePayProvider.validate(session: unifiedSession)
+        
+        let request = try unifiedSession.makePaymentRequestOrError()
+        let controller = PKPaymentAuthorizationController(paymentRequest: request)
+        controller.delegate = self
+        
+        Task { @MainActor in
+            delegate?.providerDidStartRequest(self)
+            let presented = await controller.present()
+            guard presented else {
+                handlePresentationFail()
+                return
             }
             
-        } catch {
-            delegate?.provider(self, didCompleteWith: .failure, error: error)
+            // Log risk event
+            RiskLogger.log(.showApplePay, screen: .applePay)
+            debugLog("Show apple pay")
+            paymentState = .notStarted
+            AnalyticsLogger.log(
+                pageView: .applePaySheet,
+                extraInfo: [
+                    .supportedNetworks : unifiedSession.applePayOptions?.supportedNetworks ?? []
+                ]
+            )
         }
     }
     

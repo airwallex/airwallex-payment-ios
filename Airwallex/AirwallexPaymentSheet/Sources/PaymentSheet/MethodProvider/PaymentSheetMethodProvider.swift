@@ -29,10 +29,10 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
     var consents: [AWXPaymentConsent] {
         var set = Set<String>()
         return (citConsents + mitConsents).reduce(into: [AWXPaymentConsent]()) { partialResult, consent in
-            guard let methodId = consent.paymentMethod?.id else { return }
-            if !set.contains(methodId) {
+            guard let fingerprint = consent.paymentMethod?.card?.fingerprint else { return }
+            if !set.contains(fingerprint) {
                 partialResult.append(consent)
-                set.insert(methodId)
+                set.insert(fingerprint)
             }
         }
     }
@@ -84,7 +84,10 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
         // Only fetch consents if AWXCardKey in the filtered methods
         citConsents.removeAll()
         mitConsents.removeAll()
-        if filteredMethods.contains(where: { $0.name.lowercased() == AWXCardKey }) {
+        if filteredMethods.contains(where: { $0.name.lowercased() == AWXCardKey }),
+           (session is Session || session is AWXOneOffSession || session is AWXRecurringWithIntentSession) {
+            // AWXOneOffSession and AWXRecurringWithIntentSession can be converted to Session internally to
+            // work with the simplified consent flow
             let consentsResult = try await getAllConsents()
             //  filter consents
             set.removeAll()

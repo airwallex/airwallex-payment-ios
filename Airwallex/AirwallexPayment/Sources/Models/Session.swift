@@ -1,5 +1,5 @@
 //
-//  RecurringOptions.swift
+//  Session.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2025/8/18.
@@ -11,23 +11,29 @@ import AirwallexCore
 #endif
 import Foundation
 
-/// `Session` is a Swift wrapper for AWXSession and its subclasses.
-/// This class includes all properties from AWXSession, AWXOneOffSession, and AWXRecurringWithIntentSession.
+/// `Session` is a specialized subclass of `AWXSession`
+///
+/// This class provides a unified interface for working with the simplified consent flow,
+/// abstracting away the complexity of different payment scenarios (one-off and recurring payments).
+/// It handles both standard payment intents and recurring payment configurations through a
+/// consistent API, making it easier to implement payment processing in your application.
+///
+/// - SeeAlso: `AWXSession`, `RecurringOptions`
 @objc public final class Session: AWXSession {
     
     /// The payment intent to handle.
-    public let paymentIntent: AWXPaymentIntent
+    @objc public let paymentIntent: AWXPaymentIntent
     
     /// Required for recurring payment
-    public internal(set) var recurringOptions: RecurringOptions?
+    @objc public internal(set) var recurringOptions: RecurringOptions?
     
     /// Only applicable when payment_method.type is card. If true the payment will be captured immediately after authorization succeeds.
     /// Default: YES
-    public let autoCapture: Bool
+    @objc public let autoCapture: Bool
 
     /// Indicates whether card saving is enabled by default.
     /// Defaults to YES.
-    public let autoSaveCardForFuturePayments: Bool
+    @objc public let autoSaveCardForFuturePayments: Bool
     
     /// Initialize a new Session
     /// - Parameters:
@@ -43,7 +49,7 @@ import Foundation
     ///   - paymentMethods: Array of payment method type names to limit displayed methods (optional)
     ///   - recurringOptions: Options for recurring payments (optional)
     ///   - requiredBillingContactFields: Required billing contact fields (default: .name)
-    public init(countryCode: String,
+    @objc public init(countryCode: String,
          paymentIntent: AWXPaymentIntent,
          returnURL: String,
          applePayOptions: AWXApplePayOptions? = nil,
@@ -51,7 +57,7 @@ import Foundation
          autoSaveCardForFuturePayments: Bool = true,
          billing: AWXPlaceDetails? = nil,
          hidePaymentConsents: Bool = false,
-         lang: String = Bundle.main.preferredLocalizations.first ?? Locale.current.languageCode ?? "en",
+         lang: String? = nil,
          paymentMethods: [String]? = nil,
          recurringOptions: RecurringOptions? = nil,
          requiredBillingContactFields: RequiredBillingContactFields = .name
@@ -65,78 +71,185 @@ import Foundation
         self.countryCode = countryCode
         self.hidePaymentConsents = hidePaymentConsents
         self.returnURL = returnURL
-        self.lang = lang
+        self.lang = lang ?? Locale.current.languageCode ?? "en"
         self.billing = billing
         self.requiredBillingContactFields = requiredBillingContactFields
         self.applePayOptions = applePayOptions
         self.paymentMethods = paymentMethods
     }
     
-    public override func customerId() -> String? {
+    /// Returns the customer ID associated with the current payment intent.
+    /// - Returns: The customer ID as a String, or nil if not available.
+    @objc public override func customerId() -> String? {
         paymentIntent.customerId
     }
     
-    public override func currency() -> String {
+    /// Returns the currency code for the current payment.
+    /// - Returns: The three-letter currency code as a String.
+    @objc public override func currency() -> String {
         paymentIntent.currency
     }
     
-    public override func amount() -> NSDecimalNumber {
+    /// Returns the payment amount.
+    /// - Returns: The payment amount as an NSDecimalNumber.
+    @objc public override func amount() -> NSDecimalNumber {
         paymentIntent.amount
     }
     
-    public override func paymentIntentId() -> String? {
+    /// Returns the payment intent ID.
+    /// - Returns: The payment intent ID as a String, or nil if not available.
+    @objc public override func paymentIntentId() -> String? {
         paymentIntent.id
     }
     
-    public override func validateData() -> String? {
-        return nil
-    }
-    
-    public override func transactionMode() -> String {
-        recurringOptions == nil ? AWXPaymentTransactionModeOneOff: AWXPaymentTransactionModeRecurring
+    /// Determines the transaction mode based on the presence of recurring options.
+    /// - Returns: "RECURRING" for recurring payments, "ONE_OFF" for one-time payments.
+    /// - Complexity: O(1)
+    @objc public override func transactionMode() -> String {
+        return recurringOptions == nil ? AWXPaymentTransactionModeOneOff : AWXPaymentTransactionModeRecurring
     }
 }
 
-// MARK: -
+// MARK: - Extensions
 
 extension Session {
-    /// Initialize a new Session from an AWXOneOffSession
-    /// - Parameter oneOffSession: The AWXOneOffSession to initialize from
-    @objc public convenience init(oneOffSession: AWXOneOffSession) {
+    
+    /// Creates a new Session instance from an existing AWXSession.
+    ///
+    /// This initializer provides conversion capabilities from legacy session types
+    /// to the unified Session class. It extracts all relevant properties from the source
+    /// session and constructs a new Session instance with equivalent configuration.
+    ///
+    /// - Parameter session: The source AWXSession to convert from
+    /// - Returns: A new Session instance, or nil if conversion is not possible
+    convenience init?(_ session: AWXSession) {
+        // Fast path for same type conversion
+        if let existingSession = session as? Session {
+            self.init(
+                countryCode: existingSession.countryCode,
+                paymentIntent: existingSession.paymentIntent,
+                returnURL: existingSession.returnURL,
+                applePayOptions: existingSession.applePayOptions,
+                autoCapture: existingSession.autoCapture,
+                autoSaveCardForFuturePayments: existingSession.autoSaveCardForFuturePayments,
+                billing: existingSession.billing,
+                hidePaymentConsents: existingSession.hidePaymentConsents,
+                lang: existingSession.lang,
+                paymentMethods: existingSession.paymentMethods,
+                recurringOptions: existingSession.recurringOptions,
+                requiredBillingContactFields: existingSession.requiredBillingContactFields
+            )
+            return
+        }
+        
+        // Extract parameters from other session types
+        var intent: AWXPaymentIntent?
+        var recurringOptions: RecurringOptions?
+        var autoCapture = false
+        var autoSaveCard = true
+        
+        switch session {
+        case let oneOffSession as AWXOneOffSession:
+            intent = oneOffSession.paymentIntent
+            recurringOptions = nil
+            autoCapture = oneOffSession.autoCapture
+            autoSaveCard = oneOffSession.autoSaveCardForFuturePayments
+            
+        case let recurringSession as AWXRecurringWithIntentSession:
+            intent = recurringSession.paymentIntent
+            autoCapture = recurringSession.autoCapture
+            recurringOptions = RecurringOptions(
+                nextTriggeredBy: recurringSession.nextTriggerByType,
+                merchantTriggerReason: recurringSession.merchantTriggerReason
+            )
+            
+        default:
+            // Unsupported session type
+            return nil
+        }
+        
+        // Validate required parameters
+        guard let intent, !intent.currency.isEmpty else {
+            // Cannot create a Session without a valid payment intent
+            return nil
+        }
+        
+        // Create new instance with extracted parameters
         self.init(
-            countryCode: oneOffSession.countryCode,
-            paymentIntent: oneOffSession.paymentIntent!,// TODO: try to avoid force unwrap here
-            returnURL: oneOffSession.returnURL,
-            applePayOptions: oneOffSession.applePayOptions,
-            autoCapture: oneOffSession.autoCapture,
-            autoSaveCardForFuturePayments: oneOffSession.autoSaveCardForFuturePayments,
-            billing: oneOffSession.billing,
-            hidePaymentConsents: oneOffSession.hidePaymentConsents,
-            lang: oneOffSession.lang ?? Bundle.main.preferredLocalizations.first ?? Locale.current.languageCode ?? "en",
-            paymentMethods: oneOffSession.paymentMethods,
-            recurringOptions: nil,
-            requiredBillingContactFields: oneOffSession.requiredBillingContactFields
+            countryCode: session.countryCode,
+            paymentIntent: intent,
+            returnURL: session.returnURL,
+            applePayOptions: session.applePayOptions,
+            autoCapture: autoCapture,
+            autoSaveCardForFuturePayments: autoSaveCard,
+            billing: session.billing,
+            hidePaymentConsents: session.hidePaymentConsents,
+            lang: session.lang,
+            paymentMethods: session.paymentMethods,
+            recurringOptions: recurringOptions,
+            requiredBillingContactFields: session.requiredBillingContactFields
         )
     }
     
-    /// Initialize a new Session from an AWXRecurringWithIntentSession
-    /// - Parameter recurringWithIntentSession: The AWXRecurringWithIntentSession to initialize from
-    @objc public convenience init(recurringWithIntentSession: AWXRecurringWithIntentSession) {
-        self.init(
-            countryCode: recurringWithIntentSession.countryCode,
-            paymentIntent: recurringWithIntentSession.paymentIntent!,
-            returnURL: recurringWithIntentSession.returnURL,
-            applePayOptions: recurringWithIntentSession.applePayOptions,
-            autoCapture: recurringWithIntentSession.autoCapture,
-            billing: recurringWithIntentSession.billing,
-            hidePaymentConsents: true,
-            lang: recurringWithIntentSession.lang ?? Bundle.main.preferredLocalizations.first ?? Locale.current.languageCode ?? "en",
-            paymentMethods: recurringWithIntentSession.paymentMethods,
-            recurringOptions: RecurringOptions(
-                nextTriggeredBy: recurringWithIntentSession.nextTriggerByType,
-                merchantTriggerReason: recurringWithIntentSession.merchantTriggerReason
-            ),
-            requiredBillingContactFields: recurringWithIntentSession.requiredBillingContactFields
-        )
+    /// Converts the current `Session` instance to a legacy `AWXSession` object.
+    ///
+    /// - Note: This conversion is primarily required for Local Payment Methods (LPM),
+    ///   as they are not yet supported by the simplified consent flow.
+    ///
+    /// - Returns: A legacy `AWXSession` object representing the current session state.
+    func convertToLegacySession() -> AWXSession {
+        if let recurringOptions {
+            if paymentIntent.amount == 0 {
+                // Zero-amount recurring session (setup only)
+                let session = AWXRecurringSession()
+                configureCommonProperties(for: session)
+                
+                // Set specific properties for recurring sessions
+                session.setAmount(paymentIntent.amount)
+                session.setCurrency(paymentIntent.currency)
+                session.setCustomerId(paymentIntent.customerId)
+                session.merchantTriggerReason = recurringOptions.merchantTriggerReason ?? .undefined
+                session.nextTriggerByType = recurringOptions.nextTriggeredBy
+                
+                return session
+            } else {
+                // Non-zero amount recurring session with intent
+                let session = AWXRecurringWithIntentSession()
+                configureCommonProperties(for: session)
+                
+                // Set specific properties for recurring with intent
+                session.autoCapture = autoCapture
+                session.paymentIntent = paymentIntent
+                session.merchantTriggerReason = recurringOptions.merchantTriggerReason ?? .undefined
+                session.nextTriggerByType = recurringOptions.nextTriggeredBy
+                
+                return session
+            }
+        } else {
+            // One-off payment session
+            let session = AWXOneOffSession()
+            configureCommonProperties(for: session)
+            
+            // Set specific properties for one-off payments
+            session.autoCapture = autoCapture
+            session.autoSaveCardForFuturePayments = autoSaveCardForFuturePayments
+            session.paymentIntent = paymentIntent
+            
+            return session
+        }
+    }
+    
+    /// Helper method to configure common properties for all session types.
+    ///
+    /// - Parameter session: The AWXSession object to configure
+    private func configureCommonProperties(for session: AWXSession) {
+        session.applePayOptions = applePayOptions
+        session.billing = billing
+        session.countryCode = countryCode
+        session.hidePaymentConsents = hidePaymentConsents
+        session.lang = lang
+        session.paymentMethods = paymentMethods
+        session.requiredBillingContactFields = requiredBillingContactFields
+        session.returnURL = returnURL
     }
 }

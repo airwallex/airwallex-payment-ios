@@ -114,14 +114,12 @@
 
     if (self.paymentConsent.paymentMethod.card != nil) {
         _titleLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Enter CVC/CVV for\n%@", nil, [NSBundle resourceBundle], nil), [NSString stringWithFormat:@"%@ •••• %@", self.paymentConsent.paymentMethod.card.brand.capitalizedString, self.paymentConsent.paymentMethod.card.last4]];
-        _cvcField.hidden = NO;
     } else {
         if (self.paymentConsent == nil) {
             _titleLabel.text = NSLocalizedStringFromTableInBundle(@"Enter CVC/CVV", nil, [NSBundle resourceBundle], nil);
         } else {
             _titleLabel.text = self.paymentConsent.paymentMethod.type.capitalizedString;
         }
-        _cvcField.hidden = YES;
     }
 
     if (self.paymentConsent.paymentMethod.card.cvc) {
@@ -166,17 +164,14 @@
 }
 
 - (void)payPressed:(id)sender {
-    if (self.cvcCallback) {
-        self.cvcCallback(_cvcField.text, false);
-    }
-    [self close:sender];
+    [self close:nil];
 }
 
 // override
 - (void)close:(id)sender {
     [super close:sender];
     if (self.cvcCallback) {
-        self.cvcCallback(_cvcField.text, true);
+        self.cvcCallback(_cvcField.text, sender != nil);
     }
 }
 

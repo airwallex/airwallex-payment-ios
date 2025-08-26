@@ -115,7 +115,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXOneOffSession` is the session used for one-off payment.
  */
-@interface AWXOneOffSession : AWXSession
+__deprecated_msg("Will be removed in next major version release, use AirwallexPayment.Session instead")
+    @interface AWXOneOffSession : AWXSession
 
 /**
  The payment intent to handle.
@@ -136,7 +137,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXRecurringSession` is the session used for recurring.
  */
-@interface AWXRecurringSession : AWXSession
+__deprecated_msg("Will be removed in next major version release, use AirwallexPayment.Session instead")
+    @interface AWXRecurringSession : AWXSession
 
 /**
  Payment amount. This is the order amount you would like to charge your customer.
@@ -174,7 +176,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXRecurringWithIntentSession` is the session used for recurring with intent.
  */
-@interface AWXRecurringWithIntentSession : AWXSession
+__deprecated_msg("Will be removed in next major version release, use AirwallexPayment.Session instead")
+    @interface AWXRecurringWithIntentSession : AWXSession
 
 /**
  The payment intent to handle.

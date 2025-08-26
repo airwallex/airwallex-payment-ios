@@ -54,10 +54,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func handleAirwallexDemoSchema(_ url: URL) -> Bool {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
               components.scheme == String.demoAppScheme,
-              components.host == String.demoAppHost,
-              let type = components.queryItems?.first(where: { $0.name == "type"})?.value else {
+              components.host == String.demoAppHost else {
             return false
         }
+        guard let type = components.queryItems?.first(where: { $0.name == "type"})?.value else {
+            window?.rootViewController?.showAlert(message: url.absoluteString, title: "APP launched by URL")
+            return true
+        }
+        
         switch type {
         case "SUCCESS_URL":
             let intentId = components.queryItems?.first(where: { $0.name == "id"})?.value ?? "Not Found"
@@ -82,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIView.setAnimationsEnabled(false)
             UIWindow.appearance().layer.speed = 100
             CATransaction.setAnimationDuration(0)
-            UIApplication.shared.keyWindow?.layer.speed = 100
+            window?.layer.speed = 100
         }
     }
 }
