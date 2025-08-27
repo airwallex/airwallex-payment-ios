@@ -43,7 +43,7 @@ extension AWXApplePayProvider {
         }
     }
     
-    func validate() throws {
+    class func validate(paymentMethodType: AWXPaymentMethodType?, session: AWXSession) throws {
         if let methodType = paymentMethodType {
             guard methodType.name == AWXApplePayKey else {
                 let localizedString = "Invalid payment method name %@ for apple pay"
@@ -109,8 +109,18 @@ extension AWXApplePayProvider {
                         "CIT not supported by Apple Pay"
                     )
                 }
+            } else if let session = session as? Session {
+                guard session.recurringOptions?.nextTriggeredBy != .customerType else {
+                    throw ValidationError.applePayNotSupported(
+                        "CIT not supported by Apple Pay"
+                    )
+                }
             }
         }
+    }
+    
+    func validate() throws {
+        try AWXApplePayProvider.validate(paymentMethodType: paymentMethodType, session: session)
     }
 }
 
@@ -152,8 +162,8 @@ extension AWXCardProvider {
         }
     }
     
-    func validate(card: AWXCard, billing: AWXPlaceDetails?) throws {
-        try validateMethodTypeAndSession()
+    class func validate(card: AWXCard, billing: AWXPlaceDetails?, paymentMethodType: AWXPaymentMethodType?, session: AWXSession) throws {
+        try validateMethodTypeAndSession(paymentMethodType: paymentMethodType, session: session)
         do {
             // if paymentMethodType is nil, means it's comes from low level API integration
             let cardSchemes = paymentMethodType?.cardSchemes ?? AWXCardScheme.allAvailable
@@ -236,13 +246,21 @@ extension AWXCardProvider {
         }
     }
     
-    func validate(consent: AWXPaymentConsent) throws {
-        try validateMethodTypeAndSession()
-        try validate(consentId: consent.id)
+    func validate(card: AWXCard, billing: AWXPlaceDetails?) throws {
+        try AWXCardProvider.validate(card: card, billing: billing, paymentMethodType: paymentMethodType, session: session)
     }
     
-    func validate(consentId: String) throws {
-        try validateMethodTypeAndSession()
+    class func validate(consent: AWXPaymentConsent, paymentMethodType: AWXPaymentMethodType?, session: AWXSession) throws {
+        try validateMethodTypeAndSession(paymentMethodType: paymentMethodType, session: session)
+        try validate(consentId: consent.id, paymentMethodType: paymentMethodType, session: session)
+    }
+    
+    func validate(consent: AWXPaymentConsent) throws {
+        try AWXCardProvider.validate(consent: consent, paymentMethodType: paymentMethodType, session: session)
+    }
+    
+    class func validate(consentId: String, paymentMethodType: AWXPaymentMethodType?, session: AWXSession) throws {
+        try validateMethodTypeAndSession(paymentMethodType: paymentMethodType, session: session)
         guard !consentId.isEmpty else {
             throw ValidationError.invalidConsent(
                 "Consent ID required"
@@ -250,7 +268,11 @@ extension AWXCardProvider {
         }
     }
     
-    private func validateMethodTypeAndSession() throws {
+    func validate(consentId: String) throws {
+        try AWXCardProvider.validate(consentId: consentId, paymentMethodType: paymentMethodType, session: session)
+    }
+    
+    class func validateMethodTypeAndSession(paymentMethodType: AWXPaymentMethodType?, session: AWXSession) throws {
         if let methodType = paymentMethodType {
             guard methodType.name == AWXCardKey else {
                 let localizedString = "Invalid payment method name %@ for card payment"
@@ -277,6 +299,10 @@ extension AWXCardProvider {
         } catch {
             throw ValidationError.invalidSession(underlyingError: error)
         }
+    }
+    
+    private func validateMethodTypeAndSession() throws {
+        try AWXCardProvider.validateMethodTypeAndSession(paymentMethodType: paymentMethodType, session: session)
     }
 }
 
@@ -305,11 +331,12 @@ extension AWXRedirectActionProvider {
         }
     }
     
-    func validate(name: String) throws {
+    class func validate(name: String, paymentMethodType: AWXPaymentMethodType?, session: AWXSession) throws {
         if let paymentMethodType {
             guard paymentMethodType.name == name,
                   name != AWXCardKey,
-                  name != AWXApplePayKey else {
+                  name != AWXApplePayKey,
+                  paymentMethodType.hasSchema else {
                 let localizedString = "Invalid payment method name %@"
                 let message = String(format: localizedString, name)
                 throw ValidationError.invalidMethodType(message)
@@ -320,5 +347,9 @@ extension AWXRedirectActionProvider {
         } catch {
             throw ValidationError.invalidSession(underlyingError: error)
         }
+    }
+    
+    func validate(name: String) throws {
+        try AWXRedirectActionProvider.validate(name: name, paymentMethodType: paymentMethodType, session: session)
     }
 }

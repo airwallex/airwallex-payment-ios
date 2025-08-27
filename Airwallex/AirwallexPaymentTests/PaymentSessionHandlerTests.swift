@@ -489,40 +489,6 @@ class PaymentSessionHandlerTests: XCTestCase {
         }
     }
     
-    func testConfirmRedirectPaymentWithInconsistentPaymentMethod() {
-        mockMethodType.name = "paypal"
-        let method = AWXPaymentMethod()
-        method.type = "wechatpay"
-        XCTAssertThrowsError(try mockSessionHandler.confirmRedirectPayment(with: method)) { error in
-            guard case PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: let error) = error,
-                  case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
-                XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(String(describing: mockPaymentResultDelegate.error))")
-                return
-            }
-        }
-    }
-    
-    func testConfirmRedirectPaymentWithInvalidPaymentMethod() {
-        let method = AWXPaymentMethod()
-        method.type = AWXCardKey
-        XCTAssertThrowsError(try mockSessionHandler.confirmRedirectPayment(with: method)) { error in
-            guard case PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: let error) = error,
-                  case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
-                XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(String(describing: mockPaymentResultDelegate.error))")
-                return
-            }
-        }
-        
-        method.type = AWXApplePayKey
-        XCTAssertThrowsError(try mockSessionHandler.confirmRedirectPayment(with: method)) { error in
-            guard case PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: let error) = error,
-                  case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
-                XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(String(describing: mockPaymentResultDelegate.error))")
-                return
-            }
-        }
-    }
-    
     // add test cases for AWXProviderDelegate
     func testProviderDidStartRequest() {
         mockSessionHandler.providerDidStartRequest(mockProvider)

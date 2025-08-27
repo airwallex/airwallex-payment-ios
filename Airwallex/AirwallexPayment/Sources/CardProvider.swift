@@ -14,7 +14,15 @@ import Foundation
 class CardProvider: AWXDefaultProvider {
     
     override class func canHandle(_ session: AWXSession, paymentMethod: AWXPaymentMethodType) -> Bool {
-        paymentMethod.name == AWXCardKey && paymentMethod.cardSchemes.count > 0
+        guard session is Session else {
+            return false
+        }
+        do {
+            try AWXCardProvider.validateMethodTypeAndSession(paymentMethodType: paymentMethod, session: session)
+            return true
+        } catch {
+            return false
+        }
     }
     
     init(delegate: any AWXProviderDelegate, session: Session, methodType: AWXPaymentMethodType?) {
@@ -23,9 +31,15 @@ class CardProvider: AWXDefaultProvider {
     
     func confirmIntentWithCard(_ card: AWXCard,
                                billing: AWXPlaceDetails? = nil,
-                               saveCard: Bool) {
+                               saveCard: Bool) throws {
+        try AWXCardProvider.validate(
+            card: card,
+            billing: billing,
+            paymentMethodType: paymentMethodType,
+            session: unifiedSession
+        )
         debugLog("Start payment confirm. Type: Card. Intent Id: \(unifiedSession.paymentIntent.id)")
-        var method = AWXPaymentMethod()
+        let method = AWXPaymentMethod()
         method.type = AWXCardKey
         method.billing = billing
         method.card = card
@@ -37,11 +51,14 @@ class CardProvider: AWXDefaultProvider {
         confirmInitialTransaction(method)
     }
     
-    // MARK: - Payment Consent Confirmation
-    
     /// Confirms a payment intent using an existing payment consent
     /// - Parameter consent: The payment consent to use for confirmation
-    func confirmIntentWithConsent(_ consent: AWXPaymentConsent) {
+    func confirmIntentWithConsent(_ consent: AWXPaymentConsent) throws {
+        try AWXCardProvider.validate(
+            consent: consent,
+            paymentMethodType: paymentMethodType,
+            session: unifiedSession
+        )
         // Create a task that can be cancelled if needed
         Task { @MainActor in
             do {
@@ -52,7 +69,7 @@ class CardProvider: AWXDefaultProvider {
                    card.numberType == "PAN" && (cvc ?? "").isEmpty {
                     cvc = try await collectCVC(for:consent)
                 }
-                if let options = unifiedSession.recurringOptions {
+                if unifiedSession.recurringOptions != nil {
                     // Create consent & confirm payment with existing payment method
                     confirmConsentConversion(methodId: methodId, cvc: cvc)
                 } else if consent.isMITConsent {
@@ -73,11 +90,35 @@ class CardProvider: AWXDefaultProvider {
         }
     }
     
+    func confirmIntentWithConsent(_ consentId: String, requiresCVC: Bool = false) throws {
+        try AWXCardProvider.validate(
+            consentId: consentId,
+            paymentMethodType: paymentMethodType,
+            session: unifiedSession
+        )
+        if requiresCVC {
+            Task { @MainActor in
+                do {
+                    let cvc = try await collectCVC()
+                    confirmSubsequentTransaction(consentId: consentId, cvc: cvc)
+                } catch {
+                    if Task.isCancelled {
+                        delegate?.provider(self, didCompleteWith: .cancel, error: nil)
+                    } else {
+                        delegate?.provider(self, didCompleteWith: .failure, error: error)
+                    }
+                }
+            }
+        } else {
+            confirmSubsequentTransaction(consentId: consentId, cvc: nil)
+        }
+    }
+    
     /// Collects CVC for a card that requires it
     /// - Parameters:
     ///   - card: The card to collect CVC for
     ///   - consent: The associated payment consent
-    @MainActor private func collectCVC(for consent: AWXPaymentConsent) async throws -> String {
+    @MainActor private func collectCVC(for consent: AWXPaymentConsent? = nil) async throws -> String {
         guard let hostVC = delegate?.hostViewController?() else {
             throw "Host view controller not found".asError()
         }
@@ -99,26 +140,5 @@ class CardProvider: AWXDefaultProvider {
         }
         
         return cvc
-    }
-    
-    func confirmIntentWithConsent(_ consentId: String, requiresCVC: Bool = false) {
-        if requiresCVC {
-            Task { @MainActor in
-                do {
-                    let consent = AWXPaymentConsent()
-                    consent.id = consentId
-                    let cvc = try await collectCVC(for: consent)
-                    confirmSubsequentTransaction(consentId: consentId, cvc: cvc)
-                } catch {
-                    if Task.isCancelled {
-                        delegate?.provider(self, didCompleteWith: .cancel, error: nil)
-                    } else {
-                        delegate?.provider(self, didCompleteWith: .failure, error: error)
-                    }
-                }
-            }
-        } else {
-            confirmSubsequentTransaction(consentId: consentId, cvc: nil)
-        }
     }
 }

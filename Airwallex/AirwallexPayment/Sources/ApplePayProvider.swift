@@ -49,14 +49,11 @@ class ApplePayProvider: AWXDefaultProvider {
     ///   - paymentMethod: The payment method to check
     /// - Returns: True if the provider can handle the session and payment method
     override class func canHandle(_ session: AWXSession, paymentMethod: AWXPaymentMethodType) -> Bool {
-        guard paymentMethod.name == AWXApplePayKey else {
-            return false
-        }
-        guard let session = session as? Session else {
+        guard session is Session else {
             return false
         }
         do {
-            try validate(session: session)
+            try AWXApplePayProvider.validate(paymentMethodType: paymentMethod, session: session)
             return true
         } catch {
             return false
@@ -67,43 +64,12 @@ class ApplePayProvider: AWXDefaultProvider {
         super.init(delegate: delegate, session: session, paymentMethodType: methodType)
     }
     
-    /// Validates that the session can be used with Apple Pay
-    /// - Throws: An error if the session cannot be used with Apple Pay
-    class func validate(session: Session) throws {
-        // Check if Apple Pay options are available
-        guard let options = session.applePayOptions else {
-            throw "Missing Apple Pay options in session.".asError()
-        }
-        
-        // Check if Apple Pay is available on the device
-        var canMakePayment = false
-        if #available(iOS 15.0, *) {
-            // From iOS 15.0 onwards, user can add new card directly in the apple pay flow
-            canMakePayment = PKPaymentAuthorizationController.canMakePayments()
-        } else {
-            canMakePayment = PKPaymentAuthorizationController.canMakePayments(
-                usingNetworks: AWXApplePaySupportedNetworks(),
-                capabilities: options.merchantCapabilities
-            )
-        }
-        
-        guard canMakePayment else {
-            throw "Payment not supported via Apple Pay.".asError()
-        }
-        
-        // Check if the session is a recurring session with customer-initiated transactions
-        if session.transactionMode() == AWXPaymentTransactionModeRecurring &&
-            session.recurringOptions?.nextTriggeredBy == .customerType {
-            throw "CIT not supported by Apple Pay".asError()
-        }
-    }
-    
     /// Launch Apple Pay sheet to confirm the payment intent
     func startPayment(cancelPaymentOnDismiss: Bool = true) throws {
+        try AWXApplePayProvider.validate(paymentMethodType: paymentMethodType, session: unifiedSession)
         paymentState = .notPresented
         didHandlePresentationFail = false
         self.cancelPaymentOnDismiss = cancelPaymentOnDismiss
-        try ApplePayProvider.validate(session: unifiedSession)
         
         let request = try unifiedSession.makePaymentRequestOrError()
         let controller = PKPaymentAuthorizationController(paymentRequest: request)

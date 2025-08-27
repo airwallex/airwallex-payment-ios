@@ -166,12 +166,12 @@
 		D85041F82DA79D380074BA7F /* AWXWeChatPayActionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D85041F72DA79D380074BA7F /* AWXWeChatPayActionProvider.m */; };
 		D85041F92DA79D380074BA7F /* AWXWeChatPayActionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = D85041F62DA79D380074BA7F /* AWXWeChatPayActionProvider.h */; };
 		D85041FB2DA79D490074BA7F /* AirwallexWeChatPay.h in Headers */ = {isa = PBXBuildFile; fileRef = D85041FA2DA79D490074BA7F /* AirwallexWeChatPay.h */; };
-		D85042462DA79E650074BA7F /* PKPaymentMethod+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E127ED443E00CFC2EF /* PKPaymentMethod+Request.h */; };
-		D85042482DA79E650074BA7F /* PKPaymentToken+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E527ED451600CFC2EF /* PKPaymentToken+Request.h */; };
-		D850424A2DA79E650074BA7F /* AWXPaymentIntent+Summary.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E927ED491100CFC2EF /* AWXPaymentIntent+Summary.h */; };
-		D850424C2DA79E650074BA7F /* AWXSession+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37ED27ED4A0500CFC2EF /* AWXSession+Request.h */; };
-		D850424E2DA79E650074BA7F /* PKContact+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE9BA252806D2A5005B70C3 /* PKContact+Request.h */; };
-		D85042502DA79E650074BA7F /* AWXPlaceDetails+PKContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE9BA2B2806DE74005B70C3 /* AWXPlaceDetails+PKContact.h */; };
+		D85042462DA79E650074BA7F /* PKPaymentMethod+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E127ED443E00CFC2EF /* PKPaymentMethod+Request.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D85042482DA79E650074BA7F /* PKPaymentToken+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E527ED451600CFC2EF /* PKPaymentToken+Request.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D850424A2DA79E650074BA7F /* AWXPaymentIntent+Summary.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37E927ED491100CFC2EF /* AWXPaymentIntent+Summary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D850424C2DA79E650074BA7F /* AWXSession+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A37ED27ED4A0500CFC2EF /* AWXSession+Request.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D850424E2DA79E650074BA7F /* PKContact+Request.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE9BA252806D2A5005B70C3 /* PKContact+Request.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D85042502DA79E650074BA7F /* AWXPlaceDetails+PKContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE9BA2B2806DE74005B70C3 /* AWXPlaceDetails+PKContact.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D85042522DA79E650074BA7F /* AWXApplePayProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C99E7A227EAF2840074156C /* AWXApplePayProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D85042542DA79E650074BA7F /* AWX3DSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 57A3AD6C27589BEF00EFF0A1 /* AWX3DSService.h */; };
 		D85042562DA79E650074BA7F /* AWX3DSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 57D4A44D2785AF4500487E1C /* AWX3DSViewController.h */; };
@@ -900,17 +900,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D893C4E62E531E2A0065D8DC /* Models */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
+		D893C4E62E531E2A0065D8DC /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1955,7 +1945,13 @@
 				5775CF5D26E5DF5000C6AFE3 /* AWXPaymentMethodOptions.h in Headers */,
 				5775CF5B26E5DF5000C6AFE3 /* AWXPaymentIntentRequest.h in Headers */,
 				D805CC852DB0EF8100693929 /* AWXPaymentResultDelegate.h in Headers */,
+				D85042502DA79E650074BA7F /* AWXPlaceDetails+PKContact.h in Headers */,
+				D850424A2DA79E650074BA7F /* AWXPaymentIntent+Summary.h in Headers */,
 				5775CF2626E5DF4F00C6AFE3 /* AWXPaymentConsentRequest.h in Headers */,
+				D850424C2DA79E650074BA7F /* AWXSession+Request.h in Headers */,
+				D850424E2DA79E650074BA7F /* PKContact+Request.h in Headers */,
+				D85042462DA79E650074BA7F /* PKPaymentMethod+Request.h in Headers */,
+				D85042482DA79E650074BA7F /* PKPaymentToken+Request.h in Headers */,
 				D8A599B62DAF9DF20045BFEC /* AWXShippingViewController.h in Headers */,
 				5775CF3926E5DF4F00C6AFE3 /* AWXPaymentConsentResponse.h in Headers */,
 				184169DE29C4381500B02D96 /* NSData+Base64.h in Headers */,
@@ -1963,12 +1959,6 @@
 				184169DA29C4347800B02D96 /* UIColor+AWXTheme.h in Headers */,
 				1820C9702C85A1C0006B18C4 /* AWXFloatingCvcTextField.h in Headers */,
 				18E0571929C9A7F20099388A /* AWXAPIErrorResponse+Update.h in Headers */,
-				D85042462DA79E650074BA7F /* PKPaymentMethod+Request.h in Headers */,
-				D85042482DA79E650074BA7F /* PKPaymentToken+Request.h in Headers */,
-				D850424A2DA79E650074BA7F /* AWXPaymentIntent+Summary.h in Headers */,
-				D850424C2DA79E650074BA7F /* AWXSession+Request.h in Headers */,
-				D850424E2DA79E650074BA7F /* PKContact+Request.h in Headers */,
-				D85042502DA79E650074BA7F /* AWXPlaceDetails+PKContact.h in Headers */,
 				D85042542DA79E650074BA7F /* AWX3DSService.h in Headers */,
 				D850425E2DA79E650074BA7F /* AWX3DSActionProvider.h in Headers */,
 				D85042562DA79E650074BA7F /* AWX3DSViewController.h in Headers */,
@@ -2353,9 +2343,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

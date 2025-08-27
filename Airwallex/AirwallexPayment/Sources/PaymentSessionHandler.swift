@@ -246,13 +246,7 @@ public class PaymentSessionHandler: NSObject {
                 methodType: methodType
             )
             actionProvider = applePayProvider
-            do {
-                try applePayProvider.startPayment(cancelPaymentOnDismiss: cancelPaymentOnDismiss)
-            } catch {
-                let error = ValidationError.invalidPayment(underlyingError: error)
-                debugLog("\(error)")
-                throw error
-            }
+            try applePayProvider.startPayment(cancelPaymentOnDismiss: cancelPaymentOnDismiss)
             return
         }
         let applePayProvider = AWXApplePayProvider(
@@ -260,13 +254,7 @@ public class PaymentSessionHandler: NSObject {
             session: session,
             paymentMethodType: methodType
         )
-        do {
-            try applePayProvider.validate()
-        } catch {
-            let error = ValidationError.invalidPayment(underlyingError: error)
-            debugLog("\(error)")
-            throw error
-        }
+        try applePayProvider.validate()
         actionProvider = applePayProvider
         if cancelPaymentOnDismiss {
             applePayProvider.startPayment()
@@ -292,7 +280,8 @@ public class PaymentSessionHandler: NSObject {
                 methodType: methodType
             )
             actionProvider = cardProvider
-            cardProvider.confirmIntentWithCard(
+            
+            try cardProvider.confirmIntentWithCard(
                 card,
                 billing: billing,
                 saveCard: saveCard
@@ -304,13 +293,7 @@ public class PaymentSessionHandler: NSObject {
             session: session,
             paymentMethodType: methodType
         )
-        do {
-            try cardProvider.validate(card: card, billing: billing)
-        } catch {
-            let error = ValidationError.invalidPayment(underlyingError: error)
-            debugLog("\(error)")
-            throw error
-        }
+        try cardProvider.validate(card: card, billing: billing)
         actionProvider = cardProvider
         cardProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
     }
@@ -333,7 +316,7 @@ public class PaymentSessionHandler: NSObject {
             methodType: methodType
         )
         actionProvider = cardProvider
-        cardProvider.confirmIntentWithConsent(consent)
+        try cardProvider.confirmIntentWithConsent(consent)
     }
     
     /// Initiates a payment using a consent ID.
@@ -351,7 +334,7 @@ public class PaymentSessionHandler: NSObject {
             methodType: methodType
         )
         actionProvider = cardProvider
-        cardProvider.confirmIntentWithConsent(consentId, requiresCVC: requiresCVC)
+        try cardProvider.confirmIntentWithConsent(consentId, requiresCVC: requiresCVC)
     }
     
     /// Initiates a schema-based payment transaction.
@@ -372,13 +355,7 @@ public class PaymentSessionHandler: NSObject {
             session: session,
             paymentMethodType: methodType
         )
-        do {
-            try redirectAction.validate(name: name)
-        } catch {
-            let error = ValidationError.invalidPayment(underlyingError: error)
-            debugLog("\(error)")
-            throw error
-        }
+        try redirectAction.validate(name: name)
         actionProvider = redirectAction
         redirectAction.confirmPaymentIntent(with: name, additionalInfo: additionalInfo)
     }
@@ -400,24 +377,16 @@ public class PaymentSessionHandler: NSObject {
             session: session,
             paymentMethodType: methodType
         )
-        do {
-            try redirectAction.validate(name: paymentMethod.type)
-        } catch {
-            let error = ValidationError.invalidPayment(underlyingError: error)
-            debugLog("\(error)")
-            throw error
-        }
+        try redirectAction.validate(name: paymentMethod.type)
         actionProvider = redirectAction
         redirectAction.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
     }
     
     private func handleFailure(_ paymentResultDelegate: AWXPaymentResultDelegate?,
                                _ error: Error) {
+        let error = ValidationError.invalidPayment(underlyingError: error)
+        debugLog("\(error)")
         paymentResultDelegate?.paymentViewController(nil, didCompleteWith: .failure, error: error)
-        guard let error = error as? ErrorLoggable else {
-            assert(false, "expected PaymentSessionHandler.ValidationError but get \(error.localizedDescription)")
-            return
-        }
         AnalyticsLogger.log(error: error)
     }
 }

@@ -82,6 +82,8 @@ public extension AWXSession {
                     "Customer ID required"
                 )
             }
+        } else if let session = self as? Session {
+            try validate(paymentIntent: session.paymentIntent)
         }
     }
     
