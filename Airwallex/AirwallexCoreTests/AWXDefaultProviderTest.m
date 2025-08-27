@@ -73,7 +73,15 @@ NSString *const kMockKey = @"MOCK";
 - (void)testCanHandleSessionAndPaymentMethodDefaultImplementation {
     AWXSession *session = [AWXSession new];
     AWXPaymentMethodType *paymentMethod = [AWXPaymentMethodType new];
+    paymentMethod.name = AWXCardKey;
     XCTAssertFalse([AWXDefaultProvider canHandleSession:session paymentMethod:paymentMethod]);
+    paymentMethod.name = AWXApplePayKey;
+    XCTAssertFalse([AWXDefaultProvider canHandleSession:session paymentMethod:paymentMethod]);
+    paymentMethod.name = AWXWeChatPayKey;
+    XCTAssertFalse([AWXDefaultProvider canHandleSession:session paymentMethod:paymentMethod]);
+    paymentMethod.resources = [AWXResources new];
+    paymentMethod.resources.hasSchema = true;
+    XCTAssertTrue([AWXDefaultProvider canHandleSession:session paymentMethod:paymentMethod]);
 }
 
 - (void)testConfirmPaymentIntentWithoutCompletionBlock {
