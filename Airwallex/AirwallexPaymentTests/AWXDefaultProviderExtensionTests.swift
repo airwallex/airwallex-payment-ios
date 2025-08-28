@@ -354,6 +354,8 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         
         // Test valid method name
         mockMethodType.name = "redirect"
+        mockMethodType.resources = AWXResources()
+        mockMethodType.resources.hasSchema = true
         XCTAssertNoThrow(try provider.validate(name: "redirect"))
         
         // Test invalid method name

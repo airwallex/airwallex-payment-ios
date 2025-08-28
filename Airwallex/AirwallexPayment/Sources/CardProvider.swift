@@ -11,7 +11,7 @@ import AirwallexCore
 #endif
 import Foundation
 
-class CardProvider: AWXDefaultProvider {
+class CardProvider: PaymentProvider {
     
     override class func canHandle(_ session: AWXSession, paymentMethod: AWXPaymentMethodType) -> Bool {
         guard session is Session else {
@@ -23,10 +23,6 @@ class CardProvider: AWXDefaultProvider {
         } catch {
             return false
         }
-    }
-    
-    init(delegate: any AWXProviderDelegate, session: Session, methodType: AWXPaymentMethodType?) {
-        super.init(delegate: delegate, session: session, paymentMethodType: methodType)
     }
     
     func confirmIntentWithCard(_ card: AWXCard,

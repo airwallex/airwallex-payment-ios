@@ -1,5 +1,5 @@
 //
-//  AWXDefaultProvider+Intent.swift
+//  PaymentProvider.swift
 //  AirwallexPayment
 //
 //  Created by Weiping Li on 18/8/25.
@@ -12,7 +12,9 @@ import AirwallexCore
 import UIKit
 
 /// Extension for handling simplified consent flow
-extension AWXDefaultProvider {
+class PaymentProvider: AWXDefaultProvider {
+    
+    let apiClient: AWXAPIClient
     
     /// Returns the current session cast as a `Session` type, used for the simplified consent flow.
     /// - Note: This property force casts `session` to `Session`. Ensure that `session` is always of type `Session` to avoid runtime crashes.
@@ -20,6 +22,14 @@ extension AWXDefaultProvider {
     /// Only expected to be used by ApplePayProvider and CardProvider
     var unifiedSession: Session {
         session as! Session
+    }
+    
+    init(delegate: any AWXProviderDelegate,
+         session: Session,
+         methodType: AWXPaymentMethodType?,
+         apiClient: AWXAPIClient = AWXAPIClient.init(configuration: .shared())) {
+        self.apiClient = apiClient
+        super.init(delegate: delegate, session: session, paymentMethodType: methodType)
     }
     
     /// Confirms a payment intent by sending a request with the provided payment method and consent information.
@@ -86,7 +96,7 @@ extension AWXDefaultProvider {
     }
 }
 
-fileprivate extension AWXDefaultProvider {
+fileprivate extension PaymentProvider {
     
     func createPaymentMethodOptions(_ paymentMethod: AWXPaymentMethod) -> AWXPaymentMethodOptions? {
         guard [AWXApplePayKey, AWXCardKey].contains(paymentMethod.type) else {
@@ -122,7 +132,6 @@ fileprivate extension AWXDefaultProvider {
     }
     
     func sendRequest<Req: AWXRequest, Res: AWXResponse>(_ request: Req) async throws -> Res {
-        let apiClient = AWXAPIClient(configuration: .shared())
         guard let response = try await apiClient.send(request) as? Res else {
             throw NSError(
                 domain: AWXSDKErrorDomain,

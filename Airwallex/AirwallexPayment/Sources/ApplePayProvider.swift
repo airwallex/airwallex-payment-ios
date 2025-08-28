@@ -17,10 +17,10 @@ import PassKit
 /// `ApplePayProvider` is a Swift implementation of the Apple Pay payment provider.
 /// It handles payment method with Apple Pay, providing a more Swift-idiomatic interface
 /// while preserving all functionality of the Objective-C AWXApplePayProvider.
-class ApplePayProvider: AWXDefaultProvider {
+class ApplePayProvider: PaymentProvider {
     
     /// Represents the current state of the Apple Pay payment flow
-    private enum PaymentState {
+    enum PaymentState {
         /// initial status
         case notPresented
         /// payment sheet displayed but not authorized
@@ -37,11 +37,17 @@ class ApplePayProvider: AWXDefaultProvider {
     /// Indicates whether a presentation failure has already been handled
     private var didHandlePresentationFail = false
     
+    /// Indicates whether the apple pay sheet dismiss in .pending status
+    /// which can happen when app accidentily go to background when apple pay authorized but
+    /// provider still sending request for confirming payment intent, in this case we will not receive paymentAuthorizationControllerDidFinish
+    /// callback after request complete, so we will depend on this flag to callback for payment status to delegate
+    private var didDismissWhilePending = false
+    
     /// The current state of the payment process
-    private var paymentState: PaymentState = .notPresented
+    private(set) var paymentState: PaymentState = .notPresented
     
     /// Result of confirm intent
-    private var result: Result<AWXConfirmPaymentIntentResponse, Error>?
+    private var confirmIntentResponse: Result<AWXConfirmPaymentIntentResponse, Error>?
     
     /// Determines if the provider can handle the given session and payment method
     /// - Parameters:
@@ -60,8 +66,20 @@ class ApplePayProvider: AWXDefaultProvider {
         }
     }
     
-    init(delegate: any AWXProviderDelegate, session: Session, methodType: AWXPaymentMethodType?) {
-        super.init(delegate: delegate, session: session, paymentMethodType: methodType)
+    private let paymentController: PKPaymentAuthorizationController.Type
+    
+    init(delegate: any AWXProviderDelegate,
+         session: Session,
+         methodType: AWXPaymentMethodType?,
+         apiClient: AWXAPIClient = AWXAPIClient(configuration: .shared()),
+         paymentController: PKPaymentAuthorizationController.Type = PKPaymentAuthorizationController.self) {
+        self.paymentController = paymentController
+        super.init(
+            delegate: delegate,
+            session: session,
+            methodType: methodType,
+            apiClient: apiClient
+        )
     }
     
     /// Launch Apple Pay sheet to confirm the payment intent
@@ -69,19 +87,20 @@ class ApplePayProvider: AWXDefaultProvider {
         try AWXApplePayProvider.validate(paymentMethodType: paymentMethodType, session: unifiedSession)
         paymentState = .notPresented
         didHandlePresentationFail = false
+        didDismissWhilePending = false
         self.cancelPaymentOnDismiss = cancelPaymentOnDismiss
         
         let request = try unifiedSession.makePaymentRequestOrError()
-        let controller = PKPaymentAuthorizationController(paymentRequest: request)
+        let controller = paymentController.init(paymentRequest: request)
         controller.delegate = self
         
         Task { @MainActor in
-            delegate?.providerDidStartRequest(self)
             let presented = await controller.present()
             guard presented else {
                 handlePresentationFail()
                 return
             }
+            delegate?.providerDidStartRequest(self)
             
             // Log risk event
             RiskLogger.log(.showApplePay, screen: .applePay)
@@ -113,6 +132,10 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
     
     func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController,
                                         didAuthorizePayment payment: PKPayment) async -> PKPaymentAuthorizationResult {
+        await confirmIntent(payment: payment)
+    }
+    
+    @MainActor func confirmIntent(payment: PKPayment) async -> PKPaymentAuthorizationResult {
         debugLog()
         let method = AWXPaymentMethod()
         method.type = AWXApplePayKey
@@ -124,26 +147,33 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
             method.appendAdditionalParams(applePayParams)
             paymentState = .pending
             let response = try await confirmIntent(method: method)
+            confirmIntentResponse = Result.success(response)
             paymentState = .complete
-            result = Result.success(response)
+            if didDismissWhilePending {
+                complete(with: response, error: nil)
+            }
             return PKPaymentAuthorizationResult(status: .success, errors: nil)
         } catch {
+            confirmIntentResponse = Result.failure(error)
             paymentState = .complete
-            result = Result.failure(error)
+            if didDismissWhilePending {
+                complete(with: nil, error: error)
+            }
             return PKPaymentAuthorizationResult(status: .failure, errors: [error])
         }
     }
     
     func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
-        debugLog()
         Task { @MainActor in
             await controller.dismiss()
             switch paymentState {
             case .notPresented:
                 debugLog("Apple pay sheet did finished at not presented status")
+                self.delegate?.providerDidEndRequest(self)
                 handlePresentationFail()
             case .notStarted:
                 debugLog("Apple pay sheet did finished at not started status (cancelled)")
+                self.delegate?.providerDidEndRequest(self)
                 if cancelPaymentOnDismiss {
                     delegate?.provider(self, didCompleteWith: .cancel, error: nil)
                 }
@@ -152,14 +182,15 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
                 // If UI disappears during the interaction with our API, we pass the state to the upper level
                 // so in progress UI can be handled before we get the confirmed or failed intent
                 delegate?.provider(self, didCompleteWith: .inProgress, error: nil)
+                didDismissWhilePending = true
             case .complete:
-                debugLog("Apple pay sheet did finished at complete status (success or failed)")
-                guard let result else {
+                debugLog("Apple pay sheet did finished at complete status")
+                guard let confirmIntentResponse else {
                     assert(false, "should never happen")
                     delegate?.provider(self, didCompleteWith: .failure, error: nil)
                     return
                 }
-                switch result {
+                switch confirmIntentResponse {
                 case .success(let response):
                     complete(with: response, error: nil)
                 case .failure(let error):

@@ -319,7 +319,7 @@
 		D8D36E782E5C5CAC005618D4 /* AWXCardValidator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E5B2E5C5CAC005618D4 /* AWXCardValidator+Extensions.swift */; };
 		D8D36E792E5C5CAC005618D4 /* AWXConfirmPaymentNextAction+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E5C2E5C5CAC005618D4 /* AWXConfirmPaymentNextAction+Extension.swift */; };
 		D8D36E7A2E5C5CAC005618D4 /* AWXDefaultProvider+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E5D2E5C5CAC005618D4 /* AWXDefaultProvider+Extensions.swift */; };
-		D8D36E7B2E5C5CAC005618D4 /* AWXDefaultProvider+Intent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E5E2E5C5CAC005618D4 /* AWXDefaultProvider+Intent.swift */; };
+		D8D36E7B2E5C5CAC005618D4 /* PaymentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E5E2E5C5CAC005618D4 /* PaymentProvider.swift */; };
 		D8D36E7C2E5C5CAC005618D4 /* AWXPaymentConsent+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E5F2E5C5CAC005618D4 /* AWXPaymentConsent+Extensions.swift */; };
 		D8D36E7D2E5C5CAC005618D4 /* AWXPlaceDetails+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E602E5C5CAC005618D4 /* AWXPlaceDetails+Extensions.swift */; };
 		D8D36E7E2E5C5CAC005618D4 /* AWXSession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E612E5C5CAC005618D4 /* AWXSession+Extensions.swift */; };
@@ -419,6 +419,8 @@
 		D8D36F492E5C5CB0005618D4 /* CurrencyCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = D8D36E8F2E5C5CB0005618D4 /* CurrencyCodes.json */; };
 		D8D36F4A2E5C5CB0005618D4 /* AirwallexPaymentSheet.h in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EF22E5C5CB0005618D4 /* AirwallexPaymentSheet.h */; };
 		D8D370542E5D8D73005618D4 /* AirwallexPaymentStatus+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D370532E5D8D73005618D4 /* AirwallexPaymentStatus+Extension.swift */; };
+		D8D370A22E5EDD8F005618D4 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D72D9E335D00D082EC /* MockURLProtocol.swift */; };
+		D8D370EC2E5EF019005618D4 /* ApplePayProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D370EB2E5EF019005618D4 /* ApplePayProviderTests.swift */; };
 		D8DD6B4D2DA7BCDC0047E450 /* AirwallexPayment.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D8DD6B4C2DA7BCDC0047E450 /* AirwallexPayment.xctestplan */; };
 		D8EC88192D9E335D00D082EC /* AWXCardValidatorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87E22D9E335D00D082EC /* AWXCardValidatorExtensionTests.swift */; };
 		D8EC88202D9E335D00D082EC /* AWXDefaultProviderExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87F12D9E335D00D082EC /* AWXDefaultProviderExtensionTests.swift */; };
@@ -738,7 +740,7 @@
 		D8D36E5B2E5C5CAC005618D4 /* AWXCardValidator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXCardValidator+Extensions.swift"; sourceTree = "<group>"; };
 		D8D36E5C2E5C5CAC005618D4 /* AWXConfirmPaymentNextAction+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXConfirmPaymentNextAction+Extension.swift"; sourceTree = "<group>"; };
 		D8D36E5D2E5C5CAC005618D4 /* AWXDefaultProvider+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXDefaultProvider+Extensions.swift"; sourceTree = "<group>"; };
-		D8D36E5E2E5C5CAC005618D4 /* AWXDefaultProvider+Intent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXDefaultProvider+Intent.swift"; sourceTree = "<group>"; };
+		D8D36E5E2E5C5CAC005618D4 /* PaymentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentProvider.swift; sourceTree = "<group>"; };
 		D8D36E5F2E5C5CAC005618D4 /* AWXPaymentConsent+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXPaymentConsent+Extensions.swift"; sourceTree = "<group>"; };
 		D8D36E602E5C5CAC005618D4 /* AWXPlaceDetails+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXPlaceDetails+Extensions.swift"; sourceTree = "<group>"; };
 		D8D36E612E5C5CAC005618D4 /* AWXSession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXSession+Extensions.swift"; sourceTree = "<group>"; };
@@ -845,6 +847,7 @@
 		D8D36EF32E5C5CB0005618D4 /* AWXUIContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXUIContext.swift; sourceTree = "<group>"; };
 		D8D36EF52E5C5CB0005618D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D370532E5D8D73005618D4 /* AirwallexPaymentStatus+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirwallexPaymentStatus+Extension.swift"; sourceTree = "<group>"; };
+		D8D370EB2E5EF019005618D4 /* ApplePayProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayProviderTests.swift; sourceTree = "<group>"; };
 		D8DD6B4C2DA7BCDC0047E450 /* AirwallexPayment.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = AirwallexPayment.xctestplan; path = ../AirwallexPayment.xctestplan; sourceTree = SOURCE_ROOT; };
 		D8EC87CB2D9E335D00D082EC /* AnySectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnySectionControllerTests.swift; sourceTree = "<group>"; };
 		D8EC87CC2D9E335D00D082EC /* CollectionViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContextTests.swift; sourceTree = "<group>"; };
@@ -900,7 +903,28 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D893C4E62E531E2A0065D8DC /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
+		D893C4E62E531E2A0065D8DC /* Models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D8D3709F2E5EDD17005618D4 /* MockObjects */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = MockObjects;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1121,6 +1145,7 @@
 				3C5A37FA27F29DD200CFC2EF /* AWXProviderDelegateSpy.h */,
 				3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */,
 				D8EC87D42D9E335D00D082EC /* MockProviderDelegate.swift */,
+				D8EC87D72D9E335D00D082EC /* MockURLProtocol.swift */,
 				D8EC87D32D9E335D00D082EC /* MockPaymentResultDelegate.swift */,
 				D8EC87D12D9E335D00D082EC /* Bundle+Extensions.swift */,
 			);
@@ -1497,7 +1522,6 @@
 				D8D36E5B2E5C5CAC005618D4 /* AWXCardValidator+Extensions.swift */,
 				D8D36E5C2E5C5CAC005618D4 /* AWXConfirmPaymentNextAction+Extension.swift */,
 				D8D36E5D2E5C5CAC005618D4 /* AWXDefaultProvider+Extensions.swift */,
-				D8D36E5E2E5C5CAC005618D4 /* AWXDefaultProvider+Intent.swift */,
 				D8D36E5F2E5C5CAC005618D4 /* AWXPaymentConsent+Extensions.swift */,
 				D8D36E602E5C5CAC005618D4 /* AWXPlaceDetails+Extensions.swift */,
 				D8D36E612E5C5CAC005618D4 /* AWXSession+Extensions.swift */,
@@ -1534,6 +1558,7 @@
 				D8D36E6A2E5C5CAC005618D4 /* UI */,
 				D8D36E6B2E5C5CAC005618D4 /* ApplePayProvider.swift */,
 				D8D36E6C2E5C5CAC005618D4 /* CardProvider.swift */,
+				D8D36E5E2E5C5CAC005618D4 /* PaymentProvider.swift */,
 				D8D36E6D2E5C5CAC005618D4 /* ErrorMessage.swift */,
 				D8D36E6E2E5C5CAC005618D4 /* Events.swift */,
 				D8D36E6F2E5C5CAC005618D4 /* PaymentSessionHandler.swift */,
@@ -1764,7 +1789,6 @@
 		D8EC87D82D9E335D00D082EC /* MockObjects */ = {
 			isa = PBXGroup;
 			children = (
-				D8EC87D72D9E335D00D082EC /* MockURLProtocol.swift */,
 				D8EC87D22D9E335D00D082EC /* MockCollectionViewContext.swift */,
 				D8EC87D52D9E335D00D082EC /* MockSectionController.swift */,
 				D8EC87D62D9E335D00D082EC /* MockABSectionProvider.swift */,
@@ -1878,9 +1902,11 @@
 				D8F2FAFC2DA8F9C300209602 /* EventsTests.swift */,
 				D893C4E62E531E2A0065D8DC /* Models */,
 				D8F2FAFE2DA9054900209602 /* AWXCardSchemeExtensionTests.swift */,
+				D8D3709F2E5EDD17005618D4 /* MockObjects */,
 				D8EC87F42D9E335D00D082EC /* AWXSessionExtensionTests.swift */,
 				D8EC87FD2D9E335D00D082EC /* UIVIewControllerExtensionsTests.swift */,
 				D8EC88052D9E335D00D082EC /* PaymentSessionHandlerTests.swift */,
+				D8D370EB2E5EF019005618D4 /* ApplePayProviderTests.swift */,
 			);
 			path = AirwallexPaymentTests;
 			sourceTree = "<group>";
@@ -2101,6 +2127,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				D893C4E62E531E2A0065D8DC /* Models */,
+				D8D3709F2E5EDD17005618D4 /* MockObjects */,
 			);
 			name = AirwallexPaymentTests;
 			productName = PaymentTests;
@@ -2343,13 +2370,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2547,8 +2570,10 @@
 				D8EC88232D9E335D00D082EC /* AWXSessionExtensionTests.swift in Sources */,
 				D8EC88272D9E335D00D082EC /* StringExtensionTests.swift in Sources */,
 				D8EC882E2D9E335D00D082EC /* ErrorMessageTests.swift in Sources */,
+				D8D370EC2E5EF019005618D4 /* ApplePayProviderTests.swift in Sources */,
 				D8EC88322D9E335D00D082EC /* PaymentSessionHandlerTests.swift in Sources */,
 				D88045922DA7B663008308C7 /* MockPaymentResultDelegate.swift in Sources */,
+				D8D370A22E5EDD8F005618D4 /* MockURLProtocol.swift in Sources */,
 				D88045932DA7B663008308C7 /* MockProviderDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2704,7 +2729,7 @@
 				D8D36E782E5C5CAC005618D4 /* AWXCardValidator+Extensions.swift in Sources */,
 				D8D36E792E5C5CAC005618D4 /* AWXConfirmPaymentNextAction+Extension.swift in Sources */,
 				D8D36E7A2E5C5CAC005618D4 /* AWXDefaultProvider+Extensions.swift in Sources */,
-				D8D36E7B2E5C5CAC005618D4 /* AWXDefaultProvider+Intent.swift in Sources */,
+				D8D36E7B2E5C5CAC005618D4 /* PaymentProvider.swift in Sources */,
 				D8D36E7C2E5C5CAC005618D4 /* AWXPaymentConsent+Extensions.swift in Sources */,
 				D8D370542E5D8D73005618D4 /* AirwallexPaymentStatus+Extension.swift in Sources */,
 				D8D36E7D2E5C5CAC005618D4 /* AWXPlaceDetails+Extensions.swift in Sources */,
