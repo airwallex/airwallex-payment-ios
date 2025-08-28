@@ -146,7 +146,8 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
             let applePayParams = try payment.token.payloadForRequest(withBilling: billingPayload)
             method.appendAdditionalParams(applePayParams)
             paymentState = .pending
-            let response = try await confirmIntent(method: method)
+            let request = createConfirmIntentRequest(method: method, consent: nil)
+            let response: AWXConfirmPaymentIntentResponse = try await apiClient.sendRequest(request)
             confirmIntentResponse = Result.success(response)
             paymentState = .complete
             if didDismissWhilePending {

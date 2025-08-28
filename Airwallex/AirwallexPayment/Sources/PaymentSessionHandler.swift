@@ -272,6 +272,12 @@ public class PaymentSessionHandler: NSObject {
     func confirmCardPayment(with card: AWXCard,
                             billing: AWXPlaceDetails?,
                             saveCard: Bool = false) throws {
+        try AWXCardProvider.validate(
+            card: card,
+            billing: billing,
+            paymentMethodType: methodType,
+            session: session
+        )
         if let unifiedSession = Session(session) {
             // Simplified payment flow
             let cardProvider = CardProvider(
@@ -280,12 +286,13 @@ public class PaymentSessionHandler: NSObject {
                 methodType: methodType
             )
             actionProvider = cardProvider
-            
-            try cardProvider.confirmIntentWithCard(
-                card,
-                billing: billing,
-                saveCard: saveCard
-            )
+            Task {
+                await cardProvider.confirmIntentWithCard(
+                    card,
+                    billing: billing,
+                    saveCard: saveCard
+                )
+            }
             return
         }
         let cardProvider = AWXCardProvider(
@@ -293,7 +300,6 @@ public class PaymentSessionHandler: NSObject {
             session: session,
             paymentMethodType: methodType
         )
-        try cardProvider.validate(card: card, billing: billing)
         actionProvider = cardProvider
         cardProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
     }
@@ -309,6 +315,11 @@ public class PaymentSessionHandler: NSObject {
                 underlyingError: "Invalid session (payment intent required)".asError()
             )
         }
+        try AWXCardProvider.validate(
+            consent: consent,
+            paymentMethodType: methodType,
+            session: unifiedSession
+        )
         // Simplified consent flow
         let cardProvider = CardProvider(
             delegate: self,
@@ -316,7 +327,9 @@ public class PaymentSessionHandler: NSObject {
             methodType: methodType
         )
         actionProvider = cardProvider
-        try cardProvider.confirmIntentWithConsent(consent)
+        Task {
+            await cardProvider.confirmIntentWithConsent(consent)
+        }
     }
     
     /// Initiates a payment using a consent ID.
@@ -327,6 +340,11 @@ public class PaymentSessionHandler: NSObject {
                 underlyingError: "Invalid session (payment intent required)".asError()
             )
         }
+        try AWXCardProvider.validate(
+            consentId: consentId,
+            paymentMethodType: methodType,
+            session: unifiedSession
+        )
         // Simplified consent flow
         let cardProvider = CardProvider(
             delegate: self,
@@ -334,7 +352,9 @@ public class PaymentSessionHandler: NSObject {
             methodType: methodType
         )
         actionProvider = cardProvider
-        try cardProvider.confirmIntentWithConsent(consentId, requiresCVC: requiresCVC)
+        Task {
+            await cardProvider.confirmIntentWithConsent(consentId, requiresCVC: requiresCVC)
+        }
     }
     
     /// Initiates a schema-based payment transaction.

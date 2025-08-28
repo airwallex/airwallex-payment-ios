@@ -1,8 +1,8 @@
+import AirwallexCore
+@testable import AirwallexPayment
 import UIKit
 import XCTest
-import AirwallexCore
 import PassKit
-@testable import AirwallexPayment
 
 class ApplePayProviderTests: XCTestCase {
     
@@ -98,6 +98,8 @@ class ApplePayProviderTests: XCTestCase {
         XCTAssertFalse(ApplePayProvider.canHandle(recurringWithIntentSession, paymentMethod: methodType))
     }
     
+    // MARK: - Payment status handling
+    
     func testStartPaymentWithMissingApplePayOptions() {
         // Test with missing Apple Pay options
         let delegate = MockProviderDelegate()
@@ -189,8 +191,6 @@ class ApplePayProviderTests: XCTestCase {
         // Verify payment state
         XCTAssertEqual(provider.paymentState, .notPresented)
     }
-    
-    // MARK: - PKPaymentAuthorizationControllerDelegate Methods Tests
     
     func testDidAuthorizePaymentSuccess() async {
         // Test successful payment authorization

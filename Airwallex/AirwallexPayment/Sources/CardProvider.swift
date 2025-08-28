@@ -27,13 +27,7 @@ class CardProvider: PaymentProvider {
     
     func confirmIntentWithCard(_ card: AWXCard,
                                billing: AWXPlaceDetails? = nil,
-                               saveCard: Bool) throws {
-        try AWXCardProvider.validate(
-            card: card,
-            billing: billing,
-            paymentMethodType: paymentMethodType,
-            session: unifiedSession
-        )
+                               saveCard: Bool) async {
         debugLog("Start payment confirm. Type: Card. Intent Id: \(unifiedSession.paymentIntent.id)")
         let method = AWXPaymentMethod()
         method.type = AWXCardKey
@@ -44,39 +38,41 @@ class CardProvider: PaymentProvider {
         if saveCard && unifiedSession.paymentIntent.customerId != nil {
             unifiedSession.recurringOptions = RecurringOptions(nextTriggeredBy: .customerType)
         }
-        confirmInitialTransaction(method)
+        
+        let request = createConfirmIntentRequest(method: method, consent: nil)
+        await confirmIntent(request)
     }
     
     /// Confirms a payment intent using an existing payment consent
     /// - Parameter consent: The payment consent to use for confirmation
-    func confirmIntentWithConsent(_ consent: AWXPaymentConsent) throws {
-        try AWXCardProvider.validate(
-            consent: consent,
-            paymentMethodType: paymentMethodType,
-            session: unifiedSession
-        )
-        // Create a task that can be cancelled if needed
-        Task { @MainActor in
-            do {
-                let methodId = consent.paymentMethod?.id
-                var cvc = consent.paymentMethod?.card?.cvc
-                // Collect CVC if needed for PAN cards
-                if let card = consent.paymentMethod?.card,
-                   card.numberType == "PAN" && (cvc ?? "").isEmpty {
-                    cvc = try await collectCVC(for:consent)
-                }
+    func confirmIntentWithConsent(_ consent: AWXPaymentConsent) async {
+        
+        do {
+            let methodId = consent.paymentMethod?.id
+            var cvc = consent.paymentMethod?.card?.cvc
+            // Collect CVC if needed for PAN cards
+            if let card = consent.paymentMethod?.card,
+               card.numberType == "PAN" && (cvc ?? "").isEmpty {
+                cvc = try await collectCVC(for:consent)
+            }
+            if let methodId {
                 if unifiedSession.recurringOptions != nil {
                     // Create consent & confirm payment with existing payment method
-                    confirmConsentConversion(methodId: methodId, cvc: cvc)
+                    let request = createRequestForConsentConversion(methodId: methodId, cvc: cvc)
+                    await confirmIntent(request)
                 } else if consent.isMITConsent {
                     // CIT transaction with MIT consent
                     unifiedSession.recurringOptions = RecurringOptions(nextTriggeredBy: .customerType)
-                    confirmConsentConversion(methodId: methodId, cvc: cvc)
-                } else {
-                    // CIT transaction with CIT consent
-                    confirmSubsequentTransaction(consentId: consent.id, cvc: cvc)
+                    let request = createRequestForConsentConversion(methodId: methodId, cvc: cvc)
+                    await confirmIntent(request)
                 }
-            } catch {
+            } else {
+                // CIT transaction with CIT consent
+                let request = createRequestForSubsequentTransaction(consentId: consent.id, cvc: cvc)
+                await confirmIntent(request)
+            }
+        } catch {
+            await MainActor.run {
                 if Task.isCancelled {
                     delegate?.provider(self, didCompleteWith: .cancel, error: nil)
                 } else {
@@ -86,27 +82,22 @@ class CardProvider: PaymentProvider {
         }
     }
     
-    func confirmIntentWithConsent(_ consentId: String, requiresCVC: Bool = false) throws {
-        try AWXCardProvider.validate(
-            consentId: consentId,
-            paymentMethodType: paymentMethodType,
-            session: unifiedSession
-        )
-        if requiresCVC {
-            Task { @MainActor in
-                do {
-                    let cvc = try await collectCVC()
-                    confirmSubsequentTransaction(consentId: consentId, cvc: cvc)
-                } catch {
-                    if Task.isCancelled {
-                        delegate?.provider(self, didCompleteWith: .cancel, error: nil)
-                    } else {
-                        delegate?.provider(self, didCompleteWith: .failure, error: error)
-                    }
+    func confirmIntentWithConsent(_ consentId: String, requiresCVC: Bool = false) async {
+        do {
+            var cvc: String? = nil
+            if requiresCVC {
+                cvc = try await collectCVC()
+            }
+            let request = createRequestForSubsequentTransaction(consentId: consentId, cvc: cvc)
+            await confirmIntent(request)
+        } catch {
+            await MainActor.run {
+                if Task.isCancelled {
+                    delegate?.provider(self, didCompleteWith: .cancel, error: nil)
+                } else {
+                    delegate?.provider(self, didCompleteWith: .failure, error: error)
                 }
             }
-        } else {
-            confirmSubsequentTransaction(consentId: consentId, cvc: nil)
         }
     }
     
@@ -137,4 +128,33 @@ class CardProvider: PaymentProvider {
         
         return cvc
     }
+}
+
+extension CardProvider {
+    
+    func createRequestForSubsequentTransaction(consentId: String, cvc: String?) -> AWXConfirmPaymentIntentRequest {
+        let consent = AWXPaymentConsent()
+        consent.id = consentId
+        // for now all subsequent transactions's type are card
+        let method = AWXPaymentMethod()
+        method.type = AWXCardKey
+        if let cvc {
+            method.card = AWXCard()
+            method.card?.cvc = cvc
+        }
+        return createConfirmIntentRequest(method: method, consent: consent)
+    }
+    
+    func createRequestForConsentConversion(methodId: String?, cvc: String?) -> AWXConfirmPaymentIntentRequest {
+        // for now all conversion transactions's type are card
+        let method = AWXPaymentMethod()
+        method.id = methodId
+        method.type = AWXCardKey
+        if let cvc {
+            method.card = AWXCard()
+            method.card?.cvc = cvc
+        }
+        return createConfirmIntentRequest(method: method, consent: nil)
+    }
+    
 }
