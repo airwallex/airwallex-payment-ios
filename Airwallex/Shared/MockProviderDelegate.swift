@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
 import AirwallexCore
+import UIKit
 
-class MockProviderDelegate: NSObject, AWXProviderDelegate {
+class MockProviderDelegate: UIViewController, AWXProviderDelegate {
     // Properties to track delegate calls
     var didStartRequest = 0
     var didEndRequest = 0
@@ -41,7 +41,7 @@ class MockProviderDelegate: NSObject, AWXProviderDelegate {
     
     // Additional required methods with empty implementations
     func hostViewController() -> UIViewController {
-        return UIViewController()
+        return self
     }
     
     func provider(_ provider: AWXDefaultProvider, shouldHandle nextAction: AWXConfirmPaymentNextAction) {
@@ -64,5 +64,21 @@ class MockProviderDelegate: NSObject, AWXProviderDelegate {
         completionError = nil
         paymentConsentId = nil
         paymentIntentId = nil
+    }
+    
+    var presentedViewControllerSpy: UIViewController?
+    
+    override var presentedViewController: UIViewController? {
+        return self
+    }
+    
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        presentedViewControllerSpy = viewControllerToPresent
+        completion?()
+    }
+    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        presentedViewControllerSpy = nil
+        completion?()
     }
 }
