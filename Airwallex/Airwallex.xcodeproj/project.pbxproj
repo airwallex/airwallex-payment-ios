@@ -368,6 +368,7 @@
 		D8D370542E5D8D73005618D4 /* AirwallexPaymentStatus+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D370532E5D8D73005618D4 /* AirwallexPaymentStatus+Extension.swift */; };
 		D8D370A22E5EDD8F005618D4 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D72D9E335D00D082EC /* MockURLProtocol.swift */; };
 		D8D3712B2E604F5A005618D4 /* AWXAPIClient+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D3712A2E604F5A005618D4 /* AWXAPIClient+Extension.swift */; };
+		D8D3726D2E617332005618D4 /* ProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D3726C2E617332005618D4 /* ProviderFactory.swift */; };
 		D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
 /* End PBXBuildFile section */
 
@@ -764,6 +765,7 @@
 		D8D36EF52E5C5CB0005618D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D370532E5D8D73005618D4 /* AirwallexPaymentStatus+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AirwallexPaymentStatus+Extension.swift"; sourceTree = "<group>"; };
 		D8D3712A2E604F5A005618D4 /* AWXAPIClient+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXAPIClient+Extension.swift"; sourceTree = "<group>"; };
+		D8D3726C2E617332005618D4 /* ProviderFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderFactory.swift; sourceTree = "<group>"; };
 		D8EC87D12D9E335D00D082EC /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		D8EC87D32D9E335D00D082EC /* MockPaymentResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPaymentResultDelegate.swift; sourceTree = "<group>"; };
 		D8EC87D42D9E335D00D082EC /* MockProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProviderDelegate.swift; sourceTree = "<group>"; };
@@ -772,14 +774,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D8D371532E60566A005618D4 /* Exceptions for "AirwallexPaymentTests" folder in "AirwallexPaymentTests" target */ = {
+		D8D371532E60566A005618D4 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				UIVIewControllerExtensionsTests.swift,
 			);
 			target = D81983472D6F120B008008A3 /* AirwallexPaymentTests */;
 		};
-		D8D371CD2E605670005618D4 /* Exceptions for "AirwallexPaymentSheetTests" folder in "AirwallexPaymentTests" target */ = {
+		D8D371CD2E605670005618D4 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/method_type_card.json,
@@ -792,30 +794,8 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D8D371412E60566A005618D4 /* AirwallexPaymentTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				D8D371532E60566A005618D4 /* Exceptions for "AirwallexPaymentTests" folder in "AirwallexPaymentTests" target */,
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = AirwallexPaymentTests;
-			sourceTree = "<group>";
-		};
-		D8D371942E605670005618D4 /* AirwallexPaymentSheetTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				D8D371CD2E605670005618D4 /* Exceptions for "AirwallexPaymentSheetTests" folder in "AirwallexPaymentTests" target */,
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = AirwallexPaymentSheetTests;
-			sourceTree = "<group>";
-		};
+		D8D371412E60566A005618D4 /* AirwallexPaymentTests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D8D371532E60566A005618D4 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = AirwallexPaymentTests; sourceTree = "<group>"; };
+		D8D371942E605670005618D4 /* AirwallexPaymentSheetTests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D8D371CD2E605670005618D4 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = AirwallexPaymentSheetTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1414,6 +1394,7 @@
 				D8D36E6D2E5C5CAC005618D4 /* ErrorMessage.swift */,
 				D8D36E6E2E5C5CAC005618D4 /* Events.swift */,
 				D8D36E6F2E5C5CAC005618D4 /* PaymentSessionHandler.swift */,
+				D8D3726C2E617332005618D4 /* ProviderFactory.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -2076,9 +2057,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2379,6 +2364,7 @@
 				D8D36E792E5C5CAC005618D4 /* AWXConfirmPaymentNextAction+Extension.swift in Sources */,
 				D8D36E7A2E5C5CAC005618D4 /* AWXDefaultProvider+Extensions.swift in Sources */,
 				D8D36E7B2E5C5CAC005618D4 /* PaymentProvider.swift in Sources */,
+				D8D3726D2E617332005618D4 /* ProviderFactory.swift in Sources */,
 				D8D36E7C2E5C5CAC005618D4 /* AWXPaymentConsent+Extensions.swift in Sources */,
 				D8D370542E5D8D73005618D4 /* AirwallexPaymentStatus+Extension.swift in Sources */,
 				D8D36E7D2E5C5CAC005618D4 /* AWXPlaceDetails+Extensions.swift in Sources */,

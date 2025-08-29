@@ -6,10 +6,10 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-import UIKit
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
+import UIKit
 
 public class PaymentSessionHandler: NSObject {
     enum ValidationError: ErrorLoggable {
@@ -101,6 +101,8 @@ public class PaymentSessionHandler: NSObject {
     // UI Integration support
     @_spi(AWX) public typealias DismissActionBlock = (@escaping () -> Void) -> Void
     var dismissAction: DismissActionBlock? = nil
+    
+    lazy var providerFactory: ProviderFactoryProtocol = ProviderFactory()
     
     @_spi(AWX) public init(session: AWXSession,
                            viewController: UIViewController,
@@ -196,24 +198,22 @@ public class PaymentSessionHandler: NSObject {
               !methodType.name.isEmpty else {
             return false
         }
-        if let session = session as? Session {
-            switch methodType.name {
-            case AWXCardKey:
+        if methodType.name == AWXApplePayKey || methodType.name == AWXCardKey,
+           let session = Session(session) {
+            // we will eventually use Session on this branch
+            if methodType.name == AWXCardKey {
                 return CardProvider.canHandle(session, paymentMethod: methodType)
-            case AWXApplePayKey:
+            } else {
                 return ApplePayProvider.canHandle(session, paymentMethod: methodType)
-            case AWXWeChatPayKey:
-#if canImport(WechatOpenSDKDynamic)
-                return true
-#else
-                return false
-#endif
-            default:
-                return AWXDefaultProvider.canHandle(session, paymentMethod: methodType)
             }
         } else {
+            // fallback to use legacy sessions for LPM method type or session which can not be converted to Session. (e.g. AWXRecurringSession)
+            var legacySession = session
+            if let session = legacySession as? Session {
+                legacySession = session.convertToLegacySession()
+            }
             guard let providerClass = ClassToHandleFlowForPaymentMethodType(methodType),
-                  providerClass.canHandle(session, paymentMethod: methodType) else {
+                  providerClass.canHandle(legacySession, paymentMethod: methodType) else {
                 return false
             }
             
@@ -238,29 +238,13 @@ public class PaymentSessionHandler: NSObject {
     ///     receives a cancellation callback if the user dismisses the sheet.
     ///   - If `false`, dismissing the Apple Pay sheet does not trigger a cancellation callback,
     func confirmApplePay(cancelPaymentOnDismiss: Bool) throws {
-        if let unifiedSession = Session(session) {
-            // Simplified payment flow
-            let applePayProvider = ApplePayProvider(
-                delegate: self,
-                session: unifiedSession,
-                methodType: methodType
-            )
-            actionProvider = applePayProvider
-            try applePayProvider.startPayment(cancelPaymentOnDismiss: cancelPaymentOnDismiss)
-            return
-        }
-        let applePayProvider = AWXApplePayProvider(
+        let provider = providerFactory.applePayProvider(
             delegate: self,
             session: session,
-            paymentMethodType: methodType
+            type: methodType
         )
-        try applePayProvider.validate()
-        actionProvider = applePayProvider
-        if cancelPaymentOnDismiss {
-            applePayProvider.startPayment()
-        } else {
-            applePayProvider.handleFlow()
-        }
+        actionProvider = provider
+        try provider.startPayment(cancelPaymentOnDismiss: cancelPaymentOnDismiss)
     }
     
     /// Initiates a card payment transaction.
@@ -278,30 +262,19 @@ public class PaymentSessionHandler: NSObject {
             paymentMethodType: methodType,
             session: session
         )
-        if let unifiedSession = Session(session) {
-            // Simplified payment flow
-            let cardProvider = CardProvider(
-                delegate: self,
-                session: unifiedSession,
-                methodType: methodType
-            )
-            actionProvider = cardProvider
-            Task {
-                await cardProvider.confirmIntentWithCard(
-                    card,
-                    billing: billing,
-                    saveCard: saveCard
-                )
-            }
-            return
-        }
-        let cardProvider = AWXCardProvider(
+        let provider = providerFactory.cardProvider(
             delegate: self,
             session: session,
-            paymentMethodType: methodType
+            type: methodType
         )
-        actionProvider = cardProvider
-        cardProvider.confirmPaymentIntent(with: card, billing: billing, saveCard: saveCard)
+        actionProvider = provider
+        Task {
+            await provider.confirmIntentWithCard(
+                card,
+                billing: billing,
+                saveCard: saveCard
+            )
+        }
     }
     
     /// Initiates a payment using AWXPaymentConsent
@@ -321,10 +294,10 @@ public class PaymentSessionHandler: NSObject {
             session: unifiedSession
         )
         // Simplified consent flow
-        let cardProvider = CardProvider(
+        let cardProvider = providerFactory.cardProvider(
             delegate: self,
             session: unifiedSession,
-            methodType: methodType
+            type: methodType
         )
         actionProvider = cardProvider
         Task {
@@ -346,10 +319,10 @@ public class PaymentSessionHandler: NSObject {
             session: unifiedSession
         )
         // Simplified consent flow
-        let cardProvider = CardProvider(
+        let cardProvider = providerFactory.cardProvider(
             delegate: self,
             session: unifiedSession,
-            methodType: methodType
+            type: methodType
         )
         actionProvider = cardProvider
         Task {
@@ -364,16 +337,10 @@ public class PaymentSessionHandler: NSObject {
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     func confirmRedirectPayment(with name: String, additionalInfo: [String: String]?) throws {
-        let session = if let unifiedSession = session as? Session {
-            // simplified consnet flow not yet supported by LPM
-            unifiedSession.convertToLegacySession()
-        } else {
-            session
-        }
-        let redirectAction = AWXRedirectActionProvider(
+        let redirectAction = providerFactory.redirectProvider(
             delegate: self,
             session: session,
-            paymentMethodType: methodType
+            type: methodType
         )
         try redirectAction.validate(name: name)
         actionProvider = redirectAction
@@ -386,16 +353,10 @@ public class PaymentSessionHandler: NSObject {
     /// - Parameters:
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
     func confirmRedirectPayment(with paymentMethod: AWXPaymentMethod) throws {
-        let session = if let unifiedSession = session as? Session {
-            // simplified consnet flow not yet supported by LPM
-            unifiedSession.convertToLegacySession()
-        } else {
-            session
-        }
-        let redirectAction = AWXRedirectActionProvider(
+        let redirectAction = providerFactory.redirectProvider(
             delegate: self,
             session: session,
-            paymentMethodType: methodType
+            type: methodType
         )
         try redirectAction.validate(name: paymentMethod.type)
         actionProvider = redirectAction

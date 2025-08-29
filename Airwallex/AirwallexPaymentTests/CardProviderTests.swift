@@ -566,8 +566,7 @@ class CardProviderTests: XCTestCase {
         
         // Verify the request properties
         XCTAssertEqual(request1.paymentConsent?.id, "consent_123")
-        XCTAssertEqual(request1.paymentMethod?.type, AWXCardKey)
-        XCTAssertNil(request1.paymentMethod?.card?.cvc)
+        XCTAssertNil(request1.paymentMethod)
         XCTAssertEqual(request1.intentId, mockPaymentIntent.id)
         
         // Test with CVC

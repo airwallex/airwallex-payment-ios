@@ -50,17 +50,17 @@ import Foundation
     ///   - recurringOptions: Options for recurring payments (optional)
     ///   - requiredBillingContactFields: Required billing contact fields (default: .name)
     @objc public init(countryCode: String,
-         paymentIntent: AWXPaymentIntent,
-         returnURL: String,
-         applePayOptions: AWXApplePayOptions? = nil,
-         autoCapture: Bool = true,
-         autoSaveCardForFuturePayments: Bool = true,
-         billing: AWXPlaceDetails? = nil,
-         hidePaymentConsents: Bool = false,
-         lang: String? = nil,
-         paymentMethods: [String]? = nil,
-         recurringOptions: RecurringOptions? = nil,
-         requiredBillingContactFields: RequiredBillingContactFields = .name
+                      paymentIntent: AWXPaymentIntent,
+                      returnURL: String,
+                      applePayOptions: AWXApplePayOptions? = nil,
+                      autoCapture: Bool = true,
+                      autoSaveCardForFuturePayments: Bool = true,
+                      billing: AWXPlaceDetails? = nil,
+                      hidePaymentConsents: Bool = false,
+                      lang: String? = nil,
+                      paymentMethods: [String]? = nil,
+                      recurringOptions: RecurringOptions? = nil,
+                      requiredBillingContactFields: RequiredBillingContactFields = .name
     ) {
         self.paymentIntent = paymentIntent
         self.recurringOptions = recurringOptions

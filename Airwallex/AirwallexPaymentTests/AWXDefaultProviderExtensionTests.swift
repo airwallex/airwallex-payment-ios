@@ -395,4 +395,68 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         }
     }
 
+    // MARK: - Additional tests for AWXApplePayProvider.validate()
+    
+    func testApplePayValidateHappyPath() {
+        // Setup Apple Pay method type
+        mockMethodType.name = AWXApplePayKey
+        mockMethodType.displayName = "Apple Pay"
+        mockSession.applePayOptions = mockApplePayOptions
+        mockApplePayOptions.supportedNetworks = [.visa, .masterCard]
+        
+        // Validation should pass with correct setup
+        XCTAssertNoThrow(try AWXApplePayProvider.validate(paymentMethodType: mockMethodType, session: mockSession))
+    }
+    
+    func testApplePayValidateCITNotSupported() {
+        // Setup Apple Pay method type
+        mockMethodType.name = AWXApplePayKey
+        mockMethodType.displayName = "Apple Pay"
+        mockMethodType.transactionMode = AWXPaymentTransactionModeRecurring
+        
+        // Create recurring session with CIT
+        let recurringSession = AWXRecurringSession()
+        recurringSession.countryCode = "AU"
+        recurringSession.setAmount(100)
+        recurringSession.setCurrency("AUD")
+        recurringSession.setCustomerId("test_customer_id")
+        recurringSession.applePayOptions = mockApplePayOptions
+        recurringSession.applePayOptions?.supportedNetworks = [.visa, .masterCard]
+        recurringSession.nextTriggerByType = .customerType // CIT - Customer Initiated Transaction
+        
+        // Validation should throw "CIT not supported by Apple Pay" error
+        XCTAssertThrowsError(try AWXApplePayProvider.validate(paymentMethodType: mockMethodType, session: recurringSession)) { error in
+            guard case AWXApplePayProvider.ValidationError.applePayNotSupported(let message) = error else {
+                XCTFail("Expected AWXApplePayProvider.ValidationError.applePayNotSupported, but got \(error)")
+                return
+            }
+            XCTAssertEqual(message, "CIT not supported by Apple Pay")
+        }
+    }
+    
+    func testApplePayValidateWithSessionTypeConversion() {
+        // Setup Apple Pay method type
+        mockMethodType.name = AWXApplePayKey
+        mockMethodType.displayName = "Apple Pay"
+        mockMethodType.transactionMode = AWXPaymentTransactionModeRecurring
+        
+        // Create Session with recurring options and CIT
+        let session = Session(
+            countryCode: "AU",
+            paymentIntent: mockPaymentIntent,
+            returnURL: "https://example.com/return",
+            applePayOptions: mockApplePayOptions
+        )
+        session.applePayOptions?.supportedNetworks = [.visa, .masterCard]
+        session.recurringOptions = RecurringOptions(nextTriggeredBy: .customerType) // CIT
+        
+        // Validation should throw "CIT not supported by Apple Pay" error
+        XCTAssertThrowsError(try AWXApplePayProvider.validate(paymentMethodType: mockMethodType, session: session)) { error in
+            guard case AWXApplePayProvider.ValidationError.applePayNotSupported(let message) = error else {
+                XCTFail("Expected AWXApplePayProvider.ValidationError.applePayNotSupported, but got \(error)")
+                return
+            }
+            XCTAssertEqual(message, "CIT not supported by Apple Pay")
+        }
+    }
 }
