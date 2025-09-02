@@ -45,6 +45,7 @@
         }
         return;
     }
+    actionProvider.paymentConsent = self.paymentConsent;
     [actionProvider handleNextAction:nextAction];
     self.provider = actionProvider;
 }

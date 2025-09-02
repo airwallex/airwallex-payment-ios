@@ -201,6 +201,7 @@
     }
 
     AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:self session:self.session];
+    actionProvider.paymentConsent = provider.paymentConsent;
     [actionProvider handleNextAction:nextAction];
     self.provider = actionProvider;
 }

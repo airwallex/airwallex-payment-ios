@@ -517,6 +517,7 @@ typedef enum {
         return;
     }
 
+    actionProvider.paymentConsent = provider.paymentConsent;
     [actionProvider handleNextAction:nextAction];
     self.provider = actionProvider;
 }

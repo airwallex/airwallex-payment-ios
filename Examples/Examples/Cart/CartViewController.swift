@@ -365,6 +365,10 @@ extension CartViewController: AWXPaymentResultDelegate {
             self.handlePaymentResult(status: status, error: error)
         }
     }
+    
+    func paymentViewController(_ controller: UIViewController, didCompleteWithPaymentConsentId paymentConsentId: String) {
+        print("\(#function) called with consent ID: \(paymentConsentId)")
+    }
 }
 
 // ApplePayProvider delegate methods, no need to conform to if using AWXUIContext
