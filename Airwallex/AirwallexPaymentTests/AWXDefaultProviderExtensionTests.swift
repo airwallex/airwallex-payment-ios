@@ -440,6 +440,7 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         mockMethodType.displayName = "Apple Pay"
         mockMethodType.transactionMode = AWXPaymentTransactionModeRecurring
         
+        mockPaymentIntent.customerId = "mock_customer_id"
         // Create Session with recurring options and CIT
         let session = Session(
             countryCode: "AU",

@@ -56,19 +56,20 @@ class MockURLProtocol: URLProtocol {
 
     override func stopLoading() {}
     
-    static func mockSuccess(delay: UInt64 = UInt64.random(in: 1_000...2_000)) {
+    static func mockSuccess(data: Data = Data(),
+                            delay: UInt64 = UInt64.random(in: 1_000...2_000)) {
         let response = HTTPURLResponse(
             url: URL(string: "https://www.example.com")!,
             statusCode: 200,
             httpVersion: nil,
             headerFields: nil
         )
-        let data = Data()
         mockResponse = (data, response, nil)
         responseDelay = delay
     }
     
-    static func mockFailure(withError error: Error? = nil, delay: UInt64 = UInt64.random(in: 1_000...2_000)) {
+    static func mockFailure(withError error: Error? = nil,
+                            delay: UInt64 = UInt64.random(in: 1_000...2_000)) {
         let response = HTTPURLResponse(
             url: URL(string: "https://www.example.com")!,
             statusCode: 500,
