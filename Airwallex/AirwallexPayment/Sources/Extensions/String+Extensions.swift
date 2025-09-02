@@ -42,15 +42,15 @@ import Foundation
         case invalidJSON
         
         public var errorDescription: String? {
-                switch self {
-                case .invalidFormat:
-                    return "The JWT is not in a valid format."
-                case .invalidBase64:
-                    return "The JWT contains invalid base64."
-                case .invalidJSON:
-                    return "The JWT payload contains invalid JSON."
-                }
+            switch self {
+            case .invalidFormat:
+                return "The JWT is not in a valid format."
+            case .invalidBase64:
+                return "The JWT contains invalid base64."
+            case .invalidJSON:
+                return "The JWT payload contains invalid JSON."
             }
+        }
     }
     
     func payloadOfJWT() throws -> [String: Any] {

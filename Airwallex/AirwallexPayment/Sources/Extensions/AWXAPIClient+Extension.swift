@@ -21,8 +21,7 @@ extension AWXAPIClient {
                 domain: AWXSDKErrorDomain,
                 code: -1,
                 userInfo: [
-                    NSLocalizedDescriptionKey: "failed to parse response",
-                    NSURLErrorFailingURLErrorKey: request.path()
+                    NSLocalizedDescriptionKey: "failed to parse response for \(request.path())"
                 ]
             )
         }

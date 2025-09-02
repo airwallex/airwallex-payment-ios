@@ -63,4 +63,24 @@ class AWXAPIClientExtensionTests: XCTestCase {
             XCTAssertEqual((error as NSError).code, NSURLErrorNotConnectedToInternet)
         }
     }
+    
+    func testFailedToParseError() async throws {
+
+        class MockAWXResponse: AWXResponse {}
+        // Create a mock request
+        let request = AWXConfirmPaymentIntentRequest()
+        
+        // Set up mock success response
+        MockURLProtocol.mockSuccess()
+        
+        // Send the request and test for success
+        do {
+            let _ : MockAWXResponse = try await mockApiClient.sendRequest(request)
+            XCTFail("Request should failed to parse response")
+        } catch {
+            XCTAssertEqual((error as NSError).domain, AWXSDKErrorDomain)
+            XCTAssertEqual((error as NSError).code, -1)
+            XCTAssertEqual((error as NSError).userInfo[NSLocalizedDescriptionKey] as? String, "failed to parse response for \(request.path())")
+        }
+    }
 }

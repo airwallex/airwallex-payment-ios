@@ -217,6 +217,15 @@ class AWXSessionExtensionTests: XCTestCase {
         }
     }
     
+    func testValidateSession() {
+        let session = Session(
+            countryCode: "AU",
+            paymentIntent: mockPaymentIntent,
+            returnURL: AWXThreeDSReturnURL
+        )
+        XCTAssertNoThrow(try session.validate())
+    }
+    
     func testValidateInvalidSessionType() {
         let session = AWXSession()
         

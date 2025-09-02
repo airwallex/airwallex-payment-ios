@@ -70,13 +70,14 @@ class PaymentSessionHandlerTests: XCTestCase {
             session: mockSession,
             viewController: viewController,
             paymentResultDelegate: mockPaymentResultDelegate,
-            methodType: mockMethodType
-        )
+            methodType: mockMethodType) { _ in }
         XCTAssertTrue(handler.paymentResultDelegate === mockPaymentResultDelegate)
         XCTAssertFalse(handler.viewController === mockPaymentResultDelegate)
         XCTAssertTrue(handler.viewController === viewController)
         XCTAssertEqual(handler.methodType, mockMethodType)
         XCTAssertEqual(handler.session, mockSession)
+        XCTAssertNotNil(handler.dismissAction)
+        XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
 
     func testConvenienceInit() {
@@ -89,6 +90,24 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertNil(handler.methodType)
         XCTAssertTrue(handler.session === self.mockSession)
         XCTAssertNil(mockPaymentResultDelegate.error)
+        XCTAssertNil(handler.dismissAction)
+        XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
+    }
+    
+    func testConvenienceInit2() {
+        let viewController = UIViewController()
+        let handler = PaymentSessionHandler(
+            session: mockSession,
+            viewController: viewController,
+            paymentResultDelegate: mockPaymentResultDelegate
+        )
+        XCTAssertTrue(handler.paymentResultDelegate === self.mockPaymentResultDelegate)
+        XCTAssertTrue(handler.viewController === viewController)
+        XCTAssertNil(handler.methodType)
+        XCTAssertTrue(handler.session === self.mockSession)
+        XCTAssertNil(mockPaymentResultDelegate.error)
+        XCTAssertNil(handler.dismissAction)
+        XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
     
     // test start apple pay check if it throws as expected
@@ -858,6 +877,47 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertTrue(mockFactory.cardProviderCalled)
         XCTAssertTrue(mockCardProvider.startConsentPaymentCalled)
         XCTAssertEqual(mockCardProvider.lastConsentUsed?.id, consent.id)
+    }
+    
+    func testConsentPaymentHappyPathWithID() async {
+        // Setup Card method type for consent payment
+        mockMethodType.name = AWXCardKey
+        mockMethodType.displayName = "Card"
+        mockMethodType.cardSchemes = AWXCardScheme.allAvailable
+        
+        // Create valid consent
+        let consent = AWXPaymentConsent()
+        consent.id = "cst_123456789"
+        
+        // Create mock provider factory with a success-returning MockCardProvider
+        let mockFactory = MockProviderFactory()
+        let mockCardProvider = MockCardProvider(
+            delegate: mockSessionHandler,
+            session: mockSession,
+            methodType: mockMethodType,
+            shouldSucceed: true
+        )
+        mockFactory.mockCardProvider = mockCardProvider
+        
+        // Inject mock factory into session handler
+        mockSessionHandler.providerFactory = mockFactory
+        
+        // Start Consent payment
+        mockSessionHandler.startConsentPayment(withId: consent.id)
+        
+        // Add sleep to wait for async status updates
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        
+        // Verify success was called on the delegate
+        await MainActor.run {
+            XCTAssertEqual(mockPaymentResultDelegate.status, .success)
+            XCTAssertNil(mockPaymentResultDelegate.error)
+        }
+        
+        // Verify the mock provider was used
+        XCTAssertTrue(mockFactory.cardProviderCalled)
+        XCTAssertTrue(mockCardProvider.startConsentPaymentCalled)
+        XCTAssertEqual(mockCardProvider.lastConsentIdUsed, consent.id)
     }
     
     // MARK: - Redirect Payment Happy Path Test

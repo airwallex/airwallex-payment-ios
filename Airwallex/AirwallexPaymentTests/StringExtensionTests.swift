@@ -88,6 +88,7 @@ class StringExtensionTests: XCTestCase {
                 return
             }
             XCTAssertEqual(jwtError, .invalidFormat)
+            XCTAssertNotNil(jwtError.errorDescription)
         }
     }
     
@@ -102,6 +103,7 @@ class StringExtensionTests: XCTestCase {
                 return
             }
             XCTAssertEqual(jwtError, .invalidBase64)
+            XCTAssertNotNil(jwtError.errorDescription)
         }
     }
     
@@ -116,6 +118,7 @@ class StringExtensionTests: XCTestCase {
                 return
             }
             XCTAssertEqual(jwtError, .invalidJSON)
+            XCTAssertNotNil(jwtError.errorDescription)
         }
     }
     
@@ -130,6 +133,7 @@ class StringExtensionTests: XCTestCase {
                 return
             }
             XCTAssertEqual(jwtError, .invalidJSON)
+            XCTAssertNotNil(jwtError.errorDescription)
         }
     }
     
