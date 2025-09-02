@@ -51,7 +51,7 @@ enum PaymentMethodProviderUpdateType {
     /// Remove consent from provider
     /// - Parameter consentId: id of the consent to be removed
     /// - Returns: if the consent is successfully removed
-    func removeConsent(consentId: String) -> Bool
+    @discardableResult func removeConsent(consentId: String) -> Bool
 }
 
 extension PaymentMethodProvider {
@@ -78,9 +78,7 @@ extension PaymentMethodProvider {
         let request = AWXDisablePaymentConsentRequest()
         request.id = consent.id
         try await apiClient.send(request)
-        if removeConsent(consentId: consent.id) {
-            updatePublisher.send(PaymentMethodProviderUpdateType.consentDeleted(consent))
-        }
+        removeConsent(consentId: consent.id)
     }
     
     /// Retrieves a list of available banks for certain online banking payment methods that require bank selection.
