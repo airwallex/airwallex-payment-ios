@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AWXNextActionHandler : NSObject
 
+/// Previously used/generated payment consent
+@property (nonatomic, strong, nullable) AWXPaymentConsent *paymentConsent;
+
 - (instancetype)initWithDelegate:(id<AWXProviderDelegate>)delegate session:(AWXSession *)session;
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction;

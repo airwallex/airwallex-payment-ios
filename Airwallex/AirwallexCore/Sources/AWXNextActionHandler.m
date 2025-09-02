@@ -34,6 +34,7 @@
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
     Class class = ClassToHandleNextActionForType(nextAction);
     AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:self.delegate session:self.session];
+    actionProvider.paymentConsent = self.paymentConsent;
     [actionProvider handleNextAction:nextAction];
     self.provider = actionProvider;
 }
