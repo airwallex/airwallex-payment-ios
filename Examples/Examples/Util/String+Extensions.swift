@@ -13,4 +13,7 @@ extension String {
     var nilIfEmpty: String? {
         isEmpty ? nil : self
     }
+    
+    static let demoAppScheme = "airwallexcheckout"
+    static let demoAppHost = "com.airwallex.paymentacceptance"
 }

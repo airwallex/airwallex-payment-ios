@@ -117,6 +117,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly, nullable) AWXPaymentMethod *paymentMethod;
 
+/// Payment consent used/generated in payment flow
+@property (nonatomic, strong, nullable) AWXPaymentConsent *paymentConsent;
 /**
  whether should show this payment directly.
  */

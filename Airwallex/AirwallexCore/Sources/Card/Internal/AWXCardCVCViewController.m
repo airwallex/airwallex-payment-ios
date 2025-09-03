@@ -194,6 +194,7 @@
     [self log:@"provider:shouldHandleNextAction:  type:%@, stage: %@", nextAction.type, nextAction.stage];
     Class class = ClassToHandleNextActionForType(nextAction);
     AWXDefaultActionProvider *actionProvider = [[class alloc] initWithDelegate:self session:self.session];
+    actionProvider.paymentConsent = provider.paymentConsent;
     [actionProvider handleNextAction:nextAction];
     self.provider = actionProvider;
 }
