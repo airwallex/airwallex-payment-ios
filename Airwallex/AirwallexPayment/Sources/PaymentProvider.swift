@@ -54,17 +54,13 @@ class PaymentProvider: AWXDefaultProvider {
         return request
     }
     
-    func confirmIntent(_ request: AWXConfirmPaymentIntentRequest) async {
+    @MainActor func confirmIntent(_ request: AWXConfirmPaymentIntentRequest) async {
         do {
             self.delegate?.providerDidStartRequest(self)
             let response: AWXConfirmPaymentIntentResponse = try await apiClient.sendRequest(request)
-            await MainActor.run {
-                complete(with: response, error: nil)
-            }
+            complete(with: response, error: nil)
         } catch {
-            await MainActor.run {
-                complete(with: nil, error: error)
-            }
+            complete(with: nil, error: error)
         }
     }
 }

@@ -31,6 +31,11 @@ final class CardGuestUserCheckoutTests: XCTestCase {
     }
     
     @MainActor
+    func testCardPayment_oneOff_3DS_Combined_legacySession() throws {
+        testCardPayment(cardNumber: TestCards.visa3DS, preferUnifiedSession: false, threeDSChallenge: true)
+    }
+    
+    @MainActor
     func testCardPayment_oneOff_3DS_Combined_accordionLayout() throws {
         testCardPayment(cardNumber: TestCards.visa3DS, threeDSChallenge: true, useTabLayout: false)
     }
@@ -51,13 +56,17 @@ final class CardGuestUserCheckoutTests: XCTestCase {
     }
     
     @MainActor
-    private func testCardPayment(cardNumber: String, threeDSChallenge: Bool, useTabLayout: Bool = true) {
+    private func testCardPayment(cardNumber: String,
+                                 preferUnifiedSession: Bool = true,
+                                 threeDSChallenge: Bool,
+                                 useTabLayout: Bool = true) {
         launchAppAndEnsureSettings(
             app,
             checkoutMode: .oneOff,
             customerID: "",
-            useTabLayout: useTabLayout,
-            force3DS: false
+            force3DS: false,
+            preferUnifiedSession: true,
+            useTabLayout: useTabLayout
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()

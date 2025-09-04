@@ -537,7 +537,15 @@ private extension IntegrationDemoListViewController {
         return secret
     }
     
-    func createPaymentSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> Session {
+    func createPaymentSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
+        if ExamplesKeys.preferUnifiedSession {
+            return try await createUnifiedSession(force3DS: force3DS)
+        } else {
+            return try await createLegacySession(force3DS: force3DS)
+        }
+    }
+    
+    func createUnifiedSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
         // Create payment intent
         let amount = ExamplesKeys.checkoutMode == .recurring ? 0 : (Decimal(string: ExamplesKeys.amount) ?? 0)
         let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(
@@ -562,57 +570,57 @@ private extension IntegrationDemoListViewController {
         return session
     }
     
-//    func createPaymentSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
-//        // create payment session
-//        var paymentSession: AWXSession
-//        switch ExamplesKeys.checkoutMode {
-//        case .oneOff:
-//            // create payment intent
-//            let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(force3DS: force3DS)
-//            // update client secret
-//            AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
-//            // create AWXOneOffSession
-//            let session = AWXOneOffSession()
-//            session.paymentIntent = paymentIntent
-//            session.autoCapture = ExamplesKeys.autoCapture
-//            paymentSession = session
-//        case .recurring:
-//            // generate client secret
-//            let clientSecret = try await generateClientSecretForRecurringPayment()
-//            // update client secret
-//            AWXAPIClientConfiguration.shared().clientSecret = clientSecret
-//            // create AWXRecurringSession
-//            let session = AWXRecurringSession()
-//            session.setCurrency(ExamplesKeys.currency)
-//            session.setAmount(NSDecimalNumber(string: ExamplesKeys.amount))
-//            session.setCustomerId(ExamplesKeys.customerId)
-//            session.nextTriggerByType = ExamplesKeys.nextTriggerByType
-//            session.merchantTriggerReason = .unscheduled
-//            paymentSession = session
-//        case .recurringWithIntent:
-//            // create payment intent
-//            let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(force3DS: force3DS)
-//            // update client secret
-//            AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
-//            // create AWXRecurringWithIntentSession
-//            let session = AWXRecurringWithIntentSession()
-//            session.paymentIntent = paymentIntent
-//            session.nextTriggerByType = ExamplesKeys.nextTriggerByType
-//            session.autoCapture = ExamplesKeys.autoCapture
-//            session.merchantTriggerReason = .scheduled
-//            paymentSession = session
-//        }
-//        // update `paymentSession.billing` if you want to reuse shipping address for billing address
-//        paymentSession.billing = shippingAddress
-//        paymentSession.countryCode = ExamplesKeys.countryCode
-//        // setup options for applepay
-//        paymentSession.applePayOptions = DemoDataSource.applePayOptions
-//        // setup returnURL (schema or universalLink of your app) which is required for payments like wechat pay
-//        paymentSession.returnURL = ExamplesKeys.returnUrl
-//        // update required billing contact fields
-//        paymentSession.requiredBillingContactFields = getRequiredBillingContactFields()
-//        return paymentSession
-//    }
+    func createLegacySession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
+        // create payment session
+        var paymentSession: AWXSession
+        switch ExamplesKeys.checkoutMode {
+        case .oneOff:
+            // create payment intent
+            let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(force3DS: force3DS)
+            // update client secret
+            AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
+            // create AWXOneOffSession
+            let session = AWXOneOffSession()
+            session.paymentIntent = paymentIntent
+            session.autoCapture = ExamplesKeys.autoCapture
+            paymentSession = session
+        case .recurring:
+            // generate client secret
+            let clientSecret = try await generateClientSecretForRecurringPayment()
+            // update client secret
+            AWXAPIClientConfiguration.shared().clientSecret = clientSecret
+            // create AWXRecurringSession
+            let session = AWXRecurringSession()
+            session.setCurrency(ExamplesKeys.currency)
+            session.setAmount(NSDecimalNumber(string: ExamplesKeys.amount))
+            session.setCustomerId(ExamplesKeys.customerId)
+            session.nextTriggerByType = ExamplesKeys.nextTriggerByType
+            session.merchantTriggerReason = .unscheduled
+            paymentSession = session
+        case .recurringWithIntent:
+            // create payment intent
+            let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(force3DS: force3DS)
+            // update client secret
+            AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
+            // create AWXRecurringWithIntentSession
+            let session = AWXRecurringWithIntentSession()
+            session.paymentIntent = paymentIntent
+            session.nextTriggerByType = ExamplesKeys.nextTriggerByType
+            session.autoCapture = ExamplesKeys.autoCapture
+            session.merchantTriggerReason = .scheduled
+            paymentSession = session
+        }
+        // update `paymentSession.billing` if you want to reuse shipping address for billing address
+        paymentSession.billing = shippingAddress
+        paymentSession.countryCode = ExamplesKeys.countryCode
+        // setup options for applepay
+        paymentSession.applePayOptions = DemoDataSource.applePayOptions
+        // setup returnURL (schema or universalLink of your app) which is required for payments like wechat pay
+        paymentSession.returnURL = ExamplesKeys.returnUrl
+        // update required billing contact fields
+        paymentSession.requiredBillingContactFields = getRequiredBillingContactFields()
+        return paymentSession
+    }
     
     func getRequiredBillingContactFields() -> RequiredBillingContactFields {
         var requiredBillingContactFields: RequiredBillingContactFields = []

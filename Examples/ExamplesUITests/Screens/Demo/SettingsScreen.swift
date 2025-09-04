@@ -27,6 +27,7 @@ enum SettingsScreen {
     static let customerIDTextField = app.textFields[AccessibilityIdentifiers.SettingsScreen.textFieldForCustomerID]
     static let customerIDActionButton = app.buttons[AccessibilityIdentifiers.SettingsScreen.actionButtonForCustomerID]
     static let toggleFor3DS = app.switches[AccessibilityIdentifiers.SettingsScreen.toggleFor3DS]
+    static let toggleForUnifiedSession = app.switches[AccessibilityIdentifiers.SettingsScreen.toggleForUnifiedSession]
     static let alert = app.alerts.firstMatch
     static let activityIndicator = app.activityIndicators.firstMatch
     static let keyboard = app.keyboards.firstMatch
@@ -97,6 +98,16 @@ enum SettingsScreen {
         XCTAssertTrue(app.buttons[layoutName].exists)
         app.buttons[layoutName].robustTap()
         XCTAssertTrue(optionViewForLayout.staticTexts[layoutName].waitForExistence(timeout: .animationTimeout))
+    }
+    
+    static func ensurePreferUnifiedSession(_ preferUnifiedSession: Bool) {
+        XCTAssertTrue(toggleForUnifiedSession.exists)
+        var isOn = (toggleForUnifiedSession.value as? String) == "1"
+        if isOn != preferUnifiedSession {
+            toggleForUnifiedSession.robustTap()
+        }
+        isOn = (toggleForUnifiedSession.value as? String) == "1"
+        XCTAssertEqual(isOn, preferUnifiedSession)
     }
     
     static func ensureNextTriggerByCustomer(_ isTriggerByCustomer: Bool) {
