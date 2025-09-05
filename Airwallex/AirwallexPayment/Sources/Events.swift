@@ -17,17 +17,19 @@ import AirwallexCore
     @_spi(AWX) public enum Fields: String {
         case subtype = "subtype"
         case intentId = "intent_id"
-        case paymentMethod = "payment_method"
+        case paymentMethod = "paymentMethod"
         case consentId = "consent_id"
         case supportedSchemes = "supportedSchemes"
         case bankName = "bankName"
         case message = "message"
         case value = "value"
         case eventType = "eventType"
+        case supportedNetworks = "supported_networks"
     }
     
     @_spi(AWX) public enum PageView: String {
         case paymentMethodList = "payment_method_list"
+        case applePaySheet = "apple_pay_sheet"
     }
     
     @_spi(AWX) public struct PaymentMethodView: RawRepresentable {
@@ -49,12 +51,17 @@ import AirwallexCore
         case selectBank = "select_bank"
         case paymentLaunched = "payment_launched"
         case paymentCanceled = "payment_canceled"
+        case paymentSuccess = "payment_success"
     }
 }
 
 public protocol ErrorLoggable: LocalizedError, CustomNSError {
     var eventName: String { get }
     var eventType: String? { get }
+}
+
+extension ErrorLoggable {
+    var eventType: String? { return nil }
 }
 
 @_spi(AWX) public extension AnalyticsLogger {
@@ -87,6 +94,26 @@ public protocol ErrorLoggable: LocalizedError, CustomNSError {
         shared().logError(withName: name, additionalInfo: additionalInfo)
     }
     
+    static func log(errorName: String,
+                    errorType: String? = nil,
+                    errorMessage: String? = nil,
+                    extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+        guard !ProcessInfo.isRunningUnitTest else { return }
+        var infoDict = [String: Any]()
+        if let errorType {
+            infoDict[AnalyticEvent.Fields.eventType.rawValue] = errorType
+        }
+        if let errorMessage {
+            infoDict[AnalyticEvent.Fields.message.rawValue] = errorMessage
+        }
+        if let extraInfo {
+            for keyValuePair in extraInfo {
+                infoDict[keyValuePair.key.rawValue] = keyValuePair.value
+            }
+        }
+        shared().logError(withName: errorName, additionalInfo: infoDict)
+    }
+    
     static func processEventInfo<T: RawRepresentable<String>>(event: T, extraInfo: [AnalyticEvent.Fields: Any]?) -> (String, [String: Any]) {
         var processedInfo = [String: Any]()
         if let extraInfo {
@@ -114,8 +141,10 @@ public protocol ErrorLoggable: LocalizedError, CustomNSError {
     @_spi(AWX) public enum Page: String {
         case consent = "page_consent"
         case createCard = "page_create_card"
+        case applePay = "page_apple_pay"
     }
     
+    case showApplePay = "show_apple_pay"
     case showCreateCard = "show_create_card"
     case showConsent = "show_consent"
     

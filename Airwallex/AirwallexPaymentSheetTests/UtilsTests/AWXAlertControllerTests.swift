@@ -22,4 +22,16 @@ class AWXAlertControllerTests: XCTestCase {
                        UIColor.awxColor(.theme).resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark)),
                        "The tintColor should be set to the theme color.")
     }
+    
+    // test allert is shown as expected
+    func testShowAlert() {
+        let mockDelegate = MockPaymentResultDelegate()
+        
+        mockDelegate.showAlert(title: "Test Title", message: "Test Message")
+        XCTAssertNotNil(mockDelegate.presentedViewControllerSpy)
+        XCTAssertTrue(mockDelegate.presentedViewControllerSpy is UIAlertController)
+        let alertController = mockDelegate.presentedViewControllerSpy as? UIAlertController
+        XCTAssertEqual(alertController?.title, "Test Title")
+        XCTAssertEqual(alertController?.message, "Test Message")
+    }
 }

@@ -12,13 +12,29 @@
 @implementation AWXCard
 
 - (NSDictionary *)encodeToJSON {
-    return @{
-        @"number": self.number,
-        @"expiry_month": self.expiryMonth,
-        @"expiry_year": self.expiryYear,
-        @"name": self.name ?: @"",
-        @"cvc": self.cvc ?: @""
-    };
+    NSMutableDictionary *json = [NSMutableDictionary dictionary];
+
+    if (self.number) {
+        json[@"number"] = self.number;
+    }
+
+    if (self.expiryMonth) {
+        json[@"expiry_month"] = self.expiryMonth;
+    }
+
+    if (self.expiryYear) {
+        json[@"expiry_year"] = self.expiryYear;
+    }
+
+    if (self.name) {
+        json[@"name"] = self.name;
+    }
+
+    if (self.cvc) {
+        json[@"cvc"] = self.cvc;
+    }
+
+    return [NSDictionary dictionaryWithDictionary:json];
 }
 
 + (id)decodeFromJSON:(NSDictionary *)json {

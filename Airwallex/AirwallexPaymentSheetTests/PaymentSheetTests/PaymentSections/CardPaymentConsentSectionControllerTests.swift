@@ -159,10 +159,35 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
             return
         }
         cell.viewModel?.buttonAction()
-        guard mockViewController.presentedViewControllerSpy is AWXAlertController else {
+        guard let alertVC = mockViewController.presentedViewControllerSpy as? AWXAlertController else {
             XCTFail("expect alert")
             return
         }
+        XCTAssertEqual(alertVC.actions.count, 2)
+    }
+    
+    func testAlertForDeleteMITConsent() {
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+        AWXAPIClientConfiguration.shared().clientSecret = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTY4MDQ2MzAsImV4cCI6MTc1NjgwODIzMCwidHlwZSI6ImNsaWVudC1zZWNyZXQiLCJwYWRjIjoiSEsiLCJhY2NvdW50X2lkIjoiNGY4YTkwM2UtYmYwOC00ZTI0LTk5YTYtNGJlYTk5YTk1MWEyIiwiaW50ZW50X2lkIjoiaW50X2hrZG1zZnEyY2hhcWd3bDliZnoiLCJjdXN0b21lcl9pZCI6ImN1c19oa2RtZnQ1ZGhoYWJ2cHR5d3FyIiwiYnVzaW5lc3NfbmFtZSI6IkZ1bmssIEdheWxvcmQgYW5kIFN3aWZ0In0"
+        guard let anySectionController = mockManager.sectionControllers[PaymentSectionType.cardPaymentConsent],
+              let sectionController = anySectionController.embededSectionController as? CardPaymentConsentSectionController else {
+                  XCTFail()
+                  return
+              }
+        guard let consentID = mockMethodProvider.consents.last?.id,
+              let cell = sectionController.context.cellForItem(consentID) as? CardConsentCell else {
+            XCTFail()
+            return
+        }
+        cell.viewModel?.buttonAction()
+        guard let alertVC = mockViewController.presentedViewControllerSpy as? AWXAlertController else {
+            XCTFail("expect alert")
+            return
+        }
+        XCTAssertEqual(alertVC.actions.count, 1)
+        XCTAssertEqual(alertVC.actions.first?.style, .cancel)
+        
     }
     
 }

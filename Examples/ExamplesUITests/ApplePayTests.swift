@@ -56,21 +56,39 @@ final class ApplePayTests: XCTestCase {
     
     @MainActor
     func testApplePay_recurring() throws {
-        testApplePay(checkoutMode: .recurring, nextTriggerByCustomer: false)
+        testApplePay(checkoutMode: .recurring)
     }
     
     @MainActor
     func testApplePay_recurringWithIntent() throws {
-        testApplePay(checkoutMode: .recurringWithIntent, nextTriggerByCustomer: false)
+        testApplePay(checkoutMode: .recurringWithIntent)
     }
     
     @MainActor
-    private func testApplePay(checkoutMode: CheckoutMode, nextTriggerByCustomer: Bool? = nil) {
+    func testApplePay_oneOff_lagacySession() throws {
+        testApplePay(checkoutMode: .oneOff, preferUnifiedSession: false)
+    }
+    
+    @MainActor
+    func testApplePay_recurring_lagacySession() throws {
+        testApplePay(checkoutMode: .recurring, preferUnifiedSession: false)
+    }
+    
+    @MainActor
+    func testApplePay_recurringWithIntent_lagacySession() throws {
+        testApplePay(checkoutMode: .recurringWithIntent, preferUnifiedSession: false)
+    }
+    
+    @MainActor
+    private func testApplePay(checkoutMode: CheckoutMode,
+                              preferUnifiedSession: Bool = true) {
+        let nextTriggerByCustomer = (checkoutMode == .recurring || checkoutMode == .recurringWithIntent) ? false : nil
         launchAppAndEnsureSettings(
             app,
             checkoutMode: checkoutMode,
             customerID: customerId,
-            nextTriggerByCustomer: nextTriggerByCustomer
+            nextTriggerByCustomer: nextTriggerByCustomer,
+            preferUnifiedSession: preferUnifiedSession
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence(.animationTimeout)

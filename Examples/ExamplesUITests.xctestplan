@@ -10,12 +10,21 @@
             "value" : "$(UI_TESTING_CUSTOMER_ID)"
           },
           {
+            "key" : "UI_TESTING_CUSTOMER_ID_2",
+            "value" : "$(UI_TESTING_CUSTOMER_ID_2)"
+          },
+          {
             "key" : "UI_TESTING_MOCK_APPLEPAY_TOKEN",
             "value" : "$(UI_TESTING_MOCK_APPLEPAY_TOKEN)"
           },
           {
             "enabled" : false,
             "key" : "UI_TESTING_CUSTOMER_ID",
+            "value" : ""
+          },
+          {
+            "enabled" : false,
+            "key" : "UI_TESTING_CUSTOMER_ID_2",
             "value" : ""
           },
           {

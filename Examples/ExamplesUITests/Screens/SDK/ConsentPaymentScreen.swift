@@ -15,9 +15,20 @@ enum ConsentPaymentScreen {
 
     // consent list
     static let addNewCardToggle = app.cells["addNewCardToggle"].buttons["Add new"]
-    static let anyConsentInList = app.cells[AccessibilityIdentifiers.listedConsentCell]
-    static let allConsentCells = app.cells.matching(identifier: AccessibilityIdentifiers.listedConsentCell)
-    static let consentActionButton = anyConsentInList.buttons.firstMatch
+    
+    // all consents
+    static let consentCellsPredicate = NSPredicate(format: "identifier BEGINSWITH %@", AccessibilityIdentifiers.listedConsentCell)
+    static let firstConsentInList = app.cells.matching(consentCellsPredicate).firstMatch
+    static let allConsentCells = app.cells.matching(consentCellsPredicate)
+    
+    // cit consents
+    static let firstCITConsentInList = app.cells[AccessibilityIdentifiers.listedCITConsentCell].firstMatch
+    static let allCITConsentCells = app.cells.matching(identifier: AccessibilityIdentifiers.listedCITConsentCell)
+    static let firstCITConsentActionButton = firstCITConsentInList.buttons.firstMatch
+    
+    // mit consents
+    static let allMITConsentCells = app.cells.matching(identifier: AccessibilityIdentifiers.listedMITConsentCell)
+    static let firstMITConsentInList = app.cells[AccessibilityIdentifiers.listedMITConsentCell].firstMatch
     
     static let alertForRemove = app.alerts.firstMatch
     
@@ -36,9 +47,7 @@ enum ConsentPaymentScreen {
             XCTAssert(changeToListButton.exists)
         } else {
             XCTAssertTrue(addNewCardToggle.exists)
-            XCTAssertTrue(addNewCardToggle.exists)
-            XCTAssertTrue(anyConsentInList.exists)
-            XCTAssertTrue(consentActionButton.exists)
+            XCTAssertTrue(firstConsentInList.exists)
         }
         validateConsentIcons()
     }
@@ -47,39 +56,45 @@ enum ConsentPaymentScreen {
         selectedConsent.exists
     }
     
-    static func deleteFirstConsent() {
+    static func deleteFirstCITConsent() {
         if isConsentSelected {
             changeToListButton.robustTap()
         }
-        let count  = allConsentCells.count
+        let count = allCITConsentCells.count
         guard count > 0 else {
             return
         }
-        XCTAssert(consentActionButton.exists)
-        consentActionButton.robustTap()
+        XCTAssert(firstCITConsentActionButton.exists)
+        firstCITConsentActionButton.robustTap()
         XCTAssertTrue(alertForRemove.waitForExistence(timeout: .animationTimeout))
         XCTAssertTrue(alertForRemove.staticTexts["This option will be permanently removed from your saved payment methods."].exists)
         alertForRemove.buttons["Remove"].robustTap()
         _ = alertForRemove.waitForNonExistence(timeout: .animationTimeout)
         _ = activityIndicator.waitForNonExistence(timeout: .networkRequestTimeout)
-        XCTAssertEqual(count, allConsentCells.count + 1)
+        XCTAssertEqual(count, allCITConsentCells.count + 1)
     }
     
-    static func deleteAllConsents() {
+    static func deleteAllCITConsents() {
         validate()
         if isConsentSelected {
             changeToListButton.robustTap()
         }
-        while allConsentCells.count > 0 {
-            deleteFirstConsent()
+        while allCITConsentCells.count > 0 {
+            deleteFirstCITConsent()
         }
-        XCTAssertTrue(addNewCardToggle.waitForNonExistence(timeout: .animationTimeout))
+        if !addNewCardToggle.waitForNonExistence(timeout: .animationTimeout) {
+            XCTAssertTrue(allMITConsentCells.count > 0)
+        }
     }
     
-    static func payWithFirstConsent() {
+    static func payWithFirstConsent(cit: Bool) {
         validate()
         if !isConsentSelected {
-            allConsentCells.firstMatch.robustTap()
+            if cit {
+                allCITConsentCells.firstMatch.robustTap()
+            } else {
+                allMITConsentCells.firstMatch.robustTap()
+            }
         }
         XCTAssertTrue(isConsentSelected)
         if cvcField.exists {
@@ -96,9 +111,7 @@ enum ConsentPaymentScreen {
     
     static func validateConsentIcons() {
         func validateIfIconAndLabelMatched(consentCell: XCUIElement) {
-            guard let label = (consentCell.staticTexts.firstMatch.value as? String)?.lowercased() else {
-                return
-            }
+            let label = consentCell.staticTexts.firstMatch.label.lowercased()
             if label.hasPrefix("visa") {
                 XCTAssertTrue(consentCell.images["visa"].exists)
             } else if label.hasPrefix("union pay") {
@@ -114,5 +127,22 @@ enum ConsentPaymentScreen {
                 validateIfIconAndLabelMatched(consentCell: cell)
             }
         }
+    }
+    
+    static func validateConsentCount(cit: Int, mit: Int) {
+        if isConsentSelected {
+            changeToListButton.tap()
+        }
+        XCTAssertEqual(allCITConsentCells.count, cit)
+        XCTAssertEqual(allMITConsentCells.count, mit)
+    }
+    
+    static func validateFirstConsent(prefix: String, last4: String) {
+        if isConsentSelected {
+            changeToListButton.tap()
+        }
+        let label = firstConsentInList.staticTexts.firstMatch.label
+        XCTAssertTrue(label.hasPrefix(prefix))
+        XCTAssertTrue(label.hasSuffix(last4))
     }
 }

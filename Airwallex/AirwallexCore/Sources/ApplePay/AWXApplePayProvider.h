@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXApplePayProvider` is a provider to handle payment method with Apple Pay.
  */
-@interface AWXApplePayProvider : AWXDefaultProvider
+__deprecated_msg("Will be removed in next major version release, use AirwallexPayment.ApplePayProvider instead")
+    @interface AWXApplePayProvider : AWXDefaultProvider
 
 /**
  Launch Apple Pay sheet to confirm the payment intent.

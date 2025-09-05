@@ -19,9 +19,10 @@ protocol APIClient {
 
 extension APIClient {
     
-    func createPaymentIntent(force3DS: Bool = false) async throws -> AWXPaymentIntent {
+    func createPaymentIntent(amount: Decimal = Decimal(string: ExamplesKeys.amount) ?? 0,
+                             force3DS: Bool = false) async throws -> AWXPaymentIntent {
         let request = PaymentIntentRequest(
-            amount: Decimal(string: ExamplesKeys.amount) ?? 0,
+            amount: amount,
             currency: ExamplesKeys.currency,
             order: DemoDataSource.createOrder(),
             metadata: ["id": 1],

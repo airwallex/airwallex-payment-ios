@@ -108,6 +108,58 @@ import Combine
         XCTAssertNil(provider.method(named: "test_recurring"))
     }
     
+    func testFetchPaymentConsents() async {
+        let mockConsentsData = Bundle.dataOfFile("payment_consents_mix")!
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
+            AWXGetPaymentConsentsRequest().path(): (mockConsentsData, mockSuccessResponse, nil)
+        ]
+        mockOneOffSession.paymentIntent = mockPaymentIntent
+        do {
+            try await provider.getPaymentMethodTypes()
+        } catch {
+            XCTFail()
+        }
+        
+        XCTAssertEqual(provider.session, mockOneOffSession)
+        // we only handle consents of card, consents created from other payment methods (e.g. alipayhk or applepay) should be filtered
+        XCTAssertNil(provider.consents.first(where: { $0.paymentMethod?.type != AWXCardKey }))
+        // assert no duplicate consent
+        XCTAssertEqual(
+            provider.consents.reduce(into: Set<String>(), { $0.insert($1.paymentMethod?.card?.fingerprint ?? "foo")}).count,
+            provider.consents.count)
+        
+        // assert CIT prioritize MIT
+        let fingerprint = "RZIQ1oT3j70T7OtvANY8YIz7FKM="
+        guard let consent = provider.consents.first(where: { $0.paymentMethod?.card?.fingerprint == fingerprint }) else {
+            XCTFail("CIT consent not found")
+            return
+        }
+        
+        XCTAssertEqual(consent.nextTriggeredBy, FormatNextTriggerByType(.customerType))
+        // check fallback to MIT consenty
+        let count  = provider.consents.count
+        XCTAssertTrue(provider.removeConsent(consentId: consent.id))
+        guard let consent = provider.consents.first(where: { $0.paymentMethod?.card?.fingerprint == fingerprint }) else {
+            XCTFail("MIT consent not found")
+            return
+        }
+        XCTAssertEqual(consent.nextTriggeredBy, FormatNextTriggerByType(.merchantType))
+        XCTAssertEqual(
+            provider.consents.count,
+            count
+        )
+        
+        // verify CIT & MIT consent all deleted
+        XCTAssertTrue(provider.removeConsent(consentId: consent.id))
+        XCTAssertNil(provider.consents.first(where: { $0.paymentMethod?.card?.fingerprint == fingerprint }))
+        XCTAssertEqual(
+            provider.consents.count,
+            count - 1
+        )
+    }
+    
+    
     func testMethodFilterOnSession() async {
         mockOneOffSession.paymentMethods = ["alipaycn", "alipayhk", "card"]
         mockOneOffSession.paymentIntent = mockPaymentIntent

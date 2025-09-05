@@ -31,10 +31,6 @@
     return AWXPaymentTransactionModeOneOff;
 }
 
-@end
-
-@implementation AWXSession (Utils)
-
 - (void)updateInitialPaymentIntentId:(NSString *)initialPaymentIntentId {
     self.initialPaymentIntentId = initialPaymentIntentId;
 }

@@ -32,9 +32,10 @@ extension XCTestCase {
                                     checkoutMode: CheckoutMode,
                                     customerID: String = "",
                                     env: SettingsScreen.Environment = .demo,
-                                    useTabLayout: Bool = true,
+                                    force3DS: Bool = false,
                                     nextTriggerByCustomer: Bool? = nil,
-                                    force3DS: Bool = false) {
+                                    preferUnifiedSession: Bool = false,
+                                    useTabLayout: Bool = true) {
         app.launchEnvironment[UITestingEnvironmentVariable.isUITesting] = "1"
         app.launchEnvironment[UITestingEnvironmentVariable.mockApplePayToken] = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.mockApplePayToken]
         app.launch()
@@ -52,6 +53,7 @@ extension XCTestCase {
             SettingsScreen.ensureNextTriggerByCustomer(nextTriggerByCustomer)
         }
         SettingsScreen.ensureForce3DS(force3DS)
+        SettingsScreen.ensurePreferUnifiedSession(preferUnifiedSession)
         SettingsScreen.save()
         UIIntegrationDemoScreen.validate()
     }

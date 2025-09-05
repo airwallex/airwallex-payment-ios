@@ -8,7 +8,7 @@
 
 import UIKit
 import XCTest
-@testable import AirwallexPayment
+@_spi(AWX) @testable import AirwallexPayment
 
 class UIVIewControllerExtensionsTests: XCTestCase {
 
@@ -36,17 +36,5 @@ class UIVIewControllerExtensionsTests: XCTestCase {
         viewController.stopLoading()
         XCTAssertFalse(viewController.isLoading)
         XCTAssertTrue(viewController.view.isUserInteractionEnabled)
-    }
-
-    // test allert is shown as expected
-    func testShowAlert() {
-        let mockDelegate = MockPaymentResultDelegate()
-        
-        mockDelegate.showAlert(title: "Test Title", message: "Test Message")
-        XCTAssertNotNil(mockDelegate.presentedViewControllerSpy)
-        XCTAssertTrue(mockDelegate.presentedViewControllerSpy is UIAlertController)
-        let alertController = mockDelegate.presentedViewControllerSpy as? UIAlertController
-        XCTAssertEqual(alertController?.title, "Test Title")
-        XCTAssertEqual(alertController?.message, "Test Message")
     }
 }

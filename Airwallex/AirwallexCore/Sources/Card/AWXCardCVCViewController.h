@@ -16,16 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
  `AWXCardCVCViewController` provides a confirm button for user to finish checkout flow with payment consent.
  */
 @interface AWXCardCVCViewController : AWXViewController
-
-/**
- A delegate which handles confirmed payment intent.
- */
-@property (nonatomic, weak) id<AWXPaymentResultDelegate> delegate;
-
 /**
  A payment consent.
  */
-@property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
+@property (nonatomic, strong, nullable) AWXPaymentConsent *paymentConsent;
+
+@property (nonatomic, copy, nullable) void (^cvcCallback)(NSString *cvc, BOOL cancelled);
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

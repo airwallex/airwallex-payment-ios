@@ -124,26 +124,16 @@
                             withCompletionHandler:[OCMArg any]]);
 }
 
-- (void)testPaymentResultDelegate {
-    id mockViewController = OCMClassMock([UIViewController class]);
-    OCMStub([mockViewController dismissViewControllerAnimated:YES completion:[OCMArg invokeBlockWithArgs:nil]]);
-    id mockDelegate = OCMClassMock([AWXProviderDelegateSpy class]);
-    AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:mockDelegate session:session];
-
-    [provider paymentViewController:mockViewController didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
-    OCMVerify(times(1), [mockViewController dismissViewControllerAnimated:YES completion:[OCMArg any]]);
-    OCMVerify(times(1), [mockDelegate provider:provider didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil]);
-
-    [provider paymentViewController:mockViewController didCompleteWithPaymentConsentId:@"consentID"];
-    OCMVerify(times(1), [mockDelegate provider:provider didCompleteWithPaymentConsentId:@"consentID"]);
-}
-
 - (void)testClose {
     id mockDelegate = OCMClassMock([AWXProviderDelegateSpy class]);
     AWXOneOffSession *session = [AWXOneOffSession new];
     AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:mockDelegate session:session];
     AWXCardCVCViewController *paymentVC = [[AWXCardCVCViewController alloc] initWithNibName:nil bundle:nil];
+    paymentVC.cvcCallback = ^(NSString *_Nonnull cvc, BOOL cancelled) {
+        if (cancelled) {
+            [mockDelegate provider:provider didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+        }
+    };
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:paymentVC];
 
     // Set up the mock to return a hostViewController
@@ -155,7 +145,7 @@
     OCMExpect([mockDelegate provider:provider didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil]);
 
     // Call the method
-    [provider performSelector:@selector(close)];
+    [paymentVC performSelector:@selector(close:) withObject:UIControl.new];
 
     // Verify the results with a small delay to allow for animation completion block
     XCTestExpectation *expectation = [self expectationWithDescription:@"Dismissal"];
