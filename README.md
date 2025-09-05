@@ -35,9 +35,9 @@ Table of contents
     - [CocoaPods](#cocoapods)
   - [Required Setup](#required-setup)
     - [Customer ID](#customer-id)
-    - [Payment session](#payment-session)
     - [Payment Intent](#payment-intent)
     - [Client Secret](#client-secret)
+    - [Payment session](#payment-session)
   - [Optional Setup](#optional-setup)
     - [WeChat Pay](#wechat-pay)
     - [Apple Pay](#apple-pay)
@@ -148,85 +148,61 @@ Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 ```
 ---
 #### Customer ID 
-> [!IMPORTANT]
-> - **Required** for **recurring** payment
-> - **Required** for **recurring with intent** payment
-> - For **one-off** payment
->   - **Required** for card saving payment
->   - **Optional** for other cases
->
+
 Generate or retrieve a customer ID for your user on your server-side. 
 Refer to the [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/) for more details
 
----
-#### Payment session
-
-- If you want to make a **one-off** payment, create a **one-off** session.
-``` swift
-let session = AWXOneOffSession()
-session.countryCode = "Your country code"
-session.billing = "Your shipping address"
-session.returnURL = "App return url"
-```
-- If you want to make a recurring payment, create a recurring session.
-``` swift
-let session = AWXRecurringSession()
-session.countryCode = "Your country code"
-session.billing = "Your shipping address"
-session.returnURL = "App return url"
-session.setCurrency("Currency code")
-session.setAmount("Total amount")
-session.setCustomerId("Customer ID")
-session.nextTriggerByType = "customer or merchant";
-session.merchantTriggerReason = "Unscheduled or scheduled";
-```
-- If you want to make a recurring payment with intent, create a recurring with intent session.
-
-``` swift
-let session = AWXRecurringWithIntentSession()
-session.countryCode = "Your country code"
-session.billing = "Your shipping address"
-session.returnURL = "App return url"
-session.nextTriggerByType = "customer or merchant"
-session.merchantTriggerReason = "Unscheduled or scheduled"
-```
-> [!TIP] 
-> You only need to explicitly set the customer ID for a recurring session.
-> For **one-off** session and **recurring-with-intent** session, the customer ID is automatically retrieved from `session.paymentIntent`
-
+> [!NOTE]
+> If you only support guest checkout, you can skip this step
 ---
 #### Payment Intent
-> [!IMPORTANT]
-> **Required** for **one-off** payemnt
-> **Required** for **recurring with intent** payment
-> **Not needed** for **recurring** checkouts.
 
+The Payment Intent is a required object for all transaction modes in the Airwallex iOS SDK. 
+It represents a specific payment attempt and must be created before initiating a payment from the mobile app.
 Create payment intent on your **server-side** and then pass the payment intent to the mobile-side to confirm the payment intent with the payment method selected.
 
-Refer to the [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Payment_Intents/) for details
+Please refer to the [Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Payment_Intents/) for details of the payment intent API.
 
-``` swift
-let paymentIntent = "The payment intent created on your server"
-// update session you created above
-session.paymentIntent = paymentIntent
-```
+While creating payment intent using `payment_intents/create`:
+- If **amount = 0**, only a payment consent will be created (no funds will be deducted).
+- If **amount > 0**, a payment consent will be created and a deduction will be made at the same time.
+- For guest checkout, `customer_id` parameter can be omitted.
 
 ---
 #### Client Secret
-- For **one-off** and **recurring-with-intent** payment, use `paymentIntent.clientSecret`
+
+Update client secret using `paymentIntent.clientSecret`
 ``` swift
 AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
 ```
-
-- For **recurring payment**, you'll need to generate client secret with customer ID on your **server-side** and pass it to `AWXAPIClientConfiguration`.
-
-Refer to the Airwallex API Documentation for details.
-[Airwallex API Doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/_api_v1_pa_customers__id__generate_client_secret/get/)
+---
+#### Payment session
 
 ``` swift
-let clientSecret = "The client secret generated with customer ID on your server"
-AWXAPIClientConfiguration.shared().clientSecret = clientSecret
+let recurringOptions = if /* one-off transaction */  {
+    nil
+} else {
+    /* recurring transaction */
+    RecurringOptions(
+        nextTriggeredBy: ".customer/.merchant",
+        merchantTriggerReason: "nil/.scheduled/.unscheduled/...."
+    )
+}
+let session = Session(
+    countryCode: "Your country code",
+    paymentIntent: "payment intent create on your server",
+    returnURL: "App return url",
+    applePayOptions: "required if you want to support apple pay",
+    autoCapture: "Only applicable when for card payment. If true the payment will be captured immediately after authorization succeeds.",
+    billing: "prefilled billing address",
+    recurringOptions: "info for recurring transactions",
+    requiredBillingContactFields: "customize billing contact fields for card payment"
+)
 ```
+The new `Session` type introduced in version 6.2.0 provides a unified and simplified way for integration and there are some internal optimization as well. We recommend using `Session` instead of the legacy `AWXOneOffSession`, `AWXRecurringSession`, and `AWXRecurringWithIntentSession`.
+
+> [!NOTE]
+> We will continue to support integrations using legacy session types until the next major version release. For integration steps, please refer to [integration guide](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration) 
 
 ### Optional Setup
 ---
@@ -287,10 +263,10 @@ options.requiredBillingContactFields = [.postalAddress]
 options.supportedCountries = ["AU"]
 options.totalPriceLabel = "COMPANY, INC."
 
-let session = AWXOneOffSession()
-//  configure other properties
-...
-session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")// required for Apple Pay
+let session = Session(
+    //  ...
+    applePayOptions: options// required for Apple Pay
+)
 ```
 
 > [!IMPORTANT]

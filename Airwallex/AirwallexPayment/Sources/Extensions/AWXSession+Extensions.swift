@@ -19,6 +19,7 @@ public extension AWXSession {
         case invalidCustomerId(String)
         case invalidSessionType(String)
         case invalidData(String)
+        case invalidAmount(String)
         
         //  CustomNSError
         public static var errorDomain: String {
@@ -39,6 +40,8 @@ public extension AWXSession {
             case .invalidSessionType(let message):
                 return message
             case .invalidData(let message):
+                return message
+            case .invalidAmount(let message):
                 return message
             }
         }
@@ -88,6 +91,12 @@ public extension AWXSession {
                 guard let customerId = session.customerId(), !customerId.isEmpty else {
                     throw ValidationError.invalidCustomerId(
                         "Customer ID required"
+                    )
+                }
+            } else {
+                guard session.paymentIntent.amount.doubleValue > 0 else {
+                    throw ValidationError.invalidAmount(
+                        "Amount should greater than 0 for one-off payment"
                     )
                 }
             }
