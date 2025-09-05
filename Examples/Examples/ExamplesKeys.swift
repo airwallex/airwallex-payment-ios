@@ -65,6 +65,9 @@ struct ExamplesKeys {
     
     @RawRepresentableStorage("paymentLayout", defaultValue: AWXUIContext.PaymentLayout.tab)
     static var paymentLayout: AWXUIContext.PaymentLayout
+    
+    @Storage("preferUnifiedSession", defaultValue: true)
+    static var preferUnifiedSession: Bool
         
     static var allSettings: AllSettings {
         get {
@@ -85,7 +88,8 @@ struct ExamplesKeys {
                 currency: ExamplesKeys.currency,
                 countryCode: ExamplesKeys.countryCode,
                 returnUrl: ExamplesKeys.returnUrl,
-                paymentLayout: ExamplesKeys.paymentLayout
+                paymentLayout: ExamplesKeys.paymentLayout,
+                preferUnifiedSession: ExamplesKeys.preferUnifiedSession
             )
         }
         set {
@@ -130,6 +134,7 @@ struct ExamplesKeys {
         var returnUrl: String
         
         var paymentLayout: AWXUIContext.PaymentLayout
+        var preferUnifiedSession: Bool
         
         init(environment: AirwallexSDKMode,
              nextTriggerByType: AirwallexNextTriggerByType,
@@ -147,7 +152,8 @@ struct ExamplesKeys {
              currency: String,
              countryCode: String,
              returnUrl: String,
-             paymentLayout: AWXUIContext.PaymentLayout) {
+             paymentLayout: AWXUIContext.PaymentLayout,
+             preferUnifiedSession: Bool) {
             self.environment = environment
             self.nextTriggerByType = nextTriggerByType
             self.requiresName = requiresName
@@ -165,6 +171,7 @@ struct ExamplesKeys {
             self.countryCode = countryCode
             self.returnUrl = returnUrl
             self.paymentLayout = paymentLayout
+            self.preferUnifiedSession = preferUnifiedSession
         }
         
         var description: String {
@@ -186,6 +193,7 @@ struct ExamplesKeys {
                 ├── Country Code: \(countryCode)
                 ├── Return URL: \(returnUrl)
                 ├── Payment Layout: \(paymentLayout)
+                ├── Prefer Unified Session: \(preferUnifiedSession)
                 """
         }
     }

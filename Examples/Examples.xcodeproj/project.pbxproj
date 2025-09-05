@@ -53,6 +53,7 @@
 		D8BDF8682D3E1E3E00C9AE72 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */; };
 		D8BDF8702D3E206700C9AE72 /* H5DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */; };
 		D8BDF8802D3F3B4B00C9AE72 /* HomePageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */; };
+		D8C8CA7A2E695CFF00A2B5E8 /* CardRegisteredUserUnifiedSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C8CA792E695CFF00A2B5E8 /* CardRegisteredUserUnifiedSessionTests.swift */; };
 		D8D506472E3CB7060098CACD /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506372E3CB7060098CACD /* HomeScreen.swift */; };
 		D8D506482E3CB7060098CACD /* IntegrationDemoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506382E3CB7060098CACD /* IntegrationDemoScreen.swift */; };
 		D8D506492E3CB7060098CACD /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506392E3CB7060098CACD /* SettingsScreen.swift */; };
@@ -158,6 +159,7 @@
 		D8BDF8652D3E1E3E00C9AE72 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D8BDF86F2D3E206700C9AE72 /* H5DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H5DemoViewController.swift; sourceTree = "<group>"; };
 		D8BDF87F2D3F3B4B00C9AE72 /* HomePageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTitleView.swift; sourceTree = "<group>"; };
+		D8C8CA792E695CFF00A2B5E8 /* CardRegisteredUserUnifiedSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRegisteredUserUnifiedSessionTests.swift; sourceTree = "<group>"; };
 		D8D506372E3CB7060098CACD /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		D8D506382E3CB7060098CACD /* IntegrationDemoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationDemoScreen.swift; sourceTree = "<group>"; };
 		D8D506392E3CB7060098CACD /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				D8D506422E3CB7060098CACD /* ApplePayTests.swift */,
 				D8D506432E3CB7060098CACD /* CardGuestUserCheckoutTests.swift */,
 				D8D506442E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift */,
+				D8C8CA792E695CFF00A2B5E8 /* CardRegisteredUserUnifiedSessionTests.swift */,
 				D8D506452E3CB7060098CACD /* UITestingUtils.swift */,
 			);
 			path = ExamplesUITests;
@@ -549,9 +552,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -585,9 +592,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -678,6 +689,7 @@
 				D8D5064D2E3CB7060098CACD /* PaymentSheetScreen.swift in Sources */,
 				D8D5064E2E3CB7060098CACD /* ThreeDSScreen.swift in Sources */,
 				D8D5064F2E3CB7060098CACD /* ApplePayTests.swift in Sources */,
+				D8C8CA7A2E695CFF00A2B5E8 /* CardRegisteredUserUnifiedSessionTests.swift in Sources */,
 				D8D506502E3CB7060098CACD /* CardGuestUserCheckoutTests.swift in Sources */,
 				D8D506512E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift in Sources */,
 				D8D506522E3CB7060098CACD /* UITestingUtils.swift in Sources */,

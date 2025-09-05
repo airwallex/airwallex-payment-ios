@@ -217,7 +217,11 @@ class CardPaymentConsentSectionController: SectionController {
                     }
                 )
                 let consentIndex = consents.firstIndex { $0.id == itemIdentifier } ?? 0
-                cell.accessibilityIdentifier = "consentListed"
+                if consent.isCITConsent {
+                    cell.accessibilityIdentifier = "consentListed-cit"
+                } else {
+                    cell.accessibilityIdentifier = "consentListed-mit"
+                }
             }
             cell.setup(viewModel)
             return cell
