@@ -113,11 +113,11 @@ You can add `Airwallex` for a comprehensive integration that includes everything
 
 | Integration Style| Components Included | IPA Size Increase |
 |-----------------|----------------------|------------------:|
-| Low-Level API Integration | AirwallexCore <br> AirwallexPayment | 1.20 MB  |
-| UI Integration | AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 2.74 MB |
-| Full Integration | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 3.53 MB |
+| Low-Level API Integration | AirwallexCore <br> AirwallexPayment | 428KB  |
+| UI Integration | AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 1.2 MB |
+| Full Integration | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 1.4 MB |
 
-> The IPA size increases shown above reflect the additional archive size when integrating the Airwallex SDK using Swift Package Manager (SPM) into an otherwise empty project, measured for each integration style.
+> The above size increase (compressed) was calculated based on Xcode’s App Thinning Size Report for a minimal iOS project integrating AirwallexSDK via Swift Package Manager (SPM).
 #### CocoaPods
 
 Airwallex for iOS is available via [CocoaPods](https://cocoapods.org/).
