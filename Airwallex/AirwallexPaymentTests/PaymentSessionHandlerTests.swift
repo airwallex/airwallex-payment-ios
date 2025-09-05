@@ -567,6 +567,22 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertEqual(mockPaymentResultDelegate.status, .failure)
     }
 
+    func testProviderShouldHandleNextActionWithConsent() {
+        let mockConsent = AWXPaymentConsent()
+        mockConsent.id = "mock_cst_id"
+        let nextAction = AWXConfirmPaymentNextAction.decode(fromJSON: [
+            "type" : "redirect_form",
+            "method": "mock_method",
+            "url": AWXThreeDSReturnURL
+        ]) as! AWXConfirmPaymentNextAction
+        mockProvider.paymentConsent = mockConsent
+        mockSessionHandler.provider(mockProvider, shouldHandle: nextAction)
+        XCTAssertEqual(mockPaymentResultDelegate.status, .failure)
+        XCTAssertNotNil(mockSessionHandler.actionProvider)
+        XCTAssertNotNil(mockSessionHandler.actionProvider?.paymentConsent)
+        XCTAssertEqual(mockSessionHandler.actionProvider?.paymentConsent?.id, mockConsent.id)
+    }
+
     func testProviderShouldInsertController() {
         let controller = UIViewController()
         mockSessionHandler.provider(mockProvider, shouldInsert: controller)

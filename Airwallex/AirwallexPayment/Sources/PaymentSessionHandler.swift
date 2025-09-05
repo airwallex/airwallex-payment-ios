@@ -448,6 +448,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
             return
         }
         let actionHandler = actionProviderClass.init(delegate: self, session: session)
+        actionHandler.paymentConsent = provider.paymentConsent
         actionHandler.handle(nextAction)
         actionProvider = actionHandler
     }

@@ -131,7 +131,50 @@
         }
     }
     field.candidates = items;
+    field.validations = [AWXFieldValidation decodeFromJSON:json[@"validations"]];
     return field;
+}
+
+@end
+
+@implementation AWXFieldValidation
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.max = -1;
+    }
+    return self;
+}
+
++ (id)decodeFromJSON:(NSDictionary *)json {
+    // Input validation - return nil for nil or non-dictionary input
+    if (!json || ![json isKindOfClass:[NSDictionary class]]) {
+        return nil;
+    }
+
+    AWXFieldValidation *validation = [AWXFieldValidation new];
+
+    // Extract regex pattern if available
+    id regexValue = json[@"regex"];
+    if (regexValue && [regexValue isKindOfClass:[NSString class]]) {
+        validation.regex = regexValue;
+    }
+
+    // Extract max length with type safety
+    id maxValue = json[@"max"];
+    if (maxValue) {
+        if ([maxValue isKindOfClass:[NSNumber class]]) {
+            validation.max = [maxValue integerValue];
+        } else if ([maxValue isKindOfClass:[NSString class]]) {
+            // Handle case where max might be provided as string
+            validation.max = [maxValue integerValue];
+        }
+    }
+    if (validation.regex == nil && validation.max < 0) {
+        return nil;
+    }
+
+    return validation;
 }
 
 @end

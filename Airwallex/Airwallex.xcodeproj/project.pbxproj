@@ -144,6 +144,7 @@
 		D8269FB92DB7701E00E179EB /* AWXPaymentFormViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */; };
 		D8269FBA2DB7701E00E179EB /* AWXRedirectActionProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */; };
 		D8269FBB2DB7702400E179EB /* AWXCardProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */; };
+		D8316DC22E6AF16D002A42BA /* SchemaFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */; };
 		D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D85041C82DA7957A0074BA7F /* AirwallexPaymentSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */; };
 		D85041D42DA79A0B0074BA7F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85041D32DA79A0B0074BA7F /* Security.framework */; };
@@ -618,6 +619,7 @@
 		D81983412D6F120B008008A3 /* AirwallexPayment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AirwallexPayment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81983482D6F120B008008A3 /* AirwallexPaymentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexPaymentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81983EA2D6F1C70008008A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaFieldValidator.swift; sourceTree = "<group>"; };
 		D8352B4D2DA640B10025BE9E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
 		D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AirwallexPaymentSheet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1256,7 +1258,6 @@
 		D8A599BA2DAFA1B60045BFEC /* Logging */ = {
 			isa = PBXGroup;
 			children = (
-				D8A599C42DAFBF200045BFEC /* Internal */,
 				1839054D29C01AE900FE8069 /* AWXAnalyticsLogger.h */,
 				C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */,
 				C844DC7C2C3CE37F0099614C /* NSObject+Logging.m */,
@@ -1292,13 +1293,6 @@
 			children = (
 				184169DC29C4381500B02D96 /* NSData+Base64.h */,
 				184169DD29C4381500B02D96 /* NSData+Base64.m */,
-			);
-			path = Internal;
-			sourceTree = "<group>";
-		};
-		D8A599C42DAFBF200045BFEC /* Internal */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -1461,6 +1455,7 @@
 			isa = PBXGroup;
 			children = (
 				D8D36EB92E5C5CB0005618D4 /* BlockValidator.swift */,
+				D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */,
 				D8D36EBA2E5C5CB0005618D4 /* CardCVCValidator.swift */,
 				D8D36EBB2E5C5CB0005618D4 /* CardExpiryValidator.swift */,
 				D8D36EBC2E5C5CB0005618D4 /* CardNumberValidator.swift */,
@@ -2253,6 +2248,7 @@
 				D8D36EFE2E5C5CB0005618D4 /* BeginEditingEventObserver.swift in Sources */,
 				D8D36F4A2E5C5CB0005618D4 /* AirwallexPaymentSheet.h in Sources */,
 				D8D36EFF2E5C5CB0005618D4 /* UserEditingEventObserver.swift in Sources */,
+				D8316DC22E6AF16D002A42BA /* SchemaFieldValidator.swift in Sources */,
 				D8D36F002E5C5CB0005618D4 /* CardExpiryFormatter.swift in Sources */,
 				D8D36F012E5C5CB0005618D4 /* CardNumberFormatter.swift in Sources */,
 				D8D36F022E5C5CB0005618D4 /* MaxLengthFormatter.swift in Sources */,
