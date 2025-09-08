@@ -35,8 +35,8 @@ class CardProviderTests: XCTestCase {
         
         // Create mock session
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com"
         )
         mockSession = session
@@ -215,8 +215,8 @@ class CardProviderTests: XCTestCase {
     func testConfirmIntentWithConsentForRecurringPayment() async {
         // Set up recurring options
         mockSession = Session(
-            countryCode: "AU",
             paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
             returnURL: "https://www.example.com",
             recurringOptions: RecurringOptions(nextTriggeredBy: .merchantType)
         )

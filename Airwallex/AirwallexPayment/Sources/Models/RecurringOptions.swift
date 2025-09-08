@@ -15,16 +15,27 @@ import Foundation
 @objc
 public final class RecurringOptions: NSObject {
     /// The party to trigger subsequent payments. One of `merchant`, `customer`.
-    public let nextTriggeredBy: AirwallexNextTriggerByType
+    @objc public let nextTriggeredBy: AirwallexNextTriggerByType
     
     /// indicate whether the subsequent payments are scheduled.
     /// Only applicable when next_triggered_by is merchant. One of `scheduled`, `unscheduled`, `installments`. Default: `unscheduled`
-    public let merchantTriggerReason: AirwallexMerchantTriggerReason?
+    public private(set) var merchantTriggerReason: AirwallexMerchantTriggerReason
     
-    public init(nextTriggeredBy: AirwallexNextTriggerByType,
-         merchantTriggerReason: AirwallexMerchantTriggerReason? = nil) {
+    @objc public init(nextTriggeredBy: AirwallexNextTriggerByType,
+                      merchantTriggerReason: AirwallexMerchantTriggerReason = .undefined) {
         self.nextTriggeredBy = nextTriggeredBy
         self.merchantTriggerReason = merchantTriggerReason
+    }
+    
+    func validate() throws {
+        switch nextTriggeredBy {
+        case .customerType:
+            guard merchantTriggerReason == .undefined else {
+                throw "merchant trigger reason should be .undefined for CIT recurring options".asError()
+            }
+        case .merchantType:
+            break
+        }
     }
 }
 
@@ -38,7 +49,6 @@ extension RecurringOptions: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(FormatNextTriggerByType(nextTriggeredBy), forKey: .nextTriggeredBy)
         if nextTriggeredBy == AirwallexNextTriggerByType.merchantType,
-           let merchantTriggerReason,
            let reason = FormatMerchantTriggerReason(merchantTriggerReason) {
             try container.encode(reason, forKey: .merchantTriggerReason)
         }

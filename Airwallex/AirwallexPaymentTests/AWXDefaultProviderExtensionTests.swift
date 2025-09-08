@@ -443,8 +443,8 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         mockPaymentIntent.customerId = "mock_customer_id"
         // Create Session with recurring options and CIT
         let session = Session(
-            countryCode: "AU",
             paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
             returnURL: "https://example.com/return",
             applePayOptions: mockApplePayOptions,
             recurringOptions: RecurringOptions(nextTriggeredBy: .customerType) // CIT

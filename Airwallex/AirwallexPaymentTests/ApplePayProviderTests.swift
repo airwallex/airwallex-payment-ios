@@ -24,8 +24,8 @@ class ApplePayProviderTests: XCTestCase {
         
         let applePayOptions = AWXApplePayOptions(merchantIdentifier: "merchant.com.test")
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com",
             applePayOptions: applePayOptions
         )

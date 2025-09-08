@@ -49,8 +49,8 @@ import Foundation
     ///   - paymentMethods: Array of payment method type names to limit displayed methods (optional)
     ///   - recurringOptions: Options for recurring payments (optional)
     ///   - requiredBillingContactFields: Required billing contact fields (default: .name)
-    @objc public init(countryCode: String,
-                      paymentIntent: AWXPaymentIntent,
+    @objc public init(paymentIntent: AWXPaymentIntent,
+                      countryCode: String,
                       returnURL: String,
                       applePayOptions: AWXApplePayOptions? = nil,
                       autoCapture: Bool = true,
@@ -126,8 +126,8 @@ extension Session {
         // Fast path for same type conversion
         if let existingSession = session as? Session {
             self.init(
-                countryCode: existingSession.countryCode,
                 paymentIntent: existingSession.paymentIntent,
+                countryCode: existingSession.countryCode,
                 returnURL: existingSession.returnURL,
                 applePayOptions: existingSession.applePayOptions,
                 autoCapture: existingSession.autoCapture,
@@ -176,8 +176,8 @@ extension Session {
         
         // Create new instance with extracted parameters
         self.init(
-            countryCode: session.countryCode,
             paymentIntent: intent,
+            countryCode: session.countryCode,
             returnURL: session.returnURL,
             applePayOptions: session.applePayOptions,
             autoCapture: autoCapture,

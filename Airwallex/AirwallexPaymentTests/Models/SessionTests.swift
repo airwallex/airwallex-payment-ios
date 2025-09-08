@@ -39,8 +39,8 @@ final class SessionTests: XCTestCase {
     func testInit_withDefaultParameters() {
         // Test initializing with default parameters
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL
         )
         
@@ -67,8 +67,8 @@ final class SessionTests: XCTestCase {
         // Use the mockBillingContactFields for consistency
         
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL,
             applePayOptions: applePayOptions,
             autoCapture: false,
@@ -101,8 +101,8 @@ final class SessionTests: XCTestCase {
     
     func testCustomerId() {
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL
         )
         
@@ -115,8 +115,8 @@ final class SessionTests: XCTestCase {
     
     func testCurrency() {
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL
         )
         
@@ -125,8 +125,8 @@ final class SessionTests: XCTestCase {
     
     func testAmount() {
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL
         )
         
@@ -135,8 +135,8 @@ final class SessionTests: XCTestCase {
     
     func testPaymentIntentId() {
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL
         )
         
@@ -145,8 +145,8 @@ final class SessionTests: XCTestCase {
     
     func testTransactionMode_oneOff() {
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL
         )
         
@@ -156,8 +156,8 @@ final class SessionTests: XCTestCase {
     func testTransactionMode_recurring() {
         let recurringOptions = RecurringOptions(nextTriggeredBy: .merchantType)
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL,
             recurringOptions: recurringOptions
         )
@@ -174,8 +174,8 @@ final class SessionTests: XCTestCase {
         let billing = AWXPlaceDetails()
         
         let originalSession = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL,
             applePayOptions: applePayOptions,
             autoCapture: false,
@@ -328,8 +328,8 @@ final class SessionTests: XCTestCase {
     
     func testConvertToLegacySession_oneOff() {
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL,
             autoCapture: false,
             autoSaveCardForFuturePayments: false
@@ -349,8 +349,8 @@ final class SessionTests: XCTestCase {
     func testConvertToLegacySession_recurringWithIntent() {
         let recurringOptions = RecurringOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL,
             autoCapture: false,
             recurringOptions: recurringOptions
@@ -379,8 +379,8 @@ final class SessionTests: XCTestCase {
         
         let recurringOptions = RecurringOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: zeroAmountIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL,
             recurringOptions: recurringOptions
         )
@@ -407,8 +407,8 @@ final class SessionTests: XCTestCase {
         // Use the mockBillingContactFields for consistency
         
         let session = Session(
-            countryCode: mockCountryCode,
             paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
             returnURL: mockReturnURL,
             applePayOptions: applePayOptions,
             billing: billing,

@@ -555,8 +555,8 @@ private extension IntegrationDemoListViewController {
         // Update client secret
         AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
         let session = Session(
-            countryCode: ExamplesKeys.countryCode,
             paymentIntent: paymentIntent,
+            countryCode: ExamplesKeys.countryCode,
             returnURL: ExamplesKeys.returnUrl,
             applePayOptions: DemoDataSource.applePayOptions,
             autoCapture: ExamplesKeys.autoCapture,

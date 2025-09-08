@@ -39,8 +39,8 @@ class PaymentProviderTests: XCTestCase {
         
         // Create mock session
         mockSession = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com"
         )
         

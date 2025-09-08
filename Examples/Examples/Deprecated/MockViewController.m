@@ -28,18 +28,19 @@
 }
 
 - (void)testObjcAPIVisibility {
-    Session *session = [[Session alloc] initWithCountryCode:@"AU"
-                                              paymentIntent:AWXPaymentIntent.new
-                                                  returnURL:@""
-                                            applePayOptions:nil
-                                                autoCapture:true
-                              autoSaveCardForFuturePayments:true
-                                                    billing:nil
-                                        hidePaymentConsents:false
-                                                       lang:nil
-                                             paymentMethods:nil
-                                           recurringOptions:nil
-                               requiredBillingContactFields:AWXRequiredBillingContactFieldName];
+    RecurringOptions *recurringOptions = [[RecurringOptions alloc] initWithNextTriggeredBy:AirwallexNextTriggerByMerchantType merchantTriggerReason:AirwallexMerchantTriggerReasonScheduled];
+    Session *session = [[Session alloc] initWithPaymentIntent:AWXPaymentIntent.new
+                                                  countryCode:@"AU"
+                                                    returnURL:@""
+                                              applePayOptions:nil
+                                                  autoCapture:true
+                                autoSaveCardForFuturePayments:true
+                                                      billing:nil
+                                          hidePaymentConsents:false
+                                                         lang:nil
+                                               paymentMethods:nil
+                                             recurringOptions:recurringOptions
+                                 requiredBillingContactFields:AWXRequiredBillingContactFieldName];
     [AWXUIContext launchPaymentFrom:self session:session filterBy:nil launchStyle:LaunchStylePush layout:PaymentLayoutTab];
     [AWXUIContext launchPaymentFrom:self session:session paymentResultDelegate:self filterBy:nil launchStyle:LaunchStylePresent layout:PaymentLayoutAccordion];
     [AWXUIContext launchCardPaymentFrom:self session:session supportedBrands:@[] launchStyle:LaunchStylePush];

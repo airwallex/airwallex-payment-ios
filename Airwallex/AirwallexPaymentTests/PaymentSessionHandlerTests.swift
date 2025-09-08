@@ -619,8 +619,8 @@ class PaymentSessionHandlerTests: XCTestCase {
         
         // Session is oneoff by default
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com/return"
         )
         
@@ -637,8 +637,8 @@ class PaymentSessionHandlerTests: XCTestCase {
         
         // Create matching session
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com/return"
         )
         
@@ -655,8 +655,8 @@ class PaymentSessionHandlerTests: XCTestCase {
         
         // Create matching session
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com/return"
         )
         
@@ -674,8 +674,8 @@ class PaymentSessionHandlerTests: XCTestCase {
         
         // Create matching session
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com/return"
         )
         
@@ -696,8 +696,8 @@ class PaymentSessionHandlerTests: XCTestCase {
         
         // Create matching session with Apple Pay options
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com/return",
             applePayOptions: AWXApplePayOptions(merchantIdentifier: "merchant_id")
         )
@@ -721,8 +721,8 @@ class PaymentSessionHandlerTests: XCTestCase {
         
         // Create matching session
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com/return"
         )
         
@@ -747,8 +747,8 @@ class PaymentSessionHandlerTests: XCTestCase {
         
         // Create matching session
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com/return"
         )
         
