@@ -166,7 +166,7 @@ class PaymentProviderTests: XCTestCase {
         method.type = AWXCardKey
         
         // Test creating confirm intent request with method
-        let request = provider.createConfirmIntentRequest(method: method, consent: nil)
+        let request = provider.createConfirmIntentRequest(method: method, consent: nil, consentOptions: nil)
         
         // Verify request is correctly configured
         XCTAssertEqual(request.intentId, mockPaymentIntent.id)
@@ -176,6 +176,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertNotNil(request.device)
         XCTAssertEqual(request.returnURL, AWXThreeDSReturnURL)
         XCTAssertNotNil(request.options)
+        XCTAssertNil(request.consentOptions)
     }
     
     func testCreateConfirmIntentRequestWithConsent() {
@@ -191,7 +192,7 @@ class PaymentProviderTests: XCTestCase {
         consent.id = "test_consent_id"
         
         // Test creating confirm intent request with consent
-        let request = provider.createConfirmIntentRequest(method: nil, consent: consent)
+        let request = provider.createConfirmIntentRequest(method: nil, consent: consent, consentOptions: nil)
         
         // Verify request is correctly configured
         XCTAssertEqual(request.intentId, mockPaymentIntent.id)
@@ -201,5 +202,34 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertNotNil(request.device)
         XCTAssertEqual(request.returnURL, AWXThreeDSReturnURL)
         XCTAssertNil(request.options)
+        XCTAssertNil(request.consentOptions)
+    }
+    
+    func testCreateConfirmIntentRequestWithConsentOptions() {
+        // Create a provider
+        let provider = PaymentProvider(
+            delegate: mockDelegate,
+            session: mockSession,
+            methodType: mockMethodType
+        )
+        
+        // Create a payment consent
+        let consent = AWXPaymentConsent()
+        consent.id = "test_consent_id"
+        
+        // Test creating confirm intent request with consent
+        let request = provider.createConfirmIntentRequest(
+            method: nil,
+            consent: consent,
+            consentOptions: RecurringOptions(
+                nextTriggeredBy: .merchantType,
+                merchantTriggerReason: .installments
+            )
+        )
+        
+        // Verify request is correctly configured
+        XCTAssertNotNil(request.consentOptions)
+        XCTAssertEqual(request.consentOptions?["next_triggered_by"] as? String, "merchant")
+        XCTAssertEqual(request.consentOptions?["merchant_trigger_reason"] as? String, "installments")
     }
 }

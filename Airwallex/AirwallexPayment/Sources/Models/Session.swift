@@ -25,7 +25,7 @@ import Foundation
     @objc public let paymentIntent: AWXPaymentIntent
     
     /// Required for recurring payment
-    @objc public internal(set) var recurringOptions: RecurringOptions?
+    @objc public let recurringOptions: RecurringOptions?
     
     /// Only applicable when payment_method.type is card. If true the payment will be captured immediately after authorization succeeds.
     /// Default: YES

@@ -170,10 +170,6 @@ class CardProviderTests: XCTestCase {
         // Call the method under test with saveCard = true
         await provider.confirmIntentWithCard(card, saveCard: true)
         
-        // Verify the recurring options were set
-        XCTAssertNotNil(mockSession.recurringOptions)
-        XCTAssertEqual(mockSession.recurringOptions?.nextTriggeredBy, .customerType)
-        
         // Verify the API client was called correctly
         await MainActor.run {
             XCTAssertEqual(mockDelegate.didStartRequest, 1)
@@ -217,6 +213,14 @@ class CardProviderTests: XCTestCase {
     // MARK: - confirmIntentWithConsent (PaymentConsent object) Tests
     
     func testConfirmIntentWithConsentForRecurringPayment() async {
+        // Set up recurring options
+        mockSession = Session(
+            countryCode: "AU",
+            paymentIntent: mockPaymentIntent,
+            returnURL: "https://www.example.com",
+            recurringOptions: RecurringOptions(nextTriggeredBy: .merchantType)
+        )
+        
         // Configure a CardProvider
         let provider = CardProvider(
             delegate: mockDelegate,
@@ -243,9 +247,6 @@ class CardProviderTests: XCTestCase {
         method.card = card
         
         consent.paymentMethod = method
-        
-        // Set up recurring options
-        mockSession.recurringOptions = RecurringOptions(nextTriggeredBy: .merchantType)
         
         // Call the method under test
         await provider.confirmIntentWithConsent(consent)
@@ -285,10 +286,6 @@ class CardProviderTests: XCTestCase {
         // Call the method under test
         await provider.confirmIntentWithConsent(consent)
         
-        // Verify recurring options were set
-        XCTAssertNotNil(mockSession.recurringOptions)
-        XCTAssertEqual(mockSession.recurringOptions?.nextTriggeredBy, .customerType)
-        
         // Verify the API client was called correctly
         await MainActor.run {
             XCTAssertEqual(mockDelegate.didStartRequest, 1)
@@ -317,9 +314,6 @@ class CardProviderTests: XCTestCase {
         
         // Call the method under test
         await provider.confirmIntentWithConsent(consent)
-        
-        // Verify recurring options not changed
-        XCTAssertNil(mockSession.recurringOptions)
         
         // Verify the API client was called correctly
         await MainActor.run {
@@ -592,7 +586,11 @@ class CardProviderTests: XCTestCase {
         )
         
         // Test without CVC
-        let request1 = provider.createRequestForConsentConversion(methodId: "method_123", cvc: nil)
+        let request1 = provider.createRequestForConsentConversion(
+            methodId: "method_123",
+            cvc: nil,
+            consentOptions: RecurringOptions(nextTriggeredBy: .customerType)
+        )
         
         // Verify the request properties
         XCTAssertEqual(request1.paymentMethod?.id, "method_123")
@@ -600,9 +598,17 @@ class CardProviderTests: XCTestCase {
         XCTAssertNil(request1.paymentMethod?.card?.cvc)
         XCTAssertEqual(request1.intentId, mockPaymentIntent.id)
         XCTAssertNil(request1.paymentConsent)
+        XCTAssertEqual(request1.consentOptions?["next_triggered_by"] as? String, "customer")
         
         // Test with CVC
-        let request2 = provider.createRequestForConsentConversion(methodId: "method_123", cvc: "123")
+        let request2 = provider.createRequestForConsentConversion(
+            methodId: "method_123",
+            cvc: "123",
+            consentOptions: RecurringOptions(
+                nextTriggeredBy: .merchantType,
+                merchantTriggerReason: .unscheduled
+            )
+        )
         
         // Verify the request properties
         XCTAssertEqual(request2.paymentMethod?.id, "method_123")
@@ -610,5 +616,7 @@ class CardProviderTests: XCTestCase {
         XCTAssertEqual(request2.paymentMethod?.card?.cvc, "123")
         XCTAssertEqual(request2.intentId, mockPaymentIntent.id)
         XCTAssertNil(request2.paymentConsent)
+        XCTAssertEqual(request2.consentOptions?["next_triggered_by"] as? String, "merchant")
+        XCTAssertEqual(request2.consentOptions?["merchant_trigger_reason"] as? String, "unscheduled")
     }
 }

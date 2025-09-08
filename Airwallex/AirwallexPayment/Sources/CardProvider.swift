@@ -35,11 +35,17 @@ class CardProvider: PaymentProvider {
         method.card = card
         method.customerId = unifiedSession.paymentIntent.customerId
         
-        if saveCard && unifiedSession.paymentIntent.customerId != nil {
-            unifiedSession.recurringOptions = RecurringOptions(nextTriggeredBy: .customerType)
+        let consentOptions = if saveCard && unifiedSession.paymentIntent.customerId != nil {
+            RecurringOptions(nextTriggeredBy: .customerType)
+        } else {
+            unifiedSession.recurringOptions
         }
         
-        let request = createConfirmIntentRequest(method: method, consent: nil)
+        let request = createConfirmIntentRequest(
+            method: method,
+            consent: nil,
+            consentOptions: consentOptions
+        )
         await confirmIntent(request)
     }
     
@@ -56,14 +62,21 @@ class CardProvider: PaymentProvider {
                 cvc = try await collectCVC(for:consent)
             }
             if let methodId {
-                if unifiedSession.recurringOptions != nil {
+                if let recurringOptions = unifiedSession.recurringOptions  {
                     // Create consent & confirm payment with existing payment method
-                    let request = createRequestForConsentConversion(methodId: methodId, cvc: cvc)
+                    let request = createRequestForConsentConversion(
+                        methodId: methodId,
+                        cvc: cvc,
+                        consentOptions: recurringOptions
+                    )
                     await confirmIntent(request)
                 } else if consent.isMITConsent {
                     // CIT transaction with MIT consent
-                    unifiedSession.recurringOptions = RecurringOptions(nextTriggeredBy: .customerType)
-                    let request = createRequestForConsentConversion(methodId: methodId, cvc: cvc)
+                    let request = createRequestForConsentConversion(
+                        methodId: methodId,
+                        cvc: cvc,
+                        consentOptions: RecurringOptions(nextTriggeredBy: .customerType)
+                    )
                     await confirmIntent(request)
                 } else {
                     // CIT transaction with CIT consent
@@ -146,10 +159,10 @@ extension CardProvider {
             method?.card = AWXCard()
             method?.card?.cvc = cvc
         }
-        return createConfirmIntentRequest(method: method, consent: consent)
+        return createConfirmIntentRequest(method: method, consent: consent, consentOptions: nil)
     }
     
-    func createRequestForConsentConversion(methodId: String?, cvc: String?) -> AWXConfirmPaymentIntentRequest {
+    func createRequestForConsentConversion(methodId: String?, cvc: String?, consentOptions: RecurringOptions) -> AWXConfirmPaymentIntentRequest {
         let method = AWXPaymentMethod()
         method.id = methodId
         method.type = AWXCardKey
@@ -157,7 +170,7 @@ extension CardProvider {
             method.card = AWXCard()
             method.card?.cvc = cvc
         }
-        return createConfirmIntentRequest(method: method, consent: nil)
+        return createConfirmIntentRequest(method: method, consent: nil, consentOptions: consentOptions)
     }
     
 }
