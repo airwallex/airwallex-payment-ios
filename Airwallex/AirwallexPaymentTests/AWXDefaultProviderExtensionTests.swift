@@ -443,13 +443,13 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         mockPaymentIntent.customerId = "mock_customer_id"
         // Create Session with recurring options and CIT
         let session = Session(
-            countryCode: "AU",
             paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
             returnURL: "https://example.com/return",
-            applePayOptions: mockApplePayOptions
+            applePayOptions: mockApplePayOptions,
+            recurringOptions: RecurringOptions(nextTriggeredBy: .customerType) // CIT
         )
         session.applePayOptions?.supportedNetworks = [.visa, .masterCard]
-        session.recurringOptions = RecurringOptions(nextTriggeredBy: .customerType) // CIT
         
         // Validation should throw "CIT not supported by Apple Pay" error
         XCTAssertThrowsError(try AWXApplePayProvider.validate(paymentMethodType: mockMethodType, session: session)) { error in

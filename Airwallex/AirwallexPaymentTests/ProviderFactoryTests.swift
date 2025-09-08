@@ -40,8 +40,8 @@ class ProviderFactoryTests: XCTestCase {
         
         // Create mock unified session
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com"
         )
         mockSession = session
@@ -329,7 +329,12 @@ class ProviderFactoryTests: XCTestCase {
     func testProviderFactoryWithRecurringSession() {
         // Setup recurring session
         let recurringOptions = RecurringOptions(nextTriggeredBy: .merchantType)
-        mockSession.recurringOptions = recurringOptions
+        mockSession = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            returnURL: "https://example.com",
+            recurringOptions: recurringOptions
+        )
         
         // Verify with all provider types
         

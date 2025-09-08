@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import AirwallexPayment
+@testable import AirwallexCore
 
 final class RecurringOptionsTests: XCTestCase {
 
@@ -62,5 +63,16 @@ final class RecurringOptionsTests: XCTestCase {
         XCTAssertEqual(jsonObject["next_triggered_by"] as? String, "merchant")
         XCTAssertEqual(jsonObject["merchant_trigger_reason"] as? String, "installments")
         XCTAssertEqual(jsonObject.count, 2)
+    }
+    
+    func testValidate() {
+        
+        let arr: [AirwallexMerchantTriggerReason] = [.scheduled, .installments, .unscheduled]
+        for reason in arr {
+            let model = RecurringOptions(nextTriggeredBy: .customerType, merchantTriggerReason: reason)
+            XCTAssertThrowsError(try model.validate())
+        }
+        
+        XCTAssertNoThrow(try RecurringOptions(nextTriggeredBy: .customerType, merchantTriggerReason: .undefined).validate())
     }
 }

@@ -219,8 +219,8 @@ class AWXSessionExtensionTests: XCTestCase {
     
     func testValidateSession() {
         let session = Session(
-            countryCode: "AU",
             paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
             returnURL: AWXThreeDSReturnURL
         )
         XCTAssertNoThrow(try session.validate())
@@ -228,8 +228,8 @@ class AWXSessionExtensionTests: XCTestCase {
     
     func testValidateSessionRecurring() {
         let session = Session(
-            countryCode: "AU",
             paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
             returnURL: AWXThreeDSReturnURL,
             recurringOptions: .init(nextTriggeredBy: .customerType)
         )
@@ -239,8 +239,8 @@ class AWXSessionExtensionTests: XCTestCase {
     func testValidateSessionRecurringWithoutCustomerID() {
         mockPaymentIntent.customerId = nil
         let session = Session(
-            countryCode: "AU",
             paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
             returnURL: AWXThreeDSReturnURL,
             recurringOptions: .init(nextTriggeredBy: .customerType)
         )

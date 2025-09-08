@@ -24,8 +24,8 @@ class ApplePayProviderTests: XCTestCase {
         
         let applePayOptions = AWXApplePayOptions(merchantIdentifier: "merchant.com.test")
         let session = Session(
-            countryCode: "US",
             paymentIntent: mockPaymentIntent,
+            countryCode: "US",
             returnURL: "https://example.com",
             applePayOptions: applePayOptions
         )
@@ -124,7 +124,7 @@ class ApplePayProviderTests: XCTestCase {
     
     func testStartPaymentPresentation() async {
         // Test successful presentation using mocks and dependency injection
-        let delegate = MockProviderDelegate()
+        let delegate = await MockProviderDelegate()
         
         let methodType = AWXPaymentMethodType()
         methodType.name = AWXApplePayKey
@@ -153,12 +153,14 @@ class ApplePayProviderTests: XCTestCase {
         XCTAssertEqual(provider.paymentState, .notStarted)
         
         // Verify delegate methods called
-        XCTAssertTrue(delegate.didStartRequest == 1)
+        await MainActor.run {
+            XCTAssertTrue(delegate.didStartRequest == 1)
+        }
     }
     
     func testStartPaymentPresentationFailure() async {
         // Test presentation failure
-        let delegate = MockProviderDelegate()
+        let delegate = await MockProviderDelegate()
         
         let methodType = AWXPaymentMethodType()
         methodType.name = AWXApplePayKey
@@ -184,17 +186,19 @@ class ApplePayProviderTests: XCTestCase {
         XCTAssertEqual(MockPKPaymentAuthorizationController.lastInstance?.presentCalled, true)
         
         // Verify delegate methods called with appropriate error
-        XCTAssertEqual(delegate.didStartRequest, 0)
-        XCTAssertEqual(delegate.didEndRequest, 0)
-        XCTAssertNotNil(delegate.completionError)
-        
-        // Verify payment state
-        XCTAssertEqual(provider.paymentState, .notPresented)
+        await MainActor.run {
+            XCTAssertEqual(delegate.didStartRequest, 0)
+            XCTAssertEqual(delegate.didEndRequest, 0)
+            XCTAssertNotNil(delegate.completionError)
+            
+            // Verify payment state
+            XCTAssertEqual(provider.paymentState, .notPresented)
+        }
     }
     
     func testDidAuthorizePaymentSuccess() async {
         // Test successful payment authorization
-        let delegate = MockProviderDelegate()
+        let delegate = await MockProviderDelegate()
         
         let methodType = AWXPaymentMethodType()
         methodType.name = AWXApplePayKey
@@ -242,14 +246,16 @@ class ApplePayProviderTests: XCTestCase {
         try? await Task.sleep(nanoseconds: 100_000_000)
         
         // Verify authorization result
-        XCTAssertEqual(delegate.completionStatus, .success)
-        XCTAssertEqual(delegate.didStartRequest, delegate.didEndRequest)
-        XCTAssertEqual(provider.paymentState, .complete)
+        await MainActor.run {
+            XCTAssertEqual(delegate.completionStatus, .success)
+            XCTAssertEqual(delegate.didStartRequest, delegate.didEndRequest)
+            XCTAssertEqual(provider.paymentState, .complete)
+        }
     }
     
     func testDidAuthorizePaymentFailure() async {
         // Test failed payment authorization
-        let delegate = MockProviderDelegate()
+        let delegate = await MockProviderDelegate()
         
         let methodType = AWXPaymentMethodType()
         methodType.name = AWXApplePayKey
@@ -297,15 +303,17 @@ class ApplePayProviderTests: XCTestCase {
         try? await Task.sleep(nanoseconds: 100_000_000)
         
         // Verify authorization result
-        XCTAssertEqual(delegate.completionStatus, .failure)
-        XCTAssertNotNil(delegate.completionError)
-        XCTAssertEqual(delegate.didStartRequest, delegate.didEndRequest)
-        XCTAssertEqual(provider.paymentState, .complete)
+        await MainActor.run {
+            XCTAssertEqual(delegate.completionStatus, .failure)
+            XCTAssertNotNil(delegate.completionError)
+            XCTAssertEqual(delegate.didStartRequest, delegate.didEndRequest)
+            XCTAssertEqual(provider.paymentState, .complete)
+        }
     }
     
     func testCancelledPayment() async {
         // Test cancelled payment flow
-        let delegate = MockProviderDelegate()
+        let delegate = await MockProviderDelegate()
         
         let methodType = AWXPaymentMethodType()
         methodType.name = AWXApplePayKey
@@ -350,13 +358,15 @@ class ApplePayProviderTests: XCTestCase {
         
         // Verify the state after cancellation
         XCTAssertTrue(controller.dismissCalled)
-        XCTAssertEqual(delegate.completionStatus, .cancel)
-        XCTAssertEqual(delegate.didStartRequest, delegate.didEndRequest)
+        await MainActor.run {
+            XCTAssertEqual(delegate.completionStatus, .cancel)
+            XCTAssertEqual(delegate.didStartRequest, delegate.didEndRequest)
+        }
     }
     
     func testPaymentSheetDismissedInPendingStatus() async {
         // Test payment behavior with slow network response
-        let delegate = MockProviderDelegate()
+        let delegate = await MockProviderDelegate()
         
         let methodType = AWXPaymentMethodType()
         methodType.name = AWXApplePayKey
@@ -410,14 +420,18 @@ class ApplePayProviderTests: XCTestCase {
         XCTAssertTrue(controller.dismissCalled)
         
         // Verify the state during network request
-        XCTAssertEqual(delegate.completionStatus, .inProgress)
+        await MainActor.run {
+            XCTAssertEqual(delegate.completionStatus, .inProgress)
+        }
         
         // Wait for the slow network response to complete
         _ = await foo
         
         // Verify final state after network request completes
-        XCTAssertEqual(delegate.completionStatus, .success)
-        XCTAssertEqual(delegate.didStartRequest, delegate.didEndRequest)
-        XCTAssertEqual(provider.paymentState, .complete)
+        await MainActor.run {
+            XCTAssertEqual(delegate.completionStatus, .success)
+            XCTAssertEqual(delegate.didStartRequest, delegate.didEndRequest)
+            XCTAssertEqual(provider.paymentState, .complete)
+        }
     }
 }

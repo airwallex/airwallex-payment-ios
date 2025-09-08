@@ -36,9 +36,12 @@ class PaymentProvider: AWXDefaultProvider {
     /// - Parameters:
     ///   - method: The payment method to use for confirming the intent. Optional.
     ///   - consent: The payment consent information. Optional.
+    ///   - consentOptions: The associated PaymentConsent to set up along with the PaymentIntent. Optional
+    ///     usually you will want to pass unifiedSession.recurringOptions for consentOptions
     /// - Returns: request object
     func createConfirmIntentRequest(method: AWXPaymentMethod?,
-                                    consent: AWXPaymentConsent?) -> AWXConfirmPaymentIntentRequest {
+                                    consent: AWXPaymentConsent?,
+                                    consentOptions: RecurringOptions?) -> AWXConfirmPaymentIntentRequest {
         assert(method != nil || consent != nil)
         let request = AWXConfirmPaymentIntentRequest()
         request.intentId = unifiedSession.paymentIntent.id
@@ -46,7 +49,7 @@ class PaymentProvider: AWXDefaultProvider {
         request.paymentMethod = method
         request.paymentConsent = consent
         request.device = AWXDevice.withRiskSessionId()
-        request.consentOptions = unifiedSession.recurringOptions?.encodeToJSON()
+        request.consentOptions = consentOptions?.encodeToJSON()
         request.returnURL = AWXThreeDSReturnURL
         if let method {
             request.options = createPaymentMethodOptions(method)

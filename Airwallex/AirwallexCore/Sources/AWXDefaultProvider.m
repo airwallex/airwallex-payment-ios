@@ -26,7 +26,6 @@
 @property (nonatomic, weak, readwrite) id<AWXProviderDelegate> delegate;
 @property (nonatomic, strong, readwrite) AWXSession *session;
 @property (nonatomic, strong, readwrite, nullable) AWXPaymentMethod *paymentMethod;
-@property (nonatomic, strong) AWXPaymentConsent *paymentConsent;
 @property (nonatomic, strong) NSString *paymentIntentId;
 @property (nonatomic, strong) AWXNextActionHandler *nextActionHandler;
 
@@ -202,6 +201,7 @@
                 [self.delegate provider:self shouldHandleNextAction:response.nextAction];
             } else {
                 AWXNextActionHandler *handler = [[AWXNextActionHandler alloc] initWithDelegate:self.delegate session:self.session];
+                handler.paymentConsent = self.paymentConsent;
                 [handler handleNextAction:response.nextAction];
                 self.nextActionHandler = handler;
             }

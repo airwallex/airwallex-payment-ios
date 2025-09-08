@@ -87,12 +87,13 @@ public extension AWXSession {
             }
         } else if let session = self as? Session {
             try validate(paymentIntent: session.paymentIntent)
-            if session.recurringOptions != nil {
+            if let recurringOptions = session.recurringOptions {
                 guard let customerId = session.customerId(), !customerId.isEmpty else {
                     throw ValidationError.invalidCustomerId(
                         "Customer ID required"
                     )
                 }
+                try recurringOptions.validate()
             } else {
                 guard session.paymentIntent.amount.doubleValue > 0 else {
                     throw ValidationError.invalidAmount(
