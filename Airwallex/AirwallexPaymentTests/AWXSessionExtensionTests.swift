@@ -250,8 +250,8 @@ class AWXSessionExtensionTests: XCTestCase {
     func testValidateSessionAmount() {
         mockPaymentIntent.amount = NSDecimalNumber(0)
         let session = Session(
-            countryCode: "AU",
             paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
             returnURL: AWXThreeDSReturnURL
         )
         XCTAssertThrowsError(try session.validate())

@@ -189,8 +189,8 @@ let recurringOptions = if /* one-off transaction */  {
     )
 }
 let session = Session(
-    countryCode: "Your country code",
     paymentIntent: "payment intent create on your server",
+    countryCode: "Your country code",
     returnURL: "App return url",
     applePayOptions: "required if you want to support apple pay",
     autoCapture: "Only applicable when for card payment. If true the payment will be captured immediately after authorization succeeds.",
