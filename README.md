@@ -179,11 +179,11 @@ AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
 #### Payment session
 
 ``` swift
-let recurringOptions = if /* one-off transaction */  {
+let paymentConsentOptions = if /* one-off transaction */  {
     nil
 } else {
     /* recurring transaction */
-    RecurringOptions(
+    PaymentConsentOptions(
         nextTriggeredBy: ".customer/.merchant",
         merchantTriggerReason: "nil/.scheduled/.unscheduled/...."
     )
@@ -195,12 +195,14 @@ let session = Session(
     applePayOptions: "required if you want to support apple pay",
     autoCapture: "Only applicable when for card payment. If true the payment will be captured immediately after authorization succeeds.",
     billing: "prefilled billing address",
-    recurringOptions: "info for recurring transactions",
+    paymentConsentOptions: "info for recurring transactions",
     requiredBillingContactFields: "customize billing contact fields for card payment"
 )
 ```
 The new `Session` type introduced in version 6.2.0 provides a unified and simplified way for integration and there are some internal optimization as well. We recommend using `Session` instead of the legacy `AWXOneOffSession`, `AWXRecurringSession`, and `AWXRecurringWithIntentSession`.
-
+```mermaid
+ graph TD; A-->B; A-->C; B-->D; C-->D; 
+```
 > [!NOTE]
 > We will continue to support integrations using legacy session types until the next major version release. For integration steps, please refer to [integration guide](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration) 
 

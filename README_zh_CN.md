@@ -176,11 +176,11 @@ AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
 #### 创建 `Session`
 
 ``` swift
-let recurringOptions = if /* 单次扣款 */  {
+let paymentConsentOptions = if /* 单次扣款 */  {
     nil
 } else {
     /* 周期/非周期扣款 */
-    RecurringOptions(
+    paymentConsentOptions(
         nextTriggeredBy: ".customer/.merchant",
         merchantTriggerReason: "nil/.scheduled/.unscheduled/...."
     )
@@ -192,7 +192,7 @@ let session = Session(
     applePayOptions: "required if you want to support apple pay",
     autoCapture: "Only applicable when for card payment. If true the payment will be captured immediately after authorization succeeds.",
     billing: "prefilled billing address",
-    recurringOptions: recurringOptions,
+    paymentConsentOptions: paymentConsentOptions,
     requiredBillingContactFields: "customize billing contact fields for card payment"
 )
 ```

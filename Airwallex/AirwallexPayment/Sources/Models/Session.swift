@@ -37,8 +37,8 @@ import Foundation
     
     /// Initialize a new Session
     /// - Parameters:
-    ///   - countryCode: The country code
     ///   - paymentIntent: The payment intent to handle
+    ///   - countryCode: The country code
     ///   - returnURL: Return URL for redirects
     ///   - applePayOptions: Apple Pay options (optional)
     ///   - autoCapture: Whether to capture payment immediately after authorization (default: true)
