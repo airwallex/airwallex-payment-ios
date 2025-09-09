@@ -110,7 +110,7 @@ extension AWXApplePayProvider {
                     )
                 }
             } else if let session = session as? Session {
-                guard session.recurringOptions?.nextTriggeredBy != .customerType else {
+                guard session.paymentConsentOptions?.nextTriggeredBy != .customerType else {
                     throw ValidationError.applePayNotSupported(
                         "CIT not supported by Apple Pay"
                     )

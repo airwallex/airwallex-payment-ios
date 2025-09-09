@@ -28,7 +28,7 @@
 }
 
 - (void)testObjcAPIVisibility {
-    RecurringOptions *recurringOptions = [[RecurringOptions alloc] initWithNextTriggeredBy:AirwallexNextTriggerByMerchantType merchantTriggerReason:AirwallexMerchantTriggerReasonScheduled];
+    PaymentConsentOptions *options = [[PaymentConsentOptions alloc] initWithNextTriggeredBy:AirwallexNextTriggerByMerchantType merchantTriggerReason:AirwallexMerchantTriggerReasonScheduled];
     Session *session = [[Session alloc] initWithPaymentIntent:AWXPaymentIntent.new
                                                   countryCode:@"AU"
                                                     returnURL:@""
@@ -39,7 +39,7 @@
                                           hidePaymentConsents:false
                                                          lang:nil
                                                paymentMethods:nil
-                                             recurringOptions:recurringOptions
+                                        paymentConsentOptions:options
                                  requiredBillingContactFields:AWXRequiredBillingContactFieldName];
     [AWXUIContext launchPaymentFrom:self session:session filterBy:nil launchStyle:LaunchStylePush layout:PaymentLayoutTab];
     [AWXUIContext launchPaymentFrom:self session:session paymentResultDelegate:self filterBy:nil launchStyle:LaunchStylePresent layout:PaymentLayoutAccordion];

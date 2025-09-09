@@ -561,7 +561,7 @@ private extension IntegrationDemoListViewController {
             applePayOptions: DemoDataSource.applePayOptions,
             autoCapture: ExamplesKeys.autoCapture,
             billing: shippingAddress,
-            recurringOptions: (ExamplesKeys.checkoutMode == .oneOff) ? nil : RecurringOptions(
+            paymentConsentOptions: (ExamplesKeys.checkoutMode == .oneOff) ? nil : PaymentConsentOptions(
                 nextTriggeredBy: ExamplesKeys.nextTriggerByType,
                 merchantTriggerReason: .scheduled
             ),

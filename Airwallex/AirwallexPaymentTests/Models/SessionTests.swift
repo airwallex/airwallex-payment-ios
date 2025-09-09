@@ -46,7 +46,7 @@ final class SessionTests: XCTestCase {
         
         // Verify properties set from initializer
         XCTAssertEqual(session.paymentIntent, mockPaymentIntent)
-        XCTAssertNil(session.recurringOptions)
+        XCTAssertNil(session.paymentConsentOptions)
         XCTAssertTrue(session.autoCapture)
         XCTAssertTrue(session.autoSaveCardForFuturePayments)
         XCTAssertEqual(session.countryCode, mockCountryCode)
@@ -61,7 +61,7 @@ final class SessionTests: XCTestCase {
     
     func testInit_withCustomParameters() {
         // Test initializing with custom parameters
-        let recurringOptions = RecurringOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
+        let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
         let applePayOptions = AWXApplePayOptions()
         let billing = AWXPlaceDetails()
         // Use the mockBillingContactFields for consistency
@@ -77,14 +77,14 @@ final class SessionTests: XCTestCase {
             hidePaymentConsents: true,
             lang: "zh-Hans",
             paymentMethods: mockPaymentMethods,
-            recurringOptions: recurringOptions,
+            paymentConsentOptions: consentOptions,
             requiredBillingContactFields: mockBillingContactFields
         )
         
         // Verify properties set from initializer
         XCTAssertEqual(session.paymentIntent, mockPaymentIntent)
-        XCTAssertEqual(session.recurringOptions?.nextTriggeredBy, recurringOptions.nextTriggeredBy)
-        XCTAssertEqual(session.recurringOptions?.merchantTriggerReason, recurringOptions.merchantTriggerReason)
+        XCTAssertEqual(session.paymentConsentOptions?.nextTriggeredBy, consentOptions.nextTriggeredBy)
+        XCTAssertEqual(session.paymentConsentOptions?.merchantTriggerReason, consentOptions.merchantTriggerReason)
         XCTAssertFalse(session.autoCapture)
         XCTAssertFalse(session.autoSaveCardForFuturePayments)
         XCTAssertEqual(session.countryCode, mockCountryCode)
@@ -154,12 +154,12 @@ final class SessionTests: XCTestCase {
     }
     
     func testTransactionMode_recurring() {
-        let recurringOptions = RecurringOptions(nextTriggeredBy: .merchantType)
+        let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType)
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: mockCountryCode,
             returnURL: mockReturnURL,
-            recurringOptions: recurringOptions
+            paymentConsentOptions: consentOptions
         )
         
         XCTAssertEqual(session.transactionMode(), AWXPaymentTransactionModeRecurring)
@@ -169,7 +169,7 @@ final class SessionTests: XCTestCase {
     
     func testConvenienceInit_fromSameType() {
         // Setup with all properties configured
-        let recurringOptions = RecurringOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
+        let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
         let applePayOptions = AWXApplePayOptions()
         let billing = AWXPlaceDetails()
         
@@ -184,7 +184,7 @@ final class SessionTests: XCTestCase {
             hidePaymentConsents: true,
             lang: "zh-Hans",
             paymentMethods: mockPaymentMethods,
-            recurringOptions: recurringOptions,
+            paymentConsentOptions: consentOptions,
             requiredBillingContactFields: mockBillingContactFields
         )
         
@@ -212,9 +212,9 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(newSession?.lang, originalSession.lang)
         // 10. paymentMethods
         XCTAssertEqual(newSession?.paymentMethods, originalSession.paymentMethods)
-        // 11. recurringOptions
-        XCTAssertEqual(newSession?.recurringOptions?.nextTriggeredBy, originalSession.recurringOptions?.nextTriggeredBy)
-        XCTAssertEqual(newSession?.recurringOptions?.merchantTriggerReason, originalSession.recurringOptions?.merchantTriggerReason)
+        // 11. consentOptions
+        XCTAssertEqual(newSession?.paymentConsentOptions?.nextTriggeredBy, originalSession.paymentConsentOptions?.nextTriggeredBy)
+        XCTAssertEqual(newSession?.paymentConsentOptions?.merchantTriggerReason, originalSession.paymentConsentOptions?.merchantTriggerReason)
         // 12. requiredBillingContactFields
         XCTAssertEqual(newSession?.requiredBillingContactFields, originalSession.requiredBillingContactFields)
     }
@@ -243,7 +243,7 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(session?.paymentIntent, oneOffSession.paymentIntent)
         XCTAssertEqual(session?.autoCapture, oneOffSession.autoCapture)
         XCTAssertEqual(session?.autoSaveCardForFuturePayments, oneOffSession.autoSaveCardForFuturePayments)
-        XCTAssertNil(session?.recurringOptions)
+        XCTAssertNil(session?.paymentConsentOptions)
         
         // Verify properties inherited from AWXSession
         XCTAssertEqual(session?.countryCode, oneOffSession.countryCode)
@@ -282,9 +282,9 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(session?.autoCapture, recurringSession.autoCapture)
         
         // Verify recurring options
-        XCTAssertNotNil(session?.recurringOptions)
-        XCTAssertEqual(session?.recurringOptions?.nextTriggeredBy, recurringSession.nextTriggerByType)
-        XCTAssertEqual(session?.recurringOptions?.merchantTriggerReason, recurringSession.merchantTriggerReason)
+        XCTAssertNotNil(session?.paymentConsentOptions)
+        XCTAssertEqual(session?.paymentConsentOptions?.nextTriggeredBy, recurringSession.nextTriggerByType)
+        XCTAssertEqual(session?.paymentConsentOptions?.merchantTriggerReason, recurringSession.merchantTriggerReason)
         
         // Verify properties inherited from AWXSession
         XCTAssertEqual(session?.countryCode, recurringSession.countryCode)
@@ -347,13 +347,13 @@ final class SessionTests: XCTestCase {
     }
     
     func testConvertToLegacySession_recurringWithIntent() {
-        let recurringOptions = RecurringOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
+        let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: mockCountryCode,
             returnURL: mockReturnURL,
             autoCapture: false,
-            recurringOptions: recurringOptions
+            paymentConsentOptions: consentOptions
         )
         
         let legacySession = session.convertToLegacySession()
@@ -364,8 +364,8 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(recurringSession.paymentIntent, session.paymentIntent)
         XCTAssertEqual(recurringSession.returnURL, session.returnURL)
         XCTAssertEqual(recurringSession.autoCapture, session.autoCapture)
-        XCTAssertEqual(recurringSession.nextTriggerByType, recurringOptions.nextTriggeredBy)
-        XCTAssertEqual(recurringSession.merchantTriggerReason, recurringOptions.merchantTriggerReason ?? .undefined)
+        XCTAssertEqual(recurringSession.nextTriggerByType, consentOptions.nextTriggeredBy)
+        XCTAssertEqual(recurringSession.merchantTriggerReason, consentOptions.merchantTriggerReason ?? .undefined)
     }
     
     func testConvertToLegacySession_recurringZeroAmount() {
@@ -377,12 +377,12 @@ final class SessionTests: XCTestCase {
         zeroAmountIntent.amount = NSDecimalNumber.zero
         zeroAmountIntent.currency = "AUD"
         
-        let recurringOptions = RecurringOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
+        let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
         let session = Session(
             paymentIntent: zeroAmountIntent,
             countryCode: mockCountryCode,
             returnURL: mockReturnURL,
-            recurringOptions: recurringOptions
+            paymentConsentOptions: consentOptions
         )
         
         let legacySession = session.convertToLegacySession()
@@ -394,8 +394,8 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(recurringSession.currency(), session.currency())
         XCTAssertEqual(recurringSession.amount(), session.amount())
         XCTAssertEqual(recurringSession.customerId(), session.customerId())
-        XCTAssertEqual(recurringSession.nextTriggerByType, recurringOptions.nextTriggeredBy)
-        XCTAssertEqual(recurringSession.merchantTriggerReason, recurringOptions.merchantTriggerReason ?? .undefined)
+        XCTAssertEqual(recurringSession.nextTriggerByType, consentOptions.nextTriggeredBy)
+        XCTAssertEqual(recurringSession.merchantTriggerReason, consentOptions.merchantTriggerReason ?? .undefined)
     }
     
     // MARK: - Common Configuration Tests

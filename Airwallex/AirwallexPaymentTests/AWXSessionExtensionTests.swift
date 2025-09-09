@@ -231,7 +231,7 @@ class AWXSessionExtensionTests: XCTestCase {
             paymentIntent: mockPaymentIntent,
             countryCode: "AU",
             returnURL: AWXThreeDSReturnURL,
-            recurringOptions: .init(nextTriggeredBy: .customerType)
+            paymentConsentOptions: .init(nextTriggeredBy: .customerType)
         )
         XCTAssertNoThrow(try session.validate())
     }
@@ -242,7 +242,7 @@ class AWXSessionExtensionTests: XCTestCase {
             paymentIntent: mockPaymentIntent,
             countryCode: "AU",
             returnURL: AWXThreeDSReturnURL,
-            recurringOptions: .init(nextTriggeredBy: .customerType)
+            paymentConsentOptions: .init(nextTriggeredBy: .customerType)
         )
         XCTAssertThrowsError(try session.validate())
     }

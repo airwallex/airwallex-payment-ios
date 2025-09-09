@@ -36,9 +36,9 @@ class CardProvider: PaymentProvider {
         method.customerId = unifiedSession.paymentIntent.customerId
         
         let consentOptions = if saveCard && unifiedSession.paymentIntent.customerId != nil {
-            RecurringOptions(nextTriggeredBy: .customerType)
+            PaymentConsentOptions(nextTriggeredBy: .customerType)
         } else {
-            unifiedSession.recurringOptions
+            unifiedSession.paymentConsentOptions
         }
         
         let request = createConfirmIntentRequest(
@@ -62,12 +62,12 @@ class CardProvider: PaymentProvider {
                 cvc = try await collectCVC(for:consent)
             }
             if let methodId {
-                if let recurringOptions = unifiedSession.recurringOptions  {
+                if let options = unifiedSession.paymentConsentOptions  {
                     // Create consent & confirm payment with existing payment method
                     let request = createRequestForConsentConversion(
                         methodId: methodId,
                         cvc: cvc,
-                        consentOptions: recurringOptions
+                        consentOptions: options
                     )
                     await confirmIntent(request)
                 } else if consent.isMITConsent {
@@ -75,7 +75,7 @@ class CardProvider: PaymentProvider {
                     let request = createRequestForConsentConversion(
                         methodId: methodId,
                         cvc: cvc,
-                        consentOptions: RecurringOptions(nextTriggeredBy: .customerType)
+                        consentOptions: PaymentConsentOptions(nextTriggeredBy: .customerType)
                     )
                     await confirmIntent(request)
                 } else {
@@ -162,7 +162,7 @@ extension CardProvider {
         return createConfirmIntentRequest(method: method, consent: consent, consentOptions: nil)
     }
     
-    func createRequestForConsentConversion(methodId: String?, cvc: String?, consentOptions: RecurringOptions) -> AWXConfirmPaymentIntentRequest {
+    func createRequestForConsentConversion(methodId: String?, cvc: String?, consentOptions: PaymentConsentOptions) -> AWXConfirmPaymentIntentRequest {
         let method = AWXPaymentMethod()
         method.id = methodId
         method.type = AWXCardKey

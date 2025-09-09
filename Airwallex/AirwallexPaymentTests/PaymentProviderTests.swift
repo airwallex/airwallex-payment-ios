@@ -221,7 +221,7 @@ class PaymentProviderTests: XCTestCase {
         let request = provider.createConfirmIntentRequest(
             method: nil,
             consent: consent,
-            consentOptions: RecurringOptions(
+            consentOptions: PaymentConsentOptions(
                 nextTriggeredBy: .merchantType,
                 merchantTriggerReason: .installments
             )
