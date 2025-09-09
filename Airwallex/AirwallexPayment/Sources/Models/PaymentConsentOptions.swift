@@ -18,9 +18,18 @@ public final class PaymentConsentOptions: NSObject {
     @objc public let nextTriggeredBy: AirwallexNextTriggerByType
     
     /// indicate whether the subsequent payments are scheduled.
-    /// Only applicable when next_triggered_by is merchant. One of `scheduled`, `unscheduled`, `installments`. Default: `unscheduled`
-    public private(set) var merchantTriggerReason: AirwallexMerchantTriggerReason
+    /// Only applicable when next_triggered_by is merchant. One of `.undefined`, `scheduled`, `unscheduled`, `installments`. Default: `.undefined`
+    @objc public let merchantTriggerReason: AirwallexMerchantTriggerReason
     
+    /// Creates a new payment consent options instance for recurring payments.
+    ///
+    /// - Parameters:
+    ///   - nextTriggeredBy: Specifies which party will trigger subsequent payments.
+    ///                      Use `.merchantType` when merchant initiates future payments,
+    ///                      or `.customerType` when customer initiates future payments.
+    ///   - merchantTriggerReason: Indicates whether subsequent payments are scheduled.
+    ///                           Only applicable when nextTriggeredBy is `.merchantType`.
+    ///                           Default value is `.undefined`.
     @objc public init(nextTriggeredBy: AirwallexNextTriggerByType,
                       merchantTriggerReason: AirwallexMerchantTriggerReason = .undefined) {
         self.nextTriggeredBy = nextTriggeredBy
@@ -59,11 +68,17 @@ extension PaymentConsentOptions: AWXJSONEncodable {
     public func encodeToJSON() -> [AnyHashable : Any] {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
-        guard let data = try? encoder.encode(self),
-              let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [AnyHashable : Any] else {
-            assert(false, "something is wrong in data encoding")
+        do {
+            let data = try encoder.encode(self)
+            let jsonObject = try JSONSerialization.jsonObject(with: data)
+            guard let jsonObject = jsonObject as? [AnyHashable : Any] else {
+                throw "encoded json object can not be casted to [AnyHashable : Any]".asError()
+            }
+            return jsonObject
+        } catch {
+            debugLog(error.localizedDescription)
+            assert(false, error.localizedDescription)
             return [:]
         }
-        return jsonObject
     }
 }
