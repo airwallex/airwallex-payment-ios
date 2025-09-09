@@ -218,7 +218,7 @@ class CardProviderTests: XCTestCase {
             paymentIntent: mockPaymentIntent,
             countryCode: "AU",
             returnURL: "https://www.example.com",
-            recurringOptions: RecurringOptions(nextTriggeredBy: .merchantType)
+            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .merchantType)
         )
         
         // Configure a CardProvider
@@ -589,7 +589,7 @@ class CardProviderTests: XCTestCase {
         let request1 = provider.createRequestForConsentConversion(
             methodId: "method_123",
             cvc: nil,
-            consentOptions: RecurringOptions(nextTriggeredBy: .customerType)
+            consentOptions: PaymentConsentOptions(nextTriggeredBy: .customerType)
         )
         
         // Verify the request properties
@@ -604,7 +604,7 @@ class CardProviderTests: XCTestCase {
         let request2 = provider.createRequestForConsentConversion(
             methodId: "method_123",
             cvc: "123",
-            consentOptions: RecurringOptions(
+            consentOptions: PaymentConsentOptions(
                 nextTriggeredBy: .merchantType,
                 merchantTriggerReason: .unscheduled
             )

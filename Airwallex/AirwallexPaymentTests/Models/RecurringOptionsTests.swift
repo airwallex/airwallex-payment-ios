@@ -21,20 +21,20 @@ final class RecurringOptionsTests: XCTestCase {
     }
 
     func testEncoding_customer() {
-        let model = RecurringOptions(nextTriggeredBy: .customerType)
+        let model = PaymentConsentOptions(nextTriggeredBy: .customerType)
         let jsonObject = model.encodeToJSON()
         XCTAssertEqual(jsonObject["next_triggered_by"] as? String, "customer")
         XCTAssertEqual(jsonObject.count, 1)
     }
 
     func testEncoding_merchant() {
-        let model = RecurringOptions(nextTriggeredBy: .merchantType)
+        let model = PaymentConsentOptions(nextTriggeredBy: .merchantType)
         let jsonObject = model.encodeToJSON()
         XCTAssertEqual(jsonObject["next_triggered_by"] as? String, "merchant")
         XCTAssertEqual(jsonObject.count, 1)
     }
     func testEncoding_merchantUnscheduled() {
-        let model = RecurringOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .unscheduled)
+        let model = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .unscheduled)
         let jsonObject = model.encodeToJSON()
         XCTAssertEqual(jsonObject["next_triggered_by"] as? String, "merchant")
         XCTAssertEqual(jsonObject["merchant_trigger_reason"] as? String, "unscheduled")
@@ -42,7 +42,7 @@ final class RecurringOptionsTests: XCTestCase {
     }
     
     func testEncoding_merchantScheduled() {
-        let model = RecurringOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
+        let model = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
         let jsonObject = model.encodeToJSON()
         XCTAssertEqual(jsonObject["next_triggered_by"] as? String, "merchant")
         XCTAssertEqual(jsonObject["merchant_trigger_reason"] as? String, "scheduled")
@@ -50,7 +50,7 @@ final class RecurringOptionsTests: XCTestCase {
     }
     
     func testEncoding_merchantUndefined() {
-        let model = RecurringOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .undefined)
+        let model = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .undefined)
         let jsonObject = model.encodeToJSON()
         XCTAssertEqual(jsonObject["next_triggered_by"] as? String, "merchant")
         XCTAssertNil(jsonObject["merchant_trigger_reason"])
@@ -58,7 +58,7 @@ final class RecurringOptionsTests: XCTestCase {
     }
     
     func testEncoding_merchantInstallments() {
-        let model = RecurringOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .installments)
+        let model = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .installments)
         let jsonObject = model.encodeToJSON()
         XCTAssertEqual(jsonObject["next_triggered_by"] as? String, "merchant")
         XCTAssertEqual(jsonObject["merchant_trigger_reason"] as? String, "installments")
@@ -69,10 +69,10 @@ final class RecurringOptionsTests: XCTestCase {
         
         let arr: [AirwallexMerchantTriggerReason] = [.scheduled, .installments, .unscheduled]
         for reason in arr {
-            let model = RecurringOptions(nextTriggeredBy: .customerType, merchantTriggerReason: reason)
+            let model = PaymentConsentOptions(nextTriggeredBy: .customerType, merchantTriggerReason: reason)
             XCTAssertThrowsError(try model.validate())
         }
         
-        XCTAssertNoThrow(try RecurringOptions(nextTriggeredBy: .customerType, merchantTriggerReason: .undefined).validate())
+        XCTAssertNoThrow(try PaymentConsentOptions(nextTriggeredBy: .customerType, merchantTriggerReason: .undefined).validate())
     }
 }

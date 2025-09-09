@@ -447,7 +447,7 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
             countryCode: "AU",
             returnURL: "https://example.com/return",
             applePayOptions: mockApplePayOptions,
-            recurringOptions: RecurringOptions(nextTriggeredBy: .customerType) // CIT
+            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .customerType) // CIT
         )
         session.applePayOptions?.supportedNetworks = [.visa, .masterCard]
         

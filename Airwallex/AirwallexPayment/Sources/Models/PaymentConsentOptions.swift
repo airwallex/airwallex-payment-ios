@@ -1,5 +1,5 @@
 //
-//  RecurringOptions.swift
+//  PaymentConsentOptions.swift
 //  Airwallex
 //
 //  Created by Weiping Li on 2025/8/18.
@@ -13,7 +13,7 @@ import Foundation
 
 /// Options for recurring payments
 @objc
-public final class RecurringOptions: NSObject {
+public final class PaymentConsentOptions: NSObject {
     /// The party to trigger subsequent payments. One of `merchant`, `customer`.
     @objc public let nextTriggeredBy: AirwallexNextTriggerByType
     
@@ -39,7 +39,7 @@ public final class RecurringOptions: NSObject {
     }
 }
 
-extension RecurringOptions: Encodable {
+extension PaymentConsentOptions: Encodable {
     enum CodingKeys: String, CodingKey {
         case nextTriggeredBy
         case merchantTriggerReason
@@ -55,7 +55,7 @@ extension RecurringOptions: Encodable {
     }
 }
 
-extension RecurringOptions: AWXJSONEncodable {
+extension PaymentConsentOptions: AWXJSONEncodable {
     public func encodeToJSON() -> [AnyHashable : Any] {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase

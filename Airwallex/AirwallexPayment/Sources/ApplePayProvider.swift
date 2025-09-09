@@ -149,7 +149,7 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
             let request = createConfirmIntentRequest(
                 method: method,
                 consent: nil,
-                consentOptions: unifiedSession.recurringOptions
+                consentOptions: unifiedSession.paymentConsentOptions
             )
             let response: AWXConfirmPaymentIntentResponse = try await apiClient.sendRequest(request)
             confirmIntentResponse = Result.success(response)

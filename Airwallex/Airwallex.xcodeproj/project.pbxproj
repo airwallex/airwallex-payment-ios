@@ -273,7 +273,7 @@
 		D8D36E7E2E5C5CAC005618D4 /* AWXSession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E612E5C5CAC005618D4 /* AWXSession+Extensions.swift */; };
 		D8D36E7F2E5C5CAC005618D4 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E622E5C5CAC005618D4 /* Bundle+Extensions.swift */; };
 		D8D36E802E5C5CAC005618D4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E632E5C5CAC005618D4 /* String+Extensions.swift */; };
-		D8D36E812E5C5CAC005618D4 /* RecurringOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E652E5C5CAC005618D4 /* RecurringOptions.swift */; };
+		D8D36E812E5C5CAC005618D4 /* PaymentConsentOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E652E5C5CAC005618D4 /* PaymentConsentOptions.swift */; };
 		D8D36E822E5C5CAC005618D4 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E662E5C5CAC005618D4 /* Session.swift */; };
 		D8D36E832E5C5CAC005618D4 /* LoadingSpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E682E5C5CAC005618D4 /* LoadingSpinnerView.swift */; };
 		D8D36E842E5C5CAC005618D4 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E692E5C5CAC005618D4 /* UIViewController+Extensions.swift */; };
@@ -665,7 +665,7 @@
 		D8D36E612E5C5CAC005618D4 /* AWXSession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXSession+Extensions.swift"; sourceTree = "<group>"; };
 		D8D36E622E5C5CAC005618D4 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		D8D36E632E5C5CAC005618D4 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		D8D36E652E5C5CAC005618D4 /* RecurringOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringOptions.swift; sourceTree = "<group>"; };
+		D8D36E652E5C5CAC005618D4 /* PaymentConsentOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentConsentOptions.swift; sourceTree = "<group>"; };
 		D8D36E662E5C5CAC005618D4 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		D8D36E682E5C5CAC005618D4 /* LoadingSpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinnerView.swift; sourceTree = "<group>"; };
 		D8D36E692E5C5CAC005618D4 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
@@ -1361,7 +1361,7 @@
 		D8D36E672E5C5CAC005618D4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D8D36E652E5C5CAC005618D4 /* RecurringOptions.swift */,
+				D8D36E652E5C5CAC005618D4 /* PaymentConsentOptions.swift */,
 				D8D36E662E5C5CAC005618D4 /* Session.swift */,
 			);
 			path = Models;
@@ -2363,7 +2363,7 @@
 				D8D36E7E2E5C5CAC005618D4 /* AWXSession+Extensions.swift in Sources */,
 				D8D36E7F2E5C5CAC005618D4 /* Bundle+Extensions.swift in Sources */,
 				D8D36E802E5C5CAC005618D4 /* String+Extensions.swift in Sources */,
-				D8D36E812E5C5CAC005618D4 /* RecurringOptions.swift in Sources */,
+				D8D36E812E5C5CAC005618D4 /* PaymentConsentOptions.swift in Sources */,
 				D8D3712B2E604F5A005618D4 /* AWXAPIClient+Extension.swift in Sources */,
 				D8D36E822E5C5CAC005618D4 /* Session.swift in Sources */,
 				D8D36E832E5C5CAC005618D4 /* LoadingSpinnerView.swift in Sources */,

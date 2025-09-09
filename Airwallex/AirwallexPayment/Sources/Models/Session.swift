@@ -18,14 +18,14 @@ import Foundation
 /// It handles both standard payment intents and recurring payment configurations through a
 /// consistent API, making it easier to implement payment processing in your application.
 ///
-/// - SeeAlso: `AWXSession`, `RecurringOptions`
+/// - SeeAlso: `AWXSession`, `PaymentConsentOptions`
 @objc public final class Session: AWXSession {
     
     /// The payment intent to handle.
     @objc public let paymentIntent: AWXPaymentIntent
     
     /// Required for recurring payment
-    @objc public let recurringOptions: RecurringOptions?
+    @objc public let paymentConsentOptions: PaymentConsentOptions?
     
     /// Only applicable when payment_method.type is card. If true the payment will be captured immediately after authorization succeeds.
     /// Default: YES
@@ -47,7 +47,7 @@ import Foundation
     ///   - hidePaymentConsents: Whether to hide stored payment methods (default: false)
     ///   - lang: The language code (default: system language)
     ///   - paymentMethods: Array of payment method type names to limit displayed methods (optional)
-    ///   - recurringOptions: Options for recurring payments (optional)
+    ///   - paymentConsentOptions: Options for recurring payments (optional)
     ///   - requiredBillingContactFields: Required billing contact fields (default: .name)
     @objc public init(paymentIntent: AWXPaymentIntent,
                       countryCode: String,
@@ -59,11 +59,11 @@ import Foundation
                       hidePaymentConsents: Bool = false,
                       lang: String? = nil,
                       paymentMethods: [String]? = nil,
-                      recurringOptions: RecurringOptions? = nil,
+                      paymentConsentOptions: PaymentConsentOptions? = nil,
                       requiredBillingContactFields: RequiredBillingContactFields = .name
     ) {
         self.paymentIntent = paymentIntent
-        self.recurringOptions = recurringOptions
+        self.paymentConsentOptions = paymentConsentOptions
         self.autoCapture = autoCapture
         self.autoSaveCardForFuturePayments = autoSaveCardForFuturePayments
         
@@ -106,7 +106,7 @@ import Foundation
     /// - Returns: "RECURRING" for recurring payments, "ONE_OFF" for one-time payments.
     /// - Complexity: O(1)
     @objc public override func transactionMode() -> String {
-        return recurringOptions == nil ? AWXPaymentTransactionModeOneOff : AWXPaymentTransactionModeRecurring
+        return paymentConsentOptions == nil ? AWXPaymentTransactionModeOneOff : AWXPaymentTransactionModeRecurring
     }
 }
 
@@ -136,7 +136,7 @@ extension Session {
                 hidePaymentConsents: existingSession.hidePaymentConsents,
                 lang: existingSession.lang,
                 paymentMethods: existingSession.paymentMethods,
-                recurringOptions: existingSession.recurringOptions,
+                paymentConsentOptions: existingSession.paymentConsentOptions,
                 requiredBillingContactFields: existingSession.requiredBillingContactFields
             )
             return
@@ -144,21 +144,21 @@ extension Session {
         
         // Extract parameters from other session types
         var intent: AWXPaymentIntent?
-        var recurringOptions: RecurringOptions?
+        var consentOptions: PaymentConsentOptions?
         var autoCapture = false
         var autoSaveCard = true
         
         switch session {
         case let oneOffSession as AWXOneOffSession:
             intent = oneOffSession.paymentIntent
-            recurringOptions = nil
+            consentOptions = nil
             autoCapture = oneOffSession.autoCapture
             autoSaveCard = oneOffSession.autoSaveCardForFuturePayments
             
         case let recurringSession as AWXRecurringWithIntentSession:
             intent = recurringSession.paymentIntent
             autoCapture = recurringSession.autoCapture
-            recurringOptions = RecurringOptions(
+            consentOptions = PaymentConsentOptions(
                 nextTriggeredBy: recurringSession.nextTriggerByType,
                 merchantTriggerReason: recurringSession.merchantTriggerReason
             )
@@ -186,7 +186,7 @@ extension Session {
             hidePaymentConsents: session.hidePaymentConsents,
             lang: session.lang,
             paymentMethods: session.paymentMethods,
-            recurringOptions: recurringOptions,
+            paymentConsentOptions: consentOptions,
             requiredBillingContactFields: session.requiredBillingContactFields
         )
     }
@@ -198,7 +198,7 @@ extension Session {
     ///
     /// - Returns: A legacy `AWXSession` object representing the current session state.
     func convertToLegacySession() -> AWXSession {
-        if let recurringOptions {
+        if let paymentConsentOptions {
             if paymentIntent.amount == 0 {
                 // Zero-amount recurring session (setup only)
                 let session = AWXRecurringSession()
@@ -208,8 +208,8 @@ extension Session {
                 session.setAmount(paymentIntent.amount)
                 session.setCurrency(paymentIntent.currency)
                 session.setCustomerId(paymentIntent.customerId)
-                session.merchantTriggerReason = recurringOptions.merchantTriggerReason ?? .undefined
-                session.nextTriggerByType = recurringOptions.nextTriggeredBy
+                session.merchantTriggerReason = paymentConsentOptions.merchantTriggerReason ?? .undefined
+                session.nextTriggerByType = paymentConsentOptions.nextTriggeredBy
                 
                 return session
             } else {
@@ -220,8 +220,8 @@ extension Session {
                 // Set specific properties for recurring with intent
                 session.autoCapture = autoCapture
                 session.paymentIntent = paymentIntent
-                session.merchantTriggerReason = recurringOptions.merchantTriggerReason ?? .undefined
-                session.nextTriggerByType = recurringOptions.nextTriggeredBy
+                session.merchantTriggerReason = paymentConsentOptions.merchantTriggerReason ?? .undefined
+                session.nextTriggerByType = paymentConsentOptions.nextTriggeredBy
                 
                 return session
             }
