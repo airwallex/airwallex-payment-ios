@@ -103,8 +103,7 @@ import Foundation
     }
     
     /// Determines the transaction mode based on the presence of recurring options.
-    /// - Returns: "RECURRING" for recurring payments, "ONE_OFF" for one-time payments.
-    /// - Complexity: O(1)
+    /// - Returns: "recurring" for recurring payments, "oneoff" for one-time payments.
     @objc public override func transactionMode() -> String {
         return paymentConsentOptions == nil ? AWXPaymentTransactionModeOneOff : AWXPaymentTransactionModeRecurring
     }
