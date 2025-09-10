@@ -124,16 +124,6 @@ class ApplePayProvider: PaymentProvider {
             delegate?.provider(self, didCompleteWith: .failure, error: error)
         }
     }
-}
-
-// MARK: - PKPaymentAuthorizationControllerDelegate
-
-extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
-    
-    func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController,
-                                        didAuthorizePayment payment: PKPayment) async -> PKPaymentAuthorizationResult {
-        await confirmIntent(payment: payment)
-    }
     
     @MainActor func confirmIntent(payment: PKPayment) async -> PKPaymentAuthorizationResult {
         debugLog()
@@ -166,6 +156,16 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
             }
             return PKPaymentAuthorizationResult(status: .failure, errors: [error])
         }
+    }
+}
+
+// MARK: - PKPaymentAuthorizationControllerDelegate
+
+extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
+    
+    func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController,
+                                        didAuthorizePayment payment: PKPayment) async -> PKPaymentAuthorizationResult {
+        await confirmIntent(payment: payment)
     }
     
     func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {

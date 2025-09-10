@@ -556,7 +556,7 @@ class CardProviderTests: XCTestCase {
         )
         
         // Test without CVC
-        let request1 = provider.createRequestForSubsequentTransaction(consentId: "consent_123", cvc: nil)
+        let request1 = provider.createPaymentRequestWithExistingConsent(consentId: "consent_123", cvc: nil)
         
         // Verify the request properties
         XCTAssertEqual(request1.paymentConsent?.id, "consent_123")
@@ -564,7 +564,7 @@ class CardProviderTests: XCTestCase {
         XCTAssertEqual(request1.intentId, mockPaymentIntent.id)
         
         // Test with CVC
-        let request2 = provider.createRequestForSubsequentTransaction(consentId: "consent_123", cvc: "123")
+        let request2 = provider.createPaymentRequestWithExistingConsent(consentId: "consent_123", cvc: "123")
         
         // Verify the request properties
         XCTAssertEqual(request2.paymentConsent?.id, "consent_123")
@@ -586,7 +586,7 @@ class CardProviderTests: XCTestCase {
         )
         
         // Test without CVC
-        let request1 = provider.createRequestForConsentConversion(
+        let request1 = provider.createPaymentRequestWithConsentCreation(
             methodId: "method_123",
             cvc: nil,
             consentOptions: PaymentConsentOptions(nextTriggeredBy: .customerType)
@@ -601,7 +601,7 @@ class CardProviderTests: XCTestCase {
         XCTAssertEqual(request1.consentOptions?["next_triggered_by"] as? String, "customer")
         
         // Test with CVC
-        let request2 = provider.createRequestForConsentConversion(
+        let request2 = provider.createPaymentRequestWithConsentCreation(
             methodId: "method_123",
             cvc: "123",
             consentOptions: PaymentConsentOptions(
