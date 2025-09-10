@@ -16,15 +16,15 @@ import AirwallexCore
     
     @_spi(AWX) public enum Fields: String {
         case subtype = "subtype"
-        case intentId = "intent_id"
+        case intentId = "intentId"
         case paymentMethod = "paymentMethod"
-        case consentId = "consent_id"
+        case consentId = "consentId"
         case supportedSchemes = "supportedSchemes"
         case bankName = "bankName"
         case message = "message"
         case value = "value"
         case eventType = "eventType"
-        case supportedNetworks = "supported_networks"
+        case supportedNetworks = "supportedNetworks"
     }
     
     @_spi(AWX) public enum PageView: String {
