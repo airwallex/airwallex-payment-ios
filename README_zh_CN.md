@@ -202,6 +202,31 @@ let session = Session(
 > [!NOTE]
 > 下一个大版本更新之前 Airwallex SDK 仍会继续支持 `AWXOneOffSession`, `AWXRecurringSession` 和 `AWXRecurringWithIntentSession`，具体集成方式请参考[集成文档](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration)
 
+```mermaid
+---
+title: Mapping between Session and Legacy Sessions
+---
+flowchart LR
+    A{Session}
+    B1[AWXOneOffSession]
+    B2{Recurring transaction}
+    C1[AWXRecurringSession]
+    C2[AWXRecurringWithIntentSession]
+
+subgraph Session.swift
+    A
+end 
+
+A -- paymentConsentOptions == nil --> B1
+A -- paymentConsentOptions != nil --> B2
+
+subgraph Legacy Sessions
+    B1;C1;C2
+end
+
+B2 -- amount = 0 --> C1
+B2 -- amount \> 0 --> C2
+```
 
 ### 可选设置
 #### 微信支付

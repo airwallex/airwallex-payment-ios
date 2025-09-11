@@ -200,11 +200,34 @@ let session = Session(
 )
 ```
 The new `Session` type introduced in version 6.2.0 provides a unified and simplified way for integration and there are some internal optimization as well. We recommend using `Session` instead of the legacy `AWXOneOffSession`, `AWXRecurringSession`, and `AWXRecurringWithIntentSession`.
-```mermaid
- graph TD; A-->B; A-->C; B-->D; C-->D; 
-```
+
 > [!NOTE]
 > We will continue to support integrations using legacy session types until the next major version release. For integration steps, please refer to [integration guide](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration) 
+```mermaid
+---
+title: Mapping between Session and Legacy Sessions
+---
+flowchart LR
+    A{Session}
+    B1[AWXOneOffSession]
+    B2{Recurring transaction}
+    C1[AWXRecurringSession]
+    C2[AWXRecurringWithIntentSession]
+
+subgraph Session.swift
+    A
+end 
+
+A -- paymentConsentOptions == nil --> B1
+A -- paymentConsentOptions != nil --> B2
+
+subgraph Legacy Sessions
+    B1;C1;C2
+end
+
+B2 -- amount = 0 --> C1
+B2 -- amount \> 0 --> C2
+```
 
 ### Optional Setup
 ---
