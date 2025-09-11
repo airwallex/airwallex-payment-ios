@@ -41,7 +41,9 @@
         return;
     }
 
-    [WXApi registerApp:response.appId universalLink:self.session.returnURL];
+    // WeChat Pay may not function properly if you have not registered with a valid universal link before you start the payment session
+    NSString *universalLink = self.session.returnURL ?: @"";
+    [WXApi registerApp:response.appId universalLink:universalLink];
 
     PayReq *request = [[PayReq alloc] init];
     request.partnerId = response.partnerId;

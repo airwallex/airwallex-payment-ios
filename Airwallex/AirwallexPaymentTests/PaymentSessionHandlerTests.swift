@@ -698,8 +698,8 @@ class PaymentSessionHandlerTests: XCTestCase {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: "US",
-            returnURL: "https://example.com/return",
-            applePayOptions: AWXApplePayOptions(merchantIdentifier: "merchant_id")
+            applePayOptions: AWXApplePayOptions(merchantIdentifier: "merchant_id"),
+            returnURL: "https://example.com/return"
         )
         session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "merchant_id")
         session.applePayOptions?.supportedNetworks = [.visa, .masterCard]

@@ -555,9 +555,9 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: "AU",
-            returnURL: "https://example.com/return",
             applePayOptions: mockApplePayOptions,
-            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .customerType) // CIT
+            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .customerType), // CIT
+            returnURL: "https://example.com/return"
         )
         session.applePayOptions?.supportedNetworks = [.visa, .masterCard]
         

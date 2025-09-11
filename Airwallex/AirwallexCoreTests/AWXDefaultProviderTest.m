@@ -180,12 +180,13 @@ NSString *const kMockKey = @"MOCK";
     OCMVerify(times(1), [self.providerMock completeWithResponse:nil error:self.error]);
 }
 
-- (void)testCreatePaymentConsentAndConfirmIntentWithRecurringWithIntentSession {
+- (void)testCreateLPMPaymentConsentAndVerifyRecurringWithIntentSession {
     AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
     AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
+    paymentMethod.type = @"alipay";
     paymentMethod.additionalParams = [NSDictionary dictionary];
     session.requiresCVC = YES;
-    [self createProviderAndMockWithSession:session];
+    [self createProviderAndMockWithSession:session hasError:NO];
     [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod];
 
     OCMVerify(times(1), [self.providerMock createPaymentConsentWithPaymentMethod:[OCMArg any]
@@ -196,6 +197,31 @@ NSString *const kMockKey = @"MOCK";
                                                            merchantTriggerReason:AirwallexMerchantTriggerReasonUndefined
                                                                       completion:([OCMArg invokeBlockWithArgs:self.response, self.error, nil])]);
     OCMVerify(times(1), [self.providerMock verifyPaymentConsentWithPaymentMethod:[OCMArg any]
+                                                                  paymentConsent:[OCMArg any]
+                                                                        currency:[OCMArg any]
+                                                                          amount:[OCMArg any]
+                                                                       returnURL:[OCMArg any]
+                                                                      completion:([OCMArg invokeBlockWithArgs:self.response, self.error, nil])]);
+}
+
+- (void)testCreateLPMPaymentConsentAndAbortVerifyRecurringWithIntentSession {
+    AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
+    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
+    paymentMethod.type = @"alipay";
+    paymentMethod.additionalParams = [NSDictionary dictionary];
+    session.requiresCVC = YES;
+    [self createProviderAndMockWithSession:session hasError:YES];
+    [self.provider createPaymentConsentAndConfirmIntentWithPaymentMethod:paymentMethod];
+
+    OCMVerify(times(1), [self.providerMock createPaymentConsentWithPaymentMethod:[OCMArg any]
+                                                                      customerId:[OCMArg any]
+                                                                        currency:[OCMArg any]
+                                                               nextTriggerByType:AirwallexNextTriggerByCustomerType
+                                                                     requiresCVC:[OCMArg any]
+                                                           merchantTriggerReason:AirwallexMerchantTriggerReasonUndefined
+                                                                      completion:([OCMArg invokeBlockWithArgs:self.response, self.error, nil])]);
+    // verify consent should not be called if create payment consent failed
+    OCMVerify(times(0), [self.providerMock verifyPaymentConsentWithPaymentMethod:[OCMArg any]
                                                                   paymentConsent:[OCMArg any]
                                                                         currency:[OCMArg any]
                                                                           amount:[OCMArg any]
