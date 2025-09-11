@@ -86,7 +86,7 @@
                               merchantTriggerReason:AirwallexMerchantTriggerReasonUndefined
                                          completion:^(AWXResponse *_Nullable response, NSError *_Nullable error) {
                                              __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                             NSString *returnURL;
+                                             NSString *returnURL = self.session.returnURL;
                                              if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
                                                  returnURL = AWXThreeDSReturnURL;
                                              }
@@ -141,6 +141,7 @@
                                              __strong __typeof(weakSelf) strongSelf = weakSelf;
                                              AWXRecurringWithIntentSession *session = (AWXRecurringWithIntentSession *)self.session;
                                              if ([paymentMethod.type isEqualToString:AWXCardKey] || [paymentMethod.type isEqualToString:AWXApplePayKey]) {
+                                                 // will continue to confirm intent event if consent creation failed
                                                  [strongSelf confirmPaymentIntentWithId:session.paymentIntent.Id
                                                                              customerId:session.paymentIntent.customerId
                                                                           paymentMethod:paymentMethod
@@ -149,6 +150,11 @@
                                                                             autoCapture:session.autoCapture
                                                                              completion:completion];
                                              } else {
+                                                 if (error || !response) {
+                                                     // if consent creation failed, there is no reason continue to verify the nonexising consent
+                                                     completion(nil, error);
+                                                     return;
+                                                 }
                                                  NSString *returnURL = session.returnURL;
                                                  if (strongSelf.paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
                                                      returnURL = AWXThreeDSReturnURL;
@@ -235,7 +241,7 @@
                                        paymentConsent:(AWXPaymentConsent *)paymentConsent
                                            completion:(AWXRequestHandler)completion {
     if ([self.session isKindOfClass:[AWXOneOffSession class]]) {
-        NSString *returnURL = nil;
+        NSString *returnURL = self.session.returnURL;
         if (paymentConsent && [paymentMethod.type isEqualToString:AWXCardKey]) {
             returnURL = AWXThreeDSReturnURL;
         }

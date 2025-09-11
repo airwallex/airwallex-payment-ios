@@ -39,7 +39,6 @@ import Foundation
     /// - Parameters:
     ///   - countryCode: The country code
     ///   - paymentIntent: The payment intent to handle
-    ///   - returnURL: Return URL for redirects
     ///   - applePayOptions: Apple Pay options (optional)
     ///   - autoCapture: Whether to capture payment immediately after authorization (default: true)
     ///   - autoSaveCardForFuturePayments: Whether to save card for future payments (default: true)
@@ -49,9 +48,9 @@ import Foundation
     ///   - paymentMethods: Array of payment method type names to limit displayed methods (optional)
     ///   - paymentConsentOptions: Options for recurring payments (optional)
     ///   - requiredBillingContactFields: Required billing contact fields (default: .name)
+    ///   - returnURL: Return URL for redirecting users back to your app after external payment processing.(optional)
     @objc public init(paymentIntent: AWXPaymentIntent,
                       countryCode: String,
-                      returnURL: String,
                       applePayOptions: AWXApplePayOptions? = nil,
                       autoCapture: Bool = true,
                       autoSaveCardForFuturePayments: Bool = true,
@@ -60,7 +59,8 @@ import Foundation
                       lang: String? = nil,
                       paymentMethods: [String]? = nil,
                       paymentConsentOptions: PaymentConsentOptions? = nil,
-                      requiredBillingContactFields: RequiredBillingContactFields = .name
+                      requiredBillingContactFields: RequiredBillingContactFields = .name,
+                      returnURL: String? = nil
     ) {
         self.paymentIntent = paymentIntent
         self.paymentConsentOptions = paymentConsentOptions
@@ -127,7 +127,6 @@ extension Session {
             self.init(
                 paymentIntent: existingSession.paymentIntent,
                 countryCode: existingSession.countryCode,
-                returnURL: existingSession.returnURL,
                 applePayOptions: existingSession.applePayOptions,
                 autoCapture: existingSession.autoCapture,
                 autoSaveCardForFuturePayments: existingSession.autoSaveCardForFuturePayments,
@@ -136,7 +135,8 @@ extension Session {
                 lang: existingSession.lang,
                 paymentMethods: existingSession.paymentMethods,
                 paymentConsentOptions: existingSession.paymentConsentOptions,
-                requiredBillingContactFields: existingSession.requiredBillingContactFields
+                requiredBillingContactFields: existingSession.requiredBillingContactFields,
+                returnURL: existingSession.returnURL
             )
             return
         }
@@ -177,7 +177,6 @@ extension Session {
         self.init(
             paymentIntent: intent,
             countryCode: session.countryCode,
-            returnURL: session.returnURL,
             applePayOptions: session.applePayOptions,
             autoCapture: autoCapture,
             autoSaveCardForFuturePayments: autoSaveCard,
@@ -186,7 +185,8 @@ extension Session {
             lang: session.lang,
             paymentMethods: session.paymentMethods,
             paymentConsentOptions: consentOptions,
-            requiredBillingContactFields: session.requiredBillingContactFields
+            requiredBillingContactFields: session.requiredBillingContactFields,
+            returnURL: session.returnURL,
         )
     }
     

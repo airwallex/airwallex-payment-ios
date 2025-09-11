@@ -217,8 +217,8 @@ class CardProviderTests: XCTestCase {
         mockSession = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: "AU",
-            returnURL: "https://www.example.com",
-            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .merchantType)
+            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .merchantType),
+            returnURL: "https://www.example.com"
         )
         
         // Configure a CardProvider

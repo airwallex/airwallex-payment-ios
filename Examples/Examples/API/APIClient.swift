@@ -26,6 +26,7 @@ extension APIClient {
             currency: ExamplesKeys.currency,
             order: DemoDataSource.createOrder(),
             metadata: ["id": 1],
+            //  If a returnURL is provided in payment_intents/confirm, it will override the one set in payment_intents/create
             returnUrl: ExamplesKeys.returnUrl,
             customerID: ExamplesKeys.customerId?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty,
             paymentMethodOptions: force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,

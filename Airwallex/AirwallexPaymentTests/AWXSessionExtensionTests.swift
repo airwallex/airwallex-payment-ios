@@ -230,8 +230,8 @@ class AWXSessionExtensionTests: XCTestCase {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: "AU",
-            returnURL: AWXThreeDSReturnURL,
-            paymentConsentOptions: .init(nextTriggeredBy: .customerType)
+            paymentConsentOptions: .init(nextTriggeredBy: .customerType),
+            returnURL: AWXThreeDSReturnURL
         )
         XCTAssertNoThrow(try session.validate())
     }
@@ -241,8 +241,8 @@ class AWXSessionExtensionTests: XCTestCase {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: "AU",
-            returnURL: AWXThreeDSReturnURL,
-            paymentConsentOptions: .init(nextTriggeredBy: .customerType)
+            paymentConsentOptions: .init(nextTriggeredBy: .customerType),
+            returnURL: AWXThreeDSReturnURL
         )
         XCTAssertThrowsError(try session.validate())
     }

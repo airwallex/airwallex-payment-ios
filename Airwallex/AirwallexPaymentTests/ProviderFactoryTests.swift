@@ -332,8 +332,8 @@ class ProviderFactoryTests: XCTestCase {
         mockSession = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: "AU",
-            returnURL: "https://example.com",
-            paymentConsentOptions: consentOptions
+            paymentConsentOptions: consentOptions,
+            returnURL: "https://example.com"
         )
         
         // Verify with all provider types

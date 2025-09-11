@@ -49,6 +49,8 @@ class PaymentProvider: AWXDefaultProvider {
         request.paymentConsent = consent
         request.device = AWXDevice.withRiskSessionId()
         request.consentOptions = consentOptions?.encodeToJSON()
+        // TODO: Currently hardcoded to AWXThreeDSReturnURL for Apple Pay and Card payments (3DS webView interception).
+        // When LPM supports simplified consent flow, check payment method type and use session.returnURL for redirect payments.
         request.returnURL = AWXThreeDSReturnURL
         if let method {
             request.options = createPaymentMethodOptions(method)
