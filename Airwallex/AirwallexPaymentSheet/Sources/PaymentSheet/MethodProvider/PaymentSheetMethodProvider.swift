@@ -43,16 +43,19 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
         methods = filterMethods(methodsResult)
         
         // Only fetch consents if AWXCardKey in the filtered methods
-        consents.removeAll()
-        mitConsents.removeAll()
         if methods.contains(where: { $0.name.lowercased() == AWXCardKey }),
            (session is Session || session is AWXOneOffSession || session is AWXRecurringWithIntentSession) {
             // AWXOneOffSession and AWXRecurringWithIntentSession can be converted to Session internally to
             // work with the simplified consent flow
             let consentsResult = try await getAllConsents()
+            consents.removeAll()
+            mitConsents.removeAll()
             let (filteredConsents, mitConsents) = filterConsents(consentsResult)
             consents.append(contentsOf: filteredConsents)
             self.mitConsents.merge(mitConsents) { $1 }
+        } else {
+            consents.removeAll()
+            mitConsents.removeAll()
         }
         if let old = selectedMethod, let new = methods.first(where: { $0.name == old.name}) {
             selectedMethod = new
