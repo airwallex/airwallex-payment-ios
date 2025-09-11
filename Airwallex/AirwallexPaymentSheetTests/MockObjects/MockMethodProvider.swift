@@ -13,9 +13,8 @@ import AirwallexCore
 import Combine
 
 class MockMethodProvider: PaymentMethodProvider {
-    func removeConsent(consentId: String) -> Bool {
-        consents.removeAll(where: { $0.id == consentId})
-        return true
+    func disable(consent: AWXPaymentConsent) async throws {
+        consents.removeAll(where: { $0.id == consent.id })
     }
     
     var apiClient: AWXAPIClient = {
@@ -28,7 +27,7 @@ class MockMethodProvider: PaymentMethodProvider {
     }()
     
     var session: AWXSession = {
-        let session =  AWXOneOffSession()
+        let session = AWXOneOffSession()
         session.countryCode = "AU"
         session.paymentIntent = AWXPaymentIntent()
         session.paymentIntent?.clientSecret = "client_secret"

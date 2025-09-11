@@ -48,14 +48,12 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
             // AWXOneOffSession and AWXRecurringWithIntentSession can be converted to Session internally to
             // work with the simplified consent flow
             let consentsResult = try await getAllConsents()
-            consents.removeAll()
-            mitConsents.removeAll()
             let (filteredConsents, mitConsents) = filterConsents(consentsResult)
-            consents.append(contentsOf: filteredConsents)
-            self.mitConsents.merge(mitConsents) { $1 }
+            consents = filteredConsents
+            self.mitConsents = mitConsents
         } else {
-            consents.removeAll()
-            mitConsents.removeAll()
+            consents = [AWXPaymentConsent]()
+            mitConsents = [String: AWXPaymentConsent]()
         }
         if let old = selectedMethod, let new = methods.first(where: { $0.name == old.name}) {
             selectedMethod = new
@@ -76,29 +74,12 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
         return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse
     }
     
-    func removeConsent(consentId: String) -> Bool {
-        if let index = consents.firstIndex(where: { $0.id == consentId }) {
-            let consent = consents.remove(at: index)
-            if consent.isCITConsent {
-                // when CIT consent removed, fallback to mit consent
-                if let fingerprint = consent.paymentMethod?.card?.fingerprint,
-                   let mitConsent = mitConsents[fingerprint] {
-                    consents.insert(mitConsent, at: index)
-                }
-            }
-            if consent.isMITConsent {
-                // also remove MIT consent from mitConsents dictionary
-                // we have blocked removal of MIT consent from payment UI,
-                // so this will not actually happened
-                if let element = mitConsents.first(where:{ $0.value.id == consentId }) {
-                    mitConsents.removeValue(forKey: element.key)
-                }
-            }
-            updatePublisher.send(PaymentMethodProviderUpdateType.consentDeleted(consent))
-            return true
-        }
-        
-        return false
+    func disable(consent: AWXPaymentConsent) async throws {
+        let request = AWXDisablePaymentConsentRequest()
+        request.id = consent.id
+        try await apiClient.send(request)
+        let result = removeConsent(consentId: consent.id)
+        assert(result, "consent should exist until it is removed")
     }
 }
 
@@ -212,5 +193,30 @@ private extension PaymentSheetMethodProvider {
             }
         }
         return (filteredConsents, mitConsents)
+    }
+    
+    func removeConsent(consentId: String) -> Bool {
+        if let index = consents.firstIndex(where: { $0.id == consentId }) {
+            let consent = consents.remove(at: index)
+            if consent.isCITConsent {
+                // when CIT consent removed, fallback to mit consent
+                if let fingerprint = consent.paymentMethod?.card?.fingerprint,
+                   let mitConsent = mitConsents[fingerprint] {
+                    consents.insert(mitConsent, at: index)
+                }
+            }
+            if consent.isMITConsent {
+                // also remove MIT consent from mitConsents dictionary
+                // we have blocked removal of MIT consent from payment UI,
+                // so this will not actually happened
+                if let element = mitConsents.first(where:{ $0.value.id == consentId }) {
+                    mitConsents.removeValue(forKey: element.key)
+                }
+            }
+            updatePublisher.send(PaymentMethodProviderUpdateType.consentDeleted(consent))
+            return true
+        }
+        
+        return false
     }
 }

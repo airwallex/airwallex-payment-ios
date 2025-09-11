@@ -94,5 +94,5 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
         return try await task.value
     }
     
-    func removeConsent(consentId: String) -> Bool { false }
+    func disable(consent: AWXPaymentConsent) async throws {}
 }

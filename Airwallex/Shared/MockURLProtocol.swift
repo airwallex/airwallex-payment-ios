@@ -34,7 +34,10 @@ class MockURLProtocol: URLProtocol {
         } else if let url = request.url, let (data, response, error) = Self.mockResponseMap?[url.path] {
             communicateClient(data, response, error)
         } else {
-            assert(false, "mock response not found")
+            MockURLProtocol.mockFailure()
+            if let (data, response, error) = Self.mockResponse {
+                communicateClient(data, response, error)
+            }
         }
     }
     

@@ -108,7 +108,7 @@ import Combine
         XCTAssertNil(provider.method(named: "test_recurring"))
     }
     
-    func testFetchPaymentConsents() async {
+    func testFetchPaymentConsents() async throws {
         let mockConsentsData = Bundle.dataOfFile("payment_consents_mix")!
         MockURLProtocol.mockResponseMap = [
             AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
@@ -139,7 +139,8 @@ import Combine
         XCTAssertEqual(consent.nextTriggeredBy, FormatNextTriggerByType(.customerType))
         // check fallback to MIT consenty
         let count  = provider.consents.count
-        XCTAssertTrue(provider.removeConsent(consentId: consent.id))
+        MockURLProtocol.mockSuccess()
+        try await provider.disable(consent: consent)
         guard let consent = provider.consents.first(where: { $0.paymentMethod?.card?.fingerprint == fingerprint }) else {
             XCTFail("MIT consent not found")
             return
@@ -151,7 +152,7 @@ import Combine
         )
         
         // verify CIT & MIT consent all deleted
-        XCTAssertTrue(provider.removeConsent(consentId: consent.id))
+        try await provider.disable(consent: consent)
         XCTAssertNil(provider.consents.first(where: { $0.paymentMethod?.card?.fingerprint == fingerprint }))
         XCTAssertEqual(
             provider.consents.count,
