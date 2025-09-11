@@ -69,7 +69,6 @@ final class SessionTests: XCTestCase {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: mockCountryCode,
-            returnURL: mockReturnURL,
             applePayOptions: applePayOptions,
             autoCapture: false,
             autoSaveCardForFuturePayments: false,
@@ -78,7 +77,8 @@ final class SessionTests: XCTestCase {
             lang: "zh-Hans",
             paymentMethods: mockPaymentMethods,
             paymentConsentOptions: consentOptions,
-            requiredBillingContactFields: mockBillingContactFields
+            requiredBillingContactFields: mockBillingContactFields,
+            returnURL: mockReturnURL
         )
         
         // Verify properties set from initializer
@@ -158,8 +158,8 @@ final class SessionTests: XCTestCase {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: mockCountryCode,
-            returnURL: mockReturnURL,
-            paymentConsentOptions: consentOptions
+            paymentConsentOptions: consentOptions,
+            returnURL: mockReturnURL
         )
         
         XCTAssertEqual(session.transactionMode(), AWXPaymentTransactionModeRecurring)
@@ -176,7 +176,6 @@ final class SessionTests: XCTestCase {
         let originalSession = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: mockCountryCode,
-            returnURL: mockReturnURL,
             applePayOptions: applePayOptions,
             autoCapture: false,
             autoSaveCardForFuturePayments: false,
@@ -185,7 +184,8 @@ final class SessionTests: XCTestCase {
             lang: "zh-Hans",
             paymentMethods: mockPaymentMethods,
             paymentConsentOptions: consentOptions,
-            requiredBillingContactFields: mockBillingContactFields
+            requiredBillingContactFields: mockBillingContactFields,
+            returnURL: mockReturnURL
         )
         
         let newSession = Session(originalSession)
@@ -330,9 +330,9 @@ final class SessionTests: XCTestCase {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: mockCountryCode,
-            returnURL: mockReturnURL,
             autoCapture: false,
-            autoSaveCardForFuturePayments: false
+            autoSaveCardForFuturePayments: false,
+            returnURL: mockReturnURL
         )
         
         let legacySession = session.convertToLegacySession()
@@ -351,9 +351,9 @@ final class SessionTests: XCTestCase {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: mockCountryCode,
-            returnURL: mockReturnURL,
             autoCapture: false,
-            paymentConsentOptions: consentOptions
+            paymentConsentOptions: consentOptions,
+            returnURL: mockReturnURL
         )
         
         let legacySession = session.convertToLegacySession()
@@ -381,8 +381,8 @@ final class SessionTests: XCTestCase {
         let session = Session(
             paymentIntent: zeroAmountIntent,
             countryCode: mockCountryCode,
-            returnURL: mockReturnURL,
-            paymentConsentOptions: consentOptions
+            paymentConsentOptions: consentOptions,
+            returnURL: mockReturnURL
         )
         
         let legacySession = session.convertToLegacySession()
@@ -409,13 +409,13 @@ final class SessionTests: XCTestCase {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: mockCountryCode,
-            returnURL: mockReturnURL,
             applePayOptions: applePayOptions,
             billing: billing,
             hidePaymentConsents: true,
             lang: "zh-Hans",
             paymentMethods: mockPaymentMethods,
-            requiredBillingContactFields: mockBillingContactFields
+            requiredBillingContactFields: mockBillingContactFields,
+            returnURL: mockReturnURL
         )
         
         let legacySession = session.convertToLegacySession()

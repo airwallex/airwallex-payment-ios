@@ -26,8 +26,8 @@ class ApplePayProviderTests: XCTestCase {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: "US",
-            returnURL: "https://example.com",
-            applePayOptions: applePayOptions
+            applePayOptions: applePayOptions,
+            returnURL: "https://example.com"
         )
         mockSession = session
         

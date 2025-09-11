@@ -557,7 +557,6 @@ private extension IntegrationDemoListViewController {
         let session = Session(
             paymentIntent: paymentIntent,
             countryCode: ExamplesKeys.countryCode,
-            returnURL: ExamplesKeys.returnUrl,
             applePayOptions: DemoDataSource.applePayOptions,
             autoCapture: ExamplesKeys.autoCapture,
             billing: shippingAddress,
@@ -565,7 +564,8 @@ private extension IntegrationDemoListViewController {
                 nextTriggeredBy: ExamplesKeys.nextTriggerByType,
                 merchantTriggerReason: .scheduled
             ),
-            requiredBillingContactFields: getRequiredBillingContactFields()
+            requiredBillingContactFields: getRequiredBillingContactFields(),
+            returnURL: ExamplesKeys.returnUrl
         )
         return session
     }
