@@ -191,12 +191,12 @@ let paymentConsentOptions = if /* one-off transaction */  {
 let session = Session(
     paymentIntent: "payment intent create on your server",
     countryCode: "Your country code",
-    returnURL: "App return url",
     applePayOptions: "required if you want to support apple pay",
     autoCapture: "Only applicable when for card payment. If true the payment will be captured immediately after authorization succeeds.",
     billing: "prefilled billing address",
     paymentConsentOptions: "info for recurring transactions",
-    requiredBillingContactFields: "customize billing contact fields for card payment"
+    requiredBillingContactFields: "customize billing contact fields for card payment",
+    returnURL: "App return url"
 )
 ```
 The new `Session` type introduced in version 6.2.0 provides a unified and simplified way for integration and there are some internal optimization as well. We recommend using `Session` instead of the legacy `AWXOneOffSession`, `AWXRecurringSession`, and `AWXRecurringWithIntentSession`.

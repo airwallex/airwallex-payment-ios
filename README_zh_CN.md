@@ -188,12 +188,12 @@ let paymentConsentOptions = if /* 单次扣款 */  {
 let session = Session(
     paymentIntent: "payment intent create on your server",
     countryCode: "Your country code",
-    returnURL: "App return url",
     applePayOptions: "required if you want to support apple pay",
     autoCapture: "Only applicable when for card payment. If true the payment will be captured immediately after authorization succeeds.",
     billing: "prefilled billing address",
     paymentConsentOptions: paymentConsentOptions,
-    requiredBillingContactFields: "customize billing contact fields for card payment"
+    requiredBillingContactFields: "customize billing contact fields for card payment",
+    returnURL: "App return url"
 )
 ```
 
