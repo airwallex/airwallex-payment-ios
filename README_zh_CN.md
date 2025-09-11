@@ -106,16 +106,15 @@ Airwallex iOS SDK 支持通过 Swift Package Manager 集成。要将其集成到
 - `AirwallexWeChatPay`: 集成微信支付，如果您需要支持微信支付请务必添加此依赖
   
 
-**Size Impact**
+**包大小**
 
 | 集成方式| 包含的组件 | IPA 包增加的大小 |
 |-----------------|----------------------|------------------:|
-| Low-Level API 集成| AirwallexCore <br> AirwallexPayment | 1.20 MB  |
-| UI 集成| AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 2.74 MB |
-| 全部组件 | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 3.53 MB |
+| Low-Level API 集成| AirwallexCore <br> AirwallexPayment | 428 MB  |
+| UI 集成| AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 1.2 MB |
+| 全部组件 | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 1.4 MB |
 
-> The IPA size increases shown above reflect the additional archive size when integrating the Airwallex SDK using Swift Package Manager (SPM) into an otherwise empty project, measured for each integration style.
-> 上述 IPA 体积的增长是在一个空项目中，通过 Swift Package Manager (SPM) 使用不同方式集成 Airwallex SDK 后，归档 IPA 文件增加的大小。
+> 上述 IPA 体积的增长是通过 Swift Package Manager (SPM) 使用不同方式集成 Airwallex SDK 后根据 App Thinning Size Report 中的 App size compressed 计算得到的。
 
 ---
 #### CocoaPods
@@ -148,85 +147,61 @@ Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 ```
 ---
 #### Customer ID 
-> [!IMPORTANT]
-> - **订阅支付**： **必须**绑定 customer ID
-> - **带intent订阅支付**： **必须**绑定 customer ID
-> - **一次性支付**：
->   - 保存银行卡：**必须**绑定 customer ID
->   - 不保存银行卡： **可选**
-
 请在您的服务器端为您的用户生成或检索 customer ID。
-相关接口信息，请参阅[Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
+相关接口信息请参阅[Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/)
+
+> [!NOTE]
+> 如果您的 APP 不需要签约周期/非周期扣款或在付款时进行存卡操作，您可以跳过这个步骤
 
 ---
-#### 创建 `AWXSession`
+#### 创建支付意图对象
 
-- 如果您想进行一次性支付，请创建 `AWXOneOffSession`。
-``` swift
-let session = AWXOneOffSession()
-session.countryCode = "Your country code"
-session.billing = "Your shipping address"
-session.returnURL = "App return url"
-```
-- 如果您想进行订阅支付，请创建 `AWXRecurringSession`。
-``` swift
-let session = AWXRecurringSession()
-session.countryCode = "Your country code"
-session.billing = "Your shipping address"
-session.returnURL = "App return url"
-session.setCurrency("Currency code")
-session.setAmount("Total amount")
-session.setCustomerId("Customer ID")
-session.nextTriggerByType = "customer or merchant";
-session.merchantTriggerReason = "Unscheduled or scheduled";
-```
-- 如果你想完成带 payment intent 的订阅支付，请创建 `AWXRecurringWithIntentSession`。
+您需要为所有交易创建 payment intent。
+请在您的**服务器端**创建 payment intent，然后将 payment intent 返回到移动端。
 
-``` swift
-let session = AWXRecurringWithIntentSession()
-session.countryCode = "Your country code"
-session.billing = "Your shipping address"
-session.returnURL = "App return url"
-session.nextTriggerByType = "customer or merchant"
-session.merchantTriggerReason = "Unscheduled or scheduled"
-```
-> [!TIP] 
-> 您只需为订阅支付（`AWXRecurringSession`）显式设置客户 ID。
-> 对于**一次性支付**和**带 intent 的订阅支付**，会自动从 `session.paymentIntent` 中获取 customer ID。
+相关接口信息请参阅 [Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance/Payment_Intents/)
 
----
-#### 创建 `AWXPaymentIntent`
-> [!IMPORTANT]
-> **一次性支付**: **必须**创建 `AWXPaymentIntent`
-> **带 intent 订阅支付**: **必须**创建 `AWXPaymentIntent`
-> **订阅支付** **不需要**创建 `AWXPaymentIntent`。
-> 
-
-在您的服务器端创建**payment intent**，然后将payment intent返回到移动端。
-
-相关接口信息，请参阅 [Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance/Payment_Intents/)
-
-``` swift
-let paymentIntent = "The payment intent created on your server"
-// 将 payment intent 和 session 绑定
-session.paymentIntent = paymentIntent
-```
+当调用 `payment_intents/create` 接口时
+- **amount = 0** 表示仅签约周期/非周期扣款，不进行扣款
+- **amount > 0** 表示签约周期/非周期扣款并且同时进行扣款
+- 如果需要签约周期/非周期扣款或付款时进行存卡操作，请提供 `customer_id` 参数
 ---
 
 #### 设置客户端密钥
-- 对于**一次性支付**和**带 intent 的订阅支付**，使用 `paymentIntent` 中的 `clientSecret`
+将 `paymentIntent` 中的 `clientSecret` 更新到SDK中
 ``` swift
 AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
 ```
 
-- 对于**订阅支付**，您需要使用 customer ID 在服务器端创建 **客户端密钥**并将其传递给 `AWXAPIClientConfiguration`。
-
-相关接口信息，请参阅 [Airwallex API 文档](https://www.airwallex.com/docs/api#/Payment_Acceptance/Customers/_api_v1_pa_customers__id__generate_client_secret/get/)
+#### 创建 `Session`
 
 ``` swift
-let clientSecret = "The client secret generated with customer ID on your server"
-AWXAPIClientConfiguration.shared().clientSecret = clientSecret
+let paymentConsentOptions = if /* 单次扣款 */  {
+    nil
+} else {
+    /* 周期/非周期扣款 */
+    paymentConsentOptions(
+        nextTriggeredBy: ".customer/.merchant",
+        merchantTriggerReason: "nil/.scheduled/.unscheduled/...."
+    )
+}
+let session = Session(
+    paymentIntent: "payment intent create on your server",
+    countryCode: "Your country code",
+    returnURL: "App return url",
+    applePayOptions: "required if you want to support apple pay",
+    autoCapture: "Only applicable when for card payment. If true the payment will be captured immediately after authorization succeeds.",
+    billing: "prefilled billing address",
+    paymentConsentOptions: paymentConsentOptions,
+    requiredBillingContactFields: "customize billing contact fields for card payment"
+)
 ```
+
+6.2.0 版本新增 `Session` 类型简化了SDK的集成方式并且进行了一些内部优化。我们建议使用 `Session` 替代已经被标记为废弃的 `AWXOneOffSession`, `AWXRecurringSession` 和 `AWXRecurringWithIntentSession`
+
+> [!NOTE]
+> 下一个大版本更新之前 Airwallex SDK 仍会继续支持 `AWXOneOffSession`, `AWXRecurringSession` 和 `AWXRecurringWithIntentSession`，具体集成方式请参考[集成文档](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration)
+
 
 ### 可选设置
 #### 微信支付
@@ -286,10 +261,10 @@ options.requiredBillingContactFields = [.postalAddress]
 options.supportedCountries = ["AU"]
 options.totalPriceLabel = "COMPANY, INC."
 
-let session = AWXOneOffSession()
-//  configure other properties
-...
-session.applePayOptions = AWXApplePayOptions(merchantIdentifier: "Your Merchant Identifier")// required for Apple Pay
+let session = Session(
+    //  ...
+    applePayOptions: options// required for Apple Pay
+)
 ```
 
 > [!IMPORTANT]
