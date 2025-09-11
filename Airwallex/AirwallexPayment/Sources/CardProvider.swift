@@ -71,7 +71,7 @@ class CardProvider: PaymentProvider {
                     )
                     await confirmIntent(request)
                 } else if consent.isMITConsent {
-                    // CIT transaction with MIT consent
+                    // one-off transaction with MIT consent
                     let request = createPaymentRequestWithConsentCreation(
                         methodId: methodId,
                         cvc: cvc,
@@ -79,12 +79,12 @@ class CardProvider: PaymentProvider {
                     )
                     await confirmIntent(request)
                 } else {
-                    // CIT transaction with CIT consent
+                    // one-off transaction with CIT consent
                     let request = createPaymentRequestWithExistingConsent(consentId: consent.id, cvc: cvc)
                     await confirmIntent(request)
                 }
             } else {
-                // CIT transaction with CIT consent
+                // treated as one-off transaction like before, and payment consent options will be ignored
                 let request = createPaymentRequestWithExistingConsent(consentId: consent.id, cvc: cvc)
                 await confirmIntent(request)
             }

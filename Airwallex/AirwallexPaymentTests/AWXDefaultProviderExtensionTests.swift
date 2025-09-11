@@ -41,6 +41,7 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         mockPaymentIntent.clientSecret = mockClientSecret
         mockPaymentIntent.amount = NSDecimalNumber(string: "99")
         mockPaymentIntent.currency = "AUD"
+        mockPaymentIntent.customerId = "mock_customer_id"
         
         mockApplePayOptions = AWXApplePayOptions(merchantIdentifier: "merchant_id")
 
@@ -339,14 +340,123 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         }
     }
 
-    func testCardProviderValidateWithConsent() {
+    func testCardProviderValidateWithValidConsent() {
         mockMethodType.name = AWXCardKey
         let provider = AWXCardProvider(delegate: mockProviderDelegate, session: mockSession, paymentMethodType: mockMethodType)
         
-        // Test valid consent
+        // Test valid consent for one-off session (no consent options)
         let validConsent = AWXPaymentConsent()
         validConsent.id = "cst_validConsentId"
         XCTAssertNoThrow(try provider.validate(consent: validConsent))
+    }
+    
+    func testCardProviderValidateConsentWithInvalidMethodType() {
+        let validConsent = AWXPaymentConsent()
+        validConsent.id = "cst_validConsentId"
+        
+        // Test invalid method type
+        mockMethodType.name = AWXApplePayKey
+        let provider = AWXCardProvider(delegate: mockProviderDelegate, session: mockSession, paymentMethodType: mockMethodType)
+        
+        XCTAssertThrowsError(try provider.validate(consent: validConsent)) { error in
+            guard case AWXCardProvider.ValidationError.invalidMethodType(_) = error else {
+                XCTFail("Expected AWXCardProvider.ValidationError.invalidMethodType, but got \(error)")
+                return
+            }
+        }
+    }
+    
+    func testCardProviderValidateConsentWithEmptyId() {
+        mockMethodType.name = AWXCardKey
+        let provider = AWXCardProvider(delegate: mockProviderDelegate, session: mockSession, paymentMethodType: mockMethodType)
+        
+        // Test empty consent ID
+        let invalidConsent = AWXPaymentConsent()
+        invalidConsent.id = ""
+        XCTAssertThrowsError(try provider.validate(consent: invalidConsent)) { error in
+            guard case AWXCardProvider.ValidationError.invalidConsent(_) = error else {
+                XCTFail("Expected AWXCardProvider.ValidationError.invalidConsent, but got \(error)")
+                return
+            }
+        }
+    }
+    
+    func testCardProviderValidateConsentWithRecurringSession() {
+        // Test with Session that has payment consent options (recurring scenario)
+        let sessionWithConsent = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            returnURL: "https://example.com",
+            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .merchantType)
+        )
+        
+        mockMethodType.name = AWXCardKey
+        let provider = AWXCardProvider(delegate: mockProviderDelegate, session: sessionWithConsent, paymentMethodType: mockMethodType)
+        
+        // Test consent without payment method ID (should fail for recurring)
+        let consentWithoutMethodId = AWXPaymentConsent()
+        consentWithoutMethodId.id = "cst_validConsentId"
+        consentWithoutMethodId.paymentMethod = AWXPaymentMethod()
+        // paymentMethod.id is nil
+        
+        XCTAssertThrowsError(try provider.validate(consent: consentWithoutMethodId)) { error in
+            guard case AWXCardProvider.ValidationError.invalidConsent(let message) = error else {
+                XCTFail("Expected AWXCardProvider.ValidationError.invalidConsent, but got \(error)")
+                return
+            }
+            XCTAssertTrue(message.contains("method id required"))
+        }
+        
+        // Test consent with payment method ID (should pass)
+        let consentWithMethodId = AWXPaymentConsent()
+        consentWithMethodId.id = "cst_validConsentId"
+        consentWithMethodId.paymentMethod = AWXPaymentMethod()
+        consentWithMethodId.paymentMethod?.id = "pm_validMethodId"
+        
+        XCTAssertNoThrow(try provider.validate(consent: consentWithMethodId))
+    }
+    
+    func testCardProviderValidateConsentIdClassMethod() {
+        mockMethodType.name = AWXCardKey
+        
+        // Test valid consent ID with one-off session
+        XCTAssertNoThrow(try AWXCardProvider.validate(consentId: "cst_validConsentId", paymentMethodType: mockMethodType, session: mockSession))
+        
+        // Test empty consent ID
+        XCTAssertThrowsError(try AWXCardProvider.validate(consentId: "", paymentMethodType: mockMethodType, session: mockSession)) { error in
+            guard case AWXCardProvider.ValidationError.invalidConsent(_) = error else {
+                XCTFail("Expected AWXCardProvider.ValidationError.invalidConsent, but got \(error)")
+                return
+            }
+        }
+        
+        // Test invalid method type
+        mockMethodType.name = AWXApplePayKey
+        XCTAssertThrowsError(try AWXCardProvider.validate(consentId: "cst_validConsentId", paymentMethodType: mockMethodType, session: mockSession)) { error in
+            guard case AWXCardProvider.ValidationError.invalidMethodType(_) = error else {
+                XCTFail("Expected AWXCardProvider.ValidationError.invalidMethodType, but got \(error)")
+                return
+            }
+        }
+        
+        // Reset method type
+        mockMethodType.name = AWXCardKey
+        
+        // Test with recurring session (should fail because consent ID is only for one-off)
+        let recurringSession = AWXRecurringSession()
+        recurringSession.setAmount(NSDecimalNumber(string: "99"))
+        recurringSession.setCurrency("AUD")
+        recurringSession.setCustomerId("test_customer_id")
+        recurringSession.countryCode = "AU"
+        recurringSession.nextTriggerByType = .merchantType
+        
+        XCTAssertThrowsError(try AWXCardProvider.validate(consentId: "cst_validConsentId", paymentMethodType: mockMethodType, session: recurringSession)) { error in
+            // Should throw an error because consent payment with ID is only for one-off transactions
+            XCTAssertTrue(error.localizedDescription.contains("transaction mode should be one-off"))
+        }
+        
+        // Test with nil payment method type (low-level API integration)
+        XCTAssertNoThrow(try AWXCardProvider.validate(consentId: "cst_validConsentId", paymentMethodType: nil, session: mockSession))
     }
 
     func testRedirectActionProviderValidate() {

@@ -148,11 +148,18 @@ public class PaymentSessionHandler: NSObject {
         }
     }
     
-    /// Initiates a payment using AWXPaymentConsent
-    /// This method processes a payment using a previously obtained payment consent, which may require additional input such as a CVC.
-    /// - Parameters:
-    ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
-    ///   If The payment method details, which may require additional input such as a CVC for validation.
+    /// Initiates a consent-based payment using a previously obtained payment consent object.
+    ///
+    /// This method processes payments with different behaviors based on the session type and consent configuration:
+    /// - **Recurring sessions**: Creates a new consent and confirms payment using the existing payment method
+    /// - **One-off sessions with MIT consent**: Creates a new CIT consent and confirms the payment intent
+    /// - **One-off sessions with CIT consent**: Processes as a standard subsequent one-off transaction
+    ///
+    /// **Important**: Consents with `numberType` "PAN" may require additional user input (such as CVC) for security validation.
+    /// The SDK will automatically prompt for required information when necessary.
+    ///
+    /// - Parameter consent: The payment consent object retrieved from the server that authorizes this transaction.
+    ///                     This consent must be valid and not expired.
     func startConsentPayment(with consent: AWXPaymentConsent) {
         do {
             try confirmConsentPayment(with: consent)
@@ -161,9 +168,18 @@ public class PaymentSessionHandler: NSObject {
         }
     }
     
-    /// Initiates a payment using a consent ID.
-    /// - Parameter consentId: The previously generated consent identifier.
-    /// - Parameter requiresCVC: Whether prompt for user iput for cvc. You typically pass true when the number type of the consent is "PAN"
+    /// Initiates a consent-based subsequent one-off payment using a consent identifier with optional CVC requirement.
+    ///
+    /// Use this method when you have stored the consent ID and want to control whether CVC input is required.
+    ///
+    /// **CVC Requirement Guidelines:**
+    /// - Set `requiresCVC` to `true` when the consent's `numberType` is "PAN" for enhanced security
+    /// - Set `requiresCVC` to `false` for tokenized payment methods that don't require CVC re-entry
+    ///
+    /// - Parameters:
+    ///   - consentId: The unique identifier of the previously created payment consent.
+    ///   - requiresCVC: Whether to prompt the user for CVC input. Defaults to `false`.
+    ///                  Set to `true` for PAN-type consents that require CVC validation.
     func startConsentPayment(withId consentId: String, requiresCVC: Bool = false) {
         do {
             try confirmConsentPayment(withId: consentId, requiresCVC: requiresCVC)
@@ -172,8 +188,15 @@ public class PaymentSessionHandler: NSObject {
         }
     }
     
-    /// Initiates a payment with a tokenized consent
-    /// - Parameter consentId: The previously generated consent identifier.
+    /// Initiates a consent-based  subsequent one-off payment using a consent identifier without CVC requirement.
+    ///
+    /// This is a convenience method that calls `startConsentPayment(withId:requiresCVC:)` with `requiresCVC` set to `false`.
+    /// Use this method when you're confident that the consent doesn't require CVC input, typically for tokenized payment methods.
+    ///
+    /// **Note**: If the consent actually requires CVC (e.g., PAN-type consents), the payment may fail.
+    /// Consider using `startConsentPayment(withId:requiresCVC:)` with `requiresCVC: true` for such cases.
+    ///
+    /// - Parameter consentId: The unique identifier of the previously created payment consent.
     func startConsentPayment(withId consentId: String) {
         startConsentPayment(withId: consentId, requiresCVC: false)
     }

@@ -252,7 +252,18 @@ extension AWXCardProvider {
     
     class func validate(consent: AWXPaymentConsent, paymentMethodType: AWXPaymentMethodType?, session: AWXSession) throws {
         try validateMethodTypeAndSession(paymentMethodType: paymentMethodType, session: session)
-        try validate(consentId: consent.id, paymentMethodType: paymentMethodType, session: session)
+        guard !consent.id.isEmpty else {
+            throw ValidationError.invalidConsent(
+                "Consent ID required"
+            )
+        }
+        if let session = Session(session) {
+            if session.paymentConsentOptions != nil {
+                guard consent.paymentMethod?.id != nil else {
+                    throw ValidationError.invalidConsent("method id required for recurring transactoin with consent")
+                }
+            }
+        }
     }
     
     func validate(consent: AWXPaymentConsent) throws {
@@ -261,6 +272,11 @@ extension AWXCardProvider {
     
     class func validate(consentId: String, paymentMethodType: AWXPaymentMethodType?, session: AWXSession) throws {
         try validateMethodTypeAndSession(paymentMethodType: paymentMethodType, session: session)
+        guard session.transactionMode() == AWXPaymentTransactionModeOneOff else {
+            throw ValidationError.invalidSession(
+                underlyingError:"transaction mode should be one-off for consent payment with consent Id".asError()
+            )
+        }
         guard !consentId.isEmpty else {
             throw ValidationError.invalidConsent(
                 "Consent ID required"

@@ -29,7 +29,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
     var consents = [AWXPaymentConsent]()
     let apiClient: AWXAPIClient
     
-    /// finger print -> MIT consent object
+    /// fingerprint -> MIT consent object
     private var mitConsents = [String: AWXPaymentConsent]()
     
     init(session: AWXSession,
