@@ -78,7 +78,8 @@ extension PaymentMethodProvider {
         let request = AWXDisablePaymentConsentRequest()
         request.id = consent.id
         try await apiClient.send(request)
-        removeConsent(consentId: consent.id)
+        let result = removeConsent(consentId: consent.id)
+        assert(result, "consent should exist until it is removed")
     }
     
     /// Retrieves a list of available banks for certain online banking payment methods that require bank selection.
