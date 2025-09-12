@@ -35,19 +35,48 @@ import Foundation
     /// Defaults to YES.
     @objc public let autoSaveCardForFuturePayments: Bool
     
-    /// Initialize a new Session
+    /// Creates a new unified Session for payment processing.
+    ///
+    /// This initializer supports both one-off and recurring payment scenarios through a single API.
+    /// The session type is automatically determined by the presence of `paymentConsentOptions`:
+    /// - **One-off payments**: When `paymentConsentOptions` is nil
+    /// - **Recurring payments**: When `paymentConsentOptions` is provided
+    ///
     /// - Parameters:
-    ///   - paymentIntent: The payment intent to handle
-    ///   - applePayOptions: Apple Pay options (optional)
-    ///   - autoCapture: Whether to capture payment immediately after authorization (default: true)
-    ///   - autoSaveCardForFuturePayments: Whether to save card for future payments (default: true)
-    ///   - billing: The billing address (optional)
-    ///   - hidePaymentConsents: Whether to hide stored payment methods (default: false)
-    ///   - lang: The language code (default: system language)
-    ///   - paymentMethods: Array of payment method type names to limit displayed methods (optional)
-    ///   - paymentConsentOptions: Options for recurring payments (optional)
-    ///   - requiredBillingContactFields: Required billing contact fields (default: .name)
-    ///   - returnURL: Return URL for redirecting users back to your app after external payment processing.(optional)
+    ///   - paymentIntent: The payment intent containing transaction details (amount, currency, customer).
+    ///                   Must have a valid amount and currency.
+    ///   - countryCode: The ISO 3166-1 alpha-2 country code (e.g., "US", "AU", "GB").
+    ///                 Used for localization and payment method availability.
+    ///   - applePayOptions: Configuration for Apple Pay integration. Specify to enable Apple Pay as a payment option.
+    ///                     Default: nil (Apple Pay disabled).
+    ///   - autoCapture: Whether to automatically capture the payment after successful authorization.
+    ///                 - true: Payment is captured immediately (funds are transferred)
+    ///                 - false: Payment is only authorized (requires manual capture later)
+    ///                 Default: true.
+    ///   - autoSaveCardForFuturePayments: Whether to automatically save card details for future payments.
+    ///                                   Only applies when customer is logged in. Default: true.
+    ///   - billing: Pre-filled billing address information. If provided, billing form fields will be pre-populated.
+    ///             Default: nil (user must enter billing information).
+    ///   - hidePaymentConsents: Whether to hide previously saved payment methods in the payment sheet.
+    ///                         For now, we only display payment consent for cards.
+    ///                         - true: Only show new payment method entry
+    ///                         - false: Show saved payment methods (if available)
+    ///                         Default: false.
+    ///   - lang: Language code for UI localization (e.g., "en", "zh-Hans", "ja").
+    ///          If nil, uses the system's current language. Default: system language.
+    ///   - paymentMethods: Array of payment method identifiers to limit which methods are displayed.
+    ///                    Useful for restricting to specific payment types (e.g., ["card", "wechatpay"]).
+    ///                    If nil, all available methods for the region are shown. Default: nil.
+    ///   - paymentConsentOptions: Configuration for recurring payments including terms of use, billing schedules, and consent parameters.
+    ///                           - When provided: Creates a recurring payment session
+    ///                           - When nil: Creates a one-off payment session
+    ///                           Default: nil.
+    ///   - requiredBillingContactFields: Specifies which billing contact fields are mandatory.
+    ///                                  Can be combined using OptionSet syntax (e.g., [.name, .address]).
+    ///                                  Default: .name.
+    ///   - returnURL: The URL to redirect users after payment completion or cancellation when user
+    ///               choose a redirect payment, for example: wechatpay.
+    ///               Should be a valid URL that your app can handle (e.g., "yourapp://payment/return").
     @objc public init(paymentIntent: AWXPaymentIntent,
                       countryCode: String,
                       applePayOptions: AWXApplePayOptions? = nil,

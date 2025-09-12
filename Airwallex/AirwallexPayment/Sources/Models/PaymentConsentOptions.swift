@@ -11,7 +11,7 @@ import AirwallexCore
 #endif
 import Foundation
 
-/// Options for recurring payments
+/// Options for payment consents
 @objc
 public final class PaymentConsentOptions: NSObject {
     /// The party to trigger subsequent payments. One of `merchant`, `customer`.
@@ -20,6 +20,10 @@ public final class PaymentConsentOptions: NSObject {
     /// indicate whether the subsequent payments are scheduled.
     /// Only applicable when next_triggered_by is merchant. One of `.undefined`, `scheduled`, `unscheduled`, `installments`. Default: `.undefined`
     @objc public let merchantTriggerReason: AirwallexMerchantTriggerReason
+    
+    /// Terms to specify how this Payment Consent will be used.
+    /// Optional.
+    @objc public let termsOfUse: TermsOfUse?
     
     /// Creates a new payment consent options instance for recurring payments.
     ///
@@ -30,10 +34,13 @@ public final class PaymentConsentOptions: NSObject {
     ///   - merchantTriggerReason: Indicates whether subsequent payments are scheduled.
     ///                           Only applicable when nextTriggeredBy is `.merchantType`.
     ///                           Default value is `.undefined`.
+    ///   - termsOfUse: Terms to specify how this Payment Consent will be used.
     @objc public init(nextTriggeredBy: AirwallexNextTriggerByType,
-                      merchantTriggerReason: AirwallexMerchantTriggerReason = .undefined) {
+                      merchantTriggerReason: AirwallexMerchantTriggerReason = .undefined,
+                      termsOfUse: TermsOfUse? = nil) {
         self.nextTriggeredBy = nextTriggeredBy
         self.merchantTriggerReason = merchantTriggerReason
+        self.termsOfUse = termsOfUse
     }
     
     func validate() throws {
@@ -52,6 +59,7 @@ extension PaymentConsentOptions: Encodable {
     enum CodingKeys: String, CodingKey {
         case nextTriggeredBy
         case merchantTriggerReason
+        case termsOfUse
     }
     
     public func encode(to encoder: any Encoder) throws {
@@ -61,6 +69,7 @@ extension PaymentConsentOptions: Encodable {
            let reason = FormatMerchantTriggerReason(merchantTriggerReason) {
             try container.encode(reason, forKey: .merchantTriggerReason)
         }
+        try container.encodeIfPresent(termsOfUse, forKey: .termsOfUse)
     }
 }
 

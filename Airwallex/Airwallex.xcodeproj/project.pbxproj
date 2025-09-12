@@ -243,6 +243,7 @@
 		D85042DA2DA7A46D0074BA7F /* AWXWidgets.h in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEEA26E5DF4E00C6AFE3 /* AWXWidgets.h */; };
 		D85042DC2DA7A46D0074BA7F /* AWXFloatingCvcTextField.h in Sources */ = {isa = PBXBuildFile; fileRef = 1820C96E2C85A1C0006B18C4 /* AWXFloatingCvcTextField.h */; };
 		D85042DD2DA7A46D0074BA7F /* NSObject+Logging.h in Sources */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; };
+		D87FFFD62E70304F0008784D /* TermsOfUse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87FFFD52E70304F0008784D /* TermsOfUse.swift */; };
 		D880456A2DA7B281008308C7 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D42D9E335D00D082EC /* MockProviderDelegate.swift */; };
 		D880456B2DA7B281008308C7 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D12D9E335D00D082EC /* Bundle+Extensions.swift */; };
 		D880456E2DA7B281008308C7 /* MockPaymentResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D32D9E335D00D082EC /* MockPaymentResultDelegate.swift */; };
@@ -632,6 +633,7 @@
 		D85041F62DA79D380074BA7F /* AWXWeChatPayActionProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXWeChatPayActionProvider.h; sourceTree = "<group>"; };
 		D85041F72DA79D380074BA7F /* AWXWeChatPayActionProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXWeChatPayActionProvider.m; sourceTree = "<group>"; };
 		D85041FA2DA79D490074BA7F /* AirwallexWeChatPay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexWeChatPay.h; sourceTree = "<group>"; };
+		D87FFFD52E70304F0008784D /* TermsOfUse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUse.swift; sourceTree = "<group>"; };
 		D88E34B82DA7E93100183A49 /* Airwallex_Export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airwallex_Export.swift; sourceTree = "<group>"; };
 		D8A599B32DAF9DF20045BFEC /* AWXShippingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXShippingViewController.h; sourceTree = "<group>"; };
 		D8A599B42DAF9DF20045BFEC /* AWXShippingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXShippingViewController.m; sourceTree = "<group>"; };
@@ -1362,6 +1364,7 @@
 			isa = PBXGroup;
 			children = (
 				D8D36E652E5C5CAC005618D4 /* PaymentConsentOptions.swift */,
+				D87FFFD52E70304F0008784D /* TermsOfUse.swift */,
 				D8D36E662E5C5CAC005618D4 /* Session.swift */,
 			);
 			path = Models;
@@ -2363,6 +2366,7 @@
 				D8D36E7E2E5C5CAC005618D4 /* AWXSession+Extensions.swift in Sources */,
 				D8D36E7F2E5C5CAC005618D4 /* Bundle+Extensions.swift in Sources */,
 				D8D36E802E5C5CAC005618D4 /* String+Extensions.swift in Sources */,
+				D87FFFD62E70304F0008784D /* TermsOfUse.swift in Sources */,
 				D8D36E812E5C5CAC005618D4 /* PaymentConsentOptions.swift in Sources */,
 				D8D3712B2E604F5A005618D4 /* AWXAPIClient+Extension.swift in Sources */,
 				D8D36E822E5C5CAC005618D4 /* Session.swift in Sources */,

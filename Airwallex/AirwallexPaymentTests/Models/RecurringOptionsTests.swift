@@ -65,6 +65,58 @@ final class RecurringOptionsTests: XCTestCase {
         XCTAssertEqual(jsonObject.count, 2)
     }
     
+    func testEncoding_withTermsOfUse() {
+        let paymentSchedule = PaymentSchedule(period: 3, periodUnit: .month)
+        let termsOfUse = TermsOfUse(
+            billingCycleChargeDay: 15,
+            fixedPaymentAmount: NSDecimalNumber(value: 100.00),
+            paymentAmountType: .fixed,
+            paymentCurrency: "USD",
+            paymentSchedule: paymentSchedule,
+            totalBillingCycles: 12
+        )
+        
+        let model = PaymentConsentOptions(
+            nextTriggeredBy: .merchantType,
+            merchantTriggerReason: .scheduled,
+            termsOfUse: termsOfUse
+        )
+        
+        let jsonObject = model.encodeToJSON()
+        
+        XCTAssertEqual(jsonObject["next_triggered_by"] as? String, "merchant")
+        XCTAssertEqual(jsonObject["merchant_trigger_reason"] as? String, "scheduled")
+        XCTAssertNotNil(jsonObject["terms_of_use"])
+        
+        let termsOfUseJSON = jsonObject["terms_of_use"] as! [String: Any]
+        XCTAssertEqual(termsOfUseJSON["billing_cycle_charge_day"] as? Int, 15)
+        XCTAssertEqual(termsOfUseJSON["fixed_payment_amount"] as? Double, 100.00)
+        XCTAssertEqual(termsOfUseJSON["payment_amount_type"] as? String, "FIXED")
+        XCTAssertEqual(termsOfUseJSON["payment_currency"] as? String, "USD")
+        XCTAssertEqual(termsOfUseJSON["total_billing_cycles"] as? Int, 12)
+        
+        let paymentScheduleJSON = termsOfUseJSON["payment_schedule"] as! [String: Any]
+        XCTAssertEqual(paymentScheduleJSON["period"] as? Int, 3)
+        XCTAssertEqual(paymentScheduleJSON["period_unit"] as? String, "MONTH")
+        
+        XCTAssertEqual(jsonObject.count, 3) // next_triggered_by, merchant_trigger_reason, terms_of_use
+    }
+    
+    func testEncoding_withoutTermsOfUse() {
+        let model = PaymentConsentOptions(
+            nextTriggeredBy: .merchantType,
+            merchantTriggerReason: .scheduled,
+            termsOfUse: nil
+        )
+        
+        let jsonObject = model.encodeToJSON()
+        
+        XCTAssertEqual(jsonObject["next_triggered_by"] as? String, "merchant")
+        XCTAssertEqual(jsonObject["merchant_trigger_reason"] as? String, "scheduled")
+        XCTAssertNil(jsonObject["terms_of_use"])
+        XCTAssertEqual(jsonObject.count, 2) // next_triggered_by, merchant_trigger_reason
+    }
+    
     func testValidate() {
         
         let arr: [AirwallexMerchantTriggerReason] = [.scheduled, .installments, .unscheduled]

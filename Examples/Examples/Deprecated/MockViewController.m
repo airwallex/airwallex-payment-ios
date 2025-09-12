@@ -28,7 +28,8 @@
 }
 
 - (void)testObjcAPIVisibility {
-    PaymentConsentOptions *options = [[PaymentConsentOptions alloc] initWithNextTriggeredBy:AirwallexNextTriggerByMerchantType merchantTriggerReason:AirwallexMerchantTriggerReasonScheduled];
+    TermsOfUse *termsOfUse = [[TermsOfUse alloc] initWithBillingCycleChargeDay:3 endDate:@"" firstPaymentAmount:nil fixedPaymentAmount:nil maxPaymentAmount:nil minPaymentAmount:nil paymentAmountType:PaymentAmountTypeFixed paymentCurrency:nil paymentSchedule:[[PaymentSchedule alloc] initWithPeriod:1 periodUnit:PeriodUnitDay] startDate:nil totalBillingCycles:1];
+    PaymentConsentOptions *options = [[PaymentConsentOptions alloc] initWithNextTriggeredBy:AirwallexNextTriggerByMerchantType merchantTriggerReason:AirwallexMerchantTriggerReasonScheduled termsOfUse:termsOfUse];
     Session *session = [[Session alloc] initWithPaymentIntent:AWXPaymentIntent.new
                                                   countryCode:@"AU"
                                               applePayOptions:nil
