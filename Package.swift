@@ -48,8 +48,8 @@ let package = Package(
             dependencies: [
                 .target(name: "AirwallexPaymentSheet")
             ],
-            path: "Airwallex/Airwallex"
-//            sources: [ "Airwallex_Export.swift", "Documentation.docc/*" ]
+            path: "Airwallex/Airwallex",
+            exclude: ["Airwallex.h"]
         ),
         .target(
             name: "AirwallexPaymentSheet",

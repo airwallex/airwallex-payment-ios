@@ -4,8 +4,10 @@
 
 set -e
 
+# Prepare 
 rm -rf DerivedData
 mkdir -p docs
+cp -r Airwallex.docc Airwallex/Airwallex/Documentation.docc
 
 # Build documentation
 
@@ -23,9 +25,12 @@ xcodebuild docbuild \
 # Create redirect index.html under docs/
 cat > docs/index.html << EOF
 <head>
-  <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/$LATEST_VERSION/documentation/airwallex'" />
+  <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/documentation/airwallex'" />
 </head>
 EOF
+
+# Cleanup
+rm -rf Airwallex/Airwallex/Documentation.docc
 
 echo "Documentation generated in ./docs/html"
 echo "Redirect index.html created in ./docs/"
