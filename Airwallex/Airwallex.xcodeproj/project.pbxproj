@@ -930,7 +930,6 @@
 		085BD3BE23CC62B4002E8F27 = {
 			isa = PBXGroup;
 			children = (
-				D85567AB2E7409C500828F21 /* Airwallex.docc */,
 				D88E34B72DA7E91C00183A49 /* Airwallex */,
 				3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */,
 				3C72E12828EC4BDD00F038E3 /* Configurations */,
@@ -2056,13 +2055,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
