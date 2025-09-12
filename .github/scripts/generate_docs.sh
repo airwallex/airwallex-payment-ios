@@ -20,7 +20,9 @@ xcodebuild docbuild \
 # Transform for static hosting
 "$(xcrun --find docc)" process-archive \
     transform-for-static-hosting DerivedData/Build/Products/Debug-iphoneos/Airwallex/Airwallex.doccarchive \
-    --output-path ./docs/html
+    --output-path ./docs/html \
+    # --hosting-base-path "/airwallex-payment-ios/$LATEST_VERSION"
+    --hosting-base-path "/airwallex-payment-ios"
 
 # Create redirect index.html under docs/
 cat > docs/index.html << EOF

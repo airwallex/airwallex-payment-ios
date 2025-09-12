@@ -700,6 +700,7 @@
 		D85041FC2DA79D7A0074BA7F /* AirwallexPaymentSheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexPaymentSheet.h; sourceTree = "<group>"; };
 		D85042732DA79FFB0074BA7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D85042752DA79FFF0074BA7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D85567AB2E7409C500828F21 /* Airwallex.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; name = Airwallex.docc; path = ../Airwallex.docc; sourceTree = SOURCE_ROOT; };
 		D86710182DCD9D2C001D5A74 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
 		D8890ABE2DB893BB00F94F68 /* BankSelectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankSelectionViewModelTests.swift; sourceTree = "<group>"; };
 		D8890AC02DB8985B00F94F68 /* BillingInfoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillingInfoCellViewModelTests.swift; sourceTree = "<group>"; };
@@ -1018,6 +1019,7 @@
 		085BD3BE23CC62B4002E8F27 = {
 			isa = PBXGroup;
 			children = (
+				D85567AB2E7409C500828F21 /* Airwallex.docc */,
 				D88E34B72DA7E91C00183A49 /* Airwallex */,
 				3CF4FED827E95F1C00FB0CE4 /* Airwallex.xctestplan */,
 				3C72E12828EC4BDD00F038E3 /* Configurations */,
@@ -2314,9 +2316,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
