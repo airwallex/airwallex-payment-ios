@@ -25,10 +25,18 @@ import Foundation
     }
 }
 
-@_spi(AWX) public func debugLog(_ message: String = "",
+@_spi(AWX) public func debugLog(_ message: String? = nil,
                                 file: String = #file,
                                 functionName: String = #function,
                                 line: Int = #line) {
     let fileName = file.split(separator: "/").map { String($0) }.last ?? file
-    NSObject.logMesage("----Airwallex SDK----\(Date())---\n- \(fileName) L:\(line)\n- func: \(functionName)\n- \(message)")
+    var fullMessage = """
+        ----Airwallex SDK----\(Date())---
+        - \(fileName) L:\(line)
+        - func: \(functionName)
+        """
+    if let message {
+        fullMessage += "\n- \(message)"
+    }
+    NSObject.logMesage(fullMessage)
 }

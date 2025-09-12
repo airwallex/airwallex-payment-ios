@@ -232,6 +232,7 @@ extension InfoCollectorTextFieldViewModel {
         self.init(
             textFieldType: .CVC,
             placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: "user input - cvc placeholder"),
+            clearButtonMode: .whileEditing,
             returnActionHandler: returnActionHandler,
             customInputFormatter: cvcValidator,
             customInputValidator: cvcValidator,

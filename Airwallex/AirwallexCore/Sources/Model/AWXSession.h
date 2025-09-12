@@ -50,9 +50,29 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSArray<NSString *> *paymentMethods;
 
 /**
- Return URL.
+ Return URL for redirecting users back to your app after external payment processing.
+
+ This URL is required when payments are processed outside of your app and users need to be redirected back.
+
+ URL Format Guidelines:
+ - Use universal links (recommended): https://example.com/
+    - Required for wechatpay
+ - Custom URL schemes (fallback): yourapp://payment/return
+ - Must be registered in your app's URL schemes or Associated Domains
+
+ Note:
+ - Universal links are strongly recommended over custom URL schemes for better user experience
+ - Can be nil if you only support in-app payment methods (Apple Pay, cards)
+
+ @see https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app
+ @see https://developer.apple.com/documentation/xcode/supporting-universal-links-in-your-app
  */
-@property (nonatomic, copy) NSString *returnURL;
+@property (nonatomic, copy, nullable) NSString *returnURL;
+
+/**
+ Whether show stored card.
+ */
+@property (nonatomic) BOOL hidePaymentConsents;
 
 /**
  Return transaction mode.
@@ -71,12 +91,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Return all of customer payment consents
  */
-- (NSArray *)customerPaymentConsents;
+- (NSArray *)customerPaymentConsents __deprecated;
 
 /**
  Return all of customer payment methods
  */
-- (NSArray *)customerPaymentMethods;
+- (NSArray *)customerPaymentMethods __deprecated;
 
 /**
  Return customer id
@@ -110,7 +130,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXOneOffSession` is the session used for one-off payment.
  */
-@interface AWXOneOffSession : AWXSession
+__deprecated_msg("Will be removed in next major version release, use AirwallexPayment.Session instead")
+    @interface AWXOneOffSession : AWXSession
 
 /**
  The payment intent to handle.
@@ -123,11 +144,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) BOOL autoCapture;
 
-/**
- Whether show stored card.
- */
-@property (nonatomic) BOOL hidePaymentConsents;
-
 /// Indicates whether card saving is enabled by default. Defaults to YES.
 @property (nonatomic, assign) BOOL autoSaveCardForFuturePayments;
 
@@ -136,7 +152,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXRecurringSession` is the session used for recurring.
  */
-@interface AWXRecurringSession : AWXSession
+__deprecated_msg("Will be removed in next major version release, use AirwallexPayment.Session instead")
+    @interface AWXRecurringSession : AWXSession
 
 /**
  Payment amount. This is the order amount you would like to charge your customer.
@@ -174,7 +191,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  `AWXRecurringWithIntentSession` is the session used for recurring with intent.
  */
-@interface AWXRecurringWithIntentSession : AWXSession
+__deprecated_msg("Will be removed in next major version release, use AirwallexPayment.Session instead")
+    @interface AWXRecurringWithIntentSession : AWXSession
 
 /**
  The payment intent to handle.

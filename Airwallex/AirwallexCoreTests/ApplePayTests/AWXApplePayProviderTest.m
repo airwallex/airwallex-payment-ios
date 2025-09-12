@@ -259,7 +259,7 @@
 
     OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet"
                                       additionalInfo:@{
-                                          @"supported_networks": session.applePayOptions.supportedNetworks ?: @[]
+                                          @"supportedNetworks": session.applePayOptions.supportedNetworks ?: @[]
                                       }]);
 
     OCMVerify(times(1), [providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(id obj) {
@@ -312,7 +312,7 @@
 
     OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet"
                                       additionalInfo:@{
-                                          @"supported_networks": session.applePayOptions.supportedNetworks ?: @[]
+                                          @"supportedNetworks": session.applePayOptions.supportedNetworks ?: @[]
                                       }]);
 
     OCMVerify(times(1), [providerSpy createPaymentConsentAndConfirmIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(id obj) {

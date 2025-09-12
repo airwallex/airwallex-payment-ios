@@ -94,7 +94,9 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         self.imageLoader = imageLoader
         super.init()
         createViewModelForRequiredFields()
-        if let oneOffSession = methodProvider.session as? AWXOneOffSession {
+        if let session = session as? Session {
+            self.shouldSaveCard = supportCardSaving && session.autoSaveCardForFuturePayments
+        } else if let oneOffSession = methodProvider.session as? AWXOneOffSession {
             self.shouldSaveCard = supportCardSaving && oneOffSession.autoSaveCardForFuturePayments
         }
     }
@@ -276,7 +278,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
 private extension NewCardPaymentSectionController {
     
     var supportCardSaving: Bool {
-        guard let session = session as? AWXOneOffSession,
+        guard session.transactionMode() == AWXPaymentTransactionModeOneOff,
            let customerId = session.customerId(),
            !customerId.isEmpty else {
             return false

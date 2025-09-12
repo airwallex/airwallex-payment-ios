@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Return url.
  */
-@property (nonatomic, copy) NSString *returnURL;
+@property (nonatomic, copy, nullable) NSString *returnURL;
 /**
  Payment method object.
  */
