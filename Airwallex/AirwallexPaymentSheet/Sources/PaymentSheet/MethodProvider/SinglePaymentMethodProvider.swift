@@ -93,4 +93,6 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
         }
         return try await task.value
     }
+    
+    func disable(consent: AWXPaymentConsent) async throws {}
 }

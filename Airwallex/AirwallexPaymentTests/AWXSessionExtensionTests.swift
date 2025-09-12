@@ -217,6 +217,46 @@ class AWXSessionExtensionTests: XCTestCase {
         }
     }
     
+    func testValidateSession() {
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+        XCTAssertNoThrow(try session.validate())
+    }
+    
+    func testValidateSessionRecurring() {
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            paymentConsentOptions: .init(nextTriggeredBy: .customerType),
+            returnURL: AWXThreeDSReturnURL
+        )
+        XCTAssertNoThrow(try session.validate())
+    }
+    
+    func testValidateSessionRecurringWithoutCustomerID() {
+        mockPaymentIntent.customerId = nil
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            paymentConsentOptions: .init(nextTriggeredBy: .customerType),
+            returnURL: AWXThreeDSReturnURL
+        )
+        XCTAssertThrowsError(try session.validate())
+    }
+    
+    func testValidateSessionAmount() {
+        mockPaymentIntent.amount = NSDecimalNumber(0)
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+        XCTAssertThrowsError(try session.validate())
+    }
+    
     func testValidateInvalidSessionType() {
         let session = AWXSession()
         

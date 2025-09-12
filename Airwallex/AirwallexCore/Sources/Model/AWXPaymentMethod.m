@@ -25,6 +25,9 @@
     if (self.customerId) {
         items[@"customer_id"] = self.customerId;
     }
+    if (self.Id) {
+        items[@"id"] = self.Id;
+    }
     return items;
 }
 

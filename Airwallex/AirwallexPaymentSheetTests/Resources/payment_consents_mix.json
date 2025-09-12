@@ -1,0 +1,731 @@
+{
+    "has_more": false,
+    "items": [
+        {
+            "id": "cst_hkdm42894haqc11iyuu",
+            "request_id": "CCEA02D0-E911-478E-A7E0-D89213C2BDFE",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdm2p5vthaqc11d9hg",
+                "card": {
+                    "expiry_month": "11",
+                    "expiry_year": "2035",
+                    "name": "",
+                    "bin": "40120003",
+                    "last4": "0062",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "yvCOEo4CM9r4hUSksDFrvERuRJY=",
+                    "billing": {
+                        "first_name": "",
+                        "last_name": "",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "VISA PRODUCTION SUPPORT CLIENT BID 1",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdm2p5vthaqc0w24b5",
+            "next_triggered_by": "customer",
+            "status": "VERIFIED",
+            "created_at": "2025-09-02T06:20:15+0000",
+            "updated_at": "2025-09-02T06:20:15+0000",
+            "mandate": {
+                "payment_amount_type": "VARIABLE"
+            },
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdm42894haqbyos0m5",
+            "request_id": "C59A10C0-9884-4BEF-B62B-446DC1C27D6E",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdm42894haqbyomhjf",
+                "card": {
+                    "expiry_month": "11",
+                    "expiry_year": "2035",
+                    "name": "",
+                    "bin": "40120003",
+                    "last4": "0021",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "UDQnA16kTW9pEsuzivU7Vqcieak=",
+                    "billing": {
+                        "first_name": "",
+                        "last_name": "",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "VISA PRODUCTION SUPPORT CLIENT BID 1",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdm42894haqbyihrj7",
+            "next_triggered_by": "customer",
+            "status": "VERIFIED",
+            "created_at": "2025-09-02T06:17:52+0000",
+            "updated_at": "2025-09-02T06:17:52+0000",
+            "mandate": {
+                "payment_amount_type": "VARIABLE"
+            },
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khaiok9wxxf",
+            "request_id": "9F082323-08BD-4195-AE70-DD2BDC7BA3D3",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmgpg5khaimw695qs",
+                "card": {
+                    "expiry_month": "12",
+                    "expiry_year": "2029",
+                    "name": "John Citizen",
+                    "bin": "54252334",
+                    "last4": "9903",
+                    "brand": "mastercard",
+                    "issuer_country_code": "US",
+                    "card_type": "DEBIT",
+                    "fingerprint": "V2EtCPCA6cUJ5HGiyBP4bt+0+24=",
+                    "billing": {
+                        "first_name": "Jason",
+                        "last_name": "Wang",
+                        "email": "abc@123.com",
+                        "phone_number": "13800000000",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "MTF INTERNAL MEMBER ID - CZECH",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmft5dhhaiok7yp80",
+            "next_triggered_by": "customer",
+            "metadata": {
+                "id": "1"
+            },
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:46:26+0000",
+            "updated_at": "2025-08-26T07:46:26+0000",
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmft5dhhaiok1blyi",
+            "request_id": "ABA61BF6-9A28-4839-B0B0-72E192146FFB",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmft5dhhaindd4uqb",
+                "card": {
+                    "expiry_month": "12",
+                    "expiry_year": "2029",
+                    "name": "John Citizen",
+                    "bin": "40120003",
+                    "last4": "0088",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "gFZHWtJpwxqeNz8W8xTW+UMQ4qE=",
+                    "billing": {
+                        "first_name": "Jason",
+                        "last_name": "Wang",
+                        "email": "abc@123.com",
+                        "phone_number": "13800000000",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "VISA PRODUCTION SUPPORT CLIENT BID 1",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmgpg5khaiojz8pc5",
+            "next_triggered_by": "customer",
+            "metadata": {
+                "id": "1"
+            },
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:46:11+0000",
+            "updated_at": "2025-08-26T07:46:11+0000",
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khainozraze",
+            "request_id": "0A5DDEBD-F525-4097-95A9-6D1927251A78",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmgpg5khainozr9ft",
+                "card": {
+                    "expiry_month": "03",
+                    "expiry_year": "2033",
+                    "name": "",
+                    "bin": "41111111",
+                    "last4": "1111",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "RZIQ1oT3j70T7OtvANY8YIz7FKM=",
+                    "billing": {
+                        "first_name": "",
+                        "last_name": "",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "CONOTOXIA SP. Z O.O",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmft5dhhainoswa6d",
+            "next_triggered_by": "customer",
+            "metadata": {
+                "id": "1"
+            },
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:14:54+0000",
+            "updated_at": "2025-08-26T07:14:54+0000",
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khaioqibxsm",
+            "request_id": "78AE929B-21BB-45ED-B8CC-B56E7B81FFA7",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "alipayhk",
+                "id": "mtd_hkdmgpg5khaioqoo7ed",
+                "alipayhk": {
+                    "user_id": "2102209000000419128I0"
+                }
+            },
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "unscheduled",
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:52:43+0000",
+            "updated_at": "2025-08-26T07:52:43+0000",
+            "mandate": {
+                "type": "alipayhk",
+                "version": "1.0",
+                "accepted_at": "2025-08-26T07:52:43+0000",
+                "payment_amount_type": "VARIABLE"
+            },
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmft5dhhad63rj87k",
+            "request_id": "DE7D6138-DAA7-4522-B274-0631029F1FF6",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "applepay",
+                "id": "mtd_hkdmft5dhhad63rj54f"
+            },
+            "initial_payment_intent_id": "int_hkdmgpg5khad63p8f14",
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "scheduled",
+            "metadata": {
+                "id": "1"
+            },
+            "status": "VERIFIED",
+            "created_at": "2025-08-21T07:46:25+0000",
+            "updated_at": "2025-08-21T07:46:25+0000",
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khaiopunulg",
+            "request_id": "0F111643-0D8B-479B-AFE6-4ED4CE56ED05",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "alipayhk",
+                "id": "mtd_hkdmgpg5khaioq2lg94",
+                "alipayhk": {
+                    "user_id": "2102209000000419128I0"
+                }
+            },
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "scheduled",
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:52:03+0000",
+            "updated_at": "2025-08-26T07:52:03+0000",
+            "mandate": {
+                "type": "alipayhk",
+                "version": "1.0",
+                "accepted_at": "2025-08-26T07:52:03+0000",
+                "payment_amount_type": "VARIABLE"
+            },
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmft5dhhaiont8d5f",
+            "request_id": "E412D77F-73BF-44DF-B6A4-BF822D3B77F1",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmft5dhhaiont8au2",
+                "card": {
+                    "expiry_month": "03",
+                    "expiry_year": "2033",
+                    "name": "",
+                    "bin": "41111111",
+                    "last4": "1111",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "RZIQ1oT3j70T7OtvANY8YIz7FKM=",
+                    "billing": {
+                        "first_name": "",
+                        "last_name": "",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "CONOTOXIA SP. Z O.O",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmft5dhhaionnd3fi",
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "scheduled",
+            "metadata": {
+                "id": "1"
+            },
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:50:00+0000",
+            "updated_at": "2025-08-26T07:50:00+0000",
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khaiong39p5",
+            "request_id": "01D6B7CA-F5AD-4057-AA55-A11455080D6A",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmgpg5khaimw695qs",
+                "card": {
+                    "expiry_month": "12",
+                    "expiry_year": "2029",
+                    "name": "John Citizen",
+                    "bin": "54252334",
+                    "last4": "9903",
+                    "brand": "mastercard",
+                    "issuer_country_code": "US",
+                    "card_type": "DEBIT",
+                    "fingerprint": "V2EtCPCA6cUJ5HGiyBP4bt+0+24=",
+                    "billing": {
+                        "first_name": "Jason",
+                        "last_name": "Wang",
+                        "email": "abc@123.com",
+                        "phone_number": "13800000000",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "MTF INTERNAL MEMBER ID - CZECH",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmft5dhhaion622dv",
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "scheduled",
+            "metadata": {
+                "id": "1"
+            },
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:49:37+0000",
+            "updated_at": "2025-08-26T07:49:37+0000",
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khaiombmox8",
+            "request_id": "03F3159C-131A-45A9-A660-98FF84BDFFFF",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "alipayhk",
+                "id": "mtd_hkdmft5dhhaiomi55ai",
+                "alipayhk": {
+                    "user_id": "2102209000000419128I0"
+                }
+            },
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "unscheduled",
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:48:29+0000",
+            "updated_at": "2025-08-26T07:48:29+0000",
+            "mandate": {
+                "type": "alipayhk",
+                "version": "1.0",
+                "accepted_at": "2025-08-26T07:48:29+0000",
+                "payment_amount_type": "VARIABLE"
+            },
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khaiom22on0",
+            "request_id": "FA901F1B-F7C1-4A52-BE79-37B56A4D921C",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmgpg5khaiom1yc02",
+                "card": {
+                    "expiry_month": "11",
+                    "expiry_year": "2035",
+                    "name": "",
+                    "bin": "41111111",
+                    "last4": "1111",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "RZIQ1oT3j70T7OtvANY8YIz7FKM=",
+                    "billing": {
+                        "first_name": "",
+                        "last_name": "",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "CONOTOXIA SP. Z O.O",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmgpg5khaiom26cl2_m22on0",
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "unscheduled",
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:48:13+0000",
+            "updated_at": "2025-08-26T07:48:13+0000",
+            "mandate": {
+                "payment_amount_type": "VARIABLE"
+            },
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khaiogxhiu2",
+            "request_id": "B34EFD31-7C42-4F7B-900C-C69F0BFF6160",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmgpg5khainozr9ft",
+                "card": {
+                    "expiry_month": "03",
+                    "expiry_year": "2033",
+                    "name": "",
+                    "bin": "41111111",
+                    "last4": "1111",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "RZIQ1oT3j70T7OtvANY8YIz7FKM=",
+                    "billing": {
+                        "first_name": "",
+                        "last_name": "",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "CONOTOXIA SP. Z O.O",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmft5dhhaiogue3xw",
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "scheduled",
+            "metadata": {
+                "id": "1"
+            },
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:43:03+0000",
+            "updated_at": "2025-08-26T07:43:03+0000",
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khaiofyzjcx",
+            "request_id": "43F3F80C-12F7-463B-A817-E40EDF37CF09",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmgpg5khaiofyvp8n",
+                "card": {
+                    "expiry_month": "11",
+                    "expiry_year": "2035",
+                    "name": "",
+                    "bin": "41111111",
+                    "last4": "1111",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "RZIQ1oT3j70T7OtvANY8YIz7FKM=",
+                    "billing": {
+                        "first_name": "",
+                        "last_name": "",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "CONOTOXIA SP. Z O.O",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmft5dhhaiofz38rg_fyzjcx",
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "unscheduled",
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:42:05+0000",
+            "updated_at": "2025-08-26T07:42:05+0000",
+            "mandate": {
+                "payment_amount_type": "VARIABLE"
+            },
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khainppsfvz",
+            "request_id": "A78453E5-3C36-434B-A34A-B9C8290A8B9C",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmft5dhhainppml86",
+                "card": {
+                    "expiry_month": "11",
+                    "expiry_year": "2035",
+                    "name": "",
+                    "bin": "41111111",
+                    "last4": "1111",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "RZIQ1oT3j70T7OtvANY8YIz7FKM=",
+                    "billing": {
+                        "first_name": "",
+                        "last_name": "",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "CONOTOXIA SP. Z O.O",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmft5dhhainppwj94_ppsfvz",
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "unscheduled",
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:15:38+0000",
+            "updated_at": "2025-08-26T07:15:38+0000",
+            "mandate": {
+                "payment_amount_type": "VARIABLE"
+            },
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmgpg5khainn81d2w",
+            "request_id": "BE15FA11-4A97-455F-9A45-4FDBB9D6F182",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmft5dhhailpu0vku",
+                "card": {
+                    "expiry_month": "03",
+                    "expiry_year": "2033",
+                    "name": "",
+                    "bin": "41111111",
+                    "last4": "1111",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "RZIQ1oT3j70T7OtvANY8YIz7FKM=",
+                    "billing": {
+                        "first_name": "",
+                        "last_name": "",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "CONOTOXIA SP. Z O.O",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmft5dhhainn0jjam",
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "scheduled",
+            "metadata": {
+                "id": "1"
+            },
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:13:07+0000",
+            "updated_at": "2025-08-26T07:13:07+0000",
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmft5dhhaindd54rg",
+            "request_id": "22D0A1B5-DA4D-4DA8-B9E6-A533AB078E5E",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmft5dhhaindd4uqb",
+                "card": {
+                    "expiry_month": "12",
+                    "expiry_year": "2029",
+                    "name": "John Citizen",
+                    "bin": "40120003",
+                    "last4": "0088",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "gFZHWtJpwxqeNz8W8xTW+UMQ4qE=",
+                    "billing": {
+                        "first_name": "Jason",
+                        "last_name": "Wang",
+                        "email": "abc@123.com",
+                        "phone_number": "13800000000",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "VISA PRODUCTION SUPPORT CLIENT BID 1",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmgpg5khaindcm5tv",
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "scheduled",
+            "metadata": {
+                "id": "1"
+            },
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T07:03:11+0000",
+            "updated_at": "2025-08-26T07:03:11+0000",
+            "purpose": "recurring"
+        },
+        {
+            "id": "cst_hkdmft5dhhain6zd0ub",
+            "request_id": "8439CBE1-75B5-4AD9-A550-228439AF39A3",
+            "customer_id": "cus_hkdmft5dhhabvptywqr",
+            "payment_method": {
+                "type": "card",
+                "id": "mtd_hkdmft5dhhain6zcyiy",
+                "card": {
+                    "expiry_month": "12",
+                    "expiry_year": "2029",
+                    "name": "John Citizen",
+                    "bin": "40120003",
+                    "last4": "0088",
+                    "brand": "visa",
+                    "issuer_country_code": "RU",
+                    "card_type": "CREDIT",
+                    "fingerprint": "gFZHWtJpwxqeNz8W8xTW+UMQ4qE=",
+                    "billing": {
+                        "first_name": "Jason",
+                        "last_name": "Wang",
+                        "email": "abc@123.com",
+                        "phone_number": "13800000000",
+                        "date_of_birth": "",
+                        "address": {
+                            "country_code": "CN",
+                            "state": "Shanghai",
+                            "city": "Shanghai",
+                            "street": "Pudong District",
+                            "postcode": "100000"
+                        }
+                    },
+                    "issuer_name": "VISA PRODUCTION SUPPORT CLIENT BID 1",
+                    "is_commercial": false,
+                    "number_type": "AIRWALLEX_NETWORK_TOKEN"
+                }
+            },
+            "initial_payment_intent_id": "int_hkdmgpg5khain6yhvkt",
+            "next_triggered_by": "merchant",
+            "merchant_trigger_reason": "scheduled",
+            "metadata": {
+                "id": "1"
+            },
+            "status": "VERIFIED",
+            "created_at": "2025-08-26T06:56:45+0000",
+            "updated_at": "2025-08-26T06:56:45+0000",
+            "purpose": "recurring"
+        }
+    ]
+}

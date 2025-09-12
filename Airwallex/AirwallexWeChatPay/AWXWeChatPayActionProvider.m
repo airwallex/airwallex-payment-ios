@@ -34,7 +34,6 @@
                                              __strong __typeof(weakSelf) strongSelf = weakSelf;
                                              dispatch_async(dispatch_get_main_queue(), ^{
                                                  [strongSelf.delegate providerDidEndRequest:strongSelf];
-                                                 [strongSelf log:@"Delegate: %@, providerDidEndRequest:", self.delegate.class];
                                                  [strongSelf.delegate provider:strongSelf didCompleteWithStatus:error != nil ? AirwallexPaymentStatusFailure : AirwallexPaymentStatusSuccess error:error];
                                                  [strongSelf log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", strongSelf.delegate.class, (error != nil ? AirwallexPaymentStatusFailure : AirwallexPaymentStatusSuccess), error.localizedDescription];
                                              });
@@ -42,7 +41,9 @@
         return;
     }
 
-    [WXApi registerApp:response.appId universalLink:self.session.returnURL];
+    // WeChat Pay may not function properly if you have not registered with a valid universal link before you start the payment session
+    NSString *universalLink = self.session.returnURL ?: @"";
+    [WXApi registerApp:response.appId universalLink:universalLink];
 
     PayReq *request = [[PayReq alloc] init];
     request.partnerId = response.partnerId;

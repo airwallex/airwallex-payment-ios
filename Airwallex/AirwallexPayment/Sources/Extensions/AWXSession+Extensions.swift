@@ -19,6 +19,7 @@ public extension AWXSession {
         case invalidCustomerId(String)
         case invalidSessionType(String)
         case invalidData(String)
+        case invalidAmount(String)
         
         //  CustomNSError
         public static var errorDomain: String {
@@ -40,12 +41,14 @@ public extension AWXSession {
                 return message
             case .invalidData(let message):
                 return message
+            case .invalidAmount(let message):
+                return message
             }
         }
     }
     
     func validate() throws {
-        if !(self is AWXOneOffSession || self is AWXRecurringSession || self is AWXRecurringWithIntentSession) {
+        if !(self is AWXOneOffSession || self is AWXRecurringSession || self is AWXRecurringWithIntentSession || self is Session) {
             throw ValidationError.invalidSessionType(
                 "Invalid session type: \(type(of: self))"
             )
@@ -81,6 +84,22 @@ public extension AWXSession {
                 throw ValidationError.invalidCustomerId(
                     "Customer ID required"
                 )
+            }
+        } else if let session = self as? Session {
+            try validate(paymentIntent: session.paymentIntent)
+            if let options = session.paymentConsentOptions {
+                guard let customerId = session.customerId(), !customerId.isEmpty else {
+                    throw ValidationError.invalidCustomerId(
+                        "Customer ID required"
+                    )
+                }
+                try options.validate()
+            } else {
+                guard session.paymentIntent.amount.doubleValue > 0 else {
+                    throw ValidationError.invalidAmount(
+                        "Amount should greater than 0 for one-off payment"
+                    )
+                }
             }
         }
     }

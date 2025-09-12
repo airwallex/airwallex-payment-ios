@@ -51,3 +51,4 @@ close button on navigation bar */
 /* Shiping field placeholder - Zip code (optional) */
 "Zip code (optional)" = "Code postal (optionnel)";
 
+"Enter CVC/CVV" = "Saisir CVC/CVV";

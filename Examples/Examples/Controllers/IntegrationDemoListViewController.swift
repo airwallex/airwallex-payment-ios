@@ -379,8 +379,8 @@ private extension IntegrationDemoListViewController {
                 let session = try await createPaymentSession()
                 paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
                 paymentSessionHandler?.startRedirectPayment(
-                    with: "paypal",
-                    additionalInfo: ["shopper_name": "Hector", "country_code": "CN"]
+                    with: "alipayhk",
+                    additionalInfo: nil
                 )
             } catch {
                 showAlert(message: error.localizedDescription)
@@ -538,6 +538,39 @@ private extension IntegrationDemoListViewController {
     }
     
     func createPaymentSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
+        if ExamplesKeys.preferUnifiedSession {
+            return try await createUnifiedSession(force3DS: force3DS)
+        } else {
+            return try await createLegacySession(force3DS: force3DS)
+        }
+    }
+    
+    func createUnifiedSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
+        // Create payment intent
+        let amount = ExamplesKeys.checkoutMode == .recurring ? 0 : (Decimal(string: ExamplesKeys.amount) ?? 0)
+        let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(
+            amount: amount,
+            force3DS: force3DS
+        )
+        // Update client secret
+        AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
+        let session = Session(
+            paymentIntent: paymentIntent,
+            countryCode: ExamplesKeys.countryCode,
+            applePayOptions: DemoDataSource.applePayOptions,
+            autoCapture: ExamplesKeys.autoCapture,
+            billing: shippingAddress,
+            paymentConsentOptions: (ExamplesKeys.checkoutMode == .oneOff) ? nil : PaymentConsentOptions(
+                nextTriggeredBy: ExamplesKeys.nextTriggerByType,
+                merchantTriggerReason: .scheduled
+            ),
+            requiredBillingContactFields: getRequiredBillingContactFields(),
+            returnURL: ExamplesKeys.returnUrl
+        )
+        return session
+    }
+    
+    func createLegacySession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
         // create payment session
         var paymentSession: AWXSession
         switch ExamplesKeys.checkoutMode {
@@ -585,11 +618,11 @@ private extension IntegrationDemoListViewController {
         // setup returnURL (schema or universalLink of your app) which is required for payments like wechat pay
         paymentSession.returnURL = ExamplesKeys.returnUrl
         // update required billing contact fields
-        updateRequiredBillingContactFields(paymentSession)
+        paymentSession.requiredBillingContactFields = getRequiredBillingContactFields()
         return paymentSession
     }
     
-    func updateRequiredBillingContactFields(_ session: AWXSession) {
+    func getRequiredBillingContactFields() -> RequiredBillingContactFields {
         var requiredBillingContactFields: RequiredBillingContactFields = []
         if ExamplesKeys.requiresName {
             requiredBillingContactFields.insert(.name)
@@ -606,7 +639,7 @@ private extension IntegrationDemoListViewController {
         if ExamplesKeys.requiresCountryCode {
             requiredBillingContactFields.insert(.countryCode)
         }
-        session.requiredBillingContactFields = requiredBillingContactFields
+        return requiredBillingContactFields
     }
 }
 
