@@ -7,7 +7,10 @@ set -e
 # Prepare 
 rm -rf DerivedData
 mkdir -p docs
-cp -r Airwallex.docc Airwallex/Airwallex/Documentation.docc
+mv Airwallex.docc Airwallex/Airwallex/
+
+# Temporarily hide workspace to force Package.swift build
+mv Airwallex.xcworkspace Airwallex.xcworkspace.tmp
 
 # Build documentation
 
@@ -17,9 +20,12 @@ xcodebuild docbuild \
     -derivedDataPath DerivedData \
     -skipPackagePluginValidation
 
+# Restore workspace
+mv Airwallex.xcworkspace.tmp Airwallex.xcworkspace
+
 # Transform for static hosting
 "$(xcrun --find docc)" process-archive \
-    transform-for-static-hosting DerivedData/Build/Products/Debug-iphoneos/Airwallex/Airwallex.doccarchive \
+    transform-for-static-hosting DerivedData/Build/Products/Debug-iphoneos/Airwallex.doccarchive \
     --output-path ./docs/ \
     --hosting-base-path "/airwallex-payment-ios"
     # --hosting-base-path "/airwallex-payment-ios/$LATEST_VERSION"
@@ -32,7 +38,7 @@ cat > docs/index.html << EOF
 EOF
 
 # Cleanup
-rm -rf Airwallex/Airwallex/Documentation.docc
+mv Airwallex/Airwallex/Airwallex.docc .
 
 echo "Documentation generated in ./docs/"
 echo "Redirect index.html created in ./docs/"
