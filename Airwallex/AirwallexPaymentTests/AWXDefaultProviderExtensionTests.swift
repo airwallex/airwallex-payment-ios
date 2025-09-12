@@ -386,8 +386,8 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
         let sessionWithConsent = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: "AU",
-            returnURL: "https://example.com",
-            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .merchantType)
+            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .merchantType),
+            returnURL: "https://example.com"
         )
         
         mockMethodType.name = AWXCardKey
