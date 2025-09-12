@@ -29,7 +29,7 @@ class SettingsViewController: UIViewController {
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.keyboardDismissMode = .interactive
+        view.keyboardDismissMode = .onDrag
         return view
     }()
     
@@ -59,24 +59,28 @@ class SettingsViewController: UIViewController {
     private lazy var optionForEnvironment: ConfigActionView = {
         let view = ConfigActionView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.optionButtonForEnvironment
         return view
     }()
     
     private lazy var optionForNextTrigger: ConfigActionView = {
         let view = ConfigActionView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.optionButtonForNextTriggerBy
         return view
     }()
     
     private lazy var optionForPaymentLayout: ConfigActionView = {
         let view = ConfigActionView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.optionButtonForLayout
         return view
     }()
     
     private lazy var switchForForce3DS: ConfigSwitchView = {
         let view = ConfigSwitchView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.optionSwitch.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.toggleFor3DS
         return view
     }()
     
@@ -107,6 +111,7 @@ class SettingsViewController: UIViewController {
         button.sizeToFit()
         view.textField.rightView = button
         view.textField.rightViewMode = .always
+        view.textField.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.textFieldForCustomerID
         return view
     }()
     
@@ -118,6 +123,7 @@ class SettingsViewController: UIViewController {
         view.titleLabel?.font = .awxFont(.body1, weight: .medium)
         view.contentEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         view.addTarget(self, action: #selector(onCustomerIdActionButtonTapped), for: .touchUpInside)
+        view.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.actionButtonForCustomerID
         return view
     }()
     
@@ -179,6 +185,11 @@ class SettingsViewController: UIViewController {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
         view.text = "App Version: v\(version) (\(build))"
+        view.accessibilityLabel = AccessibilityIdentifiers.SettingsScreen.versionLabel
+        view.isUserInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onVersionLabelTapped))
+        view.addGestureRecognizer(tapGesture)
         return view
     }()
     
@@ -585,5 +596,9 @@ private extension SettingsViewController {
                     }
                 }
         }
+    }
+    
+    @objc func onVersionLabelTapped() {
+        self.scrollView.endEditing(true)
     }
 }

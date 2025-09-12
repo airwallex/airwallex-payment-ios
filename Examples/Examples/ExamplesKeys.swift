@@ -9,23 +9,6 @@
 import Foundation
 import Airwallex
 
-enum CheckoutMode: Int, CaseIterable {
-    case oneOff
-    case recurring
-    case recurringWithIntent
-    
-    var localizedDescription: String {
-        switch self {
-        case .oneOff:
-            return "One-off payment"
-        case .recurring:
-            return "Recurring"
-        case .recurringWithIntent:
-            return "Recurring with intent"
-        }
-    }
-}
-
 struct ExamplesKeys {
     static let storagePrefix = "airwallexExamples-"
     
@@ -116,7 +99,7 @@ struct ExamplesKeys {
             ExamplesKeys.requiresCountryCode = newValue.requiresCountryCode
             ExamplesKeys.force3DS = newValue.force3DS
             ExamplesKeys.autoCapture = newValue.autoCapture
-            ExamplesKeys.customerId = newValue.customerId?.nilIfEmpty
+            ExamplesKeys.customerId = newValue.customerId?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
             ExamplesKeys.apiKey = newValue.apiKey
             ExamplesKeys.clientId = newValue.clientId
             ExamplesKeys.amount = newValue.amount

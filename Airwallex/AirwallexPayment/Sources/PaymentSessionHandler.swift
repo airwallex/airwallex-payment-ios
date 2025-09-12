@@ -77,6 +77,9 @@ public class PaymentSessionHandler: NSObject {
         self._viewController = viewController
         self.methodType = methodType
         self.paymentResultDelegate = paymentResultDelegate
+        
+        // update logger.session for low-level API integration
+        AnalyticsLogger.shared().session = session
     }
     
     /// Initializes a `PaymentSessionHandler` with a payment session and a view controller that also acts as a payment result delegate.
@@ -361,7 +364,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         if status == .cancel {
             // only log payment_canceled here
-            // payment_success and error eent are logged in AWXDefaultProvider
+            // payment_success and error event are logged in AWXDefaultProvider
             AnalyticsLogger.log(action: .paymentCanceled)
         }
         debugLog("stauts: \(status), error: \(error?.localizedDescription ?? "N/A")")
@@ -372,13 +375,15 @@ extension PaymentSessionHandler: AWXProviderDelegate {
                 // for example, by backgrounding the app—after successfully authorizing the payment.
                 return
             }
+            let viewController = self.viewController
             dismissAction {
-                self.paymentResultDelegate?.paymentViewController(self.viewController, didCompleteWith: status, error: error)
+                self.paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
             }
             self.dismissAction = nil
         } else {
             paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
         }
+        AnalyticsLogger.shared().session = nil
     }
     
     public func hostViewController() -> UIViewController {
@@ -398,6 +403,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
             return
         }
         let actionHandler = actionProviderClass.init(delegate: self, session: session)
+        actionHandler.paymentConsent = provider.paymentConsent
         actionHandler.handle(nextAction)
         actionProvider = actionHandler
     }

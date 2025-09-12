@@ -13,4 +13,7 @@
    <FileRef
       location = "group:Package.swift">
    </FileRef>
+   <FileRef
+      location = "group:Examples/ExamplesUITests.xctestplan">
+   </FileRef>
 </Workspace>

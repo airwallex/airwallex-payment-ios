@@ -271,6 +271,7 @@ private extension AWXUIContext {
             return
         }
         
+        // update logger.session for UI integration
         AnalyticsLogger.shared().session = session
         AWXUIContext.shared.delegate = paymentResultDelegate
         switch launchStyle {

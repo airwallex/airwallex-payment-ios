@@ -14,11 +14,14 @@
 - (nullable NSDictionary *)payloadForRequestWithBilling:(nullable NSDictionary *)billingPayload
                                                 orError:(NSError *_Nullable *)error;
 {
+    NSDictionary *paymentJSON = nil;
     NSData *paymentData = self.paymentData;
-    NSDictionary *paymentJSON = [NSJSONSerialization JSONObjectWithData:paymentData
-                                                                options:0
-                                                                  error:error];
-
+    if ([NSProcessInfo.processInfo.environment[@"IS_UI_TESTING"] isEqualToString:@"1"] && NSProcessInfo.processInfo.environment[@"UI_TESTING_MOCK_APPLEPAY_TOKEN"].length > 0) {
+        paymentData = [NSProcessInfo.processInfo.environment[@"UI_TESTING_MOCK_APPLEPAY_TOKEN"] dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    paymentJSON = [NSJSONSerialization JSONObjectWithData:paymentData
+                                                  options:0
+                                                    error:error];
     if (!paymentJSON) {
         return nil;
     }

@@ -1,1 +1,52 @@
-// dummy file
+/* Shiping field placeholder - City */
+"City" = "City";
+
+/* close button for UIAlertController
+close button for alert
+close button on navigation bar */
+"Close" = "Close";
+
+/* Shiping field placeholder - Country / Region */
+"Country / Region" = "Country / Region";
+
+/* CVC / CVV placeholder */
+"CVC / CVV" = "CVC / CVV";
+
+/* Shiping field placeholder - Email (optional) */
+"Email (optional)" = "Email (optional)";
+
+/* No comment provided by engineer. */
+"Enter CVC/CVV for\n%@" = "Enter CVC/CVV for\n%@";
+
+/* Shiping field placeholder - First Name */
+"First name" = "First name";
+
+/* string description when decimal number is zero */
+"Free" = "Free";
+
+/* Shiping field placeholder - Last Name */
+"Last name" = "Last name";
+
+/* Pay now - pay button */
+"Pay now" = "Pay now";
+
+/* Shiping field placeholder - Phone number (optional) */
+"Phone number (optional)" = "Phone number (optional)";
+
+/* save button on navigation bar */
+"Save" = "Save";
+
+/* title of shipping view controller */
+"Shipping" = "Shipping";
+
+/* Shiping field placeholder - State */
+"State" = "State";
+
+/* Shiping field placeholder - Street */
+"Street" = "Street";
+
+/* total amount of payment session */
+"Total %@" = "Total %@";
+
+/* Shiping field placeholder - Zip code (optional) */
+"Zip code (optional)" = "Zip code (optional)";

@@ -1,0 +1,53 @@
+{
+  "configurations" : [
+    {
+      "id" : "646E9225-0B80-465E-9900-FB2EF9653BAD",
+      "name" : "Test Scheme Action",
+      "options" : {
+        "environmentVariableEntries" : [
+          {
+            "key" : "UI_TESTING_CUSTOMER_ID",
+            "value" : "$(UI_TESTING_CUSTOMER_ID)"
+          },
+          {
+            "key" : "UI_TESTING_MOCK_APPLEPAY_TOKEN",
+            "value" : "$(UI_TESTING_MOCK_APPLEPAY_TOKEN)"
+          },
+          {
+            "enabled" : false,
+            "key" : "UI_TESTING_CUSTOMER_ID",
+            "value" : ""
+          },
+          {
+            "enabled" : false,
+            "key" : "UI_TESTING_MOCK_APPLEPAY_TOKEN",
+            "value" : ""
+          }
+        ],
+        "language" : "en",
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:Examples.xcodeproj",
+          "identifier" : "D8F268B22DDADDE000E84D64",
+          "name" : "ExamplesUITests"
+        },
+        "testTimeoutsEnabled" : true
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+
+    ]
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Examples.xcodeproj",
+        "identifier" : "D8F268B22DDADDE000E84D64",
+        "name" : "ExamplesUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

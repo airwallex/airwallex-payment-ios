@@ -33,16 +33,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        AWXTheme.shared().tintColor = UIColor.systemBrown
         UISwitch.appearance().onTintColor = .awxColor(.theme)
         UIView.appearance().tintColor = .awxColor(.theme)
+        
+        disableAnimationForUITesting()
         return true
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         NotificationCenter.default.post(name: PaymentResultViewController.paymentResultNotification, object: nil)
 #if canImport(WechatOpenSDKDynamic)
-        return WXApi.handleOpen(url, delegate: self)
+        if WXApi.handleOpen(url, delegate: self) {
+            return true
+        } else {
+            return handleAirwallexDemoSchema(url)
+        }
 #else
-        return true
+        return handleSchemaURL(url)
 #endif
+    }
+    
+    private func handleAirwallexDemoSchema(_ url: URL) -> Bool {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              components.scheme == String.demoAppScheme,
+              components.host == String.demoAppHost,
+              let type = components.queryItems?.first(where: { $0.name == "type"})?.value else {
+            return false
+        }
+        switch type {
+        case "SUCCESS_URL":
+            let intentId = components.queryItems?.first(where: { $0.name == "id"})?.value ?? "Not Found"
+            window?.rootViewController?.showAlert(message: "intentId: \(intentId)", title: "Payment Success") {
+                UIPasteboard.general.string = intentId
+            }
+        case "FAIL_URL":
+            let intentId = components.queryItems?.first(where: { $0.name == "id"})?.value ?? "Not Found"
+            let error = components.queryItems?.first(where: { $0.name == "error"})?.value ?? "Not Found"
+            window?.rootViewController?.showAlert(message: "error: \(error), intentId: \(intentId)", title: "Payment Failed") {
+                UIPasteboard.general.string = intentId
+            }
+        default:
+            window?.rootViewController?.showAlert(message: url.absoluteString, title: type)
+        }
+        return true
+    }
+    
+    fileprivate func disableAnimationForUITesting() {
+        if ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.isUITesting] == "1" {
+            // disable animation for robust UI testing
+            UIView.setAnimationsEnabled(false)
+            UIWindow.appearance().layer.speed = 100
+            CATransaction.setAnimationDuration(0)
+            UIApplication.shared.keyWindow?.layer.speed = 100
+        }
     }
 }
 

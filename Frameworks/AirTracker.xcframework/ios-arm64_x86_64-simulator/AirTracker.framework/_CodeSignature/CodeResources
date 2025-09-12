@@ -18,7 +18,7 @@
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		KmRV2IHFcqEObQPS1zsFE3IxgN4=
+		oaab2GVO1go7J8MUuKy/p3CbGzE=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		KmRV2IHFcqEObQPS1zsFE3IxgN4=
+		oaab2GVO1go7J8MUuKy/p3CbGzE=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -93,11 +93,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KmRV2IHFcqEObQPS1zsFE3IxgN4=
+			oaab2GVO1go7J8MUuKy/p3CbGzE=
 			</data>
 			<key>hash2</key>
 			<data>
-			VLNroXAMRifyio3TSKRlLwlqrHQu+Yfy5JGguFOq1ms=
+			aMw6xrc2R0rsDDCJrYnR1DTL4jnYdOLKzGBrUUuWEIM=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
@@ -148,11 +148,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KmRV2IHFcqEObQPS1zsFE3IxgN4=
+			oaab2GVO1go7J8MUuKy/p3CbGzE=
 			</data>
 			<key>hash2</key>
 			<data>
-			VLNroXAMRifyio3TSKRlLwlqrHQu+Yfy5JGguFOq1ms=
+			aMw6xrc2R0rsDDCJrYnR1DTL4jnYdOLKzGBrUUuWEIM=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
