@@ -5,15 +5,12 @@ The Airwallex iOS SDK is a framework for integrating easy, fast and secure payme
 
 ## Topics
 
-
-### Integration
-
 - ``AWXPaymentConsent``
 - ``Session``
 - ``PaymentConsentOptions``
 - ``AWXPaymentIntent``
 
-#### UI Integration
+### UI Integration
 - ``AWXUIContext``
-#### API Integration
+### API Integration
 - ``PaymentSessionHandler``
