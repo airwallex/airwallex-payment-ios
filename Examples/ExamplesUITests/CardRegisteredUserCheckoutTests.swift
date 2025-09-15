@@ -77,7 +77,7 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
             checkoutMode: .oneOff,
             customerID: customerId,
             preferUnifiedSession: false,
-            useTabLayout: useTabLayout,
+            useTabLayout: useTabLayout
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
