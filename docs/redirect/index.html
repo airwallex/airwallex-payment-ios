@@ -1,3 +1,25 @@
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/0.2.0/documentation/airwallex'" />
+  <script>
+    // Extract the path after /airwallex-payment-ios/documentation/airwallex
+    const currentPath = window.location.pathname;
+    const basePath = '/airwallex-payment-ios/documentation/airwallex';
+    
+    if (currentPath.startsWith(basePath)) {
+      const subPath = currentPath.substring(basePath.length);
+      const newPath = '/airwallex-payment-ios/0.3.0/documentation/airwallex' + subPath;
+      window.location.replace(newPath);
+    } else {
+      // Fallback redirect
+      window.location.replace('/airwallex-payment-ios/0.3.0/documentation/airwallex');
+    }
+  </script>
+  <noscript>
+    <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/0.3.0/documentation/airwallex'" />
+  </noscript>
 </head>
+<body>
+  <p>Redirecting to the latest documentation...</p>
+</body>
+</html>
