@@ -199,7 +199,7 @@ let session = Session(
     returnURL: "App return url"
 )
 ```
-The new [Session](https://weiping-awx.github.io/airwallex-payment-ios/documentation/airwallex/session) type introduced in version 6.2.0 provides a unified and simplified way for integration and there are some internal optimization as well. We recommend using `Session` instead of the legacy `AWXOneOffSession`, `AWXRecurringSession`, and `AWXRecurringWithIntentSession`.
+The new [Session](https://weiping-awx.github.io/airwallex-payment-ios/0.3.0/documentation/airwallex/session) type introduced in version 6.2.0 provides a unified and simplified way for integration and there are some internal optimization as well. We recommend using `Session` instead of the legacy `AWXOneOffSession`, `AWXRecurringSession`, and `AWXRecurringWithIntentSession`.
 
 > [!NOTE]
 > We will continue to support integrations using legacy session types until the next major version release. For integration steps, please refer to [integration guide](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration) 

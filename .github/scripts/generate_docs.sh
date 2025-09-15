@@ -14,8 +14,8 @@ fi
 echo "Building documentation for version: $LATEST_VERSION"
 
 # Prepare 
-rm -rf DerivedData
-rm -rf docs
+rm -rf DerivedData/*
+rm -rf docs/*
 mkdir -p docs
 mv Airwallex.docc Airwallex/Airwallex/
 
@@ -48,35 +48,13 @@ mv "DerivedData/Build/Products/Release-iphoneos/Airwallex.doccarchive" "docs/Air
 mkdir -p docs/redirect
 
 cat > docs/redirect/index.html << EOF
-<!DOCTYPE html>
-<html>
 <head>
-  <script>
-    // Extract the path after /airwallex-payment-ios/documentation/airwallex
-    const currentPath = window.location.pathname;
-    const basePath = '/airwallex-payment-ios/documentation/airwallex';
-    
-    if (currentPath.startsWith(basePath)) {
-      const subPath = currentPath.substring(basePath.length);
-      const newPath = '/airwallex-payment-ios/$LATEST_VERSION/documentation/airwallex' + subPath;
-      window.location.replace(newPath);
-    } else {
-      // Fallback redirect
-      window.location.replace('/airwallex-payment-ios/$LATEST_VERSION/documentation/airwallex');
-    }
-  </script>
-  <noscript>
-    <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/$LATEST_VERSION/documentation/airwallex'" />
-  </noscript>
+  <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/$LATEST_VERSION/documentation/airwallex'" />
 </head>
-<body>
-  <p>Redirecting to the latest documentation...</p>
-</body>
-</html>
 EOF
 
 # Cleanup
 mv Airwallex/Airwallex/Airwallex.docc .
 
-echo "Documentation generated in ./docs/"
+echo "Documentation generated in ./docs/html"
 echo "Redirect index.html created in ./docs/redirect/"
