@@ -1,0 +1,46 @@
+name: Deploy Docs
+on:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: write
+  pages: write 
+
+jobs:
+
+  Deploy:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744  # 3.6.0
+      with:
+        fetch-depth: 0
+    - uses: n1hility/cancel-previous-runs@e709d8e41b16d5d0b8d529d293c5e126c57dc022 #v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Select latest Xcode
+      uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd #v1.6.0
+      with:
+        xcode-version: latest-stable
+
+    - name: Get latest published version
+      id: get-current-marketing-version
+      uses: pozetroninc/github-action-get-latest-release@2a61c339ea7ef0a336d1daa35ef0cb1418e7676c #v0.8.0
+      with:
+        repository: ${{ github.repository }}
+        excludes: prerelease, draft
+
+    - name: Deploy to current version 🚀
+      uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e #v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/html
+        destination_dir: ./${{ steps.get-current-marketing-version.outputs.release }}
+        
+    - name: Deploy to root 🚀
+      uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e #v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/redirect
+        keep_files: true

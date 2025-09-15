@@ -35,7 +35,7 @@ mv "DerivedData/Build/Products/Release-iphoneos/Airwallex.doccarchive" "docs/Air
     # --hosting-base-path "/airwallex-payment-ios"
 
 # Create redirect index.html under docs/
-cat > docs/index.html << EOF
+cat > docs/redirect/index.html << EOF
 <head>
   <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/$LATEST_VERSION/documentation/airwallex'" />
 </head>
@@ -45,4 +45,4 @@ EOF
 mv Airwallex/Airwallex/Airwallex.docc .
 
 echo "Documentation generated in ./docs/"
-echo "Redirect index.html created in ./docs/"
+echo "Redirect index.html created in ./docs/redirect/"
