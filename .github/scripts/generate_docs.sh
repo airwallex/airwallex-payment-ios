@@ -29,7 +29,7 @@ mv "DerivedData/Build/Products/Release-iphoneos/Airwallex.doccarchive" "docs/Air
 
 # Transform for static hosting
 "$(xcrun --find docc)" process-archive \
-    transform-for-static-hosting DerivedData/Build/Products/Release-iphoneos/Airwallex.doccarchive \
+    transform-for-static-hosting docs/Airwallex.doccarchive \
     --output-path ./docs/html/ \
     --hosting-base-path "/airwallex-payment-ios/$LATEST_VERSION" \
     # --hosting-base-path "/airwallex-payment-ios"
