@@ -28,13 +28,13 @@ mv Airwallex.xcworkspace.tmp Airwallex.xcworkspace
 "$(xcrun --find docc)" process-archive \
     transform-for-static-hosting DerivedData/Build/Products/Release-iphoneos/Airwallex.doccarchive \
     --output-path ./docs/ \
-    --hosting-base-path "/airwallex-payment-ios"
-    # --hosting-base-path "/airwallex-payment-ios/$LATEST_VERSION"
+    --hosting-base-path "/airwallex-payment-ios/$LATEST_VERSION" \
+    # --hosting-base-path "/airwallex-payment-ios"
 
 # Create redirect index.html under docs/
 cat > docs/index.html << EOF
 <head>
-  <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/documentation/airwallex'" />
+  <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/$LATEST_VERSION/documentation/airwallex'" />
 </head>
 EOF
 
