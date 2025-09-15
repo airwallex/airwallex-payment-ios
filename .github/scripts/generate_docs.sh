@@ -18,14 +18,15 @@ xcodebuild docbuild \
     -scheme Airwallex \
     -destination "generic/platform=iOS" \
     -derivedDataPath DerivedData \
-    -skipPackagePluginValidation
+    -skipPackagePluginValidation \
+    -configuration Release \
 
 # Restore workspace
 mv Airwallex.xcworkspace.tmp Airwallex.xcworkspace
 
 # Transform for static hosting
 "$(xcrun --find docc)" process-archive \
-    transform-for-static-hosting DerivedData/Build/Products/Debug-iphoneos/Airwallex.doccarchive \
+    transform-for-static-hosting DerivedData/Build/Products/Release-iphoneos/Airwallex.doccarchive \
     --output-path ./docs/ \
     --hosting-base-path "/airwallex-payment-ios"
     # --hosting-base-path "/airwallex-payment-ios/$LATEST_VERSION"
