@@ -4,8 +4,18 @@
 
 set -e
 
+# Check if LATEST_VERSION is set
+if [ -z "$LATEST_VERSION" ]; then
+    echo "Error: LATEST_VERSION environment variable is required but not set"
+    echo "Please provide a version (e.g., LATEST_VERSION=1.0.0)"
+    exit 1
+fi
+
+echo "Building documentation for version: $LATEST_VERSION"
+
 # Prepare 
 rm -rf DerivedData
+rm -rf docs
 mkdir -p docs
 mv Airwallex.docc Airwallex/Airwallex/
 
