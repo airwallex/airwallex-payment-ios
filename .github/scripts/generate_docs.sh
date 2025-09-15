@@ -24,10 +24,13 @@ xcodebuild docbuild \
 # Restore workspace
 mv Airwallex.xcworkspace.tmp Airwallex.xcworkspace
 
+# Move the new DocC archive to the its final place
+mv "DerivedData/Build/Products/Release-iphoneos/Airwallex.doccarchive" "docs/Airwallex.doccarchive"
+
 # Transform for static hosting
 "$(xcrun --find docc)" process-archive \
     transform-for-static-hosting DerivedData/Build/Products/Release-iphoneos/Airwallex.doccarchive \
-    --output-path ./docs/ \
+    --output-path ./docs/html/ \
     --hosting-base-path "/airwallex-payment-ios/$LATEST_VERSION" \
     # --hosting-base-path "/airwallex-payment-ios"
 
