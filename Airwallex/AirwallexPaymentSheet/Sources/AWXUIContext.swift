@@ -13,6 +13,24 @@ import AirwallexCore
 @_spi(AWX) import AirwallexPayment
 #endif
 
+/// The main UI context for Airwallex payment flows.
+///
+/// `AWXUIContext` provides a high-level interface for launching pre-built payment flows.
+/// It handles the presentation of payment forms, user interactions, and payment processing
+/// with minimal integration effort.
+///
+/// ## Usage
+/// ```swift
+/// let context = AWXUIContext()
+/// context.launchPayment(session: session, from: viewController) { result in
+///     switch result {
+///     case .success(let paymentResult):
+///         // Handle successful payment
+///     case .failure(let error):
+///         // Handle payment error
+///     }
+/// }
+/// ```
 @MainActor
 @objc public class AWXUIContext: NSObject {
     private static let subtypeDropin = "dropin"
@@ -22,8 +40,11 @@ import AirwallexCore
         case present
     }
     
+    /// Defines the layout style for payment method selection.
     @objc public enum PaymentLayout: Int, CaseIterable {
+        /// Display payment methods in an expandable accordion layout.
         case accordion
+        /// Display payment methods in a tabbed layout.
         case tab
         
         public var displayName: String {
