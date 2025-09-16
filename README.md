@@ -199,7 +199,7 @@ let session = Session(
     returnURL: "App return url"
 )
 ```
-The new [Session](https://weiping-awx.github.io/airwallex-payment-ios/6.2.0/documentation/airwallex/session) type introduced in version 6.2.0 provides a unified and simplified way for integration and there are some internal optimization as well. We recommend using `Session` instead of the legacy `AWXOneOffSession`, `AWXRecurringSession`, and `AWXRecurringWithIntentSession`.
+The new [Session](https://weiping-awx.github.io/airwallex-payment-ios/6.1.9/documentation/airwallex/session) type introduced in version 6.2.0 provides a unified and simplified way for integration and there are some internal optimization as well. We recommend using `Session` instead of the legacy `AWXOneOffSession`, `AWXRecurringSession`, and `AWXRecurringWithIntentSession`.
 
 > [!NOTE]
 > We will continue to support integrations using legacy session types until the next major version release. For integration steps, please refer to [integration guide](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration) 
@@ -314,7 +314,7 @@ let session = Session(
 > This is **recommended usage**, it builds a complete user flow on top of your app with our prebuilt UI to collect payment details, billing details, and confirming the payment.
 
 Make sure you add dependency for `Airwallex` or `AirwallexPaymentSheet`.
-Upon checkout, use [AWXUIContext](https://weiping-awx.github.io/airwallex-payment-ios/6.2.0/documentation/airwallex/awxuicontext) to present the payment flow where the user will be able to select the payment method.
+Upon checkout, use [AWXUIContext](https://weiping-awx.github.io/airwallex-payment-ios/6.1.9/documentation/airwallex/awxuicontext) to present the payment flow where the user will be able to select the payment method.
 
 ``` swift
 AWXUIContext.launchPayment(
@@ -384,7 +384,7 @@ You can build your own entirely custom UI on top of our low-level APIs.
 > you may find [Airwallex API Docs](https://www.airwallex.com/docs/api#/Payment_Acceptance) useful if you are using this integration style
 ---
 #### Create PaymentSessionHandler 
-[PaymentSessionHandler](https://weiping-awx.github.io/airwallex-payment-ios/6.2.0/documentation/airwallex/paymentsessionhandler) is at the center of the API integration.
+[PaymentSessionHandler](https://weiping-awx.github.io/airwallex-payment-ios/6.1.9/documentation/airwallex/paymentsessionhandler) is at the center of the API integration.
 ```swift
 let paymentSessionHandler = PaymentSessionHandler(
     session: "The session created above", 

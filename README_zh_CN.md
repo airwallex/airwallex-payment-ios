@@ -197,7 +197,7 @@ let session = Session(
 )
 ```
 
-6.2.0 版本新增 [Session](https://weiping-awx.github.io/airwallex-payment-ios/6.2.0/documentation/airwallex/session/) 类型简化了SDK的集成方式并且进行了一些内部优化。我们建议使用 `Session` 替代已经被标记为废弃的 `AWXOneOffSession`, `AWXRecurringSession` 和 `AWXRecurringWithIntentSession`
+6.2.0 版本新增 [Session](https://weiping-awx.github.io/airwallex-payment-ios/6.1.9/documentation/airwallex/session/) 类型简化了SDK的集成方式并且进行了一些内部优化。我们建议使用 `Session` 替代已经被标记为废弃的 `AWXOneOffSession`, `AWXRecurringSession` 和 `AWXRecurringWithIntentSession`
 
 > [!NOTE]
 > 下一个大版本更新之前 Airwallex SDK 仍会继续支持 `AWXOneOffSession`, `AWXRecurringSession` 和 `AWXRecurringWithIntentSession`，具体集成方式请参考[集成文档](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration)
@@ -311,7 +311,7 @@ let session = Session(
 > [!NOTE]
 > 通过UI集成您可以在您的app中使用我们预构建的 UI 收集支付详情、账单详情并确认支付。
 
-请确保您已经添加对 `Airwallex` 或 `AirwallexPaymentSheet` 的依赖。 在结账时使用 [AWXUIContext](https://weiping-awx.github.io/airwallex-payment-ios/6.2.0/documentation/airwallex/awxuicontext/) 启动支付流程，用户能够通过支付列表选择您支持的支付方式。
+请确保您已经添加对 `Airwallex` 或 `AirwallexPaymentSheet` 的依赖。 在结账时使用 [AWXUIContext](https://weiping-awx.github.io/airwallex-payment-ios/6.1.9/documentation/airwallex/awxuicontext/) 启动支付流程，用户能够通过支付列表选择您支持的支付方式。
 ``` swift
 AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
@@ -380,7 +380,7 @@ AWXTheme.shared().tintColor = .red
 
 ---
 #### 创建 PaymentSessionHandler 
-[PaymentSessionHandler](https://weiping-awx.github.io/airwallex-payment-ios/6.2.0/documentation/airwallex/paymentsessionhandler/)是 API 集成的核心。
+[PaymentSessionHandler](https://weiping-awx.github.io/airwallex-payment-ios/6.1.9/documentation/airwallex/paymentsessionhandler/)是 API 集成的核心。
 
 ```swift
 let paymentSessionHandler = PaymentSessionHandler(

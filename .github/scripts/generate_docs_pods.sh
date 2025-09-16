@@ -4,14 +4,18 @@
 
 set -e
 
-# Check if LATEST_VERSION is set
-if [ -z "$LATEST_VERSION" ]; then
-    echo "Error: LATEST_VERSION environment variable is required but not set"
-    echo "Please provide a version (e.g., LATEST_VERSION=1.0.0)"
+# Accept VERSION as command line argument or environment variable
+if [ $# -eq 1 ]; then
+    VERSION="$1"
+elif [ -n "${VERSION:-}" ]; then
+    VERSION="${VERSION}"
+else
+    echo "Usage: $0 <version> or set VERSION environment variable"
+    echo "Example: $0 1.0.0 or VERSION=1.0.0 $0"
     exit 1
 fi
 
-echo "Building documentation for version: $LATEST_VERSION"
+echo "Building documentation for version: $VERSION"
 
 # Prepare 
 rm -rf DerivedData/*
@@ -56,14 +60,14 @@ mv "DerivedData/Build/Products/Release-iphoneos/Airwallex/Airwallex.doccarchive"
 "$(xcrun --find docc)" process-archive \
     transform-for-static-hosting docs/Airwallex.doccarchive \
     --output-path ./docs/html/ \
-    --hosting-base-path "/airwallex-payment-ios/$LATEST_VERSION"
+    --hosting-base-path "/airwallex-payment-ios/$VERSION"
 
 # Create redirect index.html under docs/
 mkdir -p docs/redirect
 
 cat > docs/redirect/index.html << EOF
 <head>
-  <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/$LATEST_VERSION/documentation/airwallex'" />
+  <meta http-equiv="Refresh" content="0; url='/airwallex-payment-ios/$VERSION/documentation/airwallex'" />
 </head>
 EOF
 
