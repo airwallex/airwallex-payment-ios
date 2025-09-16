@@ -11,6 +11,36 @@ import UIKit
 import AirwallexCore
 #endif
 
+/// A low-level API handler for managing Airwallex payment sessions.
+///
+/// `PaymentSessionHandler` provides direct control over payment processing without pre-built UI components.
+/// It's designed for developers who want to implement custom payment flows while leveraging Airwallex's
+/// payment processing capabilities.
+///
+/// ## Usage
+/// ```swift
+/// let handler = PaymentSessionHandler(
+///     session: session,
+///     viewController: self,
+///     paymentResultDelegate: self
+/// )
+/// 
+/// // Handle card payment
+/// handler.startCardPayment(
+///     card: card,
+///     billing: billing,
+///     saveCard: true
+/// )
+///
+/// // Handle Apple Pay
+/// handler.startApplePay()
+/// ```
+///
+/// This class handles:
+/// - Direct payment method processing
+/// - Payment result callbacks
+/// - Error handling and validation
+/// - Custom payment flow integration
 public class PaymentSessionHandler: NSObject {
     enum ValidationError: ErrorLoggable {
         case invalidPayment(underlyingError: Error)

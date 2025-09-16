@@ -49,7 +49,7 @@ let package = Package(
                 .target(name: "AirwallexPaymentSheet")
             ],
             path: "Airwallex/Airwallex",
-            sources: [ "Airwallex_Export.swift" ]
+            exclude: ["Airwallex.h"]
         ),
         .target(
             name: "AirwallexPaymentSheet",
