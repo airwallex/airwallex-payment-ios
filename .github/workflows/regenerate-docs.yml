@@ -29,7 +29,7 @@ jobs:
 
     - name: Generate Docs
       run: |
-        .github/scripts/generate_docs.sh
+        .github/scripts/generate-docs.sh
       env:
         VERSION: ${{ github.event.inputs.latestVersion }}
     - name: Create Pull Request
