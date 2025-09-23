@@ -560,8 +560,9 @@ class CardProviderTests: XCTestCase {
         
         // Verify the request properties
         XCTAssertEqual(request1.paymentConsent?.id, "consent_123")
-        XCTAssertNil(request1.paymentMethod)
+        XCTAssertNotNil(request1.paymentMethod)
         XCTAssertEqual(request1.intentId, mockPaymentIntent.id)
+        XCTAssertNotNil(request1.options)
         
         // Test with CVC
         let request2 = provider.createPaymentRequestWithExistingConsent(consentId: "consent_123", cvc: "123")
@@ -571,6 +572,7 @@ class CardProviderTests: XCTestCase {
         XCTAssertEqual(request2.paymentMethod?.type, AWXCardKey)
         XCTAssertEqual(request2.paymentMethod?.card?.cvc, "123")
         XCTAssertEqual(request2.intentId, mockPaymentIntent.id)
+        XCTAssertNotNil(request2.options)
     }
     
     func testCreateRequestForConsentConversion() {
