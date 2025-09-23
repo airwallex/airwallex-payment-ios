@@ -554,6 +554,13 @@ private extension IntegrationDemoListViewController {
         )
         // Update client secret
         AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
+        
+        // Merchant trigger reason
+        let merchantTriggerReason: AirwallexMerchantTriggerReason = if ExamplesKeys.nextTriggerByType == .customerType {
+            .undefined
+        } else {
+            .unscheduled
+        }
         let session = Session(
             paymentIntent: paymentIntent,
             countryCode: ExamplesKeys.countryCode,
@@ -562,7 +569,7 @@ private extension IntegrationDemoListViewController {
             billing: shippingAddress,
             paymentConsentOptions: (ExamplesKeys.checkoutMode == .oneOff) ? nil : PaymentConsentOptions(
                 nextTriggeredBy: ExamplesKeys.nextTriggerByType,
-                merchantTriggerReason: .scheduled
+                merchantTriggerReason: merchantTriggerReason
             ),
             requiredBillingContactFields: getRequiredBillingContactFields(),
             returnURL: ExamplesKeys.returnUrl
