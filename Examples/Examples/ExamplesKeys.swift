@@ -111,6 +111,7 @@ struct ExamplesKeys {
             ExamplesKeys.countryCode = newValue.countryCode
             ExamplesKeys.returnUrl = newValue.returnUrl
             ExamplesKeys.paymentLayout = newValue.paymentLayout
+            ExamplesKeys.preferUnifiedSession = newValue.preferUnifiedSession
         }
     }
     

@@ -152,12 +152,11 @@ extension CardProvider {
     func createPaymentRequestWithExistingConsent(consentId: String, cvc: String?) -> AWXConfirmPaymentIntentRequest {
         let consent = AWXPaymentConsent()
         consent.id = consentId
-        var method: AWXPaymentMethod?
+        var method = AWXPaymentMethod()
+        method.type = AWXCardKey
         if let cvc {
-            method = AWXPaymentMethod()
-            method?.type = AWXCardKey
-            method?.card = AWXCard()
-            method?.card?.cvc = cvc
+            method.card = AWXCard()
+            method.card?.cvc = cvc
         }
         return createConfirmIntentRequest(method: method, consent: consent, consentOptions: nil)
     }
