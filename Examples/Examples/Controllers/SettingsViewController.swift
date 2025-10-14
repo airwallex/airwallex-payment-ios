@@ -410,7 +410,7 @@ private extension SettingsViewController {
         
         switchForUnifiedSession.setup(
             ConfigSwitchViewModel(
-                title: "Prefer Unified Session",
+                title: "Use Session over AWXXXSession",
                 isOn: settings.preferUnifiedSession,
                 action: { [weak self] isOn in
                     self?.settings.preferUnifiedSession = isOn
