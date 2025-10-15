@@ -1,5 +1,5 @@
 //
-//  RecurringOptionsTests.swift
+//  PaymentConsentOptionsTests.swift
 //  AirwallexPaymentTests
 //
 //  Created by Weiping Li on 18/8/25.
@@ -10,7 +10,7 @@ import XCTest
 @testable import AirwallexPayment
 @testable import AirwallexCore
 
-final class RecurringOptionsTests: XCTestCase {
+final class PaymentConsentOptionsTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -118,13 +118,51 @@ final class RecurringOptionsTests: XCTestCase {
     }
     
     func testValidate() {
-        
+
         let arr: [AirwallexMerchantTriggerReason] = [.scheduled, .installments, .unscheduled]
         for reason in arr {
             let model = PaymentConsentOptions(nextTriggeredBy: .customerType, merchantTriggerReason: reason)
-            XCTAssertThrowsError(try model.validate())
+            XCTAssertNoThrow(try model.validate())
+            XCTAssertEqual(model.merchantTriggerReason, .undefined)
         }
-        
-        XCTAssertNoThrow(try PaymentConsentOptions(nextTriggeredBy: .customerType, merchantTriggerReason: .undefined).validate())
+        for reason in arr {
+            let model = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: reason)
+            XCTAssertNoThrow(try model.validate())
+            XCTAssertEqual(model.merchantTriggerReason, reason)
+        }
+    }
+
+    // MARK: - Initializer Logic Tests
+
+    func testInit_customerType_automaticallyForcesUndefinedMerchantTriggerReason() {
+        // Test that merchantTriggerReason is automatically set to .undefined when nextTriggeredBy is .customerType
+        let reasons: [AirwallexMerchantTriggerReason] = [.scheduled, .unscheduled, .installments, .undefined]
+
+        for reason in reasons {
+            let model = PaymentConsentOptions(
+                nextTriggeredBy: .customerType,
+                merchantTriggerReason: reason
+            )
+
+            XCTAssertEqual(model.nextTriggeredBy, .customerType)
+            XCTAssertEqual(model.merchantTriggerReason, .undefined,
+                          "merchantTriggerReason should be forced to .undefined when nextTriggeredBy is .customerType, regardless of input value")
+        }
+    }
+
+    func testInit_merchantType_preservesMerchantTriggerReason() {
+        // Test that merchantTriggerReason is preserved when nextTriggeredBy is .merchantType
+        let testCases: [AirwallexMerchantTriggerReason] = [.scheduled, .unscheduled, .installments, .undefined]
+
+        for reason in testCases {
+            let model = PaymentConsentOptions(
+                nextTriggeredBy: .merchantType,
+                merchantTriggerReason: reason
+            )
+
+            XCTAssertEqual(model.nextTriggeredBy, .merchantType)
+            XCTAssertEqual(model.merchantTriggerReason, reason,
+                          "merchantTriggerReason should be preserved when nextTriggeredBy is .merchantType")
+        }
     }
 }

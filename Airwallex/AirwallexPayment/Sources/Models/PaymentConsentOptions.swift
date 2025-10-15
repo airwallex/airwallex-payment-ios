@@ -16,11 +16,12 @@ import Foundation
 public final class PaymentConsentOptions: NSObject {
     /// The party to trigger subsequent payments. One of `merchant`, `customer`.
     @objc public let nextTriggeredBy: AirwallexNextTriggerByType
-    
+
     /// indicate whether the subsequent payments are scheduled.
     /// Only applicable when next_triggered_by is merchant. One of `.undefined`, `scheduled`, `unscheduled`, `installments`. Default: `.undefined`
+    /// Note: Automatically set to `.undefined` when nextTriggeredBy is `.customerType`
     @objc public let merchantTriggerReason: AirwallexMerchantTriggerReason
-    
+
     /// Terms to specify how this Payment Consent will be used.
     /// Optional.
     @objc public let termsOfUse: TermsOfUse?
@@ -39,7 +40,7 @@ public final class PaymentConsentOptions: NSObject {
                       merchantTriggerReason: AirwallexMerchantTriggerReason = .undefined,
                       termsOfUse: TermsOfUse? = nil) {
         self.nextTriggeredBy = nextTriggeredBy
-        self.merchantTriggerReason = merchantTriggerReason
+        self.merchantTriggerReason = nextTriggeredBy == .customerType ? .undefined : merchantTriggerReason
         self.termsOfUse = termsOfUse
     }
     
