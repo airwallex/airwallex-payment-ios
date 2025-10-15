@@ -62,20 +62,6 @@ extension XCTestCase {
 extension XCUIElement {
     
     func robustTap() {
-        let expectation = XCTNSPredicateExpectation(predicate: NSPredicate(format: "hittable == true"), object: self)
-        _ = XCTWaiter().wait(for: [expectation], timeout: .shortTimeout)
-        
-        if #available(iOS 18.0, *) {
-            tap()
-        } else if #available(iOS 17.0, *) {
-            sleep(1)
-            coordinateTap()
-        } else {
-            tap()
-        }
-    }
-    
-    func coordinateTap() {
         let coordinate = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
         coordinate.tap()
     }
