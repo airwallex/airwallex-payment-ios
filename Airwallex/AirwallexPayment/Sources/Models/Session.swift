@@ -214,7 +214,7 @@ extension Session {
             paymentMethods: session.paymentMethods,
             paymentConsentOptions: consentOptions,
             requiredBillingContactFields: session.requiredBillingContactFields,
-            returnURL: session.returnURL,
+            returnURL: session.returnURL
         )
     }
     
