@@ -22,7 +22,7 @@ extension TimeInterval {
 enum TestCards {
     static let visa = "4111111111111111"
     static let visa3DS = "4012000300000088"
-    static let unionPay = "6262000000000000"
+    static let unionPay = "6252470144444939"
 }
 
 @MainActor

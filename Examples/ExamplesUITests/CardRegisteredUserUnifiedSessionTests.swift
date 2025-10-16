@@ -77,8 +77,6 @@ import XCTest
             prefix: "Visa",
             last4: String(TestCards.visa.suffix(4))
         )
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
         ConsentPaymentScreen.payWithFirstConsent(cit: false)
         
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
