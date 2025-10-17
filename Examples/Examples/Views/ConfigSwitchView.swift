@@ -59,6 +59,8 @@ class ConfigSwitchView: UIView {
             stack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
+        
+        optionLabel.setContentCompressionResistancePriority(.defaultHigh - 50, for: .horizontal)
     }
     
     required init?(coder: NSCoder) {

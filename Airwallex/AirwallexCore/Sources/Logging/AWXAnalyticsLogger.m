@@ -171,10 +171,10 @@
 
 - (void)addInfoFromPaymentSession:(AWXSession *)session {
     if (session.paymentIntentId) {
-        self[@"payment_intent_id"] = session.paymentIntentId;
+        self[@"paymentIntentId"] = session.paymentIntentId;
     }
     if (session.transactionMode) {
-        self[@"transaction_mode"] = session.transactionMode;
+        self[@"transactionMode"] = session.transactionMode;
     }
 }
 

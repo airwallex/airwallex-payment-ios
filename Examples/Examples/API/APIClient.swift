@@ -19,12 +19,14 @@ protocol APIClient {
 
 extension APIClient {
     
-    func createPaymentIntent(force3DS: Bool = false) async throws -> AWXPaymentIntent {
+    func createPaymentIntent(amount: Decimal = Decimal(string: ExamplesKeys.amount) ?? 0,
+                             force3DS: Bool = false) async throws -> AWXPaymentIntent {
         let request = PaymentIntentRequest(
-            amount: Decimal(string: ExamplesKeys.amount) ?? 0,
+            amount: amount,
             currency: ExamplesKeys.currency,
             order: DemoDataSource.createOrder(),
             metadata: ["id": 1],
+            //  If a returnURL is provided in payment_intents/confirm, it will override the one set in payment_intents/create
             returnUrl: ExamplesKeys.returnUrl,
             customerID: ExamplesKeys.customerId?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty,
             paymentMethodOptions: force3DS ? ["card": ["three_ds_action": "FORCE_3DS"]] : nil,

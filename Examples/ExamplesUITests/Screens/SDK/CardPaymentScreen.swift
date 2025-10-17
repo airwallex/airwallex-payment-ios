@@ -66,6 +66,10 @@ enum CardPaymentScreen {
             }
         }
         
+        while !(checkoutButton.exists && checkoutButton.isHittable) {
+            cardInfoCell.swipeUp(velocity: .slow)
+        }
+        
         checkoutButton.robustTap()
         XCTAssertTrue(activityIndicator.exists)
         activityIndicator.waitForNonExistence(timeout: .networkRequestTimeout)

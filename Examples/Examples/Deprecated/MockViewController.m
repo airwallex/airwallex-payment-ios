@@ -28,7 +28,20 @@
 }
 
 - (void)testObjcAPIVisibility {
-    AWXOneOffSession *session = [[AWXOneOffSession alloc] init];
+    TermsOfUse *termsOfUse = [[TermsOfUse alloc] initWithBillingCycleChargeDay:3 endDate:@"" firstPaymentAmount:nil fixedPaymentAmount:nil maxPaymentAmount:nil minPaymentAmount:nil paymentAmountType:PaymentAmountTypeFixed paymentCurrency:nil paymentSchedule:[[PaymentSchedule alloc] initWithPeriod:1 periodUnit:PeriodUnitDay] startDate:nil totalBillingCycles:1];
+    PaymentConsentOptions *options = [[PaymentConsentOptions alloc] initWithNextTriggeredBy:AirwallexNextTriggerByMerchantType merchantTriggerReason:AirwallexMerchantTriggerReasonScheduled termsOfUse:termsOfUse];
+    Session *session = [[Session alloc] initWithPaymentIntent:AWXPaymentIntent.new
+                                                  countryCode:@"AU"
+                                              applePayOptions:nil
+                                                  autoCapture:true
+                                autoSaveCardForFuturePayments:true
+                                                      billing:nil
+                                          hidePaymentConsents:false
+                                                         lang:nil
+                                               paymentMethods:nil
+                                        paymentConsentOptions:options
+                                 requiredBillingContactFields:AWXRequiredBillingContactFieldName
+                                                    returnURL:@""];
     [AWXUIContext launchPaymentFrom:self session:session filterBy:nil launchStyle:LaunchStylePush layout:PaymentLayoutTab];
     [AWXUIContext launchPaymentFrom:self session:session paymentResultDelegate:self filterBy:nil launchStyle:LaunchStylePresent layout:PaymentLayoutAccordion];
     [AWXUIContext launchCardPaymentFrom:self session:session supportedBrands:@[] launchStyle:LaunchStylePush];

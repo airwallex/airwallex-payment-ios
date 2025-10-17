@@ -310,18 +310,19 @@ private extension AWXUIContext {
                     completion()
                     return
                 }
-                CATransaction.begin()
-                CATransaction.setCompletionBlock {
-                    completion()
+                defer {
+                    if let coordinator = paymentVC.transitionCoordinator {
+                        coordinator.animate(alongsideTransition: nil) { _ in completion() }
+                    } else {
+                        completion()
+                    }
                 }
                 guard let index = nav.viewControllers.firstIndex(of: paymentVC),
                       let targetVC = nav.viewControllers[safe: index - 1] else {
                     nav.popViewController(animated: true)
-                    CATransaction.commit()
                     return
                 }
                 nav.popToViewController(targetVC, animated: true)
-                CATransaction.commit()
             }
         case .present:
             let paymentVC = PaymentViewController(

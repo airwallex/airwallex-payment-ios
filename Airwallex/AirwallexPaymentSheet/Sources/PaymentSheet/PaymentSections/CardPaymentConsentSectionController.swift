@@ -199,6 +199,7 @@ class CardPaymentConsentSectionController: SectionController {
             } else {
                 cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
                 let consentTitle = "\(brand.capitalized) •••• \(card.last4 ?? "")"
+                let actionIconColor: UIColor = consent.isCITConsent ? .awxColor(.iconLink) : .awxColor(.iconDisabled)
                 viewModel = CardConsentCellViewModel(
                     image: image,
                     text: consentTitle,
@@ -206,13 +207,21 @@ class CardPaymentConsentSectionController: SectionController {
                     actionTitle: nil,
                     actionIcon: UIImage(systemName: "ellipsis")?
                         .rotate(degrees: 90)?
-                        .withTintColor(.awxColor(.iconLink), renderingMode: .alwaysOriginal),
+                        .withTintColor(actionIconColor, renderingMode: .alwaysOriginal),
                     buttonAction: { [weak self] in
-                        self?.showAlertForDelete(consent, consentDescription: consentTitle)
+                        if consent.isCITConsent {
+                            self?.showAlertForDeleteCITConsent(consent, consentDescription: consentTitle)
+                        } else {
+                            self?.showAlertForDeleteMITConsent(consent)
+                        }
                     }
                 )
                 let consentIndex = consents.firstIndex { $0.id == itemIdentifier } ?? 0
-                cell.accessibilityIdentifier = "consentListed"
+                if consent.isCITConsent {
+                    cell.accessibilityIdentifier = "consentListed-cit"
+                } else {
+                    cell.accessibilityIdentifier = "consentListed-mit"
+                }
             }
             cell.setup(viewModel)
             return cell
@@ -365,7 +374,7 @@ class CardPaymentConsentSectionController: SectionController {
  
 private extension CardPaymentConsentSectionController {
     // actions
-    func showAlertForDelete(_ consent: AWXPaymentConsent, consentDescription: String) {
+    func showAlertForDeleteCITConsent(_ consent: AWXPaymentConsent, consentDescription: String) {
         let title = NSLocalizedString("Remove %@?", bundle: .paymentSheet, comment: "consent section - alert title for delete a consent")
         let alert = AWXAlertController(
             title: String(format: title, consentDescription),
@@ -395,6 +404,32 @@ private extension CardPaymentConsentSectionController {
         )
         alert.addAction(cancelAction)
         context.viewController?.present(alert, animated: true)
+    }
+    
+    func showAlertForDeleteMITConsent(_ consent: AWXPaymentConsent) {
+        do {
+            guard let token = AWXAPIClientConfiguration.shared().clientSecret else {
+                throw "clientSecret not found".asError()
+            }
+            let payload = try token.payloadOfJWT()
+            guard let merchantName = payload["business_name"] as? String else {
+                throw "business name not found in token \(token)".asError()
+            }
+            let message = String(format: NSLocalizedString("This card is used for other payments you've set up with %@. Please contact %@ to update the payment method for these payments before removing this card.", bundle: .paymentSheet, comment: "alert message for delete MIT consent"), merchantName, merchantName)
+            let alert = AWXAlertController(
+                title: nil,
+                message: message,
+                preferredStyle: .alert
+            )
+            let cancelAction = UIAlertAction(
+                title: NSLocalizedString("Cancel", bundle: .paymentSheet, comment: "consent section - alert cancel button to delete a consent"),
+                style: .cancel
+            )
+            alert.addAction(cancelAction)
+            context.viewController?.present(alert, animated: true)
+        } catch {
+            AnalyticsLogger.log(errorName: "JWT decoding error", errorMessage: error.localizedDescription)
+        }
     }
     
     func checkout(consent: AWXPaymentConsent) {

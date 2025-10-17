@@ -90,6 +90,13 @@ class SettingsViewController: UIViewController {
         return view
     }()
     
+    private lazy var switchForUnifiedSession: ConfigSwitchView = {
+        let view = ConfigSwitchView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.optionSwitch.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.toggleForUnifiedSession
+        return view
+    }()
+    
     private lazy var requiredBillingFieldsEntry: ConfigEntryView = {
         let view = ConfigEntryView()
         let viewModel = ConfigEntryViewModel(
@@ -243,6 +250,7 @@ private extension SettingsViewController {
         stack.addArrangedSubview(requiredBillingFieldsEntry)
         stack.addArrangedSubview(switchForForce3DS)
         stack.addArrangedSubview(switchForAutoCapture)
+        stack.addArrangedSubview(switchForUnifiedSession)
         stack.addArrangedSubview(fieldForCustomerId)
         
         stack.addArrangedSubview(fieldForAPIKey)
@@ -396,6 +404,16 @@ private extension SettingsViewController {
                 isOn: settings.autoCapture,
                 action: { [weak self] isOn in
                     self?.settings.autoCapture = isOn
+                }
+            )
+        )
+        
+        switchForUnifiedSession.setup(
+            ConfigSwitchViewModel(
+                title: "Use Session over legacy variants",
+                isOn: settings.preferUnifiedSession,
+                action: { [weak self] isOn in
+                    self?.settings.preferUnifiedSession = isOn
                 }
             )
         )

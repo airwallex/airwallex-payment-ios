@@ -22,7 +22,7 @@ extension TimeInterval {
 enum TestCards {
     static let visa = "4111111111111111"
     static let visa3DS = "4012000300000088"
-    static let unionPay = "6262000000000000"
+    static let unionPay = "6252470144444939"
 }
 
 @MainActor
@@ -32,9 +32,10 @@ extension XCTestCase {
                                     checkoutMode: CheckoutMode,
                                     customerID: String = "",
                                     env: SettingsScreen.Environment = .demo,
-                                    useTabLayout: Bool = true,
+                                    force3DS: Bool = false,
                                     nextTriggerByCustomer: Bool? = nil,
-                                    force3DS: Bool = false) {
+                                    preferUnifiedSession: Bool = false,
+                                    useTabLayout: Bool = true) {
         app.launchEnvironment[UITestingEnvironmentVariable.isUITesting] = "1"
         app.launchEnvironment[UITestingEnvironmentVariable.mockApplePayToken] = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.mockApplePayToken]
         app.launch()
@@ -52,6 +53,7 @@ extension XCTestCase {
             SettingsScreen.ensureNextTriggerByCustomer(nextTriggerByCustomer)
         }
         SettingsScreen.ensureForce3DS(force3DS)
+        SettingsScreen.ensurePreferUnifiedSession(preferUnifiedSession)
         SettingsScreen.save()
         UIIntegrationDemoScreen.validate()
     }
@@ -60,20 +62,6 @@ extension XCTestCase {
 extension XCUIElement {
     
     func robustTap() {
-        let expectation = XCTNSPredicateExpectation(predicate: NSPredicate(format: "hittable == true"), object: self)
-        _ = XCTWaiter().wait(for: [expectation], timeout: .shortTimeout)
-        
-        if #available(iOS 18.0, *) {
-            tap()
-        } else if #available(iOS 17.0, *) {
-            sleep(1)
-            coordinateTap()
-        } else {
-            tap()
-        }
-    }
-    
-    func coordinateTap() {
         let coordinate = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
         coordinate.tap()
     }

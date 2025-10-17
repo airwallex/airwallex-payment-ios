@@ -51,3 +51,4 @@ close button on navigation bar */
 /* Shiping field placeholder - Zip code (optional) */
 "Zip code (optional)" = "郵便番号（任意）";
 
+"Enter CVC/CVV" = "CVC/CVVを入力";

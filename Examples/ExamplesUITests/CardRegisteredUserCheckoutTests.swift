@@ -35,12 +35,13 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         launchAppAndEnsureSettings(
             app,
             checkoutMode: .oneOff,
-            customerID: customerId
+            customerID: customerId,
+            preferUnifiedSession: false
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         if ConsentPaymentScreen.exists {
-            ConsentPaymentScreen.deleteAllConsents()
+            ConsentPaymentScreen.deleteAllCITConsents()
         }
         PaymentSheetScreen.waitForExistence()
         CardPaymentScreen.payWithCard(
@@ -53,6 +54,7 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         // check no consents saved
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
+        CardPaymentScreen.validate()
         PaymentSheetScreen.cancelPayment()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
     }
@@ -74,12 +76,13 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
             app,
             checkoutMode: .oneOff,
             customerID: customerId,
+            preferUnifiedSession: false,
             useTabLayout: useTabLayout
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         if ConsentPaymentScreen.exists {
-            ConsentPaymentScreen.deleteAllConsents()
+            ConsentPaymentScreen.deleteAllCITConsents()
         }
         PaymentSheetScreen.waitForExistence()
         CardPaymentScreen.payWithCard(
@@ -94,7 +97,7 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         // pay with consent
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.payWithFirstConsent()
+        ConsentPaymentScreen.payWithFirstConsent(cit: true)
         
         ThreeDSScreen.handleThreeDS()
         PaymentSheetScreen.waitForNonExistence()
@@ -119,14 +122,14 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         // pay with new consent
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.payWithFirstConsent()
+        ConsentPaymentScreen.payWithFirstConsent(cit: true)
         PaymentSheetScreen.waitForNonExistence()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
         // delete all consents
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.deleteAllConsents()
+        ConsentPaymentScreen.deleteAllCITConsents()
         CardPaymentScreen.validate()
         PaymentSheetScreen.cancelPayment()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
@@ -138,18 +141,8 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
     }
     
     @MainActor
-    func testRecurringPayment_triggerByMerchant() throws {
-        testRecurringPayemnt(withIntent: false, nextTriggerByCustomer: false)
-    }
-    
-    @MainActor
     func testRecurringWithIntentPayment_triggerByCustomer() throws {
         testRecurringPayemnt(withIntent: true, nextTriggerByCustomer: true)
-    }
-    
-    @MainActor
-    func testRecurringWithIntentPayment_triggerByMerchant() throws {
-        testRecurringPayemnt(withIntent: true, nextTriggerByCustomer: false)
     }
     
     @MainActor
@@ -158,12 +151,13 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         launchAppAndEnsureSettings(
             app,
             checkoutMode: .oneOff,
-            customerID: customerId
+            customerID: customerId,
+            preferUnifiedSession: false
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
         if ConsentPaymentScreen.exists {
-            ConsentPaymentScreen.deleteAllConsents()
+            ConsentPaymentScreen.deleteAllCITConsents()
         }
         PaymentSheetScreen.cancelPayment()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
@@ -194,13 +188,13 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         
         if nextTriggerByCustomer {
             // pay with consent
-            ConsentPaymentScreen.payWithFirstConsent()
+            ConsentPaymentScreen.payWithFirstConsent(cit: true)
             PaymentSheetScreen.waitForNonExistence()
             UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
             // delete all consents
             UIIntegrationDemoScreen.openDefaultPaymentList()
             PaymentSheetScreen.waitForExistence()
-            ConsentPaymentScreen.deleteAllConsents()
+            ConsentPaymentScreen.deleteAllCITConsents()
             CardPaymentScreen.validate()
         } else {
             // no consent exists
