@@ -2,9 +2,10 @@ name: Generate Docs
 on: 
   workflow_dispatch:
     inputs:
-      latestVersion:
+      version:
         description: 'Whats the latest version of the SDK?'
-        required: true
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -26,12 +27,33 @@ jobs:
       uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd #v1.6.0
       with:
         xcode-version: 16.4
+ 
+    - name: Get latest published version
+      id: get-last-published-version
+      if: ${{ github.event.inputs.version == '' }}
+      uses: pozetroninc/github-action-get-latest-release@2a61c339ea7ef0a336d1daa35ef0cb1418e7676c #v0.8.0
+      with:
+        repository: ${{ github.repository }}
+        excludes: prerelease, draft
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Determine version to deploy
+      id: deploy-version
+      run: |
+        if [ -n "${{ github.event.inputs.version }}" ]; then
+          VERSION="${{ github.event.inputs.version }}"
+          echo "Using user input version: $VERSION"
+        else
+          VERSION="${{ steps.get-last-published-version.outputs.release }}"
+          echo "Using latest published version: $VERSION"
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
 
     - name: Generate Docs
       run: |
         .github/scripts/generate-docs.sh
       env:
-        VERSION: ${{ github.event.inputs.latestVersion }}
+        VERSION: ${{ steps.deploy-version.outputs.version }}
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e #v7.0.8
       with:
