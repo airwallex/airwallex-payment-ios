@@ -14,7 +14,7 @@ permissions:
 jobs:
 
   Generate:
-    runs-on: macos-15.5-arm64
+    runs-on: macos-15.5
     steps:
     - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744  # 3.6.0
       with:
