@@ -24,6 +24,7 @@ mkdir -p docs
 mv Airwallex.docc Airwallex/Airwallex/
 
 # Temporarily hide workspace to force Package.swift build
+rm -rf Airwallex.xcworkspace.tmp
 mv Airwallex.xcworkspace Airwallex.xcworkspace.tmp
 
 # Build documentation
