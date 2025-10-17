@@ -54,12 +54,13 @@ jobs:
         .github/scripts/generate-docs.sh
       env:
         VERSION: ${{ steps.deploy-version.outputs.version }}
+
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e #v7.0.8
       with:
         delete-branch: true
         branch: update-docs-github-action
-        commit-message: "chore: updated documentation"
-        title: update documentation
-        body: Regenerate documentation.
+        commit-message: "doc: update reference doc [no ci]"
+        title: "doc: update reference doc"
+        body: "Regenerate reference doc for ${{ steps.deploy-version.outputs.version }}"
         token: ${{ secrets.GITHUB_TOKEN }}
