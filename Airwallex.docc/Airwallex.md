@@ -12,9 +12,7 @@ The Airwallex iOS SDK is a flexible tool that enables you to integrate payment m
 
 ### Preparation
 - ``AWXPaymentIntent``
-- ``AWXOneOffSession``
-- ``AWXRecurringSession``
-- ``AWXRecurringWithIntentSession``
+- ``Session``
 - ``PaymentConsentOptions``
 - ``AWXApplePayOptions``
 - ``AWXAPIClientConfiguration``
