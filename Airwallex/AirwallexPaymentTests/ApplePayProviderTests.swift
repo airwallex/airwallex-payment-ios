@@ -143,7 +143,7 @@ class ApplePayProviderTests: XCTestCase {
         try? provider.startPayment()
         
         // Wait for async operations to complete
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
         // Verify controller was created with the right request
         XCTAssertNotNil(MockPKPaymentAuthorizationController.lastInstance?.lastRequest)
@@ -179,7 +179,7 @@ class ApplePayProviderTests: XCTestCase {
         try? provider.startPayment()
         
         // Wait for async operations to complete
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
         // Verify controller was created but presentation failed
         XCTAssertNotNil(MockPKPaymentAuthorizationController.lastInstance?.lastRequest)
@@ -221,7 +221,7 @@ class ApplePayProviderTests: XCTestCase {
         try? provider.startPayment()
         
         // Wait for async operations
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
         XCTAssertEqual(provider.paymentState, .notStarted)
         
@@ -243,7 +243,7 @@ class ApplePayProviderTests: XCTestCase {
         await provider.paymentAuthorizationControllerDidFinish(controller)
         
         // Wait for async operations
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
         // Verify authorization result
         await MainActor.run {
@@ -278,7 +278,7 @@ class ApplePayProviderTests: XCTestCase {
         try? provider.startPayment()
         
         // Wait for async operations
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
         XCTAssertEqual(provider.paymentState, .notStarted)
         
@@ -300,7 +300,7 @@ class ApplePayProviderTests: XCTestCase {
         await provider.paymentAuthorizationControllerDidFinish(controller)
         
         // Wait for async operations
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
         // Verify authorization result
         await MainActor.run {
@@ -336,7 +336,7 @@ class ApplePayProviderTests: XCTestCase {
         try? provider.startPayment(cancelPaymentOnDismiss: true)
         
         // Wait for async operations
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
         XCTAssertEqual(provider.paymentState, .notStarted)
         
@@ -354,7 +354,7 @@ class ApplePayProviderTests: XCTestCase {
         await provider.paymentAuthorizationControllerDidFinish(controller)
         
         // Wait for async operations
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
         // Verify the state after cancellation
         XCTAssertTrue(controller.dismissCalled)
@@ -389,7 +389,7 @@ class ApplePayProviderTests: XCTestCase {
         try? provider.startPayment()
         
         // Wait for async operations
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
         XCTAssertEqual(provider.paymentState, .notStarted)
         

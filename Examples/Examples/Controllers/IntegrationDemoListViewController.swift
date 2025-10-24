@@ -217,8 +217,7 @@ private extension IntegrationDemoListViewController {
                         view.isHidden = false
                     case .recurring, .recurringWithIntent:
                         view.isHidden = (
-                            title == DemoDataSource.titleForPayAndSaveCard ||
-                            title == DemoDataSource.titleForPayByRedirect
+                            title == DemoDataSource.titleForPayAndSaveCard
                         )
                         if title == DemoDataSource.titleForPayWithApplePay {
                             view.isHidden = (ExamplesKeys.nextTriggerByType == .customerType)

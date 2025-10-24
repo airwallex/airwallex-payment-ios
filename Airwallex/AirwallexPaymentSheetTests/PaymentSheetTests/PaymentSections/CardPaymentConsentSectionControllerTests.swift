@@ -45,7 +45,7 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
         }
         XCTAssertEqual(mockManager.sections, [.cardPaymentConsent])
         XCTAssertEqual(sectionController.section, PaymentSectionType.cardPaymentConsent)
-        XCTAssert(sectionController.items.contains(firstConsentId))
+        XCTAssert(sectionController.items.contains(CardPaymentConsentSectionController.Items.selectedConsent))
         XCTAssertEqual(sectionController.mode, CardPaymentConsentSectionController.Mode.consentPayment)
     }
     
@@ -101,7 +101,7 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
         mockViewController.view.layoutIfNeeded()
         XCTAssertEqual(sectionController.mode, CardPaymentConsentSectionController.Mode.consentPayment)
         
-        guard let cell = sectionController.context.cellForItem(firstConsentId) as? CardSelectedConsentCell else {
+        guard let cell = sectionController.context.cellForItem(CardPaymentConsentSectionController.Items.selectedConsent) as? CardSelectedConsentCell else {
             XCTFail()
             return
         }

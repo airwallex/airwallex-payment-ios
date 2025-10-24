@@ -12,7 +12,13 @@ enum ApplePaymentSheet {
     static let applePaySheet = XCUIApplication(bundleIdentifier: "com.apple.PassbookUIService")
     static let cardButton = applePaySheet.buttons.containing(NSPredicate(format: "label CONTAINS 'Simulated Card - '")).firstMatch
     static let payButton = applePaySheet.buttons["Pay with Passcode"]
-    static let cancelButton = applePaySheet.buttons["close"]
+    static var cancelButton: XCUIElement {
+        if #available(iOS 26.0, *) {
+            return applePaySheet.buttons["dismiss"]
+        } else {
+            return applePaySheet.buttons["close"]
+        }
+    }
     
     static func waitForExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
         XCTAssertTrue(cancelButton.waitForExistence(timeout: timeout))
@@ -25,8 +31,10 @@ enum ApplePaymentSheet {
     }
     
     static func cancelPayment() {
-        cancelButton.robustTap()
-        waitForNonExistence(.animationTimeout)
+        //  cancelButton.robustTap()
+        //  not sure why but robust tap not working for this cancel button
+        cancelButton.tap()
+        waitForNonExistence()
     }
     
     static func confirmPayment() {
