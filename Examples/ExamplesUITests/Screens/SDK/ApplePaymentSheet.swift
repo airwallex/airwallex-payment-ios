@@ -31,7 +31,9 @@ enum ApplePaymentSheet {
     }
     
     static func cancelPayment() {
-        cancelButton.robustTap()
+        //  cancelButton.robustTap()
+        //  not sure why but robust tap not working for this cancel button
+        cancelButton.tap()
         waitForNonExistence()
     }
     
