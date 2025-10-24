@@ -25,6 +25,8 @@ class CardPaymentConsentSectionController: SectionController {
         static let checkoutButton: String = "checkoutButton"
         /// cvc field if required for payment mode
         static let cvcField: String = "cvcField"
+        /// selected consent
+        static let selectedConsent: String = "consent-selected"
     }
     
     enum Mode {
@@ -112,7 +114,7 @@ class CardPaymentConsentSectionController: SectionController {
         
         if let selectedConsent {
             // payment mode
-            items.append(selectedConsent.id)
+            items.append(Items.selectedConsent)
             if selectedConsent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
                 items.append(Items.cvcField)
             }
@@ -164,66 +166,27 @@ class CardPaymentConsentSectionController: SectionController {
                 cell.setup(cvcConfigurer)
             }
             return cell
+        case Items.selectedConsent:
+            let cell = context.dequeueReusableCell(CardSelectedConsentCell.self, for: itemIdentifier, indexPath: indexPath)
+            if let consentID = selectedConsent?.id,
+               let viewModel = viewModelForConsent(consentID: consentID) {
+                cell.setup(viewModel)
+            }
+            cell.accessibilityIdentifier = "consentSelected"
+            return cell
         default:
-            
-            guard let consent = selectedConsent ?? consents.first(where: { $0.id == itemIdentifier }),
-                  let card = consent.paymentMethod?.card,
-                  let brand = card.brand else {
-                assert(false, "invalid card consent")
-                return UICollectionViewCell()
+            // consent list
+            let cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
+            if let viewModel = viewModelForConsent(consentID: itemIdentifier) {
+                cell.setup(viewModel)
             }
-            
-            var image: UIImage? = nil
-            if let cardBrand = AWXCardValidator.shared().brand(forCardName: brand) {
-                image = UIImage.image(for: cardBrand.type)
-            }
-                        
-            var viewModel: CardConsentCellViewModel
-            var cell: CardConsentCell
-            if selectedConsent != nil {
-                cell = context.dequeueReusableCell(CardSelectedConsentCell.self, for: itemIdentifier, indexPath: indexPath)
-                viewModel = CardConsentCellViewModel(
-                    image: image,
-                    text: "\(brand.capitalized) •••• \(card.last4 ?? "")",
-                    highlightable: false,
-                    actionTitle: NSLocalizedString("Change", bundle: .paymentSheet, comment: "consent section - unselect consent and go back to consent list"),
-                    actionIcon: nil,
-                    buttonAction: { [weak self] in
-                        guard let self else { return }
-                        self.selectedConsent = nil
-                        self.cvcConfigurer = nil
-                        self.context.performUpdates(section, forceReload: true, animatingDifferences: false)
-                    }
-                )
-                cell.accessibilityIdentifier = "consentSelected"
-            } else {
-                cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
-                let consentTitle = "\(brand.capitalized) •••• \(card.last4 ?? "")"
-                let actionIconColor: UIColor = consent.isCITConsent ? .awxColor(.iconLink) : .awxColor(.iconDisabled)
-                viewModel = CardConsentCellViewModel(
-                    image: image,
-                    text: consentTitle,
-                    highlightable: true,
-                    actionTitle: nil,
-                    actionIcon: UIImage(systemName: "ellipsis")?
-                        .rotate(degrees: 90)?
-                        .withTintColor(actionIconColor, renderingMode: .alwaysOriginal),
-                    buttonAction: { [weak self] in
-                        if consent.isCITConsent {
-                            self?.showAlertForDeleteCITConsent(consent, consentDescription: consentTitle)
-                        } else {
-                            self?.showAlertForDeleteMITConsent(consent)
-                        }
-                    }
-                )
-                let consentIndex = consents.firstIndex { $0.id == itemIdentifier } ?? 0
+            if let consent = consents.first(where: { $0.id == itemIdentifier}) {
                 if consent.isCITConsent {
                     cell.accessibilityIdentifier = "consentListed-cit"
                 } else {
                     cell.accessibilityIdentifier = "consentListed-mit"
                 }
             }
-            cell.setup(viewModel)
             return cell
         }
     }
@@ -369,6 +332,54 @@ class CardPaymentConsentSectionController: SectionController {
             }
         )
         return viewModel
+    }
+    
+    private func viewModelForConsent(consentID: String) -> CardConsentCellViewModel? {
+        guard let consent = consents.first(where: { $0.id == consentID }),
+              let card = consent.paymentMethod?.card,
+              let brand = card.brand else {
+            return nil
+        }
+        
+        var image: UIImage? = nil
+        if let cardBrand = AWXCardValidator.shared().brand(forCardName: brand) {
+            image = UIImage.image(for: cardBrand.type)
+        }
+        
+        let consentTitle = "\(brand.capitalized) •••• \(card.last4 ?? "")"
+        if selectedConsent?.id == consentID {
+            return CardConsentCellViewModel(
+                image: image,
+                text: consentTitle,
+                highlightable: false,
+                actionTitle: NSLocalizedString("Change", bundle: .paymentSheet, comment: "consent section - unselect consent and go back to consent list"),
+                actionIcon: nil,
+                buttonAction: { [weak self] in
+                    guard let self else { return }
+                    self.selectedConsent = nil
+                    self.cvcConfigurer = nil
+                    self.context.performUpdates(section, forceReload: true, animatingDifferences: false)
+                }
+            )
+        } else {
+            let actionIconColor: UIColor = consent.isCITConsent ? .awxColor(.iconLink) : .awxColor(.iconDisabled)
+            return CardConsentCellViewModel(
+                image: image,
+                text: consentTitle,
+                highlightable: true,
+                actionTitle: nil,
+                actionIcon: UIImage(systemName: "ellipsis")?
+                    .rotate(degrees: 90)?
+                    .withTintColor(actionIconColor, renderingMode: .alwaysOriginal),
+                buttonAction: { [weak self] in
+                    if consent.isCITConsent {
+                        self?.showAlertForDeleteCITConsent(consent, consentDescription: consentTitle)
+                    } else {
+                        self?.showAlertForDeleteMITConsent(consent)
+                    }
+                }
+            )
+        }
     }
 }
  

@@ -313,4 +313,97 @@ import XCTest
         XCTAssertTrue(mockProvider.sectionControllerA.sectionDisplaying)
         XCTAssertTrue(mockProvider.sectionControllerB.sectionDisplaying)
     }
+    
+    func testCellReconfigurePerformUpdate() throws {
+        guard #available(iOS 26.0, *) else {
+            throw XCTSkip("This test requires iOS 26.0 or later")
+        }
+
+        // Start with status A
+        mockProvider.status = .AB
+        mockProvider.sectionControllerA.items = [.A1]
+        mockProvider.sectionControllerB.items = [.B1]
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+        
+        XCTAssertEqual(mockManager.sections, [.A, .B])
+        
+        // Reset lifecycle tracking properties for Section A and Section B
+        mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
+        mockProvider.sectionControllerB.cellForItemAtIndexPathCalled = nil
+        
+        // Perform updates
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+        
+        // verify cell was reconfigured
+        XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
+        if let (item, _) = mockProvider.sectionControllerA.cellForItemAtIndexPathCalled {
+            XCTAssertEqual(item, .A1)
+        }
+        if let (item, _) = mockProvider.sectionControllerB.cellForItemAtIndexPathCalled {
+            XCTAssertEqual(item, .B1)
+        }
+        
+        // reset status
+        mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
+        mockProvider.sectionControllerB.cellForItemAtIndexPathCalled = nil
+        
+        // Perform updates with items moved
+        mockProvider.sectionControllerA.items = [.B1]
+        mockProvider.sectionControllerB.items = [.A1]
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+        
+        // verify cell was reconfigured
+        XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
+        XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
+        if let (item, _) = mockProvider.sectionControllerA.cellForItemAtIndexPathCalled {
+            XCTAssertEqual(item, .B1)
+        }
+        if let (item, _) = mockProvider.sectionControllerB.cellForItemAtIndexPathCalled {
+            XCTAssertEqual(item, .A1)
+        }
+    }
+    
+    func testCellReconfigureForSectionUpdate() throws {
+        guard #available(iOS 26.0, *) else {
+            throw XCTSkip("This test requires iOS 26.0 or later")
+        }
+
+        // Start with status A
+        mockProvider.status = .A
+        mockProvider.sectionControllerA.items = [.A1]
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+        
+        XCTAssertEqual(mockManager.sections, [.A])
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
+        
+        // Reset lifecycle tracking properties for Section A and Section B
+        mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
+        
+        // Perform updates
+        mockManager.performUpdates(section: .A)
+        mockManager.collectionView.layoutIfNeeded()
+        
+        // verify cell was reconfigured
+        XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
+        if let (item, _) = mockProvider.sectionControllerA.cellForItemAtIndexPathCalled {
+            XCTAssertEqual(item, .A1)
+        }
+            
+        // reset status
+        mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
+        
+        // Perform updates with force reload
+        mockManager.performUpdates(section: .A, forceReload: true)
+        mockManager.collectionView.layoutIfNeeded()
+        
+        // verify cell was reconfigured
+        XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
+        if let (item, _) = mockProvider.sectionControllerA.cellForItemAtIndexPathCalled {
+            XCTAssertEqual(item, .A1)
+        }
+    }
 }
