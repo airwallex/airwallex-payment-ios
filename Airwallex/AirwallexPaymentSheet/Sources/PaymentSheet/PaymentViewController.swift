@@ -120,6 +120,7 @@ class PaymentViewController: AWXViewController {
         collectionView.keyboardDismissMode = .interactive
         collectionView.backgroundColor = .awxColor(.backgroundPrimary)
         collectionView.refreshControl = refreshControl
+        collectionView.contentInsetAdjustmentBehavior = .always
         
         view.addSubview(collectionView)
         let constraints = [
