@@ -253,6 +253,7 @@
 		D88045932DA7B663008308C7 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D42D9E335D00D082EC /* MockProviderDelegate.swift */; };
 		D88045942DA7B6C5008308C7 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D12D9E335D00D082EC /* Bundle+Extensions.swift */; };
 		D88045952DA7B742008308C7 /* AirwallexCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* AirwallexCore.framework */; };
+		D895DD7E2EBC42B600E29F08 /* PaymentIntentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D895DD7D2EBC42B600E29F08 /* PaymentIntentProvider.swift */; };
 		D8A599B52DAF9DF20045BFEC /* AWXShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8A599B42DAF9DF20045BFEC /* AWXShippingViewController.m */; };
 		D8A599B62DAF9DF20045BFEC /* AWXShippingViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D8A599B32DAF9DF20045BFEC /* AWXShippingViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8AD269A2D6862E5002DD3FD /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
@@ -635,6 +636,7 @@
 		D85041FA2DA79D490074BA7F /* AirwallexWeChatPay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexWeChatPay.h; sourceTree = "<group>"; };
 		D87FFFD52E70304F0008784D /* TermsOfUse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUse.swift; sourceTree = "<group>"; };
 		D88E34B82DA7E93100183A49 /* Airwallex_Export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airwallex_Export.swift; sourceTree = "<group>"; };
+		D895DD7D2EBC42B600E29F08 /* PaymentIntentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentIntentProvider.swift; sourceTree = "<group>"; };
 		D8A599B32DAF9DF20045BFEC /* AWXShippingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXShippingViewController.h; sourceTree = "<group>"; };
 		D8A599B42DAF9DF20045BFEC /* AWXShippingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXShippingViewController.m; sourceTree = "<group>"; };
 		D8ADC8E72DCA0982008E9AF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1366,6 +1368,7 @@
 				D8D36E652E5C5CAC005618D4 /* PaymentConsentOptions.swift */,
 				D87FFFD52E70304F0008784D /* TermsOfUse.swift */,
 				D8D36E662E5C5CAC005618D4 /* Session.swift */,
+				D895DD7D2EBC42B600E29F08 /* PaymentIntentProvider.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2375,6 +2378,7 @@
 				D8D36E852E5C5CAC005618D4 /* ApplePayProvider.swift in Sources */,
 				D8D36E862E5C5CAC005618D4 /* CardProvider.swift in Sources */,
 				D8D36E872E5C5CAC005618D4 /* ErrorMessage.swift in Sources */,
+				D895DD7E2EBC42B600E29F08 /* PaymentIntentProvider.swift in Sources */,
 				D8D36E882E5C5CAC005618D4 /* Events.swift in Sources */,
 				D8D36E892E5C5CAC005618D4 /* PaymentSessionHandler.swift in Sources */,
 			);

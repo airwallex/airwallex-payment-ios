@@ -47,7 +47,9 @@ public extension AWXSession {
         }
     }
     
-    func validate() throws {
+    /// Payment intent required for UI integration and optional for API integration ()
+    /// - Parameter paymentIntentRequired: <#paymentIntentRequired description#>
+    func validate(paymentIntentRequired: Bool = false) throws {
         if !(self is AWXOneOffSession || self is AWXRecurringSession || self is AWXRecurringWithIntentSession || self is Session) {
             throw ValidationError.invalidSessionType(
                 "Invalid session type: \(type(of: self))"
@@ -71,9 +73,9 @@ public extension AWXSession {
         }
         
         if let session = self as? AWXOneOffSession {
-            try validate(paymentIntent: session.paymentIntent)
+            try validate(paymentIntent: session.paymentIntent, required: true)
         } else if let session = self as? AWXRecurringWithIntentSession {
-            try validate(paymentIntent: session.paymentIntent)
+            try validate(paymentIntent: session.paymentIntent, required: true)
             guard let customerId = session.customerId(), !customerId.isEmpty else {
                 throw ValidationError.invalidCustomerId(
                     "Customer ID required"
@@ -86,7 +88,12 @@ public extension AWXSession {
                 )
             }
         } else if let session = self as? Session {
-            try validate(paymentIntent: session.paymentIntent)
+            guard session.paymentIntent != nil || session.paymentIntentProvider != nil else {
+                throw ValidationError.invalidPaymentIntent(
+                    "Payment intent or intent provider should exist"
+                )
+            }
+            try validate(paymentIntent: session.paymentIntent, required: paymentIntentRequired)
             if let options = session.paymentConsentOptions {
                 guard let customerId = session.customerId(), !customerId.isEmpty else {
                     throw ValidationError.invalidCustomerId(
@@ -95,7 +102,7 @@ public extension AWXSession {
                 }
                 try options.validate()
             } else {
-                guard session.paymentIntent.amount.doubleValue > 0 else {
+                guard session.amount().doubleValue > 0 else {
                     throw ValidationError.invalidAmount(
                         "Amount should greater than 0 for one-off payment"
                     )
@@ -104,12 +111,17 @@ public extension AWXSession {
         }
     }
     
-    private func validate(paymentIntent: AWXPaymentIntent?) throws {
+    private func validate(paymentIntent: AWXPaymentIntent?, required: Bool) throws {
         guard let paymentIntent else {
-            throw ValidationError.invalidPaymentIntent(
-                "Payment intent required"
-            )
+            if required {
+                throw ValidationError.invalidPaymentIntent(
+                    "Payment intent required"
+                )
+            } else {
+                return
+            }
         }
+        
         guard !paymentIntent.id.isEmpty else {
             throw ValidationError.invalidPaymentIntent(
                 "Intent id required"

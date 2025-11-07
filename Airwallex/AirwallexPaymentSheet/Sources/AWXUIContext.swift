@@ -270,7 +270,8 @@ private extension AWXUIContext {
                                          launchStyle: LaunchStyle,
                                          layout: PaymentLayout = .tab) {
         do {
-            try session.validate()
+            // payment intent is required for UI integration
+            try session.validate(paymentIntentRequired: true)
         } catch {
             handleLaunchFailure(
                 paymentResultDelegate,

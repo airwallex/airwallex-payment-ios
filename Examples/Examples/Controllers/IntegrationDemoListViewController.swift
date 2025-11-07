@@ -265,6 +265,27 @@ private extension IntegrationDemoListViewController {
     }
 }
 
+extension IntegrationDemoListViewController: PaymentIntentProvider {
+    func createPaymentIntent(customerID: String?, currency: String, amount: NSDecimalNumber) async throws -> AWXPaymentIntent {
+        try await Airwallex.apiClient.createPaymentIntent(
+            amount: amount.decimalValue
+        )
+    }
+    
+    var currency: String {
+        ExamplesKeys.currency
+    }
+    
+    var amount: NSDecimalNumber {
+        let amount = ExamplesKeys.checkoutMode == .recurring ? 0 : (Decimal(string: ExamplesKeys.amount) ?? 0)
+        return NSDecimalNumber(decimal: amount)
+    }
+    
+    var customerId: String? {
+        ExamplesKeys.customerId
+    }
+}
+
 //  MARK:  UI Integration actions
 private extension IntegrationDemoListViewController {
     
@@ -538,17 +559,20 @@ private extension IntegrationDemoListViewController {
     
     func createPaymentSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
         if ExamplesKeys.preferUnifiedSession {
-            return try await createUnifiedSession(force3DS: force3DS)
+            if ExamplesKeys.expressCheckout && integrationType == .API {
+                return try await createUnifiedSessionWithProvider(force3DS: force3DS)
+            } else {
+                return try await createUnifiedSessionWithIntent(force3DS: force3DS)
+            }
         } else {
             return try await createLegacySession(force3DS: force3DS)
         }
     }
     
-    func createUnifiedSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
+    func createUnifiedSessionWithIntent(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
         // Create payment intent
-        let amount = ExamplesKeys.checkoutMode == .recurring ? 0 : (Decimal(string: ExamplesKeys.amount) ?? 0)
         let paymentIntent = try await Airwallex.apiClient.createPaymentIntent(
-            amount: amount,
+            amount: amount.decimalValue,
             force3DS: force3DS
         )
         // Update client secret
@@ -562,6 +586,29 @@ private extension IntegrationDemoListViewController {
         }
         let session = Session(
             paymentIntent: paymentIntent,
+            countryCode: ExamplesKeys.countryCode,
+            applePayOptions: DemoDataSource.applePayOptions,
+            autoCapture: ExamplesKeys.autoCapture,
+            billing: shippingAddress,
+            paymentConsentOptions: (ExamplesKeys.checkoutMode == .oneOff) ? nil : PaymentConsentOptions(
+                nextTriggeredBy: ExamplesKeys.nextTriggerByType,
+                merchantTriggerReason: merchantTriggerReason
+            ),
+            requiredBillingContactFields: getRequiredBillingContactFields(),
+            returnURL: ExamplesKeys.returnUrl
+        )
+        return session
+    }
+    
+    func createUnifiedSessionWithProvider(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
+        // Merchant trigger reason
+        let merchantTriggerReason: AirwallexMerchantTriggerReason = if ExamplesKeys.nextTriggerByType == .customerType {
+            .undefined
+        } else {
+            .unscheduled
+        }
+        let session = Session(
+            paymentIntentProvider: self,
             countryCode: ExamplesKeys.countryCode,
             applePayOptions: DemoDataSource.applePayOptions,
             autoCapture: ExamplesKeys.autoCapture,
