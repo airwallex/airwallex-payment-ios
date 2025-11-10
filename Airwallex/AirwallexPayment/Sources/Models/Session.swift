@@ -171,13 +171,17 @@ import Foundation
     /// Returns the currency code for the current payment.
     /// - Returns: The three-letter currency code as a String.
     @objc public override func currency() -> String {
-        paymentIntent?.currency ?? paymentIntentProvider?.currency ?? ""
+        let currency = paymentIntent?.currency ?? paymentIntentProvider?.currency ?? ""
+        assert(Locale.isoCurrencyCodes.contains(currency))
+        return currency
     }
     
     /// Returns the payment amount.
     /// - Returns: The payment amount as an NSDecimalNumber.
     @objc public override func amount() -> NSDecimalNumber {
-        paymentIntent?.amount ?? paymentIntentProvider?.amount ?? NSDecimalNumber.zero
+        let amount = paymentIntent?.amount ?? paymentIntentProvider?.amount
+        assert(amount != nil)
+        return amount ?? .zero
     }
     
     /// Returns the payment intent ID.
@@ -221,10 +225,12 @@ import Foundation
 
         // Create intent from provider
         let intent = try await provider.createPaymentIntent()
-
-        assert(intent.customerId == provider.customerId)
-        assert(intent.currency == provider.currency)
-        assert(intent.amount == provider.amount)
+        
+        guard intent.customerId == provider.customerId,
+              intent.currency == provider.currency,
+              intent.amount == provider.amount else {
+            throw "payment intent info not matched".asError()
+        }
         
         // Cache the created intent
         paymentIntent = intent

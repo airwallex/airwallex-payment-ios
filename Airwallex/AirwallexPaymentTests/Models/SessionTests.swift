@@ -8,7 +8,9 @@
 //
 
 import XCTest
-@testable import AirwallexPayment
+#if canImport(AirwallexPayment)
+@testable @_spi(AWX) import AirwallexPayment
+#endif
 import AirwallexCore
 
 final class SessionTests: XCTestCase {
@@ -97,8 +99,84 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(session.paymentMethods, mockPaymentMethods)
     }
     
+    // MARK: - PaymentIntentProvider Initialization Tests
+
+    func testInit_withPaymentIntentProvider_defaultParameters() {
+        // Create a mock payment intent provider
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        // Verify properties set from initializer
+        XCTAssertNil(session.paymentIntent)
+        XCTAssertNotNil(session.paymentIntentProvider)
+        XCTAssertNil(session.paymentConsentOptions)
+        XCTAssertTrue(session.autoCapture)
+        XCTAssertTrue(session.autoSaveCardForFuturePayments)
+        XCTAssertEqual(session.countryCode, mockCountryCode)
+        XCTAssertEqual(session.returnURL, mockReturnURL)
+        XCTAssertFalse(session.hidePaymentConsents)
+        XCTAssertEqual(session.lang, Locale.current.languageCode ?? "en")
+        XCTAssertEqual(session.requiredBillingContactFields, .name)
+        XCTAssertNil(session.billing)
+        XCTAssertNil(session.applePayOptions)
+        XCTAssertNil(session.paymentMethods)
+    }
+
+    func testInit_withPaymentIntentProvider_customParameters() {
+        // Create a mock payment intent provider
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
+        let applePayOptions = AWXApplePayOptions()
+        let billing = AWXPlaceDetails()
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            applePayOptions: applePayOptions,
+            autoCapture: false,
+            autoSaveCardForFuturePayments: false,
+            billing: billing,
+            hidePaymentConsents: true,
+            lang: "zh-Hans",
+            paymentMethods: mockPaymentMethods,
+            paymentConsentOptions: consentOptions,
+            requiredBillingContactFields: mockBillingContactFields,
+            returnURL: mockReturnURL
+        )
+
+        // Verify properties set from initializer
+        XCTAssertNil(session.paymentIntent)
+        XCTAssertNotNil(session.paymentIntentProvider)
+        XCTAssertEqual(session.paymentConsentOptions?.nextTriggeredBy, consentOptions.nextTriggeredBy)
+        XCTAssertEqual(session.paymentConsentOptions?.merchantTriggerReason, consentOptions.merchantTriggerReason)
+        XCTAssertFalse(session.autoCapture)
+        XCTAssertFalse(session.autoSaveCardForFuturePayments)
+        XCTAssertEqual(session.countryCode, mockCountryCode)
+        XCTAssertEqual(session.returnURL, mockReturnURL)
+        XCTAssertTrue(session.hidePaymentConsents)
+        XCTAssertEqual(session.lang, "zh-Hans")
+        XCTAssertEqual(session.requiredBillingContactFields, mockBillingContactFields)
+        XCTAssertEqual(session.billing, billing)
+        XCTAssertEqual(session.applePayOptions, applePayOptions)
+        XCTAssertEqual(session.paymentMethods, mockPaymentMethods)
+    }
+
     // MARK: - Overridden Methods Tests
-    
+
     func testCustomerId() {
         let session = Session(
             paymentIntent: mockPaymentIntent,
@@ -161,10 +239,188 @@ final class SessionTests: XCTestCase {
             paymentConsentOptions: consentOptions,
             returnURL: mockReturnURL
         )
-        
+
         XCTAssertEqual(session.transactionMode(), AWXPaymentTransactionModeRecurring)
     }
-    
+
+    func testCustomerId_withProvider() {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        XCTAssertEqual(session.customerId(), mockCustomerId)
+
+        // Test with nil customerId
+        let providerWithoutCustomer = MockPaymentIntentProvider(
+            customerId: nil,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let sessionWithoutCustomer = Session(
+            paymentIntentProvider: providerWithoutCustomer,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        XCTAssertNil(sessionWithoutCustomer.customerId())
+    }
+
+    func testCurrency_withProvider() {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "USD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        XCTAssertEqual(session.currency(), "USD")
+    }
+
+    func testAmount_withProvider() {
+        let expectedAmount = NSDecimalNumber(value: 250.50)
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: expectedAmount
+        )
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        XCTAssertEqual(session.amount(), expectedAmount)
+    }
+
+    func testPaymentIntentId_withProvider() {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        // Should return nil before payment intent is created
+        XCTAssertNil(session.paymentIntentId())
+    }
+
+    func testTransactionMode_withProvider_oneOff() {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        XCTAssertEqual(session.transactionMode(), AWXPaymentTransactionModeOneOff)
+    }
+
+    func testTransactionMode_withProvider_recurring() {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType)
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            paymentConsentOptions: consentOptions,
+            returnURL: mockReturnURL
+        )
+
+        XCTAssertEqual(session.transactionMode(), AWXPaymentTransactionModeRecurring)
+    }
+
+    // MARK: - EnsurePaymentIntent Tests
+
+    func testEnsurePaymentIntent_withExistingIntent() async throws {
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        // Should return existing intent without creating a new one
+        let intent = try await session.ensurePaymentIntent()
+        XCTAssertEqual(intent, mockPaymentIntent)
+        XCTAssertEqual(intent.id, mockIntentId)
+    }
+
+    func testEnsurePaymentIntent_withProvider() async throws {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        // Verify no intent exists initially
+        XCTAssertNil(session.paymentIntent)
+
+        // Ensure payment intent - should create one from provider
+        let intent = try await session.ensurePaymentIntent()
+        XCTAssertNotNil(intent)
+        XCTAssertEqual(intent.customerId, mockCustomerId)
+        XCTAssertEqual(intent.currency, "AUD")
+        XCTAssertEqual(intent.amount, NSDecimalNumber(value: 100))
+
+        // Verify the intent is cached
+        XCTAssertEqual(session.paymentIntent, intent)
+
+        // Second call should return cached intent
+        let cachedIntent = try await session.ensurePaymentIntent()
+        XCTAssertEqual(cachedIntent, intent)
+    }
+
+    func testEnsurePaymentIntent_providerThrowsError() async {
+        let provider = MockPaymentIntentProviderWithError()
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        do {
+            _ = try await session.ensurePaymentIntent()
+            XCTFail("Should throw error when provider fails")
+        } catch {
+            XCTAssertNotNil(error)
+        }
+    }
+
     // MARK: - Convenience Init Tests
     
     func testConvenienceInit_fromSameType() {
@@ -188,7 +444,7 @@ final class SessionTests: XCTestCase {
             returnURL: mockReturnURL
         )
         
-        let newSession = Session(originalSession)
+        let newSession = Session.convertFromLegacySession(originalSession)
         XCTAssertNotNil(newSession)
         
         // Verify all 12 properties are copied correctly
@@ -236,7 +492,7 @@ final class SessionTests: XCTestCase {
         oneOffSession.paymentMethods = mockPaymentMethods
         oneOffSession.requiredBillingContactFields = mockBillingContactFields
         
-        let session = Session(oneOffSession)
+        let session = Session.convertFromLegacySession(oneOffSession)
         XCTAssertNotNil(session)
         
         // Verify properties specific to AWXOneOffSession
@@ -274,7 +530,7 @@ final class SessionTests: XCTestCase {
         recurringSession.paymentMethods = mockPaymentMethods
         recurringSession.requiredBillingContactFields = mockBillingContactFields
         
-        let session = Session(recurringSession)
+        let session = Session.convertFromLegacySession(recurringSession)
         XCTAssertNotNil(session)
         
         // Verify properties specific to AWXRecurringWithIntentSession
@@ -302,7 +558,7 @@ final class SessionTests: XCTestCase {
         baseSession.countryCode = mockCountryCode
         baseSession.returnURL = mockReturnURL
         
-        let session = Session(baseSession)
+        let session = Session.convertFromLegacySession(baseSession)
         XCTAssertNil(session, "Should return nil for unsupported session types")
     }
     
@@ -313,7 +569,7 @@ final class SessionTests: XCTestCase {
         
         // Test with nil payment intent
         oneOffSession.paymentIntent = nil
-        XCTAssertNil(Session(oneOffSession), "Should return nil when payment intent is nil")
+        XCTAssertNil(Session.convertFromLegacySession(oneOffSession), "Should return nil when payment intent is nil")
         
         // Test with empty currency
         let emptyIntent = AWXPaymentIntent()
@@ -321,12 +577,12 @@ final class SessionTests: XCTestCase {
         emptyIntent.clientSecret = mockClientSecret
         emptyIntent.currency = ""
         oneOffSession.paymentIntent = emptyIntent
-        XCTAssertNil(Session(oneOffSession), "Should return nil when currency is empty")
+        XCTAssertNil(Session.convertFromLegacySession(oneOffSession), "Should return nil when currency is empty")
     }
     
     // MARK: - Convert to Legacy Session Tests
     
-    func testConvertToLegacySession_oneOff() {
+    func testConvertToLegacySession_oneOff() async throws {
         let session = Session(
             paymentIntent: mockPaymentIntent,
             countryCode: mockCountryCode,
@@ -335,7 +591,7 @@ final class SessionTests: XCTestCase {
             returnURL: mockReturnURL
         )
         
-        let legacySession = session.convertToLegacySession()
+        let legacySession = try await session.convertToLegacySession()
         XCTAssertTrue(legacySession is AWXOneOffSession)
         
         let oneOffSession = legacySession as! AWXOneOffSession
@@ -346,7 +602,7 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(oneOffSession.autoSaveCardForFuturePayments, session.autoSaveCardForFuturePayments)
     }
     
-    func testConvertToLegacySession_recurringWithIntent() {
+    func testConvertToLegacySession_recurringWithIntent() async throws {
         let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
         let session = Session(
             paymentIntent: mockPaymentIntent,
@@ -356,7 +612,7 @@ final class SessionTests: XCTestCase {
             returnURL: mockReturnURL
         )
         
-        let legacySession = session.convertToLegacySession()
+        let legacySession = try await session.convertToLegacySession()
         XCTAssertTrue(legacySession is AWXRecurringWithIntentSession)
         
         let recurringSession = legacySession as! AWXRecurringWithIntentSession
@@ -368,7 +624,7 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(recurringSession.merchantTriggerReason, consentOptions.merchantTriggerReason ?? .undefined)
     }
     
-    func testConvertToLegacySession_recurringZeroAmount() {
+    func testConvertToLegacySession_recurringZeroAmount() async throws {
         // Create a zero-amount payment intent
         let zeroAmountIntent = AWXPaymentIntent()
         zeroAmountIntent.customerId = mockCustomerId
@@ -385,7 +641,7 @@ final class SessionTests: XCTestCase {
             returnURL: mockReturnURL
         )
         
-        let legacySession = session.convertToLegacySession()
+        let legacySession = try await session.convertToLegacySession()
         XCTAssertTrue(legacySession is AWXRecurringSession)
         
         let recurringSession = legacySession as! AWXRecurringSession
@@ -398,9 +654,105 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(recurringSession.merchantTriggerReason, consentOptions.merchantTriggerReason ?? .undefined)
     }
     
+    // MARK: - Convert to Legacy Session with Provider Tests
+
+    func testConvertToLegacySession_withProvider_oneOff() async throws {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            autoCapture: false,
+            autoSaveCardForFuturePayments: false,
+            returnURL: mockReturnURL
+        )
+
+        let legacySession = try await session.convertToLegacySession()
+        XCTAssertTrue(legacySession is AWXOneOffSession)
+
+        let oneOffSession = legacySession as! AWXOneOffSession
+        XCTAssertEqual(oneOffSession.countryCode, session.countryCode)
+        XCTAssertNotNil(oneOffSession.paymentIntent)
+        XCTAssertEqual(oneOffSession.paymentIntent?.customerId, mockCustomerId)
+        XCTAssertEqual(oneOffSession.returnURL, session.returnURL)
+        XCTAssertEqual(oneOffSession.autoCapture, session.autoCapture)
+        XCTAssertEqual(oneOffSession.autoSaveCardForFuturePayments, session.autoSaveCardForFuturePayments)
+
+        // Verify payment intent was created and cached
+        XCTAssertNotNil(session.paymentIntent)
+        XCTAssertEqual(session.paymentIntent?.customerId, mockCustomerId)
+    }
+
+    func testConvertToLegacySession_withProvider_recurringWithIntent() async throws {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            autoCapture: false,
+            paymentConsentOptions: consentOptions,
+            returnURL: mockReturnURL
+        )
+
+        let legacySession = try await session.convertToLegacySession()
+        XCTAssertTrue(legacySession is AWXRecurringWithIntentSession)
+
+        let recurringSession = legacySession as! AWXRecurringWithIntentSession
+        XCTAssertEqual(recurringSession.countryCode, session.countryCode)
+        XCTAssertNotNil(recurringSession.paymentIntent)
+        XCTAssertEqual(recurringSession.paymentIntent?.customerId, mockCustomerId)
+        XCTAssertEqual(recurringSession.returnURL, session.returnURL)
+        XCTAssertEqual(recurringSession.autoCapture, session.autoCapture)
+        XCTAssertEqual(recurringSession.nextTriggerByType, consentOptions.nextTriggeredBy)
+        XCTAssertEqual(recurringSession.merchantTriggerReason, consentOptions.merchantTriggerReason ?? .undefined)
+
+        // Verify payment intent was created and cached
+        XCTAssertNotNil(session.paymentIntent)
+    }
+
+    func testConvertToLegacySession_withProvider_recurringZeroAmount() async throws {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber.zero
+        )
+
+        let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType, merchantTriggerReason: .scheduled)
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: mockCountryCode,
+            paymentConsentOptions: consentOptions,
+            returnURL: mockReturnURL
+        )
+
+        let legacySession = try await session.convertToLegacySession()
+        XCTAssertTrue(legacySession is AWXRecurringSession)
+
+        let recurringSession = legacySession as! AWXRecurringSession
+        XCTAssertEqual(recurringSession.countryCode, session.countryCode)
+        XCTAssertEqual(recurringSession.returnURL, session.returnURL)
+        XCTAssertEqual(recurringSession.currency(), "AUD")
+        XCTAssertEqual(recurringSession.amount(), NSDecimalNumber.zero)
+        XCTAssertEqual(recurringSession.customerId(), mockCustomerId)
+        XCTAssertEqual(recurringSession.nextTriggerByType, consentOptions.nextTriggeredBy)
+        XCTAssertEqual(recurringSession.merchantTriggerReason, consentOptions.merchantTriggerReason)
+
+        // Verify payment intent was created
+        XCTAssertNotNil(session.paymentIntent)
+    }
+
     // MARK: - Common Configuration Tests
-    
-    func testConfigureCommonProperties() {
+
+    func testConfigureCommonProperties() async throws {
         // This test indirectly tests the configureCommonProperties method through convertToLegacySession
         let applePayOptions = AWXApplePayOptions()
         let billing = AWXPlaceDetails()
@@ -418,7 +770,7 @@ final class SessionTests: XCTestCase {
             returnURL: mockReturnURL
         )
         
-        let legacySession = session.convertToLegacySession()
+        let legacySession = try await session.convertToLegacySession()
         
         // Verify common properties were configured correctly
         XCTAssertEqual(legacySession.countryCode, session.countryCode)
@@ -429,5 +781,43 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(legacySession.lang, session.lang)
         XCTAssertEqual(legacySession.paymentMethods, session.paymentMethods)
         XCTAssertEqual(legacySession.requiredBillingContactFields, session.requiredBillingContactFields)
+    }
+}
+
+// MARK: - Mock Payment Intent Provider
+
+class MockPaymentIntentProvider: NSObject, PaymentIntentProvider {
+    let customerId: String?
+    let currency: String
+    let amount: NSDecimalNumber
+
+    init(customerId: String?, currency: String, amount: NSDecimalNumber) {
+        self.customerId = customerId
+        self.currency = currency
+        self.amount = amount
+    }
+
+    func createPaymentIntent() async throws -> AWXPaymentIntent {
+        let intent = AWXPaymentIntent()
+        intent.customerId = customerId
+        intent.currency = currency
+        intent.amount = amount
+        intent.id = "test_intent_from_provider_\(UUID().uuidString)"
+        intent.clientSecret = "test_client_secret_\(UUID().uuidString)"
+        return intent
+    }
+}
+
+class MockPaymentIntentProviderWithError: NSObject, PaymentIntentProvider {
+    var customerId: String? { "error_customer" }
+    var currency: String { "USD" }
+    var amount: NSDecimalNumber { NSDecimalNumber(value: 100) }
+
+    func createPaymentIntent() async throws -> AWXPaymentIntent {
+        throw NSError(
+            domain: "TestErrorDomain",
+            code: -1,
+            userInfo: [NSLocalizedDescriptionKey: "Mock provider error"]
+        )
     }
 }

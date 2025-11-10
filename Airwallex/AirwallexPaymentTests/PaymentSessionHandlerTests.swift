@@ -474,36 +474,39 @@ class PaymentSessionHandlerTests: XCTestCase {
         }
     }
 
-    func testStartRedirectPaymentWithCardPayment() {
+    func testStartRedirectPaymentWithCardPayment() async {
         // Test for invalid method type
         mockMethodType.name = AWXCardKey
         mockSessionHandler.startRedirectPayment(with: AWXCardKey, additionalInfo: nil)
-        guard let error = mockPaymentResultDelegate.error,
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        guard let error = await mockPaymentResultDelegate.error,
               case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
               case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
-            XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(String(describing: mockPaymentResultDelegate.error))")
+            XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(await String(describing: mockPaymentResultDelegate.error))")
             return
         }
     }
     
-    func testStartRedirctPaymentWithApplePay() {
+    func testStartRedirctPaymentWithApplePay() async {
         mockMethodType.name = AWXApplePayKey
         mockSessionHandler.startRedirectPayment(with: AWXApplePayKey, additionalInfo: nil)
-        guard let error = mockPaymentResultDelegate.error,
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        guard let error = await mockPaymentResultDelegate.error,
               case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
               case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
-            XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(String(describing: mockPaymentResultDelegate.error))")
+            XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(await String(describing: mockPaymentResultDelegate.error))")
             return
         }
     }
     
-    func testStartRedirectPaymentWithWrongPaymentMethod() {
+    func testStartRedirectPaymentWithWrongPaymentMethod() async {
         mockMethodType.name = "paypal"
         mockSessionHandler.startRedirectPayment(with: "wechatpay", additionalInfo: nil)
-        guard let error = mockPaymentResultDelegate.error,
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        guard let error = await mockPaymentResultDelegate.error,
               case let PaymentSessionHandler.ValidationError.invalidPayment(underlyingError: error) = error,
               case AWXRedirectActionProvider.ValidationError.invalidMethodType = error else {
-            XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(String(describing: mockPaymentResultDelegate.error))")
+            XCTFail("Expected AWXRedirectActionProvider.ValidationError.invalidMethodType but got \(await String(describing: mockPaymentResultDelegate.error))")
             return
         }
     }
