@@ -266,7 +266,7 @@ private extension IntegrationDemoListViewController {
 }
 
 extension IntegrationDemoListViewController: PaymentIntentProvider {
-    func createPaymentIntent(customerID: String?, currency: String, amount: NSDecimalNumber) async throws -> AWXPaymentIntent {
+    func createPaymentIntent() async throws -> AWXPaymentIntent {
         try await Airwallex.apiClient.createPaymentIntent(
             amount: amount.decimalValue
         )
@@ -559,7 +559,7 @@ private extension IntegrationDemoListViewController {
     
     func createPaymentSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
         if ExamplesKeys.preferUnifiedSession {
-            if ExamplesKeys.expressCheckout && integrationType == .API {
+            if ExamplesKeys.expressCheckout {
                 return try await createUnifiedSessionWithProvider(force3DS: force3DS)
             } else {
                 return try await createUnifiedSessionWithIntent(force3DS: force3DS)

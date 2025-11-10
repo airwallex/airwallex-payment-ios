@@ -13,9 +13,7 @@ import Foundation
 
 @objc
 public protocol PaymentIntentProvider {
-    func createPaymentIntent(customerID: String?,
-                             currency: String,
-                             amount: NSDecimalNumber) async throws -> AWXPaymentIntent
+    func createPaymentIntent() async throws -> AWXPaymentIntent
 
     var currency: String { get }
     var amount: NSDecimalNumber { get }

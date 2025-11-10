@@ -271,7 +271,7 @@ private extension AWXUIContext {
                                          layout: PaymentLayout = .tab) {
         do {
             // payment intent is required for UI integration
-            try session.validate(paymentIntentRequired: true)
+            try session.validate()
         } catch {
             handleLaunchFailure(
                 paymentResultDelegate,
@@ -280,13 +280,17 @@ private extension AWXUIContext {
             return
         }
         
-        guard let secret = AWXAPIClientConfiguration.shared().clientSecret,
-              !secret.isEmpty else {
-            handleLaunchFailure(
-                paymentResultDelegate,
-                LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
-            )
-            return
+        if let session = session as? Session, session.paymentIntentProvider != nil {
+            // will use paymentIntentProvider to get client secret
+        } else {
+            guard let secret = AWXAPIClientConfiguration.shared().clientSecret,
+                  !secret.isEmpty else {
+                handleLaunchFailure(
+                    paymentResultDelegate,
+                    LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
+                )
+                return
+            }
         }
         
         // update logger.session for UI integration

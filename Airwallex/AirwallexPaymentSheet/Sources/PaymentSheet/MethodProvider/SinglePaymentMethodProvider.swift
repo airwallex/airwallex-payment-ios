@@ -84,6 +84,7 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
             request.transactionMode = session.transactionMode()
             request.lang = session.lang
             let task = Task {
+                try await (session as? Session)?.ensurePaymentIntent()
                 return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse
             }
             self.task = task

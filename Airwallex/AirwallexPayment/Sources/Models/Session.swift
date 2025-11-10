@@ -183,7 +183,6 @@ import Foundation
     /// Returns the payment intent ID.
     /// - Returns: The payment intent ID as a String, or nil if not available.
     @objc public override func paymentIntentId() -> String? {
-        assert(paymentIntent != nil, "this method is only expected to be called after payment intent is actually created")
         return paymentIntent?.id
     }
     
@@ -204,7 +203,8 @@ import Foundation
     ///   - Both `paymentIntent` and `paymentIntentProvider` are nil
     ///   - The provider's `createPaymentIntent()` method throws an error
     @discardableResult
-    @objc public func ensurePaymentIntent() async throws -> AWXPaymentIntent {
+    @objc
+    @_spi(AWX) public func ensurePaymentIntent() async throws -> AWXPaymentIntent {
         // Return existing intent if available
         if let paymentIntent {
             return paymentIntent
@@ -220,12 +220,12 @@ import Foundation
         }
 
         // Create intent from provider
-        let intent = try await provider.createPaymentIntent(
-            customerID: provider.customerId,
-            currency: provider.currency,
-            amount: provider.amount
-        )
+        let intent = try await provider.createPaymentIntent()
 
+        assert(intent.customerId == provider.customerId)
+        assert(intent.currency == provider.currency)
+        assert(intent.amount == provider.amount)
+        
         // Cache the created intent
         paymentIntent = intent
         AWXAPIClientConfiguration.shared().clientSecret = intent.clientSecret
@@ -310,8 +310,9 @@ extension Session {
     /// - Throws: An error if the payment intent cannot be ensured
     func convertToLegacySession() async throws -> AWXSession {
         // Ensure payment intent exists before conversion
+        let paymentIntent = try await ensurePaymentIntent()
         if let paymentConsentOptions {
-            if let paymentIntent, paymentIntent.amount.doubleValue > 0 {
+            if paymentIntent.amount.doubleValue > 0 {
                 // Non-zero amount recurring session with intent
                 let session = AWXRecurringWithIntentSession()
                 configureCommonProperties(for: session)
@@ -331,9 +332,9 @@ extension Session {
                 configureCommonProperties(for: session)
                 
                 // Set specific properties for recurring sessions
-                session.setAmount(amount())
-                session.setCurrency(currency())
-                session.setCustomerId(customerId())
+                session.setAmount(paymentIntent.amount)
+                session.setCurrency(paymentIntent.currency)
+                session.setCustomerId(paymentIntent.customerId)
                 session.merchantTriggerReason = paymentConsentOptions.merchantTriggerReason
                 session.nextTriggerByType = paymentConsentOptions.nextTriggeredBy
                 
@@ -341,7 +342,6 @@ extension Session {
             }
         } else {
             // One-off payment session
-            let paymentIntent = try await ensurePaymentIntent()
             let session = AWXOneOffSession()
             configureCommonProperties(for: session)
             
