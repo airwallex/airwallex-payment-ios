@@ -34,7 +34,8 @@ extension XCTestCase {
                                     env: SettingsScreen.Environment = .demo,
                                     force3DS: Bool = false,
                                     nextTriggerByCustomer: Bool? = nil,
-                                    preferUnifiedSession: Bool = false,
+                                    preferUnifiedSession: Bool = true,
+                                    preferExpressCheckout: Bool = true,
                                     useTabLayout: Bool = true) {
         app.launchEnvironment[UITestingEnvironmentVariable.isUITesting] = "1"
         app.launchEnvironment[UITestingEnvironmentVariable.mockApplePayToken] = ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.mockApplePayToken]
@@ -47,13 +48,13 @@ extension XCTestCase {
         SettingsScreen.validate()
         SettingsScreen.ensureEnvironment(.demo)
         SettingsScreen.ensureCustomerID(customerID)
-        SettingsScreen.ensureForce3DS(false)
         SettingsScreen.ensureLayoutMode(useTabLayout: useTabLayout)
         if let nextTriggerByCustomer {
             SettingsScreen.ensureNextTriggerByCustomer(nextTriggerByCustomer)
         }
         SettingsScreen.ensureForce3DS(force3DS)
         SettingsScreen.ensurePreferUnifiedSession(preferUnifiedSession)
+        SettingsScreen.ensureExpressCheckout(preferUnifiedSession && preferExpressCheckout)
         SettingsScreen.save()
         UIIntegrationDemoScreen.validate()
     }

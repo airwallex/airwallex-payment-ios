@@ -28,6 +28,7 @@ enum SettingsScreen {
     static let customerIDActionButton = app.buttons[AccessibilityIdentifiers.SettingsScreen.actionButtonForCustomerID]
     static let toggleFor3DS = app.switches[AccessibilityIdentifiers.SettingsScreen.toggleFor3DS]
     static let toggleForUnifiedSession = app.switches[AccessibilityIdentifiers.SettingsScreen.toggleForUnifiedSession]
+    static let toggleForExpressCheckout = app.switches[AccessibilityIdentifiers.SettingsScreen.toggleForExpressCheckout]
     static let alert = app.alerts.firstMatch
     static let activityIndicator = app.activityIndicators.firstMatch
     static let keyboard = app.keyboards.firstMatch
@@ -108,6 +109,16 @@ enum SettingsScreen {
         }
         isOn = (toggleForUnifiedSession.value as? String) == "1"
         XCTAssertEqual(isOn, preferUnifiedSession)
+    }
+    
+    static func ensureExpressCheckout(_ expressCheckout: Bool) {
+        XCTAssertTrue(toggleForExpressCheckout.exists)
+        var isOn = (toggleForExpressCheckout.value as? String) == "1"
+        if isOn != expressCheckout {
+            toggleForExpressCheckout.robustTap()
+        }
+        isOn = (toggleForExpressCheckout.value as? String) == "1"
+        XCTAssertEqual(isOn, expressCheckout)
     }
     
     static func ensureNextTriggerByCustomer(_ isTriggerByCustomer: Bool) {

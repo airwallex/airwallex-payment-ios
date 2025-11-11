@@ -100,6 +100,7 @@ class SettingsViewController: UIViewController {
     private lazy var switchForExpressCheckout: ConfigSwitchView = {
         let view = ConfigSwitchView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.optionSwitch.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.toggleForExpressCheckout
         return view
     }()
     

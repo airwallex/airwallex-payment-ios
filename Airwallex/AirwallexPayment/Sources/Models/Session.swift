@@ -211,6 +211,7 @@ import Foundation
     @_spi(AWX) public func ensurePaymentIntent() async throws -> AWXPaymentIntent {
         // Return existing intent if available
         if let paymentIntent {
+            AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
             return paymentIntent
         }
 
