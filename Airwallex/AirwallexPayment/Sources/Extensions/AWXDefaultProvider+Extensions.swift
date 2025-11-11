@@ -257,11 +257,10 @@ extension AWXCardProvider {
                 "Consent ID required"
             )
         }
-        if let session = Session.convertFromLegacySession(session) {
-            if session.paymentConsentOptions != nil {
-                guard consent.paymentMethod?.id != nil else {
-                    throw ValidationError.invalidConsent("method id required for recurring transactoin with consent")
-                }
+        if let session = Session.convertFromLegacySession(session),
+           session.paymentConsentOptions != nil {
+            guard consent.paymentMethod?.id != nil else {
+                throw ValidationError.invalidConsent("method id required for recurring transactoin with consent")
             }
         }
     }
