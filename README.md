@@ -171,12 +171,16 @@ While creating payment intent using `payment_intents/create`:
 ---
 #### Client Secret
 
-Update client secret using `paymentIntent.clientSecret`
-``` swift
-AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
-```
+If you are using `Session` object, you don't need to manually update client secret, it will be automatically handled by the SDK internally
+
+> [!NOTE]
+> If you are using deprecated subclasses of  `AWXSession`, please refer to [integration guide 6.1.9](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration) 
 ---
 #### Payment session
+
+The new `Session` type introduced in version 6.2.0 provides a unified and simplified way for integration and there are some internal optimization as well. We recommend using `Session` instead of the legacy `AWXOneOffSession`, `AWXRecurringSession`, and `AWXRecurringWithIntentSession`.
+
+**Option 1: Initialize with a pre-created payment intent**
 
 ``` swift
 let paymentConsentOptions = if /* one-off transaction */  {
@@ -189,17 +193,46 @@ let paymentConsentOptions = if /* one-off transaction */  {
     )
 }
 let session = Session(
-    paymentIntent: "payment intent create on your server",
-    countryCode: "Your country code",
-    applePayOptions: "required if you want to support apple pay",
-    autoCapture: "Only applicable when for card payment. If true the payment will be captured immediately after authorization succeeds.",
-    billing: "prefilled billing address",
-    paymentConsentOptions: "info for recurring transactions",
-    requiredBillingContactFields: "customize billing contact fields for card payment",
-    returnURL: "App return url"
+    paymentIntent: paymentIntent, // payment intent created on your server
+    countryCode: "Your country code",readme
+    applePayOptions: applePayOptions, // required if you want to support apple pay
+    autoCapture: true, // Only applicable for card payment. If true the payment will be captured immediately after authorization succeeds.
+    billing: billing, // prefilled billing address
+    paymentConsentOptions: paymentConsentOptions, // info for recurring transactions
+    requiredBillingContactFields: [.name, .email], // customize billing contact fields for card payment
+    returnURL: "myapp://payment/return" // App return url
 )
 ```
-The new `Session` type introduced in version 6.2.0 provides a unified and simplified way for integration and there are some internal optimization as well. We recommend using `Session` instead of the legacy `AWXOneOffSession`, `AWXRecurringSession`, and `AWXRecurringWithIntentSession`.
+
+**Option 2: Initialize with a payment intent provider (Express Checkout)**
+
+Using a `PaymentIntentProvider` allows the SDK to delay payment intent creation until just before payment confirmation or when clientSecret is required to request some airwallex API. 
+
+``` swift
+// 1. Implement PaymentIntentProvider
+class MyPaymentIntentProvider: NSObject, PaymentIntentProvider {
+    let currency: String = "USD"
+    let amount: NSDecimalNumber = NSDecimalNumber(value: 100.00)
+    let customerId: String? = "customer_123"
+
+    func createPaymentIntent() async throws -> AWXPaymentIntent {
+        // Call your backend to create the payment intent
+        let response = try await MyBackendAPI.createPaymentIntent(
+            amount: amount,
+            currency: currency,
+            customerId: customerId
+        )
+        return response.paymentIntent
+    }
+}
+
+// 2. Create session with the provider
+let provider = MyPaymentIntentProvider()
+let session = Session(readme
+    paymentIntentProvider: provider, // Payment intent will be created when needed
+    countryCode: "US"
+)
+```
 
 > [!NOTE]
 > We will continue to support integrations using legacy session types until the next major version release. For integration steps, please refer to [integration guide](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration) 

@@ -575,8 +575,6 @@ private extension IntegrationDemoListViewController {
             amount: amount.decimalValue,
             force3DS: force3DS
         )
-        // Update client secret
-        AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
         
         // Merchant trigger reason
         let merchantTriggerReason: AirwallexMerchantTriggerReason = if ExamplesKeys.nextTriggerByType == .customerType {

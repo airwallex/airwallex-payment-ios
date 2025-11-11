@@ -10,6 +10,7 @@ import Foundation
 import Combine
 #if canImport(AirwallexCore)
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
 
 enum PaymentMethodProviderUpdateType {

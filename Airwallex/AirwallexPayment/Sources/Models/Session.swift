@@ -114,8 +114,7 @@ import Foundation
     /// Creates a new unified Session with delayed payment intent creation.
     ///
     /// This initializer allows you to defer the creation of the payment intent until just before
-    /// payment confirmation. This is useful when you need to collect user information (like billing details)
-    /// before creating the payment intent on your server.
+    /// payment confirmation or when it is required. 
     ///
     /// - Parameters:
     ///   - paymentIntentProvider: An object conforming to `PaymentIntentProvider` protocol that will create
@@ -207,7 +206,6 @@ import Foundation
     ///   - Both `paymentIntent` and `paymentIntentProvider` are nil
     ///   - The provider's `createPaymentIntent()` method throws an error
     @discardableResult
-    @objc
     @_spi(AWX) public func ensurePaymentIntent() async throws -> AWXPaymentIntent {
         // Return existing intent if available
         if let paymentIntent {

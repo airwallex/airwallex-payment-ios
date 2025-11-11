@@ -23,8 +23,8 @@ Airwallex iOS SDK 是一款灵活的工具，可让您将支付方式集成到�
 </p>
 
 目录
+=================
 <!--ts-->
-
 - [开始集成](#开始集成)
 - [要求](#要求)
 - [示例项目](#示例项目)
@@ -34,9 +34,9 @@ Airwallex iOS SDK 是一款灵活的工具，可让您将支付方式集成到�
     - [CocoaPods](#cocoapods)
   - [必要设置](#必要设置)
     - [Customer ID](#customer-id)
-    - [创建 `AWXSession`](#创建-awxsession)
-    - [创建 `AWXPaymentIntent`](#创建-awxpaymentintent)
+    - [创建支付意图对象](#创建支付意图对象)
     - [设置客户端密钥](#设置客户端密钥)
+    - [创建 `Session`](#创建-session)
   - [可选设置](#可选设置)
     - [微信支付](#微信支付)
     - [Apple Pay](#apple-pay)
@@ -46,7 +46,7 @@ Airwallex iOS SDK 是一款灵活的工具，可让您将支付方式集成到�
     - [按名称启动支付方式](#按名称启动支付方式)
     - [自定义主题色](#自定义主题色)
   - [Low-level API 集成](#low-level-api-集成)
-    - [创建 PaymentSessionHandler](#创-paymentsessionhandler)
+    - [创建 PaymentSessionHandler](#创建-paymentsessionhandler)
     - [使用卡支付](#使用卡支付)
     - [使用保存的卡支](#使用保存的卡支)
     - [使用 Apple Pay 支付](#使用-apple-pay-支付)
@@ -54,7 +54,7 @@ Airwallex iOS SDK 是一款灵活的工具，可让您将支付方式集成到�
   - [处理支付结果](#处理支付结果)
 - [贡献](#贡献)
 <!--te-->
-=================
+
 ## 开始集成
 请按照我们的[集成指南](#integration)并探索[示例项目](#examples)，以快速使用 Airwallex iOS SDK 设置支付功能。
 > [!TIP] 
@@ -168,36 +168,67 @@ Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
 ---
 
 #### 设置客户端密钥
-将 `paymentIntent` 中的 `clientSecret` 更新到SDK中
-``` swift
-AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret
-```
+如果您使用 `Session` 对象,则无需手动更新客户端密钥,SDK 将在内部自动处理
+> ![Note]
+> 如果您使用已经被标记为废弃的 `AWXOneOffSession`, `AWXRecurringSession` 和 `AWXRecurringWithIntentSession`， 您需要参考[6.1.9 版本集成文档](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration)来主动更新 `clientSecret`
 
 #### 创建 `Session`
+
+6.2.0 版本新增 `Session` 类型简化了SDK的集成方式并且进行了一些内部优化。我们建议使用 `Session` 替代已经被标记为废弃的 `AWXOneOffSession`, `AWXRecurringSession` 和 `AWXRecurringWithIntentSession`
+
+**方式 1: 使用预先创建的 payment intent 初始化**
 
 ``` swift
 let paymentConsentOptions = if /* 单次扣款 */  {
     nil
 } else {
     /* 周期/非周期扣款 */
-    paymentConsentOptions(
+    PaymentConsentOptions(
         nextTriggeredBy: ".customer/.merchant",
         merchantTriggerReason: "nil/.scheduled/.unscheduled/...."
     )
 }
 let session = Session(
-    paymentIntent: "payment intent create on your server",
+    paymentIntent: paymentIntent, // 在您的服务器上创建的 payment intent
     countryCode: "Your country code",
-    applePayOptions: "required if you want to support apple pay",
-    autoCapture: "Only applicable when for card payment. If true the payment will be captured immediately after authorization succeeds.",
-    billing: "prefilled billing address",
-    paymentConsentOptions: paymentConsentOptions,
-    requiredBillingContactFields: "customize billing contact fields for card payment",
-    returnURL: "App return url"
+    applePayOptions: applePayOptions, // 如果您想支持 Apple Pay,则必填
+    autoCapture: true, // 仅适用于卡支付。如果为 true,则授权成功后将立即捕获支付
+    billing: billing, // 预填的账单地址
+    paymentConsentOptions: paymentConsentOptions, // 周期/非周期扣款的信息
+    requiredBillingContactFields: [.name, .email], // 自定义卡支付的账单联系字段
+    returnURL: "myapp://payment/return" // App 返回 URL
 )
 ```
 
-6.2.0 版本新增 `Session` 类型简化了SDK的集成方式并且进行了一些内部优化。我们建议使用 `Session` 替代已经被标记为废弃的 `AWXOneOffSession`, `AWXRecurringSession` 和 `AWXRecurringWithIntentSession`
+**方式 2: 使用 PaymentIntentProvider 初始化**
+
+使用 `PaymentIntentProvider` 允许 SDK 将 payment intent 的创建延迟到支付最终确认之前或者访问需要 `clientSecret` 的接口之前。
+
+``` swift
+// 1. 实现 PaymentIntentProvider
+class MyPaymentIntentProvider: NSObject, PaymentIntentProvider {
+    let currency: String = "USD"
+    let amount: NSDecimalNumber = NSDecimalNumber(value: 100.00)
+    let customerId: String? = "customer_123"
+
+    func createPaymentIntent() async throws -> AWXPaymentIntent {
+        // 调用您的后端来创建 payment intent
+        let response = try await MyBackendAPI.createPaymentIntent(
+            amount: amount,
+            currency: currency,
+            customerId: customerId
+        )
+        return response.paymentIntent
+    }
+}
+
+// 2. 使用 provider 创建 session
+let provider = MyPaymentIntentProvider()
+let session = Session(
+    paymentIntentProvider: provider, // Payment intent 将在需要时创建
+    countryCode: "US"
+)
+```
 
 > [!NOTE]
 > 下一个大版本更新之前 Airwallex SDK 仍会继续支持 `AWXOneOffSession`, `AWXRecurringSession` 和 `AWXRecurringWithIntentSession`，具体集成方式请参考[集成文档](https://github.com/airwallex/airwallex-payment-ios/tree/6.1.9?tab=readme-ov-file#integration)
