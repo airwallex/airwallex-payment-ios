@@ -136,4 +136,54 @@ import Combine
             XCTFail()
         }
     }
+
+    func testFetchOnlineBankingPaymentMethod() async {
+        let onlineBankingData = Bundle.dataOfFile("method_type_online_banking")!
+        let mockURL = URL(string: "https://api-demo.airwallex.com/api/v1/pa/config/payment_method_types/online_banking?flow=inapp&transaction_mode=oneoff")!
+        let onlineBankingSuccessResponse = HTTPURLResponse(
+            url: mockURL,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )
+
+        MockURLProtocol.mockResponse = (onlineBankingData, onlineBankingSuccessResponse, nil)
+
+        provider = SinglePaymentMethodProvider(
+            session: mockSession,
+            name: "online_banking"
+        )
+        provider.apiClient = mockAPIClient
+
+        updates = [PaymentMethodProviderUpdateType]()
+        cancellable = provider.updatePublisher.sink { [weak self] update in
+            self?.updates.append(update)
+        }
+
+        do {
+            try await provider.getPaymentMethodTypes()
+        } catch {
+            XCTFail("Failed to fetch online banking payment method: \(error)")
+        }
+
+        let model: AWXPaymentMethodType = Bundle.decode(file: "method_type_online_banking")!
+
+        XCTAssertEqual(provider.methods.count, 1)
+        XCTAssertEqual(provider.selectedMethod?.name, "online_banking")
+        XCTAssertEqual(provider.selectedMethod?.displayName, model.displayName)
+        XCTAssertEqual(provider.methods.first?.name, model.name)
+        XCTAssertTrue(provider.selectedMethod?.resources.hasSchema ?? false)
+
+        guard case PaymentMethodProviderUpdateType.methodSelected(_) = updates.first!,
+              case PaymentMethodProviderUpdateType.listUpdated = updates.last! else {
+            XCTFail("Expected methodSelected and listUpdated updates")
+            return
+        }
+
+        XCTAssertEqual(provider.session, mockSession)
+        XCTAssertEqual(provider.selectedMethod?.transactionMode, mockSession.transactionMode())
+        XCTAssertFalse(provider.isApplePayAvailable)
+        XCTAssertNil(provider.applePayMethodType)
+        XCTAssertEqual(provider.method(named: "online_banking"), provider.selectedMethod)
+    }
 }

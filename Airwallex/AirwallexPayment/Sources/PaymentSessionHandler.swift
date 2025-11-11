@@ -449,6 +449,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     }
     
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
+        viewController.stopLoading()
         if status == .cancel {
             // only log payment_canceled here
             // payment_success and error event are logged in AWXDefaultProvider

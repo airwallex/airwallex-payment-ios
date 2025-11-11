@@ -210,6 +210,33 @@ class CardProviderTests: XCTestCase {
         }
     }
     
+    func testConfirmIntentWithCardThrowsErrorInCreateRequest() async {
+        
+        mockSession = Session(
+            paymentIntentProvider: MockPaymentIntentProviderWithError(),
+            countryCode: "AU"
+        )
+        
+        let provider = CardProvider(
+            delegate: mockDelegate,
+            session: mockSession,
+            methodType: mockMethodType,
+            apiClient: mockApiClient
+        )
+
+        // Call the method under test
+        await provider.confirmIntentWithCard(AWXCard(), saveCard: false)
+
+        // Verify error was handled correctly (line 52-54)
+        await MainActor.run {
+            XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.failure)
+            XCTAssertNotNil(mockDelegate.completionError, "Error should be passed to delegate")
+            // No API requests should be made since the error occurred before confirmIntent
+            XCTAssertEqual(mockDelegate.didStartRequest, 1)
+            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+        }
+    }
+    
     // MARK: - confirmIntentWithConsent (PaymentConsent object) Tests
     
     func testConfirmIntentWithConsentForRecurringPayment() async {

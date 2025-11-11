@@ -124,7 +124,6 @@ public extension AWXSession {
                 "Payment intent required"
             )
         }
-        
         guard !paymentIntent.id.isEmpty else {
             throw ValidationError.invalidPaymentIntent(
                 "Intent id required"

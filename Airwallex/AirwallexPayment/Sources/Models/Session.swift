@@ -170,8 +170,7 @@ import Foundation
     /// Returns the currency code for the current payment.
     /// - Returns: The three-letter currency code as a String.
     @objc public override func currency() -> String {
-        let currency = paymentIntent?.currency ?? paymentIntentProvider?.currency ?? ""
-        assert(Locale.isoCurrencyCodes.contains(currency))
+        let currency = paymentIntent?.currency ?? paymentIntentProvider?.currency ?? paymentConsentOptions?.termsOfUse?.paymentCurrency ?? ""
         return currency
     }
     

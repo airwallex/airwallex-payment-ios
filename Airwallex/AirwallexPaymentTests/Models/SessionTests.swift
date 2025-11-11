@@ -404,6 +404,31 @@ final class SessionTests: XCTestCase {
         }
     }
 
+    func testEnsurePaymentIntent_noIntentOrProvider() async {
+        // Test line 216: When both paymentIntent and paymentIntentProvider are nil
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
+            returnURL: mockReturnURL
+        )
+
+        // Use reflection to set both paymentIntent and paymentIntentProvider to nil
+        session.setValue(nil, forKey: "paymentIntent")
+        session.setValue(nil, forKey: "paymentIntentProvider")
+
+        do {
+            _ = try await session.ensurePaymentIntent()
+            XCTFail("Should throw error when both intent and provider are nil")
+        } catch let error as NSError {
+            XCTAssertEqual(error.domain, AWXSDKErrorDomain)
+            XCTAssertEqual(error.code, -1)
+            XCTAssertEqual(
+                error.userInfo[NSLocalizedDescriptionKey] as? String,
+                "Payment intent not available. Either provide a payment intent or a payment intent provider."
+            )
+        }
+    }
+
     // MARK: - Convenience Init Tests
     
     func testConvenienceInit_fromSameType() {
@@ -764,42 +789,5 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(legacySession.lang, session.lang)
         XCTAssertEqual(legacySession.paymentMethods, session.paymentMethods)
         XCTAssertEqual(legacySession.requiredBillingContactFields, session.requiredBillingContactFields)
-    }
-}
-
-// MARK: - Mock Payment Intent Provider
-
-class MockPaymentIntentProvider: NSObject, PaymentIntentProvider {
-    let customerId: String?
-    let currency: String
-    let mockAmount: NSDecimalNumber
-
-    init(customerId: String?, currency: String, amount: NSDecimalNumber) {
-        self.customerId = customerId
-        self.currency = currency
-        self.mockAmount = amount
-    }
-
-    func createPaymentIntent() async throws -> AWXPaymentIntent {
-        let intent = AWXPaymentIntent()
-        intent.customerId = customerId
-        intent.currency = currency
-        intent.amount = mockAmount
-        intent.id = "test_intent_from_provider_\(UUID().uuidString)"
-        intent.clientSecret = "test_client_secret_\(UUID().uuidString)"
-        return intent
-    }
-}
-
-class MockPaymentIntentProviderWithError: NSObject, PaymentIntentProvider {
-    var customerId: String? { "error_customer" }
-    var currency: String { "USD" }
-
-    func createPaymentIntent() async throws -> AWXPaymentIntent {
-        throw NSError(
-            domain: "TestErrorDomain",
-            code: -1,
-            userInfo: [NSLocalizedDescriptionKey: "Mock provider error"]
-        )
     }
 }
