@@ -49,30 +49,26 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
     private var task: Task<AWXGetPaymentMethodTypeResponse, Error>?
     
     func getPaymentMethodTypes() async throws {
-        var method = AWXPaymentMethodType()
+        let method = AWXPaymentMethodType()
         method.name = name
         method.transactionMode = session.transactionMode()
+        method.resources = AWXResources()
         switch name {
         case AWXApplePayKey:
             method.displayName = NSLocalizedString("Apple Pay", bundle: .paymentSheet, comment: "")
-            method.resources = AWXResources()
         case AWXCardKey:
             method.displayName = NSLocalizedString("Card", bundle: .paymentSheet, comment: "")
-            method.resources = AWXResources()
             let brands = supportedCardBrands ?? AWXCardBrand.allAvailable
             method.cardSchemes = brands.map { AWXCardScheme(name: $0.rawValue) }
         default:
             let response = try await getPaymentMethodTypeDetails(name: name)
-            methodTypeDetails = response
             guard response.hasSchema else {
                 throw "Invalid payment method".asError()
             }
-            let resources = AWXResources()
-            resources.logoURL = response.logoURL
-            resources.hasSchema = response.hasSchema
-            
+            methodTypeDetails = response
             method.displayName = response.displayName
-            method.resources = resources
+            method.resources.logoURL = response.logoURL
+            method.resources.hasSchema = response.hasSchema
         }
         methods = [method]
         selectedMethod = method

@@ -22,11 +22,11 @@ import Foundation
 @objc public final class Session: AWXSession {
     
     /// The payment intent to handle.
-    @objc public internal(set) var paymentIntent: AWXPaymentIntent?
+    @objc public private(set) var paymentIntent: AWXPaymentIntent?
 
     /// Provider for delayed payment intent creation.
     /// When set, the payment intent will be created just before confirmation.
-    @objc public let paymentIntentProvider: PaymentIntentProvider?
+    @objc public weak private(set) var paymentIntentProvider: PaymentIntentProvider?
 
     /// Required for recurring payment
     @objc public let paymentConsentOptions: PaymentConsentOptions?
@@ -118,7 +118,7 @@ import Foundation
     ///
     /// - Parameters:
     ///   - paymentIntentProvider: An object conforming to `PaymentIntentProvider` protocol that will create
-    ///                           the payment intent when needed. The provider must supply currency, amount,
+    ///                           the payment intent when needed. The provider must supply currency,
     ///                           and customerId properties immediately, and create the actual intent asynchronously.
     ///   - countryCode: The ISO 3166-1 alpha-2 country code (e.g., "US", "AU", "GB").
     ///   - applePayOptions: Configuration for Apple Pay integration. Default: nil.
@@ -178,15 +178,13 @@ import Foundation
     /// Returns the payment amount.
     /// - Returns: The payment amount as an NSDecimalNumber.
     @objc public override func amount() -> NSDecimalNumber {
-        let amount = paymentIntent?.amount ?? paymentIntentProvider?.amount
-        assert(amount != nil)
-        return amount ?? .zero
+        paymentIntent?.amount ?? .zero
     }
     
     /// Returns the payment intent ID.
     /// - Returns: The payment intent ID as a String, or nil if not available.
     @objc public override func paymentIntentId() -> String? {
-        return paymentIntent?.id
+        paymentIntent?.id
     }
     
     /// Determines the transaction mode based on the presence of recurring options.
@@ -225,10 +223,11 @@ import Foundation
         // Create intent from provider
         let intent = try await provider.createPaymentIntent()
         
-        guard intent.customerId == provider.customerId,
-              intent.currency == provider.currency,
-              intent.amount == provider.amount else {
-            throw "payment intent info not matched".asError()
+        assert(intent.customerId == provider.customerId)
+        assert(intent.currency == provider.currency)
+        
+        if let currency = paymentConsentOptions?.termsOfUse?.paymentCurrency {
+            assert(currency == intent.currency)
         }
         
         // Cache the created intent
@@ -243,7 +242,7 @@ import Foundation
 
 extension Session {
     
-    /// Creates a new Session instance from an existing Legacy AWXSession.
+    /// Check the type of session and creates a new Session instance from an existing Legacy AWXSession if necessary.
     ///
     /// This initializer provides conversion capabilities from legacy session types
     /// to the unified Session class. It extracts all relevant properties from the source
@@ -317,19 +316,7 @@ extension Session {
         // Ensure payment intent exists before conversion
         let paymentIntent = try await ensurePaymentIntent()
         if let paymentConsentOptions {
-            if paymentIntent.amount.doubleValue > 0 {
-                // Non-zero amount recurring session with intent
-                let session = AWXRecurringWithIntentSession()
-                configureCommonProperties(for: session)
-                
-                // Set specific properties for recurring with intent
-                session.autoCapture = autoCapture
-                session.paymentIntent = paymentIntent
-                session.merchantTriggerReason = paymentConsentOptions.merchantTriggerReason ?? .undefined
-                session.nextTriggerByType = paymentConsentOptions.nextTriggeredBy
-                
-                return session
-            } else {
+            if paymentIntent.amount == 0 {
                 // We currently don't support recurring with intent for LPM
                 // if we only have paymentIntentProvider instead of an existing payment intent
                 // There is no need to create an intent through `paymentIntentProvider`
@@ -341,6 +328,18 @@ extension Session {
                 session.setCurrency(paymentIntent.currency)
                 session.setCustomerId(paymentIntent.customerId)
                 session.merchantTriggerReason = paymentConsentOptions.merchantTriggerReason
+                session.nextTriggerByType = paymentConsentOptions.nextTriggeredBy
+                
+                return session
+            } else {
+                // Non-zero amount recurring session with intent
+                let session = AWXRecurringWithIntentSession()
+                configureCommonProperties(for: session)
+                
+                // Set specific properties for recurring with intent
+                session.autoCapture = autoCapture
+                session.paymentIntent = paymentIntent
+                session.merchantTriggerReason = paymentConsentOptions.merchantTriggerReason ?? .undefined
                 session.nextTriggerByType = paymentConsentOptions.nextTriggeredBy
                 
                 return session

@@ -69,7 +69,7 @@ struct ExamplesKeys {
     @Storage("preferUnifiedSession", defaultValue: true)
     static var preferUnifiedSession: Bool
 
-    @Storage("expressCheckout", defaultValue: false)
+    @Storage("expressCheckout", defaultValue: true)
     static var expressCheckout: Bool
 
     static var allSettings: AllSettings {

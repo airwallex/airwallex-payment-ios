@@ -238,10 +238,12 @@ public class PaymentSessionHandler: NSObject {
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     func startRedirectPayment(with name: String, additionalInfo: [String: String]?) {
-        do {
-            try confirmRedirectPayment(with: name, additionalInfo: additionalInfo)
-        } catch {
-            handleFailure(paymentResultDelegate, error)
+        Task { @MainActor in
+            do {
+                try await confirmRedirectPayment(with: name, additionalInfo: additionalInfo)
+            } catch {
+                handleFailure(paymentResultDelegate, error)
+            }
         }
     }
     
@@ -387,21 +389,16 @@ public class PaymentSessionHandler: NSObject {
     /// - Parameters:
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
-    func confirmRedirectPayment(with name: String, additionalInfo: [String: String]?) throws {
-        Task { @MainActor in
-            do {
-                let redirectAction = try await providerFactory.redirectProvider(
-                    delegate: self,
-                    session: session,
-                    type: methodType
-                )
-                try redirectAction.validate(name: name)
-                actionProvider = redirectAction
-                redirectAction.confirmPaymentIntent(with: name, additionalInfo: additionalInfo)
-            } catch {
-                handleFailure(paymentResultDelegate, error)
-            }
-        }
+    @MainActor
+    func confirmRedirectPayment(with name: String, additionalInfo: [String: String]?) async throws {
+        let redirectAction = try await providerFactory.redirectProvider(
+            delegate: self,
+            session: session,
+            type: methodType
+        )
+        try redirectAction.validate(name: name)
+        actionProvider = redirectAction
+        redirectAction.confirmPaymentIntent(with: name, additionalInfo: additionalInfo)
     }
     
     /// Initiates a schema-based payment transaction.
@@ -409,21 +406,16 @@ public class PaymentSessionHandler: NSObject {
     /// You should collect all information from your user before calling this api
     /// - Parameters:
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
-    func confirmRedirectPayment(with paymentMethod: AWXPaymentMethod) throws {
-        Task { @MainActor in
-            do {
-                let redirectAction = try await providerFactory.redirectProvider(
-                    delegate: self,
-                    session: session,
-                    type: methodType
-                )
-                try redirectAction.validate(name: paymentMethod.type)
-                actionProvider = redirectAction
-                redirectAction.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil, flow: .app)
-            } catch {
-                handleFailure(paymentResultDelegate, error)
-            }
-        }
+    @MainActor
+    func confirmRedirectPayment(with paymentMethod: AWXPaymentMethod) async throws {
+        let redirectAction = try await providerFactory.redirectProvider(
+            delegate: self,
+            session: session,
+            type: methodType
+        )
+        try redirectAction.validate(name: paymentMethod.type)
+        actionProvider = redirectAction
+        redirectAction.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil, flow: .app)
     }
     
     private func handleFailure(_ paymentResultDelegate: AWXPaymentResultDelegate?,
@@ -510,6 +502,8 @@ extension PaymentSessionHandler: AWXProviderDelegate {
             paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: .failure, error: error)
             return
         }
+        // if convertion from/to legacy session happends
+        // self.session will be the original session and `provider.session` will be the converted session
         let actionHandler = actionProviderClass.init(delegate: self, session: provider.session)
         actionHandler.paymentConsent = provider.paymentConsent
         actionHandler.handle(nextAction)

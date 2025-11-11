@@ -575,23 +575,13 @@ private extension IntegrationDemoListViewController {
             amount: amount.decimalValue,
             force3DS: force3DS
         )
-        
-        // Merchant trigger reason
-        let merchantTriggerReason: AirwallexMerchantTriggerReason = if ExamplesKeys.nextTriggerByType == .customerType {
-            .undefined
-        } else {
-            .unscheduled
-        }
         let session = Session(
             paymentIntent: paymentIntent,
             countryCode: ExamplesKeys.countryCode,
             applePayOptions: DemoDataSource.applePayOptions,
             autoCapture: ExamplesKeys.autoCapture,
             billing: shippingAddress,
-            paymentConsentOptions: (ExamplesKeys.checkoutMode == .oneOff) ? nil : PaymentConsentOptions(
-                nextTriggeredBy: ExamplesKeys.nextTriggerByType,
-                merchantTriggerReason: merchantTriggerReason
-            ),
+            paymentConsentOptions: consentOptions,
             requiredBillingContactFields: getRequiredBillingContactFields(),
             returnURL: ExamplesKeys.returnUrl
         )
@@ -600,25 +590,29 @@ private extension IntegrationDemoListViewController {
     
     func createUnifiedSessionWithProvider(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
         // Merchant trigger reason
-        let merchantTriggerReason: AirwallexMerchantTriggerReason = if ExamplesKeys.nextTriggerByType == .customerType {
-            .undefined
-        } else {
-            .unscheduled
-        }
         let session = Session(
             paymentIntentProvider: self,
             countryCode: ExamplesKeys.countryCode,
             applePayOptions: DemoDataSource.applePayOptions,
             autoCapture: ExamplesKeys.autoCapture,
             billing: shippingAddress,
-            paymentConsentOptions: (ExamplesKeys.checkoutMode == .oneOff) ? nil : PaymentConsentOptions(
-                nextTriggeredBy: ExamplesKeys.nextTriggerByType,
-                merchantTriggerReason: merchantTriggerReason
-            ),
+            paymentConsentOptions: consentOptions,
             requiredBillingContactFields: getRequiredBillingContactFields(),
             returnURL: ExamplesKeys.returnUrl
         )
         return session
+    }
+    
+    private var consentOptions: PaymentConsentOptions? {
+        guard ExamplesKeys.checkoutMode != .oneOff else { return nil }
+        
+        let type = ExamplesKeys.nextTriggerByType
+        let reason: AirwallexMerchantTriggerReason = (type == .customerType) ? .undefined : .unscheduled
+        
+        return PaymentConsentOptions(
+            nextTriggeredBy: type,
+            merchantTriggerReason: reason
+        )
     }
     
     func createLegacySession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {

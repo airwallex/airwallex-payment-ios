@@ -100,8 +100,15 @@ public extension AWXSession {
                         )
                     }
                     try options.validate()
+                    if let currency = options.termsOfUse?.paymentCurrency {
+                        guard paymentIntent.currency == currency else {
+                            throw ValidationError.invalidData(
+                                "There is a currency mismatch between the payment intent and the terms of use"
+                            )
+                        }
+                    }
                 } else {
-                    guard session.amount().doubleValue > 0 else {
+                    guard paymentIntent.amount.doubleValue > 0 else {
                         throw ValidationError.invalidAmount(
                             "Amount should greater than 0 for one-off payment"
                         )

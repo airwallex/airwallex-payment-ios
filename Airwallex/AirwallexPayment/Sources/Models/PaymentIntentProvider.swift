@@ -20,20 +20,18 @@ import Foundation
 ///
 /// When using `Session` with a payment intent provider instead of a pre-created intent,
 /// the SDK will call `createPaymentIntent()` asynchronously when needed. The provider
-/// must also supply the basic payment information (currency, amount, customerId) synchronously.
+/// must also supply the basic payment information (currency, customerId) synchronously.
 ///
 /// ## Usage Example
 ///
 /// ```swift
 /// class MyPaymentIntentProvider: NSObject, PaymentIntentProvider {
 ///     let currency: String = "USD"
-///     let amount: NSDecimalNumber = NSDecimalNumber(value: 100.00)
 ///     let customerId: String? = "customer_123"
 ///
 ///     func createPaymentIntent() async throws -> AWXPaymentIntent {
 ///         // Call your backend to create the payment intent
 ///         let response = try await MyBackendAPI.createPaymentIntent(
-///             amount: amount,
 ///             currency: currency,
 ///             customerId: customerId
 ///         )
@@ -52,9 +50,8 @@ import Foundation
 ///
 /// ## Important Notes
 ///
-/// - The `currency`, `amount`, and `customerId` properties must return values immediately
-///   (they cannot be async)
-/// - The values returned by `currency`, `amount`, and `customerId` must match the values
+/// - The `currency` and `customerId` properties must return values immediately (they cannot be async)
+/// - The values returned by `currency` and `customerId` must match the values
 ///   in the `AWXPaymentIntent` returned by `createPaymentIntent()`
 /// - The `createPaymentIntent()` method will only be called once, and the result is cached
 /// - If `createPaymentIntent()` throws an error, the payment flow will fail
@@ -73,7 +70,6 @@ public protocol PaymentIntentProvider {
     ///
     /// The returned payment intent must have:
     /// - `currency` matching the `currency` property
-    /// - `amount` matching the `amount` property
     /// - `customerId` matching the `customerId` property (if not nil)
     ///
     /// If these values don't match, the SDK will throw a validation error.
@@ -90,14 +86,6 @@ public protocol PaymentIntentProvider {
     ///
     /// - Important: Must be a valid ISO 4217 currency code.
     var currency: String { get }
-
-    /// The payment amount as an `NSDecimalNumber`.
-    ///
-    /// This value must be available immediately and should match the amount
-    /// of the payment intent that will be created by `createPaymentIntent()`.
-    ///
-    /// - Important: Must be a positive value.
-    var amount: NSDecimalNumber { get }
 
     /// The customer ID associated with this payment, if available.
     ///

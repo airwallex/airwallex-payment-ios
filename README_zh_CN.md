@@ -208,13 +208,11 @@ let session = Session(
 // 1. 实现 PaymentIntentProvider
 class MyPaymentIntentProvider: NSObject, PaymentIntentProvider {
     let currency: String = "USD"
-    let amount: NSDecimalNumber = NSDecimalNumber(value: 100.00)
     let customerId: String? = "customer_123"
 
     func createPaymentIntent() async throws -> AWXPaymentIntent {
         // 调用您的后端来创建 payment intent
         let response = try await MyBackendAPI.createPaymentIntent(
-            amount: amount,
             currency: currency,
             customerId: customerId
         )

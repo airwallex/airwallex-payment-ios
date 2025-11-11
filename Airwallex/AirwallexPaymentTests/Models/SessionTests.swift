@@ -290,23 +290,6 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(session.currency(), "USD")
     }
 
-    func testAmount_withProvider() {
-        let expectedAmount = NSDecimalNumber(value: 250.50)
-        let provider = MockPaymentIntentProvider(
-            customerId: mockCustomerId,
-            currency: "AUD",
-            amount: expectedAmount
-        )
-
-        let session = Session(
-            paymentIntentProvider: provider,
-            countryCode: mockCountryCode,
-            returnURL: mockReturnURL
-        )
-
-        XCTAssertEqual(session.amount(), expectedAmount)
-    }
-
     func testPaymentIntentId_withProvider() {
         let provider = MockPaymentIntentProvider(
             customerId: mockCustomerId,
@@ -789,19 +772,19 @@ final class SessionTests: XCTestCase {
 class MockPaymentIntentProvider: NSObject, PaymentIntentProvider {
     let customerId: String?
     let currency: String
-    let amount: NSDecimalNumber
+    let mockAmount: NSDecimalNumber
 
     init(customerId: String?, currency: String, amount: NSDecimalNumber) {
         self.customerId = customerId
         self.currency = currency
-        self.amount = amount
+        self.mockAmount = amount
     }
 
     func createPaymentIntent() async throws -> AWXPaymentIntent {
         let intent = AWXPaymentIntent()
         intent.customerId = customerId
         intent.currency = currency
-        intent.amount = amount
+        intent.amount = mockAmount
         intent.id = "test_intent_from_provider_\(UUID().uuidString)"
         intent.clientSecret = "test_client_secret_\(UUID().uuidString)"
         return intent
@@ -811,7 +794,6 @@ class MockPaymentIntentProvider: NSObject, PaymentIntentProvider {
 class MockPaymentIntentProviderWithError: NSObject, PaymentIntentProvider {
     var customerId: String? { "error_customer" }
     var currency: String { "USD" }
-    var amount: NSDecimalNumber { NSDecimalNumber(value: 100) }
 
     func createPaymentIntent() async throws -> AWXPaymentIntent {
         throw NSError(
