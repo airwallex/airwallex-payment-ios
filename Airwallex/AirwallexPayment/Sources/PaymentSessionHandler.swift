@@ -42,6 +42,7 @@ import UIKit
 /// - Error handling and validation
 /// - Custom payment flow integration
 public class PaymentSessionHandler: NSObject {
+    private let launchSubtype = "api"
     enum ValidationError: ErrorLoggable {
         case invalidPayment(underlyingError: Error)
         
@@ -156,6 +157,10 @@ public class PaymentSessionHandler: NSObject {
     /// This method sets up and starts the Apple Pay payment flow.
     func startApplePay() {
         do {
+            AnalyticsLogger.log(
+                action: .paymentLaunched,
+                extraInfo: [.subtype: launchSubtype]
+            )
             try confirmApplePay(cancelPaymentOnDismiss: true)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -172,6 +177,10 @@ public class PaymentSessionHandler: NSObject {
                           billing: AWXPlaceDetails?,
                           saveCard: Bool = false) {
         do {
+            AnalyticsLogger.log(
+                action: .paymentLaunched,
+                extraInfo: [.subtype: launchSubtype]
+            )
             try confirmCardPayment(with: card, billing: billing, saveCard: saveCard)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -192,6 +201,10 @@ public class PaymentSessionHandler: NSObject {
     ///                     This consent must be valid and not expired.
     func startConsentPayment(with consent: AWXPaymentConsent) {
         do {
+            AnalyticsLogger.log(
+                action: .paymentLaunched,
+                extraInfo: [.subtype: launchSubtype]
+            )
             try confirmConsentPayment(with: consent)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -212,6 +225,10 @@ public class PaymentSessionHandler: NSObject {
     ///                  Set to `true` for PAN-type consents that require CVC validation.
     func startConsentPayment(withId consentId: String, requiresCVC: Bool = false) {
         do {
+            AnalyticsLogger.log(
+                action: .paymentLaunched,
+                extraInfo: [.subtype: launchSubtype]
+            )
             try confirmConsentPayment(withId: consentId, requiresCVC: requiresCVC)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -240,6 +257,10 @@ public class PaymentSessionHandler: NSObject {
     func startRedirectPayment(with name: String, additionalInfo: [String: String]?) {
         Task { @MainActor in
             do {
+                AnalyticsLogger.log(
+                    action: .paymentLaunched,
+                    extraInfo: [.subtype: launchSubtype]
+                )
                 try await confirmRedirectPayment(with: name, additionalInfo: additionalInfo)
             } catch {
                 handleFailure(paymentResultDelegate, error)
