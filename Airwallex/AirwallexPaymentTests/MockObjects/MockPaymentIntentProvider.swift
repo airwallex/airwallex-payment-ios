@@ -15,19 +15,19 @@ import AirwallexCore
 class MockPaymentIntentProvider: NSObject, PaymentIntentProvider {
     let customerId: String?
     let currency: String
-    let mockAmount: NSDecimalNumber
+    let amount: NSDecimalNumber
 
     init(customerId: String?, currency: String, amount: NSDecimalNumber) {
         self.customerId = customerId
         self.currency = currency
-        self.mockAmount = amount
+        self.amount = amount
     }
 
     func createPaymentIntent() async throws -> AWXPaymentIntent {
         let intent = AWXPaymentIntent()
         intent.customerId = customerId
         intent.currency = currency
-        intent.amount = mockAmount
+        intent.amount = amount
         intent.id = "test_intent_from_provider_\(UUID().uuidString)"
         intent.clientSecret = "test_client_secret_\(UUID().uuidString)"
         return intent
@@ -37,6 +37,7 @@ class MockPaymentIntentProvider: NSObject, PaymentIntentProvider {
 class MockPaymentIntentProviderWithError: NSObject, PaymentIntentProvider {
     var customerId: String? { "error_customer" }
     var currency: String { "USD" }
+    var amount: NSDecimalNumber { NSDecimalNumber(value: 100) }
 
     func createPaymentIntent() async throws -> AWXPaymentIntent {
         throw NSError(

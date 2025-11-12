@@ -20,18 +20,20 @@ import Foundation
 ///
 /// When using `Session` with a payment intent provider instead of a pre-created intent,
 /// the SDK will call `createPaymentIntent()` asynchronously when needed. The provider
-/// must also supply the basic payment information (currency, customerId) synchronously.
+/// must also supply the basic payment information (amount, currency, customerId) synchronously.
 ///
 /// ## Usage Example
 ///
 /// ```swift
 /// class MyPaymentIntentProvider: NSObject, PaymentIntentProvider {
+///     let amount: NSDecimalNumber = NSDecimalNumber(string: "99.99")
 ///     let currency: String = "USD"
 ///     let customerId: String? = "customer_123"
 ///
 ///     func createPaymentIntent() async throws -> AWXPaymentIntent {
 ///         // Call your backend to create the payment intent
 ///         let response = try await MyBackendAPI.createPaymentIntent(
+///             amount: amount.decimalValue,
 ///             currency: currency,
 ///             customerId: customerId
 ///         )
@@ -50,9 +52,10 @@ import Foundation
 ///
 /// ## Important Notes
 ///
-/// - The `currency` and `customerId` properties must return values immediately (they cannot be async)
-/// - The values returned by `currency` and `customerId` must match the values
+/// - The `amount`, `currency` and `customerId` properties must return values immediately (they cannot be async)
+/// - The values returned by `amount`, `currency` and `customerId` must match the values
 ///   in the `AWXPaymentIntent` returned by `createPaymentIntent()`
+/// - The `amount` should be zero for recurring-only payments (no immediate charge)
 /// - The `createPaymentIntent()` method will only be called once, and the result is cached
 /// - If `createPaymentIntent()` throws an error, the payment flow will fail
 ///
@@ -69,6 +72,7 @@ public protocol PaymentIntentProvider {
     /// ## Important
     ///
     /// The returned payment intent must have:
+    /// - `amount` matching the `amount` property
     /// - `currency` matching the `currency` property
     /// - `customerId` matching the `customerId` property (if not nil)
     ///
@@ -78,6 +82,15 @@ public protocol PaymentIntentProvider {
     /// - Throws: Any error that occurs during payment intent creation (e.g., network errors,
     ///          API errors). The error will be propagated to the payment flow.
     func createPaymentIntent() async throws -> AWXPaymentIntent
+
+    /// The payment amount as an NSDecimalNumber value.
+    ///
+    /// This value must be available immediately and should match the amount
+    /// of the payment intent that will be created by `createPaymentIntent()`.
+    ///
+    /// - Important: Should be zero for recurring-only payments (no immediate charge).
+    ///             Must match the amount in the created payment intent.
+    var amount: NSDecimalNumber { get }
 
     /// The three-letter ISO currency code (e.g., "USD", "AUD", "GBP").
     ///

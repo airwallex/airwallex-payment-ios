@@ -211,12 +211,14 @@ Using a `PaymentIntentProvider` allows the SDK to delay payment intent creation 
 ``` swift
 // 1. Implement PaymentIntentProvider
 class MyPaymentIntentProvider: NSObject, PaymentIntentProvider {
+    let amount = NSDecimalNumber(string: "99.99")
     let currency: String = "USD"
     let customerId: String? = "customer_123"
 
     func createPaymentIntent() async throws -> AWXPaymentIntent {
         // Call your backend to create the payment intent
         let response = try await MyBackendAPI.createPaymentIntent(
+            amount: amount,
             currency: currency,
             customerId: customerId
         )

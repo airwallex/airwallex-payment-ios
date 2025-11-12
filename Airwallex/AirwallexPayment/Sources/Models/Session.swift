@@ -177,7 +177,13 @@ import Foundation
     /// Returns the payment amount.
     /// - Returns: The payment amount as an NSDecimalNumber.
     @objc public override func amount() -> NSDecimalNumber {
-        paymentIntent?.amount ?? .zero
+        if let intentAmount = paymentIntent?.amount {
+            return intentAmount
+        }
+        if let providerAmount = paymentIntentProvider?.amount {
+            return providerAmount
+        }
+        return .zero
     }
     
     /// Returns the payment intent ID.
@@ -224,6 +230,7 @@ import Foundation
         
         assert(intent.customerId == provider.customerId)
         assert(intent.currency == provider.currency)
+        assert(intent.amount == provider.amount)
         
         if let currency = paymentConsentOptions?.termsOfUse?.paymentCurrency {
             assert(currency == intent.currency)

@@ -503,7 +503,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
             paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: .failure, error: error)
             return
         }
-        // if convertion from/to legacy session happends
+        // if convertion from/to legacy session happens
         // self.session will be the original session and `provider.session` will be the converted session
         let actionHandler = actionProviderClass.init(delegate: self, session: provider.session)
         actionHandler.paymentConsent = provider.paymentConsent
