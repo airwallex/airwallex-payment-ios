@@ -226,7 +226,16 @@ import Foundation
         }
 
         // Create intent from provider
-        let intent = try await provider.createPaymentIntent()
+        var intent: AWXPaymentIntent
+        do {
+            intent = try await provider.createPaymentIntent()
+        } catch {
+            AnalyticsLogger.log(
+                errorName: "ensure_intent",
+                errorMessage: error.localizedDescription
+            )
+            throw error
+        }
         
         assert(intent.customerId == provider.customerId)
         assert(intent.currency == provider.currency)
