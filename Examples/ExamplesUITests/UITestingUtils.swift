@@ -47,7 +47,6 @@ extension XCTestCase {
         UIIntegrationDemoScreen.openSettings()
         SettingsScreen.validate()
         SettingsScreen.ensureEnvironment(.demo)
-        SettingsScreen.ensureCustomerID(customerID)
         SettingsScreen.ensureLayoutMode(useTabLayout: useTabLayout)
         if let nextTriggerByCustomer {
             SettingsScreen.ensureNextTriggerByCustomer(nextTriggerByCustomer)
@@ -55,6 +54,7 @@ extension XCTestCase {
         SettingsScreen.ensureForce3DS(force3DS)
         SettingsScreen.ensurePreferUnifiedSession(preferUnifiedSession)
         SettingsScreen.ensureExpressCheckout(preferUnifiedSession && preferExpressCheckout)
+        SettingsScreen.ensureCustomerID(customerID)
         SettingsScreen.save()
         UIIntegrationDemoScreen.validate()
     }
@@ -63,7 +63,6 @@ extension XCTestCase {
 extension XCUIElement {
     
     func robustTap() {
-        let coordinate = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        coordinate.tap()
+        tap()
     }
 }

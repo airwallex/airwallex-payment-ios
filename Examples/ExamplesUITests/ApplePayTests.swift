@@ -87,7 +87,7 @@ final class ApplePayTests: XCTestCase {
             checkoutMode: checkoutMode,
             customerID: customerId,
             nextTriggerByCustomer: nextTriggerByCustomer,
-            preferUnifiedSession: preferUnifiedSession,
+            preferUnifiedSession: preferUnifiedSession
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence(.animationTimeout)
