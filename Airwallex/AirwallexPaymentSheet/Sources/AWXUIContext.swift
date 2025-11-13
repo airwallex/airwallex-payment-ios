@@ -279,13 +279,18 @@ private extension AWXUIContext {
             return
         }
         
-        guard let secret = AWXAPIClientConfiguration.shared().clientSecret,
-              !secret.isEmpty else {
-            handleLaunchFailure(
-                paymentResultDelegate,
-                LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
-            )
-            return
+        if let session = session as? Session {
+            // client secret will be updated on `AWXAPIClientConfiguration.shared()`
+            // when `session.ensurePaymentIntent()` called
+        } else {
+            guard let secret = AWXAPIClientConfiguration.shared().clientSecret,
+                  !secret.isEmpty else {
+                handleLaunchFailure(
+                    paymentResultDelegate,
+                    LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
+                )
+                return
+            }
         }
         
         // update logger.session for UI integration

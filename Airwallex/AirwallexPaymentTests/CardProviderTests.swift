@@ -138,8 +138,8 @@ class CardProviderTests: XCTestCase {
         
         // Verify the API client was called correctly
         await MainActor.run {        
-            XCTAssertEqual(mockDelegate.didStartRequest, 1)
-            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+            XCTAssertEqual(mockDelegate.didStartRequest, 2)
+            XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.success)
             XCTAssertNil(mockDelegate.completionError)
         }
@@ -172,8 +172,8 @@ class CardProviderTests: XCTestCase {
         
         // Verify the API client was called correctly
         await MainActor.run {
-            XCTAssertEqual(mockDelegate.didStartRequest, 1)
-            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+            XCTAssertEqual(mockDelegate.didStartRequest, 2)
+            XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.success)
             XCTAssertNil(mockDelegate.completionError)
         }
@@ -203,10 +203,37 @@ class CardProviderTests: XCTestCase {
         
         // Verify the API client was called correctly
         await MainActor.run {
-            XCTAssertEqual(mockDelegate.didStartRequest, 1)
-            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+            XCTAssertEqual(mockDelegate.didStartRequest, 2)
+            XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.failure)
             XCTAssertNotNil(mockDelegate.completionError)
+        }
+    }
+    
+    func testConfirmIntentWithCardThrowsErrorInCreateRequest() async {
+        
+        mockSession = Session(
+            paymentIntentProvider: MockPaymentIntentProviderWithError(),
+            countryCode: "AU"
+        )
+        
+        let provider = CardProvider(
+            delegate: mockDelegate,
+            session: mockSession,
+            methodType: mockMethodType,
+            apiClient: mockApiClient
+        )
+
+        // Call the method under test
+        await provider.confirmIntentWithCard(AWXCard(), saveCard: false)
+
+        // Verify error was handled correctly (line 52-54)
+        await MainActor.run {
+            XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.failure)
+            XCTAssertNotNil(mockDelegate.completionError, "Error should be passed to delegate")
+            // No API requests should be made since the error occurred before confirmIntent
+            XCTAssertEqual(mockDelegate.didStartRequest, 1)
+            XCTAssertEqual(mockDelegate.didEndRequest, 1)
         }
     }
     
@@ -253,8 +280,8 @@ class CardProviderTests: XCTestCase {
         
         // Verify the API client was called correctly
         await MainActor.run {
-            XCTAssertEqual(mockDelegate.didStartRequest, 1)
-            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+            XCTAssertEqual(mockDelegate.didStartRequest, 2)
+            XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.success)
             XCTAssertNil(mockDelegate.completionError)
         }
@@ -288,8 +315,8 @@ class CardProviderTests: XCTestCase {
         
         // Verify the API client was called correctly
         await MainActor.run {
-            XCTAssertEqual(mockDelegate.didStartRequest, 1)
-            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+            XCTAssertEqual(mockDelegate.didStartRequest, 2)
+            XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.success)
             XCTAssertNil(mockDelegate.completionError)
         }
@@ -317,8 +344,8 @@ class CardProviderTests: XCTestCase {
         
         // Verify the API client was called correctly
         await MainActor.run {
-            XCTAssertEqual(mockDelegate.didStartRequest, 1)
-            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+            XCTAssertEqual(mockDelegate.didStartRequest, 2)
+            XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.success)
             XCTAssertNil(mockDelegate.completionError)
         }
@@ -368,8 +395,8 @@ class CardProviderTests: XCTestCase {
         // Verify the API client was called correctly
         await MainActor.run {
             XCTAssertNil(mockDelegate.presentedViewControllerSpy)
-            XCTAssertEqual(mockDelegate.didStartRequest, 1)
-            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+            XCTAssertEqual(mockDelegate.didStartRequest, 2)
+            XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.success)
             XCTAssertNil(mockDelegate.completionError)
         }
@@ -441,8 +468,8 @@ class CardProviderTests: XCTestCase {
         
         // Verify the API client was called correctly
         await MainActor.run {
-            XCTAssertEqual(mockDelegate.didStartRequest, 1)
-            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+            XCTAssertEqual(mockDelegate.didStartRequest, 2)
+            XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.success)
             XCTAssertNil(mockDelegate.completionError)
         }
@@ -478,8 +505,8 @@ class CardProviderTests: XCTestCase {
         // Verify the API client was called correctly
         await MainActor.run {
             XCTAssertNil(mockDelegate.presentedViewControllerSpy)
-            XCTAssertEqual(mockDelegate.didStartRequest, 1)
-            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+            XCTAssertEqual(mockDelegate.didStartRequest, 2)
+            XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.success)
             XCTAssertNil(mockDelegate.completionError)
         }
@@ -503,8 +530,8 @@ class CardProviderTests: XCTestCase {
         
         // Verify the API client was called correctly
         await MainActor.run {
-            XCTAssertEqual(mockDelegate.didStartRequest, 1)
-            XCTAssertEqual(mockDelegate.didEndRequest, 1)
+            XCTAssertEqual(mockDelegate.didStartRequest, 2)
+            XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.failure)
             XCTAssertNotNil(mockDelegate.completionError)
         }
@@ -546,7 +573,7 @@ class CardProviderTests: XCTestCase {
     
     // MARK: - Helper Method Tests
     
-    func testCreateRequestForSubsequentTransaction() {
+    func testCreateRequestForSubsequentTransaction() async throws {
         // Configure a CardProvider
         let provider = CardProvider(
             delegate: mockDelegate,
@@ -554,19 +581,19 @@ class CardProviderTests: XCTestCase {
             methodType: mockMethodType,
             apiClient: mockApiClient
         )
-        
+
         // Test without CVC
-        let request1 = provider.createPaymentRequestWithExistingConsent(consentId: "consent_123", cvc: nil)
-        
+        let request1 = try await provider.createPaymentRequestWithExistingConsent(consentId: "consent_123", cvc: nil)
+
         // Verify the request properties
         XCTAssertEqual(request1.paymentConsent?.id, "consent_123")
         XCTAssertNotNil(request1.paymentMethod)
         XCTAssertEqual(request1.intentId, mockPaymentIntent.id)
         XCTAssertNotNil(request1.options)
-        
+
         // Test with CVC
-        let request2 = provider.createPaymentRequestWithExistingConsent(consentId: "consent_123", cvc: "123")
-        
+        let request2 = try await provider.createPaymentRequestWithExistingConsent(consentId: "consent_123", cvc: "123")
+
         // Verify the request properties
         XCTAssertEqual(request2.paymentConsent?.id, "consent_123")
         XCTAssertEqual(request2.paymentMethod?.type, AWXCardKey)
@@ -575,25 +602,25 @@ class CardProviderTests: XCTestCase {
         XCTAssertNotNil(request2.options)
     }
     
-    func testCreateRequestForConsentConversion() {
+    func testCreateRequestForConsentConversion() async throws {
         // Configure a CardProvider
         let methodType = AWXPaymentMethodType()
         methodType.name = AWXCardKey
-        
+
         let provider = CardProvider(
             delegate: mockDelegate,
             session: mockSession,
             methodType: methodType,
             apiClient: mockApiClient
         )
-        
+
         // Test without CVC
-        let request1 = provider.createPaymentRequestWithConsentCreation(
+        let request1 = try await provider.createPaymentRequestWithConsentCreation(
             methodId: "method_123",
             cvc: nil,
             consentOptions: PaymentConsentOptions(nextTriggeredBy: .customerType)
         )
-        
+
         // Verify the request properties
         XCTAssertEqual(request1.paymentMethod?.id, "method_123")
         XCTAssertEqual(request1.paymentMethod?.type, AWXCardKey)
@@ -601,9 +628,9 @@ class CardProviderTests: XCTestCase {
         XCTAssertEqual(request1.intentId, mockPaymentIntent.id)
         XCTAssertNil(request1.paymentConsent)
         XCTAssertEqual(request1.consentOptions?["next_triggered_by"] as? String, "customer")
-        
+
         // Test with CVC
-        let request2 = provider.createPaymentRequestWithConsentCreation(
+        let request2 = try await provider.createPaymentRequestWithConsentCreation(
             methodId: "method_123",
             cvc: "123",
             consentOptions: PaymentConsentOptions(
@@ -611,7 +638,7 @@ class CardProviderTests: XCTestCase {
                 merchantTriggerReason: .unscheduled
             )
         )
-        
+
         // Verify the request properties
         XCTAssertEqual(request2.paymentMethod?.id, "method_123")
         XCTAssertEqual(request2.paymentMethod?.type, AWXCardKey)

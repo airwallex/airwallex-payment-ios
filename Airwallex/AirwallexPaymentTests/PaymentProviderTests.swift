@@ -153,7 +153,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertNil(options)
     }
     
-    func testCreateConfirmIntentRequestWithMethod() {
+    func testCreateConfirmIntentRequestWithMethod() async throws {
         // Create a provider
         let provider = PaymentProvider(
             delegate: mockDelegate,
@@ -166,7 +166,7 @@ class PaymentProviderTests: XCTestCase {
         method.type = AWXCardKey
         
         // Test creating confirm intent request with method
-        let request = provider.createConfirmIntentRequest(method: method, consent: nil, consentOptions: nil)
+        let request = try await provider.createConfirmIntentRequest(method: method, consent: nil, consentOptions: nil)
         
         // Verify request is correctly configured
         XCTAssertEqual(request.intentId, mockPaymentIntent.id)
@@ -179,7 +179,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertNil(request.consentOptions)
     }
     
-    func testCreateConfirmIntentRequestWithConsent() {
+    func testCreateConfirmIntentRequestWithConsent() async throws{
         // Create a provider
         let provider = PaymentProvider(
             delegate: mockDelegate,
@@ -192,7 +192,7 @@ class PaymentProviderTests: XCTestCase {
         consent.id = "test_consent_id"
         
         // Test creating confirm intent request with consent
-        let request = provider.createConfirmIntentRequest(method: nil, consent: consent, consentOptions: nil)
+        let request = try await provider.createConfirmIntentRequest(method: nil, consent: consent, consentOptions: nil)
         
         // Verify request is correctly configured
         XCTAssertEqual(request.intentId, mockPaymentIntent.id)
@@ -205,7 +205,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertNil(request.consentOptions)
     }
     
-    func testCreateConfirmIntentRequestWithConsentOptions() {
+    func testCreateConfirmIntentRequestWithConsentOptions() async throws {
         // Create a provider
         let provider = PaymentProvider(
             delegate: mockDelegate,
@@ -218,7 +218,7 @@ class PaymentProviderTests: XCTestCase {
         consent.id = "test_consent_id"
         
         // Test creating confirm intent request with consent
-        let request = provider.createConfirmIntentRequest(
+        let request = try await provider.createConfirmIntentRequest(
             method: nil,
             consent: consent,
             consentOptions: PaymentConsentOptions(

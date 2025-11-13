@@ -8,6 +8,7 @@
 
 import XCTest
 
+@MainActor
 final class CardRegisteredUserCheckoutTests: XCTestCase {
     
     var app: XCUIApplication!
@@ -30,7 +31,6 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         
     }
     
-    @MainActor
     func testOneOffPayment_noSave() throws {
         launchAppAndEnsureSettings(
             app,
@@ -58,18 +58,15 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         PaymentSheetScreen.cancelPayment()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
     }
-    
-    @MainActor
+
     func testOneOffPayment_saveCard_tabLayout() throws {
         try testOneOffPayment_saveCard(useTabLayout: true)
     }
-    
-    @MainActor
+
     func testOneOffPayment_saveCard_accordionLayout() throws {
         try testOneOffPayment_saveCard(useTabLayout: false)
     }
-    
-    @MainActor
+
     private func testOneOffPayment_saveCard(useTabLayout: Bool) throws {
         // first card payment
         launchAppAndEnsureSettings(
@@ -134,18 +131,15 @@ final class CardRegisteredUserCheckoutTests: XCTestCase {
         PaymentSheetScreen.cancelPayment()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
     }
-    
-    @MainActor
+
     func testRecurringPayment_triggerByCustomer() throws {
         testRecurringPayemnt(withIntent: false, nextTriggerByCustomer: true)
     }
-    
-    @MainActor
+
     func testRecurringWithIntentPayment_triggerByCustomer() throws {
         testRecurringPayemnt(withIntent: true, nextTriggerByCustomer: true)
     }
-    
-    @MainActor
+
     private func testRecurringPayemnt(withIntent: Bool, nextTriggerByCustomer: Bool) {
         // delete saved consent if exists
         launchAppAndEnsureSettings(

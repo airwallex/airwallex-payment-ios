@@ -312,25 +312,31 @@ private extension SchemaPaymentSectionController {
             // update hidden fields
             paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
             
-            do {
-                paymentSessionHandler = PaymentSessionHandler(
-                    session: session,
-                    viewController: context.viewController!,
-                    paymentResultDelegate: AWXUIContext.shared.delegate,
-                    methodType: methodProvider.method(named: name),
-                    dismissAction: { completion in
-                        AWXUIContext.shared.dismissAction?(completion)
-                        // clear dismissAction block here so the user cancel detection
-                        // in AWXPaymentViewController.deinit() can work as expected
-                        AWXUIContext.shared.dismissAction = nil
+            paymentSessionHandler = PaymentSessionHandler(
+                session: session,
+                viewController: context.viewController!,
+                paymentResultDelegate: AWXUIContext.shared.delegate,
+                methodType: methodProvider.method(named: name),
+                dismissAction: { completion in
+                    AWXUIContext.shared.dismissAction?(completion)
+                    // clear dismissAction block here so the user cancel detection
+                    // in AWXPaymentViewController.deinit() can work as expected
+                    AWXUIContext.shared.dismissAction = nil
+                }
+            )
+            
+            Task { @MainActor in
+                do {
+                    try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
+                    debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
+                } catch {
+                    context.viewController?.showAlert(message: error.localizedDescription)
+                    for viewModel in uiFieldViewModels {
+                        viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
                     }
-                )
-                try paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
-            } catch {
-                context.viewController?.showAlert(message: error.localizedDescription)
+                }
             }
             
-            debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         } catch {
             context.viewController?.showAlert(message: error.localizedDescription)
             for viewModel in uiFieldViewModels {

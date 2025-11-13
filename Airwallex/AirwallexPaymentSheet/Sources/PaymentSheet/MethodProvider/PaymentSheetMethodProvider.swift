@@ -86,6 +86,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
 private extension PaymentSheetMethodProvider {
     
     func getAllMethodTypes() async throws -> [AWXPaymentMethodType] {
+        try await (session as? Session)?.ensurePaymentIntent()
         let request = AWXGetPaymentMethodTypesRequest()
         request.transactionCurrency = session.currency()
         request.transactionMode = session.transactionMode()

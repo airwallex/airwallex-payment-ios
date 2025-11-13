@@ -28,25 +28,31 @@ class CardProvider: PaymentProvider {
     func confirmIntentWithCard(_ card: AWXCard,
                                billing: AWXPlaceDetails? = nil,
                                saveCard: Bool) async {
-        debugLog("Start payment confirm. Type: Card. Intent Id: \(unifiedSession.paymentIntent.id)")
-        let method = AWXPaymentMethod()
-        method.type = AWXCardKey
-        method.billing = billing
-        method.card = card
-        method.customerId = unifiedSession.paymentIntent.customerId
-        
-        let consentOptions = if saveCard && unifiedSession.paymentIntent.customerId != nil {
-            PaymentConsentOptions(nextTriggeredBy: .customerType)
-        } else {
-            unifiedSession.paymentConsentOptions
+        do {
+            debugLog("Start payment confirm. Type: Card")
+            let method = AWXPaymentMethod()
+            method.type = AWXCardKey
+            method.billing = billing
+            method.card = card
+            method.customerId = unifiedSession.customerId()
+
+            let consentOptions = if saveCard && unifiedSession.customerId() != nil {
+                PaymentConsentOptions(nextTriggeredBy: .customerType)
+            } else {
+                unifiedSession.paymentConsentOptions
+            }
+
+            let request = try await createConfirmIntentRequest(
+                method: method,
+                consent: nil,
+                consentOptions: consentOptions
+            )
+            await confirmIntent(request)
+        } catch {
+            await MainActor.run {
+                delegate?.provider(self, didCompleteWith: .failure, error: error)
+            }
         }
-        
-        let request = createConfirmIntentRequest(
-            method: method,
-            consent: nil,
-            consentOptions: consentOptions
-        )
-        await confirmIntent(request)
     }
     
     /// Confirms a payment intent using an existing payment consent
@@ -64,7 +70,7 @@ class CardProvider: PaymentProvider {
             if let methodId {
                 if let options = unifiedSession.paymentConsentOptions  {
                     // Create consent & confirm payment with existing payment method
-                    let request = createPaymentRequestWithConsentCreation(
+                    let request = try await createPaymentRequestWithConsentCreation(
                         methodId: methodId,
                         cvc: cvc,
                         consentOptions: options
@@ -72,7 +78,7 @@ class CardProvider: PaymentProvider {
                     await confirmIntent(request)
                 } else if consent.isMITConsent {
                     // one-off transaction with MIT consent
-                    let request = createPaymentRequestWithConsentCreation(
+                    let request = try await createPaymentRequestWithConsentCreation(
                         methodId: methodId,
                         cvc: cvc,
                         consentOptions: PaymentConsentOptions(nextTriggeredBy: .customerType)
@@ -80,12 +86,12 @@ class CardProvider: PaymentProvider {
                     await confirmIntent(request)
                 } else {
                     // one-off transaction with CIT consent
-                    let request = createPaymentRequestWithExistingConsent(consentId: consent.id, cvc: cvc)
+                    let request = try await createPaymentRequestWithExistingConsent(consentId: consent.id, cvc: cvc)
                     await confirmIntent(request)
                 }
             } else {
                 // treated as one-off transaction like before, and payment consent options will be ignored
-                let request = createPaymentRequestWithExistingConsent(consentId: consent.id, cvc: cvc)
+                let request = try await createPaymentRequestWithExistingConsent(consentId: consent.id, cvc: cvc)
                 await confirmIntent(request)
             }
         } catch {
@@ -105,7 +111,7 @@ class CardProvider: PaymentProvider {
             if requiresCVC {
                 cvc = try await collectCVC()
             }
-            let request = createPaymentRequestWithExistingConsent(consentId: consentId, cvc: cvc)
+            let request = try await createPaymentRequestWithExistingConsent(consentId: consentId, cvc: cvc)
             await confirmIntent(request)
         } catch {
             await MainActor.run {
@@ -149,7 +155,7 @@ class CardProvider: PaymentProvider {
 
 extension CardProvider {
     
-    func createPaymentRequestWithExistingConsent(consentId: String, cvc: String?) -> AWXConfirmPaymentIntentRequest {
+    func createPaymentRequestWithExistingConsent(consentId: String, cvc: String?) async throws -> AWXConfirmPaymentIntentRequest {
         let consent = AWXPaymentConsent()
         consent.id = consentId
         var method = AWXPaymentMethod()
@@ -158,10 +164,10 @@ extension CardProvider {
             method.card = AWXCard()
             method.card?.cvc = cvc
         }
-        return createConfirmIntentRequest(method: method, consent: consent, consentOptions: nil)
+        return try await createConfirmIntentRequest(method: method, consent: consent, consentOptions: nil)
     }
-    
-    func createPaymentRequestWithConsentCreation(methodId: String?, cvc: String?, consentOptions: PaymentConsentOptions) -> AWXConfirmPaymentIntentRequest {
+
+    func createPaymentRequestWithConsentCreation(methodId: String?, cvc: String?, consentOptions: PaymentConsentOptions) async throws -> AWXConfirmPaymentIntentRequest {
         let method = AWXPaymentMethod()
         method.id = methodId
         method.type = AWXCardKey
@@ -169,7 +175,7 @@ extension CardProvider {
             method.card = AWXCard()
             method.card?.cvc = cvc
         }
-        return createConfirmIntentRequest(method: method, consent: nil, consentOptions: consentOptions)
+        return try await createConfirmIntentRequest(method: method, consent: nil, consentOptions: consentOptions)
     }
     
 }

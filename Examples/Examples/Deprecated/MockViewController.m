@@ -16,7 +16,7 @@
 @import AirwallexCore;
 #endif
 
-@interface MockViewController ()<AWXPaymentResultDelegate>
+@interface MockViewController ()<AWXPaymentResultDelegate, PaymentIntentProvider>
 
 @end
 
@@ -28,7 +28,7 @@
 }
 
 - (void)testObjcAPIVisibility {
-    TermsOfUse *termsOfUse = [[TermsOfUse alloc] initWithBillingCycleChargeDay:3 endDate:@"" firstPaymentAmount:nil fixedPaymentAmount:nil maxPaymentAmount:nil minPaymentAmount:nil paymentAmountType:PaymentAmountTypeFixed paymentCurrency:nil paymentSchedule:[[PaymentSchedule alloc] initWithPeriod:1 periodUnit:PeriodUnitDay] startDate:nil totalBillingCycles:1];
+    TermsOfUse *termsOfUse = [[TermsOfUse alloc] initWithBillingCycleChargeDay:3 endDate:NSDate.date firstPaymentAmount:nil fixedPaymentAmount:nil maxPaymentAmount:nil minPaymentAmount:nil paymentAmountType:PaymentAmountTypeFixed paymentCurrency:nil paymentSchedule:[[PaymentSchedule alloc] initWithPeriod:1 periodUnit:PeriodUnitDay] startDate:nil totalBillingCycles:1];
     PaymentConsentOptions *options = [[PaymentConsentOptions alloc] initWithNextTriggeredBy:AirwallexNextTriggerByMerchantType merchantTriggerReason:AirwallexMerchantTriggerReasonScheduled termsOfUse:termsOfUse];
     Session *session = [[Session alloc] initWithPaymentIntent:AWXPaymentIntent.new
                                                   countryCode:@"AU"
@@ -58,6 +58,22 @@
     [handler startConsentPaymentWith:consent];
     [handler startConsentPaymentWithId:@"id"];
     [handler startRedirectPaymentWith:@"paypal" additionalInfo:@{}];
+    
+    do {
+        Session *session = [[Session alloc] initWithPaymentIntentProvider:self
+                                                              countryCode:@"AU"
+                                                          applePayOptions:nil
+                                                              autoCapture:true
+                                            autoSaveCardForFuturePayments:true
+                                                                  billing:nil
+                                                      hidePaymentConsents:false
+                                                                     lang:nil
+                                                           paymentMethods:nil
+                                                    paymentConsentOptions:options
+                                             requiredBillingContactFields:AWXRequiredBillingContactFieldName
+                                                                returnURL:@""];
+        
+    } while (0);
 }
 
 // AWXPaymentResultDelegate
@@ -66,6 +82,30 @@
 }
 
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)paymentConsentId {
+}
+
+// PaymentIntentProvider
+
+- (NSDecimalNumber *)amount {
+    return [NSDecimalNumber decimalNumberWithString:@"100"];
+}
+
+- (NSString *)currency {
+    return @"AUD";
+}
+
+- (NSString *)customerId {
+    return @"mock_customer_id";
+}
+
+- (void)createPaymentIntentWithCompletionHandler:(void (^)(AWXPaymentIntent * _Nullable, NSError * _Nullable))completionHandler {
+    AWXPaymentIntent *intent = [[AWXPaymentIntent alloc] init];
+    intent.amount = self.amount;
+    intent.currency = self.currency;
+    intent.customerId = self.customerId;
+    intent.Id = [NSString stringWithFormat:@"mock_intent_%@", [[NSUUID UUID] UUIDString]];
+    intent.clientSecret = [NSString stringWithFormat:@"mock_secret_%@", [[NSUUID UUID] UUIDString]];
+    completionHandler(intent, nil);
 }
 
 @end
