@@ -221,7 +221,7 @@ import Foundation
             throw NSError(
                 domain: AWXSDKErrorDomain,
                 code: -1,
-                userInfo: [NSLocalizedDescriptionKey: "Payment intent not available. Either provide a payment intent or a payment intent provider."]
+                userInfo: [NSLocalizedDescriptionKey: "Payment intent not available. Either provide a payment intent or a provider."]
             )
         }
 
