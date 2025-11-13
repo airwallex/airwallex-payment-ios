@@ -136,4 +136,8 @@ public extension AWXSession {
             )
         }
     }
+    
+    var isExpressCheckout: Bool {
+        (self as? Session)?.paymentIntentProvider != nil
+    }
 }

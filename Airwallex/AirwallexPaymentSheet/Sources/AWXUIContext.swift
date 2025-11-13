@@ -167,7 +167,13 @@ import AirwallexCore
             layout: layout
         )
         
-        AnalyticsLogger.log(action: .paymentLaunched, extraInfo: [.subtype: Self.subtypeDropin])
+        AnalyticsLogger.log(
+            action: .paymentLaunched,
+            extraInfo: [
+                .subtype: Self.subtypeDropin,
+                .expressCheckout: session.isExpressCheckout
+            ]
+        )
     }
     //  MARK: - Launch by Payment Method
     
@@ -257,7 +263,14 @@ import AirwallexCore
             paymentResultDelegate: paymentResultDelegate,
             launchStyle: launchStyle
         )
-        AnalyticsLogger.log(action: .paymentLaunched, extraInfo: [.subtype: Self.subtypeElement, .paymentMethod: name])
+        AnalyticsLogger.log(
+            action: .paymentLaunched,
+            extraInfo: [
+                .subtype: Self.subtypeElement,
+                .paymentMethod: name,
+                .expressCheckout: session.isExpressCheckout
+            ]
+        )
     }
 }
 

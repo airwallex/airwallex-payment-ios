@@ -424,7 +424,7 @@ final class SessionTests: XCTestCase {
             XCTAssertEqual(error.code, -1)
             XCTAssertEqual(
                 error.userInfo[NSLocalizedDescriptionKey] as? String,
-                "Payment intent not available. Either provide a payment intent or a payment intent provider."
+                "Payment intent not available. Either provide a payment intent or a provider."
             )
         }
     }

@@ -136,7 +136,7 @@
 
 - (NSDictionary *)extraCommonData {
     NSMutableDictionary *data = [NSMutableDictionary new];
-    NSString *merchantAppName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString *merchantAppName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"] ?: [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
     if (merchantAppName.length > 0) {
         [data setObject:merchantAppName forKey:@"merchantAppName"];
     }
