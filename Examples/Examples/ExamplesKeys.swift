@@ -68,7 +68,10 @@ struct ExamplesKeys {
     
     @Storage("preferUnifiedSession", defaultValue: true)
     static var preferUnifiedSession: Bool
-        
+
+    @Storage("expressCheckout", defaultValue: true)
+    static var expressCheckout: Bool
+
     static var allSettings: AllSettings {
         get {
             AllSettings(
@@ -89,7 +92,8 @@ struct ExamplesKeys {
                 countryCode: ExamplesKeys.countryCode,
                 returnUrl: ExamplesKeys.returnUrl,
                 paymentLayout: ExamplesKeys.paymentLayout,
-                preferUnifiedSession: ExamplesKeys.preferUnifiedSession
+                preferUnifiedSession: ExamplesKeys.preferUnifiedSession,
+                expressCheckout: ExamplesKeys.expressCheckout
             )
         }
         set {
@@ -112,6 +116,7 @@ struct ExamplesKeys {
             ExamplesKeys.returnUrl = newValue.returnUrl
             ExamplesKeys.paymentLayout = newValue.paymentLayout
             ExamplesKeys.preferUnifiedSession = newValue.preferUnifiedSession
+            ExamplesKeys.expressCheckout = newValue.expressCheckout
         }
     }
     
@@ -136,6 +141,7 @@ struct ExamplesKeys {
         
         var paymentLayout: AWXUIContext.PaymentLayout
         var preferUnifiedSession: Bool
+        var expressCheckout: Bool
         
         init(environment: AirwallexSDKMode,
              nextTriggerByType: AirwallexNextTriggerByType,
@@ -154,7 +160,8 @@ struct ExamplesKeys {
              countryCode: String,
              returnUrl: String,
              paymentLayout: AWXUIContext.PaymentLayout,
-             preferUnifiedSession: Bool) {
+             preferUnifiedSession: Bool,
+             expressCheckout: Bool) {
             self.environment = environment
             self.nextTriggerByType = nextTriggerByType
             self.requiresName = requiresName
@@ -173,6 +180,7 @@ struct ExamplesKeys {
             self.returnUrl = returnUrl
             self.paymentLayout = paymentLayout
             self.preferUnifiedSession = preferUnifiedSession
+            self.expressCheckout = expressCheckout
         }
         
         var description: String {
@@ -195,6 +203,7 @@ struct ExamplesKeys {
                 ├── Return URL: \(returnUrl)
                 ├── Payment Layout: \(paymentLayout)
                 ├── Prefer Unified Session: \(preferUnifiedSession)
+                ├── Express Checkout: \(expressCheckout)
                 """
         }
     }

@@ -228,14 +228,14 @@ class ProviderFactoryTests: XCTestCase {
     
     // MARK: - Redirect Provider Tests
     
-    func testRedirectProviderWithUnifiedSession() {
+    func testRedirectProviderWithUnifiedSession() async throws {
         // Configure for redirect payment
         mockMethodType.name = "paypal"
         mockMethodType.resources = AWXResources()
         mockMethodType.resources.hasSchema = true
         
         // Get provider
-        let provider = factory.redirectProvider(
+        let provider = try await factory.redirectProvider(
             delegate: mockDelegate,
             session: mockSession,
             type: mockMethodType
@@ -245,14 +245,14 @@ class ProviderFactoryTests: XCTestCase {
         XCTAssertTrue(provider is AWXRedirectActionProvider)
     }
     
-    func testRedirectProviderWithOneOffSession() {
+    func testRedirectProviderWithOneOffSession() async throws {
         // Configure for redirect payment
         mockMethodType.name = "paypal"
         mockMethodType.resources = AWXResources()
         mockMethodType.resources.hasSchema = true
         
         // Get provider
-        let provider = factory.redirectProvider(
+        let provider = try await factory.redirectProvider(
             delegate: mockDelegate,
             session: mockOneOffSession,
             type: mockMethodType
@@ -262,14 +262,14 @@ class ProviderFactoryTests: XCTestCase {
         XCTAssertTrue(provider is AWXRedirectActionProvider)
     }
     
-    func testRedirectProviderWithRecurringWithIntentSession() {
+    func testRedirectProviderWithRecurringWithIntentSession() async throws {
         // Configure for redirect payment
         mockMethodType.name = "paypal"
         mockMethodType.resources = AWXResources()
         mockMethodType.resources.hasSchema = true
         
         // Get provider
-        let provider = factory.redirectProvider(
+        let provider = try await factory.redirectProvider(
             delegate: mockDelegate,
             session: mockRecurringWithIntentSession,
             type: mockMethodType
@@ -279,14 +279,14 @@ class ProviderFactoryTests: XCTestCase {
         XCTAssertTrue(provider is AWXRedirectActionProvider)
     }
     
-    func testRedirectProviderWithRecurringSession() {
+    func testRedirectProviderWithRecurringSession() async throws {
         // Configure for redirect payment
         mockMethodType.name = "paypal"
         mockMethodType.resources = AWXResources()
         mockMethodType.resources.hasSchema = true
         
         // Get provider
-        let provider = factory.redirectProvider(
+        let provider = try await factory.redirectProvider(
             delegate: mockDelegate,
             session: mockRecurringSession,
             type: mockMethodType
@@ -298,7 +298,7 @@ class ProviderFactoryTests: XCTestCase {
     
     // MARK: - Edge Cases
     
-    func testProviderFactoryWithNilMethodType() {
+    func testProviderFactoryWithNilMethodType() async throws {
         // Test with nil method type
         
         // Apple Pay Provider
@@ -318,7 +318,7 @@ class ProviderFactoryTests: XCTestCase {
         XCTAssertNotNil(cardProvider)
         
         // Redirect Provider
-        let redirectProvider = factory.redirectProvider(
+        let redirectProvider = try await factory.redirectProvider(
             delegate: mockDelegate,
             session: mockSession,
             type: nil
@@ -326,7 +326,7 @@ class ProviderFactoryTests: XCTestCase {
         XCTAssertNotNil(redirectProvider)
     }
     
-    func testProviderFactoryWithRecurringSession() {
+    func testProviderFactoryWithRecurringSession() async throws {
         // Setup recurring session
         let consentOptions = PaymentConsentOptions(nextTriggeredBy: .merchantType)
         mockSession = Session(
@@ -358,7 +358,7 @@ class ProviderFactoryTests: XCTestCase {
         
         // Redirect Provider
         mockMethodType.name = "paypal"
-        let redirectProvider = factory.redirectProvider(
+        let redirectProvider = try await factory.redirectProvider(
             delegate: mockDelegate,
             session: mockSession,
             type: mockMethodType

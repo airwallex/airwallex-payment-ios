@@ -8,6 +8,7 @@
 
 import XCTest
 
+@MainActor
 final class CardGuestUserCheckoutTests: XCTestCase {
 
     var app: XCUIApplication!
@@ -25,39 +26,37 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    @MainActor
     func testCardPayment_oneOff_3DS_Combined() throws {
         testCardPayment(cardNumber: TestCards.visa3DS, threeDSChallenge: true)
     }
     
-    @MainActor
     func testCardPayment_oneOff_3DS_Combined_legacySession() throws {
         testCardPayment(cardNumber: TestCards.visa3DS, preferUnifiedSession: false, threeDSChallenge: true)
     }
     
-    @MainActor
     func testCardPayment_oneOff_3DS_Combined_accordionLayout() throws {
         testCardPayment(cardNumber: TestCards.visa3DS, threeDSChallenge: true, useTabLayout: false)
     }
     
-    @MainActor
     func testCardPayment_oneOff_3DS_Explicit() throws {
         testCardPayment(cardNumber: "4012000300000062", threeDSChallenge: true)
     }
     
-    @MainActor
     func testCardPayment_oneOff_3DS_Implicit() throws {
         testCardPayment(cardNumber: "4012000300000021", threeDSChallenge: false)
     }
     
-    @MainActor
     func testCardPayment_oneOff_3DS_None() throws {
         testCardPayment(cardNumber: TestCards.visa, threeDSChallenge: false)
     }
     
-    @MainActor
+    func testCardPayment_oneOff_3DS_None_no_express_checkout() throws {
+        testCardPayment(cardNumber: TestCards.visa, threeDSChallenge: false)
+    }
+    
     private func testCardPayment(cardNumber: String,
                                  preferUnifiedSession: Bool = true,
+                                 preferExpressCheckout: Bool = true,
                                  threeDSChallenge: Bool,
                                  useTabLayout: Bool = true) {
         launchAppAndEnsureSettings(
@@ -65,7 +64,8 @@ final class CardGuestUserCheckoutTests: XCTestCase {
             checkoutMode: .oneOff,
             customerID: "",
             force3DS: false,
-            preferUnifiedSession: true,
+            preferUnifiedSession: preferUnifiedSession,
+            preferExpressCheckout: preferExpressCheckout,
             useTabLayout: useTabLayout
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
@@ -81,7 +81,6 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
     }
     
-    @MainActor
     func testPaymentCancelled() throws {
         launchAppAndEnsureSettings(app, checkoutMode: .oneOff)
         UIIntegrationDemoScreen.openDefaultPaymentList()
@@ -90,7 +89,6 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
     }
     
-    @MainActor
     func test3DSCancelled() throws {
         launchAppAndEnsureSettings(app, checkoutMode: .oneOff)
         UIIntegrationDemoScreen.openDefaultPaymentList()

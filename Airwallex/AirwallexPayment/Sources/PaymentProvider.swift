@@ -38,13 +38,20 @@ class PaymentProvider: AWXDefaultProvider {
     ///   - consent: The payment consent information. Optional.
     ///   - consentOptions: The associated PaymentConsent to set up along with the PaymentIntent. Optional
     /// - Returns: request object
-    func createConfirmIntentRequest(method: AWXPaymentMethod?,
+    /// - Throws: An error if the payment intent cannot be ensured
+    @MainActor func createConfirmIntentRequest(method: AWXPaymentMethod?,
                                     consent: AWXPaymentConsent?,
-                                    consentOptions: PaymentConsentOptions?) -> AWXConfirmPaymentIntentRequest {
+                                    consentOptions: PaymentConsentOptions?) async throws -> AWXConfirmPaymentIntentRequest {
+        defer {
+            self.delegate?.providerDidEndRequest(self)
+        }
         assert(method != nil || consent != nil)
+        self.delegate?.providerDidStartRequest(self)
+        // Ensure payment intent exists
+        let intent = try await unifiedSession.ensurePaymentIntent()
         let request = AWXConfirmPaymentIntentRequest()
-        request.intentId = unifiedSession.paymentIntent.id
-        request.customerId = unifiedSession.paymentIntent.customerId
+        request.intentId = intent.id
+        request.customerId = intent.customerId
         request.paymentMethod = method
         request.paymentConsent = consent
         request.device = AWXDevice.withRiskSessionId()

@@ -267,4 +267,106 @@ class AWXSessionExtensionTests: XCTestCase {
             }
         }
     }
+
+    func testValidateSessionWithoutPaymentIntentOrProvider() {
+        // Test line 91: Session has neither paymentIntent nor paymentIntentProvider
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        // Use reflection to set both paymentIntent and paymentIntentProvider to nil
+        session.setValue(nil, forKey: "paymentIntent")
+        session.setValue(nil, forKey: "paymentIntentProvider")
+
+        XCTAssertThrowsError(try session.validate())
+    }
+
+    func testValidateSessionWithCurrencyMismatch() {
+        // Test line 105: Currency mismatch between payment intent and terms of use
+        mockPaymentIntent.currency = "USD"
+
+        let termsOfUse = TermsOfUse(
+            paymentAmountType: .fixed,
+            paymentCurrency: "AUD"  // Different from payment intent currency
+        )
+
+        let consentOptions = PaymentConsentOptions(
+            nextTriggeredBy: .merchantType,
+            termsOfUse: termsOfUse
+        )
+
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            paymentConsentOptions: consentOptions,
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertThrowsError(try session.validate()) { error in
+            guard case AWXSession.ValidationError.invalidData(let message) = error else {
+                XCTFail("Expected invalidData error, got: \(error.localizedDescription)")
+                return
+            }
+            XCTAssertEqual(message, "There is a currency mismatch between the payment intent and the terms of use")
+        }
+    }
+
+    func testValidateSessionWithMatchingCurrency() {
+        // Test that validation passes when currencies match
+        mockPaymentIntent.currency = "USD"
+
+        let termsOfUse = TermsOfUse(
+            paymentAmountType: .fixed,
+            paymentCurrency: "USD"  // Same as payment intent currency
+        )
+
+        let consentOptions = PaymentConsentOptions(
+            nextTriggeredBy: .merchantType,
+            termsOfUse: termsOfUse
+        )
+
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            paymentConsentOptions: consentOptions,
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertNoThrow(try session.validate())
+    }
+
+    func testIsExpressCheckout() {
+        // Test with payment intent provider - should be express checkout
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let sessionWithProvider = Session(
+            paymentIntentProvider: provider,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertTrue(sessionWithProvider.isExpressCheckout)
+
+        // Test with payment intent - should not be express checkout
+        let sessionWithIntent = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertFalse(sessionWithIntent.isExpressCheckout)
+
+        // Test with legacy session - should not be express checkout
+        let legacySession = AWXOneOffSession()
+        legacySession.paymentIntent = mockPaymentIntent
+        legacySession.countryCode = "AU"
+
+        XCTAssertFalse(legacySession.isExpressCheckout)
+    }
 }

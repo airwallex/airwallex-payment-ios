@@ -42,6 +42,7 @@ import UIKit
 /// - Error handling and validation
 /// - Custom payment flow integration
 public class PaymentSessionHandler: NSObject {
+    private let launchSubtype = "api"
     enum ValidationError: ErrorLoggable {
         case invalidPayment(underlyingError: Error)
         
@@ -156,6 +157,14 @@ public class PaymentSessionHandler: NSObject {
     /// This method sets up and starts the Apple Pay payment flow.
     func startApplePay() {
         do {
+            AnalyticsLogger.log(
+                action: .paymentLaunched,
+                extraInfo: [
+                    .subtype: launchSubtype,
+                    .paymentMethod: AWXApplePayKey,
+                    .expressCheckout: session.isExpressCheckout
+                ]
+            )
             try confirmApplePay(cancelPaymentOnDismiss: true)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -172,6 +181,14 @@ public class PaymentSessionHandler: NSObject {
                           billing: AWXPlaceDetails?,
                           saveCard: Bool = false) {
         do {
+            AnalyticsLogger.log(
+                action: .paymentLaunched,
+                extraInfo: [
+                    .subtype: launchSubtype,
+                    .paymentMethod: AWXCardKey,
+                    .expressCheckout: session.isExpressCheckout
+                ]
+            )
             try confirmCardPayment(with: card, billing: billing, saveCard: saveCard)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -192,6 +209,15 @@ public class PaymentSessionHandler: NSObject {
     ///                     This consent must be valid and not expired.
     func startConsentPayment(with consent: AWXPaymentConsent) {
         do {
+            AnalyticsLogger.log(
+                action: .paymentLaunched,
+                extraInfo: [
+                    .subtype: launchSubtype,
+                    .paymentMethod: AWXCardKey,
+                    .consentId: consent.id,
+                    .expressCheckout: session.isExpressCheckout
+                ]
+            )
             try confirmConsentPayment(with: consent)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -212,6 +238,15 @@ public class PaymentSessionHandler: NSObject {
     ///                  Set to `true` for PAN-type consents that require CVC validation.
     func startConsentPayment(withId consentId: String, requiresCVC: Bool = false) {
         do {
+            AnalyticsLogger.log(
+                action: .paymentLaunched,
+                extraInfo: [
+                    .subtype: launchSubtype,
+                    .paymentMethod: AWXCardKey,
+                    .consentId: consentId,
+                    .expressCheckout: session.isExpressCheckout
+                ]
+            )
             try confirmConsentPayment(withId: consentId, requiresCVC: requiresCVC)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -238,10 +273,20 @@ public class PaymentSessionHandler: NSObject {
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     func startRedirectPayment(with name: String, additionalInfo: [String: String]?) {
-        do {
-            try confirmRedirectPayment(with: name, additionalInfo: additionalInfo)
-        } catch {
-            handleFailure(paymentResultDelegate, error)
+        Task { @MainActor in
+            do {
+                AnalyticsLogger.log(
+                    action: .paymentLaunched,
+                    extraInfo: [
+                        .subtype: launchSubtype,
+                        .paymentMethod: name,
+                        .expressCheckout: session.isExpressCheckout
+                    ]
+                )
+                try await confirmRedirectPayment(with: name, additionalInfo: additionalInfo)
+            } catch {
+                handleFailure(paymentResultDelegate, error)
+            }
         }
     }
     
@@ -252,7 +297,7 @@ public class PaymentSessionHandler: NSObject {
             return false
         }
         if methodType.name == AWXApplePayKey || methodType.name == AWXCardKey,
-           let session = Session(session) {
+           let session = Session.convertFromLegacySession(session) {
             // we will eventually use Session on this branch
             if methodType.name == AWXCardKey {
                 return CardProvider.canHandle(session, paymentMethod: methodType)
@@ -261,12 +306,10 @@ public class PaymentSessionHandler: NSObject {
             }
         } else {
             // fallback to use legacy sessions for LPM method type or session which can not be converted to Session. (e.g. AWXRecurringSession)
-            var legacySession = session
-            if let session = legacySession as? Session {
-                legacySession = session.convertToLegacySession()
-            }
             guard let providerClass = ClassToHandleFlowForPaymentMethodType(methodType),
-                  providerClass.canHandle(legacySession, paymentMethod: methodType) else {
+                  providerClass.canHandle(session, paymentMethod: methodType) else {
+                // for now the `canHandle(...)` of AWXDefaultProvider doesn't check session at all
+                // so we just pass session to it no matter it's a legacy session or `Session`
                 return false
             }
             
@@ -336,7 +379,7 @@ public class PaymentSessionHandler: NSObject {
     ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
     ///   If The payment method details, which may require additional input such as a CVC for validation.
     func confirmConsentPayment(with consent: AWXPaymentConsent) throws {
-        guard let unifiedSession = Session(session) else {
+        guard let unifiedSession = Session.convertFromLegacySession(session) else {
             throw ValidationError.invalidPayment(
                 underlyingError: "Invalid session (payment intent required)".asError()
             )
@@ -361,7 +404,7 @@ public class PaymentSessionHandler: NSObject {
     /// Initiates a payment using a consent ID.
     /// - Parameter consentId: The previously generated consent identifier.
     func confirmConsentPayment(withId consentId: String, requiresCVC: Bool = false) throws {
-        guard let unifiedSession = Session(session) else {
+        guard let unifiedSession = Session.convertFromLegacySession(session) else {
             throw ValidationError.invalidPayment(
                 underlyingError: "Invalid session (payment intent required)".asError()
             )
@@ -389,8 +432,9 @@ public class PaymentSessionHandler: NSObject {
     /// - Parameters:
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
-    func confirmRedirectPayment(with name: String, additionalInfo: [String: String]?) throws {
-        let redirectAction = providerFactory.redirectProvider(
+    @MainActor
+    func confirmRedirectPayment(with name: String, additionalInfo: [String: String]?) async throws {
+        let redirectAction = try await providerFactory.redirectProvider(
             delegate: self,
             session: session,
             type: methodType
@@ -405,15 +449,16 @@ public class PaymentSessionHandler: NSObject {
     /// You should collect all information from your user before calling this api
     /// - Parameters:
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
-    func confirmRedirectPayment(with paymentMethod: AWXPaymentMethod) throws {
-        let redirectAction = providerFactory.redirectProvider(
+    @MainActor
+    func confirmRedirectPayment(with paymentMethod: AWXPaymentMethod) async throws {
+        let redirectAction = try await providerFactory.redirectProvider(
             delegate: self,
             session: session,
             type: methodType
         )
         try redirectAction.validate(name: paymentMethod.type)
         actionProvider = redirectAction
-        redirectAction.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil)
+        redirectAction.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil, flow: .app)
     }
     
     private func handleFailure(_ paymentResultDelegate: AWXPaymentResultDelegate?,
@@ -447,6 +492,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     }
     
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
+        viewController.stopLoading()
         if status == .cancel {
             // only log payment_canceled here
             // payment_success and error event are logged in AWXDefaultProvider
@@ -500,7 +546,9 @@ extension PaymentSessionHandler: AWXProviderDelegate {
             paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: .failure, error: error)
             return
         }
-        let actionHandler = actionProviderClass.init(delegate: self, session: session)
+        // if convertion from/to legacy session happens
+        // self.session will be the original session and `provider.session` will be the converted session
+        let actionHandler = actionProviderClass.init(delegate: self, session: provider.session)
         actionHandler.paymentConsent = provider.paymentConsent
         actionHandler.handle(nextAction)
         actionProvider = actionHandler

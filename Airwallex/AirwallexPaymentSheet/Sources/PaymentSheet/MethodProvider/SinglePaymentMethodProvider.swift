@@ -49,25 +49,26 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
     private var task: Task<AWXGetPaymentMethodTypeResponse, Error>?
     
     func getPaymentMethodTypes() async throws {
-        let response = try await getPaymentMethodTypeDetails(name: name)
-        methodTypeDetails = response
-        
-        guard response.name == AWXCardKey || response.name == AWXApplePayKey || response.hasSchema else {
-            throw "Invalid payment method".asError()
-        }
-        
-        let resources = AWXResources()
-        resources.logoURL = response.logoURL
-        resources.hasSchema = response.hasSchema
-        
         let method = AWXPaymentMethodType()
-        method.name = response.name
-        method.displayName = response.displayName
-        method.resources = resources
+        method.name = name
         method.transactionMode = session.transactionMode()
-        if name == AWXCardKey {
+        method.resources = AWXResources()
+        switch name {
+        case AWXApplePayKey:
+            method.displayName = NSLocalizedString("Apple Pay", bundle: .paymentSheet, comment: "")
+        case AWXCardKey:
+            method.displayName = NSLocalizedString("Card", bundle: .paymentSheet, comment: "")
             let brands = supportedCardBrands ?? AWXCardBrand.allAvailable
             method.cardSchemes = brands.map { AWXCardScheme(name: $0.rawValue) }
+        default:
+            let response = try await getPaymentMethodTypeDetails(name: name)
+            guard response.hasSchema else {
+                throw "Invalid payment method".asError()
+            }
+            methodTypeDetails = response
+            method.displayName = response.displayName
+            method.resources.logoURL = response.logoURL
+            method.resources.hasSchema = response.hasSchema
         }
         methods = [method]
         selectedMethod = method
@@ -84,6 +85,7 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
             request.transactionMode = session.transactionMode()
             request.lang = session.lang
             let task = Task {
+                try await (session as? Session)?.ensurePaymentIntent()
                 return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse
             }
             self.task = task

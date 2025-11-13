@@ -136,7 +136,7 @@ class ApplePayProvider: PaymentProvider {
             let applePayParams = try payment.token.payloadForRequest(withBilling: billingPayload)
             method.appendAdditionalParams(applePayParams)
             paymentState = .pending
-            let request = createConfirmIntentRequest(
+            let request = try await createConfirmIntentRequest(
                 method: method,
                 consent: nil,
                 consentOptions: unifiedSession.paymentConsentOptions

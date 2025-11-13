@@ -167,7 +167,13 @@ import AirwallexCore
             layout: layout
         )
         
-        AnalyticsLogger.log(action: .paymentLaunched, extraInfo: [.subtype: Self.subtypeDropin])
+        AnalyticsLogger.log(
+            action: .paymentLaunched,
+            extraInfo: [
+                .subtype: Self.subtypeDropin,
+                .expressCheckout: session.isExpressCheckout
+            ]
+        )
     }
     //  MARK: - Launch by Payment Method
     
@@ -257,7 +263,14 @@ import AirwallexCore
             paymentResultDelegate: paymentResultDelegate,
             launchStyle: launchStyle
         )
-        AnalyticsLogger.log(action: .paymentLaunched, extraInfo: [.subtype: Self.subtypeElement, .paymentMethod: name])
+        AnalyticsLogger.log(
+            action: .paymentLaunched,
+            extraInfo: [
+                .subtype: Self.subtypeElement,
+                .paymentMethod: name,
+                .expressCheckout: session.isExpressCheckout
+            ]
+        )
     }
 }
 
@@ -279,13 +292,18 @@ private extension AWXUIContext {
             return
         }
         
-        guard let secret = AWXAPIClientConfiguration.shared().clientSecret,
-              !secret.isEmpty else {
-            handleLaunchFailure(
-                paymentResultDelegate,
-                LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
-            )
-            return
+        if let session = session as? Session {
+            // client secret will be updated on `AWXAPIClientConfiguration.shared()`
+            // when `session.ensurePaymentIntent()` called
+        } else {
+            guard let secret = AWXAPIClientConfiguration.shared().clientSecret,
+                  !secret.isEmpty else {
+                handleLaunchFailure(
+                    paymentResultDelegate,
+                    LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
+                )
+                return
+            }
         }
         
         // update logger.session for UI integration

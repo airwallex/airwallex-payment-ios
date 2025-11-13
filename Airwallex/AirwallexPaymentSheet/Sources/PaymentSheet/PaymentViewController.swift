@@ -138,6 +138,7 @@ class PaymentViewController: AWXViewController {
     }
     
     @objc func onCloseButtonTapped() {
+        AWXUIContext.shared.dismissAction = nil
         dismiss(animated: true) {
             AWXUIContext.shared.delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
         }

@@ -18,6 +18,7 @@ enum AccessibilityIdentifiers {
         static let actionButtonForCustomerID = "actionButtonForCustomerID"
         static let toggleFor3DS = "toggleFor3DS"
         static let toggleForUnifiedSession = "toggleForUnifiedSession"
+        static let toggleForExpressCheckout = "toggleForExpressCheckout"
         static let versionLabel = "versionLabel"
     }
     static let selectedConsentCell = "consentSelected"

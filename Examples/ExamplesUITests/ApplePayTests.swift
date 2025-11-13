@@ -8,6 +8,7 @@
 
 import XCTest
 
+@MainActor
 final class ApplePayTests: XCTestCase {
     
     var app: XCUIApplication!
@@ -30,7 +31,6 @@ final class ApplePayTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    @MainActor
     func testApplePay_cancel() throws {
         // UI tests must launch the application that they test.
         launchAppAndEnsureSettings(
@@ -49,12 +49,14 @@ final class ApplePayTests: XCTestCase {
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.cancel)
     }
     
-    @MainActor
     func testApplePay_oneOff() throws {
         testApplePay(checkoutMode: .oneOff)
     }
     
-    @MainActor
+    func testApplePay_oneOff_no_express_checkout() throws {
+        testApplePay(checkoutMode: .oneOff, preferExpressCheckout: false)
+    }
+    
     func testApplePay_recurring() throws {
         testApplePay(checkoutMode: .recurring)
     }
@@ -64,24 +66,21 @@ final class ApplePayTests: XCTestCase {
         testApplePay(checkoutMode: .recurringWithIntent)
     }
     
-    @MainActor
     func testApplePay_oneOff_lagacySession() throws {
         testApplePay(checkoutMode: .oneOff, preferUnifiedSession: false)
     }
     
-    @MainActor
     func testApplePay_recurring_lagacySession() throws {
         testApplePay(checkoutMode: .recurring, preferUnifiedSession: false)
     }
     
-    @MainActor
     func testApplePay_recurringWithIntent_lagacySession() throws {
         testApplePay(checkoutMode: .recurringWithIntent, preferUnifiedSession: false)
     }
     
-    @MainActor
     private func testApplePay(checkoutMode: CheckoutMode,
-                              preferUnifiedSession: Bool = true) {
+                              preferUnifiedSession: Bool = true,
+                              preferExpressCheckout: Bool = true) {
         let nextTriggerByCustomer = (checkoutMode == .recurring || checkoutMode == .recurringWithIntent) ? false : nil
         launchAppAndEnsureSettings(
             app,

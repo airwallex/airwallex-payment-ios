@@ -96,6 +96,13 @@ class SettingsViewController: UIViewController {
         view.optionSwitch.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.toggleForUnifiedSession
         return view
     }()
+
+    private lazy var switchForExpressCheckout: ConfigSwitchView = {
+        let view = ConfigSwitchView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.optionSwitch.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.toggleForExpressCheckout
+        return view
+    }()
     
     private lazy var requiredBillingFieldsEntry: ConfigEntryView = {
         let view = ConfigEntryView()
@@ -251,6 +258,7 @@ private extension SettingsViewController {
         stack.addArrangedSubview(switchForForce3DS)
         stack.addArrangedSubview(switchForAutoCapture)
         stack.addArrangedSubview(switchForUnifiedSession)
+        stack.addArrangedSubview(switchForExpressCheckout)
         stack.addArrangedSubview(fieldForCustomerId)
         
         stack.addArrangedSubview(fieldForAPIKey)
@@ -413,7 +421,29 @@ private extension SettingsViewController {
                 title: "Use Session over legacy variants",
                 isOn: settings.preferUnifiedSession,
                 action: { [weak self] isOn in
-                    self?.settings.preferUnifiedSession = isOn
+                    guard let self else { return }
+                    self.settings.preferUnifiedSession = isOn
+                    // If preferUnifiedSession is toggled to false, also set expressCheckout to false
+                    if !isOn && self.settings.expressCheckout {
+                        self.settings.expressCheckout = false
+                        self.setupSwitches()
+                    }
+                }
+            )
+        )
+
+        switchForExpressCheckout.setup(
+            ConfigSwitchViewModel(
+                title: "Express Checkout",
+                isOn: settings.expressCheckout,
+                action: { [weak self] isOn in
+                    guard let self else { return }
+                    self.settings.expressCheckout = isOn
+                    // If expressCheckout is toggled to true, also set preferUnifiedSession to true
+                    if isOn && !self.settings.preferUnifiedSession {
+                        self.settings.preferUnifiedSession = true
+                        self.setupSwitches()
+                    }
                 }
             )
         )

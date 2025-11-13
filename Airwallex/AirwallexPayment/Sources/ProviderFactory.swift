@@ -23,7 +23,7 @@ protocol ProviderFactoryProtocol {
     
     func redirectProvider(delegate: any AWXProviderDelegate,
                           session: AWXSession,
-                          type: AWXPaymentMethodType?) -> RedirectProviderProtocol
+                          type: AWXPaymentMethodType?) async throws -> RedirectProviderProtocol
 }
 
 final class ProviderFactory: ProviderFactoryProtocol {
@@ -31,7 +31,7 @@ final class ProviderFactory: ProviderFactoryProtocol {
     func applePayProvider(delegate: any AWXProviderDelegate,
                           session: AWXSession,
                           type: AWXPaymentMethodType?) -> ApplePayProviderProtocol {
-        if let unifiedSession = Session(session) {
+        if let unifiedSession = Session.convertFromLegacySession(session) {
             // Simplified payment flow
             return ApplePayProvider(
                 delegate: delegate,
@@ -51,7 +51,7 @@ final class ProviderFactory: ProviderFactoryProtocol {
     func cardProvider(delegate: any AWXProviderDelegate,
                       session: AWXSession,
                       type: AWXPaymentMethodType?) -> CardProviderProtocol {
-        if let session = Session(session) {
+        if let session = Session.convertFromLegacySession(session) {
             return CardProvider(
                 delegate: delegate,
                 session: session,
@@ -68,10 +68,10 @@ final class ProviderFactory: ProviderFactoryProtocol {
     
     func redirectProvider(delegate: any AWXProviderDelegate,
                           session: AWXSession,
-                          type: AWXPaymentMethodType?) -> RedirectProviderProtocol {
+                          type: AWXPaymentMethodType?) async throws -> RedirectProviderProtocol {
         let session = if let unifiedSession = session as? Session {
             // simplified consnet flow not yet supported by LPM
-            unifiedSession.convertToLegacySession()
+            try await unifiedSession.convertToLegacySession()
         } else {
             session
         }
