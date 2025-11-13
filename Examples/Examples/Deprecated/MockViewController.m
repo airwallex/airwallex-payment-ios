@@ -58,7 +58,7 @@
     [handler startConsentPaymentWith:consent];
     [handler startConsentPaymentWithId:@"id"];
     [handler startRedirectPaymentWith:@"paypal" additionalInfo:@{}];
-    
+
     do {
         Session *session = [[Session alloc] initWithPaymentIntentProvider:self
                                                               countryCode:@"AU"
@@ -72,7 +72,7 @@
                                                     paymentConsentOptions:options
                                              requiredBillingContactFields:AWXRequiredBillingContactFieldName
                                                                 returnURL:@""];
-        
+
     } while (0);
 }
 
