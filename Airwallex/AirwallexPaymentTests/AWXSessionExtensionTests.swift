@@ -336,4 +336,37 @@ class AWXSessionExtensionTests: XCTestCase {
 
         XCTAssertNoThrow(try session.validate())
     }
+
+    func testIsExpressCheckout() {
+        // Test with payment intent provider - should be express checkout
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let sessionWithProvider = Session(
+            paymentIntentProvider: provider,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertTrue(sessionWithProvider.isExpressCheckout)
+
+        // Test with payment intent - should not be express checkout
+        let sessionWithIntent = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertFalse(sessionWithIntent.isExpressCheckout)
+
+        // Test with legacy session - should not be express checkout
+        let legacySession = AWXOneOffSession()
+        legacySession.paymentIntent = mockPaymentIntent
+        legacySession.countryCode = "AU"
+
+        XCTAssertFalse(legacySession.isExpressCheckout)
+    }
 }

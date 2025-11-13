@@ -159,7 +159,11 @@ public class PaymentSessionHandler: NSObject {
         do {
             AnalyticsLogger.log(
                 action: .paymentLaunched,
-                extraInfo: [.subtype: launchSubtype]
+                extraInfo: [
+                    .subtype: launchSubtype,
+                    .paymentMethod: AWXApplePayKey,
+                    .expressCheckout: session.isExpressCheckout
+                ]
             )
             try confirmApplePay(cancelPaymentOnDismiss: true)
         } catch {
@@ -179,7 +183,11 @@ public class PaymentSessionHandler: NSObject {
         do {
             AnalyticsLogger.log(
                 action: .paymentLaunched,
-                extraInfo: [.subtype: launchSubtype]
+                extraInfo: [
+                    .subtype: launchSubtype,
+                    .paymentMethod: AWXCardKey,
+                    .expressCheckout: session.isExpressCheckout
+                ]
             )
             try confirmCardPayment(with: card, billing: billing, saveCard: saveCard)
         } catch {
@@ -203,7 +211,12 @@ public class PaymentSessionHandler: NSObject {
         do {
             AnalyticsLogger.log(
                 action: .paymentLaunched,
-                extraInfo: [.subtype: launchSubtype]
+                extraInfo: [
+                    .subtype: launchSubtype,
+                    .paymentMethod: AWXCardKey,
+                    .consentId: consent.id,
+                    .expressCheckout: session.isExpressCheckout
+                ]
             )
             try confirmConsentPayment(with: consent)
         } catch {
@@ -227,7 +240,12 @@ public class PaymentSessionHandler: NSObject {
         do {
             AnalyticsLogger.log(
                 action: .paymentLaunched,
-                extraInfo: [.subtype: launchSubtype]
+                extraInfo: [
+                    .subtype: launchSubtype,
+                    .paymentMethod: AWXCardKey,
+                    .consentId: consentId,
+                    .expressCheckout: session.isExpressCheckout
+                ]
             )
             try confirmConsentPayment(withId: consentId, requiresCVC: requiresCVC)
         } catch {
@@ -259,7 +277,11 @@ public class PaymentSessionHandler: NSObject {
             do {
                 AnalyticsLogger.log(
                     action: .paymentLaunched,
-                    extraInfo: [.subtype: launchSubtype]
+                    extraInfo: [
+                        .subtype: launchSubtype,
+                        .paymentMethod: name,
+                        .expressCheckout: session.isExpressCheckout
+                    ]
                 )
                 try await confirmRedirectPayment(with: name, additionalInfo: additionalInfo)
             } catch {

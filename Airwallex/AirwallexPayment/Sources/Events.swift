@@ -25,6 +25,7 @@ import AirwallexCore
         case value = "value"
         case eventType = "eventType"
         case supportedNetworks = "supportedNetworks"
+        case expressCheckout = "expressCheckout"// boolean value
     }
     
     @_spi(AWX) public enum PageView: String {

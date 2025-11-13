@@ -58,7 +58,7 @@
     [handler startConsentPaymentWith:consent];
     [handler startConsentPaymentWithId:@"id"];
     [handler startRedirectPaymentWith:@"paypal" additionalInfo:@{}];
-    
+
     do {
         Session *session = [[Session alloc] initWithPaymentIntentProvider:self
                                                               countryCode:@"AU"
@@ -72,7 +72,7 @@
                                                     paymentConsentOptions:options
                                              requiredBillingContactFields:AWXRequiredBillingContactFieldName
                                                                 returnURL:@""];
-        
+
     } while (0);
 }
 
@@ -98,7 +98,7 @@
     return @"mock_customer_id";
 }
 
-- (void)createPaymentIntentWithCompletionHandler:(void (^)(AWXPaymentIntent * _Nullable, NSError * _Nullable))completionHandler {
+- (void)createPaymentIntentWithCompletionHandler:(void (^)(AWXPaymentIntent *_Nullable, NSError *_Nullable))completionHandler {
     AWXPaymentIntent *intent = [[AWXPaymentIntent alloc] init];
     intent.amount = self.amount;
     intent.currency = self.currency;
