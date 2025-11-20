@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.0.2 effective-5.10 (swiftlang-6.0.2.1.2 clang-1600.0.26.4)
-// swift-module-flags: -target x86_64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name AirwallexRisk
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-module-flags: -target x86_64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name AirwallexRisk
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
 import Foundation
 import Swift
 import UIKit
@@ -52,6 +52,18 @@ extension AirwallexRisk.Risk {
   @objc public static var sessionID: Foundation.UUID? {
     @objc get
   }
+}
+extension AirwallexRisk.Risk {
+  @_hasMissingDesignatedInitializers @objc(AWXRiskEvents) public class Events : ObjectiveC.NSObject {
+    final public let rawValue: Swift.String
+    @objc public static let transactionInitiated: AirwallexRisk.Risk.Events
+    @objc public static let cardPinViewed: AirwallexRisk.Risk.Events
+    @objc public static let cardCvcViewed: AirwallexRisk.Risk.Events
+    @objc public static let profilePhoneUpdated: AirwallexRisk.Risk.Events
+    @objc public static let profileEmailUpdated: AirwallexRisk.Risk.Events
+    @objc deinit
+  }
+  @objc(logPredefinedEvent:screen:) public static func log(event: AirwallexRisk.Risk.Events, screen: Swift.String? = nil)
 }
 @_hasMissingDesignatedInitializers @objc(AWXRisk) public class Risk : ObjectiveC.NSObject {
   @objc deinit
