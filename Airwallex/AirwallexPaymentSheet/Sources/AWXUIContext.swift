@@ -309,6 +309,10 @@ private extension AWXUIContext {
         // update logger.session for UI integration
         AnalyticsLogger.shared().session = session
         AWXUIContext.shared.delegate = paymentResultDelegate
+        
+        // Risk event
+        RiskLogger.log(.transactionInitiated, screen: .paymentSheet)
+        
         switch launchStyle {
         case .push:
             guard let nav = hostingVC.navigationController else {
