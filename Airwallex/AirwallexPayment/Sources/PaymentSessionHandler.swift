@@ -94,6 +94,16 @@ public class PaymentSessionHandler: NSObject {
     
     private(set) weak var paymentResultDelegate: AWXPaymentResultDelegate?
     
+    /// whether display the default loading indicator
+    /// Set this to false if you prefer to display your own indicator instead of the default one
+    public var showIndicator: Bool = true {
+        didSet {
+            if !showIndicator {
+                viewController.stopLoading()
+            }
+        }
+    }
+    
     /// Initializes a `PaymentSessionHandler` with a payment session and the view controller from which the payment is initiated.
     /// - Parameters:
     ///   - session: The payment session containing relevant transaction details.
@@ -347,7 +357,7 @@ public class PaymentSessionHandler: NSObject {
     /// This method sets up and confirms a card-based payment, including optional billing and card-saving preferences.
     /// - Parameters:
     ///   - card: The card details required for processing the payment.
-    ///   - billing: Billing information for the transaction (optional).
+    ///   - billing: Billing information for the transaction (optional). Required if requiredBillingContactFields is not `.none`
     ///   - saveCard: A boolean indicating whether to save the card for future transactions (default is `false`).
     func confirmCardPayment(with card: AWXCard,
                             billing: AWXPlaceDetails?,
@@ -473,12 +483,16 @@ public class PaymentSessionHandler: NSObject {
 extension PaymentSessionHandler: AWXProviderDelegate {
     public func providerDidStartRequest(_ provider: AWXDefaultProvider) {
         debugLog("Provider: \(type(of: provider))")
-        viewController.startLoading()
+        if showIndicator {
+            viewController.startLoading()
+        }
     }
     
     public func providerDidEndRequest(_ provider: AWXDefaultProvider) {
         debugLog("Provider: \(type(of: provider))")
-        viewController.stopLoading()
+        if showIndicator {
+            viewController.stopLoading()
+        }
     }
     
     public func provider(_ provider: AWXDefaultProvider, didInitializePaymentIntentId paymentIntentId: String) {
