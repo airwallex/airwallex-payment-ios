@@ -311,7 +311,7 @@ private extension AWXUIContext {
         AWXUIContext.shared.delegate = paymentResultDelegate
         
         // Risk event
-        RiskLogger.log(.transactionInitiated, screen: .paymentSheet)
+        RiskLogger.log(.transactionInitiated)
         
         switch launchStyle {
         case .push:

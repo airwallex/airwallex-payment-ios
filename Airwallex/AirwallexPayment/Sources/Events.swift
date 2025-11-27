@@ -143,7 +143,6 @@ extension ErrorLoggable {
         case consent = "page_consent"
         case createCard = "page_create_card"
         case applePay = "page_apple_pay"
-        case paymentSheet = "payment_sheet"
     }
     
     case showApplePay = "show_apple_pay"
@@ -164,7 +163,7 @@ extension ErrorLoggable {
         Risk.log(event: event.rawValue, screen: screen?.rawValue)
     }
     @_spi(AWX) public
-    static func log(_ event: Risk.Events, screen: RiskEvent.Page?) {
+    static func log(_ event: Risk.Events, screen: RiskEvent.Page? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
         Risk.log(event: event, screen: screen?.rawValue)
     }
