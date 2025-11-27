@@ -73,6 +73,8 @@
                                              requiredBillingContactFields:AWXRequiredBillingContactFieldName
                                                                 returnURL:@""];
 
+        PaymentSessionHandler *handler = [[PaymentSessionHandler alloc] initWithSession:session viewController:self methodType:nil];
+        handler.showIndicator = false;
     } while (0);
 }
 
