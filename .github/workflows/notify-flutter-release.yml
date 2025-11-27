@@ -1,0 +1,29 @@
+name: Notify Mobile SDKs of iOS Release
+
+on:
+  release:
+    types: [published, edited]
+
+jobs:
+  notify-mobile-sdks:
+    runs-on: ubuntu-latest
+    # Only trigger for non-prerelease versions
+    if: ${{ !github.event.release.prerelease }}
+    steps:
+      - name: Send repository dispatch to Flutter SDK
+        env:
+          GH_TOKEN: ${{ secrets.SERVICE_ACCOUNT_PAT }}
+        run: |
+          gh api repos/airwallex/airwallex-payment-flutter/dispatches \
+            --method POST \
+            --field event_type='ios_release' \
+            --raw-field client_payload='{"tag":"${{ github.event.release.tag_name }}"}'
+
+      - name: Send repository dispatch to React Native SDK
+        env:
+          GH_TOKEN: ${{ secrets.SERVICE_ACCOUNT_PAT }}
+        run: |
+          gh api repos/airwallex/airwallex-payment-react-native/dispatches \
+            --method POST \
+            --field event_type='ios_release' \
+            --raw-field client_payload='{"tag":"${{ github.event.release.tag_name }}"}'
