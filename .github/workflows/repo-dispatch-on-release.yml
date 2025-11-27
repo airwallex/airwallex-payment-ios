@@ -1,11 +1,11 @@
-name: Notify Mobile SDKs of iOS Release
+name: Repo Dispatch on iOS Release
 
 on:
   release:
     types: [published, edited]
 
 jobs:
-  notify-mobile-sdks:
+  repo-dispatch-on-release:
     runs-on: ubuntu-latest
     # Only trigger for non-prerelease versions
     if: ${{ !github.event.release.prerelease }}
