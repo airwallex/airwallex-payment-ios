@@ -2,14 +2,33 @@ name: Repo Dispatch on iOS Release
 
 on:
   release:
-    types: [published, edited, created]
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'iOS SDK version (e.g., 6.3.0)'
+        required: true
+        type: string
 
 jobs:
   repo-dispatch-on-release:
     runs-on: ubuntu-latest
-    # Only trigger for non-prerelease versions
-    if: ${{ !github.event.release.prerelease }}
+    # Only trigger for non-prerelease versions (skip for workflow_dispatch)
+    if: ${{ github.event_name == 'workflow_dispatch' || !github.event.release.prerelease }}
     steps:
+      - name: Set version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.tag }}"
+            ACTION="manual"
+          else
+            VERSION="${{ github.event.release.tag_name }}"
+            ACTION="${{ github.event.action }}"
+          fi
+          echo "tag=$VERSION" >> $GITHUB_OUTPUT
+          echo "action=$ACTION" >> $GITHUB_OUTPUT
+          echo "Dispatching for version: $VERSION (action: $ACTION)"
       - name: Send repository dispatch to Flutter SDK
         env:
           GH_TOKEN: ${{ secrets.SERVICE_ACCOUNT_PAT }}
@@ -17,7 +36,7 @@ jobs:
           gh api repos/airwallex/airwallex-payment-flutter/dispatches \
             --method POST \
             --field event_type='ios_release' \
-            --raw-field client_payload='{"tag":"${{ github.event.release.tag_name }}","action":"${{ github.event.action }}"}'
+            --raw-field client_payload='{"tag":"${{ steps.version.outputs.tag }}","action":"${{ steps.version.outputs.action }}"}'
 
       - name: Send repository dispatch to React Native SDK
         env:
@@ -26,4 +45,4 @@ jobs:
           gh api repos/airwallex/airwallex-payment-react-native/dispatches \
             --method POST \
             --field event_type='ios_release' \
-            --raw-field client_payload='{"tag":"${{ github.event.release.tag_name }}","action":"${{ github.event.action }}"}'
+            --raw-field client_payload='{"tag":"${{ steps.version.outputs.tag }}","action":"${{ steps.version.outputs.action }}"}'
