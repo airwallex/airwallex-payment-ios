@@ -2,7 +2,7 @@ name: Repo Dispatch on iOS Release
 
 on:
   release:
-    types: [published, edited]
+    types: [published, edited, created]
 
 jobs:
   repo-dispatch-on-release:
@@ -17,7 +17,7 @@ jobs:
           gh api repos/airwallex/airwallex-payment-flutter/dispatches \
             --method POST \
             --field event_type='ios_release' \
-            --raw-field client_payload='{"tag":"${{ github.event.release.tag_name }}"}'
+            --raw-field client_payload='{"tag":"${{ github.event.release.tag_name }}","action":"${{ github.event.action }}"}'
 
       - name: Send repository dispatch to React Native SDK
         env:
@@ -26,4 +26,4 @@ jobs:
           gh api repos/airwallex/airwallex-payment-react-native/dispatches \
             --method POST \
             --field event_type='ios_release' \
-            --raw-field client_payload='{"tag":"${{ github.event.release.tag_name }}"}'
+            --raw-field client_payload='{"tag":"${{ github.event.release.tag_name }}","action":"${{ github.event.action }}"}'
