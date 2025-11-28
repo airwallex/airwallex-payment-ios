@@ -36,7 +36,8 @@ jobs:
           gh api repos/airwallex/airwallex-payment-flutter/dispatches \
             --method POST \
             --field event_type='ios_release' \
-            --raw-field client_payload='{"tag":"${{ steps.version.outputs.tag }}","action":"${{ steps.version.outputs.action }}"}'
+            --field client_payload[tag]='${{ steps.version.outputs.tag }}' \
+            --field client_payload[action]='${{ steps.version.outputs.action }}'
 
       - name: Send repository dispatch to React Native SDK
         env:
@@ -45,4 +46,5 @@ jobs:
           gh api repos/airwallex/airwallex-payment-react-native/dispatches \
             --method POST \
             --field event_type='ios_release' \
-            --raw-field client_payload='{"tag":"${{ steps.version.outputs.tag }}","action":"${{ steps.version.outputs.action }}"}'
+            --field client_payload[tag]='${{ steps.version.outputs.tag }}' \
+            --field client_payload[action]='${{ steps.version.outputs.action }}'
