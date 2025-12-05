@@ -10,9 +10,21 @@ if [ $# -eq 1 ]; then
 elif [ -n "${VERSION:-}" ]; then
     VERSION="${VERSION}"
 else
-    echo "Usage: $0 <version> or set VERSION environment variable"
-    echo "Example: $0 1.0.0 or VERSION=1.0.0 $0"
-    exit 1
+    # Read version from Airwallex.podspec
+    PODSPEC_PATH="Airwallex.podspec"
+    if [ -f "$PODSPEC_PATH" ]; then
+        VERSION=$(grep -E '^\s*s\.version\s*=' "$PODSPEC_PATH" | sed -E 's/.*"([^"]+)".*/\1/')
+        if [ -z "$VERSION" ]; then
+            echo "✗ Error: Could not extract version from $PODSPEC_PATH"
+            exit 1
+        fi
+        echo "Using version from $PODSPEC_PATH: $VERSION"
+    else
+        echo "Usage: $0 <version> or set VERSION environment variable"
+        echo "Example: $0 1.0.0 or VERSION=1.0.0 $0"
+        echo "Alternatively, ensure Airwallex.podspec exists in the current directory"
+        exit 1
+    fi
 fi
 
 echo "Building documentation for version: $VERSION"
