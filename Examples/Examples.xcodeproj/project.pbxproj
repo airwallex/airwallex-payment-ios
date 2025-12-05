@@ -46,6 +46,7 @@
 		D89C7AED2D423AD60042FC3B /* GetCardConsentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */; };
 		D89C7AF32D424C890042FC3B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AF22D424C890042FC3B /* SettingsViewController.swift */; };
 		D89C7AF52D432D900042FC3B /* ConfigSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AF42D432D900042FC3B /* ConfigSwitchView.swift */; };
+		D8A1EE2D2EE27F2D0071A84E /* PaymentStatusPoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A1EE2C2EE27F2D0071A84E /* PaymentStatusPoller.swift */; };
 		D8A599A92DAF841E0045BFEC /* ConfigEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A599A82DAF841E0045BFEC /* ConfigEntryView.swift */; };
 		D8A599AB2DAF88440045BFEC /* BillingFieldsSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A599AA2DAF88440045BFEC /* BillingFieldsSettingViewController.swift */; };
 		D8AEAA8B2E4458A700683280 /* demo.html in Resources */ = {isa = PBXBuildFile; fileRef = D8AEAA8A2E4458A700683280 /* demo.html */; };
@@ -151,6 +152,7 @@
 		D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCardConsentsViewController.swift; sourceTree = "<group>"; };
 		D89C7AF22D424C890042FC3B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D89C7AF42D432D900042FC3B /* ConfigSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigSwitchView.swift; sourceTree = "<group>"; };
+		D8A1EE2C2EE27F2D0071A84E /* PaymentStatusPoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentStatusPoller.swift; sourceTree = "<group>"; };
 		D8A599A82DAF841E0045BFEC /* ConfigEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigEntryView.swift; sourceTree = "<group>"; };
 		D8A599AA2DAF88440045BFEC /* BillingFieldsSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillingFieldsSettingViewController.swift; sourceTree = "<group>"; };
 		D8AEAA8A2E4458A700683280 /* demo.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = demo.html; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				D80F0E302D5DC4B400401BA6 /* AirwallexSDKMode+Extensions.swift */,
 				182F1CE62C903B18000B993D /* Encodable+Extensions.swift */,
 				D81EAF682D3F474100B44784 /* UIViewController+Extensions.swift */,
+				D8A1EE2C2EE27F2D0071A84E /* PaymentStatusPoller.swift */,
 				1859F19C2C8A9EE90017FA4D /* NSError+Extensions.swift */,
 				D81EAF712D3F8B8F00B44784 /* KeyboardHandler.swift */,
 				D8F84B842DDC1BDC0020C73F /* AccessibilityIdentifiers.swift */,
@@ -552,9 +555,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -588,9 +595,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -659,6 +670,7 @@
 				D8AEAA8D2E44594B00683280 /* HPPDemoController.swift in Sources */,
 				1859F19D2C8A9EE90017FA4D /* NSError+Extensions.swift in Sources */,
 				1859F19B2C89B0C40017FA4D /* PurchaseOrder.swift in Sources */,
+				D8A1EE2D2EE27F2D0071A84E /* PaymentStatusPoller.swift in Sources */,
 				D8A599AB2DAF88440045BFEC /* BillingFieldsSettingViewController.swift in Sources */,
 				182F1CE72C903B18000B993D /* Encodable+Extensions.swift in Sources */,
 				D8F84B852DDC1BDC0020C73F /* AccessibilityIdentifiers.swift in Sources */,
