@@ -197,6 +197,11 @@ class PaymentStatusPoller {
     }
 
     private func handlePaymentIntent(_ intent: AWXPaymentIntent) {
+        guard let pollingStartTime else {
+            // polling is stopped
+            stop()
+            return
+        }
         let newStatus = PaymentIntentStatus(rawValue: intent.status)
         let previousStatus = status
 
@@ -217,7 +222,7 @@ class PaymentStatusPoller {
             if case .unknown(let rawValue) = newStatus {
                 print("PaymentStatusPoller: Unknown status '\(rawValue)', continuing to poll")
             }
-            if let pollingStartTime, Date().timeIntervalSince(pollingStartTime) < maxPollingDuration {
+            if Date().timeIntervalSince(pollingStartTime) < maxPollingDuration {
                 scheduleNextPoll()
             } else {
                 delegate?.paymentStatusPoller(self, didTimeoutWithStatus: newStatus)
@@ -231,7 +236,9 @@ class PaymentStatusPoller {
         pollingAttempts += 1
 
         pollingTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { [weak self] _ in
-            self?.pollPaymentStatus()
+            Task { @MainActor [weak self] in
+                self?.pollPaymentStatus()
+            }
         }
     }
 
