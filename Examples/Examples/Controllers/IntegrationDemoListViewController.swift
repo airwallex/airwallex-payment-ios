@@ -762,6 +762,7 @@ extension IntegrationDemoListViewController: PaymentStatusPollerDelegate {
     }
 
     func paymentStatusPoller(_ poller: PaymentStatusPoller, didFailWithError error: Error) {
+        stopLoading()
         showAlert(
             message: "Error checking payment status: \(error.localizedDescription)",
             title: "Error"
@@ -769,6 +770,7 @@ extension IntegrationDemoListViewController: PaymentStatusPollerDelegate {
     }
 
     func paymentStatusPoller(_ poller: PaymentStatusPoller, didTimeoutWithStatus status: PaymentIntentStatus) {
+        stopLoading()
         showAlert(
             message: "Payment status \(status.rawValue)",
             title: "Polling timeout"
