@@ -145,10 +145,6 @@ class IntegrationDemoListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        paymentStatusPoller?.stop()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 

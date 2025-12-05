@@ -83,6 +83,7 @@ enum PaymentIntentStatus: Equatable, RawRepresentable {
     }
 }
 
+@MainActor
 protocol PaymentStatusPollerDelegate: AnyObject {
     func paymentStatusPoller(_ poller: PaymentStatusPoller, didStartPolling status: PaymentIntentStatus)
     func paymentStatusPoller(_ poller: PaymentStatusPoller, didUpdateStatus status: PaymentIntentStatus)
@@ -90,6 +91,7 @@ protocol PaymentStatusPollerDelegate: AnyObject {
     func paymentStatusPoller(_ poller: PaymentStatusPoller, didTimeoutWithStatus status: PaymentIntentStatus)
 }
 
+@MainActor
 class PaymentStatusPoller {
     // MARK: - Properties
 
@@ -183,17 +185,13 @@ class PaymentStatusPoller {
         }
 
         // Fetch status
-        Task {
+        Task { @MainActor in
             do {
                 let intent = try await apiClient.retrievePaymentIntent(intentId: intentId)
-                await MainActor.run {
-                    self.handlePaymentIntent(intent)
-                }
+                handlePaymentIntent(intent)
             } catch {
-                await MainActor.run {
-                    self.delegate?.paymentStatusPoller(self, didFailWithError: error)
-                    self.stop()
-                }
+                delegate?.paymentStatusPoller(self, didFailWithError: error)
+                stop()
             }
         }
     }
