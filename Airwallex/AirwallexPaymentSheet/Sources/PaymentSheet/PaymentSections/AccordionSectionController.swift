@@ -58,21 +58,21 @@ class AccordionSectionController: SectionController  {
         self.context = context
     }
     
-    func cell(for item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        guard let methodName = rawItemValue(for: item) else {
-            assert(false, "invalid item \(item)")
+    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
+        guard let methodName = rawItemValue(for: itemIdentifier) else {
+            assert(false, "invalid item \(itemIdentifier)")
             return UICollectionViewCell()
         }
         let cellClass = (methodName == AWXCardKey ? AccordionCardMethodCell.self : AccordionPaymentMethodCell.self)
-        let cell = context.dequeueReusableCell(cellClass, for: item, indexPath: indexPath)
+        let cell = context.dequeueReusableCell(cellClass, for: itemIdentifier, indexPath: indexPath)
         if let viewModel = viewModels[safe: indexPath.item] {
             cell.setup(viewModel)
         }
         return cell
     }
 
-    func collectionView(didSelectItem item: String, at indexPath: IndexPath) {
-        guard let methodName = rawItemValue(for: item) else {
+    func collectionView(didSelectItem itemIdentifier: String, at indexPath: IndexPath) {
+        guard let methodName = rawItemValue(for: itemIdentifier) else {
             return
         }
         methodProvider.selectPaymentMethod(byName: methodName)

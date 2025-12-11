@@ -182,11 +182,12 @@ class CardPaymentConsentSectionController: SectionController {
             }
         } else {
             // consent list
-            let cell = context.dequeueReusableCell(CardConsentCell.self, for: rawItemValue, indexPath: indexPath)
-            if let viewModel = viewModelForConsent(consentID: itemIdentifier) {
+            let consentId = rawItemValue
+            let cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
+            if let viewModel = viewModelForConsent(consentID: consentId) {
                 cell.setup(viewModel)
             }
-            if let consent = consents.first(where: { $0.id == itemIdentifier}) {
+            if let consent = consents.first(where: { $0.id == consentId}) {
                 if consent.isCITConsent {
                     cell.accessibilityIdentifier = "consentListed-cit"
                 } else {
@@ -289,7 +290,8 @@ class CardPaymentConsentSectionController: SectionController {
             context.endEditing()
             return
         }
-        guard let consent = consents.first(where: { $0.id == itemIdentifier }) ,
+        guard let rawItemValue = rawItemValue(for: itemIdentifier),
+              let consent = consents.first(where: { $0.id == rawItemValue }) ,
               context.viewController != nil else {
             assert(false, "view controller not found")
             return

@@ -18,7 +18,7 @@ enum Section: CaseIterable {
     case B
 }
 
-enum Item {
+enum Item: String {
     case A1
     case A2
     case B1

@@ -161,11 +161,11 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             cell.setup(viewModelForConsentToggle)
             return cell
         case .cardInfo:
-            let cell = context.dequeueReusableCell(CardInfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CardInfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
             cell.setup(viewModelForCardInfo)
             return cell
         case .checkoutButton:
-            let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
                 shouldShowPayAsCta: !(session is AWXRecurringSession),
                 checkoutAction: checkout
@@ -173,7 +173,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             cell.setup(viewModel)
             return cell
         case .saveCardToggle:
-            let cell = context.dequeueReusableCell(CheckBoxCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CheckBoxCell.self, for: itemIdentifier, indexPath: indexPath)
             let viewModel = CheckBoxCellViewModel(
                 isSelected: shouldSaveCard,
                 title: nil,
@@ -183,7 +183,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             cell.setup(viewModel)
             return cell
         case .billingFieldAddress:
-            let cell = context.dequeueReusableCell(BillingInfoCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(BillingInfoCell.self, for: itemIdentifier, indexPath: indexPath)
             if let viewModelForBillingAddress {
                 cell.setup(viewModelForBillingAddress)
             } else {
@@ -191,7 +191,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             }
             return cell
         case .unionPayWarning:
-            let cell = context.dequeueReusableCell(WarningViewCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(WarningViewCell.self, for: itemIdentifier, indexPath: indexPath)
             let message = NSLocalizedString(
                 "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.",
                 bundle: .paymentSheet,
@@ -200,7 +200,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             cell.setup(message)
             return cell
         case .cardholderName:
-            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
             if let viewModelForCardholderName {
                 cell.setup(viewModelForCardholderName)
             } else {
@@ -208,7 +208,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             }
             return cell
         case .billingFieldEmail:
-            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
             if let viewModelForEmail {
                 cell.setup(viewModelForEmail)
             } else {
@@ -216,7 +216,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             }
             return cell
         case .billingFieldPhone:
-            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
             if let viewModelForPhoneNumber {
                 cell.setup(viewModelForPhoneNumber)
             } else {
@@ -224,7 +224,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             }
             return cell
         case .billingFieldCountryCode:
-            let cell = context.dequeueReusableCell(CountrySelectionCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CountrySelectionCell.self, for: itemIdentifier, indexPath: indexPath)
             if let viewModelForCountryCode {
                 cell.setup(viewModelForCountryCode)
             } else {
