@@ -137,6 +137,23 @@ extension SectionController {
     func sectionDidEndDisplaying() {
         // do nothing by default
     }
+    
+    func identifier<T: RawRepresentable<String>>(for item: T) -> String {
+        prefix + item.rawValue
+    }
+    
+    func identifier(for item: String) -> String {
+        prefix + item
+    }
+    
+    func rawItemValue(for identifier: String) -> String? {
+        guard identifier.hasPrefix(prefix) else { return nil }
+        return String(identifier.dropFirst(prefix.count))
+    }
+    
+    var prefix: String {
+        "\(String(describing: section))-"
+    }
 }
 
 /// Type erasor for SectionController

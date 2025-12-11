@@ -14,6 +14,10 @@ import AirwallexCore
 
 class ApplePaySectionController: SectionController {
     
+    enum Item: String {
+        case applePayButton
+    }
+    
     private let session: AWXSession
     private let methodType: AWXPaymentMethodType
     private var paymentSessionHandler: PaymentSessionHandler?
@@ -30,7 +34,9 @@ class ApplePaySectionController: SectionController {
     
     let section = PaymentSectionType.applePay
     
-    let items = [ "\(PaymentSectionType.applePay)-\(AWXApplePayKey)" ]
+    var items: [String] {
+        [identifier(for: Item.applePayButton)]
+    }
     
     private(set) var context: CollectionViewContext<PaymentSectionType, String>!
     

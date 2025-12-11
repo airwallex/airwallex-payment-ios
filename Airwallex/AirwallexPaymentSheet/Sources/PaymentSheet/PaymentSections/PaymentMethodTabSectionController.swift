@@ -23,16 +23,6 @@ class PaymentMethodTabSectionController: SectionController {
 
     private var methodTypes: [AWXPaymentMethodType]
     private let imageLoader: ImageLoader
-
-    private func itemIdentifier(for methodName: String) -> String {
-        "\(PaymentSectionType.methodList)-\(methodName)"
-    }
-
-    private func methodName(from itemIdentifier: String) -> String? {
-        let prefix = "\(PaymentSectionType.methodList)-"
-        guard itemIdentifier.hasPrefix(prefix) else { return nil }
-        return String(itemIdentifier.dropFirst(prefix.count))
-    }
     
     init(methodProvider: PaymentMethodProvider,
          imageLoader: ImageLoader) {
@@ -48,7 +38,7 @@ class PaymentMethodTabSectionController: SectionController {
     let section = PaymentSectionType.methodList
     
     var items: [String]  {
-        methodTypes.compactMap { $0.name != AWXApplePayKey ? itemIdentifier(for: $0.name) : nil }
+        methodTypes.compactMap { $0.name != AWXApplePayKey ? identifier(for: $0.name) : nil }
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
@@ -99,12 +89,12 @@ class PaymentMethodTabSectionController: SectionController {
         AnalyticsLogger.log(action: .selectPayment, extraInfo: [.paymentMethod: selected.name])
 
         let itemsToReload = [
-            self.itemIdentifier(for: selected.name),
-            self.itemIdentifier(for: selectedMethod)
+            identifier(for: selected.name),
+            identifier(for: selectedMethod)
         ]
         selectedMethod = selected.name
         methodProvider.selectedMethod = selected
-        context.reconfigure(items: itemsToReload, invalidateLayout: false)
+        context.reload(items: itemsToReload)
     }
     
     func updateItemsIfNecessary() {
