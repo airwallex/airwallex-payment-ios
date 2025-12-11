@@ -129,8 +129,12 @@ class IntegrationDemoListViewController: UIViewController {
     private lazy var shippingAddress = DemoDataSource.shippingAddress
     
     private let integrationType: IntegrationType
-    
+
     private var paymentSessionHandler: PaymentSessionHandler?
+    
+    private var paymentStatusPoller: PaymentStatusPoller?
+    
+    private var session: AWXSession?
     
     init(_ integrationStyle: IntegrationType) {
         self.integrationType = integrationStyle
@@ -140,7 +144,7 @@ class IntegrationDemoListViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -558,15 +562,18 @@ private extension IntegrationDemoListViewController {
     }
     
     func createPaymentSession(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
+        var session: AWXSession
         if ExamplesKeys.preferUnifiedSession {
             if ExamplesKeys.expressCheckout {
-                return try await createUnifiedSessionWithProvider(force3DS: force3DS)
+                session = try await createUnifiedSessionWithProvider(force3DS: force3DS)
             } else {
-                return try await createUnifiedSessionWithIntent(force3DS: force3DS)
+                session = try await createUnifiedSessionWithIntent(force3DS: force3DS)
             }
         } else {
-            return try await createLegacySession(force3DS: force3DS)
+            session = try await createLegacySession(force3DS: force3DS)
         }
+        self.session = session
+        return session
     }
     
     func createUnifiedSessionWithIntent(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
@@ -702,14 +709,70 @@ extension IntegrationDemoListViewController: AWXPaymentResultDelegate {
             showAlert(message: "Your payment has been charged", title: "Payment successful")
         case .inProgress:
             print("Payment in progress, you should check payment status from time to time from backend and show result to the payer")
+            // Extract intent ID and start polling using paymentIntentId()
+            if let intentId = session?.paymentIntentId() {
+                startPollingForPaymentIntent(intentId)
+            }
         case .failure:
             showAlert(message: error?.localizedDescription ?? "There was an error while processing your payment. Please try again.", title: "Payment failed")
         case .cancel:
             showAlert(message: "Your payment has been cancelled", title: "Payment cancelled")
         }
+        // clear session on payment complete
+        session = nil
     }
     
     func paymentViewController(_ controller: UIViewController?, didCompleteWithPaymentConsentId paymentConsentId: String) {
         print("paymentViewController(_:didCompleteWithPaymentConsentId:) - \(paymentConsentId)")
+    }
+}
+
+// MARK: - Payment Status Polling
+private extension IntegrationDemoListViewController {
+    func startPollingForPaymentIntent(_ intentId: String) {
+        paymentStatusPoller?.stop()
+
+        let poller = PaymentStatusPoller(
+            intentId: intentId,
+            apiClient: Airwallex.apiClient
+        )
+        poller.delegate = self
+        paymentStatusPoller = poller
+        poller.start()
+    }
+}
+
+// MARK: - PaymentStatusPollerDelegate
+extension IntegrationDemoListViewController: PaymentStatusPollerDelegate {
+    func paymentStatusPollerDidStartPolling(_ poller: PaymentStatusPoller) {
+        startLoading()
+    }
+    
+    func paymentStatusPoller(_ poller: PaymentStatusPoller, didUpdateStatus attempt: PaymentAttempt) {
+        if attempt.isTerminal {
+            stopLoading()
+            showAlert(
+                message: attempt.description,
+                title: session?.paymentIntentId() ?? ""
+            )
+        } else {
+            startLoading(text: attempt.status.rawValue)
+        }
+    }
+
+    func paymentStatusPoller(_ poller: PaymentStatusPoller, didFailWithError error: Error) {
+        stopLoading()
+        showAlert(
+            message: "Error checking payment status: \(error.localizedDescription)",
+            title: "Error"
+        )
+    }
+
+    func paymentStatusPoller(_ poller: PaymentStatusPoller, didTimeoutWithStatus attempt: PaymentAttempt) {
+        stopLoading()
+        showAlert(
+            message: "Payment status \(attempt.status.rawValue)",
+            title: "Polling timeout"
+        )
     }
 }
