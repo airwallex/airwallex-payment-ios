@@ -114,6 +114,8 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                 sectionController.bind(context: context)
                 sectionControllers[section] = sectionController
                 controller = sectionController
+                // delay first call of `updateItemsIfNecessary`
+                // until `sectionWillDisplay` called
             } else {
                 controller?.updateItemsIfNecessary()
             }
