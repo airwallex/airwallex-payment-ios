@@ -127,9 +127,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
             }
             newSnapshot.reloadItems(toReload)
         }
-        if #available(iOS 26, *) {
-            newSnapshot.reconfigureItems(newSnapshot.itemIdentifiers)
-        }
+        
         diffableDataSource.apply(newSnapshot, animatingDifferences: animatingDifferences)
     }
     
@@ -155,9 +153,6 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
             snapshot.reloadItems(toReload)
         }
         
-        if #available(iOS 26, *) {
-            snapshot.reconfigureItems(newItems)
-        }
         diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
