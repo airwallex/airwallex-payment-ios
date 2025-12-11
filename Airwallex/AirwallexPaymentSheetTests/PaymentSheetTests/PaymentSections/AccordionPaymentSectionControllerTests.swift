@@ -37,7 +37,7 @@ class AccordionPaymentSectionControllerTests: BasePaymentSectionControllerTests 
             return
         }
         XCTAssertNil(mockManager.sectionControllers[PaymentSectionType.accordion(.bottom)])
-        XCTAssertEqual(sectionController.items, mockMethodNames)
+        XCTAssertEqual(sectionController.items, mockMethodNames.map { sectionController.identifier(for: $0) })
     }
     
     func testMethodsForAccordionPosition_withSelectedMethod() {
@@ -54,8 +54,8 @@ class AccordionPaymentSectionControllerTests: BasePaymentSectionControllerTests 
         }
         
         let index = mockMethodNames.firstIndex(of: AWXCardKey)!
-        XCTAssertEqual(accordionTop.items, Array(mockMethodNames[..<index]))
-        XCTAssertEqual(accordionBot.items, Array(mockMethodNames[(index+1)...]))
+        XCTAssertEqual(accordionTop.items, Array(mockMethodNames[..<index].map { accordionTop.identifier(for: $0) }))
+        XCTAssertEqual(accordionBot.items, Array(mockMethodNames[(index+1)...].map { accordionBot.identifier(for: $0) }))
     }
     
     func testHandleUserSelection() {
@@ -65,7 +65,7 @@ class AccordionPaymentSectionControllerTests: BasePaymentSectionControllerTests 
             XCTFail()
             return
         }
-        accordionTop.collectionView(didSelectItem: AWXCardKey, at: IndexPath())
+        accordionTop.collectionView(didSelectItem: accordionTop.identifier(for: AWXCardKey), at: IndexPath())
         mockManager.performUpdates()
         XCTAssertEqual(mockManager.sections, [PaymentSectionType.accordion(.top), PaymentSectionType.cardPaymentNew, PaymentSectionType.accordion(.bottom)])
     }

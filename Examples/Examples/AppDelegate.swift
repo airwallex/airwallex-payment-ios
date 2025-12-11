@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
         guard let type = components.queryItems?.first(where: { $0.name == "type"})?.value else {
-            window?.rootViewController?.showAlert(message: url.absoluteString, title: "APP launched by URL")
+            print("APP launched by URL: \(url.absoluteString)")
             return true
         }
         

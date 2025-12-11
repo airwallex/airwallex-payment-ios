@@ -55,10 +55,10 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
         XCTAssertEqual(sectionController.section, PaymentSectionType.cardPaymentNew)
         XCTAssertFalse(sectionController.items.isEmpty)
-        XCTAssertTrue(sectionController.items.contains(NewCardPaymentSectionController.Item.consentToggle.rawValue))
+        XCTAssertTrue(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.consentToggle)))
         mockMethodProvider.consents = []
         mockManager.performUpdates()
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.consentToggle.rawValue))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.consentToggle)))
     }
     
     func testInitWithAccordion() {
@@ -67,40 +67,40 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
         XCTAssertEqual(sectionController.section, PaymentSectionType.cardPaymentNew)
         mockViewController.view.layoutIfNeeded()
-        XCTAssertNotNil(sectionController.context.cellForItem(NewCardPaymentSectionController.Item.accordionKey.rawValue))
+        XCTAssertNotNil(sectionController.context.cellForItem(sectionController.identifier(for: NewCardPaymentSectionController.Item.accordionKey)))
     }
     
     func testRequiredBillingFields_None() {
         mockMethodProvider.session.requiredBillingContactFields = []
         mockManager.performUpdates()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.cardholderName.rawValue))
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldEmail.rawValue))
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldPhone.rawValue))
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldAddress.rawValue))
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldCountryCode.rawValue))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.cardholderName)))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldEmail)))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldPhone)))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldAddress)))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldCountryCode)))
     }
     
     func testRequiredBillingFields_AddressAndCountryCode() {
         mockMethodProvider.session.requiredBillingContactFields = [.name, .address, .countryCode]
         mockManager.performUpdates()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        XCTAssertTrue(sectionController.items.contains(NewCardPaymentSectionController.Item.cardholderName.rawValue))
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldEmail.rawValue))
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldPhone.rawValue))
-        XCTAssertTrue(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldAddress.rawValue))
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldCountryCode.rawValue))
+        XCTAssertTrue(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.cardholderName)))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldEmail)))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldPhone)))
+        XCTAssertTrue(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldAddress)))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldCountryCode)))
     }
     
     func testRequiredBillingFields_EmailAndPhone() {
         mockMethodProvider.session.requiredBillingContactFields = [.phone, .email, .countryCode]
         mockManager.performUpdates()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.cardholderName.rawValue))
-        XCTAssertTrue(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldEmail.rawValue))
-        XCTAssertTrue(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldPhone.rawValue))
-        XCTAssertFalse(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldAddress.rawValue))
-        XCTAssertTrue(sectionController.items.contains(NewCardPaymentSectionController.Item.billingFieldCountryCode.rawValue))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.cardholderName)))
+        XCTAssertTrue(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldEmail)))
+        XCTAssertTrue(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldPhone)))
+        XCTAssertFalse(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldAddress)))
+        XCTAssertTrue(sectionController.items.contains(sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldCountryCode)))
     }
     
     func testSaveCardToggle_OneOff() {
@@ -109,11 +109,11 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         session.paymentIntent?.customerId = "customer_id"
         session.requiredBillingContactFields = []
         mockMethodProvider.session = session
-        
+
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let itemIdentifier = NewCardPaymentSectionController.Item.saveCardToggle.rawValue
+        let itemIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.saveCardToggle)
         XCTAssertTrue(sectionController.items.contains(itemIdentifier))
 
         guard let cell = sectionController.context.cellForItem(itemIdentifier) as? CheckBoxCell,
@@ -129,11 +129,11 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         session.paymentIntent = AWXPaymentIntent()
         session.requiredBillingContactFields = []
         mockMethodProvider.session = session
-        
+
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let itemIdentifier = NewCardPaymentSectionController.Item.saveCardToggle.rawValue
+        let itemIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.saveCardToggle)
         XCTAssertFalse(sectionController.items.contains(itemIdentifier))
         XCTAssertNil(sectionController.context.cellForItem(itemIdentifier))
     }
@@ -148,7 +148,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let itemIdentifier = NewCardPaymentSectionController.Item.saveCardToggle.rawValue
+        let itemIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.saveCardToggle)
         XCTAssertTrue(sectionController.items.contains(itemIdentifier))
 
         guard let cell = sectionController.context.cellForItem(itemIdentifier) as? CheckBoxCell,
@@ -166,7 +166,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let itemIdentifier = NewCardPaymentSectionController.Item.saveCardToggle.rawValue
+        let itemIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.saveCardToggle)
         XCTAssertFalse(sectionController.items.contains(itemIdentifier))
         XCTAssertNil(sectionController.context.cellForItem(itemIdentifier))
     }
@@ -181,7 +181,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let itemIdentifier = NewCardPaymentSectionController.Item.saveCardToggle.rawValue
+        let itemIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.saveCardToggle)
         XCTAssertFalse(sectionController.items.contains(itemIdentifier))
         XCTAssertNil(sectionController.context.cellForItem(itemIdentifier))
     }
@@ -196,7 +196,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let itemIdentifier = NewCardPaymentSectionController.Item.saveCardToggle.rawValue
+        let itemIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.saveCardToggle)
         XCTAssertTrue(sectionController.items.contains(itemIdentifier))
         guard let toggleCell = sectionController.context.cellForItem(itemIdentifier) as? CheckBoxCell else {
             XCTFail()
@@ -206,8 +206,8 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         toggleCell.viewModel?.toggleSelection()
         XCTAssert(toggleCell.viewModel?.isSelected == false)
         toggleCell.viewModel?.toggleSelection()
-        
-        let cardIdentifier = NewCardPaymentSectionController.Item.cardInfo.rawValue
+
+        let cardIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.cardInfo)
         guard let cardInfoCell = sectionController.context.cellForItem(cardIdentifier) as? CardInfoCollectorCell else {
             XCTFail()
             return
@@ -218,7 +218,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
             shouldChangeCharactersIn: NSRange(location: 0, length: 0),
             replacementString: "62"
         )
-        let unionPayWarningItem = NewCardPaymentSectionController.Item.unionPayWarning.rawValue
+        let unionPayWarningItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.unionPayWarning)
         (cardInfoCell.allFields.first as? CardNumberTextField)?.editingDidEnd(textField)
         XCTAssertTrue(sectionController.items.contains(unionPayWarningItem))
     }
@@ -229,7 +229,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let addressItem = NewCardPaymentSectionController.Item.billingFieldAddress.rawValue
+        let addressItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldAddress)
         guard let addressCell = sectionController.context.cellForItem(addressItem) as? BillingInfoCell else {
             XCTFail()
             return
@@ -241,7 +241,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssertEqual(addressCell.viewModel?.cityConfigurer.text, mockShippingInfo.address?.city)
         XCTAssertEqual(addressCell.viewModel?.zipConfigurer.text, mockShippingInfo.address?.postcode)
         
-        let emailItem = NewCardPaymentSectionController.Item.billingFieldEmail.rawValue
+        let emailItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldEmail)
         guard let emailCell = sectionController.context.cellForItem(emailItem) as? InfoCollectorCell else {
             XCTFail()
             return
@@ -249,14 +249,14 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssertEqual(emailCell.viewModel?.text, mockShippingInfo.email)
         
         
-        let nameItem = NewCardPaymentSectionController.Item.cardholderName.rawValue
+        let nameItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.cardholderName)
         guard let nameCell = sectionController.context.cellForItem(nameItem) as? InfoCollectorCell else {
             XCTFail()
             return
         }
         XCTAssertEqual(nameCell.viewModel?.text, mockShippingInfo.fullName)
         
-        let phoneItem = NewCardPaymentSectionController.Item.billingFieldPhone.rawValue
+        let phoneItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldPhone)
         guard let phoneCell = sectionController.context.cellForItem(phoneItem) as? InfoCollectorCell else {
             XCTFail()
             return
@@ -270,10 +270,10 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let addressItem = NewCardPaymentSectionController.Item.billingFieldAddress.rawValue
+        let addressItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldAddress)
         XCTAssertNil(sectionController.context.cellForItem(addressItem))
         
-        let countryCodeItem = NewCardPaymentSectionController.Item.billingFieldCountryCode.rawValue
+        let countryCodeItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldCountryCode)
         guard let countryCell = sectionController.context.cellForItem(countryCodeItem) as? CountrySelectionCell else {
             XCTFail()
             return
@@ -288,7 +288,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let addressItem = NewCardPaymentSectionController.Item.billingFieldAddress.rawValue
+        let addressItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldAddress)
         guard let addressCell = sectionController.context.cellForItem(addressItem) as? BillingInfoCell else {
             XCTFail()
             return
@@ -309,7 +309,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let addressItem = NewCardPaymentSectionController.Item.billingFieldAddress.rawValue
+        let addressItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldAddress)
         guard let addressCell = sectionController.context.cellForItem(addressItem) as? BillingInfoCell else {
             XCTFail()
             return
@@ -328,13 +328,13 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
-        let cardIdentifier = NewCardPaymentSectionController.Item.cardInfo.rawValue
+        let cardIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.cardInfo)
         guard let cardInfoCell = sectionController.context.cellForItem(cardIdentifier) as? CardInfoCollectorCell else {
             XCTFail()
             return
         }
         
-        let checkoutButtonIdentifier = NewCardPaymentSectionController.Item.checkoutButton.rawValue
+        let checkoutButtonIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.checkoutButton)
         guard let checkoutButtonCell = sectionController.context.cellForItem(checkoutButtonIdentifier) as? CheckoutButtonCell else {
             XCTFail()
             return
@@ -378,7 +378,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
         
-        let checkoutButtonIdentifier = NewCardPaymentSectionController.Item.checkoutButton.rawValue
+        let checkoutButtonIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.checkoutButton)
         guard let checkoutButtonCell = sectionController.context.cellForItem(checkoutButtonIdentifier) as? CheckoutButtonCell else {
             XCTFail()
             return
@@ -389,7 +389,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
             session: mockMethodProvider.session,
             paymentMethodType: mockMethodProvider.selectedMethod
         )
-        let cardIdentifier = NewCardPaymentSectionController.Item.cardInfo.rawValue
+        let cardIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.cardInfo)
         guard let cardInfoCell = sectionController.context.cellForItem(cardIdentifier) as? CardInfoCollectorCell else {
             XCTFail()
             return
@@ -406,7 +406,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         
         do {
             // invalid name
-            let nameItem = NewCardPaymentSectionController.Item.cardholderName.rawValue
+            let nameItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.cardholderName)
             guard let nameCell = sectionController.context.cellForItem(nameItem) as? InfoCollectorCell else {
                 XCTFail()
                 return
@@ -420,7 +420,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         
         do {// invalid email
             mockViewController.presentedViewControllerSpy = nil
-            let emailItem = NewCardPaymentSectionController.Item.billingFieldEmail.rawValue
+            let emailItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldEmail)
             guard let emailCell = sectionController.context.cellForItem(emailItem) as? InfoCollectorCell else {
                 XCTFail()
                 return
@@ -434,7 +434,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         
         do {// invalid phone
             mockViewController.presentedViewControllerSpy = nil
-            let phoneItem = NewCardPaymentSectionController.Item.billingFieldPhone.rawValue
+            let phoneItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldPhone)
             guard let phoneCell = sectionController.context.cellForItem(phoneItem) as? InfoCollectorCell else {
                 XCTFail()
                 return
@@ -448,7 +448,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         
         do {// invalid address
             mockViewController.presentedViewControllerSpy = nil
-            let addressItem = NewCardPaymentSectionController.Item.billingFieldAddress.rawValue
+            let addressItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldAddress)
             guard let addressCell = sectionController.context.cellForItem(addressItem) as? BillingInfoCell else {
                 XCTFail()
                 return
@@ -467,7 +467,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getCardSectionController() else { XCTFail(); return }
         
-        let checkoutButtonIdentifier = NewCardPaymentSectionController.Item.checkoutButton.rawValue
+        let checkoutButtonIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.checkoutButton)
         guard let checkoutButtonCell = sectionController.context.cellForItem(checkoutButtonIdentifier) as? CheckoutButtonCell else {
             XCTFail()
             return
@@ -478,7 +478,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
             session: mockMethodProvider.session,
             paymentMethodType: mockMethodProvider.selectedMethod
         )
-        let cardIdentifier = NewCardPaymentSectionController.Item.cardInfo.rawValue
+        let cardIdentifier = sectionController.identifier(for: NewCardPaymentSectionController.Item.cardInfo)
         guard let cardInfoCell = sectionController.context.cellForItem(cardIdentifier) as? CardInfoCollectorCell else {
             XCTFail()
             return
@@ -492,7 +492,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         }
         XCTAssertNoThrow(try mockProvider.validate(card: card, billing: mockShippingInfo))
         
-        let countryCodeItem = NewCardPaymentSectionController.Item.billingFieldCountryCode.rawValue
+        let countryCodeItem = sectionController.identifier(for: NewCardPaymentSectionController.Item.billingFieldCountryCode)
         guard let countryCodeCell = sectionController.context.cellForItem(countryCodeItem) as? CountrySelectionCell else {
             XCTFail()
             return

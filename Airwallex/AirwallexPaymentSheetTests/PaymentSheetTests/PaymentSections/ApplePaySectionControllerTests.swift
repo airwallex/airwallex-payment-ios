@@ -25,13 +25,14 @@ import AirwallexCore
         mockViewController.view.layoutIfNeeded()
         
         XCTAssertEqual([PaymentSectionType.applePay], mockManager.sections)
-        XCTAssertEqual([AWXApplePayKey], mockManager.diffableDataSource.snapshot().itemIdentifiers)
         guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay] else {
             XCTFail("apple pay section controller not initialized")
             return
         }
+        let items = [controller.identifier(for: ApplePaySectionController.Item.applePayButton)]
+        XCTAssertEqual(items, mockManager.diffableDataSource.snapshot().itemIdentifiers)
         XCTAssertEqual(controller.section, PaymentSectionType.applePay)
-        XCTAssertEqual(controller.items, [AWXApplePayKey])
+        XCTAssertEqual(controller.items, items)
     }
     
     func testSupplementaryView() {
@@ -45,7 +46,8 @@ import AirwallexCore
             XCTFail("apple pay section controller not initialized")
             return
         }
-        guard let indexPath = mockManager.diffableDataSource.indexPath(for: AWXApplePayKey) else {
+        let itemIdentifier = controller.identifier(for: ApplePaySectionController.Item.applePayButton)
+        guard let indexPath = mockManager.diffableDataSource.indexPath(for: itemIdentifier) else {
             XCTFail()
             return
         }

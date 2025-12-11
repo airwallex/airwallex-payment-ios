@@ -15,11 +15,11 @@ import AirwallexCore
 /// This section controlelr is for schema payment
 class SchemaPaymentSectionController: NSObject, SectionController {
     
-    struct Item {
-        static let accordionKey = "schemaPaymentAccordionKey"
-        static let bankName = AWXField.Name.bankName
-        static let redirectReminder = "redirectReminder"
-        static let checkoutButton = "checkoutButton"
+    enum Items: String {
+        case accordionKey
+        case bankName
+        case redirectReminder
+        case checkoutButton
     }
     
     private var session: AWXSession {
@@ -37,7 +37,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     private var uiFieldViewModels = [InfoCollectorTextFieldViewModel]()
     private let name: String
     private let imageLoader: ImageLoader
-    
+
     let layout: AWXUIContext.PaymentLayout
     private let methodType: AWXPaymentMethodType
     
@@ -64,19 +64,19 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         var items = [String]()
         
         if layout == .accordion {
-            items.append(Item.accordionKey)
+            items.append(identifier(for: Items.accordionKey))
         }
-        
+
         if bankSelectionViewModel != nil {
-            items.append(Item.bankName)
+            items.append(identifier(for: Items.bankName))
         }
-        
+
         if let uiFields = schema?.uiFields {
-            items.append(contentsOf: uiFields.map { $0.name })
+            items.append(contentsOf: uiFields.map { identifier(for: $0.name) })
         }
-        
-        items.append(Item.redirectReminder)
-        items.append(Item.checkoutButton)
+
+        items.append(identifier(for: Items.redirectReminder))
+        items.append(identifier(for: Items.checkoutButton))
         return items
     }
     
@@ -107,7 +107,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     
     func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
         switch itemIdentifier {
-        case Item.accordionKey:
+        case identifier(for: Items.accordionKey):
             let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: itemIdentifier, indexPath: indexPath)
             let viewModel = PaymentMethodCellViewModel(
                 itemIdentifier: itemIdentifier,
@@ -119,7 +119,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             )
             cell.setup(viewModel)
             return cell
-        case Item.checkoutButton:
+        case identifier(for: Items.checkoutButton):
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
                 shouldShowPayAsCta: !(session is AWXRecurringSession),
@@ -127,9 +127,9 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             )
             cell.setup(viewModel)
             return cell
-        case Item.redirectReminder:
+        case identifier(for: Items.redirectReminder):
             return context.dequeueReusableCell(SchemaPaymentReminderCell.self, for: itemIdentifier, indexPath: indexPath)
-        case Item.bankName:
+        case identifier(for: Items.bankName):
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: itemIdentifier, indexPath: indexPath)
             assert(bankSelectionViewModel != nil)
             if let bankSelectionViewModel {
@@ -138,7 +138,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             return cell
         default:
             let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
-            if let viewModel = uiFieldViewModels.first(where: { $0.fieldName == itemIdentifier}) {
+            if let fieldName = rawItemValue(for: itemIdentifier),
+               let viewModel = uiFieldViewModels.first(where: { $0.fieldName == fieldName}) {
                 cell.setup(viewModel)
             } else {
                 assert(false)
@@ -182,7 +183,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         bankList = banks
                         bankSelectionViewModel = BankSelectionCellViewModel(
                             bank: banks.count == 1 ? banks.first! : nil,
-                            itemIdentifier: Item.bankName,
+                            itemIdentifier: identifier(for: Items.bankName),
                             handleUserInteraction: { [weak self] in
                                 self?.handleBankSelection()
                             },
@@ -199,7 +200,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 uiFieldViewModels = schema.uiFields.reduce(into: [InfoCollectorTextFieldViewModel](), { partialResult, field in
                     //  create view model for UI fields
                     let viewModel = InfoCollectorCellViewModel(
-                        itemIdentifier: field.name,
+                        itemIdentifier: identifier(for: field.name),
+                        fieldName: field.name,
                         textFieldType: field.textFieldType,
                         title: field.displayName,
                         returnActionHandler: { [weak self] itemIdentifier, _ in
@@ -290,7 +292,7 @@ private extension SchemaPaymentSectionController {
                 do {
                     try viewModel.validate()
                 } catch {
-                    context.scroll(to: viewModel.fieldName, position: .bottom, animated: true)
+                    context.scroll(to: identifier(for: viewModel.fieldName), position: .bottom, animated: true)
                     throw error
                 }
             }

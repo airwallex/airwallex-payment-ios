@@ -16,17 +16,17 @@ class CardPaymentConsentSectionController: SectionController {
     
     static let subType = "consent"
     
-    enum Items {
+    enum Items: String {
         /// for accordion layout
-        static let accordionKey = "consentAccordionKey"
+        case accordionKey
         /// for addNewCardToggle
-        static let addNewCardToggle = "addNewCardToggle"
+        case addNewCardToggle
         /// checkout button for payment mode
-        static let checkoutButton: String = "checkoutButton"
+        case checkoutButton
         /// cvc field if required for payment mode
-        static let cvcField: String = "cvcField"
+        case cvcField
         /// selected consent
-        static let selectedConsent: String = "consent-selected"
+        case selectedConsent
     }
     
     enum Mode {
@@ -55,7 +55,7 @@ class CardPaymentConsentSectionController: SectionController {
     private let layout: AWXUIContext.PaymentLayout
     
     private lazy var viewModelForAccordionKey = PaymentMethodCellViewModel(
-        itemIdentifier: Items.accordionKey,
+        itemIdentifier: identifier(for: Items.accordionKey),
         name: methodType.displayName,
         imageURL: methodType.resources.logoURL,
         isSelected: true,
@@ -109,20 +109,20 @@ class CardPaymentConsentSectionController: SectionController {
     var items: [String] {
         var items = [String]()
         if layout == .accordion {
-            items.append(Items.accordionKey)
+            items.append(identifier(for: Items.accordionKey))
         }
-        
+
         if let selectedConsent {
             // payment mode
-            items.append(Items.selectedConsent)
+            items.append(identifier(for: Items.selectedConsent))
             if selectedConsent.paymentMethod?.card?.numberType == AWXCard.NumberType.PAN {
-                items.append(Items.cvcField)
+                items.append(identifier(for: Items.cvcField))
             }
-            items.append(Items.checkoutButton)
+            items.append(identifier(for: Items.checkoutButton))
         } else {
             // list mode
-            items.append(Items.addNewCardToggle)
-            items += consents.map { $0.id }
+            items.append(identifier(for: Items.addNewCardToggle))
+            items += consents.map { identifier(for: $0.id) }
         }
         return items
     }
@@ -132,55 +132,62 @@ class CardPaymentConsentSectionController: SectionController {
     }
     
     func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        switch itemIdentifier {
-        case Items.accordionKey:
-            let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: itemIdentifier, indexPath: indexPath)
-            cell.setup(viewModelForAccordionKey)
-            return cell
-        case Items.addNewCardToggle:
-            let cell = context.dequeueReusableCell(CardPaymentToggleCell.self, for: itemIdentifier, indexPath: indexPath)
-            cell.setup(viewModelForConsentToggle)
-            return cell
-        case Items.checkoutButton:
-            let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
-            let viewModel = CheckoutButtonCellViewModel(shouldShowPayAsCta: !(session is AWXRecurringSession)) { [weak self] in
-                guard let self, let selectedConsent else {
-                    assert(false, "selected consent not found")
-                    return
+        guard let rawItemValue = rawItemValue(for: itemIdentifier) else {
+            assert(false, "invalid item \(itemIdentifier)")
+            return UICollectionViewCell()
+        }
+        if let item = Items(rawValue: rawItemValue) {
+            switch item {
+            case Items.accordionKey:
+                let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: itemIdentifier, indexPath: indexPath)
+                cell.setup(viewModelForAccordionKey)
+                return cell
+            case Items.addNewCardToggle:
+                let cell = context.dequeueReusableCell(CardPaymentToggleCell.self, for: itemIdentifier, indexPath: indexPath)
+                cell.setup(viewModelForConsentToggle)
+                return cell
+            case Items.checkoutButton:
+                let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
+                let viewModel = CheckoutButtonCellViewModel(shouldShowPayAsCta: !(session is AWXRecurringSession)) { [weak self] in
+                    guard let self, let selectedConsent else {
+                        assert(false, "selected consent not found")
+                        return
+                    }
+                    self.checkout(consent: selectedConsent)
                 }
-                self.checkout(consent: selectedConsent)
-            }
-            cell.setup(viewModel)
-            return cell
-        case Items.cvcField:
-            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
-            guard let selectedConsent else {
-                assert(false, "expected selected consent")
+                cell.setup(viewModel)
+                return cell
+            case Items.cvcField:
+                let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
+                guard let selectedConsent else {
+                    assert(false, "expected selected consent")
+                    return cell
+                }
+                if let cvcConfigurer {
+                    cell.setup(cvcConfigurer)
+                } else {
+                    let cvcConfigurer = createCVCConfigurer(consent: selectedConsent)
+                    self.cvcConfigurer = cvcConfigurer
+                    cell.setup(cvcConfigurer)
+                }
+                return cell
+            case Items.selectedConsent:
+                let cell = context.dequeueReusableCell(CardSelectedConsentCell.self, for: itemIdentifier, indexPath: indexPath)
+                if let consentID = selectedConsent?.id,
+                   let viewModel = viewModelForConsent(consentID: consentID) {
+                    cell.setup(viewModel)
+                }
+                cell.accessibilityIdentifier = "consentSelected"
                 return cell
             }
-            if let cvcConfigurer {
-                cell.setup(cvcConfigurer)
-            } else {
-                let cvcConfigurer = createCVCConfigurer(consent: selectedConsent)
-                self.cvcConfigurer = cvcConfigurer
-                cell.setup(cvcConfigurer)
-            }
-            return cell
-        case Items.selectedConsent:
-            let cell = context.dequeueReusableCell(CardSelectedConsentCell.self, for: itemIdentifier, indexPath: indexPath)
-            if let consentID = selectedConsent?.id,
-               let viewModel = viewModelForConsent(consentID: consentID) {
-                cell.setup(viewModel)
-            }
-            cell.accessibilityIdentifier = "consentSelected"
-            return cell
-        default:
+        } else {
             // consent list
+            let consentId = rawItemValue
             let cell = context.dequeueReusableCell(CardConsentCell.self, for: itemIdentifier, indexPath: indexPath)
-            if let viewModel = viewModelForConsent(consentID: itemIdentifier) {
+            if let viewModel = viewModelForConsent(consentID: consentId) {
                 cell.setup(viewModel)
             }
-            if let consent = consents.first(where: { $0.id == itemIdentifier}) {
+            if let consent = consents.first(where: { $0.id == consentId}) {
                 if consent.isCITConsent {
                     cell.accessibilityIdentifier = "consentListed-cit"
                 } else {
@@ -279,11 +286,12 @@ class CardPaymentConsentSectionController: SectionController {
             return
         }
         
-        guard ![Items.accordionKey, Items.addNewCardToggle].contains(itemIdentifier) else {
+        guard ![identifier(for: Items.accordionKey), identifier(for: Items.addNewCardToggle)].contains(itemIdentifier) else {
             context.endEditing()
             return
         }
-        guard let consent = consents.first(where: { $0.id == itemIdentifier }) ,
+        guard let rawItemValue = rawItemValue(for: itemIdentifier),
+              let consent = consents.first(where: { $0.id == rawItemValue }) ,
               context.viewController != nil else {
             assert(false, "view controller not found")
             return
@@ -319,7 +327,7 @@ class CardPaymentConsentSectionController: SectionController {
     private func createCVCConfigurer(consent: AWXPaymentConsent) -> InfoCollectorCellViewModel<String> {
         let validator = CardCVCValidator(cardName: consent.paymentMethod?.card?.brand ?? "")
         let viewModel = InfoCollectorCellViewModel(
-            itemIdentifier: Items.cvcField,
+            itemIdentifier: identifier(for: Items.cvcField),
             textFieldType: .CVC,
             placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: "consent section - cvc field placeholder"),
             customInputFormatter: validator,

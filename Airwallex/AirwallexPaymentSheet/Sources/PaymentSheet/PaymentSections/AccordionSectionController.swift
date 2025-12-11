@@ -58,17 +58,24 @@ class AccordionSectionController: SectionController  {
         self.context = context
     }
     
-    func cell(for item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        let cellClass = (item == AWXCardKey ? AccordionCardMethodCell.self : AccordionPaymentMethodCell.self)
-        let cell = context.dequeueReusableCell(cellClass, for: item, indexPath: indexPath)
+    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
+        guard let methodName = rawItemValue(for: itemIdentifier) else {
+            assert(false, "invalid item \(itemIdentifier)")
+            return UICollectionViewCell()
+        }
+        let cellClass = (methodName == AWXCardKey ? AccordionCardMethodCell.self : AccordionPaymentMethodCell.self)
+        let cell = context.dequeueReusableCell(cellClass, for: itemIdentifier, indexPath: indexPath)
         if let viewModel = viewModels[safe: indexPath.item] {
             cell.setup(viewModel)
         }
         return cell
     }
-    
-    func collectionView(didSelectItem item: String, at indexPath: IndexPath) {
-        methodProvider.selectPaymentMethod(byName: item)
+
+    func collectionView(didSelectItem itemIdentifier: String, at indexPath: IndexPath) {
+        guard let methodName = rawItemValue(for: itemIdentifier) else {
+            return
+        }
+        methodProvider.selectPaymentMethod(byName: methodName)
     }
             
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -110,7 +117,8 @@ class AccordionSectionController: SectionController  {
             view.isHidden = itemCount == indexPath.item - 1
             return view
         default:
-            fatalError("unexpected elementKind: \(elementKind)")
+            assert(false, "unexpected elementKind: \(elementKind)")
+            return UICollectionReusableView()
         }
     }
     
@@ -123,7 +131,7 @@ class AccordionSectionController: SectionController  {
         
         viewModels = methodProvider.methodsForAccordionPosition(position).map { methodType in
             PaymentMethodCellViewModel(
-                itemIdentifier: methodType.name,
+                itemIdentifier: identifier(for: methodType.name),
                 name: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: false,
