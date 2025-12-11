@@ -15,11 +15,11 @@ import AirwallexCore
 /// This section controlelr is for schema payment
 class SchemaPaymentSectionController: NSObject, SectionController {
     
-    struct Item {
-        static let accordionKey = "schemaPaymentAccordionKey"
-        static let bankName = AWXField.Name.bankName
-        static let redirectReminder = "redirectReminder"
-        static let checkoutButton = "checkoutButton"
+    enum Item {
+        case accordionKey
+        case bankName
+        case redirectReminder
+        case checkoutButton
     }
     
     private var session: AWXSession {
@@ -37,9 +37,23 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     private var uiFieldViewModels = [InfoCollectorTextFieldViewModel]()
     private let name: String
     private let imageLoader: ImageLoader
-    
+
     let layout: AWXUIContext.PaymentLayout
     private let methodType: AWXPaymentMethodType
+
+    private func itemIdentifier(for item: Item) -> String {
+        "schemaPayment(\(name))-\(String(describing: item))"
+    }
+
+    private func fieldIdentifier(for fieldName: String) -> String {
+        "schemaPayment(\(name))-\(fieldName)"
+    }
+
+    private func extractFieldName(from identifier: String) -> String? {
+        let prefix = "schemaPayment(\(name))-"
+        guard identifier.hasPrefix(prefix) else { return nil }
+        return String(identifier.dropFirst(prefix.count))
+    }
     
     init(methodType: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
@@ -64,19 +78,19 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         var items = [String]()
         
         if layout == .accordion {
-            items.append(Item.accordionKey)
+            items.append(itemIdentifier(for: .accordionKey))
         }
         
         if bankSelectionViewModel != nil {
-            items.append(Item.bankName)
+            items.append(itemIdentifier(for: .bankName))
         }
         
         if let uiFields = schema?.uiFields {
-            items.append(contentsOf: uiFields.map { $0.name })
+            items.append(contentsOf: uiFields.map { fieldIdentifier(for: $0.name) })
         }
         
-        items.append(Item.redirectReminder)
-        items.append(Item.checkoutButton)
+        items.append(itemIdentifier(for: .redirectReminder))
+        items.append(itemIdentifier(for: .checkoutButton))
         return items
     }
     
@@ -107,7 +121,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     
     func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
         switch itemIdentifier {
-        case Item.accordionKey:
+        case self.itemIdentifier(for: .accordionKey):
             let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: itemIdentifier, indexPath: indexPath)
             let viewModel = PaymentMethodCellViewModel(
                 itemIdentifier: itemIdentifier,
@@ -119,7 +133,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             )
             cell.setup(viewModel)
             return cell
-        case Item.checkoutButton:
+        case self.itemIdentifier(for: .checkoutButton):
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: itemIdentifier, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
                 shouldShowPayAsCta: !(session is AWXRecurringSession),
@@ -127,9 +141,9 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             )
             cell.setup(viewModel)
             return cell
-        case Item.redirectReminder:
+        case self.itemIdentifier(for: .redirectReminder):
             return context.dequeueReusableCell(SchemaPaymentReminderCell.self, for: itemIdentifier, indexPath: indexPath)
-        case Item.bankName:
+        case self.itemIdentifier(for: .bankName):
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: itemIdentifier, indexPath: indexPath)
             assert(bankSelectionViewModel != nil)
             if let bankSelectionViewModel {
@@ -138,7 +152,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             return cell
         default:
             let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: itemIdentifier, indexPath: indexPath)
-            if let viewModel = uiFieldViewModels.first(where: { $0.fieldName == itemIdentifier}) {
+            if let fieldName = extractFieldName(from: itemIdentifier),
+               let viewModel = uiFieldViewModels.first(where: { $0.fieldName == fieldName}) {
                 cell.setup(viewModel)
             } else {
                 assert(false)
@@ -182,7 +197,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                         bankList = banks
                         bankSelectionViewModel = BankSelectionCellViewModel(
                             bank: banks.count == 1 ? banks.first! : nil,
-                            itemIdentifier: Item.bankName,
+                            itemIdentifier: itemIdentifier(for: .bankName),
                             handleUserInteraction: { [weak self] in
                                 self?.handleBankSelection()
                             },
@@ -199,7 +214,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 uiFieldViewModels = schema.uiFields.reduce(into: [InfoCollectorTextFieldViewModel](), { partialResult, field in
                     //  create view model for UI fields
                     let viewModel = InfoCollectorCellViewModel(
-                        itemIdentifier: field.name,
+                        itemIdentifier: fieldIdentifier(for: field.name),
+                        fieldName: field.name,
                         textFieldType: field.textFieldType,
                         title: field.displayName,
                         returnActionHandler: { [weak self] itemIdentifier, _ in
@@ -290,7 +306,7 @@ private extension SchemaPaymentSectionController {
                 do {
                     try viewModel.validate()
                 } catch {
-                    context.scroll(to: viewModel.fieldName, position: .bottom, animated: true)
+                    context.scroll(to: fieldIdentifier(for: viewModel.fieldName), position: .bottom, animated: true)
                     throw error
                 }
             }

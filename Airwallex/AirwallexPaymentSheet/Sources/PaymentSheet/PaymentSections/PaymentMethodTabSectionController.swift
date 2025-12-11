@@ -13,16 +13,26 @@ import AirwallexCore
 #endif
 
 class PaymentMethodTabSectionController: SectionController {
-    
+
     private var session: AWXSession {
         methodProvider.session
     }
-    
+
     private var selectedMethod: String
     private let methodProvider: PaymentMethodProvider
-    
+
     private var methodTypes: [AWXPaymentMethodType]
     private let imageLoader: ImageLoader
+
+    private func itemIdentifier(for methodName: String) -> String {
+        "\(PaymentSectionType.methodList)-\(methodName)"
+    }
+
+    private func methodName(from itemIdentifier: String) -> String? {
+        let prefix = "\(PaymentSectionType.methodList)-"
+        guard itemIdentifier.hasPrefix(prefix) else { return nil }
+        return String(itemIdentifier.dropFirst(prefix.count))
+    }
     
     init(methodProvider: PaymentMethodProvider,
          imageLoader: ImageLoader) {
@@ -38,7 +48,7 @@ class PaymentMethodTabSectionController: SectionController {
     let section = PaymentSectionType.methodList
     
     var items: [String]  {
-        methodTypes.compactMap { $0.name != AWXApplePayKey ? $0.name : nil }
+        methodTypes.compactMap { $0.name != AWXApplePayKey ? itemIdentifier(for: $0.name) : nil }
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
@@ -52,10 +62,10 @@ class PaymentMethodTabSectionController: SectionController {
             return cell
         }
         let viewModel = PaymentMethodCellViewModel(
-            itemIdentifier: methodType.name,
+            itemIdentifier: itemIdentifier,
             name: methodType.displayName,
             imageURL: methodType.resources.logoURL,
-            isSelected: itemIdentifier == selectedMethod,
+            isSelected: methodType.name == selectedMethod,
             imageLoader: imageLoader,
             cardBrands: []
         )
@@ -86,12 +96,15 @@ class PaymentMethodTabSectionController: SectionController {
             context.endEditing()
             return
         }
-        AnalyticsLogger.log(action: .selectPayment, extraInfo: [.paymentMethod: itemIdentifier])
-        
-        let itemsToReload = [ selected.name, selectedMethod ]
+        AnalyticsLogger.log(action: .selectPayment, extraInfo: [.paymentMethod: selected.name])
+
+        let itemsToReload = [
+            self.itemIdentifier(for: selected.name),
+            self.itemIdentifier(for: selectedMethod)
+        ]
         selectedMethod = selected.name
         methodProvider.selectedMethod = selected
-        context.reload(items: itemsToReload)
+        context.reconfigure(items: itemsToReload, invalidateLayout: false)
     }
     
     func updateItemsIfNecessary() {

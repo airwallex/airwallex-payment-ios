@@ -25,13 +25,12 @@ class ApplePaySectionController: SectionController {
         assert(methodType.name == AWXApplePayKey)
         self.session = session
         self.methodType = methodType
-        self.items = [ methodType.name ]
         self.methodProvider = methodProvider
     }
     
     let section = PaymentSectionType.applePay
     
-    private(set) var items: [String]
+    let items = [ "\(PaymentSectionType.applePay)-\(AWXApplePayKey)" ]
     
     private(set) var context: CollectionViewContext<PaymentSectionType, String>!
     

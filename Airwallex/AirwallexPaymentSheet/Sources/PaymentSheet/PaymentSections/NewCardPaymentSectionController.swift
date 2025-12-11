@@ -17,8 +17,8 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     
     static let subType = "card"
     
-    enum Item: String {
-        case accordionKey = "newCardAccordionKey"
+    enum Item: RawRepresentable {
+        case accordionKey
         case consentToggle
         case cardInfo
         case checkoutButton
@@ -32,6 +32,27 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         case billingFieldPhone
         case billingFieldAddress
         case billingFieldCountryCode
+        
+        var rawValue: String {
+            "\(PaymentSectionType.cardPaymentNew)-\(String(describing: self))"
+        }
+
+        init?(rawValue: String) {
+            switch rawValue {
+            case Item.accordionKey.rawValue: self = .accordionKey
+            case Item.consentToggle.rawValue: self = .consentToggle
+            case Item.cardInfo.rawValue: self = .cardInfo
+            case Item.checkoutButton.rawValue: self = .checkoutButton
+            case Item.saveCardToggle.rawValue: self = .saveCardToggle
+            case Item.unionPayWarning.rawValue: self = .unionPayWarning
+            case Item.cardholderName.rawValue: self = .cardholderName
+            case Item.billingFieldEmail.rawValue: self = .billingFieldEmail
+            case Item.billingFieldPhone.rawValue: self = .billingFieldPhone
+            case Item.billingFieldAddress.rawValue: self = .billingFieldAddress
+            case Item.billingFieldCountryCode.rawValue: self = .billingFieldCountryCode
+            default: return nil
+            }
+        }
     }
     
     private var methodType: AWXPaymentMethodType

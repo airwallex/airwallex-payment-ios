@@ -87,7 +87,7 @@ class PaymentViewController: AWXViewController {
             if case PaymentMethodProviderUpdateType.consentDeleted(_) = type {
                 animating = true
             }
-            self.collectionViewManager.performUpdates(forceReload: true, animatingDifferences: animating)
+            self.collectionViewManager.performUpdates(animatingDifferences: animating)
         }
     }
     
