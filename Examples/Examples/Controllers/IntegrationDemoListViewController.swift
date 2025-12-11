@@ -744,20 +744,19 @@ private extension IntegrationDemoListViewController {
 
 // MARK: - PaymentStatusPollerDelegate
 extension IntegrationDemoListViewController: PaymentStatusPollerDelegate {
-    
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didStartPolling status: PaymentIntentStatus) {
-        startLoading(text: status.rawValue)
+    func paymentStatusPollerDidStartPolling(_ poller: PaymentStatusPoller) {
+        startLoading()
     }
     
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didUpdateStatus status: PaymentIntentStatus) {
-        if status.isTerminal {
+    func paymentStatusPoller(_ poller: PaymentStatusPoller, didUpdateStatus attempt: PaymentAttempt) {
+        if attempt.isTerminal {
             stopLoading()
             showAlert(
-                message: status.rawValue,
+                message: attempt.description,
                 title: session?.paymentIntentId() ?? ""
             )
         } else {
-            startLoading(text: status.rawValue)
+            startLoading(text: attempt.status.rawValue)
         }
     }
 
@@ -769,10 +768,10 @@ extension IntegrationDemoListViewController: PaymentStatusPollerDelegate {
         )
     }
 
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didTimeoutWithStatus status: PaymentIntentStatus) {
+    func paymentStatusPoller(_ poller: PaymentStatusPoller, didTimeoutWithStatus attempt: PaymentAttempt) {
         stopLoading()
         showAlert(
-            message: "Payment status \(status.rawValue)",
+            message: "Payment status \(attempt.status.rawValue)",
             title: "Polling timeout"
         )
     }

@@ -10,85 +10,12 @@ import Foundation
 import UIKit
 import Airwallex
 
-enum PaymentIntentStatus: Equatable, RawRepresentable {
-    case succeeded
-    case cancelled
-    case pending
-    case requiresPaymentMethod
-    case requiresCustomerAction
-    case pendingReview
-    case requiresCapture
-    case unknown(String)
-
-    typealias RawValue = String
-
-    init(rawValue: String) {
-        switch rawValue.uppercased() {
-        case "SUCCEEDED":
-            self = .succeeded
-        case "CANCELLED":
-            self = .cancelled
-        case "PENDING":
-            self = .pending
-        case "REQUIRES_PAYMENT_METHOD":
-            self = .requiresPaymentMethod
-        case "REQUIRES_CUSTOMER_ACTION":
-            self = .requiresCustomerAction
-        case "PENDING_REVIEW":
-            self = .pendingReview
-        case "REQUIRES_CAPTURE":
-            self = .requiresCapture
-        default:
-            self = .unknown(rawValue)
-        }
-    }
-
-    var rawValue: String {
-        switch self {
-        case .succeeded:
-            return "SUCCEEDED"
-        case .cancelled:
-            return "CANCELLED"
-        case .pending:
-            return "PENDING"
-        case .requiresPaymentMethod:
-            return "REQUIRES_PAYMENT_METHOD"
-        case .requiresCustomerAction:
-            return "REQUIRES_CUSTOMER_ACTION"
-        case .pendingReview:
-            return "PENDING_REVIEW"
-        case .requiresCapture:
-            return "REQUIRES_CAPTURE"
-        case .unknown(let value):
-            return value
-        }
-    }
-
-    var isTerminal: Bool {
-        switch self {
-        case .succeeded, .cancelled:
-            return true
-        default:
-            return false
-        }
-    }
-
-    var shouldContinuePolling: Bool {
-        switch self {
-        case .pending, .requiresPaymentMethod, .requiresCustomerAction, .pendingReview, .requiresCapture, .unknown:
-            return true
-        default:
-            return false
-        }
-    }
-}
-
 @MainActor
 protocol PaymentStatusPollerDelegate: AnyObject {
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didStartPolling status: PaymentIntentStatus)
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didUpdateStatus status: PaymentIntentStatus)
+    func paymentStatusPollerDidStartPolling(_ poller: PaymentStatusPoller)
+    func paymentStatusPoller(_ poller: PaymentStatusPoller, didUpdateStatus attempt: PaymentAttempt)
     func paymentStatusPoller(_ poller: PaymentStatusPoller, didFailWithError error: Error)
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didTimeoutWithStatus status: PaymentIntentStatus)
+    func paymentStatusPoller(_ poller: PaymentStatusPoller, didTimeoutWithStatus attempt: PaymentAttempt)
 }
 
 @MainActor
@@ -97,8 +24,8 @@ class PaymentStatusPoller {
 
     weak var delegate: PaymentStatusPollerDelegate?
 
-    internal let intentId: String
-    internal private(set) var status: PaymentIntentStatus
+    private let intentId: String
+    private(set) var paymentAttempt: PaymentAttempt?
 
     private let apiClient: APIClient
     private let maxPollingDuration: TimeInterval
@@ -114,14 +41,12 @@ class PaymentStatusPoller {
 
     init(
         intentId: String,
-        status: PaymentIntentStatus = .pending,
         apiClient: APIClient,
         maxPollingDuration: TimeInterval = 300, // 5 minutes
         baseInterval: TimeInterval = 2.0,
-        maxInterval: TimeInterval = 30.0
+        maxInterval: TimeInterval = 16.0
     ) {
         self.intentId = intentId
-        self.status = status
         self.apiClient = apiClient
         self.maxPollingDuration = maxPollingDuration
         self.baseInterval = baseInterval
@@ -147,13 +72,18 @@ class PaymentStatusPoller {
 
     func start() {
         guard !isPolling else { return }
-        guard !status.isTerminal else { return }
+
+        // Check if latest payment attempt status is terminal
+        guard paymentAttempt?.isTerminal != true else {
+            return
+        }
 
         isPolling = true
         pollingAttempts = 0
         pollingStartTime = Date()
         pollPaymentStatus()
-        delegate?.paymentStatusPoller(self, didStartPolling: status)
+
+        delegate?.paymentStatusPollerDidStartPolling(self)
     }
 
     func stop() {
@@ -187,8 +117,8 @@ class PaymentStatusPoller {
         // Fetch status
         Task { @MainActor in
             do {
-                let intent = try await apiClient.retrievePaymentIntent(intentId: intentId)
-                handlePaymentIntent(intent)
+                let intent = try await apiClient.retrievePaymentIntent(intentId)
+                handlePaymentIntnet(intent)
             } catch {
                 delegate?.paymentStatusPoller(self, didFailWithError: error)
                 stop()
@@ -196,36 +126,41 @@ class PaymentStatusPoller {
         }
     }
 
-    private func handlePaymentIntent(_ intent: AWXPaymentIntent) {
+    private func handlePaymentIntnet(_ intent: PaymentIntent) {
         guard let pollingStartTime else {
             // polling is stopped
             stop()
             return
         }
-        let newStatus = PaymentIntentStatus(rawValue: intent.status)
-        let previousStatus = status
 
-        // Update status property
-        status = newStatus
-
-        // Only notify delegate if status has changed
-        if previousStatus != newStatus {
-            delegate?.paymentStatusPoller(self, didUpdateStatus: newStatus)
+        // Check if latest payment attempt exists
+        guard let paymentAttempt = intent.latestPaymentAttempt else {
+            let error = NSError.airwallexError(localizedMessage: "Payment attempt not found")
+            delegate?.paymentStatusPoller(self, didFailWithError: error)
+            stop()
+            return
         }
 
-        // Check if status is terminal or requires continued polling
-        if newStatus.isTerminal {
+        // Only notify delegate if status has changed
+        // Use latest_payment_attempt.status for comparison
+
+        let previousAttemp = self.paymentAttempt
+        // Update status property
+        self.paymentAttempt = paymentAttempt
+        if paymentAttempt.status != previousAttemp?.status {
+            delegate?.paymentStatusPoller(self, didUpdateStatus: paymentAttempt)
+        }
+        
+        // Check if status is terminal using latest_payment_attempt.status
+        if paymentAttempt.isTerminal {
             // Terminal states - stop polling
             stop()
-        } else if newStatus.shouldContinuePolling {
+        } else {
             // Continue polling
-            if case .unknown(let rawValue) = newStatus {
-                print("PaymentStatusPoller: Unknown status '\(rawValue)', continuing to poll")
-            }
             if Date().timeIntervalSince(pollingStartTime) < maxPollingDuration {
                 scheduleNextPoll()
             } else {
-                delegate?.paymentStatusPoller(self, didTimeoutWithStatus: newStatus)
+                delegate?.paymentStatusPoller(self, didTimeoutWithStatus: paymentAttempt)
                 stop()
             }
         }

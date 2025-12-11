@@ -82,18 +82,7 @@ class DirectAPIClient: APIClient {
         }
     }
 
-    func retrievePaymentIntent(intentId: String) async throws -> AWXPaymentIntent {
-        // Ensure we have auth token
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            MockAPIClient.shared().createAuthenticationToken { error in
-                if let error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: ())
-                }
-            }
-        }
-
+    func retrievePaymentIntent(_ intentId: String) async throws -> PaymentIntent {
         // Make async request
         let path = "api/v1/pa/payment_intents/\(intentId)"
         let requestURL = URL(string: path, relativeTo: MockAPIClient.shared().paymentBaseURL)!
@@ -101,29 +90,31 @@ class DirectAPIClient: APIClient {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Airwallex-iOS-SDK", forHTTPHeaderField: "User-Agent")
-        if let token = MockAPIClient.shared().token {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        if let clientSecret = AWXAPIClientConfiguration.shared().clientSecret {
+            request.setValue(clientSecret, forHTTPHeaderField: "client-secret")
         }
 
-        let (data, _) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URLSession.shared.data(for: request)
 
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-            throw NSError.airwallexError(localizedMessage: "Invalid response format")
+        // Check HTTP status code
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200..<300).contains(httpResponse.statusCode) else {
+            // Try to extract error message from response
+            if let responseDict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let errorMessage = responseDict["message"] as? String {
+                throw NSError(
+                    domain: "com.airwallex.paymentacceptance",
+                    code: -1,
+                    userInfo: [NSLocalizedDescriptionKey: errorMessage]
+                )
+            }
+            throw NSError.airwallexError(localizedMessage: "Invalid response from server")
         }
 
-        if let errorMessage = json["message"] as? String {
-            throw NSError(
-                domain: "com.airwallex.paymentacceptance",
-                code: -1,
-                userInfo: [NSLocalizedDescriptionKey: errorMessage]
-            )
-        }
-
-        guard let paymentIntent = AWXPaymentIntent.decode(fromJSON: json) as? AWXPaymentIntent else {
-            throw NSError.airwallexError(localizedMessage: "Failed to decode payment intent")
-        }
-
-        return paymentIntent
+        // Decode using Decodable
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try decoder.decode(PaymentIntent.self, from: data)
     }
 }
 
