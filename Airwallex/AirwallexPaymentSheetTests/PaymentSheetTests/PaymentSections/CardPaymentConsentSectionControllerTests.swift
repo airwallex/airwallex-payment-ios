@@ -45,7 +45,7 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
         }
         XCTAssertEqual(mockManager.sections, [.cardPaymentConsent])
         XCTAssertEqual(sectionController.section, PaymentSectionType.cardPaymentConsent)
-        XCTAssert(sectionController.items.contains(CardPaymentConsentSectionController.Items.selectedConsent))
+        XCTAssert(sectionController.items.contains(.selectedConsent))
         XCTAssertEqual(sectionController.mode, CardPaymentConsentSectionController.Mode.consentPayment)
     }
     
@@ -75,12 +75,12 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
         }
         XCTAssertEqual(mockManager.sections, [.cardPaymentConsent])
         XCTAssertEqual(sectionController.section, PaymentSectionType.cardPaymentConsent)
-        XCTAssert(sectionController.items.contains(CardPaymentConsentSectionController.Items.accordionKey))
+        XCTAssert(sectionController.items.contains(.accordionKey))
         
-        sectionController.collectionView(didSelectItem: firstConsentId, at: IndexPath())
+        sectionController.collectionView(didSelectItem: sectionController.sectionItem(firstConsentId), at: IndexPath())
         mockViewController.view.layoutIfNeeded()
         XCTAssertEqual(sectionController.mode, .consentPayment)
-        XCTAssert(sectionController.items.contains(CardPaymentConsentSectionController.Items.accordionKey))
+        XCTAssert(sectionController.items.contains(.accordionKey))
     }
     
     func testToggleListAndPaymentMode() {
@@ -93,22 +93,23 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
         }
         XCTAssertEqual(sectionController.mode, CardPaymentConsentSectionController.Mode.consentList)
         
-        guard let indexPath = mockManager.diffableDataSource.indexPath(for: firstConsentId) else {
+        let firstConsentSectionItem = sectionController.sectionItem(firstConsentId)
+        guard let indexPath = mockManager.diffableDataSource.indexPath(for: firstConsentSectionItem) else {
             XCTFail()
             return
         }
-        sectionController.collectionView(didSelectItem: firstConsentId, at: indexPath)
+        sectionController.collectionView(didSelectItem: firstConsentSectionItem, at: indexPath)
         mockViewController.view.layoutIfNeeded()
         XCTAssertEqual(sectionController.mode, CardPaymentConsentSectionController.Mode.consentPayment)
         
-        guard let cell = sectionController.context.cellForItem(CardPaymentConsentSectionController.Items.selectedConsent) as? CardSelectedConsentCell else {
+        guard let cell = sectionController.context.cellForItem(sectionController.sectionItem(.selectedConsent)) as? CardSelectedConsentCell else {
             XCTFail()
             return
         }
         cell.viewModel?.buttonAction()
         XCTAssertEqual(sectionController.mode, CardPaymentConsentSectionController.Mode.consentList)
         mockViewController.view.layoutIfNeeded()
-        guard let cell = sectionController.context.cellForItem(CardPaymentConsentSectionController.Items.addNewCardToggle) as? CardPaymentToggleCell  else {
+        guard let cell = sectionController.context.cellForItem(sectionController.sectionItem(.addNewCardToggle)) as? CardPaymentToggleCell  else {
             XCTFail()
             return
         }
@@ -132,7 +133,7 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
               }
         
         // test checkout
-        guard let cell = sectionController.context.cellForItem(CardPaymentConsentSectionController.Items.checkoutButton) as? CheckoutButtonCell else {
+        guard let cell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
             XCTFail()
             return
         }
@@ -154,7 +155,7 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
         
         
         guard let consentID = mockMethodProvider.consents.first?.id,
-              let cell = sectionController.context.cellForItem(consentID) as? CardConsentCell else {
+              let cell = sectionController.context.cellForItem(sectionController.sectionItem(consentID)) as? CardConsentCell else {
             XCTFail()
             return
         }
@@ -176,7 +177,7 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
                   return
               }
         guard let consentID = mockMethodProvider.consents.last?.id,
-              let cell = sectionController.context.cellForItem(consentID) as? CardConsentCell else {
+              let cell = sectionController.context.cellForItem(sectionController.sectionItem(consentID)) as? CardConsentCell else {
             XCTFail()
             return
         }
@@ -190,4 +191,13 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
         
     }
     
+}
+
+// MARK: - Item Identifiers (mirroring CardPaymentConsentSectionController)
+private extension String {
+    static let accordionKey = "accordionKey"
+    static let addNewCardToggle = "addNewCardToggle"
+    static let checkoutButton = "checkoutButton"
+    static let cvcField = "cvcField"
+    static let selectedConsent = "selectedConsent"
 }

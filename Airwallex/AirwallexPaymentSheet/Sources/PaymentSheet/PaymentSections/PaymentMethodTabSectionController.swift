@@ -11,9 +11,9 @@ import UIKit
 @_spi(AWX) import AirwallexPayment
 import AirwallexCore
 #endif
-
-class PaymentMethodTabSectionController: SectionController {
     
+class PaymentMethodTabSectionController: SectionController {
+    typealias SectionItem = CompoundItem<PaymentSectionType, String>
     private var session: AWXSession {
         methodProvider.session
     }
@@ -37,16 +37,18 @@ class PaymentMethodTabSectionController: SectionController {
     
     let section = PaymentSectionType.methodList
     
-    var items: [String]  {
-        methodTypes.compactMap { $0.name != AWXApplePayKey ? $0.name : nil }
+    var items: [String] {
+        methodTypes
+            .filter { $0.name != AWXApplePayKey }
+            .map { $0.name }
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
         self.context = context
     }
     
-    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = context.dequeueReusableCell(PaymentMethodCell.self, for: itemIdentifier, indexPath: indexPath)
+    func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = context.dequeueReusableCell(PaymentMethodCell.self, for: sectionItem, indexPath: indexPath)
         guard let methodType = methodTypes[safe: indexPath.item] else {
             assert(false, "index out of bounds")
             return cell
@@ -55,7 +57,7 @@ class PaymentMethodTabSectionController: SectionController {
             itemIdentifier: methodType.name,
             name: methodType.displayName,
             imageURL: methodType.resources.logoURL,
-            isSelected: itemIdentifier == selectedMethod,
+            isSelected: methodType.name == selectedMethod,
             imageLoader: imageLoader,
             cardBrands: []
         )
@@ -76,8 +78,8 @@ class PaymentMethodTabSectionController: SectionController {
         section.interGroupSpacing = 8
         return section
     }
-
-    func collectionView(didSelectItem itemIdentifier: String, at indexPath: IndexPath) {
+    
+    func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
         guard let selected = methodTypes[safe: indexPath.item] else {
             assert(false, "invalid index")
             return
@@ -86,9 +88,12 @@ class PaymentMethodTabSectionController: SectionController {
             context.endEditing()
             return
         }
-        AnalyticsLogger.log(action: .selectPayment, extraInfo: [.paymentMethod: itemIdentifier])
-        
-        let itemsToReload = [ selected.name, selectedMethod ]
+        AnalyticsLogger.log(action: .selectPayment, extraInfo: [.paymentMethod: selected.name])
+    
+        let itemsToReload = [
+            self.sectionItem(selected.name),
+            self.sectionItem(selectedMethod)
+        ]
         selectedMethod = selected.name
         methodProvider.selectedMethod = selected
         context.reload(items: itemsToReload)

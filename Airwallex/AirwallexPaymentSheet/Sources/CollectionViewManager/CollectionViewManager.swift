@@ -22,11 +22,15 @@ import UIKit
 @MainActor
 class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable, SectionProvider: CollectionViewSectionProvider>: NSObject, UICollectionViewDelegate where SectionProvider.SectionType == SectionType, SectionProvider.ItemType == ItemType {
     
+    /// Type alias for the compound item type used in the diffable data source
+    typealias SectionItem = CompoundItem<SectionType, ItemType>
+    
     weak var sectionDataSource: SectionProvider?
     private(set) var sections = [SectionType]()
     private(set) var sectionControllers = [SectionType: AnySectionController<SectionType, ItemType>]()
     
-    private(set) var diffableDataSource: UICollectionViewDiffableDataSource<SectionType, ItemType>!
+    /// The diffable data source uses SectionItem to ensure global uniqueness of item identifiers
+    private(set) var diffableDataSource: UICollectionViewDiffableDataSource<SectionType, SectionItem>!
     private var context: CollectionViewContext<SectionType, ItemType>!
     private(set) var collectionView: UICollectionView!
     
@@ -58,15 +62,16 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         
-        diffableDataSource = UICollectionViewDiffableDataSource<SectionType, ItemType>(
+        diffableDataSource = UICollectionViewDiffableDataSource<SectionType, SectionItem>(
             collectionView: collectionView,
-            cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
+            cellProvider: { [weak self] collectionView, indexPath, sectionItem in
                 guard let self, let sectionType = self.sections[safe: indexPath.section],
                       let sectionController = self.sectionControllers[sectionType] else {
                     assert(false, "invalid section index")
                     return UICollectionViewCell()
                 }
-                return sectionController.cell(for: itemIdentifier, at: indexPath)
+                // Pass the compound item directly to section controller
+                return sectionController.cell(for: sectionItem, at: indexPath)
             }
         )
         
@@ -105,7 +110,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     func performUpdates(forceReload: Bool = false, animatingDifferences: Bool = false) {
         guard let sectionDataSource else { return }
         sections = sectionDataSource.sections()
-        var newSnapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
+        var newSnapshot = NSDiffableDataSourceSnapshot<SectionType, SectionItem>()
         newSnapshot.appendSections(sections)
         for section in sections {
             var controller = sectionControllers[section]
@@ -114,22 +119,24 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                 sectionController.bind(context: context)
                 sectionControllers[section] = sectionController
                 controller = sectionController
+                // delay first call of `updateItemsIfNecessary`
+                // until `sectionWillDisplay` called
             } else {
                 controller?.updateItemsIfNecessary()
             }
-            let items = controller?.items ?? []
+            // Wrap raw items in SectionItem for global uniqueness
+            let rawItems = controller?.items ?? []
+            let items = rawItems.map { SectionItem(section, $0) }
             newSnapshot.appendItems(items, toSection: section)
         }
         if forceReload {
             let existingItems = Set(diffableDataSource.snapshot().itemIdentifiers)
-            let toReload = newSnapshot.itemIdentifiers.reduce(into: [ItemType]()) { partialResult, item in
+            let toReload = newSnapshot.itemIdentifiers.reduce(into: [SectionItem]()) { partialResult, item in
                 if existingItems.contains(item) { partialResult.append(item) }
             }
             newSnapshot.reloadItems(toReload)
         }
-        if #available(iOS 26, *) {
-            newSnapshot.reconfigureItems(newSnapshot.itemIdentifiers)
-        }
+        
         diffableDataSource.apply(newSnapshot, animatingDifferences: animatingDifferences)
     }
     
@@ -143,21 +150,19 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
         if updateItems {
             controller.updateItemsIfNecessary()
         }
-        let items = snapshot.itemIdentifiers(inSection: section)
-        snapshot.deleteItems(items)
-        let newItems = controller.items
+        let existingItems = snapshot.itemIdentifiers(inSection: section)
+        snapshot.deleteItems(existingItems)
+        // Wrap raw items in SectionItem for global uniqueness
+        let newItems = controller.items.map { SectionItem(section, $0) }
         snapshot.appendItems(newItems, toSection: section)
         if forceReload {
-            let existingItems = Set(items)
-            let toReload = newItems.reduce(into: [ItemType]()) { partialResult, item in
-                if existingItems.contains(item) { partialResult.append(item) }
+            let existingSet = Set(existingItems)
+            let toReload = newItems.reduce(into: [SectionItem]()) { partialResult, item in
+                if existingSet.contains(item) { partialResult.append(item) }
             }
             snapshot.reloadItems(toReload)
         }
         
-        if #available(iOS 26, *) {
-            snapshot.reconfigureItems(newItems)
-        }
         diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
@@ -166,23 +171,25 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = sections[safe: indexPath.section],
               let controller = sectionControllers[section],
-              let itemIdentifier = diffableDataSource.itemIdentifier(for: indexPath) else {
+              let sectionItem = diffableDataSource.itemIdentifier(for: indexPath) else {
             return
         }
-        controller.collectionView(didSelectItem: itemIdentifier, at: indexPath)
+        // Pass the compound item directly to section controller
+        controller.collectionView(didSelectItem: sectionItem, at: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let itemIdentifier = diffableDataSource.itemIdentifier(for: indexPath),
+        guard let sectionItem = diffableDataSource.itemIdentifier(for: indexPath),
               let section = sections[safe: indexPath.section],
               let sectionController = sectionControllers[section] else {
             assert(false, "section and item for found for indexPath: \(indexPath)")
             return
         }
+        // Pass the compound item directly to display handler
         displayHandler.willDisplay(
             cell: cell,
             for: sectionController,
-            itemIdentifier: itemIdentifier,
+            sectionItem: sectionItem,
             indexPath: indexPath
         )
     }
