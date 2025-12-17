@@ -736,43 +736,44 @@ private extension IntegrationDemoListViewController {
             intentId: intentId,
             apiClient: Airwallex.apiClient
         )
-        poller.delegate = self
         paymentStatusPoller = poller
-        poller.start()
-    }
-}
 
-// MARK: - PaymentStatusPollerDelegate
-extension IntegrationDemoListViewController: PaymentStatusPollerDelegate {
-    func paymentStatusPollerDidStartPolling(_ poller: PaymentStatusPoller) {
         startLoading()
-    }
-    
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didUpdateStatus attempt: PaymentAttempt) {
-        if attempt.isTerminal {
-            stopLoading()
-            showAlert(
-                message: attempt.description,
-                title: session?.paymentIntentId() ?? ""
-            )
-        } else {
-            startLoading(text: attempt.status.rawValue)
+
+        Task {
+            do {
+                let attempt = try await poller.getPaymentAttempt()
+                stopLoading()
+                showAlert(
+                    message: attempt.description,
+                    title: session?.paymentIntentId() ?? ""
+                )
+            } catch let error as PaymentStatusPoller.PollingError {
+                stopLoading()
+                switch error {
+                case .timeout(let lastAttempt):
+                    showAlert(
+                        message: "Payment status \(lastAttempt?.status.rawValue ?? "unknown")",
+                        title: "Polling timeout"
+                    )
+                case .apiError(let underlyingError):
+                    showAlert(
+                        message: "Error checking payment status: \(underlyingError.localizedDescription)",
+                        title: "Error"
+                    )
+                case .paymentAttemptNotFound:
+                    showAlert(
+                        message: "Payment attempt not found",
+                        title: "Error"
+                    )
+                }
+            } catch {
+                stopLoading()
+                showAlert(
+                    message: "Error checking payment status: \(error.localizedDescription)",
+                    title: "Error"
+                )
+            }
         }
-    }
-
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didFailWithError error: Error) {
-        stopLoading()
-        showAlert(
-            message: "Error checking payment status: \(error.localizedDescription)",
-            title: "Error"
-        )
-    }
-
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didTimeoutWithStatus attempt: PaymentAttempt) {
-        stopLoading()
-        showAlert(
-            message: "Payment status \(attempt.status.rawValue)",
-            title: "Polling timeout"
-        )
     }
 }

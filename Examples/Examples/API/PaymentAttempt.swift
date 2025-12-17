@@ -39,11 +39,11 @@ struct PaymentAttempt: Decodable {
         }
     }
 
-    var isTerminal: Bool {
+    var isFinal: Bool {
         guard failureDetails == nil else {
             return true
         }
-        return status.isTerminal
+        return status.isFinal
     }
     
     enum Status: Equatable, RawRepresentable, Decodable {
@@ -58,64 +58,34 @@ struct PaymentAttempt: Decodable {
         case settled
         case paid
         case unknown(String)
-
-        typealias RawValue = String
-
+        
+        private static let mapping: [String: Status] = [
+            "RECEIVED": .received,
+            "AUTHENTICATION_REDIRECTED": .authenticationRedirected,
+            "PENDING_AUTHORIZATION": .pendingAuthorization,
+            "AUTHORIZED": .authorized,
+            "CAPTURE_REQUESTED": .captureRequested,
+            "EXPIRED": .expired,
+            "CANCELLED": .cancelled,
+            "FAILED": .failed,
+            "SETTLED": .settled,
+            "PAID": .paid
+        ]
+        
         init(rawValue: String) {
-            switch rawValue.uppercased() {
-            case "RECEIVED":
-                self = .received
-            case "AUTHENTICATION_REDIRECTED":
-                self = .authenticationRedirected
-            case "PENDING_AUTHORIZATION":
-                self = .pendingAuthorization
-            case "AUTHORIZED":
-                self = .authorized
-            case "CAPTURE_REQUESTED":
-                self = .captureRequested
-            case "EXPIRED":
-                self = .expired
-            case "CANCELLED":
-                self = .cancelled
-            case "FAILED":
-                self = .failed
-            case "SETTLED":
-                self = .settled
-            case "PAID":
-                self = .paid
-            default:
-                self = .unknown(rawValue)
-            }
+            self = Self.mapping[rawValue.uppercased()] ?? .unknown(rawValue)
         }
-
+        
         var rawValue: String {
-            switch self {
-            case .received:
-                return "RECEIVED"
-            case .authenticationRedirected:
-                return "AUTHENTICATION_REDIRECTED"
-            case .pendingAuthorization:
-                return "PENDING_AUTHORIZATION"
-            case .authorized:
-                return "AUTHORIZED"
-            case .captureRequested:
-                return "CAPTURE_REQUESTED"
-            case .expired:
-                return "EXPIRED"
-            case .cancelled:
-                return "CANCELLED"
-            case .failed:
-                return "FAILED"
-            case .settled:
-                return "SETTLED"
-            case .paid:
-                return "PAID"
-            case .unknown(let value):
-                return value
-            }
+            Self.mapping.first(where: { $0.value == self })?.key ?? {
+                if case .unknown(let value) = self {
+                    return value
+                }
+                return ""
+            }()
         }
 
-        var isTerminal: Bool {
+        var isFinal: Bool {
             switch self {
             case .authorized, .captureRequested, .expired, .cancelled, .failed, .settled, .paid:
                 return true

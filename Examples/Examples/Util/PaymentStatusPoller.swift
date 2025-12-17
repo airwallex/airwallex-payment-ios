@@ -11,38 +11,28 @@ import UIKit
 import Airwallex
 
 @MainActor
-protocol PaymentStatusPollerDelegate: AnyObject {
-    func paymentStatusPollerDidStartPolling(_ poller: PaymentStatusPoller)
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didUpdateStatus attempt: PaymentAttempt)
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didFailWithError error: Error)
-    func paymentStatusPoller(_ poller: PaymentStatusPoller, didTimeoutWithStatus attempt: PaymentAttempt)
-}
-
-@MainActor
 class PaymentStatusPoller {
-    // MARK: - Properties
 
-    weak var delegate: PaymentStatusPollerDelegate?
+    enum PollingError: Error {
+        case apiError(Error)
+        
+        case timeout(lastAttempt: PaymentAttempt?)
+        case paymentAttemptNotFound
+    }
 
     private let intentId: String
-    private(set) var paymentAttempt: PaymentAttempt?
-
     private let apiClient: APIClient
     private let maxPollingDuration: TimeInterval
     private let baseInterval: TimeInterval
     private let maxInterval: TimeInterval
 
-    private var pollingTimer: Timer?
-    private var pollingAttempts: Int = 0
-    private var pollingStartTime: Date?
-    private var isPolling: Bool = false
-
-    // MARK: - Initialization
+    private var pollingTask: Task<PaymentAttempt, Error>?
+    private var wentToBackgroundDuringRequest = false
 
     init(
         intentId: String,
         apiClient: APIClient,
-        maxPollingDuration: TimeInterval = 300, // 5 minutes
+        maxPollingDuration: TimeInterval = 300,
         baseInterval: TimeInterval = 2.0,
         maxInterval: TimeInterval = 16.0
     ) {
@@ -52,133 +42,100 @@ class PaymentStatusPoller {
         self.baseInterval = baseInterval
         self.maxInterval = maxInterval
 
-        // Handle app lifecycle notifications
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(handleAppDidBecomeActive),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil
-        )
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleAppWillResignActive),
+            selector: #selector(appWillResignActive),
             name: UIApplication.willResignActiveNotification,
             object: nil
         )
     }
 
-    // MARK: - Public Methods
+    @objc private func appWillResignActive() {
+        wentToBackgroundDuringRequest = true
+    }
 
-    func start() {
-        guard !isPolling else { return }
+    func getPaymentAttempt() async throws -> PaymentAttempt {
+        let task = Task { @MainActor in
+            let startTime = Date()
+            var attempts = 0
 
-        // Check if latest payment attempt status is terminal
-        guard paymentAttempt?.isTerminal != true else {
-            return
+            debugLog("Starting polling for intent: \(intentId)")
+
+            while true {
+                try Task.checkCancellation()
+
+                // Wait for app to be active
+                while UIApplication.shared.applicationState != .active {
+                    debugLog("App not active, waiting...")
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    try Task.checkCancellation()
+                }
+
+                // Fetch status
+                debugLog("Poll attempt #\(attempts + 1)")
+                wentToBackgroundDuringRequest = false
+                let intent: PaymentIntent
+                do {
+                    intent = try await apiClient.retrievePaymentIntent(intentId)
+                } catch {
+                    // If app went to background during request, retry instead of failing
+                    if wentToBackgroundDuringRequest {
+                        debugLog("Request failed due to background, retrying...")
+                        continue
+                    }
+                    debugLog("API error: \(error.localizedDescription)")
+                    throw PollingError.apiError(error)
+                }
+
+                guard let paymentAttempt = intent.latestPaymentAttempt else {
+                    debugLog("Payment attempt not found")
+                    throw PollingError.paymentAttemptNotFound
+                }
+
+                debugLog("Payment attempt status: \(paymentAttempt.status.rawValue)")
+
+                if paymentAttempt.isFinal {
+                    debugLog("Final status reached: \(paymentAttempt.status.rawValue)")
+                    return paymentAttempt
+                }
+
+                // Check timeout
+                let elapsed = Date().timeIntervalSince(startTime)
+                if elapsed >= maxPollingDuration {
+                    debugLog("Timeout after \(elapsed)s, last status: \(paymentAttempt.status.rawValue)")
+                    throw PollingError.timeout(lastAttempt: paymentAttempt)
+                }
+
+                // Wait before next poll (exponential backoff)
+                let interval = min(baseInterval * pow(2, Double(attempts)), maxInterval)
+                attempts += 1
+                debugLog("Waiting \(interval)s before next poll...")
+                try await Task.sleep(nanoseconds: UInt64(interval * 1_000_000_000))
+            }
         }
 
-        isPolling = true
-        pollingAttempts = 0
-        pollingStartTime = Date()
-        pollPaymentStatus()
+        pollingTask = task
 
-        delegate?.paymentStatusPollerDidStartPolling(self)
+        do {
+            return try await task.value
+        } catch {
+            pollingTask = nil
+            if error is CancellationError {
+                throw PollingError.apiError(error)
+            }
+            throw error
+        }
     }
 
     func stop() {
-        pollingTimer?.invalidate()
-        pollingTimer = nil
-        isPolling = false
-        pollingAttempts = 0
-        pollingStartTime = nil
+        debugLog("Polling stopped")
+        pollingTask?.cancel()
+        pollingTask = nil
     }
 
-    // MARK: - Private Methods
-
-    @objc private func handleAppDidBecomeActive() {
-        start()
-    }
-
-    @objc private func handleAppWillResignActive() {
-        stop()
-    }
-
-    private func pollPaymentStatus() {
-        guard UIApplication.shared.applicationState == .active else {
-            stop()
-            return
-        }
-        guard pollingStartTime != nil else {
-            stop()
-            return
-        }
-
-        // Fetch status
-        Task { @MainActor in
-            do {
-                let intent = try await apiClient.retrievePaymentIntent(intentId)
-                handlePaymentIntnet(intent)
-            } catch {
-                delegate?.paymentStatusPoller(self, didFailWithError: error)
-                stop()
-            }
-        }
-    }
-
-    private func handlePaymentIntnet(_ intent: PaymentIntent) {
-        guard let pollingStartTime else {
-            // polling is stopped
-            stop()
-            return
-        }
-
-        // Check if latest payment attempt exists
-        guard let paymentAttempt = intent.latestPaymentAttempt else {
-            let error = NSError.airwallexError(localizedMessage: "Payment attempt not found")
-            delegate?.paymentStatusPoller(self, didFailWithError: error)
-            stop()
-            return
-        }
-
-        // Only notify delegate if status has changed
-        // Use latest_payment_attempt.status for comparison
-
-        let previousAttemp = self.paymentAttempt
-        // Update status property
-        self.paymentAttempt = paymentAttempt
-        if paymentAttempt.status != previousAttemp?.status {
-            delegate?.paymentStatusPoller(self, didUpdateStatus: paymentAttempt)
-        }
-        
-        // Check if status is terminal using latest_payment_attempt.status
-        if paymentAttempt.isTerminal {
-            // Terminal states - stop polling
-            stop()
-        } else {
-            // Continue polling
-            if Date().timeIntervalSince(pollingStartTime) < maxPollingDuration {
-                scheduleNextPoll()
-            } else {
-                delegate?.paymentStatusPoller(self, didTimeoutWithStatus: paymentAttempt)
-                stop()
-            }
-        }
-    }
-
-    private func scheduleNextPoll() {
-        let interval = calculateNextPollingInterval()
-        pollingAttempts += 1
-
-        pollingTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { [weak self] _ in
-            Task { @MainActor [weak self] in
-                self?.pollPaymentStatus()
-            }
-        }
-    }
-
-    private func calculateNextPollingInterval() -> TimeInterval {
-        let exponentialInterval = baseInterval * pow(2, Double(pollingAttempts))
-        return min(exponentialInterval, maxInterval)
+    private func debugLog(_ message: String) {
+        #if DEBUG
+        print("[PaymentStatusPoller] \(message)")
+        #endif
     }
 }
