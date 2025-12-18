@@ -55,7 +55,7 @@ class PaymentStatusPoller {
     }
 
     func getPaymentAttempt() async throws -> PaymentAttempt {
-        let task = Task { @MainActor in
+        let task = Task {
             let startTime = Date()
             var attempts = 0
 
