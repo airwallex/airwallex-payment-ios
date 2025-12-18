@@ -15,6 +15,8 @@ protocol APIClient {
     func generateClientSecret(customerID: String, apiKey: String?, clientID: String?, completion: @escaping (Result<String, Error>) -> Void)
     
     func createCustomer(request: CustomerRequest, completion: @escaping (Result<Customer, Error>) -> Void)
+
+    func retrievePaymentIntent(_ intentId: String) async throws -> PaymentIntent
 }
 
 extension APIClient {
@@ -123,7 +125,7 @@ class DemoStoreAPIClient: APIClient, CustomerFetchable {
             queryItems.append(.init(name: "clientId", value: clientID))
         }
         urlComponents.queryItems = queryItems
-        
+
         guard let url = urlComponents.url else {
             preconditionFailure("Unable to unwrap URL")
         }
@@ -142,7 +144,7 @@ class DemoStoreAPIClient: APIClient, CustomerFetchable {
                     completion(.failure(error))
                     return
                 }
-                
+
                 if let errorMessage = responseDict?["message"] as? String {
                     completion(.failure(NSError.airwallexError(localizedMessage: errorMessage)))
                     return
@@ -156,6 +158,38 @@ class DemoStoreAPIClient: APIClient, CustomerFetchable {
         }.resume()
     }
     
+    func retrievePaymentIntent(_ intentId: String) async throws -> PaymentIntent {
+        let path = "/api/v1/pa/payment_intents/\(intentId)"
+
+        guard let baseUrl = demoStoreBaseUrl, let url = URL(string: baseUrl + path) else {
+            throw NSError.airwallexError(localizedMessage: "Unable to unwrap URL")
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        if let clientSecret = AWXAPIClientConfiguration.shared().clientSecret {
+            request.setValue(clientSecret, forHTTPHeaderField: "client-secret")
+        }
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+
+        // Check HTTP status code
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200..<300).contains(httpResponse.statusCode) else {
+            // Try to extract error message from response
+            if let responseDict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let errorMessage = responseDict["message"] as? String {
+                throw NSError.airwallexError(localizedMessage: errorMessage)
+            }
+            throw NSError.airwallexError(localizedMessage: "Invalid response from server")
+        }
+
+        // Decode using Decodable
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try decoder.decode(PaymentIntent.self, from: data)
+    }
+
     private func post<T: AWXJSONDecodable>(path: String, encodable: Encodable, completion: @escaping (Result<T, Error>) -> Void) {
         guard let baseUrl = demoStoreBaseUrl, let url = URL(string: baseUrl + path) else {
             preconditionFailure("Unable to unwrap URL")

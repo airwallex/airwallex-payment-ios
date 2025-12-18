@@ -81,6 +81,41 @@ class DirectAPIClient: APIClient {
             }
         }
     }
+
+    func retrievePaymentIntent(_ intentId: String) async throws -> PaymentIntent {
+        // Make async request
+        let path = "api/v1/pa/payment_intents/\(intentId)"
+        let requestURL = URL(string: path, relativeTo: MockAPIClient.shared().paymentBaseURL)!
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Airwallex-iOS-SDK", forHTTPHeaderField: "User-Agent")
+        if let clientSecret = AWXAPIClientConfiguration.shared().clientSecret {
+            request.setValue(clientSecret, forHTTPHeaderField: "client-secret")
+        }
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+
+        // Check HTTP status code
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200..<300).contains(httpResponse.statusCode) else {
+            // Try to extract error message from response
+            if let responseDict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let errorMessage = responseDict["message"] as? String {
+                throw NSError(
+                    domain: "com.airwallex.paymentacceptance",
+                    code: -1,
+                    userInfo: [NSLocalizedDescriptionKey: errorMessage]
+                )
+            }
+            throw NSError.airwallexError(localizedMessage: "Invalid response from server")
+        }
+
+        // Decode using Decodable
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try decoder.decode(PaymentIntent.self, from: data)
+    }
 }
 
 extension DirectAPIClient: CustomerFetchable {
