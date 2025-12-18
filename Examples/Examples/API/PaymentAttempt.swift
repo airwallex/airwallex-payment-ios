@@ -46,44 +46,23 @@ struct PaymentAttempt: Decodable {
         return status.isFinal
     }
     
-    enum Status: Equatable, RawRepresentable, Decodable {
-        case received
-        case authenticationRedirected
-        case pendingAuthorization
-        case authorized
-        case captureRequested
-        case expired
-        case cancelled
-        case failed
-        case settled
-        case paid
-        case unknown(String)
-        
-        private static let mapping: [String: Status] = [
-            "RECEIVED": .received,
-            "AUTHENTICATION_REDIRECTED": .authenticationRedirected,
-            "PENDING_AUTHORIZATION": .pendingAuthorization,
-            "AUTHORIZED": .authorized,
-            "CAPTURE_REQUESTED": .captureRequested,
-            "EXPIRED": .expired,
-            "CANCELLED": .cancelled,
-            "FAILED": .failed,
-            "SETTLED": .settled,
-            "PAID": .paid
-        ]
-        
+    struct Status: RawRepresentable, Hashable, Decodable {
+        let rawValue: String
+
         init(rawValue: String) {
-            self = Self.mapping[rawValue.uppercased()] ?? .unknown(rawValue)
+            self.rawValue = rawValue.uppercased()
         }
-        
-        var rawValue: String {
-            Self.mapping.first(where: { $0.value == self })?.key ?? {
-                if case .unknown(let value) = self {
-                    return value
-                }
-                return ""
-            }()
-        }
+
+        static let received = Status(rawValue: "RECEIVED")
+        static let authenticationRedirected = Status(rawValue: "AUTHENTICATION_REDIRECTED")
+        static let pendingAuthorization = Status(rawValue: "PENDING_AUTHORIZATION")
+        static let authorized = Status(rawValue: "AUTHORIZED")
+        static let captureRequested = Status(rawValue: "CAPTURE_REQUESTED")
+        static let expired = Status(rawValue: "EXPIRED")
+        static let cancelled = Status(rawValue: "CANCELLED")
+        static let failed = Status(rawValue: "FAILED")
+        static let settled = Status(rawValue: "SETTLED")
+        static let paid = Status(rawValue: "PAID")
 
         var isFinal: Bool {
             switch self {
@@ -93,7 +72,7 @@ struct PaymentAttempt: Decodable {
                 return false
             }
         }
-        
+
         var description: String {
             switch self {
             case .authorized, .captureRequested, .settled, .paid:
@@ -101,12 +80,6 @@ struct PaymentAttempt: Decodable {
             default:
                 return rawValue
             }
-        }
-
-        init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            let rawValue = try container.decode(String.self)
-            self.init(rawValue: rawValue)
         }
     }
 }
