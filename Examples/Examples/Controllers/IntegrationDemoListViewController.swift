@@ -156,6 +156,19 @@ class IntegrationDemoListViewController: UIViewController {
         super.viewWillAppear(animated)
         setupCheckoutMode()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        // Stop polling when view disappears to prevent retain cycles
+        if isMovingFromParent || isBeingDismissed {
+            paymentStatusPoller?.stop()
+            paymentStatusPoller = nil
+        }
+    }
+
+    deinit {
+        print("IntegrationDemoListViewController:- " + #function)
+    }
 }
 
 private extension IntegrationDemoListViewController {

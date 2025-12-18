@@ -38,6 +38,10 @@ extension UIViewController {
                    buttonTitle: String = "OK",
                    action: (() -> Void)? = nil) {
         guard title != nil || message != nil else { return }
+        guard view.window != nil else {
+            print("showAlert skipped: view is not in the window hierarchy")
+            return
+        }
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let closeAction = UIAlertAction(title: buttonTitle, style: .cancel) { _ in
             action?()
