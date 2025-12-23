@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if canImport(AirwallexPayment)
+@_spi(AWX) import AirwallexPayment
+#endif
 
 protocol WarningViewCellConfiguring {
     var warningMessage: String { get }
@@ -41,7 +44,7 @@ class WarningViewCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(systemName: "exclamationmark.circle.fill")?
-            .withTintColor(Palette.orange50, renderingMode: .alwaysOriginal)
+            .withTintColor(.awxColor(.iconWarning), renderingMode: .alwaysOriginal)
         return view
     }()
        

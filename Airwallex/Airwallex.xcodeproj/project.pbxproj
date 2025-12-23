@@ -353,7 +353,6 @@
 		D8D36F362E5C5CB0005618D4 /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EE92E5C5CB0005618D4 /* Font+Extensions.swift */; };
 		D8D36F372E5C5CB0005618D4 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEA2E5C5CB0005618D4 /* ImageLoader.swift */; };
 		D8D36F382E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEB2E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift */; };
-		D8D36F3A2E5C5CB0005618D4 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */; };
 		D8D36F3B2E5C5CB0005618D4 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEE2E5C5CB0005618D4 /* UIImage+Extensions.swift */; };
 		D8D36F3C2E5C5CB0005618D4 /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEF2E5C5CB0005618D4 /* UIStackView+Extensions.swift */; };
 		D8D36F3D2E5C5CB0005618D4 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EF02E5C5CB0005618D4 /* UITextField+Extensions.swift */; };
@@ -373,6 +372,7 @@
 		D8D3712B2E604F5A005618D4 /* AWXAPIClient+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D3712A2E604F5A005618D4 /* AWXAPIClient+Extension.swift */; };
 		D8D3726D2E617332005618D4 /* ProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D3726C2E617332005618D4 /* ProviderFactory.swift */; };
 		D8FA4FC62EFA48D70010E912 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEC2E5C5CB0005618D4 /* Palette.swift */; };
+		D8FA52882EFA64240010E912 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */; };
 		D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
 /* End PBXBuildFile section */
 
@@ -1389,6 +1389,7 @@
 		D8D36E6A2E5C5CAC005618D4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */,
 				D8D36E682E5C5CAC005618D4 /* LoadingSpinnerView.swift */,
 				D8D36EEC2E5C5CB0005618D4 /* Palette.swift */,
 				D8D36E692E5C5CAC005618D4 /* UIViewController+Extensions.swift */,
@@ -1592,7 +1593,6 @@
 				D8D36EE92E5C5CB0005618D4 /* Font+Extensions.swift */,
 				D8D36EEA2E5C5CB0005618D4 /* ImageLoader.swift */,
 				D8D36EEB2E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift */,
-				D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */,
 				D8D36EEE2E5C5CB0005618D4 /* UIImage+Extensions.swift */,
 				D8D36EEF2E5C5CB0005618D4 /* UIStackView+Extensions.swift */,
 				D8D36EF02E5C5CB0005618D4 /* UITextField+Extensions.swift */,
@@ -2343,7 +2343,6 @@
 				D8D36F362E5C5CB0005618D4 /* Font+Extensions.swift in Sources */,
 				D8D36F372E5C5CB0005618D4 /* ImageLoader.swift in Sources */,
 				D8D36F382E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift in Sources */,
-				D8D36F3A2E5C5CB0005618D4 /* UIColor+Extensions.swift in Sources */,
 				D8D36F3B2E5C5CB0005618D4 /* UIImage+Extensions.swift in Sources */,
 				D8D36F3C2E5C5CB0005618D4 /* UIStackView+Extensions.swift in Sources */,
 				D8D36F3D2E5C5CB0005618D4 /* UITextField+Extensions.swift in Sources */,
@@ -2367,6 +2366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8FA52882EFA64240010E912 /* UIColor+Extensions.swift in Sources */,
 				D8FA4FC62EFA48D70010E912 /* Palette.swift in Sources */,
 				D8D36E732E5C5CAC005618D4 /* Array+Extensions.swift in Sources */,
 				D8D36E742E5C5CAC005618D4 /* AWXBrandType+Extensions.swift in Sources */,
