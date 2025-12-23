@@ -80,12 +80,14 @@ class LoadingSpinnerView: UIView {
         shapeLayer.path = arcPath.cgPath
 
         shapeLayer.lineWidth = style.lineWidth
-        shapeLayer.strokeColor = AWXTheme.shared().tintColor.cgColor
+        shapeLayer.strokeColor = Palette.SemanticColor.theme.cgColor
         shapeLayer.fillColor = nil
         shapeLayer.lineCap = .round
 
         layer.addSublayer(shapeLayer)
         backgroundColor = .clear
+
+        setupShadow()
     }
     
     override func layoutSubviews() {
@@ -102,7 +104,22 @@ class LoadingSpinnerView: UIView {
             shapeLayer.path = arcPath.cgPath
         }
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            setupShadow()
+        }
+    }
     
+    /// Add shadow for visibility on same-colored backgrounds
+    private func setupShadow() {
+        layer.shadowColor = Palette.SemanticColor.backgroundPrimary.cgColor
+        layer.shadowOffset = .zero
+        layer.shadowOpacity = 0.5
+        layer.shadowRadius = 8
+    }
+
     func startAnimating() {
         guard shapeLayer.animation(forKey: animationKey) == nil else {
             return
