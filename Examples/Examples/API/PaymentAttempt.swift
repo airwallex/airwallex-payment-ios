@@ -58,6 +58,7 @@ struct PaymentAttempt: Decodable {
         static let pendingAuthorization = Status(rawValue: "PENDING_AUTHORIZATION")
         static let authorized = Status(rawValue: "AUTHORIZED")
         static let captureRequested = Status(rawValue: "REQUESTED_CAPTURE")
+        static let requestedCapture = Status(rawValue: "CAPTURE_REQUESTED")
         static let expired = Status(rawValue: "EXPIRED")
         static let cancelled = Status(rawValue: "CANCELLED")
         static let failed = Status(rawValue: "FAILED")
@@ -66,7 +67,7 @@ struct PaymentAttempt: Decodable {
 
         var isFinal: Bool {
             switch self {
-            case .authorized, .captureRequested, .expired, .cancelled, .failed, .settled, .paid:
+            case .authorized, .captureRequested, .requestedCapture, .expired, .cancelled, .failed, .settled, .paid:
                 return true
             default:
                 return false
@@ -75,7 +76,7 @@ struct PaymentAttempt: Decodable {
 
         var description: String {
             switch self {
-            case .authorized, .captureRequested, .settled, .paid:
+            case .authorized, .captureRequested, .requestedCapture, .settled, .paid:
                 return "SUCCEED"
             default:
                 return rawValue
