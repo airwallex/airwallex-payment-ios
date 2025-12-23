@@ -57,7 +57,7 @@ struct PaymentAttempt: Decodable {
         static let authenticationRedirected = Status(rawValue: "AUTHENTICATION_REDIRECTED")
         static let pendingAuthorization = Status(rawValue: "PENDING_AUTHORIZATION")
         static let authorized = Status(rawValue: "AUTHORIZED")
-        static let captureRequested = Status(rawValue: "CAPTURE_REQUESTED")
+        static let captureRequested = Status(rawValue: "REQUESTED_CAPTURE")
         static let expired = Status(rawValue: "EXPIRED")
         static let cancelled = Status(rawValue: "CANCELLED")
         static let failed = Status(rawValue: "FAILED")
