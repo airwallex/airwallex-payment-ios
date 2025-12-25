@@ -65,7 +65,7 @@ class AccordionPaymentSectionControllerTests: BasePaymentSectionControllerTests 
             XCTFail()
             return
         }
-        accordionTop.collectionView(didSelectItem: AWXCardKey, at: IndexPath())
+        accordionTop.collectionView(didSelectItem: accordionTop.sectionItem(AWXCardKey), at: IndexPath())
         mockManager.performUpdates()
         XCTAssertEqual(mockManager.sections, [PaymentSectionType.accordion(.top), PaymentSectionType.cardPaymentNew, PaymentSectionType.accordion(.bottom)])
     }

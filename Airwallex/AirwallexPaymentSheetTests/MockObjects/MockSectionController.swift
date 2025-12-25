@@ -11,15 +11,17 @@ import UIKit
 @testable import AirwallexPaymentSheet
 
 class MockSectionController<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable>: SectionController {
+
+    typealias SectionItem = CompoundItem<SectionType, ItemType>
     
     var updateItemsIfNecessaryCalled: Bool = false
-    var didSelectItemCalled: (item: ItemType, indexPath: IndexPath)? = nil
-    var willDisplayCellCalled: (cell: UICollectionViewCell, item: ItemType, indexPath: IndexPath)? = nil
-    var didEndDisplayingCellCalled: (cell: UICollectionViewCell, item: ItemType, indexPath: IndexPath)? = nil
+    var didSelectItemCalled: (sectionItem: SectionItem, indexPath: IndexPath)? = nil
+    var willDisplayCellCalled: (cell: UICollectionViewCell, sectionItem: SectionItem, indexPath: IndexPath)? = nil
+    var didEndDisplayingCellCalled: (cell: UICollectionViewCell, sectionItem: SectionItem, indexPath: IndexPath)? = nil
     var willDisplaySupplementaryViewCalled: (view: UICollectionReusableView, indexPath: IndexPath)? = nil
     var didEndDisplayingSupplementaryViewCalled: (view: UICollectionReusableView, indexPath: IndexPath)? = nil
     var sectionDisplaying: Bool = false
-    var cellForItemAtIndexPathCalled: (item: ItemType, indexPath: IndexPath)? = nil
+    var cellForItemAtIndexPathCalled: (sectionItem: SectionItem, indexPath: IndexPath)? = nil
     var supplementaryViewForElementKindAtIndexPathCalled: (elementKind: String, indexPath: IndexPath)? = nil
     var sectionLayoutCalled: (any NSCollectionLayoutEnvironment)? = nil
     
@@ -38,10 +40,10 @@ class MockSectionController<SectionType: Hashable & Sendable, ItemType: Hashable
         self.context = context
     }
     
-    func cell(for item: ItemType, at indexPath: IndexPath) -> UICollectionViewCell {
-        cellForItemAtIndexPathCalled = (item, indexPath)
-        let cell = context.dequeueReusableCell(LabelCell.self, for: item, indexPath: indexPath)
-        cell.label.text = "\(section)-\(item)"
+    func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
+        cellForItemAtIndexPathCalled = (sectionItem, indexPath)
+        let cell = context.dequeueReusableCell(LabelCell.self, for: sectionItem, indexPath: indexPath)
+        cell.label.text = "\(section)-\(sectionItem.item)"
         return cell
     }
     
@@ -82,17 +84,17 @@ class MockSectionController<SectionType: Hashable & Sendable, ItemType: Hashable
         return context.dequeueReusableSupplementaryView(ofKind: elementKind, viewClass: PaymentMethodListSeparator.self, indexPath: indexPath)
     }
     
-    func collectionView(didSelectItem itemIdentifier: ItemType, at indexPath: IndexPath) {
-        didSelectItemCalled = (itemIdentifier, indexPath)
+    func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
+        didSelectItemCalled = (sectionItem, indexPath)
     }
     
-    func willDisplay(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath) {
-        willDisplayCellCalled = (cell, itemIdentifier, indexPath)
+    func willDisplay(cell: UICollectionViewCell, sectionItem: SectionItem, at indexPath: IndexPath) {
+        willDisplayCellCalled = (cell, sectionItem, indexPath)
     }
     
-    func didEndDisplaying(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath) {
+    func didEndDisplaying(cell: UICollectionViewCell, sectionItem: SectionItem, at indexPath: IndexPath) {
         // store parameters in property for testing
-        didEndDisplayingCellCalled = (cell, itemIdentifier, indexPath)
+        didEndDisplayingCellCalled = (cell, sectionItem, indexPath)
     }
     
     func willDisplay(supplementaryView: UICollectionReusableView, at indexPath: IndexPath) {

@@ -12,9 +12,9 @@ import Combine
 @_spi(AWX) import AirwallexPayment
 import AirwallexCore
 #endif
-
-class AccordionSectionController: SectionController  {
     
+class AccordionSectionController: SectionController  {
+    typealias SectionItem = CompoundItem<PaymentSectionType, String>
     static let separatorElementKind = "acordian-folded-item-separator"
     static let backgroundElementKind = "acordian-folded-section-background"
     
@@ -58,17 +58,19 @@ class AccordionSectionController: SectionController  {
         self.context = context
     }
     
-    func cell(for item: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        let cellClass = (item == AWXCardKey ? AccordionCardMethodCell.self : AccordionPaymentMethodCell.self)
-        let cell = context.dequeueReusableCell(cellClass, for: item, indexPath: indexPath)
+    func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
+        let methodName = sectionItem.item
+        let cellClass = (methodName == AWXCardKey ? AccordionCardMethodCell.self : AccordionPaymentMethodCell.self)
+        let cell = context.dequeueReusableCell(cellClass, for: sectionItem, indexPath: indexPath)
         if let viewModel = viewModels[safe: indexPath.item] {
             cell.setup(viewModel)
         }
         return cell
     }
     
-    func collectionView(didSelectItem item: String, at indexPath: IndexPath) {
-        methodProvider.selectPaymentMethod(byName: item)
+    func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
+        let methodName = sectionItem.item
+        methodProvider.selectPaymentMethod(byName: methodName)
     }
             
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -110,7 +112,8 @@ class AccordionSectionController: SectionController  {
             view.isHidden = itemCount == indexPath.item - 1
             return view
         default:
-            fatalError("unexpected elementKind: \(elementKind)")
+            assert(false, "unexpected elementKind: \(elementKind)")
+            return UICollectionReusableView()
         }
     }
     
@@ -156,7 +159,7 @@ class AccordionSectionController: SectionController  {
         }
     }
 }
-
+    
 extension PaymentMethodProvider {
     func methodsForAccordionPosition(_ position: AccordionSectionController.Position) -> [AWXPaymentMethodType] {
         guard let selectedMethod,

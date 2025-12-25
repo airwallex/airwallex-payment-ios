@@ -12,27 +12,27 @@ import AirwallexRisk
 import AirwallexCore
 @_spi(AWX) import AirwallexPayment
 #endif
-
+    
+// MARK: - Item Identifiers
+private extension String {
+    static let accordionKey = "accordionKey"
+    static let consentToggle = "consentToggle"
+    static let cardInfo = "cardInfo"
+    static let checkoutButton = "checkoutButton"
+    /// display this item only when session is AWXOneOffSession && has customerId
+    static let saveCardToggle = "saveCardToggle"
+    static let unionPayWarning = "unionPayWarning"
+    // billing fields
+    static let cardholderName = "cardholderName"
+    static let billingFieldEmail = "billingFieldEmail"
+    static let billingFieldPhone = "billingFieldPhone"
+    static let billingFieldAddress = "billingFieldAddress"
+    static let billingFieldCountryCode = "billingFieldCountryCode"
+}
+    
 class NewCardPaymentSectionController: NSObject, SectionController {
-    
+    typealias SectionItem = CompoundItem<PaymentSectionType, String>
     static let subType = "card"
-    
-    enum Item: String {
-        case accordionKey = "newCardAccordionKey"
-        case consentToggle
-        case cardInfo
-        case checkoutButton
-        // display this item only when session is AWXOneOffSession && has customerId
-        case saveCardToggle
-        case unionPayWarning
-        
-        // billing fields
-        case cardholderName
-        case billingFieldEmail
-        case billingFieldPhone
-        case billingFieldAddress
-        case billingFieldCountryCode
-    }
     
     private var methodType: AWXPaymentMethodType
     
@@ -46,7 +46,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     private var shouldReuseShippingAddress: Bool
     
     private lazy var viewModelForAccordionKey = PaymentMethodCellViewModel(
-        itemIdentifier: Item.accordionKey.rawValue,
+        itemIdentifier: .accordionKey,
         name: methodType.displayName,
         imageURL: methodType.resources.logoURL,
         isSelected: true,
@@ -109,13 +109,13 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     var items: [String] {
         var items = [String]()
         if layout == .accordion {
-            items.append(Item.accordionKey.rawValue)
+            items.append(.accordionKey)
         }
-        
+    
         if !methodProvider.consents.isEmpty {
-            items.append(Item.consentToggle.rawValue)
+            items.append(.consentToggle)
         }
-        
+    
         let viewModels: [(any CellViewModelIdentifiable)?] = [
             viewModelForCardInfo,
             viewModelForCardholderName,
@@ -129,15 +129,15 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                 items.append(identifier)
             }
         }
-        
+    
         if supportCardSaving {
-            items.append(Item.saveCardToggle.rawValue)
+            items.append(.saveCardToggle)
             if shouldSaveCard && viewModelForCardInfo.cardNumberConfigurer.currentBrand == .unionPay {
-                items.append(Item.unionPayWarning.rawValue)
+                items.append(.unionPayWarning)
             }
         }
-        
-        items.append(Item.checkoutButton.rawValue)
+    
+        items.append(.checkoutButton)
         return items
     }
     
@@ -145,23 +145,24 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         self.context = context
     }
     
-    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        guard let item = Item(rawValue: itemIdentifier) else { fatalError("Invalid item") }
+    func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
+        let item = sectionItem.item
+    
         switch item {
         case .accordionKey:
-            let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: itemIdentifier, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: sectionItem, indexPath: indexPath)
             cell.setup(viewModelForAccordionKey)
             return cell
         case .consentToggle:
-            let cell = context.dequeueReusableCell(CardPaymentToggleCell.self, for: itemIdentifier, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CardPaymentToggleCell.self, for: sectionItem, indexPath: indexPath)
             cell.setup(viewModelForConsentToggle)
             return cell
         case .cardInfo:
-            let cell = context.dequeueReusableCell(CardInfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CardInfoCollectorCell.self, for: sectionItem, indexPath: indexPath)
             cell.setup(viewModelForCardInfo)
             return cell
         case .checkoutButton:
-            let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
                 shouldShowPayAsCta: !(session is AWXRecurringSession),
                 checkoutAction: checkout
@@ -169,7 +170,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             cell.setup(viewModel)
             return cell
         case .saveCardToggle:
-            let cell = context.dequeueReusableCell(CheckBoxCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CheckBoxCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = CheckBoxCellViewModel(
                 isSelected: shouldSaveCard,
                 title: nil,
@@ -179,7 +180,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             cell.setup(viewModel)
             return cell
         case .billingFieldAddress:
-            let cell = context.dequeueReusableCell(BillingInfoCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(BillingInfoCell.self, for: sectionItem, indexPath: indexPath)
             if let viewModelForBillingAddress {
                 cell.setup(viewModelForBillingAddress)
             } else {
@@ -187,7 +188,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             }
             return cell
         case .unionPayWarning:
-            let cell = context.dequeueReusableCell(WarningViewCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(WarningViewCell.self, for: sectionItem, indexPath: indexPath)
             let message = NSLocalizedString(
                 "For UnionPay, only credit cards can be saved. Click “Pay” to proceed with a one time payment or use another card if you would like to save it for future use.",
                 bundle: .paymentSheet,
@@ -196,7 +197,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             cell.setup(message)
             return cell
         case .cardholderName:
-            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: sectionItem, indexPath: indexPath)
             if let viewModelForCardholderName {
                 cell.setup(viewModelForCardholderName)
             } else {
@@ -204,7 +205,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             }
             return cell
         case .billingFieldEmail:
-            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: sectionItem, indexPath: indexPath)
             if let viewModelForEmail {
                 cell.setup(viewModelForEmail)
             } else {
@@ -212,7 +213,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             }
             return cell
         case .billingFieldPhone:
-            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(InfoCollectorCell.self, for: sectionItem, indexPath: indexPath)
             if let viewModelForPhoneNumber {
                 cell.setup(viewModelForPhoneNumber)
             } else {
@@ -220,17 +221,20 @@ class NewCardPaymentSectionController: NSObject, SectionController {
             }
             return cell
         case .billingFieldCountryCode:
-            let cell = context.dequeueReusableCell(CountrySelectionCell.self, for: item.rawValue, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(CountrySelectionCell.self, for: sectionItem, indexPath: indexPath)
             if let viewModelForCountryCode {
                 cell.setup(viewModelForCountryCode)
             } else {
                 assert(false)
             }
             return cell
+        default:
+            assert(false, "unexpected item: \(item)")
+            return UICollectionViewCell()
         }
     }
     
-    func collectionView(didSelectItem item: String, at indexPath: IndexPath) {
+    func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
         context.endEditing()
     }
     
@@ -274,7 +278,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         )
     }
 }
-
+    
 private extension NewCardPaymentSectionController {
     
     var supportCardSaving: Bool {
@@ -425,7 +429,7 @@ private extension NewCardPaymentSectionController {
         )
         let viewModel = createBillingAddressViewModel(reuseShippingAddress: shouldReuseShippingAddress)
         viewModelForBillingAddress = viewModel
-        context.reconfigure(items: [ viewModel.itemIdentifier ], invalidateLayout: true) { cell in
+        context.reconfigure(items: [sectionItem(viewModel.itemIdentifier)], invalidateLayout: true) { cell in
             guard let cell = cell as? BillingInfoCell else { return }
             cell.setup(viewModel)
         }
@@ -448,7 +452,7 @@ private extension NewCardPaymentSectionController {
     
     func createBillingAddressViewModel(reuseShippingAddress: Bool) -> BillingInfoCellViewModel {
         BillingInfoCellViewModel(
-            itemIdentifier: Item.billingFieldAddress.rawValue,
+            itemIdentifier: .billingFieldAddress,
             prefilledAddress: session.billing?.address,
             reusePrefilledAddress: reuseShippingAddress,
             countrySelectionHandler: { [weak self] in
@@ -458,25 +462,27 @@ private extension NewCardPaymentSectionController {
                 guard let self else { return }
                 self.toggleReuseShippingAddress()
             },
-            cellReconfigureHandler: { [weak self] in
-                self?.context.reconfigure(items: [$0], invalidateLayout: $1)
+            cellReconfigureHandler: { [weak self] itemIdentifier, invalidateLayout in
+                guard let self else { return }
+                self.context.reconfigure(items: [sectionItem(itemIdentifier)], invalidateLayout: invalidateLayout)
             }
         )
     }
     
     func createViewModelForRequiredFields() {
         viewModelForCardInfo = CardInfoCollectorCellViewModel(
-            itemIdentifier: Item.cardInfo.rawValue,
+            itemIdentifier: .cardInfo,
             cardSchemes: methodType.cardSchemes,
             returnActionHandler: { [weak self] identifier, _ in
                 guard let self else { return false }
                 return self.context.activateNextRespondableCell(
                     section: self.section,
-                    itemIdentifier: identifier
+                    sectionItem: self.sectionItem(identifier)
                 )
             },
-            reconfigureHandler: { [weak self] in
-                self?.context.reconfigure(items: [$0], invalidateLayout: $1)
+            reconfigureHandler: { [weak self] itemIdentifier, invalidateLayout in
+                guard let self else { return }
+                self.context.reconfigure(items: [sectionItem(itemIdentifier)], invalidateLayout: invalidateLayout)
             },
             cardNumberDidEndEditing: { [weak self] in
                 guard let self else { return }
@@ -484,21 +490,21 @@ private extension NewCardPaymentSectionController {
                 self.context.performUpdates(self.section)
             }
         )
-        
+    
         let returnActionHandler: (String, UIResponder) -> Bool = { [weak self] itemIdentifier, responder in
             guard let self else { return false }
             return self.context.activateNextRespondableCell(
                 section: self.section,
-                itemIdentifier: itemIdentifier
+                sectionItem: self.sectionItem(itemIdentifier)
             )
         }
-        
+    
         if session.requiredBillingContactFields.contains(.name) {
             let firstName = session.billing?.firstName ?? ""
             let lastName = session.billing?.lastName ?? ""
             let text = (firstName + " " + lastName).trimmed
             viewModelForCardholderName = InfoCollectorCellViewModel(
-                itemIdentifier: Item.cardholderName.rawValue,
+                itemIdentifier: .cardholderName,
                 textFieldType: .nameOnCard,
                 title: NSLocalizedString("Name on card", bundle: .paymentSheet, comment: "add card section - billing field"),
                 text: text,
@@ -507,38 +513,41 @@ private extension NewCardPaymentSectionController {
                 editingEventObserver: BeginEditingEventObserver {
                     RiskLogger.log(.inputCardHolderName, screen: .createCard)
                 },
-                cellReconfigureHandler: { [weak self] in
-                    self?.context.reconfigure(items: [$0], invalidateLayout: $1)
+                cellReconfigureHandler: { [weak self] itemIdentifier, invalidateLayout in
+                    guard let self else { return }
+                    self.context.reconfigure(items: [sectionItem(itemIdentifier)], invalidateLayout: invalidateLayout)
                 }
             )
         }
         if session.requiredBillingContactFields.contains(.email) {
             viewModelForEmail = InfoCollectorCellViewModel(
-                itemIdentifier: Item.billingFieldEmail.rawValue,
+                itemIdentifier: .billingFieldEmail,
                 textFieldType: .email,
                 title: NSLocalizedString("Email", bundle: .paymentSheet, comment: "add card section - billing field"),
                 text: session.billing?.email,
                 returnKeyType: .next,
                 returnActionHandler: returnActionHandler,
-                cellReconfigureHandler: { [weak self] in
-                    self?.context.reconfigure(items: [$0], invalidateLayout: $1)
+                cellReconfigureHandler: { [weak self] itemIdentifier, invalidateLayout in
+                    guard let self else { return }
+                    self.context.reconfigure(items: [sectionItem(itemIdentifier)], invalidateLayout: invalidateLayout)
                 }
             )
         }
         if session.requiredBillingContactFields.contains(.phone) {
             viewModelForPhoneNumber = InfoCollectorCellViewModel(
-                itemIdentifier: Item.billingFieldPhone.rawValue,
+                itemIdentifier: .billingFieldPhone,
                 textFieldType: .phoneNumber,
                 title: NSLocalizedString("Phone number", bundle: .paymentSheet, comment: "add card section - billing field"),
                 text: session.billing?.phoneNumber,
                 returnKeyType: .next,
                 returnActionHandler: returnActionHandler,
-                cellReconfigureHandler: { [weak self] in
-                    self?.context.reconfigure(items: [$0], invalidateLayout: $1)
+                cellReconfigureHandler: { [weak self] itemIdentifier, invalidateLayout in
+                    guard let self else { return }
+                    self.context.reconfigure(items: [sectionItem(itemIdentifier)], invalidateLayout: invalidateLayout)
                 }
             )
         }
-        
+    
         if session.requiredBillingContactFields.contains(.address) {
             viewModelForBillingAddress = createBillingAddressViewModel(reuseShippingAddress: shouldReuseShippingAddress)
         } else if session.requiredBillingContactFields.contains(.countryCode) {
@@ -548,19 +557,20 @@ private extension NewCardPaymentSectionController {
             }
             viewModelForCountryCode = CountrySelectionCellViewModel(
                 country: country,
-                itemIdentifier: Item.billingFieldCountryCode.rawValue,
+                itemIdentifier: .billingFieldCountryCode,
                 title: NSLocalizedString("Billing country or region", bundle: .paymentSheet, comment: "add card section - billing info"),
                 handleUserInteraction: { [weak self] in
                     self?.triggerCountrySelection()
                 },
-                cellReconfigureHandler: { [weak self] in
-                    self?.context.reconfigure(items: [$0], invalidateLayout: $1)
+                cellReconfigureHandler: { [weak self] itemIdentifier, invalidateLayout in
+                    guard let self else { return }
+                    self.context.reconfigure(items: [sectionItem(itemIdentifier)], invalidateLayout: invalidateLayout)
                 }
             )
         }
     }
 }
-
+    
 extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate {
     func countryListViewController(_ controller: AWXCountryListViewController, didSelect country: AWXCountry) {
         controller.dismiss(animated: true)
@@ -572,4 +582,4 @@ extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate 
         }
     }
 }
-
+    

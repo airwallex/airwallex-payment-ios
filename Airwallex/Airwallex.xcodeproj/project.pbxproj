@@ -145,6 +145,7 @@
 		D8269FBA2DB7701E00E179EB /* AWXRedirectActionProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */; };
 		D8269FBB2DB7702400E179EB /* AWXCardProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */; };
 		D8316DC22E6AF16D002A42BA /* SchemaFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */; };
+		D83AD9C82EF544A600649996 /* CompoundItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83AD9C72EF544A600649996 /* CompoundItem.swift */; };
 		D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D85041C82DA7957A0074BA7F /* AirwallexPaymentSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */; };
 		D85041D42DA79A0B0074BA7F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85041D32DA79A0B0074BA7F /* Security.framework */; };
@@ -623,6 +624,7 @@
 		D81983EA2D6F1C70008008A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaFieldValidator.swift; sourceTree = "<group>"; };
 		D8352B4D2DA640B10025BE9E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D83AD9C72EF544A600649996 /* CompoundItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundItem.swift; sourceTree = "<group>"; };
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
 		D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AirwallexPaymentSheet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85041C42DA7957A0074BA7F /* AirwallexPaymentSheetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexPaymentSheetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1438,6 +1440,7 @@
 				D8D36E9F2E5C5CB0005618D4 /* CollectionViewContext.swift */,
 				D8D36EA02E5C5CB0005618D4 /* CollectionViewManager.swift */,
 				D8D36EA12E5C5CB0005618D4 /* LabelCell.swift */,
+				D83AD9C72EF544A600649996 /* CompoundItem.swift */,
 				D8D36EA22E5C5CB0005618D4 /* ListHeaderFooterProvider.swift */,
 				D8D36EA32E5C5CB0005618D4 /* SectionController.swift */,
 				D8D36EA42E5C5CB0005618D4 /* SectionDisplayHandler.swift */,
@@ -2319,6 +2322,7 @@
 				D8D36F222E5C5CB0005618D4 /* ApplePayCell.swift in Sources */,
 				D8D36F232E5C5CB0005618D4 /* BankSelectionCell.swift in Sources */,
 				D8D36F242E5C5CB0005618D4 /* CardBrandView.swift in Sources */,
+				D83AD9C82EF544A600649996 /* CompoundItem.swift in Sources */,
 				D8D36F252E5C5CB0005618D4 /* CellSeparator.swift in Sources */,
 				D8D36F262E5C5CB0005618D4 /* CheckBoxCell.swift in Sources */,
 				D8D36F272E5C5CB0005618D4 /* CheckoutButtonCell.swift in Sources */,

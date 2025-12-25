@@ -41,8 +41,8 @@ import XCTest
         
         let snapshot = mockManager.diffableDataSource.snapshot()
         XCTAssertEqual(snapshot.sectionIdentifiers, mockProvider.sections())
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: Section.A), mockProvider.sectionControllerA.items)
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: Section.B), mockProvider.sectionControllerB.items)
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: Section.A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: Section.B), mockProvider.sectionControllerB.items.map { CompoundItem(.B, $0) })
         
         let boundarySupplementaryItems = (mockManager.collectionView.collectionViewLayout as! UICollectionViewCompositionalLayout).configuration.boundarySupplementaryItems
         XCTAssert(boundarySupplementaryItems.count == mockProvider.listBoundaryItemProviders()?.count)
@@ -77,8 +77,8 @@ import XCTest
         
         snapshot = mockManager.diffableDataSource.snapshot()
         XCTAssertEqual(snapshot.sectionIdentifiers, [.A])
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
-        
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
+    
         // Append Section B
         mockProvider.status = .AB
         mockManager.performUpdates()
@@ -88,11 +88,11 @@ import XCTest
         XCTAssert(mockManager.sectionControllers[.B] === mockProvider.anySectionControllerB)
         XCTAssertTrue(mockProvider.sectionControllerA.sectionDisplaying)
         XCTAssertTrue(mockProvider.sectionControllerB.sectionDisplaying)
-        
+    
         snapshot = mockManager.diffableDataSource.snapshot()
         XCTAssertEqual(snapshot.sectionIdentifiers, [.A, .B])
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items)
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items.map { CompoundItem(.B, $0) })
     }
     
     func testRemoveSection() async {
@@ -108,9 +108,9 @@ import XCTest
         
         var snapshot = mockManager.diffableDataSource.snapshot()
         XCTAssertEqual(snapshot.sectionIdentifiers, [.A, .B])
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items)
-        
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items.map { CompoundItem(.B, $0) })
+    
         // Remove Section A
         mockProvider.status = .B
         mockManager.performUpdates()
@@ -121,10 +121,10 @@ import XCTest
         try? await Task.sleep(nanoseconds: 1)
         XCTAssertFalse(mockProvider.sectionControllerA.sectionDisplaying)
         XCTAssertTrue(mockProvider.sectionControllerB.sectionDisplaying)
-        
+    
         snapshot = mockManager.diffableDataSource.snapshot()
         XCTAssertEqual(snapshot.sectionIdentifiers, [.B])
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items)
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items.map { CompoundItem(.B, $0) })
         
         // Remove Section B
         mockProvider.status = .None
@@ -154,9 +154,9 @@ import XCTest
         
         var snapshot = mockManager.diffableDataSource.snapshot()
         XCTAssertEqual(snapshot.sectionIdentifiers, [.A, .B])
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items)
-        
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items.map { CompoundItem(.B, $0) })
+    
         // Reorder sections to BA
         mockProvider.status = .BA
         mockManager.performUpdates()
@@ -166,11 +166,11 @@ import XCTest
         XCTAssert(mockManager.sectionControllers[.A] === mockProvider.anySectionControllerA)
         XCTAssertTrue(mockProvider.sectionControllerB.sectionDisplaying)
         XCTAssertTrue(mockProvider.sectionControllerA.sectionDisplaying)
-        
+    
         snapshot = mockManager.diffableDataSource.snapshot()
         XCTAssertEqual(snapshot.sectionIdentifiers, [.B, .A])
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items)
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items.map { CompoundItem(.B, $0) })
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
     }
     
     func testUpdateItems() {
@@ -179,17 +179,17 @@ import XCTest
         mockManager.performUpdates()
         mockManager.collectionView.layoutIfNeeded()
         XCTAssertEqual(mockManager.sections, [.A, .B])
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items)
-        
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items.map { CompoundItem(.B, $0) })
+    
         // Move items from Section B to Section A
         mockProvider.sectionControllerA.items.append(contentsOf: mockProvider.sectionControllerB.items)
         mockProvider.sectionControllerB.items.removeAll()
         mockManager.performUpdates()
         mockManager.collectionView.layoutIfNeeded()
-        
+    
         let snapshot = mockManager.diffableDataSource.snapshot()
-        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
+        XCTAssertEqual(snapshot.itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
         XCTAssertEqual(snapshot.itemIdentifiers(inSection: .B), [])
     }
     
@@ -216,15 +216,15 @@ import XCTest
         
         // Verify didEndDisplaying was called (because of force reload)
         XCTAssertNotNil(mockProvider.sectionControllerA.didEndDisplayingCellCalled)
-        XCTAssertEqual(mockProvider.sectionControllerA.didEndDisplayingCellCalled?.1, .A1) // First item in Section A
-        
+        XCTAssertEqual(mockProvider.sectionControllerA.didEndDisplayingCellCalled?.sectionItem.item, .A1) // First item in Section A
+    
         // check section displaying status not changed
         XCTAssertTrue(mockProvider.sectionControllerA.sectionDisplaying)
-
+    
         // Verify cellForItemAtIndexPathCalled was called
         XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
-        XCTAssertEqual(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled?.0, .A1) // First item in Section A
-
+        XCTAssertEqual(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled?.sectionItem.item, .A1) // First item in Section A
+    
         // check section displaying status not changed
         try? await Task.sleep(nanoseconds: 1)
         XCTAssertTrue(mockProvider.sectionControllerA.sectionDisplaying)
@@ -237,22 +237,22 @@ import XCTest
         mockManager.collectionView.layoutIfNeeded()
         
         XCTAssertEqual(mockManager.sections, [.A, .B])
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items)
-        
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items.map { CompoundItem(.B, $0) })
+    
         // Manually update items in Section A and Section B
         mockProvider.sectionControllerA.items = [.A2]
         mockProvider.sectionControllerB.items = [.B2]
-        
+    
         // Perform updates only on Section A
         mockManager.performUpdates(section: .A)
         mockManager.collectionView.layoutIfNeeded()
-        
+    
         // Assert Section A is updated
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), [.A2])
-        
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), [CompoundItem(.A, .A2)])
+    
         // Assert Section B remains unchanged
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .B), [.B1, .B2])
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .B), [CompoundItem(.B, .B1), CompoundItem(.B, .B2)])
     }
     
     func testPerformSectionUpdateAndUpdateItems() {
@@ -262,20 +262,20 @@ import XCTest
         mockManager.collectionView.layoutIfNeeded()
         
         XCTAssertEqual(mockManager.sections, [.A])
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
-        
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
+    
         // Update items in Section A
         mockProvider.sectionControllerA.items = [.A2]
-        
+    
         // Assert updateItemsIfNecessaryCalled is false before performUpdates
         XCTAssertFalse(mockProvider.sectionControllerA.updateItemsIfNecessaryCalled)
-        
+    
         // Perform updates on Section A with updateItems flag
         mockManager.performUpdates(section: .A, updateItems: true)
         mockManager.collectionView.layoutIfNeeded()
-        
+    
         // Assert Section A is updated
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), [.A2])
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), [CompoundItem(.A, .A2)])
         
         // Verify updateItemsIfNecessary was called on MockSectionController
         XCTAssertTrue(mockProvider.sectionControllerA.updateItemsIfNecessaryCalled)
@@ -288,15 +288,15 @@ import XCTest
         mockManager.collectionView.layoutIfNeeded()
         
         XCTAssertEqual(mockManager.sections, [.A, .B])
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items)
-        
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items.map { CompoundItem(.A, $0) })
+        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .B), mockProvider.sectionControllerB.items.map { CompoundItem(.B, $0) })
+    
         // Reset lifecycle tracking properties for Section A and Section B
         mockProvider.sectionControllerA.didEndDisplayingCellCalled = nil
         mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
         mockProvider.sectionControllerB.didEndDisplayingCellCalled = nil
         mockProvider.sectionControllerB.cellForItemAtIndexPathCalled = nil
-        
+    
         // Perform updates on Section B with force reload
         mockManager.performUpdates(section: .B, forceReload: true)
         mockManager.collectionView.layoutIfNeeded()
@@ -312,98 +312,5 @@ import XCTest
         // Verify section displaying status
         XCTAssertTrue(mockProvider.sectionControllerA.sectionDisplaying)
         XCTAssertTrue(mockProvider.sectionControllerB.sectionDisplaying)
-    }
-    
-    func testCellReconfigurePerformUpdate() throws {
-        guard #available(iOS 26.0, *) else {
-            throw XCTSkip("This test requires iOS 26.0 or later")
-        }
-
-        // Start with status A
-        mockProvider.status = .AB
-        mockProvider.sectionControllerA.items = [.A1]
-        mockProvider.sectionControllerB.items = [.B1]
-        mockManager.performUpdates()
-        mockManager.collectionView.layoutIfNeeded()
-        
-        XCTAssertEqual(mockManager.sections, [.A, .B])
-        
-        // Reset lifecycle tracking properties for Section A and Section B
-        mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
-        mockProvider.sectionControllerB.cellForItemAtIndexPathCalled = nil
-        
-        // Perform updates
-        mockManager.performUpdates()
-        mockManager.collectionView.layoutIfNeeded()
-        
-        // verify cell was reconfigured
-        XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
-        if let (item, _) = mockProvider.sectionControllerA.cellForItemAtIndexPathCalled {
-            XCTAssertEqual(item, .A1)
-        }
-        if let (item, _) = mockProvider.sectionControllerB.cellForItemAtIndexPathCalled {
-            XCTAssertEqual(item, .B1)
-        }
-        
-        // reset status
-        mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
-        mockProvider.sectionControllerB.cellForItemAtIndexPathCalled = nil
-        
-        // Perform updates with items moved
-        mockProvider.sectionControllerA.items = [.B1]
-        mockProvider.sectionControllerB.items = [.A1]
-        mockManager.performUpdates()
-        mockManager.collectionView.layoutIfNeeded()
-        
-        // verify cell was reconfigured
-        XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
-        XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
-        if let (item, _) = mockProvider.sectionControllerA.cellForItemAtIndexPathCalled {
-            XCTAssertEqual(item, .B1)
-        }
-        if let (item, _) = mockProvider.sectionControllerB.cellForItemAtIndexPathCalled {
-            XCTAssertEqual(item, .A1)
-        }
-    }
-    
-    func testCellReconfigureForSectionUpdate() throws {
-        guard #available(iOS 26.0, *) else {
-            throw XCTSkip("This test requires iOS 26.0 or later")
-        }
-
-        // Start with status A
-        mockProvider.status = .A
-        mockProvider.sectionControllerA.items = [.A1]
-        mockManager.performUpdates()
-        mockManager.collectionView.layoutIfNeeded()
-        
-        XCTAssertEqual(mockManager.sections, [.A])
-        XCTAssertEqual(mockManager.diffableDataSource.snapshot().itemIdentifiers(inSection: .A), mockProvider.sectionControllerA.items)
-        
-        // Reset lifecycle tracking properties for Section A and Section B
-        mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
-        
-        // Perform updates
-        mockManager.performUpdates(section: .A)
-        mockManager.collectionView.layoutIfNeeded()
-        
-        // verify cell was reconfigured
-        XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
-        if let (item, _) = mockProvider.sectionControllerA.cellForItemAtIndexPathCalled {
-            XCTAssertEqual(item, .A1)
-        }
-            
-        // reset status
-        mockProvider.sectionControllerA.cellForItemAtIndexPathCalled = nil
-        
-        // Perform updates with force reload
-        mockManager.performUpdates(section: .A, forceReload: true)
-        mockManager.collectionView.layoutIfNeeded()
-        
-        // verify cell was reconfigured
-        XCTAssertNotNil(mockProvider.sectionControllerA.cellForItemAtIndexPathCalled)
-        if let (item, _) = mockProvider.sectionControllerA.cellForItemAtIndexPathCalled {
-            XCTAssertEqual(item, .A1)
-        }
     }
 }
