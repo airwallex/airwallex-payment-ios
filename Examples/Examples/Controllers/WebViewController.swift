@@ -11,23 +11,28 @@ import UIKit
 import Combine
 
 class WebViewController: UIViewController {
-    private lazy var webView: WKWebView = {
-        let config = WKWebViewConfiguration()
-        let webView = WKWebView(frame: .zero, configuration: config)
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.navigationDelegate = self
-        return webView
-    }()
-    
+    private var webView: WKWebView!
+
     let url: String
     private(set) var referer: String
-    
+
     init(url: String, referer: String) {
         self.url = url
         self.referer = referer
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    /// Initialize with an external WKWebView (used for popup support, e.g., Google Pay)
+    /// https://developers.google.com/pay/api/web/guides/recipes/using-ios-wkwebview
+    init(webView: WKWebView) {
+        self.url = ""
+        self.referer = ""
+        super.init(nibName: nil, bundle: nil)
+        self.webView = webView
+        self.webView.uiDelegate = self
+        self.webView.navigationDelegate = self
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -36,7 +41,18 @@ class WebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        // Create webView if not already provided (normal case vs popup case)
+        if webView == nil {
+            let config = WKWebViewConfiguration()
+            // Append GOOGLE_PAY_SUPPORTED to user agent for Google Pay isReadyToPay API
+            config.applicationNameForUserAgent = "Airwallex-iOS-SDK" + " GOOGLE_PAY_SUPPORTED"
+            webView = WKWebView(frame: .zero, configuration: config)
+            webView.uiDelegate = self
+            webView.navigationDelegate = self
+        }
+        webView.translatesAutoresizingMaskIntoConstraints = false
+
         view.addSubview(webView)
         let constraints = [
             webView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -45,15 +61,13 @@ class WebViewController: UIViewController {
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
-        
+
         cancellable = webView.publisher(for: \.title)
             .assign(to: \.title, on: self)
-        
-        load()
-    }
-    
-    deinit {
-        webView.removeObserver(self, forKeyPath: "title")
+
+        if !url.isEmpty {
+            load()
+        }
     }
     
     func load() {
@@ -66,7 +80,6 @@ class WebViewController: UIViewController {
         }
         
         request.setValue(referer, forHTTPHeaderField: "Referer")
-        request.setValue("Airwallex-iOS-SDK", forHTTPHeaderField: "User-Agent")
         request.httpMethod = "GET"
         
         webView.load(request)
@@ -80,14 +93,40 @@ extension WebViewController: WKNavigationDelegate {
             decisionHandler(.allow)
             return
         }
-        
+
         let customSchemes = ["weixin://wap/pay?", "alipay://", "alipayhk://", "airwallexcheckout://", "alipays://", "kakaotalk://"]
-        
+
         if customSchemes.contains(where: { absoluteString.hasPrefix($0) }),
             let url = URL(string: absoluteString) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
-        
+
         decisionHandler(.allow)
+    }
+}
+
+// MARK: - WKUIDelegate (Popup support for Google Pay)
+extension WebViewController: WKUIDelegate {
+
+    func webView(
+        _ webView: WKWebView,
+        createWebViewWith configuration: WKWebViewConfiguration,
+        for navigationAction: WKNavigationAction,
+        windowFeatures: WKWindowFeatures
+    ) -> WKWebView? {
+        // Only handle popup requests (when targetFrame is nil)
+        guard navigationAction.targetFrame == nil else { return nil }
+
+        let popupWebView = WKWebView(frame: .zero, configuration: configuration)
+        popupWebView.customUserAgent = "Airwallex-iOS-SDK" + " GOOGLE_PAY_SUPPORTED"
+
+        let popupViewController = WebViewController(webView: popupWebView)
+        present(popupViewController, animated: true)
+
+        return popupWebView
+    }
+
+    func webViewDidClose(_ webView: WKWebView) {
+        presentingViewController?.dismiss(animated: true)
     }
 }
