@@ -15,6 +15,7 @@ class WebViewController: UIViewController {
 
     let url: String
     private(set) var referer: String
+    var isPopupWebView = false
 
     init(url: String, referer: String) {
         self.url = url
@@ -50,6 +51,9 @@ class WebViewController: UIViewController {
             webView = WKWebView(frame: .zero, configuration: config)
             webView.uiDelegate = self
             webView.navigationDelegate = self
+            if #available(iOS 16.4, *) {
+                webView.isInspectable = true
+            }
         }
         webView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -69,7 +73,24 @@ class WebViewController: UIViewController {
             load()
         }
     }
-    
+
+    private var webViewDidCloseHandled: Bool = false
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        guard isPopupWebView && !webViewDidCloseHandled else { return }
+        // Only execute when actually being dismissed/popped, not when covered by another VC
+        guard isBeingDismissed || isMovingFromParent else { return }
+        webViewDidCloseHandled = true
+        // when dismissed or popped by user
+        // force status sync (to dismiss GPay mask in original webView)
+        webView.evaluateJavaScript("window.close()") { object, error in
+            if let error {
+                print(error)
+            }
+        }
+    }
+
     func load() {
         guard !url.isEmpty, let requestUrl = URL(string: url) else { return }
         
@@ -121,12 +142,19 @@ extension WebViewController: WKUIDelegate {
         popupWebView.customUserAgent = "Airwallex-iOS-SDK" + " GOOGLE_PAY_SUPPORTED"
 
         let popupViewController = WebViewController(webView: popupWebView)
+        popupViewController.isPopupWebView = true
         present(popupViewController, animated: true)
 
         return popupWebView
     }
 
     func webViewDidClose(_ webView: WKWebView) {
-        presentingViewController?.dismiss(animated: true)
+        guard !webViewDidCloseHandled else { return }
+        webViewDidCloseHandled = true
+        if let presentingViewController {
+            presentingViewController.dismiss(animated: true)
+        } else if let navigationController {
+            navigationController.popViewController(animated: true)
+        }
     }
 }
