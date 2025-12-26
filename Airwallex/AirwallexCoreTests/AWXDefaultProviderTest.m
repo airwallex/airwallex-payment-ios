@@ -267,6 +267,53 @@ NSString *const kMockKey = @"MOCK";
     OCMVerify(times(1), [mockDelegateSpy provider:provider didCompleteWithPaymentConsentId:@"consentId"]);
 }
 
+- (void)testCompleteWithResponseWithPaymentConsentIdFromResponse {
+    id mockDelegateSpy = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
+    paymentMethod.type = AWXCardKey;
+    AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:mockDelegateSpy session:[AWXOneOffSession new] paymentMethodType:[AWXPaymentMethodType new]];
+
+    // No paymentConsent set, but response has paymentConsentId
+    [provider confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil];
+
+    NSDictionary *json = @{@"id": @"int_123", @"status": @"SUCCEEDED", @"payment_consent_id": @"responseConsentId"};
+    NSData *responseData = [NSJSONSerialization dataWithJSONObject:json options:0 error:nil];
+    AWXConfirmPaymentIntentResponse *response = (AWXConfirmPaymentIntentResponse *)[AWXConfirmPaymentIntentResponse parse:responseData];
+
+    [provider completeWithResponse:response error:nil];
+    OCMVerify(times(1), [mockDelegateSpy provider:provider didCompleteWithPaymentConsentId:@"responseConsentId"]);
+}
+
+- (void)testCompleteWithResponseWithNoPaymentConsentId {
+    id mockDelegateSpy = OCMClassMock([AWXProviderDelegateSpy class]);
+    AWXPaymentMethod *paymentMethod = [AWXPaymentMethod new];
+    paymentMethod.type = AWXCardKey;
+    AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:mockDelegateSpy session:[AWXOneOffSession new] paymentMethodType:[AWXPaymentMethodType new]];
+
+    // No paymentConsent set and response has no paymentConsentId
+    [provider confirmPaymentIntentWithPaymentMethod:paymentMethod paymentConsent:nil];
+    [provider completeWithResponse:[AWXConfirmPaymentIntentResponse new] error:nil];
+
+    // Verify didCompleteWithPaymentConsentId is NOT called
+    OCMVerify(times(0), [mockDelegateSpy provider:provider didCompleteWithPaymentConsentId:[OCMArg any]]);
+}
+
+- (void)testConfirmPaymentIntentResponseParsesPaymentConsentId {
+    NSDictionary *json = @{@"id": @"int_123", @"status": @"SUCCEEDED", @"payment_consent_id": @"cst_parsed_id"};
+    NSData *responseData = [NSJSONSerialization dataWithJSONObject:json options:0 error:nil];
+    AWXConfirmPaymentIntentResponse *response = (AWXConfirmPaymentIntentResponse *)[AWXConfirmPaymentIntentResponse parse:responseData];
+
+    XCTAssertEqualObjects(response.paymentConsentId, @"cst_parsed_id");
+}
+
+- (void)testConfirmPaymentIntentResponseParsesNilPaymentConsentId {
+    NSDictionary *json = @{@"id": @"int_123", @"status": @"SUCCEEDED"};
+    NSData *responseData = [NSJSONSerialization dataWithJSONObject:json options:0 error:nil];
+    AWXConfirmPaymentIntentResponse *response = (AWXConfirmPaymentIntentResponse *)[AWXConfirmPaymentIntentResponse parse:responseData];
+
+    XCTAssertNil(response.paymentConsentId);
+}
+
 - (void)testCompleteWithResponseWhenHasNextAction {
     AWXProviderDelegateEmpty *spy = [AWXProviderDelegateEmpty new];
     AWXDefaultProvider *provider = [[AWXDefaultProvider alloc] initWithDelegate:spy session:[AWXOneOffSession new] paymentMethodType:[AWXPaymentMethodType new]];
